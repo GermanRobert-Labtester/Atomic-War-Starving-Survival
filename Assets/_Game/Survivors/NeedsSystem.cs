@@ -24,6 +24,12 @@ namespace AtomicWar._Game.Survivors
         private readonly Func<Survivor, bool> _isNearHeatSource;
         private readonly List<Survivor> _survivors = new List<Survivor>();
 
+        // Optional photoperiod integration — null-safe so existing callers don't break.
+        // Stored as thin delegates so Survivors.asmdef has no reference to Environment.
+        private Func<float>  _getEffectiveDaylightHours; // returns PhotoperiodSystem.EffectiveDaylightHours
+        private Func<bool>   _isGrowLightActive;
+        private LightProfile _lightProfile;
+
         /// <summary>Fired whenever any single need value changes, with its new value.</summary>
         public event Action<Survivor, NeedKind, float> OnNeedChanged;
         /// <summary>Fired once when a need first crosses into its critical range.</summary>
@@ -35,6 +41,24 @@ namespace AtomicWar._Game.Survivors
         {
             _profile = profile != null ? profile : throw new ArgumentNullException(nameof(profile));
             _isNearHeatSource = isNearHeatSource;
+        }
+
+        /// <summary>
+        /// Inject photoperiod light delegates after construction so existing
+        /// callsites don't need to change signature.
+        /// <paramref name="getEffectiveDaylightHours"/> is called each Tick and
+        /// returns the current effective daylight hours from PhotoperiodSystem.
+        /// <paramref name="isGrowLightActive"/> returns true when the shelter
+        /// grow-light module is fuelled and running.
+        /// </summary>
+        public void SetPhotoPeriodSystem(
+            Func<float>  getEffectiveDaylightHours,
+            LightProfile lightProfile,
+            Func<bool>   isGrowLightActive = null)
+        {
+            _getEffectiveDaylightHours = getEffectiveDaylightHours;
+            _lightProfile              = lightProfile;
+            _isGrowLightActive         = isGrowLightActive;
         }
 
         /// <summary>Register a survivor so bulk Tick(gameHours) advances their needs.</summary>
@@ -73,6 +97,18 @@ namespace AtomicWar._Game.Survivors
             Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours);
             Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours);
             ApplyWarmth(survivor, gameHours);
+
+            // Light / photoperiod tick — null-safe; skipped when not wired
+            if (_getEffectiveDaylightHours != null && _lightProfile != null)
+            {
+                bool growLight = _isGrowLightActive != null && _isGrowLightActive();
+                LightSystemHelper.TickSurvivorLight(
+                    survivor,
+                    gameHours,
+                    _getEffectiveDaylightHours(),
+                    growLight,
+                    _lightProfile);
+            }
 
             var needs = survivor.Needs;
             bool hungerCritical = needs.Hunger >= _profile.hungerCritical;

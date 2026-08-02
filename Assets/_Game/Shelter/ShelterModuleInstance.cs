@@ -65,6 +65,13 @@ namespace AtomicWar._Game.Shelter
                     Fuel = Mathf.Max(0f, Fuel - heaterSO.FuelConsumptionRatePerHour * gameHours);
                 }
             }
+            else if (_definition is GrowLightModuleSO growSO)
+            {
+                if (Fuel > 0f)
+                {
+                    Fuel = Mathf.Max(0f, Fuel - growSO.FuelConsumptionRatePerHour * gameHours);
+                }
+            }
             else if (_definition is WaterPurifierModuleSO waterSO)
             {
                 WaterConversionProgress += gameHours;
@@ -80,7 +87,12 @@ namespace AtomicWar._Game.Shelter
                 {
                     Fuel = Mathf.Max(0f, Fuel - 1f * gameHours);
                 }
+                else if (ModuleId == "grow_light" && Fuel > 0f)
+                {
+                    Fuel = Mathf.Max(0f, Fuel - 1.5f * gameHours);
+                }
             }
+
         }
 
         public void ReplaceFilter()

@@ -22,8 +22,18 @@ namespace AtomicWar._Game.AI
                 : rawScore;
 
             float score = (curvedScore + action.basePriority) * action.weight;
+
+            // Listless penalty: light-deprived survivors are sluggish about everything.
+            // Applied after curve so it can't inflate low-urgency scores, only drag them down.
+            if (context.IsListless)
+            {
+                const float ListlessScorePenalty = 0.08f;
+                score -= ListlessScorePenalty;
+            }
+
             return Mathf.Clamp01(score);
         }
+
 
         /// <summary>Legacy single-survivor scoring signature.</summary>
         public float Score(SurvivorAction action, Survivor survivor)

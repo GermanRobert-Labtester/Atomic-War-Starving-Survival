@@ -47,6 +47,31 @@ namespace AtomicWar._Game.Survivors
         public bool HasRadResistance;
         public float RadResistanceHoursRemaining;
 
+        // -------------------------------------------------------------------
+        // Photoperiod / light state — owned and written by PhotoperiodSystem.
+        // -------------------------------------------------------------------
+
+        /// <summary>
+        /// Recent-light index (0..100). Accumulates during effective daylight,
+        /// drains in darkness.  When it falls to LightProfile.listlessThreshold
+        /// the survivor becomes Listless.
+        /// </summary>
+        public float LightExposure = 100f;
+
+        /// <summary>
+        /// Hidden status: true when LightExposure has been below the threshold long
+        /// enough to trigger seasonal-affective / cabin-fever effects.  Does NOT
+        /// appear as a visible need bar; manifests as morale drain + AI score penalty.
+        /// </summary>
+        public bool IsListless;
+
+        /// <summary>
+        /// Vitamin D proxy (0..100, hidden). Accumulates slowly in useful light;
+        /// decays in prolonged darkness.  When low it silently penalises health and
+        /// morale. Offset by consuming vitaminD-tagged food items (fish, eggs, etc.).
+        /// </summary>
+        public float VitaminDProxy = 100f;
+
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
         {
@@ -55,6 +80,7 @@ namespace AtomicWar._Game.Survivors
                 case SurvivorStatus.AcuteRadiationSickness: return HasAcuteRadiationSickness;
                 case SurvivorStatus.ChronicIllness: return HasChronicIllness;
                 case SurvivorStatus.RadResistance: return HasRadResistance;
+                case SurvivorStatus.Listless: return IsListless;
                 default: return false;
             }
         }

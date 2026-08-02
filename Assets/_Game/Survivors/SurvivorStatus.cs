@@ -8,6 +8,13 @@ namespace AtomicWar._Game.Survivors
     {
         AcuteRadiationSickness,
         ChronicIllness,
-        RadResistance
+        RadResistance,
+        /// <summary>
+        /// Seasonal-affective / cabin-fever collapse from prolonged light deprivation.
+        /// Hidden from the main needs bars; visible only as a status tag.
+        /// Cleared by a sun-lamp session, a vitaminD-rich meal, or returning
+        /// LightExposure above LightProfile.listlessThreshold.
+        /// </summary>
+        Listless
     }
 }

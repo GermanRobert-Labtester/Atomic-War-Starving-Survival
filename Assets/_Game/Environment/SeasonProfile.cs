@@ -20,6 +20,12 @@ namespace AtomicWar._Game.Environment
         [Tooltip("X: 0..1 fraction of the campaign elapsed. Y: ambient Celsius. Author non-increasing for a believable nuclear winter.")]
         public AnimationCurve ambientTemperatureCurve = AnimationCurve.Linear(0f, 5f, 1f, -35f);
 
+        [Header("Daylight Curve")]
+        [Tooltip("X: 0..1 campaign fraction. Y: base hours of daylight per day (0..16). " +
+                 "Deep nuclear winter should approach 2-4 h; ash storms push it to near-zero " +
+                 "via PhotoperiodSystem.skyClarity, not this curve directly.")]
+        public AnimationCurve daylightCurve = AnimationCurve.Linear(0f, 12f, 1f, 2f);
+
         [Header("Weather")]
         [Tooltip("WeatherSystem rolls for a transition this often.")]
         public float weatherCheckIntervalHours = 6f;
@@ -34,6 +40,19 @@ namespace AtomicWar._Game.Environment
             float dayFraction = campaignLengthDays > 0 ? Mathf.Clamp01(days / campaignLengthDays) : 0f;
             return ambientTemperatureCurve.Evaluate(dayFraction);
         }
+
+        /// <summary>
+        /// Sample the daylight-hours curve at the given elapsed campaign hours.
+        /// Returns base hours of useful daylight in [0..16]; multiply by
+        /// <see cref="AtomicWar._Game.Environment.PhotoperiodSystem.SkyClarity"/> for effective daylight.
+        /// </summary>
+        public float EvaluateDaylightHours(float elapsedHours)
+        {
+            float days = elapsedHours / 24f;
+            float dayFraction = campaignLengthDays > 0 ? Mathf.Clamp01(days / campaignLengthDays) : 0f;
+            return Mathf.Clamp(daylightCurve.Evaluate(dayFraction), 0f, 16f);
+        }
+
 
         /// <summary>The active season window for a given campaign day (last entry with startDay &lt;= day; a designer-neutral default if none configured).</summary>
         public SeasonWindow GetSeasonForDay(int day)

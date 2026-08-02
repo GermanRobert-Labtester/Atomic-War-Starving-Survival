@@ -19,6 +19,10 @@ namespace AtomicWar._Game.AI
         public bool IsFalloutStorm;
         public float AmbientRadRate;
         public bool IsRadiationRising;
+        /// <summary>True when the survivor currently has the Listless status (light deprivation).</summary>
+        public bool IsListless;
+        /// <summary>True when the shelter's grow-light module is running; relevant to morale-seeking actions.</summary>
+        public bool GrowLightActive;
         public Random Random;
 
         public AIContext() { }

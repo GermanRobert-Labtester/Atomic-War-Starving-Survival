@@ -29,6 +29,7 @@ namespace AtomicWar._Game.Core
 
         [Header("Data Assets")]
         [SerializeField] private NeedsProfile _needsProfile;
+        [SerializeField] private LightProfile _lightProfile;
         [SerializeField] private SeasonProfile _seasonProfile;
         [SerializeField] private ItemCatalogSO _itemCatalog;
         [SerializeField] private RecipeCatalogSO _recipeCatalog;
@@ -52,6 +53,7 @@ namespace AtomicWar._Game.Core
         public TimeSystem TimeSystem { get; private set; }
         public WeatherSystem WeatherSystem { get; private set; }
         public TemperatureSystem TemperatureSystem { get; private set; }
+        public PhotoperiodSystem PhotoperiodSystem { get; private set; }
         public NeedsSystem NeedsSystem { get; private set; }
         public RadiationSystem RadiationSystem { get; private set; }
         public Shelter.Shelter Shelter { get; private set; }
@@ -118,6 +120,7 @@ namespace AtomicWar._Game.Core
             // Environment
             WeatherSystem = new WeatherSystem(_seasonProfile, _worldSeed);
             TemperatureSystem = new TemperatureSystem(_seasonProfile, WeatherSystem);
+            PhotoperiodSystem = new PhotoperiodSystem(_seasonProfile, WeatherSystem);
 
             // Shelter
             Shelter = new Shelter.Shelter();
@@ -125,9 +128,21 @@ namespace AtomicWar._Game.Core
             Shelter.AddModule(new ShelterModuleInstance("radiation_shielding", 2));
             Shelter.AddModule(new ShelterModuleInstance("heater", 1) { Fuel = 50f });
             Shelter.AddModule(new ShelterModuleInstance("workbench", 1));
+            // Grow-light starts installed but dry (no fuel). Player must scavenge fuel to light it.
+            Shelter.AddModule(new ShelterModuleInstance("grow_light", 1) { Fuel = 0f });
 
             // Needs + Radiation
             NeedsSystem = new NeedsSystem(_needsProfile, sv => true);
+
+            // Wire photoperiod into NeedsSystem (null-safe: skipped if LightProfile not assigned)
+            if (_lightProfile != null)
+            {
+                NeedsSystem.SetPhotoPeriodSystem(
+                    () => PhotoperiodSystem.EffectiveDaylightHours,
+                    _lightProfile,
+                    () => Shelter.IsGrowLightActive);
+            }
+
             RadiationSystem = new RadiationSystem(NeedsSystem);
 
             // Inventory + Crafting
@@ -171,6 +186,7 @@ namespace AtomicWar._Game.Core
                 RadiationSystem, Shelter, () => Survivors,
                 id => _itemCatalog?.GetById(id),
                 id => null);
+            SaveSystem.SetPhotoPeriodSystem(PhotoperiodSystem);
 
             // Subscribe to phase changes for autosave
             GameState.OnPhaseChanged += phase =>
@@ -234,6 +250,7 @@ namespace AtomicWar._Game.Core
             // Environment
             WeatherSystem.Tick(gameHours);
             TemperatureSystem.Tick(gameHours);
+            PhotoperiodSystem.Tick(gameHours);
 
             // Shelter
             Shelter.Tick(gameHours);
@@ -259,8 +276,10 @@ namespace AtomicWar._Game.Core
                     if (!sv.IsAlive) continue;
                     var context = new AIContext(sv, Shelter, Inventory, new System.Random(_worldSeed + sv.Id.GetHashCode()))
                     {
-                        IsFalloutStorm = WeatherSystem.Current == WeatherKind.FalloutStorm,
-                        AmbientRadRate = 5f
+                        IsFalloutStorm  = WeatherSystem.Current == WeatherKind.FalloutStorm,
+                        AmbientRadRate  = 5f,
+                        IsListless      = sv.IsListless,
+                        GrowLightActive = Shelter.IsGrowLightActive
                     };
                     var action = UtilityAI.SelectAction(context, Actions);
                     action?.Execute(context);

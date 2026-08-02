@@ -40,6 +40,9 @@ namespace AtomicWar._Game.Core
         private readonly Func<string, ShelterModule> _moduleLookup;
         private readonly string _savesDir;
 
+        // Optional — injected after construction to keep constructor signature stable
+        private PhotoperiodSystem _photoPeriodSystem;
+
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
         public SaveSystem(
@@ -69,6 +72,12 @@ namespace AtomicWar._Game.Core
             {
                 _gameState.OnPhaseChanged += OnPhaseChanged;
             }
+        }
+
+        /// <summary>Inject a PhotoperiodSystem after construction (optional; safe to skip in tests).</summary>
+        public void SetPhotoPeriodSystem(PhotoperiodSystem photoPeriodSystem)
+        {
+            _photoPeriodSystem = photoPeriodSystem;
         }
 
         /// <summary>Write the current world state to the given slot.</summary>
@@ -269,6 +278,9 @@ namespace AtomicWar._Game.Core
                 }
             }
 
+            if (_photoPeriodSystem != null)
+                data.Photoperiod = _photoPeriodSystem.GetState();
+
             return data;
         }
 
@@ -296,7 +308,12 @@ namespace AtomicWar._Game.Core
                 HasChronicIllness = sv.HasChronicIllness,
                 HasRadResistance = sv.HasRadResistance,
                 RadResistanceHoursRemaining = sv.RadResistanceHoursRemaining,
-                HasFullSuitEquipped = sv.HasFullSuitEquipped
+                HasFullSuitEquipped = sv.HasFullSuitEquipped,
+
+                // Light / photoperiod
+                LightExposure = sv.LightExposure,
+                VitaminDProxy = sv.VitaminDProxy,
+                IsListless    = sv.IsListless
             };
 
             if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
@@ -366,6 +383,11 @@ namespace AtomicWar._Game.Core
                     _worldFlags[data.WorldFlagKeys[i]] = data.WorldFlagValues[i];
                 }
             }
+
+            if (_photoPeriodSystem != null && data.Photoperiod != null)
+            {
+                _photoPeriodSystem.RestoreState(data.Photoperiod);
+            }
         }
 
         private void RestoreSurvivor(Survivor sv, SurvivorSave save)
@@ -391,6 +413,11 @@ namespace AtomicWar._Game.Core
             sv.HasRadResistance = save.HasRadResistance;
             sv.RadResistanceHoursRemaining = save.RadResistanceHoursRemaining;
             sv.HasFullSuitEquipped = save.HasFullSuitEquipped;
+
+            // Light / photoperiod
+            sv.LightExposure = save.LightExposure;
+            sv.VitaminDProxy = save.VitaminDProxy;
+            sv.IsListless    = save.IsListless;
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)
@@ -460,6 +487,7 @@ namespace AtomicWar._Game.Core
         public GameStateSave GameState = new GameStateSave();
         public WeatherState Weather;
         public float ElapsedHours;
+        public PhotoperiodState Photoperiod;
         public List<SurvivorSave> Survivors = new List<SurvivorSave>();
         public List<ShelterModuleSave> ShelterModules = new List<ShelterModuleSave>();
         public List<string> WorldFlagKeys = new List<string>();
@@ -510,6 +538,11 @@ namespace AtomicWar._Game.Core
         // Dosimeter
         public float DosimeterRate;
         public float DosimeterRecent;
+
+        // Light / photoperiod
+        public float LightExposure = 100f;
+        public float VitaminDProxy = 100f;
+        public bool  IsListless;
     }
 
     /// <summary>Shelter module runtime state snapshot.</summary>

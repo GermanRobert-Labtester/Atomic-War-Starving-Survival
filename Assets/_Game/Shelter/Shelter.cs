@@ -126,6 +126,37 @@ namespace AtomicWar._Game.Shelter
             }
         }
 
+        /// <summary>
+        /// True when the grow-light module is installed, enabled, and has fuel remaining.
+        /// Queried by NeedsSystem each tick to grant survivors an artificial light fraction.
+        /// </summary>
+        public bool IsGrowLightActive
+        {
+            get
+            {
+                var growModule = GetModule("grow_light");
+                return growModule != null && growModule.IsOperational && growModule.Fuel > 0f;
+            }
+        }
+
+        /// <summary>
+        /// Direct morale bonus per in-game hour from a running grow-light.
+        /// Returns 0 when the module is absent, disabled, or out of fuel.
+        /// </summary>
+        public float GrowLightMoraleBoost
+        {
+            get
+            {
+                if (!IsGrowLightActive) return 0f;
+                var growModule = GetModule("grow_light");
+                if (growModule?.Definition is Modules.GrowLightModuleSO growSO)
+                {
+                    return growSO.MoraleBoostPerHour;
+                }
+                return 0.3f; // fallback default matching LightProfile
+            }
+        }
+
         /// <summary>Indoor radiation level for a given exterior radiation dose rate.</summary>
         public float GetInteriorRadsPerHour(float exteriorRads)
         {
