@@ -1,1 +1,382 @@
-[]
+[
+  {
+    "id": "event_irradiated_stranger",
+    "title": "Irradiated Stranger at the Hatch",
+    "bodyText": "Heavy knocks echo against the steel airlock. Through the viewglass, an unarmored wanderer clutches a coughing chest, begging for shelter from the rising fallout.",
+    "weight": 1.0,
+    "conditions": { "minDay": 1, "minHour": 0.0, "maxHour": 24.0 },
+    "choices": [
+      {
+        "choiceId": "open_hatch",
+        "text": "Open the hatch and let them inside.",
+        "moraleDelta": 10.0,
+        "effects": [
+          { "targetNeed": "radiation", "needDelta": 15.0 },
+          { "setWorldFlag": "stranger_sheltered", "worldFlagValue": true }
+        ],
+        "delayedConsequence": {
+          "delayHours": 24.0,
+          "title": "Stranger's Gratitude",
+          "description": "The recovered stranger shares a hidden stash of supplies before leaving.",
+          "effects": [ { "itemId": "canned_food", "itemAmount": 2 } ]
+        }
+      },
+      {
+        "choiceId": "refuse_entry",
+        "text": "Keep the hatch sealed and tell them to move on.",
+        "moraleDelta": -15.0,
+        "effects": [
+          { "setWorldFlag": "stranger_turned_away", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_last_iodine",
+    "title": "The Last Iodine Dose",
+    "bodyText": "Only one iodine tablet remains in the cabinet. The child is showing early symptoms, but the scavenger must cross the hot zone at dawn for vital fuel.",
+    "weight": 1.0,
+    "conditions": { "minDay": 2, "requiredItemId": "iodine_pills" },
+    "choices": [
+      {
+        "choiceId": "give_child",
+        "text": "Administer the iodine to the child.",
+        "moraleDelta": 15.0,
+        "effects": [
+          { "itemId": "iodine_pills", "itemAmount": -1 }
+        ]
+      },
+      {
+        "choiceId": "give_scavenger",
+        "text": "Save the dose for the dawn scavenger mission.",
+        "moraleDelta": -20.0,
+        "effects": [
+          { "itemId": "iodine_pills", "itemAmount": -1 },
+          { "setWorldFlag": "scavenger_protected", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_air_filter_breach",
+    "title": "Mid-Night Filter Breach",
+    "bodyText": "A sudden squall tears at the intake vent. Black dust rattles through the ductwork as the air filtration alarm buzzes in the dark.",
+    "weight": 1.2,
+    "conditions": { "minDay": 1, "requireFalloutStorm": true },
+    "choices": [
+      {
+        "choiceId": "emergency_repair",
+        "text": "Send someone into the intake shaft to manual-seal the leak.",
+        "moraleDelta": -5.0,
+        "effects": [
+          { "targetNeed": "radiation", "needDelta": 20.0 },
+          { "targetNeed": "fatigue", "needDelta": 25.0 }
+        ]
+      },
+      {
+        "choiceId": "install_spare_filter",
+        "text": "Replace the damaged filter element immediately.",
+        "moraleDelta": 5.0,
+        "effects": [
+          { "itemId": "air_filter", "itemAmount": -1 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_geiger_clicking_water",
+    "title": "Ticking Water Supply",
+    "bodyText": "The dosimeter chatters rhythmically when brought near the main water barrel. Fine grey sediment has settled at the bottom.",
+    "weight": 1.0,
+    "conditions": { "minDay": 2 },
+    "choices": [
+      {
+        "choiceId": "boil_and_filter",
+        "text": "Purify the reservoir using the water still.",
+        "moraleDelta": 0.0,
+        "effects": [
+          { "targetNeed": "thirst", "needDelta": 10.0 }
+        ]
+      },
+      {
+        "choiceId": "drink_anyway",
+        "text": "Ignore the clicking and issue rations as usual.",
+        "moraleDelta": -10.0,
+        "effects": [
+          { "targetNeed": "radiation", "needDelta": 25.0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_trader_water_dosimeter",
+    "title": "The Trader's Offer",
+    "bodyText": "A traveling scavenger stands outside holding an military dosimeter. They demand three units of clean water in exchange.",
+    "weight": 0.9,
+    "conditions": { "minDay": 3, "requiredItemId": "clean_water" },
+    "choices": [
+      {
+        "choiceId": "trade_water",
+        "text": "Hand over the clean water for the dosimeter.",
+        "moraleDelta": 10.0,
+        "effects": [
+          { "itemId": "clean_water", "itemAmount": -3 },
+          { "itemId": "dosimeter", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "reject_trade",
+        "text": "Keep your water reserves.",
+        "moraleDelta": -5.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "event_shattered_hatch_seal",
+    "title": "Degraded Hatch Gasket",
+    "bodyText": "Sub-zero winds crack the rubber gasket along the outer bunker door. Frost lines the interior hinges.",
+    "weight": 0.8,
+    "conditions": { "minDay": 2 },
+    "choices": [
+      {
+        "choiceId": "caulk_seal",
+        "text": "Use sealant and rags to reinforce the door frame.",
+        "moraleDelta": 0.0,
+        "effects": [
+          { "targetNeed": "warmth", "needDelta": 15.0 },
+          { "itemId": "scrap_metal", "itemAmount": -1 }
+        ]
+      },
+      {
+        "choiceId": "stope_heater",
+        "text": "Burn extra fuel to compensate for the draft.",
+        "moraleDelta": -5.0,
+        "effects": [
+          { "itemId": "fuel", "itemAmount": -2 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_dying_scavenger_plea",
+    "title": "Collapse at the Trench",
+    "bodyText": "A local scavenger collapses ten yards from the airlock, clutching a sealed crate of canned food.",
+    "weight": 1.0,
+    "conditions": { "minDay": 3 },
+    "choices": [
+      {
+        "choiceId": "drag_inside",
+        "text": "Braving the fallout to drag them and their crate inside.",
+        "moraleDelta": 15.0,
+        "effects": [
+          { "targetNeed": "radiation", "needDelta": 10.0 },
+          { "itemId": "canned_food", "itemAmount": 4 }
+        ]
+      },
+      {
+        "choiceId": "retrieve_crate_only",
+        "text": "Quickly snatch the crate and lock the door.",
+        "moraleDelta": -25.0,
+        "effects": [
+          { "itemId": "canned_food", "itemAmount": 4 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_stolen_medicine",
+    "title": "Missing Anti-Rad Dose",
+    "bodyText": "An audit of the emergency medical kit reveals one missing anti-rad ampoule. Suspicion hangs heavy in the common room.",
+    "weight": 0.7,
+    "conditions": { "minDay": 4 },
+    "choices": [
+      {
+        "choiceId": "interrogate",
+        "text": "Search everyone's quarters to find the culprit.",
+        "moraleDelta": -20.0,
+        "effects": [
+          { "itemId": "anti_rad", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "let_it_pass",
+        "text": "Keep silent and avoid fracturing the group.",
+        "moraleDelta": 5.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "event_distress_signal",
+    "title": "Static on the Shortwave",
+    "bodyText": "The shortwave radio crackles with a faint voice repeating coordinates five miles north, claiming to hold clean seed stock.",
+    "weight": 0.8,
+    "conditions": { "minDay": 5 },
+    "choices": [
+      {
+        "choiceId": "record_coordinates",
+        "text": "Log the coordinates for future scavenge runs.",
+        "moraleDelta": 5.0,
+        "effects": [
+          { "setWorldFlag": "coordinates_logged", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "broadcast_warning",
+        "text": "Warn them of nearby hot zones over the radio.",
+        "moraleDelta": 10.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "event_fuel_leak_choice",
+    "title": "Leaking Fuel Drum",
+    "bodyText": "A hairline crack in the primary fuel drum drips diesel onto the concrete floor. Strong fumes fill the corridor.",
+    "weight": 0.9,
+    "conditions": { "minDay": 2, "requiredItemId": "fuel" },
+    "choices": [
+      {
+        "choiceId": "siphon_quickly",
+        "text": "Siphon what remains into smaller containers.",
+        "moraleDelta": 0.0,
+        "effects": [
+          { "itemId": "fuel", "itemAmount": -1 },
+          { "targetNeed": "fatigue", "needDelta": 15.0 }
+        ]
+      },
+      {
+        "choiceId": "patch_drum",
+        "text": "Attempt to weld and patch the leak under fumes.",
+        "moraleDelta": -5.0,
+        "effects": [
+          { "targetNeed": "health", "needDelta": -10.0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_contaminated_canned_food",
+    "title": "Swollen Rations",
+    "bodyText": "Two cans of meat in the pantry have expanded. Hunger is mounting, but botulism or radiation contamination is likely.",
+    "weight": 1.0,
+    "conditions": { "minDay": 3 },
+    "choices": [
+      {
+        "choiceId": "discard_cans",
+        "text": "Throw the swollen cans out the trash chute.",
+        "moraleDelta": -5.0,
+        "effects": []
+      },
+      {
+        "choiceId": "cook_thoroughly",
+        "text": "Boil and eat the meat to stave off starvation.",
+        "moraleDelta": 5.0,
+        "effects": [
+          { "targetNeed": "hunger", "needDelta": -35.0 },
+          { "targetNeed": "health", "needDelta": -15.0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_exhausted_sentinel",
+    "title": "Asleep at the Watch",
+    "bodyText": "During the 4 AM check, the night sentry is found fast asleep against the airlock door, rifle lying in the dirt.",
+    "weight": 0.9,
+    "conditions": { "minDay": 3, "minHour": 0.0, "maxHour": 6.0 },
+    "choices": [
+      {
+        "choiceId": "reprimand",
+        "text": "Issue a stern reprimand and double their shift.",
+        "moraleDelta": -15.0,
+        "effects": [
+          { "targetNeed": "fatigue", "needDelta": 20.0 }
+        ]
+      },
+      {
+        "choiceId": "relieve_quietly",
+        "text": "Take over watch duty silently and let them rest.",
+        "moraleDelta": 10.0,
+        "effects": [
+          { "targetNeed": "fatigue", "needDelta": 15.0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_blackout_in_blizzard",
+    "title": "Sub-Zero Power Failure",
+    "bodyText": "The generator throws a spark and dies. Darkness falls as interior temperatures plunge toward freezing.",
+    "weight": 1.1,
+    "conditions": { "minDay": 3 },
+    "choices": [
+      {
+        "choiceId": "restart_generator",
+        "text": "Work in the freezing dark to clear the fuel line.",
+        "moraleDelta": -10.0,
+        "effects": [
+          { "targetNeed": "warmth", "needDelta": -20.0 },
+          { "targetNeed": "health", "needDelta": -5.0 }
+        ]
+      },
+      {
+        "choiceId": "huddle_blankets",
+        "text": "Gather everyone in the inner room with thermal blankets.",
+        "moraleDelta": 5.0,
+        "effects": [
+          { "targetNeed": "fatigue", "needDelta": 10.0 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "event_stray_mutated_dog",
+    "title": "Scratching at the Outflow",
+    "bodyText": "A emaciated stray dog whimpers outside the drainage outflow. Its fur is patchy from fallout exposure.",
+    "weight": 0.7,
+    "conditions": { "minDay": 2 },
+    "choices": [
+      {
+        "choiceId": "feed_dog",
+        "text": "Share a scrap of food and let it sleep in the airlock.",
+        "moraleDelta": 20.0,
+        "effects": [
+          { "itemId": "canned_food", "itemAmount": -1 },
+          { "setWorldFlag": "bunker_mascot", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "chase_away",
+        "text": "Drive the animal away to conserve resources.",
+        "moraleDelta": -15.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "event_desperate_trade_refugee",
+    "title": "Refugee's Last Exchange",
+    "bodyText": "A refugee family at the outer gate offers two fuel canisters in exchange for your last iodine pills.",
+    "weight": 0.8,
+    "conditions": { "minDay": 4, "requiredItemId": "iodine_pills" },
+    "choices": [
+      {
+        "choiceId": "accept_trade",
+        "text": "Trade the iodine pills for the fuel canisters.",
+        "moraleDelta": 10.0,
+        "effects": [
+          { "itemId": "iodine_pills", "itemAmount": -1 },
+          { "itemId": "fuel", "itemAmount": 2 }
+        ]
+      },
+      {
+        "choiceId": "refuse_trade",
+        "text": "Keep your iodine reserves.",
+        "moraleDelta": -10.0,
+        "effects": []
+      }
+    ]
+  }
+]

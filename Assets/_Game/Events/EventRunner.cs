@@ -1,21 +1,218 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Events
 {
+    [Serializable]
+    public class ActiveDelayedConsequence
+    {
+        public string EventId;
+        public string ChoiceId;
+        public float RemainingHours;
+        public DelayedConsequence Consequence;
+    }
+
     /// <summary>
-    /// Selects and applies GameEvents over time (weighted random and scheduled),
-    /// enforcing cooldowns and gating conditions. Raises bus events so the UI can
-    /// present them.
+    /// Data-driven engine that evaluates, triggers, and resolves GameEvents based on
+    /// weighted conditions and presents choices with immediate and delayed consequences.
+    /// Save/load safe.
     /// </summary>
     public class EventRunner
     {
-        /// <summary>Advance event scheduling/selection over elapsed game hours.</summary>
-        public void Tick(float gameHours) => throw new System.NotImplementedException();
+        private readonly List<GameEvent> _pool = new List<GameEvent>();
+        private readonly Dictionary<string, float> _cooldowns = new Dictionary<string, float>();
+        private readonly List<ActiveDelayedConsequence> _activeConsequences = new List<ActiveDelayedConsequence>();
 
-        /// <summary>Run a specific event immediately.</summary>
-        public void Run(GameEvent gameEvent) => throw new System.NotImplementedException();
+        public IReadOnlyList<GameEvent> Pool => _pool;
+        public IReadOnlyList<ActiveDelayedConsequence> ActiveConsequences => _activeConsequences;
 
-        /// <summary>Replace the active pool of selectable events.</summary>
-        public void SetPool(IReadOnlyList<GameEvent> pool) => throw new System.NotImplementedException();
+        public event Action<GameEvent, EventContext> OnEventTriggered;
+        public event Action<GameEvent, EventChoice, EventContext> OnChoiceApplied;
+        public event Action<ActiveDelayedConsequence, EventContext> OnDelayedConsequenceResolved;
+
+        public float DefaultCooldownHours = 24f;
+
+        public void SetPool(IReadOnlyList<GameEvent> pool)
+        {
+            _pool.Clear();
+            if (pool != null)
+            {
+                _pool.AddRange(pool);
+            }
+        }
+
+        public bool CanTrigger(GameEvent gameEvent, EventContext context)
+        {
+            if (gameEvent == null || string.IsNullOrEmpty(gameEvent.id)) return false;
+
+            if (_cooldowns.TryGetValue(gameEvent.id, out float remaining) && remaining > 0f)
+            {
+                return false;
+            }
+
+            return gameEvent.CanTrigger(context);
+        }
+
+        public GameEvent SelectEvent(EventContext context)
+        {
+            if (_pool.Count == 0) return null;
+
+            List<GameEvent> validEvents = new List<GameEvent>();
+            float totalWeight = 0f;
+
+            for (int i = 0; i < _pool.Count; i++)
+            {
+                var ev = _pool[i];
+                if (CanTrigger(ev, context))
+                {
+                    validEvents.Add(ev);
+                    totalWeight += Mathf.Max(0.01f, ev.weight);
+                }
+            }
+
+            if (validEvents.Count == 0 || totalWeight <= 0f) return null;
+
+            double roll = context?.Random != null ? context.Random.NextDouble() * totalWeight : UnityEngine.Random.Range(0f, totalWeight);
+            float accum = 0f;
+
+            for (int i = 0; i < validEvents.Count; i++)
+            {
+                var ev = validEvents[i];
+                accum += Mathf.Max(0.01f, ev.weight);
+                if (roll <= accum)
+                {
+                    return ev;
+                }
+            }
+
+            return validEvents[0];
+        }
+
+        public void Run(GameEvent gameEvent, EventContext context = null)
+        {
+            if (gameEvent == null) return;
+            _cooldowns[gameEvent.id] = DefaultCooldownHours;
+            gameEvent.Apply();
+            OnEventTriggered?.Invoke(gameEvent, context);
+        }
+
+        public void ApplyChoice(GameEvent gameEvent, EventChoice choice, EventContext context)
+        {
+            if (choice == null || context == null) return;
+
+            // Apply immediate choice effects
+            if (choice.Effects != null)
+            {
+                for (int i = 0; i < choice.Effects.Count; i++)
+                {
+                    ApplyEffect(choice.Effects[i], context);
+                }
+            }
+
+            // Apply Morale Delta
+            if (choice.MoraleDelta != 0f && context.PrimarySurvivor != null)
+            {
+                context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + choice.MoraleDelta, 0f, 100f);
+            }
+
+            // Register Delayed Consequence if present
+            if (choice.DelayedConsequence != null && choice.DelayedConsequence.DelayHours > 0f)
+            {
+                _activeConsequences.Add(new ActiveDelayedConsequence
+                {
+                    EventId = gameEvent != null ? gameEvent.id : "unknown",
+                    ChoiceId = choice.ChoiceId,
+                    RemainingHours = choice.DelayedConsequence.DelayHours,
+                    Consequence = choice.DelayedConsequence
+                });
+            }
+
+            OnChoiceApplied?.Invoke(gameEvent, choice, context);
+        }
+
+        public void Tick(float gameHours, EventContext context = null)
+        {
+            if (gameHours <= 0f) return;
+
+            // Decrement cooldown timers
+            List<string> keys = new List<string>(_cooldowns.Keys);
+            for (int i = 0; i < keys.Count; i++)
+            {
+                string key = keys[i];
+                float remaining = _cooldowns[key] - gameHours;
+                if (remaining <= 0f)
+                {
+                    _cooldowns.Remove(key);
+                }
+                else
+                {
+                    _cooldowns[key] = remaining;
+                }
+            }
+
+            // Decrement active delayed consequences
+            for (int i = _activeConsequences.Count - 1; i >= 0; i--)
+            {
+                var active = _activeConsequences[i];
+                active.RemainingHours -= gameHours;
+                if (active.RemainingHours <= 0f)
+                {
+                    _activeConsequences.RemoveAt(i);
+                    if (active.Consequence != null && active.Consequence.Effects != null && context != null)
+                    {
+                        for (int j = 0; j < active.Consequence.Effects.Count; j++)
+                        {
+                            ApplyEffect(active.Consequence.Effects[j], context);
+                        }
+                    }
+                    OnDelayedConsequenceResolved?.Invoke(active, context);
+                }
+            }
+        }
+
+        private static void ApplyEffect(EventEffect effect, EventContext context)
+        {
+            if (effect == null || context == null) return;
+
+            // Apply Need Delta
+            if (!string.IsNullOrEmpty(effect.TargetNeed) && context.PrimarySurvivor != null)
+            {
+                switch (effect.TargetNeed.ToLowerInvariant())
+                {
+                    case "hunger": context.PrimarySurvivor.Needs.Hunger = Mathf.Clamp(context.PrimarySurvivor.Needs.Hunger + effect.NeedDelta, 0f, 100f); break;
+                    case "thirst": context.PrimarySurvivor.Needs.Thirst = Mathf.Clamp(context.PrimarySurvivor.Needs.Thirst + effect.NeedDelta, 0f, 100f); break;
+                    case "fatigue": context.PrimarySurvivor.Needs.Fatigue = Mathf.Clamp(context.PrimarySurvivor.Needs.Fatigue + effect.NeedDelta, 0f, 100f); break;
+                    case "warmth": context.PrimarySurvivor.Needs.Warmth = Mathf.Clamp(context.PrimarySurvivor.Needs.Warmth + effect.NeedDelta, 0f, 100f); break;
+                    case "morale": context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + effect.NeedDelta, 0f, 100f); break;
+                    case "health": context.PrimarySurvivor.Needs.Health = Mathf.Clamp(context.PrimarySurvivor.Needs.Health + effect.NeedDelta, 0f, 100f); break;
+                    case "radiation": context.PrimarySurvivor.RadiationDose = Mathf.Clamp(context.PrimarySurvivor.RadiationDose + effect.NeedDelta, 0f, 100f); break;
+                }
+            }
+
+            // Apply Inventory changes
+            if (!string.IsNullOrEmpty(effect.ItemId) && context.Inventory != null)
+            {
+                var itemDef = ScriptableObject.CreateInstance<Inventory.ItemDefinition>();
+                itemDef.id = effect.ItemId;
+                itemDef.displayName = effect.ItemId;
+
+                if (effect.ItemAmount > 0)
+                {
+                    context.Inventory.Add(itemDef, effect.ItemAmount);
+                }
+                else if (effect.ItemAmount < 0)
+                {
+                    context.Inventory.Remove(itemDef, Math.Abs(effect.ItemAmount));
+                }
+            }
+
+            // Apply World Flags
+            if (!string.IsNullOrEmpty(effect.SetWorldFlag))
+            {
+                context.SetFlag(effect.SetWorldFlag, effect.WorldFlagValue);
+            }
+        }
     }
 }

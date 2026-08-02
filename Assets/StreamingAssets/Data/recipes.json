@@ -1,1 +1,72 @@
-[]
+[
+  {
+    "id": "purify_water",
+    "recipeName": "Purify Water",
+    "ingredients": [
+      { "itemId": "dirty_water", "amount": 2 },
+      { "itemId": "water_filter", "amount": 1 }
+    ],
+    "resultItemId": "clean_water",
+    "resultAmount": 2,
+    "craftingTimeHours": 0.5,
+    "requiredStationId": "water_purifier"
+  },
+  {
+    "id": "craft_bandage",
+    "recipeName": "Craft Bandage",
+    "ingredients": [
+      { "itemId": "scrap_metal", "amount": 2 }
+    ],
+    "resultItemId": "bandage",
+    "resultAmount": 1,
+    "craftingTimeHours": 0.25,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "refuel_heater",
+    "recipeName": "Refuel Heater",
+    "ingredients": [
+      { "itemId": "fuel_canister", "amount": 1 }
+    ],
+    "resultItemId": "fuel_canister",
+    "resultAmount": 0,
+    "craftingTimeHours": 0.1,
+    "requiredStationId": "heater"
+  },
+  {
+    "id": "patch_hazmat",
+    "recipeName": "Patch Hazmat Suit",
+    "ingredients": [
+      { "itemId": "scrap_metal", "amount": 5 },
+      { "itemId": "bandage", "amount": 2 }
+    ],
+    "resultItemId": "hazmat_suit",
+    "resultAmount": 1,
+    "craftingTimeHours": 2.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "cook_beans",
+    "recipeName": "Cook Beans",
+    "ingredients": [
+      { "itemId": "canned_beans", "amount": 1 },
+      { "itemId": "fuel_canister", "amount": 1 }
+    ],
+    "resultItemId": "canned_beans",
+    "resultAmount": 1,
+    "craftingTimeHours": 0.2,
+    "requiredStationId": "stove"
+  },
+  {
+    "id": "assemble_gas_mask",
+    "recipeName": "Assemble Gas Mask",
+    "ingredients": [
+      { "itemId": "scrap_metal", "amount": 3 },
+      { "itemId": "water_filter", "amount": 1 }
+    ],
+    "resultItemId": "gas_mask",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.5,
+    "requiredStationId": "workbench"
+  }
+]

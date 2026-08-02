@@ -14,6 +14,17 @@ namespace AtomicWar._Game.Data
         public List<GameEvent> events = new List<GameEvent>();
 
         /// <summary>Look up a game event by its snake_case id.</summary>
-        public GameEvent GetById(string id) => throw new System.NotImplementedException();
+        public GameEvent GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id) || events == null) return null;
+            for (int i = 0; i < events.Count; i++)
+            {
+                if (events[i] != null && events[i].id == id)
+                {
+                    return events[i];
+                }
+            }
+            return null;
+        }
     }
 }

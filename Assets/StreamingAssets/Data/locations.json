@@ -1,1 +1,34 @@
-[]
+[
+  {
+    "id": "abandoned_hospital",
+    "displayName": "Abandoned Hospital",
+    "description": "Collapsed wing of a regional hospital. Medical supplies may remain in sealed rooms.",
+    "dangerLevel": 6,
+    "travelHours": 2.0,
+    "baseRadsPerHour": 35
+  },
+  {
+    "id": "rural_gas_station",
+    "displayName": "Rural Gas Station",
+    "description": "A stripped roadside station. Fuel drums and scrap metal scattered across the lot.",
+    "dangerLevel": 3,
+    "travelHours": 1.5,
+    "baseRadsPerHour": 15
+  },
+  {
+    "id": "suburban_house",
+    "displayName": "Suburban House",
+    "description": "Intact house in a low-density neighborhood. Pantry, tools, maybe a working stove.",
+    "dangerLevel": 2,
+    "travelHours": 1.0,
+    "baseRadsPerHour": 10
+  },
+  {
+    "id": "government_bunker",
+    "displayName": "Government Bunker",
+    "description": "Sealed military installation. High-value supplies behind heavy doors.",
+    "dangerLevel": 8,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 60
+  }
+]

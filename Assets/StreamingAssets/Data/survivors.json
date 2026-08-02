@@ -1,1 +1,23 @@
-[]
+[
+  {
+    "id": "elena_vasquez",
+    "displayName": "Elena Vasquez",
+    "profession": "Paramedic",
+    "bio": "Former field medic who ran triage in the first hours after the exchange. She doesn't talk about what she saw, but her hands never shake.",
+    "baseHealth": 100
+  },
+  {
+    "id": "marcus_olejnik",
+    "displayName": "Marcus Olejnik",
+    "profession": "Mechanical Engineer",
+    "bio": "Kept the municipal water plant running for three weeks after the grid fell. Came to the bunker when the last pipe froze.",
+    "baseHealth": 90
+  },
+  {
+    "id": "suki_tanaka",
+    "displayName": "Suki Tanaka",
+    "profession": "Farmer",
+    "bio": "Her family's greenhouse survived the initial blast. She knows which soil still grows and which poisons the roots.",
+    "baseHealth": 95
+  }
+]
