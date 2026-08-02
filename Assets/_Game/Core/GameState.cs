@@ -1,3 +1,5 @@
+using System;
+
 namespace AtomicWar._Game.Core
 {
     /// <summary>
@@ -17,12 +19,29 @@ namespace AtomicWar._Game.Core
     /// the dedicated systems; this is the state they mutate and the SaveSystem
     /// persists.
     /// </summary>
-    [System.Serializable]
+    [Serializable]
     public class GameState
     {
-        public GamePhase Phase { get; set; } = GamePhase.MainMenu;
+        private GamePhase _phase = GamePhase.MainMenu;
+
+        public GamePhase Phase
+        {
+            get => _phase;
+            set
+            {
+                if (_phase != value)
+                {
+                    _phase = value;
+                    OnPhaseChanged?.Invoke(value);
+                }
+            }
+        }
+
         public int Day { get; set; }
         public bool IsPaused { get; set; }
+
+        /// <summary>Fired when Phase actually changes (not on redundant sets).</summary>
+        public event Action<GamePhase> OnPhaseChanged;
 
         /// <summary>Reset to a fresh new-game state.</summary>
         public void Reset() => throw new System.NotImplementedException();
