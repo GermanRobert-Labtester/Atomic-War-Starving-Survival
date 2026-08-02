@@ -40,6 +40,7 @@ namespace AtomicWar._Game.Survivors
 
         public bool HasAcuteRadiationSickness;
         public bool HasChronicIllness;
+        public bool HasFullSuitEquipped;
 
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
