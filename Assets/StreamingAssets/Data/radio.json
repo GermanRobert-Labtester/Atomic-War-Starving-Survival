@@ -1,1 +1,62 @@
-[]
+[
+  {
+    "id": "radio_welcome",
+    "minDay": 1,
+    "maxDay": 3,
+    "message": "This is Emergency Broadcast Station 7. Remain indoors. Await further instructions. Do not drink untreated water."
+  },
+  {
+    "id": "radio_weather_warning",
+    "minDay": 2,
+    "maxDay": 10,
+    "message": "Fallout storm system moving east. Expect elevated radiation levels for the next 12 hours. Seal all exterior vents."
+  },
+  {
+    "id": "radio_military_coords",
+    "minDay": 5,
+    "maxDay": 15,
+    "message": "Military supply cache at grid reference 4-7-North. Approach with caution. Heavy contamination reported in the area."
+  },
+  {
+    "id": "radio_survivor_signal",
+    "minDay": 7,
+    "maxDay": 20,
+    "message": "Mayday, mayday. This is survivor group Delta. We are trapped in the basement of the old hospital. Please respond."
+  },
+  {
+    "id": "radio_fallout_update",
+    "minDay": 10,
+    "maxDay": 30,
+    "message": "Radiation levels continue to rise in the northern sectors. Evacuation is no longer recommended. Shelter in place."
+  },
+  {
+    "id": "radio_trader_network",
+    "minDay": 12,
+    "maxDay": 40,
+    "message": "Trading post established at the old gas station. Bring supplies. Fair dealing guaranteed. Look for the red flag."
+  },
+  {
+    "id": "radio_animal_migration",
+    "minDay": 15,
+    "maxDay": 35,
+    "message": "Large animal migration observed heading south. Likely fleeing contaminated zones. Do not approach. They may be aggressive."
+  },
+  {
+    "id": "radio_water_source",
+    "minDay": 20,
+    "maxDay": 50,
+    "message": "Clean water source confirmed at the old well, two miles east of the river crossing. Test before drinking."
+  },
+  {
+    "id": "radio_ash_warning",
+    "minDay": 25,
+    "maxDay": 60,
+    "message": "Heavy ash fall expected. Visibility will drop to near zero. Air filtration systems should be checked and replaced if needed."
+  },
+  {
+    "id": "radio_last_broadcast",
+    "minDay": 80,
+    "maxDay": 90,
+    "message": "This is the final scheduled broadcast from Station 7. If you can hear this, you have survived the worst. Good luck."
+  }
+]

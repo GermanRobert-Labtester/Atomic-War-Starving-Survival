@@ -1,10 +1,20 @@
 [
   {
+    "id": "craft_bandage",
+    "recipeName": "Craft Bandage",
+    "ingredients": [
+      { "itemId": "cloth", "amount": 2 }
+    ],
+    "resultItemId": "bandage",
+    "resultAmount": 1,
+    "craftingTimeHours": 0.5,
+    "requiredStationId": "workbench"
+  },
+  {
     "id": "purify_water",
     "recipeName": "Purify Water",
     "ingredients": [
-      { "itemId": "dirty_water", "amount": 2 },
-      { "itemId": "water_filter", "amount": 1 }
+      { "itemId": "irradiated_water", "amount": 2 }
     ],
     "resultItemId": "clean_water",
     "resultAmount": 2,
@@ -12,59 +22,123 @@
     "requiredStationId": "water_purifier"
   },
   {
-    "id": "craft_bandage",
-    "recipeName": "Craft Bandage",
+    "id": "craft_anti_rad",
+    "recipeName": "Craft Anti-Rad",
     "ingredients": [
-      { "itemId": "scrap_metal", "amount": 2 }
+      { "itemId": "iodine_pills", "amount": 1 },
+      { "itemId": "clean_water", "amount": 1 }
     ],
-    "resultItemId": "bandage",
+    "resultItemId": "anti_rad",
     "resultAmount": 1,
-    "craftingTimeHours": 0.25,
+    "craftingTimeHours": 1.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_water_filter",
+    "recipeName": "Craft Water Filter",
+    "ingredients": [
+      { "itemId": "cloth", "amount": 1 },
+      { "itemId": "scrap_metal", "amount": 1 }
+    ],
+    "resultItemId": "water_filter",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_air_filter",
+    "recipeName": "Craft Air Filter",
+    "ingredients": [
+      { "itemId": "cloth", "amount": 2 },
+      { "itemId": "scrap_metal", "amount": 1 }
+    ],
+    "resultItemId": "air_filter",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "cook_meat",
+    "recipeName": "Cook Meat",
+    "ingredients": [
+      { "itemId": "raw_meat", "amount": 1 },
+      { "itemId": "fuel", "amount": 1 }
+    ],
+    "resultItemId": "cooked_meat",
+    "resultAmount": 1,
+    "craftingTimeHours": 0.5,
+    "requiredStationId": "stove"
+  },
+  {
+    "id": "boil_water",
+    "recipeName": "Boil Water",
+    "ingredients": [
+      { "itemId": "dirty_water", "amount": 2 },
+      { "itemId": "fuel", "amount": 1 }
+    ],
+    "resultItemId": "clean_water",
+    "resultAmount": 1,
+    "craftingTimeHours": 0.3,
+    "requiredStationId": "stove"
+  },
+  {
+    "id": "craft_hazmat_patch",
+    "recipeName": "Patch Hazmat Suit",
+    "ingredients": [
+      { "itemId": "cloth", "amount": 3 },
+      { "itemId": "scrap_metal", "amount": 2 },
+      { "itemId": "water_filter", "amount": 1 }
+    ],
+    "resultItemId": "hazmat_suit",
+    "resultAmount": 1,
+    "craftingTimeHours": 3.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_gas_mask",
+    "recipeName": "Craft Gas Mask",
+    "ingredients": [
+      { "itemId": "cloth", "amount": 2 },
+      { "itemId": "water_filter", "amount": 1 },
+      { "itemId": "scrap_metal", "amount": 1 }
+    ],
+    "resultItemId": "gas_mask",
+    "resultAmount": 1,
+    "craftingTimeHours": 2.0,
     "requiredStationId": "workbench"
   },
   {
     "id": "refuel_heater",
     "recipeName": "Refuel Heater",
     "ingredients": [
-      { "itemId": "fuel_canister", "amount": 1 }
+      { "itemId": "fuel", "amount": 3 }
     ],
-    "resultItemId": "fuel_canister",
+    "resultItemId": "fuel",
     "resultAmount": 0,
     "craftingTimeHours": 0.1,
     "requiredStationId": "heater"
   },
   {
-    "id": "patch_hazmat",
-    "recipeName": "Patch Hazmat Suit",
+    "id": "craft_dosimeter",
+    "recipeName": "Craft Dosimeter",
     "ingredients": [
-      { "itemId": "scrap_metal", "amount": 5 },
-      { "itemId": "bandage", "amount": 2 }
+      { "itemId": "scrap_metal", "amount": 3 },
+      { "itemId": "cloth", "amount": 1 }
     ],
-    "resultItemId": "hazmat_suit",
+    "resultItemId": "dosimeter",
     "resultAmount": 1,
     "craftingTimeHours": 2.0,
     "requiredStationId": "workbench"
   },
   {
-    "id": "cook_beans",
-    "recipeName": "Cook Beans",
+    "id": "craft_medical_kit",
+    "recipeName": "Craft Medical Kit",
     "ingredients": [
-      { "itemId": "canned_beans", "amount": 1 },
-      { "itemId": "fuel_canister", "amount": 1 }
+      { "itemId": "bandage", "amount": 3 },
+      { "itemId": "anti_rad", "amount": 1 },
+      { "itemId": "iodine_pills", "amount": 2 }
     ],
-    "resultItemId": "canned_beans",
-    "resultAmount": 1,
-    "craftingTimeHours": 0.2,
-    "requiredStationId": "stove"
-  },
-  {
-    "id": "assemble_gas_mask",
-    "recipeName": "Assemble Gas Mask",
-    "ingredients": [
-      { "itemId": "scrap_metal", "amount": 3 },
-      { "itemId": "water_filter", "amount": 1 }
-    ],
-    "resultItemId": "gas_mask",
+    "resultItemId": "medical_kit",
     "resultAmount": 1,
     "craftingTimeHours": 1.5,
     "requiredStationId": "workbench"

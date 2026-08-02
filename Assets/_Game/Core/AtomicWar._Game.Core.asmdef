@@ -6,7 +6,12 @@
         "AtomicWar._Game.Shelter",
         "AtomicWar._Game.Inventory",
         "AtomicWar._Game.Radiation",
-        "AtomicWar._Game.Environment"
+        "AtomicWar._Game.Environment",
+        "AtomicWar._Game.AI",
+        "AtomicWar._Game.Events",
+        "AtomicWar._Game.Data",
+        "AtomicWar._Game.Crafting",
+        "AtomicWar._Game.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -33,5 +33,145 @@
     "bodyText": "The stored water tastes metallic. A quick check with the dosimeter confirms it: the supply is hot.",
     "weight": 2.0,
     "minDay": 2
+  },
+  {
+    "id": "stranger_sickness",
+    "title": "Sick Stranger",
+    "bodyText": "A coughing figure stumbles into the airlock. Their skin is mottled with radiation burns. They collapse before speaking.",
+    "weight": 1.5,
+    "minDay": 4
+  },
+  {
+    "id": "generator_sputter",
+    "title": "Generator Failure",
+    "bodyText": "The lights flicker and die. The generator coughs once, then silence. Cold seeps in immediately.",
+    "weight": 2.0,
+    "minDay": 3
+  },
+  {
+    "id": "rat_infestation",
+    "title": "Rats in the Stores",
+    "bodyText": "Droppings in the food crate. Something has been gnawing at the ration packs. The scratching comes from the walls.",
+    "weight": 1.5,
+    "minDay": 6
+  },
+  {
+    "id": "morale_crisis",
+    "title": "Shouting in the Dark",
+    "bodyText": "Raised voices echo through the bunker. Two survivors are arguing over the last iodine pill. The tension is reaching a breaking point.",
+    "weight": 1.0,
+    "minDay": 8
+  },
+  {
+    "id": "supply_drop_rumor",
+    "title": "Supply Drop Rumor",
+    "bodyText": "A crackling radio message mentions a military supply drop three miles north. Could be real. Could be a trap.",
+    "weight": 1.0,
+    "minDay": 10
+  },
+  {
+    "id": "hatch_breach",
+    "title": "Hatch Seal Breach",
+    "bodyText": "A high-pitched whistle from the outer hatch. The rubber gasket has cracked. Fallout-laced air seeps in.",
+    "weight": 2.0,
+    "minDay": 4
+  },
+  {
+    "id": "water_shortage",
+    "title": "Dry Pipes",
+    "bodyText": "The water barrel is nearly empty. Rationing has begun, but thirst is already setting in. Desperation grows.",
+    "weight": 2.5,
+    "minDay": 5
+  },
+  {
+    "id": "heater_malfunction",
+    "title": "Heater Overheat",
+    "bodyText": "The heater unit glows red-hot. A acrid smell fills the shelter. Someone needs to shut it down before it catches fire.",
+    "weight": 1.5,
+    "minDay": 6
+  },
+  {
+    "id": "dead_animal",
+    "title": "Dead Dog Outside",
+    "bodyText": "A stray dog lies dead near the airlock, fur patchy, ribs showing. Fallout got it. A reminder of what waits outside.",
+    "weight": 0.8,
+    "minDay": 3
+  },
+  {
+    "id": "cramped_quarters",
+    "title": "Cabin Fever",
+    "bodyText": "The walls feel closer every day. Someone hasn't spoken in three days. Another paces endlessly. The bunker was not built for this many people.",
+    "weight": 1.0,
+    "minDay": 12
+  },
+  {
+    "id": "found_diary",
+    "title": "Old Diary",
+    "bodyText": "Behind a loose panel, a diary from the bunker's original occupant. The last entry is dated three weeks after the bombs. It does not end well.",
+    "weight": 0.5,
+    "minDay": 8
+  },
+  {
+    "id": "ash_pileup",
+    "title": "Ash Accumulation",
+    "bodyText": "Radioactive ash has piled up against the air intake. If it's not cleared, the filters will clog within hours.",
+    "weight": 2.0,
+    "minDay": 7
+  },
+  {
+    "id": "trader_offers_medicine",
+    "title": "Medicine Trade",
+    "bodyText": "A trader at the gate claims to have anti-rad medication. They want food in return. The deal feels too good.",
+    "weight": 1.0,
+    "minDay": 10
+  },
+  {
+    "id": "power_cell_discovery",
+    "title": "Hidden Power Cell",
+    "bodyText": "While clearing debris, a sealed power cell is found behind a wall panel. Still charged. Could power the radio for weeks.",
+    "weight": 0.7,
+    "minDay": 15
+  },
+  {
+    "id": "night_terrors",
+    "title": "Night Terrors",
+    "bodyText": "Someone wakes screaming. They dreamed of the flash, the heat, the silence after. No one sleeps well anymore.",
+    "weight": 1.0,
+    "minDay": 5
+  },
+  {
+    "id": "filter_degradation",
+    "title": "Filter Wear",
+    "bodyText": "The air filter's indicator has dropped into the yellow. Replacement is needed soon, or the air quality will suffer.",
+    "weight": 2.0,
+    "minDay": 10
+  },
+  {
+    "id": "lucky_find",
+    "title": "Lucky Find",
+    "bodyText": "A sealed crate in the corner, overlooked until now. Inside: canned food, a water filter, and a working flashlight.",
+    "weight": 0.5,
+    "minDay": 3
+  },
+  {
+    "id": "radiation_leak",
+    "title": "Radiation Spike",
+    "bodyText": "The dosimeter alarm triggers. Radiation levels inside the bunker have spiked. Something is leaking.",
+    "weight": 2.0,
+    "minDay": 8
+  },
+  {
+    "id": "morale_boost",
+    "title": "Old Music",
+    "bodyText": "Someone finds a working music player with a single battered disc. For a few minutes, the bunker feels almost human again.",
+    "weight": 0.5,
+    "minDay": 14
+  },
+  {
+    "id": "structural_damage",
+    "title": "Wall Crack",
+    "bodyText": "A hairline crack has appeared in the bunker wall. Water seeps through when it rains. If it widens, the shelter is compromised.",
+    "weight": 1.5,
+    "minDay": 12
   }
 ]

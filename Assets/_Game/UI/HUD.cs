@@ -92,5 +92,18 @@ namespace AtomicWar._Game.UI
             EnsureWidgetReferences();
             if (_eventModalUi != null) _eventModalUi.Bind(runner);
         }
+
+        /// <summary>
+        /// Poll-friendly update: call from GameBootstrap.Update to push environment
+        /// data (time, weather, season) to the EnvironmentStatusHUD widget each frame.
+        /// </summary>
+        public void Tick(int day, float hour, string weatherName, string seasonName)
+        {
+            EnsureWidgetReferences();
+            if (_environmentStatusHud != null)
+            {
+                _environmentStatusHud.SetEnvironment(day, hour, weatherName, seasonName);
+            }
+        }
     }
 }
