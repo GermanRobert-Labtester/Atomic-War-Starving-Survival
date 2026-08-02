@@ -7,6 +7,7 @@ namespace AtomicWar._Game.Survivors
     public enum SurvivorStatus
     {
         AcuteRadiationSickness,
-        ChronicIllness
+        ChronicIllness,
+        RadResistance
     }
 }

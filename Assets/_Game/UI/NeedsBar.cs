@@ -1,17 +1,142 @@
+using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.UI
 {
+    [System.Serializable]
+    public class NeedBarData
+    {
+        public string NeedId;
+        public string DisplayName;
+        public float CurrentValue;
+        public float MaxValue = 100f;
+        public bool IsCritical;
+        public Color NormalColor = new Color(0.2f, 0.8f, 0.3f);
+        public Color CriticalColor = new Color(0.9f, 0.2f, 0.2f);
+    }
+
     /// <summary>
-    /// Renders a survivor's need values (hunger, thirst, fatigue, warmth, morale,
-    /// health) as bars. Refreshed by the HUD when need events fire. Thin MonoBehaviour.
+    /// Renders a survivor's 7 need values (hunger, thirst, fatigue, warmth, morale,
+    /// health, radiation) as progress bars. Supports critical color-shifts, pulse triggers,
+    /// and raw number debug overlays. Event-driven only.
     /// </summary>
     public class NeedsBar : MonoBehaviour
     {
-        [SerializeField] private RectTransform _barRoot;
+        [SerializeField] private bool _showRawValues = false;
 
-        /// <summary>Update all bars from a needs snapshot.</summary>
-        public void SetNeeds(Needs needs) => throw new System.NotImplementedException();
+        private readonly Dictionary<string, NeedBarData> _needBars = new Dictionary<string, NeedBarData>();
+        private readonly Dictionary<string, float> _pulseTimers = new Dictionary<string, float>();
+
+        public bool ShowRawValues => _showRawValues;
+        public IReadOnlyDictionary<string, NeedBarData> NeedBars => _needBars;
+
+        private void Awake()
+        {
+            EnsureInitialized();
+        }
+
+        public void EnsureInitialized()
+        {
+            if (_needBars.Count == 0)
+            {
+                InitializeDefaultBars();
+            }
+        }
+
+        public void InitializeDefaultBars()
+        {
+            _needBars.Clear();
+            AddBar("hunger", "Hunger", 0f, normal: new Color(0.8f, 0.6f, 0.2f));
+            AddBar("thirst", "Thirst", 0f, normal: new Color(0.2f, 0.6f, 0.9f));
+            AddBar("fatigue", "Fatigue", 0f, normal: new Color(0.6f, 0.4f, 0.8f));
+            AddBar("warmth", "Warmth", 100f, normal: new Color(0.9f, 0.5f, 0.2f));
+            AddBar("morale", "Morale", 100f, normal: new Color(0.2f, 0.8f, 0.4f));
+            AddBar("health", "Health", 100f, normal: new Color(0.9f, 0.3f, 0.3f));
+            AddBar("radiation", "Radiation", 0f, normal: new Color(0.3f, 0.9f, 0.3f));
+        }
+
+        private void AddBar(string id, string name, float initialVal, Color normal)
+        {
+            _needBars[id] = new NeedBarData
+            {
+                NeedId = id,
+                DisplayName = name,
+                CurrentValue = initialVal,
+                NormalColor = normal,
+                CriticalColor = new Color(0.95f, 0.15f, 0.15f)
+            };
+        }
+
+        public void SetNeeds(Needs needs, float health = 100f, float radiation = 0f)
+        {
+            EnsureInitialized();
+            if (needs == null) return;
+            UpdateNeed("hunger", needs.Hunger);
+            UpdateNeed("thirst", needs.Thirst);
+            UpdateNeed("fatigue", needs.Fatigue);
+            UpdateNeed("warmth", needs.Warmth);
+            UpdateNeed("morale", needs.Morale);
+            UpdateNeed("health", health);
+            UpdateNeed("radiation", radiation);
+        }
+
+        public void UpdateNeed(string needId, float value)
+        {
+            EnsureInitialized();
+            if (!_needBars.TryGetValue(needId.ToLowerInvariant(), out var data)) return;
+
+            data.CurrentValue = Mathf.Clamp(value, 0f, data.MaxValue);
+            data.IsCritical = CheckIsCritical(needId.ToLowerInvariant(), data.CurrentValue);
+            PulseOnEvent(needId);
+        }
+
+        public void PulseOnEvent(string needId)
+        {
+            _pulseTimers[needId.ToLowerInvariant()] = 0.5f;
+        }
+
+        public void SetShowRawValues(bool show)
+        {
+            _showRawValues = show;
+        }
+
+        private static bool CheckIsCritical(string needId, float val)
+        {
+            switch (needId)
+            {
+                case "hunger":
+                case "thirst":
+                case "fatigue":
+                    return val >= 80f;
+                case "warmth":
+                case "morale":
+                case "health":
+                    return val <= 20f;
+                case "radiation":
+                    return val >= 60f;
+                default:
+                    return false;
+            }
+        }
+
+        public Color GetActiveColor(string needId)
+        {
+            EnsureInitialized();
+            if (_needBars.TryGetValue(needId.ToLowerInvariant(), out var data))
+            {
+                return data.IsCritical ? data.CriticalColor : data.NormalColor;
+            }
+            return Color.white;
+        }
+
+        public float GetPulse(string needId)
+        {
+            if (_pulseTimers.TryGetValue(needId.ToLowerInvariant(), out float t) && t > 0f)
+            {
+                return t;
+            }
+            return 0f;
+        }
     }
 }

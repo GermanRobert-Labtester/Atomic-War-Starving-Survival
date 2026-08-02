@@ -1,0 +1,28 @@
+{
+    "name": "AtomicWar._Game.Editor",
+    "rootNamespace": "AtomicWar._Game.Editor",
+    "references": [
+        "AtomicWar._Game.Survivors",
+        "AtomicWar._Game.Shelter",
+        "AtomicWar._Game.Inventory",
+        "AtomicWar._Game.Radiation",
+        "AtomicWar._Game.Environment",
+        "AtomicWar._Game.AI",
+        "AtomicWar._Game.Events",
+        "AtomicWar._Game.UI",
+        "AtomicWar._Game.Core",
+        "AtomicWar._Game.Crafting",
+        "AtomicWar._Game.Data"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

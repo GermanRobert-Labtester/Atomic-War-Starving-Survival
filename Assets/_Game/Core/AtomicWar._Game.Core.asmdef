@@ -1,0 +1,20 @@
+{
+    "name": "AtomicWar._Game.Core",
+    "rootNamespace": "AtomicWar._Game.Core",
+    "references": [
+        "AtomicWar._Game.Survivors",
+        "AtomicWar._Game.Shelter",
+        "AtomicWar._Game.Inventory",
+        "AtomicWar._Game.Radiation",
+        "AtomicWar._Game.Environment"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

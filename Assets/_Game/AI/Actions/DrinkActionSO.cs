@@ -27,7 +27,7 @@ namespace AtomicWar._Game.AI.Actions
                 for (int i = 0; i < context.Inventory.Slots.Count; i++)
                 {
                     var slot = context.Inventory.Slots[i];
-                    if (slot != null && slot.Item != null && (slot.Item.id == WaterItemId || slot.Item.thirstRestored > 0f))
+                    if (slot != null && slot.Item != null && (slot.Item.id == WaterItemId || slot.Item.thirstRestore > 0f))
                     {
                         hasWater = true;
                         break;

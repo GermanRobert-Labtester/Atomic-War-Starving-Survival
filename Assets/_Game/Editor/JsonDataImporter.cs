@@ -232,14 +232,19 @@ namespace AtomicWar._Game.Editor
             public string id;
             public string displayName;
             public string description;
-            public string itemType;
-            public int    stackSize = 1;
+            public string type;
+            public int    stackMax = 1;
             public float  weight;
-            public float  hungerRestored;
-            public float  thirstRestored;
-            public float  healthRestored;
-            public float  moraleRestored;
-            public float  radiationRemoved;
+            public float  radProtection;
+            public float  durability;
+            public float  contamination;
+            public float  hungerRestore;
+            public float  thirstRestore;
+            public float  healthEffect;
+            public float  radCleanse;
+            public float  moraleEffect;
+            public bool   isEquipable;
+            public string equipSlot;
         }
 
         [Serializable]
@@ -360,10 +365,14 @@ namespace AtomicWar._Game.Editor
                 case ItemJson item:
                     if (string.IsNullOrEmpty(item.displayName))
                         errors.Add($"[{typeName}:{id}] displayName is null or empty");
-                    if (!Enum.TryParse<ItemType>(item.itemType, true, out _))
-                        errors.Add($"[{typeName}:{id}] invalid itemType '{item.itemType}' (valid: {string.Join(", ", Enum.GetNames(typeof(ItemType)))})");
-                    if (item.stackSize < 1)
-                        errors.Add($"[{typeName}:{id}] stackSize must be >= 1");
+                    if (!Enum.TryParse<ItemType>(item.type, true, out _))
+                        errors.Add($"[{typeName}:{id}] invalid type '{item.type}' (valid: {string.Join(", ", Enum.GetNames(typeof(ItemType)))})");
+                    if (item.stackMax < 1)
+                        errors.Add($"[{typeName}:{id}] stackMax must be >= 1");
+                    if (item.contamination < 0f || item.contamination > 1f)
+                        errors.Add($"[{typeName}:{id}] contamination must be within 0..1");
+                    if (!string.IsNullOrEmpty(item.equipSlot) && !Enum.TryParse<EquipSlot>(item.equipSlot, true, out _))
+                        errors.Add($"[{typeName}:{id}] invalid equipSlot '{item.equipSlot}' (valid: {string.Join(", ", Enum.GetNames(typeof(EquipSlot)))})");
                     break;
 
                 case RecipeJson recipe:
@@ -446,14 +455,19 @@ namespace AtomicWar._Game.Editor
                 so.id              = json.id;
                 so.displayName     = json.displayName;
                 so.description     = json.description;
-                so.itemType        = Enum.Parse<ItemType>(json.itemType, true);
-                so.stackSize       = json.stackSize;
+                so.type            = Enum.Parse<ItemType>(json.type, true);
+                so.stackMax        = json.stackMax;
                 so.weight          = json.weight;
-                so.hungerRestored  = json.hungerRestored;
-                so.thirstRestored  = json.thirstRestored;
-                so.healthRestored  = json.healthRestored;
-                so.moraleRestored  = json.moraleRestored;
-                so.radiationRemoved = json.radiationRemoved;
+                so.radProtection   = json.radProtection;
+                so.durability      = json.durability;
+                so.contamination   = json.contamination;
+                so.hungerRestore   = json.hungerRestore;
+                so.thirstRestore   = json.thirstRestore;
+                so.healthEffect    = json.healthEffect;
+                so.radCleanse      = json.radCleanse;
+                so.moraleEffect    = json.moraleEffect;
+                so.isEquipable     = json.isEquipable;
+                so.equipSlot       = string.IsNullOrEmpty(json.equipSlot) ? EquipSlot.None : Enum.Parse<EquipSlot>(json.equipSlot, true);
                 EditorUtility.SetDirty(so);
                 map[json.id] = so;
             }

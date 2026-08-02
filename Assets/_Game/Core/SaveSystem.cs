@@ -272,9 +272,9 @@ namespace AtomicWar._Game.Core
             return data;
         }
 
-        private static SurvivorSave CaptureSurvivor(Survivor sv)
+        private SurvivorSave CaptureSurvivor(Survivor sv)
         {
-            return new SurvivorSave
+            var save = new SurvivorSave
             {
                 Id = sv.Id,
                 DisplayName = sv.DisplayName,
@@ -298,6 +298,18 @@ namespace AtomicWar._Game.Core
                 RadResistanceHoursRemaining = sv.RadResistanceHoursRemaining,
                 HasFullSuitEquipped = sv.HasFullSuitEquipped
             };
+
+            if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
+            {
+                var dos = _radiationSystem.GetDosimeter(sv.Id);
+                if (dos != null)
+                {
+                    save.DosimeterRate = dos.CurrentRate;
+                    save.DosimeterRecent = dos.RecentExposure;
+                }
+            }
+
+            return save;
         }
 
         // -----------------------------------------------------------------

@@ -110,7 +110,7 @@ namespace AtomicWar.Tests.EditMode
         /// items in inventory, world flags set.
         /// </summary>
         private (GameState gs, WeatherSystem ws, TemperatureSystem ts, NeedsSystem ns,
-                 RadiationSystem rs, Shelter.Shelter shelter, Survivor survivor,
+                 RadiationSystem rs, Shelter shelter, Survivor survivor,
                  Dictionary<string, ItemDefinition> items)
             BuildNastyState()
         {
@@ -151,7 +151,7 @@ namespace AtomicWar.Tests.EditMode
             dos.LifetimeDose = survivor.LifetimeRadiationExposure;
 
             // Shelter: air filter at 12%, shielding level 3, heater with fuel
-            var shelter = new Shelter.Shelter();
+            var shelter = new Shelter();
             shelter.AddModule(MakeModule("air_filtration", level: 2, filterHealth: 12f, fuel: 0f));
             shelter.AddModule(MakeModule("radiation_shielding", level: 3, filterHealth: 100f, fuel: 0f));
             shelter.AddModule(MakeModule("heater", level: 2, filterHealth: 100f, fuel: 45f));
@@ -170,7 +170,7 @@ namespace AtomicWar.Tests.EditMode
 
         private SaveSystem MakeSaveSystem(
             GameState gs, WeatherSystem ws, TemperatureSystem ts,
-            NeedsSystem ns, RadiationSystem rs, Shelter.Shelter shelter,
+            NeedsSystem ns, RadiationSystem rs, Shelter shelter,
             Survivor survivor, Dictionary<string, ItemDefinition> items)
         {
             var survivorsList = new List<Survivor> { survivor };
@@ -299,6 +299,7 @@ namespace AtomicWar.Tests.EditMode
             var (gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2) = BuildNastyState();
             survivor2.Needs.Hunger = 0f;
             var loadSys = MakeSaveSystem(gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2);
+            UnityEngine.TestTools.LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex(".*corrupt.*"));
             Assert.IsFalse(loadSys.Load("corrupt_slot"));
 
             // Fresh state should be unchanged

@@ -3,41 +3,56 @@ using UnityEngine;
 namespace AtomicWar._Game.Radiation
 {
     /// <summary>
-    /// Runtime instance of a piece of ProtectiveGear currently worn by a survivor:
-    /// the gear definition plus its remaining durability. Protection scales with
-    /// the durability fraction, so a suit at zero durability protects nothing.
-    /// Save/load safe (public fields).
+    /// Runtime instance of a piece of protective gear currently worn by a survivor,
+    /// stored as raw stats (protection, durability, degrade rate) so it can be built
+    /// from either a ProtectiveGear asset or an equipped ItemDefinition without the
+    /// Radiation assembly depending on Inventory. Protection scales with the durability
+    /// fraction, so a suit at zero durability protects nothing. Save/load safe.
     /// </summary>
     [System.Serializable]
     public class WornGear
     {
-        public ProtectiveGear Gear;
+        public float RadProtection;
+        public float MaxDurability;
         public float CurrentDurability;
+        public float DegradeRate;
 
-        /// <summary>Remaining durability as a 0..1 fraction of the gear's max durability.</summary>
+        private ProtectiveGear _gear;
+        public ProtectiveGear Gear
+        {
+            get => _gear;
+            set
+            {
+                _gear = value;
+                if (value != null)
+                {
+                    RadProtection = value.radProtection;
+                    MaxDurability = value.durability;
+                    DegradeRate = value.degradeRate;
+                }
+            }
+        }
+
+        /// <summary>Remaining durability as a 0..1 fraction of max durability.</summary>
         public float DurabilityFraction()
         {
-            if (Gear == null || Gear.durability <= 0f)
-            {
-                return 0f;
-            }
-            return Mathf.Clamp01(CurrentDurability / Gear.durability);
+            return MaxDurability > 0f ? Mathf.Clamp01(CurrentDurability / MaxDurability) : 0f;
         }
 
         /// <summary>Effective protection right now: radProtection scaled by durability fraction.</summary>
         public float EffectiveProtection()
         {
-            return Gear == null ? 0f : Mathf.Max(0f, Gear.radProtection) * DurabilityFraction();
+            return Mathf.Max(0f, RadProtection) * DurabilityFraction();
         }
 
-        /// <summary>Wear the gear down by its degradeRate over elapsed game hours (floored at 0).</summary>
+        /// <summary>Wear the gear down by its degrade rate over elapsed game hours (floored at 0).</summary>
         public void Degrade(float gameHours)
         {
-            if (Gear == null || gameHours <= 0f)
+            if (gameHours <= 0f)
             {
                 return;
             }
-            CurrentDurability = Mathf.Max(0f, CurrentDurability - Gear.degradeRate * gameHours);
+            CurrentDurability = Mathf.Max(0f, CurrentDurability - DegradeRate * gameHours);
         }
     }
 }

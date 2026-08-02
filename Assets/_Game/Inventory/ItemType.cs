@@ -8,13 +8,18 @@ namespace AtomicWar._Game.Inventory
     {
         Food,
         Water,
+        IrradiatedWater,
         Medical,
-        RadProtection,
+        AntiRad,
+        Iodine,
+        Protective,
         Tool,
-        Material,
         Fuel,
         Filter,
+        Material,
+        Trade,
         Comfort,
-        Quest
+        Quest,
+        Device
     }
 }

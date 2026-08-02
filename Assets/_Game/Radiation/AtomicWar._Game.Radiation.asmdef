@@ -2,15 +2,14 @@
     "name": "AtomicWar._Game.Radiation",
     "rootNamespace": "AtomicWar._Game.Radiation",
     "references": [
-        "AtomicWar._Game.Survivors",
-        "AtomicWar._Game.Shelter"
+        "AtomicWar._Game.Survivors"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
-    "autoReferenced": true,
+    "autoReferenced": false,
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false

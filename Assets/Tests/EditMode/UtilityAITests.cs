@@ -38,7 +38,7 @@ namespace AtomicWar.Tests.EditMode
         {
             _foodItem = ScriptableObject.CreateInstance<ItemDefinition>();
             _foodItem.id = "canned_food";
-            _foodItem.hungerRestored = 40f;
+            _foodItem.hungerRestore = 40f;
 
             _iodineItem = ScriptableObject.CreateInstance<ItemDefinition>();
             _iodineItem.id = "iodine_pills";

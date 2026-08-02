@@ -42,6 +42,11 @@ namespace AtomicWar._Game.Survivors
         public bool HasChronicIllness;
         public bool HasFullSuitEquipped;
 
+        // Temporary rad resistance (e.g. from iodine pills): timed, owned and written
+        // by AtomicWar._Game.Radiation.RadiationSystem.
+        public bool HasRadResistance;
+        public float RadResistanceHoursRemaining;
+
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
         {
@@ -49,6 +54,7 @@ namespace AtomicWar._Game.Survivors
             {
                 case SurvivorStatus.AcuteRadiationSickness: return HasAcuteRadiationSickness;
                 case SurvivorStatus.ChronicIllness: return HasChronicIllness;
+                case SurvivorStatus.RadResistance: return HasRadResistance;
                 default: return false;
             }
         }

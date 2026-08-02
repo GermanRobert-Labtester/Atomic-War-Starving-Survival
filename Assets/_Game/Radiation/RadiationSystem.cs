@@ -20,6 +20,9 @@ namespace AtomicWar._Game.Radiation
     /// Tick is pause-aware and driven with gameHours like NeedsSystem; the per-survivor
     /// zone/shielding/worn-gear inputs come from an injected hook so this system stays
     /// decoupled from FalloutMap / Inventory / Shelter (which supply the hook later).
+    ///
+    /// Iodine grants a timed RadResistance status that multiplies the dose rate by
+    /// RadResistanceFactor while active; anti-rad reduces the current dose directly.
     /// </summary>
     public class RadiationSystem
     {
@@ -29,6 +32,10 @@ namespace AtomicWar._Game.Radiation
         public const float ChronicLifetimeThreshold = 400f;
         /// <summary>Health lost per hour while current dose is at/above AcuteThreshold.</summary>
         public const float HealthLossPerHourAtAcute = 5f;
+        /// <summary>Hours of temporary rad resistance granted by iodine pills.</summary>
+        public const float IodineResistanceHours = 6f;
+        /// <summary>Exposure multiplier while rad resistance is active (0.5 = halves dose rate).</summary>
+        public const float RadResistanceFactor = 0.5f;
 
         private readonly NeedsSystem _needsSystem;
         private readonly Func<Survivor, ExposureContext> _exposureContext;
@@ -42,6 +49,8 @@ namespace AtomicWar._Game.Radiation
         public event Action<Survivor, float> OnDoseChanged;
         /// <summary>Fired once when a survivor first gains a radiation-driven status.</summary>
         public event Action<Survivor, SurvivorStatus> OnStatusGained;
+        /// <summary>Fired once when a timed radiation status (e.g. rad resistance) expires.</summary>
+        public event Action<Survivor, SurvivorStatus> OnStatusLost;
 
         public RadiationSystem(NeedsSystem needsSystem, Func<Survivor, ExposureContext> exposureContext = null)
         {
@@ -67,10 +76,10 @@ namespace AtomicWar._Game.Radiation
         /// <summary>
         /// Advance dose accumulation over elapsed game hours for all registered survivors.
         /// Pause-aware: does nothing while IsPaused. For each survivor it resolves the
-        /// exposure context via the injected hook, computes the exposure rate, degrades
-        /// worn gear, applies the dose via Expose, and updates the survivor's dosimeter.
-        /// With no hook registered, survivors receive no ambient dose — call Expose(...)
-        /// directly for scripted exposure.
+        /// exposure context via the injected hook, computes the exposure rate, applies any
+        /// active rad resistance, degrades worn gear, applies the dose via Expose, updates
+        /// the dosimeter, and advances the rad-resistance timer. With no hook registered,
+        /// survivors receive no ambient dose -- call Expose(...) directly for scripted exposure.
         /// </summary>
         public void Tick(float gameHours)
         {
@@ -93,9 +102,9 @@ namespace AtomicWar._Game.Radiation
 
                 float gearProtection = ComputeGearProtection(worn);
                 float exposurePerHour;
-                if (context != null && context.Shelter != null)
+                if (context != null && context.ShelterRadQuery != null)
                 {
-                    float interiorRads = context.Shelter.GetInteriorRadsPerHour(zone);
+                    float interiorRads = context.ShelterRadQuery(zone);
                     exposurePerHour = Mathf.Max(0f, interiorRads - gearProtection);
                 }
                 else
@@ -104,12 +113,19 @@ namespace AtomicWar._Game.Radiation
                     exposurePerHour = ComputeExposurePerHour(zone, gearProtection, shielding);
                 }
 
+                if (survivor.HasRadResistance)
+                {
+                    exposurePerHour *= RadResistanceFactor;
+                }
+
                 DegradeWornGear(worn, gameHours);
                 Expose(survivor, exposurePerHour, gameHours);
 
                 var dosimeter = GetDosimeter(survivor.Id);
                 dosimeter.Record(exposurePerHour * gameHours, gameHours);
                 dosimeter.LifetimeDose = survivor.LifetimeRadiationExposure;
+
+                TickRadResistance(survivor, gameHours);
             }
         }
 
@@ -213,11 +229,51 @@ namespace AtomicWar._Game.Radiation
             }
         }
 
-        /// <summary>Administer iodine pills to blunt thyroid uptake for a window of time.</summary>
-        public void AdministerIodine(Survivor survivor) => throw new NotImplementedException();
+        /// <summary>
+        /// Administer iodine pills: grants temporary rad resistance (a timed status that
+        /// scales the dose rate by RadResistanceFactor while active). Re-dosing tops up
+        /// the remaining window rather than stacking it.
+        /// </summary>
+        public void AdministerIodine(Survivor survivor)
+        {
+            if (survivor == null || !survivor.IsAlive)
+            {
+                return;
+            }
+            survivor.RadResistanceHoursRemaining = Mathf.Max(survivor.RadResistanceHoursRemaining, IodineResistanceHours);
+            survivor.HasRadResistance = true;
+            GrantStatus(survivor, SurvivorStatus.RadResistance);
+        }
 
-        /// <summary>Administer anti-rad medication to reduce cumulative dose.</summary>
-        public void AdministerAntiRad(Survivor survivor, float radsRemoved) => throw new NotImplementedException();
+        /// <summary>
+        /// Administer anti-rad medication: reduces the survivor's current radiation dose
+        /// (clamped at 0). Lifetime exposure is deliberately left intact -- it only ever
+        /// grows and drives chronic illness.
+        /// </summary>
+        public void AdministerAntiRad(Survivor survivor, float radsRemoved)
+        {
+            if (survivor == null || !survivor.IsAlive || radsRemoved <= 0f)
+            {
+                return;
+            }
+            survivor.RadiationDose = Mathf.Clamp(survivor.RadiationDose - radsRemoved, 0f, 100f);
+            OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
+        }
+
+        private void TickRadResistance(Survivor survivor, float gameHours)
+        {
+            if (!survivor.HasRadResistance)
+            {
+                return;
+            }
+            survivor.RadResistanceHoursRemaining -= gameHours;
+            if (survivor.RadResistanceHoursRemaining <= 0f)
+            {
+                survivor.RadResistanceHoursRemaining = 0f;
+                survivor.HasRadResistance = false;
+                OnStatusLost?.Invoke(survivor, SurvivorStatus.RadResistance);
+            }
+        }
 
         private static void DegradeWornGear(List<WornGear> worn, float gameHours)
         {
@@ -249,6 +305,10 @@ namespace AtomicWar._Game.Radiation
             else if (status == SurvivorStatus.ChronicIllness)
             {
                 survivor.HasChronicIllness = true;
+            }
+            else if (status == SurvivorStatus.RadResistance)
+            {
+                survivor.HasRadResistance = true;
             }
 
             OnStatusGained?.Invoke(survivor, status);

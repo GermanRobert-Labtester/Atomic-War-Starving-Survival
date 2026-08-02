@@ -1,0 +1,22 @@
+{
+    "name": "AtomicWar._Game.UI",
+    "rootNamespace": "AtomicWar._Game.UI",
+    "references": [
+        "AtomicWar._Game.Survivors",
+        "AtomicWar._Game.Shelter",
+        "AtomicWar._Game.Inventory",
+        "AtomicWar._Game.Radiation",
+        "AtomicWar._Game.Environment",
+        "AtomicWar._Game.Events",
+        "AtomicWar._Game.AI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

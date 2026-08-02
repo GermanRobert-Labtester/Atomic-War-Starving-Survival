@@ -28,7 +28,7 @@ namespace AtomicWar._Game.AI.Actions
                 for (int i = 0; i < context.Inventory.Slots.Count; i++)
                 {
                     var slot = context.Inventory.Slots[i];
-                    if (slot != null && slot.Item != null && (slot.Item.id == FoodItemId || slot.Item.hungerRestored > 0f))
+                    if (slot != null && slot.Item != null && (slot.Item.id == FoodItemId || slot.Item.hungerRestore > 0f))
                     {
                         hasFood = true;
                         break;
