@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 
@@ -11,6 +12,14 @@ namespace AtomicWar._Game.Radiation
     ///
     /// Health loss from acute exposure is applied through NeedsSystem.Modify so
     /// Health stays a single-writer value that always raises OnNeedChanged.
+    ///
+    /// Exposure model (per tick, per survivor):
+    ///   gearProtection   = sum of worn gear radProtection scaled by durability fraction
+    ///   effectiveAmbient = max(0, zoneRadLevel - shelterShielding)   (shielding caps ambient)
+    ///   exposurePerHour  = max(0, zoneRadLevel - gearProtection - shelterShielding)
+    /// Tick is pause-aware and driven with gameHours like NeedsSystem; the per-survivor
+    /// zone/shielding/worn-gear inputs come from an injected hook so this system stays
+    /// decoupled from FalloutMap / Inventory / Shelter (which supply the hook later).
     /// </summary>
     public class RadiationSystem
     {
@@ -22,27 +31,159 @@ namespace AtomicWar._Game.Radiation
         public const float HealthLossPerHourAtAcute = 5f;
 
         private readonly NeedsSystem _needsSystem;
+        private readonly Func<Survivor, ExposureContext> _exposureContext;
+        private readonly List<Survivor> _survivors = new List<Survivor>();
+        private readonly Dictionary<string, Dosimeter> _dosimeters = new Dictionary<string, Dosimeter>();
+
+        /// <summary>When true, Tick accumulates no dose (game paused).</summary>
+        public bool IsPaused { get; set; }
 
         /// <summary>Fired whenever a survivor's current radiation dose changes.</summary>
         public event Action<Survivor, float> OnDoseChanged;
         /// <summary>Fired once when a survivor first gains a radiation-driven status.</summary>
         public event Action<Survivor, SurvivorStatus> OnStatusGained;
 
-        public RadiationSystem(NeedsSystem needsSystem)
+        public RadiationSystem(NeedsSystem needsSystem, Func<Survivor, ExposureContext> exposureContext = null)
         {
             _needsSystem = needsSystem != null ? needsSystem : throw new ArgumentNullException(nameof(needsSystem));
+            _exposureContext = exposureContext;
+        }
+
+        /// <summary>Register a survivor so bulk Tick(gameHours) advances their dose.</summary>
+        public void Register(Survivor survivor)
+        {
+            if (survivor != null && !_survivors.Contains(survivor))
+            {
+                _survivors.Add(survivor);
+            }
+        }
+
+        /// <summary>Stop advancing a survivor's dose via bulk Tick(gameHours).</summary>
+        public void Unregister(Survivor survivor)
+        {
+            _survivors.Remove(survivor);
         }
 
         /// <summary>
-        /// Advance dose accumulation over elapsed game hours for all survivors from
-        /// ambient sources. Not yet implemented: needs a survivor registry and a
-        /// zone/contamination + worn-protection lookup (FalloutMap, Inventory),
-        /// neither of which exist yet. Call Expose(...) directly per survivor with
-        /// an already-computed rate until those systems land.
+        /// Advance dose accumulation over elapsed game hours for all registered survivors.
+        /// Pause-aware: does nothing while IsPaused. For each survivor it resolves the
+        /// exposure context via the injected hook, computes the exposure rate, degrades
+        /// worn gear, applies the dose via Expose, and updates the survivor's dosimeter.
+        /// With no hook registered, survivors receive no ambient dose — call Expose(...)
+        /// directly for scripted exposure.
         /// </summary>
-        public void Tick(float gameHours) => throw new NotImplementedException(
-            "RadiationSystem.Tick needs a survivor registry and a zone/protection " +
-            "rate lookup that don't exist yet. Call Expose(survivor, radsPerHour, hours) directly.");
+        public void Tick(float gameHours)
+        {
+            if (IsPaused || gameHours <= 0f)
+            {
+                return;
+            }
+
+            for (int i = 0; i < _survivors.Count; i++)
+            {
+                var survivor = _survivors[i];
+                if (survivor == null || !survivor.IsAlive)
+                {
+                    continue;
+                }
+
+                var context = _exposureContext != null ? _exposureContext(survivor) : null;
+                float zone = context != null ? context.ZoneRadLevel : 0f;
+                List<WornGear> worn = context != null ? context.WornGear : null;
+
+                float gearProtection = ComputeGearProtection(worn);
+                float exposurePerHour;
+                if (context != null && context.Shelter != null)
+                {
+                    float interiorRads = context.Shelter.GetInteriorRadsPerHour(zone);
+                    exposurePerHour = Mathf.Max(0f, interiorRads - gearProtection);
+                }
+                else
+                {
+                    float shielding = context != null ? context.ShelterShielding : 0f;
+                    exposurePerHour = ComputeExposurePerHour(zone, gearProtection, shielding);
+                }
+
+                DegradeWornGear(worn, gameHours);
+                Expose(survivor, exposurePerHour, gameHours);
+
+                var dosimeter = GetDosimeter(survivor.Id);
+                dosimeter.Record(exposurePerHour * gameHours, gameHours);
+                dosimeter.LifetimeDose = survivor.LifetimeRadiationExposure;
+            }
+        }
+
+        /// <summary>
+        /// Total protection from worn gear: sum of each piece's radProtection scaled by
+        /// its remaining durability fraction. A suit at zero durability contributes nothing.
+        /// </summary>
+        public static float ComputeGearProtection(IReadOnlyList<WornGear> worn)
+        {
+            if (worn == null)
+            {
+                return 0f;
+            }
+
+            float total = 0f;
+            for (int i = 0; i < worn.Count; i++)
+            {
+                var piece = worn[i];
+                if (piece != null)
+                {
+                    total += piece.EffectiveProtection();
+                }
+            }
+            return Mathf.Max(0f, total);
+        }
+
+        /// <summary>Effective ambient dose-rate after shelter shielding caps it (floored at 0).</summary>
+        public static float ComputeEffectiveAmbient(float zoneRadLevel, float shelterShielding)
+        {
+            return Mathf.Max(0f, zoneRadLevel - Mathf.Max(0f, shelterShielding));
+        }
+
+        /// <summary>
+        /// Exposure rate for a survivor: max(0, zoneRadLevel - protectionFromGear - shelterShielding).
+        /// Negative results clamp to zero.
+        /// </summary>
+        public static float ComputeExposurePerHour(float zoneRadLevel, float gearProtection, float shelterShielding)
+        {
+            return Mathf.Max(0f, zoneRadLevel - Mathf.Max(0f, gearProtection) - Mathf.Max(0f, shelterShielding));
+        }
+
+        /// <summary>
+        /// Ambient dose-rate that a set of contaminated items adds to a space (e.g. the
+        /// bunker) if brought inside. Decontaminate items (DecontaminationStation) or let
+        /// them decay to lower this before stowing them.
+        /// </summary>
+        public static float ComputeContaminationAmbient(IEnumerable<Contamination> contaminations)
+        {
+            if (contaminations == null)
+            {
+                return 0f;
+            }
+
+            float total = 0f;
+            foreach (var contamination in contaminations)
+            {
+                if (contamination != null)
+                {
+                    total += contamination.AmbientContribution();
+                }
+            }
+            return Mathf.Max(0f, total);
+        }
+
+        /// <summary>Get (creating on demand) the dosimeter read-model for a survivor.</summary>
+        public Dosimeter GetDosimeter(string survivorId)
+        {
+            if (!_dosimeters.TryGetValue(survivorId, out var dosimeter))
+            {
+                dosimeter = new Dosimeter { SurvivorId = survivorId };
+                _dosimeters[survivorId] = dosimeter;
+            }
+            return dosimeter;
+        }
 
         /// <summary>Expose a survivor to a dose rate for a number of hours.</summary>
         public void Expose(Survivor survivor, float radsPerHour, float hours)
@@ -77,6 +218,22 @@ namespace AtomicWar._Game.Radiation
 
         /// <summary>Administer anti-rad medication to reduce cumulative dose.</summary>
         public void AdministerAntiRad(Survivor survivor, float radsRemoved) => throw new NotImplementedException();
+
+        private static void DegradeWornGear(List<WornGear> worn, float gameHours)
+        {
+            if (worn == null)
+            {
+                return;
+            }
+            for (int i = 0; i < worn.Count; i++)
+            {
+                var piece = worn[i];
+                if (piece != null)
+                {
+                    piece.Degrade(gameHours);
+                }
+            }
+        }
 
         private void GrantStatus(Survivor survivor, SurvivorStatus status)
         {

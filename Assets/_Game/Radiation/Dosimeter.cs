@@ -1,20 +1,45 @@
+using UnityEngine;
+
 namespace AtomicWar._Game.Radiation
 {
     /// <summary>
-    /// Personal dosimeter reading model: cumulative dose and current dose rate.
-    /// This is the in-world device's data; the DosimeterHUD presents it.
-    /// Save/load safe.
+    /// Personal dosimeter read-model the UI (DosimeterHUD) presents: the current
+    /// dose-rate, a decaying "recent exposure" window, and the lifetime dose mirrored
+    /// from Survivor.LifetimeRadiationExposure (the authoritative, save/load-safe
+    /// value). Public fields, not properties, so JsonUtility can serialize it.
     /// </summary>
     [System.Serializable]
     public class Dosimeter
     {
-        public float CumulativeDose { get; private set; }
-        public float CurrentRate { get; private set; }
+        /// <summary>Survivor this reading belongs to.</summary>
+        public string SurvivorId;
 
-        /// <summary>Record exposure at a given rate over a number of hours.</summary>
-        public void Record(float radsPerHour, float hours) => throw new System.NotImplementedException();
+        /// <summary>Instantaneous dose-rate for the latest tick (units/hour).</summary>
+        public float CurrentRate;
 
-        /// <summary>Zero the cumulative reading (new dosimeter / reset).</summary>
-        public void Reset() => throw new System.NotImplementedException();
+        /// <summary>Decaying sum of recent exposure (a short rolling window for the UI).</summary>
+        public float RecentExposure;
+
+        /// <summary>Lifetime dose mirrored from the survivor; the survivor field is authoritative.</summary>
+        public float LifetimeDose;
+
+        /// <summary>Fraction of RecentExposure retained each recorded tick (the rest decays away).</summary>
+        public const float RecentRetention = 0.5f;
+
+        /// <summary>Record one tick of exposure: refresh the rate and fold it into the recent window.</summary>
+        public void Record(float exposureThisTick, float gameHours)
+        {
+            float clamped = Mathf.Max(0f, exposureThisTick);
+            CurrentRate = gameHours > 0f ? clamped / gameHours : 0f;
+            RecentExposure = Mathf.Max(0f, RecentExposure * RecentRetention + clamped);
+        }
+
+        /// <summary>Zero the reading (new dosimeter / reset).</summary>
+        public void Reset()
+        {
+            CurrentRate = 0f;
+            RecentExposure = 0f;
+            LifetimeDose = 0f;
+        }
     }
 }
