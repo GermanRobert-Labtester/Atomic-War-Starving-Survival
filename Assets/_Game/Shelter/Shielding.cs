@@ -1,18 +1,42 @@
+using UnityEngine;
+
 namespace AtomicWar._Game.Shelter
 {
     /// <summary>
-    /// Radiation shielding level of the bunker; attenuates incoming fallout.
-    /// Upgradeable with materials. Save/load safe.
+    /// Legacy wrapper for radiation shielding level of the shelter.
+    /// Delegates to shelter modules and maintains serializable compatibility.
     /// </summary>
     [System.Serializable]
     public class Shielding
     {
-        public int Level = 1;
+        private Shelter _shelter;
+        private int _fallbackLevel = 1;
 
-        /// <summary>Fraction of exterior radiation blocked (0..1) at the current level.</summary>
-        public float AttenuationFactor => throw new System.NotImplementedException();
+        public int Level
+        {
+            get
+            {
+                var mod = _shelter?.GetModule("radiation_shielding");
+                return mod != null ? mod.Level : _fallbackLevel;
+            }
+            set
+            {
+                _fallbackLevel = value;
+                var mod = _shelter?.GetModule("radiation_shielding");
+                if (mod != null) mod.Level = value;
+            }
+        }
 
-        /// <summary>Increase the shielding level by one.</summary>
-        public void Upgrade() => throw new System.NotImplementedException();
+        public float AttenuationFactor => Mathf.Clamp01(Level * 0.15f);
+
+        public void BindShelter(Shelter shelter)
+        {
+            _shelter = shelter;
+        }
+
+        public void Upgrade()
+        {
+            Level++;
+        }
     }
 }

@@ -1,0 +1,96 @@
+using System;
+using UnityEngine;
+using AtomicWar._Game.Shelter.Modules;
+
+namespace AtomicWar._Game.Shelter
+{
+    /// <summary>
+    /// Runtime state of an installed shelter module. Save/load safe.
+    /// Supports add/remove at runtime without null refs.
+    /// </summary>
+    [Serializable]
+    public class ShelterModuleInstance
+    {
+        public string ModuleId;
+        public int Level = 1;
+        public bool IsEnabled = true;
+        public float FilterHealth = 100f;
+        public float Fuel = 0f;
+        public float WaterConversionProgress = 0f;
+
+        [NonSerialized]
+        private ShelterModule _definition;
+
+        public ShelterModule Definition
+        {
+            get => _definition;
+            set => _definition = value;
+        }
+
+        public ShelterModuleInstance() { }
+
+        public ShelterModuleInstance(ShelterModule definition, int level = 1)
+        {
+            _definition = definition;
+            ModuleId = definition != null ? definition.ModuleId : string.Empty;
+            Level = level;
+            FilterHealth = 100f;
+            Fuel = 0f;
+            IsEnabled = true;
+        }
+
+        public ShelterModuleInstance(string moduleId, int level = 1)
+        {
+            ModuleId = moduleId;
+            Level = level;
+            FilterHealth = 100f;
+            Fuel = 0f;
+            IsEnabled = true;
+        }
+
+        public bool IsOperational => IsEnabled && Level > 0;
+
+        public void Tick(float gameHours, Shelter shelter)
+        {
+            if (!IsOperational || gameHours <= 0f) return;
+
+            if (_definition is AirFiltrationModuleSO airSO)
+            {
+                FilterHealth = Mathf.Max(0f, FilterHealth - airSO.DegradationRatePerHour * gameHours);
+            }
+            else if (_definition is HeaterModuleSO heaterSO)
+            {
+                if (Fuel > 0f)
+                {
+                    Fuel = Mathf.Max(0f, Fuel - heaterSO.FuelConsumptionRatePerHour * gameHours);
+                }
+            }
+            else if (_definition is WaterPurifierModuleSO waterSO)
+            {
+                WaterConversionProgress += gameHours;
+            }
+            else
+            {
+                // Generic degradation fallback if ModuleId matches air_filtration without explicit SO instance
+                if (ModuleId == "air_filtration")
+                {
+                    FilterHealth = Mathf.Max(0f, FilterHealth - 2f * gameHours);
+                }
+                else if (ModuleId == "heater" && Fuel > 0f)
+                {
+                    Fuel = Mathf.Max(0f, Fuel - 1f * gameHours);
+                }
+            }
+        }
+
+        public void ReplaceFilter()
+        {
+            FilterHealth = 100f;
+        }
+
+        public void AddFuel(float amount)
+        {
+            Fuel = Mathf.Max(0f, Fuel + amount);
+        }
+    }
+}

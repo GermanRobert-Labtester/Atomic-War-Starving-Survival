@@ -1,23 +1,76 @@
+using UnityEngine;
+
 namespace AtomicWar._Game.Shelter
 {
     /// <summary>
-    /// Air-filtration unit: scrubs airborne fallout from incoming air. Degrades
-    /// over time and consumes replaceable air filters; failure lets interior
-    /// contamination rise. Save/load safe.
+    /// Legacy wrapper for air filtration unit.
+    /// Delegates to shelter modules and maintains serializable compatibility.
     /// </summary>
     [System.Serializable]
     public class AirFiltration
     {
-        public float FilterHealth = 100f;
-        public bool IsPowered;
+        private Shelter _shelter;
+        private float _fallbackHealth = 100f;
+        private bool _fallbackPowered = true;
 
-        /// <summary>Current filtration efficiency (0..1) given filter health and power.</summary>
-        public float FiltrationEfficiency => throw new System.NotImplementedException();
+        public float FilterHealth
+        {
+            get
+            {
+                var mod = _shelter?.GetModule("air_filtration");
+                return mod != null ? mod.FilterHealth : _fallbackHealth;
+            }
+            set
+            {
+                _fallbackHealth = value;
+                var mod = _shelter?.GetModule("air_filtration");
+                if (mod != null) mod.FilterHealth = value;
+            }
+        }
 
-        /// <summary>Degrade the filter and update efficiency over elapsed game hours.</summary>
-        public void Tick(float gameHours) => throw new System.NotImplementedException();
+        public bool IsPowered
+        {
+            get
+            {
+                var mod = _shelter?.GetModule("air_filtration");
+                return mod != null ? mod.IsEnabled : _fallbackPowered;
+            }
+            set
+            {
+                _fallbackPowered = value;
+                var mod = _shelter?.GetModule("air_filtration");
+                if (mod != null) mod.IsEnabled = value;
+            }
+        }
 
-        /// <summary>Install a fresh air filter, restoring filter health.</summary>
-        public void ReplaceFilter() => throw new System.NotImplementedException();
+        public float FiltrationEfficiency => Mathf.Clamp01(FilterHealth / 100f);
+
+        public void BindShelter(Shelter shelter)
+        {
+            _shelter = shelter;
+        }
+
+        public void Tick(float gameHours)
+        {
+            if (_shelter != null)
+            {
+                var mod = _shelter.GetModule("air_filtration");
+                mod?.Tick(gameHours, _shelter);
+            }
+            else
+            {
+                FilterHealth = Mathf.Max(0f, FilterHealth - 2f * gameHours);
+            }
+        }
+
+        public void ReplaceFilter()
+        {
+            FilterHealth = 100f;
+            var mod = _shelter?.GetModule("air_filtration");
+            if (mod != null)
+            {
+                mod.ReplaceFilter();
+            }
+        }
     }
 }

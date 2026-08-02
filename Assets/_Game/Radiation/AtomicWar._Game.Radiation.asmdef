@@ -2,7 +2,8 @@
     "name": "AtomicWar._Game.Radiation",
     "rootNamespace": "AtomicWar._Game.Radiation",
     "references": [
-        "AtomicWar._Game.Survivors"
+        "AtomicWar._Game.Survivors",
+        "AtomicWar._Game.Shelter"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

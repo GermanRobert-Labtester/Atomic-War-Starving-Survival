@@ -1,0 +1,16 @@
+{
+    "name": "AtomicWar._Game.Shelter",
+    "rootNamespace": "AtomicWar._Game.Shelter",
+    "references": [
+        "AtomicWar._Game.Inventory"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
