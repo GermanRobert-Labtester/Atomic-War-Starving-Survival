@@ -1,0 +1,154 @@
+[
+  {
+    "assetType": "item",
+    "id": "dosimeter",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A small Soviet-era personal dosimeter pen-tube device, worn brushed aluminum casing, scuffed clip on one side, circular glass readout lens fogged with age, faint green-cyan glow emanating from the internal ionization chamber visible through the lens, hairline scratches across the barrel, fine ash dust settled in the grooves, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "geiger_counter",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A handheld Geiger counter, boxy olive-drab body with a cylindrical wand probe attached by a fraying rubber cable, analog needle dial face scratched and yellowed, red indicator needle pegged high, faint green-cyan glow pulsing from the probe tip, battered metal casing dented at corners, dust and soot caked into the seam lines, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "iodine_pills",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A small dented tin blister pack of potassium iodide tablets, military-issue, foil backing peeled at one corner, three white oval pills visible through cracked plastic bubbles, rust staining along the tin edges, surface filmed with fine grey ash dust, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "anti_rad",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A single military auto-injector syringe, matte olive polymer casing, orange safety cap cracked and taped back on, plunger mechanism slightly corroded, a murky amber-coloured liquid visible through a scratched polycarbonate window, dried residue around the needle cover, light ash film on the surface, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "gas_mask",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A Soviet-style rubber gas mask, dark charcoal grey, cracked and stiff rubber facepiece, twin circular goggle lenses scratched and yellowed, cylindrical filter canister threaded into the front port, corroded canister surface with peeling paint, frayed head straps dangling, cheek seams pulling apart with age, pale ash dust lodged in every crease, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "hazmat_suit",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A folded full-body chemical-biological protective suit, thick matte yellow-grey Tyvek-like material heavily stained with soot and grime, sealed hood collapsed on top, taped wrist seams with crumbling adhesive, multiple patches of duct tape over tears, heavy-duty rubberized booties attached at the ankles, surface blanketed in fine grey ash, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "water_filter",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A cylindrical water purification filter cartridge, dark grey compressed activated-charcoal housing, threaded plastic collar at each end, hairline cracks along the body, dark water staining and limescale rings around the base thread, small chip out of one edge, surface dusted with pale grey ash, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "air_filter",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A rectangular HEPA-style air filter panel for a shelter ventilation unit, rigid metal frame with dark compressed fibrous filtration medium, surface completely caked with layers of dark grey and black particulate matter, edges bent and slightly crushed, wire mesh backing partially detached, heavy dust loading visible as thick clumped deposits across the face, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "clean_water",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A scratched clear plastic military canteen sealed with a battered metal cap, filled with clean slightly blue-tinted water, gentle light refracting through the water creating subtle caustic highlights, condensation beads on the exterior surface, minor scuff marks and a dent on one side, faded webbing strap clip attached to the neck, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "irradiated_water",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A cracked dirty glass bottle stoppered with a rag, filled with murky grey-green contaminated water, faint green-cyan bioluminescent glow emanating from within the liquid, oily iridescent sheen on the water surface visible through the glass, dark sediment settled at the bottom, exterior surface grimy with soot and fingerprints, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "canned_food",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A dented unlabelled tin can of preserved rations, lid partially pried up revealing dark stewed contents inside, rust blooms spreading from the bottom seam, deep dents on the side walls, bare corroded steel surface where the paper label has long since disintegrated, a bent fork propped against the rim, fine ash dust settled on top and around the base, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "item",
+    "id": "fuel",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Square icon, centered object, transparent background. A dented red steel jerry can for combustible fuel, paint chipped and faded to a dull rust-tinged ochre, screw-top cap sealed with wire, fuel residue staining running down one side in dark amber streaks, deep impact dents on the front face, handle worn smooth from use, surface coated in grime and soot, pooled ash around the flat base, isolated on transparent background.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "transparent bg required, 512x512 sprite atlas icon"
+  },
+  {
+    "assetType": "location",
+    "id": "abandoned_hospital",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Wide 16:9 cross-section interior of a collapsed regional hospital wing. The ceiling has partially caved in, exposing twisted rebar and crumbled concrete slabs overhead. Broken fluorescent light fixtures dangle by wires, a few flickering with a sickly faint green-cyan radiation glow from contaminated dust motes drifting through the air. Overturned hospital gurneys lie scattered across cracked linoleum floors stained dark with old blood and grime. A nurses station in the mid-ground has its glass partition shattered, papers and manila folders strewn everywhere. In the far background, a sealed steel door remains intact, hinting at preserved medical supplies beyond. Corroded IV poles, smashed medicine cabinets with scattered pill bottles, and a toppled X-ray light board litter the corridor. Dust hangs thick in the cold half-light. Atmosphere is oppressive, claustrophobic, and irradiated.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "16:9",
+    "notes": "wide establishing shot, used as scavenge screen background"
+  },
+  {
+    "assetType": "location",
+    "id": "rural_gas_station",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Wide 16:9 ruined exterior of a stripped roadside gas station on a desolate highway. The canopy over the pump island has partially collapsed, its metal frame bent and rusted, one corner resting on the cracked asphalt. Old analog fuel pumps stand dented and looted, hoses torn free. Scattered across the forecourt are dented fuel drums, coils of rusted scrap metal, and broken auto parts. The attached service garage has its rolling door half-open and jammed, revealing a dark interior with a toppled tool cabinet and an abandoned pickup truck on a lift, tires rotted flat. Broken glass crunches along the front window line of the station convenience store, shelves stripped bare inside. Dead weeds push through asphalt cracks. A flat grey overcast sky stretches to the horizon. Ash drifts like fine snow across the lot. Atmosphere is bleak, windswept, and abandoned.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "16:9",
+    "notes": "wide establishing shot, used as scavenge screen background"
+  },
+  {
+    "assetType": "location",
+    "id": "suburban_house",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Wide 16:9 cross-section interior of a mostly intact suburban house. The living room in the foreground has a dusty sofa, a toppled bookshelf with paperback novels splayed across the floor, and a cold fireplace with ash and old charred wood. Through an open doorway, a kitchen is visible with a vintage gas stove that still appears functional, pots and pans hanging on a rack. A pantry door stands slightly ajar revealing canned goods and mason jars on wooden shelves. Faded family photographs hang crookedly on the wallpapered walls. A tool belt and hand tools hang by the side door to a small overgrown backyard glimpsed through a dirty curtained window. Thin light filters through boarded and cracked windows. Dust motes drift through the still air. The house feels like time stopped mid-afternoon years ago. Atmosphere is eerily quiet, melancholy, and surprisingly preserved.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "16:9",
+    "notes": "wide establishing shot, used as scavenge screen background"
+  },
+  {
+    "assetType": "location",
+    "id": "government_bunker",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. Wide 16:9 interior cross-section of a sealed military government bunker with extremely high radiation. The main corridor is lined with riveted steel blast walls and thick concrete, lit by intermittent emergency strip lights that pulse a sickly faint green-cyan radiation glow reflecting off pooled contaminated water on the floor. A colossal vault-style blast door dominates the far end, its locking wheel mechanism massive and corroded but intact, radiating a visible green-cyan aura from accumulated fallout. Overturned metal filing cabinets and broken communications equipment litter a command room visible through a shattered observation window to one side. Military supply crates are stacked behind heavy chain-link cages. Cracked ceramic warning placards and broken Geiger counter units hang from the walls. Pipes drip irradiated condensation that glows faintly where it pools. The ceiling is low, the air thick with dust and invisible danger. Atmosphere is suffocating, foreboding, and lethally irradiated.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "16:9",
+    "notes": "wide establishing shot, used as scavenge screen background"
+  },
+  {
+    "assetType": "survivor",
+    "id": "elena_vasquez",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. 3/4 portrait of a Latin American woman in her late 30s, neutral tired expression, hollow but composed dark eyes that have witnessed mass casualties. Short black hair tucked behind one ear, a smear of dried blood on her temple she has not bothered to clean. Wearing a torn and re-stitched olive paramedic jacket with a faded red cross patch on the left breast, collar turned up against the cold. A worn canvas field-medic satchel strap crosses her chest, small glass ampoules and a hand-labeled morphine pen visible in a breast pocket. Her jaw is set, posture straight and deliberate. Hands are out of frame, framed from mid-chest up. Ash dust settles on her shoulders. Background is shallow dark bunker wall with peeling paint, out of focus.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "3/4 portrait, dialogue box framing, 512x768 tall crop"
+  },
+  {
+    "assetType": "survivor",
+    "id": "marcus_olejnik",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. 3/4 portrait of a broad-shouldered Eastern European man in his mid-40s, neutral tired expression, deep-set grey eyes with crow's feet from years of squinting at machinery. Short salt-and-pepper stubble, close-cropped thinning hair, a healed cut across his left eyebrow. Wearing a heavy dark work jacket stained with pipe grease and mineral deposits, collar reinforced with duct tape. A cracked yellow hard-hat hangs from a clip on his belt, visible at the bottom of the frame. Worn pipe-wrench handle visible at his hip. A hand-drawn schematic folded and tucked into his front chest pocket. Posture is solid and weary, like a man who has not slept properly in weeks. Background is a shallow dark bunker wall, out of focus, condensation on cold concrete.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "3/4 portrait, dialogue box framing, 512x768 tall crop"
+  },
+  {
+    "assetType": "survivor",
+    "id": "suki_tanaka",
+    "imagePrompt": "2D hand-painted atomic-survival art, grim realism, desaturated cold palette (#0e1113, #20262b, #4b5560, #8a9099, #b98a5e, #7a2f27, #cfd6cf), charcoal and gouache texture, soft top-left light, ash and dust in the air, faint green-cyan radiation glow only where radiation is present, no text, no watermark, no logo. 3/4 portrait of a Japanese woman in her early 50s, neutral tired expression, calm watchful dark brown eyes with a quiet shrewdness. Silver-streaked black hair tied back tightly with a strip of cloth. Deep weathered skin, callused hands visible at the bottom of frame, soil worked into the creases of her knuckles. Wearing a layered cotton field shirt under a patched canvas apron with deep front pockets containing seed packets and a small folded paper with soil notes. A short pruning knife in a leather sheath at her belt. Her posture is upright and patient, the stillness of someone who understands slow growth. Background is a shallow dark bunker interior with a faint warm grow-lamp glow from off-frame left, hinting at a small indoor planting area, out of focus.",
+    "negativePrompt": "text, letters, watermark, logo, bright saturated colors, cartoon, anime, glossy plastic, modern branding, extra limbs, deformed hands",
+    "aspect": "1:1",
+    "notes": "3/4 portrait, dialogue box framing, 512x768 tall crop"
+  }
+]
