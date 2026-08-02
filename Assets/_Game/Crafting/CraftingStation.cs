@@ -1,8 +1,10 @@
+using UnityEngine;
+
 namespace AtomicWar._Game.Crafting
 {
     /// <summary>
-    /// A craft station (workbench, water still, chemistry set) that gates which
-    /// recipes can run and may degrade with use. Save/load safe.
+    /// A craft station (workbench, water purifier, chemistry set) that gates which
+    /// recipes can run and wears down with use. Save/load safe.
     /// </summary>
     [System.Serializable]
     public class CraftingStation
@@ -13,7 +15,10 @@ namespace AtomicWar._Game.Crafting
 
         public bool IsOperational => Condition > 0f;
 
-        /// <summary>Reduce station condition by an amount (wear from crafting).</summary>
-        public void Degrade(float amount) => throw new System.NotImplementedException();
+        /// <summary>Reduce station condition by an amount (wear from crafting), floored at 0.</summary>
+        public void Degrade(float amount)
+        {
+            Condition = Mathf.Max(0f, Condition - Mathf.Max(0f, amount));
+        }
     }
 }

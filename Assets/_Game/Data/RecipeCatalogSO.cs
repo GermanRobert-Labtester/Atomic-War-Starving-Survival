@@ -14,6 +14,20 @@ namespace AtomicWar._Game.Data
         public List<Recipe> recipes = new List<Recipe>();
 
         /// <summary>Look up a recipe by its snake_case id.</summary>
-        public Recipe GetById(string id) => throw new System.NotImplementedException();
+        public Recipe GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                if (recipes[i] != null && recipes[i].id == id)
+                {
+                    return recipes[i];
+                }
+            }
+            return null;
+        }
     }
 }
