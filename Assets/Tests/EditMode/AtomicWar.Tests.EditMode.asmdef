@@ -2,7 +2,9 @@
     "name": "AtomicWar.Tests.EditMode",
     "references": [
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "AtomicWar._Game.Survivors",
+        "AtomicWar._Game.Radiation"
     ],
     "includePlatforms": [
         "Editor"
