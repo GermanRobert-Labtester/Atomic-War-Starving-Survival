@@ -1,4 +1,5 @@
 using UnityEngine;
+using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core

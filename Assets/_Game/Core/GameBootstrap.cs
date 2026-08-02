@@ -57,7 +57,7 @@ namespace AtomicWar._Game.Core
         public NeedsSystem NeedsSystem { get; private set; }
         public RadiationSystem RadiationSystem { get; private set; }
         public Shelter.Shelter Shelter { get; private set; }
-        public Inventory Inventory { get; private set; }
+        public Inventory.Inventory Inventory { get; private set; }
         public CraftingSystem CraftingSystem { get; private set; }
         public UtilityAI UtilityAI { get; private set; }
         public EventRunner EventRunner { get; private set; }
@@ -146,7 +146,7 @@ namespace AtomicWar._Game.Core
             RadiationSystem = new RadiationSystem(NeedsSystem);
 
             // Inventory + Crafting
-            Inventory = new Inventory { Capacity = 50, MaxWeight = 200f };
+            Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
             CraftingSystem = new CraftingSystem(Inventory);
 
             // Seed inventory
@@ -287,7 +287,7 @@ namespace AtomicWar._Game.Core
             }
 
             // Events (chance per hour)
-            var eventContext = new EventContext(Survivors.Count > 0 ? Survivors[0], Shelter, Inventory,
+            var eventContext = new EventContext(Survivors.Count > 0 ? Survivors[0] : null, Shelter, Inventory,
                 new System.Random(_worldSeed + TimeSystem.CurrentDay))
             {
                 CurrentDay = TimeSystem.CurrentDay,

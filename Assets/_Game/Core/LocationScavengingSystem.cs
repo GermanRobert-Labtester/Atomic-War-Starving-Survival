@@ -17,7 +17,7 @@ namespace AtomicWar._Game.Core
     public class LocationScavengingSystem
     {
         private readonly RadiationSystem _radSystem;
-        private readonly Inventory _inventory;
+        private readonly Inventory.Inventory _inventory;
         private readonly ItemCatalogSO _itemCatalog;
         private readonly System.Random _rng;
         private readonly List<ActiveMission> _active = new List<ActiveMission>();
@@ -25,7 +25,7 @@ namespace AtomicWar._Game.Core
         public event Action<ActiveMission> OnMissionStarted;
         public event Action<ActiveMission, List<ItemDefinition>> OnMissionCompleted;
 
-        public LocationScavengingSystem(RadiationSystem radSystem, Inventory inventory, ItemCatalogSO itemCatalog, int seed = 42)
+        public LocationScavengingSystem(RadiationSystem radSystem, Inventory.Inventory inventory, ItemCatalogSO itemCatalog, int seed = 42)
         {
             _radSystem = radSystem;
             _inventory = inventory;

@@ -1,5 +1,4 @@
 using UnityEngine;
-using AtomicWar._Game.Core;
 using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.UI
@@ -11,7 +10,15 @@ namespace AtomicWar._Game.UI
     /// </summary>
     public class TutorialOverlay : MonoBehaviour
     {
-        [SerializeField] private GameBootstrap _bootstrap;
+        // Day provider injected by the composition root; avoids a UI -> Core assembly
+        // cycle (Core already references UI). Null until SetDayProvider is called.
+        private System.Func<int> _getCurrentDay;
+
+        /// <summary>Inject a provider for the current game day (e.g. () => TimeSystem.CurrentDay).</summary>
+        public void SetDayProvider(System.Func<int> getCurrentDay)
+        {
+            _getCurrentDay = getCurrentDay;
+        }
 
         public enum TutorialStep
         {
@@ -79,9 +86,9 @@ namespace AtomicWar._Game.UI
             if (!IsActive) return;
 
             // Auto-advance on day change for later steps
-            if (_bootstrap != null && _bootstrap.TimeSystem != null)
+            if (_getCurrentDay != null)
             {
-                int day = _bootstrap.TimeSystem.CurrentDay;
+                int day = _getCurrentDay();
                 if (day != _lastDay)
                 {
                     _lastDay = day;
