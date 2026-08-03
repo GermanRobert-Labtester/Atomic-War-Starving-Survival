@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Economy;
 
-namespace AtomicWar._Game.Core
+namespace AtomicWar._Game.Flashpoint
 {
     // -------------------------------------------------------------------
     // Designer-facing data for the Day-30 Flashpoint Choreography.

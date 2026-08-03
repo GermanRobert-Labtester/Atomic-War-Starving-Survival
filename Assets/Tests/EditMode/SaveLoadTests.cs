@@ -371,7 +371,7 @@ namespace AtomicWar.Tests.EditMode
 
             string path = Path.Combine(_testDir, "save_version_check.json");
             string json = File.ReadAllText(path);
-            Assert.IsTrue(json.Contains("\"SaveVersion\": 1"), "Save file should contain SaveVersion field");
+            Assert.IsTrue(json.Contains("\"SaveVersion\": 2"), "Save file should contain SaveVersion field");
             Assert.IsTrue(json.Contains("\"Checksum\":"), "Save file should contain Checksum field");
         }
     }

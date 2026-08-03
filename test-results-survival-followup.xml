@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="9" result="Passed" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.1975331">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.197533" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1357" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.183303" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="312742" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1358" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.180421" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1359" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.177968" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1360" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="319" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.175684" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1308" name="SurvivalSmokeTest" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.170212" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1320" name="SaveLoadMidRun_PreservesState" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.120465" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1317" name="SaveLoadMidRun_PreservesState(1)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState(1)" methodname="SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1664142746" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.084630" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[[SaveSystem] Saved to slot 'midrun'.
+[SaveSystem] Loaded slot 'midrun' (version 2).
+]]></output>
+                </test-case>
+                <test-case id="1318" name="SaveLoadMidRun_PreservesState(42)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState(42)" methodname="SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1810378186" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.005786" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[[SaveSystem] Saved to slot 'midrun'.
+[SaveSystem] Loaded slot 'midrun' (version 2).
+]]></output>
+                </test-case>
+                <test-case id="1319" name="SaveLoadMidRun_PreservesState(1337)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState(1337)" methodname="SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="174111485" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.007418" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[[SaveSystem] Saved to slot 'midrun'.
+[SaveSystem] Loaded slot 'midrun' (version 2).
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1316" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.016725" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1313" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1)" methodname="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1883325228" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.009038" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1314" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(42)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(42)" methodname="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="957987675" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.002332" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1315" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1337)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1337)" methodname="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1453528872" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.001663" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1312" name="Simulate30Days_NoNullRef_NoNaN" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.024155" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1309" name="Simulate30Days_NoNullRef_NoNaN(1)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN(1)" methodname="Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1581641506" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.009122" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[=== BALANCE REPORT ===
+ID                     Days Cause                AvgRad  PeakRad  Starv  Dehyd  Freez   CI   ARS
+sv_sickly               2.0 acute_radiation       10.42    100.0      0      0      0 True  True
+sv_doomed               2.5 acute_radiation        4.93    100.0      0      0      0 False  True
+sv_survivor            30.0 alive                  0.10     72.0      0      0      0 False False
+======================
+]]></output>
+                </test-case>
+                <test-case id="1310" name="Simulate30Days_NoNullRef_NoNaN(42)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN(42)" methodname="Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1675189162" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.005884" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[=== BALANCE REPORT ===
+ID                     Days Cause                AvgRad  PeakRad  Starv  Dehyd  Freez   CI   ARS
+sv_sickly               2.0 acute_radiation       10.42    100.0      0      0      0 True  True
+sv_doomed               2.5 acute_radiation        4.93    100.0      0      0      0 False  True
+sv_survivor            30.0 alive                  0.10     72.0      0      0      0 False False
+======================
+]]></output>
+                </test-case>
+                <test-case id="1311" name="Simulate30Days_NoNullRef_NoNaN(1337)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN(1337)" methodname="Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="722296270" result="Passed" start-time="2026-08-03 15:47:43Z" end-time="2026-08-03 15:47:43Z" duration="0.006715" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[=== BALANCE REPORT ===
+ID                     Days Cause                AvgRad  PeakRad  Starv  Dehyd  Freez   CI   ARS
+sv_sickly               2.0 acute_radiation       10.42    100.0      0      0      0 True  True
+sv_doomed               2.5 acute_radiation        4.93    100.0      0      0      0 False  True
+sv_survivor            30.0 alive                  0.10     72.0      0      0      0 False False
+======================
+Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

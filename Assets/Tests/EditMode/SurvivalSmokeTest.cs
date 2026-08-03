@@ -264,8 +264,10 @@ namespace AtomicWar.Tests.EditMode
             _survivors.Add(sickly);
 
             // Survivor 3: "Survivor" - low rad exposure, will live through 30 days.
-            // Rad: 0.5/hr → lifetime 360 over 30 days (below chronic threshold 400).
-            // Health loss from hunger/thirst starts at hour 50 but rate is manageable.
+            // Rad: 0.1/hr → lifetime 72 over 30 days (well below both the ARS
+            // threshold of 80 and the chronic threshold of 400). The previous
+            // value of 0.5/hr drove the dose past 80 within 6.7 days, triggering
+            // ARS and the "acute_radiation" cause-of-death this test rejects.
             var survivor = new Survivor
             {
                 Id = "sv_survivor",
@@ -286,10 +288,11 @@ namespace AtomicWar.Tests.EditMode
 
         private float GetRadRate(Survivor sv)
         {
-            // Doom: 8/hr, Sickly: 20/hr, Survivor: 0.5/hr
+            // Doom: 8/hr, Sickly: 20/hr, Survivor: 0.1/hr (was 0.5/hr — see
+            // Survivor 3 ctor comment for why this was lowered)
             if (sv.Id == "sv_doomed") return 8f;
             if (sv.Id == "sv_sickly") return 20f;
-            return 0.5f;
+            return 0.1f;
         }
 
         private void SimulateHour(float hour, float day)

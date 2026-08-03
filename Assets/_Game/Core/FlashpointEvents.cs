@@ -1,6 +1,6 @@
 using System;
 
-namespace AtomicWar._Game.Core
+namespace AtomicWar._Game.Flashpoint
 {
     // -------------------------------------------------------------------
     // Typed EventBus payloads for the Day-30 Flashpoint Choreography.

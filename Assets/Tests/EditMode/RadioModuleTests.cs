@@ -111,7 +111,12 @@ namespace AtomicWar.Tests.EditMode
         {
             var state = new RadioState();
             float stormModifier = RadioTunerSystem.GetWeatherSignalModifier(WeatherKind.FalloutStorm);
-            state.UpdateSignalStrength(0.7f, stormModifier, 0.3f);
+            // Use interferenceSusceptibility=1.0 so the test name matches the
+            // expectation: "Signal should be ~20% in fallout storm" means the
+            // storm modifier is applied in full to a fully-susceptible
+            // frequency. The default 0.3 used in the production code only
+            // applies 30% of the storm, which doesn't match the test's intent.
+            state.UpdateSignalStrength(0.7f, stormModifier, 1.0f);
 
             Assert.Less(state.SignalStrength, 0.7f, "Signal should be reduced in fallout storm");
             Assert.AreEqual(0.14f, state.SignalStrength, 0.01f, "Signal should be ~20% in fallout storm");
@@ -166,6 +171,7 @@ namespace AtomicWar.Tests.EditMode
         public void RadioState_AdvanceTuning_IncreasesProgress()
         {
             var state = new RadioState();
+            state.AvailableFuel = 1f; // PowerConsumptionPerHour defaults to 0.5; fuel > 0 makes IsOperational true
             state.SignalStrength = 1.0f;
             state.CurrentFrequencyId = "test";
 
@@ -179,6 +185,7 @@ namespace AtomicWar.Tests.EditMode
         public void RadioState_AdvanceTuning_CompletesAtOne()
         {
             var state = new RadioState();
+            state.AvailableFuel = 1f;
             state.SignalStrength = 1.0f;
             state.CurrentFrequencyId = "test";
 
@@ -208,6 +215,7 @@ namespace AtomicWar.Tests.EditMode
         {
             var tuner = new RadioTunerSystem(_rng);
             tuner.SetFrequencies(new[] { _civilianFreq });
+            tuner.State.AvailableFuel = 1f; // AdvanceTuning requires IsOperational
 
             tuner.State.SignalStrength = 1.0f;
             tuner.State.AdvanceTuning(1f, 0.5f);

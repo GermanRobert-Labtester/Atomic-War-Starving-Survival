@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="11" result="Passed" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.2582654">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="195" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.258265" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1223" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="195" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.224183" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="205332" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1224" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="195" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.221863" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1225" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="195" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.216916" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1226" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="195" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.215423" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1068" name="FlashpointInterceptTests" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.205013" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1071" name="CautiousSurvivor_OnFlashpoint_PausesInShelterAndGainsRadiationAnxiety" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.CautiousSurvivor_OnFlashpoint_PausesInShelterAndGainsRadiationAnxiety" methodname="CautiousSurvivor_OnFlashpoint_PausesInShelterAndGainsRadiationAnxiety" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="135416462" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.063196" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1075" name="CommsSeveredExpedition_OnReturn_RaisesHatchDilemmaSignal_InsteadOfCompleting" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.CommsSeveredExpedition_OnReturn_RaisesHatchDilemmaSignal_InsteadOfCompleting" methodname="CommsSeveredExpedition_OnReturn_RaisesHatchDilemmaSignal_InsteadOfCompleting" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="600997370" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.007477" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1078" name="DenyEntry_Choice_KillsSurvivor" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.DenyEntry_Choice_KillsSurvivor" methodname="DenyEntry_Choice_KillsSurvivor" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="1144583796" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.010997" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[Flashpoint] DenyEntry: sv_deny died outside the hatch; 0 other survivor(s) lost 20 morale.
+]]></output>
+              </test-case>
+              <test-case id="1072" name="FatalistSurvivor_OnFlashpoint_HalvesSpeedAndGainsNumbness" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.FatalistSurvivor_OnFlashpoint_HalvesSpeedAndGainsNumbness" methodname="FatalistSurvivor_OnFlashpoint_HalvesSpeedAndGainsNumbness" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="1317822045" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.007965" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1077" name="ForceDecon_Choice_DamagesSurvivorButKeepsThemAlive" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.ForceDecon_Choice_DamagesSurvivorButKeepsThemAlive" methodname="ForceDecon_Choice_DamagesSurvivorButKeepsThemAlive" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="503012201" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.017540" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1074" name="Idempotency_DoubleIntercept_DoesNotApplyTwice" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.Idempotency_DoubleIntercept_DoesNotApplyTwice" methodname="Idempotency_DoubleIntercept_DoesNotApplyTwice" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="774630835" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.006367" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1073" name="IsCommsSevered_DefaultsToFalse_BeforeIntercept" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.IsCommsSevered_DefaultsToFalse_BeforeIntercept" methodname="IsCommsSevered_DefaultsToFalse_BeforeIntercept" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="810849331" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.005542" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1076" name="LetThemIn_Choice_CompletesExpeditionAndKeepsSurvivorAlive" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.LetThemIn_Choice_CompletesExpeditionAndKeepsSurvivorAlive" methodname="LetThemIn_Choice_CompletesExpeditionAndKeepsSurvivorAlive" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="1689146789" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.003486" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1079" name="NonCommsSeveredExpedition_StillCompletesNormally_WithoutHatchDilemma" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.NonCommsSeveredExpedition_StillCompletesNormally_WithoutHatchDilemma" methodname="NonCommsSeveredExpedition_StillCompletesNormally_WithoutHatchDilemma" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="1528466846" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.004162" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1069" name="ParanoidSurvivor_OnFlashpoint_DropsAllLootAndHalvesEta" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.ParanoidSurvivor_OnFlashpoint_DropsAllLootAndHalvesEta" methodname="ParanoidSurvivor_OnFlashpoint_DropsAllLootAndHalvesEta" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="582262868" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.008220" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="RecklessSurvivor_OnFlashpoint_KeepsLootAndNormalSpeed" fullname="AtomicWar.Tests.EditMode.FlashpointInterceptTests.RecklessSurvivor_OnFlashpoint_KeepsLootAndNormalSpeed" methodname="RecklessSurvivor_OnFlashpoint_KeepsLootAndNormalSpeed" classname="AtomicWar.Tests.EditMode.FlashpointInterceptTests" runstate="Runnable" seed="34723769" result="Passed" start-time="2026-08-03 13:06:05Z" end-time="2026-08-03 13:06:05Z" duration="0.002512" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="62" result="Passed" total="62" passed="62" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.3865734">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.386573" total="62" passed="62" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1211" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.365565" total="62" passed="62" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="198392" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1212" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.363377" total="62" passed="62" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1213" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.361600" total="62" passed="62" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1214" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.359770" total="62" passed="62" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1044" name="FactionEconomyTests" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.113880" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1051" name="EconomyState_RoundTripsThroughSave" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.EconomyState_RoundTripsThroughSave" methodname="EconomyState_RoundTripsThroughSave" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="901479359" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.043043" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1050" name="FairTrade_TransfersItems_AndNudgesDemand" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.FairTrade_TransfersItems_AndNudgesDemand" methodname="FairTrade_TransfersItems_AndNudgesDemand" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="518275943" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.015114" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="Jewelry_TradeValue_DropsToZero_OnDay30Flashpoint" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.Jewelry_TradeValue_DropsToZero_OnDay30Flashpoint" methodname="Jewelry_TradeValue_DropsToZero_OnDay30Flashpoint" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="1360258678" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001247" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="PostDay30_AntiRadAndIodine_TenX_WaterIsGold" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.PostDay30_AntiRadAndIodine_TenX_WaterIsGold" methodname="PostDay30_AntiRadAndIodine_TenX_WaterIsGold" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="524128654" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000911" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1046" name="PreDay30_FoodExpensive_AntiRadCheap" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.PreDay30_FoodExpensive_AntiRadCheap" methodname="PreDay30_FoodExpensive_AntiRadCheap" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="1422867298" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000682" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1048" name="RefuseScout_DropsTrust_RaidAtMinus50" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.RefuseScout_DropsTrust_RaidAtMinus50" methodname="RefuseScout_DropsTrust_RaidAtMinus50" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="199352756" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.013432" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1049" name="TradeScreen_BarterMath_UsesPhaseAndTrust" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.TradeScreen_BarterMath_UsesPhaseAndTrust" methodname="TradeScreen_BarterMath_UsesPhaseAndTrust" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="2086120406" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.006141" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="WorldPhaseSystem_Day30_SetsFlashpoint_ForEconomy" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.WorldPhaseSystem_Day30_SetsFlashpoint_ForEconomy" methodname="WorldPhaseSystem_Day30_SetsFlashpoint_ForEconomy" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="1082440650" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002092" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1053" name="FlashpointChoreographerTests" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.057608" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1054" name="BuildupDay_FiresEventAndAppliesEconomyModifier_OnDayTick" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.BuildupDay_FiresEventAndAppliesEconomyModifier_OnDayTick" methodname="BuildupDay_FiresEventAndAppliesEconomyModifier_OnDayTick" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="1418890743" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.010161" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1055" name="BuildupDay_IsIdempotent_AcrossRepeatedDayTicks" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.BuildupDay_IsIdempotent_AcrossRepeatedDayTicks" methodname="BuildupDay_IsIdempotent_AcrossRepeatedDayTicks" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="883018766" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001743" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1056" name="BuildupDay_WithNoMatchingEntry_DoesNotFire" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.BuildupDay_WithNoMatchingEntry_DoesNotFire" methodname="BuildupDay_WithNoMatchingEntry_DoesNotFire" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="76945456" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000901" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="Choreographer_RestoreOnFreshInstance_MarksChoreographyActive" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreographer_RestoreOnFreshInstance_MarksChoreographyActive" methodname="Choreographer_RestoreOnFreshInstance_MarksChoreographyActive" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="812091243" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002236" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="Choreographer_SaveAndRestore_PreservesBuildupDaysAndStepIndex" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreographer_SaveAndRestore_PreservesBuildupDaysAndStepIndex" methodname="Choreographer_SaveAndRestore_PreservesBuildupDaysAndStepIndex" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="1700277858" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.005069" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="Choreography_EmpStep_AppliesMoraleAndUnpausesSystems" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_EmpStep_AppliesMoraleAndUnpausesSystems" methodname="Choreography_EmpStep_AppliesMoraleAndUnpausesSystems" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="691089031" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.011750" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="Choreography_EmptySteps_MarksCompleteImmediately" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_EmptySteps_MarksCompleteImmediately" methodname="Choreography_EmptySteps_MarksCompleteImmediately" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="2125279129" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001111" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1058" name="Choreography_FiresStepsInOrder_AfterAccumulatedDelays" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_FiresStepsInOrder_AfterAccumulatedDelays" methodname="Choreography_FiresStepsInOrder_AfterAccumulatedDelays" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="1621937163" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.005321" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="Choreography_FlashStep_UsesDefaultDuration_WhenAccessibilityDisabled" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_FlashStep_UsesDefaultDuration_WhenAccessibilityDisabled" methodname="Choreography_FlashStep_UsesDefaultDuration_WhenAccessibilityDisabled" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="702462493" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002993" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="Choreography_FlashStep_UsesSafeDuration_WhenAccessibilityEnabled" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_FlashStep_UsesSafeDuration_WhenAccessibilityEnabled" methodname="Choreography_FlashStep_UsesSafeDuration_WhenAccessibilityEnabled" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="1607563121" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001431" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="Choreography_NullSequence_DoesNotThrow" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_NullSequence_DoesNotThrow" methodname="Choreography_NullSequence_DoesNotThrow" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="1105983381" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.003550" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="Choreography_OnNuclearExchange_IsIdempotent" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_OnNuclearExchange_IsIdempotent" methodname="Choreography_OnNuclearExchange_IsIdempotent" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="1216607336" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001513" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="Choreography_ShockwaveStep_ReducesShakeAmplitude_WhenAccessibilityEnabled" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_ShockwaveStep_ReducesShakeAmplitude_WhenAccessibilityEnabled" methodname="Choreography_ShockwaveStep_ReducesShakeAmplitude_WhenAccessibilityEnabled" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="659699493" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002504" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="Choreography_StartsOnNuclearExchange_AndFiresStartedEvent" fullname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests.Choreography_StartsOnNuclearExchange_AndFiresStartedEvent" methodname="Choreography_StartsOnNuclearExchange_AndFiresStartedEvent" classname="AtomicWar.Tests.EditMode.FlashpointChoreographerTests" runstate="Runnable" seed="789832589" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000797" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1148" name="RadioModuleTests" fullname="AtomicWar.Tests.EditMode.RadioModuleTests" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.037926" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1163" name="IntelNode_CreateMortarWarning_SetsProperties" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.IntelNode_CreateMortarWarning_SetsProperties" methodname="IntelNode_CreateMortarWarning_SetsProperties" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="311898928" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.009956" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="IntelNode_CreatePlumeReport_SetsProperties" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.IntelNode_CreatePlumeReport_SetsProperties" methodname="IntelNode_CreatePlumeReport_SetsProperties" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1093381862" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002340" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1150" name="RadioFrequency_IsActiveOnDay_InfiniteRange" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioFrequency_IsActiveOnDay_InfiniteRange" methodname="RadioFrequency_IsActiveOnDay_InfiniteRange" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1025220762" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001292" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="RadioFrequency_IsActiveOnDay_WithinRange" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioFrequency_IsActiveOnDay_WithinRange" methodname="RadioFrequency_IsActiveOnDay_WithinRange" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="714319332" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000874" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="RadioState_AdvanceTuning_CompletesAtOne" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_AdvanceTuning_CompletesAtOne" methodname="RadioState_AdvanceTuning_CompletesAtOne" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1847634773" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001367" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1157" name="RadioState_AdvanceTuning_IncreasesProgress" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_AdvanceTuning_IncreasesProgress" methodname="RadioState_AdvanceTuning_IncreasesProgress" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="128809527" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001682" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="RadioState_ApplyEmpDamage_ClampsAt100" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_ApplyEmpDamage_ClampsAt100" methodname="RadioState_ApplyEmpDamage_ClampsAt100" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1951567482" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000964" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1155" name="RadioState_ConsumeFuel_ReducesFuel" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_ConsumeFuel_ReducesFuel" methodname="RadioState_ConsumeFuel_ReducesFuel" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1072420163" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000878" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1156" name="RadioState_ConsumeFuel_StopsAtZero" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_ConsumeFuel_StopsAtZero" methodname="RadioState_ConsumeFuel_StopsAtZero" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="124496091" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000613" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1151" name="RadioState_UpdateSignalStrength_ClearWeather" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_UpdateSignalStrength_ClearWeather" methodname="RadioState_UpdateSignalStrength_ClearWeather" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1735378953" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000913" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="RadioState_UpdateSignalStrength_EmpDamageReducesSignal" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_UpdateSignalStrength_EmpDamageReducesSignal" methodname="RadioState_UpdateSignalStrength_EmpDamageReducesSignal" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="71633442" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000667" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="RadioState_UpdateSignalStrength_FalloutStormReducesSignal" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_UpdateSignalStrength_FalloutStormReducesSignal" methodname="RadioState_UpdateSignalStrength_FalloutStormReducesSignal" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1737548652" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000936" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="RadioTunerSystem_ApplyPlumeReportToMap_UpdatesKnowledgeMap" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_ApplyPlumeReportToMap_UpdatesKnowledgeMap" methodname="RadioTunerSystem_ApplyPlumeReportToMap_UpdatesKnowledgeMap" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1675879196" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002396" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="RadioTunerSystem_CaptureAndRestoreState_PreservesState" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_CaptureAndRestoreState_PreservesState" methodname="RadioTunerSystem_CaptureAndRestoreState_PreservesState" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="326875314" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002060" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1161" name="RadioTunerSystem_GetWeatherSignalModifier_VariousWeather" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_GetWeatherSignalModifier_VariousWeather" methodname="RadioTunerSystem_GetWeatherSignalModifier_VariousWeather" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="552165233" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000677" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1159" name="RadioTunerSystem_SetFrequencies_LoadsFrequencies" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_SetFrequencies_LoadsFrequencies" methodname="RadioTunerSystem_SetFrequencies_LoadsFrequencies" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="2004237644" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001214" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1165" name="RadioTunerSystem_Tick_ConsumesFuel" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_Tick_ConsumesFuel" methodname="RadioTunerSystem_Tick_ConsumesFuel" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1869655894" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001691" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1160" name="RadioTunerSystem_TuneToFrequency_ResetsProgress" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_TuneToFrequency_ResetsProgress" methodname="RadioTunerSystem_TuneToFrequency_ResetsProgress" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="481415226" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001260" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1167" name="SaveLoadTests" fullname="AtomicWar.Tests.EditMode.SaveLoadTests" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.063431" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1172" name="Delete_RemovesSaveFile" fullname="AtomicWar.Tests.EditMode.SaveLoadTests.Delete_RemovesSaveFile" methodname="Delete_RemovesSaveFile" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" seed="1025748234" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.026963" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveSystem] Saved to slot 'delete_me'.
+]]></output>
+              </test-case>
+              <test-case id="1169" name="Load_DetectsCorruptSave_ReturnsFalse" fullname="AtomicWar.Tests.EditMode.SaveLoadTests.Load_DetectsCorruptSave_ReturnsFalse" methodname="Load_DetectsCorruptSave_ReturnsFalse" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" seed="1035953425" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.007878" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveSystem] Saved to slot 'corrupt_slot'.
+[SaveSystem] Slot 'corrupt_slot' is corrupt (checksum mismatch). Load aborted.
+]]></output>
+              </test-case>
+              <test-case id="1170" name="Load_NonexistentSlot_ReturnsFalse" fullname="AtomicWar.Tests.EditMode.SaveLoadTests.Load_NonexistentSlot_ReturnsFalse" methodname="Load_NonexistentSlot_ReturnsFalse" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" seed="407359916" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.003522" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveSystem] Slot 'ghost_slot' not found.
+]]></output>
+              </test-case>
+              <test-case id="1173" name="Save_FileContainsSaveVersion" fullname="AtomicWar.Tests.EditMode.SaveLoadTests.Save_FileContainsSaveVersion" methodname="Save_FileContainsSaveVersion" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" seed="1180700648" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002066" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveSystem] Saved to slot 'version_check'.
+]]></output>
+              </test-case>
+              <test-case id="1171" name="Save_TwiceToSameSlot_OverwritesCleanly" fullname="AtomicWar.Tests.EditMode.SaveLoadTests.Save_TwiceToSameSlot_OverwritesCleanly" methodname="Save_TwiceToSameSlot_OverwritesCleanly" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" seed="699385909" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.005701" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveSystem] Saved to slot 'overwrite_slot'.
+[SaveSystem] Saved to slot 'overwrite_slot'.
+[SaveSystem] Loaded slot 'overwrite_slot' (version 2).
+]]></output>
+              </test-case>
+              <test-case id="1168" name="SaveLoad_RoundTripsNastyMidStormState" fullname="AtomicWar.Tests.EditMode.SaveLoadTests.SaveLoad_RoundTripsNastyMidStormState" methodname="SaveLoad_RoundTripsNastyMidStormState" classname="AtomicWar.Tests.EditMode.SaveLoadTests" runstate="Runnable" seed="1882843306" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.014076" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveSystem] Saved to slot 'test_slot'.
+[SaveSystem] Loaded slot 'test_slot' (version 2).
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1181" name="SurvivalSmokeTest" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.066723" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-suite type="ParameterizedMethod" id="1193" name="SaveLoadMidRun_PreservesState" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.030356" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1190" name="SaveLoadMidRun_PreservesState(1)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState(1)" methodname="SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1702731344" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.019544" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[[SaveSystem] Saved to slot 'midrun'.
+[SaveSystem] Loaded slot 'midrun' (version 2).
+]]></output>
+                </test-case>
+                <test-case id="1191" name="SaveLoadMidRun_PreservesState(42)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState(42)" methodname="SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="691242918" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.005902" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[[SaveSystem] Saved to slot 'midrun'.
+[SaveSystem] Loaded slot 'midrun' (version 2).
+]]></output>
+                </test-case>
+                <test-case id="1192" name="SaveLoadMidRun_PreservesState(1337)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.SaveLoadMidRun_PreservesState(1337)" methodname="SaveLoadMidRun_PreservesState" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="824880178" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.003344" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[[SaveSystem] Saved to slot 'midrun'.
+[SaveSystem] Loaded slot 'midrun' (version 2).
+]]></output>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1189" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.011523" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1186" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1)" methodname="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="601563" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.004371" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1187" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(42)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(42)" methodname="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="346051215" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.002859" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1188" name="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1337)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_AtLeastOneChronicIllnessAndOneDeath(1337)" methodname="Simulate30Days_AtLeastOneChronicIllnessAndOneDeath" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="2055268369" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001894" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-suite type="ParameterizedMethod" id="1185" name="Simulate30Days_NoNullRef_NoNaN" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.021961" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1182" name="Simulate30Days_NoNullRef_NoNaN(1)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN(1)" methodname="Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="62242861" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.007132" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[=== BALANCE REPORT ===
+ID                     Days Cause                AvgRad  PeakRad  Starv  Dehyd  Freez   CI   ARS
+sv_sickly               2.0 acute_radiation       10.42    100.0      0      0      0 True  True
+sv_doomed               2.5 acute_radiation        4.93    100.0      0      0      0 False  True
+sv_survivor            30.0 alive                  0.10     72.0      0      0      0 False False
+======================
+]]></output>
+                </test-case>
+                <test-case id="1183" name="Simulate30Days_NoNullRef_NoNaN(42)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN(42)" methodname="Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1800220475" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.006052" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[=== BALANCE REPORT ===
+ID                     Days Cause                AvgRad  PeakRad  Starv  Dehyd  Freez   CI   ARS
+sv_sickly               2.0 acute_radiation       10.42    100.0      0      0      0 True  True
+sv_doomed               2.5 acute_radiation        4.93    100.0      0      0      0 False  True
+sv_survivor            30.0 alive                  0.10     72.0      0      0      0 False False
+======================
+]]></output>
+                </test-case>
+                <test-case id="1184" name="Simulate30Days_NoNullRef_NoNaN(1337)" fullname="AtomicWar.Tests.EditMode.SurvivalSmokeTest.Simulate30Days_NoNullRef_NoNaN(1337)" methodname="Simulate30Days_NoNullRef_NoNaN" classname="AtomicWar.Tests.EditMode.SurvivalSmokeTest" runstate="Runnable" seed="1475152787" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.006755" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[=== BALANCE REPORT ===
+ID                     Days Cause                AvgRad  PeakRad  Starv  Dehyd  Freez   CI   ARS
+sv_sickly               2.0 acute_radiation       10.42    100.0      0      0      0 True  True
+sv_doomed               2.5 acute_radiation        4.93    100.0      0      0      0 False  True
+sv_survivor            30.0 alive                  0.10     72.0      0      0      0 False False
+======================
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+            <test-suite type="TestFixture" id="1201" name="WorldPhaseEngineTests" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.010508" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1202" name="Day29To30Transition_FiresNuclearExchangeOnce_AndAdvancesPhaseAcrossDay31" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.Day29To30Transition_FiresNuclearExchangeOnce_AndAdvancesPhaseAcrossDay31" methodname="Day29To30Transition_FiresNuclearExchangeOnce_AndAdvancesPhaseAcrossDay31" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="703906" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000756" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1204" name="EMPEvent_BreaksUnshieldedElectronics_SparesShielded" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.EMPEvent_BreaksUnshieldedElectronics_SparesShielded" methodname="EMPEvent_BreaksUnshieldedElectronics_SparesShielded" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="1298573020" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001147" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1205" name="EMPEvent_ShieldedShelterModule_StaysEnabled" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.EMPEvent_ShieldedShelterModule_StaysEnabled" methodname="EMPEvent_ShieldedShelterModule_StaysEnabled" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="1041320543" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001091" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1203" name="FlashpointDay_IsDesignerTunable_ViaConfig" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.FlashpointDay_IsDesignerTunable_ViaConfig" methodname="FlashpointDay_IsDesignerTunable_ViaConfig" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="1142140288" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000518" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1207" name="LootTableSO_GetValidEntries_GatesByPhaseRequirement" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.LootTableSO_GetValidEntries_GatesByPhaseRequirement" methodname="LootTableSO_GetValidEntries_GatesByPhaseRequirement" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="1816296036" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001612" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1206" name="TradeEconomy_MoneyDropsToZero_WaterAndIodineSkyrocket_PostFlashpoint" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.TradeEconomy_MoneyDropsToZero_WaterAndIodineSkyrocket_PostFlashpoint" methodname="TradeEconomy_MoneyDropsToZero_WaterAndIodineSkyrocket_PostFlashpoint" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="1964197223" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.000767" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1208" name="WeatherSystem_RestrictToNonHazardWeather_ExcludesPostWarKinds" fullname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests.WeatherSystem_RestrictToNonHazardWeather_ExcludesPostWarKinds" methodname="WeatherSystem_RestrictToNonHazardWeather_ExcludesPostWarKinds" classname="AtomicWar.Tests.EditMode.WorldPhaseEngineTests" runstate="Runnable" seed="547776033" result="Passed" start-time="2026-08-03 12:49:12Z" end-time="2026-08-03 12:49:12Z" duration="0.001331" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="8" result="Passed" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.1132861">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="310" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.113286" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1348" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="310" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.102907" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="304606" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1349" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="310" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.101883" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1350" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="310" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.101296" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1351" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="310" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.100666" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1060" name="FactionHatchIntegrationTests" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.096254" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1068" name="EconomySave_RoundTripsAggressionSuccessionSurrender" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.EconomySave_RoundTripsAggressionSuccessionSurrender" methodname="EconomySave_RoundTripsAggressionSuccessionSurrender" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="535720824" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.039500" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="ForceSurrender_AfterBreachPath_StillEndsHostility" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ForceSurrender_AfterBreachPath_StillEndsHostility" methodname="ForceSurrender_AfterBreachPath_StillEndsHostility" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="700535530" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.012194" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="HighAggression_HitsHarderThanLowAggression" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.HighAggression_HitsHarderThanLowAggression" methodname="HighAggression_HitsHarderThanLowAggression" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="883708713" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.005458" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="KeybindDocs_PlayerInputHandler_ExposesWorkbenchAndHatchKeys" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.KeybindDocs_PlayerInputHandler_ExposesWorkbenchAndHatchKeys" methodname="KeybindDocs_PlayerInputHandler_ExposesWorkbenchAndHatchKeys" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="109837486" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.001136" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="Succession_BlendsTrust_AndBumpsGeneration" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.Succession_BlendsTrust_AndBumpsGeneration" methodname="Succession_BlendsTrust_AndBumpsGeneration" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="187253740" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.001464" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="TrustDrop_ToRaidThreshold_LaunchesAggressionScaledHatchRaid" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.TrustDrop_ToRaidThreshold_LaunchesAggressionScaledHatchRaid" methodname="TrustDrop_ToRaidThreshold_LaunchesAggressionScaledHatchRaid" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="270359108" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.001638" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="TwoRepels_AutoSurrender_LiftsTrust_AndBlocksFurtherRaids" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.TwoRepels_AutoSurrender_LiftsTrust_AndBlocksFurtherRaids" methodname="TwoRepels_AutoSurrender_LiftsTrust_AndBlocksFurtherRaids" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1470306974" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.002300" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="WorkbenchUI_ListsAndInstallsHatchUpgrades" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.WorkbenchUI_ListsAndInstallsHatchUpgrades" methodname="WorkbenchUI_ListsAndInstallsHatchUpgrades" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1649138215" result="Passed" start-time="2026-08-03 15:31:53Z" end-time="2026-08-03 15:31:53Z" duration="0.010242" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

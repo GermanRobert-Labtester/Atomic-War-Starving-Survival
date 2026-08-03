@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="18" result="Passed" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.1477136">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.147714" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1211" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.130693" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="199029" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1212" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.128308" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1213" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.126507" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1214" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="184" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.124749" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1148" name="RadioModuleTests" fullname="AtomicWar.Tests.EditMode.RadioModuleTests" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" testcasecount="18" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.118821" total="18" passed="18" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1163" name="IntelNode_CreateMortarWarning_SetsProperties" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.IntelNode_CreateMortarWarning_SetsProperties" methodname="IntelNode_CreateMortarWarning_SetsProperties" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="530959620" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.043225" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1162" name="IntelNode_CreatePlumeReport_SetsProperties" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.IntelNode_CreatePlumeReport_SetsProperties" methodname="IntelNode_CreatePlumeReport_SetsProperties" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="2022611495" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.007991" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1150" name="RadioFrequency_IsActiveOnDay_InfiniteRange" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioFrequency_IsActiveOnDay_InfiniteRange" methodname="RadioFrequency_IsActiveOnDay_InfiniteRange" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1148900831" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.003672" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1149" name="RadioFrequency_IsActiveOnDay_WithinRange" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioFrequency_IsActiveOnDay_WithinRange" methodname="RadioFrequency_IsActiveOnDay_WithinRange" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1577314779" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001253" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="RadioState_AdvanceTuning_CompletesAtOne" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_AdvanceTuning_CompletesAtOne" methodname="RadioState_AdvanceTuning_CompletesAtOne" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1693488638" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001086" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1157" name="RadioState_AdvanceTuning_IncreasesProgress" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_AdvanceTuning_IncreasesProgress" methodname="RadioState_AdvanceTuning_IncreasesProgress" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1706440450" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.000692" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="RadioState_ApplyEmpDamage_ClampsAt100" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_ApplyEmpDamage_ClampsAt100" methodname="RadioState_ApplyEmpDamage_ClampsAt100" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1761797789" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001046" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1155" name="RadioState_ConsumeFuel_ReducesFuel" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_ConsumeFuel_ReducesFuel" methodname="RadioState_ConsumeFuel_ReducesFuel" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1253461037" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001010" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1156" name="RadioState_ConsumeFuel_StopsAtZero" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_ConsumeFuel_StopsAtZero" methodname="RadioState_ConsumeFuel_StopsAtZero" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="552004286" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.000932" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1151" name="RadioState_UpdateSignalStrength_ClearWeather" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_UpdateSignalStrength_ClearWeather" methodname="RadioState_UpdateSignalStrength_ClearWeather" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="820523904" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001193" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="RadioState_UpdateSignalStrength_EmpDamageReducesSignal" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_UpdateSignalStrength_EmpDamageReducesSignal" methodname="RadioState_UpdateSignalStrength_EmpDamageReducesSignal" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1231187544" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.000645" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1152" name="RadioState_UpdateSignalStrength_FalloutStormReducesSignal" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioState_UpdateSignalStrength_FalloutStormReducesSignal" methodname="RadioState_UpdateSignalStrength_FalloutStormReducesSignal" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="523882272" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.006942" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="RadioTunerSystem_ApplyPlumeReportToMap_UpdatesKnowledgeMap" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_ApplyPlumeReportToMap_UpdatesKnowledgeMap" methodname="RadioTunerSystem_ApplyPlumeReportToMap_UpdatesKnowledgeMap" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1550478094" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.004902" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="RadioTunerSystem_CaptureAndRestoreState_PreservesState" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_CaptureAndRestoreState_PreservesState" methodname="RadioTunerSystem_CaptureAndRestoreState_PreservesState" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="2115672689" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.004336" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1161" name="RadioTunerSystem_GetWeatherSignalModifier_VariousWeather" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_GetWeatherSignalModifier_VariousWeather" methodname="RadioTunerSystem_GetWeatherSignalModifier_VariousWeather" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="343818884" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001434" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1159" name="RadioTunerSystem_SetFrequencies_LoadsFrequencies" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_SetFrequencies_LoadsFrequencies" methodname="RadioTunerSystem_SetFrequencies_LoadsFrequencies" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="215883943" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001686" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1165" name="RadioTunerSystem_Tick_ConsumesFuel" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_Tick_ConsumesFuel" methodname="RadioTunerSystem_Tick_ConsumesFuel" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="305067470" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001895" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1160" name="RadioTunerSystem_TuneToFrequency_ResetsProgress" fullname="AtomicWar.Tests.EditMode.RadioModuleTests.RadioTunerSystem_TuneToFrequency_ResetsProgress" methodname="RadioTunerSystem_TuneToFrequency_ResetsProgress" classname="AtomicWar.Tests.EditMode.RadioModuleTests" runstate="Runnable" seed="1110680704" result="Passed" start-time="2026-08-03 12:49:49Z" end-time="2026-08-03 12:49:49Z" duration="0.001170" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

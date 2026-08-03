@@ -1,4 +1,20 @@
 ﻿<Solution>
+  <Project Path="AtomicWar._Game.Medical.csproj" />
+  <Project Path="AtomicWar._Game.Core.csproj" />
+  <Project Path="AtomicWar._Game.UI.csproj" />
+  <Project Path="AtomicWar._Game.Shelter.csproj" />
+  <Project Path="AtomicWar.Tests.EditMode.csproj" />
+  <Project Path="AtomicWar._Game.AI.csproj" />
+  <Project Path="AtomicWar._Game.Survivors.csproj" />
+  <Project Path="AtomicWar._Game.Data.csproj" />
+  <Project Path="AtomicWar._Game.Environment.csproj" />
+  <Project Path="AtomicWar._Game.Radiation.csproj" />
+  <Project Path="AtomicWar._Game.Economy.csproj" />
+  <Project Path="AtomicWar._Game.Editor.csproj" />
+  <Project Path="AtomicWar._Game.Inventory.csproj" />
+  <Project Path="AtomicWar._Game.Events.csproj" />
+  <Project Path="AtomicWar._Game.Crafting.csproj" />
   <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
+  <Project Path="AtomicWar.Tests.PlayMode.csproj" />
 </Solution>

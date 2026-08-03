@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="16" result="Passed" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.2658437">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="288" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.265844" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1324" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="288" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.242737" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="278240" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1325" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="288" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.233546" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1326" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="288" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.218102" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1327" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="288" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.199982" total="16" passed="16" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1051" name="FactionEconomyTests" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.104682" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1058" name="EconomyState_RoundTripsThroughSave" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.EconomyState_RoundTripsThroughSave" methodname="EconomyState_RoundTripsThroughSave" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="31862695" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.035972" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="FairTrade_TransfersItems_AndNudgesDemand" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.FairTrade_TransfersItems_AndNudgesDemand" methodname="FairTrade_TransfersItems_AndNudgesDemand" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="403778705" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.013133" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="Jewelry_TradeValue_DropsToZero_OnDay30Flashpoint" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.Jewelry_TradeValue_DropsToZero_OnDay30Flashpoint" methodname="Jewelry_TradeValue_DropsToZero_OnDay30Flashpoint" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="37915517" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.001556" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1054" name="PostDay30_AntiRadAndIodine_TenX_WaterIsGold" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.PostDay30_AntiRadAndIodine_TenX_WaterIsGold" methodname="PostDay30_AntiRadAndIodine_TenX_WaterIsGold" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="1052512282" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.001972" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1053" name="PreDay30_FoodExpensive_AntiRadCheap" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.PreDay30_FoodExpensive_AntiRadCheap" methodname="PreDay30_FoodExpensive_AntiRadCheap" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="365205589" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.000937" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1055" name="RefuseScout_DropsTrust_RaidAtMinus50" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.RefuseScout_DropsTrust_RaidAtMinus50" methodname="RefuseScout_DropsTrust_RaidAtMinus50" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="2011905225" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.012846" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1056" name="TradeScreen_BarterMath_UsesPhaseAndTrust" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.TradeScreen_BarterMath_UsesPhaseAndTrust" methodname="TradeScreen_BarterMath_UsesPhaseAndTrust" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="828669609" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.004654" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="WorldPhaseSystem_Day30_SetsFlashpoint_ForEconomy" fullname="AtomicWar.Tests.EditMode.FactionEconomyTests.WorldPhaseSystem_Day30_SetsFlashpoint_ForEconomy" methodname="WorldPhaseSystem_Day30_SetsFlashpoint_ForEconomy" classname="AtomicWar.Tests.EditMode.FactionEconomyTests" runstate="Runnable" seed="520396777" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.001633" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1096" name="HatchDefenseTests" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.019869" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1097" name="Acceptance_Raid50_Security20_BreachesAndStealsLoot" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.Acceptance_Raid50_Security20_BreachesAndStealsLoot" methodname="Acceptance_Raid50_Security20_BreachesAndStealsLoot" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="1404789596" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.008901" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1100" name="GuardAction_Execute_RegistersWithHatchDefense" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.GuardAction_Execute_RegistersWithHatchDefense" methodname="GuardAction_Execute_RegistersWithHatchDefense" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="1857235181" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.001643" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1099" name="GuardDuty_BoostsSecurity_AndDrainsFatigue" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.GuardDuty_BoostsSecurity_AndDrainsFatigue" methodname="GuardDuty_BoostsSecurity_AndDrainsFatigue" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="1190239261" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.000779" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1103" name="HatchModules_ContributeToSecurity" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.HatchModules_ContributeToSecurity" methodname="HatchModules_ContributeToSecurity" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="176900163" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.000636" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1098" name="HighSecurity_PlusWeapons_RepelsRaid_ConsumesAmmo" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.HighSecurity_PlusWeapons_RepelsRaid_ConsumesAmmo" methodname="HighSecurity_PlusWeapons_RepelsRaid_ConsumesAmmo" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="1255917854" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.002028" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1102" name="NoiseRaid_GeneratorOutside_CanBuildEvent" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.NoiseRaid_GeneratorOutside_CanBuildEvent" methodname="NoiseRaid_GeneratorOutside_CanBuildEvent" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="2053042196" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.001037" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1101" name="PreDay30_RaidBlockedUnlessForced" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.PreDay30_RaidBlockedUnlessForced" methodname="PreDay30_RaidBlockedUnlessForced" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="1883538642" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.000297" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1104" name="TraumaRoll_OnSevereBreach_InjuresSurvivors" fullname="AtomicWar.Tests.EditMode.HatchDefenseTests.TraumaRoll_OnSevereBreach_InjuresSurvivors" methodname="TraumaRoll_OnSevereBreach_InjuresSurvivors" classname="AtomicWar.Tests.EditMode.HatchDefenseTests" runstate="Runnable" seed="985209197" result="Passed" start-time="2026-08-03 15:11:14Z" end-time="2026-08-03 15:11:14Z" duration="0.001269" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="14" result="Passed" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.1252965">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="325" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.125297" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1363" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="325" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.110573" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="316340" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1364" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="325" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.107270" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1365" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="325" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.104791" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1366" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="325" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.101970" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1219" name="PhotoperiodSmokeTest" fullname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" classname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.081777" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1223" name="GrowLight_Running_PreventsListless" fullname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest.GrowLight_Running_PreventsListless" methodname="GrowLight_Running_PreventsListless" classname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" runstate="Runnable" seed="1185579831" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.039009" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1220" name="Simulate60Days_LightExposure_CorrelatesWithDaylightCurve" fullname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest.Simulate60Days_LightExposure_CorrelatesWithDaylightCurve" methodname="Simulate60Days_LightExposure_CorrelatesWithDaylightCurve" classname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" runstate="Runnable" seed="81551349" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.003728" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1221" name="Simulate60Days_Listless_AppearsOnlyInDarkestStretch" fullname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest.Simulate60Days_Listless_AppearsOnlyInDarkestStretch" methodname="Simulate60Days_Listless_AppearsOnlyInDarkestStretch" classname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" runstate="Runnable" seed="1994678632" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.005168" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[PhotoperiodSmokeTest] First Listless on day 21; last not-Listless day 20
+]]></output>
+              </test-case>
+              <test-case id="1224" name="Simulate60Days_NoNaN_NoNullRef" fullname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest.Simulate60Days_NoNaN_NoNullRef" methodname="Simulate60Days_NoNaN_NoNullRef" classname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" runstate="Runnable" seed="499216206" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.008016" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1222" name="SunLampSession_DuringDarkStretch_ClearsListless" fullname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest.SunLampSession_DuringDarkStretch_ClearsListless" methodname="SunLampSession_DuringDarkStretch_ClearsListless" classname="AtomicWar.Tests.EditMode.PhotoperiodSmokeTest" runstate="Runnable" seed="119216806" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.001973" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1225" name="PhotoperiodTests" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.009853" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1228" name="AshBlackout_OverridesWeatherClarity" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.AshBlackout_OverridesWeatherClarity" methodname="AshBlackout_OverridesWeatherClarity" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="234673297" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.002004" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1226" name="DaylightHours_TracksSeasonCurve_MonotonicallyDeclines" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.DaylightHours_TracksSeasonCurve_MonotonicallyDeclines" methodname="DaylightHours_TracksSeasonCurve_MonotonicallyDeclines" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="1842808996" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.001020" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1233" name="GrowLight_Active_ProvidesLightExposureBoost" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.GrowLight_Active_ProvidesLightExposureBoost" methodname="GrowLight_Active_ProvidesLightExposureBoost" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="1704048736" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000675" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1229" name="LightExposure_Falls_InTotalDark_Rises_InDaylight" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.LightExposure_Falls_InTotalDark_Rises_InDaylight" methodname="LightExposure_Falls_InTotalDark_Rises_InDaylight" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="2078520734" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000323" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1230" name="ListlessStatus_Appears_AfterProlangedDarkness" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.ListlessStatus_Appears_AfterProlangedDarkness" methodname="ListlessStatus_Appears_AfterProlangedDarkness" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="1952349779" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000300" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1234" name="PhotoperiodState_RoundTrips_Correctly" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.PhotoperiodState_RoundTrips_Correctly" methodname="PhotoperiodState_RoundTrips_Correctly" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="679002497" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000624" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1227" name="SkyClarity_MapsWeatherKind_Correctly" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.SkyClarity_MapsWeatherKind_Correctly" methodname="SkyClarity_MapsWeatherKind_Correctly" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="219830131" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000389" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1231" name="SunLampSession_BoostsLightExposure_ClearsListless" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.SunLampSession_BoostsLightExposure_ClearsListless" methodname="SunLampSession_BoostsLightExposure_ClearsListless" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="1582723911" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000264" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1232" name="VitaminD_FallsInDark_AppliesHiddenHealthPenalty" fullname="AtomicWar.Tests.EditMode.PhotoperiodTests.VitaminD_FallsInDark_AppliesHiddenHealthPenalty" methodname="VitaminD_FallsInDark_AppliesHiddenHealthPenalty" classname="AtomicWar.Tests.EditMode.PhotoperiodTests" runstate="Runnable" seed="47104903" result="Passed" start-time="2026-08-03 15:56:16Z" end-time="2026-08-03 15:56:16Z" duration="0.000276" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

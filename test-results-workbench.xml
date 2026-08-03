@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="9" result="Passed" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.1090828">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="270" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.109083" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1304" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="270" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.097262" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="274629" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1305" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="270" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.095100" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1306" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="270" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.093388" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1307" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="270" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.091382" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1284" name="WorkbenchEconomyTests" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" testcasecount="9" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.086444" total="9" passed="9" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1287" name="Acceptance_DisassembleRadio_ThenRepairGeiger_WithScrap" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.Acceptance_DisassembleRadio_ThenRepairGeiger_WithScrap" methodname="Acceptance_DisassembleRadio_ThenRepairGeiger_WithScrap" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="245214615" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.045599" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1289" name="Consumables_CannotDisassemble" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.Consumables_CannotDisassemble" methodname="Consumables_CannotDisassemble" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="152769502" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.000645" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1285" name="Disassemble_BrokenRadio_DestroysItem_AndYieldsElectronicScrap" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.Disassemble_BrokenRadio_DestroysItem_AndYieldsElectronicScrap" methodname="Disassemble_BrokenRadio_DestroysItem_AndYieldsElectronicScrap" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="150247111" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.004263" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1288" name="RecalibrateGeiger_RequiresElectronicScrap" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.RecalibrateGeiger_RequiresElectronicScrap" methodname="RecalibrateGeiger_RequiresElectronicScrap" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="1016637219" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.002164" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1286" name="Repair_BrokenGeiger_WithScrap_ClearsBroken" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.Repair_BrokenGeiger_WithScrap_ClearsBroken" methodname="Repair_BrokenGeiger_WithScrap_ClearsBroken" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="1092237529" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.000684" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1292" name="Scavenge_PrioritizesJunk_WhenElectronicScrapNeededForCriticalRepair" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.Scavenge_PrioritizesJunk_WhenElectronicScrapNeededForCriticalRepair" methodname="Scavenge_PrioritizesJunk_WhenElectronicScrapNeededForCriticalRepair" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="1939922917" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.004128" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1290" name="ScrapMaterials_CannotDisassemble" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.ScrapMaterials_CannotDisassemble" methodname="ScrapMaterials_CannotDisassemble" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="976722815" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.000338" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1293" name="StationOffline_BlocksDisassembleAndRepair" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.StationOffline_BlocksDisassembleAndRepair" methodname="StationOffline_BlocksDisassembleAndRepair" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="1905663047" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.000404" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1291" name="WorkbenchUI_ListsDisassembleAndRepair_FromItemDefinitions" fullname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests.WorkbenchUI_ListsDisassembleAndRepair_FromItemDefinitions" methodname="WorkbenchUI_ListsDisassembleAndRepair_FromItemDefinitions" classname="AtomicWar.Tests.EditMode.WorkbenchEconomyTests" runstate="Runnable" seed="1411353814" result="Passed" start-time="2026-08-03 14:57:04Z" end-time="2026-08-03 14:57:04Z" duration="0.004031" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="20" result="Passed" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.1424929">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="328" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.142493" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1366" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="328" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.131555" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="321652" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1367" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="328" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.130412" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1368" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="328" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.129677" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1369" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="328" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.128911" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1060" name="FactionHatchIntegrationTests" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" testcasecount="20" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.123596" total="20" passed="20" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1068" name="CanDemandParley_False_WithoutRepel_True_AfterOneRepel" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.CanDemandParley_False_WithoutRepel_True_AfterOneRepel" methodname="CanDemandParley_False_WithoutRepel_True_AfterOneRepel" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1730666125" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.040739" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1069" name="DemandParley_AfterRepel_SurrendersAndBlocksRaids" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.DemandParley_AfterRepel_SurrendersAndBlocksRaids" methodname="DemandParley_AfterRepel_SurrendersAndBlocksRaids" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1276166641" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.011431" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1071" name="EconomySave_RoundTripsAggressionSuccessionSurrender" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.EconomySave_RoundTripsAggressionSuccessionSurrender" methodname="EconomySave_RoundTripsAggressionSuccessionSurrender" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1545837445" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.003585" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1072" name="EconomySave_RoundTripsLastRepelledFactionId" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.EconomySave_RoundTripsLastRepelledFactionId" methodname="EconomySave_RoundTripsLastRepelledFactionId" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1710997174" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.000494" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1077" name="FactionRadioIntercepts_AutoSurrender_UsesSurrenderKind" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.FactionRadioIntercepts_AutoSurrender_UsesSurrenderKind" methodname="FactionRadioIntercepts_AutoSurrender_UsesSurrenderKind" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1684390480" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.004677" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1076" name="FactionRadioIntercepts_SuccessionParleyAndHatchRepel" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.FactionRadioIntercepts_SuccessionParleyAndHatchRepel" methodname="FactionRadioIntercepts_SuccessionParleyAndHatchRepel" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="2037512485" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.002297" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="ForceSurrender_AfterBreachPath_StillEndsHostility" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ForceSurrender_AfterBreachPath_StillEndsHostility" methodname="ForceSurrender_AfterBreachPath_StillEndsHostility" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="226186480" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.005610" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="HighAggression_HitsHarderThanLowAggression" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.HighAggression_HitsHarderThanLowAggression" methodname="HighAggression_HitsHarderThanLowAggression" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="27900546" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.000576" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="KeybindDocs_PlayerInputHandler_ExposesWorkbenchAndHatchKeys" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.KeybindDocs_PlayerInputHandler_ExposesWorkbenchAndHatchKeys" methodname="KeybindDocs_PlayerInputHandler_ExposesWorkbenchAndHatchKeys" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="325732172" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.001010" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1079" name="ParleyBarterSoftener_ImprovesSellAndBuyAfterSurrender" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ParleyBarterSoftener_ImprovesSellAndBuyAfterSurrender" methodname="ParleyBarterSoftener_ImprovesSellAndBuyAfterSurrender" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="558865732" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.001458" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1075" name="ParleyOffer_ViaEventRunner_DemandParleyChoice_AppliesSurrender" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ParleyOffer_ViaEventRunner_DemandParleyChoice_AppliesSurrender" methodname="ParleyOffer_ViaEventRunner_DemandParleyChoice_AppliesSurrender" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1990418379" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.004045" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1080" name="ParleyOfferEvent_FactionFlavor_UsesChannelTagsAndDistinctCopy" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ParleyOfferEvent_FactionFlavor_UsesChannelTagsAndDistinctCopy" methodname="ParleyOfferEvent_FactionFlavor_UsesChannelTagsAndDistinctCopy" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="2089995203" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.001666" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1073" name="ParleyOfferEvent_HasDemandTradeAndDismissChoices" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ParleyOfferEvent_HasDemandTradeAndDismissChoices" methodname="ParleyOfferEvent_HasDemandTradeAndDismissChoices" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1686989340" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.000924" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1074" name="ParleyOfferPrompt_BeginTimeoutAndResolve" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.ParleyOfferPrompt_BeginTimeoutAndResolve" methodname="ParleyOfferPrompt_BeginTimeoutAndResolve" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1201961075" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.001547" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1078" name="RadioInterceptHUD_Push_ShowsStatusAndDetail" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.RadioInterceptHUD_Push_ShowsStatusAndDetail" methodname="RadioInterceptHUD_Push_ShowsStatusAndDetail" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1736130575" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.003676" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="Succession_BlendsTrust_AndBumpsGeneration" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.Succession_BlendsTrust_AndBumpsGeneration" methodname="Succession_BlendsTrust_AndBumpsGeneration" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1513655099" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.000730" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="TradeScreen_SurfacesLeaderAggressionAndParleyReady" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.TradeScreen_SurfacesLeaderAggressionAndParleyReady" methodname="TradeScreen_SurfacesLeaderAggressionAndParleyReady" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="715166925" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.003691" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="TrustDrop_ToRaidThreshold_LaunchesAggressionScaledHatchRaid" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.TrustDrop_ToRaidThreshold_LaunchesAggressionScaledHatchRaid" methodname="TrustDrop_ToRaidThreshold_LaunchesAggressionScaledHatchRaid" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="161040956" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.001617" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="TwoRepels_AutoSurrender_LiftsTrust_AndBlocksFurtherRaids" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.TwoRepels_AutoSurrender_LiftsTrust_AndBlocksFurtherRaids" methodname="TwoRepels_AutoSurrender_LiftsTrust_AndBlocksFurtherRaids" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1191662175" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.000768" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="WorkbenchUI_ListsAndInstallsHatchUpgrades" fullname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests.WorkbenchUI_ListsAndInstallsHatchUpgrades" methodname="WorkbenchUI_ListsAndInstallsHatchUpgrades" classname="AtomicWar.Tests.EditMode.FactionHatchIntegrationTests" runstate="Runnable" seed="1046335790" result="Passed" start-time="2026-08-03 16:08:36Z" end-time="2026-08-03 16:08:36Z" duration="0.009030" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

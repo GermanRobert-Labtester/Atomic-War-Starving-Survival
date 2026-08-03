@@ -15,8 +15,7 @@
         "AtomicWar._Game.Crafting",
         "AtomicWar._Game.Data",
         "AtomicWar._Game.Medical",
-        "AtomicWar._Game.Economy",
-        "AtomicWar._Game.Flashpoint"
+        "AtomicWar._Game.Economy"
     ],
     "includePlatforms": [
         "Editor"
