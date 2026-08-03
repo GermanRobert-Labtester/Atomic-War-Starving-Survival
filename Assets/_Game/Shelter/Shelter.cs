@@ -271,6 +271,27 @@ namespace AtomicWar._Game.Shelter
         }
 
         // -----------------------------------------------------------------
+        // Room ids (derived from modules)
+        // -----------------------------------------------------------------
+
+        /// <summary>Every unique RoomId across all installed modules. Empty
+        /// list when no modules have a RoomId. Used by the RoomAssignmentHUD
+        /// to build the room dropdown and by the MentalBreakSystem to filter
+        /// passive morale drain by room.</summary>
+        public List<string> GetRoomIds()
+        {
+            var ids = new List<string>();
+            if (_modules == null) return ids;
+            for (int i = 0; i < _modules.Count; i++)
+            {
+                var m = _modules[i];
+                if (m == null || string.IsNullOrEmpty(m.RoomId)) continue;
+                if (!ids.Contains(m.RoomId)) ids.Add(m.RoomId);
+            }
+            return ids;
+        }
+
+        // -----------------------------------------------------------------
         // Room adjacency (sleep noise, contamination spread hooks)
         // -----------------------------------------------------------------
 

@@ -765,6 +765,13 @@ namespace AtomicWar._Game.Core
             if (id == "sv_elena") sv.MedicalSkill = 0.85f;
             else if (id == "sv_marcus") sv.MedicalSkill = 0.35f;
             else sv.MedicalSkill = 0.25f;
+            // Default room assignment so the MentalBreakSystem has room
+            // boundaries from day 1 (Prompt #29 follow-up). Elena stays
+            // near the bed in quarters; Marcus watches the stores; Suki
+            // is in the entry hallway (closest to the hatch).
+            if (id == "sv_elena") sv.CurrentRoomId = "quarters";
+            else if (id == "sv_marcus") sv.CurrentRoomId = "stores";
+            else if (id == "sv_suki") sv.CurrentRoomId = "entry";
             Survivors.Add(sv);
             NeedsSystem.Register(sv);
             RadiationSystem.Register(sv);
@@ -1005,6 +1012,7 @@ namespace AtomicWar._Game.Core
 
             _hud.BindEventRunner(EventRunner);
             _hud.BindEconomy(EconomySystem);
+            _hud.BindRoomAssignment(Survivors, Shelter);
             _hud.BindPowerNetwork(PowerNetwork);
             _hud.BindHatchDefense(HatchDefenseSystem);
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
@@ -1157,6 +1165,23 @@ namespace AtomicWar._Game.Core
         public void ToggleHatchDefense()
         {
             _hud?.HatchDefenseHUD?.Toggle();
+        }
+
+        /// <summary>
+        /// Open trade with a faction stockpile (UI). Hostile factions still open
+        /// so the player can demand parley after a hatch repel.
+        /// </summary>
+        public bool OpenTrade(string factionId, Inventory.Inventory factionStock)
+        {
+            if (_hud?.TradeScreenUI == null || Inventory == null || factionStock == null)
+                return false;
+            return _hud.TradeScreenUI.Open(factionId, Inventory, factionStock);
+        }
+
+        /// <summary>Demand parley / surrender on the open trade screen (keybind P).</summary>
+        public bool DemandTradeParley()
+        {
+            return _hud?.TradeScreenUI != null && _hud.TradeScreenUI.TryDemandParley();
         }
 
         /// <summary>Send a survivor to survey a location with a working geiger.</summary>

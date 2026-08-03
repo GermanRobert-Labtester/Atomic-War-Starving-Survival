@@ -11,6 +11,7 @@ using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -169,8 +170,8 @@ namespace AtomicWar.Tests.EditMode
                 "Unassigned survivor should lose 1 morale per hour.");
             Assert.AreEqual(59f, unassigned2.Needs.Morale, 0.01f,
                 "Unassigned survivor should lose 1 morale per hour.");
-            Assert.AreEqual(60f, inRoomA.Needs.Morale, 0.01f,
-                "Roomed survivor should NOT drain when broken is unassigned.");
+            Assert.AreEqual(59f, inRoomA.Needs.Morale, 0.01f,
+                "When broken is unassigned, ALL survivors drain (including roomed ones — whole-bunker fallback).");
         }
 
         // -------------------------------------------------------------------
@@ -265,7 +266,7 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.IsTrue(prompt.IsActive, "Begin must activate the prompt.");
             Assert.AreSame(exp, prompt.ActiveExpedition);
-            Assert.AreEqual(3f, prompt.TimeRemainingGameHours, 0.001f);
+            Assert.AreEqual(3f, prompt.HoursRemaining, 0.001f);
             Assert.AreSame(exp, firedExp, "Begin must fire OnPromptReady.");
         }
 
@@ -281,7 +282,7 @@ namespace AtomicWar.Tests.EditMode
 
             prompt.Tick(1f);
             Assert.IsTrue(prompt.IsActive, "1h of a 2h timeout: still active.");
-            Assert.AreEqual(1f, prompt.TimeRemainingGameHours, 0.001f);
+            Assert.AreEqual(1f, prompt.HoursRemaining, 0.001f);
 
             prompt.Tick(0.5f);
             Assert.IsTrue(prompt.IsActive, "0.5h on a 1h remaining: still active.");
@@ -327,6 +328,116 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.AreEqual(1, fires, "Begin-while-active is a no-op; OnPromptReady fires once.");
             Assert.AreSame(exp1, prompt.ActiveExpedition, "Active expedition unchanged.");
+        }
+
+        // -------------------------------------------------------------------
+        // (d) Room-assignment HUD logic
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void RoomAssignmentHUD_AssignSurvivorToRoom_MovesSurvivor()
+        {
+            var sv = MakeSurvivor("sv_move", RiskBiasTrait.Realist);
+            var other = MakeSurvivor("sv_other", RiskBiasTrait.Realist);
+
+            var hud = new GameObject().AddComponent<RoomAssignmentHUD>();
+            hud.Bind(_allSurvivors, _shelter);
+
+            // No assignment yet.
+            Assert.IsTrue(string.IsNullOrEmpty(sv.CurrentRoomId), "Setup: no room assigned.");
+
+            // Assign.
+            bool moved = hud.AssignSurvivorToRoom("sv_move", "quarters");
+            Assert.IsTrue(moved);
+            Assert.AreEqual("quarters", sv.CurrentRoomId);
+            Assert.IsTrue(string.IsNullOrEmpty(other.CurrentRoomId),
+                "Other survivor must stay unassigned.");
+        }
+
+        [Test]
+        public void RoomAssignmentHUD_AssignSurvivorToRoom_SameRoom_NoOp()
+        {
+            var sv = MakeSurvivor("sv_same", RiskBiasTrait.Realist);
+            sv.CurrentRoomId = "stores";
+            var hud = new GameObject().AddComponent<RoomAssignmentHUD>();
+            hud.Bind(_allSurvivors, _shelter);
+
+            bool moved = hud.AssignSurvivorToRoom("sv_same", "stores");
+            Assert.IsFalse(moved, "Reassigning to the same room is a no-op.");
+            Assert.AreEqual("stores", sv.CurrentRoomId);
+        }
+
+        [Test]
+        public void RoomAssignmentHUD_GetAssignmentRows_ShowsCorrectLabels()
+        {
+            var svA = MakeSurvivor("sv_rowA", RiskBiasTrait.Realist);
+            var svB = MakeSurvivor("sv_rowB", RiskBiasTrait.Realist);
+            svA.CurrentRoomId = "quarters";
+            // svB has no room.
+
+            var hud = new GameObject().AddComponent<RoomAssignmentHUD>();
+            hud.Bind(_allSurvivors, _shelter);
+
+            var rows = hud.GetAssignmentRows();
+            Assert.AreEqual(2, rows.Count);
+            // Unassigned should show the "Common Area" label.
+            bool foundQuarters = false;
+            bool foundCommon = false;
+            for (int i = 0; i < rows.Count; i++)
+            {
+                if (rows[i].Survivor.Id == "sv_rowA" && rows[i].CurrentRoomLabel == "quarters") foundQuarters = true;
+                if (rows[i].Survivor.Id == "sv_rowB" && rows[i].CurrentRoomLabel == hud.UnassignedRoomLabel) foundCommon = true;
+            }
+            Assert.IsTrue(foundQuarters, "Assigned survivor should show the room id.");
+            Assert.IsTrue(foundCommon, "Unassigned survivor should show the Common Area label.");
+        }
+
+        [Test]
+        public void RoomAssignmentHUD_AssignAllUnassigned_MovesEveryoneWithoutARoom()
+        {
+            var sv1 = MakeSurvivor("sv_un1", RiskBiasTrait.Realist);
+            var sv2 = MakeSurvivor("sv_un2", RiskBiasTrait.Realist);
+            var sv3 = MakeSurvivor("sv_un3", RiskBiasTrait.Realist);
+            sv3.CurrentRoomId = "entry"; // already assigned
+
+            var hud = new GameObject().AddComponent<RoomAssignmentHUD>();
+            hud.Bind(_allSurvivors, _shelter);
+            hud.AssignAllUnassigned("quarters");
+
+            Assert.AreEqual("quarters", sv1.CurrentRoomId);
+            Assert.AreEqual("quarters", sv2.CurrentRoomId);
+            Assert.AreEqual("entry", sv3.CurrentRoomId,
+                "Already-assigned survivor must not be moved.");
+        }
+
+        [Test]
+        public void RoomAssignmentHUD_EventFiresOnEachChange()
+        {
+            var sv = MakeSurvivor("sv_event", RiskBiasTrait.Realist);
+            var hud = new GameObject().AddComponent<RoomAssignmentHUD>();
+            hud.Bind(_allSurvivors, _shelter);
+
+            Survivor firedSv = null;
+            string firedRoom = null;
+            hud.OnRoomAssignmentChanged += (s, r) => { firedSv = s; firedRoom = r; };
+
+            hud.AssignSurvivorToRoom("sv_event", "entry");
+            Assert.AreSame(sv, firedSv);
+            Assert.AreEqual("entry", firedRoom);
+        }
+
+        [Test]
+        public void Shelter_GetRoomIds_ReturnsUniqueIdsFromModules()
+        {
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance("air_filtration", 1) { RoomId = "plant" });
+            shelter.AddModule(new ShelterModuleInstance("bed", 1) { RoomId = "quarters" });
+            shelter.AddModule(new ShelterModuleInstance("workbench", 1) { RoomId = "plant" }); // duplicate
+
+            var ids = shelter.GetRoomIds();
+            Assert.AreEqual(2, ids.Count, "Duplicate RoomIds should be collapsed.");
+            Assert.IsTrue(ids.Contains("plant"));
+            Assert.IsTrue(ids.Contains("quarters"));
         }
     }
 }

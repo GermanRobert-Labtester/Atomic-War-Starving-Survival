@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
@@ -28,6 +29,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private MapScreenUI _mapScreenUi;
         [SerializeField] private WorkbenchUI _workbenchUi;
         [SerializeField] private HatchDefenseHUD _hatchDefenseHud;
+        [SerializeField] private RoomAssignmentHUD _roomAssignmentHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -44,6 +46,7 @@ namespace AtomicWar._Game.UI
         public MapScreenUI MapScreenUI { get { EnsureWidgetReferences(); return _mapScreenUi; } }
         public WorkbenchUI WorkbenchUI { get { EnsureWidgetReferences(); return _workbenchUi; } }
         public HatchDefenseHUD HatchDefenseHUD { get { EnsureWidgetReferences(); return _hatchDefenseHud; } }
+        public RoomAssignmentHUD RoomAssignmentHUD { get { EnsureWidgetReferences(); return _roomAssignmentHud; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -65,6 +68,18 @@ namespace AtomicWar._Game.UI
             if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
             if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
             if (_hatchDefenseHud == null) _hatchDefenseHud = GetComponentInChildren<HatchDefenseHUD>() ?? gameObject.AddComponent<HatchDefenseHUD>();
+            if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
+        }
+
+        /// <summary>
+        /// Bind the room-assignment widget to the live survivor list and
+        /// shelter. Called once from GameBootstrap after the survivors
+        /// are created and the shelter is fully populated.
+        /// </summary>
+        public void BindRoomAssignment(IReadOnlyList<AtomicWar._Game.Survivors.Survivor> survivors, Shelter.Shelter shelter)
+        {
+            EnsureWidgetReferences();
+            _roomAssignmentHud?.Bind(survivors, shelter);
         }
 
         private void Update()
