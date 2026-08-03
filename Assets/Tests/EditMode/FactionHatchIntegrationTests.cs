@@ -297,6 +297,114 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(input.WorkbenchKey, Is.EqualTo(KeyCode.B));
             Assert.That(input.HatchDefenseKey, Is.EqualTo(KeyCode.H));
             Assert.That(input.MapKey, Is.EqualTo(KeyCode.M));
+            Assert.That(input.ParleyKey, Is.EqualTo(KeyCode.P),
+                "Trade parley / demand surrender is [P] when trade is open");
+        }
+
+        [Test]
+        public void CanDemandParley_False_WithoutRepel_True_AfterOneRepel()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.ScavengerCamp;
+            eco.SetTrust(fid, -80f);
+
+            Assert.That(eco.CanDemandParley(fid), Is.False,
+                "No hatch hold yet — parley must stay locked");
+            Assert.That(eco.LastRepelledFactionId, Is.EqualTo(string.Empty));
+
+            var blocked = eco.DemandParley(fid);
+            Assert.That(blocked.Applied, Is.False);
+            Assert.That(blocked.Message, Does.Contain("hold the hatch").IgnoreCase);
+
+            var raid = eco.TryLaunchRaid(fid, ignoreDayGate: true);
+            Assert.That(raid.Launched, Is.True);
+            Assert.That(raid.Repelled, Is.True);
+            Assert.That(eco.GetConsecutiveRepels(fid), Is.EqualTo(1));
+            Assert.That(eco.LastRepelledFactionId, Is.EqualTo(fid));
+            Assert.That(eco.CanDemandParley(fid), Is.True,
+                "One consecutive repel unlocks demand-parley");
+        }
+
+        [Test]
+        public void DemandParley_AfterRepel_SurrendersAndBlocksRaids()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.MilitaryRemnants;
+            eco.SetTrust(fid, -90f);
+            eco.SetRaidAggression(fid, 0.8f);
+            string leader = eco.GetLeaderName(fid);
+
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(eco.CanDemandParley(fid), Is.True);
+
+            FactionSurrenderResult seen = null;
+            eco.OnFactionSurrender += r => seen = r;
+
+            var result = eco.DemandParley(fid);
+            Assert.That(result.Applied, Is.True);
+            Assert.That(result.Auto, Is.False);
+            Assert.That(result.Message, Does.Contain("parley").IgnoreCase);
+            Assert.That(eco.HasSurrendered(fid), Is.True);
+            Assert.That(eco.CanDemandParley(fid), Is.False, "Already stood down");
+            Assert.That(eco.GetTrust(fid), Is.GreaterThan(eco.GetFaction(fid).raidThreshold));
+            Assert.That(eco.GetRaidAggression(fid), Is.LessThan(0.8f));
+            Assert.That(seen, Is.Not.Null);
+            Assert.That(seen.Applied, Is.True);
+
+            var blocked = eco.TryLaunchRaid(fid, ignoreDayGate: true);
+            Assert.That(blocked.Launched, Is.False);
+            Assert.That(blocked.Message, Does.Contain("stood down").IgnoreCase);
+            Assert.That(leader, Is.Not.Empty);
+        }
+
+        [Test]
+        public void TradeScreen_SurfacesLeaderAggressionAndParleyReady()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.ScavengerCamp;
+            eco.SetTrust(fid, -80f);
+            eco.SetRaidAggression(fid, 0.65f);
+            eco.ApplySuccession(fid, "Marrow Road Boss", 0.2f, 0.55f);
+
+            var player = new Inventory { Capacity = 20, MaxWeight = 100f };
+            var stock = new Inventory { Capacity = 20, MaxWeight = 100f };
+
+            var go = new GameObject("TradeParleyUi");
+            _toDestroy.Add(go);
+            var ui = go.AddComponent<TradeScreenUI>();
+            ui.Bind(eco);
+            Assert.IsTrue(ui.Open(fid, player, stock));
+
+            // Before repel: strip shows leader + aggression, no PARLEY READY
+            Assert.That(ui.LeaderName, Is.EqualTo("Marrow Road Boss"));
+            Assert.That(ui.Aggression, Is.EqualTo(0.55f).Within(Eps));
+            Assert.That(ui.SuccessionGeneration, Is.EqualTo(1));
+            Assert.That(ui.CanDemandParley, Is.False);
+            Assert.That(ui.FactionStatusStrip, Does.Contain("Leader: Marrow Road Boss"));
+            Assert.That(ui.FactionStatusStrip, Does.Contain("Aggression"));
+            Assert.That(ui.FactionStatusStrip, Does.Not.Contain("PARLEY READY"));
+
+            Assert.That(ui.TryDemandParley(), Is.False, "Cannot parley without a hatch hold");
+
+            // One repel unlocks strip + TryDemandParley
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            ui.Recalculate();
+            Assert.That(ui.CanDemandParley, Is.True);
+            Assert.That(ui.ConsecutiveRepels, Is.EqualTo(1));
+            Assert.That(ui.FactionStatusStrip, Does.Contain("PARLEY READY [P]"));
+            Assert.That(ui.FactionStatusStrip, Does.Contain("Hatch holds ×1"));
+            Assert.That(ui.BuildQuoteSummary(), Does.Contain("[P] Demand parley"));
+
+            FactionSurrenderResult uiEvent = null;
+            ui.OnParleyResolved += r => uiEvent = r;
+            Assert.That(ui.TryDemandParley(), Is.True);
+            Assert.That(ui.HasSurrendered, Is.True);
+            Assert.That(ui.CanDemandParley, Is.False);
+            Assert.That(ui.FactionStatusStrip, Does.Contain("STOOD DOWN"));
+            Assert.That(ui.LastParleyMessage, Does.Contain("parley").IgnoreCase);
+            Assert.That(uiEvent, Is.Not.Null);
+            Assert.That(uiEvent.Applied, Is.True);
+            Assert.That(eco.HasSurrendered(fid), Is.True);
         }
 
         [Test]

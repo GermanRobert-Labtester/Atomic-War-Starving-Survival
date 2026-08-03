@@ -10,8 +10,8 @@ namespace AtomicWar._Game.UI
 {
     /// <summary>
     /// Barter screen: dynamically prices every line from WorldPhase + faction Trust
-    /// via DynamicEconomySystem. Presentation is data-driven (no hardcoded values);
-    /// Bind/Open/TryConfirm are the API GameBootstrap and tests use.
+    /// via DynamicEconomySystem. Shows leader / aggression / parley after a hatch
+    /// repel. Bind/Open/TryConfirm/TryDemandParley are the API GameBootstrap and tests use.
     /// </summary>
     public class TradeScreenUI : MonoBehaviour
     {
@@ -24,11 +24,25 @@ namespace AtomicWar._Game.UI
         public float FactionAskValue { get; private set; }
         public bool IsFair { get; private set; }
 
+        /// <summary>Runtime leader name for the open faction.</summary>
+        public string LeaderName { get; private set; } = string.Empty;
+        /// <summary>Effective raid aggression 0..1.</summary>
+        public float Aggression { get; private set; }
+        public int SuccessionGeneration { get; private set; }
+        public int ConsecutiveRepels { get; private set; }
+        public bool HasSurrendered { get; private set; }
+        public bool CanDemandParley { get; private set; }
+        /// <summary>One-line status under the header (leader, aggression, parley).</summary>
+        public string FactionStatusStrip { get; private set; } = string.Empty;
+        /// <summary>Last parley / surrender message for the player.</summary>
+        public string LastParleyMessage { get; private set; } = string.Empty;
+
         public IReadOnlyList<BarterLine> PlayerOffers => _playerOffers;
         public IReadOnlyList<BarterLine> FactionAsks => _factionAsks;
 
         public event Action<bool> OnTradeClosed; // true if a trade completed
         public event Action OnQuoteChanged;
+        public event Action<FactionSurrenderResult> OnParleyResolved;
 
         private DynamicEconomySystem _economy;
         private Inventory.Inventory _playerInv;
@@ -53,7 +67,7 @@ namespace AtomicWar._Game.UI
             Stance = _economy.GetStance(factionId);
             if (Stance == TradeStance.HostileRaid || Stance == TradeStance.Refuse || Stance == TradeStance.Rob)
             {
-                // Hostile/rob/refuse: screen can still open for messaging, but confirm is blocked.
+                // Hostile/rob/refuse: screen can still open for messaging / parley, but confirm is blocked.
             }
 
             ActiveFactionId = factionId;
@@ -61,6 +75,7 @@ namespace AtomicWar._Game.UI
             _factionStock = factionStock;
             _playerOffers.Clear();
             _factionAsks.Clear();
+            LastParleyMessage = string.Empty;
             Phase = _economy.CurrentPhase;
             IsOpen = true;
             Recalculate();
@@ -76,6 +91,13 @@ namespace AtomicWar._Game.UI
             PlayerOfferValue = 0f;
             FactionAskValue = 0f;
             IsFair = false;
+            LeaderName = string.Empty;
+            Aggression = 0f;
+            SuccessionGeneration = 0;
+            ConsecutiveRepels = 0;
+            HasSurrendered = false;
+            CanDemandParley = false;
+            FactionStatusStrip = string.Empty;
             OnTradeClosed?.Invoke(traded);
         }
 
@@ -109,6 +131,10 @@ namespace AtomicWar._Game.UI
                 PlayerOfferValue = 0f;
                 FactionAskValue = 0f;
                 IsFair = false;
+                LeaderName = string.Empty;
+                Aggression = 0f;
+                FactionStatusStrip = string.Empty;
+                CanDemandParley = false;
                 return;
             }
 
@@ -118,6 +144,8 @@ namespace AtomicWar._Game.UI
             FactionAskValue = _economy.EvaluateOffer(_factionAsks, ActiveFactionId, playerSelling: false);
             IsFair = _economy.IsFairTrade(
                 _playerOffers, _factionAsks, ActiveFactionId, out _, out _);
+
+            RefreshFactionStrip();
             OnQuoteChanged?.Invoke();
         }
 
@@ -136,7 +164,23 @@ namespace AtomicWar._Game.UI
             return ok;
         }
 
-        /// <summary>Human-readable quote for HUD / tests (phase, trust, totals).</summary>
+        /// <summary>
+        /// Demand parley / surrender after holding the hatch (repel streak ≥ 1).
+        /// Keybind [P] when the trade screen is open.
+        /// </summary>
+        public bool TryDemandParley()
+        {
+            if (!IsOpen || _economy == null || string.IsNullOrEmpty(ActiveFactionId))
+                return false;
+
+            var result = _economy.DemandParley(ActiveFactionId);
+            LastParleyMessage = result.Message ?? string.Empty;
+            Recalculate();
+            OnParleyResolved?.Invoke(result);
+            return result.Applied;
+        }
+
+        /// <summary>Human-readable quote for HUD / tests (phase, trust, leader, parley).</summary>
         public string BuildQuoteSummary()
         {
             if (!IsOpen || _economy == null) return string.Empty;
@@ -144,11 +188,18 @@ namespace AtomicWar._Game.UI
             float trust = _economy.GetTrust(ActiveFactionId);
             var fac = _economy.GetFaction(ActiveFactionId);
             string name = fac != null ? fac.displayName : ActiveFactionId;
-            sb.AppendLine($"Trade — {name}");
+            sb.AppendLine($"Trade — {name}  [P] parley when available");
+            sb.AppendLine(FactionStatusStrip);
             sb.AppendLine($"Phase: {Phase}  Trust: {trust:0}  Stance: {Stance}");
             sb.AppendLine($"You offer: {PlayerOfferValue:0.0}");
             sb.AppendLine($"They ask:  {FactionAskValue:0.0}");
             sb.Append(IsFair ? "Deal is fair." : "Deal is short.");
+            if (CanDemandParley)
+                sb.AppendLine().Append("[P] Demand parley / surrender — they flinched at the hatch.");
+            else if (HasSurrendered)
+                sb.AppendLine().Append("They already stood down. Barter may reopen.");
+            if (!string.IsNullOrEmpty(LastParleyMessage))
+                sb.AppendLine().Append(LastParleyMessage);
             return sb.ToString();
         }
 
@@ -161,6 +212,32 @@ namespace AtomicWar._Game.UI
             if (_economy == null || item == null || string.IsNullOrEmpty(ActiveFactionId))
                 return 0f;
             return _economy.GetBarterUnitValue(item, ActiveFactionId, playerSelling: fromPlayerOffer);
+        }
+
+        private void RefreshFactionStrip()
+        {
+            LeaderName = _economy.GetLeaderName(ActiveFactionId);
+            Aggression = _economy.GetRaidAggression(ActiveFactionId);
+            SuccessionGeneration = _economy.GetSuccessionGeneration(ActiveFactionId);
+            ConsecutiveRepels = _economy.GetConsecutiveRepels(ActiveFactionId);
+            HasSurrendered = _economy.HasSurrendered(ActiveFactionId);
+            CanDemandParley = _economy.CanDemandParley(ActiveFactionId);
+
+            var sb = new StringBuilder();
+            sb.Append("Leader: ").Append(LeaderName);
+            if (SuccessionGeneration > 0)
+                sb.Append(" (gen ").Append(SuccessionGeneration).Append(')');
+            sb.Append("  ·  Aggression ").Append(Aggression.ToString("0.00"));
+            if (ConsecutiveRepels > 0)
+                sb.Append("  ·  Hatch holds ×").Append(ConsecutiveRepels);
+            if (HasSurrendered)
+                sb.Append("  ·  STOOD DOWN");
+            else if (CanDemandParley)
+                sb.Append("  ·  PARLEY READY [P]");
+            else if (Stance == TradeStance.HostileRaid)
+                sb.Append("  ·  hostile — hold the hatch to force parley");
+
+            FactionStatusStrip = sb.ToString();
         }
 
         private static void Upsert(List<BarterLine> list, ItemDefinition item, int amount)

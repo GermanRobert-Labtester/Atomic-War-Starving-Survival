@@ -299,9 +299,48 @@ namespace AtomicWar._Game.Economy
             return result;
         }
 
+        /// <summary>Last faction the player successfully repelled at the hatch (for UI).</summary>
+        public string LastRepelledFactionId { get; private set; } = string.Empty;
+
+        /// <summary>
+        /// True when the player can demand parley / surrender: at least one
+        /// consecutive hatch repel and the faction has not already stood down.
+        /// </summary>
+        public bool CanDemandParley(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId) || !_factions.ContainsKey(factionId)) return false;
+            if (HasSurrendered(factionId)) return false;
+            return GetConsecutiveRepels(factionId) >= 1;
+        }
+
+        /// <summary>
+        /// Player demands parley after holding the hatch (requires a repel streak).
+        /// Lifts trust and cuts aggression via <see cref="ForceSurrender"/>.
+        /// </summary>
+        public FactionSurrenderResult DemandParley(string factionId)
+        {
+            if (!CanDemandParley(factionId))
+            {
+                return new FactionSurrenderResult
+                {
+                    FactionId = factionId,
+                    Applied = false,
+                    Message = HasSurrendered(factionId)
+                        ? "Already stood down."
+                        : "They will not parley until you hold the hatch at least once."
+                };
+            }
+            var result = ApplySurrender(factionId, auto: false);
+            if (result.Applied)
+                result.Message = $"{GetLeaderName(factionId)} accepts the parley. The raid is called off.";
+            return result;
+        }
+
         /// <summary>
         /// Force a hostile faction to stand down after a successful defense.
         /// Lifts trust above raid threshold and cuts aggression.
+        /// Does not require a repel (scripted / test path); player UI should use
+        /// <see cref="DemandParley"/> after a repel.
         /// </summary>
         public FactionSurrenderResult ForceSurrender(string factionId)
         {
@@ -376,6 +415,7 @@ namespace AtomicWar._Game.Economy
 
             if (repelled)
             {
+                LastRepelledFactionId = factionId;
                 int n = GetConsecutiveRepels(factionId) + 1;
                 _consecutiveRepels[factionId] = n;
                 if (n >= RepelsForAutoSurrender)

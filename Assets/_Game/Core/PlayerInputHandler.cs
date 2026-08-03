@@ -26,11 +26,13 @@ namespace AtomicWar._Game.Core
         [SerializeField] private KeyCode _workbenchKey = KeyCode.B;
         [SerializeField] private KeyCode _hatchDefenseKey = KeyCode.H;
         [SerializeField] private KeyCode _mapKey = KeyCode.M;
+        [SerializeField] private KeyCode _parleyKey = KeyCode.P;
 
         /// <summary>Exposed for tests / rebinding docs.</summary>
         public KeyCode WorkbenchKey => _workbenchKey;
         public KeyCode HatchDefenseKey => _hatchDefenseKey;
         public KeyCode MapKey => _mapKey;
+        public KeyCode ParleyKey => _parleyKey;
 
         private void Awake()
         {
@@ -63,6 +65,13 @@ namespace AtomicWar._Game.Core
                 _bootstrap.ToggleHatchDefense();
             if (Input.GetKeyDown(_mapKey))
                 _bootstrap.OpenMapScreen();
+
+            // Trade: demand parley / surrender after a hatch repel
+            if (Input.GetKeyDown(_parleyKey) && IsTradeOpen())
+            {
+                _bootstrap.DemandTradeParley();
+                return;
+            }
 
             // Workbench lines: 1-9 execute when workbench is open (also hatch installs)
             if (IsWorkbenchOpen())
@@ -110,6 +119,16 @@ namespace AtomicWar._Game.Core
                 wb = hud != null ? hud.WorkbenchUI : null;
             }
             return wb != null && wb.IsOpen;
+        }
+
+        private bool IsTradeOpen()
+        {
+            if (_bootstrap == null) return false;
+            var hud = _bootstrap.GetComponentInChildren<UI.HUD>(true);
+            var trade = hud != null ? hud.TradeScreenUI : null;
+            if (trade == null)
+                trade = _bootstrap.GetComponentInChildren<UI.TradeScreenUI>(true);
+            return trade != null && trade.IsOpen;
         }
 
         private void TryConsumeByType(Survivor sv, ItemType type)
