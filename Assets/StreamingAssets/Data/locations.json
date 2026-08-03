@@ -30,5 +30,16 @@
     "dangerLevel": 8,
     "travelHours": 4.0,
     "baseRadsPerHour": 60
+  },
+  {
+    "id": "stranger_cache",
+    "displayName": "The Cartographer's Cache",
+    "description": "A sealed pre-war storage locker in a collapsed residential block. Coordinates from a stranger. Real or a trap — you won't know until you're there.",
+    "dangerLevel": 7,
+    "travelHours": 3.0,
+    "baseRadsPerHour": 25,
+    "requiredFlagId": "stranger_has_coordinates",
+    "cleanWaterRewardFlag": "stranger_given_clean_water",
+    "ambushFlag": "stranger_given_irradiated_water"
   }
 ]

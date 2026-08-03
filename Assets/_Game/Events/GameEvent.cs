@@ -32,6 +32,21 @@ namespace AtomicWar._Game.Events
         public string SurvivorBId;
         /// <summary>Affinity change applied to the pair (-100..100 scale).</summary>
         public float AffinityDelta;
+
+        // -----------------------------------------------------------------
+        // Deferred narrative chain scheduling (Prompt #43 — scheduleEvent).
+        // When ScheduleEventId is non-empty, EventRunner enqueues the named
+        // GameEvent to fire on ScheduleOnDay. This is how choices in Part 1
+        // schedule Part 2 or Part 3 of a multi-stage story arc.
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// snake_case id of the GameEvent to schedule. Leave empty for no scheduling.
+        /// Matches an id in the EventRunner pool or authored events.json chain.
+        /// </summary>
+        public string ScheduleEventId;
+        /// <summary>Campaign day on which ScheduleEventId should fire (absolute, not relative).</summary>
+        public int ScheduleOnDay;
     }
 
     [Serializable]
@@ -78,6 +93,40 @@ namespace AtomicWar._Game.Events
         public DelayedConsequence DelayedConsequence;
         public BeliefCheck BeliefCheck;
 
+        // -----------------------------------------------------------------
+        // Trait / trust / eventFlag gates (dynamic choice list)
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Trait gate: RiskBias name (Paranoid, Reckless, …) or "Medical".
+        /// Empty = no trait requirement. Evaluated against anyone in the bunker.
+        /// </summary>
+        public string RequiredTrait;
+
+        /// <summary>Faction id for trust gate (snake_case, e.g. scavenger_camp).</summary>
+        public string RequiredTrustFactionId;
+
+        /// <summary>
+        /// If set (not NaN), trust must be ≥ this value.
+        /// Example: ScavengerCamp &gt; 20 → RequiredTrustMin = 20.001 or use exclusive helpers.
+        /// </summary>
+        public float RequiredTrustMin = float.NaN;
+
+        /// <summary>
+        /// If set (not NaN), trust must be &lt; this value (strict).
+        /// Example: threatening emissary → RequiredTrustMaxExclusive = -20.
+        /// </summary>
+        public float RequiredTrustMaxExclusive = float.NaN;
+
+        /// <summary>Event flags that must already be true (prerequisites).</summary>
+        public List<string> RequiredEventFlags = new List<string>();
+
+        /// <summary>Flags injected into SaveSystem / EventContext when this choice resolves.</summary>
+        public List<string> SetEventFlags = new List<string>();
+
+        /// <summary>When true (default), failed gates hide the choice. When false, gray it out.</summary>
+        public bool HideIfGatesFail = true;
+
         /// <summary>Whether the given survivor's beliefs satisfy this choice's BeliefCheck (true if none set).</summary>
         public bool PassesBeliefCheck(Survivor survivor)
         {
@@ -99,6 +148,69 @@ namespace AtomicWar._Game.Events
             }
             return true;
         }
+
+        /// <summary>Trait + trust + eventFlag gates (BeliefCheck separate).</summary>
+        public bool PassesTraitAndTrustGates(EventContext context)
+        {
+            if (!string.IsNullOrEmpty(RequiredTrait))
+            {
+                if (context == null || !context.HasTraitInBunker(RequiredTrait))
+                    return false;
+            }
+
+            if (!string.IsNullOrEmpty(RequiredTrustFactionId) && context != null)
+            {
+                float trust = context.ResolveFactionTrust(RequiredTrustFactionId);
+                if (!float.IsNaN(RequiredTrustMin) && trust < RequiredTrustMin)
+                    return false;
+                if (!float.IsNaN(RequiredTrustMaxExclusive) && trust >= RequiredTrustMaxExclusive)
+                    return false;
+            }
+            else if ((!float.IsNaN(RequiredTrustMin) || !float.IsNaN(RequiredTrustMaxExclusive))
+                     && context == null)
+            {
+                return false;
+            }
+
+            if (RequiredEventFlags != null && RequiredEventFlags.Count > 0)
+            {
+                if (context == null) return false;
+                for (int i = 0; i < RequiredEventFlags.Count; i++)
+                {
+                    string f = RequiredEventFlags[i];
+                    if (string.IsNullOrEmpty(f)) continue;
+                    if (!context.HasEventFlag(f)) return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>All gates including BeliefCheck (primary survivor for belief).</summary>
+        public bool PassesAllGates(EventContext context)
+        {
+            if (!PassesTraitAndTrustGates(context)) return false;
+            if (BeliefCheck != null && BeliefCheck.HideIfFails
+                && !PassesBeliefCheck(context?.PrimarySurvivor))
+                return false;
+            // Soft belief check without HideIfFails still passes presentation;
+            // weighted pick handles reweight separately.
+            return true;
+        }
+    }
+
+    /// <summary>UI-facing view of a choice after gate evaluation.</summary>
+    [Serializable]
+    public class PresentedEventChoice
+    {
+        public EventChoice Choice;
+        public bool IsAvailable;
+        public bool IsGrayedOut;
+        public bool IsHidden;
+        public string GateFailReason;
+
+        public string ChoiceId => Choice != null ? Choice.ChoiceId : string.Empty;
+        public string Text => Choice != null ? Choice.Text : string.Empty;
     }
 
     [Serializable]
@@ -114,6 +226,8 @@ namespace AtomicWar._Game.Events
         public float MinSurvivorHunger = -1f;
         public string RequiredItemId;
         public string RequiredFlagId;
+        /// <summary>All listed eventFlags must be set for the event to fire.</summary>
+        public List<string> RequiredEventFlags = new List<string>();
     }
 
     /// <summary>
@@ -163,10 +277,44 @@ namespace AtomicWar._Game.Events
             if (!string.IsNullOrEmpty(conditions.RequiredFlagId) && !context.GetFlag(conditions.RequiredFlagId))
                 return false;
 
+            if (conditions.RequiredEventFlags != null)
+            {
+                for (int i = 0; i < conditions.RequiredEventFlags.Count; i++)
+                {
+                    string f = conditions.RequiredEventFlags[i];
+                    if (string.IsNullOrEmpty(f)) continue;
+                    if (!context.GetFlag(f)) return false;
+                }
+            }
+
             if (!string.IsNullOrEmpty(conditions.RequiredItemId) && (context.Inventory == null || context.Inventory.Count(new Inventory.ItemDefinition { id = conditions.RequiredItemId }) <= 0))
                 return false;
 
             return true;
+        }
+
+        /// <summary>
+        /// Body text that may swap under low faction trust (threatening emissary).
+        /// </summary>
+        [TextArea(2, 4)]
+        public string threateningBodyText;
+
+        /// <summary>Faction id used for threatening body swap.</summary>
+        public string threateningFactionId;
+
+        /// <summary>When trust is strictly below this, use threateningBodyText if set.</summary>
+        public float threateningTrustBelow = -20f;
+
+        public string ResolveBodyText(EventContext context)
+        {
+            if (context != null
+                && !string.IsNullOrEmpty(threateningBodyText)
+                && !string.IsNullOrEmpty(threateningFactionId)
+                && context.ResolveFactionTrust(threateningFactionId) < threateningTrustBelow)
+            {
+                return threateningBodyText;
+            }
+            return bodyText;
         }
 
         public virtual void Apply()

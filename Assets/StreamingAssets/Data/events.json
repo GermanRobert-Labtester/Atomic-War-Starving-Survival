@@ -208,5 +208,183 @@
     "bodyText": "Last night the artillery reached a fever pitch, shells falling close enough to feel in the floor. By morning, no gunfire at all. Just the wind against the hatch. Nobody slept through it.",
     "weight": 1.0,
     "minDay": 29
+  },
+
+  {
+    "id": "silent_knock_part1",
+    "title": "A Knock in the Ash",
+    "bodyText": "Three slow knocks on the outer hatch. Deliberate. Not debris, not wind. High fallout outside — the ash is coming down like grey snow. Whoever is out there cannot see, and neither can you.",
+    "weight": 0.0,
+    "minDay": 35,
+    "conditions": {
+      "MinDay": 35,
+      "RequireFalloutStorm": true
+    },
+    "choices": [
+      {
+        "choiceId": "open_hatch",
+        "text": "Open the hatch. Pull them in.",
+        "moraleDelta": 5.0,
+        "effects": [
+          { "targetNeed": "radiation", "needDelta": 12.0 },
+          { "setWorldFlag": "stranger_inside", "worldFlagValue": true },
+          { "scheduleEventId": "silent_knock_part2a_wakes", "scheduleOnDay": 37 }
+        ]
+      },
+      {
+        "choiceId": "ignore_hatch",
+        "text": "Say nothing. Step away from the hatch.",
+        "moraleDelta": -15.0,
+        "effects": [
+          { "setWorldFlag": "stranger_ignored", "worldFlagValue": true },
+          { "scheduleEventId": "silent_knock_part2b_scraping", "scheduleOnDay": 38 }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "silent_knock_part2a_wakes",
+    "title": "The Stranger Wakes",
+    "bodyText": "He opens his eyes on Day 37. Radiation burns across his neck. He was a cartographer. Says he knows a pre-war cache — sealed, untouched. Grid coordinates. He writes them down on a strip of packaging.\n\nHe needs water. He's barely holding on.",
+    "weight": 0.0,
+    "minDay": 37,
+    "conditions": {
+      "MinDay": 37,
+      "RequiredFlagId": "stranger_inside"
+    },
+    "choices": [
+      {
+        "choiceId": "give_clean_water",
+        "text": "Give him the clean water.",
+        "moraleDelta": 8.0,
+        "effects": [
+          { "itemId": "clean_water", "itemAmount": -1 },
+          { "setWorldFlag": "stranger_given_clean_water", "worldFlagValue": true },
+          { "setWorldFlag": "stranger_has_coordinates", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "give_irradiated_water",
+        "text": "Give him the irradiated water. He won't know the difference.",
+        "moraleDelta": -20.0,
+        "effects": [
+          { "itemId": "irradiated_water", "itemAmount": -1 },
+          { "setWorldFlag": "stranger_given_irradiated_water", "worldFlagValue": true },
+          { "setWorldFlag": "stranger_has_coordinates", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "silent_knock_part2b_scraping",
+    "title": "The Scraping",
+    "bodyText": "On Day 38, it starts again — but this time not knocking. A long, slow scraping against the outer hatch seal. Something methodical. Then silence for six hours. Then again. It continues for two days, then stops.",
+    "weight": 0.0,
+    "minDay": 38,
+    "conditions": {
+      "MinDay": 38,
+      "RequiredFlagId": "stranger_ignored"
+    },
+    "choices": [
+      {
+        "choiceId": "scraping_accept",
+        "text": "You made your choice. Keep the hatch sealed.",
+        "moraleDelta": -10.0,
+        "effects": [
+          { "setWorldFlag": "stranger_died_outside", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "silent_knock_part3_coordinates",
+    "title": "The Coordinates",
+    "bodyText": "The address the stranger wrote. Grid reference for what he called a 'pristine pre-war cache'. Could be medicine, sealed food, batteries. Could be exactly what it says on the paper.\n\nYou have his word. And the memory of the water you gave him.",
+    "weight": 0.0,
+    "minDay": 39,
+    "conditions": {
+      "MinDay": 39,
+      "RequiredFlagId": "stranger_has_coordinates"
+    },
+    "choices": [
+      {
+        "choiceId": "send_expedition",
+        "text": "Send someone to the coordinates.",
+        "moraleDelta": 0.0,
+        "effects": [
+          { "setWorldFlag": "stranger_cache_expedition_launched", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "discard_coordinates",
+        "text": "Burn the paper. Don't risk it.",
+        "moraleDelta": -5.0,
+        "effects": [
+          { "setWorldFlag": "stranger_cache_abandoned", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "the_emissary",
+    "title": "The Emissary",
+    "bodyText": "Someone from the scavenger camp stands at the hatch. Hands empty, voice dry. They want water — enough for three, they say. The canteen at their hip is dented and light.",
+    "threateningBodyText": "The same voice at the hatch, but the tone has changed. Not asking. They know what you have. The words are short: open up, or they come back with friends.",
+    "threateningFactionId": "scavenger_camp",
+    "threateningTrustBelow": -20.0,
+    "weight": 1.5,
+    "minDay": 5,
+    "conditions": {
+      "MinDay": 5
+    },
+    "choices": [
+      {
+        "choiceId": "share_water",
+        "text": "Pass a jug of clean water through the hatch.",
+        "moraleDelta": 4.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": 15.0,
+        "setEventFlags": ["shared_water_with_emissary"],
+        "effects": [
+          { "itemId": "clean_water", "itemAmount": -1 }
+        ]
+      },
+      {
+        "choiceId": "refuse_water",
+        "text": "Keep the seal. Tell them we have nothing to spare.",
+        "moraleDelta": -3.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -12.0,
+        "setEventFlags": ["refused_emissary_water"]
+      },
+      {
+        "choiceId": "lie_purifier_broken",
+        "text": "Lie and say the purifier is broken.",
+        "moraleDelta": -1.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": 0.0,
+        "requiredTrait": "Paranoid",
+        "requiredTrustFactionId": "scavenger_camp",
+        "requiredTrustMin": -20.0,
+        "hideIfGatesFail": true,
+        "setEventFlags": ["lied_purifier_broken"]
+      },
+      {
+        "choiceId": "preemptive_fire_hatch",
+        "text": "Preemptively open fire through the hatch.",
+        "moraleDelta": -12.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -40.0,
+        "requiredTrait": "Paranoid",
+        "requiredTrustFactionId": "scavenger_camp",
+        "requiredTrustMaxExclusive": -20.0,
+        "hideIfGatesFail": true,
+        "setEventFlags": ["fired_on_emissary_hatch"]
+      }
+    ]
   }
 ]
