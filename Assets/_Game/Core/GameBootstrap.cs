@@ -1085,8 +1085,18 @@ namespace AtomicWar._Game.Core
                 AllSurvivors = Survivors,
                 MentalBreak = MentalBreakSystem,
                 CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f,
-                IndoorTemperatureC = indoorTemp
+                IndoorTemperatureC = indoorTemp,
+                // Trait/trust gates + eventFlags (SaveSystem-backed world flags).
+                GetFactionTrust = factionId =>
+                    EconomySystem != null ? EconomySystem.GetTrust(factionId) : 0f,
+                OnEventFlagChanged = (flagId, value) =>
+                {
+                    if (SaveSystem != null)
+                        SaveSystem.SetWorldFlag(flagId, value);
+                }
             };
+            if (SaveSystem != null)
+                eventContext.ImportFlags(SaveSystem.WorldFlags);
             EventRunner.Tick(gameHours, eventContext);
 
             // Diegetic journal discoveries (first-time atmosphere / rad / storm / etc.)
