@@ -54,6 +54,7 @@ namespace AtomicWar._Game.Core
         private WaterStorage _waterStorage;
         private GeneratedMap _generatedMap;
         private HatchDefenseSystem _hatchDefense;
+        private FactionRadioInterceptSystem _factionRadioIntercepts;
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
@@ -143,6 +144,12 @@ namespace AtomicWar._Game.Core
         public void SetHatchDefense(HatchDefenseSystem hatchDefense)
         {
             _hatchDefense = hatchDefense;
+        }
+
+        /// <summary>Inject faction radio intercept log for save/load.</summary>
+        public void SetFactionRadioIntercepts(FactionRadioInterceptSystem radioIntercepts)
+        {
+            _factionRadioIntercepts = radioIntercepts;
         }
 
         /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
@@ -402,6 +409,9 @@ namespace AtomicWar._Game.Core
             if (_hatchDefense != null)
                 data.HatchDefense = _hatchDefense.CaptureState();
 
+            if (_factionRadioIntercepts != null)
+                data.FactionRadioIntercepts = _factionRadioIntercepts.CaptureState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -609,6 +619,12 @@ namespace AtomicWar._Game.Core
             if (_hatchDefense != null && data.HatchDefense != null)
             {
                 _hatchDefense.RestoreState(data.HatchDefense);
+            }
+
+            if (_factionRadioIntercepts != null)
+            {
+                // Null snapshot (pre-feature saves) clears to empty log.
+                _factionRadioIntercepts.RestoreState(data.FactionRadioIntercepts);
             }
 
             if (_generatedMap != null && data.GeneratedMap != null)
@@ -854,6 +870,7 @@ namespace AtomicWar._Game.Core
         public DynamicEconomySave Economy;
         public PowerNetworkSave Power;
         public HatchDefenseSave HatchDefense;
+        public FactionRadioInterceptSave FactionRadioIntercepts;
         public WaterStorageSave Water;
         public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;

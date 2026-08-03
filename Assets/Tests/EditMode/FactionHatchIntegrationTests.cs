@@ -1,12 +1,15 @@
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
@@ -301,6 +304,8 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(input.MapKey, Is.EqualTo(KeyCode.M));
             Assert.That(input.ParleyKey, Is.EqualTo(KeyCode.P),
                 "Trade parley / demand surrender is [P] when trade is open");
+            Assert.That(input.RadioInterceptKey, Is.EqualTo(KeyCode.R),
+                "Expanded radio intercept log is [R]");
         }
 
         [Test]
@@ -627,6 +632,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(hud.HasUnread, Is.True);
             Assert.That(hud.LatestKind, Is.EqualTo("HatchRepel"));
             Assert.That(hud.LatestMessage, Does.Contain("Hatch bounce"));
+            Assert.That(hud.LatestChannelTag, Does.Contain("ASH ROAD").Or.Contain("CH-3"));
             Assert.That(hud.StatusLine, Does.Contain("RADIO"));
             Assert.That(hud.StatusLine, Does.Contain("HATCH").Or.Contain("NEW"));
             Assert.That(hud.DetailSummary, Does.Contain("Hatch bounce"));
@@ -635,6 +641,12 @@ namespace AtomicWar.Tests.EditMode
             hud.Open();
             Assert.That(hud.IsOpen, Is.True);
             Assert.That(hud.HasUnread, Is.False, "Open marks strip read");
+            Assert.That(hud.StatusLine, Does.Contain("OPEN").IgnoreCase);
+            Assert.That(hud.DetailSummary, Does.Contain("intercept log").IgnoreCase
+                .Or.Contain("[R] close"));
+
+            hud.Toggle();
+            Assert.That(hud.IsOpen, Is.False, "[R] closes expanded log");
 
             hud.Push("Parley on the air. Stand-down.", "Parley",
                 FactionSO.Ids.ScavengerCamp, day: 42);
@@ -643,7 +655,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(hud.LatestKind, Is.EqualTo("Parley"));
             Assert.That(hud.StatusLine, Does.Contain("PARLEY").Or.Contain("Parley").IgnoreCase);
 
-            // SetLines replaces
+            // SetLines replaces (save restore path — no NEW badge)
             hud.SetLines(new[]
             {
                 new RadioInterceptHUD.Line
@@ -655,8 +667,166 @@ namespace AtomicWar.Tests.EditMode
                 }
             });
             Assert.That(hud.LineCount, Is.EqualTo(1));
+            Assert.That(hud.HasUnread, Is.False, "Restore must not flash NEW");
             Assert.That(hud.LatestKind, Is.EqualTo("Succession"));
             Assert.That(hud.StatusLine, Does.Contain("BAND").Or.Contain("Band").IgnoreCase);
+            Assert.That(hud.LatestChannelTag, Does.Contain("MILBAND").Or.Contain("CH-7"));
+        }
+
+        [Test]
+        public void FactionRadioIntercepts_SaveLoad_RoundTripsThroughSaveSystem_AndHudSync()
+        {
+            string testDir = Path.Combine(Path.GetTempPath(), "ashfall_radio_save_" + Path.GetRandomFileName());
+            Directory.CreateDirectory(testDir);
+            try
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                _toDestroy.Add(profile);
+                var season = ScriptableObject.CreateInstance<SeasonProfile>();
+                _toDestroy.Add(season);
+                season.campaignLengthDays = 90;
+                season.ambientTemperatureCurve = AnimationCurve.Linear(0f, 0f, 1f, -10f);
+                season.weatherCheckIntervalHours = 6f;
+                season.seasons = new[]
+                {
+                    new SeasonWindow
+                    {
+                        id = "winter", displayName = "Winter", startDay = 0,
+                        clearWeight = 1f
+                    }
+                };
+
+                var gs = new GameState { Phase = GamePhase.Running, Day = 12 };
+                var ws = new WeatherSystem(season, seed: 3);
+                var ts = new TemperatureSystem(season, ws);
+                var ns = new NeedsSystem(profile);
+                var rs = new RadiationSystem(ns);
+                var shelter = new Shelter();
+                var survivor = new Survivor { Id = "s1", DisplayName = "Op" };
+                var survivors = new List<Survivor> { survivor };
+
+                var radio = new FactionRadioInterceptSystem();
+                radio.Push(FactionSO.Ids.ScavengerCamp,
+                    FactionRadioInterceptSystem.InterceptKind.HatchRepel,
+                    "Hatch bounce. Road curses, then dead air.", day: 12);
+                radio.Push(FactionSO.Ids.MilitaryRemnants,
+                    FactionRadioInterceptSystem.InterceptKind.Parley,
+                    "Parley on the air. Formal stand-down.", day: 13);
+                Assert.That(radio.Log.Count, Is.EqualTo(2));
+
+                var saveSys = new SaveSystem(
+                    gs, ws, ts, ns, rs, shelter,
+                    () => survivors,
+                    id => null,
+                    id => null,
+                    testDir);
+                saveSys.SetFactionRadioIntercepts(radio);
+                Assert.IsTrue(saveSys.Save("radio_slot"));
+
+                var radio2 = new FactionRadioInterceptSystem();
+                Assert.That(radio2.Log.Count, Is.EqualTo(0));
+
+                var gs2 = new GameState { Phase = GamePhase.Running, Day = 1 };
+                var ws2 = new WeatherSystem(season, seed: 3);
+                var ts2 = new TemperatureSystem(season, ws2);
+                var ns2 = new NeedsSystem(profile);
+                var rs2 = new RadiationSystem(ns2);
+                var shelter2 = new Shelter();
+                var survivor2 = new Survivor { Id = "s1", DisplayName = "Op" };
+                var survivors2 = new List<Survivor> { survivor2 };
+
+                var loadSys = new SaveSystem(
+                    gs2, ws2, ts2, ns2, rs2, shelter2,
+                    () => survivors2,
+                    id => null,
+                    id => null,
+                    testDir);
+                loadSys.SetFactionRadioIntercepts(radio2);
+                Assert.IsTrue(loadSys.Load("radio_slot"));
+
+                Assert.That(radio2.Log.Count, Is.EqualTo(2));
+                Assert.That(radio2.LastInterceptMessage, Is.EqualTo(radio.LastInterceptMessage));
+                Assert.That(radio2.Log[0].Kind, Is.EqualTo(nameof(FactionRadioInterceptSystem.InterceptKind.Parley)));
+                Assert.That(radio2.Log[1].FactionId, Is.EqualTo(FactionSO.Ids.ScavengerCamp));
+
+                // HUD sync path (what LoadGame does after SaveSystem.Load)
+                var go = new GameObject("RadioHudSync");
+                _toDestroy.Add(go);
+                var strip = go.AddComponent<RadioInterceptHUD>();
+                var lines = new List<RadioInterceptHUD.Line>();
+                for (int i = 0; i < radio2.Log.Count; i++)
+                {
+                    var e = radio2.Log[i];
+                    lines.Add(new RadioInterceptHUD.Line
+                    {
+                        Message = e.Message,
+                        Kind = e.Kind,
+                        FactionId = e.FactionId,
+                        Day = e.Day
+                    });
+                }
+                strip.SetLines(lines);
+                Assert.That(strip.LineCount, Is.EqualTo(2));
+                Assert.That(strip.HasUnread, Is.False);
+                Assert.That(strip.LatestMessage, Does.Contain("Parley"));
+                Assert.That(strip.LatestChannelTag, Does.Contain("MILBAND").Or.Contain("CH-7"));
+            }
+            finally
+            {
+                if (Directory.Exists(testDir))
+                    Directory.Delete(testDir, true);
+            }
+        }
+
+        [Test]
+        public void FactionRadioVoHook_ResolvesByChannelTag_ThenKind_ThenDefault()
+        {
+            var go = new GameObject("VoHookTest");
+            _toDestroy.Add(go);
+            var vo = go.AddComponent<FactionRadioVoHook>();
+
+            // No clips → resolve null, TryPlay false (safe before assets exist)
+            Assert.That(vo.ResolveClip("CH-7 MILBAND", "Parley"), Is.Null);
+            Assert.That(vo.TryPlay(FactionSO.Ids.MilitaryRemnants, "Parley"), Is.False);
+            Assert.That(vo.LastPlayHadClip, Is.False);
+            Assert.That(vo.LastChannelTag, Is.EqualTo(DynamicEconomySystem.GetParleyChannelTag(
+                FactionSO.Ids.MilitaryRemnants)));
+
+            // Kind fallback when channel empty
+            var kindClip = AudioClip.Create("kind_parley", 4410, 1, 44100, false);
+            _toDestroy.Add(kindClip);
+            vo.SetKindClips(new[]
+            {
+                new FactionRadioVoHook.KindClip { Kind = "Parley", Clip = kindClip }
+            });
+            Assert.That(vo.ResolveClip("CH-3 ASH ROAD", "Parley"), Is.SameAs(kindClip));
+
+            // Channel tag wins over kind
+            var milClip = AudioClip.Create("mil_band", 4410, 1, 44100, false);
+            _toDestroy.Add(milClip);
+            vo.SetChannelClips(new[]
+            {
+                new FactionRadioVoHook.ChannelClip
+                {
+                    ChannelTag = DynamicEconomySystem.GetParleyChannelTag(FactionSO.Ids.MilitaryRemnants),
+                    Clip = milClip
+                }
+            });
+            Assert.That(vo.ResolveClip(
+                    DynamicEconomySystem.GetParleyChannelTag(FactionSO.Ids.MilitaryRemnants),
+                    "Parley"),
+                Is.SameAs(milClip));
+            Assert.That(vo.TryPlay(FactionSO.Ids.MilitaryRemnants, "Parley"), Is.True);
+            Assert.That(vo.LastPlayHadClip, Is.True);
+            Assert.That(vo.PlayCount, Is.EqualTo(1));
+
+            // Default static when neither channel nor kind match
+            var hiss = AudioClip.Create("static_hiss", 4410, 1, 44100, false);
+            _toDestroy.Add(hiss);
+            vo.SetDefaultStaticClip(hiss);
+            vo.SetChannelClips(null);
+            vo.SetKindClips(null);
+            Assert.That(vo.ResolveClip("CH-OPEN", "Unknown"), Is.SameAs(hiss));
         }
 
         [Test]

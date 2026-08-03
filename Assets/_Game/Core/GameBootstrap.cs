@@ -415,6 +415,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetEconomySystem(EconomySystem);
             SaveSystem.SetPowerNetwork(PowerNetwork);
             SaveSystem.SetHatchDefense(HatchDefenseSystem);
+            SaveSystem.SetFactionRadioIntercepts(FactionRadioIntercepts);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
             // after the Choreographer itself is constructed (it depends on
@@ -1112,6 +1113,8 @@ namespace AtomicWar._Game.Core
             {
                 IsGameOver = false;
                 GameOverReason = null;
+                // Intercept log restored on FactionRadioIntercepts — refresh HUD strip.
+                SyncRadioInterceptHudFromLog();
             }
         }
 
@@ -1191,6 +1194,18 @@ namespace AtomicWar._Game.Core
         public void ToggleHatchDefense()
         {
             _hud?.HatchDefenseHUD?.Toggle();
+        }
+
+        /// <summary>Open the expanded radio intercept log.</summary>
+        public void OpenRadioInterceptLog()
+        {
+            _hud?.EnsureRadioInterceptHud()?.Open();
+        }
+
+        /// <summary>Toggle expanded radio intercept log (keybind R).</summary>
+        public void ToggleRadioInterceptLog()
+        {
+            _hud?.EnsureRadioInterceptHud()?.Toggle();
         }
 
         /// <summary>
@@ -1348,10 +1363,12 @@ namespace AtomicWar._Game.Core
                     Message = e.Message,
                     Kind = e.Kind ?? string.Empty,
                     FactionId = e.FactionId ?? string.Empty,
-                    Day = e.Day
+                    Day = e.Day,
+                    ChannelTag = DynamicEconomySystem.GetParleyChannelTag(e.FactionId)
                 });
             }
             strip.SetLines(lines);
+            // Restore is silent — do not re-fire VO for historical lines.
         }
 
         // -----------------------------------------------------------------
