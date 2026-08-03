@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Random = System.Random;
 
 namespace AtomicWar._Game.Radiation
 {
@@ -39,6 +40,7 @@ namespace AtomicWar._Game.Radiation
 
         private readonly NeedsSystem _needsSystem;
         private readonly Func<Survivor, ExposureContext> _exposureContext;
+        private readonly Random _rng;
         private readonly List<Survivor> _survivors = new List<Survivor>();
         private readonly Dictionary<string, Dosimeter> _dosimeters = new Dictionary<string, Dosimeter>();
 
@@ -52,10 +54,11 @@ namespace AtomicWar._Game.Radiation
         /// <summary>Fired once when a timed radiation status (e.g. rad resistance) expires.</summary>
         public event Action<Survivor, SurvivorStatus> OnStatusLost;
 
-        public RadiationSystem(NeedsSystem needsSystem, Func<Survivor, ExposureContext> exposureContext = null)
+        public RadiationSystem(NeedsSystem needsSystem, Func<Survivor, ExposureContext> exposureContext = null, Random rng = null)
         {
             _needsSystem = needsSystem != null ? needsSystem : throw new ArgumentNullException(nameof(needsSystem));
             _exposureContext = exposureContext;
+            _rng = rng ?? new Random();
         }
 
         /// <summary>Register a survivor so bulk Tick(gameHours) advances their dose.</summary>
@@ -126,6 +129,7 @@ namespace AtomicWar._Game.Radiation
                 dosimeter.LifetimeDose = survivor.LifetimeRadiationExposure;
 
                 TickRadResistance(survivor, gameHours);
+                PrognosisPipeline.Tick(survivor, gameHours, _needsSystem, _rng, GrantStatus);
             }
         }
 
@@ -227,12 +231,32 @@ namespace AtomicWar._Game.Radiation
             {
                 GrantStatus(survivor, SurvivorStatus.ChronicIllness);
             }
+
+            if (radsPerHour > 0f)
+            {
+                PrognosisPipeline.OnExposure(survivor, radsPerHour * hours, _needsSystem, GrantStatus);
+            }
+        }
+
+        /// <summary>
+        /// Medical exam / doctor check: the only way a prognosis onset estimate is
+        /// revealed to the player. Not pushed automatically like the dosimeter's rate.
+        /// </summary>
+        public PrognosisEstimate ExaminePrognosis(Survivor survivor)
+        {
+            return PrognosisPipeline.Examine(survivor);
         }
 
         /// <summary>
         /// Administer iodine pills: grants temporary rad resistance (a timed status that
         /// scales the dose rate by RadResistanceFactor while active). Re-dosing tops up
         /// the remaining window rather than stacking it.
+        ///
+        /// Also (re)starts IodineProtectionTimer, a short window used only by
+        /// PrognosisPipeline: if a Prodromal-triggering dose lands while this timer is
+        /// still active, its latent-damage severity is mitigated. Once the window lapses
+        /// -- or if a dose already landed before iodine was ever taken -- administering
+        /// iodine afterwards does nothing for that dose. Timing, not a stat stick.
         /// </summary>
         public void AdministerIodine(Survivor survivor)
         {
@@ -242,6 +266,7 @@ namespace AtomicWar._Game.Radiation
             }
             survivor.RadResistanceHoursRemaining = Mathf.Max(survivor.RadResistanceHoursRemaining, IodineResistanceHours);
             survivor.HasRadResistance = true;
+            survivor.IodineProtectionTimer = Mathf.Max(survivor.IodineProtectionTimer, PrognosisPipeline.IodineWindowHours);
             GrantStatus(survivor, SurvivorStatus.RadResistance);
         }
 
@@ -309,6 +334,10 @@ namespace AtomicWar._Game.Radiation
             else if (status == SurvivorStatus.RadResistance)
             {
                 survivor.HasRadResistance = true;
+            }
+            else if (status == SurvivorStatus.AcuteRadiationSyndrome)
+            {
+                survivor.HasAcuteRadiationSyndrome = true;
             }
 
             OnStatusGained?.Invoke(survivor, status);

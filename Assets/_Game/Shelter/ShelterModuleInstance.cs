@@ -76,6 +76,13 @@ namespace AtomicWar._Game.Shelter
             {
                 WaterConversionProgress += gameHours;
             }
+            else if (_definition is RadioModuleSO radioSO)
+            {
+                if (Fuel > 0f)
+                {
+                    Fuel = Mathf.Max(0f, Fuel - radioSO.PowerConsumptionPerHour * gameHours);
+                }
+            }
             else
             {
                 // Generic degradation fallback if ModuleId matches air_filtration without explicit SO instance
@@ -90,6 +97,10 @@ namespace AtomicWar._Game.Shelter
                 else if (ModuleId == "grow_light" && Fuel > 0f)
                 {
                     Fuel = Mathf.Max(0f, Fuel - 1.5f * gameHours);
+                }
+                else if (ModuleId == "radio" && Fuel > 0f)
+                {
+                    Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours);
                 }
             }
 

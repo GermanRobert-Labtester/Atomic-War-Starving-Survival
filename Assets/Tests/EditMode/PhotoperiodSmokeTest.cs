@@ -35,7 +35,7 @@ namespace AtomicWar.Tests.EditMode
         private PhotoperiodSystem _photoPeriodSystem;
         private NeedsSystem      _needsSystem;
         private RadiationSystem  _radSystem;
-        private Shelter.Shelter  _shelter;
+        private Shelter  _shelter;
         private List<Survivor>   _survivors;
 
         [SetUp]
@@ -96,7 +96,7 @@ namespace AtomicWar.Tests.EditMode
             _weatherSystem     = new WeatherSystem(_seasonProfile, Seed);
             _photoPeriodSystem = new PhotoperiodSystem(_seasonProfile, _weatherSystem);
 
-            _shelter = new Shelter.Shelter();
+            _shelter = new Shelter();
             _shelter.AddModule(new ShelterModuleInstance("air_filtration",     2) { FilterHealth = 100f });
             _shelter.AddModule(new ShelterModuleInstance("radiation_shielding",2));
             _shelter.AddModule(new ShelterModuleInstance("heater",             2) { Fuel = 9999f });

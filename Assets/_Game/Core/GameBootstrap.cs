@@ -65,6 +65,8 @@ namespace AtomicWar._Game.Core
         public LocationScavengingSystem ScavengingSystem { get; private set; }
         public RadiationKnowledgeMap KnowledgeMap { get; private set; }
         public RadioBroadcastSystem RadioSystem { get; private set; }
+        public RadioTunerSystem RadioTunerSystem { get; private set; }
+        public BeliefSystem BeliefSystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -146,6 +148,15 @@ namespace AtomicWar._Game.Core
 
             RadiationSystem = new RadiationSystem(NeedsSystem);
 
+            BeliefSystem = new BeliefSystem(rng: new System.Random(_worldSeed + 31));
+            RadiationSystem.OnStatusGained += (sv, status) =>
+            {
+                if (status == SurvivorStatus.AcuteRadiationSyndrome)
+                {
+                    BeliefSystem.ShockRecoverNumbness(sv);
+                }
+            };
+
             // Inventory + Crafting
             Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
             CraftingSystem = new CraftingSystem(Inventory);
@@ -217,9 +228,33 @@ namespace AtomicWar._Game.Core
                 KnowledgeMap.OnKnowledgeChanged += RefreshMapKnowledgeHUD;
             }
 
-            // Radio (broadcast only; tuner/intel extraction is separate WIP)
+            // Radio (broadcast only; tuner/intel extraction is separate)
             RadioSystem = new RadioBroadcastSystem();
             RadioSystem.SetCatalog(_radioCatalog);
+            
+            // Radio Tuner System (intel extraction)
+            RadioTunerSystem = new RadioTunerSystem(new System.Random(_worldSeed + 31));
+            InitializeRadioFrequencies();
+            
+            // Wire up radio module fuel supply to RadioTunerSystem
+            var radioModule = Shelter.GetModule("radio");
+            if (radioModule != null && radioModule.IsOperational)
+            {
+                RadioTunerSystem.State.AvailableFuel = radioModule.Fuel;
+                RadioTunerSystem.State.PowerConsumptionPerHour = 0.5f; // Default consumption
+            }
+            
+            // Wire up intel extraction events
+            RadioTunerSystem.OnIntelExtracted += intel =>
+            {
+                Debug.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
+                if (intel.Type == IntelType.PlumeReport)
+                {
+                    // Apply plume reports to knowledge map
+                    RadioTunerSystem.ApplyPlumeReportToMap(intel, KnowledgeMap);
+                    RefreshMapKnowledgeHUD();
+                }
+            };
 
             TimeSystem.OnDayTick += day =>
             {
@@ -228,6 +263,52 @@ namespace AtomicWar._Game.Core
                 KnowledgeMap?.TickDay(day);
                 RefreshMapKnowledgeHUD();
             };
+        }
+
+        private void InitializeRadioFrequencies()
+        {
+            // Create default frequencies
+            var civilian = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            civilian.id = "88.5_civilian";
+            civilian.displayName = "88.5 FM Civilian";
+            civilian.frequencyMHz = 88.5f;
+            civilian.type = RadioFrequencyType.Civilian;
+            civilian.activeFromDay = 0;
+            civilian.activeUntilDay = 30;
+            civilian.baseSignalStrength = 0.7f;
+            civilian.interferenceSusceptibility = 0.3f;
+            
+            var military = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            military.id = "102.1_military";
+            military.displayName = "102.1 Military";
+            military.frequencyMHz = 102.1f;
+            military.type = RadioFrequencyType.Military;
+            military.activeFromDay = 0;
+            military.activeUntilDay = 30;
+            military.baseSignalStrength = 0.6f;
+            military.interferenceSusceptibility = 0.2f;
+            
+            var numbers = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            numbers.id = "99.0_numbers";
+            numbers.displayName = "99.0 Numbers Station";
+            numbers.frequencyMHz = 99.0f;
+            numbers.type = RadioFrequencyType.NumbersStation;
+            numbers.activeFromDay = 31;
+            numbers.activeUntilDay = -1;
+            numbers.baseSignalStrength = 0.4f;
+            numbers.interferenceSusceptibility = 0.5f;
+            
+            var emergency = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            emergency.id = "107.0_emergency";
+            emergency.displayName = "107.0 Emergency";
+            emergency.frequencyMHz = 107.0f;
+            emergency.type = RadioFrequencyType.Emergency;
+            emergency.activeFromDay = 31;
+            emergency.activeUntilDay = -1;
+            emergency.baseSignalStrength = 0.5f;
+            emergency.interferenceSusceptibility = 0.4f;
+            
+            RadioTunerSystem.SetFrequencies(new[] { civilian, military, numbers, emergency });
         }
 
         private void SeedKnowledgeMap()
@@ -320,6 +401,16 @@ namespace AtomicWar._Game.Core
 
             // Scavenging
             ScavengingSystem?.Tick(gameHours);
+            
+            // Radio Tuner (intel extraction)
+            if (RadioTunerSystem != null && Shelter != null)
+            {
+                var radioModule = Shelter.GetModule("radio");
+                if (radioModule != null && radioModule.IsOperational && radioModule.Fuel > 0f)
+                {
+                    RadioTunerSystem.Tick(gameHours, WeatherSystem.Current, TimeSystem.CurrentDay);
+                }
+            }
 
             // AI (evaluate per survivor, every EvaluationInterval)
             UtilityAI.Tick(gameHours * TimeSystem.SecondsPerGameHour);
@@ -329,6 +420,7 @@ namespace AtomicWar._Game.Core
                 {
                     if (!sv.IsAlive) continue;
                     float mapUncertainty = GetMapUncertaintyFor(sv);
+                    BeliefSystem.Tick(sv, mapUncertainty, gameHours);
                     var context = new AIContext(sv, Shelter, Inventory, new System.Random(_worldSeed + sv.Id.GetHashCode()))
                     {
                         IsFalloutStorm  = WeatherSystem.Current == WeatherKind.FalloutStorm,
@@ -337,6 +429,7 @@ namespace AtomicWar._Game.Core
                         GrowLightActive = Shelter.IsGrowLightActive,
                         OnRequestSurvey = RequestSurveyForSurvivor,
                         MapUncertainty  = mapUncertainty,
+                        BeliefSystem    = BeliefSystem,
                         IsAnxious       = sv.HasRadiationAnxietyStatus,
                         IsNumb          = sv.IsNumb
                     };

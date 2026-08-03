@@ -48,6 +48,25 @@ namespace AtomicWar._Game.Survivors
         public float RadResistanceHoursRemaining;
 
         // -------------------------------------------------------------------
+        // Latent damage / prognosis pipeline — the delayed "fallout kills you
+        // later" layer on top of the instant checks above. Owned and written by
+        // AtomicWar._Game.Radiation.PrognosisPipeline (invoked from RadiationSystem).
+        // -------------------------------------------------------------------
+
+        /// <summary>Rolling sum of recent dose (decays over time) — the acute trigger quantity.</summary>
+        public float AcuteDoseWindow;
+        public PrognosisStage PrognosisStage = PrognosisStage.Healthy;
+        /// <summary>Days until the next prognosis stage transition. Hidden from the player by
+        /// default; revealed only via RadiationSystem.ExaminePrognosis (a medical exam).</summary>
+        public float OnsetTimer;
+        /// <summary>Permanent accumulated tissue damage. Never decays; feeds both the acute
+        /// pathway's severity curves and the chronic-illness threshold.</summary>
+        public float LatentDamage;
+        /// <summary>Hours remaining in the iodine protection window (see AdministerIodine).</summary>
+        public float IodineProtectionTimer;
+        public bool HasAcuteRadiationSyndrome;
+
+        // -------------------------------------------------------------------
         // Photoperiod / light state — owned and written by PhotoperiodSystem.
         // -------------------------------------------------------------------
 
@@ -72,6 +91,37 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public float VitaminDProxy = 100f;
 
+        // -------------------------------------------------------------------
+        // Belief / risk-perception — subjective danger sense, distinct from the
+        // objective radiation state above. Owned and written by
+        // AtomicWar._Game.Survivors.BeliefSystem. Two survivors with identical
+        // RadiationDose can have wildly different PerceivedRadRisk.
+        // -------------------------------------------------------------------
+
+        /// <summary>Characteristic bias in how this survivor interprets radiation risk.</summary>
+        public RiskBiasTrait RiskBias = RiskBiasTrait.Realist;
+
+        /// <summary>Subjective sense of radiation danger (0..1). Updated by observed
+        /// experience (sickness witnessed, hot trips survived) and trait, NOT by truth.</summary>
+        public float PerceivedRadRisk = 0.3f;
+
+        /// <summary>How much this survivor trusts the geiger/dosimeter vs their own gut (0..1).</summary>
+        public float TrustInInstruments = 0.7f;
+
+        /// <summary>Mental status (0..1): rises when PerceivedRadRisk and instrument
+        /// uncertainty are both high. Causes refusal-to-scavenge, hoarding, sleep loss.</summary>
+        public float RadiationAnxiety;
+
+        /// <summary>Mental status (0..1): the opposite failure mode of RadiationAnxiety —
+        /// stops caring, takes lethal risks.</summary>
+        public float Numbness;
+
+        /// <summary>True once RadiationAnxiety has crossed BeliefSystem.AnxietyThreshold.</summary>
+        public bool HasRadiationAnxietyStatus;
+
+        /// <summary>True once Numbness has crossed BeliefSystem.NumbnessThreshold.</summary>
+        public bool IsNumb;
+
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
         {
@@ -81,6 +131,9 @@ namespace AtomicWar._Game.Survivors
                 case SurvivorStatus.ChronicIllness: return HasChronicIllness;
                 case SurvivorStatus.RadResistance: return HasRadResistance;
                 case SurvivorStatus.Listless: return IsListless;
+                case SurvivorStatus.AcuteRadiationSyndrome: return HasAcuteRadiationSyndrome;
+                case SurvivorStatus.RadiationAnxiety: return HasRadiationAnxietyStatus;
+                case SurvivorStatus.Numb: return IsNumb;
                 default: return false;
             }
         }

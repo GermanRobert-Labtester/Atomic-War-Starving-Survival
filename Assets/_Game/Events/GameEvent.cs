@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Events
 {
@@ -24,6 +25,25 @@ namespace AtomicWar._Game.Events
         public List<EventEffect> Effects = new List<EventEffect>();
     }
 
+    /// <summary>
+    /// Belief-based gate/reweight on an EventChoice, structurally separate from the
+    /// objective world-state EventConditions on GameEvent. Lets a Denialist survivor
+    /// never even see a "wear the suit" choice offered as costly, or a Paranoid
+    /// survivor's "take iodine, just in case" choice get auto-favored.
+    /// </summary>
+    [Serializable]
+    public class BeliefCheck
+    {
+        /// <summary>Empty = any trait passes.</summary>
+        public List<RiskBiasTrait> RequiredTraits = new List<RiskBiasTrait>();
+        public float MinPerceivedRadRisk = -1f; // -1 = ignore
+        public float MaxPerceivedRadRisk = -1f; // -1 = ignore
+        /// <summary>Applied to the choice's effective weight in PickWeightedChoice when the check passes.</summary>
+        public float WeightMultiplier = 1f;
+        /// <summary>If true and the check fails, the choice is removed from GetAvailableChoices entirely.</summary>
+        public bool HideIfFails;
+    }
+
     [Serializable]
     public class EventChoice
     {
@@ -33,6 +53,29 @@ namespace AtomicWar._Game.Events
         public float RelationshipDelta;
         public List<EventEffect> Effects = new List<EventEffect>();
         public DelayedConsequence DelayedConsequence;
+        public BeliefCheck BeliefCheck;
+
+        /// <summary>Whether the given survivor's beliefs satisfy this choice's BeliefCheck (true if none set).</summary>
+        public bool PassesBeliefCheck(Survivor survivor)
+        {
+            if (BeliefCheck == null) return true;
+            if (survivor == null) return false;
+
+            if (BeliefCheck.RequiredTraits != null && BeliefCheck.RequiredTraits.Count > 0
+                && !BeliefCheck.RequiredTraits.Contains(survivor.RiskBias))
+            {
+                return false;
+            }
+            if (BeliefCheck.MinPerceivedRadRisk >= 0f && survivor.PerceivedRadRisk < BeliefCheck.MinPerceivedRadRisk)
+            {
+                return false;
+            }
+            if (BeliefCheck.MaxPerceivedRadRisk >= 0f && survivor.PerceivedRadRisk > BeliefCheck.MaxPerceivedRadRisk)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 
     [Serializable]

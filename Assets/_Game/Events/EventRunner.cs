@@ -90,6 +90,73 @@ namespace AtomicWar._Game.Events
             return validEvents[0];
         }
 
+        /// <summary>
+        /// Choices actually offered to the given survivor: drops any choice whose
+        /// BeliefCheck.HideIfFails is true and the check fails. Implements "a Denialist
+        /// may not even see the 'wear the suit' option as costly." Callers presenting
+        /// choices should use this instead of iterating gameEvent.choices directly.
+        /// </summary>
+        public static List<EventChoice> GetAvailableChoices(GameEvent gameEvent, EventContext context)
+        {
+            var result = new List<EventChoice>();
+            if (gameEvent?.choices == null) return result;
+
+            var survivor = context?.PrimarySurvivor;
+            for (int i = 0; i < gameEvent.choices.Count; i++)
+            {
+                var choice = gameEvent.choices[i];
+                if (choice == null) continue;
+                if (choice.BeliefCheck != null && choice.BeliefCheck.HideIfFails && !choice.PassesBeliefCheck(survivor))
+                {
+                    continue;
+                }
+                result.Add(choice);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Belief-weighted auto-selection among a game event's choices, for callers that
+        /// pick on a survivor's behalf (e.g. AI-controlled companions) rather than
+        /// presenting a player with a menu. Choices whose BeliefCheck passes get their
+        /// weight scaled by BeliefCheck.WeightMultiplier — this is how a Paranoid
+        /// survivor "demands iodine, just in case." Not used for player-facing choice UI.
+        /// </summary>
+        public static EventChoice PickWeightedChoice(GameEvent gameEvent, EventContext context, System.Random rng)
+        {
+            var choices = GetAvailableChoices(gameEvent, context);
+            if (choices.Count == 0) return null;
+
+            var survivor = context?.PrimarySurvivor;
+            float totalWeight = 0f;
+            var weights = new float[choices.Count];
+            for (int i = 0; i < choices.Count; i++)
+            {
+                float weight = 1f;
+                var check = choices[i].BeliefCheck;
+                if (check != null && choices[i].PassesBeliefCheck(survivor))
+                {
+                    weight *= Mathf.Max(0.01f, check.WeightMultiplier);
+                }
+                weights[i] = weight;
+                totalWeight += weight;
+            }
+
+            if (totalWeight <= 0f) return choices[0];
+
+            double roll = rng != null ? rng.NextDouble() * totalWeight : UnityEngine.Random.Range(0f, totalWeight);
+            float accum = 0f;
+            for (int i = 0; i < choices.Count; i++)
+            {
+                accum += weights[i];
+                if (roll <= accum)
+                {
+                    return choices[i];
+                }
+            }
+            return choices[choices.Count - 1];
+        }
+
         public void Run(GameEvent gameEvent, EventContext context = null)
         {
             if (gameEvent == null) return;
@@ -188,6 +255,10 @@ namespace AtomicWar._Game.Events
                     case "morale": context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + effect.NeedDelta, 0f, 100f); break;
                     case "health": context.PrimarySurvivor.Needs.Health = Mathf.Clamp(context.PrimarySurvivor.Needs.Health + effect.NeedDelta, 0f, 100f); break;
                     case "radiation": context.PrimarySurvivor.RadiationDose = Mathf.Clamp(context.PrimarySurvivor.RadiationDose + effect.NeedDelta, 0f, 100f); break;
+                    // Mental-status cures: a talk/comfort event effect. 0..1 range,
+                    // unlike the 0..100 Needs fields above, so clamp separately.
+                    case "radiationanxiety": context.PrimarySurvivor.RadiationAnxiety = Mathf.Clamp01(context.PrimarySurvivor.RadiationAnxiety + effect.NeedDelta); break;
+                    case "numbness": context.PrimarySurvivor.Numbness = Mathf.Clamp01(context.PrimarySurvivor.Numbness + effect.NeedDelta); break;
                 }
             }
 

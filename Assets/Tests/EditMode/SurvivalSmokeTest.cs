@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using Random = System.Random;
+using Object = UnityEngine.Object;
 using AtomicWar._Game.AI;
 using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Core;
@@ -135,7 +137,7 @@ namespace AtomicWar.Tests.EditMode
         private RadiationSystem _radSystem;
         private WeatherSystem _weatherSystem;
         private TemperatureSystem _tempSystem;
-        private Shelter.Shelter _shelter;
+        private Shelter _shelter;
         private UtilityAI _ai;
         private EventRunner _eventRunner;
         private GameState _gameState;
@@ -195,7 +197,7 @@ namespace AtomicWar.Tests.EditMode
             _needsSystem = new NeedsSystem(_profile, sv => true); // always near heat
             _radSystem = new RadiationSystem(_needsSystem);
 
-            _shelter = new Shelter.Shelter();
+            _shelter = new Shelter();
             _shelter.AddModule(new ShelterModuleInstance("air_filtration", 2) { FilterHealth = 100f });
             _shelter.AddModule(new ShelterModuleInstance("radiation_shielding", 3));
             _shelter.AddModule(new ShelterModuleInstance("heater", 2) { Fuel = 500f });

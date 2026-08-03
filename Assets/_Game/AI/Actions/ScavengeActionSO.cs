@@ -33,7 +33,12 @@ namespace AtomicWar._Game.AI.Actions
             // High map uncertainty (stale/dark fog-of-war) damps scavenger eagerness:
             // survivors prefer known ground when instruments have failed.
             float uncertaintyDamp = Mathf.Lerp(1f, 0.55f, Mathf.Clamp01(context.MapUncertainty));
-            return Mathf.Clamp01(baseScore * uncertaintyDamp);
+            // Belief/risk-perception bias: trait, perceived rad risk, and instrument trust
+            // further gate willingness to scavenge on top of the raw uncertainty damp (see BeliefSystem).
+            float beliefMultiplier = context.BeliefSystem != null
+                ? context.BeliefSystem.ComputeScavengeMultiplier(context.Survivor, context.MapUncertainty)
+                : 1f;
+            return Mathf.Clamp01(baseScore * uncertaintyDamp * beliefMultiplier);
         }
     }
 }

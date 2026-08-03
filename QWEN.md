@@ -32,3 +32,8 @@ shelter: bunker with radiation shielding level + air-filtration that degrades
 WORKFLOW PER TASK:
 1) Restate goal in 2 lines. 2) List files you'll touch/create. 3) Implement.
 4) Verify (compile/test). 5) Summarize + give the exact next prompt to run.
+
+CROSS-TOOL QA RULE: any system that introduces >=2 new coupled variables MUST be
+implemented by one tool and reviewed/tested by a DIFFERENT tool (see Prompt #26).
+The reviewer may NOT see the implementer's reasoning — only the diff + the spec —
+so it reviews the CODE, not the story the implementer told itself.

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d29ad771aea28e2d988b7cec0e8c6aa, type: 3}
+  m_Name: found_diary
+  m_EditorClassIdentifier: AtomicWar._Game.Events::AtomicWar._Game.Events.GameEvent
+  id: found_diary
+  title: Old Diary
+  bodyText: Behind a loose panel, a diary from the bunker's original occupant. The
+    last entry is dated three weeks after the bombs. It does not end well.
+  weight: 0.5
+  conditions:
+    MinDay: 8
+    MinHour: 0
+    MaxHour: 24
+    RequireFalloutStorm: 0
+    MinShelterAirQuality: -1
+    MaxShelterAirQuality: -1
+    MinSurvivorRad: -1
+    MinSurvivorHunger: -1
+    RequiredItemId: 
+    RequiredFlagId: 
+  choices: []
