@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using AtomicWar._Game.Shelter;
 
 namespace AtomicWar._Game.Survivors
 {
@@ -21,9 +20,9 @@ namespace AtomicWar._Game.Survivors
         public const float FurContaminationDepositRate = 0.05f; // Rate fur contamination transfers to room per hour
 
         private readonly NeedsSystem _needsSystem;
-        private readonly Shelter.Shelter _shelter;
+        private readonly Action<string, float> _depositRoomContamination; // (roomId, amount) -> deposits contamination into room
+        private readonly Action<float> _addBunkerContamination;           // (amount) -> adds bunker contamination
         private readonly List<PetState> _pets = new List<PetState>();
-        private readonly List<ShelterRoom> _rooms = new List<ShelterRoom>();
 
         public IReadOnlyList<PetState> Pets => _pets;
 
@@ -31,18 +30,14 @@ namespace AtomicWar._Game.Survivors
         public event Action<PetState> OnPetDied;
         public event Action<PetState, string> OnPetRoomChanged;
 
-        public PetSystem(NeedsSystem needsSystem, Shelter.Shelter shelter = null)
+        public PetSystem(
+            NeedsSystem needsSystem,
+            Action<string, float> depositRoomContamination = null,
+            Action<float> addBunkerContamination = null)
         {
             _needsSystem = needsSystem ?? throw new ArgumentNullException(nameof(needsSystem));
-            _shelter = shelter;
-        }
-
-        public void RegisterRoom(ShelterRoom room)
-        {
-            if (room != null && !_rooms.Contains(room))
-            {
-                _rooms.Add(room);
-            }
+            _depositRoomContamination = depositRoomContamination;
+            _addBunkerContamination = addBunkerContamination;
         }
 
         public void AddPet(PetState pet)
@@ -111,15 +106,14 @@ namespace AtomicWar._Game.Survivors
                 // 2. Mobile Contamination (Radiates room and adds ambient contamination)
                 if (pet.FurContamination > 0f && !string.IsNullOrEmpty(pet.CurrentRoomId))
                 {
-                    ShelterRoom room = FindRoom(pet.CurrentRoomId);
-                    if (room != null)
+                    float deposit = pet.FurContamination * FurContaminationDepositRate * gameHours;
+                    if (_depositRoomContamination != null)
                     {
-                        float deposit = pet.FurContamination * FurContaminationDepositRate * gameHours;
-                        room.AmbientContamination = Mathf.Clamp01(room.AmbientContamination + deposit);
+                        _depositRoomContamination(pet.CurrentRoomId, deposit);
                     }
-                    else if (_shelter != null)
+                    else if (_addBunkerContamination != null)
                     {
-                        _shelter.AddBunkerContamination(pet.FurContamination * 0.1f * gameHours);
+                        _addBunkerContamination(deposit);
                     }
 
                     // Pet receives rad dose from its own fur
@@ -139,16 +133,6 @@ namespace AtomicWar._Game.Survivors
                     }
                 }
             }
-        }
-
-        public ShelterRoom FindRoom(string roomId)
-        {
-            if (string.IsNullOrEmpty(roomId)) return null;
-            for (int i = 0; i < _rooms.Count; i++)
-            {
-                if (_rooms[i] != null && _rooms[i].RoomId == roomId) return _rooms[i];
-            }
-            return null;
         }
 
         private void TriggerCatastrophicMoraleDrop(IReadOnlyList<Survivor> survivors)

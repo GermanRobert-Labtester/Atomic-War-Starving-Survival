@@ -24,10 +24,15 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void ContaminatedDogInRoom_RaisesAmbientRoomRadiation()
         {
-            var petSystem = new PetSystem(_needsSystem, _shelter);
-
             var room = new ShelterRoom("quarters", null);
-            petSystem.RegisterRoom(room);
+
+            var petSystem = new PetSystem(_needsSystem, (roomId, amount) =>
+            {
+                if (roomId == room.RoomId)
+                {
+                    room.AmbientContamination = Mathf.Clamp01(room.AmbientContamination + amount);
+                }
+            });
 
             var dog = new PetState
             {
@@ -52,7 +57,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void PetStarvation_TriggersCatastrophicMoraleDrop()
         {
-            var petSystem = new PetSystem(_needsSystem, _shelter);
+            var petSystem = new PetSystem(_needsSystem);
 
             var survivor = new Survivor
             {
@@ -84,7 +89,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void PetDecontamination_ClearsFurContamination()
         {
-            var petSystem = new PetSystem(_needsSystem, _shelter);
+            var petSystem = new PetSystem(_needsSystem);
 
             var pet = new PetState
             {

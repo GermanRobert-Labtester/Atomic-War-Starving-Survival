@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Crafting;
+using AtomicWar._Game.Data;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
 
