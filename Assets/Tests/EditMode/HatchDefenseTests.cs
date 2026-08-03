@@ -8,6 +8,7 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -309,6 +310,183 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(result.TraumatizedSurvivorIds.Count + inflicted.Count, Is.GreaterThanOrEqualTo(0));
             // Health fallback or trauma list — at least breach side effects ran
             Assert.That(result.StolenItems.Count, Is.GreaterThan(0));
+        }
+
+        // -----------------------------------------------------------------
+        // Phase 2: install upgrades, Tick noise, save/load, HUD
+        // -----------------------------------------------------------------
+
+        [Test]
+        public void TryInstallHatchUpgrade_ConsumesMaterials_AndRaisesSecurity()
+        {
+            var shelter = new Shelter();
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mech = MakeItem("mechanical_parts", ItemType.Material);
+            var inv = new Inventory { Capacity = 30, MaxWeight = 200f };
+            inv.Add(scrap, 20);
+            inv.Add(mech, 10);
+
+            var hatch = MakeSystem(shelter, inv, new List<Survivor>(), day: 40);
+            float secBefore = hatch.GetShelterSecurity();
+
+            HatchDefenseSystem.GetUpgradeMaterialCost(
+                HatchDefenseModuleSO.BlastDoorId, 1, out int scrapNeed, out int mechNeed);
+            Assert.That(scrapNeed, Is.GreaterThan(0));
+            Assert.That(mechNeed, Is.GreaterThan(0));
+
+            Assert.IsTrue(hatch.CanInstallHatchUpgrade(
+                HatchDefenseModuleSO.BlastDoorId,
+                id => id == "scrap_metal" ? scrap : id == "mechanical_parts" ? mech : null));
+
+            Assert.IsTrue(hatch.TryInstallHatchUpgrade(
+                HatchDefenseModuleSO.BlastDoorId,
+                id => id == "scrap_metal" ? scrap : id == "mechanical_parts" ? mech : null));
+
+            Assert.That(inv.Count(scrap), Is.EqualTo(20 - scrapNeed));
+            Assert.That(inv.Count(mech), Is.EqualTo(10 - mechNeed));
+            Assert.That(shelter.GetModule(HatchDefenseModuleSO.BlastDoorId), Is.Not.Null);
+            Assert.That(shelter.GetModule(HatchDefenseModuleSO.BlastDoorId).Level, Is.EqualTo(1));
+            Assert.That(hatch.GetShelterSecurity(), Is.GreaterThan(secBefore));
+        }
+
+        [Test]
+        public void TryInstallHatchUpgrade_FailsWhenMaterialsMissing()
+        {
+            var shelter = new Shelter();
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mech = MakeItem("mechanical_parts", ItemType.Material);
+            var inv = new Inventory { Capacity = 10, MaxWeight = 50f };
+            inv.Add(scrap, 1);
+            inv.Add(mech, 0);
+
+            var hatch = MakeSystem(shelter, inv, new List<Survivor>());
+            Assert.IsFalse(hatch.TryInstallHatchUpgrade(
+                HatchDefenseModuleSO.ReinforcedLocksId,
+                id => id == "scrap_metal" ? scrap : id == "mechanical_parts" ? mech : null));
+            Assert.That(shelter.GetModule(HatchDefenseModuleSO.ReinforcedLocksId), Is.Null);
+            Assert.That(inv.Count(scrap), Is.EqualTo(1), "Must not consume on failure");
+        }
+
+        [Test]
+        public void OutdoorDiesel_SyncsNoise_AndIsOutdoorRoom()
+        {
+            Assert.IsTrue(HatchDefenseSystem.IsOutdoorRoomId("outside"));
+            Assert.IsTrue(HatchDefenseSystem.IsOutdoorRoomId("yard"));
+            Assert.IsFalse(HatchDefenseSystem.IsOutdoorRoomId("quarters"));
+
+            var diesel = PowerSourceSO.CreateDieselGenerator(50f);
+            _toDestroy.Add(diesel);
+            var net = new PowerNetwork();
+            net.RegisterSourceDefinition(diesel);
+            net.AddSource(new PowerSourceInstance(diesel, initialFuel: 40f)
+            {
+                RoomId = HatchDefenseSystem.OutdoorRoomId,
+                IsEnabled = true
+            });
+
+            Assert.IsTrue(HatchDefenseSystem.IsOutdoorDieselRunning(net));
+
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SyncGeneratorNoise(net);
+            Assert.IsTrue(hatch.GeneratorRunningOutside);
+            Assert.That(hatch.ExternalNoise, Is.GreaterThanOrEqualTo(
+                HatchDefenseSystem.ExternalGeneratorNoiseThreshold));
+        }
+
+        [Test]
+        public void Tick_DecaysNoiseWhenQuiet_NoRaidPreDay30()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 10);
+            hatch.SetExternalNoise(0.9f);
+            hatch.GeneratorRunningOutside = false;
+
+            var result = hatch.Tick(8f, power: null);
+            Assert.That(result, Is.Null, "Pre-Day 30 must not fire noise raids");
+            Assert.That(hatch.ExternalNoise, Is.LessThan(0.9f), "Noise should decay when quiet");
+        }
+
+        [Test]
+        public void CaptureAndRestoreState_PreservesRaidCountersAndNoise()
+        {
+            var shelter = new Shelter();
+            var food = MakeItem("canned_food", ItemType.Food);
+            var inv = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inv.Add(food, 6);
+            var sv = new Survivor { Id = "s1" };
+            sv.Needs.Morale = 60f;
+
+            var hatch = MakeSystem(shelter, inv, new List<Survivor> { sv }, day: 40);
+            hatch.SecurityOverride = 5f;
+            hatch.SetExternalNoise(0.7f);
+            hatch.GeneratorRunningOutside = true;
+
+            var resolution = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+            Assert.That(resolution.Breached, Is.True);
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(hatch.TotalBreaches, Is.EqualTo(1));
+
+            var snap = hatch.CaptureState();
+            Assert.That(snap.ExternalNoise, Is.EqualTo(0.7f).Within(Eps));
+            Assert.That(snap.GeneratorRunningOutside, Is.True);
+            Assert.That(snap.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(snap.LastBreached, Is.True);
+
+            var restored = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            restored.RestoreState(snap);
+
+            Assert.That(restored.ExternalNoise, Is.EqualTo(0.7f).Within(Eps));
+            Assert.That(restored.GeneratorRunningOutside, Is.True);
+            Assert.That(restored.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(restored.TotalBreaches, Is.EqualTo(1));
+            Assert.That(restored.LastRaidSummary, Is.EqualTo(hatch.LastRaidSummary));
+            Assert.That(restored.LastResolution, Is.Not.Null);
+            Assert.That(restored.LastResolution.RaidStrength, Is.EqualTo(50f).Within(Eps));
+        }
+
+        [Test]
+        public void HatchDefenseHUD_Refresh_ShowsDefenseAndLastRaid()
+        {
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance(HatchDefenseModuleSO.ReinforcedLocksId, 1)
+            {
+                SecurityContribution = 10f
+            });
+            var inv = new Inventory { Capacity = 10, MaxWeight = 50f };
+            var hatch = MakeSystem(shelter, inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = -1f;
+
+            var go = new GameObject("HatchHUDTest");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<HatchDefenseHUD>();
+            hud.Bind(hatch);
+            hud.SetDay(40);
+            hud.Open();
+            hud.Refresh();
+
+            Assert.That(hud.IsOpen, Is.True);
+            Assert.That(hud.ShelterSecurity, Is.EqualTo(hatch.GetShelterSecurity()).Within(Eps));
+            Assert.That(hud.DefenseScore, Is.EqualTo(hud.ShelterSecurity + hud.WeaponPower).Within(Eps));
+            Assert.That(hud.RaidUnlocked, Is.True);
+            Assert.That(hud.StatusLine, Does.Contain("HATCH"));
+            Assert.That(hud.LastRaidLine, Does.Contain("Last:"));
+            Assert.That(hud.DetailSummary, Does.Contain("HATCH"));
+
+            // After a raid, HUD should pick up summary
+            hatch.SecurityOverride = 5f;
+            hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 40f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(hud.LastRaidLine, Does.Contain("raids"));
+            Assert.That(hatch.LastRaidSummary, Is.Not.Null.And.Not.Empty);
         }
     }
 }

@@ -88,6 +88,7 @@ namespace AtomicWar._Game.Core
         public WaterEconomySystem WaterEconomySystem { get; private set; }
         public FlashpointChoreographer FlashpointChoreographer { get; private set; }
         public MentalBreakSystem MentalBreakSystem { get; private set; }
+        public HatchDilemmaPrompt HatchDilemmaPromptField { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -169,6 +170,15 @@ namespace AtomicWar._Game.Core
                 RoomId = SleepQualitySystem.DefaultSleepRoomId,
                 ComfortLevel = 1f,
                 Capacity = 2
+            });
+            // Comfort station: a quiet corner of the quarters where the AI
+            // is willing to spend comfort items on a broken survivor. Always
+            // on (no fuel cost in the current tuning); the
+            // MentalBreakComfortActionSO reads it via MedicalSystem.ComfortStationModuleId.
+            Shelter.AddModule(new ShelterModuleInstance("comfort_station", 1)
+            {
+                RoomId = SleepQualitySystem.DefaultSleepRoomId,
+                IsEnabled = true
             });
             Shelter.SetRoomsAdjacent(
                 SleepQualitySystem.DefaultSleepRoomId,
@@ -315,6 +325,13 @@ namespace AtomicWar._Game.Core
             // assembly directly. Same asmdef-boundary pattern.
             MentalBreakSystem.ComfortCureHandler = (sv, br) => ForceMentalBreakComfortCure(sv, br);
 
+            // Hatch-dilemma prompt: tracks the active "knock at the
+            // hatch" decision and provides a timeout so the survivor
+            // doesn't sit in AtHatchDilemma forever. The UI flow is
+            // wired in OnHatchDilemmaReady_Handle (EventRunner.Run shows
+            // the modal; the prompt's Tick advances the timeout).
+            HatchDilemmaPromptField = new HatchDilemmaPrompt();
+
             // Hatch defense (Prompt #33): security vs raids, guard duty, loot theft
             HatchDefenseSystem = new HatchDefenseSystem(
                 getShelter: () => Shelter,
@@ -372,6 +389,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);
             SaveSystem.SetPowerNetwork(PowerNetwork);
+            SaveSystem.SetHatchDefense(HatchDefenseSystem);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
             // after the Choreographer itself is constructed (it depends on
@@ -804,6 +822,9 @@ namespace AtomicWar._Game.Core
                 PowerNetwork.ApplyToShelter(Shelter);
             }
 
+            // Hatch defense: outdoor generator noise + periodic post-Day-30 raid rolls
+            HatchDefenseSystem?.Tick(gameHours, PowerNetwork);
+
             // Needs
             NeedsSystem.Tick(gameHours);
 
@@ -817,6 +838,10 @@ namespace AtomicWar._Game.Core
             {
                 MentalBreakSystem.Tick(gameHours, Survivors, new System.Random(_worldSeed));
             }
+
+            // Hatch-dilemma prompt: advance the timeout. On expiry the
+            // prompt auto-resolves with ForceDeconOutside.
+            HatchDilemmaPromptField?.Tick(gameHours);
 
             // Radiation
             RadiationSystem.Tick(gameHours);
@@ -979,6 +1004,7 @@ namespace AtomicWar._Game.Core
             _hud.BindEventRunner(EventRunner);
             _hud.BindEconomy(EconomySystem);
             _hud.BindPowerNetwork(PowerNetwork);
+            _hud.BindHatchDefense(HatchDefenseSystem);
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
             _hud.BindWorkbench(WorkbenchSystem);
 
@@ -1224,6 +1250,18 @@ namespace AtomicWar._Game.Core
                 }
             };
 
+            // Start the prompt (begins the timeout). On timeout, the
+            // prompt fires OnTimeout which auto-resolves with
+            // ForceDeconOutside (the safest option).
+            if (HatchDilemmaPromptField != null)
+            {
+                HatchDilemmaPromptField.Begin(exp);
+                HatchDilemmaPromptField.OnTimeout -= OnHatchDilemmaTimeout_Handle;
+                HatchDilemmaPromptField.OnTimeout += OnHatchDilemmaTimeout_Handle;
+                HatchDilemmaPromptField.OnChoiceApplied -= OnHatchDilemmaChoiceApplied_Handle;
+                HatchDilemmaPromptField.OnChoiceApplied += OnHatchDilemmaChoiceApplied_Handle;
+            }
+
             // Translate the EventRunner's choice event into our typed signal.
             string expeditionId = exp.ExpeditionId;
             Action<GameEvent, EventChoice, EventContext> onChoice = null;
@@ -1245,6 +1283,8 @@ namespace AtomicWar._Game.Core
                         break;
                 }
                 EventBus.Raise(new HatchDilemmaResolvedSignal(expeditionId, resolution));
+                // Stop the timeout so we do not double-resolve on Tick.
+                HatchDilemmaPromptField?.ApplyChoice(resolution);
                 EventRunner.OnChoiceApplied -= onChoice;
             };
             EventRunner.OnChoiceApplied += onChoice;
@@ -1254,6 +1294,47 @@ namespace AtomicWar._Game.Core
             // signal). Run so the event modal is presented to the player.
             var ctx = new EventContext(exp.Survivor, Shelter, Inventory, new System.Random(_worldSeed));
             EventRunner.Run(eventSo, ctx);
+        }
+
+        /// <summary>
+        /// Hatch-dilemma prompt timeout: auto-apply the timeout resolution
+        /// (default ForceDeconOutside) by raising the resolved signal.
+        /// The ExpeditionSystem listens and applies the consequence.
+        /// </summary>
+        private void OnHatchDilemmaTimeout_Handle(HatchDilemmaResolvedSignal.Resolution resolution)
+        {
+            // Find the active expedition and raise the signal so the
+            // ExpeditionSystem can apply the consequence. The prompt
+            // already deactivated itself in Tick before firing OnTimeout.
+            EventBus.Raise(new HatchDilemmaResolvedSignal(
+                expeditionId: FindActiveHatchDilemmaExpeditionId(),
+                choice: resolution));
+        }
+
+        /// <summary>
+        /// Player (or AI) made a hatch-dilemma choice via the event
+        /// modal. The OnChoiceApplied lambda already raised the
+        /// HatchDilemmaResolvedSignal; here we just cancel the prompt
+        /// timeout so the survivor doesn't wait indefinitely after the
+        /// player has already chosen.
+        /// </summary>
+        private void OnHatchDilemmaChoiceApplied_Handle(HatchDilemmaResolvedSignal.Resolution resolution)
+        {
+            HatchDilemmaPromptField?.Cancel();
+        }
+
+        private string FindActiveHatchDilemmaExpeditionId()
+        {
+            // Best-effort: walk the active expeditions and find the one in
+            // AtHatchDilemma. If none, return empty (the resolve signal
+            // is a no-op without an expeditionId).
+            if (ExpeditionSystem == null || ExpeditionSystem.ActiveExpeditions == null) return string.Empty;
+            for (int i = 0; i < ExpeditionSystem.ActiveExpeditions.Count; i++)
+            {
+                var e = ExpeditionSystem.ActiveExpeditions[i];
+                if (e != null && e.Phase == ExpeditionPhase.AtHatchDilemma) return e.ExpeditionId;
+            }
+            return string.Empty;
         }
     }
 }

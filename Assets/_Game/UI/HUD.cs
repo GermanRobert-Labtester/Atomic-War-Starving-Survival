@@ -27,6 +27,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private PowerGridHUD _powerGridHud;
         [SerializeField] private MapScreenUI _mapScreenUi;
         [SerializeField] private WorkbenchUI _workbenchUi;
+        [SerializeField] private HatchDefenseHUD _hatchDefenseHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -42,6 +43,7 @@ namespace AtomicWar._Game.UI
         public PowerGridHUD PowerGridHUD { get { EnsureWidgetReferences(); return _powerGridHud; } }
         public MapScreenUI MapScreenUI { get { EnsureWidgetReferences(); return _mapScreenUi; } }
         public WorkbenchUI WorkbenchUI { get { EnsureWidgetReferences(); return _workbenchUi; } }
+        public HatchDefenseHUD HatchDefenseHUD { get { EnsureWidgetReferences(); return _hatchDefenseHud; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -62,6 +64,7 @@ namespace AtomicWar._Game.UI
             if (_powerGridHud == null) _powerGridHud = GetComponentInChildren<PowerGridHUD>() ?? gameObject.AddComponent<PowerGridHUD>();
             if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
             if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
+            if (_hatchDefenseHud == null) _hatchDefenseHud = GetComponentInChildren<HatchDefenseHUD>() ?? gameObject.AddComponent<HatchDefenseHUD>();
         }
 
         private void Update()
@@ -154,6 +157,13 @@ namespace AtomicWar._Game.UI
             if (_workbenchUi != null) _workbenchUi.Bind(workbench);
         }
 
+        /// <summary>Bind hatch defense / raid status panel.</summary>
+        public void BindHatchDefense(HatchDefenseSystem hatch)
+        {
+            EnsureWidgetReferences();
+            if (_hatchDefenseHud != null) _hatchDefenseHud.Bind(hatch);
+        }
+
         /// <summary>
         /// Poll-friendly update: call from GameBootstrap.Update to push environment
         /// data (time, weather, season) to the EnvironmentStatusHUD widget each frame.
@@ -164,6 +174,10 @@ namespace AtomicWar._Game.UI
             if (_environmentStatusHud != null)
             {
                 _environmentStatusHud.SetEnvironment(day, hour, weatherName, seasonName);
+            }
+            if (_hatchDefenseHud != null)
+            {
+                _hatchDefenseHud.SetDay(day);
             }
         }
 

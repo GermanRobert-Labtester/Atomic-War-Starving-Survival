@@ -84,6 +84,12 @@ namespace AtomicWar._Game.Shelter
         public const float BreachMoralePenalty = -12f;
         public const float NoiseRaidStrength = 40f;
         public const float ExternalGeneratorNoiseThreshold = 0.6f;
+        /// <summary>Game-hours between outdoor-noise raid rolls post Day 30.</summary>
+        public const float NoiseCheckIntervalHours = 6f;
+        /// <summary>Minimum game-hours between any two raids (trust or noise).</summary>
+        public const float RaidCooldownHours = 12f;
+
+        public const string OutdoorRoomId = "outside";
 
         /// <summary>Known hatch upgrade module ids and default security if no SO bound.</summary>
         public static readonly string[] HatchModuleIds =
@@ -103,6 +109,9 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Active guards this evaluation wave (survivor id → bonus).</summary>
         private readonly Dictionary<string, float> _activeGuards = new Dictionary<string, float>();
 
+        private float _noiseCheckAccumulator;
+        private float _hoursSinceLastRaid = RaidCooldownHours;
+
         /// <summary>0..1 external noise (generator outside, loud work).</summary>
         public float ExternalNoise { get; private set; }
 
@@ -111,6 +120,18 @@ namespace AtomicWar._Game.Shelter
 
         /// <summary>Optional test override for aggregate security (−1 = compute normally).</summary>
         public float SecurityOverride = -1f;
+
+        /// <summary>Most recent raid resolution (null until first raid).</summary>
+        public RaidResolution LastResolution { get; private set; }
+
+        /// <summary>Short player-facing line for HUD / log.</summary>
+        public string LastRaidSummary { get; private set; } = "Hatch quiet.";
+
+        /// <summary>Total raids resolved this campaign (save/load).</summary>
+        public int TotalRaidsResolved { get; private set; }
+
+        /// <summary>Total breaches this campaign.</summary>
+        public int TotalBreaches { get; private set; }
 
         public event Action<RaidResolution> OnRaidResolved;
         public event Action OnSecurityChanged;
@@ -463,7 +484,17 @@ namespace AtomicWar._Game.Shelter
                 ApplyHatchWear(result.HatchDamage);
             }
 
+            if (result.Launched)
+            {
+                LastResolution = result;
+                TotalRaidsResolved++;
+                if (result.Breached) TotalBreaches++;
+                _hoursSinceLastRaid = 0f;
+                LastRaidSummary = BuildSummary(result);
+            }
+
             OnRaidResolved?.Invoke(result);
+            OnSecurityChanged?.Invoke();
             return result;
         }
 
@@ -675,5 +706,271 @@ namespace AtomicWar._Game.Shelter
                     shield.Level = Mathf.Max(0, shield.Level - 1);
             }
         }
+
+        private static string BuildSummary(RaidResolution result)
+        {
+            if (result == null || !result.Launched) return "Hatch quiet.";
+            if (result.Repelled)
+            {
+                return $"Repelled (D {result.DefenseScore:0} > R {result.RaidStrength:0})"
+                    + (result.AmmoConsumed > 0 ? $", −{result.AmmoConsumed} ammo" : "");
+            }
+
+            int stolen = result.StolenItems != null ? result.StolenItems.Count : 0;
+            return $"BREACHED (D {result.DefenseScore:0} < R {result.RaidStrength:0}), stole {stolen} stacks";
+        }
+
+        // -----------------------------------------------------------------
+        // Tick / outdoor generator noise
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// True when a diesel source is running in an outdoor room id.
+        /// </summary>
+        public static bool IsOutdoorDieselRunning(PowerNetwork power)
+        {
+            if (power?.Sources == null) return false;
+            for (int i = 0; i < power.Sources.Count; i++)
+            {
+                var src = power.Sources[i];
+                if (src == null || !src.IsEnabled || src.Fuel <= 0f) continue;
+                bool diesel = (src.Definition != null && src.Definition.Kind == PowerSourceKind.Diesel)
+                    || string.Equals(src.SourceId, "diesel_generator", StringComparison.Ordinal);
+                if (!diesel) continue;
+                if (IsOutdoorRoomId(src.RoomId)) return true;
+            }
+            return false;
+        }
+
+        public static bool IsOutdoorRoomId(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return false;
+            return string.Equals(roomId, OutdoorRoomId, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(roomId, "exterior", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(roomId, "yard", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(roomId, "surface", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Sync outdoor-generator noise from the power grid. Call each host tick.
+        /// </summary>
+        public void SyncGeneratorNoise(PowerNetwork power)
+        {
+            bool outdoor = IsOutdoorDieselRunning(power);
+            if (outdoor)
+            {
+                GeneratorRunningOutside = true;
+                ExternalNoise = Mathf.Max(ExternalNoise, 0.85f);
+            }
+            else if (GeneratorRunningOutside && power != null)
+            {
+                // Manual flag still counts as noise if set without outdoor room
+                ExternalNoise = Mathf.Max(ExternalNoise, 0.85f);
+            }
+        }
+
+        /// <summary>
+        /// Advance noise decay + periodic outdoor raid rolls. Returns a resolution
+        /// if a noise raid fired this tick; otherwise null.
+        /// </summary>
+        public RaidResolution Tick(float gameHours, PowerNetwork power = null)
+        {
+            if (gameHours <= 0f) return null;
+
+            _hoursSinceLastRaid += gameHours;
+            SyncGeneratorNoise(power);
+
+            // Noise decays when the outdoor gen is off
+            if (!GeneratorRunningOutside && !IsOutdoorDieselRunning(power))
+            {
+                ExternalNoise = Mathf.Max(0f, ExternalNoise - 0.08f * gameHours);
+            }
+
+            int day = _getDay != null ? _getDay() : 0;
+            if (!IsRaidUnlocked(day)) return null;
+            if (_hoursSinceLastRaid < RaidCooldownHours) return null;
+
+            _noiseCheckAccumulator += gameHours;
+            if (_noiseCheckAccumulator < NoiseCheckIntervalHours) return null;
+            _noiseCheckAccumulator = 0f;
+
+            var evt = TryBuildNoiseRaid(day);
+            if (evt == null) return null;
+            return ResolveRaid(evt);
+        }
+
+        // -----------------------------------------------------------------
+        // Hatch upgrade install (resource sink)
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Material cost to install or level-up a hatch defense module.
+        /// Uses scrap_metal + mechanical_parts (or mechanical_components alias).
+        /// </summary>
+        public static void GetUpgradeMaterialCost(string moduleId, int targetLevel, out int scrap, out int mechanical)
+        {
+            int tier = Mathf.Max(1, targetLevel);
+            scrap = 0;
+            mechanical = 0;
+            if (moduleId == HatchDefenseModuleSO.ReinforcedLocksId)
+            {
+                scrap = 3 + tier;
+                mechanical = 1 + tier / 2;
+            }
+            else if (moduleId == HatchDefenseModuleSO.BlastDoorId)
+            {
+                scrap = 6 + tier * 2;
+                mechanical = 2 + tier;
+            }
+            else if (moduleId == HatchDefenseModuleSO.HatchTrapsId)
+            {
+                scrap = 2 + tier;
+                mechanical = 2 + tier;
+            }
+            else
+            {
+                scrap = 4;
+                mechanical = 2;
+            }
+        }
+
+        /// <summary>
+        /// Install a hatch upgrade or raise its level, consuming scrap + mechanical parts.
+        /// </summary>
+        public bool TryInstallHatchUpgrade(
+            string moduleId,
+            Func<string, ItemDefinition> itemLookup,
+            Inventory.Inventory inventory = null)
+        {
+            if (string.IsNullOrEmpty(moduleId) || !IsHatchModuleId(moduleId)) return false;
+            var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
+            var shelter = _getShelter != null ? _getShelter() : null;
+            if (inv == null || shelter == null || itemLookup == null) return false;
+
+            var existing = shelter.GetModule(moduleId);
+            int targetLevel = existing != null ? existing.Level + 1 : 1;
+            if (existing != null && existing.Definition != null && targetLevel > existing.Definition.MaxLevel)
+                return false;
+            if (targetLevel > 5) return false;
+
+            GetUpgradeMaterialCost(moduleId, targetLevel, out int scrapNeed, out int mechNeed);
+            var scrap = itemLookup("scrap_metal");
+            var mech = itemLookup("mechanical_parts") ?? itemLookup("mechanical_components");
+            if (scrap == null || mech == null) return false;
+            if (inv.Count(scrap) < scrapNeed || inv.Count(mech) < mechNeed) return false;
+
+            inv.Remove(scrap, scrapNeed);
+            inv.Remove(mech, mechNeed);
+
+            if (existing != null)
+            {
+                existing.Level = targetLevel;
+                if (existing.SecurityContribution <= 0f)
+                    existing.SecurityContribution = DefaultSecurityForModuleId(moduleId);
+                existing.FilterHealth = 100f;
+                existing.IsEnabled = true;
+            }
+            else
+            {
+                shelter.AddModule(new ShelterModuleInstance(moduleId, targetLevel)
+                {
+                    SecurityContribution = DefaultSecurityForModuleId(moduleId),
+                    FilterHealth = 100f,
+                    IsEnabled = true,
+                    RoomId = "entry"
+                });
+            }
+
+            OnSecurityChanged?.Invoke();
+            return true;
+        }
+
+        public bool CanInstallHatchUpgrade(
+            string moduleId,
+            Func<string, ItemDefinition> itemLookup,
+            Inventory.Inventory inventory = null)
+        {
+            if (string.IsNullOrEmpty(moduleId) || !IsHatchModuleId(moduleId)) return false;
+            var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
+            var shelter = _getShelter != null ? _getShelter() : null;
+            if (inv == null || shelter == null || itemLookup == null) return false;
+
+            var existing = shelter.GetModule(moduleId);
+            int targetLevel = existing != null ? existing.Level + 1 : 1;
+            if (targetLevel > 5) return false;
+
+            GetUpgradeMaterialCost(moduleId, targetLevel, out int scrapNeed, out int mechNeed);
+            var scrap = itemLookup("scrap_metal");
+            var mech = itemLookup("mechanical_parts") ?? itemLookup("mechanical_components");
+            if (scrap == null || mech == null) return false;
+            return inv.Count(scrap) >= scrapNeed && inv.Count(mech) >= mechNeed;
+        }
+
+        // -----------------------------------------------------------------
+        // Save / load
+        // -----------------------------------------------------------------
+
+        public HatchDefenseSave CaptureState()
+        {
+            return new HatchDefenseSave
+            {
+                ExternalNoise = ExternalNoise,
+                GeneratorRunningOutside = GeneratorRunningOutside,
+                HoursSinceLastRaid = _hoursSinceLastRaid,
+                NoiseCheckAccumulator = _noiseCheckAccumulator,
+                TotalRaidsResolved = TotalRaidsResolved,
+                TotalBreaches = TotalBreaches,
+                LastRaidSummary = LastRaidSummary ?? "Hatch quiet.",
+                LastRaidStrength = LastResolution != null ? LastResolution.RaidStrength : 0f,
+                LastDefenseScore = LastResolution != null ? LastResolution.DefenseScore : 0f,
+                LastRepelled = LastResolution != null && LastResolution.Repelled,
+                LastBreached = LastResolution != null && LastResolution.Breached
+            };
+        }
+
+        public void RestoreState(HatchDefenseSave save)
+        {
+            if (save == null) return;
+            ExternalNoise = Mathf.Clamp01(save.ExternalNoise);
+            GeneratorRunningOutside = save.GeneratorRunningOutside;
+            _hoursSinceLastRaid = Mathf.Max(0f, save.HoursSinceLastRaid);
+            _noiseCheckAccumulator = Mathf.Max(0f, save.NoiseCheckAccumulator);
+            TotalRaidsResolved = Mathf.Max(0, save.TotalRaidsResolved);
+            TotalBreaches = Mathf.Max(0, save.TotalBreaches);
+            LastRaidSummary = string.IsNullOrEmpty(save.LastRaidSummary)
+                ? "Hatch quiet."
+                : save.LastRaidSummary;
+
+            if (save.LastRaidStrength > 0f || save.LastBreached || save.LastRepelled)
+            {
+                LastResolution = new RaidResolution
+                {
+                    Launched = true,
+                    Repelled = save.LastRepelled,
+                    RaidStrength = save.LastRaidStrength,
+                    DefenseScore = save.LastDefenseScore,
+                    Message = LastRaidSummary
+                };
+            }
+
+            OnSecurityChanged?.Invoke();
+        }
+    }
+
+    /// <summary>Serializable hatch defense snapshot.</summary>
+    [Serializable]
+    public class HatchDefenseSave
+    {
+        public float ExternalNoise;
+        public bool GeneratorRunningOutside;
+        public float HoursSinceLastRaid;
+        public float NoiseCheckAccumulator;
+        public int TotalRaidsResolved;
+        public int TotalBreaches;
+        public string LastRaidSummary;
+        public float LastRaidStrength;
+        public float LastDefenseScore;
+        public bool LastRepelled;
+        public bool LastBreached;
     }
 }

@@ -53,6 +53,7 @@ namespace AtomicWar._Game.Core
         private PowerNetwork _powerNetwork;
         private WaterStorage _waterStorage;
         private GeneratedMap _generatedMap;
+        private HatchDefenseSystem _hatchDefense;
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
@@ -136,6 +137,12 @@ namespace AtomicWar._Game.Core
         public void SetPowerNetwork(PowerNetwork powerNetwork)
         {
             _powerNetwork = powerNetwork;
+        }
+
+        /// <summary>Inject hatch defense / raid state for save/load.</summary>
+        public void SetHatchDefense(HatchDefenseSystem hatchDefense)
+        {
+            _hatchDefense = hatchDefense;
         }
 
         /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
@@ -392,6 +399,9 @@ namespace AtomicWar._Game.Core
             if (_powerNetwork != null)
                 data.Power = _powerNetwork.CaptureState();
 
+            if (_hatchDefense != null)
+                data.HatchDefense = _hatchDefense.CaptureState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -594,6 +604,11 @@ namespace AtomicWar._Game.Core
             {
                 _powerNetwork.RestoreState(data.Power);
                 _powerNetwork.ApplyToShelter(_shelter);
+            }
+
+            if (_hatchDefense != null && data.HatchDefense != null)
+            {
+                _hatchDefense.RestoreState(data.HatchDefense);
             }
 
             if (_generatedMap != null && data.GeneratedMap != null)
@@ -838,6 +853,7 @@ namespace AtomicWar._Game.Core
         public WorldPhaseSave WorldPhase;
         public DynamicEconomySave Economy;
         public PowerNetworkSave Power;
+        public HatchDefenseSave HatchDefense;
         public WaterStorageSave Water;
         public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;
