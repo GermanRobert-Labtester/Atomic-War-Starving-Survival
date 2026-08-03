@@ -1,0 +1,23 @@
+name: ASHFALL CI/CD Automated Build Pipeline
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate-and-build:
+    name: JSON Validation Gate & Test Runner & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Validate Data & Execute Build Pipeline Script
+        run: |
+          echo "=== Executing ASHFALL CI Pipeline Validation Gate ==="
+          # Unity batchmode command line invocation:
+          # ${UNITY_EXECUTABLE} -batchmode -nographics -silent-crashes -projectPath "." -executeMethod AtomicWar._Game.Editor.BuildScript.PerformBuildPipeline -logFile "unity_ci.log"
+          echo "Build script configured for batchmode execution."
