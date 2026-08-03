@@ -11,6 +11,7 @@ using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
+using AtomicWar._Game.Economy;
 
 namespace AtomicWar._Game.Core
 {
@@ -47,6 +48,8 @@ namespace AtomicWar._Game.Core
         private Inventory.Inventory _inventory;
         private ExpeditionSystem _expeditionSystem;
         private MedicalSystem _medicalSystem;
+        private DynamicEconomySystem _economySystem;
+        private WorldPhaseSystem _worldPhaseSystem;
 
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
@@ -107,6 +110,18 @@ namespace AtomicWar._Game.Core
         public void SetMedicalSystem(MedicalSystem medicalSystem)
         {
             _medicalSystem = medicalSystem;
+        }
+
+        /// <summary>Inject world phase system so CurrentPhase/HasTriggeredExchange persist across save/load.</summary>
+        public void SetWorldPhaseSystem(WorldPhaseSystem worldPhaseSystem)
+        {
+            _worldPhaseSystem = worldPhaseSystem;
+        }
+
+        /// <summary>Inject dynamic economy / faction trust matrix for save/load.</summary>
+        public void SetEconomySystem(DynamicEconomySystem economySystem)
+        {
+            _economySystem = economySystem;
         }
 
         /// <summary>Write the current world state to the given slot.</summary>
@@ -319,6 +334,12 @@ namespace AtomicWar._Game.Core
             if (_medicalSystem != null)
                 data.Medical = _medicalSystem.CaptureState();
 
+            if (_worldPhaseSystem != null)
+                data.WorldPhase = _worldPhaseSystem.CaptureState();
+
+            if (_economySystem != null)
+                data.Economy = _economySystem.CaptureState();
+
             if (_expeditionSystem != null && _expeditionSystem.ActiveExpeditions != null)
             {
                 foreach (var exp in _expeditionSystem.ActiveExpeditions)
@@ -484,6 +505,16 @@ namespace AtomicWar._Game.Core
             if (_medicalSystem != null && data.Medical != null)
             {
                 _medicalSystem.RestoreState(data.Medical);
+            }
+
+            if (_worldPhaseSystem != null && data.WorldPhase != null)
+            {
+                _worldPhaseSystem.RestoreState(data.WorldPhase);
+            }
+
+            if (_economySystem != null && data.Economy != null)
+            {
+                _economySystem.RestoreState(data.Economy);
             }
 
             if (_expeditionSystem != null && data.Expeditions != null)
@@ -684,6 +715,8 @@ namespace AtomicWar._Game.Core
         public RadiationKnowledgeSave RadiationKnowledge;
         public InventorySaveState Inventory;
         public MedicalSystemSave Medical;
+        public WorldPhaseSave WorldPhase;
+        public DynamicEconomySave Economy;
         public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();
     }
 

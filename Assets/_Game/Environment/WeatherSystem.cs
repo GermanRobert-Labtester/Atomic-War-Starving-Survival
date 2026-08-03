@@ -10,6 +10,8 @@ namespace AtomicWar._Game.Environment
     public enum WeatherKind
     {
         Clear,
+        Rain,
+        Overcast,
         Ashfall,
         FalloutStorm,
         Blizzard
@@ -45,6 +47,13 @@ namespace AtomicWar._Game.Environment
         private int _rollCount;
 
         public WeatherKind Current { get; private set; } = WeatherKind.Clear;
+
+        /// <summary>
+        /// When true, RollNextState excludes Ashfall/FalloutStorm/Blizzard from the weighted
+        /// roll regardless of how the active SeasonWindow is authored — guarantees Phase 1
+        /// (Civil War) never rolls a post-war hazard. Set by WorldPhaseSystem/GameBootstrap.
+        /// </summary>
+        public bool RestrictToNonHazardWeather;
 
         /// <summary>Base seed this system's deterministic roll sequence is derived from.</summary>
         public int Seed => _seed;
@@ -157,10 +166,12 @@ namespace AtomicWar._Game.Environment
             _rollCount++;
 
             float clear = Mathf.Max(0f, season.GetWeight(WeatherKind.Clear));
-            float ashfall = Mathf.Max(0f, season.GetWeight(WeatherKind.Ashfall));
-            float storm = Mathf.Max(0f, season.GetWeight(WeatherKind.FalloutStorm));
-            float blizzard = Mathf.Max(0f, season.GetWeight(WeatherKind.Blizzard));
-            float total = clear + ashfall + storm + blizzard;
+            float rain = Mathf.Max(0f, season.GetWeight(WeatherKind.Rain));
+            float overcast = Mathf.Max(0f, season.GetWeight(WeatherKind.Overcast));
+            float ashfall = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.Ashfall));
+            float storm = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.FalloutStorm));
+            float blizzard = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.Blizzard));
+            float total = clear + rain + overcast + ashfall + storm + blizzard;
             if (total <= 0f)
             {
                 return WeatherKind.Clear;
@@ -172,6 +183,16 @@ namespace AtomicWar._Game.Environment
                 return WeatherKind.Clear;
             }
             roll -= clear;
+            if (roll < rain)
+            {
+                return WeatherKind.Rain;
+            }
+            roll -= rain;
+            if (roll < overcast)
+            {
+                return WeatherKind.Overcast;
+            }
+            roll -= overcast;
             if (roll < ashfall)
             {
                 return WeatherKind.Ashfall;

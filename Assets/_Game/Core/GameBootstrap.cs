@@ -14,6 +14,7 @@ using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
+using AtomicWar._Game.Economy;
 
 namespace AtomicWar._Game.Core
 {
@@ -37,6 +38,8 @@ namespace AtomicWar._Game.Core
         [SerializeField] private GameEventCatalogSO _eventCatalog;
         [SerializeField] private LocationCatalogSO _locationCatalog;
         [SerializeField] private RadioCatalogSO _radioCatalog;
+        [SerializeField] private WorldPhaseConfigSO _worldPhaseConfig;
+        [SerializeField] private LootTableSO _lootTable;
 
         [Header("UI")]
         [SerializeField] private HUD _hud;
@@ -70,6 +73,8 @@ namespace AtomicWar._Game.Core
         public RadioTunerSystem RadioTunerSystem { get; private set; }
         public BeliefSystem BeliefSystem { get; private set; }
         public MedicalSystem MedicalSystem { get; private set; }
+        public WorldPhaseSystem WorldPhaseSystem { get; private set; }
+        public DynamicEconomySystem EconomySystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -160,6 +165,14 @@ namespace AtomicWar._Game.Core
                 }
             };
 
+            // World Phase (Civil War -> Flashpoint -> Nuclear Winter). Phase 1 defaults:
+            // no radiation, no post-war weather hazards, until the exchange fires.
+            WorldPhaseSystem = new WorldPhaseSystem(_worldPhaseConfig);
+            RadiationSystem.IsPaused = true;
+            WeatherSystem.RestrictToNonHazardWeather = true;
+            WorldPhaseSystem.OnNuclearExchange += HandleNuclearExchange;
+            TimeSystem.OnDayTick += WorldPhaseSystem.OnDayTick;
+
             // Inventory + Crafting
             Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
             CraftingSystem = new CraftingSystem(Inventory);
@@ -215,6 +228,24 @@ namespace AtomicWar._Game.Core
                 EventRunner.SetPool(_eventCatalog.events);
             }
 
+            // Dynamic phase economy + faction trust matrix
+            EconomySystem = new DynamicEconomySystem(
+                getPhase: () => WorldPhaseSystem.CurrentPhase,
+                shelter: Shelter,
+                rng: new System.Random(_worldSeed + 91));
+            foreach (var fac in DynamicEconomySystem.CreateDefaultFactions())
+                EconomySystem.RegisterFaction(fac);
+            EconomySystem.BindEventRunner(EventRunner);
+            WorldPhaseSystem.OnPhaseChanged += phase =>
+            {
+                EconomySystem.NotifyPhaseChanged(phase);
+                // Keep weather/rad systems in sync with campaign phase labels
+                if (phase == WorldPhase.Flashpoint || phase == WorldPhase.NuclearWinter)
+                {
+                    // Exchange already unpauses rads in HandleNuclearExchange
+                }
+            };
+
             // Knowledge map must exist before SaveSystem can capture it
             KnowledgeMap = new RadiationKnowledgeMap();
             SeedKnowledgeMap();
@@ -229,6 +260,8 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetKnowledgeMap(KnowledgeMap);
             SaveSystem.SetInventory(Inventory);
             SaveSystem.SetMedicalSystem(MedicalSystem);
+            SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
+            SaveSystem.SetEconomySystem(EconomySystem);
 
             // Subscribe to phase changes for autosave
             GameState.OnPhaseChanged += phase =>
@@ -239,7 +272,8 @@ namespace AtomicWar._Game.Core
             // Scavenging + survey (shares KnowledgeMap with SaveSystem)
             ScavengingSystem = new LocationScavengingSystem(
                 RadiationSystem, Inventory, _itemCatalog, _worldSeed,
-                KnowledgeMap, () => TimeSystem.CurrentDay);
+                KnowledgeMap, () => TimeSystem.CurrentDay,
+                _lootTable, () => WorldPhaseSystem.CurrentPhase);
             ScavengingSystem.OnSurveyCompleted += (mission, success) => RefreshMapKnowledgeHUD();
             ScavengingSystem.OnMissionCompleted += (mission, loot) => RefreshMapKnowledgeHUD();
 
@@ -338,6 +372,28 @@ namespace AtomicWar._Game.Core
             emergency.interferenceSusceptibility = 0.4f;
             
             RadioTunerSystem.SetFrequencies(new[] { civilian, military, numbers, emergency });
+        }
+
+        /// <summary>
+        /// The Day-30 atomic exchange cascade: EMP fries unshielded electronics, weather
+        /// snaps to Ashfall and hazards unlock, radiation activates map-wide, and every
+        /// survivor takes a permanent morale hit. Fired once by WorldPhaseSystem.
+        /// </summary>
+        private void HandleNuclearExchange()
+        {
+            var empResult = EMPEvent.ApplyGlobal(Inventory, Shelter, RadioTunerSystem?.State);
+            Debug.Log($"[GameBootstrap] Nuclear exchange: {empResult.DevicesBroken} devices broken, " +
+                      $"{empResult.ModulesDisabled} modules disabled, radio destroyed={empResult.RadioDestroyed}.");
+
+            WeatherSystem.RestrictToNonHazardWeather = false;
+            WeatherSystem.ForceWeather(WeatherKind.Ashfall);
+            RadiationSystem.IsPaused = false;
+
+            foreach (var sv in Survivors)
+            {
+                if (sv == null || !sv.IsAlive) continue;
+                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - WorldPhaseSystem.ExchangeMoraleHit, 0f, 100f);
+            }
         }
 
         private void SeedKnowledgeMap()
@@ -540,6 +596,7 @@ namespace AtomicWar._Game.Core
             if (_hud == null) return;
 
             _hud.BindEventRunner(EventRunner);
+            _hud.BindEconomy(EconomySystem);
 
             // Wire radiation updates
             RadiationSystem.OnDoseChanged += (sv, dose) =>

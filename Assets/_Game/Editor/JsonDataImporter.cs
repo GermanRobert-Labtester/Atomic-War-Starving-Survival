@@ -245,6 +245,8 @@ namespace AtomicWar._Game.Editor
             public float  moraleEffect;
             public bool   isEquipable;
             public string equipSlot;
+            public float  tradeValue;
+            public bool   empShielded;
         }
 
         [Serializable]
@@ -468,6 +470,8 @@ namespace AtomicWar._Game.Editor
                 so.moraleEffect    = json.moraleEffect;
                 so.isEquipable     = json.isEquipable;
                 so.equipSlot       = string.IsNullOrEmpty(json.equipSlot) ? EquipSlot.None : Enum.Parse<EquipSlot>(json.equipSlot, true);
+                so.tradeValue      = json.tradeValue;
+                so.empShielded     = json.empShielded;
                 EditorUtility.SetDirty(so);
                 map[json.id] = so;
             }

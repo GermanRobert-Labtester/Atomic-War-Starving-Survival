@@ -26,6 +26,8 @@ namespace AtomicWar._Game.Core
         private readonly Func<int> _getCurrentDay;
         private readonly System.Random _rng;
         private readonly List<ActiveMission> _active = new List<ActiveMission>();
+        private readonly LootTableSO _lootTable;
+        private readonly Func<WorldPhase> _getCurrentPhase;
 
         public event Action<ActiveMission> OnMissionStarted;
         public event Action<ActiveMission, List<ItemDefinition>> OnMissionCompleted;
@@ -37,7 +39,9 @@ namespace AtomicWar._Game.Core
             ItemCatalogSO itemCatalog,
             int seed = 42,
             RadiationKnowledgeMap knowledge = null,
-            Func<int> getCurrentDay = null)
+            Func<int> getCurrentDay = null,
+            LootTableSO lootTable = null,
+            Func<WorldPhase> getCurrentPhase = null)
         {
             _radSystem = radSystem;
             _inventory = inventory;
@@ -45,6 +49,8 @@ namespace AtomicWar._Game.Core
             _knowledge = knowledge;
             _getCurrentDay = getCurrentDay ?? (() => 0);
             _rng = new System.Random(seed);
+            _lootTable = lootTable;
+            _getCurrentPhase = getCurrentPhase ?? (() => WorldPhase.CivilWar);
         }
 
         public IReadOnlyList<ActiveMission> ActiveMissions => _active;
@@ -220,10 +226,40 @@ namespace AtomicWar._Game.Core
         private List<ItemDefinition> RollLoot(float dangerLevel)
         {
             var loot = new List<ItemDefinition>();
-            if (_itemCatalog == null || _itemCatalog.items.Count == 0) return loot;
 
             int itemCount = 1 + (int)(dangerLevel / 3f);
             itemCount = Mathf.Clamp(itemCount, 1, 4);
+
+            if (_lootTable != null)
+            {
+                var entries = _lootTable.GetValidEntries(_getCurrentPhase());
+                if (entries.Count == 0) return loot;
+
+                float totalWeight = 0f;
+                for (int i = 0; i < entries.Count; i++) totalWeight += Mathf.Max(0f, entries[i].weight);
+                if (totalWeight <= 0f) return loot;
+
+                for (int i = 0; i < itemCount; i++)
+                {
+                    float chance = 0.6f + dangerLevel * 0.03f;
+                    if (_rng.NextDouble() >= chance) continue;
+
+                    double roll = _rng.NextDouble() * totalWeight;
+                    for (int e = 0; e < entries.Count; e++)
+                    {
+                        roll -= Mathf.Max(0f, entries[e].weight);
+                        if (roll <= 0f)
+                        {
+                            loot.Add(entries[e].item);
+                            break;
+                        }
+                    }
+                }
+
+                return loot;
+            }
+
+            if (_itemCatalog == null || _itemCatalog.items.Count == 0) return loot;
 
             for (int i = 0; i < itemCount; i++)
             {

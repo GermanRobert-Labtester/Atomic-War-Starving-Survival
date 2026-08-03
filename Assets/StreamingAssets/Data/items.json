@@ -15,7 +15,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 30,
+    "empShielded": false
   },
   {
     "id": "geiger_counter",
@@ -33,7 +35,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 30,
+    "empShielded": false
   },
   {
     "id": "iodine_pills",
@@ -51,7 +55,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 6,
+    "empShielded": false
   },
   {
     "id": "anti_rad",
@@ -69,7 +75,9 @@
     "radCleanse": 50,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 8,
+    "empShielded": false
   },
   {
     "id": "gas_mask",
@@ -87,7 +95,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": true,
-    "equipSlot": "Face"
+    "equipSlot": "Face",
+    "tradeValue": 40,
+    "empShielded": false
   },
   {
     "id": "hazmat_suit",
@@ -105,7 +115,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": true,
-    "equipSlot": "Body"
+    "equipSlot": "Body",
+    "tradeValue": 40,
+    "empShielded": false
   },
   {
     "id": "water_filter",
@@ -123,7 +135,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 20,
+    "empShielded": false
   },
   {
     "id": "air_filter",
@@ -141,7 +155,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 20,
+    "empShielded": false
   },
   {
     "id": "clean_water",
@@ -159,7 +175,9 @@
     "radCleanse": 0,
     "moraleEffect": 1,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
   },
   {
     "id": "irradiated_water",
@@ -177,7 +195,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
   },
   {
     "id": "canned_food",
@@ -195,7 +215,9 @@
     "radCleanse": 0,
     "moraleEffect": 2,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 12,
+    "empShielded": false
   },
   {
     "id": "fuel",
@@ -213,7 +235,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 14,
+    "empShielded": false
   },
   {
     "id": "cloth",
@@ -231,7 +255,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 5,
+    "empShielded": false
   },
   {
     "id": "scrap_metal",
@@ -249,7 +275,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 5,
+    "empShielded": false
   },
   {
     "id": "bandage",
@@ -267,7 +295,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 10,
+    "empShielded": false
   },
   {
     "id": "raw_meat",
@@ -285,7 +315,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 12,
+    "empShielded": false
   },
   {
     "id": "cooked_meat",
@@ -303,7 +335,9 @@
     "radCleanse": 0,
     "moraleEffect": 3,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 12,
+    "empShielded": false
   },
   {
     "id": "dirty_water",
@@ -321,7 +355,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
   },
   {
     "id": "medical_kit",
@@ -339,7 +375,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 10,
+    "empShielded": false
   },
   {
     "id": "battery",
@@ -357,7 +395,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 5,
+    "empShielded": false
   },
   {
     "id": "calibration_kit",
@@ -375,7 +415,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 18,
+    "empShielded": false
   },
   {
     "id": "tweezers",
@@ -393,7 +435,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 18,
+    "empShielded": false
   },
   {
     "id": "splint",
@@ -411,7 +455,9 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 10,
+    "empShielded": false
   },
   {
     "id": "antibiotics",
@@ -429,6 +475,48 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": false,
-    "equipSlot": ""
+    "equipSlot": "",
+    "tradeValue": 10,
+    "empShielded": false
+  },
+  {
+    "id": "jewelry",
+    "displayName": "Jewelry",
+    "description": "Gold and stones from before. Pretty until the sky burns; then it buys nothing.",
+    "type": "Trade",
+    "stackMax": 20,
+    "weight": 0.05,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 2,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false
+  },
+  {
+    "id": "currency",
+    "displayName": "Paper Currency",
+    "description": "Pre-exchange notes. Still foldable. Not drinkable.",
+    "type": "Trade",
+    "stackMax": 100,
+    "weight": 0.01,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 20,
+    "empShielded": false
   }
 ]

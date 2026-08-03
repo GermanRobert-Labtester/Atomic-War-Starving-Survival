@@ -4,6 +4,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Economy;
 
 namespace AtomicWar._Game.UI
 {
@@ -22,6 +23,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private EnvironmentStatusHUD _environmentStatusHud;
         [SerializeField] private EventModalUI _eventModalUi;
         [SerializeField] private MapKnowledgeHUD _mapKnowledgeHud;
+        [SerializeField] private TradeScreenUI _tradeScreenUi;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -33,6 +35,7 @@ namespace AtomicWar._Game.UI
         public EnvironmentStatusHUD EnvironmentStatusHud { get { EnsureWidgetReferences(); return _environmentStatusHud; } }
         public EventModalUI EventModalUI { get { EnsureWidgetReferences(); return _eventModalUi; } }
         public MapKnowledgeHUD MapKnowledgeHUD { get { EnsureWidgetReferences(); return _mapKnowledgeHud; } }
+        public TradeScreenUI TradeScreenUI { get { EnsureWidgetReferences(); return _tradeScreenUi; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -49,6 +52,7 @@ namespace AtomicWar._Game.UI
             if (_environmentStatusHud == null) _environmentStatusHud = GetComponentInChildren<EnvironmentStatusHUD>() ?? gameObject.AddComponent<EnvironmentStatusHUD>();
             if (_eventModalUi == null) _eventModalUi = GetComponentInChildren<EventModalUI>() ?? gameObject.AddComponent<EventModalUI>();
             if (_mapKnowledgeHud == null) _mapKnowledgeHud = GetComponentInChildren<MapKnowledgeHUD>() ?? gameObject.AddComponent<MapKnowledgeHUD>();
+            if (_tradeScreenUi == null) _tradeScreenUi = GetComponentInChildren<TradeScreenUI>() ?? gameObject.AddComponent<TradeScreenUI>();
         }
 
         private void Update()
@@ -111,6 +115,13 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_eventModalUi != null) _eventModalUi.Bind(runner);
+        }
+
+        /// <summary>Bind DynamicEconomySystem to the trade / barter screen.</summary>
+        public void BindEconomy(DynamicEconomySystem economy)
+        {
+            EnsureWidgetReferences();
+            if (_tradeScreenUi != null) _tradeScreenUi.Bind(economy);
         }
 
         /// <summary>

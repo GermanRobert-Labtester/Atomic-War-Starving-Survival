@@ -1,0 +1,610 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using AtomicWar._Game.Data;
+using AtomicWar._Game.Events;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Survivors;
+
+namespace AtomicWar._Game.Economy
+{
+    /// <summary>
+    /// Phase-driven item values + per-faction TrustLevel matrix. Values combine
+    /// TradeEconomy phase multipliers with global supply/demand pressure. Trust
+    /// (-100..100) gates trade / rob / intel / hatch raids. EventRunner choices
+    /// with FactionId + TrustDelta (or RelationshipDelta) mutate trust.
+    /// </summary>
+    public class DynamicEconomySystem
+    {
+        public const float MinTrust = -100f;
+        public const float MaxTrust = 100f;
+        public const float DefaultRaidThreshold = -50f;
+
+        /// <summary>Supply pressure clamp: demand mult stays in [min, max].</summary>
+        public const float MinDemandMult = 0.25f;
+        public const float MaxDemandMult = 4f;
+
+        private readonly Dictionary<string, FactionSO> _factions = new Dictionary<string, FactionSO>();
+        private readonly Dictionary<string, float> _trust = new Dictionary<string, float>();
+        /// <summary>Per item-id demand pressure. 1 = neutral; &gt;1 scarce; &lt;1 surplus.</summary>
+        private readonly Dictionary<string, float> _demand = new Dictionary<string, float>();
+
+        private Func<WorldPhase> _getPhase;
+        private Shelter.Shelter _shelter;
+        private System.Random _rng;
+
+        public event Action<string, float, float> OnTrustChanged; // factionId, old, new
+        public event Action<WorldPhase> OnEconomyPhaseChanged;
+        public event Action<FactionRaidResult> OnRaidResolved;
+        public event Action OnEconomyChanged;
+
+        public WorldPhase CurrentPhase => _getPhase != null ? _getPhase() : WorldPhase.CivilWar;
+
+        public DynamicEconomySystem(
+            Func<WorldPhase> getPhase = null,
+            Shelter.Shelter shelter = null,
+            System.Random rng = null)
+        {
+            _getPhase = getPhase ?? (() => WorldPhase.CivilWar);
+            _shelter = shelter;
+            _rng = rng ?? new System.Random(7);
+        }
+
+        public void SetPhaseProvider(Func<WorldPhase> getPhase)
+        {
+            _getPhase = getPhase ?? (() => WorldPhase.CivilWar);
+        }
+
+        public void SetShelter(Shelter.Shelter shelter) => _shelter = shelter;
+
+        public void NotifyPhaseChanged(WorldPhase phase)
+        {
+            OnEconomyPhaseChanged?.Invoke(phase);
+            OnEconomyChanged?.Invoke();
+        }
+
+        // -----------------------------------------------------------------
+        // Factions / trust
+        // -----------------------------------------------------------------
+
+        public void RegisterFaction(FactionSO faction)
+        {
+            if (faction == null || string.IsNullOrEmpty(faction.id)) return;
+            _factions[faction.id] = faction;
+            if (!_trust.ContainsKey(faction.id))
+                _trust[faction.id] = Mathf.Clamp(faction.startingTrust, MinTrust, MaxTrust);
+        }
+
+        public FactionSO GetFaction(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return null;
+            return _factions.TryGetValue(factionId, out var f) ? f : null;
+        }
+
+        public IReadOnlyDictionary<string, FactionSO> Factions => _factions;
+
+        public float GetTrust(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return 0f;
+            return _trust.TryGetValue(factionId, out float t) ? t : 0f;
+        }
+
+        public float ModifyTrust(string factionId, float delta)
+        {
+            if (string.IsNullOrEmpty(factionId) || Mathf.Approximately(delta, 0f)) return GetTrust(factionId);
+
+            float old = GetTrust(factionId);
+            float next = Mathf.Clamp(old + delta, MinTrust, MaxTrust);
+            _trust[factionId] = next;
+            OnTrustChanged?.Invoke(factionId, old, next);
+            OnEconomyChanged?.Invoke();
+
+            // Crossing into raid territory may trigger an immediate hatch check
+            float threshold = _factions.TryGetValue(factionId, out var fac)
+                ? fac.raidThreshold
+                : DefaultRaidThreshold;
+            if (old > threshold && next <= threshold)
+            {
+                TryLaunchRaid(factionId);
+            }
+
+            return next;
+        }
+
+        public void SetTrust(string factionId, float value)
+        {
+            if (string.IsNullOrEmpty(factionId)) return;
+            float old = GetTrust(factionId);
+            float next = Mathf.Clamp(value, MinTrust, MaxTrust);
+            _trust[factionId] = next;
+            if (!Mathf.Approximately(old, next))
+            {
+                OnTrustChanged?.Invoke(factionId, old, next);
+                OnEconomyChanged?.Invoke();
+            }
+        }
+
+        public TradeStance GetStance(string factionId)
+        {
+            float trust = GetTrust(factionId);
+            var fac = GetFaction(factionId);
+            float raidAt = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
+            float robAt = fac != null ? fac.robThreshold : -20f;
+            float tradeAt = fac != null ? fac.minTrustToTrade : -40f;
+            float intelAt = fac != null ? fac.intelShareThreshold : 40f;
+
+            if (trust <= raidAt) return TradeStance.HostileRaid;
+            if (trust <= robAt) return TradeStance.Rob;
+            if (trust < tradeAt) return TradeStance.Refuse;
+            if (trust >= intelAt) return TradeStance.ShareIntel;
+            return TradeStance.Trade;
+        }
+
+        public bool WillTrade(string factionId)
+        {
+            var s = GetStance(factionId);
+            return s == TradeStance.Trade || s == TradeStance.ShareIntel;
+        }
+
+        public bool WillShareIntel(string factionId) => GetStance(factionId) == TradeStance.ShareIntel;
+
+        // -----------------------------------------------------------------
+        // Pricing
+        // -----------------------------------------------------------------
+
+        public float GetDemandMultiplier(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return 1f;
+            return _demand.TryGetValue(itemId, out float d) ? Mathf.Clamp(d, MinDemandMult, MaxDemandMult) : 1f;
+        }
+
+        /// <summary>Nudge global demand (scarcity). Positive = more scarce / valuable.</summary>
+        public void AdjustDemand(string itemId, float delta)
+        {
+            if (string.IsNullOrEmpty(itemId) || Mathf.Approximately(delta, 0f)) return;
+            float cur = GetDemandMultiplier(itemId);
+            _demand[itemId] = Mathf.Clamp(cur + delta, MinDemandMult, MaxDemandMult);
+            OnEconomyChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Effective trade value for an item under current WorldPhase + supply/demand.
+        /// Does not apply faction trust (use <see cref="GetBarterUnitValue"/> for that).
+        /// </summary>
+        public float GetTradeValue(ItemDefinition item)
+        {
+            if (item == null) return 0f;
+            float phaseVal = TradeEconomy.GetEffectiveValue(item, CurrentPhase);
+            if (phaseVal <= 0f) return 0f;
+            return phaseVal * GetDemandMultiplier(item.id);
+        }
+
+        /// <summary>
+        /// Unit value in a barter with a specific faction. High trust improves the
+        /// player's selling price and softens buy prices; low trust does the reverse.
+        /// </summary>
+        /// <param name="playerSelling">True when the player is offering the item to the faction.</param>
+        public float GetBarterUnitValue(ItemDefinition item, string factionId, bool playerSelling)
+        {
+            float baseVal = GetTradeValue(item);
+            if (baseVal <= 0f) return 0f;
+
+            float trust = GetTrust(factionId);
+            // trust -100..100 → factor ~0.7..1.3 for seller favor when player sells
+            float trustNorm = Mathf.Clamp(trust, MinTrust, MaxTrust) / MaxTrust; // -1..1
+            float factor = playerSelling
+                ? 1f + 0.3f * trustNorm   // trusted: get more for goods you sell
+                : 1f - 0.25f * trustNorm; // trusted: pay less for goods you buy
+
+            return Mathf.Max(0f, baseVal * factor);
+        }
+
+        /// <summary>
+        /// Sum of barter value for a list of (item, amount) offers.
+        /// </summary>
+        public float EvaluateOffer(
+            IReadOnlyList<BarterLine> lines,
+            string factionId,
+            bool playerSelling)
+        {
+            if (lines == null || lines.Count == 0) return 0f;
+            float total = 0f;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.Item == null || line.Amount <= 0) continue;
+                total += GetBarterUnitValue(line.Item, factionId, playerSelling) * line.Amount;
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// Whether the player's offer covers the faction ask under current barter math.
+        /// </summary>
+        public bool IsFairTrade(
+            IReadOnlyList<BarterLine> playerOffers,
+            IReadOnlyList<BarterLine> factionAsks,
+            string factionId,
+            out float playerValue,
+            out float factionValue)
+        {
+            playerValue = EvaluateOffer(playerOffers, factionId, playerSelling: true);
+            factionValue = EvaluateOffer(factionAsks, factionId, playerSelling: false);
+            if (!WillTrade(factionId)) return false;
+            // Small epsilon for float fairness
+            return playerValue + 0.01f >= factionValue;
+        }
+
+        /// <summary>
+        /// Execute a fair trade: move items between player inventory and a virtual
+        /// faction stock bag (also an Inventory). Returns false if unfair / refused.
+        /// </summary>
+        public bool TryExecuteTrade(
+            Inventory.Inventory playerInv,
+            Inventory.Inventory factionStock,
+            IReadOnlyList<BarterLine> playerOffers,
+            IReadOnlyList<BarterLine> factionAsks,
+            string factionId)
+        {
+            if (playerInv == null || factionStock == null) return false;
+            if (!WillTrade(factionId)) return false;
+            if (!IsFairTrade(playerOffers, factionAsks, factionId, out _, out _)) return false;
+
+            // Validate stock
+            if (!HasLines(playerInv, playerOffers) || !HasLines(factionStock, factionAsks))
+                return false;
+
+            // Transfer
+            if (!TransferLines(playerInv, factionStock, playerOffers)) return false;
+            if (!TransferLines(factionStock, playerInv, factionAsks))
+            {
+                // Best-effort rollback of player→faction transfer
+                TransferLines(factionStock, playerInv, playerOffers);
+                return false;
+            }
+
+            // Supply/demand: player sold goods become more common; bought goods scarcer
+            NudgeDemandFromTrade(playerOffers, soldByPlayer: true);
+            NudgeDemandFromTrade(factionAsks, soldByPlayer: false);
+
+            // Tiny trust bump for completing a deal
+            ModifyTrust(factionId, +1f);
+            return true;
+        }
+
+        private void NudgeDemandFromTrade(IReadOnlyList<BarterLine> lines, bool soldByPlayer)
+        {
+            if (lines == null) return;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.Item == null) continue;
+                // Player selling floods market → demand down; player buying drains → demand up
+                float delta = soldByPlayer ? -0.05f * line.Amount : 0.05f * line.Amount;
+                AdjustDemand(line.Item.id, delta);
+            }
+        }
+
+        private static bool HasLines(Inventory.Inventory inv, IReadOnlyList<BarterLine> lines)
+        {
+            if (lines == null) return true;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.Item == null || line.Amount <= 0) continue;
+                if (inv.Count(line.Item) < line.Amount) return false;
+            }
+            return true;
+        }
+
+        private static bool TransferLines(
+            Inventory.Inventory from,
+            Inventory.Inventory to,
+            IReadOnlyList<BarterLine> lines)
+        {
+            if (lines == null) return true;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.Item == null || line.Amount <= 0) continue;
+                if (!from.Remove(line.Item, line.Amount)) return false;
+                if (!to.Add(line.Item, line.Amount))
+                {
+                    from.Add(line.Item, line.Amount);
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // -----------------------------------------------------------------
+        // Raids
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Attempt a hatch raid when trust is at/below the faction's raid threshold.
+        /// Shielding integrity (module level) determines whether the raid is repelled.
+        /// </summary>
+        public FactionRaidResult TryLaunchRaid(string factionId)
+        {
+            var result = new FactionRaidResult { FactionId = factionId };
+            var fac = GetFaction(factionId);
+            float trust = GetTrust(factionId);
+            float threshold = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
+
+            if (trust > threshold)
+            {
+                result.Launched = false;
+                result.Message = "Trust still above raid threshold.";
+                return result;
+            }
+
+            result.Launched = true;
+            int shieldLevel = _shelter?.Shielding?.Level ?? 0;
+            float aggression = fac != null ? fac.raidAggression : 0.5f;
+
+            // Level 0 hatch = soft; each shielding level cuts damage ~25%
+            float integrity = Mathf.Clamp01(shieldLevel * 0.25f);
+            result.ShieldingLevel = shieldLevel;
+            result.Repelled = integrity >= 0.5f && _rng.NextDouble() < integrity;
+
+            if (result.Repelled)
+            {
+                result.HatchDamage = 5f + 10f * aggression * (1f - integrity);
+                result.Message = "Hatch held. Scuffs on the plate, nothing more.";
+            }
+            else
+            {
+                result.HatchDamage = 20f + 40f * aggression * (1f - integrity);
+                result.Message = "Hatch forced. Interior took the hit.";
+                ApplyHatchDamage(result.HatchDamage);
+            }
+
+            OnRaidResolved?.Invoke(result);
+            OnEconomyChanged?.Invoke();
+            return result;
+        }
+
+        private void ApplyHatchDamage(float damage)
+        {
+            if (_shelter == null || damage <= 0f) return;
+
+            // Prefer air filtration as the "hatch seal" integrity proxy
+            var air = _shelter.GetModule("air_filtration");
+            if (air != null)
+            {
+                air.FilterHealth = Mathf.Max(0f, air.FilterHealth - damage);
+            }
+
+            // Heavy hits can knock a level off radiation shielding
+            if (damage >= 40f)
+            {
+                var shield = _shelter.GetModule("radiation_shielding");
+                if (shield != null && shield.Level > 0)
+                    shield.Level = Mathf.Max(0, shield.Level - 1);
+            }
+        }
+
+        // -----------------------------------------------------------------
+        // EventRunner binding
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Subscribe to EventRunner so choice FactionId + TrustDelta/RelationshipDelta
+        /// alter the trust matrix. Also applies EventEffect trust fields when present.
+        /// </summary>
+        public void BindEventRunner(EventRunner runner)
+        {
+            if (runner == null) return;
+            runner.OnChoiceApplied += HandleChoiceApplied;
+        }
+
+        public void UnbindEventRunner(EventRunner runner)
+        {
+            if (runner == null) return;
+            runner.OnChoiceApplied -= HandleChoiceApplied;
+        }
+
+        private void HandleChoiceApplied(GameEvent gameEvent, EventChoice choice, EventContext context)
+        {
+            if (choice == null) return;
+
+            string factionId = choice.FactionId;
+            float delta = choice.TrustDelta;
+            // RelationshipDelta is the older field used by narrative content; treat as trust
+            // when FactionId is set and TrustDelta was left at 0.
+            if (Mathf.Approximately(delta, 0f) && !Mathf.Approximately(choice.RelationshipDelta, 0f))
+                delta = choice.RelationshipDelta;
+
+            if (!string.IsNullOrEmpty(factionId) && !Mathf.Approximately(delta, 0f))
+                ModifyTrust(factionId, delta);
+
+            // Effects may also carry faction trust deltas
+            if (choice.Effects != null)
+            {
+                for (int i = 0; i < choice.Effects.Count; i++)
+                {
+                    var fx = choice.Effects[i];
+                    if (fx == null || string.IsNullOrEmpty(fx.FactionId)) continue;
+                    if (!Mathf.Approximately(fx.TrustDelta, 0f))
+                        ModifyTrust(fx.FactionId, fx.TrustDelta);
+                }
+            }
+        }
+
+        // -----------------------------------------------------------------
+        // Factories
+        // -----------------------------------------------------------------
+
+        public static List<FactionSO> CreateDefaultFactions()
+        {
+            return new List<FactionSO>
+            {
+                MakeFaction(FactionSO.Ids.MilitaryRemnants, "Military Remnants",
+                    "Scattered uniformed holdouts. Trade ammo and order for food.",
+                    startingTrust: 10f, raidAggression: 0.7f, raidThreshold: -50f,
+                    minTrade: -35f, rob: -15f, intel: 45f),
+                MakeFaction(FactionSO.Ids.ScavengerCamp, "Scavenger Camp",
+                    "Loose camp on the ring road. Everything has a price.",
+                    startingTrust: 0f, raidAggression: 0.55f, raidThreshold: -50f,
+                    minTrade: -40f, rob: -20f, intel: 35f),
+                MakeFaction(FactionSO.Ids.DoomsdayPreppers, "Doomsday Preppers",
+                    "Bunker neighbors who stocked early. Paranoid, but solvent.",
+                    startingTrust: 5f, raidAggression: 0.35f, raidThreshold: -55f,
+                    minTrade: -30f, rob: -25f, intel: 50f),
+            };
+        }
+
+        private static FactionSO MakeFaction(
+            string id, string name, string desc,
+            float startingTrust, float raidAggression, float raidThreshold,
+            float minTrade, float rob, float intel)
+        {
+            var f = ScriptableObject.CreateInstance<FactionSO>();
+            f.id = id;
+            f.displayName = name;
+            f.description = desc;
+            f.startingTrust = startingTrust;
+            f.raidAggression = raidAggression;
+            f.raidThreshold = raidThreshold;
+            f.minTrustToTrade = minTrade;
+            f.robThreshold = rob;
+            f.intelShareThreshold = intel;
+            return f;
+        }
+
+        /// <summary>
+        /// Narrative event: faction scouts ask to enter the bunker.
+        /// Refuse → trust drop (may cascade into raid at -50).
+        /// </summary>
+        public static GameEvent CreateFactionScoutEvent(FactionSO faction)
+        {
+            if (faction == null) throw new ArgumentNullException(nameof(faction));
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = "evt_faction_scout_" + faction.id;
+            ev.title = "Knock at the Hatch";
+            ev.bodyText =
+                $"{faction.displayName} scouts want a look inside. " +
+                "Letting them in risks a map of your stores. Refusing risks a grudge.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions { MinDay = 1 };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "allow_scout",
+                    Text = "Crack the hatch. Let them see we're still human.",
+                    MoraleDelta = -2f,
+                    FactionId = faction.id,
+                    TrustDelta = 12f,
+                    RelationshipDelta = 12f
+                },
+                new EventChoice
+                {
+                    ChoiceId = "refuse_scout",
+                    Text = "Keep it sealed. Nobody maps our stores.",
+                    MoraleDelta = 1f,
+                    FactionId = faction.id,
+                    TrustDelta = -30f,
+                    RelationshipDelta = -30f
+                }
+            };
+            return ev;
+        }
+
+        // -----------------------------------------------------------------
+        // Save / load
+        // -----------------------------------------------------------------
+
+        public DynamicEconomySave CaptureState()
+        {
+            var save = new DynamicEconomySave();
+            var trustRows = new List<FactionTrustSave>();
+            foreach (var kv in _trust)
+            {
+                trustRows.Add(new FactionTrustSave { FactionId = kv.Key, Trust = kv.Value });
+            }
+            save.Trust = trustRows.ToArray();
+
+            var demandRows = new List<DemandSave>();
+            foreach (var kv in _demand)
+            {
+                demandRows.Add(new DemandSave { ItemId = kv.Key, Multiplier = kv.Value });
+            }
+            save.Demand = demandRows.ToArray();
+            return save;
+        }
+
+        public void RestoreState(DynamicEconomySave save)
+        {
+            if (save == null) return;
+            _trust.Clear();
+            if (save.Trust != null)
+            {
+                for (int i = 0; i < save.Trust.Length; i++)
+                {
+                    var row = save.Trust[i];
+                    if (row == null || string.IsNullOrEmpty(row.FactionId)) continue;
+                    _trust[row.FactionId] = Mathf.Clamp(row.Trust, MinTrust, MaxTrust);
+                }
+            }
+            _demand.Clear();
+            if (save.Demand != null)
+            {
+                for (int i = 0; i < save.Demand.Length; i++)
+                {
+                    var row = save.Demand[i];
+                    if (row == null || string.IsNullOrEmpty(row.ItemId)) continue;
+                    _demand[row.ItemId] = Mathf.Clamp(row.Multiplier, MinDemandMult, MaxDemandMult);
+                }
+            }
+            OnEconomyChanged?.Invoke();
+        }
+    }
+
+    [Serializable]
+    public struct BarterLine
+    {
+        public ItemDefinition Item;
+        public int Amount;
+
+        public BarterLine(ItemDefinition item, int amount)
+        {
+            Item = item;
+            Amount = amount;
+        }
+    }
+
+    [Serializable]
+    public class FactionRaidResult
+    {
+        public string FactionId;
+        public bool Launched;
+        public bool Repelled;
+        public float HatchDamage;
+        public int ShieldingLevel;
+        public string Message;
+    }
+
+    [Serializable]
+    public class FactionTrustSave
+    {
+        public string FactionId;
+        public float Trust;
+    }
+
+    [Serializable]
+    public class DemandSave
+    {
+        public string ItemId;
+        public float Multiplier;
+    }
+
+    [Serializable]
+    public class DynamicEconomySave
+    {
+        public FactionTrustSave[] Trust;
+        public DemandSave[] Demand;
+    }
+}

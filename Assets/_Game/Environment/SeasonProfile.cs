@@ -87,6 +87,8 @@ namespace AtomicWar._Game.Environment
             displayName = "Default",
             startDay = 0,
             clearWeight = 1f,
+            rainWeight = 1f,
+            overcastWeight = 1f,
             ashfallWeight = 1f,
             falloutStormWeight = 1f,
             blizzardWeight = 1f
@@ -99,6 +101,8 @@ namespace AtomicWar._Game.Environment
         public int startDay;
 
         public float clearWeight = 1f;
+        public float rainWeight = 1f;
+        public float overcastWeight = 1f;
         public float ashfallWeight = 1f;
         public float falloutStormWeight = 1f;
         public float blizzardWeight = 1f;
@@ -109,6 +113,8 @@ namespace AtomicWar._Game.Environment
             switch (kind)
             {
                 case WeatherKind.Clear: return clearWeight;
+                case WeatherKind.Rain: return rainWeight;
+                case WeatherKind.Overcast: return overcastWeight;
                 case WeatherKind.Ashfall: return ashfallWeight;
                 case WeatherKind.FalloutStorm: return falloutStormWeight;
                 case WeatherKind.Blizzard: return blizzardWeight;

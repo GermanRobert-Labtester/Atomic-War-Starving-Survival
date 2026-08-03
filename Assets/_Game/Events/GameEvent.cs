@@ -14,6 +14,11 @@ namespace AtomicWar._Game.Events
         public int ItemAmount; // positive = add, negative = remove
         public string SetWorldFlag;
         public bool WorldFlagValue = true;
+
+        /// <summary>Optional faction id for trust matrix deltas (DynamicEconomySystem).</summary>
+        public string FactionId;
+        /// <summary>Trust change applied when this effect resolves (-100..100 scale).</summary>
+        public float TrustDelta;
     }
 
     [Serializable]
@@ -50,7 +55,12 @@ namespace AtomicWar._Game.Events
         public string ChoiceId;
         public string Text;
         public float MoraleDelta;
+        /// <summary>Legacy relationship delta; when FactionId is set, also applied as trust if TrustDelta is 0.</summary>
         public float RelationshipDelta;
+        /// <summary>Faction trust matrix target (snake_case id, e.g. scavenger_camp).</summary>
+        public string FactionId;
+        /// <summary>Trust change applied by DynamicEconomySystem on choice resolve.</summary>
+        public float TrustDelta;
         public List<EventEffect> Effects = new List<EventEffect>();
         public DelayedConsequence DelayedConsequence;
         public BeliefCheck BeliefCheck;

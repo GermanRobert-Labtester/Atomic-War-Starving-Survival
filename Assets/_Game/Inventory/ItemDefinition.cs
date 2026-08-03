@@ -40,5 +40,11 @@ namespace AtomicWar._Game.Inventory
         /// <summary>Current radiation dose cleansed on consume (anti-rad).</summary>
         public float radCleanse;
         public float moraleEffect;
+
+        [Header("EMP / Economy")]
+        /// <summary>Survives EMP (Faraday-caged / hardened gear) if a Device; unaffected otherwise.</summary>
+        public bool empShielded;
+        /// <summary>Base barter value; phase-modulated by TradeEconomy.GetEffectiveValue.</summary>
+        public float tradeValue;
     }
 }

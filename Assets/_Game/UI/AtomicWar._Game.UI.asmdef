@@ -8,7 +8,9 @@
         "AtomicWar._Game.Radiation",
         "AtomicWar._Game.Environment",
         "AtomicWar._Game.Events",
-        "AtomicWar._Game.AI"
+        "AtomicWar._Game.AI",
+        "AtomicWar._Game.Economy",
+        "AtomicWar._Game.Data"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

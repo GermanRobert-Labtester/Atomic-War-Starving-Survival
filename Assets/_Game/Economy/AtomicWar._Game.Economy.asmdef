@@ -1,19 +1,12 @@
 {
-    "name": "AtomicWar._Game.Core",
-    "rootNamespace": "AtomicWar._Game.Core",
+    "name": "AtomicWar._Game.Economy",
+    "rootNamespace": "AtomicWar._Game.Economy",
     "references": [
         "AtomicWar._Game.Survivors",
-        "AtomicWar._Game.Shelter",
         "AtomicWar._Game.Inventory",
-        "AtomicWar._Game.Radiation",
-        "AtomicWar._Game.Environment",
-        "AtomicWar._Game.AI",
+        "AtomicWar._Game.Shelter",
         "AtomicWar._Game.Events",
-        "AtomicWar._Game.Data",
-        "AtomicWar._Game.Crafting",
-        "AtomicWar._Game.UI",
-        "AtomicWar._Game.Medical",
-        "AtomicWar._Game.Economy"
+        "AtomicWar._Game.Data"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

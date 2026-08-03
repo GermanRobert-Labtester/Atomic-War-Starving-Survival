@@ -29,6 +29,10 @@ namespace AtomicWar._Game.Shelter
         public int MaxLevel = 5;
         public List<ModuleLevelRequirement> UpgradeRequirements = new List<ModuleLevelRequirement>();
 
+        [Header("EMP")]
+        /// <summary>Survives an EMP event (Faraday-caged / hardened installation).</summary>
+        public bool EmpShielded;
+
         public virtual List<ModuleUpgradeCost> GetUpgradeCosts(int targetLevel)
         {
             if (UpgradeRequirements != null)
