@@ -197,7 +197,8 @@ namespace AtomicWar._Game.UI
             if (CanDemandParley)
                 sb.AppendLine().Append("[P] Demand parley / surrender — they flinched at the hatch.");
             else if (HasSurrendered)
-                sb.AppendLine().Append("They already stood down. Barter may reopen.");
+                sb.AppendLine().Append(
+                    "They stood down. Hatch-hold softens barter (better sell / cheaper buy).");
             if (!string.IsNullOrEmpty(LastParleyMessage))
                 sb.AppendLine().Append(LastParleyMessage);
             return sb.ToString();

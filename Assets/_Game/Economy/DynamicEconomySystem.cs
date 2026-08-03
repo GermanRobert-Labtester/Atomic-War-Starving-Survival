@@ -27,6 +27,14 @@ namespace AtomicWar._Game.Economy
         public const float SurrenderTrustBuffer = 18f;
         /// <summary>Aggression multiplier applied on surrender (0..1 scale factor).</summary>
         public const float SurrenderAggressionScale = 0.45f;
+        /// <summary>
+        /// After a parley / surrender, player sell prices improve by this fraction
+        /// (on top of trust). Softens the table without stacking forever — only
+        /// while <see cref="HasSurrendered"/> is true.
+        /// </summary>
+        public const float ParleyBarterSellBonus = 0.12f;
+        /// <summary>After parley / surrender, player buy prices drop by this fraction.</summary>
+        public const float ParleyBarterBuyDiscount = 0.10f;
 
         /// <summary>Supply pressure clamp: demand mult stays in [min, max].</summary>
         public const float MinDemandMult = 0.25f;
@@ -461,6 +469,8 @@ namespace AtomicWar._Game.Economy
         /// <summary>
         /// Unit value in a barter with a specific faction. High trust improves the
         /// player's selling price and softens buy prices; low trust does the reverse.
+        /// After a hatch parley / surrender, prices soften further in the player's favor
+        /// (see <see cref="ParleyBarterSellBonus"/> / <see cref="ParleyBarterBuyDiscount"/>).
         /// </summary>
         /// <param name="playerSelling">True when the player is offering the item to the faction.</param>
         public float GetBarterUnitValue(ItemDefinition item, string factionId, bool playerSelling)
@@ -474,6 +484,14 @@ namespace AtomicWar._Game.Economy
             float factor = playerSelling
                 ? 1f + 0.3f * trustNorm   // trusted: get more for goods you sell
                 : 1f - 0.25f * trustNorm; // trusted: pay less for goods you buy
+
+            // Post-parley softener: they flinched at the hatch; the table tilts.
+            if (HasSurrendered(factionId))
+            {
+                factor *= playerSelling
+                    ? 1f + ParleyBarterSellBonus
+                    : 1f - ParleyBarterBuyDiscount;
+            }
 
             return Mathf.Max(0f, baseVal * factor);
         }
@@ -888,21 +906,26 @@ namespace AtomicWar._Game.Economy
         /// <summary>
         /// Post-repel modal: demand parley, open trade, or dismiss.
         /// Choice ids: parley_now | open_trade | dismiss.
+        /// Copy and channel-tag VO flavor are faction-specific.
         /// </summary>
         public GameEvent CreateParleyOfferEvent(string factionId)
         {
             var fac = GetFaction(factionId);
-            string name = fac != null ? fac.displayName : factionId;
+            string name = fac != null && !string.IsNullOrEmpty(fac.displayName)
+                ? fac.displayName
+                : (factionId ?? "unknown");
             string leader = GetLeaderName(factionId);
             if (string.IsNullOrEmpty(leader)) leader = "Their lead";
+            string channelTag = GetParleyChannelTag(factionId);
+
+            GetParleyOfferFlavor(factionId, name, leader, channelTag,
+                out string title, out string body,
+                out string parleyChoice, out string tradeChoice, out string dismissChoice);
 
             var ev = ScriptableObject.CreateInstance<GameEvent>();
             ev.id = "evt_parley_offer_" + (factionId ?? "unknown");
-            ev.title = "They Flinched at the Hatch";
-            ev.bodyText =
-                $"{name} bounced off the plate. {leader} is still on the band — " +
-                "short curses, then dead air. You can demand they stand down now, " +
-                "or open trade and press the issue at the table.";
+            ev.title = title;
+            ev.bodyText = body;
             ev.weight = 1f;
             ev.conditions = new EventConditions { MinDay = 1 };
             ev.choices = new List<EventChoice>
@@ -910,26 +933,108 @@ namespace AtomicWar._Game.Economy
                 new EventChoice
                 {
                     ChoiceId = "parley_now",
-                    Text = "Open the channel. Demand they stand down. [parley]",
+                    Text = parleyChoice,
                     MoraleDelta = 2f,
                     FactionId = factionId
                 },
                 new EventChoice
                 {
                     ChoiceId = "open_trade",
-                    Text = "Crack trade first. Keep the hatch sealed. [trade]",
+                    Text = tradeChoice,
                     MoraleDelta = 0f,
                     FactionId = factionId
                 },
                 new EventChoice
                 {
                     ChoiceId = "dismiss",
-                    Text = "Not now. Let them stew.",
+                    Text = dismissChoice,
                     MoraleDelta = -1f,
                     FactionId = factionId
                 }
             };
             return ev;
+        }
+
+        /// <summary>Short diegetic VO/channel label for radio UI + parley body.</summary>
+        public static string GetParleyChannelTag(string factionId)
+        {
+            switch (factionId)
+            {
+                case FactionSO.Ids.MilitaryRemnants: return "CH-7 MILBAND";
+                case FactionSO.Ids.ScavengerCamp: return "CH-3 ASH ROAD";
+                case FactionSO.Ids.DoomsdayPreppers: return "CH-11 STOCKPILE";
+                default: return "CH-OPEN";
+            }
+        }
+
+        /// <summary>
+        /// Faction-flavored title/body/choices for the post-repel parley modal.
+        /// Tone stays cold and human — no glory, no slogans.
+        /// </summary>
+        public static void GetParleyOfferFlavor(
+            string factionId,
+            string factionDisplayName,
+            string leaderName,
+            string channelTag,
+            out string title,
+            out string body,
+            out string parleyChoice,
+            out string tradeChoice,
+            out string dismissChoice)
+        {
+            string name = string.IsNullOrEmpty(factionDisplayName) ? "They" : factionDisplayName;
+            string leader = string.IsNullOrEmpty(leaderName) ? "Their lead" : leaderName;
+            string tag = string.IsNullOrEmpty(channelTag) ? "CH-OPEN" : channelTag;
+
+            switch (factionId)
+            {
+                case FactionSO.Ids.MilitaryRemnants:
+                    title = "They Flinched at the Hatch";
+                    body =
+                        $"[{tag}] Static. Then a clipped voice — {leader}, {name}. " +
+                        "Orders break mid-sentence. Boots scrape back from the plate. " +
+                        "You can demand a formal stand-down now, or keep the hatch sealed " +
+                        "and force the issue across a trade table.";
+                    parleyChoice = "Open channel. Demand formal stand-down. [parley]";
+                    tradeChoice = "Hold the seal. Call them to the table first. [trade]";
+                    dismissChoice = "Let the band go cold. Not yet.";
+                    break;
+
+                case FactionSO.Ids.ScavengerCamp:
+                    title = "They Flinched at the Hatch";
+                    body =
+                        $"[{tag}] Market chatter dies. {leader} of {name} is on the air — " +
+                        "short curses, someone laughing once, then dead air. Hatch held. " +
+                        "You can make them name the stand-down, or open trade while the " +
+                        "road still remembers who bounced.";
+                    parleyChoice = "Cut in. Make them stand down out loud. [parley]";
+                    tradeChoice = "Open the bag first. Talk prices, not raids. [trade]";
+                    dismissChoice = "Not now. Let the road stew.";
+                    break;
+
+                case FactionSO.Ids.DoomsdayPreppers:
+                    title = "They Flinched at the Hatch";
+                    body =
+                        $"[{tag}] A hymn cuts out mid-line. {leader} of {name} whispers " +
+                        "inventory codes into the dark — then nothing. Their test of the " +
+                        "hatch failed. Demand they fold the raid, or bargain over sealed " +
+                        "stores before the next sermon.";
+                    parleyChoice = "Answer the hymn. Demand the raid is over. [parley]";
+                    tradeChoice = "Offer a sealed trade. Keep the hatch blind. [trade]";
+                    dismissChoice = "Silence. Let them recount their stores alone.";
+                    break;
+
+                default:
+                    title = "They Flinched at the Hatch";
+                    body =
+                        $"[{tag}] {name} bounced off the plate. {leader} is still on the band — " +
+                        "short curses, then dead air. You can demand they stand down now, " +
+                        "or open trade and press the issue at the table.";
+                    parleyChoice = "Open the channel. Demand they stand down. [parley]";
+                    tradeChoice = "Crack trade first. Keep the hatch sealed. [trade]";
+                    dismissChoice = "Not now. Let them stew.";
+                    break;
+            }
         }
 
         // -----------------------------------------------------------------

@@ -611,5 +611,134 @@ namespace AtomicWar.Tests.EditMode
                 .Or.Contain("stops").IgnoreCase);
             radio.Unbind();
         }
+
+        [Test]
+        public void RadioInterceptHUD_Push_ShowsStatusAndDetail()
+        {
+            var go = new GameObject("RadioHUDTest");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<RadioInterceptHUD>();
+
+            Assert.That(hud.StatusLine, Does.Contain("quiet").IgnoreCase.Or.Contain("RADIO"));
+            hud.Push("Hatch bounce. They curse, then dead air.", "HatchRepel",
+                FactionSO.Ids.ScavengerCamp, day: 41);
+
+            Assert.That(hud.LineCount, Is.EqualTo(1));
+            Assert.That(hud.HasUnread, Is.True);
+            Assert.That(hud.LatestKind, Is.EqualTo("HatchRepel"));
+            Assert.That(hud.LatestMessage, Does.Contain("Hatch bounce"));
+            Assert.That(hud.StatusLine, Does.Contain("RADIO"));
+            Assert.That(hud.StatusLine, Does.Contain("HATCH").Or.Contain("NEW"));
+            Assert.That(hud.DetailSummary, Does.Contain("Hatch bounce"));
+            Assert.That(hud.DetailSummary, Does.Contain("D41"));
+
+            hud.Open();
+            Assert.That(hud.IsOpen, Is.True);
+            Assert.That(hud.HasUnread, Is.False, "Open marks strip read");
+
+            hud.Push("Parley on the air. Stand-down.", "Parley",
+                FactionSO.Ids.ScavengerCamp, day: 42);
+            Assert.That(hud.LineCount, Is.EqualTo(2));
+            Assert.That(hud.HasUnread, Is.True);
+            Assert.That(hud.LatestKind, Is.EqualTo("Parley"));
+            Assert.That(hud.StatusLine, Does.Contain("PARLEY").Or.Contain("Parley").IgnoreCase);
+
+            // SetLines replaces
+            hud.SetLines(new[]
+            {
+                new RadioInterceptHUD.Line
+                {
+                    Message = "Band shift. New banner.",
+                    Kind = "Succession",
+                    FactionId = FactionSO.Ids.MilitaryRemnants,
+                    Day = 10
+                }
+            });
+            Assert.That(hud.LineCount, Is.EqualTo(1));
+            Assert.That(hud.LatestKind, Is.EqualTo("Succession"));
+            Assert.That(hud.StatusLine, Does.Contain("BAND").Or.Contain("Band").IgnoreCase);
+        }
+
+        [Test]
+        public void ParleyBarterSoftener_ImprovesSellAndBuyAfterSurrender()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.ScavengerCamp;
+            var food = MakeItem("canned_food", ItemType.Food);
+            food.tradeValue = 10f;
+
+            eco.SetTrust(fid, 0f);
+            float sellBefore = eco.GetBarterUnitValue(food, fid, playerSelling: true);
+            float buyBefore = eco.GetBarterUnitValue(food, fid, playerSelling: false);
+            Assert.That(sellBefore, Is.GreaterThan(0f));
+            Assert.That(buyBefore, Is.GreaterThan(0f));
+
+            // Hold hatch + parley → HasSurrendered → softener
+            eco.SetTrust(fid, -80f);
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(eco.DemandParley(fid).Applied, Is.True);
+            Assert.That(eco.HasSurrendered(fid), Is.True);
+
+            // Pin trust so only softener differs from pre-parley neutral math
+            eco.SetTrust(fid, 0f);
+            float sellAfter = eco.GetBarterUnitValue(food, fid, playerSelling: true);
+            float buyAfter = eco.GetBarterUnitValue(food, fid, playerSelling: false);
+
+            Assert.That(sellAfter, Is.EqualTo(sellBefore * (1f + DynamicEconomySystem.ParleyBarterSellBonus))
+                .Within(Eps));
+            Assert.That(buyAfter, Is.EqualTo(buyBefore * (1f - DynamicEconomySystem.ParleyBarterBuyDiscount))
+                .Within(Eps));
+            Assert.That(sellAfter, Is.GreaterThan(sellBefore));
+            Assert.That(buyAfter, Is.LessThan(buyBefore));
+        }
+
+        [Test]
+        public void ParleyOfferEvent_FactionFlavor_UsesChannelTagsAndDistinctCopy()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+
+            // Military
+            string mil = FactionSO.Ids.MilitaryRemnants;
+            eco.SetTrust(mil, -90f);
+            Assert.That(eco.TryLaunchRaid(mil, ignoreDayGate: true).Repelled, Is.True);
+            var milEv = eco.CreateParleyOfferEvent(mil);
+            _toDestroy.Add(milEv);
+            Assert.That(milEv.bodyText, Does.Contain(DynamicEconomySystem.GetParleyChannelTag(mil)));
+            Assert.That(milEv.bodyText, Does.Contain("formal").IgnoreCase
+                .Or.Contain("Orders").IgnoreCase);
+            Assert.That(milEv.choices.Find(c => c.ChoiceId == "parley_now").Text,
+                Does.Contain("formal").IgnoreCase.Or.Contain("stand-down").IgnoreCase);
+
+            // Scavenger
+            string scav = FactionSO.Ids.ScavengerCamp;
+            eco.SetTrust(scav, -80f);
+            Assert.That(eco.TryLaunchRaid(scav, ignoreDayGate: true).Repelled, Is.True);
+            var scavEv = eco.CreateParleyOfferEvent(scav);
+            _toDestroy.Add(scavEv);
+            Assert.That(scavEv.bodyText, Does.Contain("CH-3").Or.Contain("ASH ROAD"));
+            Assert.That(scavEv.bodyText, Does.Contain("Market").IgnoreCase
+                .Or.Contain("road").IgnoreCase);
+            Assert.That(scavEv.choices.Find(c => c.ChoiceId == "open_trade").Text,
+                Does.Contain("bag").IgnoreCase.Or.Contain("prices").IgnoreCase);
+
+            // Preppers
+            string prep = FactionSO.Ids.DoomsdayPreppers;
+            eco.SetTrust(prep, -80f);
+            Assert.That(eco.TryLaunchRaid(prep, ignoreDayGate: true).Repelled, Is.True);
+            var prepEv = eco.CreateParleyOfferEvent(prep);
+            _toDestroy.Add(prepEv);
+            Assert.That(prepEv.bodyText, Does.Contain("STOCKPILE").Or.Contain("CH-11"));
+            Assert.That(prepEv.bodyText, Does.Contain("hymn").IgnoreCase
+                .Or.Contain("sermon").IgnoreCase
+                .Or.Contain("inventory").IgnoreCase);
+            Assert.That(prepEv.choices.Find(c => c.ChoiceId == "dismiss").Text,
+                Does.Contain("stores").IgnoreCase.Or.Contain("Silence").IgnoreCase);
+
+            // Distinct channel tags across factions
+            Assert.That(DynamicEconomySystem.GetParleyChannelTag(mil),
+                Is.Not.EqualTo(DynamicEconomySystem.GetParleyChannelTag(scav)));
+            Assert.That(DynamicEconomySystem.GetParleyChannelTag(scav),
+                Is.Not.EqualTo(DynamicEconomySystem.GetParleyChannelTag(prep)));
+        }
     }
 }

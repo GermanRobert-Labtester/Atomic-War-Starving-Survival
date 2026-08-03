@@ -30,6 +30,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private WorkbenchUI _workbenchUi;
         [SerializeField] private HatchDefenseHUD _hatchDefenseHud;
         [SerializeField] private RoomAssignmentHUD _roomAssignmentHud;
+        [SerializeField] private RadioInterceptHUD _radioInterceptHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -47,6 +48,7 @@ namespace AtomicWar._Game.UI
         public WorkbenchUI WorkbenchUI { get { EnsureWidgetReferences(); return _workbenchUi; } }
         public HatchDefenseHUD HatchDefenseHUD { get { EnsureWidgetReferences(); return _hatchDefenseHud; } }
         public RoomAssignmentHUD RoomAssignmentHUD { get { EnsureWidgetReferences(); return _roomAssignmentHud; } }
+        public RadioInterceptHUD RadioInterceptHUD { get { EnsureWidgetReferences(); return _radioInterceptHud; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -69,6 +71,7 @@ namespace AtomicWar._Game.UI
             if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
             if (_hatchDefenseHud == null) _hatchDefenseHud = GetComponentInChildren<HatchDefenseHUD>() ?? gameObject.AddComponent<HatchDefenseHUD>();
             if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
+            if (_radioInterceptHud == null) _radioInterceptHud = GetComponentInChildren<RadioInterceptHUD>() ?? gameObject.AddComponent<RadioInterceptHUD>();
         }
 
         /// <summary>
@@ -177,6 +180,16 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_hatchDefenseHud != null) _hatchDefenseHud.Bind(hatch);
+        }
+
+        /// <summary>
+        /// Ensure the radio intercept strip exists. Lines are pushed from
+        /// GameBootstrap (Core owns the intercept system; UI stays decoupled).
+        /// </summary>
+        public RadioInterceptHUD EnsureRadioInterceptHud()
+        {
+            EnsureWidgetReferences();
+            return _radioInterceptHud;
         }
 
         /// <summary>

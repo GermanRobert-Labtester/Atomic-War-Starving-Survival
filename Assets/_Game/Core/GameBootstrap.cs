@@ -378,8 +378,9 @@ namespace AtomicWar._Game.Core
             EconomySystem.OnRaidResolved += OnFactionRaidResolved_Handle;
             FactionRadioIntercepts.OnIntercept += entry =>
             {
-                if (entry != null && !string.IsNullOrEmpty(entry.Message))
-                    Debug.Log($"[Radio intercept] {entry.Message}");
+                if (entry == null || string.IsNullOrEmpty(entry.Message)) return;
+                Debug.Log($"[Radio intercept] {entry.Message}");
+                PushRadioInterceptToHud(entry);
             };
 
             WorldPhaseSystem.OnPhaseChanged += phase =>
@@ -1038,6 +1039,8 @@ namespace AtomicWar._Game.Core
             _hud.BindRoomAssignment(Survivors, Shelter);
             _hud.BindPowerNetwork(PowerNetwork);
             _hud.BindHatchDefense(HatchDefenseSystem);
+            _hud.EnsureRadioInterceptHud();
+            SyncRadioInterceptHudFromLog();
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
             _hud.BindWorkbench(WorkbenchSystem);
 
@@ -1312,6 +1315,43 @@ namespace AtomicWar._Game.Core
             }
             if (count == 0) return hasWorkingGeiger ? 0.5f : 1f;
             return Mathf.Clamp01(1f - (totalConfidence / count));
+        }
+
+        // -----------------------------------------------------------------
+        // Radio intercept HUD strip
+        // -----------------------------------------------------------------
+
+        private void PushRadioInterceptToHud(FactionRadioInterceptSystem.InterceptEntry entry)
+        {
+            if (entry == null || _hud == null) return;
+            var strip = _hud.EnsureRadioInterceptHud();
+            strip?.Push(entry.Message, entry.Kind, entry.FactionId, entry.Day);
+        }
+
+        /// <summary>
+        /// Rebuild the radio strip from the intercept log (after WireHUD / save load).
+        /// </summary>
+        public void SyncRadioInterceptHudFromLog()
+        {
+            if (_hud == null || FactionRadioIntercepts == null) return;
+            var strip = _hud.EnsureRadioInterceptHud();
+            if (strip == null) return;
+
+            var log = FactionRadioIntercepts.Log;
+            var lines = new System.Collections.Generic.List<RadioInterceptHUD.Line>(log.Count);
+            for (int i = 0; i < log.Count; i++)
+            {
+                var e = log[i];
+                if (e == null || string.IsNullOrEmpty(e.Message)) continue;
+                lines.Add(new RadioInterceptHUD.Line
+                {
+                    Message = e.Message,
+                    Kind = e.Kind ?? string.Empty,
+                    FactionId = e.FactionId ?? string.Empty,
+                    Day = e.Day
+                });
+            }
+            strip.SetLines(lines);
         }
 
         // -----------------------------------------------------------------
