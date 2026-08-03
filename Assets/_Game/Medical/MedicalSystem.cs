@@ -290,6 +290,8 @@ namespace AtomicWar._Game.Medical
                     }
 
                     ApplyHealthDrain(survivor, def, gameHours);
+                    ApplyFatigueDrain(survivor, def, gameHours);
+                    ApplyStaminaCap(survivor, def);
                 }
             }
         }
@@ -300,6 +302,43 @@ namespace AtomicWar._Game.Medical
             float drain = def.healthDrainPerHour * EffectiveLethality(survivor, def) * hours;
             if (drain > 0f)
                 _needs.Modify(survivor, NeedKind.Health, -drain);
+        }
+
+        /// <summary>
+        /// Apply the per-hour fatigue drain defined on the affliction
+        /// (Prompt #47 — biological trade side effects). No-op for
+        /// afflictions without a <c>fatigueDrainPerHour</c>. Models
+        /// blood_loss and similar consequences that tax the body beyond
+        /// the standard health drain.
+        /// </summary>
+        private void ApplyFatigueDrain(Survivor survivor, AfflictionSO def, float hours)
+        {
+            if (survivor == null || def == null || hours <= 0f || !survivor.IsAlive) return;
+            if (def.fatigueDrainPerHour <= 0f) return;
+            _needs.Modify(survivor, NeedKind.Fatigue, def.fatigueDrainPerHour * hours);
+        }
+
+        /// <summary>
+        /// Apply the hard stamina cap defined on the affliction. If
+        /// <c>staminaCap &gt; 0</c>, the survivor's Fatigue is clamped to
+        /// the cap value (Fatigue rises with exhaustion, so a low cap
+        /// means the donor cannot recover above that floor). No-op for
+        /// afflictions without a cap. This is how blood_loss keeps the
+        /// donor "functional but never fully rested" for ~7 days.
+        /// </summary>
+        private void ApplyStaminaCap(Survivor survivor, AfflictionSO def)
+        {
+            if (survivor == null || def == null || !survivor.IsAlive) return;
+            if (def.staminaCap < 0f) return;
+            float cap = Mathf.Clamp(def.staminaCap, 0f, 100f);
+            if (survivor.Needs.Fatigue > cap)
+            {
+                // Direct set rather than Modify: Needs.Modify clamps to [0,100]
+                // but we want the cap to act as a hard floor the survivor cannot
+                // rest below. We bypass the normal decay by writing Fatigue
+                // back down to the cap, after which further rest is suppressed.
+                survivor.Needs.Fatigue = cap;
+            }
         }
 
         public float EffectiveLethality(Survivor survivor, AfflictionSO def)
@@ -438,6 +477,17 @@ namespace AtomicWar._Game.Medical
                 MakeAffliction(AfflictionSO.Ids.HeavyMetalPoisoning, "Heavy Metal Poisoning", AfflictionPhase.Phase2,
                     healthDrain: 1.5f, progressionHours: 72f, progressesTo: AfflictionSO.Ids.Sepsis,
                     haltItem: null, infection: false, requiresBed: true),
+                // Prompt #47 — BloodLoss. Faction convoy traded a pint of the
+                // survivor's blood for water/iodine. The body is functional
+                // but never fully rested: stamina cap 30, +2 fatigue/hr, and
+                // 24h to a bacterial infection (the needle was not sterile).
+                // Cure window is ~7 days of high food/water.
+                MakeAffliction(AfflictionSO.Ids.BloodLoss, "Blood Loss", AfflictionPhase.Phase1,
+                    healthDrain: 0.4f, progressionHours: 24f,
+                    progressesTo: AfflictionSO.Ids.BacterialInfection,
+                    haltItem: null, infection: false,
+                    requiresBed: false, lethality: 0.5f,
+                    fatigueDrain: 2f, staminaCap: 30f),
             };
             return list;
         }
@@ -686,7 +736,9 @@ namespace AtomicWar._Game.Medical
             string haltItem,
             bool infection,
             bool requiresBed = false,
-            float lethality = 1f)
+            float lethality = 1f,
+            float fatigueDrain = 0f,
+            float staminaCap = -1f)
         {
             var a = ScriptableObject.CreateInstance<AfflictionSO>();
             a.id = id;
@@ -700,6 +752,10 @@ namespace AtomicWar._Game.Medical
             a.isInfection = infection;
             a.requiresMedicalBed = requiresBed;
             a.baseLethality = lethality;
+            // Prompt #47 — biological trade side effects. Default 0/-1 keeps
+            // every existing affliction backward-compatible.
+            a.fatigueDrainPerHour = fatigueDrain;
+            a.staminaCap = staminaCap;
             return a;
         }
     }

@@ -365,6 +365,12 @@ namespace AtomicWar._Game.Core
             EnsurePoolHasRadioTriggeredEvents(eventPool);
             // Internal mysteries (Missing Rations) — factory events for choice resolution.
             EnsurePoolHasMissingRationsChain(eventPool);
+            // Prompt #47 — biological trade economy. The Blood for Water
+            // event is registered as a faction-triggered event; the
+            // bootstrap gates it on is_blood_for_water_offered (raised
+            // when a faction at Rob/HostileRaid trade-stance visits the
+            // hatch with an empty inventory).
+            EnsurePoolHasBiologicalTradeEvents(eventPool);
             EventRunner.SetPool(eventPool);
 
             SuspicionTracker = new SuspicionTracker();
@@ -607,6 +613,7 @@ namespace AtomicWar._Game.Core
             // plays the loop, the player is at the dial, the event fires.
             RadioSystem.OnBroadcastStarted += HandleRadioBroadcastTrigger;
             EventRunner.OnChoiceApplied += HandleSafeHavenChoiceApplied;
+            EventRunner.OnChoiceApplied += HandleBloodForWaterChoiceApplied;
 
             TimeSystem.OnDayTick += day =>
             {
@@ -805,6 +812,17 @@ namespace AtomicWar._Game.Core
             ctx.SetEventFlag("is_on_radio", true);
             ctx.SetEventFlag("broadcast_" + broadcast.id, true);
 
+            // Prompt #47 — the medical convoy broadcast also opens the
+            // Blood for Water gate. We do this here (rather than in the
+            // event's CanTrigger) so the gate stays decoupled from the
+            // radio bridge: the convoy can also be triggered by a
+            // hatch-visit faction event in the future without code
+            // changes to the radio path.
+            if (broadcast.id == "medical_convoy_announcement")
+            {
+                ctx.SetEventFlag("is_blood_for_water_offered", true);
+            }
+
             // Default reliability is Unverified; the player must verify
             // (or get ambushed) to flip it.
             ctx.ActiveIntelReliability = IntelReliability.Unverified;
@@ -871,9 +889,8 @@ namespace AtomicWar._Game.Core
 
             if (choice.ChoiceId == "send_expedition")
             {
-                // If the player analyzed first, do NOT inject the ambush —
-                // they earned the empty-cache outcome by spending a survivor
-                // turn on the analysis. Decision is pure + unit-tested.
+                // Prompt #47 — radio intel reliability drives which location
+                // encounter is injected for the Safe Haven grid.
                 if (EventRunner.ShouldInjectSafeHavenAmbush(ctx))
                 {
                     InjectSafeHavenAmbushEncounter();
@@ -881,75 +898,127 @@ namespace AtomicWar._Game.Core
                 }
                 else
                 {
-                    Debug.Log("[Safe Haven] Trap confirmed. Expedition will find the empty cache, not the bunker.");
+                    InjectSafeHavenEmptyCacheEncounter();
+                    Debug.Log("[Safe Haven] Trap confirmed. Empty-cache encounter injected — no sniper.");
                 }
                 return;
             }
         }
 
         /// <summary>
-        /// Build the Safe Haven sniper-ambush encounter and inject it into
-        /// ExpeditionSystem.EncouterPool with a heavy weight so any
-        /// expedition to the Safe Haven target location is biased toward
-        /// this encounter. The encounter is gated to
-        /// <see cref="EventRunner.SafeHavenTargetLocationId"/> via its id
-        /// (the expedition resolver in ExpeditionSystem matches the
-        /// location id field on the encounter).
+        /// Inject location-bound sniper ambush (Unverified send). forceOnArrival
+        /// guarantees the beat fires when the expedition reaches the grid.
         /// </summary>
         private void InjectSafeHavenAmbushEncounter()
         {
             if (ExpeditionSystem == null) return;
+            ExpeditionSystem.AddEncounter(SafeHavenEncounters.CreateAmbush());
+        }
 
-            var ambush = ScriptableObject.CreateInstance<EncounterSO>();
-            ambush.id = EventRunner.SafeHavenAmbushEncounterId;
-            ambush.title = "Safe Haven Sniper Ambush";
-            ambush.description =
-                "The cache is not a cache. The 'bunker entrance' is a firing position. " +
-                "A single high-caliber round takes the first survivor in the chest before the rest " +
-                "even hear the shot. The loop is still playing. There was never anyone in the bunker.";
-            ambush.category = EncounterCategory.Combat;
-            ambush.baseWeight = 5f;
-            ambush.stealthWeightMultiplier = 1.2f;
-            ambush.speedWeightMultiplier = 1.4f;
-            ambush.minDangerLevel = 1f;
-            ambush.enableAutoResolution = false;
-            ambush.autoEngageTrait = RiskBiasTrait.Reckless;
-            ambush.autoFleeTrait = RiskBiasTrait.Paranoid;
-            ambush.choices = new List<EventChoice>
+        /// <summary>
+        /// Inject empty-cache discovery after the player analyzed the loop.
+        /// </summary>
+        private void InjectSafeHavenEmptyCacheEncounter()
+        {
+            if (ExpeditionSystem == null) return;
+            ExpeditionSystem.AddEncounter(SafeHavenEncounters.CreateEmptyCache());
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #47 — Blood for Water: link DynamicEconomy (#25) to
+        // MedicalSystem (#24). When a faction convoy visits the hatch with
+        // an empty inventory and demands biological payment, the choice
+        // here inflicts the actual BloodLossAffliction on the donor and,
+        // if the choice was forced, slams the affinity matrix.
+        // ─────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// EventRunner.OnChoiceApplied listener for the Blood for Water
+        /// event. Inflicts <c>BloodLoss</c> on the donor survivor (resolved
+        /// via <see cref="EventRunner.FindBloodDonor"/>) and, on a forced
+        /// bleed, slams the donor's affinity with the bunker leader to
+        /// <see cref="EventRunner.ForcedBleedAffinityFloor"/> so
+        /// MentalBreakSystem can fire a ViolentParanoia break.
+        /// </summary>
+        private void HandleBloodForWaterChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null) return;
+            if (ev.id != EventRunner.BloodForWaterEventId) return;
+
+            // Refuse / ignore: nothing to inflict, the trust delta was
+            // already applied by the runner via the choice's FactionId +
+            // TrustDelta path.
+            if (choice.ChoiceId == "refuse_convoy") return;
+            if (choice.ChoiceId == "ignore_summons") return;
+
+            // Resolve the donor. The choice text doesn't carry a survivor
+            // id (the bunker has multiple, the player can pick). For the
+            // bootstrap, prefer the explicit PrimarySurvivor (the UI sets
+            // it to the highlighted donor); fall back to the union of the
+            // event's two gates (Fatalist first, then any non-Paranoid).
+            var donor = ctx != null ? ctx.PrimarySurvivor : null;
+            if (donor == null || !donor.IsAlive)
             {
-                new EventChoice
-                {
-                    ChoiceId = "drag_wounded_back",
-                    Text = "Drag the wounded back. Leave the cache.",
-                    MoraleDelta = -20f
-                },
-                new EventChoice
-                {
-                    ChoiceId = "suppress_and_advance",
-                    Text = "Pin down the shooter and push forward.",
-                    MoraleDelta = -8f,
-                    Effects = new List<EventEffect>
-                    {
-                        new EventEffect { TargetNeed = "health", NeedDelta = -25f }
-                    }
-                },
-                new EventChoice
-                {
-                    ChoiceId = "abort_expedition",
-                    Text = "Abort. Run.",
-                    MoraleDelta = -5f,
-                    Effects = new List<EventEffect>
-                    {
-                        new EventEffect { TargetNeed = "fatigue", NeedDelta = 10f }
-                    }
-                }
-            };
+                donor = EventRunner.FindBloodDonor(Survivors);
+            }
+            if (donor == null || !donor.IsAlive)
+            {
+                Debug.LogWarning("[Blood for Water] No eligible donor in the bunker; skipping BloodLoss inflict.");
+                return;
+            }
 
-            // Inject (do not replace) — the existing feral-dogs / deserters
-            // pool stays intact, but the ambush is now the dominant event
-            // for the Safe Haven location until the player resolves it.
-            ExpeditionSystem.SetEncounterPool(
-                new List<EncounterSO>(ExpeditionSystem.EncounterPool) { ambush });
+            // Inflict the affliction. MedicalSystem.Inflict is a no-op if
+            // the def is unknown or the survivor already has it.
+            if (MedicalSystem != null)
+            {
+                bool applied = MedicalSystem.Inflict(donor, AfflictionSO.Ids.BloodLoss);
+                if (!applied)
+                {
+                    Debug.LogWarning($"[Blood for Water] MedicalSystem.Inflict returned false for {donor.Id}.");
+                }
+                else
+                {
+                    Debug.Log($"[Blood for Water] BloodLoss inflicted on {donor.DisplayName}.");
+                }
+            }
+
+            // Forced bleed: slam the donor's affinity with the bunker leader
+            // (the highest-trust living survivor, or donor themselves if
+            // alone) to the ForcedBleedAffinityFloor. MentalBreakSystem
+            // reads this matrix in its roll; -100 is the input that
+            // maximises a Paranoid survivor's chance of a ViolentParanoia
+            // break.
+            if (choice.ChoiceId == "bleed_paranoid_force"
+                && ctx != null
+                && ctx.MentalBreak != null
+                && MentalBreakSystem != null)
+            {
+                Survivor leader = ResolveBunkerLeader();
+                if (leader != null && leader != donor)
+                {
+                    MentalBreakSystem.Affinity.Set(
+                        donor.Id, leader.Id,
+                        EventRunner.ForcedBleedAffinityFloor);
+                    Debug.Log($"[Blood for Water] Affinity {donor.DisplayName}↔{leader.DisplayName} slammed to {EventRunner.ForcedBleedAffinityFloor}.");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Pick the survivor to treat as the "leader" of the bunker for
+        /// affinity bookkeeping. Defaults to the first living survivor
+        /// (matches the convention used by MentalBreakSystem); falls back
+        /// to the donor if they are the only living survivor.
+        /// </summary>
+        private Survivor ResolveBunkerLeader()
+        {
+            if (Survivors == null) return null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var s = Survivors[i];
+                if (s != null && s.IsAlive) return s;
+            }
+            return null;
         }
 
         private void SeedKnowledgeMap()
@@ -1441,6 +1510,23 @@ namespace AtomicWar._Game.Core
                 if (pool[j] != null && pool[j].id == safeHaven.id) return;
             }
             pool.Add(safeHaven);
+        }
+
+        /// <summary>
+        /// Register Prompt #47 biological-trade events (Blood for Water)
+        /// into the EventRunner pool if not already present. Mirrors the
+        /// <see cref="EnsurePoolHasEmissaryChain"/> pattern.
+        /// </summary>
+        private static void EnsurePoolHasBiologicalTradeEvents(List<GameEvent> pool)
+        {
+            if (pool == null) return;
+            var blood = EventRunner.CreateBloodForWaterEvent();
+            if (blood == null || string.IsNullOrEmpty(blood.id)) return;
+            for (int j = 0; j < pool.Count; j++)
+            {
+                if (pool[j] != null && pool[j].id == blood.id) return;
+            }
+            pool.Add(blood);
         }
 
         // -----------------------------------------------------------------

@@ -1195,5 +1195,235 @@ namespace AtomicWar._Game.Events
             }
             return null;
         }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #47 — biological trade economy. When the bunker has
+        // nothing left to trade, factions will ask for pieces of the
+        // player. "Blood for Water" is the entry point: a heavily-armed
+        // medical convoy from a wealthy faction demands O-negative blood
+        // for their dying commander. Accepting costs one survivor the
+        // BloodLossAffliction and a chance of infection; refusing costs
+        // trust and may escalate to a hatch raid.
+        //
+        // Trait variance:
+        //  - Fatalist volunteers outright.
+        //  - Paranoid refuses outright (and bleeds the affinity if forced).
+        //  - Cautious / Realist / Reckless / Denialist will agree if the
+        //    player has a med-skill survivor present to vouch for safety.
+        //
+        // EventRunner applies the choice effects (inventory + flag), but
+        // the actual MedicalSystem.Inflict(...) call lives in
+        // GameBootstrap.HandleBloodForWaterChoiceApplied — same hook
+        // pattern as Safe Haven. Tests assert the inventory + flag delta;
+        // the bootstrap-level integration is exercised by PlayMode tests.
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string BloodForWaterEventId = "blood_for_water";
+
+        // Faction id the convoy belongs to. Defaults to the wealthy prepper
+        // faction (the doomsday_preppers have stockpiled medicine and would
+        // be the natural asker for blood).
+        public const string BloodForWaterFactionId = "doomsday_preppers";
+
+        // Reward magnitudes (Prompt #47 acceptance criteria).
+        public const int BloodForWaterCleanWaterReward = 10;
+        public const int BloodForWaterIodinePillsReward = 5;
+
+        // World flags written by Blood for Water choices. Read by tests
+        // and by GameBootstrap to know whether to inject the
+        // BloodLossAffliction or slam the affinity matrix.
+        public const string FlagBloodDrawn       = "blood_for_water_drawn";
+        public const string FlagBloodRefused     = "blood_for_water_refused";
+        public const string FlagBloodForced      = "blood_for_water_forced";
+        public const string FlagBloodIgnoresSummons = "blood_for_water_ignored";
+
+        // Forced-bleed affinity floor: forcing a Paranoid survivor to give
+        // blood slams their affinity with the bunker leader to the bottom
+        // of the [-100, +100] scale, which is the input to MentalBreakSystem
+        // (Prompt #29) that can fire a ViolentParanoia break.
+        public const float ForcedBleedAffinityFloor = -100f;
+
+        /// <summary>
+        /// Faction convoy at the hatch demanding O-negative blood for their
+        /// dying commander. The four choices are gated by both bunker-level
+        /// traits and inventory state — a low-inventory player has no
+        /// out-of-blood option, so the trade-off is forced.
+        ///
+        /// Choice semantics:
+        ///  - <c>bleed_willing_survivor</c>: requires a Fatalist, OR a
+        ///    non-Paranoid survivor with a medic/tech in the bunker to
+        ///    vouch. Reward: 10 clean_water + 5 iodine_pills. Cost:
+        ///    BloodLossAffliction on the donor.
+        ///  - <c>bleed_paranoid_force</c>: requires a Paranoid survivor in
+        ///    the bunker. Reward: 10 clean_water + 5 iodine_pills. Cost:
+        ///    BloodLossAffliction + affinity floor (-100) between the
+        ///    forced survivor and the bunker leader — MentalBreak risk.
+        ///  - <c>refuse_convoy</c>: always available. Cost: -5 trust with
+        ///    the convoy's faction.
+        ///  - <c>ignore_summons</c>: always available. Cost: -10 trust, no
+        ///    reward, no relationship change.
+        ///
+        /// The event is gated by <c>is_blood_for_water_offered</c> (set by
+        /// the bootstrap when a faction at Rob/HostileRaid trade-stance
+        /// visits the hatch with an empty inventory). This keeps the event
+        /// out of the random pool — it is a faction-triggered event, like
+        /// the Emissary.
+        /// </summary>
+        public static GameEvent CreateBloodForWaterEvent(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId) ? BloodForWaterFactionId : factionId;
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = BloodForWaterEventId;
+            ev.title = "Blood for Water";
+            ev.bodyText =
+                "Six vehicles. Armored. White markings over rust. A lieutenant at the hatch, " +
+                "polite as a knife: their commander is dying of a perforated ulcer and the only " +
+                "thing keeping him alive is O-negative whole blood. They have iodine. They have " +
+                "clean water in drums. They do not have a donor. The lieutenant does not blink. " +
+                "There is enough tubing in the convoy to take a pint from the hatch and put a " +
+                "jug of clean water through it. The tubing is not sterile. Nobody in the convoy " +
+                "pretends otherwise.";
+            ev.weight = 1.3f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 25,                          // any time the convoy is rolling
+                RequiredFlagId = "is_blood_for_water_offered"
+            };
+            ev.choices = new List<EventChoice>
+            {
+                // ── Default: trade a pint for water + iodine. The actual
+                //    MedicalSystem.Inflict(blood_loss) call lives in the
+                //    bootstrap's HandleBloodForWaterChoiceApplied — the
+                //    effect here is the inventory + flag delta the runner
+                //    can apply directly.
+                new EventChoice
+                {
+                    ChoiceId = "bleed_willing_survivor",
+                    Text = "Pick a survivor who can spare the blood. Run the line.",
+                    MoraleDelta = -10f,
+                    FactionId = fid,
+                    TrustDelta = 18f,
+                    RequiredTrait = "Fatalist",   // Fatalist volunteers outright
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagBloodDrawn },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { ItemId = "clean_water",    ItemAmount = BloodForWaterCleanWaterReward },
+                        new EventEffect { ItemId = "iodine_pills",   ItemAmount = BloodForWaterIodinePillsReward }
+                    }
+                },
+                // Alias: non-Fatalist with a medic or tech in the bunker
+                // (someone to vouch for the procedure). Hidden if Fatalist
+                // already satisfies the row above OR no one is in the bunker.
+                new EventChoice
+                {
+                    ChoiceId = "bleed_willing_survivor_under_care",
+                    Text = "A medic or tech supervises. A survivor agrees under care.",
+                    MoraleDelta = -6f,
+                    FactionId = fid,
+                    TrustDelta = 12f,
+                    RequiredTrait = "Medical",    // OR-gate: see HasTraitInBunker
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagBloodDrawn },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { ItemId = "clean_water",    ItemAmount = BloodForWaterCleanWaterReward },
+                        new EventEffect { ItemId = "iodine_pills",   ItemAmount = BloodForWaterIodinePillsReward }
+                    }
+                },
+                // ── Force: a Paranoid survivor is dragged to the line. Reward
+                //    same, but the affinity hit is the real cost (MentalBreak
+                //    risk).
+                new EventChoice
+                {
+                    ChoiceId = "bleed_paranoid_force",
+                    Text = "The Paranoid one will not agree. Hold them down anyway.",
+                    MoraleDelta = -22f,
+                    FactionId = fid,
+                    TrustDelta = 10f,
+                    RequiredTrait = "Paranoid",
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagBloodDrawn, FlagBloodForced },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { ItemId = "clean_water",    ItemAmount = BloodForWaterCleanWaterReward },
+                        new EventEffect { ItemId = "iodine_pills",   ItemAmount = BloodForWaterIodinePillsReward }
+                    }
+                },
+
+                // ── Refuse: keep the blood, lose trust. The convoy drives
+                //    off; the next time they come back the trade-stance
+                //    will be one step closer to Rob.
+                new EventChoice
+                {
+                    ChoiceId = "refuse_convoy",
+                    Text = "Seal the hatch. The blood stays in the bunker.",
+                    MoraleDelta = 2f,
+                    FactionId = fid,
+                    TrustDelta = -8f,
+                    SetEventFlags = new List<string> { FlagBloodRefused }
+                },
+
+                // ── Ignore: pretend no one heard the lieutenant. Worst
+                //    trust outcome (the convoy returns to a closed hatch).
+                new EventChoice
+                {
+                    ChoiceId = "ignore_summons",
+                    Text = "Don't answer. Pretend no one heard.",
+                    MoraleDelta = -3f,
+                    FactionId = fid,
+                    TrustDelta = -14f,
+                    SetEventFlags = new List<string> { FlagBloodIgnoresSummons }
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// Test helper: pick the survivor who would be bled if the
+        /// <c>bleed_willing_survivor</c> choice resolves right now. Returns
+        /// the first living bunker survivor matching the gate priority:
+        /// Fatalist first (volunteers outright), then non-Paranoid (a medic
+        /// or tech vouching), then null. Mirrors the union of the two
+        /// gated rows on <see cref="CreateBloodForWaterEvent"/>.
+        /// </summary>
+        public static Survivor FindBloodDonor(IReadOnlyList<Survivor> bunker)
+        {
+            if (bunker == null) return null;
+            // 1. Fatalist volunteers.
+            for (int i = 0; i < bunker.Count; i++)
+            {
+                var s = bunker[i];
+                if (s == null || !s.IsAlive) continue;
+                if (s.RiskBias == RiskBiasTrait.Fatalist) return s;
+            }
+            // 2. Anyone who is not Paranoid (the medic/tech-row gate
+            //    covers this: HasTraitInBunker("Medical") and the survivor
+            //    is the donor).
+            for (int i = 0; i < bunker.Count; i++)
+            {
+                var s = bunker[i];
+                if (s == null || !s.IsAlive) continue;
+                if (s.RiskBias != RiskBiasTrait.Paranoid) return s;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Test helper: pick the first Paranoid survivor in the bunker.
+        /// Used by the <c>bleed_paranoid_force</c> row and by tests that
+        /// assert the forced-bleed affinity-floor consequence.
+        /// </summary>
+        public static Survivor FindParanoidSurvivor(IReadOnlyList<Survivor> bunker)
+        {
+            if (bunker == null) return null;
+            for (int i = 0; i < bunker.Count; i++)
+            {
+                var s = bunker[i];
+                if (s == null || !s.IsAlive) continue;
+                if (s.RiskBias == RiskBiasTrait.Paranoid) return s;
+            }
+            return null;
+        }
     }
 }

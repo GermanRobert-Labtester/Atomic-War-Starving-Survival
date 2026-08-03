@@ -65,5 +65,12 @@
     "maxDay": 90,
     "message": "[LOOPED BROADCAST] Safe haven at grid 4-7-North, twenty miles. Working scrubbers. Hot food. Come in on 107.0. [REPEAT IN 6:00] Safe haven at grid 4-7-North, twenty miles. Working scrubbers. Hot food…",
     "triggerEventId": "radio_safe_haven_broadcast"
+  },
+  {
+    "id": "medical_convoy_announcement",
+    "minDay": 25,
+    "maxDay": 80,
+    "message": "[CH-7 MILBAND] Convoy Six to Outpost Selene. We are inbound with twelve drums of clean water and a crate of iodine. Standing request: O-negative donors. We are not in a position to pay in ammunition. We are in a position to pay in antibiotics. Out.",
+    "triggerEventId": "blood_for_water"
   }
 ]
