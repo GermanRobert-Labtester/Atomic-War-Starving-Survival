@@ -14,11 +14,28 @@ namespace AtomicWar._Game.Core
 
     public enum ExpeditionPhase
     {
-        Outbound,   // Traveling to target location node
-        Looting,    // At target location node (Push-Your-Luck phase)
-        Inbound,    // Returning to shelter
-        Completed,  // Returned safely with loot unloaded
-        Failed      // Survivor died or collapsed
+        Outbound,        // Traveling to target location node
+        Looting,         // At target location node (Push-Your-Luck phase)
+        Inbound,         // Returning to shelter
+        AtHatchDilemma,  // At the hatch; the player must decide whether to let them in
+        Completed,       // Returned safely with loot unloaded
+        Failed           // Survivor died or collapsed
+    }
+
+    /// <summary>
+    /// How a survivor reacted when caught in a Day-30 Flashpoint while on
+    /// expedition. The intercept system sets this once based on the survivor's
+    /// <see cref="RiskBiasTrait"/>; it persists with the expedition so save/load
+    /// round-trips preserve the trait-driven state (dropped loot, paused ETA,
+    /// speed multiplier, acquired afflictions).
+    /// </summary>
+    public enum FlashpointBehavior
+    {
+        None = 0,
+        RecklessPushThrough, // Default: keep loot, normal return speed, full rad accumulation
+        ParanoidSprint,      // Drop all loot, sprint home empty-handed
+        CautiousShelter,     // Pause ETA 12-24 ticks, gain RadiationAnxiety
+        FatalistNumbWalk     // Keep loot, halve return speed, gain Numbness
     }
 
     /// <summary>
@@ -52,6 +69,50 @@ namespace AtomicWar._Game.Core
 
         public bool IsPushingLuck;
         public bool IsRetreating;
+
+        // -----------------------------------------------------------------
+        // Day-30 Flashpoint intercept state (Prompt #26)
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// True when the EMP severed comms to this expedition. The UI must
+        /// replace ETA / health / status with "SIGNAL LOST" and disable the
+        /// recall button. The player has no further control over this survivor
+        /// until they reach the hatch.
+        /// </summary>
+        public bool isCommsSevered;
+
+        /// <summary>
+        /// Trait-driven resolution the survivor committed to when the EMP hit.
+        /// Drives loot behavior, return speed, and acquired statuses.
+        /// </summary>
+        public FlashpointBehavior flashpointBehavior = FlashpointBehavior.None;
+
+        /// <summary>
+        /// ETA at the moment the intercept fired. Persisted so the Cautious
+        /// "12-24 hour delay" and the "ETA halved" visual can be restored on
+        /// load without recomputing from current state.
+        /// </summary>
+        public float originalEtaTicks;
+
+        /// <summary>
+        /// For <see cref="FlashpointBehavior.CautiousShelter"/>: ticks the
+        /// expedition sits in a ruin before resuming the return. Counts down
+        /// each inbound tick; while > 0 the survivor doesn't advance.
+        /// </summary>
+        public int shelterDelayTicksRemaining;
+
+        /// <summary>
+        /// For <see cref="FlashpointBehavior.ParanoidSprint"/>: speed
+        /// multiplier applied to the return step (e.g. 2.0 = sprint).
+        /// </summary>
+        public float returnSpeedMultiplier = 1f;
+
+        /// <summary>
+        /// For <see cref="FlashpointBehavior.FatalistNumbWalk"/>: speed
+        /// multiplier applied to the return step (e.g. 0.5 = slow walk).
+        /// </summary>
+        public float returnSpeedDivisor = 1f;
 
         public List<string> CollectedLootItemIds = new List<string>();
 

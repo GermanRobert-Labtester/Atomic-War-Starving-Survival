@@ -682,6 +682,12 @@ namespace AtomicWar._Game.Core
                 state.DangerLevel = saveExp.DangerLevel;
                 state.IsPushingLuck = saveExp.IsPushingLuck;
                 state.IsRetreating = saveExp.IsRetreating;
+                state.isCommsSevered = saveExp.IsCommsSevered;
+                state.flashpointBehavior = saveExp.FlashpointBehavior;
+                state.originalEtaTicks = saveExp.OriginalEtaTicks;
+                state.shelterDelayTicksRemaining = saveExp.ShelterDelayTicksRemaining;
+                state.returnSpeedMultiplier = saveExp.ReturnSpeedMultiplier;
+                state.returnSpeedDivisor = saveExp.ReturnSpeedDivisor;
                 state.Survivor = survivor;
 
                 state.CollectedLootItemIds.Clear();
@@ -774,6 +780,15 @@ namespace AtomicWar._Game.Core
         public float DangerLevel;
         public bool IsPushingLuck;
         public bool IsRetreating;
+
+        // Day-30 Flashpoint intercept state (Prompt #26)
+        public bool IsCommsSevered;
+        public FlashpointBehavior FlashpointBehavior;
+        public float OriginalEtaTicks;
+        public int ShelterDelayTicksRemaining;
+        public float ReturnSpeedMultiplier = 1f;
+        public float ReturnSpeedDivisor = 1f;
+
         public List<string> CollectedLootItemIds = new List<string>();
     }
 

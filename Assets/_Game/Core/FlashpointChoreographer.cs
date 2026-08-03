@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -8,7 +9,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 
-namespace AtomicWar._Game.Core
+namespace AtomicWar._Game.Flashpoint
 {
     // -------------------------------------------------------------------
     // Day-30 Flashpoint Choreographer.
@@ -143,7 +144,9 @@ namespace AtomicWar._Game.Core
             _choreographyStarted = true;
             _currentStepIndex = -1;
             _elapsedRealSeconds = 0f;
-            _nextStepDelayRemaining = 0f;
+            // The first step's delay is the wait AFTER OnNuclearExchange
+            // BEFORE the first step fires. Typically 0 (fires immediately).
+            _nextStepDelayRemaining = Mathf.Max(0f, _sequence.steps[0].delayFromPreviousSeconds);
             _choreographyCompleted = false;
 
             string sequenceId = _sequence.sequenceId;
@@ -155,6 +158,14 @@ namespace AtomicWar._Game.Core
         /// Advance the choreography by <paramref name="realDeltaSeconds"/>.
         /// Called from GameBootstrap.Update with Time.deltaTime. The
         /// choreography runs in real time, not game time.
+        ///
+        /// Semantics: each step's <c>delayFromPreviousSeconds</c> is the wait
+        /// time BEFORE that step fires, measured from the previous step (or
+        /// from OnNuclearExchange for the first step). A step with delay 0
+        /// fires on the next Tick. After a step fires, the wait time for the
+        /// NEXT step is set to that next step's delay — never to the current
+        /// step's, which would cause the next step to fire on the same tick
+        /// when the current step's delay is 0.
         /// </summary>
         public void Tick(float realDeltaSeconds)
         {
@@ -178,13 +189,25 @@ namespace AtomicWar._Game.Core
 
                 var step = _sequence.steps[nextIndex];
                 _currentStepIndex = nextIndex;
-                _nextStepDelayRemaining = Mathf.Max(0f, step.delayFromPreviousSeconds);
                 ExecuteStep(step);
 
                 if (step.actionId == "complete")
                 {
                     CompleteChoreography();
                     break;
+                }
+
+                // Set the wait for the NEXT step. If there is no next step,
+                // park the timer at MaxValue so the while loop exits.
+                int followingIndex = _currentStepIndex + 1;
+                if (followingIndex < _sequence.steps.Count)
+                {
+                    _nextStepDelayRemaining = Mathf.Max(0f,
+                        _sequence.steps[followingIndex].delayFromPreviousSeconds);
+                }
+                else
+                {
+                    _nextStepDelayRemaining = float.MaxValue;
                 }
             }
         }
@@ -300,13 +323,15 @@ namespace AtomicWar._Game.Core
 
         private void ExecuteEmpStep(FlashpointChoreographyStep step)
         {
+            EmpResult empResult;
             if (_systems == null)
             {
+                empResult = new EmpResult();
                 EventBus.Raise(new FlashpointEmptiedDevices(0, 0, false, 0f));
                 return;
             }
 
-            var empResult = EMPEvent.ApplyGlobal(
+            empResult = EMPEvent.ApplyGlobal(
                 _systems.Inventory,
                 _systems.Shelter,
                 _systems.RadioState);
@@ -339,6 +364,34 @@ namespace AtomicWar._Game.Core
                 empResult.ModulesDisabled,
                 empResult.RadioDestroyed,
                 moraleHit));
+
+            // Publish the "caught outside" intercept signal AFTER the EMP
+            // mechanical work so subscribers can read the post-EMP state
+            // (radio destroyed, weather forced to Ashfall, etc.). The
+            // ExpeditionSystem listens and severs comms on every active
+            // expedition, applies trait-driven behavior, and queues the
+            // hatch dilemma for when the survivor returns.
+            PublishInterceptSignal(empResult);
+        }
+
+        /// <summary>
+        /// Build and publish the typed FlashpointInterceptSignal. Snapshots
+        /// the active expeditions at the moment of the EMP. The subscribers
+        /// (ExpeditionSystem) are idempotent: re-applying to an already-severed
+        /// expedition is a no-op.
+        /// </summary>
+        private void PublishInterceptSignal(EmpResult empResult)
+        {
+            var active = _systems?.ExpeditionSystem?.ActiveExpeditions;
+            if (active == null || active.Count == 0) return;
+
+            // Copy the list so the signal payload is immutable past publish.
+            var snapshot = new List<ExpeditionState>(active.Count);
+            for (int i = 0; i < active.Count; i++)
+            {
+                if (active[i] != null) snapshot.Add(active[i]);
+            }
+            EventBus.Raise(new FlashpointInterceptSignal(empResult, snapshot));
         }
 
         private void ExecuteShockwaveStep(FlashpointChoreographyStep step)
@@ -428,5 +481,12 @@ namespace AtomicWar._Game.Core
         public DynamicEconomySystem EconomySystem;
         public IReadOnlyList<Survivor> Survivors;
         public float ExchangeMoraleHit;
+
+        /// <summary>
+        /// Optional: ExpeditionSystem so the EMP step can publish the
+        /// "caught outside" intercept signal. When null, the signal is
+        /// skipped (no-op; the choreography is mechanical-only).
+        /// </summary>
+        public ExpeditionSystem ExpeditionSystem;
     }
 }

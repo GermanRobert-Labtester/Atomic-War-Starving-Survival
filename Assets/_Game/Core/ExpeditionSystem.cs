@@ -5,6 +5,7 @@ using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 
@@ -20,12 +21,25 @@ namespace AtomicWar._Game.Core
         public const float BaseStaminaDrainPerHour = 5f;
         public const float MaxCarryingCapacityDefault = 30f;
 
+        /// <summary>AcuteDoseWindow added to the survivor when caught in the flashpoint.</summary>
+        public const float FlashpointAcuteDoseSpike = 30f;
+
+        /// <summary>Default shelter delay (ticks) for the Cautious flashpoint behavior.</summary>
+        public const int DefaultCautiousShelterDelayTicks = 18; // 12-24 hour range; midpoint
+
+        /// <summary>Return speed multiplier for the Paranoid sprint-home-empty-handed behavior.</summary>
+        public const float ParanoidSprintMultiplier = 2.0f;
+
+        /// <summary>Return speed divisor for the Fatalist slow-walk behavior.</summary>
+        public const float FatalistSlowWalkDivisor = 2.0f;
+
         private readonly RadiationSystem _radSystem;
         private readonly Inventory.Inventory _inventory;
         private readonly ItemCatalogSO _itemCatalog;
         private readonly WeatherSystem _weatherSystem;
         private readonly RadiationKnowledgeMap _knowledgeMap;
         private readonly System.Random _rng;
+        private readonly MedicalSystem _medicalSystem;
 
         private readonly List<ExpeditionState> _activeExpeditions = new List<ExpeditionState>();
         private readonly List<EncounterSO> _encounterPool = new List<EncounterSO>();
@@ -41,12 +55,18 @@ namespace AtomicWar._Game.Core
         public event Action<ExpeditionState, List<ItemDefinition>> OnExpeditionCompleted;
         public event Action<ExpeditionState, string> OnExpeditionFailed;
 
+        // Day-30 Flashpoint intercept events
+        public event Action<ExpeditionState> OnFlashpointIntercepted;
+        public event Action<ExpeditionState> OnHatchDilemmaReady;
+        public event Action<ExpeditionState> OnHatchDilemmaResolved;
+
         public ExpeditionSystem(
             RadiationSystem radSystem,
             Inventory.Inventory inventory,
             ItemCatalogSO itemCatalog,
             WeatherSystem weatherSystem = null,
             RadiationKnowledgeMap knowledgeMap = null,
+            MedicalSystem medicalSystem = null,
             int seed = 42)
         {
             _radSystem = radSystem;
@@ -54,9 +74,177 @@ namespace AtomicWar._Game.Core
             _itemCatalog = itemCatalog;
             _weatherSystem = weatherSystem;
             _knowledgeMap = knowledgeMap;
+            _medicalSystem = medicalSystem;
             _rng = new System.Random(seed);
 
             CreateDefaultEncounters();
+
+            // Subscribe to the typed intercept signal published by the
+            // FlashpointChoreographer's EMP step. Idempotent: the
+            // EventBus uses a singleton dictionary so duplicate
+            // subscriptions are ignored.
+            EventBus.Subscribe<FlashpointInterceptSignal>(HandleFlashpointIntercept);
+            EventBus.Subscribe<HatchDilemmaResolvedSignal>(HandleHatchDilemmaResolved);
+        }
+
+        /// <summary>
+        /// Day-30 intercept: sever comms on every active expedition, apply
+        /// trauma + acute-dose spike, resolve the survivor's trait-driven
+        /// behavior. Idempotent per expedition: re-firing on the same
+        /// signal is a no-op (the first call sets the behavior).
+        /// </summary>
+        private void HandleFlashpointIntercept(FlashpointInterceptSignal signal)
+        {
+            if (signal.InterceptedExpeditions == null) return;
+
+            for (int i = 0; i < signal.InterceptedExpeditions.Count; i++)
+            {
+                var exp = signal.InterceptedExpeditions[i];
+                if (exp == null || exp.isCommsSevered) continue;
+                ApplyFlashpointIntercept(exp);
+            }
+        }
+
+        private void ApplyFlashpointIntercept(ExpeditionState exp)
+        {
+            if (exp.Survivor == null) return;
+
+            // 1. Sever comms
+            exp.isCommsSevered = true;
+
+            // 2. Acute-dose spike
+            exp.Survivor.AcuteDoseWindow += FlashpointAcuteDoseSpike;
+
+            // 3. Trauma affliction (broken bones / shockwave)
+            if (_medicalSystem != null)
+            {
+                _medicalSystem.Inflict(exp.Survivor, AfflictionSO.Ids.BrokenBone);
+            }
+
+            // 4. Trait-driven resolution
+            ResolveFlashpointBehavior(exp);
+
+            // 5. Cache original ETA so the UI / save can show "halved" / "delayed"
+            exp.originalEtaTicks = exp.TravelTicksCompleted;
+
+            // 6. Force into the Inbound phase so the survivor begins the return.
+            // If they were Looting, abandon the loot site immediately; if they
+            // were Outbound, the inbound leg is the full distance.
+            exp.Phase = ExpeditionPhase.Inbound;
+            if (exp.IsPushingLuck) exp.IsPushingLuck = false;
+
+            OnFlashpointIntercepted?.Invoke(exp);
+        }
+
+        private void ResolveFlashpointBehavior(ExpeditionState exp)
+        {
+            var sv = exp.Survivor;
+            if (sv == null) return;
+
+            switch (sv.RiskBias)
+            {
+                case RiskBiasTrait.Paranoid:
+                    // Drop all loot, sprint home
+                    exp.DropLoot(1.0f);
+                    exp.returnSpeedMultiplier = ParanoidSprintMultiplier;
+                    exp.flashpointBehavior = FlashpointBehavior.ParanoidSprint;
+                    // Halve the visual ETA so the UI shows progress
+                    if (exp.originalEtaTicks <= 0f) exp.originalEtaTicks = exp.TravelTicksCompleted;
+                    exp.TravelTicksCompleted = Mathf.Max(0, Mathf.RoundToInt(exp.TravelTicksCompleted * 0.5f));
+                    break;
+
+                case RiskBiasTrait.Cautious:
+                    // Take temporary shelter, gain radiation anxiety
+                    exp.shelterDelayTicksRemaining = DefaultCautiousShelterDelayTicks;
+                    exp.flashpointBehavior = FlashpointBehavior.CautiousShelter;
+                    sv.HasRadiationAnxietyStatus = true;
+                    break;
+
+                case RiskBiasTrait.Fatalist:
+                    // Numb walk: keep loot, half speed, gain Numbness
+                    exp.returnSpeedDivisor = FatalistSlowWalkDivisor;
+                    exp.flashpointBehavior = FlashpointBehavior.FatalistNumbWalk;
+                    sv.IsNumb = true;
+                    break;
+
+                case RiskBiasTrait.Reckless:
+                case RiskBiasTrait.Realist:
+                case RiskBiasTrait.Denialist:
+                default:
+                    // Keep all loot, normal return speed, full rad accumulation
+                    exp.flashpointBehavior = FlashpointBehavior.RecklessPushThrough;
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Resolve a hatch dilemma choice. Called by the GameBootstrap (or
+        /// any handler that runs the dilemma GameEventSO through the
+        /// EventRunner) once the player picks a choice.
+        /// </summary>
+        public void ApplyHatchDilemmaChoice(string expeditionId, HatchDilemmaResolvedSignal.Resolution choice)
+        {
+            var exp = FindExpeditionById(expeditionId);
+            if (exp == null || exp.Phase != ExpeditionPhase.AtHatchDilemma) return;
+
+            switch (choice)
+            {
+                case HatchDilemmaResolvedSignal.Resolution.LetThemIn:
+                    // Complete the expedition. Shelter takes ambient radiation
+                    // from the contaminated gear; survivor is sick but alive.
+                    CompleteExpedition(exp);
+                    RemoveExpedition(exp);
+                    break;
+
+                case HatchDilemmaResolvedSignal.Resolution.ForceDeconOutside:
+                    // Strip outside in the ash: 2 hours of rad damage, big morale
+                    // hit, but the shelter stays clean.
+                    if (exp.Survivor != null && _radSystem != null)
+                    {
+                        _radSystem.Expose(exp.Survivor, 10f, 2f);
+                        exp.Survivor.Needs.Morale = Mathf.Clamp(exp.Survivor.Needs.Morale - 15f, 0f, 100f);
+                    }
+                    CompleteExpedition(exp);
+                    RemoveExpedition(exp);
+                    break;
+
+                case HatchDilemmaResolvedSignal.Resolution.DenyEntry:
+                    // Survivor dies outside. Massive morale penalty for the rest
+                    // of the bunker (signaled via the OnExpeditionFailed event
+                    // with a special reason; full morale propagation lives in
+                    // the consuming system).
+                    if (exp.Survivor != null)
+                    {
+                        exp.Survivor.State = SurvivorState.Dead;
+                    }
+                    exp.Phase = ExpeditionPhase.Failed;
+                    OnExpeditionFailed?.Invoke(exp, "denied_entry");
+                    RemoveExpedition(exp);
+                    break;
+            }
+
+            OnHatchDilemmaResolved?.Invoke(exp);
+        }
+
+        private void HandleHatchDilemmaResolved(HatchDilemmaResolvedSignal signal)
+        {
+            ApplyHatchDilemmaChoice(signal.ExpeditionId, signal.Choice);
+        }
+
+        private ExpeditionState FindExpeditionById(string expeditionId)
+        {
+            if (string.IsNullOrEmpty(expeditionId)) return null;
+            for (int i = 0; i < _activeExpeditions.Count; i++)
+            {
+                if (_activeExpeditions[i] != null && _activeExpeditions[i].ExpeditionId == expeditionId)
+                    return _activeExpeditions[i];
+            }
+            return null;
+        }
+
+        private void RemoveExpedition(ExpeditionState exp)
+        {
+            _activeExpeditions.Remove(exp);
         }
 
         public void SetEncounterPool(IEnumerable<EncounterSO> encounters)
@@ -261,11 +449,33 @@ namespace AtomicWar._Game.Core
                         break;
 
                     case ExpeditionPhase.Inbound:
-                        float returnStep = exp.Stance == ExpeditionStance.Speed ? 1.5f : 1.0f;
+                        // Cautious shelter delay: pause the return until the
+                        // shelter timer counts down.
+                        if (exp.shelterDelayTicksRemaining > 0)
+                        {
+                            exp.shelterDelayTicksRemaining--;
+                            OnExpeditionTick?.Invoke(exp);
+                            continue;
+                        }
+
+                        // Effective return step: stance x trait multiplier / divisor
+                        float baseReturnStep = exp.Stance == ExpeditionStance.Speed ? 1.5f : 1.0f;
+                        float returnStep = baseReturnStep * exp.returnSpeedMultiplier / Mathf.Max(0.01f, exp.returnSpeedDivisor);
                         exp.TravelTicksCompleted -= Mathf.RoundToInt(returnStep);
 
                         if (exp.TravelTicksCompleted <= 0)
                         {
+                            // Comms-severed expeditions don't complete cleanly:
+                            // they pause at the hatch and fire the dilemma.
+                            if (exp.isCommsSevered)
+                            {
+                                exp.Phase = ExpeditionPhase.AtHatchDilemma;
+                                bool alive = exp.Survivor != null && exp.Survivor.IsAlive;
+                                EventBus.Raise(new HatchDilemmaReadySignal(exp, alive));
+                                OnHatchDilemmaReady?.Invoke(exp);
+                                continue;
+                            }
+
                             CompleteExpedition(exp);
                             _activeExpeditions.RemoveAt(i);
                             continue;
