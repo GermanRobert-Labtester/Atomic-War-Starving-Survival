@@ -60,6 +60,7 @@ namespace AtomicWar._Game.Core
         private JournalSystem _journalSystem;
         private VictoryProjectManager _victoryProject;
         private EventRunner _eventRunner;
+        private SuspicionTracker _suspicionTracker;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
@@ -177,6 +178,12 @@ namespace AtomicWar._Game.Core
         public void SetEventRunner(EventRunner eventRunner)
         {
             _eventRunner = eventRunner;
+        }
+
+        /// <summary>Inject internal-mystery SuspicionTracker for save/load.</summary>
+        public void SetSuspicionTracker(SuspicionTracker suspicionTracker)
+        {
+            _suspicionTracker = suspicionTracker;
         }
 
         /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
@@ -459,6 +466,9 @@ namespace AtomicWar._Game.Core
             if (_eventRunner != null)
                 data.ScheduledEvents = _eventRunner.CaptureScheduledState();
 
+            if (_suspicionTracker != null)
+                data.Suspicion = _suspicionTracker.CaptureState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -556,7 +566,10 @@ namespace AtomicWar._Game.Core
                 // Mental-break system (Prompt #29)
                 CurrentMentalBreakId    = sv.currentMentalBreakId ?? string.Empty,
                 LowMoraleHours          = sv.lowMoraleHours,
-                MentalBreakCureProgress = sv.mentalBreakCureProgress
+                MentalBreakCureProgress = sv.mentalBreakCureProgress,
+
+                // Internal mysteries (Prompt #45) — permanent Fractured scar
+                IsFractured             = sv.IsFractured
             };
 
             if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
@@ -692,6 +705,9 @@ namespace AtomicWar._Game.Core
                 _eventRunner.RestoreScheduledState(data.ScheduledEvents);
             }
 
+            if (_suspicionTracker != null)
+                _suspicionTracker.RestoreState(data.Suspicion);
+
             if (_generatedMap != null && data.GeneratedMap != null)
             {
                 // Layout is pure seed; regenerate if seed differs, then re-apply fog flags.
@@ -771,6 +787,9 @@ namespace AtomicWar._Game.Core
             sv.currentMentalBreakId    = save.CurrentMentalBreakId;
             sv.lowMoraleHours          = save.LowMoraleHours;
             sv.mentalBreakCureProgress = save.MentalBreakCureProgress;
+
+            // Internal mysteries (Prompt #45)
+            sv.IsFractured             = save.IsFractured;
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)
@@ -940,6 +959,8 @@ namespace AtomicWar._Game.Core
         public VictoryProjectSave VictoryProject;
         /// <summary>Deferred narrative chain queue (Prompt #43).</summary>
         public ScheduledEventSave ScheduledEvents;
+        /// <summary>Internal mystery / Missing Rations state.</summary>
+        public SuspicionTrackerSave Suspicion;
         public WaterStorageSave Water;
         public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;
@@ -1046,6 +1067,9 @@ namespace AtomicWar._Game.Core
         public string CurrentMentalBreakId = string.Empty;
         public float LowMoraleHours;
         public float MentalBreakCureProgress;
+
+        // Internal mysteries (Prompt #45) — permanent Fractured status
+        public bool IsFractured;
     }
 
     /// <summary>Shelter module runtime state snapshot.</summary>

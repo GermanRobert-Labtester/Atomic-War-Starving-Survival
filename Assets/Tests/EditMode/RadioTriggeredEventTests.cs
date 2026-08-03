@@ -4,7 +4,9 @@ using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
+using InventoryModel = AtomicWar._Game.Inventory.Inventory;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -33,13 +35,13 @@ namespace AtomicWar.Tests.EditMode
     public class RadioTriggeredEventTests
     {
         private GameEvent _safeHaven;
-        private Inventory.Inventory _inventory;
+        private InventoryModel _inventory;
 
         [SetUp]
         public void SetUp()
         {
             _safeHaven = EventRunner.CreateSafeHavenBroadcastEvent();
-            _inventory = new Inventory.Inventory { Capacity = 32 };
+            _inventory = new InventoryModel { Capacity = 32 };
         }
 
         [TearDown]
@@ -70,7 +72,7 @@ namespace AtomicWar.Tests.EditMode
 
         private static EventContext MakeContext(
             IList<Survivor> crew,
-            Inventory.Inventory inventory = null)
+            InventoryModel inventory = null)
         {
             var primary = crew != null && crew.Count > 0 ? crew[0] : null;
             return new EventContext(primary)

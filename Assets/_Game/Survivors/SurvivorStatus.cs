@@ -35,6 +35,11 @@ namespace AtomicWar._Game.Survivors
         /// stays low for a trait prone to numbness (Reckless/Denialist/Fatalist).
         /// Can be shocked back down by a near-death experience. See BeliefSystem.
         /// </summary>
-        Numb
+        Numb,
+        /// <summary>
+        /// Permanent social fracture after an internal mystery (forgiven theft).
+        /// Never auto-clears; the bunker remembers.
+        /// </summary>
+        Fractured
     }
 }

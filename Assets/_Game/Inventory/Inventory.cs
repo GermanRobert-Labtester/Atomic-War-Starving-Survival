@@ -65,6 +65,72 @@ namespace AtomicWar._Game.Inventory
             return total;
         }
 
+        /// <summary>Total quantity of items matching a type (e.g. all Food stacks).</summary>
+        public int CountByType(ItemType type)
+        {
+            if (_slots == null) return 0;
+            int total = 0;
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.type == type)
+                    total += _slots[i].Amount;
+            }
+            return total;
+        }
+
+        /// <summary>
+        /// Remove up to <paramref name="amount"/> units of the given type
+        /// (any matching item ids). Returns how many were actually removed.
+        /// </summary>
+        public int RemoveByType(ItemType type, int amount)
+        {
+            if (amount <= 0 || _slots == null) return 0;
+            int remaining = amount;
+            int removed = 0;
+            for (int i = _slots.Count - 1; i >= 0 && remaining > 0; i--)
+            {
+                var slot = _slots[i];
+                if (slot == null || slot.Item == null || slot.Item.type != type) continue;
+
+                int take = Mathf.Min(slot.Amount, remaining);
+                var def = slot.Item;
+                if (slot.Amount <= take)
+                {
+                    remaining -= slot.Amount;
+                    removed += slot.Amount;
+                    _slots.RemoveAt(i);
+                }
+                else
+                {
+                    slot.Amount -= take;
+                    remaining -= take;
+                    removed += take;
+                }
+                OnItemRemoved?.Invoke(def, take);
+            }
+            if (removed > 0)
+                OnInventoryChanged?.Invoke();
+            return removed;
+        }
+
+        /// <summary>
+        /// Food fill ratio 0..1 against inventory capacity (units / Capacity).
+        /// Capacity ≤ 0 → treat as empty (1.0 full not assumed).
+        /// </summary>
+        public float FoodFillRatio()
+        {
+            int cap = Mathf.Max(1, Capacity);
+            return Mathf.Clamp01(CountByType(ItemType.Food) / (float)cap);
+        }
+
+        /// <summary>Water fill ratio (Water + IrradiatedWater units / Capacity).</summary>
+        public float WaterFillRatio()
+        {
+            int cap = Mathf.Max(1, Capacity);
+            int units = CountByType(ItemType.Water) + CountByType(ItemType.IrradiatedWater);
+            return Mathf.Clamp01(units / (float)cap);
+        }
+
         /// <summary>First inventory slot whose item id matches (for device state access).</summary>
         public InventorySlot FindSlot(string itemId)
         {
