@@ -50,6 +50,8 @@ namespace AtomicWar._Game.Core
         private MedicalSystem _medicalSystem;
         private DynamicEconomySystem _economySystem;
         private WorldPhaseSystem _worldPhaseSystem;
+        private PowerNetwork _powerNetwork;
+        private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
@@ -126,6 +128,18 @@ namespace AtomicWar._Game.Core
         public void SetEconomySystem(DynamicEconomySystem economySystem)
         {
             _economySystem = economySystem;
+        }
+
+        /// <summary>Inject shelter power grid for save/load.</summary>
+        public void SetPowerNetwork(PowerNetwork powerNetwork)
+        {
+            _powerNetwork = powerNetwork;
+        }
+
+        /// <summary>Inject mental-break system so affinity matrix persists across save/load.</summary>
+        public void SetMentalBreakSystem(MentalBreakSystem mentalBreakSystem)
+        {
+            _mentalBreakSystem = mentalBreakSystem;
         }
 
         /// <summary>Inject Day-30 Flashpoint Choreographer adapter so the
@@ -361,6 +375,16 @@ namespace AtomicWar._Game.Core
             if (_economySystem != null)
                 data.Economy = _economySystem.CaptureState();
 
+            if (_powerNetwork != null)
+                data.Power = _powerNetwork.CaptureState();
+
+            if (_mentalBreakSystem != null)
+            {
+                var affSave = new AffinityMatrixSave();
+                affSave.Entries.AddRange(_mentalBreakSystem.Affinity.Snapshot());
+                data.Affinity = affSave;
+            }
+
             if (_captureChoreographer != null)
                 data.FlashpointChoreographer = _captureChoreographer();
 
@@ -440,7 +464,12 @@ namespace AtomicWar._Game.Core
                 VitaminDProxy = sv.VitaminDProxy,
                 IsListless    = sv.IsListless,
 
-                MedicalSkill  = sv.MedicalSkill
+                MedicalSkill  = sv.MedicalSkill,
+
+                // Mental-break system (Prompt #29)
+                CurrentMentalBreakId    = sv.currentMentalBreakId ?? string.Empty,
+                LowMoraleHours          = sv.lowMoraleHours,
+                MentalBreakCureProgress = sv.mentalBreakCureProgress
             };
 
             if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
@@ -541,6 +570,17 @@ namespace AtomicWar._Game.Core
                 _economySystem.RestoreState(data.Economy);
             }
 
+            if (_powerNetwork != null && data.Power != null)
+            {
+                _powerNetwork.RestoreState(data.Power);
+                _powerNetwork.ApplyToShelter(_shelter);
+            }
+
+            if (_mentalBreakSystem != null && data.Affinity != null)
+            {
+                _mentalBreakSystem.Affinity.Restore(data.Affinity.Entries);
+            }
+
             if (_restoreChoreographer != null)
             {
                 // Choreographer restore is safe even if the snapshot is null
@@ -592,6 +632,11 @@ namespace AtomicWar._Game.Core
             sv.IsListless    = save.IsListless;
 
             sv.MedicalSkill  = save.MedicalSkill;
+
+            // Mental-break system (Prompt #29)
+            sv.currentMentalBreakId    = save.CurrentMentalBreakId;
+            sv.lowMoraleHours          = save.LowMoraleHours;
+            sv.mentalBreakCureProgress = save.MentalBreakCureProgress;
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)
@@ -754,7 +799,9 @@ namespace AtomicWar._Game.Core
         public MedicalSystemSave Medical;
         public WorldPhaseSave WorldPhase;
         public DynamicEconomySave Economy;
+        public PowerNetworkSave Power;
         public FlashpointChoreographerSave FlashpointChoreographer;
+        public AffinityMatrixSave Affinity = new AffinityMatrixSave();
         public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();
     }
 
@@ -852,6 +899,11 @@ namespace AtomicWar._Game.Core
 
         // Medical skill (0..1)
         public float MedicalSkill = 0.3f;
+
+        // Mental-break system (Prompt #29)
+        public string CurrentMentalBreakId = string.Empty;
+        public float LowMoraleHours;
+        public float MentalBreakCureProgress;
     }
 
     /// <summary>Shelter module runtime state snapshot.</summary>

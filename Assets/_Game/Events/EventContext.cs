@@ -22,6 +22,12 @@ namespace AtomicWar._Game.Events
         public Dictionary<string, bool> WorldFlags = new Dictionary<string, bool>();
         public Random Random;
 
+        // Optional — used by EventEffect with SurvivorBId / FactionId for cross-survivor
+        // lookups (Prompt #29: interpersonal affinity matrix). The runner is
+        // null-safe if these are not wired.
+        public List<Survivor> AllSurvivors;
+        public MentalBreakSystem MentalBreak;
+
         public EventContext() { }
 
         public EventContext(Survivor survivor, Shelter.Shelter shelter = null, Inventory.Inventory inventory = null, Random random = null)
@@ -43,6 +49,17 @@ namespace AtomicWar._Game.Events
             if (string.IsNullOrEmpty(flagId)) return;
             if (WorldFlags == null) WorldFlags = new Dictionary<string, bool>();
             WorldFlags[flagId] = value;
+        }
+
+        /// <summary>Look up a survivor by id from the AllSurvivors list (null-safe).</summary>
+        public Survivor FindSurvivor(string id)
+        {
+            if (string.IsNullOrEmpty(id) || AllSurvivors == null) return null;
+            for (int i = 0; i < AllSurvivors.Count; i++)
+            {
+                if (AllSurvivors[i] != null && AllSurvivors[i].Id == id) return AllSurvivors[i];
+            }
+            return null;
         }
     }
 }

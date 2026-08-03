@@ -41,6 +41,7 @@ namespace AtomicWar._Game.Core
         [SerializeField] private RadioCatalogSO _radioCatalog;
         [SerializeField] private WorldPhaseConfigSO _worldPhaseConfig;
         [SerializeField] private FlashpointSequenceSO _flashpointSequence;
+        [SerializeField] private MentalBreakCatalogSO _mentalBreakCatalog;
         [SerializeField] private LootTableSO _lootTable;
 
         [Header("UI")]
@@ -77,7 +78,9 @@ namespace AtomicWar._Game.Core
         public MedicalSystem MedicalSystem { get; private set; }
         public WorldPhaseSystem WorldPhaseSystem { get; private set; }
         public DynamicEconomySystem EconomySystem { get; private set; }
+        public PowerNetwork PowerNetwork { get; private set; }
         public FlashpointChoreographer FlashpointChoreographer { get; private set; }
+        public MentalBreakSystem MentalBreakSystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -151,6 +154,14 @@ namespace AtomicWar._Game.Core
             // Grow-light starts installed but dry (no fuel). Player must scavenge fuel to light it.
             Shelter.AddModule(new ShelterModuleInstance("grow_light", 1) { Fuel = 0f });
 
+            // Shelter power grid: finite watts, load-shedding, diesel + bicycle generators.
+            // Fully-qualified type: property name PowerNetwork shadows the class.
+            PowerNetwork = AtomicWar._Game.Shelter.PowerNetwork.CreateDefault(dieselFuel: 40f);
+            // Heater/filter are installed and requested; grow light stays optional until fuel/power allow.
+            PowerNetwork.SetRequested("grow_light", false);
+            PowerNetwork.SetRequested("radio", false);
+            PowerNetwork.ApplyToShelter(Shelter);
+
             // Needs + Radiation
             NeedsSystem = new NeedsSystem(_needsProfile, sv => true);
 
@@ -209,7 +220,8 @@ namespace AtomicWar._Game.Core
                 CreateAction<SurveyActionSO>(),
                 CreateAction<TreatPatientActionSO>(),
                 CreateAction<CraftActionSO>(),
-                CreateAction<GuardActionSO>()
+                CreateAction<GuardActionSO>(),
+                CreateAction<PedalGeneratorActionSO>()
             };
 
             // Medical triage (afflictions drain health; treatments halt/cure)
@@ -236,6 +248,24 @@ namespace AtomicWar._Game.Core
             {
                 EventRunner.SetPool(_eventCatalog.events);
             }
+
+            // Mental Break System (Prompt #29). Designers populate the catalog
+            // with MentalBreakSO assets (BingeEater, ViolentParanoia, etc.).
+            // If the catalog is null, the system is still constructed — just
+            // empty — so the rest of the game continues to work; the Survivor
+            // just never rolls for a break.
+            MentalBreakSystem = new MentalBreakSystem();
+            if (_mentalBreakCatalog != null)
+            {
+                foreach (var br in _mentalBreakCatalog.breaks)
+                {
+                    if (br != null) MentalBreakSystem.RegisterBreak(br);
+                }
+            }
+            // Host-side binge/sabotage so Survivors assembly stays free of
+            // Inventory/Shelter refs (avoids asmdef cycles).
+            MentalBreakSystem.BingeEatHandler = (sv, br) => ForceMentalBreakBingeEat(sv, br);
+            MentalBreakSystem.SabotageHandler = (sv, br, rng) => ForceMentalBreakSabotage(rng);
 
             // Dynamic phase economy + faction trust matrix
             EconomySystem = new DynamicEconomySystem(
@@ -271,6 +301,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetMedicalSystem(MedicalSystem);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);
+            SaveSystem.SetPowerNetwork(PowerNetwork);
             // SetFlashpointChoreographer is called later in InitializeSystems
             // after the Choreographer itself is constructed (it depends on
             // RadioTunerSystem and other systems wired after SaveSystem).
@@ -389,6 +420,7 @@ namespace AtomicWar._Game.Core
                 SaveSystem.SetFlashpointChoreographer(
                     FlashpointChoreographer.CaptureState,
                     FlashpointChoreographer.RestoreState);
+                SaveSystem.SetMentalBreakSystem(MentalBreakSystem);
             }
         }
 
@@ -528,6 +560,59 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        /// <summary>
+        /// Mental-break binge: consume highest-value food × multiplier from bunker stock.
+        /// Hosted in Core so Survivors does not reference Inventory.
+        /// </summary>
+        private int ForceMentalBreakBingeEat(Survivor sv, MentalBreakSO br)
+        {
+            if (sv == null || br == null || Inventory == null || Inventory.Slots == null) return 0;
+            if (!sv.IsAlive) return 0;
+
+            InventorySlot best = null;
+            float bestValue = float.NegativeInfinity;
+            int scanned = 0;
+            for (int i = 0; i < Inventory.Slots.Count && scanned < MentalBreakSystem.BingeEaterMaxSlotsScanned; i++)
+            {
+                var slot = Inventory.Slots[i];
+                if (slot == null || slot.Item == null || slot.Amount <= 0) continue;
+                if (slot.Item.type != ItemType.Food) continue;
+                if (slot.Item.hungerRestore < br.minFoodValueForBinge) continue;
+                if (slot.Item.hungerRestore > bestValue)
+                {
+                    best = slot;
+                    bestValue = slot.Item.hungerRestore;
+                }
+                scanned++;
+            }
+            if (best == null) return 0;
+
+            int wanted = Mathf.Max(1, Mathf.CeilToInt(br.consumptionMultiplier));
+            int consumed = Mathf.Min(wanted, best.Amount);
+            if (consumed <= 0) return 0;
+            Inventory.Remove(best.Item, consumed);
+            float restore = best.Item.hungerRestore * consumed;
+            sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - restore);
+            return consumed;
+        }
+
+        /// <summary>
+        /// Mental-break sabotage: disable or degrade a random shelter module.
+        /// Hosted in Core so Survivors does not reference Shelter.
+        /// </summary>
+        private void ForceMentalBreakSabotage(System.Random rng)
+        {
+            if (Shelter == null || Shelter.Modules == null || Shelter.Modules.Count == 0) return;
+            if (rng == null) rng = new System.Random();
+            int idx = rng.Next(Shelter.Modules.Count);
+            var mod = Shelter.Modules[idx];
+            if (mod == null) return;
+            if (mod.IsEnabled)
+                mod.IsEnabled = false;
+            else
+                mod.FilterHealth = Mathf.Max(0f, mod.FilterHealth - 25f);
+        }
+
         private void CreateSurvivor(string id, string name)
         {
             var sv = new Survivor { Id = id, DisplayName = name };
@@ -562,11 +647,51 @@ namespace AtomicWar._Game.Core
             // Shelter
             Shelter.Tick(gameHours);
 
+            // Power grid (fuel burn, CO, pedaling, load-shed) then push to modules
+            if (PowerNetwork != null)
+            {
+                string weatherName = WeatherSystem != null ? WeatherSystem.Current.ToString() : null;
+                PowerNetwork.Tick(
+                    gameHours,
+                    weatherName,
+                    (id, fatigueDelta, hungerDelta) =>
+                    {
+                        if (Survivors == null || string.IsNullOrEmpty(id)) return false;
+                        Survivor pedaler = null;
+                        for (int i = 0; i < Survivors.Count; i++)
+                        {
+                            if (Survivors[i] != null && Survivors[i].Id == id)
+                            {
+                                pedaler = Survivors[i];
+                                break;
+                            }
+                        }
+                        if (pedaler == null || !pedaler.IsAlive || pedaler.Needs == null)
+                            return false;
+                        if (pedaler.Needs.Fatigue >= 95f)
+                            return false;
+                        pedaler.Needs.Fatigue = Mathf.Clamp(
+                            pedaler.Needs.Fatigue + fatigueDelta, 0f, 100f);
+                        pedaler.Needs.Hunger = Mathf.Clamp(
+                            pedaler.Needs.Hunger + hungerDelta, 0f, 100f);
+                        return true;
+                    });
+                PowerNetwork.ApplyToShelter(Shelter);
+            }
+
             // Needs
             NeedsSystem.Tick(gameHours);
 
             // Medical triage — Health pressure from active afflictions
             MedicalSystem?.Tick(Survivors, gameHours);
+
+            // Mental breaks: low-morale tracking, break rolls, BingeEater
+            // consumption, ViolentParanoia sabotage, passive morale drain
+            // to other survivors, and natural cure progress.
+            if (MentalBreakSystem != null)
+            {
+                MentalBreakSystem.Tick(gameHours, Survivors, new System.Random(_worldSeed));
+            }
 
             // Radiation
             RadiationSystem.Tick(gameHours);
@@ -609,6 +734,7 @@ namespace AtomicWar._Game.Core
                         IsAnxious       = sv.HasRadiationAnxietyStatus,
                         IsNumb          = sv.IsNumb,
                         MedicalSystem   = MedicalSystem,
+                        PowerNetwork    = PowerNetwork,
                         GetSurvivors    = () => Survivors
                     };
                     var action = UtilityAI.SelectAction(context, Actions);
@@ -622,7 +748,9 @@ namespace AtomicWar._Game.Core
             {
                 CurrentDay = TimeSystem.CurrentDay,
                 CurrentHour = TimeSystem.CurrentHourFloat,
-                IsFalloutStorm = WeatherSystem.Current == WeatherKind.FalloutStorm
+                IsFalloutStorm = WeatherSystem.Current == WeatherKind.FalloutStorm,
+                AllSurvivors = Survivors,
+                MentalBreak = MentalBreakSystem
             };
             EventRunner.Tick(gameHours, eventContext);
 
@@ -681,6 +809,7 @@ namespace AtomicWar._Game.Core
 
             _hud.BindEventRunner(EventRunner);
             _hud.BindEconomy(EconomySystem);
+            _hud.BindPowerNetwork(PowerNetwork);
 
             // Wire radiation updates
             RadiationSystem.OnDoseChanged += (sv, dose) =>

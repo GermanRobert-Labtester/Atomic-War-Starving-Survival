@@ -42,6 +42,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Medical triage pipeline (afflictions / treatments).</summary>
         public MedicalSystem MedicalSystem;
 
+        /// <summary>Shelter electricity grid (generation, load-shed, pedaling).</summary>
+        public PowerNetwork PowerNetwork;
+
         /// <summary>All living survivors (for Treat Patient target selection).</summary>
         public Func<IReadOnlyList<Survivor>> GetSurvivors;
 

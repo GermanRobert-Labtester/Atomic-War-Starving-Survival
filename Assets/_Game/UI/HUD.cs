@@ -24,6 +24,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private EventModalUI _eventModalUi;
         [SerializeField] private MapKnowledgeHUD _mapKnowledgeHud;
         [SerializeField] private TradeScreenUI _tradeScreenUi;
+        [SerializeField] private PowerGridHUD _powerGridHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -36,6 +37,7 @@ namespace AtomicWar._Game.UI
         public EventModalUI EventModalUI { get { EnsureWidgetReferences(); return _eventModalUi; } }
         public MapKnowledgeHUD MapKnowledgeHUD { get { EnsureWidgetReferences(); return _mapKnowledgeHud; } }
         public TradeScreenUI TradeScreenUI { get { EnsureWidgetReferences(); return _tradeScreenUi; } }
+        public PowerGridHUD PowerGridHUD { get { EnsureWidgetReferences(); return _powerGridHud; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -53,6 +55,7 @@ namespace AtomicWar._Game.UI
             if (_eventModalUi == null) _eventModalUi = GetComponentInChildren<EventModalUI>() ?? gameObject.AddComponent<EventModalUI>();
             if (_mapKnowledgeHud == null) _mapKnowledgeHud = GetComponentInChildren<MapKnowledgeHUD>() ?? gameObject.AddComponent<MapKnowledgeHUD>();
             if (_tradeScreenUi == null) _tradeScreenUi = GetComponentInChildren<TradeScreenUI>() ?? gameObject.AddComponent<TradeScreenUI>();
+            if (_powerGridHud == null) _powerGridHud = GetComponentInChildren<PowerGridHUD>() ?? gameObject.AddComponent<PowerGridHUD>();
         }
 
         private void Update()
@@ -122,6 +125,13 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_tradeScreenUi != null) _tradeScreenUi.Bind(economy);
+        }
+
+        /// <summary>Bind shelter PowerNetwork to the power budget panel.</summary>
+        public void BindPowerNetwork(PowerNetwork network)
+        {
+            EnsureWidgetReferences();
+            if (_powerGridHud != null) _powerGridHud.Bind(network);
         }
 
         /// <summary>

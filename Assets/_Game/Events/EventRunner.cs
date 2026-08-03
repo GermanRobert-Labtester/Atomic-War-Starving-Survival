@@ -284,6 +284,22 @@ namespace AtomicWar._Game.Events
             {
                 context.SetFlag(effect.SetWorldFlag, effect.WorldFlagValue);
             }
+
+            // Apply Interpersonal Affinity (Prompt #29). SurvivorAId empty
+            // means the primary survivor; SurvivorBId must resolve to a
+            // survivor in the EventContext's AllSurvivors list.
+            if (effect.AffinityDelta != 0f && context.MentalBreak != null
+                && context.PrimarySurvivor != null)
+            {
+                string aId = string.IsNullOrEmpty(effect.SurvivorAId)
+                    ? context.PrimarySurvivor.Id
+                    : effect.SurvivorAId;
+                string bId = effect.SurvivorBId;
+                if (!string.IsNullOrEmpty(aId) && !string.IsNullOrEmpty(bId) && aId != bId)
+                {
+                    context.MentalBreak.Affinity.Adjust(aId, bId, effect.AffinityDelta);
+                }
+            }
         }
     }
 }

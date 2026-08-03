@@ -19,6 +19,19 @@ namespace AtomicWar._Game.Events
         public string FactionId;
         /// <summary>Trust change applied when this effect resolves (-100..100 scale).</summary>
         public float TrustDelta;
+
+        // -----------------------------------------------------------------
+        // Interpersonal affinity (Prompt #29). When set, ApplyEffect adjusts
+        // the survivor-pair affinity by AffinityDelta. SurvivorAId may be
+        // left empty to mean "the primary survivor" (the event context).
+        // -----------------------------------------------------------------
+
+        /// <summary>First survivor in the affinity pair. Empty = primary survivor.</summary>
+        public string SurvivorAId;
+        /// <summary>Second survivor in the affinity pair.</summary>
+        public string SurvivorBId;
+        /// <summary>Affinity change applied to the pair (-100..100 scale).</summary>
+        public float AffinityDelta;
     }
 
     [Serializable]

@@ -131,6 +131,27 @@ namespace AtomicWar._Game.Survivors
         /// <summary>0..1 medical competence. Higher = faster treatments, fewer spare parts used.</summary>
         public float MedicalSkill = 0.3f;
 
+        // -------------------------------------------------------------------
+        // Mental-break system (Prompt #29). When morale stays below the
+        // break-threshold for the configured window, the survivor rolls for
+        // a MentalBreakSO and starts behaving erratically. Owned and
+        // written by AtomicWar._Game.Survivors.MentalBreakSystem.
+        // -------------------------------------------------------------------
+
+        /// <summary>Id of the currently-active MentalBreakSO, or null/empty if sane.
+        /// The SO is looked up at consume-time via MentalBreakSystem.GetBreak(id).</summary>
+        public string currentMentalBreakId;
+
+        /// <summary>Hours the survivor has been below the low-morale break threshold.
+        /// Reset to 0 the moment their morale climbs back above the threshold.
+        /// Owned by MentalBreakSystem.</summary>
+        public float lowMoraleHours;
+
+        /// <summary>Cure progress accumulated against the active break, in game-hours.
+        /// When this reaches the break's <c>cureHours</c>, the break resolves.
+        /// Owned by MentalBreakSystem.</summary>
+        public float mentalBreakCureProgress;
+
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
         {
@@ -146,5 +167,9 @@ namespace AtomicWar._Game.Survivors
                 default: return false;
             }
         }
+
+        /// <summary>Convenience: true if the survivor is currently broken
+        /// (has a non-empty <c>currentMentalBreakId</c>).</summary>
+        public bool HasMentalBreak => !string.IsNullOrEmpty(currentMentalBreakId);
     }
 }
