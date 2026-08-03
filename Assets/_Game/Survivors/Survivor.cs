@@ -131,6 +131,16 @@ namespace AtomicWar._Game.Survivors
         /// <summary>0..1 medical competence. Higher = faster treatments, fewer spare parts used.</summary>
         public float MedicalSkill = 0.3f;
 
+        /// <summary>
+        /// Snake-case id of the <see cref="AtomicWar._Game.Shelter.ShelterRoom"/>
+        /// the survivor currently occupies (e.g. "entry", "stores", "quarters").
+        /// Empty/null = unassigned (treated as "common area" — the passive
+        /// morale drain from a broken survivor hits all other unassigned
+        /// survivors in the shelter). Owned by the room-assignment system
+        /// (Prompt #29 follow-up); read by MentalBreakSystem and the AI.
+        /// </summary>
+        public string CurrentRoomId;
+
         // -------------------------------------------------------------------
         // Mental-break system (Prompt #29). When morale stays below the
         // break-threshold for the configured window, the survivor rolls for

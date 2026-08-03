@@ -1,5 +1,8 @@
 using UnityEngine;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Medical;
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.AI.Actions
@@ -13,7 +16,7 @@ namespace AtomicWar._Game.AI.Actions
     ///
     /// Score: high if any living survivor in the shelter is broken AND
     /// a comfort item is plausibly available (handler is wired). Zero
-    /// otherwise.
+    /// otherwise. An enabled comfort station multiplies the score.
     /// </summary>
     [CreateAssetMenu(fileName = "Action_MentalBreakComfort", menuName = "ASHFALL/AI/Mental Break Comfort Action")]
     public class MentalBreakComfortActionSO : SurvivorAction
@@ -51,7 +54,26 @@ namespace AtomicWar._Game.AI.Actions
                 float score = 1f - Mathf.Clamp01(remaining / Mathf.Max(1f, br.cureHours));
                 if (score > best) best = score;
             }
-            return best;
+
+            if (best <= 0f) return 0f;
+            return best * GetComfortStationMultiplier(context.Shelter);
+        }
+
+        /// <summary>
+        /// Enabled comfort station multiplies comfort-care priority.
+        /// Disabled or missing station → 1.0 (no bonus).
+        /// </summary>
+        public static float GetComfortStationMultiplier(Shelter.Shelter shelter)
+        {
+            if (shelter == null) return 1f;
+            var mod = shelter.GetModule(MedicalSystem.ComfortStationModuleId);
+            if (mod == null || !mod.IsEnabled) return 1f;
+
+            if (mod.Definition is ComfortStationModuleSO so)
+                return Mathf.Max(1f, so.comfortCureScoreMultiplier);
+
+            // Generic comfort_station without SO: modest default boost
+            return 1.5f;
         }
 
         public override void Execute(AIContext context)

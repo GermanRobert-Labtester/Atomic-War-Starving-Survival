@@ -347,6 +347,8 @@ namespace AtomicWar._Game.Core
                 SecurityContribution = 10f,
                 FilterHealth = 100f
             });
+            // Workbench lists hatch install / upgrade lines (scrap sink)
+            WorkbenchSystem?.SetHatchDefense(HatchDefenseSystem);
 
             // Dynamic phase economy + faction trust matrix
             EconomySystem = new DynamicEconomySystem(
@@ -1127,10 +1129,34 @@ namespace AtomicWar._Game.Core
             _hud?.MapScreenUI?.Open();
         }
 
-        /// <summary>Open the workbench disassembly / repair screen.</summary>
+        /// <summary>Open the workbench disassembly / repair / hatch-install screen.</summary>
         public void OpenWorkbench()
         {
             _hud?.WorkbenchUI?.Open();
+        }
+
+        /// <summary>Toggle workbench panel (keybind B).</summary>
+        public void ToggleWorkbench()
+        {
+            _hud?.WorkbenchUI?.Toggle();
+        }
+
+        /// <summary>Execute a workbench line by 0-based index (keybinds 1-9).</summary>
+        public bool ExecuteWorkbenchLine(int lineIndex)
+        {
+            return _hud?.WorkbenchUI != null && _hud.WorkbenchUI.Execute(lineIndex);
+        }
+
+        /// <summary>Open hatch defense status panel.</summary>
+        public void OpenHatchDefense()
+        {
+            _hud?.HatchDefenseHUD?.Open();
+        }
+
+        /// <summary>Toggle hatch defense panel (keybind H).</summary>
+        public void ToggleHatchDefense()
+        {
+            _hud?.HatchDefenseHUD?.Toggle();
         }
 
         /// <summary>Send a survivor to survey a location with a working geiger.</summary>

@@ -309,10 +309,23 @@ namespace AtomicWar._Game.Survivors
                 if (br == null || br.passiveMoraleDrainPerHour <= 0f) continue;
 
                 float drain = br.passiveMoraleDrainPerHour * gameHours;
+                string brokenRoom = broken.CurrentRoomId;
+
                 for (int o = 0; o < survivors.Count; o++)
                 {
                     var other = survivors[o];
                     if (other == null || other == broken || !other.IsAlive) continue;
+                    // Per-room drain: only hit survivors in the same room
+                    // (or both unassigned, which acts as the "common area").
+                    // Falls back to "whole shelter" when the broken survivor
+                    // has no room assignment — keeps the previous broad
+                    // behavior so unassigned survivors still feel the
+                    // effect of a breakdown anywhere in the bunker.
+                    if (!string.IsNullOrEmpty(brokenRoom)
+                        && other.CurrentRoomId != brokenRoom)
+                    {
+                        continue;
+                    }
                     other.Needs.Morale = Mathf.Max(0f, other.Needs.Morale - drain);
                 }
             }
