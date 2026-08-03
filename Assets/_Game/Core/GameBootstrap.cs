@@ -863,13 +863,8 @@ namespace AtomicWar._Game.Core
 
             if (choice.ChoiceId == "analyze_audio" || choice.ChoiceId == "analyze_audio_science")
             {
-                // Verified-as-trap: flip the running context's reliability.
-                // The same broadcast context is reused on the next tick so
-                // send_expedition below will see the updated value.
-                if (ctx != null)
-                {
-                    ctx.ActiveIntelReliability = IntelReliability.Trap;
-                }
+                // Reliability flip is applied by EventRunner.ApplySafeHavenIntelEffects
+                // during ApplyChoice (before this handler). Log only here.
                 Debug.Log("[Safe Haven] Audio analyzed: the scrubber hum is a recorded loop. Trap confirmed.");
                 return;
             }
@@ -878,10 +873,8 @@ namespace AtomicWar._Game.Core
             {
                 // If the player analyzed first, do NOT inject the ambush —
                 // they earned the empty-cache outcome by spending a survivor
-                // turn on the analysis.
-                bool verifiedAsTrap = ctx != null
-                    && ctx.ActiveIntelReliability == IntelReliability.Trap;
-                if (!verifiedAsTrap)
+                // turn on the analysis. Decision is pure + unit-tested.
+                if (EventRunner.ShouldInjectSafeHavenAmbush(ctx))
                 {
                     InjectSafeHavenAmbushEncounter();
                     Debug.Log("[Safe Haven] Unverified intel accepted. Sniper ambush injected at grid 4-7-North.");

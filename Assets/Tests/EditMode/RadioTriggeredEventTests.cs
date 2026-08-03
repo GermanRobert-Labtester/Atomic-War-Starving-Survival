@@ -159,22 +159,26 @@ namespace AtomicWar.Tests.EditMode
             var medic = MakeSurvivor("medic", RiskBiasTrait.Cautious, medical: 0.8f, science: 0.2f);
             var crew = new List<Survivor> { medic };
             var ctx = MakeContext(crew, _inventory);
+            var runner = new EventRunner();
+            runner.SetPool(new List<GameEvent> { _safeHaven });
 
             var available = EventRunner.GetAvailableChoices(_safeHaven, ctx);
             Assert.That(AvailableHas(available, "analyze_audio"), Is.True,
                 "A single medic at MedicalSkill 0.8 must unlock the analyze choice.");
 
-            // Apply the choice and verify the context's reliability flips to Trap.
             var analyze = EventRunner.FindAvailableChoice(_safeHaven, ctx, "analyze_audio");
             Assert.That(analyze, Is.Not.Null);
 
             Assert.That(ctx.ActiveIntelReliability, Is.EqualTo(IntelReliability.Unverified),
                 "Default reliability must be Unverified until a survivor analyzes the loop.");
 
-            // The bootstrap is what actually flips the reliability in production;
-            // simulate that here so we can assert the encounter outcome changes.
-            ctx.ActiveIntelReliability = IntelReliability.Trap;
-            Assert.That(ctx.ActiveIntelReliability, Is.EqualTo(IntelReliability.Trap));
+            // ApplyChoice itself flips reliability (EventRunner, not only bootstrap).
+            runner.ApplyChoice(_safeHaven, analyze, ctx);
+            Assert.That(ctx.ActiveIntelReliability, Is.EqualTo(IntelReliability.Trap),
+                "Analyze must flip ActiveIntelReliability to Trap.");
+            Assert.That(ctx.HasEventFlag(EventRunner.FlagSafeHavenVerified), Is.True);
+            Assert.That(EventRunner.ShouldInjectSafeHavenAmbush(ctx), Is.False,
+                "After analysis, the ambush must NOT be injected — empty cache earned.");
         }
 
         [Test]
@@ -203,13 +207,19 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(AvailableHas(available, "warn_others"), Is.False,
                 "warn_others must be hidden when no radio_transmitter is in the bunker.");
 
-            // Add a transmitter — the choice unlocks.
-            var def = new ItemDefinition { id = EventRunner.RadioTransmitterItemId, displayName = "HAM Transmitter" };
+            // Add a transmitter — the choice unlocks (SO via CreateInstance).
+            var def = ScriptableObject.CreateInstance<ItemDefinition>();
+            def.id = EventRunner.RadioTransmitterItemId;
+            def.displayName = "HAM Transmitter";
+            def.type = ItemType.Material;
+            def.stackMax = 5;
             _inventory.Add(def, 1);
 
             available = EventRunner.GetAvailableChoices(_safeHaven, ctx);
             Assert.That(AvailableHas(available, "warn_others"), Is.True,
                 "warn_others must be available once a radio_transmitter is in the bunker.");
+
+            Object.DestroyImmediate(def);
         }
 
         [Test]
@@ -248,12 +258,11 @@ namespace AtomicWar.Tests.EditMode
             var runner = new EventRunner();
             runner.SetPool(new List<GameEvent> { _safeHaven });
 
-            // Apply analyze first (which would flip reliability to Trap in the
-            // bootstrap's HandleSafeHavenChoiceApplied; we simulate that).
+            // Apply analyze first — EventRunner flips reliability to Trap.
             var analyze = EventRunner.FindAvailableChoice(_safeHaven, ctx, "analyze_audio");
             Assert.That(analyze, Is.Not.Null);
             runner.ApplyChoice(_safeHaven, analyze, ctx);
-            ctx.ActiveIntelReliability = IntelReliability.Trap;
+            Assert.That(ctx.ActiveIntelReliability, Is.EqualTo(IntelReliability.Trap));
 
             // Now apply send_expedition.
             var send = EventRunner.FindAvailableChoice(_safeHaven, ctx, "send_expedition");
@@ -265,6 +274,24 @@ namespace AtomicWar.Tests.EditMode
                 "After analyze, the verified-as-trap flag is set BEFORE the expedition fires.");
             Assert.That(ctx.ActiveIntelReliability, Is.EqualTo(IntelReliability.Trap),
                 "Reliability remains Trap — the expedition will find the empty cache, not the bunker.");
+            Assert.That(EventRunner.ShouldInjectSafeHavenAmbush(ctx), Is.False,
+                "Verified-as-trap expedition must not inject the sniper ambush.");
+        }
+
+        [Test]
+        public void ShouldInjectSafeHavenAmbush_Unverified_True_Trap_False()
+        {
+            var unverified = new EventContext();
+            Assert.That(unverified.ActiveIntelReliability, Is.EqualTo(IntelReliability.Unverified));
+            Assert.That(EventRunner.ShouldInjectSafeHavenAmbush(unverified), Is.True,
+                "Unverified send must inject ambush.");
+
+            var trap = new EventContext { ActiveIntelReliability = IntelReliability.Trap };
+            Assert.That(EventRunner.ShouldInjectSafeHavenAmbush(trap), Is.False);
+
+            var flagged = new EventContext();
+            flagged.SetEventFlag(EventRunner.FlagSafeHavenVerified, true);
+            Assert.That(EventRunner.ShouldInjectSafeHavenAmbush(flagged), Is.False);
         }
 
         [Test]

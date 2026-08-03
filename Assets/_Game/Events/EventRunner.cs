@@ -405,7 +405,47 @@ namespace AtomicWar._Game.Events
                 });
             }
 
+            // Prompt #46 — radio intel side effects live on the runner so unit
+            // tests (and any host without GameBootstrap) still flip reliability.
+            ApplySafeHavenIntelEffects(gameEvent, choice, context);
+
             OnChoiceApplied?.Invoke(gameEvent, choice, context);
+        }
+
+        /// <summary>
+        /// Safe Haven Broadcast intel variance (Prompt #46). Analyze choices
+        /// mark the loop as a Trap; send_expedition leaves the reliability as-is
+        /// so hosts can decide whether to inject the ambush encounter.
+        /// </summary>
+        public static void ApplySafeHavenIntelEffects(
+            GameEvent gameEvent,
+            EventChoice choice,
+            EventContext context)
+        {
+            if (gameEvent == null || choice == null || context == null) return;
+            if (gameEvent.id != SafeHavenBroadcastEventId) return;
+
+            string id = choice.ChoiceId ?? string.Empty;
+            if (id == "analyze_audio" || id == "analyze_audio_science")
+            {
+                // Scrubber hum is a recorded loop — verified as trap.
+                context.ActiveIntelReliability = IntelReliability.Trap;
+                context.SetEventFlag(FlagSafeHavenVerified, true);
+            }
+        }
+
+        /// <summary>
+        /// True when send_expedition on Safe Haven should inject the sniper
+        /// ambush: player did not analyze first (reliability still Unverified).
+        /// After analyze, reliability is Trap and the empty-cache outcome is earned.
+        /// </summary>
+        public static bool ShouldInjectSafeHavenAmbush(EventContext context)
+        {
+            if (context == null) return true;
+            // Analyzed → Trap reliability → empty cache, no ambush inject.
+            if (context.ActiveIntelReliability == IntelReliability.Trap) return false;
+            if (context.HasEventFlag(FlagSafeHavenVerified)) return false;
+            return true;
         }
 
         public void Tick(float gameHours, EventContext context = null)
