@@ -16,6 +16,10 @@ namespace AtomicWar._Game.Shelter
         [SerializeField]
         private List<ShelterModuleInstance> _modules = new List<ShelterModuleInstance>();
 
+        /// <summary>Undirected room adjacency pairs ("a|b" with a &lt; b) for noise/sleep.</summary>
+        [SerializeField]
+        private List<string> _roomAdjacencyKeys = new List<string>();
+
         public IReadOnlyList<ShelterModuleInstance> Modules => _modules;
 
         public event Action<ShelterModuleInstance> OnModuleAdded;
@@ -264,6 +268,39 @@ namespace AtomicWar._Game.Shelter
         public void NotifyModuleUpgraded(ShelterModuleInstance module, int newLevel)
         {
             OnModuleUpgraded?.Invoke(module, newLevel);
+        }
+
+        // -----------------------------------------------------------------
+        // Room adjacency (sleep noise, contamination spread hooks)
+        // -----------------------------------------------------------------
+
+        /// <summary>Mark two rooms as adjacent (undirected).</summary>
+        public void SetRoomsAdjacent(string roomA, string roomB)
+        {
+            if (string.IsNullOrEmpty(roomA) || string.IsNullOrEmpty(roomB)) return;
+            if (string.Equals(roomA, roomB, StringComparison.Ordinal)) return;
+            string key = RoomAdjacencyKey(roomA, roomB);
+            if (_roomAdjacencyKeys == null) _roomAdjacencyKeys = new List<string>();
+            if (!_roomAdjacencyKeys.Contains(key))
+            {
+                _roomAdjacencyKeys.Add(key);
+            }
+        }
+
+        /// <summary>True when rooms share a wall / hatch (same room is not adjacent).</summary>
+        public bool AreRoomsAdjacent(string roomA, string roomB)
+        {
+            if (string.IsNullOrEmpty(roomA) || string.IsNullOrEmpty(roomB)) return false;
+            if (string.Equals(roomA, roomB, StringComparison.Ordinal)) return false;
+            if (_roomAdjacencyKeys == null || _roomAdjacencyKeys.Count == 0) return false;
+            return _roomAdjacencyKeys.Contains(RoomAdjacencyKey(roomA, roomB));
+        }
+
+        private static string RoomAdjacencyKey(string roomA, string roomB)
+        {
+            if (string.CompareOrdinal(roomA, roomB) <= 0)
+                return roomA + "|" + roomB;
+            return roomB + "|" + roomA;
         }
     }
 }

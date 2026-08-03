@@ -162,10 +162,25 @@ namespace AtomicWar._Game.Core
             // Roof catchment starts open (player can close it to stop collecting during a storm).
             Shelter.AddModule(new ShelterModuleInstance("catchment_surface", 1) { IsEnabled = true });
             Shelter.AddModule(new ShelterModuleInstance("water_purifier", 1) { FilterHealth = 100f });
+            // Sleep quarters: bed in "quarters"; diesel lives in "plant" next door (Prompt #32).
+            Shelter.AddModule(new ShelterModuleInstance("bed", 1)
+            {
+                RoomId = SleepQualitySystem.DefaultSleepRoomId,
+                ComfortLevel = 1f,
+                Capacity = 2
+            });
+            Shelter.SetRoomsAdjacent(
+                SleepQualitySystem.DefaultSleepRoomId,
+                SleepQualitySystem.DefaultGeneratorRoomId);
 
             // Shelter power grid: finite watts, load-shedding, diesel + bicycle generators.
             // Fully-qualified type: property name PowerNetwork shadows the class.
             PowerNetwork = AtomicWar._Game.Shelter.PowerNetwork.CreateDefault(dieselFuel: 40f);
+            var diesel = PowerNetwork.GetSource("diesel_generator");
+            if (diesel != null)
+            {
+                diesel.RoomId = SleepQualitySystem.DefaultGeneratorRoomId;
+            }
             // Heater/filter are installed and requested; grow light stays optional until fuel/power allow.
             PowerNetwork.SetRequested("grow_light", false);
             PowerNetwork.SetRequested("radio", false);
@@ -811,6 +826,12 @@ namespace AtomicWar._Game.Core
             UtilityAI.Tick(gameHours * TimeSystem.SecondsPerGameHour);
             if (UtilityAI.ShouldEvaluate())
             {
+                // Fresh sleep-wave occupancy so capacity is per evaluation pass.
+                SleepQualitySystem.ResetBedOccupancy(Shelter);
+                float indoorTemp = TemperatureSystem != null
+                    ? TemperatureSystem.GetIndoorTemperature(Shelter)
+                    : 15f;
+
                 foreach (var sv in Survivors)
                 {
                     if (!sv.IsAlive) continue;
@@ -832,6 +853,9 @@ namespace AtomicWar._Game.Core
                         IsNumb          = sv.IsNumb,
                         MedicalSystem   = MedicalSystem,
                         PowerNetwork    = PowerNetwork,
+                        IndoorTemperatureC = indoorTemp,
+                        SleepRoomId     = SleepQualitySystem.DefaultSleepRoomId,
+                        AreRoomsAdjacent = Shelter.AreRoomsAdjacent,
                         WaterStorage    = WaterStorage,
                         NeedsElectronicScrapForCriticalRepair = scrapDeficit > 0,
                         JunkScavengeUrgency = scrapDeficit > 0

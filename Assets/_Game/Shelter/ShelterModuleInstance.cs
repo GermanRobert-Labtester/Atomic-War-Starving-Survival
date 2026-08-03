@@ -18,6 +18,18 @@ namespace AtomicWar._Game.Shelter
         public float Fuel = 0f;
         public float WaterConversionProgress = 0f;
 
+        /// <summary>Shelter room this module is installed in (e.g. "quarters", "plant").</summary>
+        public string RoomId;
+
+        /// <summary>Bed modules: current sleepers this evaluation wave (Prompt #32).</summary>
+        public int Occupancy;
+
+        /// <summary>Bed modules without a bound SO: comfort 0..1 fallback.</summary>
+        public float ComfortLevel;
+
+        /// <summary>Bed modules without a bound SO: capacity fallback (0 = use default 1).</summary>
+        public int Capacity;
+
         [NonSerialized]
         private ShelterModule _definition;
 

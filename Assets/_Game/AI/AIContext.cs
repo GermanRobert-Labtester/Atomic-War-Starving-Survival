@@ -52,6 +52,21 @@ namespace AtomicWar._Game.AI
         /// <summary>Shelter electricity grid (generation, load-shed, pedaling).</summary>
         public PowerNetwork PowerNetwork;
 
+        /// <summary>Indoor °C for sleep quality (wired from TemperatureSystem).</summary>
+        public float IndoorTemperatureC = 15f;
+
+        /// <summary>Preferred sleep room id (bed RoomId overrides when claimed).</summary>
+        public string SleepRoomId = "quarters";
+
+        /// <summary>Optional adjacency query for diesel noise vs sleep room.</summary>
+        public Func<string, string, bool> AreRoomsAdjacent;
+
+        /// <summary>
+        /// When set, SleepActionSO uses these conditions instead of building from
+        /// shelter/power (tests / scripted sleep cycles).
+        /// </summary>
+        public SleepConditions? SleepConditionsOverride;
+
         /// <summary>Bunker water cisterns (clean/dirty/irradiated), fed by the catchment + purifier.</summary>
         public WaterStorage WaterStorage;
 

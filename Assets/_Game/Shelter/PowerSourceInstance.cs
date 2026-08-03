@@ -16,6 +16,8 @@ namespace AtomicWar._Game.Shelter
         public float Fuel;
         /// <summary>Survivor currently pedaling a bicycle generator (null if none).</summary>
         public string PedalingSurvivorId;
+        /// <summary>Room where this source is installed (noise adjacency for sleep quality).</summary>
+        public string RoomId;
 
         [NonSerialized]
         private PowerSourceSO _definition;
