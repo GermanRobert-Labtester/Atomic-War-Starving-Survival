@@ -38,16 +38,20 @@ namespace AtomicWar._Game.Survivors
             float growBonus       = growLightActive ? lightProfile.growLightEquivalentFraction : 0f;
             float lightFraction   = Mathf.Clamp01(naturalFraction + growBonus);
 
-            // 2. LightExposure: accumulates in light, decays in dark
-            float lightDelta;
-            if (lightFraction > 0.05f)
-            {
-                lightDelta =  lightProfile.lightExposureGainPerHourDaylight * lightFraction * gameHours;
-            }
-            else
-            {
-                lightDelta = -lightProfile.lightExposureLossPerHourDark * gameHours;
-            }
+            // 2. LightExposure: continuously balances useful light against
+            // darkness. The previous binary threshold (> 0.05 = gain,
+            // otherwise full loss) meant Ashfall could leave enough diffuse
+            // light to produce a small gain forever, so the Listless threshold
+            // was never reached in the deep-winter smoke run. Scale both
+            // sides by the light/dark fractions instead:
+            //   full darkness -> -lossRate
+            //   full light    -> +gainRate
+            //   partial light -> gain * lightFraction - loss * darkness
+            float darknessFraction = 1f - lightFraction;
+            float lightDeltaPerHour =
+                lightProfile.lightExposureGainPerHourDaylight * lightFraction
+                - lightProfile.lightExposureLossPerHourDark * darknessFraction;
+            float lightDelta = lightDeltaPerHour * gameHours;
             sv.LightExposure = Mathf.Clamp(sv.LightExposure + lightDelta, 0f, 100f);
 
             // 3. Listless status: set each tick based on current LightExposure level.
