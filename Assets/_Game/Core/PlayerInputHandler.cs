@@ -28,6 +28,8 @@ namespace AtomicWar._Game.Core
         [SerializeField] private KeyCode _mapKey = KeyCode.M;
         [SerializeField] private KeyCode _parleyKey = KeyCode.P;
         [SerializeField] private KeyCode _radioInterceptKey = KeyCode.R;
+        [SerializeField] private KeyCode _radioTunerPrevKey = KeyCode.LeftBracket;
+        [SerializeField] private KeyCode _radioTunerNextKey = KeyCode.RightBracket;
 
         /// <summary>Exposed for tests / rebinding docs.</summary>
         public KeyCode WorkbenchKey => _workbenchKey;
@@ -35,6 +37,8 @@ namespace AtomicWar._Game.Core
         public KeyCode MapKey => _mapKey;
         public KeyCode ParleyKey => _parleyKey;
         public KeyCode RadioInterceptKey => _radioInterceptKey;
+        public KeyCode RadioTunerPrevKey => _radioTunerPrevKey;
+        public KeyCode RadioTunerNextKey => _radioTunerNextKey;
 
         private void Awake()
         {
@@ -69,6 +73,10 @@ namespace AtomicWar._Game.Core
                 _bootstrap.OpenMapScreen();
             if (Input.GetKeyDown(_radioInterceptKey))
                 _bootstrap.ToggleRadioInterceptLog();
+            if (Input.GetKeyDown(_radioTunerPrevKey))
+                _bootstrap.CycleRadioTunerPrev();
+            if (Input.GetKeyDown(_radioTunerNextKey))
+                _bootstrap.CycleRadioTunerNext();
 
             // Trade: demand parley / surrender after a hatch repel
             if (Input.GetKeyDown(_parleyKey) && IsTradeOpen())

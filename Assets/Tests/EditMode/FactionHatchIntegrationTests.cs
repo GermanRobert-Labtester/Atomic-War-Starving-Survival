@@ -306,6 +306,10 @@ namespace AtomicWar.Tests.EditMode
                 "Trade parley / demand surrender is [P] when trade is open");
             Assert.That(input.RadioInterceptKey, Is.EqualTo(KeyCode.R),
                 "Expanded radio intercept log is [R]");
+            Assert.That(input.RadioTunerPrevKey, Is.EqualTo(KeyCode.LeftBracket),
+                "Radio frequency tuner previous is [");
+            Assert.That(input.RadioTunerNextKey, Is.EqualTo(KeyCode.RightBracket),
+                "Radio frequency tuner next is ]");
         }
 
         [Test]
@@ -655,7 +659,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(hud.LatestKind, Is.EqualTo("Parley"));
             Assert.That(hud.StatusLine, Does.Contain("PARLEY").Or.Contain("Parley").IgnoreCase);
 
-            // SetLines replaces (save restore path — no NEW badge)
+            // SetLines replaces; ApplyUiState restores presentation without VO
             hud.SetLines(new[]
             {
                 new RadioInterceptHUD.Line
@@ -666,6 +670,7 @@ namespace AtomicWar.Tests.EditMode
                     Day = 10
                 }
             });
+            hud.ApplyUiState(isOpen: false, hasUnread: false, tunerIndex: 0);
             Assert.That(hud.LineCount, Is.EqualTo(1));
             Assert.That(hud.HasUnread, Is.False, "Restore must not flash NEW");
             Assert.That(hud.LatestKind, Is.EqualTo("Succession"));
@@ -713,6 +718,10 @@ namespace AtomicWar.Tests.EditMode
                     FactionRadioInterceptSystem.InterceptKind.Parley,
                     "Parley on the air. Formal stand-down.", day: 13);
                 Assert.That(radio.Log.Count, Is.EqualTo(2));
+                // Presentation state (open log + unread + tuned to mil band)
+                radio.HudIsOpen = true;
+                radio.HudHasUnread = true;
+                radio.HudTunerIndex = 1;
 
                 var saveSys = new SaveSystem(
                     gs, ws, ts, ns, rs, shelter,
@@ -748,6 +757,9 @@ namespace AtomicWar.Tests.EditMode
                 Assert.That(radio2.LastInterceptMessage, Is.EqualTo(radio.LastInterceptMessage));
                 Assert.That(radio2.Log[0].Kind, Is.EqualTo(nameof(FactionRadioInterceptSystem.InterceptKind.Parley)));
                 Assert.That(radio2.Log[1].FactionId, Is.EqualTo(FactionSO.Ids.ScavengerCamp));
+                Assert.That(radio2.HudIsOpen, Is.True, "Expanded log open state must persist");
+                Assert.That(radio2.HudHasUnread, Is.True, "Unread badge must persist");
+                Assert.That(radio2.HudTunerIndex, Is.EqualTo(1), "Tuner preset must persist");
 
                 // HUD sync path (what LoadGame does after SaveSystem.Load)
                 var go = new GameObject("RadioHudSync");
@@ -766,8 +778,14 @@ namespace AtomicWar.Tests.EditMode
                     });
                 }
                 strip.SetLines(lines);
+                strip.ApplyUiState(radio2.HudIsOpen, radio2.HudHasUnread, radio2.HudTunerIndex);
                 Assert.That(strip.LineCount, Is.EqualTo(2));
-                Assert.That(strip.HasUnread, Is.False);
+                Assert.That(strip.IsOpen, Is.True);
+                Assert.That(strip.HasUnread, Is.True);
+                Assert.That(strip.TunerIndex, Is.EqualTo(1));
+                Assert.That(strip.ActiveChannelFilter, Does.Contain("MILBAND").Or.Contain("CH-7"));
+                // Tuned to mil — scavenger line filtered out of latest
+                Assert.That(strip.FilteredLineCount, Is.EqualTo(1));
                 Assert.That(strip.LatestMessage, Does.Contain("Parley"));
                 Assert.That(strip.LatestChannelTag, Does.Contain("MILBAND").Or.Contain("CH-7"));
             }
@@ -779,13 +797,51 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RadioFrequencyTuner_FiltersInterceptsByChannelTag()
+        {
+            var go = new GameObject("TunerTest");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<RadioInterceptHUD>();
+            hud.VoHook.SetAutoEnsureStubs(true);
+            hud.VoHook.EnsureBuiltInStubs();
+
+            hud.Push("Mil hatch bounce.", "HatchRepel", FactionSO.Ids.MilitaryRemnants, 10);
+            hud.Push("Road curses.", "HatchRepel", FactionSO.Ids.ScavengerCamp, 11);
+            hud.Push("Hymn cuts out.", "HatchRepel", FactionSO.Ids.DoomsdayPreppers, 12);
+            Assert.That(hud.LineCount, Is.EqualTo(3));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(3), "ALL BANDS shows everything");
+            Assert.That(hud.TunerLine, Does.Contain("ALL"));
+
+            Assert.That(hud.TuneToChannel("CH-3 ASH ROAD"), Is.True);
+            Assert.That(hud.TunerIndex, Is.EqualTo(2));
+            Assert.That(hud.ActiveChannelFilter, Is.EqualTo("CH-3 ASH ROAD"));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(1));
+            Assert.That(hud.LatestMessage, Does.Contain("Road curses"));
+            Assert.That(hud.DetailSummary, Does.Contain("ASH ROAD").Or.Contain("Road curses"));
+            Assert.That(hud.DetailSummary, Does.Not.Contain("Hymn"));
+
+            hud.CycleTunerNext(); // -> stockpile
+            Assert.That(hud.ActiveChannelFilter, Is.EqualTo("CH-11 STOCKPILE"));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(1));
+            Assert.That(hud.LatestMessage, Does.Contain("Hymn"));
+
+            hud.CycleTunerNext(); // wrap -> ALL
+            Assert.That(hud.TunerIndex, Is.EqualTo(0));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(3));
+
+            hud.CycleTunerPrev(); // -> stockpile again
+            Assert.That(hud.ActiveChannelFilter, Is.EqualTo("CH-11 STOCKPILE"));
+        }
+
+        [Test]
         public void FactionRadioVoHook_ResolvesByChannelTag_ThenKind_ThenDefault()
         {
             var go = new GameObject("VoHookTest");
             _toDestroy.Add(go);
             var vo = go.AddComponent<FactionRadioVoHook>();
+            vo.SetAutoEnsureStubs(false);
 
-            // No clips → resolve null, TryPlay false (safe before assets exist)
+            // No clips + stubs disabled → resolve null
             Assert.That(vo.ResolveClip("CH-7 MILBAND", "Parley"), Is.Null);
             Assert.That(vo.TryPlay(FactionSO.Ids.MilitaryRemnants, "Parley"), Is.False);
             Assert.That(vo.LastPlayHadClip, Is.False);
@@ -827,6 +883,19 @@ namespace AtomicWar.Tests.EditMode
             vo.SetChannelClips(null);
             vo.SetKindClips(null);
             Assert.That(vo.ResolveClip("CH-OPEN", "Unknown"), Is.SameAs(hiss));
+
+            // Built-in stubs fill empty tables
+            var go2 = new GameObject("VoStubTest");
+            _toDestroy.Add(go2);
+            var vo2 = go2.AddComponent<FactionRadioVoHook>();
+            vo2.EnsureBuiltInStubs();
+            Assert.That(vo2.HasBuiltInStubs, Is.True);
+            Assert.That(vo2.DefaultStaticClip, Is.Not.Null);
+            Assert.That(vo2.ResolveClip(
+                    DynamicEconomySystem.GetParleyChannelTag(FactionSO.Ids.MilitaryRemnants),
+                    "Parley"),
+                Is.Not.Null);
+            Assert.That(vo2.TryPlay(FactionSO.Ids.ScavengerCamp, "HatchRepel"), Is.True);
         }
 
         [Test]

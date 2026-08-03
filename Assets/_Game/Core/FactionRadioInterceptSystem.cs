@@ -86,21 +86,51 @@ namespace AtomicWar._Game.Core
             return entry;
         }
 
+        /// <summary>Presentation: expanded intercept log open (HUD).</summary>
+        public bool HudIsOpen { get; set; }
+        /// <summary>Presentation: unread badge on the radio strip (HUD).</summary>
+        public bool HudHasUnread { get; set; }
+        /// <summary>Presentation: frequency tuner index (0 = all bands).</summary>
+        public int HudTunerIndex { get; set; }
+
         public FactionRadioInterceptSave CaptureState()
         {
             return new FactionRadioInterceptSave
             {
                 Entries = _log.ToArray(),
-                NextSeq = _seq
+                NextSeq = _seq,
+                HudIsOpen = HudIsOpen,
+                HudHasUnread = HudHasUnread,
+                HudTunerIndex = HudTunerIndex
             };
+        }
+
+        /// <summary>
+        /// Capture log + optional live HUD presentation (open / unread / tuner).
+        /// </summary>
+        public FactionRadioInterceptSave CaptureState(
+            bool hudIsOpen,
+            bool hudHasUnread,
+            int hudTunerIndex)
+        {
+            HudIsOpen = hudIsOpen;
+            HudHasUnread = hudHasUnread;
+            HudTunerIndex = Math.Max(0, hudTunerIndex);
+            return CaptureState();
         }
 
         public void RestoreState(FactionRadioInterceptSave save)
         {
             _log.Clear();
             _seq = 0;
+            HudIsOpen = false;
+            HudHasUnread = false;
+            HudTunerIndex = 0;
             if (save == null) return;
             _seq = Math.Max(0, save.NextSeq);
+            HudIsOpen = save.HudIsOpen;
+            HudHasUnread = save.HudHasUnread;
+            HudTunerIndex = Math.Max(0, save.HudTunerIndex);
             if (save.Entries == null) return;
             // Restore newest-first order as stored
             for (int i = 0; i < save.Entries.Length && i < MaxLogEntries; i++)
@@ -115,6 +145,9 @@ namespace AtomicWar._Game.Core
         {
             _log.Clear();
             _seq = 0;
+            HudIsOpen = false;
+            HudHasUnread = false;
+            HudTunerIndex = 0;
         }
 
         private void HandleSuccession(FactionSuccessionResult result)
@@ -169,5 +202,11 @@ namespace AtomicWar._Game.Core
     {
         public FactionRadioInterceptSystem.InterceptEntry[] Entries;
         public int NextSeq;
+        /// <summary>Expanded intercept log was open when saved.</summary>
+        public bool HudIsOpen;
+        /// <summary>Unread NEW badge on the radio strip.</summary>
+        public bool HudHasUnread;
+        /// <summary>Frequency tuner preset index (0 = all bands).</summary>
+        public int HudTunerIndex;
     }
 }

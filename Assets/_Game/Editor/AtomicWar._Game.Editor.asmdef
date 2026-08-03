@@ -12,7 +12,8 @@
         "AtomicWar._Game.UI",
         "AtomicWar._Game.Core",
         "AtomicWar._Game.Crafting",
-        "AtomicWar._Game.Data"
+        "AtomicWar._Game.Data",
+        "AtomicWar._Game.Economy"
     ],
     "includePlatforms": [
         "Editor"

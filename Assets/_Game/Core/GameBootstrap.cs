@@ -416,6 +416,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetPowerNetwork(PowerNetwork);
             SaveSystem.SetHatchDefense(HatchDefenseSystem);
             SaveSystem.SetFactionRadioIntercepts(FactionRadioIntercepts);
+            SaveSystem.SetPreCaptureHook(SnapshotRadioHudToInterceptSystem);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
             // after the Choreographer itself is constructed (it depends on
@@ -1104,6 +1105,7 @@ namespace AtomicWar._Game.Core
 
         public void SaveGame(string slotId = "quicksave")
         {
+            SnapshotRadioHudToInterceptSystem();
             SaveSystem.Save(slotId);
         }
 
@@ -1113,9 +1115,23 @@ namespace AtomicWar._Game.Core
             {
                 IsGameOver = false;
                 GameOverReason = null;
-                // Intercept log restored on FactionRadioIntercepts — refresh HUD strip.
+                // Intercept log + open/unread/tuner restored — refresh HUD strip.
                 SyncRadioInterceptHudFromLog();
             }
+        }
+
+        /// <summary>
+        /// Copy live radio strip presentation into the intercept system so
+        /// SaveSystem.CaptureState persists open / unread / tuner index.
+        /// </summary>
+        public void SnapshotRadioHudToInterceptSystem()
+        {
+            if (FactionRadioIntercepts == null) return;
+            var strip = _hud != null ? _hud.EnsureRadioInterceptHud() : null;
+            if (strip == null) return;
+            FactionRadioIntercepts.HudIsOpen = strip.IsOpen;
+            FactionRadioIntercepts.HudHasUnread = strip.HasUnread;
+            FactionRadioIntercepts.HudTunerIndex = strip.TunerIndex;
         }
 
         public void ConsumeItem(Survivor sv, ItemDefinition item)
@@ -1206,6 +1222,18 @@ namespace AtomicWar._Game.Core
         public void ToggleRadioInterceptLog()
         {
             _hud?.EnsureRadioInterceptHud()?.Toggle();
+        }
+
+        /// <summary>Cycle radio frequency filter forward (keybind ]).</summary>
+        public void CycleRadioTunerNext()
+        {
+            _hud?.EnsureRadioInterceptHud()?.CycleTunerNext();
+        }
+
+        /// <summary>Cycle radio frequency filter backward (keybind [).</summary>
+        public void CycleRadioTunerPrev()
+        {
+            _hud?.EnsureRadioInterceptHud()?.CycleTunerPrev();
         }
 
         /// <summary>
@@ -1368,7 +1396,11 @@ namespace AtomicWar._Game.Core
                 });
             }
             strip.SetLines(lines);
-            // Restore is silent — do not re-fire VO for historical lines.
+            // Restore presentation (open / unread / tuner) without re-firing VO.
+            strip.ApplyUiState(
+                FactionRadioIntercepts.HudIsOpen,
+                FactionRadioIntercepts.HudHasUnread,
+                FactionRadioIntercepts.HudTunerIndex);
         }
 
         // -----------------------------------------------------------------

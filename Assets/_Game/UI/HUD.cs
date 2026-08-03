@@ -200,12 +200,19 @@ namespace AtomicWar._Game.UI
         }
 
         /// <summary>
-        /// Ensure the radio intercept strip exists. Lines are pushed from
-        /// GameBootstrap (Core owns the intercept system; UI stays decoupled).
+        /// Ensure the radio intercept strip exists and VO stubs are ready.
+        /// Lines are pushed from GameBootstrap (Core owns the intercept system).
         /// </summary>
         public RadioInterceptHUD EnsureRadioInterceptHud()
         {
             EnsureWidgetReferences();
+            if (_radioInterceptHud != null)
+            {
+                var vo = _radioInterceptHud.VoHook;
+                vo?.EnsureBuiltInStubs();
+                if (_factionRadioVoHook == null)
+                    _factionRadioVoHook = vo;
+            }
             return _radioInterceptHud;
         }
 

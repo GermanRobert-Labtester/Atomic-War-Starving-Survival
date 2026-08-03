@@ -60,6 +60,8 @@ namespace AtomicWar._Game.Core
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
         private Action<FlashpointChoreographerSave> _restoreChoreographer;
+        /// <summary>Optional hook run just before CaptureSnapshot (e.g. HUD → system sync).</summary>
+        private Action _preCaptureHook;
 
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
@@ -183,11 +185,22 @@ namespace AtomicWar._Game.Core
             _restoreChoreographer = restore;
         }
 
+        /// <summary>
+        /// Hook invoked immediately before building a save snapshot (quicksave,
+        /// autosave, named slots). Used to flush live HUD presentation into
+        /// systems (radio open/unread/tuner).
+        /// </summary>
+        public void SetPreCaptureHook(Action preCapture)
+        {
+            _preCaptureHook = preCapture;
+        }
+
         /// <summary>Write the current world state to the given slot.</summary>
         public bool Save(string slotId)
         {
             try
             {
+                _preCaptureHook?.Invoke();
                 var snapshot = CaptureSnapshot();
                 snapshot.GameState.Phase = _gameState.Phase;
                 snapshot.GameState.Day = _gameState.Day;

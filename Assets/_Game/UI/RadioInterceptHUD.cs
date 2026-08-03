@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -6,10 +7,9 @@ using AtomicWar._Game.Economy;
 namespace AtomicWar._Game.UI
 {
     /// <summary>
-    /// Compact radio strip + expandable intercept log ([R]). Newest faction
-    /// intercept lines (succession, hatch bounce, parley, surrender).
-    /// Push-driven from GameBootstrap so UI stays free of a Core assembly ref.
-    /// Optional <see cref="FactionRadioVoHook"/> plays channel-tag VO when clips exist.
+    /// Compact radio strip + expandable intercept log ([R]) with a frequency
+    /// tuner that filters by channel tag ([ / ]). Push-driven from GameBootstrap.
+    /// Optional <see cref="FactionRadioVoHook"/> plays channel-tag VO stubs.
     /// </summary>
     public class RadioInterceptHUD : MonoBehaviour
     {
@@ -17,15 +17,39 @@ namespace AtomicWar._Game.UI
         /// <summary>Keep in sync with FactionRadioInterceptSystem.MaxLogEntries.</summary>
         public const int MaxLogEntries = 24;
 
+        /// <summary>
+        /// Tuner presets: index 0 = all bands; then military / scavenger / prepper.
+        /// </summary>
+        public static readonly string[] TunerPresets =
+        {
+            "", // all
+            "CH-7 MILBAND",
+            "CH-3 ASH ROAD",
+            "CH-11 STOCKPILE"
+        };
+
+        public static readonly string[] TunerLabels =
+        {
+            "ALL BANDS",
+            "CH-7 MILBAND",
+            "CH-3 ASH ROAD",
+            "CH-11 STOCKPILE"
+        };
+
         [SerializeField] private FactionRadioVoHook _voHook;
+        [SerializeField] private FactionRadioVoLibrarySO _voLibrary;
 
         public bool IsOpen { get; private set; }
         public bool HasUnread { get; private set; }
         public int LineCount { get; private set; }
+        public int FilteredLineCount { get; private set; }
+        public int TunerIndex { get; private set; }
+        public string ActiveChannelFilter { get; private set; } = string.Empty;
         public string LatestMessage { get; private set; } = string.Empty;
         public string LatestKind { get; private set; } = string.Empty;
         public string LatestChannelTag { get; private set; } = string.Empty;
         public string StatusLine { get; private set; } = "RADIO: —";
+        public string TunerLine { get; private set; } = "TUNE: ALL BANDS  [ ]";
         public string DetailSummary { get; private set; } = "No intercepts.";
 
         private readonly List<Line> _lines = new List<Line>();
@@ -39,7 +63,7 @@ namespace AtomicWar._Game.UI
             public string ChannelTag;
         }
 
-        /// <summary>Newest-first snapshot for tests / expanded log.</summary>
+        /// <summary>Newest-first full log (unfiltered).</summary>
         public IReadOnlyList<Line> Lines => _lines;
 
         public FactionRadioVoHook VoHook
@@ -50,8 +74,18 @@ namespace AtomicWar._Game.UI
                     _voHook = GetComponent<FactionRadioVoHook>()
                               ?? GetComponentInChildren<FactionRadioVoHook>()
                               ?? gameObject.AddComponent<FactionRadioVoHook>();
+                if (_voLibrary != null)
+                    _voHook.SetLibrary(_voLibrary);
                 return _voHook;
             }
+        }
+
+        private void Awake()
+        {
+            // Ensure VO stubs exist when the strip is present on a HUD prefab.
+            var vo = VoHook;
+            vo.EnsureBuiltInStubs();
+            Refresh();
         }
 
         /// <summary>
@@ -75,8 +109,9 @@ namespace AtomicWar._Game.UI
             HasUnread = true;
             Refresh();
 
-            // Diegetic VO when clips are assigned; no-op without assets.
-            VoHook?.TryPlay(factionId, kind);
+            // Play VO only if the tuner is on ALL or this channel.
+            if (PassesFilter(tag))
+                VoHook?.TryPlay(factionId, kind);
         }
 
         /// <summary>Replace the strip from a save restore / full log snapshot.</summary>
@@ -90,15 +125,22 @@ namespace AtomicWar._Game.UI
                     var l = lines[i];
                     if (string.IsNullOrEmpty(l.Message)) continue;
                     if (string.IsNullOrEmpty(l.ChannelTag) && !string.IsNullOrEmpty(l.FactionId))
-                    {
                         l.ChannelTag = DynamicEconomySystem.GetParleyChannelTag(l.FactionId);
-                    }
                     _lines.Add(l);
                 }
             }
-            // Restore is not "new" traffic — leave unread false unless empty→nonempty
-            // was already unread; load should not flash NEW after a quiet restore.
-            HasUnread = false;
+            Refresh();
+        }
+
+        /// <summary>
+        /// Restore presentation state after load (open / unread / tuner index).
+        /// Does not re-fire VO.
+        /// </summary>
+        public void ApplyUiState(bool isOpen, bool hasUnread, int tunerIndex = 0)
+        {
+            IsOpen = isOpen;
+            HasUnread = hasUnread;
+            SetTunerIndex(tunerIndex, playBlip: false);
             Refresh();
         }
 
@@ -128,31 +170,117 @@ namespace AtomicWar._Game.UI
             else Open();
         }
 
-        /// <summary>Mark the strip as seen without opening the expanded log.</summary>
         public void MarkRead()
         {
             HasUnread = false;
             Refresh();
         }
 
+        /// <summary>Cycle frequency filter forward ([ key).</summary>
+        public void CycleTunerNext() => SetTunerIndex(TunerIndex + 1, playBlip: true);
+
+        /// <summary>Cycle frequency filter backward (] is next; [ is prev — use both).</summary>
+        public void CycleTunerPrev() => SetTunerIndex(TunerIndex - 1, playBlip: true);
+
+        public void SetTunerIndex(int index, bool playBlip = false)
+        {
+            int n = TunerPresets.Length;
+            if (n <= 0)
+            {
+                TunerIndex = 0;
+                ActiveChannelFilter = string.Empty;
+                Refresh();
+                return;
+            }
+            // wrap
+            int wrapped = ((index % n) + n) % n;
+            TunerIndex = wrapped;
+            ActiveChannelFilter = TunerPresets[wrapped] ?? string.Empty;
+            Refresh();
+            if (playBlip)
+            {
+                string tag = ActiveChannelFilter;
+                if (string.IsNullOrEmpty(tag))
+                    VoHook?.TryPlayChannel(string.Empty, "Succession");
+                else
+                    VoHook?.TryPlayChannel(tag, string.Empty);
+            }
+        }
+
+        /// <summary>Tune to a specific channel tag (or empty for all).</summary>
+        public bool TuneToChannel(string channelTag)
+        {
+            if (string.IsNullOrEmpty(channelTag))
+            {
+                SetTunerIndex(0, playBlip: true);
+                return true;
+            }
+            for (int i = 0; i < TunerPresets.Length; i++)
+            {
+                if (string.Equals(TunerPresets[i], channelTag, StringComparison.OrdinalIgnoreCase))
+                {
+                    SetTunerIndex(i, playBlip: true);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public bool PassesFilter(string channelTag)
+        {
+            if (string.IsNullOrEmpty(ActiveChannelFilter)) return true;
+            return string.Equals(ActiveChannelFilter, channelTag, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>Filtered newest-first view for the active tuner preset.</summary>
+        public List<Line> GetFilteredLines()
+        {
+            var result = new List<Line>();
+            for (int i = 0; i < _lines.Count; i++)
+            {
+                var l = _lines[i];
+                string ch = !string.IsNullOrEmpty(l.ChannelTag)
+                    ? l.ChannelTag
+                    : DynamicEconomySystem.GetParleyChannelTag(l.FactionId);
+                if (PassesFilter(ch))
+                    result.Add(l);
+            }
+            return result;
+        }
+
         public void Refresh()
         {
             LineCount = _lines.Count;
-            if (_lines.Count == 0)
+            var filtered = GetFilteredLines();
+            FilteredLineCount = filtered.Count;
+
+            string tuneLabel = TunerIndex >= 0 && TunerIndex < TunerLabels.Length
+                ? TunerLabels[TunerIndex]
+                : "ALL BANDS";
+            TunerLine = $"TUNE: {tuneLabel}  [ / ] cycle";
+
+            if (filtered.Count == 0)
             {
                 LatestMessage = string.Empty;
                 LatestKind = string.Empty;
                 LatestChannelTag = string.Empty;
                 StatusLine = IsOpen
-                    ? "RADIO [OPEN] quiet  [R] close"
-                    : "RADIO: quiet  [R] log";
-                DetailSummary = IsOpen
-                    ? "No intercepts on the band.\n[R] close"
-                    : "No intercepts on the band.";
+                    ? $"RADIO [OPEN] · {tuneLabel}  quiet  [R] close"
+                    : $"RADIO · {tuneLabel}  quiet  [R] log";
+                var empty = new StringBuilder();
+                empty.AppendLine(StatusLine);
+                empty.AppendLine(TunerLine);
+                if (LineCount > 0 && FilteredLineCount == 0)
+                    empty.AppendLine("No intercepts on this frequency. [ / ] retune.");
+                else
+                    empty.AppendLine("No intercepts on the band.");
+                if (IsOpen)
+                    empty.AppendLine("[R] close log");
+                DetailSummary = empty.ToString().TrimEnd();
                 return;
             }
 
-            var top = _lines[0];
+            var top = filtered[0];
             LatestMessage = top.Message ?? string.Empty;
             LatestKind = top.Kind ?? string.Empty;
             LatestChannelTag = !string.IsNullOrEmpty(top.ChannelTag)
@@ -162,22 +290,23 @@ namespace AtomicWar._Game.UI
             string tag = KindTag(LatestKind);
             string unread = HasUnread ? " · NEW" : string.Empty;
             string openMark = IsOpen ? " [OPEN]" : "";
-            string shortMsg = LatestMessage.Length > 64
-                ? LatestMessage.Substring(0, 61) + "…"
+            string shortMsg = LatestMessage.Length > 56
+                ? LatestMessage.Substring(0, 53) + "…"
                 : LatestMessage;
-            StatusLine = $"RADIO{openMark} [{tag}]{unread}  {LatestChannelTag}  {shortMsg}";
+            StatusLine = $"RADIO{openMark} [{tag}]{unread}  {tuneLabel}  {shortMsg}";
             if (!IsOpen)
                 StatusLine += "  [R]";
 
             int maxLines = IsOpen ? MaxLogEntries : MaxVisibleLinesCollapsed;
             var sb = new StringBuilder();
             sb.AppendLine(StatusLine);
+            sb.AppendLine(TunerLine);
             if (IsOpen)
                 sb.AppendLine("--- intercept log (newest first) ---");
             int shown = 0;
-            for (int i = 0; i < _lines.Count && shown < maxLines; i++)
+            for (int i = 0; i < filtered.Count && shown < maxLines; i++)
             {
-                var l = _lines[i];
+                var l = filtered[i];
                 string day = l.Day > 0 ? $"D{l.Day} " : "";
                 string ch = !string.IsNullOrEmpty(l.ChannelTag)
                     ? l.ChannelTag
@@ -185,10 +314,10 @@ namespace AtomicWar._Game.UI
                 sb.AppendLine($"  · {day}[{KindTag(l.Kind)}] [{ch}] {l.Message}");
                 shown++;
             }
-            if (!IsOpen && _lines.Count > MaxVisibleLinesCollapsed)
-                sb.AppendLine($"  … +{_lines.Count - MaxVisibleLinesCollapsed} older  [R] expand");
+            if (!IsOpen && filtered.Count > MaxVisibleLinesCollapsed)
+                sb.AppendLine($"  … +{filtered.Count - MaxVisibleLinesCollapsed} older  [R] expand");
             if (IsOpen)
-                sb.AppendLine("[R] close log");
+                sb.AppendLine("[R] close · [ / ] retune");
             DetailSummary = sb.ToString().TrimEnd();
         }
 
