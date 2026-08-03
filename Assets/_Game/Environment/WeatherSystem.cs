@@ -48,6 +48,12 @@ namespace AtomicWar._Game.Environment
 
         public WeatherKind Current { get; private set; } = WeatherKind.Clear;
 
+        /// <summary>0.0 to 1.0 storm intensity for active FalloutStorm (Prompt #40).</summary>
+        public float StormIntensity { get; set; } = 1.0f;
+
+        /// <summary>Air filter degradation multiplier: doubles (2.0x) during intense FalloutStorm (intensity >= 0.7).</summary>
+        public float AirFilterDegradationMultiplier => (Current == WeatherKind.FalloutStorm && StormIntensity >= 0.7f) ? 2.0f : 1.0f;
+
         /// <summary>
         /// When true, RollNextState excludes Ashfall/FalloutStorm/Blizzard from the weighted
         /// roll regardless of how the active SeasonWindow is authored — guarantees Phase 1

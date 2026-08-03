@@ -30,6 +30,14 @@ namespace AtomicWar._Game.Core
     }
 
     /// <summary>
+    /// Event data when emergency siren state changes.
+    /// </summary>
+    public struct EmergencySirenAudioEvent
+    {
+        public bool IsActive;
+    }
+
+    /// <summary>
     /// Dynamic Audio System event bus controller.
     /// Subscribes to EventBus and system state changes, driving dynamic audio parameters
     /// (muffled storm soundscapes, blackout/anxiety heartbeats) without polling Update().
@@ -40,12 +48,14 @@ namespace AtomicWar._Game.Core
         private bool _isUnderground = true;
         private bool _isHatchBreached = false;
         private bool _isBlackout = false;
+        private bool _isEmergencySirenActive = false;
         private readonly HashSet<string> _anxiousSurvivorIds = new HashSet<string>();
 
         public WeatherKind CurrentWeather => _currentWeather;
         public bool IsUnderground => _isUnderground;
         public bool IsHatchBreached => _isHatchBreached;
         public bool IsBlackout => _isBlackout;
+        public bool IsEmergencySirenActive => _isEmergencySirenActive;
         public int AnxiousSurvivorCount => _anxiousSurvivorIds.Count;
 
         /// <summary>True when FalloutStorm wind is playing.</summary>
@@ -65,6 +75,7 @@ namespace AtomicWar._Game.Core
 
         public event Action<WeatherAudioStateEvent> OnWeatherAudioStateChanged;
         public event Action<HeartbeatAudioStateEvent> OnHeartbeatAudioStateChanged;
+        public event Action<EmergencySirenAudioEvent> OnEmergencySirenStateChanged;
 
         public AudioEventBus()
         {
@@ -119,6 +130,17 @@ namespace AtomicWar._Game.Core
             {
                 NotifyHeartbeatAudioChanged();
             }
+        }
+
+        /// <summary>
+        /// Trigger emergency siren audio event during severe breaches (Prompt #40).
+        /// </summary>
+        public void TriggerEmergencySiren(bool active = true)
+        {
+            _isEmergencySirenActive = active;
+            var evt = new EmergencySirenAudioEvent { IsActive = active };
+            OnEmergencySirenStateChanged?.Invoke(evt);
+            EventBus.Raise(evt);
         }
 
         // -----------------------------------------------------------------

@@ -19,6 +19,9 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Ambient contamination level (0..1) of the room air/surfaces.</summary>
         public float AmbientContamination;
 
+        /// <summary>Ambient radiation level in rads/hr (Prompt #40).</summary>
+        public float AmbientRadiation { get; set; }
+
         /// <summary>True when room has mold infestation (#20, #37).</summary>
         public bool HasMold { get; set; }
 
