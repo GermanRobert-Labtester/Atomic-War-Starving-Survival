@@ -233,5 +233,48 @@ namespace AtomicWar._Game.Survivors
             }
             return false;
         }
+
+        // -------------------------------------------------------------------
+        // Chronic Disease Pipeline (Prompt #39).
+        // -------------------------------------------------------------------
+        public ChronicIllnessKind? ActiveChronicIllness;
+        public float ChronicIllnessManagedHours;
+
+        public bool IsChronicIllnessManaged => ChronicIllnessManagedHours > 0f;
+
+        /// <summary>Fatigue drain multiplier from chronic illness.</summary>
+        public float FatigueDrainMultiplier
+        {
+            get
+            {
+                if (IsChronicIllnessManaged || !ActiveChronicIllness.HasValue) return 1.0f;
+                switch (ActiveChronicIllness.Value)
+                {
+                    case ChronicIllnessKind.BoneMarrowDepression: return 2.0f;
+                    case ChronicIllnessKind.LungFibrosis: return 1.5f;
+                    default: return 1.0f;
+                }
+            }
+        }
+
+        /// <summary>Scavenging and surveying yield multiplier from chronic ocular/cataract damage.</summary>
+        public float ScavengingYieldMultiplier
+        {
+            get
+            {
+                if (IsChronicIllnessManaged || !ActiveChronicIllness.HasValue) return 1.0f;
+                return ActiveChronicIllness.Value == ChronicIllnessKind.RadiationCataracts ? 0.5f : 1.0f;
+            }
+        }
+
+        /// <summary>Maximum stamina cap (reduced to 60 by LungFibrosis).</summary>
+        public float MaxStaminaCap
+        {
+            get
+            {
+                if (!ActiveChronicIllness.HasValue) return 100f;
+                return ActiveChronicIllness.Value == ChronicIllnessKind.LungFibrosis ? 60f : 100f;
+            }
+        }
     }
 }
