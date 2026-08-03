@@ -29,7 +29,7 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class SaveSystem
     {
-        public const int CurrentSaveVersion = 1;
+        public const int CurrentSaveVersion = 2;
 
         private readonly GameState _gameState;
         private readonly WeatherSystem _weatherSystem;
@@ -50,6 +50,10 @@ namespace AtomicWar._Game.Core
         private MedicalSystem _medicalSystem;
         private DynamicEconomySystem _economySystem;
         private WorldPhaseSystem _worldPhaseSystem;
+        // Choreographer is injected as capture/restore delegates rather than a
+        // direct reference so Core stays agnostic of the Flashpoint module.
+        private Func<FlashpointChoreographerSave> _captureChoreographer;
+        private Action<FlashpointChoreographerSave> _restoreChoreographer;
 
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
@@ -122,6 +126,19 @@ namespace AtomicWar._Game.Core
         public void SetEconomySystem(DynamicEconomySystem economySystem)
         {
             _economySystem = economySystem;
+        }
+
+        /// <summary>Inject Day-30 Flashpoint Choreographer adapter so the
+        /// choreography checkpoint (buildup days processed, current step)
+        /// persists across save/load. The Capture delegate returns the
+        /// current state; the Restore delegate applies a loaded snapshot.
+        /// Optional; safe to skip if no choreographer is wired.</summary>
+        public void SetFlashpointChoreographer(
+            Func<FlashpointChoreographerSave> capture,
+            Action<FlashpointChoreographerSave> restore)
+        {
+            _captureChoreographer = capture;
+            _restoreChoreographer = restore;
         }
 
         /// <summary>Write the current world state to the given slot.</summary>
@@ -259,10 +276,14 @@ namespace AtomicWar._Game.Core
             // if (data.SaveVersion < 3) MigrateV2toV3(data);
         }
 
-        /// <summary>V1 -> V2 migration stub. Extend when V2 schema is defined.</summary>
+        /// <summary>V1 -> V2 migration: V1 saves lack the FlashpointChoreographer
+        /// snapshot. Default values leave the choreographer in a fresh state
+        /// (no buildup days processed, choreography not started). The
+        /// WorldPhaseSystem.HasTriggeredExchange flag in the same save
+        /// determines whether the choreography restarts on next load.</summary>
         private static void MigrateV1toV2(SaveData data)
         {
-            // TODO: transform data from V1 schema to V2 schema
+            data.FlashpointChoreographer = null;
             data.SaveVersion = 2;
         }
 
@@ -339,6 +360,9 @@ namespace AtomicWar._Game.Core
 
             if (_economySystem != null)
                 data.Economy = _economySystem.CaptureState();
+
+            if (_captureChoreographer != null)
+                data.FlashpointChoreographer = _captureChoreographer();
 
             if (_expeditionSystem != null && _expeditionSystem.ActiveExpeditions != null)
             {
@@ -515,6 +539,13 @@ namespace AtomicWar._Game.Core
             if (_economySystem != null && data.Economy != null)
             {
                 _economySystem.RestoreState(data.Economy);
+            }
+
+            if (_restoreChoreographer != null)
+            {
+                // Choreographer restore is safe even if the snapshot is null
+                // (first launch) — it resets the state machine to defaults.
+                _restoreChoreographer(data.FlashpointChoreographer);
             }
 
             if (_expeditionSystem != null && data.Expeditions != null)
@@ -717,6 +748,7 @@ namespace AtomicWar._Game.Core
         public MedicalSystemSave Medical;
         public WorldPhaseSave WorldPhase;
         public DynamicEconomySave Economy;
+        public FlashpointChoreographerSave FlashpointChoreographer;
         public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();
     }
 

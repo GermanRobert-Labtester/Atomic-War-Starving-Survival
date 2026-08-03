@@ -39,6 +39,7 @@ namespace AtomicWar._Game.Core
         [SerializeField] private LocationCatalogSO _locationCatalog;
         [SerializeField] private RadioCatalogSO _radioCatalog;
         [SerializeField] private WorldPhaseConfigSO _worldPhaseConfig;
+        [SerializeField] private FlashpointSequenceSO _flashpointSequence;
         [SerializeField] private LootTableSO _lootTable;
 
         [Header("UI")]
@@ -75,6 +76,7 @@ namespace AtomicWar._Game.Core
         public MedicalSystem MedicalSystem { get; private set; }
         public WorldPhaseSystem WorldPhaseSystem { get; private set; }
         public DynamicEconomySystem EconomySystem { get; private set; }
+        public FlashpointChoreographer FlashpointChoreographer { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -104,6 +106,12 @@ namespace AtomicWar._Game.Core
             float dt = Time.deltaTime;
             TimeSystem.Tick(dt);
             float gameHours = dt / TimeSystem.SecondsPerGameHour;
+
+            // Day-30 Flashpoint choreography runs in real time (the flash is a
+            // visual event, not a game-time event). Tick before the rest of
+            // the systems so the EMP step's side effects (radiation pause,
+            // weather force) are visible to the same frame's HUD push.
+            FlashpointChoreographer?.Tick(dt);
 
             TickSystems(gameHours);
             CheckWinLose();
@@ -262,6 +270,9 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetMedicalSystem(MedicalSystem);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);
+            // SetFlashpointChoreographer is called later in InitializeSystems
+            // after the Choreographer itself is constructed (it depends on
+            // RadioTunerSystem and other systems wired after SaveSystem).
 
             // Subscribe to phase changes for autosave
             GameState.OnPhaseChanged += phase =>
@@ -326,6 +337,44 @@ namespace AtomicWar._Game.Core
                 KnowledgeMap?.TickDay(day);
                 RefreshMapKnowledgeHUD();
             };
+
+            // Day-30 Flashpoint Choreographer (narrative/UX layer over the
+            // mechanical EMP/weather cascade). Owns the buildup days 25-29
+            // and the second-by-second choreography. The mechanical side
+            // effects of the exchange fire from the choreography's 'emp' step
+            // so the EMP happens after the white flash, not before.
+            //
+            // Created at the END of InitializeSystems so the systems bundle
+            // (Inventory, Survivors, EconomySystem, RadioTunerSystem) all have
+            // real references; the EMP step needs every one of them on day 30.
+            FlashpointChoreographer = new FlashpointChoreographer(
+                sequence: _flashpointSequence,
+                accessibilitySafeMode: () => GameState != null && GameState.AccessibilitySafeMode,
+                systems: new FlashpointChoreographerSystems
+                {
+                    Inventory = Inventory,
+                    Shelter = Shelter,
+                    RadioState = RadioTunerSystem?.State,
+                    WeatherSystem = WeatherSystem,
+                    RadiationSystem = RadiationSystem,
+                    EconomySystem = EconomySystem,
+                    Survivors = Survivors,
+                    ExchangeMoraleHit = WorldPhaseSystem.ExchangeMoraleHit
+                },
+                hasFlashpointTriggered: () => WorldPhaseSystem != null && WorldPhaseSystem.HasTriggeredExchange);
+            TimeSystem.OnDayTick += FlashpointChoreographer.OnDayTick;
+
+            // Wire the Choreographer into SaveSystem so the buildup-day and
+            // choreography-step state persist across save/load. Done here
+            // (after the Choreographer is created) rather than near the
+            // other SetXSystem calls because the Choreographer depends on
+            // systems that are wired after SaveSystem in InitializeSystems.
+            if (SaveSystem != null)
+            {
+                SaveSystem.SetFlashpointChoreographer(
+                    FlashpointChoreographer.CaptureState,
+                    FlashpointChoreographer.RestoreState);
+            }
         }
 
         private void InitializeRadioFrequencies()
@@ -375,25 +424,44 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
-        /// The Day-30 atomic exchange cascade: EMP fries unshielded electronics, weather
-        /// snaps to Ashfall and hazards unlock, radiation activates map-wide, and every
-        /// survivor takes a permanent morale hit. Fired once by WorldPhaseSystem.
+        /// The Day-30 atomic exchange cascade. Thinned: all mechanical
+        /// side effects (EMP, weather force, radiation unpause, morale hit)
+        /// run from the FlashpointChoreographer's 'emp' step, scheduled
+        /// after the white flash. The choreographer is the single source
+        /// of truth for the moment's timeline.
         /// </summary>
         private void HandleNuclearExchange()
         {
-            var empResult = EMPEvent.ApplyGlobal(Inventory, Shelter, RadioTunerSystem?.State);
-            Debug.Log($"[GameBootstrap] Nuclear exchange: {empResult.DevicesBroken} devices broken, " +
-                      $"{empResult.ModulesDisabled} modules disabled, radio destroyed={empResult.RadioDestroyed}.");
-
-            WeatherSystem.RestrictToNonHazardWeather = false;
-            WeatherSystem.ForceWeather(WeatherKind.Ashfall);
-            RadiationSystem.IsPaused = false;
-
-            foreach (var sv in Survivors)
+            if (FlashpointChoreographer == null)
             {
-                if (sv == null || !sv.IsAlive) continue;
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - WorldPhaseSystem.ExchangeMoraleHit, 0f, 100f);
+                // Fallback: if no choreographer is wired (test scene, broken
+                // wiring), run the original cascade so the game still
+                // advances to NuclearWinter. This matches the pre-Prompt-27
+                // behavior and prevents soft-locks.
+                var empResult = EMPEvent.ApplyGlobal(Inventory, Shelter, RadioTunerSystem?.State);
+                Debug.Log($"[GameBootstrap] Nuclear exchange (fallback): {empResult.DevicesBroken} devices broken, " +
+                          $"{empResult.ModulesDisabled} modules disabled, radio destroyed={empResult.RadioDestroyed}.");
+
+                if (WeatherSystem != null)
+                {
+                    WeatherSystem.RestrictToNonHazardWeather = false;
+                    WeatherSystem.ForceWeather(WeatherKind.Ashfall);
+                }
+                if (RadiationSystem != null) RadiationSystem.IsPaused = false;
+
+                if (Survivors != null)
+                {
+                    float hit = WorldPhaseSystem?.ExchangeMoraleHit ?? 25f;
+                    foreach (var sv in Survivors)
+                    {
+                        if (sv == null || !sv.IsAlive) continue;
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
+                    }
+                }
+                return;
             }
+
+            FlashpointChoreographer.OnNuclearExchange();
         }
 
         private void SeedKnowledgeMap()

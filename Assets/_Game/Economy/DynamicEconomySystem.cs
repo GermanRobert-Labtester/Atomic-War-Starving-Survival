@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Events;
@@ -30,6 +31,16 @@ namespace AtomicWar._Game.Economy
         /// <summary>Per item-id demand pressure. 1 = neutral; &gt;1 scarce; &lt;1 surplus.</summary>
         private readonly Dictionary<string, float> _demand = new Dictionary<string, float>();
 
+        /// <summary>
+        /// Barter-only mode: traders will only accept offers whose items are
+        /// in <see cref="_barterOnlyAcceptedItemIds"/>. Set by the Day-30
+        /// Flashpoint Choreographer (days 25-29 buildup) so the trader panic
+        /// reads as a diegetic refusal, not a UI tooltip. Cleared by restore
+        /// if needed; not auto-expired (choreographer decides).
+        /// </summary>
+        private readonly HashSet<string> _barterOnlyAcceptedItemIds = new HashSet<string>();
+        private bool _barterOnlyMode;
+
         private Func<WorldPhase> _getPhase;
         private Shelter.Shelter _shelter;
         private System.Random _rng;
@@ -38,8 +49,12 @@ namespace AtomicWar._Game.Economy
         public event Action<WorldPhase> OnEconomyPhaseChanged;
         public event Action<FactionRaidResult> OnRaidResolved;
         public event Action OnEconomyChanged;
+        /// <summary>Fired when barter-only mode flips (parameter: new value).</summary>
+        public event Action<bool> OnBarterOnlyModeChanged;
 
         public WorldPhase CurrentPhase => _getPhase != null ? _getPhase() : WorldPhase.CivilWar;
+        public bool BarterOnlyMode => _barterOnlyMode;
+        public IReadOnlyCollection<string> BarterOnlyAcceptedItemIds => _barterOnlyAcceptedItemIds;
 
         public DynamicEconomySystem(
             Func<WorldPhase> getPhase = null,
@@ -249,6 +264,7 @@ namespace AtomicWar._Game.Economy
         {
             if (playerInv == null || factionStock == null) return false;
             if (!WillTrade(factionId)) return false;
+            if (!IsOfferBarterOnlyAcceptable(playerOffers)) return false;
             if (!IsFairTrade(playerOffers, factionAsks, factionId, out _, out _)) return false;
 
             // Validate stock
@@ -384,6 +400,55 @@ namespace AtomicWar._Game.Economy
                 if (shield != null && shield.Level > 0)
                     shield.Level = Mathf.Max(0, shield.Level - 1);
             }
+        }
+
+        // -----------------------------------------------------------------
+        // Barter-only mode (flashpoint trader panic)
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Toggle the Day-30 trader panic. When enabled, player offers are
+        /// refused unless every offered item is in <paramref name="acceptedItemIds"/>
+        /// (defaults to a no-op set if null is passed and enable is false).
+        /// Pass null for <paramref name="acceptedItemIds"/> to keep the current
+        /// set when toggling, or a new list to replace it.
+        /// </summary>
+        public void SetBarterOnlyMode(bool enabled, IReadOnlyList<string> acceptedItemIds = null)
+        {
+            if (acceptedItemIds != null)
+            {
+                _barterOnlyAcceptedItemIds.Clear();
+                for (int i = 0; i < acceptedItemIds.Count; i++)
+                {
+                    var id = acceptedItemIds[i];
+                    if (!string.IsNullOrEmpty(id)) _barterOnlyAcceptedItemIds.Add(id);
+                }
+            }
+
+            if (_barterOnlyMode == enabled) return;
+            _barterOnlyMode = enabled;
+            OnBarterOnlyModeChanged?.Invoke(enabled);
+            OnEconomyChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Returns true if the player's offer is acceptable under the current
+        /// barter-only rules. When barter-only is off, every offer is
+        /// acceptable. When on, every line must be an item whose id is in
+        /// the accepted set; an empty accepted set rejects everything.
+        /// </summary>
+        public bool IsOfferBarterOnlyAcceptable(IReadOnlyList<BarterLine> playerOffers)
+        {
+            if (!_barterOnlyMode) return true;
+            if (playerOffers == null || playerOffers.Count == 0) return false;
+            if (_barterOnlyAcceptedItemIds.Count == 0) return false;
+            for (int i = 0; i < playerOffers.Count; i++)
+            {
+                var line = playerOffers[i];
+                if (line.Item == null || string.IsNullOrEmpty(line.Item.id)) return false;
+                if (!_barterOnlyAcceptedItemIds.Contains(line.Item.id)) return false;
+            }
+            return true;
         }
 
         // -----------------------------------------------------------------
@@ -533,6 +598,9 @@ namespace AtomicWar._Game.Economy
                 demandRows.Add(new DemandSave { ItemId = kv.Key, Multiplier = kv.Value });
             }
             save.Demand = demandRows.ToArray();
+
+            save.BarterOnlyMode = _barterOnlyMode;
+            save.BarterOnlyAccepted = _barterOnlyAcceptedItemIds.ToArray();
             return save;
         }
 
@@ -557,6 +625,16 @@ namespace AtomicWar._Game.Economy
                     var row = save.Demand[i];
                     if (row == null || string.IsNullOrEmpty(row.ItemId)) continue;
                     _demand[row.ItemId] = Mathf.Clamp(row.Multiplier, MinDemandMult, MaxDemandMult);
+                }
+            }
+            _barterOnlyMode = save.BarterOnlyMode;
+            _barterOnlyAcceptedItemIds.Clear();
+            if (save.BarterOnlyAccepted != null)
+            {
+                for (int i = 0; i < save.BarterOnlyAccepted.Length; i++)
+                {
+                    var id = save.BarterOnlyAccepted[i];
+                    if (!string.IsNullOrEmpty(id)) _barterOnlyAcceptedItemIds.Add(id);
                 }
             }
             OnEconomyChanged?.Invoke();
@@ -606,5 +684,9 @@ namespace AtomicWar._Game.Economy
     {
         public FactionTrustSave[] Trust;
         public DemandSave[] Demand;
+        /// <summary>Whether barter-only mode is on (Day-30 trader panic).</summary>
+        public bool BarterOnlyMode;
+        /// <summary>Item ids the player may offer while barter-only is on.</summary>
+        public string[] BarterOnlyAccepted;
     }
 }
