@@ -122,6 +122,15 @@ namespace AtomicWar._Game.Survivors
         /// <summary>True once Numbness has crossed BeliefSystem.NumbnessThreshold.</summary>
         public bool IsNumb;
 
+        // -------------------------------------------------------------------
+        // Medical triage — skill for Treat Patient actions. Affliction instances
+        // live in MedicalSystem (keyed by survivor id); this is the only skill
+        // field needed on the survivor for treatment speed / resource sparing.
+        // -------------------------------------------------------------------
+
+        /// <summary>0..1 medical competence. Higher = faster treatments, fewer spare parts used.</summary>
+        public float MedicalSkill = 0.3f;
+
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
         {

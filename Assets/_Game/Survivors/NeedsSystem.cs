@@ -115,15 +115,10 @@ namespace AtomicWar._Game.Survivors
             bool thirstCritical = needs.Thirst >= _profile.thirstCritical;
             bool warmthCritical = needs.Warmth <= _profile.warmthCritical;
 
-            float healthLossPerHour = 0f;
-            if (hungerCritical) healthLossPerHour += _profile.healthLossFromHunger;
-            if (thirstCritical) healthLossPerHour += _profile.healthLossFromThirst;
-            if (warmthCritical) healthLossPerHour += _profile.healthLossFromCold;
-            if (healthLossPerHour > 0f)
-            {
-                Modify(survivor, NeedKind.Health, -healthLossPerHour * gameHours);
-            }
-
+            // Health is medical-domain: active Afflictions (MedicalSystem) own health
+            // drain/recovery. Critical hunger/thirst/cold still punish morale and can
+            // be mirrored as afflictions by content systems, but no longer write Health
+            // here — so the Health bar is not a free-floating second meter.
             if (hungerCritical || thirstCritical || warmthCritical)
             {
                 Modify(survivor, NeedKind.Morale, -_profile.moraleLossPerHourWhileCritical * gameHours);

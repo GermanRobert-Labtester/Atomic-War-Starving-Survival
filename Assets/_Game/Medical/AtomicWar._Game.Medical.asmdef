@@ -1,14 +1,10 @@
 {
-    "name": "AtomicWar._Game.AI",
-    "rootNamespace": "AtomicWar._Game.AI",
+    "name": "AtomicWar._Game.Medical",
+    "rootNamespace": "AtomicWar._Game.Medical",
     "references": [
         "AtomicWar._Game.Survivors",
-        "AtomicWar._Game.Shelter",
         "AtomicWar._Game.Inventory",
-        "AtomicWar._Game.Radiation",
-        "AtomicWar._Game.Environment",
-        "AtomicWar._Game.Data",
-        "AtomicWar._Game.Medical"
+        "AtomicWar._Game.Shelter"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

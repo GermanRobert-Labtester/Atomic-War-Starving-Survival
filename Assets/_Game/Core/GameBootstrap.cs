@@ -13,6 +13,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
+using AtomicWar._Game.Medical;
 
 namespace AtomicWar._Game.Core
 {
@@ -68,6 +69,7 @@ namespace AtomicWar._Game.Core
         public RadioBroadcastSystem RadioSystem { get; private set; }
         public RadioTunerSystem RadioTunerSystem { get; private set; }
         public BeliefSystem BeliefSystem { get; private set; }
+        public MedicalSystem MedicalSystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -183,9 +185,28 @@ namespace AtomicWar._Game.Core
                 CreateAction<TakeIodineActionSO>(),
                 CreateAction<ScavengeActionSO>(),
                 CreateAction<SurveyActionSO>(),
+                CreateAction<TreatPatientActionSO>(),
                 CreateAction<CraftActionSO>(),
                 CreateAction<GuardActionSO>()
             };
+
+            // Medical triage (afflictions drain health; treatments halt/cure)
+            MedicalSystem = new MedicalSystem(NeedsSystem, Inventory, Shelter);
+            foreach (var aff in AtomicWar._Game.Medical.MedicalSystem.CreateDefaultAfflictions())
+                MedicalSystem.RegisterAffliction(aff);
+            // Register common treatment recipes if items exist
+            var bandage = _itemCatalog?.GetById("bandage");
+            var tweezers = _itemCatalog?.GetById("tweezers");
+            if (bandage != null)
+            {
+                MedicalSystem.RegisterTreatment(
+                    AtomicWar._Game.Medical.MedicalSystem.CreateGunshotBandageHaltRecipe(bandage));
+                if (tweezers != null)
+                {
+                    MedicalSystem.RegisterTreatment(
+                        AtomicWar._Game.Medical.MedicalSystem.CreateGunshotFullRecipe(bandage, tweezers));
+                }
+            }
 
             // Events
             EventRunner = new EventRunner();
@@ -207,6 +228,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetPhotoPeriodSystem(PhotoperiodSystem);
             SaveSystem.SetKnowledgeMap(KnowledgeMap);
             SaveSystem.SetInventory(Inventory);
+            SaveSystem.SetMedicalSystem(MedicalSystem);
 
             // Subscribe to phase changes for autosave
             GameState.OnPhaseChanged += phase =>
@@ -370,6 +392,10 @@ namespace AtomicWar._Game.Core
         private void CreateSurvivor(string id, string name)
         {
             var sv = new Survivor { Id = id, DisplayName = name };
+            // Elena is the medic by default; others baseline
+            if (id == "sv_elena") sv.MedicalSkill = 0.85f;
+            else if (id == "sv_marcus") sv.MedicalSkill = 0.35f;
+            else sv.MedicalSkill = 0.25f;
             Survivors.Add(sv);
             NeedsSystem.Register(sv);
             RadiationSystem.Register(sv);
@@ -399,6 +425,9 @@ namespace AtomicWar._Game.Core
 
             // Needs
             NeedsSystem.Tick(gameHours);
+
+            // Medical triage — Health pressure from active afflictions
+            MedicalSystem?.Tick(Survivors, gameHours);
 
             // Radiation
             RadiationSystem.Tick(gameHours);
@@ -439,7 +468,9 @@ namespace AtomicWar._Game.Core
                         MapUncertainty  = mapUncertainty,
                         BeliefSystem    = BeliefSystem,
                         IsAnxious       = sv.HasRadiationAnxietyStatus,
-                        IsNumb          = sv.IsNumb
+                        IsNumb          = sv.IsNumb,
+                        MedicalSystem   = MedicalSystem,
+                        GetSurvivors    = () => Survivors
                     };
                     var action = UtilityAI.SelectAction(context, Actions);
                     action?.Execute(context);

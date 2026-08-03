@@ -69,7 +69,7 @@ namespace AtomicWar.Tests.EditMode
             _radSystem.Register(survivor);
 
             float initialLifetimeRad = survivor.LifetimeRadiationExposure;
-            int initialInventoryCount = _inventory.Items.Count;
+            int initialInventoryCount = _inventory.Slots.Count;
 
             // Start 3-tick travel distance expedition
             bool started = _expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth);
@@ -91,7 +91,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsFalse(_expeditionSystem.IsOnExpedition(survivor.Id), "Survivor should no longer be on active expedition.");
             Assert.AreEqual(SurvivorState.Idle, survivor.State, "Survivor should return to Idle state in bunker.");
             Assert.Greater(survivor.LifetimeRadiationExposure, initialLifetimeRad, "Lifetime radiation exposure should increase.");
-            Assert.Greater(_inventory.Items.Count, initialInventoryCount, "Loot should be deposited into bunker inventory.");
+            Assert.Greater(_inventory.Slots.Count, initialInventoryCount, "Loot should be deposited into bunker inventory.");
             Assert.Less(survivor.Needs.Fatigue, 100f);
         }
 

@@ -10,6 +10,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Medical;
 
 namespace AtomicWar._Game.Core
 {
@@ -45,6 +46,7 @@ namespace AtomicWar._Game.Core
         private RadiationKnowledgeMap _knowledgeMap;
         private Inventory.Inventory _inventory;
         private ExpeditionSystem _expeditionSystem;
+        private MedicalSystem _medicalSystem;
 
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
@@ -99,6 +101,12 @@ namespace AtomicWar._Game.Core
         public void SetExpeditionSystem(ExpeditionSystem expeditionSystem)
         {
             _expeditionSystem = expeditionSystem;
+        }
+
+        /// <summary>Inject medical triage pipeline so afflictions persist across save/load.</summary>
+        public void SetMedicalSystem(MedicalSystem medicalSystem)
+        {
+            _medicalSystem = medicalSystem;
         }
 
         /// <summary>Write the current world state to the given slot.</summary>
@@ -308,6 +316,9 @@ namespace AtomicWar._Game.Core
             if (_inventory != null)
                 data.Inventory = _inventory.CaptureState();
 
+            if (_medicalSystem != null)
+                data.Medical = _medicalSystem.CaptureState();
+
             if (_expeditionSystem != null && _expeditionSystem.ActiveExpeditions != null)
             {
                 foreach (var exp in _expeditionSystem.ActiveExpeditions)
@@ -382,7 +393,9 @@ namespace AtomicWar._Game.Core
                 // Light / photoperiod
                 LightExposure = sv.LightExposure,
                 VitaminDProxy = sv.VitaminDProxy,
-                IsListless    = sv.IsListless
+                IsListless    = sv.IsListless,
+
+                MedicalSkill  = sv.MedicalSkill
             };
 
             if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
@@ -468,6 +481,11 @@ namespace AtomicWar._Game.Core
                 _inventory.RestoreState(data.Inventory, _itemLookup);
             }
 
+            if (_medicalSystem != null && data.Medical != null)
+            {
+                _medicalSystem.RestoreState(data.Medical);
+            }
+
             if (_expeditionSystem != null && data.Expeditions != null)
             {
                 RestoreExpeditions(data.Expeditions);
@@ -510,6 +528,8 @@ namespace AtomicWar._Game.Core
             sv.LightExposure = save.LightExposure;
             sv.VitaminDProxy = save.VitaminDProxy;
             sv.IsListless    = save.IsListless;
+
+            sv.MedicalSkill  = save.MedicalSkill;
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)
@@ -663,6 +683,7 @@ namespace AtomicWar._Game.Core
         public List<bool> WorldFlagValues = new List<bool>();
         public RadiationKnowledgeSave RadiationKnowledge;
         public InventorySaveState Inventory;
+        public MedicalSystemSave Medical;
         public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();
     }
 
@@ -748,6 +769,9 @@ namespace AtomicWar._Game.Core
         public float LightExposure = 100f;
         public float VitaminDProxy = 100f;
         public bool  IsListless;
+
+        // Medical skill (0..1)
+        public float MedicalSkill = 0.3f;
     }
 
     /// <summary>Shelter module runtime state snapshot.</summary>

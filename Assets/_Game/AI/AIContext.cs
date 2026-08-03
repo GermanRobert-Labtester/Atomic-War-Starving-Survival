@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Medical;
 using Random = System.Random;
 
 namespace AtomicWar._Game.AI
@@ -28,11 +30,20 @@ namespace AtomicWar._Game.AI
         /// 1 - RadiationKnowledgeMap map-tile confidence).</summary>
         public float MapUncertainty;
 
+        /// <summary>Injected by GameBootstrap: computes belief-adjusted action multipliers.</summary>
+        public BeliefSystem BeliefSystem;
+
         /// <summary>Mirrors Survivor.HasRadiationAnxietyStatus.</summary>
         public bool IsAnxious;
 
         /// <summary>Mirrors Survivor.IsNumb.</summary>
         public bool IsNumb;
+
+        /// <summary>Medical triage pipeline (afflictions / treatments).</summary>
+        public MedicalSystem MedicalSystem;
+
+        /// <summary>All living survivors (for Treat Patient target selection).</summary>
+        public Func<IReadOnlyList<Survivor>> GetSurvivors;
 
         public Random Random;
 
