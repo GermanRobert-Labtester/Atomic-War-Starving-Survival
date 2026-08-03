@@ -1,0 +1,664 @@
+[
+  {
+    "id": "echo_answering_machine",
+    "title": "The Answering Machine",
+    "bodyText": "Under a collapsed awning, half-buried in ash, a solar-powered desk phone blinks a single red light. The voicemail counter reads 14. The battery is at 4%. Most of the messages are static, hang-ups, prayers. The last one is dated Day 1. A mother, voice steady, calling her daughter home from college.",
+    "weight": 1.4,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "listen_to_messages",
+        "text": "Sit in the ash. Listen to the last one.",
+        "moraleDelta": -22.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": -0.4 },
+          { "setWorldFlag": "echo_listened_answer_machine", "worldFlagValue": true },
+          { "setWorldFlag": "echo_intel_node_answer_machine", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "smash_the_phone",
+        "text": "Smash it under your heel. There is nothing left to say.",
+        "moraleDelta": 3.0,
+        "effects": [
+          { "targetNeed": "radiationanxiety", "needDelta": -0.25 },
+          { "setWorldFlag": "echo_smashed_answer_machine", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_childs_coat",
+    "title": "The Child's Coat",
+    "bodyText": "Caught in a chain-link fence, a small red winter coat, zipped halfway. The hood is up. There's no one inside it, but the front is dark with the kind of blood that has been in the sun for a year. The stitching is intact. The label reads age 6.",
+    "weight": 1.6,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "take_the_coat",
+        "text": "Cut it down. Wash what you can. Winter is coming again.",
+        "moraleDelta": -14.0,
+        "effects": [
+          { "itemId": "protective_childs_coat", "itemAmount": 1 },
+          { "setWorldFlag": "echo_latent_trauma_coat", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "bury_the_coat",
+        "text": "Dig a hole. Bury it whole. This is not for wearing.",
+        "moraleDelta": 6.0,
+        "delayedConsequence": {
+          "delayHours": 2.0,
+          "title": "An Hour in the Cold Dirt",
+          "description": "The cold works through your gloves. The coat doesn't fit anyone, but you fold it anyway.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -6.0 },
+            { "targetNeed": "fatigue", "needDelta": 4.0 }
+          ]
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "echo_wedding_ring",
+    "title": "The Wedding Ring in the Glass",
+    "bodyText": "Two photographs fused to the glass of a picture frame by heat. A man and a woman on a beach. The wedding band is still inside the frame, rolled against the inner edge, scratched where the bride-to-be tried to pry it out. The inside is engraved: 04.12 — FOREVER, L.",
+    "weight": 1.0,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "pry_the_ring_out",
+        "text": "Pry the ring out. The frame is already gone. The metal is still good.",
+        "moraleDelta": -10.0,
+        "effects": [
+          { "itemId": "scrap_metal", "itemAmount": 1 },
+          { "setWorldFlag": "echo_latent_trauma_ring", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "take_the_photo_only",
+        "text": "Take the photo. Leave the ring. It was never yours to sell.",
+        "moraleDelta": -5.0,
+        "effects": [
+          { "itemId": "family_photo_pendant", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "bury_both_together",
+        "text": "Bury the whole frame. Together is the only honest way.",
+        "moraleDelta": 9.0,
+        "delayedConsequence": {
+          "delayHours": 3.0,
+          "title": "A Pause in the Rubble",
+          "description": "You clear the debris by hand. The frost has crept into your sleeves.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -8.0 },
+            { "targetNeed": "fatigue", "needDelta": 6.0 }
+          ]
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "echo_frozen_postman",
+    "title": "The Frozen Postman",
+    "bodyText": "A postal van, door open, engine dead. The driver is in the seat, hands still on the wheel, frosted glasses on. The mailbag is unzipped. Most of it is past-due bills and pharmacy ads. One envelope is unsealed, hand-addressed in pencil: To whoever finds this. There is no return address.",
+    "weight": 1.2,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "read_the_unsealed_letter",
+        "text": "Read the letter. Sit on the running board while you do.",
+        "moraleDelta": -12.0,
+        "effects": [
+          { "setWorldFlag": "echo_intel_node_postman_letter", "worldFlagValue": true },
+          { "setWorldFlag": "echo_latent_trauma_postman", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "search_for_supply_drops",
+        "text": "Search the bag for pharmacy addresses, special-delivery tags. He was working a route.",
+        "moraleDelta": 5.0,
+        "delayedConsequence": {
+          "delayHours": 1.0,
+          "title": "Cold Paperwork",
+          "description": "Fifteen minutes of rifling through other people's last days.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -4.0 },
+            { "setWorldFlag": "echo_intel_node_postman_route", "worldFlagValue": true }
+          ]
+        }
+      },
+      {
+        "choiceId": "close_the_door_and_walk_away",
+        "text": "Close the door. Walk away. He had a job to do and he did it.",
+        "moraleDelta": 8.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": -0.15 }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_music_box",
+    "title": "The Music Box",
+    "bodyText": "In a nursery that was never finished, a wooden ballerina turns on a brass key. The varnish has yellowed. The key is stiff but still works. The first phrase of Für Elise. Forty-seven seconds, then a tiny mechanical sigh. You stand there with the wind at your back.",
+    "weight": 1.5,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "let_it_play_out",
+        "text": "Let it finish. Listen to every second.",
+        "moraleDelta": -18.0,
+        "effects": [
+          { "targetNeed": "radiationanxiety", "needDelta": -0.2 },
+          { "setWorldFlag": "echo_latent_trauma_music_box", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "strip_it_for_parts",
+        "text": "Crack the case. The springs and gears are worth more than the song.",
+        "moraleDelta": 3.0,
+        "effects": [
+          { "itemId": "mechanical_components", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "carry_it_back_intact",
+        "text": "Wrap it in your scarf. Carry it home unbroken.",
+        "moraleDelta": -2.0,
+        "effects": [
+          { "itemId": "music_box_fur_elise", "itemAmount": 1 },
+          { "delayedConsequence": {
+              "delayHours": 24.0,
+              "title": "The Wind-Up at 3 AM",
+              "description": "Someone finds the key in the dark. The bunker holds its breath.",
+              "effects": [
+                { "targetNeed": "morale", "needDelta": 10.0 }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_crayon_drawing",
+    "title": "The Crayon Drawing",
+    "bodyText": "A kindergarten wall, mostly collapsed. Where the plaster is still up, crayon suns, blue stick-figure families, a yellow dog. One drawing, bigger than the rest, is in careful letters: I love you Mommy. There is a brown hand-print in the corner with a name. T-HeM.",
+    "weight": 1.0,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "take_one_drawing",
+        "text": "Carefully lift one from the wall. Fold it. Carry it.",
+        "moraleDelta": -2.0,
+        "effects": [
+          { "setWorldFlag": "echo_crayon_drawing_taken", "worldFlagValue": true },
+          { "delayedConsequence": {
+              "delayHours": 48.0,
+              "title": "Found in a Pocket",
+              "description": "You find it in your coat at dawn. The crayon is waxy on your thumb.",
+              "effects": [
+                { "targetNeed": "morale", "needDelta": 6.0 },
+                { "targetNeed": "numbness", "needDelta": -0.1 }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "choiceId": "leave_them_be",
+        "text": "Leave them. Whoever painted these had a wall to paint on. That's enough.",
+        "moraleDelta": 0.0
+      },
+      {
+        "choiceId": "tape_a_note_for_the_next_one",
+        "text": "Tape a scrap of paper to the wall: still here. — A.",
+        "moraleDelta": 3.0,
+        "delayedConsequence": {
+          "delayHours": 1.0,
+          "title": "A Scrap of Tape",
+          "description": "You spend a long minute fishing a strip of tape from your pack.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -2.0 }
+          ]
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "echo_family_dog_collar",
+    "title": "The Family Dog",
+    "bodyText": "A leather dog collar under a porch step. The buckle is still in the open position. The bone-shaped tag, brass, is engraved BUDDY. No dog. No body. The leather is the kind of leather that was rubbed soft by a hand.",
+    "weight": 0.8,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "take_the_collar_for_trade",
+        "text": "Pocket the collar. The buckle is good brass.",
+        "moraleDelta": 0.0,
+        "effects": [
+          { "itemId": "scrap_metal", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "leave_it_and_say_a_prayer",
+        "text": "Leave it. Say the small prayer your mother taught you, even if you don't believe in it.",
+        "moraleDelta": 7.0,
+        "delayedConsequence": {
+          "delayHours": 0.5,
+          "title": "A Breath on the Porch",
+          "description": "Your breath fogs in the cold. The collar stays where it is.",
+          "effects": [
+            { "targetNeed": "numbness", "needDelta": -0.1 }
+          ]
+        }
+      },
+      {
+        "choiceId": "take_the_tag_leave_the_collar",
+        "text": "Snap the tag off. Leave the collar. The name is what's heavy.",
+        "moraleDelta": -1.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": 0.1 },
+          { "setWorldFlag": "echo_latent_trauma_dog_tag", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_unsent_letter",
+    "title": "The Unsent Letter",
+    "bodyText": "On a kitchen table under an overturned coffee mug, a single page, lined, written in pencil. 'Dear Tom, I know we said things we can't take back. The world ended last week, in case you missed it. I'm sorry. I forgive you. I hope you got out.' No address. No stamp. The pencil is still on the page.",
+    "weight": 1.1,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "read_it",
+        "text": "Read it. Both sides. Then fold it back the way it was.",
+        "moraleDelta": -8.0,
+        "effects": [
+          { "setWorldFlag": "echo_latent_trauma_unsent_letter", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "burn_it_in_the_sink",
+        "text": "Burn it in the sink. Some mail was never meant to be answered.",
+        "moraleDelta": 4.0,
+        "delayedConsequence": {
+          "delayHours": 0.5,
+          "title": "Smoke in a Dead House",
+          "description": "The paper curls. The smoke smells like the old world for one second.",
+          "effects": [
+            { "targetNeed": "morale", "needDelta": 3.0 },
+            { "targetNeed": "health", "needDelta": -2.0 }
+          ]
+        }
+      },
+      {
+        "choiceId": "mail_it_anyway",
+        "text": "Walk it to the nearest postbox. Drop it in. Tom will get it when Tom gets it.",
+        "moraleDelta": -5.0,
+        "delayedConsequence": {
+          "delayHours": 1.0,
+          "title": "The Dead Postbox",
+          "description": "The flag is rusted. The letter disappears without a sound.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -3.0 },
+            { "setWorldFlag": "echo_letter_mailed_to_tom", "worldFlagValue": true }
+          ]
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "echo_anniversary_calendar",
+    "title": "The Anniversary Calendar",
+    "bodyText": "A wall calendar, pre-war, one month showing. One date is circled twice in red pen: TODAY. Above the calendar, a photo of a couple in their sixties, dressed for something. The kitchen smells faintly of coffee that hasn't been made in a year.",
+    "weight": 0.9,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "mark_their_day",
+        "text": "Take the red pen. Write I REMEMBER under the circle.",
+        "moraleDelta": -7.0,
+        "delayedConsequence": {
+          "delayHours": 72.0,
+          "title": "Three Days Later",
+          "description": "The bunker is quiet. The pen mark is still wet in your mind.",
+          "effects": [
+            { "targetNeed": "morale", "needDelta": 2.0 }
+          ]
+        }
+      },
+      {
+        "choiceId": "cross_it_out",
+        "text": "Cross the circle out. Today was yesterday.",
+        "moraleDelta": -4.0
+      },
+      {
+        "choiceId": "take_the_calendar_down",
+        "text": "Take the calendar off the wall. Fold it. You do not want to see it again.",
+        "moraleDelta": 1.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": 0.05 },
+          { "delayedConsequence": {
+              "delayHours": 1.0,
+              "title": "An Empty Nail",
+              "description": "You stare at the nail for a few seconds too long.",
+              "effects": [
+                { "targetNeed": "fatigue", "needDelta": 2.0 }
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_newborn_bracelet",
+    "title": "The Newborn Bracelet",
+    "bodyText": "In a hospital corridor that never had patients, a sealed plastic bag pinned to a bulletin board. Inside, a printed hospital bracelet. BABY GIRL MORALES. Born 14 March. 7 lbs 4 oz. The cord had not been cut when the building lost power. The bag is dated eleven days before the first flash.",
+    "weight": 0.7,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "bury_it_here",
+        "text": "Bury the bracelet where you found it. This belongs to this building.",
+        "moraleDelta": 9.0,
+        "delayedConsequence": {
+          "delayHours": 2.0,
+          "title": "An Empty Garden",
+          "description": "The hospital garden is full of rocks. You find a soft patch.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -5.0 },
+            { "targetNeed": "fatigue", "needDelta": 5.0 }
+          ]
+        }
+      },
+      {
+        "choiceId": "take_it_to_return_later",
+        "text": "Take it. Someone, somewhere, is still looking for her. You owe her that.",
+        "moraleDelta": -1.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": 0.1 },
+          { "setWorldFlag": "echo_latent_trauma_bracelet", "worldFlagValue": true },
+          { "setWorldFlag": "echo_bracelet_taken_to_return", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "bury_it_and_never_speak_of_it",
+        "text": "Bury it. Don't say a word. Not to the bunker. Not to yourself.",
+        "moraleDelta": 1.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": 0.15 }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_birthday_cake",
+    "title": "The Birthday Cake",
+    "bodyText": "A chest freezer, lid blown open by a pipe burst. Inside, a sheet cake still on its cardboard base, eight unlit candles melted into pink frosting. The frosting is the wrong color now, but the piped words are legible: HAPPY 8TH BIRTHDAY EMMA.",
+    "weight": 0.9,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "eat_a_forkful",
+        "text": "Take a fork from the drawer. Eat a single bite.",
+        "moraleDelta": 18.0,
+        "effects": [
+          { "targetNeed": "health", "needDelta": -22.0 },
+          { "targetNeed": "hunger", "needDelta": 8.0 },
+          { "setWorldFlag": "echo_latent_trauma_cake", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "close_the_lid_and_walk_away",
+        "text": "Close the lid. Some birthdays are not yours to keep.",
+        "moraleDelta": 4.0
+      },
+      {
+        "choiceId": "carry_the_cake_home",
+        "text": "Pick up the whole cake. Carry it home. You will figure out what to do with it later.",
+        "moraleDelta": -6.0,
+        "effects": [
+          { "itemId": "canned_food", "itemAmount": 1 },
+          { "targetNeed": "fatigue", "needDelta": 6.0 },
+          { "setWorldFlag": "echo_cake_carried_home", "worldFlagValue": true }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_smoking_pipe",
+    "title": "The Smoking Pipe",
+    "bodyText": "A man's study. Pipe stand, three pipes. One is oak, the bowl carved with a name in small letters: JAMES. The ash from the last bowl is still in it, white-grey, undisturbed. A tumbler of something that is no longer anything sits beside a half-written letter to a son.",
+    "weight": 0.8,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "smoke_it",
+        "text": "Light it. One drag. You have not smoked since before.",
+        "moraleDelta": 14.0,
+        "effects": [
+          { "targetNeed": "health", "needDelta": -6.0 },
+          { "targetNeed": "numbness", "needDelta": -0.2 },
+          { "setWorldFlag": "echo_latent_trauma_pipe", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "pocket_it_for_trade",
+        "text": "Pocket the pipe. Tobacco is a currency that still spends.",
+        "moraleDelta": 0.0,
+        "effects": [
+          { "itemId": "tobacco_pouch", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "empty_the_bowl_and_bury_it",
+        "text": "Tap the ash into the garden. Bury the pipe with the ash.",
+        "moraleDelta": 5.0,
+        "delayedConsequence": {
+          "delayHours": 1.0,
+          "title": "A Small Service",
+          "description": "The garden soil is half-frozen. You stay until your fingers are numb.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -4.0 }
+          ]
+        }
+      }
+    ]
+  },
+
+  {
+    "id": "echo_reading_glasses",
+    "title": "The Reading Glasses",
+    "bodyText": "Apartment 3B. Bathroom cabinet still mirrored. A pair of bifocals, prescription scratched off the temple. They belonged to a man who read three books at a time — there are bookmarks in three different rooms, all in mid-sentence. The last book is face-down on a chair.",
+    "weight": 0.7,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "wear_them_home",
+        "text": "Put them on. Walk home in them. See what he saw.",
+        "moraleDelta": -2.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": 0.3 },
+          { "setWorldFlag": "echo_latent_trauma_glasses", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "snap_them_for_parts",
+        "text": "Snap the frames. The lenses are good scrap.",
+        "moraleDelta": 1.0,
+        "effects": [
+          { "itemId": "scrap_metal", "itemAmount": 1 }
+        ]
+      },
+      {
+        "choiceId": "leave_them_on_the_book",
+        "text": "Set them down on the open book. He will not need them again. You will.",
+        "moraleDelta": 3.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": -0.1 }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "echo_library_card",
+    "title": "The Library Card",
+    "bodyText": "In a coat that has not moved in a year, a wallet. Inside, a library card stamped in red: DUE: 3 DAYS AFTER ARMAGEDDON. Two dollars, a stick of gum, and a school photo of a boy with a missing front tooth. The gum, somehow, is still good.",
+    "weight": 0.6,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "take_the_card",
+        "text": "Pocket the card. The fine is the least of anyone's problems now.",
+        "moraleDelta": -1.0,
+        "delayedConsequence": {
+          "delayHours": 168.0,
+          "title": "A Week Later",
+          "description": "You find the card in your coat. The dates have stopped meaning anything.",
+          "effects": [
+            { "targetNeed": "morale", "needDelta": 2.0 }
+          ]
+        }
+      },
+      {
+        "choiceId": "pay_the_late_fee",
+        "text": "Drop a coin in the dead postbox. Pay the fine on the way out.",
+        "moraleDelta": -10.0,
+        "delayedConsequence": {
+          "delayHours": 1.0,
+          "title": "A Coin in a Postbox",
+          "description": "The coin does not ring. It just sits there, in the dark.",
+          "effects": [
+            { "targetNeed": "warmth", "needDelta": -2.0 },
+            { "setWorldFlag": "echo_late_fee_paid_at_postbox", "worldFlagValue": true }
+          ]
+        }
+      },
+      {
+        "choiceId": "leave_everything",
+        "text": "Put the wallet back. The gum too. Some things are not yours to inherit.",
+        "moraleDelta": 0.0
+      }
+    ]
+  },
+
+  {
+    "id": "echo_post_it_fridge",
+    "title": "The Post-it on the Fridge",
+    "bodyText": "A yellow square on a fridge door that is now part of a wall. In blue pen, in a careful hand: Ran out of milk. Will be home by 6. Love you. — Dad. The fridge is open. The milk is gone. Six o'clock has come and gone a thousand times.",
+    "weight": 1.3,
+    "minDay": 31,
+    "conditions": {
+      "MinDay": 31,
+      "RequiredFlagId": "scarred_state"
+    },
+    "choices": [
+      {
+        "choiceId": "read_it_and_walk_on",
+        "text": "Read it. Nod to no one. Walk on.",
+        "moraleDelta": -1.0,
+        "effects": [
+          { "targetNeed": "numbness", "needDelta": 0.1 }
+        ]
+      },
+      {
+        "choiceId": "stick_it_back",
+        "text": "Press the corner back down. Some notes should not be moved.",
+        "moraleDelta": -1.0,
+        "effects": [
+          { "setWorldFlag": "echo_postit_stuck_back", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "take_the_note_with_you",
+        "text": "Pinch the corner. Lift it. Fold it. Put it in your chest pocket.",
+        "moraleDelta": -8.0,
+        "effects": [
+          { "targetNeed": "radiationanxiety", "needDelta": -0.15 },
+          { "setWorldFlag": "echo_latent_trauma_postit", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "burn_it",
+        "text": "Light it with your last waterproof match. Watch the corner curl.",
+        "moraleDelta": 3.0,
+        "effects": [
+          { "targetNeed": "health", "needDelta": -4.0 }
+        ]
+      }
+    ]
+  }
+]
