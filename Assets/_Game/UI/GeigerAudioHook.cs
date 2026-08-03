@@ -31,11 +31,23 @@ namespace AtomicWar._Game.UI
             }
         }
 
+        public bool IsStaticScreamActive { get; private set; }
+
+        /// <summary>Calculates logarithmic click cadence (0 at 0 rads, sparse at low rads, static scream at high rads).</summary>
+        public static float ComputeLogarithmicCadence(float radsPerHour)
+        {
+            if (radsPerHour <= 0f) return 0f;
+            // Logarithmic scale: log10(1 + rads) * multiplier, clamped 0..30 Hz
+            float logVal = Mathf.Log10(1f + radsPerHour);
+            return Mathf.Clamp(logVal * 14.5f, 0.2f, 30f);
+        }
+
         /// <summary>Subscribes to live exposure rate changes from RadiationSystem or Dosimeter.</summary>
         public void UpdateExposureRate(float radsPerHour)
         {
             CurrentRate = Mathf.Max(0f, radsPerHour);
-            CurrentClickFrequency = CadenceCurve != null ? CadenceCurve.Evaluate(CurrentRate) : CurrentRate * 0.3f;
+            CurrentClickFrequency = ComputeLogarithmicCadence(CurrentRate);
+            IsStaticScreamActive = CurrentRate >= 80f || CurrentClickFrequency >= 25f;
             ApplyAudioCadence();
         }
 
@@ -46,7 +58,8 @@ namespace AtomicWar._Game.UI
             // Trigger a single click or schedule click interval
             if (_clickClip != null && _audioSource.enabled)
             {
-                _audioSource.PlayOneShot(_clickClip, Mathf.Clamp01(CurrentRate / 50f + 0.1f));
+                float volume = IsStaticScreamActive ? 1.0f : Mathf.Clamp01(CurrentRate / 50f + 0.1f);
+                _audioSource.PlayOneShot(_clickClip, volume);
             }
         }
     }
