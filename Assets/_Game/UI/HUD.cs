@@ -25,6 +25,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private MapKnowledgeHUD _mapKnowledgeHud;
         [SerializeField] private TradeScreenUI _tradeScreenUi;
         [SerializeField] private PowerGridHUD _powerGridHud;
+        [SerializeField] private MapScreenUI _mapScreenUi;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -38,6 +39,7 @@ namespace AtomicWar._Game.UI
         public MapKnowledgeHUD MapKnowledgeHUD { get { EnsureWidgetReferences(); return _mapKnowledgeHud; } }
         public TradeScreenUI TradeScreenUI { get { EnsureWidgetReferences(); return _tradeScreenUi; } }
         public PowerGridHUD PowerGridHUD { get { EnsureWidgetReferences(); return _powerGridHud; } }
+        public MapScreenUI MapScreenUI { get { EnsureWidgetReferences(); return _mapScreenUi; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -56,6 +58,7 @@ namespace AtomicWar._Game.UI
             if (_mapKnowledgeHud == null) _mapKnowledgeHud = GetComponentInChildren<MapKnowledgeHUD>() ?? gameObject.AddComponent<MapKnowledgeHUD>();
             if (_tradeScreenUi == null) _tradeScreenUi = GetComponentInChildren<TradeScreenUI>() ?? gameObject.AddComponent<TradeScreenUI>();
             if (_powerGridHud == null) _powerGridHud = GetComponentInChildren<PowerGridHUD>() ?? gameObject.AddComponent<PowerGridHUD>();
+            if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
         }
 
         private void Update()
@@ -132,6 +135,13 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_powerGridHud != null) _powerGridHud.Bind(network);
+        }
+
+        /// <summary>Bind proc-gen wasteland map + weather for expedition pathing UI.</summary>
+        public void BindGeneratedMap(GeneratedMap map, System.Func<WeatherKind> getWeather = null)
+        {
+            EnsureWidgetReferences();
+            if (_mapScreenUi != null) _mapScreenUi.Bind(map, getWeather);
         }
 
         /// <summary>

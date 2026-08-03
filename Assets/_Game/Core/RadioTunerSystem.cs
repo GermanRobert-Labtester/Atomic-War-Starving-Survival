@@ -266,8 +266,12 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Apply a plume report to the knowledge map. Returns true if applied.
+        /// Optionally also updates the proc-gen wasteland graph (rumoredRad + reveal).
         /// </summary>
-        public bool ApplyPlumeReportToMap(IntelNode intel, RadiationKnowledgeMap map)
+        public bool ApplyPlumeReportToMap(
+            IntelNode intel,
+            RadiationKnowledgeMap map,
+            GeneratedMap generatedMap = null)
         {
             if (intel == null || map == null) return false;
             if (intel.Type != IntelType.PlumeReport) return false;
@@ -275,6 +279,16 @@ namespace AtomicWar._Game.Core
 
             // Apply the plume report to update the map's rumored rad
             map.SetRumor(intel.TargetLocationId, intel.NumericValue, 1f - intel.Confidence);
+
+            // Radio intel (#22): reveal silhouette + push rumored rad onto the node graph
+            if (generatedMap != null && !string.IsNullOrEmpty(intel.TargetLocationId))
+            {
+                generatedMap.SetRumoredRad(intel.TargetLocationId, intel.NumericValue);
+                // High-confidence reports fully reveal the site; low confidence only rumors.
+                if (intel.Confidence >= 0.55f)
+                    generatedMap.RevealNode(intel.TargetLocationId);
+            }
+
             intel.IsConsumed = true;
             return true;
         }

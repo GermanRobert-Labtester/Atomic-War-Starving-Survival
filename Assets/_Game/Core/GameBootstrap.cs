@@ -72,6 +72,8 @@ namespace AtomicWar._Game.Core
         public LocationScavengingSystem ScavengingSystem { get; private set; }
         public ExpeditionSystem ExpeditionSystem { get; private set; }
         public RadiationKnowledgeMap KnowledgeMap { get; private set; }
+        /// <summary>Seeded wasteland node graph for expeditions (#23).</summary>
+        public GeneratedMap GeneratedMap { get; private set; }
         public RadioBroadcastSystem RadioSystem { get; private set; }
         public RadioTunerSystem RadioTunerSystem { get; private set; }
         public BeliefSystem BeliefSystem { get; private set; }
@@ -301,6 +303,9 @@ namespace AtomicWar._Game.Core
                 }
             };
 
+            // Proc-gen wasteland map (seed-stable layout for this playthrough)
+            GeneratedMap = MapGenerator.Generate(_worldSeed);
+
             // Knowledge map must exist before SaveSystem can capture it
             KnowledgeMap = new RadiationKnowledgeMap();
             SeedKnowledgeMap();
@@ -313,6 +318,7 @@ namespace AtomicWar._Game.Core
                 id => null);
             SaveSystem.SetPhotoPeriodSystem(PhotoperiodSystem);
             SaveSystem.SetKnowledgeMap(KnowledgeMap);
+            SaveSystem.SetGeneratedMap(GeneratedMap);
             SaveSystem.SetInventory(Inventory);
             SaveSystem.SetMedicalSystem(MedicalSystem);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
@@ -345,6 +351,7 @@ namespace AtomicWar._Game.Core
             ExpeditionSystem = new ExpeditionSystem(
                 RadiationSystem, Inventory, _itemCatalog, WeatherSystem,
                 KnowledgeMap, MedicalSystem, Shelter, Survivors, _worldSeed);
+            ExpeditionSystem.SetGeneratedMap(GeneratedMap);
             SaveSystem.SetExpeditionSystem(ExpeditionSystem);
 
             // Hatch dilemma: when a comms-severed expedition arrives at the
@@ -386,9 +393,10 @@ namespace AtomicWar._Game.Core
                 Debug.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
                 if (intel.Type == IntelType.PlumeReport)
                 {
-                    // Apply plume reports to knowledge map
-                    RadioTunerSystem.ApplyPlumeReportToMap(intel, KnowledgeMap);
+                    // Apply plume reports to knowledge map + proc-gen node reveal
+                    RadioTunerSystem.ApplyPlumeReportToMap(intel, KnowledgeMap, GeneratedMap);
                     RefreshMapKnowledgeHUD();
+                    _hud?.MapScreenUI?.Refresh();
                 }
             };
 
@@ -530,11 +538,26 @@ namespace AtomicWar._Game.Core
 
         private void SeedKnowledgeMap()
         {
-            if (KnowledgeMap == null || _locationCatalog?.locations == null) return;
+            if (KnowledgeMap == null) return;
+
+            // Prefer proc-gen map nodes (authoritative per-playthrough layout)
+            if (GeneratedMap?.Nodes != null)
+            {
+                for (int i = 0; i < GeneratedMap.Nodes.Count; i++)
+                {
+                    var n = GeneratedMap.Nodes[i];
+                    if (n == null || string.IsNullOrEmpty(n.NodeId) || n.IsShelter) continue;
+                    KnowledgeMap.SeedTile(n.NodeId, n.TrueRad, n.RumoredRad, 1f);
+                }
+            }
+
+            // Also seed catalog locations if present (legacy / static sites)
+            if (_locationCatalog?.locations == null) return;
             var rng = new System.Random(_worldSeed + 17);
             foreach (var loc in _locationCatalog.locations)
             {
                 if (loc == null || string.IsNullOrEmpty(loc.id)) continue;
+                if (KnowledgeMap.GetTile(loc.id) != null) continue; // already seeded from map
                 float rumorScale = 0.4f + (float)rng.NextDouble() * 0.4f;
                 KnowledgeMap.SeedTile(loc.id, loc.baseRadsPerHour, loc.baseRadsPerHour * rumorScale, 1f);
             }
@@ -869,6 +892,23 @@ namespace AtomicWar._Game.Core
             _hud.BindEventRunner(EventRunner);
             _hud.BindEconomy(EconomySystem);
             _hud.BindPowerNetwork(PowerNetwork);
+            _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
+
+            // Map screen expedition requests → ExpeditionSystem
+            if (_hud.MapScreenUI != null)
+            {
+                _hud.MapScreenUI.OnExpeditionRequested += (survivor, nodeId, pathReq) =>
+                {
+                    if (ExpeditionSystem == null || survivor == null || pathReq == null) return;
+                    var node = GeneratedMap?.GetNode(nodeId);
+                    if (node != null)
+                        ExpeditionSystem.StartExpedition(survivor, node);
+                    else
+                        ExpeditionSystem.StartExpeditionFromPath(
+                            survivor, nodeId, pathReq.TravelHours, pathReq.TrueRad,
+                            pathReq.DangerLevel, pathReq.NodeId);
+                };
+            }
 
             // Wire radiation updates
             RadiationSystem.OnDoseChanged += (sv, dose) =>
@@ -956,6 +996,21 @@ namespace AtomicWar._Game.Core
         {
             if (ExpeditionSystem == null || survivor == null || location == null) return false;
             return ExpeditionSystem.StartExpedition(survivor, location, stance);
+        }
+
+        /// <summary>Start expedition to a proc-gen map node (weather-scaled travel).</summary>
+        public bool StartExpeditionToNode(Survivor survivor, string nodeId, ExpeditionStance stance = ExpeditionStance.Stealth)
+        {
+            if (ExpeditionSystem == null || survivor == null || GeneratedMap == null) return false;
+            var node = GeneratedMap.GetNode(nodeId);
+            if (node == null) return false;
+            return ExpeditionSystem.StartExpedition(survivor, node, stance);
+        }
+
+        /// <summary>Open the wasteland map screen (UI).</summary>
+        public void OpenMapScreen()
+        {
+            _hud?.MapScreenUI?.Open();
         }
 
         /// <summary>Send a survivor to survey a location with a working geiger.</summary>

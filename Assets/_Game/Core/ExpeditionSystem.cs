@@ -52,12 +52,14 @@ namespace AtomicWar._Game.Core
         private readonly MedicalSystem _medicalSystem;
         private readonly Shelter.Shelter _shelter;
         private readonly IReadOnlyList<Survivor> _survivors;
+        private GeneratedMap _generatedMap;
 
         private readonly List<ExpeditionState> _activeExpeditions = new List<ExpeditionState>();
         private readonly List<EncounterSO> _encounterPool = new List<EncounterSO>();
 
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
+        public GeneratedMap GeneratedMap => _generatedMap;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;
@@ -323,9 +325,16 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        /// <summary>Inject proc-gen wasteland map (visit/reveal on arrival).</summary>
+        public void SetGeneratedMap(GeneratedMap map)
+        {
+            _generatedMap = map;
+        }
+
         /// <summary>
         /// Start an expedition for a survivor to a target location node.
         /// Returns false if survivor is invalid, dead, or already on an expedition.
+        /// Travel hours are multiplied by current weather (blizzards ×2).
         /// </summary>
         public bool StartExpedition(
             Survivor survivor,
@@ -337,7 +346,8 @@ namespace AtomicWar._Game.Core
             if (IsOnExpedition(survivor.Id)) return false;
 
             float trueRad = ResolveTrueRad(location);
-            int distanceTicks = Mathf.Max(1, Mathf.RoundToInt(location.travelHours));
+            float travelHours = location.travelHours * CurrentWeatherTravelMultiplier();
+            int distanceTicks = Mathf.Max(1, Mathf.RoundToInt(travelHours));
 
             var state = new ExpeditionState
             {
@@ -362,6 +372,118 @@ namespace AtomicWar._Game.Core
             _activeExpeditions.Add(state);
             OnExpeditionStarted?.Invoke(state);
             return true;
+        }
+
+        /// <summary>
+        /// Start an expedition to a proc-gen <see cref="MapNode"/>.
+        /// Path travel uses weather-scaled hours from the generated map graph.
+        /// </summary>
+        public bool StartExpedition(
+            Survivor survivor,
+            MapNode node,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            float maxLootCapacity = MaxCarryingCapacityDefault)
+        {
+            if (survivor == null || !survivor.IsAlive || node == null || node.IsShelter) return false;
+            if (IsOnExpedition(survivor.Id)) return false;
+
+            float trueRad = node.TrueRad;
+            if (_knowledgeMap != null)
+            {
+                var tile = _knowledgeMap.GetTile(node.NodeId);
+                if (tile != null) trueRad = tile.TrueRad;
+            }
+
+            float travelHours;
+            if (_generatedMap != null)
+            {
+                var weather = _weatherSystem != null ? _weatherSystem.Current : WeatherKind.Clear;
+                travelHours = _generatedMap.GetTravelHoursFromShelter(node.NodeId, weather);
+                if (travelHours <= 0f)
+                    travelHours = node.DistanceFromShelter * CurrentWeatherTravelMultiplier();
+            }
+            else
+            {
+                travelHours = node.DistanceFromShelter * CurrentWeatherTravelMultiplier();
+            }
+
+            int distanceTicks = Mathf.Max(1, Mathf.RoundToInt(travelHours));
+
+            var state = new ExpeditionState
+            {
+                ExpeditionId = Guid.NewGuid().ToString("N"),
+                SurvivorId = survivor.Id,
+                Survivor = survivor,
+                TargetLocationId = node.NodeId,
+                TargetLocationName = node.DisplayName,
+                Stance = stance,
+                Phase = ExpeditionPhase.Outbound,
+                TotalDistanceTicks = distanceTicks,
+                CarryingCapacity = maxLootCapacity,
+                TrueRadPerHour = trueRad,
+                DangerLevel = node.DangerLevel,
+                Stamina = 100f,
+                SuitDegradation = 0f
+            };
+
+            survivor.State = SurvivorState.Working;
+            _activeExpeditions.Add(state);
+            OnExpeditionStarted?.Invoke(state);
+            return true;
+        }
+
+        /// <summary>
+        /// Start expedition from a MapScreenUI path request (precomputed weather hours).
+        /// </summary>
+        public bool StartExpeditionFromPath(
+            Survivor survivor,
+            string nodeId,
+            float travelHours,
+            float trueRad,
+            float dangerLevel,
+            string displayName,
+            ExpeditionStance stance = ExpeditionStance.Stealth,
+            float maxLootCapacity = MaxCarryingCapacityDefault)
+        {
+            if (survivor == null || !survivor.IsAlive || string.IsNullOrEmpty(nodeId)) return false;
+            if (IsOnExpedition(survivor.Id)) return false;
+            if (nodeId == GeneratedMap.ShelterNodeId) return false;
+
+            // Prefer live map data when available
+            MapNode node = _generatedMap?.GetNode(nodeId);
+            if (node != null)
+            {
+                return StartExpedition(survivor, node, stance, maxLootCapacity);
+            }
+
+            int distanceTicks = Mathf.Max(1, Mathf.RoundToInt(Mathf.Max(0.1f, travelHours)));
+            var state = new ExpeditionState
+            {
+                ExpeditionId = Guid.NewGuid().ToString("N"),
+                SurvivorId = survivor.Id,
+                Survivor = survivor,
+                TargetLocationId = nodeId,
+                TargetLocationName = string.IsNullOrEmpty(displayName) ? nodeId : displayName,
+                Stance = stance,
+                Phase = ExpeditionPhase.Outbound,
+                TotalDistanceTicks = distanceTicks,
+                CarryingCapacity = maxLootCapacity,
+                TrueRadPerHour = Mathf.Max(0f, trueRad),
+                DangerLevel = dangerLevel,
+                Stamina = 100f,
+                SuitDegradation = 0f
+            };
+
+            survivor.State = SurvivorState.Working;
+            _activeExpeditions.Add(state);
+            OnExpeditionStarted?.Invoke(state);
+            return true;
+        }
+
+        private float CurrentWeatherTravelMultiplier()
+        {
+            if (_weatherSystem == null) return 1f;
+            return GeneratedMap.WeatherTravelMultiplier(_weatherSystem.Current);
         }
 
         /// <summary>Manually order an expedition survivor to begin returning to bunker.</summary>
@@ -482,6 +604,8 @@ namespace AtomicWar._Game.Core
 
                         if (exp.TravelTicksCompleted >= exp.TotalDistanceTicks)
                         {
+                            // First arrival: mark proc-gen node visited + reveal fog-of-war
+                            _generatedMap?.MarkVisited(exp.TargetLocationId);
                             exp.Phase = ExpeditionPhase.Looting;
                         }
                         break;

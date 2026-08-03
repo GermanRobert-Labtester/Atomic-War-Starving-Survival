@@ -52,6 +52,7 @@ namespace AtomicWar._Game.Core
         private WorldPhaseSystem _worldPhaseSystem;
         private PowerNetwork _powerNetwork;
         private WaterStorage _waterStorage;
+        private GeneratedMap _generatedMap;
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
@@ -135,6 +136,12 @@ namespace AtomicWar._Game.Core
         public void SetPowerNetwork(PowerNetwork powerNetwork)
         {
             _powerNetwork = powerNetwork;
+        }
+
+        /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
+        public void SetGeneratedMap(GeneratedMap generatedMap)
+        {
+            _generatedMap = generatedMap;
         }
 
         /// <summary>Inject bunker water cisterns (clean/dirty/irradiated) for save/load.</summary>
@@ -385,6 +392,9 @@ namespace AtomicWar._Game.Core
             if (_powerNetwork != null)
                 data.Power = _powerNetwork.CaptureState();
 
+            if (_generatedMap != null)
+                data.GeneratedMap = _generatedMap.CaptureState();
+
             if (_waterStorage != null)
                 data.Water = _waterStorage.CaptureState();
 
@@ -584,6 +594,19 @@ namespace AtomicWar._Game.Core
             {
                 _powerNetwork.RestoreState(data.Power);
                 _powerNetwork.ApplyToShelter(_shelter);
+            }
+
+            if (_generatedMap != null && data.GeneratedMap != null)
+            {
+                // Layout is pure seed; regenerate if seed differs, then re-apply fog flags.
+                if (_generatedMap.Seed != data.GeneratedMap.Seed)
+                {
+                    var rebuilt = MapGenerator.Generate(data.GeneratedMap.Seed);
+                    _generatedMap.Seed = rebuilt.Seed;
+                    _generatedMap.Nodes = rebuilt.Nodes;
+                    _generatedMap.Paths = rebuilt.Paths;
+                }
+                _generatedMap.RestoreRevealState(data.GeneratedMap);
             }
 
             if (_waterStorage != null && data.Water != null)
@@ -816,6 +839,7 @@ namespace AtomicWar._Game.Core
         public DynamicEconomySave Economy;
         public PowerNetworkSave Power;
         public WaterStorageSave Water;
+        public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;
         public AffinityMatrixSave Affinity = new AffinityMatrixSave();
         public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();
