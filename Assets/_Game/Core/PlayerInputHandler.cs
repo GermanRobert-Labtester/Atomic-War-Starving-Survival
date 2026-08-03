@@ -30,6 +30,7 @@ namespace AtomicWar._Game.Core
         [SerializeField] private KeyCode _radioInterceptKey = KeyCode.R;
         [SerializeField] private KeyCode _radioTunerPrevKey = KeyCode.LeftBracket;
         [SerializeField] private KeyCode _radioTunerNextKey = KeyCode.RightBracket;
+        [SerializeField] private KeyCode _journalKey = KeyCode.J;
 
         /// <summary>Exposed for tests / rebinding docs.</summary>
         public KeyCode WorkbenchKey => _workbenchKey;
@@ -39,6 +40,7 @@ namespace AtomicWar._Game.Core
         public KeyCode RadioInterceptKey => _radioInterceptKey;
         public KeyCode RadioTunerPrevKey => _radioTunerPrevKey;
         public KeyCode RadioTunerNextKey => _radioTunerNextKey;
+        public KeyCode JournalKey => _journalKey;
 
         private void Awake()
         {
@@ -77,6 +79,8 @@ namespace AtomicWar._Game.Core
                 _bootstrap.CycleRadioTunerPrev();
             if (Input.GetKeyDown(_radioTunerNextKey))
                 _bootstrap.CycleRadioTunerNext();
+            if (Input.GetKeyDown(_journalKey))
+                _bootstrap.ToggleJournalBook();
 
             // Trade: demand parley / surrender after a hatch repel
             if (Input.GetKeyDown(_parleyKey) && IsTradeOpen())

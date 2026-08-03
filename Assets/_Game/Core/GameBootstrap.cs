@@ -93,6 +93,8 @@ namespace AtomicWar._Game.Core
         public ParleyOfferPrompt ParleyOfferPromptField { get; private set; }
         /// <summary>Faction succession / parley / hatch-bounce radio chatter.</summary>
         public FactionRadioInterceptSystem FactionRadioIntercepts { get; private set; }
+        /// <summary>Diegetic journal book + discovery knowledge (immersive tutorial).</summary>
+        public JournalSystem JournalSystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -313,6 +315,15 @@ namespace AtomicWar._Game.Core
                 EventRunner.SetPool(_eventCatalog.events);
             }
 
+            // Diegetic journal — survivors write discoveries (no tutorial popups)
+            JournalSystem = new JournalSystem();
+            JournalSystem.OnEntryAdded += entry =>
+            {
+                if (entry == null || string.IsNullOrEmpty(entry.Text)) return;
+                Debug.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
+                PushJournalEntryToHud(entry);
+            };
+
             // Mental Break System (Prompt #29). Designers populate the catalog
             // with MentalBreakSO assets (BingeEater, ViolentParanoia, etc.).
             // If the catalog is null, the system is still constructed — just
@@ -418,6 +429,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetPowerNetwork(PowerNetwork);
             SaveSystem.SetHatchDefense(HatchDefenseSystem);
             SaveSystem.SetFactionRadioIntercepts(FactionRadioIntercepts);
+            SaveSystem.SetJournalSystem(JournalSystem);
             SaveSystem.SetPreCaptureHook(SnapshotRadioHudToInterceptSystem);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
@@ -908,6 +920,11 @@ namespace AtomicWar._Game.Core
                 }
             }
 
+            // Shared indoor temp for AI sleep context + event/journal discoveries.
+            float indoorTemp = TemperatureSystem != null
+                ? TemperatureSystem.GetIndoorTemperature(Shelter)
+                : 15f;
+
             // AI (evaluate per survivor, every EvaluationInterval)
             UtilityAI.Tick(gameHours * TimeSystem.SecondsPerGameHour);
             if (UtilityAI.ShouldEvaluate())
@@ -916,9 +933,6 @@ namespace AtomicWar._Game.Core
                 SleepQualitySystem.ResetBedOccupancy(Shelter);
                 // Guards re-assigned each AI wave (stale posts clear).
                 HatchDefenseSystem?.ClearGuards();
-                float indoorTemp = TemperatureSystem != null
-                    ? TemperatureSystem.GetIndoorTemperature(Shelter)
-                    : 15f;
                 int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
                 float raidThreat = 0f;
                 if (HatchDefenseSystem != null && day >= HatchDefenseSystem.RaidUnlockDay)
@@ -986,9 +1000,15 @@ namespace AtomicWar._Game.Core
                 CurrentHour = TimeSystem.CurrentHourFloat,
                 IsFalloutStorm = WeatherSystem.Current == WeatherKind.FalloutStorm,
                 AllSurvivors = Survivors,
-                MentalBreak = MentalBreakSystem
+                MentalBreak = MentalBreakSystem,
+                CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f,
+                IndoorTemperatureC = indoorTemp
             };
             EventRunner.Tick(gameHours, eventContext);
+
+            // Diegetic journal discoveries (first-time atmosphere / rad / storm / etc.)
+            if (JournalSystem != null)
+                EventRunner.ObserveDiscoveries(JournalSystem, eventContext);
 
             // Try to trigger an event occasionally
             if (UnityEngine.Random.value < 0.05f) // ~5% chance per hour
@@ -1051,6 +1071,8 @@ namespace AtomicWar._Game.Core
             _hud.EnsureRadioInterceptHud();
             WireRadioInterceptTuner();
             SyncRadioInterceptHudFromLog();
+            _hud.EnsureJournalBook();
+            SyncJournalBookFromSystem();
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
             _hud.BindWorkbench(WorkbenchSystem);
 
@@ -1125,6 +1147,33 @@ namespace AtomicWar._Game.Core
                 GameOverReason = null;
                 // Intercept log + open/unread/tuner restored — refresh HUD strip.
                 SyncRadioInterceptHudFromLog();
+                SyncJournalBookFromSystem();
+            }
+        }
+
+        /// <summary>Toggle diegetic journal book (keybind J).</summary>
+        public void ToggleJournalBook()
+        {
+            var book = _hud?.EnsureJournalBook();
+            if (book == null) return;
+            book.Toggle();
+            if (JournalSystem != null)
+            {
+                JournalSystem.HudIsOpen = book.IsOpen;
+                if (book.IsOpen)
+                    JournalSystem.MarkRead();
+            }
+        }
+
+        /// <summary>Open journal book and clear unread / ping.</summary>
+        public void OpenJournalBook()
+        {
+            var book = _hud?.EnsureJournalBook();
+            book?.Open();
+            if (JournalSystem != null)
+            {
+                JournalSystem.HudIsOpen = true;
+                JournalSystem.MarkRead();
             }
         }
 
@@ -1377,6 +1426,26 @@ namespace AtomicWar._Game.Core
             if (entry == null || _hud == null) return;
             var strip = _hud.EnsureRadioInterceptHud();
             strip?.Push(entry.Message, entry.Kind, entry.FactionId, entry.Day);
+        }
+
+        private void PushJournalEntryToHud(JournalEntry entry)
+        {
+            if (entry == null || _hud == null) return;
+            var book = _hud.EnsureJournalBook();
+            book?.Push(entry);
+        }
+
+        /// <summary>Rebuild journal book from JournalSystem (WireHUD / load).</summary>
+        public void SyncJournalBookFromSystem()
+        {
+            if (_hud == null || JournalSystem == null) return;
+            var book = _hud.EnsureJournalBook();
+            if (book == null) return;
+            book.SetEntries(JournalSystem.Entries);
+            book.ApplyUiState(
+                JournalSystem.HudIsOpen,
+                JournalSystem.HasUnread,
+                JournalSystem.NotificationPing);
         }
 
         /// <summary>

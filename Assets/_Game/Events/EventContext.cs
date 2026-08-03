@@ -22,6 +22,11 @@ namespace AtomicWar._Game.Events
         public Dictionary<string, bool> WorldFlags = new Dictionary<string, bool>();
         public Random Random;
 
+        /// <summary>Diesel CO ppm (Prompt #20) for high_co2 journal discovery.</summary>
+        public float CarbonMonoxidePpm;
+        /// <summary>Indoor °C for freezing_shelter journal discovery.</summary>
+        public float IndoorTemperatureC = 15f;
+
         // Optional — used by EventEffect with SurvivorBId / FactionId for cross-survivor
         // lookups (Prompt #29: interpersonal affinity matrix). The runner is
         // null-safe if these are not wired.

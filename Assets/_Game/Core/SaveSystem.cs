@@ -12,6 +12,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Events;
 
 namespace AtomicWar._Game.Core
 {
@@ -56,6 +57,7 @@ namespace AtomicWar._Game.Core
         private HatchDefenseSystem _hatchDefense;
         private FactionRadioInterceptSystem _factionRadioIntercepts;
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
+        private JournalSystem _journalSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
@@ -152,6 +154,12 @@ namespace AtomicWar._Game.Core
         public void SetFactionRadioIntercepts(FactionRadioInterceptSystem radioIntercepts)
         {
             _factionRadioIntercepts = radioIntercepts;
+        }
+
+        /// <summary>Inject diegetic journal / knowledge base for save/load.</summary>
+        public void SetJournalSystem(JournalSystem journalSystem)
+        {
+            _journalSystem = journalSystem;
         }
 
         /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
@@ -425,6 +433,9 @@ namespace AtomicWar._Game.Core
             if (_factionRadioIntercepts != null)
                 data.FactionRadioIntercepts = _factionRadioIntercepts.CaptureState();
 
+            if (_journalSystem != null)
+                data.Journal = _journalSystem.CaptureState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -638,6 +649,12 @@ namespace AtomicWar._Game.Core
             {
                 // Null snapshot (pre-feature saves) clears to empty log.
                 _factionRadioIntercepts.RestoreState(data.FactionRadioIntercepts);
+            }
+
+            if (_journalSystem != null)
+            {
+                // Null journal on legacy saves resets empty (no re-fire of OnEntryAdded).
+                _journalSystem.RestoreState(data.Journal);
             }
 
             if (_generatedMap != null && data.GeneratedMap != null)
@@ -884,6 +901,7 @@ namespace AtomicWar._Game.Core
         public PowerNetworkSave Power;
         public HatchDefenseSave HatchDefense;
         public FactionRadioInterceptSave FactionRadioIntercepts;
+        public JournalSave Journal;
         public WaterStorageSave Water;
         public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;
