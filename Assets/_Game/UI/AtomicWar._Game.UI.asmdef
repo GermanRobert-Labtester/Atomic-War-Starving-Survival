@@ -10,7 +10,8 @@
         "AtomicWar._Game.Events",
         "AtomicWar._Game.AI",
         "AtomicWar._Game.Economy",
-        "AtomicWar._Game.Data"
+        "AtomicWar._Game.Data",
+        "AtomicWar._Game.Crafting"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

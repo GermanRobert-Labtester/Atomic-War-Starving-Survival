@@ -14,6 +14,15 @@ namespace AtomicWar._Game.Data
         public List<ItemDefinition> items = new List<ItemDefinition>();
 
         /// <summary>Look up an item definition by its snake_case id.</summary>
-        public ItemDefinition GetById(string id) => throw new System.NotImplementedException();
+        public ItemDefinition GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id) || items == null) return null;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i] != null && items[i].id == id)
+                    return items[i];
+            }
+            return null;
+        }
     }
 }

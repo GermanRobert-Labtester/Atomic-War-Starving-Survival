@@ -55,6 +55,15 @@ namespace AtomicWar._Game.AI
         /// <summary>Bunker water cisterns (clean/dirty/irradiated), fed by the catchment + purifier.</summary>
         public WaterStorage WaterStorage;
 
+        /// <summary>
+        /// True when ElectronicScrap is short for a critical workbench repair
+        /// (water purifier / hard-broken geiger). Scavenge actions prioritize junk.
+        /// </summary>
+        public bool NeedsElectronicScrapForCriticalRepair;
+
+        /// <summary>0..1 urgency for junk scavenging when scrap is needed (from deficit).</summary>
+        public float JunkScavengeUrgency;
+
         /// <summary>Applies radiation dose exposure (e.g. from drinking irradiated water).</summary>
         public RadiationSystem RadiationSystem;
 

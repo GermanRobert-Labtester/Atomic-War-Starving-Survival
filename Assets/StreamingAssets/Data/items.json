@@ -37,7 +37,16 @@
     "isEquipable": false,
     "equipSlot": "",
     "tradeValue": 30,
-    "empShielded": false
+    "empShielded": false,
+    "scrapValue": [
+      { "materialId": "electronic_scrap", "amount": 2 },
+      { "materialId": "mechanical_parts", "amount": 1 }
+    ],
+    "repairCosts": [
+      { "materialId": "electronic_scrap", "amount": 2 },
+      { "materialId": "mechanical_parts", "amount": 1 }
+    ],
+    "disassembleYieldFraction": 0.5
   },
   {
     "id": "iodine_pills",
@@ -518,5 +527,100 @@
     "equipSlot": "",
     "tradeValue": 20,
     "empShielded": false
+  },
+  {
+    "id": "mechanical_parts",
+    "displayName": "Mechanical Parts",
+    "description": "Gears, springs, fasteners stripped from machines. Workbench currency.",
+    "type": "Material",
+    "stackMax": 50,
+    "weight": 0.15,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 4,
+    "empShielded": false,
+    "scrapValue": [],
+    "disassembleYieldFraction": 0
+  },
+  {
+    "id": "electronic_scrap",
+    "displayName": "Electronic Scrap",
+    "description": "Boards, wire, and cracked vacuum tubes. Needed to repair instruments and the purifier.",
+    "type": "Material",
+    "stackMax": 50,
+    "weight": 0.1,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 6,
+    "empShielded": false,
+    "scrapValue": [],
+    "disassembleYieldFraction": 0
+  },
+  {
+    "id": "chemicals",
+    "displayName": "Chemicals",
+    "description": "Solvents and reagents scavenged from labs and garages.",
+    "type": "Material",
+    "stackMax": 30,
+    "weight": 0.25,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0.05,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 5,
+    "empShielded": false,
+    "scrapValue": [],
+    "disassembleYieldFraction": 0
+  },
+  {
+    "id": "handheld_radio",
+    "displayName": "Handheld Radio",
+    "description": "Portable receiver. Often dead. Still full of boards worth stripping.",
+    "type": "Device",
+    "stackMax": 1,
+    "weight": 0.8,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 22,
+    "empShielded": false,
+    "scrapValue": [
+      { "materialId": "electronic_scrap", "amount": 3 },
+      { "materialId": "mechanical_parts", "amount": 1 }
+    ],
+    "repairCosts": [
+      { "materialId": "electronic_scrap", "amount": 2 },
+      { "materialId": "mechanical_parts", "amount": 1 }
+    ],
+    "disassembleYieldFraction": 0.5
   }
 ]

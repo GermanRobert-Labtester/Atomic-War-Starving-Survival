@@ -4,6 +4,7 @@ using UnityEngine;
 using AtomicWar._Game.AI;
 using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Crafting;
+// WorkbenchSystem lives in Crafting
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -66,6 +67,7 @@ namespace AtomicWar._Game.Core
         public Shelter.Shelter Shelter { get; private set; }
         public Inventory.Inventory Inventory { get; private set; }
         public CraftingSystem CraftingSystem { get; private set; }
+        public WorkbenchSystem WorkbenchSystem { get; private set; }
         public UtilityAI UtilityAI { get; private set; }
         public EventRunner EventRunner { get; private set; }
         public SaveSystem SaveSystem { get; private set; }
@@ -205,9 +207,21 @@ namespace AtomicWar._Game.Core
             WorldPhaseSystem.OnNuclearExchange += HandleNuclearExchange;
             TimeSystem.OnDayTick += WorldPhaseSystem.OnDayTick;
 
-            // Inventory + Crafting
+            // Inventory + Crafting + Workbench scrap economy
             Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
             CraftingSystem = new CraftingSystem(Inventory);
+            CraftingSystem.AddStation(new CraftingStation
+            {
+                id = WorkbenchSystem.StationId,
+                displayName = "Workbench",
+                Condition = 100f
+            });
+            WorkbenchSystem = new WorkbenchSystem(
+                Inventory,
+                id => _itemCatalog?.GetById(id),
+                CraftingSystem,
+                () => Shelter,
+                () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
 
             // Seed inventory
             SeedStartingInventory();
@@ -802,6 +816,9 @@ namespace AtomicWar._Game.Core
                     if (!sv.IsAlive) continue;
                     float mapUncertainty = GetMapUncertaintyFor(sv);
                     BeliefSystem.Tick(sv, mapUncertainty, gameHours);
+                    int scrapDeficit = WorkbenchSystem != null
+                        ? WorkbenchSystem.GetCriticalElectronicScrapDeficit()
+                        : 0;
                     var context = new AIContext(sv, Shelter, Inventory, new System.Random(_worldSeed + sv.Id.GetHashCode()))
                     {
                         IsFalloutStorm  = WeatherSystem.Current == WeatherKind.FalloutStorm,
@@ -816,6 +833,10 @@ namespace AtomicWar._Game.Core
                         MedicalSystem   = MedicalSystem,
                         PowerNetwork    = PowerNetwork,
                         WaterStorage    = WaterStorage,
+                        NeedsElectronicScrapForCriticalRepair = scrapDeficit > 0,
+                        JunkScavengeUrgency = scrapDeficit > 0
+                            ? Mathf.Clamp01(scrapDeficit / 4f)
+                            : 0f,
                         RadiationSystem = RadiationSystem,
                         GetSurvivors    = () => Survivors
                     };
@@ -893,6 +914,7 @@ namespace AtomicWar._Game.Core
             _hud.BindEconomy(EconomySystem);
             _hud.BindPowerNetwork(PowerNetwork);
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
+            _hud.BindWorkbench(WorkbenchSystem);
 
             // Map screen expedition requests → ExpeditionSystem
             if (_hud.MapScreenUI != null)
@@ -1011,6 +1033,12 @@ namespace AtomicWar._Game.Core
         public void OpenMapScreen()
         {
             _hud?.MapScreenUI?.Open();
+        }
+
+        /// <summary>Open the workbench disassembly / repair screen.</summary>
+        public void OpenWorkbench()
+        {
+            _hud?.WorkbenchUI?.Open();
         }
 
         /// <summary>Send a survivor to survey a location with a working geiger.</summary>

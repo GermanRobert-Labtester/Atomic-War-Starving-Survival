@@ -247,7 +247,8 @@ namespace AtomicWar._Game.Inventory
                 {
                     Item = item,
                     Amount = toAdd,
-                    Device = item.type == ItemType.Device ? DeviceState.CreateDefault() : null
+                    Device = item.type == ItemType.Device ? DeviceState.CreateDefault() : null,
+                    CurrentDurability = item.durability > 0f ? item.durability : -1f
                 });
                 amount -= toAdd;
                 OnItemAdded?.Invoke(item, toAdd);
@@ -542,6 +543,32 @@ namespace AtomicWar._Game.Inventory
         public int Amount;
         /// <summary>Per-instance reliability for Device items (geiger, dosimeter); null otherwise.</summary>
         public DeviceState Device;
+        /// <summary>
+        /// Remaining durability for non-device gear/tools in storage (0..Item.durability).
+        /// -1 means "full / not tracked" (use Item.durability when needed).
+        /// </summary>
+        public float CurrentDurability = -1f;
+
+        /// <summary>Resolved durability for workbench repair UI.</summary>
+        public float GetDurability()
+        {
+            if (Item == null) return 0f;
+            if (Item.type == ItemType.Device && Device != null)
+                return Device.Broken ? 0f : Mathf.Max(0f, Device.Calibration * 100f);
+            if (Item.durability <= 0f) return 100f;
+            if (CurrentDurability < 0f) return Item.durability;
+            return CurrentDurability;
+        }
+
+        public bool IsBrokenOrDegraded()
+        {
+            if (Item == null) return false;
+            if (Item.type == ItemType.Device && Device != null)
+                return Device.Broken || Device.Calibration < InstrumentDevice.ReliableCalibrationThreshold;
+            if (Item.durability <= 0f) return false;
+            float d = GetDurability();
+            return d < Item.durability * 0.99f;
+        }
     }
 
     /// <summary>An item currently worn in an equipment slot, with its remaining durability.</summary>

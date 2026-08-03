@@ -38,7 +38,27 @@ namespace AtomicWar._Game.AI.Actions
             float beliefMultiplier = context.BeliefSystem != null
                 ? context.BeliefSystem.ComputeScavengeMultiplier(context.Survivor, context.MapUncertainty)
                 : 1f;
-            return Mathf.Clamp01(baseScore * uncertaintyDamp * beliefMultiplier);
+
+            // Workbench economy: when ElectronicScrap is needed for a critical repair
+            // (water purifier / broken geiger), scavenge prioritizes junk/materials.
+            float junkBoost = 1f;
+            if (context.NeedsElectronicScrapForCriticalRepair)
+            {
+                float urgency = Mathf.Clamp01(context.JunkScavengeUrgency);
+                if (urgency <= 0f) urgency = 0.75f;
+                junkBoost = 1f + 0.55f * urgency;
+            }
+
+            return Mathf.Clamp01(baseScore * uncertaintyDamp * beliefMultiplier * junkBoost);
+        }
+
+        /// <summary>
+        /// When true, loot rolls should bias toward junk / electronic scrap materials.
+        /// Driven by the same critical-repair scrap deficit as EvaluateRaw.
+        /// </summary>
+        public static bool PreferJunkLoot(AIContext context)
+        {
+            return context != null && context.NeedsElectronicScrapForCriticalRepair;
         }
     }
 }

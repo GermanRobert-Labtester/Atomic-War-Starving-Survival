@@ -247,6 +247,16 @@ namespace AtomicWar._Game.Editor
             public string equipSlot;
             public float  tradeValue;
             public bool   empShielded;
+            public ScrapYieldJson[] scrapValue;
+            public ScrapYieldJson[] repairCosts;
+            public float  disassembleYieldFraction = 0.5f;
+        }
+
+        [Serializable]
+        class ScrapYieldJson
+        {
+            public string materialId;
+            public int    amount = 1;
         }
 
         [Serializable]
@@ -472,6 +482,32 @@ namespace AtomicWar._Game.Editor
                 so.equipSlot       = string.IsNullOrEmpty(json.equipSlot) ? EquipSlot.None : Enum.Parse<EquipSlot>(json.equipSlot, true);
                 so.tradeValue      = json.tradeValue;
                 so.empShielded     = json.empShielded;
+                so.disassembleYieldFraction = json.disassembleYieldFraction > 0f
+                    ? Mathf.Clamp01(json.disassembleYieldFraction)
+                    : 0.5f;
+
+                so.scrapValue = new System.Collections.Generic.List<AtomicWar._Game.Inventory.ScrapYield>();
+                if (json.scrapValue != null)
+                {
+                    for (int i = 0; i < json.scrapValue.Length; i++)
+                    {
+                        var row = json.scrapValue[i];
+                        if (row == null || string.IsNullOrEmpty(row.materialId) || row.amount <= 0) continue;
+                        so.scrapValue.Add(new AtomicWar._Game.Inventory.ScrapYield(row.materialId, row.amount));
+                    }
+                }
+
+                so.repairRecipe = new AtomicWar._Game.Inventory.RepairRecipe { hours = 0.5f, requiresTools = true };
+                if (json.repairCosts != null)
+                {
+                    for (int i = 0; i < json.repairCosts.Length; i++)
+                    {
+                        var row = json.repairCosts[i];
+                        if (row == null || string.IsNullOrEmpty(row.materialId) || row.amount <= 0) continue;
+                        so.repairRecipe.costs.Add(new AtomicWar._Game.Inventory.ScrapYield(row.materialId, row.amount));
+                    }
+                }
+
                 EditorUtility.SetDirty(so);
                 map[json.id] = so;
             }

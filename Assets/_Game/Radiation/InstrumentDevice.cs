@@ -109,6 +109,19 @@ namespace AtomicWar._Game.Radiation
             device.Broken = true;
         }
 
+        /// <summary>
+        /// Workbench repair: clear hard failure and restore calibration (consumes scrap externally).
+        /// </summary>
+        public static void RepairHardFailure(DeviceState device, int currentDay = 0)
+        {
+            if (device == null) return;
+            device.Broken = false;
+            device.Calibration = 1f;
+            device.LastCalibratedDay = currentDay;
+            if (device.Battery <= 0f) device.Battery = 0.25f; // enough to power on after repair
+            device.Normalize();
+        }
+
         /// <summary>Days since last calibration (clamped ≥ 0).</summary>
         public static int DaysSinceCalibration(DeviceState device, int currentDay)
         {

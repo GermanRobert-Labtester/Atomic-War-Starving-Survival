@@ -26,6 +26,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private TradeScreenUI _tradeScreenUi;
         [SerializeField] private PowerGridHUD _powerGridHud;
         [SerializeField] private MapScreenUI _mapScreenUi;
+        [SerializeField] private WorkbenchUI _workbenchUi;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -40,6 +41,7 @@ namespace AtomicWar._Game.UI
         public TradeScreenUI TradeScreenUI { get { EnsureWidgetReferences(); return _tradeScreenUi; } }
         public PowerGridHUD PowerGridHUD { get { EnsureWidgetReferences(); return _powerGridHud; } }
         public MapScreenUI MapScreenUI { get { EnsureWidgetReferences(); return _mapScreenUi; } }
+        public WorkbenchUI WorkbenchUI { get { EnsureWidgetReferences(); return _workbenchUi; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -59,6 +61,7 @@ namespace AtomicWar._Game.UI
             if (_tradeScreenUi == null) _tradeScreenUi = GetComponentInChildren<TradeScreenUI>() ?? gameObject.AddComponent<TradeScreenUI>();
             if (_powerGridHud == null) _powerGridHud = GetComponentInChildren<PowerGridHUD>() ?? gameObject.AddComponent<PowerGridHUD>();
             if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
+            if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
         }
 
         private void Update()
@@ -142,6 +145,13 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_mapScreenUi != null) _mapScreenUi.Bind(map, getWeather);
+        }
+
+        /// <summary>Bind workbench disassembly / repair screen.</summary>
+        public void BindWorkbench(AtomicWar._Game.Crafting.WorkbenchSystem workbench)
+        {
+            EnsureWidgetReferences();
+            if (_workbenchUi != null) _workbenchUi.Bind(workbench);
         }
 
         /// <summary>

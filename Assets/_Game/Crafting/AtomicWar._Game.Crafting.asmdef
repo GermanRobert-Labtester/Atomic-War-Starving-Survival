@@ -4,7 +4,8 @@
     "references": [
         "AtomicWar._Game.Survivors",
         "AtomicWar._Game.Shelter",
-        "AtomicWar._Game.Inventory"
+        "AtomicWar._Game.Inventory",
+        "AtomicWar._Game.Radiation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
