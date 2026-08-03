@@ -89,8 +89,16 @@ namespace AtomicWar._Game.Core
         public FlashpointChoreographer FlashpointChoreographer { get; private set; }
         public MentalBreakSystem MentalBreakSystem { get; private set; }
         public HatchDilemmaPrompt HatchDilemmaPromptField { get; private set; }
+        /// <summary>Post-repel offer: open trade / demand parley without hunting the UI.</summary>
+        public ParleyOfferPrompt ParleyOfferPromptField { get; private set; }
+        /// <summary>Faction succession / parley / hatch-bounce radio chatter.</summary>
+        public FactionRadioInterceptSystem FactionRadioIntercepts { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
+
+        /// <summary>Ephemeral faction stockpiles for OpenTradeWithFaction.</summary>
+        private readonly Dictionary<string, Inventory.Inventory> _factionStocks =
+            new Dictionary<string, Inventory.Inventory>();
 
         // -----------------------------------------------------------------
         // GameOver state
@@ -360,6 +368,20 @@ namespace AtomicWar._Game.Core
             EconomySystem.SetHatchDefense(HatchDefenseSystem);
             EconomySystem.SetDayProvider(() => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             EconomySystem.BindEventRunner(EventRunner);
+
+            // Post-repel parley modal + faction radio intercept log
+            ParleyOfferPromptField = new ParleyOfferPrompt();
+            FactionRadioIntercepts = new FactionRadioInterceptSystem();
+            FactionRadioIntercepts.Bind(
+                EconomySystem,
+                () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+            EconomySystem.OnRaidResolved += OnFactionRaidResolved_Handle;
+            FactionRadioIntercepts.OnIntercept += entry =>
+            {
+                if (entry != null && !string.IsNullOrEmpty(entry.Message))
+                    Debug.Log($"[Radio intercept] {entry.Message}");
+            };
+
             WorldPhaseSystem.OnPhaseChanged += phase =>
             {
                 EconomySystem.NotifyPhaseChanged(phase);
@@ -851,6 +873,7 @@ namespace AtomicWar._Game.Core
             // Hatch-dilemma prompt: advance the timeout. On expiry the
             // prompt auto-resolves with ForceDeconOutside.
             HatchDilemmaPromptField?.Tick(gameHours);
+            ParleyOfferPromptField?.Tick(gameHours);
 
             // Radiation
             RadiationSystem.Tick(gameHours);
@@ -1178,10 +1201,47 @@ namespace AtomicWar._Game.Core
             return _hud.TradeScreenUI.Open(factionId, Inventory, factionStock);
         }
 
+        /// <summary>
+        /// Open trade using an ephemeral faction stock (created on first use).
+        /// Used by the post-repel parley modal so the player need not hunt UI.
+        /// </summary>
+        public bool OpenTradeWithFaction(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId) || Inventory == null) return false;
+            return OpenTrade(factionId, GetOrCreateFactionStock(factionId));
+        }
+
         /// <summary>Demand parley / surrender on the open trade screen (keybind P).</summary>
         public bool DemandTradeParley()
         {
             return _hud?.TradeScreenUI != null && _hud.TradeScreenUI.TryDemandParley();
+        }
+
+        /// <summary>
+        /// Demand parley for a faction. Opens trade when HUD is present so the
+        /// strip shows STOOD DOWN; falls back to economy-only when headless.
+        /// Used by the post-repel modal.
+        /// </summary>
+        public bool DemandParleyForFaction(string factionId)
+        {
+            if (EconomySystem == null || string.IsNullOrEmpty(factionId)) return false;
+            if (OpenTradeWithFaction(factionId))
+                return DemandTradeParley();
+            return EconomySystem.DemandParley(factionId).Applied;
+        }
+
+        private Inventory.Inventory GetOrCreateFactionStock(string factionId)
+        {
+            if (_factionStocks.TryGetValue(factionId, out var existing) && existing != null)
+                return existing;
+            var stock = new Inventory.Inventory { Capacity = 40, MaxWeight = 200f };
+            // Light seed stock so the screen is not empty after a stand-down.
+            var water = _itemCatalog?.GetById("clean_water");
+            var scrap = _itemCatalog?.GetById("scrap_metal");
+            if (water != null) stock.Add(water, 2);
+            if (scrap != null) stock.Add(scrap, 4);
+            _factionStocks[factionId] = stock;
+            return stock;
         }
 
         /// <summary>Send a survivor to survey a location with a working geiger.</summary>
@@ -1252,6 +1312,90 @@ namespace AtomicWar._Game.Core
             }
             if (count == 0) return hasWorkingGeiger ? 0.5f : 1f;
             return Mathf.Clamp01(1f - (totalConfidence / count));
+        }
+
+        // -----------------------------------------------------------------
+        // Post-repel parley offer (trade modal)
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// After a hatch repel that did not auto-surrender, present a modal:
+        /// demand parley now, open trade, or dismiss. Wired from Economy.OnRaidResolved.
+        /// </summary>
+        private void OnFactionRaidResolved_Handle(FactionRaidResult result)
+        {
+            if (result == null || !result.Launched || !result.Repelled) return;
+            // Second repel may auto-surrender — no parley gate left.
+            if (result.SurrenderedAfter) return;
+            if (EconomySystem == null || !EconomySystem.CanDemandParley(result.FactionId)) return;
+            // Avoid stacking over an existing offer.
+            if (ParleyOfferPromptField != null && ParleyOfferPromptField.IsActive) return;
+
+            PresentParleyOffer(result.FactionId);
+        }
+
+        /// <summary>Build + run the parley offer GameEvent; start soft timeout.</summary>
+        public void PresentParleyOffer(string factionId)
+        {
+            if (EconomySystem == null || EventRunner == null || string.IsNullOrEmpty(factionId))
+                return;
+            if (!EconomySystem.CanDemandParley(factionId)) return;
+
+            string leader = EconomySystem.GetLeaderName(factionId);
+            ParleyOfferPromptField?.Begin(factionId, leader);
+            if (ParleyOfferPromptField != null)
+            {
+                ParleyOfferPromptField.OnTimeout -= OnParleyOfferTimeout_Handle;
+                ParleyOfferPromptField.OnTimeout += OnParleyOfferTimeout_Handle;
+            }
+
+            var eventSo = EconomySystem.CreateParleyOfferEvent(factionId);
+            string eventId = eventSo.id;
+            string capturedFaction = factionId;
+
+            Action<GameEvent, EventChoice, EventContext> onChoice = null;
+            onChoice = (gameEvent, choice, ctx) =>
+            {
+                if (gameEvent == null || choice == null) return;
+                if (gameEvent.id != eventId) return;
+                ApplyParleyOfferChoice(capturedFaction, choice.ChoiceId);
+                EventRunner.OnChoiceApplied -= onChoice;
+            };
+            EventRunner.OnChoiceApplied += onChoice;
+
+            var primary = Survivors != null && Survivors.Count > 0 ? Survivors[0] : null;
+            var ctx = new EventContext(primary, Shelter, Inventory, new System.Random(_worldSeed + 17));
+            EventRunner.Run(eventSo, ctx);
+        }
+
+        private void OnParleyOfferTimeout_Handle(ParleyOfferPrompt.Resolution resolution)
+        {
+            // Soft dismiss — they can still open trade later via [P] if repels hold.
+            ParleyOfferPromptField?.Cancel();
+        }
+
+        /// <summary>Resolve a parley-offer choice id from the event modal.</summary>
+        public void ApplyParleyOfferChoice(string factionId, string choiceId)
+        {
+            if (string.IsNullOrEmpty(choiceId)) choiceId = "dismiss";
+
+            ParleyOfferPrompt.Resolution res = ParleyOfferPrompt.Resolution.Dismiss;
+            switch (choiceId)
+            {
+                case "parley_now":
+                    res = ParleyOfferPrompt.Resolution.DemandParley;
+                    DemandParleyForFaction(factionId);
+                    break;
+                case "open_trade":
+                    res = ParleyOfferPrompt.Resolution.OpenTrade;
+                    OpenTradeWithFaction(factionId);
+                    break;
+                default:
+                    res = ParleyOfferPrompt.Resolution.Dismiss;
+                    break;
+            }
+
+            ParleyOfferPromptField?.Resolve(res);
         }
 
         // -----------------------------------------------------------------

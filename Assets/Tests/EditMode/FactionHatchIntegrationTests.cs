@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
@@ -426,6 +428,188 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(eco2.GetSuccessionGeneration(fid), Is.EqualTo(1));
             Assert.That(eco2.GetLeaderName(fid), Is.EqualTo("Colonel Ash"));
             Assert.That(eco2.HasSurrendered(fid), Is.True);
+        }
+
+        [Test]
+        public void EconomySave_RoundTripsLastRepelledFactionId()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.DoomsdayPreppers;
+            eco.SetTrust(fid, -80f);
+
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(eco.LastRepelledFactionId, Is.EqualTo(fid));
+
+            var snap = eco.CaptureState();
+            Assert.That(snap.LastRepelledFactionId, Is.EqualTo(fid));
+
+            var (eco2, _, _, _) = MakeWiredStack();
+            eco2.RestoreState(snap);
+            Assert.That(eco2.LastRepelledFactionId, Is.EqualTo(fid),
+                "Trade strip / parley gate must remember last repel after load");
+            // Consecutive repels also restore so CanDemandParley stays true.
+            Assert.That(eco2.GetConsecutiveRepels(fid), Is.EqualTo(1));
+            Assert.That(eco2.CanDemandParley(fid), Is.True);
+        }
+
+        [Test]
+        public void ParleyOfferEvent_HasDemandTradeAndDismissChoices()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.ScavengerCamp;
+            eco.SetTrust(fid, -80f);
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+
+            var ev = eco.CreateParleyOfferEvent(fid);
+            _toDestroy.Add(ev);
+            Assert.That(ev.id, Does.Contain("parley_offer"));
+            Assert.That(ev.title, Does.Contain("Flinched").IgnoreCase);
+            Assert.That(ev.choices.Count, Is.EqualTo(3));
+            Assert.That(ev.choices.Exists(c => c.ChoiceId == "parley_now"), Is.True);
+            Assert.That(ev.choices.Exists(c => c.ChoiceId == "open_trade"), Is.True);
+            Assert.That(ev.choices.Exists(c => c.ChoiceId == "dismiss"), Is.True);
+            Assert.That(ev.bodyText, Does.Contain(eco.GetLeaderName(fid)));
+        }
+
+        [Test]
+        public void ParleyOfferPrompt_BeginTimeoutAndResolve()
+        {
+            var prompt = new ParleyOfferPrompt(timeoutGameHours: 2f);
+            string readyFid = null;
+            prompt.OnPromptReady += id => readyFid = id;
+            ParleyOfferPrompt.Resolution timed = ParleyOfferPrompt.Resolution.DemandParley;
+            prompt.OnTimeout += r => timed = r;
+
+            prompt.Begin(FactionSO.Ids.MilitaryRemnants, "Colonel Ash");
+            Assert.That(prompt.IsActive, Is.True);
+            Assert.That(prompt.FactionId, Is.EqualTo(FactionSO.Ids.MilitaryRemnants));
+            Assert.That(readyFid, Is.EqualTo(FactionSO.Ids.MilitaryRemnants));
+
+            // Second begin is no-op
+            prompt.Begin(FactionSO.Ids.ScavengerCamp, "Other");
+            Assert.That(prompt.FactionId, Is.EqualTo(FactionSO.Ids.MilitaryRemnants));
+
+            prompt.Tick(1f);
+            Assert.That(prompt.IsActive, Is.True);
+            prompt.Tick(1.5f);
+            Assert.That(prompt.IsActive, Is.False);
+            Assert.That(timed, Is.EqualTo(ParleyOfferPrompt.Resolution.TimedOut));
+
+            // Fresh resolve path
+            prompt.Begin(FactionSO.Ids.ScavengerCamp, "Ring Boss");
+            ParleyOfferPrompt.Resolution chosen = ParleyOfferPrompt.Resolution.TimedOut;
+            prompt.OnResolved += r => chosen = r;
+            prompt.Resolve(ParleyOfferPrompt.Resolution.DemandParley);
+            Assert.That(chosen, Is.EqualTo(ParleyOfferPrompt.Resolution.DemandParley));
+            Assert.That(prompt.IsActive, Is.False);
+        }
+
+        [Test]
+        public void ParleyOffer_ViaEventRunner_DemandParleyChoice_AppliesSurrender()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.MilitaryRemnants;
+            eco.SetTrust(fid, -90f);
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(eco.CanDemandParley(fid), Is.True);
+
+            var runner = new EventRunner();
+            var prompt = new ParleyOfferPrompt();
+            prompt.Begin(fid, eco.GetLeaderName(fid));
+
+            var ev = eco.CreateParleyOfferEvent(fid);
+            _toDestroy.Add(ev);
+            GameEvent seen = null;
+            runner.OnEventTriggered += (e, _) => seen = e;
+            runner.Run(ev, new EventContext());
+            Assert.That(seen, Is.SameAs(ev));
+
+            var parleyChoice = ev.choices.Find(c => c.ChoiceId == "parley_now");
+            Assert.That(parleyChoice, Is.Not.Null);
+
+            // Simulate modal selection side-effect (bootstrap ApplyParleyOfferChoice)
+            var result = eco.DemandParley(fid);
+            prompt.Resolve(ParleyOfferPrompt.Resolution.DemandParley);
+
+            Assert.That(result.Applied, Is.True);
+            Assert.That(eco.HasSurrendered(fid), Is.True);
+            Assert.That(prompt.IsActive, Is.False);
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Launched, Is.False);
+        }
+
+        [Test]
+        public void FactionRadioIntercepts_SuccessionParleyAndHatchRepel()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.ScavengerCamp;
+            eco.SetTrust(fid, -80f);
+
+            var radio = new FactionRadioInterceptSystem();
+            radio.Bind(eco, () => 42);
+            FactionRadioInterceptSystem.InterceptEntry last = null;
+            radio.OnIntercept += e => last = e;
+
+            eco.ApplySuccession(fid, "Ash Road Cell", 0.4f, 0.5f);
+            Assert.That(last, Is.Not.Null);
+            Assert.That(last.Kind, Is.EqualTo(nameof(FactionRadioInterceptSystem.InterceptKind.Succession)));
+            Assert.That(last.Message, Does.Contain("Ash Road Cell"));
+            Assert.That(last.Message, Does.Contain("banner").IgnoreCase);
+            Assert.That(last.Day, Is.EqualTo(42));
+            Assert.That(radio.LastInterceptMessage, Does.Contain("Ash Road Cell"));
+
+            // Succession blends trust toward starting — push back below raid line.
+            eco.SetTrust(fid, -80f);
+
+            // Hatch repel chatter (not auto-surrender)
+            last = null;
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(last, Is.Not.Null);
+            Assert.That(last.Kind, Is.EqualTo(nameof(FactionRadioInterceptSystem.InterceptKind.HatchRepel)));
+            Assert.That(last.Message, Does.Contain("Hatch bounce").IgnoreCase);
+
+            // Manual parley → Parley intercept (not Auto)
+            last = null;
+            var s = eco.DemandParley(fid);
+            Assert.That(s.Applied, Is.True);
+            Assert.That(last, Is.Not.Null);
+            Assert.That(last.Kind, Is.EqualTo(nameof(FactionRadioInterceptSystem.InterceptKind.Parley)));
+            Assert.That(last.Message, Does.Contain("Parley").IgnoreCase);
+            Assert.That(last.Message, Does.Contain("Ash Road Cell").Or.Contain("raid").IgnoreCase);
+
+            // Save/load intercept log
+            var snap = radio.CaptureState();
+            var radio2 = new FactionRadioInterceptSystem();
+            radio2.RestoreState(snap);
+            Assert.That(radio2.Log.Count, Is.EqualTo(radio.Log.Count));
+            Assert.That(radio2.LastInterceptMessage, Is.EqualTo(radio.LastInterceptMessage));
+
+            radio.Unbind();
+        }
+
+        [Test]
+        public void FactionRadioIntercepts_AutoSurrender_UsesSurrenderKind()
+        {
+            var (eco, _, _, _) = MakeWiredStack(day: 40, securityOverride: 120f);
+            string fid = FactionSO.Ids.MilitaryRemnants;
+            eco.SetTrust(fid, -90f);
+            eco.SetRaidAggression(fid, 0.6f);
+
+            var radio = new FactionRadioInterceptSystem();
+            radio.Bind(eco, () => 50);
+            FactionRadioInterceptSystem.InterceptEntry surrenderLine = null;
+            radio.OnIntercept += e =>
+            {
+                if (e.Kind == nameof(FactionRadioInterceptSystem.InterceptKind.Surrender))
+                    surrenderLine = e;
+            };
+
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(eco.TryLaunchRaid(fid, ignoreDayGate: true).Repelled, Is.True);
+            Assert.That(eco.HasSurrendered(fid), Is.True);
+            Assert.That(surrenderLine, Is.Not.Null);
+            Assert.That(surrenderLine.Message, Does.Contain("quiet").IgnoreCase
+                .Or.Contain("stops").IgnoreCase);
+            radio.Unbind();
         }
     }
 }

@@ -885,6 +885,53 @@ namespace AtomicWar._Game.Economy
             return ev;
         }
 
+        /// <summary>
+        /// Post-repel modal: demand parley, open trade, or dismiss.
+        /// Choice ids: parley_now | open_trade | dismiss.
+        /// </summary>
+        public GameEvent CreateParleyOfferEvent(string factionId)
+        {
+            var fac = GetFaction(factionId);
+            string name = fac != null ? fac.displayName : factionId;
+            string leader = GetLeaderName(factionId);
+            if (string.IsNullOrEmpty(leader)) leader = "Their lead";
+
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = "evt_parley_offer_" + (factionId ?? "unknown");
+            ev.title = "They Flinched at the Hatch";
+            ev.bodyText =
+                $"{name} bounced off the plate. {leader} is still on the band — " +
+                "short curses, then dead air. You can demand they stand down now, " +
+                "or open trade and press the issue at the table.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions { MinDay = 1 };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "parley_now",
+                    Text = "Open the channel. Demand they stand down. [parley]",
+                    MoraleDelta = 2f,
+                    FactionId = factionId
+                },
+                new EventChoice
+                {
+                    ChoiceId = "open_trade",
+                    Text = "Crack trade first. Keep the hatch sealed. [trade]",
+                    MoraleDelta = 0f,
+                    FactionId = factionId
+                },
+                new EventChoice
+                {
+                    ChoiceId = "dismiss",
+                    Text = "Not now. Let them stew.",
+                    MoraleDelta = -1f,
+                    FactionId = factionId
+                }
+            };
+            return ev;
+        }
+
         // -----------------------------------------------------------------
         // Save / load
         // -----------------------------------------------------------------
@@ -918,6 +965,7 @@ namespace AtomicWar._Game.Economy
 
             save.BarterOnlyMode = _barterOnlyMode;
             save.BarterOnlyAccepted = _barterOnlyAcceptedItemIds.ToArray();
+            save.LastRepelledFactionId = LastRepelledFactionId ?? string.Empty;
             return save;
         }
 
@@ -930,6 +978,7 @@ namespace AtomicWar._Game.Economy
             _leaderName.Clear();
             _consecutiveRepels.Clear();
             _hasSurrendered.Clear();
+            LastRepelledFactionId = string.Empty;
             if (save.Trust != null)
             {
                 for (int i = 0; i < save.Trust.Length; i++)
@@ -966,6 +1015,7 @@ namespace AtomicWar._Game.Economy
                     if (!string.IsNullOrEmpty(id)) _barterOnlyAcceptedItemIds.Add(id);
                 }
             }
+            LastRepelledFactionId = save.LastRepelledFactionId ?? string.Empty;
             OnEconomyChanged?.Invoke();
         }
     }
@@ -1059,5 +1109,7 @@ namespace AtomicWar._Game.Economy
         public bool BarterOnlyMode;
         /// <summary>Item ids the player may offer while barter-only is on.</summary>
         public string[] BarterOnlyAccepted;
+        /// <summary>Last faction successfully repelled at the hatch (trade strip / parley).</summary>
+        public string LastRepelledFactionId;
     }
 }
