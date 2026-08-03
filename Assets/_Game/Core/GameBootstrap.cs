@@ -17,6 +17,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -97,12 +98,33 @@ namespace AtomicWar._Game.Core
         public JournalSystem JournalSystem { get; private set; }
         /// <summary>Campaign win/loss projects (radio extraction + vehicle escape).</summary>
         public VictoryProjectManager VictoryProject { get; private set; }
+        /// <summary>Campaign endgame evaluation engine (Prompt #41).</summary>
+        public EndgameEngine EndgameEngine { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
         /// <summary>Ephemeral faction stockpiles for OpenTradeWithFaction.</summary>
         private readonly Dictionary<string, Inventory.Inventory> _factionStocks =
             new Dictionary<string, Inventory.Inventory>();
+
+        /// <summary>Fast-forward speed for the F-key toggle.</summary>
+        public const float FastForwardScale = 3f;
+
+        /// <summary>
+        /// Sub-step guard for the frame loop: after a long hitch the carried
+        /// game-time is consumed in at most this many steps per frame; the
+        /// remainder rolls into the next frame (no spiral of death, no lost time).
+        /// </summary>
+        private const int MaxSubstepsPerFrame = 128;
+
+        /// <summary>Game hours owed to the systems from previous frames (large-delta carry).</summary>
+        private float _pendingGameHours;
+
+        /// <summary>Recycles journal entries so long sessions allocate no entry garbage.</summary>
+        private GenericObjectPool<JournalEntry> _journalEntryPool;
+
+        /// <summary>Reusable fog-of-war view buffer (no per-refresh list allocation).</summary>
+        private readonly List<MapTilePlayerView> _knowledgeViewBuffer = new List<MapTilePlayerView>();
 
         // -----------------------------------------------------------------
         // GameOver state
@@ -129,9 +151,7 @@ namespace AtomicWar._Game.Core
             if (GameState.Phase != GamePhase.Running) return;
             if (IsGameOver) return;
 
-            float dt = Time.deltaTime;
-            TimeSystem.Tick(dt);
-            float gameHours = dt / TimeSystem.SecondsPerGameHour;
+            float dt = Time.unscaledDeltaTime;
 
             // Day-30 Flashpoint choreography runs in real time (the flash is a
             // visual event, not a game-time event). Tick before the rest of
@@ -139,7 +159,20 @@ namespace AtomicWar._Game.Core
             // weather force) are visible to the same frame's HUD push.
             FlashpointChoreographer?.Tick(dt);
 
-            TickSystems(gameHours);
+            // Fast-forward-safe clock: TimeScale (1x / 3x) scales the simulated
+            // delta, and the accumulated game-time is consumed in sub-steps of
+            // at most TimeSystem.MaxGameHoursPerStep so systems + AI see every
+            // hour chunk — large deltas (3x, hitches) never skip ticks.
+            _pendingGameHours += dt * TimeSystem.TimeScale / TimeSystem.SecondsPerGameHour;
+            int steps = 0;
+            while (_pendingGameHours > 0f && steps < MaxSubstepsPerFrame)
+            {
+                float step = Mathf.Min(_pendingGameHours, TimeSystem.MaxGameHoursPerStep);
+                _pendingGameHours -= step;
+                TimeSystem.TickHours(step);
+                TickSystems(step);
+                steps++;
+            }
             CheckWinLose();
 
             // Push environment data to HUD every frame
@@ -147,7 +180,7 @@ namespace AtomicWar._Game.Core
             {
                 string weatherName = WeatherSystem.Current.ToString();
                 string seasonName = TemperatureSystem.CurrentSeason?.displayName ?? "Nuclear Winter";
-                _hud.Tick(TimeSystem.CurrentDay, TimeSystem.CurrentHourFloat, weatherName, seasonName);
+                _hud.Tick(TimeSystem.CurrentDay, TimeSystem.CurrentHourFloat, weatherName, seasonName, TimeSystem.TimeScale);
                 _hud.OnShelterUpdated(Shelter);
                 // Live radio hardware (signal + tuned label) on the intercept strip.
                 PushRadioLiveStateToHud();
@@ -319,8 +352,27 @@ namespace AtomicWar._Game.Core
                 EventRunner.SetPool(_eventCatalog.events);
             }
 
-            // Diegetic journal — survivors write discoveries (no tutorial popups)
+            // Diegetic journal — survivors write discoveries (no tutorial popups).
+            // Entries run through a pool: evicted/cleared entries are recycled,
+            // never collected, so 100-day fast-forward runs stay GC-flat.
             JournalSystem = new JournalSystem();
+            _journalEntryPool = new GenericObjectPool<JournalEntry>(
+                () => new JournalEntry(),
+                e =>
+                {
+                    e.Id = null;
+                    e.Text = null;
+                    e.Timestamp = null;
+                    e.AuthorName = null;
+                    e.AuthorId = null;
+                    e.KnowledgeKey = null;
+                    e.Day = 0;
+                    e.Hour = 0f;
+                },
+                // +1: at a full list the new entry is acquired before the
+                // evicted one is released, so steady state needs cap+1 stock.
+                initialCapacity: JournalSystem.MaxEntries + 1);
+            JournalSystem.SetEntryFactory(_journalEntryPool.Acquire, _journalEntryPool.Release);
             JournalSystem.OnEntryAdded += entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Text)) return;
@@ -330,6 +382,7 @@ namespace AtomicWar._Game.Core
 
             // Campaign win/loss — radio extraction + vehicle escape projects
             VictoryProject = new VictoryProjectManager();
+            EndgameEngine = new EndgameEngine(GameModeKind.Story, _campaignLengthDays);
             VictoryProject.OnExtractionUnlocked += () =>
             {
                 Debug.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
@@ -489,6 +542,7 @@ namespace AtomicWar._Game.Core
             if (Inventory != null)
             {
                 Inventory.OnInventoryChanged += RefreshMapKnowledgeHUD;
+                Inventory.OnInventoryChanged += RefreshInventoryStrip;
             }
             if (KnowledgeMap != null)
             {
@@ -700,14 +754,23 @@ namespace AtomicWar._Game.Core
             if (_hud == null || KnowledgeMap == null) return;
             bool hasGeiger = Inventory != null && Inventory.HasWorkingGeiger();
             int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
-            var views = KnowledgeMap.GetAllPlayerViews(day, hasGeiger);
+            KnowledgeMap.GetAllPlayerViews(_knowledgeViewBuffer, day, hasGeiger);
             int calAge = -1;
             var geiger = Inventory?.GetBestGeigerState();
             if (geiger != null)
             {
                 calAge = InstrumentDevice.DaysSinceCalibration(geiger, day);
             }
-            _hud.OnMapKnowledgeUpdated(views, hasGeiger, calAge);
+            _hud.OnMapKnowledgeUpdated(_knowledgeViewBuffer, hasGeiger, calAge);
+        }
+
+        /// <summary>Resync the pooled inventory icon strip from live stock.</summary>
+        private void RefreshInventoryStrip()
+        {
+            if (_hud == null) return;
+            var strip = _hud.InventoryStripUI;
+            if (strip != null)
+                strip.Sync(Inventory);
         }
 
         private void SeedStartingInventory()
@@ -1050,8 +1113,29 @@ namespace AtomicWar._Game.Core
             if (VictoryProject == null || VictoryProject.IsTerminal) return;
             if (Survivors == null) return;
 
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+
             // Loss: all survivors dead → death-screen by cause (rads / hunger / breakdowns).
-            VictoryProject.EvaluateLoss(Survivors, TimeSystem != null ? TimeSystem.CurrentDay : 1);
+            VictoryProject.EvaluateLoss(Survivors, day);
+
+            if (EndgameEngine != null && !EndgameEngine.Result.IsTerminal)
+            {
+                bool isExtractionUnlocked = VictoryProject != null && VictoryProject.ExtractionUnlocked;
+                bool isHydroponicsWorking = Shelter != null && Shelter.IsGrowLightActive;
+                int deadCount = 0;
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    if (Survivors[i] != null && !Survivors[i].IsAlive) deadCount++;
+                }
+
+                EndgameEngine.Evaluate(
+                    day,
+                    Survivors,
+                    Shelter,
+                    isExtractionUnlocked,
+                    isHydroponicsWorking,
+                    deadCount);
+            }
         }
 
         /// <summary>
@@ -1164,6 +1248,7 @@ namespace AtomicWar._Game.Core
             SyncRadioInterceptHudFromLog();
             _hud.EnsureJournalBook();
             SyncJournalBookFromSystem();
+            RefreshInventoryStrip(); // initial pooled icon sync
             _hud.EnsureEndgameSummary();
             if (VictoryProject != null && VictoryProject.IsTerminal && VictoryProject.LastSummary != null)
                 PushEndgameSummaryToHud(VictoryProject.LastSummary);
@@ -1225,6 +1310,22 @@ namespace AtomicWar._Game.Core
         {
             GameState.IsPaused = false;
             GameState.Phase = GamePhase.Running;
+        }
+
+        /// <summary>Current simulation speed (1 normal, 3 fast-forward).</summary>
+        public float TimeScale => TimeSystem != null ? TimeSystem.TimeScale : 1f;
+
+        /// <summary>Toggle fast-forward: 1x <-> 3x (keybind F). Simulation-scaled only; Unity's Time.timeScale is untouched.</summary>
+        public void ToggleFastForward()
+        {
+            if (TimeSystem == null) return;
+            TimeSystem.SetTimeScale(TimeSystem.TimeScale > 1.5f ? 1f : FastForwardScale);
+        }
+
+        /// <summary>Explicit simulation speed (clamped by TimeSystem). For UI buttons/tests.</summary>
+        public void SetTimeScale(float scale)
+        {
+            TimeSystem?.SetTimeScale(scale);
         }
 
         public void SaveGame(string slotId = "quicksave")
