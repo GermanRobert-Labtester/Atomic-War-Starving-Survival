@@ -207,5 +207,31 @@ namespace AtomicWar._Game.Survivors
                 return 100f;
             }
         }
+
+        // -------------------------------------------------------------------
+        // Personality Traits & Moral Traumas (Prompt #38).
+        // -------------------------------------------------------------------
+        public System.Collections.Generic.List<string> Traits = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.List<string> Traumas = new System.Collections.Generic.List<string>();
+
+        public bool HasTrait(string traitId)
+        {
+            if (string.IsNullOrEmpty(traitId) || Traits == null) return false;
+            for (int i = 0; i < Traits.Count; i++)
+            {
+                if (string.Equals(Traits[i], traitId, System.StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
+
+        public bool HasTrauma(string traumaId)
+        {
+            if (string.IsNullOrEmpty(traumaId) || Traumas == null) return false;
+            for (int i = 0; i < Traumas.Count; i++)
+            {
+                if (string.Equals(Traumas[i], traumaId, System.StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
     }
 }
