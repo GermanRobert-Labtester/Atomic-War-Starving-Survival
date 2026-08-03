@@ -26,6 +26,13 @@ namespace AtomicWar._Game.Medical
         /// <summary>Shelter module id for the medical bed.</summary>
         public const string MedicalBedModuleId = "medical_bed";
 
+        /// <summary>
+        /// Module id for a generic "comfort" station (bed, book nook, etc.)
+        /// used by AI comfort-cure actions. Optional; not required for the
+        /// mental-break cure path itself.
+        /// </summary>
+        public const string ComfortStationModuleId = "comfort_station";
+
         private readonly NeedsSystem _needs;
         private readonly Inventory.Inventory _inventory;
         private readonly Shelter.Shelter _shelter;
@@ -465,6 +472,50 @@ namespace AtomicWar._Game.Medical
                 new TreatmentIngredient { item = tweezers, itemId = "tweezers", amount = 1 }
             };
             return r;
+        }
+
+        /// <summary>
+        /// Attempt to cure a broken survivor via a medical-bed intervention.
+        /// The break must have <c>requiresMedicalBed == true</c> and the
+        /// shelter must have a working <c>medical_bed</c> module. Returns
+        /// true if the break was cured.
+        /// </summary>
+        public bool TryCureMentalBreak(
+            Survivor patient,
+            MentalBreakSystem mentalBreakSystem,
+            Shelter.Shelter shelter)
+        {
+            if (patient == null || !patient.IsAlive) return false;
+            if (mentalBreakSystem == null) return false;
+            if (!patient.HasMentalBreak) return false;
+            var br = mentalBreakSystem.GetBreak(patient.currentMentalBreakId);
+            if (br == null) return false;
+            if (!br.requiresMedicalBed) return false;
+            if (shelter == null) return false;
+            var medBed = shelter.GetModule(MedicalBedModuleId);
+            if (medBed == null || !medBed.IsOperational) return false;
+
+            mentalBreakSystem.Cure(patient);
+            return true;
+        }
+
+        /// <summary>
+        /// True if a mental break could be cured by a medical-bed
+        /// intervention right now. Pure read; does not mutate state.
+        /// Used by AI scoring to decide whether to send the medic in.
+        /// </summary>
+        public bool CanCureMentalBreak(
+            Survivor patient,
+            MentalBreakSystem mentalBreakSystem,
+            Shelter.Shelter shelter)
+        {
+            if (patient == null || !patient.IsAlive) return false;
+            if (mentalBreakSystem == null || shelter == null) return false;
+            if (!patient.HasMentalBreak) return false;
+            var br = mentalBreakSystem.GetBreak(patient.currentMentalBreakId);
+            if (br == null || !br.requiresMedicalBed) return false;
+            var medBed = shelter.GetModule(MedicalBedModuleId);
+            return medBed != null && medBed.IsOperational;
         }
 
         private void CompleteTreatment(Survivor survivor, List<ActiveAffliction> list, ActiveAffliction active)

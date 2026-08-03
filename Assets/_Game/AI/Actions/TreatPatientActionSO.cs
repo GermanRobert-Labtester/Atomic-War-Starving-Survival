@@ -111,6 +111,17 @@ namespace AtomicWar._Game.AI.Actions
 
             // Full treatment recipe if one is registered for this affliction
             TryStartAnyTreatment(context, medic, patient, worst.AfflictionId);
+
+            // Mental-break cure via the medical bed: only fires for
+            // breaks that explicitly require it. Closes the loop on
+            // ViolentParanoia and similar hospital-grade breaks.
+            if (context.MentalBreak != null && context.Shelter != null
+                && context.MedicalSystem != null
+                && patient.HasMentalBreak
+                && context.MedicalSystem.CanCureMentalBreak(patient, context.MentalBreak, context.Shelter))
+            {
+                context.MedicalSystem.TryCureMentalBreak(patient, context.MentalBreak, context.Shelter);
+            }
         }
 
         private static void TryStartAnyTreatment(

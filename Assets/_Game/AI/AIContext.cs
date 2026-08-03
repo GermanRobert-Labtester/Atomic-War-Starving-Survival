@@ -43,6 +43,12 @@ namespace AtomicWar._Game.AI
         /// <summary>Medical triage pipeline (afflictions / treatments).</summary>
         public MedicalSystem MedicalSystem;
 
+        /// <summary>Mental-break system (Prompt #29). Used by MentalBreakComfortAction
+        /// to find broken survivors and by TreatPatientAction to trigger the
+        /// medical-bed cure path. Null-safe: not wired in scenes that don't
+        /// care about breaks.</summary>
+        public MentalBreakSystem MentalBreak;
+
         /// <summary>Shelter electricity grid (generation, load-shed, pedaling).</summary>
         public PowerNetwork PowerNetwork;
 

@@ -230,6 +230,7 @@ namespace AtomicWar._Game.Core
                 CreateAction<ScavengeActionSO>(),
                 CreateAction<SurveyActionSO>(),
                 CreateAction<TreatPatientActionSO>(),
+                CreateAction<MentalBreakComfortActionSO>(),
                 CreateAction<CraftActionSO>(),
                 CreateAction<GuardActionSO>(),
                 CreateAction<PedalGeneratorActionSO>()
@@ -277,6 +278,10 @@ namespace AtomicWar._Game.Core
             // Inventory/Shelter refs (avoids asmdef cycles).
             MentalBreakSystem.BingeEatHandler = (sv, br) => ForceMentalBreakBingeEat(sv, br);
             MentalBreakSystem.SabotageHandler = (sv, br, rng) => ForceMentalBreakSabotage(rng);
+            // Host-side comfort-cure so the system can consume a Comfort
+            // item from the Inventory without referencing the Inventory
+            // assembly directly. Same asmdef-boundary pattern.
+            MentalBreakSystem.ComfortCureHandler = (sv, br) => ForceMentalBreakComfortCure(sv, br);
 
             // Dynamic phase economy + faction trust matrix
             EconomySystem = new DynamicEconomySystem(
@@ -606,6 +611,43 @@ namespace AtomicWar._Game.Core
             float restore = best.Item.hungerRestore * consumed;
             sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - restore);
             return consumed;
+        }
+
+        /// <summary>
+        /// Mental-break comfort cure: pick a Comfort item from the
+        /// inventory, consume one, and return true. Returns false if
+        /// no Comfort item is available. Hosted in Core so Survivors
+        /// does not reference Inventory.
+        /// </summary>
+        private bool ForceMentalBreakComfortCure(Survivor sv, MentalBreakSO br)
+        {
+            if (sv == null || br == null || Inventory == null || Inventory.Slots == null) return false;
+
+            // Find a Comfort item (e.g. old_book, music_disc). Prefer the
+            // one with the highest moraleRestore / sellValue as a stand-in
+            // for "high-value".
+            InventorySlot best = null;
+            float bestValue = float.NegativeInfinity;
+            for (int i = 0; i < Inventory.Slots.Count; i++)
+            {
+                var slot = Inventory.Slots[i];
+                if (slot == null || slot.Item == null || slot.Amount <= 0) continue;
+                if (slot.Item.type != ItemType.Comfort) continue;
+                // Use tradeValue + moraleEffect as a high-value proxy.
+                float value = slot.Item.tradeValue + slot.Item.moraleEffect;
+                if (value > bestValue)
+                {
+                    best = slot;
+                    bestValue = value;
+                }
+            }
+            if (best == null || best.Item == null) return false;
+
+            // Consume one unit of the comfort item. The system-side
+            // TryCureWithComfortItem will then advance mentalBreakCureProgress
+            // by br.comfortItemCureAmount and call Cure() if the threshold
+            // is met.
+            return Inventory.Remove(best.Item, 1);
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using AtomicWar._Game.AI;
+using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
@@ -94,6 +96,8 @@ namespace AtomicWar.Tests.EditMode
             _bingeEater.minFoodValueForBinge = 0f;
             _bingeEater.passiveMoraleDrainPerHour = 1f;
             _bingeEater.cureHours = 48f;
+            _bingeEater.requiresMedicalBed = false; // comfort items + time
+            _bingeEater.comfortItemCureAmount = 24f; // 1 comfort item = 50% cure
             _bingeEater.TraitWeights = new List<RiskBiasWeight>
             {
                 new RiskBiasWeight { Trait = RiskBiasTrait.Realist, Weight = 1f }
@@ -105,6 +109,8 @@ namespace AtomicWar.Tests.EditMode
             _violentParanoia.sabotageChancePerTick = 0.05f;
             _violentParanoia.passiveMoraleDrainPerHour = 2f;
             _violentParanoia.cureHours = 72f;
+            _violentParanoia.requiresMedicalBed = true; // only curable via medical bed
+            _violentParanoia.comfortItemCureAmount = 12f; // comfort items help too
             _violentParanoia.TraitWeights = new List<RiskBiasWeight>
             {
                 new RiskBiasWeight { Trait = RiskBiasTrait.Paranoid, Weight = 2f },
@@ -451,6 +457,227 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(1f, MentalBreakSystem.WeightForTrait(_violentParanoia, RiskBiasTrait.Realist));
             Assert.AreEqual(0f, MentalBreakSystem.WeightForTrait(_violentParanoia, RiskBiasTrait.Fatalist),
                 "Unlisted trait has weight 0.");
+        }
+
+        // -------------------------------------------------------------------
+        // Comfort-item cure
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void TryCureWithComfortItem_AdvancesCureProgress_ByConfiguredAmount()
+        {
+            var survivor = MakeSurvivor("sv_comfort", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = "binge_eater";
+            survivor.mentalBreakCureProgress = 0f;
+
+            // The BingeEater test break has comfortItemCureAmount = 24h and
+            // cureHours = 48h. One comfort item should advance by 24h.
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
+
+            bool applied = _mentalBreakSystem.TryCureWithComfortItem(survivor);
+
+            Assert.IsTrue(applied, "Cure should apply when handler returns true.");
+            Assert.IsTrue(survivor.HasMentalBreak, "Not yet at cureHours; still broken.");
+            Assert.AreEqual(24f, survivor.mentalBreakCureProgress, Eps,
+                "Cure progress should advance by comfortItemCureAmount (24).");
+        }
+
+        [Test]
+        public void TryCureWithComfortItem_CuresWhenProgressReachesCureHours()
+        {
+            var survivor = MakeSurvivor("sv_cure_now", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = "binge_eater";
+            // Start one cure-amount away from full cure.
+            survivor.mentalBreakCureProgress = 24f; // cureHours = 48
+
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
+
+            _mentalBreakSystem.TryCureWithComfortItem(survivor);
+
+            Assert.IsFalse(survivor.HasMentalBreak,
+                "Cure progress crossed cureHours: break should resolve.");
+            Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps,
+                "Cure clears the progress counter.");
+        }
+
+        [Test]
+        public void TryCureWithComfortItem_NoHandler_NoOp()
+        {
+            var survivor = MakeSurvivor("sv_nohandler", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = "binge_eater";
+            _mentalBreakSystem.ComfortCureHandler = null;
+
+            bool applied = _mentalBreakSystem.TryCureWithComfortItem(survivor);
+
+            Assert.IsFalse(applied, "Without a handler, the cure must be a no-op.");
+            Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps,
+                "Progress must not change when the handler is null.");
+        }
+
+        [Test]
+        public void TryCureWithComfortItem_HandlerReturnsFalse_NoOp()
+        {
+            var survivor = MakeSurvivor("sv_nocomfort", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = "binge_eater";
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => false; // no item consumed
+
+            bool applied = _mentalBreakSystem.TryCureWithComfortItem(survivor);
+
+            Assert.IsFalse(applied);
+            Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps);
+        }
+
+        [Test]
+        public void TryCureWithComfortItem_NotBroken_NoOp()
+        {
+            var survivor = MakeSurvivor("sv_sane", RiskBiasTrait.Realist);
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
+
+            bool applied = _mentalBreakSystem.TryCureWithComfortItem(survivor);
+
+            Assert.IsFalse(applied, "No break: no cure attempt.");
+        }
+
+        [Test]
+        public void TryCureWithComfortItem_ComfortItemCureAmountIsZero_NoOp()
+        {
+            // A break with comfortItemCureAmount = 0 ignores comfort cures.
+            var noCureBreak = ScriptableObject.CreateInstance<MentalBreakSO>();
+            noCureBreak.id = "no_comfort_cure";
+            noCureBreak.comfortItemCureAmount = 0f;
+            noCureBreak.cureHours = 48f;
+            _mentalBreakSystem.RegisterBreak(noCureBreak);
+
+            var survivor = MakeSurvivor("sv_break", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = "no_comfort_cure";
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
+
+            bool applied = _mentalBreakSystem.TryCureWithComfortItem(survivor);
+
+            Assert.IsFalse(applied,
+                "A break with comfortItemCureAmount = 0 must reject comfort cures.");
+            Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps);
+        }
+
+        // -------------------------------------------------------------------
+        // Medical-bed cure
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void TryCureMentalBreak_RequiresMedicalBed_AndBedIsOperational_Cures()
+        {
+            var survivor = MakeSurvivor("sv_paranoid", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = "violent_paranoia";
+            // ViolentParanoia has requiresMedicalBed = true.
+            _shelter.AddModule(new ShelterModuleInstance("medical_bed", 1) { IsEnabled = true });
+
+            bool cured = _medicalSystem.TryCureMentalBreak(survivor, _mentalBreakSystem, _shelter);
+
+            Assert.IsTrue(cured, "Bed operational + break requires bed: cure should succeed.");
+            Assert.IsFalse(survivor.HasMentalBreak, "Break should be resolved.");
+        }
+
+        [Test]
+        public void TryCureMentalBreak_NoMedicalBedModule_NoOp()
+        {
+            var survivor = MakeSurvivor("sv_no_bed", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = "violent_paranoia";
+            // No medical_bed module added.
+
+            bool cured = _medicalSystem.TryCureMentalBreak(survivor, _mentalBreakSystem, _shelter);
+
+            Assert.IsFalse(cured, "Without a medical_bed module, the cure must fail.");
+            Assert.IsTrue(survivor.HasMentalBreak, "Break must remain.");
+        }
+
+        [Test]
+        public void TryCureMentalBreak_BedDisabled_NoOp()
+        {
+            var survivor = MakeSurvivor("sv_disabled_bed", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = "violent_paranoia";
+            _shelter.AddModule(new ShelterModuleInstance("medical_bed", 1) { IsEnabled = false });
+
+            bool cured = _medicalSystem.TryCureMentalBreak(survivor, _mentalBreakSystem, _shelter);
+
+            Assert.IsFalse(cured, "Bed disabled: cure must fail.");
+        }
+
+        [Test]
+        public void TryCureMentalBreak_BreakDoesNotRequireBed_NoOp()
+        {
+            // BingeEater has requiresMedicalBed = false; medical bed doesn't
+            // cure it (use comfort items or time instead).
+            var survivor = MakeSurvivor("sv_binger", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = "binge_eater";
+            _shelter.AddModule(new ShelterModuleInstance("medical_bed", 1) { IsEnabled = true });
+
+            bool cured = _medicalSystem.TryCureMentalBreak(survivor, _mentalBreakSystem, _shelter);
+
+            Assert.IsFalse(cured,
+                "BingeEater doesn't require the bed; medical-bed cure must be a no-op.");
+            Assert.IsTrue(survivor.HasMentalBreak);
+        }
+
+        [Test]
+        public void TryCureMentalBreak_NotBroken_NoOp()
+        {
+            var survivor = MakeSurvivor("sv_sane_med", RiskBiasTrait.Realist);
+            _shelter.AddModule(new ShelterModuleInstance("medical_bed", 1) { IsEnabled = true });
+
+            bool cured = _medicalSystem.TryCureMentalBreak(survivor, _mentalBreakSystem, _shelter);
+
+            Assert.IsFalse(cured, "No break: no cure attempt.");
+        }
+
+        [Test]
+        public void CanCureMentalBreak_PureRead_DoesNotMutate()
+        {
+            var survivor = MakeSurvivor("sv_readonly", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = "violent_paranoia";
+            _shelter.AddModule(new ShelterModuleInstance("medical_bed", 1) { IsEnabled = true });
+
+            bool can = _medicalSystem.CanCureMentalBreak(survivor, _mentalBreakSystem, _shelter);
+
+            Assert.IsTrue(can);
+            Assert.IsTrue(survivor.HasMentalBreak, "CanCureMentalBreak must not mutate state.");
+        }
+
+        // -------------------------------------------------------------------
+        // AI mental-break comfort action
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void MentalBreakComfortAction_AI_ConsumesComfortAndAdvancesProgress()
+        {
+            // End-to-end: a Paranoid survivor in ViolentParanoia (which
+            // requires the bed) but the bed is unavailable. The AI
+            // comfort action uses a Comfort item instead. Pre-advance cure
+            // progress so the score is non-zero (the AI prioritizes
+            // near-cured breaks over fresh ones).
+            var survivor = MakeSurvivor("sv_ai_comfort", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = "violent_paranoia";
+            survivor.mentalBreakCureProgress = _violentParanoia.cureHours - _violentParanoia.comfortItemCureAmount;
+            // No medical_bed module.
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
+
+            // Build the AI context the way GameBootstrap does.
+            var action = ScriptableObject.CreateInstance<MentalBreakComfortActionSO>();
+            var ctx = new AIContext(survivor, _shelter, _inventory, _rng)
+            {
+                MentalBreak = _mentalBreakSystem,
+                GetSurvivors = () => _allSurvivors
+            };
+
+            float score = action.EvaluateRaw(ctx);
+            Assert.Greater(score, 0f,
+                "Score should be > 0 for a near-cured broken survivor with handler wired.");
+
+            action.Execute(ctx);
+
+            Assert.IsFalse(survivor.HasMentalBreak,
+                "Cure threshold reached: break should be resolved by the AI action.");
+            Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps,
+                "Cure resets the progress counter to 0.");
         }
     }
 }

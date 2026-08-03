@@ -62,6 +62,16 @@ namespace AtomicWar._Game.Survivors
         public Func<Survivor, MentalBreakSO, int> BingeEatHandler;
 
         /// <summary>
+        /// Optional host hook: comfort-item cure. Given a broken survivor,
+        /// look up an appropriate comfort item in the bunker inventory,
+        /// consume one, and return true if a unit was consumed. Injected by
+        /// Core so Survivors stays free of Inventory assembly refs. Returning
+        /// false means no comfort item was available; the cure attempt was
+        /// a no-op.
+        /// </summary>
+        public Func<Survivor, MentalBreakSO, bool> ComfortCureHandler;
+
+        /// <summary>
         /// Optional host hook: sabotage a shelter module (ViolentParanoia).
         /// Injected by Core so Survivors stays free of Shelter assembly refs.
         /// </summary>
@@ -247,6 +257,33 @@ namespace AtomicWar._Game.Survivors
             sv.mentalBreakCureProgress = 0f;
             sv.lowMoraleHours = 0f; // reset the trigger so a fresh break can accumulate
             OnBreakCured?.Invoke(sv, id);
+        }
+
+        /// <summary>
+        /// Attempt to cure a broken survivor by consuming a high-value
+        /// comfort item. The actual item lookup + consumption happens in
+        /// <see cref="ComfortCureHandler"/> (host-supplied; needs Inventory
+        /// access). If the handler returns true, the break's cure progress
+        /// advances by <c>comfortItemCureAmount</c>; if the new progress
+        /// meets or exceeds <c>cureHours</c>, the break resolves. Returns
+        /// true if a cure was actually applied (item consumed + progress
+        /// added); false if no comfort item was available, the survivor
+        /// wasn't broken, or the break has <c>comfortItemCureAmount == 0</c>.
+        /// </summary>
+        public bool TryCureWithComfortItem(Survivor sv)
+        {
+            if (sv == null || !sv.HasMentalBreak) return false;
+            var br = GetBreak(sv.currentMentalBreakId);
+            if (br == null || br.comfortItemCureAmount <= 0f) return false;
+            if (ComfortCureHandler == null) return false;
+            if (!ComfortCureHandler(sv, br)) return false;
+
+            sv.mentalBreakCureProgress += br.comfortItemCureAmount;
+            if (sv.mentalBreakCureProgress >= br.cureHours)
+            {
+                Cure(sv);
+            }
+            return true;
         }
 
         // -----------------------------------------------------------------
