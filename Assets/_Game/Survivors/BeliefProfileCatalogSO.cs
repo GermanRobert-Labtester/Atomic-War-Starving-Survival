@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
-using AtomicWar._Game.Survivors;
 
-namespace AtomicWar._Game.Data
+namespace AtomicWar._Game.Survivors
 {
     /// <summary>
     /// ScriptableObject catalog of the six BeliefProfileSO trait profiles. Hand-authored

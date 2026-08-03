@@ -24,7 +24,7 @@ namespace AtomicWar._Game.Core
 
         private readonly List<RadioFrequencySO> _frequencies = new List<RadioFrequencySO>();
         private readonly List<IntelNode> _extractedIntel = new List<IntelNode>();
-        private readonly Random _rng;
+        private readonly System.Random _rng;
 
         /// <summary>Runtime radio state (power, signal, EMP damage, tuning).</summary>
         public RadioState State { get; private set; }
@@ -35,10 +35,10 @@ namespace AtomicWar._Game.Core
         /// <summary>Fired when the current frequency changes.</summary>
         public event Action<string> OnFrequencyChanged;
 
-        public RadioTunerSystem(Random rng = null)
+        public RadioTunerSystem(System.Random rng = null)
         {
             State = new RadioState();
-            _rng = rng ?? new Random();
+            _rng = rng ?? new System.Random();
         }
 
         /// <summary>Load frequency definitions from a catalog.</summary>

@@ -1,6 +1,6 @@
 using UnityEngine;
 using AtomicWar._Game.Survivors;
-using AtomicWar._Game.Core;
+using AtomicWar._Game.Data;
 
 namespace AtomicWar._Game.AI.Actions
 {

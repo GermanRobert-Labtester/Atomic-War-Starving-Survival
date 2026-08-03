@@ -11,6 +11,40 @@ real countries/wars/people.
 
 ---
 
+## Pre-War / Civil War Context
+
+**The two sides.** The fracture was a slow one. For thirty years the central government in
+the river valley had held the trade routes, the fuel pipelines, the iodine reserves, and the
+broadcast towers. The upland provinces paid the taxes that kept the army and the ministries
+running, and in return got subsidized grain and the occasional paved road. When the river
+dried up for the second summer in a row, both sides decided the other one had been lying
+about the reserves. By the time the first provincial assembly voted to keep its grain,
+the central garrison was already on the road. The fighting has been conventional, mostly:
+artillery exchanges along the ridgeline, drone strikes on fuel depots, an infantry push every
+few weeks that gains two kilometers and then gives them back.
+
+**Where the player is.** The bunker is in a small upland market town called (locals still
+use the name) Tessarat, about forty kilometers from the contested ridgeline. The town's
+official alignment is the central government, but the surrounding villages lean upland. The
+shelling that has been audible on days 1-29 is the central garrison's counter-battery fire
+against upland mortar positions in the hills to the east. The international news broadcasts
+the player can sometimes pull in are from a neutral broadcast consortium that tries to cover
+both sides without naming them; their panicked tone on day 28 reflects the diplomatic cables
+leaking, not the battlefield. When the morning of day 30 arrives and the firing has stopped,
+the silence means the central garrison's forward observers have either abandoned their posts
+or stopped transmitting. It does not mean the war is over. It means the next order of business
+is no longer artillery.
+
+**What the buildup broadcasts are signaling.** The dead air on day 25 is the civilian
+transmitter losing power. The trader panic on day 26 is a real phenomenon: people with
+iodine and working water filters are paid for in food now, not money, because money has no
+guarantee. The numbers station on day 27 is the military's automated contingency broadcast,
+which fires when no human operator is on shift. The international anchor on day 28 is
+broadcasting a partial evacuation order that was rescinded before it ended. The ceasefire
+silence on day 29 is the worst of them, because it sounds like peace.
+
+---
+
 ## Phase 1: Pre-War Propaganda (Days -30 to 0)
 
 These broadcasts are nostalgic, state-sponsored, hopeful. They play on civilian frequencies

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace AtomicWar._Game.Core
+namespace AtomicWar._Game.Data
 {
     /// <summary>
     /// Type of intel extracted from radio broadcasts.

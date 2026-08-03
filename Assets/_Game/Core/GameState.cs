@@ -40,6 +40,14 @@ namespace AtomicWar._Game.Core
         public int Day { get; set; }
         public bool IsPaused { get; set; }
 
+        /// <summary>
+        /// Photosensitivity-safe accessibility toggle. When true, the Day-30
+        /// flashpoint white flash is shorter and desaturated, and camera
+        /// shake amplitude is reduced. Read by the FlashpointChoreographer
+        /// via a delegate supplied at construction.
+        /// </summary>
+        public bool AccessibilitySafeMode { get; set; }
+
         /// <summary>Fired when Phase actually changes (not on redundant sets).</summary>
         public event Action<GamePhase> OnPhaseChanged;
 

@@ -173,5 +173,40 @@
     "bodyText": "A hairline crack has appeared in the bunker wall. Water seeps through when it rains. If it widens, the shelter is compromised.",
     "weight": 1.5,
     "minDay": 12
+  },
+  {
+    "id": "flashpoint_buildup_radio_dead_air",
+    "title": "Dead Air",
+    "bodyText": "The civilian broadcast cut out mid-sentence. No carrier, no static. Just a thin repeating tone, then silence. We tried every frequency. Nothing.",
+    "weight": 1.0,
+    "minDay": 25
+  },
+  {
+    "id": "flashpoint_buildup_trader_panic",
+    "title": "Trader in a Hurry",
+    "bodyText": "The trader took the iodine without haggling. Didn't look at the food. Said they'd be back in two days, maybe less. Packed lighter than usual going out.",
+    "weight": 1.0,
+    "minDay": 26
+  },
+  {
+    "id": "flashpoint_buildup_military_codes",
+    "title": "Numbers Station",
+    "bodyText": "An automated military frequency cycling through cipher blocks. No operator, no preamble, just beeps at fixed intervals. Marcus sat and listened for an hour. Said it means nobody's left to talk.",
+    "weight": 1.0,
+    "minDay": 27
+  },
+  {
+    "id": "flashpoint_buildup_news_anchor_panic",
+    "title": "Static, Then a Voice",
+    "bodyText": "An international station cut in over the interference. The anchor's voice was shaking. 'Do not—' the signal collapsed. We never found out what not to do.",
+    "weight": 1.0,
+    "minDay": 28
+  },
+  {
+    "id": "flashpoint_buildup_war_silence",
+    "title": "The Shelling Stopped",
+    "bodyText": "Last night the artillery reached a fever pitch, shells falling close enough to feel in the floor. By morning, no gunfire at all. Just the wind against the hatch. Nobody slept through it.",
+    "weight": 1.0,
+    "minDay": 29
   }
 ]
