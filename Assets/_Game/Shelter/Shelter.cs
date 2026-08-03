@@ -203,6 +203,47 @@ namespace AtomicWar._Game.Shelter
             return Mathf.Max(0f, rads);
         }
 
+        // -------------------------------------------------------------------
+        // Bunker contamination (Prompt #26 hatch-dilemma consequence)
+        // -------------------------------------------------------------------
+
+        /// <summary>
+        /// Accumulated ambient contamination inside the bunker, in
+        /// RadsPerHour. Spikes when a contaminated survivor is let in
+        /// through the hatch (the Day-30 dilemma's "let_them_in" choice).
+        /// Decays naturally over time (see <see cref="TickContaminationDecay"/>).
+        /// Save/load safe: the underlying field is a plain float.
+        /// </summary>
+        public float BunkerContamination { get; private set; }
+
+        /// <summary>
+        /// Add a contamination spike to the bunker's ambient level. Used by
+        /// the hatch-dilemma handler when the player lets a comms-severed
+        /// survivor in. Clamped to non-negative; never goes down via this method.
+        /// </summary>
+        public void AddBunkerContamination(float radsPerHour)
+        {
+            if (radsPerHour <= 0f) return;
+            BunkerContamination = Mathf.Max(0f, BunkerContamination + radsPerHour);
+        }
+
+        /// <summary>
+        /// Decay the bunker's accumulated contamination over elapsed game hours.
+        /// Mirrors the natural-decay model on <see cref="Contamination"/>:
+        /// the rate halves every <see cref="BunkerContaminationHalfLifeHours"/>
+        /// of in-game time. Called from <see cref="Shelter.Tick"/> so the
+        /// ambient level approaches zero if no further contamination is added.
+        /// </summary>
+        public void TickContaminationDecay(float gameHours)
+        {
+            if (gameHours <= 0f || BunkerContamination <= 0f) return;
+            float decay = BunkerContamination * (1f - Mathf.Pow(0.5f, gameHours / BunkerContaminationHalfLifeHours));
+            BunkerContamination = Mathf.Max(0f, BunkerContamination - decay);
+        }
+
+        /// <summary>Half-life of bunker contamination in game-hours. Roughly 4 days.</summary>
+        public const float BunkerContaminationHalfLifeHours = 96f;
+
         public void Tick(float gameHours)
         {
             if (gameHours <= 0f || _modules == null) return;
@@ -214,6 +255,10 @@ namespace AtomicWar._Game.Shelter
                     _modules[i].Tick(gameHours, this);
                 }
             }
+
+            // Decay accumulated ambient contamination. Half-life is on
+            // Shelter; mirrors the per-item Contamination decay model.
+            TickContaminationDecay(gameHours);
         }
 
         public void NotifyModuleUpgraded(ShelterModuleInstance module, int newLevel)

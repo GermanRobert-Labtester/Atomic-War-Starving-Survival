@@ -291,10 +291,12 @@ namespace AtomicWar._Game.Core
 
             // Expedition Engine (node-based events, stances, stamina drain, push-your-luck)
             // Wired with the MedicalSystem so the Day-30 flashpoint intercept
-            // can inflict trauma afflictions on survivors caught outside.
+            // can inflict trauma afflictions on survivors caught outside, and
+            // with the Shelter + Survivors list so the hatch-dilemma handler
+            // can spike bunker contamination and propagate deny-entry morale.
             ExpeditionSystem = new ExpeditionSystem(
                 RadiationSystem, Inventory, _itemCatalog, WeatherSystem,
-                KnowledgeMap, MedicalSystem, _worldSeed);
+                KnowledgeMap, MedicalSystem, Shelter, Survivors, _worldSeed);
             SaveSystem.SetExpeditionSystem(ExpeditionSystem);
 
             // Hatch dilemma: when a comms-severed expedition arrives at the

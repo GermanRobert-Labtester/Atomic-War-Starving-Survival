@@ -33,6 +33,16 @@ namespace AtomicWar._Game.Core
         /// <summary>Return speed divisor for the Fatalist slow-walk behavior.</summary>
         public const float FatalistSlowWalkDivisor = 2.0f;
 
+        // Hatch-dilemma consequence magnitudes (Prompt #26 follow-up).
+        // Tuned for designer iteration; log a one-liner on each apply so
+        // the values can be re-tuned from the Editor console.
+        /// <summary>Bunker contamination (rads/hr) added when the player picks "let them in".</summary>
+        public const float LetThemInContaminationRadsPerHour = 50f;
+        /// <summary>Smaller bunker contamination (rads/hr) added when the player picks "force decon" (small spill during strip-and-decon).</summary>
+        public const float ForceDeconContaminationRadsPerHour = 10f;
+        /// <summary>Morale hit applied to every OTHER living survivor when the player picks "deny entry".</summary>
+        public const float DenyEntryMoralePenaltyForOtherSurvivors = 20f;
+
         private readonly RadiationSystem _radSystem;
         private readonly Inventory.Inventory _inventory;
         private readonly ItemCatalogSO _itemCatalog;
@@ -40,6 +50,8 @@ namespace AtomicWar._Game.Core
         private readonly RadiationKnowledgeMap _knowledgeMap;
         private readonly System.Random _rng;
         private readonly MedicalSystem _medicalSystem;
+        private readonly Shelter.Shelter _shelter;
+        private readonly IReadOnlyList<Survivor> _survivors;
 
         private readonly List<ExpeditionState> _activeExpeditions = new List<ExpeditionState>();
         private readonly List<EncounterSO> _encounterPool = new List<EncounterSO>();
@@ -67,6 +79,8 @@ namespace AtomicWar._Game.Core
             WeatherSystem weatherSystem = null,
             RadiationKnowledgeMap knowledgeMap = null,
             MedicalSystem medicalSystem = null,
+            Shelter.Shelter shelter = null,
+            IReadOnlyList<Survivor> survivors = null,
             int seed = 42)
         {
             _radSystem = radSystem;
@@ -75,6 +89,8 @@ namespace AtomicWar._Game.Core
             _weatherSystem = weatherSystem;
             _knowledgeMap = knowledgeMap;
             _medicalSystem = medicalSystem;
+            _shelter = shelter;
+            _survivors = survivors;
             _rng = new System.Random(seed);
 
             CreateDefaultEncounters();
@@ -181,49 +197,96 @@ namespace AtomicWar._Game.Core
         /// Resolve a hatch dilemma choice. Called by the GameBootstrap (or
         /// any handler that runs the dilemma GameEventSO through the
         /// EventRunner) once the player picks a choice.
+        ///
+        /// Applies both the state-machine consequence (complete/fail the
+        /// expedition, kill the survivor) and the bunker-wide side effects
+        /// (contamination spike on let-them-in / force-decon; morale
+        /// propagation to the rest of the bunker on deny-entry). The side
+        /// effects are intentionally co-located here so they are testable
+        /// without a full GameBootstrap setup.
         /// </summary>
         public void ApplyHatchDilemmaChoice(string expeditionId, HatchDilemmaResolvedSignal.Resolution choice)
         {
             var exp = FindExpeditionById(expeditionId);
             if (exp == null || exp.Phase != ExpeditionPhase.AtHatchDilemma) return;
 
+            string survivorName = exp.Survivor != null ? exp.Survivor.DisplayName : "the survivor";
+
             switch (choice)
             {
                 case HatchDilemmaResolvedSignal.Resolution.LetThemIn:
-                    // Complete the expedition. Shelter takes ambient radiation
-                    // from the contaminated gear; survivor is sick but alive.
+                    // Complete the expedition. The bunker's ambient contamination
+                    // spikes by the configured amount (their gear and clothes are
+                    // soaked in fallout). The survivor is sick but alive.
+                    if (_shelter != null)
+                    {
+                        _shelter.AddBunkerContamination(LetThemInContaminationRadsPerHour);
+                        Debug.Log($"[Flashpoint] LetThemIn: bunker contamination +{LetThemInContaminationRadsPerHour} rph " +
+                                  $"(now {_shelter.BunkerContamination:F1}) after admitting {survivorName}.");
+                    }
                     CompleteExpedition(exp);
                     RemoveExpedition(exp);
                     break;
 
                 case HatchDilemmaResolvedSignal.Resolution.ForceDeconOutside:
                     // Strip outside in the ash: 2 hours of rad damage, big morale
-                    // hit, but the shelter stays clean.
+                    // hit, plus a small contamination spill (the gear is set
+                    // down just inside the airlock for decon).
                     if (exp.Survivor != null && _radSystem != null)
                     {
                         _radSystem.Expose(exp.Survivor, 10f, 2f);
                         exp.Survivor.Needs.Morale = Mathf.Clamp(exp.Survivor.Needs.Morale - 15f, 0f, 100f);
+                    }
+                    if (_shelter != null)
+                    {
+                        _shelter.AddBunkerContamination(ForceDeconContaminationRadsPerHour);
+                        Debug.Log($"[Flashpoint] ForceDecon: bunker contamination +{ForceDeconContaminationRadsPerHour} rph " +
+                                  $"(now {_shelter.BunkerContamination:F1}) from {survivorName}'s strip-down.");
                     }
                     CompleteExpedition(exp);
                     RemoveExpedition(exp);
                     break;
 
                 case HatchDilemmaResolvedSignal.Resolution.DenyEntry:
-                    // Survivor dies outside. Massive morale penalty for the rest
-                    // of the bunker (signaled via the OnExpeditionFailed event
-                    // with a special reason; full morale propagation lives in
-                    // the consuming system).
+                    // Survivor dies outside. Massive morale penalty propagates
+                    // to every OTHER living survivor in the bunker.
                     if (exp.Survivor != null)
                     {
                         exp.Survivor.State = SurvivorState.Dead;
                     }
+                    int affected = PropagateDenyEntryMoralePenalty(exp.SurvivorId);
                     exp.Phase = ExpeditionPhase.Failed;
                     OnExpeditionFailed?.Invoke(exp, "denied_entry");
                     RemoveExpedition(exp);
+                    Debug.Log($"[Flashpoint] DenyEntry: {survivorName} died outside the hatch; " +
+                              $"{affected} other survivor(s) lost {DenyEntryMoralePenaltyForOtherSurvivors} morale.");
                     break;
             }
 
             OnHatchDilemmaResolved?.Invoke(exp);
+        }
+
+        /// <summary>
+        /// Apply the deny-entry morale hit to every other living survivor in
+        /// the configured survivor list. Returns the count of survivors
+        /// affected. Skips the dying survivor (by id) and any non-alive or
+        /// null entries. Logs a one-liner so designers can tune the magnitude.
+        /// </summary>
+        private int PropagateDenyEntryMoralePenalty(string dyingSurvivorId)
+        {
+            if (_survivors == null) return 0;
+            int affected = 0;
+            for (int i = 0; i < _survivors.Count; i++)
+            {
+                var sv = _survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!string.IsNullOrEmpty(dyingSurvivorId) && sv.Id == dyingSurvivorId) continue;
+                sv.Needs.Morale = Mathf.Clamp(
+                    sv.Needs.Morale - DenyEntryMoralePenaltyForOtherSurvivors,
+                    0f, 100f);
+                affected++;
+            }
+            return affected;
         }
 
         private void HandleHatchDilemmaResolved(HatchDilemmaResolvedSignal signal)

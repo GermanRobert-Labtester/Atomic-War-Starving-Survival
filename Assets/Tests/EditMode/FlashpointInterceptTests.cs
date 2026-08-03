@@ -39,6 +39,11 @@ namespace AtomicWar.Tests.EditMode
         private MedicalSystem _medicalSystem;
         private ExpeditionSystem _expeditionSystem;
 
+        // Shared survivors list for the ExpeditionSystem to iterate over
+        // when propagating deny-entry morale. Tests add survivors via
+        // MakeSurvivor (which appends to this list).
+        private List<Survivor> _allSurvivors;
+
         [SetUp]
         public void SetUp()
         {
@@ -84,10 +89,16 @@ namespace AtomicWar.Tests.EditMode
                 _medicalSystem.RegisterAffliction(aff);
             }
 
+            // The ExpeditionSystem needs the Shelter (for the contamination
+            // spike on let-them-in / force-decon) and the survivor list (for
+            // the morale propagation on deny-entry). The survivor list is
+            // mutable so MakeSurvivor can append to it after construction.
+            _allSurvivors = new List<Survivor>();
             _expeditionSystem = new ExpeditionSystem(
                 _radSystem, _inventory, _itemCatalog,
                 weatherSystem: null, knowledgeMap: null,
-                medicalSystem: _medicalSystem, seed: 42);
+                medicalSystem: _medicalSystem, _shelter, _allSurvivors,
+                seed: 42);
         }
 
         [TearDown]
@@ -111,6 +122,9 @@ namespace AtomicWar.Tests.EditMode
             };
             _needsSystem.Register(sv);
             _radSystem.Register(sv);
+            // Track in the shared list so the ExpeditionSystem can iterate
+            // over every living survivor for deny-entry morale propagation.
+            _allSurvivors.Add(sv);
             return sv;
         }
 
@@ -401,7 +415,7 @@ namespace AtomicWar.Tests.EditMode
             // Baseline regression: without a flashpoint intercept, an
             // expedition that reaches the shelter completes as before.
             var survivor = MakeSurvivor("sv_normal", RiskBiasTrait.Realist);
-            _expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Speed);
+            _expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth);
             var exp = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
             // Force the expedition into the Inbound phase, 1 tick from arrival.
             exp.Phase = ExpeditionPhase.Inbound;
@@ -415,6 +429,106 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsFalse(fired, "Non-severed expeditions must NOT raise the hatch dilemma signal.");
             Assert.IsFalse(_expeditionSystem.IsOnExpedition(survivor.Id),
                 "Non-severed expeditions should complete and be removed.");
+        }
+
+        // -------------------------------------------------------------------
+        // Bunker-wide consequences (Prompt #26 follow-up)
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void LetThemIn_Choice_SpikesBunkerContamination()
+        {
+            // Setup: expedition on the hatch. Other survivors are inside the
+            // bunker (just to confirm they aren't accidentally affected).
+            var returning = MakeSurvivor("sv_returning", RiskBiasTrait.Realist);
+            var other1 = MakeSurvivor("sv_other1", RiskBiasTrait.Realist);
+            var other2 = MakeSurvivor("sv_other2", RiskBiasTrait.Realist);
+            _expeditionSystem.StartExpedition(returning, _location, ExpeditionStance.Stealth);
+            var exp = _expeditionSystem.GetExpeditionBySurvivor(returning.Id);
+            PublishIntercept();
+            exp.TravelTicksCompleted = 1;
+            _expeditionSystem.Tick(1f); // arrival → AtHatchDilemma
+
+            float preContamination = _shelter.BunkerContamination;
+            Assert.AreEqual(0f, preContamination, Eps, "Setup: bunker starts with zero contamination.");
+
+            _expeditionSystem.ApplyHatchDilemmaChoice(
+                exp.ExpeditionId,
+                HatchDilemmaResolvedSignal.Resolution.LetThemIn);
+
+            // Bunker contamination spikes by the configured amount.
+            Assert.AreEqual(
+                ExpeditionSystem.LetThemInContaminationRadsPerHour,
+                _shelter.BunkerContamination,
+                Eps,
+                "Let-them-in must spike bunker contamination by the configured amount.");
+        }
+
+        [Test]
+        public void DenyEntry_Choice_PropagatesMoralePenaltyToOtherSurvivors()
+        {
+            // Setup: expedition on the hatch, two other survivors in the bunker.
+            var dying = MakeSurvivor("sv_dying", RiskBiasTrait.Realist);
+            var other1 = MakeSurvivor("sv_other1", RiskBiasTrait.Realist);
+            var other2 = MakeSurvivor("sv_other2", RiskBiasTrait.Realist);
+
+            float preMorale1 = other1.Needs.Morale;
+            float preMorale2 = other2.Needs.Morale;
+
+            _expeditionSystem.StartExpedition(dying, _location, ExpeditionStance.Stealth);
+            var exp = _expeditionSystem.GetExpeditionBySurvivor(dying.Id);
+            PublishIntercept();
+            exp.TravelTicksCompleted = 1;
+            _expeditionSystem.Tick(1f);
+
+            _expeditionSystem.ApplyHatchDilemmaChoice(
+                exp.ExpeditionId,
+                HatchDilemmaResolvedSignal.Resolution.DenyEntry);
+
+            // The dying survivor's morale delta was -30 (from the choice copy).
+            // We don't assert on that here — the dying-survivor morale is
+            // expected to be moot since the survivor is dead.
+
+            // Other survivors lose the configured morale hit.
+            Assert.AreEqual(
+                preMorale1 - ExpeditionSystem.DenyEntryMoralePenaltyForOtherSurvivors,
+                other1.Needs.Morale,
+                Eps,
+                "Other survivor #1 must lose morale on deny-entry.");
+            Assert.AreEqual(
+                preMorale2 - ExpeditionSystem.DenyEntryMoralePenaltyForOtherSurvivors,
+                other2.Needs.Morale,
+                Eps,
+                "Other survivor #2 must lose morale on deny-entry.");
+            Assert.IsFalse(dying.IsAlive, "Deny-entry must kill the dying survivor.");
+        }
+
+        [Test]
+        public void BunkerContamination_NaturalDecay_HalvesEveryHalfLife()
+        {
+            // Regression: the TickContaminationDecay math should halve the
+            // bunker's contamination every BunkerContaminationHalfLifeHours.
+            _shelter.AddBunkerContamination(100f);
+            Assert.AreEqual(100f, _shelter.BunkerContamination, Eps);
+
+            _shelter.TickContaminationDecay(Shelter.BunkerContaminationHalfLifeHours);
+            Assert.AreEqual(50f, _shelter.BunkerContamination, 0.1f,
+                "After one half-life, contamination should halve.");
+
+            _shelter.TickContaminationDecay(Shelter.BunkerContaminationHalfLifeHours);
+            Assert.AreEqual(25f, _shelter.BunkerContamination, 0.1f,
+                "After two half-lives, contamination should be 25%.");
+        }
+
+        [Test]
+        public void BunkerContamination_ShelterTick_DecaysAutomatically()
+        {
+            // Regression: Shelter.Tick should drive the contamination decay
+            // even when nobody calls TickContaminationDecay directly.
+            _shelter.AddBunkerContamination(80f);
+            _shelter.Tick(Shelter.BunkerContaminationHalfLifeHours);
+            Assert.AreEqual(40f, _shelter.BunkerContamination, 0.5f,
+                "Shelter.Tick should decay bunker contamination as part of the normal tick.");
         }
     }
 }
