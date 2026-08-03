@@ -52,6 +52,15 @@ namespace AtomicWar._Game.AI
         /// <summary>Shelter electricity grid (generation, load-shed, pedaling).</summary>
         public PowerNetwork PowerNetwork;
 
+        /// <summary>Hatch defense / raid resolution (Prompt #33).</summary>
+        public HatchDefenseSystem HatchDefense;
+
+        /// <summary>0..1 perceived raid threat (faction hostility / noise).</summary>
+        public float RaidThreatLevel;
+
+        /// <summary>Current campaign day (for post-Day 30 guard priority).</summary>
+        public int CurrentDay;
+
         /// <summary>Indoor °C for sleep quality (wired from TemperatureSystem).</summary>
         public float IndoorTemperatureC = 15f;
 

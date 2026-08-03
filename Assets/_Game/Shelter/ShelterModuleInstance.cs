@@ -30,6 +30,9 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Bed modules without a bound SO: capacity fallback (0 = use default 1).</summary>
         public int Capacity;
 
+        /// <summary>Hatch defense modules without a bound SO: security points per level.</summary>
+        public float SecurityContribution;
+
         [NonSerialized]
         private ShelterModule _definition;
 

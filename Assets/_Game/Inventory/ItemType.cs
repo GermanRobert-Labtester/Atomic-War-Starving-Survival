@@ -20,6 +20,8 @@ namespace AtomicWar._Game.Inventory
         Trade,
         Comfort,
         Quest,
-        Device
+        Device,
+        /// <summary>Firearms, melee, ammo, ballistic gear used in hatch defense.</summary>
+        Weapon
     }
 }

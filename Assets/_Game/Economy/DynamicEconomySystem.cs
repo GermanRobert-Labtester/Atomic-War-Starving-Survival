@@ -44,6 +44,8 @@ namespace AtomicWar._Game.Economy
         private Func<WorldPhase> _getPhase;
         private Shelter.Shelter _shelter;
         private System.Random _rng;
+        private HatchDefenseSystem _hatchDefense;
+        private Func<int> _getDay;
 
         public event Action<string, float, float> OnTrustChanged; // factionId, old, new
         public event Action<WorldPhase> OnEconomyPhaseChanged;
@@ -51,6 +53,9 @@ namespace AtomicWar._Game.Economy
         public event Action OnEconomyChanged;
         /// <summary>Fired when barter-only mode flips (parameter: new value).</summary>
         public event Action<bool> OnBarterOnlyModeChanged;
+
+        /// <summary>Systemic hatch defense (Prompt #33). Null-safe for pure trade tests.</summary>
+        public HatchDefenseSystem HatchDefense => _hatchDefense;
 
         public WorldPhase CurrentPhase => _getPhase != null ? _getPhase() : WorldPhase.CivilWar;
         public bool BarterOnlyMode => _barterOnlyMode;
@@ -72,6 +77,10 @@ namespace AtomicWar._Game.Economy
         }
 
         public void SetShelter(Shelter.Shelter shelter) => _shelter = shelter;
+
+        public void SetHatchDefense(HatchDefenseSystem hatchDefense) => _hatchDefense = hatchDefense;
+
+        public void SetDayProvider(Func<int> getDay) => _getDay = getDay;
 
         public void NotifyPhaseChanged(WorldPhase phase)
         {
@@ -340,9 +349,10 @@ namespace AtomicWar._Game.Economy
 
         /// <summary>
         /// Attempt a hatch raid when trust is at/below the faction's raid threshold.
-        /// Shielding integrity (module level) determines whether the raid is repelled.
+        /// Delegates to HatchDefenseSystem (security + weapons vs raid strength).
+        /// Post-Day 30 only unless hatch defense is forced for tests.
         /// </summary>
-        public FactionRaidResult TryLaunchRaid(string factionId)
+        public FactionRaidResult TryLaunchRaid(string factionId, bool ignoreDayGate = false)
         {
             var result = new FactionRaidResult { FactionId = factionId };
             var fac = GetFaction(factionId);
@@ -356,25 +366,57 @@ namespace AtomicWar._Game.Economy
                 return result;
             }
 
-            result.Launched = true;
-            int shieldLevel = _shelter?.Shielding?.Level ?? 0;
             float aggression = fac != null ? fac.raidAggression : 0.5f;
+            // Map aggression 0..1 → raid strength ~30..70
+            float strength = 30f + aggression * 40f;
 
-            // Level 0 hatch = soft; each shielding level cuts damage ~25%
-            float integrity = Mathf.Clamp01(shieldLevel * 0.25f);
+            int day = _getDay != null ? _getDay() : HatchDefenseSystem.RaidUnlockDay;
+            int shieldLevel = 0;
+            var shieldMod = _shelter?.GetModule("radiation_shielding");
+            if (shieldMod != null) shieldLevel = shieldMod.Level;
             result.ShieldingLevel = shieldLevel;
-            result.Repelled = integrity >= 0.5f && _rng.NextDouble() < integrity;
 
-            if (result.Repelled)
+            if (_hatchDefense != null)
             {
-                result.HatchDamage = 5f + 10f * aggression * (1f - integrity);
-                result.Message = "Hatch held. Scuffs on the plate, nothing more.";
+                // Post-Day 30 pressure; tests may pass ignoreDayGate: true.
+                if (!ignoreDayGate && !_hatchDefense.IsRaidUnlocked(day))
+                {
+                    result.Launched = false;
+                    result.Message = "Pre-Day 30: hatch raids not yet active.";
+                    return result;
+                }
+
+                var resolution = _hatchDefense.ResolveFactionRaid(
+                    factionId, strength, day, ignoreDayGate: true);
+
+                result.Launched = resolution.Launched;
+                result.Repelled = resolution.Repelled;
+                result.Breached = resolution.Breached;
+                result.HatchDamage = resolution.HatchDamage;
+                result.RaidStrength = resolution.RaidStrength;
+                result.DefenseScore = resolution.DefenseScore;
+                result.ShelterSecurity = resolution.ShelterSecurity;
+                result.StolenItemCount = resolution.StolenItems != null ? resolution.StolenItems.Count : 0;
+                result.Message = resolution.Message;
             }
             else
             {
-                result.HatchDamage = 20f + 40f * aggression * (1f - integrity);
-                result.Message = "Hatch forced. Interior took the hit.";
-                ApplyHatchDamage(result.HatchDamage);
+                // Legacy fallback when hatch defense not wired
+                result.Launched = true;
+                float integrity = Mathf.Clamp01(shieldLevel * 0.25f);
+                result.Repelled = integrity >= 0.5f && _rng.NextDouble() < integrity;
+                if (result.Repelled)
+                {
+                    result.HatchDamage = 5f + 10f * aggression * (1f - integrity);
+                    result.Message = "Hatch held. Scuffs on the plate, nothing more.";
+                }
+                else
+                {
+                    result.HatchDamage = 20f + 40f * aggression * (1f - integrity);
+                    result.Message = "Hatch forced. Interior took the hit.";
+                    ApplyHatchDamageLegacy(result.HatchDamage);
+                    result.Breached = true;
+                }
             }
 
             OnRaidResolved?.Invoke(result);
@@ -382,18 +424,16 @@ namespace AtomicWar._Game.Economy
             return result;
         }
 
-        private void ApplyHatchDamage(float damage)
+        private void ApplyHatchDamageLegacy(float damage)
         {
             if (_shelter == null || damage <= 0f) return;
 
-            // Prefer air filtration as the "hatch seal" integrity proxy
             var air = _shelter.GetModule("air_filtration");
             if (air != null)
             {
                 air.FilterHealth = Mathf.Max(0f, air.FilterHealth - damage);
             }
 
-            // Heavy hits can knock a level off radiation shielding
             if (damage >= 40f)
             {
                 var shield = _shelter.GetModule("radiation_shielding");
@@ -660,8 +700,13 @@ namespace AtomicWar._Game.Economy
         public string FactionId;
         public bool Launched;
         public bool Repelled;
+        public bool Breached;
         public float HatchDamage;
         public int ShieldingLevel;
+        public float RaidStrength;
+        public float DefenseScore;
+        public float ShelterSecurity;
+        public int StolenItemCount;
         public string Message;
     }
 

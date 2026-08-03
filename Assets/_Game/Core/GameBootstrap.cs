@@ -82,6 +82,7 @@ namespace AtomicWar._Game.Core
         public MedicalSystem MedicalSystem { get; private set; }
         public WorldPhaseSystem WorldPhaseSystem { get; private set; }
         public DynamicEconomySystem EconomySystem { get; private set; }
+        public HatchDefenseSystem HatchDefenseSystem { get; private set; }
         public PowerNetwork PowerNetwork { get; private set; }
         public WaterStorage WaterStorage { get; private set; }
         public WaterEconomySystem WaterEconomySystem { get; private set; }
@@ -314,6 +315,22 @@ namespace AtomicWar._Game.Core
             // assembly directly. Same asmdef-boundary pattern.
             MentalBreakSystem.ComfortCureHandler = (sv, br) => ForceMentalBreakComfortCure(sv, br);
 
+            // Hatch defense (Prompt #33): security vs raids, guard duty, loot theft
+            HatchDefenseSystem = new HatchDefenseSystem(
+                getShelter: () => Shelter,
+                getInventory: () => Inventory,
+                getSurvivors: () => Survivors,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                inflictTrauma: (sv, affId) => MedicalSystem?.Inflict(sv, affId),
+                rng: new System.Random(_worldSeed + 33));
+            // Starting hatch plate: reinforced locks at level 1
+            Shelter.AddModule(new ShelterModuleInstance(
+                HatchDefenseModuleSO.ReinforcedLocksId, 1)
+            {
+                SecurityContribution = 10f,
+                FilterHealth = 100f
+            });
+
             // Dynamic phase economy + faction trust matrix
             EconomySystem = new DynamicEconomySystem(
                 getPhase: () => WorldPhaseSystem.CurrentPhase,
@@ -321,6 +338,8 @@ namespace AtomicWar._Game.Core
                 rng: new System.Random(_worldSeed + 91));
             foreach (var fac in DynamicEconomySystem.CreateDefaultFactions())
                 EconomySystem.RegisterFaction(fac);
+            EconomySystem.SetHatchDefense(HatchDefenseSystem);
+            EconomySystem.SetDayProvider(() => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             EconomySystem.BindEventRunner(EventRunner);
             WorldPhaseSystem.OnPhaseChanged += phase =>
             {
@@ -828,9 +847,29 @@ namespace AtomicWar._Game.Core
             {
                 // Fresh sleep-wave occupancy so capacity is per evaluation pass.
                 SleepQualitySystem.ResetBedOccupancy(Shelter);
+                // Guards re-assigned each AI wave (stale posts clear).
+                HatchDefenseSystem?.ClearGuards();
                 float indoorTemp = TemperatureSystem != null
                     ? TemperatureSystem.GetIndoorTemperature(Shelter)
                     : 15f;
+                int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+                float raidThreat = 0f;
+                if (HatchDefenseSystem != null && day >= HatchDefenseSystem.RaidUnlockDay)
+                {
+                    raidThreat = 0.25f;
+                    if (HatchDefenseSystem.GeneratorRunningOutside
+                        || HatchDefenseSystem.ExternalNoise >= HatchDefenseSystem.ExternalGeneratorNoiseThreshold)
+                        raidThreat = 0.7f;
+                    if (EconomySystem != null)
+                    {
+                        foreach (var fac in EconomySystem.Factions.Values)
+                        {
+                            if (fac == null) continue;
+                            if (EconomySystem.GetStance(fac.id) == TradeStance.HostileRaid)
+                                raidThreat = Mathf.Max(raidThreat, 0.85f);
+                        }
+                    }
+                }
 
                 foreach (var sv in Survivors)
                 {
@@ -853,6 +892,9 @@ namespace AtomicWar._Game.Core
                         IsNumb          = sv.IsNumb,
                         MedicalSystem   = MedicalSystem,
                         PowerNetwork    = PowerNetwork,
+                        HatchDefense    = HatchDefenseSystem,
+                        RaidThreatLevel = raidThreat,
+                        CurrentDay      = day,
                         IndoorTemperatureC = indoorTemp,
                         SleepRoomId     = SleepQualitySystem.DefaultSleepRoomId,
                         AreRoomsAdjacent = Shelter.AreRoomsAdjacent,

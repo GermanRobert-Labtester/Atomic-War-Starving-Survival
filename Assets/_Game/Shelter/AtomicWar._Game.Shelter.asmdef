@@ -2,7 +2,8 @@
     "name": "AtomicWar._Game.Shelter",
     "rootNamespace": "AtomicWar._Game.Shelter",
     "references": [
-        "AtomicWar._Game.Inventory"
+        "AtomicWar._Game.Inventory",
+        "AtomicWar._Game.Survivors"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
