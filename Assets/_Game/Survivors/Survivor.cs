@@ -122,6 +122,12 @@ namespace AtomicWar._Game.Survivors
         /// <summary>True once Numbness has crossed BeliefSystem.NumbnessThreshold.</summary>
         public bool IsNumb;
 
+        /// <summary>
+        /// Permanent Fractured status after a forgiven internal theft (or bunker-wide scar).
+        /// See <see cref="SurvivorStatus.Fractured"/>.
+        /// </summary>
+        public bool IsFractured;
+
         // -------------------------------------------------------------------
         // Medical triage — skill for Treat Patient actions. Affliction instances
         // live in MedicalSystem (keyed by survivor id); this is the only skill
@@ -130,6 +136,15 @@ namespace AtomicWar._Game.Survivors
 
         /// <summary>0..1 medical competence. Higher = faster treatments, fewer spare parts used.</summary>
         public float MedicalSkill = 0.3f;
+
+        /// <summary>
+        /// 0..1 scientific/technical competence. Drives audio/signal analysis, circuit
+        /// diagnostics, and "is this a recording loop?" inference. Default 0.3 means
+        /// the average survivor cannot reliably scrutinize a broadcast — the radio
+        /// only becomes a safe narrative tool if the bunker has a medic or a tech
+        /// at the dial. Used by EventContext.HasTraitInBunker("Science").
+        /// </summary>
+        public float ScienceSkill = 0.3f;
 
         /// <summary>
         /// Snake-case id of the <see cref="AtomicWar._Game.Shelter.ShelterRoom"/>
@@ -174,6 +189,7 @@ namespace AtomicWar._Game.Survivors
                 case SurvivorStatus.AcuteRadiationSyndrome: return HasAcuteRadiationSyndrome;
                 case SurvivorStatus.RadiationAnxiety: return HasRadiationAnxietyStatus;
                 case SurvivorStatus.Numb: return IsNumb;
+                case SurvivorStatus.Fractured: return IsFractured;
                 default: return false;
             }
         }

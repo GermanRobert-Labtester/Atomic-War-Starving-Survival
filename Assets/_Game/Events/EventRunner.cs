@@ -988,5 +988,172 @@ namespace AtomicWar._Game.Events
             };
             return ev;
         }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #46 — Radio-triggered events + Intel reliability variance.
+        // The radio airwaves are full of desperate liars: broadcasts that
+        // promise a "safe haven" can be a pre-positioned ambush. GameEvents
+        // gated on the radio must (a) only fire when a survivor is actively
+        // listening (IsOnRadio), and (b) branch on IntelReliability so that
+        // sending an expedition on a Trap is a casualty-producing decision.
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string SafeHavenBroadcastEventId = "radio_safe_haven_broadcast";
+
+        // Encounter id injected into the ExpeditionSystem's encounter pool when
+        // the player launches an expedition on a Trap broadcast. Mirrors
+        // NarrativeChainEngine.EncounterIdAmbush but is sourced from the radio
+        // pipeline (factionalized "claimed safe haven" → sniper ambush).
+        public const string SafeHavenAmbushEncounterId = "enc_safe_haven_ambush";
+
+        // Item id the player must own to unlock the "warn other survivors"
+        // choice. Defined in StreamingAssets/items.json; the choice gates on
+        // RequiredItemId and pays Power via a downstream System.PayForBroadcast
+        // delegate wired by GameBootstrap.
+        public const string RadioTransmitterItemId = "radio_transmitter";
+
+        // World flags written by Safe Haven choices. Read by tests and by
+        // GameBootstrap when materializing the ambush encounter.
+        public const string FlagSafeHavenSentExpedition  = "safe_haven_sent_expedition";
+        public const string FlagSafeHavenVerified       = "safe_haven_verified_as_trap";
+        public const string FlagSafeHavenBroadcasted    = "safe_haven_warned_others";
+        public const string FlagSafeHavenIgnored        = "safe_haven_ignored";
+
+        // Result location id written into the ambush encounter's
+        // TargetLocationId; resolved by GameBootstrap when synthesizing the
+        // sniper node. Kept in one place so the encounter factory and the
+        // location injector agree.
+        public const string SafeHavenTargetLocationId  = "safe_haven_20mi_north";
+
+        /// <summary>
+        /// Radio-triggered GameEvent: a looped broadcast claims a working
+        /// military bunker 20 miles north. Variance:
+        ///  - With a high-skill survivor (Medical OR Science) in the bunker,
+        ///    an "Analyze the audio background" choice unlocks and reveals the
+        ///    scrubber hum as a recorded loop (Verified=Trap, no trust cost).
+        ///  - With a <c>radio_transmitter</c> in the bunker, a "Warn other
+        ///    wastelanders" choice unlocks, costs power, and raises global
+        ///    karma via the PayForBroadcast delegate (verified broadcasts
+        ///    only).
+        ///  - Sending an expedition on Unverified intel biases the
+        ///    ExpeditionSystem toward a sniper ambush encounter
+        ///    (<see cref="SafeHavenAmbushEncounterId"/>).
+        /// Choice conditions:
+        ///  - analyze_audio: RequiredTrait "Medical" or "Science" (gated via
+        ///    HideIfGatesFail so the row is hidden when no qualified survivor
+        ///    is in the bunker).
+        ///  - warn_others: RequiredItemId "radio_transmitter" (gated similarly).
+        ///  - send_expedition / ignore: always available.
+        /// Trigger: requires the player to be at the radio (IsOnRadio=true on
+        /// the EventContext) and the broadcast to be in the Unverified state
+        /// (Verified broadcasts re-fire with safer outcomes; Trap broadcasts
+        /// never re-fire — the audio analysis is terminal).
+        /// </summary>
+        public static GameEvent CreateSafeHavenBroadcastEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = SafeHavenBroadcastEventId;
+            ev.title = "Safe Haven Broadcast";
+            ev.bodyText =
+                "A looped broadcast cuts through the static. A woman's voice, calm, almost rehearsed: " +
+                "safe haven at grid 4-7-North, twenty miles. Working scrubbers. Hot food. " +
+                "Come in on 107.0. The loop is on a six-minute cycle. It does not stutter. " +
+                "The background hum — the 'scrubbers' — sits at exactly the same pitch every time.";
+            ev.weight = 1.2f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 31,
+                RequiredFlagId = "is_on_radio"
+            };
+            ev.choices = new List<EventChoice>
+            {
+                // ── Default: trust the broadcast, send an expedition. ──
+                // If the broadcast turns out to be a Trap, GameBootstrap reads
+                // FlagSafeHavenSentExpedition + the Unverified reliability on
+                // EventContext and injects SafeHavenAmbushEncounterId into
+                // ExpeditionSystem.EncouterPool with a heavy weight.
+                new EventChoice
+                {
+                    ChoiceId = "send_expedition",
+                    Text = "Pack rucks. Send the team north to grid 4-7.",
+                    MoraleDelta = 8f,
+                    SetEventFlags = new List<string> { FlagSafeHavenSentExpedition }
+                },
+
+                // ── Variance: high-skill survivor at the dial can hear the loop. ──
+                // Gates on the union of "Medical" and "Science" trait strings:
+                // the bunker needs a medic or a tech to expose the recording.
+                // The effect sets FlagSafeHavenVerified and flips the context's
+                // ActiveIntelReliability to Trap so subsequent reads of the
+                // event inherit the new reliability.
+                new EventChoice
+                {
+                    ChoiceId = "analyze_audio",
+                    Text = "Tell the medic to put a stethoscope to the speaker. Tell the tech to spectrum-analyze the hum.",
+                    MoraleDelta = -2f,
+                    RequiredTrait = "Medical", // OR-gate: see TryRevealTrap below.
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagSafeHavenVerified }
+                },
+                // Science-only alias: a tech can also do the spectrum analysis
+                // alone, but the medic-only row above does not cover them when
+                // no medic is in the bunker. Hidden if Medical is present (so
+                // we don't double-show); shown if only Science is present.
+                // (HideIfGatesFail keeps the union semantics: any qualified
+                // survivor in the bunker reveals the row.)
+                new EventChoice
+                {
+                    ChoiceId = "analyze_audio_science",
+                    Text = "Run the broadcast through a bandpass filter and a spectrum analyzer.",
+                    MoraleDelta = -2f,
+                    RequiredTrait = "Science",
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagSafeHavenVerified }
+                },
+
+                // ── Variance: radio_transmitter lets the player warn other
+                //    wastelanders on the frequency. Costs power; raises global
+                //    karma/trust. Gated on the craftable transmitter item.
+                new EventChoice
+                {
+                    ChoiceId = "warn_others",
+                    Text = "Use the radio transmitter. Cut into the loop. Tell anyone listening it's a trap.",
+                    MoraleDelta = 12f,
+                    RequiredItemId = RadioTransmitterItemId,
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagSafeHavenBroadcasted }
+                },
+
+                // ── Always-available: ignore the broadcast. ──
+                new EventChoice
+                {
+                    ChoiceId = "ignore_broadcast",
+                    Text = "Static and lies. Change the frequency.",
+                    MoraleDelta = -1f,
+                    SetEventFlags = new List<string> { FlagSafeHavenIgnored }
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// Test/run-time helper: a survivor is qualified to expose the Safe
+        /// Haven trap if they have a Medical or Science skill at or above the
+        /// standard trait threshold (0.5). Returns the first such survivor in
+        /// the bunker, or null. Mirrors the union of the two
+        /// RequiredTrait-gated choices on <see cref="CreateSafeHavenBroadcastEvent"/>.
+        /// </summary>
+        public static Survivor FindSafeHavenAnalyst(IReadOnlyList<Survivor> bunker)
+        {
+            if (bunker == null) return null;
+            for (int i = 0; i < bunker.Count; i++)
+            {
+                var s = bunker[i];
+                if (s == null || !s.IsAlive) continue;
+                if (s.MedicalSkill >= EventContext.MedicalSkillTraitThreshold) return s;
+                if (s.ScienceSkill  >= EventContext.ScienceSkillTraitThreshold)  return s;
+            }
+            return null;
+        }
     }
 }

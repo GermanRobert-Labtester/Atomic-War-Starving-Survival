@@ -58,5 +58,12 @@
     "minDay": 80,
     "maxDay": 90,
     "message": "This is the final scheduled broadcast from Station 7. If you can hear this, you have survived the worst. Good luck."
+  },
+  {
+    "id": "safe_haven_loop",
+    "minDay": 35,
+    "maxDay": 90,
+    "message": "[LOOPED BROADCAST] Safe haven at grid 4-7-North, twenty miles. Working scrubbers. Hot food. Come in on 107.0. [REPEAT IN 6:00] Safe haven at grid 4-7-North, twenty miles. Working scrubbers. Hot food…",
+    "triggerEventId": "radio_safe_haven_broadcast"
   }
 ]

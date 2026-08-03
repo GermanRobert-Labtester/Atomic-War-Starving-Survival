@@ -130,6 +130,16 @@ namespace AtomicWar._Game.Events
         /// <summary>Event flags that must already be true (prerequisites).</summary>
         public List<string> RequiredEventFlags = new List<string>();
 
+        /// <summary>
+        /// Item id (snake_case) that must be present in the bunker inventory
+        /// for this choice to be available. Used by radio-triggered events
+        /// where the player must own a <c>radio_transmitter</c> to broadcast
+        /// a warning, or a <c>geiger_counter</c> to verify a hot-zone claim.
+        /// Evaluated alongside trait/trust gates; gated with the same
+        /// <see cref="HideIfGatesFail"/> semantics.
+        /// </summary>
+        public string RequiredItemId;
+
         /// <summary>Flags injected into SaveSystem / EventContext when this choice resolves.</summary>
         public List<string> SetEventFlags = new List<string>();
 
@@ -192,6 +202,15 @@ namespace AtomicWar._Game.Events
                 }
             }
 
+            // Inventory item gate (Prompt #46). When RequiredItemId is set
+            // the bunker must hold at least one of the item; an empty
+            // context is treated as "not in inventory" and fails the gate.
+            if (!string.IsNullOrEmpty(RequiredItemId))
+            {
+                if (context == null || context.Inventory == null) return false;
+                if (context.Inventory.CountById(RequiredItemId) <= 0) return false;
+            }
+
             return true;
         }
 
@@ -237,6 +256,11 @@ namespace AtomicWar._Game.Events
         public string RequiredFlagId;
         /// <summary>All listed eventFlags must be set for the event to fire.</summary>
         public List<string> RequiredEventFlags = new List<string>();
+        /// <summary>
+        /// When true, event only fires if food or water stock is below 10% of inventory capacity
+        /// (see <see cref="EventContext.IsResourceStarved"/> / SuspicionTracker).
+        /// </summary>
+        public bool RequireResourceStarved;
     }
 
     /// <summary>
@@ -297,6 +321,9 @@ namespace AtomicWar._Game.Events
             }
 
             if (!string.IsNullOrEmpty(conditions.RequiredItemId) && (context.Inventory == null || context.Inventory.Count(new Inventory.ItemDefinition { id = conditions.RequiredItemId }) <= 0))
+                return false;
+
+            if (conditions.RequireResourceStarved && !context.IsResourceStarved)
                 return false;
 
             return true;

@@ -438,5 +438,16 @@
     "healthEffect": 0,
     "moraleEffect": 30,
     "description": "A sentimental locket containing a photograph of a lost family."
+  },
+  {
+    "id": "radio_transmitter",
+    "itemName": "HAM-Band Radio Transmitter",
+    "itemType": "Tool",
+    "stackSize": 1,
+    "weight": 1.8,
+    "hungerRestored": 0,
+    "healthEffect": 0,
+    "moraleEffect": 0,
+    "description": "A short-range push-to-talk transmitter salvaged from a ham set. Lets the bunker broadcast on the civilian and emergency bands — but every transmission costs power, and someone is always listening."
   }
 ]

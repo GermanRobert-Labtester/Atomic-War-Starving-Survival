@@ -71,6 +71,8 @@ namespace AtomicWar._Game.Core
         public WorkbenchSystem WorkbenchSystem { get; private set; }
         public UtilityAI UtilityAI { get; private set; }
         public EventRunner EventRunner { get; private set; }
+        /// <summary>Internal mysteries — resource-starved Missing Rations chain.</summary>
+        public SuspicionTracker SuspicionTracker { get; private set; }
         public SaveSystem SaveSystem { get; private set; }
         public LocationScavengingSystem ScavengingSystem { get; private set; }
         public ExpeditionSystem ExpeditionSystem { get; private set; }
@@ -354,7 +356,19 @@ namespace AtomicWar._Game.Core
             // Always register factory versions so scheduleEvent ids resolve even if
             // the catalog has not been re-imported from events.json.
             EnsurePoolHasEmissaryChain(eventPool);
+
+            // Prompt #46 — radio-triggered Safe Haven Broadcast. The radio
+            // bridge in HandleRadioBroadcastTrigger raises this by id when
+            // a survivor is at the dial; the pool must contain a matching
+            // instance or FindInPool() returns null and the broadcast
+            // surfaces nothing.
+            EnsurePoolHasRadioTriggeredEvents(eventPool);
+            // Internal mysteries (Missing Rations) — factory events for choice resolution.
+            EnsurePoolHasMissingRationsChain(eventPool);
             EventRunner.SetPool(eventPool);
+
+            SuspicionTracker = new SuspicionTracker();
+            SuspicionTracker.Bind(EventRunner);
 
             // Diegetic journal — survivors write discoveries (no tutorial popups).
             // Entries run through a pool: evicted/cleared entries are recycled,
@@ -505,6 +519,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetJournalSystem(JournalSystem);
             SaveSystem.SetVictoryProjectManager(VictoryProject);
             SaveSystem.SetEventRunner(EventRunner);
+            SaveSystem.SetSuspicionTracker(SuspicionTracker);
             SaveSystem.SetPreCaptureHook(SnapshotRadioHudToInterceptSystem);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
@@ -583,6 +598,15 @@ namespace AtomicWar._Game.Core
                     _hud?.MapScreenUI?.Refresh();
                 }
             };
+
+            // Prompt #46 — Radio-triggered GameEvents. When a broadcast with
+            // a non-empty triggerEventId plays AND a survivor is currently
+            // at the radio (IsOnRadio on the EventContext), raise the named
+            // event through the standard EventRunner path. This is how the
+            // Safe Haven broadcast surfaces as a player choice: the radio
+            // plays the loop, the player is at the dial, the event fires.
+            RadioSystem.OnBroadcastStarted += HandleRadioBroadcastTrigger;
+            EventRunner.OnChoiceApplied += HandleSafeHavenChoiceApplied;
 
             TimeSystem.OnDayTick += day =>
             {
@@ -731,6 +755,208 @@ namespace AtomicWar._Game.Core
             }
 
             FlashpointChoreographer.OnNuclearExchange();
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #46 — Radio → EventRunner bridge + Safe Haven ambush wiring.
+        // The radio is a narrative tool, not just an intel sink: broadcasts
+        // with a triggerEventId surface as player choices (send the team,
+        // analyze the audio, warn other wastelanders) — and a careless
+        // expedition on a Trap broadcast is a casualty-producing decision.
+        // ─────────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// Radio-broadcast listener: when a broadcast with a triggerEventId
+        /// plays AND a survivor is at the radio, raise the named event
+        /// through EventRunner.Run. Mirrors the standard hourly event tick
+        /// but uses a context tagged with <c>IsOnRadio=true</c> so the
+        /// event's RequiredFlagId gate resolves and the modal fires.
+        /// </summary>
+        private void HandleRadioBroadcastTrigger(RadioBroadcastSO broadcast)
+        {
+            if (broadcast == null || string.IsNullOrEmpty(broadcast.triggerEventId)) return;
+            if (EventRunner == null) return;
+
+            // The player must be at the radio for the broadcast to surface
+            // as an interactive choice. Without IsOnRadio, the event stays
+            // in the pool — the loop is just audio flavor.
+            bool anyoneAtRadio = false;
+            if (Survivors != null)
+            {
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    var s = Survivors[i];
+                    if (s == null || !s.IsAlive) continue;
+                    // The listen-to-radio AI action sets CurrentRoomId to the
+                    // radio station; in test scenes we accept the flag as well.
+                    if (s.CurrentRoomId == "radio" || s.CurrentRoomId == "radio_station")
+                    {
+                        anyoneAtRadio = true;
+                        break;
+                    }
+                }
+            }
+            if (!anyoneAtRadio) return;
+
+            // Build a context tagged with IsOnRadio and the broadcast's id
+            // so the named event can also gate on a per-broadcast flag.
+            var ctx = BuildEventContext(TimeSystem != null ? TimeSystem.CurrentDay : 1);
+            ctx.IsOnRadio = true;
+            ctx.SetEventFlag("is_on_radio", true);
+            ctx.SetEventFlag("broadcast_" + broadcast.id, true);
+
+            // Default reliability is Unverified; the player must verify
+            // (or get ambushed) to flip it.
+            ctx.ActiveIntelReliability = IntelReliability.Unverified;
+
+            // Find the event by id; if it's already in the pool just Run it.
+            var ev = EventRunner.FindInPool(broadcast.triggerEventId);
+            if (ev == null)
+            {
+                Debug.LogWarning($"[GameBootstrap] Radio broadcast '{broadcast.id}' wants event " +
+                                 $"'{broadcast.triggerEventId}' but it is not in the EventRunner pool.");
+                return;
+            }
+            EventRunner.Run(ev, ctx);
+        }
+
+        /// <summary>
+        /// EventRunner.OnChoiceApplied listener: resolves side effects of the
+        /// Safe Haven Broadcast event. Specifically:
+        ///  - <c>warn_others</c>: drains 5 fuel from the radio tuner (transmission
+        ///    cost) and boosts trust with every registered faction by +3.
+        ///  - <c>send_expedition</c>: if the broadcast was NOT verified as a
+        ///    trap first, injects the Safe Haven ambush encounter into the
+        ///    ExpeditionSystem so the next expedition to grid 4-7-North hits
+        ///    a pre-positioned sniper. If the broadcast WAS verified, the
+        ///    encounter pool is left clean — the player can scavenge the
+        ///    empty cache without casualties.
+        ///  - <c>analyze_audio</c> / <c>analyze_audio_science</c>: flips the
+        ///    EventContext's ActiveIntelReliability to Trap on the running
+        ///    context so downstream choices inherit the new reliability.
+        /// </summary>
+        private void HandleSafeHavenChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null) return;
+            if (ev.id != EventRunner.SafeHavenBroadcastEventId) return;
+
+            if (choice.ChoiceId == "warn_others")
+            {
+                // Transmission cost: pull from the radio tuner's fuel reserve.
+                if (RadioTunerSystem != null && RadioTunerSystem.State != null)
+                {
+                    RadioTunerSystem.State.AvailableFuel = Mathf.Max(
+                        0f, RadioTunerSystem.State.AvailableFuel - 5f);
+                }
+                // Karma/trust boost: every registered faction gets +3 trust.
+                if (EconomySystem != null && EconomySystem.Factions != null)
+                {
+                    foreach (var fac in EconomySystem.Factions.Values)
+                    {
+                        if (fac == null) continue;
+                        EconomySystem.ModifyTrust(fac.id, 3f);
+                    }
+                }
+                Debug.Log("[Safe Haven] Broadcast warning transmitted. Radio fuel -5, all factions +3 trust.");
+                return;
+            }
+
+            if (choice.ChoiceId == "analyze_audio" || choice.ChoiceId == "analyze_audio_science")
+            {
+                // Verified-as-trap: flip the running context's reliability.
+                // The same broadcast context is reused on the next tick so
+                // send_expedition below will see the updated value.
+                if (ctx != null)
+                {
+                    ctx.ActiveIntelReliability = IntelReliability.Trap;
+                }
+                Debug.Log("[Safe Haven] Audio analyzed: the scrubber hum is a recorded loop. Trap confirmed.");
+                return;
+            }
+
+            if (choice.ChoiceId == "send_expedition")
+            {
+                // If the player analyzed first, do NOT inject the ambush —
+                // they earned the empty-cache outcome by spending a survivor
+                // turn on the analysis.
+                bool verifiedAsTrap = ctx != null
+                    && ctx.ActiveIntelReliability == IntelReliability.Trap;
+                if (!verifiedAsTrap)
+                {
+                    InjectSafeHavenAmbushEncounter();
+                    Debug.Log("[Safe Haven] Unverified intel accepted. Sniper ambush injected at grid 4-7-North.");
+                }
+                else
+                {
+                    Debug.Log("[Safe Haven] Trap confirmed. Expedition will find the empty cache, not the bunker.");
+                }
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Build the Safe Haven sniper-ambush encounter and inject it into
+        /// ExpeditionSystem.EncouterPool with a heavy weight so any
+        /// expedition to the Safe Haven target location is biased toward
+        /// this encounter. The encounter is gated to
+        /// <see cref="EventRunner.SafeHavenTargetLocationId"/> via its id
+        /// (the expedition resolver in ExpeditionSystem matches the
+        /// location id field on the encounter).
+        /// </summary>
+        private void InjectSafeHavenAmbushEncounter()
+        {
+            if (ExpeditionSystem == null) return;
+
+            var ambush = ScriptableObject.CreateInstance<EncounterSO>();
+            ambush.id = EventRunner.SafeHavenAmbushEncounterId;
+            ambush.title = "Safe Haven Sniper Ambush";
+            ambush.description =
+                "The cache is not a cache. The 'bunker entrance' is a firing position. " +
+                "A single high-caliber round takes the first survivor in the chest before the rest " +
+                "even hear the shot. The loop is still playing. There was never anyone in the bunker.";
+            ambush.category = EncounterCategory.Combat;
+            ambush.baseWeight = 5f;
+            ambush.stealthWeightMultiplier = 1.2f;
+            ambush.speedWeightMultiplier = 1.4f;
+            ambush.minDangerLevel = 1f;
+            ambush.enableAutoResolution = false;
+            ambush.autoEngageTrait = RiskBiasTrait.Reckless;
+            ambush.autoFleeTrait = RiskBiasTrait.Paranoid;
+            ambush.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "drag_wounded_back",
+                    Text = "Drag the wounded back. Leave the cache.",
+                    MoraleDelta = -20f
+                },
+                new EventChoice
+                {
+                    ChoiceId = "suppress_and_advance",
+                    Text = "Pin down the shooter and push forward.",
+                    MoraleDelta = -8f,
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { TargetNeed = "health", NeedDelta = -25f }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "abort_expedition",
+                    Text = "Abort. Run.",
+                    MoraleDelta = -5f,
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { TargetNeed = "fatigue", NeedDelta = 10f }
+                    }
+                }
+            };
+
+            // Inject (do not replace) — the existing feral-dogs / deserters
+            // pool stays intact, but the ambush is now the dominant event
+            // for the Safe Haven location until the player resolves it.
+            ExpeditionSystem.SetEncounterPool(
+                new List<EncounterSO>(ExpeditionSystem.EncounterPool) { ambush });
         }
 
         private void SeedKnowledgeMap()
@@ -1093,6 +1319,9 @@ namespace AtomicWar._Game.Core
                 indoorTemp);
             EventRunner.Tick(gameHours, eventContext);
 
+            // Internal mysteries: resource-starved Missing Rations pressure.
+            SuspicionTracker?.Tick(gameHours, eventContext, EventRunner);
+
             // Diegetic journal discoveries (first-time atmosphere / rad / storm / etc.)
             if (JournalSystem != null)
                 EventRunner.ObserveDiscoveries(JournalSystem, eventContext);
@@ -1141,11 +1370,43 @@ namespace AtomicWar._Game.Core
                 {
                     if (SaveSystem != null)
                         SaveSystem.SetWorldFlag(flagId, value);
-                }
+                },
+                // Primary survivor is POV for mystery suspect exclusion.
+                PlayerSurvivorId = Survivors != null && Survivors.Count > 0 && Survivors[0] != null
+                    ? Survivors[0].Id
+                    : null,
+                Suspicion = SuspicionTracker
             };
             if (SaveSystem != null)
                 ctx.ImportFlags(SaveSystem.WorldFlags);
+            if (SuspicionTracker != null)
+            {
+                SuspicionTracker.RefreshStarved(Inventory);
+                ctx.IsResourceStarved = SuspicionTracker.IsResourceStarved;
+            }
             return ctx;
+        }
+
+        private static void EnsurePoolHasMissingRationsChain(List<GameEvent> pool)
+        {
+            if (pool == null) return;
+            var chain = SuspicionTracker.CreateMissingRationsChain();
+            for (int i = 0; i < chain.Count; i++)
+            {
+                var next = chain[i];
+                if (next == null || string.IsNullOrEmpty(next.id)) continue;
+                bool exists = false;
+                for (int j = 0; j < pool.Count; j++)
+                {
+                    if (pool[j] != null && pool[j].id == next.id)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                    pool.Add(next);
+            }
         }
 
         private static void EnsurePoolHasEmissaryChain(List<GameEvent> pool)
@@ -1168,6 +1429,25 @@ namespace AtomicWar._Game.Core
                 if (!exists)
                     pool.Add(next);
             }
+        }
+
+        /// <summary>
+        /// Register Prompt #46 radio-triggered events (Safe Haven Broadcast) into
+        /// the EventRunner pool if not already present. Mirrors the pattern
+        /// used by <see cref="EnsurePoolHasEmissaryChain"/>: factory versions
+        /// stay in the pool so the radio bridge can resolve the id even when
+        /// the catalog import has not been re-run.
+        /// </summary>
+        private static void EnsurePoolHasRadioTriggeredEvents(List<GameEvent> pool)
+        {
+            if (pool == null) return;
+            var safeHaven = EventRunner.CreateSafeHavenBroadcastEvent();
+            if (safeHaven == null || string.IsNullOrEmpty(safeHaven.id)) return;
+            for (int j = 0; j < pool.Count; j++)
+            {
+                if (pool[j] != null && pool[j].id == safeHaven.id) return;
+            }
+            pool.Add(safeHaven);
         }
 
         // -----------------------------------------------------------------

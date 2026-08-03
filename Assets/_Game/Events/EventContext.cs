@@ -14,6 +14,32 @@ namespace AtomicWar._Game.Events
     public class EventContext
     {
         public const float MedicalSkillTraitThreshold = 0.5f;
+        /// <summary>Science/technical threshold for the "Science" trait gate
+        /// (mirrors <see cref="MedicalSkillTraitThreshold"/>). Used by radio-triggered
+        /// events where the bunker needs a tech at the dial to scrutinize a broadcast.</summary>
+        public const float ScienceSkillTraitThreshold = 0.5f;
+
+        /// <summary>
+        /// Reliability rating for the intel currently driving an event. The radio
+        /// airwaves are full of desperate liars: an Unverified broadcast is just
+        /// what was said; Verified has been corroborated (multiple frequencies,
+        /// post-broadcast confirmation, or a survivor actually walked the
+        /// route); a Trap is a broadcast engineered to lure a response (a
+        /// pre-positioned ambush, a recorded loop, a poisoned cache).
+        /// GameEvents driven by radio intel inherit the reliability of the
+        /// broadcast that triggered them; choices that send an expedition or
+        /// trust the broadcast should branch on this value.
+        /// </summary>
+        public IntelReliability ActiveIntelReliability = IntelReliability.Unverified;
+
+        /// <summary>
+        /// True while a survivor is actively listening to or tuning the radio.
+        /// Gates radio-triggered events (Prompt #46): the player must be at the
+        /// radio for the broadcast to reach them as an interactive choice.
+        /// Set by the ListenToRadio AI action / player UI; cleared when the
+        /// survivor detunes or leaves the radio module.
+        /// </summary>
+        public bool IsOnRadio;
 
         public int CurrentDay = 1;
         public float CurrentHour = 12f;
@@ -45,6 +71,18 @@ namespace AtomicWar._Game.Events
         /// Optional push when an eventFlag is set (SaveSystem.SetWorldFlag).
         /// </summary>
         public Action<string, bool> OnEventFlagChanged;
+
+        /// <summary>
+        /// True when food or water stock is below 10% of inventory capacity.
+        /// Set by SuspicionTracker / GameBootstrap before event evaluation.
+        /// </summary>
+        public bool IsResourceStarved;
+
+        /// <summary>Optional POV / player survivor id — excluded from mystery suspect pool.</summary>
+        public string PlayerSurvivorId;
+
+        /// <summary>Live suspicion / internal-mystery state (optional).</summary>
+        public SuspicionTracker Suspicion;
 
         public EventContext() { }
 
@@ -123,6 +161,12 @@ namespace AtomicWar._Game.Events
                 || string.Equals(t, "medic", StringComparison.OrdinalIgnoreCase))
             {
                 return survivor.MedicalSkill >= MedicalSkillTraitThreshold;
+            }
+            if (string.Equals(t, "Science", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(t, "Tech", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(t, "Scientist", StringComparison.OrdinalIgnoreCase))
+            {
+                return survivor.ScienceSkill >= ScienceSkillTraitThreshold;
             }
 
             if (Enum.TryParse(t, ignoreCase: true, out RiskBiasTrait bias))
