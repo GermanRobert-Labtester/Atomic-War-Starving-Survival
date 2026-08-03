@@ -181,5 +181,31 @@ namespace AtomicWar._Game.Survivors
         /// <summary>Convenience: true if the survivor is currently broken
         /// (has a non-empty <c>currentMentalBreakId</c>).</summary>
         public bool HasMentalBreak => !string.IsNullOrEmpty(currentMentalBreakId);
+
+        // -------------------------------------------------------------------
+        // Chronic disabilities / permanent consequences (Prompt #36).
+        // Earned by surviving critical affliction states > 72 hours. Permanent.
+        // -------------------------------------------------------------------
+        public System.Collections.Generic.List<string> DisabilityIds = new System.Collections.Generic.List<string>();
+
+        public bool HasDisability(string id)
+        {
+            if (string.IsNullOrEmpty(id) || DisabilityIds == null) return false;
+            for (int i = 0; i < DisabilityIds.Count; i++)
+            {
+                if (string.Equals(DisabilityIds[i], id, System.StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
+
+        /// <summary>Maximum dynamic health cap for this survivor (caps at 75 if ScarredLungs present).</summary>
+        public float MaxHealthCap
+        {
+            get
+            {
+                if (HasDisability("scarred_lungs")) return 75f;
+                return 100f;
+            }
+        }
     }
 }

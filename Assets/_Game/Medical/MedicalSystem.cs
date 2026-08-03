@@ -211,7 +211,7 @@ namespace AtomicWar._Game.Medical
             if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup))
                 return false;
 
-            float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill);
+            float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill, medic);
             target.IsTreating = true;
             target.ProgressionHalted = true; // treatment freezes progression
             target.TreatmentHoursRemaining = hours;
@@ -327,13 +327,18 @@ namespace AtomicWar._Game.Medical
             return mod != null && mod.IsOperational;
         }
 
-        public static float ComputeTreatmentHours(TreatmentRecipeSO recipe, float medicalSkill)
+        public static float ComputeTreatmentHours(TreatmentRecipeSO recipe, float medicalSkill, Survivor medic = null)
         {
             if (recipe == null) return 1f;
             float skill = Mathf.Clamp01(medicalSkill);
             // Unskilled: 1.25× base; expert (1.0): 0.5× base
             float factor = Mathf.Lerp(1.25f, 0.5f, skill);
-            return Mathf.Max(0.1f, recipe.baseTreatmentHours * factor);
+            float hours = Mathf.Max(0.1f, recipe.baseTreatmentHours * factor);
+            if (medic != null && medic.HasDisability(DisabilitySO.Ids.Tremors))
+            {
+                hours *= 2.0f; // Reduces action speed by 50%
+            }
+            return hours;
         }
 
         public MedicalSystemSave CaptureState()
@@ -538,6 +543,7 @@ namespace AtomicWar._Game.Medical
                 return;
             }
 
+            EvaluateDisabilityForLongAffliction(survivor, active);
             float restore = recipe != null ? recipe.healthRestoreOnCure : 10f;
             list.Remove(active);
             if (restore > 0f)
@@ -556,6 +562,7 @@ namespace AtomicWar._Game.Medical
             ActiveAffliction active,
             AfflictionSO def)
         {
+            EvaluateDisabilityForLongAffliction(survivor, active);
             string nextId = def.progressesToId;
             list.Remove(active);
 
@@ -590,6 +597,45 @@ namespace AtomicWar._Game.Medical
                 OnAfflictionProgressed?.Invoke(survivor, active, null);
             }
             OnMedicalStateChanged?.Invoke();
+        }
+
+        private void EvaluateDisabilityForLongAffliction(Survivor survivor, ActiveAffliction active)
+        {
+            if (survivor == null || active == null) return;
+            if (active.HoursActive > 72f)
+            {
+                string disabilityId = GetDisabilityForAffliction(active.AfflictionId);
+                if (!string.IsNullOrEmpty(disabilityId) && !survivor.HasDisability(disabilityId))
+                {
+                    survivor.DisabilityIds.Add(disabilityId);
+                    if (disabilityId == DisabilitySO.Ids.ScarredLungs)
+                    {
+                        _needs.Modify(survivor, NeedKind.Health, 0f); // Clamps health to MaxHealthCap (75)
+                    }
+                }
+            }
+        }
+
+        private static string GetDisabilityForAffliction(string afflictionId)
+        {
+            if (string.Equals(afflictionId, AfflictionSO.Ids.Sepsis, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(afflictionId, AfflictionSO.Ids.RadBurns, StringComparison.OrdinalIgnoreCase))
+            {
+                return DisabilitySO.Ids.ScarredLungs;
+            }
+            if (string.Equals(afflictionId, AfflictionSO.Ids.BrokenBone, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(afflictionId, AfflictionSO.Ids.GunshotWound, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(afflictionId, AfflictionSO.Ids.Bleeding, StringComparison.OrdinalIgnoreCase))
+            {
+                return DisabilitySO.Ids.Limp;
+            }
+            if (string.Equals(afflictionId, AfflictionSO.Ids.Dysentery, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(afflictionId, AfflictionSO.Ids.BacterialInfection, StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(afflictionId, AfflictionSO.Ids.HeavyMetalPoisoning, StringComparison.OrdinalIgnoreCase))
+            {
+                return DisabilitySO.Ids.Tremors;
+            }
+            return DisabilitySO.Ids.ScarredLungs;
         }
 
         private bool ConsumeIngredients(

@@ -113,7 +113,7 @@ namespace AtomicWar._Game.Crafting
         }
 
         /// <summary>Start crafting: consume the ingredients and queue the craft. False if it can't start.</summary>
-        public bool StartCraft(Recipe recipe)
+        public bool StartCraft(Recipe recipe, AtomicWar._Game.Survivors.Survivor crafter = null)
         {
             if (!CanCraft(recipe))
             {
@@ -129,7 +129,13 @@ namespace AtomicWar._Game.Crafting
                 }
             }
 
-            _active.Add(new ActiveCraft { Recipe = recipe, HoursRemaining = recipe.craftingTimeHours });
+            float duration = recipe.craftingTimeHours;
+            if (crafter != null && crafter.HasDisability("tremors"))
+            {
+                duration *= 2.0f; // 50% action speed penalty
+            }
+
+            _active.Add(new ActiveCraft { Recipe = recipe, HoursRemaining = duration });
             OnCraftStarted?.Invoke(recipe);
             return true;
         }

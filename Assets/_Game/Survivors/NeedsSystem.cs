@@ -133,7 +133,8 @@ namespace AtomicWar._Game.Survivors
                 return;
             }
 
-            float newValue = Mathf.Clamp(GetValue(survivor.Needs, need) + delta, 0f, 100f);
+            float maxCap = need == NeedKind.Health ? survivor.MaxHealthCap : 100f;
+            float newValue = Mathf.Clamp(GetValue(survivor.Needs, need) + delta, 0f, maxCap);
             SetValue(survivor, need, newValue);
 
             switch (need)

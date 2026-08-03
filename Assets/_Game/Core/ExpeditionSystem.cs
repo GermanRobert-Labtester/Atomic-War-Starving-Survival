@@ -701,6 +701,12 @@ namespace AtomicWar._Game.Core
                 drain += 3f * hours; // suit heat & movement restriction
             }
 
+            // Limp disability: permanently doubles stamina drain during expeditions
+            if (exp.Survivor != null && exp.Survivor.HasDisability("limp"))
+            {
+                drain *= 2f;
+            }
+
             return drain;
         }
 
