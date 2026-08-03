@@ -3,7 +3,10 @@
     "id": "craft_bandage",
     "recipeName": "Craft Bandage",
     "ingredients": [
-      { "itemId": "cloth", "amount": 2 }
+      {
+        "itemId": "cloth",
+        "amount": 2
+      }
     ],
     "resultItemId": "bandage",
     "resultAmount": 1,
@@ -14,7 +17,10 @@
     "id": "purify_water",
     "recipeName": "Purify Water",
     "ingredients": [
-      { "itemId": "irradiated_water", "amount": 2 }
+      {
+        "itemId": "irradiated_water",
+        "amount": 2
+      }
     ],
     "resultItemId": "clean_water",
     "resultAmount": 2,
@@ -25,8 +31,14 @@
     "id": "craft_anti_rad",
     "recipeName": "Craft Anti-Rad",
     "ingredients": [
-      { "itemId": "iodine_pills", "amount": 1 },
-      { "itemId": "clean_water", "amount": 1 }
+      {
+        "itemId": "iodine_pills",
+        "amount": 1
+      },
+      {
+        "itemId": "clean_water",
+        "amount": 1
+      }
     ],
     "resultItemId": "anti_rad",
     "resultAmount": 1,
@@ -37,8 +49,14 @@
     "id": "craft_water_filter",
     "recipeName": "Craft Water Filter",
     "ingredients": [
-      { "itemId": "cloth", "amount": 1 },
-      { "itemId": "scrap_metal", "amount": 1 }
+      {
+        "itemId": "cloth",
+        "amount": 1
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      }
     ],
     "resultItemId": "water_filter",
     "resultAmount": 1,
@@ -49,8 +67,14 @@
     "id": "craft_air_filter",
     "recipeName": "Craft Air Filter",
     "ingredients": [
-      { "itemId": "cloth", "amount": 2 },
-      { "itemId": "scrap_metal", "amount": 1 }
+      {
+        "itemId": "cloth",
+        "amount": 2
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      }
     ],
     "resultItemId": "air_filter",
     "resultAmount": 1,
@@ -61,8 +85,14 @@
     "id": "cook_meat",
     "recipeName": "Cook Meat",
     "ingredients": [
-      { "itemId": "raw_meat", "amount": 1 },
-      { "itemId": "fuel", "amount": 1 }
+      {
+        "itemId": "raw_meat",
+        "amount": 1
+      },
+      {
+        "itemId": "fuel",
+        "amount": 1
+      }
     ],
     "resultItemId": "cooked_meat",
     "resultAmount": 1,
@@ -73,8 +103,14 @@
     "id": "boil_water",
     "recipeName": "Boil Water",
     "ingredients": [
-      { "itemId": "dirty_water", "amount": 2 },
-      { "itemId": "fuel", "amount": 1 }
+      {
+        "itemId": "dirty_water",
+        "amount": 2
+      },
+      {
+        "itemId": "fuel",
+        "amount": 1
+      }
     ],
     "resultItemId": "clean_water",
     "resultAmount": 1,
@@ -85,9 +121,18 @@
     "id": "craft_hazmat_patch",
     "recipeName": "Patch Hazmat Suit",
     "ingredients": [
-      { "itemId": "cloth", "amount": 3 },
-      { "itemId": "scrap_metal", "amount": 2 },
-      { "itemId": "water_filter", "amount": 1 }
+      {
+        "itemId": "cloth",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "water_filter",
+        "amount": 1
+      }
     ],
     "resultItemId": "hazmat_suit",
     "resultAmount": 1,
@@ -98,9 +143,18 @@
     "id": "craft_gas_mask",
     "recipeName": "Craft Gas Mask",
     "ingredients": [
-      { "itemId": "cloth", "amount": 2 },
-      { "itemId": "water_filter", "amount": 1 },
-      { "itemId": "scrap_metal", "amount": 1 }
+      {
+        "itemId": "cloth",
+        "amount": 2
+      },
+      {
+        "itemId": "water_filter",
+        "amount": 1
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      }
     ],
     "resultItemId": "gas_mask",
     "resultAmount": 1,
@@ -111,7 +165,10 @@
     "id": "refuel_heater",
     "recipeName": "Refuel Heater",
     "ingredients": [
-      { "itemId": "fuel", "amount": 3 }
+      {
+        "itemId": "fuel",
+        "amount": 3
+      }
     ],
     "resultItemId": "fuel",
     "resultAmount": 0,
@@ -122,8 +179,14 @@
     "id": "craft_dosimeter",
     "recipeName": "Craft Dosimeter",
     "ingredients": [
-      { "itemId": "scrap_metal", "amount": 3 },
-      { "itemId": "cloth", "amount": 1 }
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      },
+      {
+        "itemId": "cloth",
+        "amount": 1
+      }
     ],
     "resultItemId": "dosimeter",
     "resultAmount": 1,
@@ -134,9 +197,18 @@
     "id": "craft_medical_kit",
     "recipeName": "Craft Medical Kit",
     "ingredients": [
-      { "itemId": "bandage", "amount": 3 },
-      { "itemId": "anti_rad", "amount": 1 },
-      { "itemId": "iodine_pills", "amount": 2 }
+      {
+        "itemId": "bandage",
+        "amount": 3
+      },
+      {
+        "itemId": "anti_rad",
+        "amount": 1
+      },
+      {
+        "itemId": "iodine_pills",
+        "amount": 2
+      }
     ],
     "resultItemId": "medical_kit",
     "resultAmount": 1,
@@ -147,9 +219,18 @@
     "id": "craft_geiger_counter",
     "recipeName": "Craft Geiger Counter",
     "ingredients": [
-      { "itemId": "scrap_metal", "amount": 5 },
-      { "itemId": "battery", "amount": 1 },
-      { "itemId": "cloth", "amount": 1 }
+      {
+        "itemId": "scrap_metal",
+        "amount": 5
+      },
+      {
+        "itemId": "battery",
+        "amount": 1
+      },
+      {
+        "itemId": "cloth",
+        "amount": 1
+      }
     ],
     "resultItemId": "geiger_counter",
     "resultAmount": 1,
@@ -160,8 +241,14 @@
     "id": "craft_calibration_kit",
     "recipeName": "Craft Calibration Kit",
     "ingredients": [
-      { "itemId": "scrap_metal", "amount": 2 },
-      { "itemId": "cloth", "amount": 1 }
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "cloth",
+        "amount": 1
+      }
     ],
     "resultItemId": "calibration_kit",
     "resultAmount": 1,
@@ -172,12 +259,40 @@
     "id": "craft_battery",
     "recipeName": "Craft Battery",
     "ingredients": [
-      { "itemId": "scrap_metal", "amount": 2 },
-      { "itemId": "dirty_water", "amount": 1 }
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "dirty_water",
+        "amount": 1
+      }
     ],
     "resultItemId": "battery",
     "resultAmount": 1,
     "craftingTimeHours": 1.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_engine",
+    "recipeName": "Rebuild Engine",
+    "ingredients": [
+      {
+        "itemId": "mechanical_parts",
+        "amount": 30
+      },
+      {
+        "itemId": "electronic_scrap",
+        "amount": 5
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 10
+      }
+    ],
+    "resultItemId": "engine",
+    "resultAmount": 1,
+    "craftingTimeHours": 12.0,
     "requiredStationId": "workbench"
   }
 ]

@@ -49,13 +49,18 @@ namespace AtomicWar._Game.Inventory
         public int Count(ItemDefinition item)
         {
             if (item == null || _slots == null) return 0;
+            return CountById(item.id);
+        }
+
+        /// <summary>Total quantity held for an item id across all stacks.</summary>
+        public int CountById(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId) || _slots == null) return 0;
             int total = 0;
             for (int i = 0; i < _slots.Count; i++)
             {
-                if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.id == item.id)
-                {
+                if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.id == itemId)
                     total += _slots[i].Amount;
-                }
             }
             return total;
         }

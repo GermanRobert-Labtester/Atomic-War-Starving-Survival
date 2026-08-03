@@ -95,6 +95,8 @@ namespace AtomicWar._Game.Core
         public FactionRadioInterceptSystem FactionRadioIntercepts { get; private set; }
         /// <summary>Diegetic journal book + discovery knowledge (immersive tutorial).</summary>
         public JournalSystem JournalSystem { get; private set; }
+        /// <summary>Campaign win/loss projects (radio extraction + vehicle escape).</summary>
+        public VictoryProjectManager VictoryProject { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -108,6 +110,8 @@ namespace AtomicWar._Game.Core
 
         public bool IsGameOver { get; private set; }
         public string GameOverReason { get; private set; }
+        public EndgameState EndgameState =>
+            VictoryProject != null ? VictoryProject.State : EndgameState.Ongoing;
 
         // -----------------------------------------------------------------
         // Lifecycle
@@ -324,6 +328,18 @@ namespace AtomicWar._Game.Core
                 PushJournalEntryToHud(entry);
             };
 
+            // Campaign win/loss — radio extraction + vehicle escape projects
+            VictoryProject = new VictoryProjectManager();
+            VictoryProject.OnExtractionUnlocked += () =>
+            {
+                Debug.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
+            };
+            VictoryProject.OnEndgameTriggered += summary =>
+            {
+                if (summary == null) return;
+                ApplyEndgame(summary);
+            };
+
             // Mental Break System (Prompt #29). Designers populate the catalog
             // with MentalBreakSO assets (BingeEater, ViolentParanoia, etc.).
             // If the catalog is null, the system is still constructed — just
@@ -430,6 +446,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetHatchDefense(HatchDefenseSystem);
             SaveSystem.SetFactionRadioIntercepts(FactionRadioIntercepts);
             SaveSystem.SetJournalSystem(JournalSystem);
+            SaveSystem.SetVictoryProjectManager(VictoryProject);
             SaveSystem.SetPreCaptureHook(SnapshotRadioHudToInterceptSystem);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
@@ -498,6 +515,7 @@ namespace AtomicWar._Game.Core
             RadioTunerSystem.OnIntelExtracted += intel =>
             {
                 Debug.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
+                VictoryProject?.NotifyIntel(intel);
                 if (intel.Type == IntelType.PlumeReport)
                 {
                     // Apply plume reports to knowledge map + proc-gen node reveal
@@ -513,6 +531,8 @@ namespace AtomicWar._Game.Core
                 Inventory?.DriftAllDevices(1f);
                 KnowledgeMap?.TickDay(day);
                 RefreshMapKnowledgeHUD();
+                // Radio win path: extraction coords + survive to Day 100.
+                VictoryProject?.TickDay(day, Survivors);
             };
 
             // Day-30 Flashpoint Choreographer (narrative/UX layer over the
@@ -1022,32 +1042,103 @@ namespace AtomicWar._Game.Core
         }
 
         // -----------------------------------------------------------------
-        // Win/Lose
+        // Win/Lose (VictoryProjectManager)
         // -----------------------------------------------------------------
 
         private void CheckWinLose()
         {
-            // Lose: all survivors dead
-            bool allDead = true;
-            foreach (var sv in Survivors)
-            {
-                if (sv.IsAlive) { allDead = false; break; }
-            }
-            if (allDead)
-            {
-                EndGame("All survivors have perished.", "lose");
-                return;
-            }
+            if (VictoryProject == null || VictoryProject.IsTerminal) return;
+            if (Survivors == null) return;
 
-            // Win: survived to campaign end
-            if (TimeSystem.CurrentDay >= _campaignLengthDays)
+            // Loss: all survivors dead → death-screen by cause (rads / hunger / breakdowns).
+            VictoryProject.EvaluateLoss(Survivors, TimeSystem != null ? TimeSystem.CurrentDay : 1);
+        }
+
+        /// <summary>
+        /// Vehicle escape project: 50 mechanical_parts + 10 fuel + repaired engine.
+        /// Explicit player action (not auto each frame).
+        /// </summary>
+        public bool TryVehicleEscape()
+        {
+            if (VictoryProject == null || Inventory == null) return false;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+            var summary = VictoryProject.TryEscapeByVehicle(
+                Inventory,
+                id => _itemCatalog?.GetById(id) ?? MakeRuntimeItem(id),
+                day,
+                Survivors);
+            return summary != null && summary.State == EndgameState.Escaped;
+        }
+
+        /// <summary>Record a resolved moral dilemma for the endgame tally.</summary>
+        public void RecordMoralChoice()
+        {
+            VictoryProject?.RecordMoralChoice();
+        }
+
+        private void ApplyEndgame(EndgameSummaryData summary)
+        {
+            if (summary == null) return;
+            IsGameOver = true;
+            GameOverReason = summary.Reason ?? summary.OutcomeTitle;
+            if (GameState != null)
             {
-                EndGame("You survived the nuclear winter.", "win");
+                GameState.IsPaused = true;
+                GameState.Phase = GamePhase.GameOver;
             }
+            // Halt TimeSystem by not ticking (Update already gates on Phase/IsGameOver).
+            PushEndgameSummaryToHud(summary);
+            Debug.Log($"[GameBootstrap] ENDGAME ({summary.State}): {summary.OutcomeTitle} — {summary.Reason}");
+        }
+
+        private void PushEndgameSummaryToHud(EndgameSummaryData summary)
+        {
+            if (_hud == null || summary == null) return;
+            var ui = _hud.EnsureEndgameSummary();
+            if (ui == null) return;
+            ui.Show(
+                summary.State.ToString(),
+                summary.OutcomeTitle,
+                summary.OutcomeBody,
+                summary.DeathScreen == DeathScreenKind.None ? string.Empty : summary.DeathScreen.ToString(),
+                summary.DaysSurvived,
+                summary.TotalRadiationAbsorbed,
+                summary.MoralChoicesMade,
+                summary.MilitaryIntelDecrypted,
+                summary.ExtractionUnlocked,
+                summary.VehicleEscapeUsed);
+        }
+
+        /// <summary>
+        /// Runtime item defs for tests / missing catalog entries (engine, parts, fuel).
+        /// </summary>
+        private static ItemDefinition MakeRuntimeItem(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = id;
+            item.displayName = id;
+            item.stackMax = id == VictoryProjectManager.EngineItemId ? 1 : 99;
+            item.weight = 0.1f;
+            if (id == VictoryProjectManager.EngineItemId)
+            {
+                item.type = ItemType.Tool;
+                item.durability = 100f;
+            }
+            else if (id == VictoryProjectManager.FuelItemId)
+            {
+                item.type = ItemType.Fuel;
+            }
+            else
+            {
+                item.type = ItemType.Material;
+            }
+            return item;
         }
 
         private void EndGame(string reason, string outcome)
         {
+            // Legacy path — prefer VictoryProject triggers.
             IsGameOver = true;
             GameOverReason = reason;
             GameState.Phase = GamePhase.GameOver;
@@ -1073,6 +1164,9 @@ namespace AtomicWar._Game.Core
             SyncRadioInterceptHudFromLog();
             _hud.EnsureJournalBook();
             SyncJournalBookFromSystem();
+            _hud.EnsureEndgameSummary();
+            if (VictoryProject != null && VictoryProject.IsTerminal && VictoryProject.LastSummary != null)
+                PushEndgameSummaryToHud(VictoryProject.LastSummary);
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
             _hud.BindWorkbench(WorkbenchSystem);
 
@@ -1143,8 +1237,21 @@ namespace AtomicWar._Game.Core
         {
             if (SaveSystem.Load(slotId))
             {
-                IsGameOver = false;
-                GameOverReason = null;
+                // Restore endgame terminal state from VictoryProject if present.
+                if (VictoryProject != null && VictoryProject.IsTerminal)
+                {
+                    IsGameOver = true;
+                    GameOverReason = VictoryProject.TerminalReason;
+                    if (GameState != null) GameState.Phase = GamePhase.GameOver;
+                    if (VictoryProject.LastSummary != null)
+                        PushEndgameSummaryToHud(VictoryProject.LastSummary);
+                }
+                else
+                {
+                    IsGameOver = false;
+                    GameOverReason = null;
+                    _hud?.EnsureEndgameSummary()?.Clear();
+                }
                 // Intercept log + open/unread/tuner restored — refresh HUD strip.
                 SyncRadioInterceptHudFromLog();
                 SyncJournalBookFromSystem();

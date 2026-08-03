@@ -39,12 +39,24 @@
     "tradeValue": 30,
     "empShielded": false,
     "scrapValue": [
-      { "materialId": "electronic_scrap", "amount": 2 },
-      { "materialId": "mechanical_parts", "amount": 1 }
+      {
+        "materialId": "electronic_scrap",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
     ],
     "repairCosts": [
-      { "materialId": "electronic_scrap", "amount": 2 },
-      { "materialId": "mechanical_parts", "amount": 1 }
+      {
+        "materialId": "electronic_scrap",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
     ],
     "disassembleYieldFraction": 0.5
   },
@@ -614,12 +626,55 @@
     "tradeValue": 22,
     "empShielded": false,
     "scrapValue": [
-      { "materialId": "electronic_scrap", "amount": 3 },
-      { "materialId": "mechanical_parts", "amount": 1 }
+      {
+        "materialId": "electronic_scrap",
+        "amount": 3
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
     ],
     "repairCosts": [
-      { "materialId": "electronic_scrap", "amount": 2 },
-      { "materialId": "mechanical_parts", "amount": 1 }
+      {
+        "materialId": "electronic_scrap",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "engine",
+    "displayName": "Engine",
+    "description": "A scavenged vehicle engine. Repair it, feed it fuel and parts, and drive out of the ash.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 25.0,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 80,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 8
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 2
+      }
     ],
     "disassembleYieldFraction": 0.5
   }

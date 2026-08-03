@@ -252,6 +252,7 @@ namespace AtomicWar._Game.Core
         private IntelNode CreateIntelFromBroadcast(RadioFrequencySO freq, RadioBroadcastSO broadcast, int currentDay)
         {
             int expirationDay = currentDay + 5; // Intel expires in 5 days
+            IntelNode intel = null;
 
             // Pre-Day 30: Military/civilian frequencies provide tactical intel
             if (currentDay < MilitarySilenceDay)
@@ -259,7 +260,7 @@ namespace AtomicWar._Game.Core
                 if (freq.type == RadioFrequencyType.Military)
                 {
                     // Military frequencies: MortarWarning or TroopMovement
-                    return IntelNode.CreateMortarWarning(
+                    intel = IntelNode.CreateMortarWarning(
                         broadcast.id,
                         0.7f, // confidence
                         currentDay,
@@ -270,7 +271,7 @@ namespace AtomicWar._Game.Core
                 else if (freq.type == RadioFrequencyType.Civilian)
                 {
                     // Civilian frequencies: WeatherForecast or generic broadcast
-                    return IntelNode.CreateWeatherForecast(
+                    intel = IntelNode.CreateWeatherForecast(
                         (int)WeatherKind.Clear, // Simplified: assume clear weather
                         0.6f,
                         currentDay,
@@ -285,7 +286,7 @@ namespace AtomicWar._Game.Core
                 if (freq.type == RadioFrequencyType.Emergency || freq.type == RadioFrequencyType.NumbersStation)
                 {
                     // Plume reports: radiation data for map update
-                    return IntelNode.CreatePlumeReport(
+                    intel = IntelNode.CreatePlumeReport(
                         broadcast.id, // Use broadcast ID as location ID (simplified)
                         50f, // Rumored rad level (placeholder)
                         0.5f, // Low confidence (post-war intel is unreliable)
@@ -296,17 +297,23 @@ namespace AtomicWar._Game.Core
                 }
             }
 
-            // Fallback: generic intel
-            return new IntelNode
+            if (intel == null)
             {
-                Id = Guid.NewGuid().ToString("N").Substring(0, 8),
-                Type = IntelType.Unknown,
-                SourceFrequencyId = freq.id,
-                ExtractedDay = currentDay,
-                ExpirationDay = expirationDay,
-                Confidence = 0.3f,
-                Text = broadcast.message
-            };
+                // Fallback: generic intel
+                intel = new IntelNode
+                {
+                    Id = Guid.NewGuid().ToString("N").Substring(0, 8),
+                    Type = IntelType.Unknown,
+                    ExtractedDay = currentDay,
+                    ExpirationDay = expirationDay,
+                    Confidence = 0.3f,
+                    Text = broadcast.message
+                };
+            }
+
+            // Always stamp source so VictoryProject can count military decrypts.
+            intel.SourceFrequencyId = freq.id;
+            return intel;
         }
 
         /// <summary>

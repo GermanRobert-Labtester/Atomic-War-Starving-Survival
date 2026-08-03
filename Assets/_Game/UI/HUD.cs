@@ -33,6 +33,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private RadioInterceptHUD _radioInterceptHud;
         [SerializeField] private FactionRadioVoHook _factionRadioVoHook;
         [SerializeField] private JournalBookUI _journalBookUi;
+        [SerializeField] private EndgameSummaryUI _endgameSummaryUi;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -52,6 +53,7 @@ namespace AtomicWar._Game.UI
         public RoomAssignmentHUD RoomAssignmentHUD { get { EnsureWidgetReferences(); return _roomAssignmentHud; } }
         public RadioInterceptHUD RadioInterceptHUD { get { EnsureWidgetReferences(); return _radioInterceptHud; } }
         public JournalBookUI JournalBookUI { get { EnsureWidgetReferences(); return _journalBookUi; } }
+        public EndgameSummaryUI EndgameSummaryUI { get { EnsureWidgetReferences(); return _endgameSummaryUi; } }
         public FactionRadioVoHook FactionRadioVoHook
         {
             get
@@ -86,6 +88,7 @@ namespace AtomicWar._Game.UI
             if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
             if (_radioInterceptHud == null) _radioInterceptHud = GetComponentInChildren<RadioInterceptHUD>() ?? gameObject.AddComponent<RadioInterceptHUD>();
             if (_journalBookUi == null) _journalBookUi = GetComponentInChildren<JournalBookUI>() ?? gameObject.AddComponent<JournalBookUI>();
+            if (_endgameSummaryUi == null) _endgameSummaryUi = GetComponentInChildren<EndgameSummaryUI>() ?? gameObject.AddComponent<EndgameSummaryUI>();
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
@@ -99,6 +102,13 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             return _journalBookUi;
+        }
+
+        /// <summary>Ensure the post-game endgame summary screen exists on the HUD.</summary>
+        public EndgameSummaryUI EnsureEndgameSummary()
+        {
+            EnsureWidgetReferences();
+            return _endgameSummaryUi;
         }
 
         /// <summary>

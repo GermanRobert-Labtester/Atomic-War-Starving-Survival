@@ -58,6 +58,7 @@ namespace AtomicWar._Game.Core
         private FactionRadioInterceptSystem _factionRadioIntercepts;
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         private JournalSystem _journalSystem;
+        private VictoryProjectManager _victoryProject;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
@@ -160,6 +161,12 @@ namespace AtomicWar._Game.Core
         public void SetJournalSystem(JournalSystem journalSystem)
         {
             _journalSystem = journalSystem;
+        }
+
+        /// <summary>Inject campaign win/loss victory project for save/load.</summary>
+        public void SetVictoryProjectManager(VictoryProjectManager victoryProject)
+        {
+            _victoryProject = victoryProject;
         }
 
         /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
@@ -436,6 +443,9 @@ namespace AtomicWar._Game.Core
             if (_journalSystem != null)
                 data.Journal = _journalSystem.CaptureState();
 
+            if (_victoryProject != null)
+                data.VictoryProject = _victoryProject.CaptureState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -655,6 +665,12 @@ namespace AtomicWar._Game.Core
             {
                 // Null journal on legacy saves resets empty (no re-fire of OnEntryAdded).
                 _journalSystem.RestoreState(data.Journal);
+            }
+
+            if (_victoryProject != null)
+            {
+                // Null victory on legacy saves resets to Ongoing.
+                _victoryProject.RestoreState(data.VictoryProject);
             }
 
             if (_generatedMap != null && data.GeneratedMap != null)
@@ -902,6 +918,7 @@ namespace AtomicWar._Game.Core
         public HatchDefenseSave HatchDefense;
         public FactionRadioInterceptSave FactionRadioIntercepts;
         public JournalSave Journal;
+        public VictoryProjectSave VictoryProject;
         public WaterStorageSave Water;
         public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;
