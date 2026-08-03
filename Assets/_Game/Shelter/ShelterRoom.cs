@@ -19,6 +19,12 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Ambient contamination level (0..1) of the room air/surfaces.</summary>
         public float AmbientContamination;
 
+        /// <summary>True when room has mold infestation (#20, #37).</summary>
+        public bool HasMold { get; set; }
+
+        /// <summary>Mold severity level (0..1).</summary>
+        public float MoldLevel { get; set; }
+
         /// <summary>Layout defining slot positions, adjacency, and transfer rates.</summary>
         [NonSerialized]
         public StorageLayoutSO Layout;

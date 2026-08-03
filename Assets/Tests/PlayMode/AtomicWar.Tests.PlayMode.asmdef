@@ -5,7 +5,11 @@
         "UnityEditor.TestRunner",
         "AtomicWar._Game.Survivors",
         "AtomicWar._Game.Radiation",
-        "AtomicWar._Game.Inventory"
+        "AtomicWar._Game.Inventory",
+        "AtomicWar._Game.Core",
+        "AtomicWar._Game.Environment",
+        "AtomicWar._Game.Shelter",
+        "AtomicWar._Game.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
