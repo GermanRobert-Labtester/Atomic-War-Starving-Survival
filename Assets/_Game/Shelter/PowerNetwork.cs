@@ -438,9 +438,11 @@ namespace AtomicWar._Game.Shelter
             net.AddConsumer(new PowerConsumer("heater", "Heater", 40f, 2));
             net.AddConsumer(new PowerConsumer("radio", "Radio", 15f, 3));
             net.AddConsumer(new PowerConsumer("grow_light", "Grow Lights", 25f, 4));
-            // Radio / grow_light start requested=false if not installed; bootstrap re-enables.
+            net.AddConsumer(new PowerConsumer("water_purifier", "Water Purifier", 20f, 3));
+            // Radio / grow_light / water_purifier start requested=false if not installed; bootstrap re-enables.
             net.GetConsumer("radio").IsRequested = false;
             net.GetConsumer("grow_light").IsRequested = false;
+            net.GetConsumer("water_purifier").IsRequested = false;
             net.Rebalance();
             return net;
         }

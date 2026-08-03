@@ -51,6 +51,7 @@ namespace AtomicWar._Game.Core
         private DynamicEconomySystem _economySystem;
         private WorldPhaseSystem _worldPhaseSystem;
         private PowerNetwork _powerNetwork;
+        private WaterStorage _waterStorage;
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
@@ -134,6 +135,12 @@ namespace AtomicWar._Game.Core
         public void SetPowerNetwork(PowerNetwork powerNetwork)
         {
             _powerNetwork = powerNetwork;
+        }
+
+        /// <summary>Inject bunker water cisterns (clean/dirty/irradiated) for save/load.</summary>
+        public void SetWaterStorage(WaterStorage waterStorage)
+        {
+            _waterStorage = waterStorage;
         }
 
         /// <summary>Inject mental-break system so affinity matrix persists across save/load.</summary>
@@ -378,6 +385,9 @@ namespace AtomicWar._Game.Core
             if (_powerNetwork != null)
                 data.Power = _powerNetwork.CaptureState();
 
+            if (_waterStorage != null)
+                data.Water = _waterStorage.CaptureState();
+
             if (_mentalBreakSystem != null)
             {
                 var affSave = new AffinityMatrixSave();
@@ -574,6 +584,11 @@ namespace AtomicWar._Game.Core
             {
                 _powerNetwork.RestoreState(data.Power);
                 _powerNetwork.ApplyToShelter(_shelter);
+            }
+
+            if (_waterStorage != null && data.Water != null)
+            {
+                _waterStorage.RestoreState(data.Water);
             }
 
             if (_mentalBreakSystem != null && data.Affinity != null)
@@ -800,6 +815,7 @@ namespace AtomicWar._Game.Core
         public WorldPhaseSave WorldPhase;
         public DynamicEconomySave Economy;
         public PowerNetworkSave Power;
+        public WaterStorageSave Water;
         public FlashpointChoreographerSave FlashpointChoreographer;
         public AffinityMatrixSave Affinity = new AffinityMatrixSave();
         public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();

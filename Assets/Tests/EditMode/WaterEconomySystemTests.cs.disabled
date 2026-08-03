@@ -1,3 +1,0 @@
-// Temporarily disabled: references missing CatchmentSurfaceModuleSO and
-// WaterEconomySystem (neither is implemented in this codebase). Restore
-// to WaterEconomySystemTests.cs when the water-economy feature ships.

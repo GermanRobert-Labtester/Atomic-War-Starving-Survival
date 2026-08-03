@@ -79,6 +79,8 @@ namespace AtomicWar._Game.Core
         public WorldPhaseSystem WorldPhaseSystem { get; private set; }
         public DynamicEconomySystem EconomySystem { get; private set; }
         public PowerNetwork PowerNetwork { get; private set; }
+        public WaterStorage WaterStorage { get; private set; }
+        public WaterEconomySystem WaterEconomySystem { get; private set; }
         public FlashpointChoreographer FlashpointChoreographer { get; private set; }
         public MentalBreakSystem MentalBreakSystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
@@ -153,6 +155,9 @@ namespace AtomicWar._Game.Core
             Shelter.AddModule(new ShelterModuleInstance("workbench", 1));
             // Grow-light starts installed but dry (no fuel). Player must scavenge fuel to light it.
             Shelter.AddModule(new ShelterModuleInstance("grow_light", 1) { Fuel = 0f });
+            // Roof catchment starts open (player can close it to stop collecting during a storm).
+            Shelter.AddModule(new ShelterModuleInstance("catchment_surface", 1) { IsEnabled = true });
+            Shelter.AddModule(new ShelterModuleInstance("water_purifier", 1) { FilterHealth = 100f });
 
             // Shelter power grid: finite watts, load-shedding, diesel + bicycle generators.
             // Fully-qualified type: property name PowerNetwork shadows the class.
@@ -160,7 +165,12 @@ namespace AtomicWar._Game.Core
             // Heater/filter are installed and requested; grow light stays optional until fuel/power allow.
             PowerNetwork.SetRequested("grow_light", false);
             PowerNetwork.SetRequested("radio", false);
+            PowerNetwork.SetRequested("water_purifier", true);
             PowerNetwork.ApplyToShelter(Shelter);
+
+            // Bunker water economy: roof catchment + 3-tier purifier (Prompt #28).
+            WaterStorage = new WaterStorage();
+            WaterEconomySystem = new WaterEconomySystem();
 
             // Needs + Radiation
             NeedsSystem = new NeedsSystem(_needsProfile, sv => true);
@@ -212,6 +222,7 @@ namespace AtomicWar._Game.Core
             {
                 CreateAction<EatActionSO>(),
                 CreateAction<DrinkActionSO>(),
+                CreateAction<DrinkContaminatedWaterActionSO>(),
                 CreateAction<SleepActionSO>(),
                 CreateAction<RestActionSO>(),
                 CreateAction<WarmUpActionSO>(),
@@ -302,6 +313,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);
             SaveSystem.SetPowerNetwork(PowerNetwork);
+            SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
             // after the Choreographer itself is constructed (it depends on
             // RadioTunerSystem and other systems wired after SaveSystem).
@@ -696,6 +708,9 @@ namespace AtomicWar._Game.Core
             // Radiation
             RadiationSystem.Tick(gameHours);
 
+            // Water economy: catchment collection + purifier conversion queue.
+            WaterEconomySystem?.Tick(gameHours, WeatherSystem.Current, TimeSystem.CurrentDay, Shelter, WaterStorage);
+
             // Crafting
             CraftingSystem.Tick(gameHours);
 
@@ -735,6 +750,8 @@ namespace AtomicWar._Game.Core
                         IsNumb          = sv.IsNumb,
                         MedicalSystem   = MedicalSystem,
                         PowerNetwork    = PowerNetwork,
+                        WaterStorage    = WaterStorage,
+                        RadiationSystem = RadiationSystem,
                         GetSurvivors    = () => Survivors
                     };
                     var action = UtilityAI.SelectAction(context, Actions);

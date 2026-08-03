@@ -1,0 +1,106 @@
+using UnityEngine;
+using AtomicWar._Game.Survivors;
+
+namespace AtomicWar._Game.AI.Actions
+{
+    /// <summary>
+    /// Desperation fallback: drink straight from the bunker's dirty/irradiated
+    /// catchment pool when dehydrated and no clean water is available. Heavily
+    /// weighted by RiskBiasTrait (#19) — Reckless/Denialist survivors reach for
+    /// it far sooner than Paranoid/Cautious ones. Irradiated water adds a rad
+    /// dose via RadiationSystem; dirty water carries a bacterial-illness chance
+    /// (Prompt #24) applied as a direct Health hit.
+    /// </summary>
+    [CreateAssetMenu(fileName = "Action_DrinkContaminatedWater", menuName = "ASHFALL/AI/Drink Contaminated Water Action")]
+    public class DrinkContaminatedWaterActionSO : SurvivorAction
+    {
+        [Tooltip("Thirst restored per drink from the dirty/irradiated pool.")]
+        public float ThirstRestore = 35f;
+        [Tooltip("Only considered once thirst is at or above this (0..100) — a last resort, not a habit.")]
+        public float MinThirstToConsider = 60f;
+        [Tooltip("Radiation dose added (rads) when drinking from the irradiated pool.")]
+        public float IrradiatedDoseAmount = 25f;
+        [Tooltip("Chance per drink of a bacterial-illness health hit from dirty water.")]
+        [Range(0f, 1f)] public float DirtyWaterIllnessChance = 0.35f;
+        public float DirtyWaterIllnessHealthLoss = 15f;
+
+        public DrinkContaminatedWaterActionSO()
+        {
+            id = "action_drink_contaminated_water";
+            displayName = "Drink Contaminated Water";
+            description = "Desperation fallback: drink straight from the dirty or irradiated catchment pool when no clean water is available.";
+            basePriority = 0.05f;
+        }
+
+        public override float EvaluateRaw(AIContext context)
+        {
+            if (context?.Survivor == null || context.WaterStorage == null) return 0f;
+
+            float thirst = context.Survivor.Needs.Thirst;
+            if (thirst < MinThirstToConsider) return 0f;
+
+            if (HasCleanWaterAvailable(context)) return 0f;
+
+            bool hasDirty = context.WaterStorage.DirtyWater > 0f;
+            bool hasIrradiated = context.WaterStorage.IrradiatedWater > 0f;
+            if (!hasDirty && !hasIrradiated) return 0f;
+
+            float urgency = Mathf.Clamp01(thirst / 100f);
+            float riskWillingness = RiskWillingness(context.Survivor.RiskBias);
+            return Mathf.Clamp01(urgency * riskWillingness);
+        }
+
+        public override void Execute(AIContext context)
+        {
+            if (context?.Survivor == null || context.WaterStorage == null) return;
+
+            var storage = context.WaterStorage;
+            bool drankIrradiated = storage.IrradiatedWater > 0f && storage.ConsumeIrradiated(1f) > 0f;
+            if (!drankIrradiated)
+            {
+                storage.ConsumeDirty(1f);
+            }
+
+            context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - ThirstRestore);
+
+            if (drankIrradiated)
+            {
+                context.RadiationSystem?.Expose(context.Survivor, IrradiatedDoseAmount, 1f);
+            }
+            else if (context.Random != null && context.Random.NextDouble() < DirtyWaterIllnessChance)
+            {
+                context.Survivor.Needs.Health = Mathf.Max(0f, context.Survivor.Needs.Health - DirtyWaterIllnessHealthLoss);
+            }
+        }
+
+        private static bool HasCleanWaterAvailable(AIContext context)
+        {
+            if (context.WaterStorage.CleanWater > 0f) return true;
+
+            if (context.Inventory?.Slots == null) return false;
+            for (int i = 0; i < context.Inventory.Slots.Count; i++)
+            {
+                var slot = context.Inventory.Slots[i];
+                if (slot != null && slot.Item != null && slot.Item.thirstRestore > 0f && slot.Amount > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static float RiskWillingness(RiskBiasTrait trait)
+        {
+            switch (trait)
+            {
+                case RiskBiasTrait.Paranoid: return 0.05f;
+                case RiskBiasTrait.Cautious: return 0.2f;
+                case RiskBiasTrait.Realist: return 0.5f;
+                case RiskBiasTrait.Fatalist: return 0.65f;
+                case RiskBiasTrait.Denialist: return 0.9f;
+                case RiskBiasTrait.Reckless: return 1f;
+                default: return 0.5f;
+            }
+        }
+    }
+}

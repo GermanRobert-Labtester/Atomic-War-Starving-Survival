@@ -72,10 +72,6 @@ namespace AtomicWar._Game.Shelter
                     Fuel = Mathf.Max(0f, Fuel - growSO.FuelConsumptionRatePerHour * gameHours);
                 }
             }
-            else if (_definition is WaterPurifierModuleSO waterSO)
-            {
-                WaterConversionProgress += gameHours;
-            }
             else if (_definition is RadioModuleSO radioSO)
             {
                 if (Fuel > 0f)

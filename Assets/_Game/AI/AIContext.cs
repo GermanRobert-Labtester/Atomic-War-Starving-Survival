@@ -5,6 +5,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
+using AtomicWar._Game.Radiation;
 using Random = System.Random;
 
 namespace AtomicWar._Game.AI
@@ -44,6 +45,12 @@ namespace AtomicWar._Game.AI
 
         /// <summary>Shelter electricity grid (generation, load-shed, pedaling).</summary>
         public PowerNetwork PowerNetwork;
+
+        /// <summary>Bunker water cisterns (clean/dirty/irradiated), fed by the catchment + purifier.</summary>
+        public WaterStorage WaterStorage;
+
+        /// <summary>Applies radiation dose exposure (e.g. from drinking irradiated water).</summary>
+        public RadiationSystem RadiationSystem;
 
         /// <summary>All living survivors (for Treat Patient target selection).</summary>
         public Func<IReadOnlyList<Survivor>> GetSurvivors;
