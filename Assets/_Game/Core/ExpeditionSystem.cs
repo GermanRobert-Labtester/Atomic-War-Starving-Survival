@@ -325,6 +325,98 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        /// <summary>
+        /// Append or replace a single encounter by id (Prompt #47 — radio intel inject).
+        /// Does not wipe the default pool.
+        /// </summary>
+        public void AddEncounter(EncounterSO encounter)
+        {
+            if (encounter == null || string.IsNullOrEmpty(encounter.id)) return;
+            for (int i = 0; i < _encounterPool.Count; i++)
+            {
+                if (_encounterPool[i] != null && _encounterPool[i].id == encounter.id)
+                {
+                    _encounterPool[i] = encounter;
+                    return;
+                }
+            }
+            _encounterPool.Add(encounter);
+        }
+
+        /// <summary>True if an encounter with the given id is currently in the pool.</summary>
+        public bool HasEncounter(string encounterId)
+        {
+            if (string.IsNullOrEmpty(encounterId)) return false;
+            for (int i = 0; i < _encounterPool.Count; i++)
+            {
+                if (_encounterPool[i] != null && _encounterPool[i].id == encounterId)
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Weighted pick among pool entries eligible for the given location.
+        /// Pure selection (no RNG chance-to-fire). Null if nothing qualifies.
+        /// forceOnArrival encounters are excluded — they only fire via
+        /// <see cref="TryFireForcedLocationEncounter"/> so they cannot re-roll.
+        /// </summary>
+        public EncounterSO PickEncounter(string locationId, ExpeditionStance stance, float dangerLevel)
+        {
+            float totalWeight = 0f;
+            var valid = new List<EncounterSO>();
+            var weights = new List<float>();
+
+            for (int i = 0; i < _encounterPool.Count; i++)
+            {
+                var enc = _encounterPool[i];
+                if (enc == null) continue;
+                // Location-scripted beats (Safe Haven ambush/cache) must not
+                // reappear in the random encounter roll after force-fire.
+                if (enc.forceOnArrival) continue;
+                float w = enc.GetEffectiveWeight(stance, dangerLevel, locationId);
+                if (w <= 0f) continue;
+                valid.Add(enc);
+                weights.Add(w);
+                totalWeight += w;
+            }
+
+            if (valid.Count == 0 || totalWeight <= 0f) return null;
+
+            double roll = _rng.NextDouble() * totalWeight;
+            float accum = 0f;
+            for (int i = 0; i < valid.Count; i++)
+            {
+                accum += weights[i];
+                if (roll <= accum) return valid[i];
+            }
+            return valid[valid.Count - 1];
+        }
+
+        /// <summary>
+        /// First forceOnArrival encounter bound to this location (highest weight wins).
+        /// </summary>
+        public EncounterSO FindForcedLocationEncounter(string locationId)
+        {
+            if (string.IsNullOrEmpty(locationId)) return null;
+            EncounterSO best = null;
+            float bestW = -1f;
+            for (int i = 0; i < _encounterPool.Count; i++)
+            {
+                var enc = _encounterPool[i];
+                if (enc == null || !enc.forceOnArrival) continue;
+                if (!string.Equals(enc.requiredLocationId, locationId, StringComparison.Ordinal))
+                    continue;
+                float w = enc.GetEffectiveWeight(ExpeditionStance.Stealth, 99f, locationId);
+                if (w > bestW)
+                {
+                    bestW = w;
+                    best = enc;
+                }
+            }
+            return best;
+        }
+
         /// <summary>Inject proc-gen wasteland map (visit/reveal on arrival).</summary>
         public void SetGeneratedMap(GeneratedMap map)
         {
@@ -607,6 +699,10 @@ namespace AtomicWar._Game.Core
                             // First arrival: mark proc-gen node visited + reveal fog-of-war
                             _generatedMap?.MarkVisited(exp.TargetLocationId);
                             exp.Phase = ExpeditionPhase.Looting;
+
+                            // Prompt #47 — location-bound forceOnArrival encounters
+                            // (Safe Haven ambush / empty cache) fire once on arrival.
+                            TryFireForcedLocationEncounter(exp);
                         }
                         break;
 
@@ -725,6 +821,16 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        private void TryFireForcedLocationEncounter(ExpeditionState exp)
+        {
+            if (exp == null || exp.LocationEncounterFired) return;
+            var forced = FindForcedLocationEncounter(exp.TargetLocationId);
+            if (forced == null) return;
+            exp.LocationEncounterFired = true;
+            OnEncounterTriggered?.Invoke(exp, forced);
+            ResolveEncounterWithPsychology(exp, forced);
+        }
+
         private void RollAndResolveEncounter(ExpeditionState exp)
         {
             if (_encounterPool.Count == 0) return;
@@ -736,38 +842,9 @@ namespace AtomicWar._Game.Core
 
             if (_rng.NextDouble() >= encounterChance) return;
 
-            // Pick weighted encounter
-            float totalWeight = 0f;
-            List<EncounterSO> validEncounters = new List<EncounterSO>();
-            List<float> weights = new List<float>();
-
-            for (int i = 0; i < _encounterPool.Count; i++)
-            {
-                var enc = _encounterPool[i];
-                float w = enc.GetEffectiveWeight(exp.Stance, exp.DangerLevel);
-                if (w > 0f)
-                {
-                    validEncounters.Add(enc);
-                    weights.Add(w);
-                    totalWeight += w;
-                }
-            }
-
-            if (validEncounters.Count == 0 || totalWeight <= 0f) return;
-
-            double roll = _rng.NextDouble() * totalWeight;
-            float accum = 0f;
-            EncounterSO selected = validEncounters[0];
-
-            for (int i = 0; i < validEncounters.Count; i++)
-            {
-                accum += weights[i];
-                if (roll <= accum)
-                {
-                    selected = validEncounters[i];
-                    break;
-                }
-            }
+            // Location-filtered weighted pick (Prompt #47)
+            EncounterSO selected = PickEncounter(exp.TargetLocationId, exp.Stance, exp.DangerLevel);
+            if (selected == null) return;
 
             OnEncounterTriggered?.Invoke(exp, selected);
 

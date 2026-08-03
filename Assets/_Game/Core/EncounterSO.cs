@@ -35,6 +35,20 @@ namespace AtomicWar._Game.Core
         // Min danger level required for this encounter
         public float minDangerLevel;
 
+        /// <summary>
+        /// When non-empty, this encounter is only eligible for expeditions whose
+        /// <c>TargetLocationId</c> matches (Prompt #47 — radio intel → location outcomes).
+        /// Empty = valid anywhere (default feral dogs / rubble / etc.).
+        /// </summary>
+        public string requiredLocationId = string.Empty;
+
+        /// <summary>
+        /// When true and <see cref="requiredLocationId"/> matches, fire once on
+        /// first arrival at the target (Looting phase start) instead of random roll.
+        /// Used for scripted Safe Haven ambush / empty-cache beats.
+        /// </summary>
+        public bool forceOnArrival;
+
         // Psychological auto-resolution triggers
         public bool enableAutoResolution = true;
         public RiskBiasTrait autoEngageTrait = RiskBiasTrait.Reckless;
@@ -47,7 +61,22 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public float GetEffectiveWeight(ExpeditionStance stance, float dangerLevel)
         {
+            return GetEffectiveWeight(stance, dangerLevel, locationId: null);
+        }
+
+        /// <summary>
+        /// Weight for stance + danger, optionally filtered by expedition location.
+        /// Location-bound encounters return 0 when the location does not match.
+        /// </summary>
+        public float GetEffectiveWeight(ExpeditionStance stance, float dangerLevel, string locationId)
+        {
             if (dangerLevel < minDangerLevel) return 0f;
+            if (!string.IsNullOrEmpty(requiredLocationId))
+            {
+                if (string.IsNullOrEmpty(locationId)
+                    || !string.Equals(requiredLocationId, locationId, StringComparison.Ordinal))
+                    return 0f;
+            }
             float weight = baseWeight;
             if (stance == ExpeditionStance.Stealth) weight *= stealthWeightMultiplier;
             else if (stance == ExpeditionStance.Speed) weight *= speedWeightMultiplier;

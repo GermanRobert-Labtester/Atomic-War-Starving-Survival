@@ -70,6 +70,12 @@ namespace AtomicWar._Game.Core
         public bool IsPushingLuck;
         public bool IsRetreating;
 
+        /// <summary>
+        /// True once a location-bound forceOnArrival encounter has fired for
+        /// this expedition (Prompt #47 — Safe Haven ambush / empty cache).
+        /// </summary>
+        public bool LocationEncounterFired;
+
         // -----------------------------------------------------------------
         // Day-30 Flashpoint intercept state (Prompt #26)
         // -----------------------------------------------------------------
