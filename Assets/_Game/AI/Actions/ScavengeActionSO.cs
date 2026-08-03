@@ -29,7 +29,11 @@ namespace AtomicWar._Game.AI.Actions
             }
 
             float avgNeed = (context.Survivor.Needs.Hunger + context.Survivor.Needs.Thirst) / 2f;
-            return Mathf.Clamp01(avgNeed / 100f + 0.15f);
+            float baseScore = Mathf.Clamp01(avgNeed / 100f + 0.15f);
+            // High map uncertainty (stale/dark fog-of-war) damps scavenger eagerness:
+            // survivors prefer known ground when instruments have failed.
+            float uncertaintyDamp = Mathf.Lerp(1f, 0.55f, Mathf.Clamp01(context.MapUncertainty));
+            return Mathf.Clamp01(baseScore * uncertaintyDamp);
         }
     }
 }

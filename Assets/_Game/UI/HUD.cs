@@ -2,6 +2,8 @@ using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.Environment;
+using AtomicWar._Game.Radiation;
 
 namespace AtomicWar._Game.UI
 {
@@ -15,18 +17,22 @@ namespace AtomicWar._Game.UI
     {
         [SerializeField] private NeedsBar _needsBar;
         [SerializeField] private DosimeterHUD _dosimeterHud;
+        [SerializeField] private HealthTrajectoryHUD _healthTrajectoryHud;
         [SerializeField] private GeigerAudioHook _geigerAudioHook;
         [SerializeField] private EnvironmentStatusHUD _environmentStatusHud;
         [SerializeField] private EventModalUI _eventModalUi;
+        [SerializeField] private MapKnowledgeHUD _mapKnowledgeHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
 
         public NeedsBar NeedsBar { get { EnsureWidgetReferences(); return _needsBar; } }
         public DosimeterHUD DosimeterHUD { get { EnsureWidgetReferences(); return _dosimeterHud; } }
+        public HealthTrajectoryHUD HealthTrajectoryHUD { get { EnsureWidgetReferences(); return _healthTrajectoryHud; } }
         public GeigerAudioHook GeigerAudioHook { get { EnsureWidgetReferences(); return _geigerAudioHook; } }
         public EnvironmentStatusHUD EnvironmentStatusHud { get { EnsureWidgetReferences(); return _environmentStatusHud; } }
         public EventModalUI EventModalUI { get { EnsureWidgetReferences(); return _eventModalUi; } }
+        public MapKnowledgeHUD MapKnowledgeHUD { get { EnsureWidgetReferences(); return _mapKnowledgeHud; } }
         public bool DebugModeEnabled => _debugModeEnabled;
 
         private void Awake()
@@ -38,9 +44,11 @@ namespace AtomicWar._Game.UI
         {
             if (_needsBar == null) _needsBar = GetComponentInChildren<NeedsBar>() ?? gameObject.AddComponent<NeedsBar>();
             if (_dosimeterHud == null) _dosimeterHud = GetComponentInChildren<DosimeterHUD>() ?? gameObject.AddComponent<DosimeterHUD>();
+            if (_healthTrajectoryHud == null) _healthTrajectoryHud = GetComponentInChildren<HealthTrajectoryHUD>() ?? gameObject.AddComponent<HealthTrajectoryHUD>();
             if (_geigerAudioHook == null) _geigerAudioHook = GetComponentInChildren<GeigerAudioHook>() ?? gameObject.AddComponent<GeigerAudioHook>();
             if (_environmentStatusHud == null) _environmentStatusHud = GetComponentInChildren<EnvironmentStatusHUD>() ?? gameObject.AddComponent<EnvironmentStatusHUD>();
             if (_eventModalUi == null) _eventModalUi = GetComponentInChildren<EventModalUI>() ?? gameObject.AddComponent<EventModalUI>();
+            if (_mapKnowledgeHud == null) _mapKnowledgeHud = GetComponentInChildren<MapKnowledgeHUD>() ?? gameObject.AddComponent<MapKnowledgeHUD>();
         }
 
         private void Update()
@@ -76,6 +84,18 @@ namespace AtomicWar._Game.UI
             if (_geigerAudioHook != null) _geigerAudioHook.UpdateExposureRate(currentRate);
         }
 
+        /// <summary>
+        /// Perform a medical exam: the only way HealthTrajectoryHUD ever updates. Call from
+        /// a doctor/medicine action, not from the per-frame tick -- the player should have
+        /// to seek this out rather than have it pushed at them like the dosimeter's rate.
+        /// </summary>
+        public void OnMedicalExam(Survivor survivor, RadiationSystem radiationSystem)
+        {
+            if (survivor == null || radiationSystem == null) return;
+            EnsureWidgetReferences();
+            _healthTrajectoryHud.SetReading(radiationSystem.ExaminePrognosis(survivor));
+        }
+
         /// <summary>Bind shelter aggregate stats to Environment status strip.</summary>
         public void OnShelterUpdated(Shelter.Shelter shelter)
         {
@@ -104,6 +124,20 @@ namespace AtomicWar._Game.UI
             {
                 _environmentStatusHud.SetEnvironment(day, hour, weatherName, seasonName);
             }
+        }
+
+        /// <summary>
+        /// Push radiation fog-of-war views + "last calibrated: N days ago" strip.
+        /// </summary>
+        public void OnMapKnowledgeUpdated(
+            System.Collections.Generic.IReadOnlyList<MapTilePlayerView> views,
+            bool hasWorkingGeiger,
+            int daysSinceCalibration)
+        {
+            EnsureWidgetReferences();
+            if (_mapKnowledgeHud == null) return;
+            _mapKnowledgeHud.SetViews(views, hasWorkingGeiger);
+            _mapKnowledgeHud.SetCalibrationAge(daysSinceCalibration);
         }
     }
 }

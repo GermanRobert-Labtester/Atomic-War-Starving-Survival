@@ -23,7 +23,24 @@ namespace AtomicWar._Game.AI
         public bool IsListless;
         /// <summary>True when the shelter's grow-light module is running; relevant to morale-seeking actions.</summary>
         public bool GrowLightActive;
+
+        /// <summary>0..1 current uncertainty in the survivor's picture of danger (e.g.
+        /// 1 - RadiationKnowledgeMap map-tile confidence).</summary>
+        public float MapUncertainty;
+
+        /// <summary>Mirrors Survivor.HasRadiationAnxietyStatus.</summary>
+        public bool IsAnxious;
+
+        /// <summary>Mirrors Survivor.IsNumb.</summary>
+        public bool IsNumb;
+
         public Random Random;
+
+        /// <summary>
+        /// Optional hook: start a radiation survey for this survivor. Returns true if
+        /// a mission began. Injected by GameBootstrap so AI actions stay free of Core refs.
+        /// </summary>
+        public Func<Survivor, bool> OnRequestSurvey;
 
         public AIContext() { }
 

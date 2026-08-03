@@ -42,6 +42,8 @@ namespace AtomicWar._Game.Core
 
         // Optional — injected after construction to keep constructor signature stable
         private PhotoperiodSystem _photoPeriodSystem;
+        private RadiationKnowledgeMap _knowledgeMap;
+        private Inventory.Inventory _inventory;
 
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
@@ -78,6 +80,18 @@ namespace AtomicWar._Game.Core
         public void SetPhotoPeriodSystem(PhotoperiodSystem photoPeriodSystem)
         {
             _photoPeriodSystem = photoPeriodSystem;
+        }
+
+        /// <summary>Inject radiation fog-of-war map (optional; safe to skip in tests).</summary>
+        public void SetKnowledgeMap(RadiationKnowledgeMap knowledgeMap)
+        {
+            _knowledgeMap = knowledgeMap;
+        }
+
+        /// <summary>Inject inventory so device battery/calibration/broken persist across save/load.</summary>
+        public void SetInventory(Inventory.Inventory inventory)
+        {
+            _inventory = inventory;
         }
 
         /// <summary>Write the current world state to the given slot.</summary>
@@ -281,6 +295,12 @@ namespace AtomicWar._Game.Core
             if (_photoPeriodSystem != null)
                 data.Photoperiod = _photoPeriodSystem.GetState();
 
+            if (_knowledgeMap != null)
+                data.RadiationKnowledge = _knowledgeMap.CaptureState();
+
+            if (_inventory != null)
+                data.Inventory = _inventory.CaptureState();
+
             return data;
         }
 
@@ -309,6 +329,14 @@ namespace AtomicWar._Game.Core
                 HasRadResistance = sv.HasRadResistance,
                 RadResistanceHoursRemaining = sv.RadResistanceHoursRemaining,
                 HasFullSuitEquipped = sv.HasFullSuitEquipped,
+
+                // Latent damage / prognosis pipeline
+                AcuteDoseWindow = sv.AcuteDoseWindow,
+                PrognosisStage = sv.PrognosisStage,
+                OnsetTimer = sv.OnsetTimer,
+                LatentDamage = sv.LatentDamage,
+                IodineProtectionTimer = sv.IodineProtectionTimer,
+                HasAcuteRadiationSyndrome = sv.HasAcuteRadiationSyndrome,
 
                 // Light / photoperiod
                 LightExposure = sv.LightExposure,
@@ -388,6 +416,16 @@ namespace AtomicWar._Game.Core
             {
                 _photoPeriodSystem.RestoreState(data.Photoperiod);
             }
+
+            if (_knowledgeMap != null && data.RadiationKnowledge != null)
+            {
+                _knowledgeMap.RestoreState(data.RadiationKnowledge);
+            }
+
+            if (_inventory != null && data.Inventory != null && _itemLookup != null)
+            {
+                _inventory.RestoreState(data.Inventory, _itemLookup);
+            }
         }
 
         private void RestoreSurvivor(Survivor sv, SurvivorSave save)
@@ -413,6 +451,14 @@ namespace AtomicWar._Game.Core
             sv.HasRadResistance = save.HasRadResistance;
             sv.RadResistanceHoursRemaining = save.RadResistanceHoursRemaining;
             sv.HasFullSuitEquipped = save.HasFullSuitEquipped;
+
+            // Latent damage / prognosis pipeline
+            sv.AcuteDoseWindow = save.AcuteDoseWindow;
+            sv.PrognosisStage = save.PrognosisStage;
+            sv.OnsetTimer = save.OnsetTimer;
+            sv.LatentDamage = save.LatentDamage;
+            sv.IodineProtectionTimer = save.IodineProtectionTimer;
+            sv.HasAcuteRadiationSyndrome = save.HasAcuteRadiationSyndrome;
 
             // Light / photoperiod
             sv.LightExposure = save.LightExposure;
@@ -492,6 +538,8 @@ namespace AtomicWar._Game.Core
         public List<ShelterModuleSave> ShelterModules = new List<ShelterModuleSave>();
         public List<string> WorldFlagKeys = new List<string>();
         public List<bool> WorldFlagValues = new List<bool>();
+        public RadiationKnowledgeSave RadiationKnowledge;
+        public InventorySaveState Inventory;
     }
 
     // =====================================================================
@@ -534,6 +582,14 @@ namespace AtomicWar._Game.Core
         public bool HasRadResistance;
         public float RadResistanceHoursRemaining;
         public bool HasFullSuitEquipped;
+
+        // Latent damage / prognosis pipeline
+        public float AcuteDoseWindow;
+        public PrognosisStage PrognosisStage;
+        public float OnsetTimer;
+        public float LatentDamage;
+        public float IodineProtectionTimer;
+        public bool HasAcuteRadiationSyndrome;
 
         // Dosimeter
         public float DosimeterRate;

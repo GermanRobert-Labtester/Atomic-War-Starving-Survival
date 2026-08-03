@@ -63,6 +63,7 @@ namespace AtomicWar._Game.Core
         public EventRunner EventRunner { get; private set; }
         public SaveSystem SaveSystem { get; private set; }
         public LocationScavengingSystem ScavengingSystem { get; private set; }
+        public RadiationKnowledgeMap KnowledgeMap { get; private set; }
         public RadioBroadcastSystem RadioSystem { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
@@ -169,6 +170,7 @@ namespace AtomicWar._Game.Core
                 CreateAction<WarmUpActionSO>(),
                 CreateAction<TakeIodineActionSO>(),
                 CreateAction<ScavengeActionSO>(),
+                CreateAction<SurveyActionSO>(),
                 CreateAction<CraftActionSO>(),
                 CreateAction<GuardActionSO>()
             };
@@ -180,6 +182,10 @@ namespace AtomicWar._Game.Core
                 EventRunner.SetPool(_eventCatalog.events);
             }
 
+            // Knowledge map must exist before SaveSystem can capture it
+            KnowledgeMap = new RadiationKnowledgeMap();
+            SeedKnowledgeMap();
+
             // Save
             SaveSystem = new SaveSystem(
                 GameState, WeatherSystem, TemperatureSystem, NeedsSystem,
@@ -187,6 +193,8 @@ namespace AtomicWar._Game.Core
                 id => _itemCatalog?.GetById(id),
                 id => null);
             SaveSystem.SetPhotoPeriodSystem(PhotoperiodSystem);
+            SaveSystem.SetKnowledgeMap(KnowledgeMap);
+            SaveSystem.SetInventory(Inventory);
 
             // Subscribe to phase changes for autosave
             GameState.OnPhaseChanged += phase =>
@@ -194,13 +202,59 @@ namespace AtomicWar._Game.Core
                 if (phase == GamePhase.Running) SaveSystem.AutoSave();
             };
 
-            // Scavenging
-            ScavengingSystem = new LocationScavengingSystem(RadiationSystem, Inventory, _itemCatalog, _worldSeed);
+            // Scavenging + survey (shares KnowledgeMap with SaveSystem)
+            ScavengingSystem = new LocationScavengingSystem(
+                RadiationSystem, Inventory, _itemCatalog, _worldSeed,
+                KnowledgeMap, () => TimeSystem.CurrentDay);
+            ScavengingSystem.OnSurveyCompleted += (mission, success) => RefreshMapKnowledgeHUD();
+            ScavengingSystem.OnMissionCompleted += (mission, loot) => RefreshMapKnowledgeHUD();
+            if (Inventory != null)
+            {
+                Inventory.OnInventoryChanged += RefreshMapKnowledgeHUD;
+            }
+            if (KnowledgeMap != null)
+            {
+                KnowledgeMap.OnKnowledgeChanged += RefreshMapKnowledgeHUD;
+            }
 
-            // Radio
+            // Radio (broadcast only; tuner/intel extraction is separate WIP)
             RadioSystem = new RadioBroadcastSystem();
             RadioSystem.SetCatalog(_radioCatalog);
-            TimeSystem.OnDayTick += day => RadioSystem.CheckForBroadcast(day);
+
+            TimeSystem.OnDayTick += day =>
+            {
+                RadioSystem.CheckForBroadcast(day);
+                Inventory?.DriftAllDevices(1f);
+                KnowledgeMap?.TickDay(day);
+                RefreshMapKnowledgeHUD();
+            };
+        }
+
+        private void SeedKnowledgeMap()
+        {
+            if (KnowledgeMap == null || _locationCatalog?.locations == null) return;
+            var rng = new System.Random(_worldSeed + 17);
+            foreach (var loc in _locationCatalog.locations)
+            {
+                if (loc == null || string.IsNullOrEmpty(loc.id)) continue;
+                float rumorScale = 0.4f + (float)rng.NextDouble() * 0.4f;
+                KnowledgeMap.SeedTile(loc.id, loc.baseRadsPerHour, loc.baseRadsPerHour * rumorScale, 1f);
+            }
+        }
+
+        private void RefreshMapKnowledgeHUD()
+        {
+            if (_hud == null || KnowledgeMap == null) return;
+            bool hasGeiger = Inventory != null && Inventory.HasWorkingGeiger();
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            var views = KnowledgeMap.GetAllPlayerViews(day, hasGeiger);
+            int calAge = -1;
+            var geiger = Inventory?.GetBestGeigerState();
+            if (geiger != null)
+            {
+                calAge = InstrumentDevice.DaysSinceCalibration(geiger, day);
+            }
+            _hud.OnMapKnowledgeUpdated(views, hasGeiger, calAge);
         }
 
         private void SeedStartingInventory()
@@ -274,12 +328,17 @@ namespace AtomicWar._Game.Core
                 foreach (var sv in Survivors)
                 {
                     if (!sv.IsAlive) continue;
+                    float mapUncertainty = GetMapUncertaintyFor(sv);
                     var context = new AIContext(sv, Shelter, Inventory, new System.Random(_worldSeed + sv.Id.GetHashCode()))
                     {
                         IsFalloutStorm  = WeatherSystem.Current == WeatherKind.FalloutStorm,
                         AmbientRadRate  = 5f,
                         IsListless      = sv.IsListless,
-                        GrowLightActive = Shelter.IsGrowLightActive
+                        GrowLightActive = Shelter.IsGrowLightActive,
+                        OnRequestSurvey = RequestSurveyForSurvivor,
+                        MapUncertainty  = mapUncertainty,
+                        IsAnxious       = sv.HasRadiationAnxietyStatus,
+                        IsNumb          = sv.IsNumb
                     };
                     var action = UtilityAI.SelectAction(context, Actions);
                     action?.Execute(context);
@@ -370,6 +429,9 @@ namespace AtomicWar._Game.Core
 
             // Wire shelter
             _hud.OnShelterUpdated(Shelter);
+
+            // Initial fog-of-war push
+            RefreshMapKnowledgeHUD();
         }
 
         // -----------------------------------------------------------------
@@ -427,6 +489,76 @@ namespace AtomicWar._Game.Core
         {
             if (ScavengingSystem == null || survivor == null || location == null) return false;
             return ScavengingSystem.StartMission(survivor, location);
+        }
+
+        /// <summary>Send a survivor to survey a location with a working geiger.</summary>
+        public bool StartSurveyMission(Survivor survivor, LocationDefinitionSO location)
+        {
+            if (ScavengingSystem == null || survivor == null || location == null) return false;
+            bool started = ScavengingSystem.StartSurvey(survivor, location);
+            if (started) RefreshMapKnowledgeHUD();
+            return started;
+        }
+
+        /// <summary>
+        /// AI/UI hook: survey the least-known location (unsurveyed first, then oldest measure).
+        /// </summary>
+        public bool RequestSurveyForSurvivor(Survivor survivor)
+        {
+            if (survivor == null || !survivor.IsAlive || ScavengingSystem == null) return false;
+            if (Inventory == null || !Inventory.HasWorkingGeiger()) return false;
+            if (_locationCatalog?.locations == null || _locationCatalog.locations.Count == 0) return false;
+
+            LocationDefinitionSO best = null;
+            int bestScore = int.MinValue;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+
+            foreach (var loc in _locationCatalog.locations)
+            {
+                if (loc == null) continue;
+                var tile = KnowledgeMap?.GetTile(loc.id);
+                int score;
+                if (tile == null || !tile.Surveyed) score = 1000;
+                else score = day - tile.MeasuredAtDay;
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    best = loc;
+                }
+            }
+
+            return best != null && StartSurveyMission(survivor, best);
+        }
+
+        private float GetMapUncertaintyFor(Survivor survivor)
+        {
+            if (KnowledgeMap == null || survivor == null) return 0.5f;
+
+            bool hasWorkingGeiger = Inventory != null && Inventory.HasWorkingGeiger();
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+
+            if (ScavengingSystem != null)
+            {
+                foreach (var mission in ScavengingSystem.ActiveMissions)
+                {
+                    if (mission?.SurvivorId == survivor.Id)
+                    {
+                        var view = KnowledgeMap.GetPlayerView(mission.LocationId, day, hasWorkingGeiger);
+                        return Mathf.Clamp01(1f - view.Confidence);
+                    }
+                }
+            }
+
+            float totalConfidence = 0f;
+            int count = 0;
+            foreach (var id in KnowledgeMap.Tiles.Keys)
+            {
+                var view = KnowledgeMap.GetPlayerView(id, day, hasWorkingGeiger);
+                totalConfidence += view.Confidence;
+                count++;
+            }
+            if (count == 0) return hasWorkingGeiger ? 0.5f : 1f;
+            return Mathf.Clamp01(1f - (totalConfidence / count));
         }
     }
 }

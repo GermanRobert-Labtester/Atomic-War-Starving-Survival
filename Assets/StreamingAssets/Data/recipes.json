@@ -142,5 +142,42 @@
     "resultAmount": 1,
     "craftingTimeHours": 1.5,
     "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_geiger_counter",
+    "recipeName": "Craft Geiger Counter",
+    "ingredients": [
+      { "itemId": "scrap_metal", "amount": 5 },
+      { "itemId": "battery", "amount": 1 },
+      { "itemId": "cloth", "amount": 1 }
+    ],
+    "resultItemId": "geiger_counter",
+    "resultAmount": 1,
+    "craftingTimeHours": 3.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_calibration_kit",
+    "recipeName": "Craft Calibration Kit",
+    "ingredients": [
+      { "itemId": "scrap_metal", "amount": 2 },
+      { "itemId": "cloth", "amount": 1 }
+    ],
+    "resultItemId": "calibration_kit",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_battery",
+    "recipeName": "Craft Battery",
+    "ingredients": [
+      { "itemId": "scrap_metal", "amount": 2 },
+      { "itemId": "dirty_water", "amount": 1 }
+    ],
+    "resultItemId": "battery",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.0,
+    "requiredStationId": "workbench"
   }
 ]

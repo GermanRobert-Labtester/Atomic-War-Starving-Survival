@@ -340,5 +340,41 @@
     "moraleEffect": 0,
     "isEquipable": false,
     "equipSlot": ""
+  },
+  {
+    "id": "battery",
+    "displayName": "Battery",
+    "description": "Cell pack for geiger counters and dosimeters. Without power, instruments go dark.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 0.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": ""
+  },
+  {
+    "id": "calibration_kit",
+    "displayName": "Calibration Kit",
+    "description": "Reference sources and tools to recalibrate a geiger or dosimeter. A mis-calibrated counter lies.",
+    "type": "Tool",
+    "stackMax": 5,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": ""
   }
 ]

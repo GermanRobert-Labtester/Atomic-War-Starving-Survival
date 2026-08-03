@@ -60,6 +60,110 @@ namespace AtomicWar._Game.Inventory
             return total;
         }
 
+        /// <summary>First inventory slot whose item id matches (for device state access).</summary>
+        public InventorySlot FindSlot(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId) || _slots == null) return null;
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.id == itemId)
+                {
+                    return _slots[i];
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Best working Device slot matching the given item id (prefers highest battery,
+        /// then highest calibration). Null if none can measure.
+        /// </summary>
+        public InventorySlot FindBestWorkingDevice(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId) || _slots == null) return null;
+            InventorySlot best = null;
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                var slot = _slots[i];
+                if (slot == null || slot.Item == null || slot.Item.id != itemId) continue;
+                if (slot.Device == null) slot.Device = DeviceState.CreateDefault();
+                if (!InstrumentDevice.CanMeasure(slot.Device)) continue;
+                if (best == null
+                    || slot.Device.Battery > best.Device.Battery
+                    || (Mathf.Approximately(slot.Device.Battery, best.Device.Battery)
+                        && slot.Device.Calibration > best.Device.Calibration))
+                {
+                    best = slot;
+                }
+            }
+            return best;
+        }
+
+        /// <summary>True if any owned geiger_counter can currently measure.</summary>
+        public bool HasWorkingGeiger()
+        {
+            return FindBestWorkingDevice("geiger_counter") != null;
+        }
+
+        /// <summary>
+        /// Best owned geiger device state (working preferred; otherwise any geiger for
+        /// "last calibrated" display). Null if none owned.
+        /// </summary>
+        public DeviceState GetBestGeigerState()
+        {
+            var working = FindBestWorkingDevice("geiger_counter");
+            if (working != null) return working.Device;
+
+            var any = FindSlot("geiger_counter");
+            if (any == null) return null;
+            if (any.Device == null) any.Device = DeviceState.CreateDefault();
+            return any.Device;
+        }
+
+        /// <summary>Drift calibration on every Device slot by the given day count.</summary>
+        public void DriftAllDevices(float days = 1f)
+        {
+            if (_slots == null || days <= 0f) return;
+            bool changed = false;
+            for (int i = 0; i < _slots.Count; i++)
+            {
+                var slot = _slots[i];
+                if (slot?.Device == null) continue;
+                InstrumentDevice.DriftCalibration(slot.Device, days);
+                changed = true;
+            }
+            if (changed) OnInventoryChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Recharge the first matching device by consuming one battery item.
+        /// Does not un-break a dead instrument.
+        /// </summary>
+        public bool RechargeDevice(string deviceItemId, ItemDefinition batteryItem)
+        {
+            if (batteryItem == null || batteryItem.id != "battery") return false;
+            var slot = FindSlot(deviceItemId);
+            if (slot?.Device == null) return false;
+            if (Count(batteryItem) < 1) return false;
+            if (!Remove(batteryItem, 1)) return false;
+            InstrumentDevice.Recharge(slot.Device);
+            OnInventoryChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>Recalibrate the first matching device by consuming one calibration_kit.</summary>
+        public bool RecalibrateDevice(string deviceItemId, ItemDefinition kitItem, int currentDay)
+        {
+            if (kitItem == null || kitItem.id != "calibration_kit") return false;
+            var slot = FindSlot(deviceItemId);
+            if (slot?.Device == null) return false;
+            if (Count(kitItem) < 1) return false;
+            if (!Remove(kitItem, 1)) return false;
+            InstrumentDevice.Recalibrate(slot.Device, currentDay);
+            OnInventoryChanged?.Invoke();
+            return true;
+        }
+
         /// <summary>Current carried weight (stored stacks plus equipped items).</summary>
         public float GetCurrentWeight()
         {
@@ -139,7 +243,12 @@ namespace AtomicWar._Game.Inventory
                     return false;
                 }
                 int toAdd = Mathf.Min(stackMax, amount);
-                _slots.Add(new InventorySlot { Item = item, Amount = toAdd });
+                _slots.Add(new InventorySlot
+                {
+                    Item = item,
+                    Amount = toAdd,
+                    Device = item.type == ItemType.Device ? DeviceState.CreateDefault() : null
+                });
                 amount -= toAdd;
                 OnItemAdded?.Invoke(item, toAdd);
             }
@@ -345,7 +454,16 @@ namespace AtomicWar._Game.Inventory
                 var slot = _slots[i];
                 if (slot != null && slot.Item != null && slot.Amount > 0)
                 {
-                    state.slots.Add(new SlotSave { itemId = slot.Item.id, amount = slot.Amount });
+                    var slotSave = new SlotSave { itemId = slot.Item.id, amount = slot.Amount };
+                    if (slot.Device != null)
+                    {
+                        slotSave.hasDevice = true;
+                        slotSave.battery = slot.Device.Battery;
+                        slotSave.calibration = slot.Device.Calibration;
+                        slotSave.broken = slot.Device.Broken;
+                        slotSave.lastCalibratedDay = slot.Device.LastCalibratedDay;
+                    }
+                    state.slots.Add(slotSave);
                 }
             }
             for (int i = 0; i < _equipped.Count; i++)
@@ -376,7 +494,26 @@ namespace AtomicWar._Game.Inventory
                     var item = lookup?.Invoke(slotSave.itemId);
                     if (item != null && slotSave.amount > 0)
                     {
-                        _slots.Add(new InventorySlot { Item = item, Amount = slotSave.amount });
+                        DeviceState device = null;
+                        if (item.type == ItemType.Device)
+                        {
+                            if (slotSave.hasDevice)
+                            {
+                                device = new DeviceState
+                                {
+                                    Battery = slotSave.battery,
+                                    Calibration = slotSave.calibration,
+                                    Broken = slotSave.broken,
+                                    LastCalibratedDay = slotSave.lastCalibratedDay
+                                };
+                                device.Normalize();
+                            }
+                            else
+                            {
+                                device = DeviceState.CreateDefault();
+                            }
+                        }
+                        _slots.Add(new InventorySlot { Item = item, Amount = slotSave.amount, Device = device });
                     }
                 }
             }
@@ -403,6 +540,8 @@ namespace AtomicWar._Game.Inventory
     {
         public ItemDefinition Item;
         public int Amount;
+        /// <summary>Per-instance reliability for Device items (geiger, dosimeter); null otherwise.</summary>
+        public DeviceState Device;
     }
 
     /// <summary>An item currently worn in an equipment slot, with its remaining durability.</summary>
@@ -428,6 +567,11 @@ namespace AtomicWar._Game.Inventory
     {
         public string itemId;
         public int amount;
+        public bool hasDevice;
+        public float battery;
+        public float calibration;
+        public bool broken;
+        public int lastCalibratedDay;
     }
 
     [Serializable]
