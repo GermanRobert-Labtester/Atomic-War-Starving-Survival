@@ -85,12 +85,78 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// Clear the dial (no frequency). Intercept HUD shows ALL BANDS;
+        /// intel extraction pauses until a frequency is selected.
+        /// </summary>
+        public void Detune()
+        {
+            if (string.IsNullOrEmpty(State.CurrentFrequencyId))
+            {
+                State.ResetTuning(null);
+                return;
+            }
+            State.ResetTuning(null);
+            State.SignalStrength = 0f;
+            OnFrequencyChanged?.Invoke(null);
+        }
+
+        /// <summary>
         /// Get the currently tuned frequency (null if not tuned).
         /// </summary>
         public RadioFrequencySO GetCurrentFrequency()
         {
             if (string.IsNullOrEmpty(State.CurrentFrequencyId)) return null;
             return GetFrequency(State.CurrentFrequencyId);
+        }
+
+        /// <summary>
+        /// Intercept channel tag for the currently tuned frequency, or empty
+        /// when detuned / unmapped.
+        /// </summary>
+        public string GetCurrentInterceptChannelTag()
+        {
+            var freq = GetCurrentFrequency();
+            return freq != null ? freq.ResolveInterceptChannelTag() : string.Empty;
+        }
+
+        /// <summary>
+        /// Find a registered frequency that surfaces the given intercept channel tag.
+        /// Prefers active-on-day when <paramref name="day"/> is provided.
+        /// </summary>
+        public RadioFrequencySO FindFrequencyForChannelTag(string channelTag, int day = -1)
+        {
+            if (string.IsNullOrEmpty(channelTag)) return null;
+            RadioFrequencySO fallback = null;
+            for (int i = 0; i < _frequencies.Count; i++)
+            {
+                var f = _frequencies[i];
+                if (f == null) continue;
+                string tag = f.ResolveInterceptChannelTag();
+                if (!string.Equals(tag, channelTag, StringComparison.OrdinalIgnoreCase))
+                    continue;
+                if (day < 0 || f.IsActiveOnDay(day))
+                    return f;
+                if (fallback == null) fallback = f;
+            }
+            return fallback;
+        }
+
+        /// <summary>
+        /// Build HUD tuner bands: index 0 = ALL (detuned), then each registered frequency.
+        /// </summary>
+        public List<RadioTunerBand> BuildTunerBands()
+        {
+            var bands = new List<RadioTunerBand>(_frequencies.Count + 1)
+            {
+                RadioTunerBand.AllBands
+            };
+            for (int i = 0; i < _frequencies.Count; i++)
+            {
+                var f = _frequencies[i];
+                if (f == null || string.IsNullOrEmpty(f.id)) continue;
+                bands.Add(RadioTunerBand.FromFrequency(f));
+            }
+            return bands;
         }
 
         /// <summary>
@@ -363,5 +429,55 @@ namespace AtomicWar._Game.Core
     {
         public RadioStateSave RadioState;
         public List<IntelNode> ExtractedIntel = new List<IntelNode>();
+    }
+
+    /// <summary>
+    /// One dial position shared by RadioTunerSystem (intel) and the intercept HUD.
+    /// Index 0 is always ALL BANDS (detuned).
+    /// </summary>
+    [Serializable]
+    public struct RadioTunerBand
+    {
+        public string FrequencyId;
+        public string Label;
+        public string ChannelTag;
+        public float FrequencyMHz;
+        public RadioFrequencyType Type;
+        public int ActiveFromDay;
+        public int ActiveUntilDay;
+
+        public bool IsAllBands => string.IsNullOrEmpty(FrequencyId);
+
+        public static RadioTunerBand AllBands => new RadioTunerBand
+        {
+            FrequencyId = string.Empty,
+            Label = "ALL BANDS",
+            ChannelTag = string.Empty,
+            FrequencyMHz = 0f,
+            Type = RadioFrequencyType.Unknown,
+            ActiveFromDay = 0,
+            ActiveUntilDay = -1
+        };
+
+        public static RadioTunerBand FromFrequency(RadioFrequencySO freq)
+        {
+            if (freq == null) return AllBands;
+            string label = !string.IsNullOrEmpty(freq.displayName)
+                ? freq.displayName
+                : freq.id;
+            string tag = freq.ResolveInterceptChannelTag();
+            if (!string.IsNullOrEmpty(tag))
+                label = $"{label} · {tag}";
+            return new RadioTunerBand
+            {
+                FrequencyId = freq.id ?? string.Empty,
+                Label = label,
+                ChannelTag = tag ?? string.Empty,
+                FrequencyMHz = freq.frequencyMHz,
+                Type = freq.type,
+                ActiveFromDay = freq.activeFromDay,
+                ActiveUntilDay = freq.activeUntilDay
+            };
+        }
     }
 }

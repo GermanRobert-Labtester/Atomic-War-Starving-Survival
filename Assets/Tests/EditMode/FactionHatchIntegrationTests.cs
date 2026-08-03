@@ -834,6 +834,96 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RadioTuner_LinkedDial_TunesIntelAndFiltersIntercepts()
+        {
+            // RadioTunerSystem bands drive the HUD dial: one retune for intel + intercepts.
+            var civilian = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            _toDestroy.Add(civilian);
+            civilian.id = RadioFrequencySO.Ids.Civilian;
+            civilian.displayName = "88.5 FM Civilian";
+            civilian.type = RadioFrequencyType.Civilian;
+            civilian.interceptChannelTag = "CH-3 ASH ROAD";
+
+            var military = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            _toDestroy.Add(military);
+            military.id = RadioFrequencySO.Ids.Military;
+            military.displayName = "102.1 Military";
+            military.type = RadioFrequencyType.Military;
+            military.interceptChannelTag = "CH-7 MILBAND";
+
+            var emergency = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            _toDestroy.Add(emergency);
+            emergency.id = RadioFrequencySO.Ids.Emergency;
+            emergency.displayName = "107.0 Emergency";
+            emergency.type = RadioFrequencyType.Emergency;
+            emergency.interceptChannelTag = "CH-11 STOCKPILE";
+
+            var tuner = new RadioTunerSystem(new System.Random(7));
+            tuner.SetFrequencies(new[] { civilian, military, emergency });
+
+            var go = new GameObject("LinkedDial");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<RadioInterceptHUD>();
+
+            // Mirror GameBootstrap.WireRadioInterceptTuner
+            var coreBands = tuner.BuildTunerBands();
+            var uiBands = new List<RadioInterceptHUD.TunerBand>(coreBands.Count);
+            for (int i = 0; i < coreBands.Count; i++)
+            {
+                var b = coreBands[i];
+                uiBands.Add(RadioInterceptHUD.TunerBand.FromParts(b.FrequencyId, b.Label, b.ChannelTag));
+            }
+            hud.SetTunerBands(uiBands);
+            hud.OnTunerBandChanged += (freqId, _) =>
+            {
+                if (string.IsNullOrEmpty(freqId)) tuner.Detune();
+                else tuner.TuneToFrequency(freqId);
+            };
+            tuner.OnFrequencyChanged += id => hud.SyncFromFrequencyId(id);
+
+            Assert.That(hud.BandCount, Is.EqualTo(4), "ALL + 3 freqs");
+            Assert.That(hud.BoundFrequencyId, Is.Empty);
+            Assert.That(string.IsNullOrEmpty(tuner.State.CurrentFrequencyId));
+
+            hud.Push("Mil hatch bounce.", "HatchRepel", FactionSO.Ids.MilitaryRemnants, 10);
+            hud.Push("Road curses.", "HatchRepel", FactionSO.Ids.ScavengerCamp, 11);
+            hud.Push("Hymn cuts out.", "HatchRepel", FactionSO.Ids.DoomsdayPreppers, 12);
+
+            // Cycle to civilian (index 1) — intel dial + ash-road intercept filter
+            hud.CycleTunerNext();
+            Assert.That(hud.BoundFrequencyId, Is.EqualTo(RadioFrequencySO.Ids.Civilian));
+            Assert.That(tuner.State.CurrentFrequencyId, Is.EqualTo(RadioFrequencySO.Ids.Civilian));
+            Assert.That(hud.ActiveChannelFilter, Is.EqualTo("CH-3 ASH ROAD"));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(1));
+            Assert.That(hud.LatestMessage, Does.Contain("Road curses"));
+            Assert.That(tuner.GetCurrentInterceptChannelTag(), Is.EqualTo("CH-3 ASH ROAD"));
+
+            // Military band
+            hud.CycleTunerNext();
+            Assert.That(tuner.State.CurrentFrequencyId, Is.EqualTo(RadioFrequencySO.Ids.Military));
+            Assert.That(hud.ActiveChannelFilter, Does.Contain("MILBAND"));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(1));
+            Assert.That(hud.LatestMessage, Does.Contain("Mil hatch"));
+
+            // Emergency / stockpile
+            hud.CycleTunerNext();
+            Assert.That(tuner.State.CurrentFrequencyId, Is.EqualTo(RadioFrequencySO.Ids.Emergency));
+            Assert.That(hud.ActiveChannelFilter, Is.EqualTo("CH-11 STOCKPILE"));
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(1));
+
+            // Wrap → ALL / detune
+            hud.CycleTunerNext();
+            Assert.That(hud.TunerIndex, Is.EqualTo(0));
+            Assert.That(string.IsNullOrEmpty(tuner.State.CurrentFrequencyId), Is.True);
+            Assert.That(hud.FilteredLineCount, Is.EqualTo(3));
+
+            // External TuneToFrequency keeps HUD in sync
+            Assert.That(tuner.TuneToFrequency(RadioFrequencySO.Ids.Military), Is.True);
+            Assert.That(hud.BoundFrequencyId, Is.EqualTo(RadioFrequencySO.Ids.Military));
+            Assert.That(hud.ActiveChannelFilter, Does.Contain("MILBAND"));
+        }
+
+        [Test]
         public void FactionRadioVoHook_ResolvesByChannelTag_ThenKind_ThenDefault()
         {
             var go = new GameObject("VoHookTest");

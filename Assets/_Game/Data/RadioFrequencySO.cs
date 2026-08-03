@@ -45,8 +45,53 @@ namespace AtomicWar._Game.Data
         [Range(0f, 1f)]
         public float interferenceSusceptibility = 0.3f;
 
+        [Header("Faction intercepts")]
+        [Tooltip(
+            "Channel tag used by the intercept strip when this frequency is tuned " +
+            "(e.g. CH-7 MILBAND). Empty = show no faction intercepts on this band " +
+            "(intel still extracts). Leave blank to use DefaultChannelTagForType.")]
+        public string interceptChannelTag;
+
         [Header("Broadcast Pool")]
         public List<RadioBroadcastSO> broadcasts = new List<RadioBroadcastSO>();
+
+        /// <summary>
+        /// Canonical ids used by GameBootstrap default frequency table.
+        /// </summary>
+        public static class Ids
+        {
+            public const string Civilian = "88.5_civilian";
+            public const string Military = "102.1_military";
+            public const string Numbers = "99.0_numbers";
+            public const string Emergency = "107.0_emergency";
+        }
+
+        /// <summary>
+        /// Resolve the intercept channel tag for this frequency (explicit field
+        /// or type default). Empty means "no faction intercepts on this band".
+        /// </summary>
+        public string ResolveInterceptChannelTag()
+        {
+            if (!string.IsNullOrEmpty(interceptChannelTag))
+                return interceptChannelTag;
+            return DefaultChannelTagForType(type);
+        }
+
+        /// <summary>
+        /// Default faction-intercept channel for a frequency type.
+        /// Military → milband, Civilian → ash road, Emergency/Numbers → stockpile.
+        /// </summary>
+        public static string DefaultChannelTagForType(RadioFrequencyType type)
+        {
+            switch (type)
+            {
+                case RadioFrequencyType.Military: return "CH-7 MILBAND";
+                case RadioFrequencyType.Civilian: return "CH-3 ASH ROAD";
+                case RadioFrequencyType.Emergency: return "CH-11 STOCKPILE";
+                case RadioFrequencyType.NumbersStation: return "CH-11 STOCKPILE";
+                default: return string.Empty;
+            }
+        }
 
         /// <summary>
         /// Check if this frequency is active on the given day.

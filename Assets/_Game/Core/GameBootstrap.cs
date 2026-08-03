@@ -544,9 +544,10 @@ namespace AtomicWar._Game.Core
 
         private void InitializeRadioFrequencies()
         {
-            // Create default frequencies
+            // Create default frequencies. interceptChannelTag links each band to
+            // faction intercept filtering (intel extraction uses the same dial).
             var civilian = ScriptableObject.CreateInstance<RadioFrequencySO>();
-            civilian.id = "88.5_civilian";
+            civilian.id = RadioFrequencySO.Ids.Civilian;
             civilian.displayName = "88.5 FM Civilian";
             civilian.frequencyMHz = 88.5f;
             civilian.type = RadioFrequencyType.Civilian;
@@ -554,9 +555,10 @@ namespace AtomicWar._Game.Core
             civilian.activeUntilDay = 30;
             civilian.baseSignalStrength = 0.7f;
             civilian.interferenceSusceptibility = 0.3f;
-            
+            civilian.interceptChannelTag = RadioFrequencySO.DefaultChannelTagForType(RadioFrequencyType.Civilian);
+
             var military = ScriptableObject.CreateInstance<RadioFrequencySO>();
-            military.id = "102.1_military";
+            military.id = RadioFrequencySO.Ids.Military;
             military.displayName = "102.1 Military";
             military.frequencyMHz = 102.1f;
             military.type = RadioFrequencyType.Military;
@@ -564,9 +566,10 @@ namespace AtomicWar._Game.Core
             military.activeUntilDay = 30;
             military.baseSignalStrength = 0.6f;
             military.interferenceSusceptibility = 0.2f;
-            
+            military.interceptChannelTag = RadioFrequencySO.DefaultChannelTagForType(RadioFrequencyType.Military);
+
             var numbers = ScriptableObject.CreateInstance<RadioFrequencySO>();
-            numbers.id = "99.0_numbers";
+            numbers.id = RadioFrequencySO.Ids.Numbers;
             numbers.displayName = "99.0 Numbers Station";
             numbers.frequencyMHz = 99.0f;
             numbers.type = RadioFrequencyType.NumbersStation;
@@ -574,9 +577,10 @@ namespace AtomicWar._Game.Core
             numbers.activeUntilDay = -1;
             numbers.baseSignalStrength = 0.4f;
             numbers.interferenceSusceptibility = 0.5f;
-            
+            numbers.interceptChannelTag = RadioFrequencySO.DefaultChannelTagForType(RadioFrequencyType.NumbersStation);
+
             var emergency = ScriptableObject.CreateInstance<RadioFrequencySO>();
-            emergency.id = "107.0_emergency";
+            emergency.id = RadioFrequencySO.Ids.Emergency;
             emergency.displayName = "107.0 Emergency";
             emergency.frequencyMHz = 107.0f;
             emergency.type = RadioFrequencyType.Emergency;
@@ -584,7 +588,8 @@ namespace AtomicWar._Game.Core
             emergency.activeUntilDay = -1;
             emergency.baseSignalStrength = 0.5f;
             emergency.interferenceSusceptibility = 0.4f;
-            
+            emergency.interceptChannelTag = RadioFrequencySO.DefaultChannelTagForType(RadioFrequencyType.Emergency);
+
             RadioTunerSystem.SetFrequencies(new[] { civilian, military, numbers, emergency });
         }
 
@@ -1042,6 +1047,7 @@ namespace AtomicWar._Game.Core
             _hud.BindPowerNetwork(PowerNetwork);
             _hud.BindHatchDefense(HatchDefenseSystem);
             _hud.EnsureRadioInterceptHud();
+            WireRadioInterceptTuner();
             SyncRadioInterceptHudFromLog();
             _hud.BindGeneratedMap(GeneratedMap, () => WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear);
             _hud.BindWorkbench(WorkbenchSystem);
@@ -1372,6 +1378,55 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// Bind the intercept strip dial to RadioTunerSystem frequencies so
+        /// [ / ] retunes intel extraction and filters faction intercepts together.
+        /// Safe to call multiple times (rebinds bands + handler).
+        /// </summary>
+        public void WireRadioInterceptTuner()
+        {
+            if (_hud == null || RadioTunerSystem == null) return;
+            var strip = _hud.EnsureRadioInterceptHud();
+            if (strip == null) return;
+
+            // Push band list (ALL + each registered frequency).
+            var coreBands = RadioTunerSystem.BuildTunerBands();
+            var uiBands = new System.Collections.Generic.List<RadioInterceptHUD.TunerBand>(coreBands.Count);
+            for (int i = 0; i < coreBands.Count; i++)
+            {
+                var b = coreBands[i];
+                uiBands.Add(RadioInterceptHUD.TunerBand.FromParts(
+                    b.FrequencyId, b.Label, b.ChannelTag));
+            }
+            strip.SetTunerBands(uiBands);
+
+            // Avoid stacking handlers if WireHUD / load re-runs.
+            strip.OnTunerBandChanged -= HandleRadioHudTunerChanged;
+            strip.OnTunerBandChanged += HandleRadioHudTunerChanged;
+            RadioTunerSystem.OnFrequencyChanged -= HandleRadioTunerFrequencyChanged;
+            RadioTunerSystem.OnFrequencyChanged += HandleRadioTunerFrequencyChanged;
+
+            // Align dial with current tuner state (detuned on fresh boot).
+            strip.SyncFromFrequencyId(RadioTunerSystem.State?.CurrentFrequencyId);
+        }
+
+        private void HandleRadioHudTunerChanged(string frequencyId, string channelTag)
+        {
+            if (RadioTunerSystem == null) return;
+            if (string.IsNullOrEmpty(frequencyId))
+                RadioTunerSystem.Detune();
+            else
+                RadioTunerSystem.TuneToFrequency(frequencyId);
+        }
+
+        private void HandleRadioTunerFrequencyChanged(string frequencyId)
+        {
+            if (_hud == null) return;
+            var strip = _hud.EnsureRadioInterceptHud();
+            // Sync HUD without re-notifying (would loop into TuneToFrequency).
+            strip?.SyncFromFrequencyId(frequencyId);
+        }
+
+        /// <summary>
         /// Rebuild the radio strip from the intercept log (after WireHUD / save load).
         /// </summary>
         public void SyncRadioInterceptHudFromLog()
@@ -1379,6 +1434,10 @@ namespace AtomicWar._Game.Core
             if (_hud == null || FactionRadioIntercepts == null) return;
             var strip = _hud.EnsureRadioInterceptHud();
             if (strip == null) return;
+
+            // Ensure bands are bound before applying a saved tuner index.
+            if (RadioTunerSystem != null && strip.BandCount <= 1)
+                WireRadioInterceptTuner();
 
             var log = FactionRadioIntercepts.Log;
             var lines = new System.Collections.Generic.List<RadioInterceptHUD.Line>(log.Count);
@@ -1396,11 +1455,13 @@ namespace AtomicWar._Game.Core
                 });
             }
             strip.SetLines(lines);
-            // Restore presentation (open / unread / tuner) without re-firing VO.
+            // Restore presentation (open / unread / tuner). notifyTuner=true so
+            // RadioTunerSystem re-tunes to the saved dial for intel extraction.
             strip.ApplyUiState(
                 FactionRadioIntercepts.HudIsOpen,
                 FactionRadioIntercepts.HudHasUnread,
-                FactionRadioIntercepts.HudTunerIndex);
+                FactionRadioIntercepts.HudTunerIndex,
+                notifyTuner: true);
         }
 
         // -----------------------------------------------------------------

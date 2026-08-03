@@ -9,6 +9,7 @@ namespace AtomicWar._Game.UI
     /// <summary>
     /// Compact radio strip + expandable intercept log ([R]) with a frequency
     /// tuner that filters by channel tag ([ / ]). Push-driven from GameBootstrap.
+    /// Bands are supplied from RadioTunerSystem (intel + intercepts share one dial).
     /// Optional <see cref="FactionRadioVoHook"/> plays channel-tag VO stubs.
     /// </summary>
     public class RadioInterceptHUD : MonoBehaviour
@@ -18,11 +19,62 @@ namespace AtomicWar._Game.UI
         public const int MaxLogEntries = 24;
 
         /// <summary>
-        /// Tuner presets: index 0 = all bands; then military / scavenger / prepper.
+        /// One dial position. Index 0 is always ALL BANDS (detuned).
+        /// Core maps these from RadioFrequencySO via Bootstrap — UI must not ref Core.
         /// </summary>
+        [Serializable]
+        public struct TunerBand
+        {
+            public string FrequencyId;
+            public string Label;
+            public string ChannelTag;
+
+            public bool IsAllBands => string.IsNullOrEmpty(FrequencyId);
+
+            public static TunerBand AllBands => new TunerBand
+            {
+                FrequencyId = string.Empty,
+                Label = "ALL BANDS",
+                ChannelTag = string.Empty
+            };
+
+            public static TunerBand ChannelOnly(string channelTag, string label = null)
+            {
+                return new TunerBand
+                {
+                    FrequencyId = string.Empty,
+                    Label = !string.IsNullOrEmpty(label) ? label : (channelTag ?? "BAND"),
+                    ChannelTag = channelTag ?? string.Empty
+                };
+            }
+
+            public static TunerBand FromParts(string frequencyId, string label, string channelTag)
+            {
+                return new TunerBand
+                {
+                    FrequencyId = frequencyId ?? string.Empty,
+                    Label = !string.IsNullOrEmpty(label) ? label : (frequencyId ?? "BAND"),
+                    ChannelTag = channelTag ?? string.Empty
+                };
+            }
+        }
+
+        /// <summary>
+        /// Fallback presets when Bootstrap has not bound RadioTunerSystem bands yet
+        /// (EditMode tests / early Awake). Index 0 = all; then mil / scav / prepper.
+        /// </summary>
+        public static readonly TunerBand[] DefaultTunerBands =
+        {
+            TunerBand.AllBands,
+            TunerBand.ChannelOnly("CH-7 MILBAND"),
+            TunerBand.ChannelOnly("CH-3 ASH ROAD"),
+            TunerBand.ChannelOnly("CH-11 STOCKPILE")
+        };
+
+        // Back-compat aliases for older tests / call sites.
         public static readonly string[] TunerPresets =
         {
-            "", // all
+            "",
             "CH-7 MILBAND",
             "CH-3 ASH ROAD",
             "CH-11 STOCKPILE"
@@ -45,6 +97,7 @@ namespace AtomicWar._Game.UI
         public int FilteredLineCount { get; private set; }
         public int TunerIndex { get; private set; }
         public string ActiveChannelFilter { get; private set; } = string.Empty;
+        public string BoundFrequencyId { get; private set; } = string.Empty;
         public string LatestMessage { get; private set; } = string.Empty;
         public string LatestKind { get; private set; } = string.Empty;
         public string LatestChannelTag { get; private set; } = string.Empty;
@@ -52,7 +105,15 @@ namespace AtomicWar._Game.UI
         public string TunerLine { get; private set; } = "TUNE: ALL BANDS  [ ]";
         public string DetailSummary { get; private set; } = "No intercepts.";
 
+        /// <summary>
+        /// Fired when the dial moves. Args: frequencyId (empty = detune), channelTag.
+        /// Bootstrap wires this to RadioTunerSystem.TuneToFrequency / Detune.
+        /// </summary>
+        public event Action<string, string> OnTunerBandChanged;
+
         private readonly List<Line> _lines = new List<Line>();
+        private readonly List<TunerBand> _bands = new List<TunerBand>(DefaultTunerBands);
+        private bool _suppressTunerCallback;
 
         public struct Line
         {
@@ -65,6 +126,11 @@ namespace AtomicWar._Game.UI
 
         /// <summary>Newest-first full log (unfiltered).</summary>
         public IReadOnlyList<Line> Lines => _lines;
+
+        /// <summary>Current dial positions (index 0 = ALL BANDS).</summary>
+        public IReadOnlyList<TunerBand> Bands => _bands;
+
+        public int BandCount => _bands.Count;
 
         public FactionRadioVoHook VoHook
         {
@@ -82,10 +148,70 @@ namespace AtomicWar._Game.UI
 
         private void Awake()
         {
+            if (_bands.Count == 0)
+                ResetToDefaultBands();
             // Ensure VO stubs exist when the strip is present on a HUD prefab.
             var vo = VoHook;
             vo.EnsureBuiltInStubs();
             Refresh();
+        }
+
+        /// <summary>
+        /// Replace dial positions from RadioTunerSystem (via Bootstrap).
+        /// Preserves current index when possible; clamps otherwise.
+        /// </summary>
+        public void SetTunerBands(IReadOnlyList<TunerBand> bands)
+        {
+            _bands.Clear();
+            if (bands != null)
+            {
+                for (int i = 0; i < bands.Count; i++)
+                {
+                    var b = bands[i];
+                    if (string.IsNullOrEmpty(b.Label) && string.IsNullOrEmpty(b.FrequencyId)
+                        && string.IsNullOrEmpty(b.ChannelTag) && i > 0)
+                        continue;
+                    if (string.IsNullOrEmpty(b.Label))
+                        b.Label = string.IsNullOrEmpty(b.FrequencyId) ? "ALL BANDS" : b.FrequencyId;
+                    _bands.Add(b);
+                }
+            }
+            if (_bands.Count == 0 || !_bands[0].IsAllBands
+                || !string.IsNullOrEmpty(_bands[0].ChannelTag))
+            {
+                _bands.Insert(0, TunerBand.AllBands);
+            }
+            // Re-apply current index against new band list without double-firing.
+            SetTunerIndex(TunerIndex, playBlip: false, notify: false);
+        }
+
+        public void ResetToDefaultBands()
+        {
+            _bands.Clear();
+            for (int i = 0; i < DefaultTunerBands.Length; i++)
+                _bands.Add(DefaultTunerBands[i]);
+            SetTunerIndex(0, playBlip: false, notify: false);
+        }
+
+        /// <summary>
+        /// Sync dial to a RadioTunerSystem frequency id (empty = ALL / detuned).
+        /// Does not re-fire OnTunerBandChanged (avoids feedback loops).
+        /// </summary>
+        public void SyncFromFrequencyId(string frequencyId)
+        {
+            if (string.IsNullOrEmpty(frequencyId))
+            {
+                SetTunerIndex(0, playBlip: false, notify: false);
+                return;
+            }
+            for (int i = 0; i < _bands.Count; i++)
+            {
+                if (string.Equals(_bands[i].FrequencyId, frequencyId, StringComparison.Ordinal))
+                {
+                    SetTunerIndex(i, playBlip: false, notify: false);
+                    return;
+                }
+            }
         }
 
         /// <summary>
@@ -134,13 +260,14 @@ namespace AtomicWar._Game.UI
 
         /// <summary>
         /// Restore presentation state after load (open / unread / tuner index).
-        /// Does not re-fire VO.
+        /// Does not re-fire VO. Notifies OnTunerBandChanged so RadioTunerSystem
+        /// can re-tune to the restored dial (unless suppressNotify).
         /// </summary>
-        public void ApplyUiState(bool isOpen, bool hasUnread, int tunerIndex = 0)
+        public void ApplyUiState(bool isOpen, bool hasUnread, int tunerIndex = 0, bool notifyTuner = true)
         {
             IsOpen = isOpen;
             HasUnread = hasUnread;
-            SetTunerIndex(tunerIndex, playBlip: false);
+            SetTunerIndex(tunerIndex, playBlip: false, notify: notifyTuner);
             Refresh();
         }
 
@@ -176,26 +303,33 @@ namespace AtomicWar._Game.UI
             Refresh();
         }
 
-        /// <summary>Cycle frequency filter forward ([ key).</summary>
+        /// <summary>Cycle frequency filter forward (] key).</summary>
         public void CycleTunerNext() => SetTunerIndex(TunerIndex + 1, playBlip: true);
 
-        /// <summary>Cycle frequency filter backward (] is next; [ is prev — use both).</summary>
+        /// <summary>Cycle frequency filter backward ([ key).</summary>
         public void CycleTunerPrev() => SetTunerIndex(TunerIndex - 1, playBlip: true);
 
         public void SetTunerIndex(int index, bool playBlip = false)
         {
-            int n = TunerPresets.Length;
+            SetTunerIndex(index, playBlip, notify: true);
+        }
+
+        private void SetTunerIndex(int index, bool playBlip, bool notify)
+        {
+            int n = _bands.Count;
             if (n <= 0)
             {
                 TunerIndex = 0;
                 ActiveChannelFilter = string.Empty;
+                BoundFrequencyId = string.Empty;
                 Refresh();
                 return;
             }
-            // wrap
             int wrapped = ((index % n) + n) % n;
             TunerIndex = wrapped;
-            ActiveChannelFilter = TunerPresets[wrapped] ?? string.Empty;
+            var band = _bands[wrapped];
+            ActiveChannelFilter = band.ChannelTag ?? string.Empty;
+            BoundFrequencyId = band.FrequencyId ?? string.Empty;
             Refresh();
             if (playBlip)
             {
@@ -205,6 +339,8 @@ namespace AtomicWar._Game.UI
                 else
                     VoHook?.TryPlayChannel(tag, string.Empty);
             }
+            if (notify && !_suppressTunerCallback)
+                OnTunerBandChanged?.Invoke(BoundFrequencyId, ActiveChannelFilter);
         }
 
         /// <summary>Tune to a specific channel tag (or empty for all).</summary>
@@ -215,11 +351,39 @@ namespace AtomicWar._Game.UI
                 SetTunerIndex(0, playBlip: true);
                 return true;
             }
+            for (int i = 0; i < _bands.Count; i++)
+            {
+                if (string.Equals(_bands[i].ChannelTag, channelTag, StringComparison.OrdinalIgnoreCase))
+                {
+                    SetTunerIndex(i, playBlip: true);
+                    return true;
+                }
+            }
+            // Fallback: legacy static presets
             for (int i = 0; i < TunerPresets.Length; i++)
             {
                 if (string.Equals(TunerPresets[i], channelTag, StringComparison.OrdinalIgnoreCase))
                 {
                     SetTunerIndex(i, playBlip: true);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>Tune by RadioFrequencySO id (empty = ALL).</summary>
+        public bool TuneToFrequencyId(string frequencyId, bool playBlip = true)
+        {
+            if (string.IsNullOrEmpty(frequencyId))
+            {
+                SetTunerIndex(0, playBlip: playBlip);
+                return true;
+            }
+            for (int i = 0; i < _bands.Count; i++)
+            {
+                if (string.Equals(_bands[i].FrequencyId, frequencyId, StringComparison.Ordinal))
+                {
+                    SetTunerIndex(i, playBlip: playBlip);
                     return true;
                 }
             }
@@ -254,9 +418,7 @@ namespace AtomicWar._Game.UI
             var filtered = GetFilteredLines();
             FilteredLineCount = filtered.Count;
 
-            string tuneLabel = TunerIndex >= 0 && TunerIndex < TunerLabels.Length
-                ? TunerLabels[TunerIndex]
-                : "ALL BANDS";
+            string tuneLabel = ResolveTuneLabel();
             TunerLine = $"TUNE: {tuneLabel}  [ / ] cycle";
 
             if (filtered.Count == 0)
@@ -319,6 +481,19 @@ namespace AtomicWar._Game.UI
             if (IsOpen)
                 sb.AppendLine("[R] close · [ / ] retune");
             DetailSummary = sb.ToString().TrimEnd();
+        }
+
+        private string ResolveTuneLabel()
+        {
+            if (TunerIndex >= 0 && TunerIndex < _bands.Count)
+            {
+                var b = _bands[TunerIndex];
+                if (!string.IsNullOrEmpty(b.Label)) return b.Label;
+                if (!string.IsNullOrEmpty(b.ChannelTag)) return b.ChannelTag;
+            }
+            if (TunerIndex >= 0 && TunerIndex < TunerLabels.Length)
+                return TunerLabels[TunerIndex];
+            return "ALL BANDS";
         }
 
         private static string KindTag(string kind)

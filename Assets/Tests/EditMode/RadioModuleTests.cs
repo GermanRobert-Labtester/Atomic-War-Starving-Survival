@@ -229,6 +229,69 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RadioFrequency_ResolveInterceptChannelTag_DefaultsByType()
+        {
+            Assert.AreEqual("CH-3 ASH ROAD", _civilianFreq.ResolveInterceptChannelTag());
+            Assert.AreEqual("CH-7 MILBAND", _militaryFreq.ResolveInterceptChannelTag());
+            Assert.AreEqual("CH-11 STOCKPILE", _emergencyFreq.ResolveInterceptChannelTag());
+
+            _militaryFreq.interceptChannelTag = "CH-CUSTOM";
+            Assert.AreEqual("CH-CUSTOM", _militaryFreq.ResolveInterceptChannelTag());
+            _militaryFreq.interceptChannelTag = null;
+        }
+
+        [Test]
+        public void RadioTunerSystem_BuildTunerBands_AllPlusFrequencies()
+        {
+            var tuner = new RadioTunerSystem(_rng);
+            tuner.SetFrequencies(new[] { _civilianFreq, _militaryFreq, _emergencyFreq });
+
+            var bands = tuner.BuildTunerBands();
+            Assert.AreEqual(4, bands.Count, "ALL + 3 frequencies");
+            Assert.IsTrue(bands[0].IsAllBands);
+            Assert.AreEqual(string.Empty, bands[0].ChannelTag);
+            Assert.AreEqual(RadioFrequencySO.Ids.Civilian, bands[1].FrequencyId);
+            Assert.AreEqual("CH-3 ASH ROAD", bands[1].ChannelTag);
+            Assert.AreEqual(RadioFrequencySO.Ids.Military, bands[2].FrequencyId);
+            Assert.AreEqual("CH-7 MILBAND", bands[2].ChannelTag);
+            Assert.AreEqual(RadioFrequencySO.Ids.Emergency, bands[3].FrequencyId);
+            Assert.AreEqual("CH-11 STOCKPILE", bands[3].ChannelTag);
+            Assert.That(bands[2].Label, Does.Contain("MILBAND").Or.Contain("Military"));
+        }
+
+        [Test]
+        public void RadioTunerSystem_Detune_ClearsFrequencyAndFiresEvent()
+        {
+            var tuner = new RadioTunerSystem(_rng);
+            tuner.SetFrequencies(new[] { _militaryFreq });
+            string last = "unset";
+            tuner.OnFrequencyChanged += id => last = id ?? "null";
+
+            Assert.IsTrue(tuner.TuneToFrequency(RadioFrequencySO.Ids.Military));
+            Assert.AreEqual(RadioFrequencySO.Ids.Military, tuner.State.CurrentFrequencyId);
+            Assert.AreEqual("CH-7 MILBAND", tuner.GetCurrentInterceptChannelTag());
+
+            tuner.Detune();
+            Assert.IsTrue(string.IsNullOrEmpty(tuner.State.CurrentFrequencyId));
+            Assert.AreEqual(string.Empty, tuner.GetCurrentInterceptChannelTag());
+            Assert.AreEqual("null", last);
+            Assert.AreEqual(0f, tuner.State.SignalStrength, Epsilon);
+        }
+
+        [Test]
+        public void RadioTunerSystem_FindFrequencyForChannelTag_PrefersActiveOnDay()
+        {
+            var tuner = new RadioTunerSystem(_rng);
+            tuner.SetFrequencies(new[] { _civilianFreq, _militaryFreq, _emergencyFreq });
+
+            Assert.AreEqual(_militaryFreq, tuner.FindFrequencyForChannelTag("CH-7 MILBAND", day: 10));
+            Assert.AreEqual(_civilianFreq, tuner.FindFrequencyForChannelTag("CH-3 ASH ROAD", day: 5));
+            // Emergency only active day 31+
+            Assert.AreEqual(_emergencyFreq, tuner.FindFrequencyForChannelTag("CH-11 STOCKPILE", day: 40));
+            Assert.IsNull(tuner.FindFrequencyForChannelTag("NOPE"));
+        }
+
+        [Test]
         public void RadioTunerSystem_GetWeatherSignalModifier_VariousWeather()
         {
             Assert.AreEqual(1.0f, RadioTunerSystem.GetWeatherSignalModifier(WeatherKind.Clear), Epsilon);
