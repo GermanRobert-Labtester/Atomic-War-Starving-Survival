@@ -280,6 +280,8 @@ namespace AtomicWar._Game.Events
         /// <summary>
         /// Called once per campaign day. Dequeues and fires all ScheduledEvents
         /// whose ExecuteOnDay == currentDay. Events are looked up by id in the pool.
+        /// If the event's <see cref="GameEvent.CanTrigger"/> fails (missing eventFlags,
+        /// day/hour gates, etc.), it is dequeued without presenting.
         /// </summary>
         public void TickDay(int currentDay, EventContext context = null)
         {
@@ -298,6 +300,16 @@ namespace AtomicWar._Game.Events
 
                 // Look up the GameEvent in the pool.
                 GameEvent gameEvent = FindInPool(scheduled.EventId);
+
+                // Flag / condition gates on multi-stage arcs (eventFlags, minDay, …).
+                if (gameEvent != null && context != null && !gameEvent.CanTrigger(context))
+                {
+                    UnityEngine.Debug.Log(
+                        $"[EventRunner] Scheduled event '{scheduled.EventId}' on day {currentDay} " +
+                        "skipped — CanTrigger failed (eventFlags / conditions).");
+                    OnScheduledEventFired?.Invoke(scheduled, null, context);
+                    continue;
+                }
 
                 // Even if not in pool, raise the signal so tests / bootstrap can hear it.
                 OnScheduledEventFired?.Invoke(scheduled, gameEvent, context);
@@ -509,8 +521,24 @@ namespace AtomicWar._Game.Events
             // Deferred narrative chain scheduling (Prompt #43 — Outcome.scheduleEvent)
             if (enableScheduling && effect != null && !string.IsNullOrEmpty(effect.ScheduleEventId))
             {
-                ScheduleEvent(effect.ScheduleEventId, effect.ScheduleOnDay, effect.SetWorldFlag);
+                int day = ResolveScheduleDay(effect, context);
+                if (day > 0)
+                    ScheduleEvent(effect.ScheduleEventId, day, effect.SetWorldFlag);
             }
+        }
+
+        /// <summary>
+        /// Absolute ScheduleOnDay, or CurrentDay + ScheduleDelayDays when delay &gt; 0.
+        /// </summary>
+        public static int ResolveScheduleDay(EventEffect effect, EventContext context)
+        {
+            if (effect == null) return 0;
+            if (effect.ScheduleDelayDays > 0)
+            {
+                int baseDay = context != null ? Mathf.Max(1, context.CurrentDay) : 1;
+                return baseDay + effect.ScheduleDelayDays;
+            }
+            return effect.ScheduleOnDay;
         }
 
         // -----------------------------------------------------------------
@@ -610,16 +638,30 @@ namespace AtomicWar._Game.Events
         public const string EmissaryShareChoiceId = "share_water";
         public const string EmissaryRefuseChoiceId = "refuse_water";
 
+        // Multi-stage follow-ups (Prompt #43)
+        public const string EmissaryReturnFavorId = "emissary_return_favor";
+        public const string EmissaryReturnCaughtId = "emissary_return_caught";
+        public const string EmissaryReturnGrudgeId = "emissary_return_grudge";
+        public const string EmissaryReturnRaidWarningId = "emissary_return_raid_warning";
+
+        public const int EmissaryFavorDelayDays = 2;
+        public const int EmissaryCaughtDelayDays = 2;
+        public const int EmissaryGrudgeDelayDays = 3;
+        public const int EmissaryRaidWarningDelayDays = 1;
+
         public const string FlagSharedWaterWithEmissary = "shared_water_with_emissary";
         public const string FlagLiedPurifierBroken = "lied_purifier_broken";
         public const string FlagFiredOnEmissary = "fired_on_emissary_hatch";
         public const string FlagRefusedEmissaryWater = "refused_emissary_water";
+        public const string FlagAcceptedEmissaryGift = "accepted_emissary_gift";
+        public const string FlagDoubledDownPurifierLie = "doubled_down_purifier_lie";
+        public const string FlagAdmittedPurifierLie = "admitted_purifier_lie";
 
         /// <summary>
         /// Faction emissary at the hatch demanding water.
         /// Variance: Paranoid + trust ≥ -20 → lie about the purifier (no water cost, no trust hit).
         /// Paranoid + trust &lt; -20 → preemptive fire through the hatch (replaces the lie).
-        /// Choices inject eventFlags for future narrative gates.
+        /// Choices inject eventFlags and schedule day-gated follow-ups.
         /// </summary>
         public static GameEvent CreateEmissaryEvent(string factionId = null)
         {
@@ -650,7 +692,14 @@ namespace AtomicWar._Game.Events
                     SetEventFlags = new List<string> { FlagSharedWaterWithEmissary },
                     Effects = new List<EventEffect>
                     {
-                        new EventEffect { ItemId = "clean_water", ItemAmount = -1 }
+                        new EventEffect { ItemId = "clean_water", ItemAmount = -1 },
+                        new EventEffect
+                        {
+                            ScheduleEventId = EmissaryReturnFavorId,
+                            ScheduleDelayDays = EmissaryFavorDelayDays,
+                            SetWorldFlag = FlagSharedWaterWithEmissary,
+                            WorldFlagValue = true
+                        }
                     }
                 },
                 new EventChoice
@@ -661,7 +710,17 @@ namespace AtomicWar._Game.Events
                     FactionId = fid,
                     TrustDelta = -12f,
                     RelationshipDelta = -12f,
-                    SetEventFlags = new List<string> { FlagRefusedEmissaryWater }
+                    SetEventFlags = new List<string> { FlagRefusedEmissaryWater },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect
+                        {
+                            ScheduleEventId = EmissaryReturnGrudgeId,
+                            ScheduleDelayDays = EmissaryGrudgeDelayDays,
+                            SetWorldFlag = FlagRefusedEmissaryWater,
+                            WorldFlagValue = true
+                        }
+                    }
                 },
                 // Variance 1: Paranoid crew, non-hostile trust — lie, keep water, no trust penalty.
                 new EventChoice
@@ -675,7 +734,17 @@ namespace AtomicWar._Game.Events
                     RequiredTrustFactionId = fid,
                     RequiredTrustMin = -20f, // trust >= -20
                     HideIfGatesFail = true,
-                    SetEventFlags = new List<string> { FlagLiedPurifierBroken }
+                    SetEventFlags = new List<string> { FlagLiedPurifierBroken },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect
+                        {
+                            ScheduleEventId = EmissaryReturnCaughtId,
+                            ScheduleDelayDays = EmissaryCaughtDelayDays,
+                            SetWorldFlag = FlagLiedPurifierBroken,
+                            WorldFlagValue = true
+                        }
+                    }
                 },
                 // Variance 2: Paranoid + trust < -20 — open fire (replaces the lie via mutual gates).
                 new EventChoice
@@ -690,7 +759,231 @@ namespace AtomicWar._Game.Events
                     RequiredTrustFactionId = fid,
                     RequiredTrustMaxExclusive = -20f, // trust < -20
                     HideIfGatesFail = true,
-                    SetEventFlags = new List<string> { FlagFiredOnEmissary }
+                    SetEventFlags = new List<string> { FlagFiredOnEmissary },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect
+                        {
+                            ScheduleEventId = EmissaryReturnRaidWarningId,
+                            ScheduleDelayDays = EmissaryRaidWarningDelayDays,
+                            SetWorldFlag = FlagFiredOnEmissary,
+                            WorldFlagValue = true
+                        }
+                    }
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// Full emissary multi-stage arc: Part 1 + all day-gated follow-ups
+        /// (flag-gated CanTrigger + TraitGates on aftermath choices).
+        /// </summary>
+        public static List<GameEvent> CreateEmissaryChain(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId) ? EmissaryFactionId : factionId;
+            return new List<GameEvent>
+            {
+                CreateEmissaryEvent(fid),
+                CreateEmissaryReturnFavorEvent(fid),
+                CreateEmissaryReturnCaughtEvent(fid),
+                CreateEmissaryReturnGrudgeEvent(fid),
+                CreateEmissaryReturnRaidWarningEvent(fid)
+            };
+        }
+
+        /// <summary>Part 2 after sharing water — they return with a gift.</summary>
+        public static GameEvent CreateEmissaryReturnFavorEvent(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId) ? EmissaryFactionId : factionId;
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = EmissaryReturnFavorId;
+            ev.title = "The Favor";
+            ev.bodyText =
+                "Two days later, the same voice at the hatch — softer. A half-crate of canned goods " +
+                "sits on the threshold. Payment for the water, they say. No weapons in sight.";
+            ev.weight = 0f; // scheduled only
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredEventFlags = new List<string> { FlagSharedWaterWithEmissary }
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "accept_gift",
+                    Text = "Take the crate. Nod once. Close the hatch.",
+                    MoraleDelta = 6f,
+                    FactionId = fid,
+                    TrustDelta = 8f,
+                    SetEventFlags = new List<string> { FlagAcceptedEmissaryGift },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { ItemId = "canned_food", ItemAmount = 2 }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "refuse_gift",
+                    Text = "Leave it. We don't take debts we can't see.",
+                    MoraleDelta = -2f,
+                    FactionId = fid,
+                    TrustDelta = -4f
+                },
+                new EventChoice
+                {
+                    ChoiceId = "search_first",
+                    Text = "Search them for weapons before anything comes in.",
+                    MoraleDelta = -1f,
+                    FactionId = fid,
+                    TrustDelta = -6f,
+                    RequiredTrait = "Paranoid",
+                    HideIfGatesFail = true
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>Part 2 after lying about the purifier — they brought a mechanic.</summary>
+        public static GameEvent CreateEmissaryReturnCaughtEvent(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId) ? EmissaryFactionId : factionId;
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = EmissaryReturnCaughtId;
+            ev.title = "The Mechanic";
+            ev.bodyText =
+                "They came back with a thin man who smells of solder. He listens at the hatch for the " +
+                "purifier's hum. The lie is thin now. They wait.";
+            ev.weight = 0f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredEventFlags = new List<string> { FlagLiedPurifierBroken }
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "admit_and_share",
+                    Text = "Admit it. Pass a jug through and call it a misunderstanding.",
+                    MoraleDelta = -4f,
+                    FactionId = fid,
+                    TrustDelta = 5f,
+                    SetEventFlags = new List<string> { FlagAdmittedPurifierLie },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { ItemId = "clean_water", ItemAmount = -1 }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "double_down_lie",
+                    Text = "Double down. Blame the filters. Blame the weather. Blame anything.",
+                    MoraleDelta = -6f,
+                    FactionId = fid,
+                    TrustDelta = -18f,
+                    RequiredTrait = "Paranoid",
+                    HideIfGatesFail = true,
+                    SetEventFlags = new List<string> { FlagDoubledDownPurifierLie }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "offer_filter_help",
+                    Text = "Offer to check their canteen filter — real help, no water lost.",
+                    MoraleDelta = 3f,
+                    FactionId = fid,
+                    TrustDelta = 10f,
+                    RequiredTrait = "Medical",
+                    HideIfGatesFail = true
+                },
+                new EventChoice
+                {
+                    ChoiceId = "seal_and_wait",
+                    Text = "Say nothing. Seal the hatch. Wait them out.",
+                    MoraleDelta = -2f,
+                    FactionId = fid,
+                    TrustDelta = -10f
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>Part 2 after refusing water — the tone hardens.</summary>
+        public static GameEvent CreateEmissaryReturnGrudgeEvent(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId) ? EmissaryFactionId : factionId;
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = EmissaryReturnGrudgeId;
+            ev.title = "The Grudge";
+            ev.bodyText =
+                "Three days. Same hatch. Fewer words. They want water or they want a reason " +
+                "to stop asking politely.";
+            ev.weight = 0f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredEventFlags = new List<string> { FlagRefusedEmissaryWater }
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "pay_up_late",
+                    Text = "Pay up late. One jug, no apology.",
+                    MoraleDelta = -2f,
+                    FactionId = fid,
+                    TrustDelta = 6f,
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { ItemId = "clean_water", ItemAmount = -1 }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "keep_sealed",
+                    Text = "Keep it sealed. Let the grudge sit.",
+                    MoraleDelta = 0f,
+                    FactionId = fid,
+                    TrustDelta = -15f
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>Part 2 after opening fire — quiet warning before the world notices.</summary>
+        public static GameEvent CreateEmissaryReturnRaidWarningEvent(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId) ? EmissaryFactionId : factionId;
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = EmissaryReturnRaidWarningId;
+            ev.title = "After the Hatch";
+            ev.bodyText =
+                "No knock. Just bootprints in the ash leading away from the hatch, then a radio " +
+                "burst on the scavenger band that cuts off mid-word. Someone will come back heavier.";
+            ev.weight = 0f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredEventFlags = new List<string> { FlagFiredOnEmissary }
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "brace_hatch",
+                    Text = "Brace the hatch. Double the watch.",
+                    MoraleDelta = -3f,
+                    FactionId = fid,
+                    TrustDelta = -5f
+                },
+                new EventChoice
+                {
+                    ChoiceId = "leave_it",
+                    Text = "Leave it. Hope the ash covers the prints.",
+                    MoraleDelta = -8f,
+                    FactionId = fid,
+                    TrustDelta = -8f
                 }
             };
             return ev;

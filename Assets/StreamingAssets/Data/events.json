@@ -350,7 +350,13 @@
         "trustDelta": 15.0,
         "setEventFlags": ["shared_water_with_emissary"],
         "effects": [
-          { "itemId": "clean_water", "itemAmount": -1 }
+          { "itemId": "clean_water", "itemAmount": -1 },
+          {
+            "scheduleEventId": "emissary_return_favor",
+            "scheduleDelayDays": 2,
+            "setWorldFlag": "shared_water_with_emissary",
+            "worldFlagValue": true
+          }
         ]
       },
       {
@@ -359,7 +365,15 @@
         "moraleDelta": -3.0,
         "factionId": "scavenger_camp",
         "trustDelta": -12.0,
-        "setEventFlags": ["refused_emissary_water"]
+        "setEventFlags": ["refused_emissary_water"],
+        "effects": [
+          {
+            "scheduleEventId": "emissary_return_grudge",
+            "scheduleDelayDays": 3,
+            "setWorldFlag": "refused_emissary_water",
+            "worldFlagValue": true
+          }
+        ]
       },
       {
         "choiceId": "lie_purifier_broken",
@@ -371,7 +385,15 @@
         "requiredTrustFactionId": "scavenger_camp",
         "requiredTrustMin": -20.0,
         "hideIfGatesFail": true,
-        "setEventFlags": ["lied_purifier_broken"]
+        "setEventFlags": ["lied_purifier_broken"],
+        "effects": [
+          {
+            "scheduleEventId": "emissary_return_caught",
+            "scheduleDelayDays": 2,
+            "setWorldFlag": "lied_purifier_broken",
+            "worldFlagValue": true
+          }
+        ]
       },
       {
         "choiceId": "preemptive_fire_hatch",
@@ -383,7 +405,166 @@
         "requiredTrustFactionId": "scavenger_camp",
         "requiredTrustMaxExclusive": -20.0,
         "hideIfGatesFail": true,
-        "setEventFlags": ["fired_on_emissary_hatch"]
+        "setEventFlags": ["fired_on_emissary_hatch"],
+        "effects": [
+          {
+            "scheduleEventId": "emissary_return_raid_warning",
+            "scheduleDelayDays": 1,
+            "setWorldFlag": "fired_on_emissary_hatch",
+            "worldFlagValue": true
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    "id": "emissary_return_favor",
+    "title": "The Favor",
+    "bodyText": "Two days later, the same voice at the hatch — softer. A half-crate of canned goods sits on the threshold. Payment for the water, they say. No weapons in sight.",
+    "weight": 0.0,
+    "minDay": 1,
+    "conditions": {
+      "MinDay": 1,
+      "RequiredEventFlags": ["shared_water_with_emissary"]
+    },
+    "choices": [
+      {
+        "choiceId": "accept_gift",
+        "text": "Take the crate. Nod once. Close the hatch.",
+        "moraleDelta": 6.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": 8.0,
+        "setEventFlags": ["accepted_emissary_gift"],
+        "effects": [
+          { "itemId": "canned_food", "itemAmount": 2 }
+        ]
+      },
+      {
+        "choiceId": "refuse_gift",
+        "text": "Leave it. We don't take debts we can't see.",
+        "moraleDelta": -2.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -4.0
+      },
+      {
+        "choiceId": "search_first",
+        "text": "Search them for weapons before anything comes in.",
+        "moraleDelta": -1.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -6.0,
+        "requiredTrait": "Paranoid",
+        "hideIfGatesFail": true
+      }
+    ]
+  },
+
+  {
+    "id": "emissary_return_caught",
+    "title": "The Mechanic",
+    "bodyText": "They came back with a thin man who smells of solder. He listens at the hatch for the purifier's hum. The lie is thin now. They wait.",
+    "weight": 0.0,
+    "minDay": 1,
+    "conditions": {
+      "MinDay": 1,
+      "RequiredEventFlags": ["lied_purifier_broken"]
+    },
+    "choices": [
+      {
+        "choiceId": "admit_and_share",
+        "text": "Admit it. Pass a jug through and call it a misunderstanding.",
+        "moraleDelta": -4.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": 5.0,
+        "setEventFlags": ["admitted_purifier_lie"],
+        "effects": [
+          { "itemId": "clean_water", "itemAmount": -1 }
+        ]
+      },
+      {
+        "choiceId": "double_down_lie",
+        "text": "Double down. Blame the filters. Blame the weather. Blame anything.",
+        "moraleDelta": -6.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -18.0,
+        "requiredTrait": "Paranoid",
+        "hideIfGatesFail": true,
+        "setEventFlags": ["doubled_down_purifier_lie"]
+      },
+      {
+        "choiceId": "offer_filter_help",
+        "text": "Offer to check their canteen filter — real help, no water lost.",
+        "moraleDelta": 3.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": 10.0,
+        "requiredTrait": "Medical",
+        "hideIfGatesFail": true
+      },
+      {
+        "choiceId": "seal_and_wait",
+        "text": "Say nothing. Seal the hatch. Wait them out.",
+        "moraleDelta": -2.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -10.0
+      }
+    ]
+  },
+
+  {
+    "id": "emissary_return_grudge",
+    "title": "The Grudge",
+    "bodyText": "Three days. Same hatch. Fewer words. They want water or they want a reason to stop asking politely.",
+    "weight": 0.0,
+    "minDay": 1,
+    "conditions": {
+      "MinDay": 1,
+      "RequiredEventFlags": ["refused_emissary_water"]
+    },
+    "choices": [
+      {
+        "choiceId": "pay_up_late",
+        "text": "Pay up late. One jug, no apology.",
+        "moraleDelta": -2.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": 6.0,
+        "effects": [
+          { "itemId": "clean_water", "itemAmount": -1 }
+        ]
+      },
+      {
+        "choiceId": "keep_sealed",
+        "text": "Keep it sealed. Let the grudge sit.",
+        "moraleDelta": 0.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -15.0
+      }
+    ]
+  },
+
+  {
+    "id": "emissary_return_raid_warning",
+    "title": "After the Hatch",
+    "bodyText": "No knock. Just bootprints in the ash leading away from the hatch, then a radio burst on the scavenger band that cuts off mid-word. Someone will come back heavier.",
+    "weight": 0.0,
+    "minDay": 1,
+    "conditions": {
+      "MinDay": 1,
+      "RequiredEventFlags": ["fired_on_emissary_hatch"]
+    },
+    "choices": [
+      {
+        "choiceId": "brace_hatch",
+        "text": "Brace the hatch. Double the watch.",
+        "moraleDelta": -3.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -5.0
+      },
+      {
+        "choiceId": "leave_it",
+        "text": "Leave it. Hope the ash covers the prints.",
+        "moraleDelta": -8.0,
+        "factionId": "scavenger_camp",
+        "trustDelta": -8.0
       }
     ]
   }

@@ -347,10 +347,14 @@ namespace AtomicWar._Game.Core
 
             // Events
             EventRunner = new EventRunner();
-            if (_eventCatalog != null)
-            {
-                EventRunner.SetPool(_eventCatalog.events);
-            }
+            var eventPool = new List<GameEvent>();
+            if (_eventCatalog != null && _eventCatalog.events != null)
+                eventPool.AddRange(_eventCatalog.events);
+            // Multi-stage emissary arc (trait/trust gates + day-gated follow-ups).
+            // Always register factory versions so scheduleEvent ids resolve even if
+            // the catalog has not been re-imported from events.json.
+            EnsurePoolHasEmissaryChain(eventPool);
+            EventRunner.SetPool(eventPool);
 
             // Diegetic journal — survivors write discoveries (no tutorial popups).
             // Entries run through a pool: evicted/cleared entries are recycled,
@@ -500,6 +504,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetFactionRadioIntercepts(FactionRadioIntercepts);
             SaveSystem.SetJournalSystem(JournalSystem);
             SaveSystem.SetVictoryProjectManager(VictoryProject);
+            SaveSystem.SetEventRunner(EventRunner);
             SaveSystem.SetPreCaptureHook(SnapshotRadioHudToInterceptSystem);
             SaveSystem.SetWaterStorage(WaterStorage);
             // SetFlashpointChoreographer is called later in InitializeSystems
@@ -587,6 +592,12 @@ namespace AtomicWar._Game.Core
                 RefreshMapKnowledgeHUD();
                 // Radio win path: extraction coords + survive to Day 100.
                 VictoryProject?.TickDay(day, Survivors);
+                // Multi-stage narrative chains (Prompt #43): fire day-gated follow-ups.
+                if (EventRunner != null)
+                {
+                    var dayCtx = BuildEventContext(day);
+                    EventRunner.TickDay(day, dayCtx);
+                }
             };
 
             // Day-30 Flashpoint Choreographer (narrative/UX layer over the
@@ -1076,27 +1087,10 @@ namespace AtomicWar._Game.Core
             }
 
             // Events (chance per hour)
-            var eventContext = new EventContext(Survivors.Count > 0 ? Survivors[0] : null, Shelter, Inventory,
-                new System.Random(_worldSeed + TimeSystem.CurrentDay))
-            {
-                CurrentDay = TimeSystem.CurrentDay,
-                CurrentHour = TimeSystem.CurrentHourFloat,
-                IsFalloutStorm = WeatherSystem.Current == WeatherKind.FalloutStorm,
-                AllSurvivors = Survivors,
-                MentalBreak = MentalBreakSystem,
-                CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f,
-                IndoorTemperatureC = indoorTemp,
-                // Trait/trust gates + eventFlags (SaveSystem-backed world flags).
-                GetFactionTrust = factionId =>
-                    EconomySystem != null ? EconomySystem.GetTrust(factionId) : 0f,
-                OnEventFlagChanged = (flagId, value) =>
-                {
-                    if (SaveSystem != null)
-                        SaveSystem.SetWorldFlag(flagId, value);
-                }
-            };
-            if (SaveSystem != null)
-                eventContext.ImportFlags(SaveSystem.WorldFlags);
+            var eventContext = BuildEventContext(
+                TimeSystem != null ? TimeSystem.CurrentDay : 1,
+                TimeSystem != null ? TimeSystem.CurrentHourFloat : 12f,
+                indoorTemp);
             EventRunner.Tick(gameHours, eventContext);
 
             // Diegetic journal discoveries (first-time atmosphere / rad / storm / etc.)
@@ -1111,6 +1105,68 @@ namespace AtomicWar._Game.Core
                 {
                     EventRunner.Run(selectedEvent, eventContext);
                 }
+            }
+        }
+
+        // -----------------------------------------------------------------
+        // Event context + narrative chain pool helpers
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Shared EventContext for hourly event ticks and day-gated scheduleEvent chains.
+        /// Imports SaveSystem world flags and wires trust + flag persistence.
+        /// </summary>
+        private EventContext BuildEventContext(int day, float hour = 12f, float? indoorTempC = null)
+        {
+            float indoor = indoorTempC ?? (TemperatureSystem != null
+                ? TemperatureSystem.GetIndoorTemperature(Shelter)
+                : 15f);
+
+            var ctx = new EventContext(
+                Survivors != null && Survivors.Count > 0 ? Survivors[0] : null,
+                Shelter,
+                Inventory,
+                new System.Random(_worldSeed + day))
+            {
+                CurrentDay = day,
+                CurrentHour = hour,
+                IsFalloutStorm = WeatherSystem != null && WeatherSystem.Current == WeatherKind.FalloutStorm,
+                AllSurvivors = Survivors,
+                MentalBreak = MentalBreakSystem,
+                CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f,
+                IndoorTemperatureC = indoor,
+                GetFactionTrust = factionId =>
+                    EconomySystem != null ? EconomySystem.GetTrust(factionId) : 0f,
+                OnEventFlagChanged = (flagId, value) =>
+                {
+                    if (SaveSystem != null)
+                        SaveSystem.SetWorldFlag(flagId, value);
+                }
+            };
+            if (SaveSystem != null)
+                ctx.ImportFlags(SaveSystem.WorldFlags);
+            return ctx;
+        }
+
+        private static void EnsurePoolHasEmissaryChain(List<GameEvent> pool)
+        {
+            if (pool == null) return;
+            var chain = EventRunner.CreateEmissaryChain();
+            for (int i = 0; i < chain.Count; i++)
+            {
+                var next = chain[i];
+                if (next == null || string.IsNullOrEmpty(next.id)) continue;
+                bool exists = false;
+                for (int j = 0; j < pool.Count; j++)
+                {
+                    if (pool[j] != null && pool[j].id == next.id)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists)
+                    pool.Add(next);
             }
         }
 

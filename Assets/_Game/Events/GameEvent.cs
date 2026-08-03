@@ -45,8 +45,17 @@ namespace AtomicWar._Game.Events
         /// Matches an id in the EventRunner pool or authored events.json chain.
         /// </summary>
         public string ScheduleEventId;
-        /// <summary>Campaign day on which ScheduleEventId should fire (absolute, not relative).</summary>
+        /// <summary>
+        /// Absolute campaign day for ScheduleEventId. Ignored when
+        /// <see cref="ScheduleDelayDays"/> is &gt; 0.
+        /// </summary>
         public int ScheduleOnDay;
+        /// <summary>
+        /// Relative delay in days from the current context day
+        /// (executeOnDay = CurrentDay + ScheduleDelayDays). Preferred for
+        /// dynamic arcs like emissary aftermath. When &gt; 0, overrides ScheduleOnDay.
+        /// </summary>
+        public int ScheduleDelayDays;
     }
 
     [Serializable]

@@ -59,6 +59,7 @@ namespace AtomicWar._Game.Core
         private AtomicWar._Game.Survivors.MentalBreakSystem _mentalBreakSystem;
         private JournalSystem _journalSystem;
         private VictoryProjectManager _victoryProject;
+        private EventRunner _eventRunner;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
@@ -167,6 +168,15 @@ namespace AtomicWar._Game.Core
         public void SetVictoryProjectManager(VictoryProjectManager victoryProject)
         {
             _victoryProject = victoryProject;
+        }
+
+        /// <summary>
+        /// Inject EventRunner so the scheduled narrative-chain queue
+        /// (Prompt #43) persists across save/load.
+        /// </summary>
+        public void SetEventRunner(EventRunner eventRunner)
+        {
+            _eventRunner = eventRunner;
         }
 
         /// <summary>Inject proc-gen wasteland map (reveal/visit flags + seed).</summary>
@@ -446,6 +456,9 @@ namespace AtomicWar._Game.Core
             if (_victoryProject != null)
                 data.VictoryProject = _victoryProject.CaptureState();
 
+            if (_eventRunner != null)
+                data.ScheduledEvents = _eventRunner.CaptureScheduledState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -671,6 +684,12 @@ namespace AtomicWar._Game.Core
             {
                 // Null victory on legacy saves resets to Ongoing.
                 _victoryProject.RestoreState(data.VictoryProject);
+            }
+
+            if (_eventRunner != null)
+            {
+                // Null queue on legacy saves clears scheduled narrative chains.
+                _eventRunner.RestoreScheduledState(data.ScheduledEvents);
             }
 
             if (_generatedMap != null && data.GeneratedMap != null)
@@ -919,6 +938,8 @@ namespace AtomicWar._Game.Core
         public FactionRadioInterceptSave FactionRadioIntercepts;
         public JournalSave Journal;
         public VictoryProjectSave VictoryProject;
+        /// <summary>Deferred narrative chain queue (Prompt #43).</summary>
+        public ScheduledEventSave ScheduledEvents;
         public WaterStorageSave Water;
         public GeneratedMapSave GeneratedMap;
         public FlashpointChoreographerSave FlashpointChoreographer;
