@@ -45,6 +45,12 @@ namespace AtomicWar.Tests.EditMode
             bool inflicted = _medicalSystem.Inflict(survivor, AfflictionSO.Ids.Sepsis);
             Assert.IsTrue(inflicted, "Sepsis should be inflicted.");
 
+            // Set active hours to 75 so survivor has spent >72h in critical Sepsis state
+            var activeList = _medicalSystem.GetActive(survivor);
+            Assert.AreEqual(1, activeList.Count);
+            activeList[0].HoursActive = 75f;
+            activeList[0].ProgressionHalted = true;
+
             // Register a treatment recipe for Sepsis
             var recipe = ScriptableObject.CreateInstance<TreatmentRecipeSO>();
             recipe.id = "cure_sepsis_test";
@@ -53,16 +59,15 @@ namespace AtomicWar.Tests.EditMode
             recipe.healthRestoreOnCure = 50f;
             _medicalSystem.RegisterTreatment(recipe);
 
-            // Tick for 75 hours while Sepsis is active
             var list = new List<Survivor> { survivor };
-            _medicalSystem.Tick(list, 75f);
+            survivor.Needs.Health = 100f;
 
             // Start and complete treatment
             bool started = _medicalSystem.TryStartTreatment(survivor, survivor, recipe);
             Assert.IsTrue(started, "Treatment should start.");
 
-            // Tick treatment completion
-            _medicalSystem.Tick(list, 5f);
+            // Tick treatment completion (recipe is 1 hour, tick 1.5 hours)
+            _medicalSystem.Tick(list, 1.5f);
 
             // Assert Sepsis is cured
             Assert.IsFalse(_medicalSystem.HasAffliction(survivor, AfflictionSO.Ids.Sepsis), "Sepsis should be cured.");
