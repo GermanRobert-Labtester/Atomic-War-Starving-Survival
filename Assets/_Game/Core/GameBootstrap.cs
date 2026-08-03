@@ -143,6 +143,8 @@ namespace AtomicWar._Game.Core
                 string seasonName = TemperatureSystem.CurrentSeason?.displayName ?? "Nuclear Winter";
                 _hud.Tick(TimeSystem.CurrentDay, TimeSystem.CurrentHourFloat, weatherName, seasonName);
                 _hud.OnShelterUpdated(Shelter);
+                // Live radio hardware (signal + tuned label) on the intercept strip.
+                PushRadioLiveStateToHud();
             }
         }
 
@@ -1407,6 +1409,7 @@ namespace AtomicWar._Game.Core
 
             // Align dial with current tuner state (detuned on fresh boot).
             strip.SyncFromFrequencyId(RadioTunerSystem.State?.CurrentFrequencyId);
+            PushRadioLiveStateToHud();
         }
 
         private void HandleRadioHudTunerChanged(string frequencyId, string channelTag)
@@ -1424,6 +1427,55 @@ namespace AtomicWar._Game.Core
             var strip = _hud.EnsureRadioInterceptHud();
             // Sync HUD without re-notifying (would loop into TuneToFrequency).
             strip?.SyncFromFrequencyId(frequencyId);
+            PushRadioLiveStateToHud();
+        }
+
+        /// <summary>
+        /// Push RadioTunerSystem.State (signal, tuned label, lock progress) onto
+        /// the intercept strip so StatusLine / TunerLine stay live each frame.
+        /// </summary>
+        public void PushRadioLiveStateToHud()
+        {
+            if (_hud == null || RadioTunerSystem == null) return;
+            var strip = _hud.EnsureRadioInterceptHud();
+            if (strip == null) return;
+
+            var state = RadioTunerSystem.State;
+            if (state == null)
+            {
+                strip.ClearLiveRadioState();
+                return;
+            }
+
+            // Keep signal current even between radio ticks (weather / EMP can change).
+            if (WeatherSystem != null)
+                RadioTunerSystem.UpdateSignalStrength(WeatherSystem.Current);
+
+            var freq = RadioTunerSystem.GetCurrentFrequency();
+            string label = string.Empty;
+            float mhz = 0f;
+            if (freq != null)
+            {
+                mhz = freq.frequencyMHz;
+                if (!string.IsNullOrEmpty(freq.displayName))
+                    label = freq.displayName;
+                else if (mhz > 0f)
+                    label = $"{mhz:0.#} MHz";
+                else
+                    label = freq.id ?? string.Empty;
+
+                // Append intercept channel tag when present (matches dial labels).
+                string tag = freq.ResolveInterceptChannelTag();
+                if (!string.IsNullOrEmpty(tag) && !label.Contains(tag))
+                    label = $"{label} · {tag}";
+            }
+
+            strip.SetLiveRadioState(
+                signalStrength: state.SignalStrength,
+                tunedFrequencyLabel: label,
+                frequencyMHz: mhz,
+                tuningProgress: state.TuningProgress,
+                isOperational: state.IsOperational);
         }
 
         /// <summary>

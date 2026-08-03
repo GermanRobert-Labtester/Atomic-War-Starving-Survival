@@ -105,6 +105,22 @@ namespace AtomicWar._Game.UI
         public string TunerLine { get; private set; } = "TUNE: ALL BANDS  [ ]";
         public string DetailSummary { get; private set; } = "No intercepts.";
 
+        // Live radio hardware (pushed from RadioTunerSystem.State via Bootstrap).
+        /// <summary>True once Bootstrap has pushed at least one live radio snapshot.</summary>
+        public bool HasLiveRadioState { get; private set; }
+        /// <summary>Signal strength 0..1 from RadioState (0 when detuned / dead).</summary>
+        public float SignalStrength { get; private set; }
+        /// <summary>Tuning lock progress 0..1 (intel extraction readiness).</summary>
+        public float TuningProgress { get; private set; }
+        /// <summary>Display label for the currently tuned frequency (empty when detuned).</summary>
+        public string TunedFrequencyLabel { get; private set; } = string.Empty;
+        /// <summary>MHz of the tuned frequency (0 when detuned).</summary>
+        public float TunedFrequencyMHz { get; private set; }
+        /// <summary>Radio has fuel and is not EMP-destroyed.</summary>
+        public bool RadioOperational { get; private set; } = true;
+        /// <summary>Compact signal token for status/tuner lines (e.g. "SIG 62%", "SIG —", "SIG DEAD").</summary>
+        public string SignalLabel { get; private set; } = string.Empty;
+
         /// <summary>
         /// Fired when the dial moves. Args: frequencyId (empty = detune), channelTag.
         /// Bootstrap wires this to RadioTunerSystem.TuneToFrequency / Detune.
@@ -212,6 +228,56 @@ namespace AtomicWar._Game.UI
                     return;
                 }
             }
+        }
+
+        /// <summary>
+        /// Push live hardware state from RadioTunerSystem.State (signal, tuned label).
+        /// Called each frame from GameBootstrap after radio Tick. UI must not ref Core.
+        /// </summary>
+        /// <param name="signalStrength">0..1 signal (0 when detuned).</param>
+        /// <param name="tunedFrequencyLabel">Display name e.g. "102.1 Military" or empty if detuned.</param>
+        /// <param name="frequencyMHz">Tuned MHz, or 0 if detuned.</param>
+        /// <param name="tuningProgress">0..1 lock progress toward intel extraction.</param>
+        /// <param name="isOperational">Fuel remaining and not EMP-destroyed.</param>
+        public void SetLiveRadioState(
+            float signalStrength,
+            string tunedFrequencyLabel,
+            float frequencyMHz = 0f,
+            float tuningProgress = 0f,
+            bool isOperational = true)
+        {
+            HasLiveRadioState = true;
+            SignalStrength = Mathf.Clamp01(signalStrength);
+            TunedFrequencyLabel = tunedFrequencyLabel ?? string.Empty;
+            TunedFrequencyMHz = frequencyMHz > 0f ? frequencyMHz : 0f;
+            TuningProgress = Mathf.Clamp01(tuningProgress);
+            RadioOperational = isOperational;
+            SignalLabel = FormatSignalLabel(SignalStrength, RadioOperational, isDetuned: string.IsNullOrEmpty(TunedFrequencyLabel) && string.IsNullOrEmpty(BoundFrequencyId));
+            Refresh();
+        }
+
+        /// <summary>Clear live hardware overlay (EditMode / unbind).</summary>
+        public void ClearLiveRadioState()
+        {
+            HasLiveRadioState = false;
+            SignalStrength = 0f;
+            TunedFrequencyLabel = string.Empty;
+            TunedFrequencyMHz = 0f;
+            TuningProgress = 0f;
+            RadioOperational = true;
+            SignalLabel = string.Empty;
+            Refresh();
+        }
+
+        /// <summary>
+        /// Compact signal token: DEAD / — (detuned) / N% with optional lock progress.
+        /// </summary>
+        public static string FormatSignalLabel(float signal01, bool operational, bool isDetuned)
+        {
+            if (!operational) return "SIG DEAD";
+            if (isDetuned) return "SIG —";
+            int pct = Mathf.Clamp(Mathf.RoundToInt(signal01 * 100f), 0, 100);
+            return $"SIG {pct}%";
         }
 
         /// <summary>
@@ -418,8 +484,15 @@ namespace AtomicWar._Game.UI
             var filtered = GetFilteredLines();
             FilteredLineCount = filtered.Count;
 
+            // Prefer live tuned frequency label from RadioTunerSystem when available.
             string tuneLabel = ResolveTuneLabel();
-            TunerLine = $"TUNE: {tuneLabel}  [ / ] cycle";
+            string sig = ResolveSignalToken();
+            string lockTok = ResolveLockToken();
+            string hardware = string.IsNullOrEmpty(sig)
+                ? string.Empty
+                : (string.IsNullOrEmpty(lockTok) ? $"  {sig}" : $"  {sig} · {lockTok}");
+
+            TunerLine = $"TUNE: {tuneLabel}{hardware}  [ / ] cycle";
 
             if (filtered.Count == 0)
             {
@@ -427,8 +500,8 @@ namespace AtomicWar._Game.UI
                 LatestKind = string.Empty;
                 LatestChannelTag = string.Empty;
                 StatusLine = IsOpen
-                    ? $"RADIO [OPEN] · {tuneLabel}  quiet  [R] close"
-                    : $"RADIO · {tuneLabel}  quiet  [R] log";
+                    ? $"RADIO [OPEN] · {tuneLabel}{hardware}  quiet  [R] close"
+                    : $"RADIO · {tuneLabel}{hardware}  quiet  [R] log";
                 var empty = new StringBuilder();
                 empty.AppendLine(StatusLine);
                 empty.AppendLine(TunerLine);
@@ -452,10 +525,12 @@ namespace AtomicWar._Game.UI
             string tag = KindTag(LatestKind);
             string unread = HasUnread ? " · NEW" : string.Empty;
             string openMark = IsOpen ? " [OPEN]" : "";
-            string shortMsg = LatestMessage.Length > 56
-                ? LatestMessage.Substring(0, 53) + "…"
+            // Leave room for SIG token on the collapsed strip.
+            int msgBudget = HasLiveRadioState ? 40 : 56;
+            string shortMsg = LatestMessage.Length > msgBudget
+                ? LatestMessage.Substring(0, Math.Max(1, msgBudget - 3)) + "…"
                 : LatestMessage;
-            StatusLine = $"RADIO{openMark} [{tag}]{unread}  {tuneLabel}  {shortMsg}";
+            StatusLine = $"RADIO{openMark} [{tag}]{unread}  {tuneLabel}{hardware}  {shortMsg}";
             if (!IsOpen)
                 StatusLine += "  [R]";
 
@@ -485,6 +560,11 @@ namespace AtomicWar._Game.UI
 
         private string ResolveTuneLabel()
         {
+            // Live label from RadioTunerSystem wins when dial is on a frequency.
+            // Bootstrap supplies displayName (often already includes MHz).
+            if (HasLiveRadioState && !string.IsNullOrEmpty(TunedFrequencyLabel))
+                return TunedFrequencyLabel;
+
             if (TunerIndex >= 0 && TunerIndex < _bands.Count)
             {
                 var b = _bands[TunerIndex];
@@ -494,6 +574,26 @@ namespace AtomicWar._Game.UI
             if (TunerIndex >= 0 && TunerIndex < TunerLabels.Length)
                 return TunerLabels[TunerIndex];
             return "ALL BANDS";
+        }
+
+        private string ResolveSignalToken()
+        {
+            if (!HasLiveRadioState) return string.Empty;
+            if (!string.IsNullOrEmpty(SignalLabel)) return SignalLabel;
+            bool detuned = string.IsNullOrEmpty(BoundFrequencyId) && string.IsNullOrEmpty(TunedFrequencyLabel);
+            return FormatSignalLabel(SignalStrength, RadioOperational, detuned);
+        }
+
+        private string ResolveLockToken()
+        {
+            if (!HasLiveRadioState || !RadioOperational) return string.Empty;
+            if (string.IsNullOrEmpty(BoundFrequencyId) && string.IsNullOrEmpty(TunedFrequencyLabel))
+                return string.Empty;
+            // Fully locked: omit; partial: show LOCK n%
+            if (TuningProgress >= 0.999f) return "LOCK";
+            if (TuningProgress <= 0.001f) return string.Empty;
+            int pct = Mathf.Clamp(Mathf.RoundToInt(TuningProgress * 100f), 1, 99);
+            return $"LOCK {pct}%";
         }
 
         private static string KindTag(string kind)

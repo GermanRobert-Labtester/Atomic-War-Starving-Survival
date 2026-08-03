@@ -834,6 +834,121 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RadioInterceptHUD_LiveSignalAndFrequencyLabel_OnStrip()
+        {
+            var go = new GameObject("LiveSignalHud");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<RadioInterceptHUD>();
+
+            // No live state yet — strip stays quiet without SIG token.
+            Assert.That(hud.HasLiveRadioState, Is.False);
+            Assert.That(hud.TunerLine, Does.Contain("ALL"));
+            Assert.That(hud.TunerLine, Does.Not.Contain("SIG"));
+
+            // Detuned + operational → SIG —
+            hud.SetLiveRadioState(0f, tunedFrequencyLabel: "", frequencyMHz: 0f, tuningProgress: 0f, isOperational: true);
+            Assert.That(hud.HasLiveRadioState, Is.True);
+            Assert.That(hud.SignalLabel, Is.EqualTo("SIG —"));
+            Assert.That(hud.TunerLine, Does.Contain("SIG —"));
+            Assert.That(hud.StatusLine, Does.Contain("SIG —"));
+
+            // Tuned military band with 62% signal, mid lock
+            hud.TuneToChannel("CH-7 MILBAND");
+            hud.SetLiveRadioState(
+                signalStrength: 0.62f,
+                tunedFrequencyLabel: "102.1 Military · CH-7 MILBAND",
+                frequencyMHz: 102.1f,
+                tuningProgress: 0.4f,
+                isOperational: true);
+            Assert.That(hud.SignalStrength, Is.EqualTo(0.62f).Within(1e-3f));
+            Assert.That(hud.TunedFrequencyLabel, Does.Contain("102.1"));
+            Assert.That(hud.TunedFrequencyMHz, Is.EqualTo(102.1f).Within(1e-3f));
+            Assert.That(hud.SignalLabel, Is.EqualTo("SIG 62%"));
+            Assert.That(hud.TunerLine, Does.Contain("102.1 Military"));
+            Assert.That(hud.TunerLine, Does.Contain("SIG 62%"));
+            Assert.That(hud.TunerLine, Does.Contain("LOCK 40%"));
+            Assert.That(hud.StatusLine, Does.Contain("SIG 62%"));
+
+            // Fully locked → LOCK token without percent
+            hud.SetLiveRadioState(0.8f, "102.1 Military · CH-7 MILBAND", 102.1f, 1f, true);
+            Assert.That(hud.TunerLine, Does.Contain("LOCK"));
+            Assert.That(hud.TunerLine, Does.Not.Contain("LOCK 100"));
+
+            // EMP / no fuel → SIG DEAD
+            hud.SetLiveRadioState(0f, "102.1 Military · CH-7 MILBAND", 102.1f, 0f, isOperational: false);
+            Assert.That(hud.SignalLabel, Is.EqualTo("SIG DEAD"));
+            Assert.That(hud.TunerLine, Does.Contain("SIG DEAD"));
+            Assert.That(hud.RadioOperational, Is.False);
+
+            Assert.That(RadioInterceptHUD.FormatSignalLabel(0.5f, true, isDetuned: false), Is.EqualTo("SIG 50%"));
+            Assert.That(RadioInterceptHUD.FormatSignalLabel(0f, true, isDetuned: true), Is.EqualTo("SIG —"));
+            Assert.That(RadioInterceptHUD.FormatSignalLabel(0f, false, isDetuned: false), Is.EqualTo("SIG DEAD"));
+        }
+
+        [Test]
+        public void RadioLiveState_FromTunerSystem_MatchesStripPush()
+        {
+            // Mirrors GameBootstrap.PushRadioLiveStateToHud without a scene bootstrap.
+            var military = ScriptableObject.CreateInstance<RadioFrequencySO>();
+            _toDestroy.Add(military);
+            military.id = RadioFrequencySO.Ids.Military;
+            military.displayName = "102.1 Military";
+            military.frequencyMHz = 102.1f;
+            military.type = RadioFrequencyType.Military;
+            military.baseSignalStrength = 0.6f;
+            military.interferenceSusceptibility = 0.2f;
+            military.interceptChannelTag = "CH-7 MILBAND";
+
+            var tuner = new RadioTunerSystem(new System.Random(3));
+            tuner.SetFrequencies(new[] { military });
+            tuner.State.AvailableFuel = 10f;
+            tuner.State.EmpDamage = 0f;
+            Assert.That(tuner.TuneToFrequency(RadioFrequencySO.Ids.Military), Is.True);
+            tuner.UpdateSignalStrength(WeatherKind.Clear);
+
+            var go = new GameObject("LiveFromTuner");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<RadioInterceptHUD>();
+            var bands = tuner.BuildTunerBands();
+            var ui = new List<RadioInterceptHUD.TunerBand>();
+            for (int i = 0; i < bands.Count; i++)
+                ui.Add(RadioInterceptHUD.TunerBand.FromParts(bands[i].FrequencyId, bands[i].Label, bands[i].ChannelTag));
+            hud.SetTunerBands(ui);
+            hud.SyncFromFrequencyId(tuner.State.CurrentFrequencyId);
+
+            var freq = tuner.GetCurrentFrequency();
+            string label = freq.displayName + " · " + freq.ResolveInterceptChannelTag();
+            hud.SetLiveRadioState(
+                tuner.State.SignalStrength,
+                label,
+                freq.frequencyMHz,
+                tuner.State.TuningProgress,
+                tuner.State.IsOperational);
+
+            Assert.That(hud.TunedFrequencyLabel, Does.Contain("102.1 Military"));
+            Assert.That(hud.TunedFrequencyMHz, Is.EqualTo(102.1f).Within(1e-3f));
+            Assert.That(hud.SignalStrength, Is.GreaterThan(0.3f), "Clear weather should leave usable signal");
+            Assert.That(hud.TunerLine, Does.Contain("SIG"));
+            Assert.That(hud.TunerLine, Does.Contain("102.1"));
+            Assert.That(hud.StatusLine, Does.Contain("SIG"));
+
+            // Storm softens signal (interference susceptibility is modest on mil band).
+            float clearSig = tuner.State.SignalStrength;
+            tuner.UpdateSignalStrength(WeatherKind.FalloutStorm);
+            float stormSig = tuner.State.SignalStrength;
+            hud.SetLiveRadioState(stormSig, label, freq.frequencyMHz, 0f, true);
+            Assert.That(stormSig, Is.LessThan(clearSig), "Fallout storm must weaken signal vs clear");
+            Assert.That(hud.SignalStrength, Is.EqualTo(stormSig).Within(1e-3f));
+            Assert.That(hud.SignalLabel, Does.StartWith("SIG"));
+
+            tuner.Detune();
+            hud.SyncFromFrequencyId(null);
+            hud.SetLiveRadioState(0f, "", 0f, 0f, true);
+            Assert.That(hud.SignalLabel, Is.EqualTo("SIG —"));
+            Assert.That(hud.TunerLine, Does.Contain("ALL").Or.Contain("SIG —"));
+        }
+
+        [Test]
         public void RadioTuner_LinkedDial_TunesIntelAndFiltersIntercepts()
         {
             // RadioTunerSystem bands drive the HUD dial: one retune for intel + intercepts.
