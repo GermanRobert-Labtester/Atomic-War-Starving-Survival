@@ -16,6 +16,8 @@ namespace AtomicWar._Game.UI
         public string SeasonName { get; private set; } = "Nuclear Winter";
         public float AirQuality { get; private set; } = 100f;
         public float FilterHealth { get; private set; } = 100f;
+        /// <summary>Simulation speed (1 normal, 3 fast-forward). Display-only.</summary>
+        public float TimeScale { get; private set; } = 1f;
 
         public bool ShowRawValues => _showRawValues;
 
@@ -25,6 +27,12 @@ namespace AtomicWar._Game.UI
             Hour = Mathf.Clamp(hour, 0f, 24f);
             WeatherName = !string.IsNullOrEmpty(weather) ? weather : "Clear";
             SeasonName = !string.IsNullOrEmpty(season) ? season : "Nuclear Winter";
+        }
+
+        /// <summary>Fast-forward indicator state (pushed from TimeSystem via HUD.Tick).</summary>
+        public void SetTimeScale(float timeScale)
+        {
+            TimeScale = Mathf.Max(0f, timeScale);
         }
 
         public void SetShelterStats(float airQuality, float filterHealth)
@@ -42,7 +50,10 @@ namespace AtomicWar._Game.UI
         {
             int h = Mathf.FloorToInt(Hour);
             int m = Mathf.FloorToInt((Hour - h) * 60f);
-            return $"Day {Day} - {h:D2}:{m:D2} | {WeatherName} | {SeasonName}";
+            string strip = $"Day {Day} - {h:D2}:{m:D2} | {WeatherName} | {SeasonName}";
+            if (TimeScale > 1.001f)
+                strip += $" | >> {TimeScale:0.#}x";
+            return strip;
         }
 
         public string GetFormattedShelterStrip()

@@ -3,13 +3,15 @@
     "references": [
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
+        "AtomicWar._Game.Utilities",
         "AtomicWar._Game.Survivors",
         "AtomicWar._Game.Radiation",
         "AtomicWar._Game.Inventory",
         "AtomicWar._Game.Core",
         "AtomicWar._Game.Environment",
         "AtomicWar._Game.Shelter",
-        "AtomicWar._Game.UI"
+        "AtomicWar._Game.UI",
+        "AtomicWar._Game.Events"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

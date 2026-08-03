@@ -4,6 +4,7 @@ using System.Text;
 using UnityEngine;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.UI
 {
@@ -32,8 +33,24 @@ namespace AtomicWar._Game.UI
         private Func<WeatherKind> _getWeather;
         private readonly List<MapNodePlayerView> _views = new List<MapNodePlayerView>();
         private readonly List<string> _selectedPath = new List<string>();
+        private readonly List<string> _routeBuffer = new List<string>();
+        private readonly List<MapPathLine> _pathLines = new List<MapPathLine>();
+        private readonly GenericObjectPool<MapPathLine> _pathLinePool = new GenericObjectPool<MapPathLine>(
+            () => new MapPathLine(),
+            line =>
+            {
+                line.FromLabel = null;
+                line.ToLabel = null;
+                line.SegmentHours = 0f;
+            });
         private float _selectedTravelHours;
         private WeatherKind _pathWeather = WeatherKind.Clear;
+
+        /// <summary>Pooled per-hop path segments for the selected expedition route (never destroyed, recycled on rebuild).</summary>
+        public IReadOnlyList<MapPathLine> PathLines => _pathLines;
+
+        /// <summary>Pool backing <see cref="PathLines"/> (profiling/test hook).</summary>
+        public GenericObjectPool<MapPathLine> PathLinePool => _pathLinePool;
 
         public void Bind(GeneratedMap map, Func<WeatherKind> getWeather = null)
         {
@@ -143,13 +160,10 @@ namespace AtomicWar._Game.UI
 
         public void Refresh()
         {
-            _views.Clear();
             if (_map != null)
-            {
-                var all = _map.GetAllPlayerViews();
-                for (int i = 0; i < all.Count; i++)
-                    _views.Add(all[i]);
-            }
+                _map.GetAllPlayerViews(_views); // buffer overload: no per-refresh list allocation
+            else
+                _views.Clear();
 
             if (!string.IsNullOrEmpty(SelectedNodeId) && _map != null && _map.GetNode(SelectedNodeId) != null)
                 RebuildPath();
@@ -157,6 +171,7 @@ namespace AtomicWar._Game.UI
             {
                 _selectedPath.Clear();
                 _selectedTravelHours = 0f;
+                ReleasePathLines();
             }
 
             RebuildPanel();
@@ -181,14 +196,38 @@ namespace AtomicWar._Game.UI
             _selectedPath.Clear();
             _selectedTravelHours = 0f;
             _pathWeather = CurrentWeather();
+            ReleasePathLines();
             if (_map == null || string.IsNullOrEmpty(SelectedNodeId)) return;
 
-            var route = _map.FindPath(GeneratedMap.ShelterNodeId, SelectedNodeId);
-            if (route == null) return;
-            for (int i = 0; i < route.Count; i++)
-                _selectedPath.Add(route[i]);
+            if (!_map.TryFindPath(GeneratedMap.ShelterNodeId, SelectedNodeId, _routeBuffer))
+                return;
+            for (int i = 0; i < _routeBuffer.Count; i++)
+                _selectedPath.Add(_routeBuffer[i]);
+
+            // Pooled per-hop path lines: recycle the previous route, acquire one
+            // line per hop. Steady-state selection churn allocates nothing.
+            for (int i = 0; i < _selectedPath.Count - 1; i++)
+            {
+                var line = _pathLinePool.Acquire();
+                if (line == null) break; // pool capped: degrade gracefully
+                var from = _map.GetNode(_selectedPath[i]);
+                var to = _map.GetNode(_selectedPath[i + 1]);
+                line.FromLabel = from != null ? from.GetDisplayLabel() : _selectedPath[i];
+                line.ToLabel = to != null ? to.GetDisplayLabel() : _selectedPath[i + 1];
+                var edge = _map.GetPath(_selectedPath[i], _selectedPath[i + 1]);
+                line.SegmentHours = edge != null ? edge.BaseTravelHours : 0f;
+                _pathLines.Add(line);
+            }
 
             _selectedTravelHours = _map.GetTravelHoursFromShelter(SelectedNodeId, _pathWeather);
+        }
+
+        /// <summary>Recycle all active path lines back into the pool (never destroys them).</summary>
+        private void ReleasePathLines()
+        {
+            for (int i = 0; i < _pathLines.Count; i++)
+                _pathLinePool.Release(_pathLines[i]);
+            _pathLines.Clear();
         }
 
         private void RebuildPanel()
@@ -277,6 +316,14 @@ namespace AtomicWar._Game.UI
             pathSb.Append("PATH: ");
             if (_selectedPath.Count == 0)
                 pathSb.Append("(none)");
+            else if (_pathLines.Count > 0)
+            {
+                // Render from pooled path lines (no node lookups, no allocations
+                // beyond the string itself).
+                pathSb.Append(_pathLines[0].FromLabel);
+                for (int i = 0; i < _pathLines.Count; i++)
+                    pathSb.Append(" → ").Append(_pathLines[i].ToLabel);
+            }
             else
             {
                 for (int i = 0; i < _selectedPath.Count; i++)
@@ -288,6 +335,17 @@ namespace AtomicWar._Game.UI
             }
             PathSummary = pathSb.ToString();
         }
+    }
+
+    /// <summary>
+    /// One pooled hop of the selected expedition route (rendered as a path line).
+    /// Instances live in MapScreenUI's GenericObjectPool — recycled, never destroyed.
+    /// </summary>
+    public class MapPathLine
+    {
+        public string FromLabel;
+        public string ToLabel;
+        public float SegmentHours;
     }
 
     /// <summary>Pathing payload from MapScreenUI to Core expedition start.</summary>

@@ -33,6 +33,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private RadioInterceptHUD _radioInterceptHud;
         [SerializeField] private FactionRadioVoHook _factionRadioVoHook;
         [SerializeField] private JournalBookUI _journalBookUi;
+        [SerializeField] private InventoryStripUI _inventoryStripUi;
         [SerializeField] private EndgameSummaryUI _endgameSummaryUi;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
@@ -53,6 +54,7 @@ namespace AtomicWar._Game.UI
         public RoomAssignmentHUD RoomAssignmentHUD { get { EnsureWidgetReferences(); return _roomAssignmentHud; } }
         public RadioInterceptHUD RadioInterceptHUD { get { EnsureWidgetReferences(); return _radioInterceptHud; } }
         public JournalBookUI JournalBookUI { get { EnsureWidgetReferences(); return _journalBookUi; } }
+        public InventoryStripUI InventoryStripUI { get { EnsureWidgetReferences(); return _inventoryStripUi; } }
         public EndgameSummaryUI EndgameSummaryUI { get { EnsureWidgetReferences(); return _endgameSummaryUi; } }
         public FactionRadioVoHook FactionRadioVoHook
         {
@@ -88,6 +90,7 @@ namespace AtomicWar._Game.UI
             if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
             if (_radioInterceptHud == null) _radioInterceptHud = GetComponentInChildren<RadioInterceptHUD>() ?? gameObject.AddComponent<RadioInterceptHUD>();
             if (_journalBookUi == null) _journalBookUi = GetComponentInChildren<JournalBookUI>() ?? gameObject.AddComponent<JournalBookUI>();
+            if (_inventoryStripUi == null) _inventoryStripUi = GetComponentInChildren<InventoryStripUI>() ?? gameObject.AddComponent<InventoryStripUI>();
             if (_endgameSummaryUi == null) _endgameSummaryUi = GetComponentInChildren<EndgameSummaryUI>() ?? gameObject.AddComponent<EndgameSummaryUI>();
             if (_factionRadioVoHook == null)
             {
@@ -240,12 +243,13 @@ namespace AtomicWar._Game.UI
         /// Poll-friendly update: call from GameBootstrap.Update to push environment
         /// data (time, weather, season) to the EnvironmentStatusHUD widget each frame.
         /// </summary>
-        public void Tick(int day, float hour, string weatherName, string seasonName)
+        public void Tick(int day, float hour, string weatherName, string seasonName, float timeScale = 1f)
         {
             EnsureWidgetReferences();
             if (_environmentStatusHud != null)
             {
                 _environmentStatusHud.SetEnvironment(day, hour, weatherName, seasonName);
+                _environmentStatusHud.SetTimeScale(timeScale);
             }
             if (_hatchDefenseHud != null)
             {

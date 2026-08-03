@@ -31,9 +31,11 @@ namespace AtomicWar._Game.Core
         [SerializeField] private KeyCode _radioTunerPrevKey = KeyCode.LeftBracket;
         [SerializeField] private KeyCode _radioTunerNextKey = KeyCode.RightBracket;
         [SerializeField] private KeyCode _journalKey = KeyCode.J;
+        [SerializeField] private KeyCode _fastForwardKey = KeyCode.F;
 
         /// <summary>Exposed for tests / rebinding docs.</summary>
         public KeyCode WorkbenchKey => _workbenchKey;
+        public KeyCode FastForwardKey => _fastForwardKey;
         public KeyCode HatchDefenseKey => _hatchDefenseKey;
         public KeyCode MapKey => _mapKey;
         public KeyCode ParleyKey => _parleyKey;
@@ -81,6 +83,10 @@ namespace AtomicWar._Game.Core
                 _bootstrap.CycleRadioTunerNext();
             if (Input.GetKeyDown(_journalKey))
                 _bootstrap.ToggleJournalBook();
+
+            // Fast-forward toggle: 1x <-> 3x simulation speed
+            if (Input.GetKeyDown(_fastForwardKey))
+                _bootstrap.ToggleFastForward();
 
             // Trade: demand parley / surrender after a hatch repel
             if (Input.GetKeyDown(_parleyKey) && IsTradeOpen())

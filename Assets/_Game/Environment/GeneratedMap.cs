@@ -89,12 +89,27 @@ namespace AtomicWar._Game.Environment
         /// <summary>BFS shortest path by hop count; ties broken by lower base hours.</summary>
         public List<string> FindPath(string fromId, string toId)
         {
-            if (string.IsNullOrEmpty(fromId) || string.IsNullOrEmpty(toId)) return null;
-            if (fromId == toId) return new List<string> { fromId };
+            var path = new List<string>();
+            return TryFindPath(fromId, toId, path) ? path : null;
+        }
+
+        /// <summary>
+        /// Buffer overload: fills <paramref name="buffer"/> (cleared first) instead of
+        /// allocating a fresh list per call. Returns false when no path exists.
+        /// </summary>
+        public bool TryFindPath(string fromId, string toId, List<string> buffer)
+        {
+            if (buffer != null) buffer.Clear();
+            if (string.IsNullOrEmpty(fromId) || string.IsNullOrEmpty(toId) || buffer == null) return false;
+            if (fromId == toId)
+            {
+                buffer.Add(fromId);
+                return true;
+            }
 
             var neighbors = BuildAdjacency();
             if (!neighbors.ContainsKey(fromId) || !neighbors.ContainsKey(toId))
-                return null;
+                return false;
 
             var prev = new Dictionary<string, string>();
             var dist = new Dictionary<string, float>();
@@ -119,18 +134,17 @@ namespace AtomicWar._Game.Environment
                 }
             }
 
-            if (!prev.ContainsKey(toId) && fromId != toId) return null;
+            if (!prev.ContainsKey(toId)) return false;
 
-            var path = new List<string>();
             string walk = toId;
-            path.Add(walk);
+            buffer.Add(walk);
             while (prev.TryGetValue(walk, out string p))
             {
-                path.Add(p);
+                buffer.Add(p);
                 walk = p;
             }
-            path.Reverse();
-            return path;
+            buffer.Reverse();
+            return true;
         }
 
         /// <summary>Reveal a node (radio intel or first visit). Keeps rumored rad.</summary>
@@ -213,13 +227,29 @@ namespace AtomicWar._Game.Environment
         public List<MapNodePlayerView> GetAllPlayerViews()
         {
             var list = new List<MapNodePlayerView>();
-            if (Nodes == null) return list;
+            FillPlayerViews(list);
+            return list;
+        }
+
+        /// <summary>
+        /// Buffer overload: clears <paramref name="buffer"/> and fills it in place,
+        /// so steady-state map refreshes allocate nothing (pool-friendly hot path).
+        /// </summary>
+        public void GetAllPlayerViews(List<MapNodePlayerView> buffer)
+        {
+            if (buffer == null) return;
+            buffer.Clear();
+            FillPlayerViews(buffer);
+        }
+
+        private void FillPlayerViews(List<MapNodePlayerView> buffer)
+        {
+            if (Nodes == null) return;
             for (int i = 0; i < Nodes.Count; i++)
             {
                 if (Nodes[i] != null)
-                    list.Add(GetPlayerView(Nodes[i].NodeId));
+                    buffer.Add(GetPlayerView(Nodes[i].NodeId));
             }
-            return list;
         }
 
         /// <summary>Stable fingerprint for determinism tests (ids, loot, distances, edges).</summary>

@@ -2,6 +2,7 @@
     "name": "AtomicWar._Game.UI",
     "rootNamespace": "AtomicWar._Game.UI",
     "references": [
+        "AtomicWar._Game.Utilities",
         "AtomicWar._Game.Survivors",
         "AtomicWar._Game.Shelter",
         "AtomicWar._Game.Inventory",

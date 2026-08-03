@@ -227,6 +227,20 @@ namespace AtomicWar._Game.Environment
             return list;
         }
 
+        /// <summary>
+        /// Buffer overload: clears <paramref name="buffer"/> and fills it in place,
+        /// so steady-state fog-of-war refreshes allocate nothing (pool-friendly hot path).
+        /// </summary>
+        public void GetAllPlayerViews(List<MapTilePlayerView> buffer, int currentDay, bool hasWorkingGeiger)
+        {
+            if (buffer == null) return;
+            buffer.Clear();
+            foreach (var id in _tiles.Keys)
+            {
+                buffer.Add(GetPlayerView(id, currentDay, hasWorkingGeiger));
+            }
+        }
+
         // -----------------------------------------------------------------
         // Save / load
         // -----------------------------------------------------------------

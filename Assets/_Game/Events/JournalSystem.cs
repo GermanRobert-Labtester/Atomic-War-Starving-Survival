@@ -16,6 +16,19 @@ namespace AtomicWar._Game.Events
         private readonly List<JournalEntry> _entries = new List<JournalEntry>();
         private readonly KnowledgeBase _knowledge = new KnowledgeBase();
         private int _seq;
+        private Func<JournalEntry> _entryFactory;
+        private Action<JournalEntry> _entryRecycler;
+
+        /// <summary>
+        /// Wire an object pool (GenericObjectPool) so evicted/cleared entries are
+        /// recycled instead of collected, and new entries reuse pooled instances.
+        /// Null factory falls back to `new JournalEntry()`; null recycler disables recycling.
+        /// </summary>
+        public void SetEntryFactory(Func<JournalEntry> factory, Action<JournalEntry> recycler)
+        {
+            _entryFactory = factory;
+            _entryRecycler = recycler;
+        }
 
         public KnowledgeBase Knowledge => _knowledge;
         /// <summary>Newest-first log.</summary>
@@ -53,27 +66,34 @@ namespace AtomicWar._Game.Events
                 : (author != null && !string.IsNullOrEmpty(author.Id) ? author.Id : "Unknown");
             string authorId = author?.Id ?? string.Empty;
 
-            var entry = new JournalEntry
-            {
-                Id = $"journal_{++_seq}_{knowledgeKey}",
-                Text = JournalVoice.ComposeFullText(knowledgeKey, bias, day),
-                Timestamp = JournalVoice.FormatTimestamp(day, hour),
-                AuthorName = name,
-                AuthorId = authorId,
-                KnowledgeKey = knowledgeKey,
-                Day = day > 0 ? day : 1,
-                Hour = hour
-            };
+            var entry = _entryFactory != null ? _entryFactory() : new JournalEntry();
+            entry.Id = $"journal_{++_seq}_{knowledgeKey}";
+            entry.Text = JournalVoice.ComposeFullText(knowledgeKey, bias, day);
+            entry.Timestamp = JournalVoice.FormatTimestamp(day, hour);
+            entry.AuthorName = name;
+            entry.AuthorId = authorId;
+            entry.KnowledgeKey = knowledgeKey;
+            entry.Day = day > 0 ? day : 1;
+            entry.Hour = hour;
 
             _entries.Insert(0, entry);
-            while (_entries.Count > MaxEntries)
+            JournalEntry evicted = null;
+            if (_entries.Count > MaxEntries)
+            {
+                evicted = _entries[_entries.Count - 1];
                 _entries.RemoveAt(_entries.Count - 1);
+            }
 
             HasUnread = true;
             NotificationPing = true;
             NotificationPingCount++;
             OnEntryAdded?.Invoke(entry);
             OnNotificationPing?.Invoke(entry);
+
+            // Recycle only after subscribers ran: the journal book trims its
+            // mirrored list inside OnEntryAdded and must drop the reference first.
+            if (evicted != null)
+                _entryRecycler?.Invoke(evicted);
             return entry;
         }
 
@@ -90,6 +110,11 @@ namespace AtomicWar._Game.Events
 
         public void Clear()
         {
+            if (_entryRecycler != null)
+            {
+                for (int i = 0; i < _entries.Count; i++)
+                    _entryRecycler(_entries[i]);
+            }
             _entries.Clear();
             _knowledge.Clear();
             _seq = 0;
