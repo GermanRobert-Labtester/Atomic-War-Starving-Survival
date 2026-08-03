@@ -21,6 +21,12 @@ namespace AtomicWar._Game.Economy
         public const float MinTrust = -100f;
         public const float MaxTrust = 100f;
         public const float DefaultRaidThreshold = -50f;
+        /// <summary>Consecutive hatch repels before a faction auto-surrenders.</summary>
+        public const int RepelsForAutoSurrender = 2;
+        /// <summary>Trust lift above raid threshold after surrender.</summary>
+        public const float SurrenderTrustBuffer = 18f;
+        /// <summary>Aggression multiplier applied on surrender (0..1 scale factor).</summary>
+        public const float SurrenderAggressionScale = 0.45f;
 
         /// <summary>Supply pressure clamp: demand mult stays in [min, max].</summary>
         public const float MinDemandMult = 0.25f;
@@ -30,6 +36,13 @@ namespace AtomicWar._Game.Economy
         private readonly Dictionary<string, float> _trust = new Dictionary<string, float>();
         /// <summary>Per item-id demand pressure. 1 = neutral; &gt;1 scarce; &lt;1 surplus.</summary>
         private readonly Dictionary<string, float> _demand = new Dictionary<string, float>();
+        /// <summary>Runtime aggression override (0..1). Absent = use FactionSO.raidAggression.</summary>
+        private readonly Dictionary<string, float> _aggressionOverride = new Dictionary<string, float>();
+        private readonly Dictionary<string, int> _successionGeneration = new Dictionary<string, int>();
+        private readonly Dictionary<string, string> _leaderName = new Dictionary<string, string>();
+        private readonly Dictionary<string, int> _consecutiveRepels = new Dictionary<string, int>();
+        private readonly Dictionary<string, int> _totalRaidsLaunched = new Dictionary<string, int>();
+        private readonly Dictionary<string, bool> _hasSurrendered = new Dictionary<string, bool>();
 
         /// <summary>
         /// Barter-only mode: traders will only accept offers whose items are
@@ -50,6 +63,8 @@ namespace AtomicWar._Game.Economy
         public event Action<string, float, float> OnTrustChanged; // factionId, old, new
         public event Action<WorldPhase> OnEconomyPhaseChanged;
         public event Action<FactionRaidResult> OnRaidResolved;
+        public event Action<FactionSuccessionResult> OnFactionSuccession;
+        public event Action<FactionSurrenderResult> OnFactionSurrender;
         public event Action OnEconomyChanged;
         /// <summary>Fired when barter-only mode flips (parameter: new value).</summary>
         public event Action<bool> OnBarterOnlyModeChanged;
@@ -98,6 +113,16 @@ namespace AtomicWar._Game.Economy
             _factions[faction.id] = faction;
             if (!_trust.ContainsKey(faction.id))
                 _trust[faction.id] = Mathf.Clamp(faction.startingTrust, MinTrust, MaxTrust);
+            if (!_successionGeneration.ContainsKey(faction.id))
+                _successionGeneration[faction.id] = 0;
+            if (!_leaderName.ContainsKey(faction.id) || string.IsNullOrEmpty(_leaderName[faction.id]))
+                _leaderName[faction.id] = faction.displayName ?? faction.id;
+            if (!_consecutiveRepels.ContainsKey(faction.id))
+                _consecutiveRepels[faction.id] = 0;
+            if (!_totalRaidsLaunched.ContainsKey(faction.id))
+                _totalRaidsLaunched[faction.id] = 0;
+            if (!_hasSurrendered.ContainsKey(faction.id))
+                _hasSurrendered[faction.id] = false;
         }
 
         public FactionSO GetFaction(string factionId)
@@ -172,6 +197,195 @@ namespace AtomicWar._Game.Economy
         }
 
         public bool WillShareIntel(string factionId) => GetStance(factionId) == TradeStance.ShareIntel;
+
+        // -----------------------------------------------------------------
+        // Aggression / succession / surrender
+        // -----------------------------------------------------------------
+
+        /// <summary>Effective raid aggression 0..1 (runtime override or SO default).</summary>
+        public float GetRaidAggression(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return 0.5f;
+            if (_aggressionOverride.TryGetValue(factionId, out float ovr))
+                return Mathf.Clamp01(ovr);
+            var fac = GetFaction(factionId);
+            return fac != null ? Mathf.Clamp01(fac.raidAggression) : 0.5f;
+        }
+
+        public void SetRaidAggression(string factionId, float aggression01)
+        {
+            if (string.IsNullOrEmpty(factionId)) return;
+            _aggressionOverride[factionId] = Mathf.Clamp01(aggression01);
+            OnEconomyChanged?.Invoke();
+        }
+
+        public int GetSuccessionGeneration(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return 0;
+            return _successionGeneration.TryGetValue(factionId, out int g) ? g : 0;
+        }
+
+        public string GetLeaderName(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return string.Empty;
+            if (_leaderName.TryGetValue(factionId, out string name) && !string.IsNullOrEmpty(name))
+                return name;
+            var fac = GetFaction(factionId);
+            return fac != null ? fac.displayName : factionId;
+        }
+
+        public int GetConsecutiveRepels(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return 0;
+            return _consecutiveRepels.TryGetValue(factionId, out int n) ? n : 0;
+        }
+
+        public bool HasSurrendered(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return false;
+            return _hasSurrendered.TryGetValue(factionId, out bool s) && s;
+        }
+
+        /// <summary>
+        /// Leadership change inside a faction. Softens trust toward startingTrust,
+        /// bumps succession generation, optional aggression reset.
+        /// </summary>
+        public FactionSuccessionResult ApplySuccession(
+            string factionId,
+            string newLeaderName = null,
+            float trustBlendTowardStarting = 0.55f,
+            float? newAggression = null)
+        {
+            var result = new FactionSuccessionResult { FactionId = factionId };
+            if (string.IsNullOrEmpty(factionId) || !_factions.ContainsKey(factionId))
+            {
+                result.Message = "Unknown faction.";
+                return result;
+            }
+
+            var fac = GetFaction(factionId);
+            float oldTrust = GetTrust(factionId);
+            float blend = Mathf.Clamp01(trustBlendTowardStarting);
+            float target = fac != null ? fac.startingTrust : 0f;
+            float nextTrust = Mathf.Lerp(oldTrust, target, blend);
+            SetTrust(factionId, nextTrust);
+
+            int gen = GetSuccessionGeneration(factionId) + 1;
+            _successionGeneration[factionId] = gen;
+            string previousLeader = GetLeaderName(factionId);
+            string leader = string.IsNullOrEmpty(newLeaderName)
+                ? $"{(fac != null ? fac.displayName : factionId)} cell {gen}"
+                : newLeaderName;
+            _leaderName[factionId] = leader;
+
+            float oldAgg = GetRaidAggression(factionId);
+            if (newAggression.HasValue)
+                SetRaidAggression(factionId, newAggression.Value);
+            // New leadership often reassesses the grudge
+            _consecutiveRepels[factionId] = 0;
+            _hasSurrendered[factionId] = false;
+
+            result.Applied = true;
+            result.PreviousLeader = previousLeader;
+            result.NewLeader = leader;
+            result.Generation = gen;
+            result.OldTrust = oldTrust;
+            result.NewTrust = GetTrust(factionId);
+            result.OldAggression = oldAgg;
+            result.NewAggression = GetRaidAggression(factionId);
+            result.Message = $"{previousLeader} is gone. {leader} holds the banner now.";
+            OnFactionSuccession?.Invoke(result);
+            OnEconomyChanged?.Invoke();
+            return result;
+        }
+
+        /// <summary>
+        /// Force a hostile faction to stand down after a successful defense.
+        /// Lifts trust above raid threshold and cuts aggression.
+        /// </summary>
+        public FactionSurrenderResult ForceSurrender(string factionId)
+        {
+            return ApplySurrender(factionId, auto: false);
+        }
+
+        /// <summary>
+        /// Auto-surrender when consecutive hatch repels reach
+        /// <see cref="RepelsForAutoSurrender"/>.
+        /// </summary>
+        public FactionSurrenderResult TryAutoSurrender(string factionId)
+        {
+            if (GetConsecutiveRepels(factionId) < RepelsForAutoSurrender)
+            {
+                return new FactionSurrenderResult
+                {
+                    FactionId = factionId,
+                    Applied = false,
+                    Message = "Not enough consecutive repels for auto-surrender."
+                };
+            }
+            return ApplySurrender(factionId, auto: true);
+        }
+
+        private FactionSurrenderResult ApplySurrender(string factionId, bool auto)
+        {
+            var result = new FactionSurrenderResult { FactionId = factionId, Auto = auto };
+            if (string.IsNullOrEmpty(factionId) || !_factions.ContainsKey(factionId))
+            {
+                result.Message = "Unknown faction.";
+                return result;
+            }
+            if (HasSurrendered(factionId))
+            {
+                result.Applied = false;
+                result.Message = "Already stood down.";
+                return result;
+            }
+
+            var fac = GetFaction(factionId);
+            float raidAt = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
+            float oldTrust = GetTrust(factionId);
+            float oldAgg = GetRaidAggression(factionId);
+
+            float nextTrust = Mathf.Max(oldTrust, raidAt + SurrenderTrustBuffer);
+            SetTrust(factionId, nextTrust);
+            SetRaidAggression(factionId, oldAgg * SurrenderAggressionScale);
+            _hasSurrendered[factionId] = true;
+            _consecutiveRepels[factionId] = 0;
+
+            result.Applied = true;
+            result.OldTrust = oldTrust;
+            result.NewTrust = GetTrust(factionId);
+            result.OldAggression = oldAgg;
+            result.NewAggression = GetRaidAggression(factionId);
+            result.NewStance = GetStance(factionId);
+            result.Message = auto
+                ? $"{GetLeaderName(factionId)} stops hammering the hatch. They've had enough."
+                : $"{GetLeaderName(factionId)} signals for parley. The raid is called off.";
+            OnFactionSurrender?.Invoke(result);
+            OnEconomyChanged?.Invoke();
+            return result;
+        }
+
+        /// <summary>Record raid outcome for surrender streak tracking.</summary>
+        public void NoteRaidOutcome(string factionId, bool launched, bool repelled)
+        {
+            if (string.IsNullOrEmpty(factionId) || !launched) return;
+            if (!_totalRaidsLaunched.ContainsKey(factionId))
+                _totalRaidsLaunched[factionId] = 0;
+            _totalRaidsLaunched[factionId]++;
+
+            if (repelled)
+            {
+                int n = GetConsecutiveRepels(factionId) + 1;
+                _consecutiveRepels[factionId] = n;
+                if (n >= RepelsForAutoSurrender)
+                    TryAutoSurrender(factionId);
+            }
+            else
+            {
+                _consecutiveRepels[factionId] = 0;
+            }
+        }
 
         // -----------------------------------------------------------------
         // Pricing
@@ -359,6 +573,14 @@ namespace AtomicWar._Game.Economy
             float trust = GetTrust(factionId);
             float threshold = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
 
+            // Surrender outranks the trust gate (surrender lifts trust on purpose).
+            if (HasSurrendered(factionId))
+            {
+                result.Launched = false;
+                result.Message = "Faction already stood down after the last push.";
+                return result;
+            }
+
             if (trust > threshold)
             {
                 result.Launched = false;
@@ -366,9 +588,10 @@ namespace AtomicWar._Game.Economy
                 return result;
             }
 
-            float aggression = fac != null ? fac.raidAggression : 0.5f;
+            float aggression = GetRaidAggression(factionId);
             // Map aggression 0..1 → raid strength ~30..70
             float strength = 30f + aggression * 40f;
+            result.Aggression = aggression;
 
             int day = _getDay != null ? _getDay() : HatchDefenseSystem.RaidUnlockDay;
             int shieldLevel = 0;
@@ -418,6 +641,10 @@ namespace AtomicWar._Game.Economy
                     result.Breached = true;
                 }
             }
+
+            NoteRaidOutcome(factionId, result.Launched, result.Repelled);
+            if (HasSurrendered(factionId))
+                result.SurrenderedAfter = true;
 
             OnRaidResolved?.Invoke(result);
             OnEconomyChanged?.Invoke();
@@ -628,7 +855,17 @@ namespace AtomicWar._Game.Economy
             var trustRows = new List<FactionTrustSave>();
             foreach (var kv in _trust)
             {
-                trustRows.Add(new FactionTrustSave { FactionId = kv.Key, Trust = kv.Value });
+                string id = kv.Key;
+                trustRows.Add(new FactionTrustSave
+                {
+                    FactionId = id,
+                    Trust = kv.Value,
+                    AggressionOverride = _aggressionOverride.TryGetValue(id, out float a) ? a : -1f,
+                    SuccessionGeneration = GetSuccessionGeneration(id),
+                    LeaderName = GetLeaderName(id),
+                    ConsecutiveRepels = GetConsecutiveRepels(id),
+                    HasSurrendered = HasSurrendered(id)
+                });
             }
             save.Trust = trustRows.ToArray();
 
@@ -648,6 +885,11 @@ namespace AtomicWar._Game.Economy
         {
             if (save == null) return;
             _trust.Clear();
+            _aggressionOverride.Clear();
+            _successionGeneration.Clear();
+            _leaderName.Clear();
+            _consecutiveRepels.Clear();
+            _hasSurrendered.Clear();
             if (save.Trust != null)
             {
                 for (int i = 0; i < save.Trust.Length; i++)
@@ -655,6 +897,13 @@ namespace AtomicWar._Game.Economy
                     var row = save.Trust[i];
                     if (row == null || string.IsNullOrEmpty(row.FactionId)) continue;
                     _trust[row.FactionId] = Mathf.Clamp(row.Trust, MinTrust, MaxTrust);
+                    if (row.AggressionOverride >= 0f)
+                        _aggressionOverride[row.FactionId] = Mathf.Clamp01(row.AggressionOverride);
+                    _successionGeneration[row.FactionId] = Mathf.Max(0, row.SuccessionGeneration);
+                    if (!string.IsNullOrEmpty(row.LeaderName))
+                        _leaderName[row.FactionId] = row.LeaderName;
+                    _consecutiveRepels[row.FactionId] = Mathf.Max(0, row.ConsecutiveRepels);
+                    _hasSurrendered[row.FactionId] = row.HasSurrendered;
                 }
             }
             _demand.Clear();
@@ -707,6 +956,37 @@ namespace AtomicWar._Game.Economy
         public float DefenseScore;
         public float ShelterSecurity;
         public int StolenItemCount;
+        public float Aggression;
+        public bool SurrenderedAfter;
+        public string Message;
+    }
+
+    [Serializable]
+    public class FactionSuccessionResult
+    {
+        public string FactionId;
+        public bool Applied;
+        public string PreviousLeader;
+        public string NewLeader;
+        public int Generation;
+        public float OldTrust;
+        public float NewTrust;
+        public float OldAggression;
+        public float NewAggression;
+        public string Message;
+    }
+
+    [Serializable]
+    public class FactionSurrenderResult
+    {
+        public string FactionId;
+        public bool Applied;
+        public bool Auto;
+        public float OldTrust;
+        public float NewTrust;
+        public float OldAggression;
+        public float NewAggression;
+        public TradeStance NewStance;
         public string Message;
     }
 
@@ -715,6 +995,12 @@ namespace AtomicWar._Game.Economy
     {
         public string FactionId;
         public float Trust;
+        /// <summary>Runtime aggression override; −1 means use FactionSO default.</summary>
+        public float AggressionOverride = -1f;
+        public int SuccessionGeneration;
+        public string LeaderName;
+        public int ConsecutiveRepels;
+        public bool HasSurrendered;
     }
 
     [Serializable]

@@ -99,7 +99,7 @@ namespace AtomicWar._Game.UI
                     ? "NOISY — drawn fire risk"
                     : "WATCHING";
 
-            StatusLine = $"HATCH  DEF {DefenseScore:0}  (sec {ShelterSecurity:0} + arms {WeaponPower:0})  [{threat}]";
+            StatusLine = $"HATCH [H]  DEF {DefenseScore:0}  (sec {ShelterSecurity:0} + arms {WeaponPower:0})  [{threat}]";
             if (ActiveGuards > 0)
                 StatusLine += $"  guards×{ActiveGuards}";
 
@@ -113,7 +113,6 @@ namespace AtomicWar._Game.UI
             for (int i = 0; i < HatchDefenseSystem.HatchModuleIds.Length; i++)
             {
                 string id = HatchDefenseSystem.HatchModuleIds[i];
-                // Security is computed from shelter modules; list known ids with contribution defaults
                 float contrib = HatchDefenseSystem.DefaultSecurityForModuleId(id);
                 string label = id == HatchDefenseModuleSO.BlastDoorId ? "blast door"
                     : id == HatchDefenseModuleSO.HatchTrapsId ? "traps"
@@ -129,6 +128,7 @@ namespace AtomicWar._Game.UI
             detail.AppendLine(StatusLine);
             detail.AppendLine(LastRaidLine);
             detail.AppendLine(UpgradesLine);
+            detail.AppendLine("Install / upgrade at workbench [B] (scrap + mechanical parts).");
             if (GeneratorOutside)
                 detail.AppendLine("Outdoor generator is drawing attention.");
             if (ActiveGuards > 0)

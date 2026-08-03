@@ -23,6 +23,14 @@ namespace AtomicWar._Game.Core
         [SerializeField] private KeyCode _eventChoice1Key = KeyCode.Alpha1;
         [SerializeField] private KeyCode _eventChoice2Key = KeyCode.Alpha2;
         [SerializeField] private KeyCode _eventChoice3Key = KeyCode.Alpha3;
+        [SerializeField] private KeyCode _workbenchKey = KeyCode.B;
+        [SerializeField] private KeyCode _hatchDefenseKey = KeyCode.H;
+        [SerializeField] private KeyCode _mapKey = KeyCode.M;
+
+        /// <summary>Exposed for tests / rebinding docs.</summary>
+        public KeyCode WorkbenchKey => _workbenchKey;
+        public KeyCode HatchDefenseKey => _hatchDefenseKey;
+        public KeyCode MapKey => _mapKey;
 
         private void Awake()
         {
@@ -48,6 +56,27 @@ namespace AtomicWar._Game.Core
             if (Input.GetKeyDown(_quickLoadKey))
                 _bootstrap.LoadGame("quicksave");
 
+            // Screens
+            if (Input.GetKeyDown(_workbenchKey))
+                _bootstrap.ToggleWorkbench();
+            if (Input.GetKeyDown(_hatchDefenseKey))
+                _bootstrap.ToggleHatchDefense();
+            if (Input.GetKeyDown(_mapKey))
+                _bootstrap.OpenMapScreen();
+
+            // Workbench lines: 1-9 execute when workbench is open (also hatch installs)
+            if (IsWorkbenchOpen())
+            {
+                for (int i = 0; i < 9; i++)
+                {
+                    if (Input.GetKeyDown(KeyCode.Alpha1 + i) || Input.GetKeyDown(KeyCode.Keypad1 + i))
+                    {
+                        _bootstrap.ExecuteWorkbenchLine(i);
+                        return;
+                    }
+                }
+            }
+
             // Consumables (primary survivor)
             if (_bootstrap.Survivors != null && _bootstrap.Survivors.Count > 0)
             {
@@ -65,10 +94,22 @@ namespace AtomicWar._Game.Core
                 }
             }
 
-            // Event choices
+            // Event choices (when modal open; workbench numbers take priority above)
             if (Input.GetKeyDown(_eventChoice1Key)) TrySelectChoice(0);
             if (Input.GetKeyDown(_eventChoice2Key)) TrySelectChoice(1);
             if (Input.GetKeyDown(_eventChoice3Key)) TrySelectChoice(2);
+        }
+
+        private bool IsWorkbenchOpen()
+        {
+            var wb = _bootstrap != null ? _bootstrap.GetComponentInChildren<UI.WorkbenchUI>(true) : null;
+            if (wb == null && _bootstrap != null)
+            {
+                // HUD may own the WorkbenchUI
+                var hud = _bootstrap.GetComponentInChildren<UI.HUD>(true);
+                wb = hud != null ? hud.WorkbenchUI : null;
+            }
+            return wb != null && wb.IsOpen;
         }
 
         private void TryConsumeByType(Survivor sv, ItemType type)

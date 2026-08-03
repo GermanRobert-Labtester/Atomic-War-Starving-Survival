@@ -4,13 +4,15 @@ using UnityEngine;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
 
 namespace AtomicWar._Game.Crafting
 {
     /// <summary>
     /// Workbench component economy: disassemble non-consumables into scrap,
     /// repair degraded gear / hard-broken devices, recalibrate instruments with
-    /// ElectronicScrap. Reads ScrapValue / RepairRecipe from ItemDefinition.
+    /// ElectronicScrap, and install hatch defense upgrades. Reads ScrapValue /
+    /// RepairRecipe from ItemDefinition; hatch costs from HatchDefenseSystem.
     /// </summary>
     public class WorkbenchSystem
     {
@@ -25,11 +27,15 @@ namespace AtomicWar._Game.Crafting
         private readonly CraftingSystem _crafting;
         private readonly Func<Shelter.Shelter> _getShelter;
         private readonly Func<int> _getDay;
+        private HatchDefenseSystem _hatchDefense;
 
         public event Action OnWorkbenchChanged;
         public event Action<ItemDefinition, List<ScrapYield>> OnDisassembled;
         public event Action<ItemDefinition> OnRepaired;
         public event Action<ItemDefinition> OnRecalibrated;
+        public event Action<string> OnHatchUpgradeInstalled;
+
+        public HatchDefenseSystem HatchDefense => _hatchDefense;
 
         public WorkbenchSystem(
             Inventory.Inventory inventory,
@@ -43,6 +49,13 @@ namespace AtomicWar._Game.Crafting
             _crafting = crafting;
             _getShelter = getShelter;
             _getDay = getDay ?? (() => 0);
+        }
+
+        /// <summary>Wire hatch defense so the workbench can list install upgrades.</summary>
+        public void SetHatchDefense(HatchDefenseSystem hatchDefense)
+        {
+            _hatchDefense = hatchDefense;
+            OnWorkbenchChanged?.Invoke();
         }
 
         public bool HasOperationalWorkbench()
@@ -413,7 +426,25 @@ namespace AtomicWar._Game.Crafting
                 }
             }
 
+            AppendHatchInstallLines(lines);
             return lines;
+        }
+
+        /// <summary>Install / level a hatch module (locks, blast door, traps).</summary>
+        public bool CanInstallHatchUpgrade(string moduleId)
+        {
+            if (_hatchDefense == null || !HasOperationalWorkbench()) return false;
+            return _hatchDefense.CanInstallHatchUpgrade(moduleId, _itemLookup, _inventory);
+        }
+
+        public bool InstallHatchUpgrade(string moduleId)
+        {
+            if (!CanInstallHatchUpgrade(moduleId)) return false;
+            if (!_hatchDefense.TryInstallHatchUpgrade(moduleId, _itemLookup, _inventory)) return false;
+            WearStation();
+            OnHatchUpgradeInstalled?.Invoke(moduleId);
+            OnWorkbenchChanged?.Invoke();
+            return true;
         }
 
         public bool ExecuteLine(WorkbenchLine line)
@@ -431,9 +462,52 @@ namespace AtomicWar._Game.Crafting
                     return RecalibrateGeiger();
                 case WorkbenchActionKind.RepairPurifier:
                     return RepairWaterPurifier();
+                case WorkbenchActionKind.InstallHatch:
+                    return InstallHatchUpgrade(line.ModuleId);
                 default:
                     return false;
             }
+        }
+
+        private void AppendHatchInstallLines(List<WorkbenchLine> lines)
+        {
+            if (_hatchDefense == null || lines == null) return;
+            var shelter = _getShelter?.Invoke();
+
+            for (int i = 0; i < HatchDefenseSystem.HatchModuleIds.Length; i++)
+            {
+                string moduleId = HatchDefenseSystem.HatchModuleIds[i];
+                var existing = shelter?.GetModule(moduleId);
+                int targetLevel = existing != null ? existing.Level + 1 : 1;
+                if (targetLevel > 5) continue;
+                if (existing?.Definition != null && targetLevel > existing.Definition.MaxLevel)
+                    continue;
+
+                HatchDefenseSystem.GetUpgradeMaterialCost(moduleId, targetLevel, out int scrap, out int mech);
+                string label = FormatHatchInstallLabel(moduleId, targetLevel, existing != null);
+                string cost = $"{scrap}x scrap_metal, {mech}x mechanical_parts";
+                lines.Add(new WorkbenchLine
+                {
+                    Kind = WorkbenchActionKind.InstallHatch,
+                    Item = null,
+                    SlotIndex = -1,
+                    ModuleId = moduleId,
+                    Label = label,
+                    CostSummary = cost,
+                    CanExecute = CanInstallHatchUpgrade(moduleId)
+                });
+            }
+        }
+
+        private static string FormatHatchInstallLabel(string moduleId, int targetLevel, bool upgrade)
+        {
+            string name = moduleId == HatchDefenseModuleSO.BlastDoorId ? "Blast Door"
+                : moduleId == HatchDefenseModuleSO.HatchTrapsId ? "Hatch Traps"
+                : moduleId == HatchDefenseModuleSO.ReinforcedLocksId ? "Reinforced Locks"
+                : moduleId;
+            return upgrade
+                ? $"Upgrade hatch: {name} → L{targetLevel}"
+                : $"Install hatch: {name}";
         }
 
         // -----------------------------------------------------------------
@@ -513,7 +587,9 @@ namespace AtomicWar._Game.Crafting
         Disassemble,
         Repair,
         Recalibrate,
-        RepairPurifier
+        RepairPurifier,
+        /// <summary>Install or level a hatch defense module (locks / blast / traps).</summary>
+        InstallHatch
     }
 
     [Serializable]
@@ -522,6 +598,8 @@ namespace AtomicWar._Game.Crafting
         public WorkbenchActionKind Kind;
         public ItemDefinition Item;
         public int SlotIndex;
+        /// <summary>Hatch module id when <see cref="Kind"/> is <see cref="WorkbenchActionKind.InstallHatch"/>.</summary>
+        public string ModuleId;
         public string Label;
         public string CostSummary;
         public bool CanExecute;

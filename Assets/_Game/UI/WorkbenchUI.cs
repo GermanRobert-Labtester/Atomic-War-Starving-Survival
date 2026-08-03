@@ -99,6 +99,27 @@ namespace AtomicWar._Game.UI
             return ok;
         }
 
+        /// <summary>Install or level a hatch upgrade by module id (from hatch install lines).</summary>
+        public bool InstallHatchUpgrade(string moduleId)
+        {
+            if (_workbench == null) return false;
+            bool ok = _workbench.InstallHatchUpgrade(moduleId);
+            Refresh();
+            return ok;
+        }
+
+        /// <summary>Count of hatch install/upgrade lines currently listed.</summary>
+        public int HatchInstallLineCount
+        {
+            get
+            {
+                int n = 0;
+                for (int i = 0; i < _lines.Count; i++)
+                    if (_lines[i].Kind == WorkbenchActionKind.InstallHatch) n++;
+                return n;
+            }
+        }
+
         public string BuildPanelText()
         {
             Refresh();
@@ -108,7 +129,7 @@ namespace AtomicWar._Game.UI
         private void RebuildPanel()
         {
             var sb = new StringBuilder();
-            sb.AppendLine("WORKBENCH");
+            sb.AppendLine("WORKBENCH  [B] toggle  ·  [1-9] execute");
             if (_workbench == null)
             {
                 sb.Append("No workbench bound.");
@@ -122,18 +143,28 @@ namespace AtomicWar._Game.UI
             if (_workbench.NeedsElectronicScrapForCriticalRepair())
                 sb.AppendLine("! Critical repair needs ElectronicScrap — scavenge junk.");
 
+            if (_workbench.HatchDefense != null)
+                sb.AppendLine("Hatch installs available below (scrap + mechanical parts).");
+
             if (_lines.Count == 0)
             {
-                sb.Append("No breakdown or repair actions available.");
+                sb.Append("No breakdown, repair, or hatch install actions available.");
                 PanelSummary = sb.ToString();
                 return;
             }
 
+            bool wroteHatchHeader = false;
             for (int i = 0; i < _lines.Count; i++)
             {
                 var line = _lines[i];
+                if (line.Kind == WorkbenchActionKind.InstallHatch && !wroteHatchHeader)
+                {
+                    sb.AppendLine("--- HATCH DEFENSE ---");
+                    wroteHatchHeader = true;
+                }
                 string flag = line.CanExecute ? "[OK]" : "[--]";
-                sb.Append(i).Append(". ").Append(flag).Append(' ')
+                // 1-based index for keybind UX (1-9)
+                sb.Append(i + 1).Append(". ").Append(flag).Append(' ')
                     .Append(line.Label).Append("  (").Append(line.CostSummary).Append(')')
                     .AppendLine();
             }

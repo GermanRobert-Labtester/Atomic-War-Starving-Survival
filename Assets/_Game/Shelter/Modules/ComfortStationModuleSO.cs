@@ -1,5 +1,4 @@
 using UnityEngine;
-using AtomicWar._Game.Medical;
 
 namespace AtomicWar._Game.Shelter.Modules
 {
@@ -10,7 +9,8 @@ namespace AtomicWar._Game.Shelter.Modules
     [CreateAssetMenu(fileName = "ComfortStationModule", menuName = "ASHFALL/Shelter/Comfort Station")]
     public class ComfortStationModuleSO : ShelterModule
     {
-        public const string DefaultModuleId = MedicalSystem.ComfortStationModuleId;
+        /// <summary>snake_case id — matches MedicalSystem.ComfortStationModuleId.</summary>
+        public const string DefaultModuleId = "comfort_station";
 
         [Header("Comfort Care")]
         [Tooltip("Multiplier applied to MentalBreakComfortActionSO score when this station is enabled.")]
