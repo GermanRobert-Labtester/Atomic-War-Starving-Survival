@@ -63,6 +63,7 @@ namespace AtomicWar._Game.Core
         public EventRunner EventRunner { get; private set; }
         public SaveSystem SaveSystem { get; private set; }
         public LocationScavengingSystem ScavengingSystem { get; private set; }
+        public ExpeditionSystem ExpeditionSystem { get; private set; }
         public RadiationKnowledgeMap KnowledgeMap { get; private set; }
         public RadioBroadcastSystem RadioSystem { get; private set; }
         public RadioTunerSystem RadioTunerSystem { get; private set; }
@@ -219,6 +220,12 @@ namespace AtomicWar._Game.Core
                 KnowledgeMap, () => TimeSystem.CurrentDay);
             ScavengingSystem.OnSurveyCompleted += (mission, success) => RefreshMapKnowledgeHUD();
             ScavengingSystem.OnMissionCompleted += (mission, loot) => RefreshMapKnowledgeHUD();
+
+            // Expedition Engine (node-based events, stances, stamina drain, push-your-luck)
+            ExpeditionSystem = new ExpeditionSystem(
+                RadiationSystem, Inventory, _itemCatalog, WeatherSystem,
+                KnowledgeMap, _worldSeed);
+            SaveSystem.SetExpeditionSystem(ExpeditionSystem);
             if (Inventory != null)
             {
                 Inventory.OnInventoryChanged += RefreshMapKnowledgeHUD;
@@ -399,8 +406,9 @@ namespace AtomicWar._Game.Core
             // Crafting
             CraftingSystem.Tick(gameHours);
 
-            // Scavenging
+            // Scavenging & Expeditions
             ScavengingSystem?.Tick(gameHours);
+            ExpeditionSystem?.Tick(gameHours);
             
             // Radio Tuner (intel extraction)
             if (RadioTunerSystem != null && Shelter != null)
@@ -582,6 +590,12 @@ namespace AtomicWar._Game.Core
         {
             if (ScavengingSystem == null || survivor == null || location == null) return false;
             return ScavengingSystem.StartMission(survivor, location);
+        }
+
+        public bool StartExpeditionMission(Survivor survivor, LocationDefinitionSO location, ExpeditionStance stance = ExpeditionStance.Stealth)
+        {
+            if (ExpeditionSystem == null || survivor == null || location == null) return false;
+            return ExpeditionSystem.StartExpedition(survivor, location, stance);
         }
 
         /// <summary>Send a survivor to survey a location with a working geiger.</summary>

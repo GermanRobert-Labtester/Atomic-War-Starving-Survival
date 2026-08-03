@@ -44,6 +44,7 @@ namespace AtomicWar._Game.Core
         private PhotoperiodSystem _photoPeriodSystem;
         private RadiationKnowledgeMap _knowledgeMap;
         private Inventory.Inventory _inventory;
+        private ExpeditionSystem _expeditionSystem;
 
         private readonly Dictionary<string, bool> _worldFlags = new Dictionary<string, bool>();
 
@@ -92,6 +93,12 @@ namespace AtomicWar._Game.Core
         public void SetInventory(Inventory.Inventory inventory)
         {
             _inventory = inventory;
+        }
+
+        /// <summary>Inject expedition system (optional; safe to skip in tests).</summary>
+        public void SetExpeditionSystem(ExpeditionSystem expeditionSystem)
+        {
+            _expeditionSystem = expeditionSystem;
         }
 
         /// <summary>Write the current world state to the given slot.</summary>
@@ -301,6 +308,40 @@ namespace AtomicWar._Game.Core
             if (_inventory != null)
                 data.Inventory = _inventory.CaptureState();
 
+            if (_expeditionSystem != null && _expeditionSystem.ActiveExpeditions != null)
+            {
+                foreach (var exp in _expeditionSystem.ActiveExpeditions)
+                {
+                    if (exp == null) continue;
+                    var saveExp = new ExpeditionSaveState
+                    {
+                        ExpeditionId = exp.ExpeditionId,
+                        SurvivorId = exp.SurvivorId,
+                        TargetLocationId = exp.TargetLocationId,
+                        TargetLocationName = exp.TargetLocationName,
+                        Stance = exp.Stance,
+                        Phase = exp.Phase,
+                        CurrentTick = exp.CurrentTick,
+                        TotalDistanceTicks = exp.TotalDistanceTicks,
+                        TravelTicksCompleted = exp.TravelTicksCompleted,
+                        LootingTicksCompleted = exp.LootingTicksCompleted,
+                        CarryingCapacity = exp.CarryingCapacity,
+                        CurrentWeight = exp.CurrentWeight,
+                        Stamina = exp.Stamina,
+                        SuitDegradation = exp.SuitDegradation,
+                        TrueRadPerHour = exp.TrueRadPerHour,
+                        DangerLevel = exp.DangerLevel,
+                        IsPushingLuck = exp.IsPushingLuck,
+                        IsRetreating = exp.IsRetreating
+                    };
+                    if (exp.CollectedLootItemIds != null)
+                    {
+                        saveExp.CollectedLootItemIds.AddRange(exp.CollectedLootItemIds);
+                    }
+                    data.Expeditions.Add(saveExp);
+                }
+            }
+
             return data;
         }
 
@@ -426,6 +467,11 @@ namespace AtomicWar._Game.Core
             {
                 _inventory.RestoreState(data.Inventory, _itemLookup);
             }
+
+            if (_expeditionSystem != null && data.Expeditions != null)
+            {
+                RestoreExpeditions(data.Expeditions);
+            }
         }
 
         private void RestoreSurvivor(Survivor sv, SurvivorSave save)
@@ -502,6 +548,83 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        private void RestoreExpeditions(List<ExpeditionSaveState> expeditions)
+        {
+            if (_expeditionSystem == null || expeditions == null) return;
+
+            var existingExpeditions = _expeditionSystem.ActiveExpeditions as List<ExpeditionState>;
+            var survivors = _getSurvivors?.Invoke();
+
+            foreach (var saveExp in expeditions)
+            {
+                if (saveExp == null || string.IsNullOrEmpty(saveExp.SurvivorId)) continue;
+
+                Survivor survivor = null;
+                if (survivors != null)
+                {
+                    for (int i = 0; i < survivors.Count; i++)
+                    {
+                        if (survivors[i]?.Id == saveExp.SurvivorId)
+                        {
+                            survivor = survivors[i];
+                            break;
+                        }
+                    }
+                }
+
+                var state = _expeditionSystem.GetExpeditionBySurvivor(saveExp.SurvivorId);
+                if (state == null)
+                {
+                    state = new ExpeditionState();
+                    if (existingExpeditions != null)
+                    {
+                        existingExpeditions.Add(state);
+                    }
+                }
+
+                state.ExpeditionId = saveExp.ExpeditionId;
+                state.SurvivorId = saveExp.SurvivorId;
+                state.TargetLocationId = saveExp.TargetLocationId;
+                state.TargetLocationName = saveExp.TargetLocationName;
+                state.Stance = saveExp.Stance;
+                state.Phase = saveExp.Phase;
+                state.CurrentTick = saveExp.CurrentTick;
+                state.TotalDistanceTicks = saveExp.TotalDistanceTicks;
+                state.TravelTicksCompleted = saveExp.TravelTicksCompleted;
+                state.LootingTicksCompleted = saveExp.LootingTicksCompleted;
+                state.CarryingCapacity = saveExp.CarryingCapacity;
+                state.CurrentWeight = saveExp.CurrentWeight;
+                state.Stamina = saveExp.Stamina;
+                state.SuitDegradation = saveExp.SuitDegradation;
+                state.TrueRadPerHour = saveExp.TrueRadPerHour;
+                state.DangerLevel = saveExp.DangerLevel;
+                state.IsPushingLuck = saveExp.IsPushingLuck;
+                state.IsRetreating = saveExp.IsRetreating;
+                state.Survivor = survivor;
+
+                state.CollectedLootItemIds.Clear();
+                if (saveExp.CollectedLootItemIds != null)
+                {
+                    state.CollectedLootItemIds.AddRange(saveExp.CollectedLootItemIds);
+                }
+
+                state.CollectedLoot.Clear();
+                if (_itemLookup != null && state.CollectedLootItemIds != null)
+                {
+                    for (int i = 0; i < state.CollectedLootItemIds.Count; i++)
+                    {
+                        var itemDef = _itemLookup(state.CollectedLootItemIds[i]);
+                        if (itemDef != null)
+                        {
+                            state.CollectedLoot.Add(itemDef);
+                        }
+                    }
+                }
+
+                state.RecalculateWeight();
+            }
+        }
+
         // -----------------------------------------------------------------
         // Autosave on phase change
         // -----------------------------------------------------------------
@@ -540,6 +663,32 @@ namespace AtomicWar._Game.Core
         public List<bool> WorldFlagValues = new List<bool>();
         public RadiationKnowledgeSave RadiationKnowledge;
         public InventorySaveState Inventory;
+        public List<ExpeditionSaveState> Expeditions = new List<ExpeditionSaveState>();
+    }
+
+    /// <summary>Expedition runtime state snapshot.</summary>
+    [Serializable]
+    public class ExpeditionSaveState
+    {
+        public string ExpeditionId;
+        public string SurvivorId;
+        public string TargetLocationId;
+        public string TargetLocationName;
+        public ExpeditionStance Stance;
+        public ExpeditionPhase Phase;
+        public int CurrentTick;
+        public int TotalDistanceTicks;
+        public int TravelTicksCompleted;
+        public int LootingTicksCompleted;
+        public float CarryingCapacity;
+        public float CurrentWeight;
+        public float Stamina;
+        public float SuitDegradation;
+        public float TrueRadPerHour;
+        public float DangerLevel;
+        public bool IsPushingLuck;
+        public bool IsRetreating;
+        public List<string> CollectedLootItemIds = new List<string>();
     }
 
     // =====================================================================
