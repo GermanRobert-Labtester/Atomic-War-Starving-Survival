@@ -1,23 +1,109 @@
-name: ASHFALL CI/CD Automated Build Pipeline
+# ASHFALL primary CI gate — Unity 6000.5.5f1 (AUDIT-001 / AUDIT-006)
+# Pins editor version explicitly so package resolve matches ProjectVersion.txt.
+name: ASHFALL CI
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
   pull_request:
-    branches: [ main, master ]
+    branches: [main, master]
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+  UNITY_VERSION: 6000.5.5f1
 
 jobs:
-  validate-and-build:
-    name: JSON Validation Gate & Test Runner & Build
+  validate:
+    name: Data Validation Gate
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Validate Data & Execute Build Pipeline Script
+      - name: Validate StreamingAssets JSON syntax
         run: |
-          echo "=== Executing ASHFALL CI Pipeline Validation Gate ==="
-          # Unity batchmode command line invocation:
-          # ${UNITY_EXECUTABLE} -batchmode -nographics -silent-crashes -projectPath "." -executeMethod AtomicWar._Game.Editor.BuildScript.PerformBuildPipeline -logFile "unity_ci.log"
-          echo "Build script configured for batchmode execution."
+          python3 - <<'PY'
+          import json, pathlib, sys
+          root = pathlib.Path("Assets/StreamingAssets")
+          errors = []
+          if not root.exists():
+              print(f"WARN: {root} missing — skipping JSON syntax scan")
+              sys.exit(0)
+          for p in sorted(root.rglob("*.json")):
+              try:
+                  json.loads(p.read_text(encoding="utf-8"))
+              except Exception as e:
+                  errors.append(f"{p}: {e}")
+          if errors:
+              print("JSON validation FAILED:")
+              print("\n".join(errors))
+              sys.exit(1)
+          print(f"OK: validated {sum(1 for _ in root.rglob('*.json'))} JSON file(s) under {root}")
+          PY
+
+      - name: Assert ProjectVersion is 6000.5.5f1
+        run: |
+          grep -q 'm_EditorVersion: 6000.5.5f1' ProjectSettings/ProjectVersion.txt
+          echo "ProjectVersion pin OK: 6000.5.5f1"
+
+  test:
+    name: EditMode Tests
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-${{ env.UNITY_VERSION }}-
+
+      - uses: game-ci/unity-test-runner@v4
+        id: tests
+        with:
+          projectPath: .
+          unityVersion: 6000.5.5f1
+          testMode: EditMode
+          artifactsPath: test-results
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: EditMode Test Results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-editmode
+          path: test-results
+
+  build-linux:
+    name: Build Linux64
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-Linux-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
+          restore-keys: |
+            Library-Linux-${{ env.UNITY_VERSION }}-
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          projectPath: .
+          buildTarget: StandaloneLinux64
+          buildsPath: builds
+          unityVersion: 6000.5.5f1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-Linux64
+          path: builds/StandaloneLinux64
