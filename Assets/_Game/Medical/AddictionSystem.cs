@@ -175,12 +175,15 @@ namespace AtomicWar._Game.Medical
                 }
 
                 // Active withdrawal drains needs
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale - WithdrawalMoraleDrainPerHour * gameHours, 0f, 100f);
-                sv.Needs.Health = Mathf.Clamp(
-                    sv.Needs.Health - WithdrawalHealthDrainPerHour * gameHours, 0f, sv.MaxHealthCap);
-                sv.Needs.Fatigue = Mathf.Clamp(
-                    sv.Needs.Fatigue + WithdrawalFatigueDrainPerHour * gameHours, 0f, 100f);
+                if (sv.Needs != null)
+                {
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale - WithdrawalMoraleDrainPerHour * gameHours, 0f, 100f);
+                    sv.Needs.Health = Mathf.Clamp(
+                        sv.Needs.Health - WithdrawalHealthDrainPerHour * gameHours, 0f, sv.MaxHealthCap);
+                    sv.Needs.Fatigue = Mathf.Clamp(
+                        sv.Needs.Fatigue + WithdrawalFatigueDrainPerHour * gameHours, 0f, 100f);
+                }
 
                 // Panic item destruction
                 if (PanicDestroyHandler != null && _rng.NextDouble() < PanicDestroyChancePerHour * gameHours)

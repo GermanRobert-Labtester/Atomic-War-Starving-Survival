@@ -29,6 +29,10 @@ namespace AtomicWar._Game.Events
         // ── Scheduled-event queue (Prompt #43 — delayed narrative chains) ──
         private readonly List<ScheduledEvent> _scheduledEvents = new List<ScheduledEvent>();
 
+        // Hot-path scratch buffers — avoid per-tick / per-SelectEvent GC.
+        private readonly List<GameEvent> _selectValidBuffer = new List<GameEvent>(32);
+        private readonly List<string> _cooldownKeyBuffer = new List<string>(16);
+
         public IReadOnlyList<GameEvent> Pool => _pool;
         public IReadOnlyList<ActiveDelayedConsequence> ActiveConsequences => _activeConsequences;
         /// <summary>Read-only view of the pending deferred narrative events.</summary>
@@ -67,17 +71,19 @@ namespace AtomicWar._Game.Events
         {
             if (_pool.Count == 0) return null;
 
-            List<GameEvent> validEvents = new List<GameEvent>();
+            var validEvents = _selectValidBuffer;
+            validEvents.Clear();
             float totalWeight = 0f;
 
             for (int i = 0; i < _pool.Count; i++)
             {
                 var ev = _pool[i];
-                if (CanTrigger(ev, context))
-                {
-                    validEvents.Add(ev);
-                    totalWeight += Mathf.Max(0.01f, ev.weight);
-                }
+                // weight <= 0 = scheduled-only / tracker-fired — never random-pick.
+                if (ev == null || ev.weight <= 0f) continue;
+                if (!CanTrigger(ev, context)) continue;
+
+                validEvents.Add(ev);
+                totalWeight += ev.weight;
             }
 
             if (validEvents.Count == 0 || totalWeight <= 0f) return null;
@@ -88,14 +94,14 @@ namespace AtomicWar._Game.Events
             for (int i = 0; i < validEvents.Count; i++)
             {
                 var ev = validEvents[i];
-                accum += Mathf.Max(0.01f, ev.weight);
+                accum += ev.weight;
                 if (roll <= accum)
                 {
                     return ev;
                 }
             }
 
-            return validEvents[0];
+            return validEvents[validEvents.Count - 1];
         }
 
         /// <summary>
@@ -452,19 +458,20 @@ namespace AtomicWar._Game.Events
         {
             if (gameHours <= 0f) return;
 
-            // Decrement cooldown timers
-            List<string> keys = new List<string>(_cooldowns.Keys);
-            for (int i = 0; i < keys.Count; i++)
+            // Decrement cooldown timers (reuse key buffer — no per-tick List alloc).
+            if (_cooldowns.Count > 0)
             {
-                string key = keys[i];
-                float remaining = _cooldowns[key] - gameHours;
-                if (remaining <= 0f)
+                _cooldownKeyBuffer.Clear();
+                foreach (var key in _cooldowns.Keys)
+                    _cooldownKeyBuffer.Add(key);
+                for (int i = 0; i < _cooldownKeyBuffer.Count; i++)
                 {
-                    _cooldowns.Remove(key);
-                }
-                else
-                {
-                    _cooldowns[key] = remaining;
+                    string key = _cooldownKeyBuffer[i];
+                    float remaining = _cooldowns[key] - gameHours;
+                    if (remaining <= 0f)
+                        _cooldowns.Remove(key);
+                    else
+                        _cooldowns[key] = remaining;
                 }
             }
 

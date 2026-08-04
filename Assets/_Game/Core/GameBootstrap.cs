@@ -171,6 +171,20 @@ namespace AtomicWar._Game.Core
         /// <summary>Reusable fog-of-war view buffer (no per-refresh list allocation).</summary>
         private readonly List<MapTilePlayerView> _knowledgeViewBuffer = new List<MapTilePlayerView>();
 
+        // ── Day-tick GC caches (no per-hour new Random / context / lambda) ──
+        private System.Random _mentalBreakRng;
+        private System.Random _phantomRng;
+        private System.Random _eventCtxRng;
+        private System.Random _aiRng;
+        private readonly AIContext _aiContextScratch = new AIContext();
+        private readonly EventContext _eventContextScratch = new EventContext();
+        private Func<string, float> _getFactionTrustEffective;
+        private Func<string, float> _getFactionTrustStored;
+        private Action<string, int, string> _scheduleEventCached;
+        private Action<string, bool> _onEventFlagChangedCached;
+        private Func<string, float, float, bool> _tryApplyPedalCostCached;
+        private Func<IReadOnlyList<Survivor>> _getSurvivorsCached;
+
         // -----------------------------------------------------------------
         // GameOver state
         // -----------------------------------------------------------------
@@ -1036,6 +1050,10 @@ namespace AtomicWar._Game.Core
                     EventRunner.TickDay(day, dayCtx);
                 }
             };
+
+            // Cache day-tick RNGs / lambdas once so TickSystems allocates no
+            // System.Random or closure per hour (see DayTickGcProfileTests).
+            WarmDayTickCaches();
 
             // Day-30 Flashpoint Choreographer (narrative/UX layer over the
             // mechanical EMP/weather cascade). Owns the buildup days 25-29
@@ -1973,9 +1991,74 @@ namespace AtomicWar._Game.Core
         // Game loop
         // -----------------------------------------------------------------
 
+        /// <summary>
+        /// One-shot: stable RNGs + non-allocating callbacks for the hourly tick.
+        /// Safe to call more than once (idempotent).
+        /// </summary>
+        private void WarmDayTickCaches()
+        {
+            _mentalBreakRng ??= new System.Random(_worldSeed + 3);
+            _phantomRng ??= new System.Random(_worldSeed + 61);
+            _eventCtxRng ??= new System.Random(_worldSeed + 11);
+            _aiRng ??= new System.Random(_worldSeed + 17);
+            _getSurvivorsCached ??= () => Survivors;
+            _getFactionTrustEffective ??= factionId =>
+                EconomySystem != null ? EconomySystem.GetEffectiveTrust(factionId) : 0f;
+            _getFactionTrustStored ??= factionId =>
+                EconomySystem != null ? EconomySystem.GetTrust(factionId) : 0f;
+            _scheduleEventCached ??= (eventId, fireDay, originFlag) =>
+                EventRunner?.ScheduleEvent(eventId, fireDay, originFlag);
+            _onEventFlagChangedCached ??= (flagId, value) =>
+            {
+                if (SaveSystem != null)
+                    SaveSystem.SetWorldFlag(flagId, value);
+            };
+            _tryApplyPedalCostCached ??= TryApplyPedalCost;
+        }
+
+        private bool TryApplyPedalCost(string id, float fatigueDelta, float hungerDelta)
+        {
+            if (Survivors == null || string.IsNullOrEmpty(id)) return false;
+            Survivor pedaler = null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                if (Survivors[i] != null && Survivors[i].Id == id)
+                {
+                    pedaler = Survivors[i];
+                    break;
+                }
+            }
+            if (pedaler == null || !pedaler.IsAlive || pedaler.Needs == null)
+                return false;
+            if (pedaler.Needs.Fatigue >= 95f)
+                return false;
+            pedaler.Needs.Fatigue = Mathf.Clamp(
+                pedaler.Needs.Fatigue + fatigueDelta, 0f, 100f);
+            pedaler.Needs.Hunger = Mathf.Clamp(
+                pedaler.Needs.Hunger + hungerDelta, 0f, 100f);
+            return true;
+        }
+
+        /// <summary>Allocation-free weather name for PowerNetwork (no Enum.ToString).</summary>
+        private static string WeatherNameOf(WeatherKind kind)
+        {
+            switch (kind)
+            {
+                case WeatherKind.Clear: return "Clear";
+                case WeatherKind.Rain: return "Rain";
+                case WeatherKind.Overcast: return "Overcast";
+                case WeatherKind.Ashfall: return "Ashfall";
+                case WeatherKind.FalloutStorm: return "FalloutStorm";
+                case WeatherKind.Blizzard: return "Blizzard";
+                case WeatherKind.BlackRain: return "BlackRain";
+                default: return "Clear";
+            }
+        }
+
         private void TickSystems(float gameHours)
         {
             if (gameHours <= 0f) return;
+            if (_mentalBreakRng == null) WarmDayTickCaches();
 
             // Environment
             WeatherSystem.Tick(gameHours);
@@ -1990,13 +2073,8 @@ namespace AtomicWar._Game.Core
                     gameHours,
                     WeatherSystem.Current,
                     Shelter,
-                    // Effective trust so Cult of the Glow (trustInversion) can dig
-                    // out a highly-irradiated party even when stored trust is low.
-                    factionId => EconomySystem != null
-                        ? EconomySystem.GetEffectiveTrust(factionId)
-                        : 0f,
-                    (eventId, fireDay, originFlag) =>
-                        EventRunner?.ScheduleEvent(eventId, fireDay, originFlag),
+                    _getFactionTrustEffective,
+                    _scheduleEventCached,
                     day);
                 SyncHatchExpeditionLock();
             }
@@ -2007,32 +2085,10 @@ namespace AtomicWar._Game.Core
             // Power grid (fuel burn, CO, pedaling, load-shed) then push to modules
             if (PowerNetwork != null)
             {
-                string weatherName = WeatherSystem != null ? WeatherSystem.Current.ToString() : null;
-                PowerNetwork.Tick(
-                    gameHours,
-                    weatherName,
-                    (id, fatigueDelta, hungerDelta) =>
-                    {
-                        if (Survivors == null || string.IsNullOrEmpty(id)) return false;
-                        Survivor pedaler = null;
-                        for (int i = 0; i < Survivors.Count; i++)
-                        {
-                            if (Survivors[i] != null && Survivors[i].Id == id)
-                            {
-                                pedaler = Survivors[i];
-                                break;
-                            }
-                        }
-                        if (pedaler == null || !pedaler.IsAlive || pedaler.Needs == null)
-                            return false;
-                        if (pedaler.Needs.Fatigue >= 95f)
-                            return false;
-                        pedaler.Needs.Fatigue = Mathf.Clamp(
-                            pedaler.Needs.Fatigue + fatigueDelta, 0f, 100f);
-                        pedaler.Needs.Hunger = Mathf.Clamp(
-                            pedaler.Needs.Hunger + hungerDelta, 0f, 100f);
-                        return true;
-                    });
+                string weatherName = WeatherSystem != null
+                    ? WeatherNameOf(WeatherSystem.Current)
+                    : null;
+                PowerNetwork.Tick(gameHours, weatherName, _tryApplyPedalCostCached);
                 PowerNetwork.ApplyToShelter(Shelter);
             }
 
@@ -2055,7 +2111,7 @@ namespace AtomicWar._Game.Core
             // to other survivors, and natural cure progress.
             if (MentalBreakSystem != null)
             {
-                MentalBreakSystem.Tick(gameHours, Survivors, new System.Random(_worldSeed));
+                MentalBreakSystem.Tick(gameHours, Survivors, _mentalBreakRng);
             }
 
             // Prompt #10 — Skill Atrophy: morale < 20 for 14 days → skill downgrade.
@@ -2069,7 +2125,7 @@ namespace AtomicWar._Game.Core
             Addiction?.Tick(gameHours, Survivors, currentDay);
 
             // Prompt #6 — Phantom Intruders: fake hatch breach when Anxiety+Fatigue max out.
-            PhantomIntruders?.Tick(gameHours, Survivors, new System.Random(_worldSeed + 61));
+            PhantomIntruders?.Tick(gameHours, Survivors, _phantomRng);
 
             // Prompt #9 — Child: Hope buff, rations consumption, death check.
             ChildSystem?.Tick(gameHours, Survivors);
@@ -2146,41 +2202,55 @@ namespace AtomicWar._Game.Core
                     }
                 }
 
-                foreach (var sv in Survivors)
+                int scrapDeficit = WorkbenchSystem != null
+                    ? WorkbenchSystem.GetCriticalElectronicScrapDeficit()
+                    : 0;
+                float junkUrgency = scrapDeficit > 0
+                    ? Mathf.Clamp01(scrapDeficit / 4f)
+                    : 0f;
+                bool needsScrap = scrapDeficit > 0;
+                bool isStorm = WeatherSystem.Current == WeatherKind.FalloutStorm
+                    || WeatherSystem.Current == WeatherKind.BlackRain;
+                bool growLight = Shelter != null && Shelter.IsGrowLightActive;
+
+                // Reuse one AIContext + shared RNG across the whole AI wave.
+                var context = _aiContextScratch;
+                context.Shelter = Shelter;
+                context.Inventory = Inventory;
+                context.Random = _aiRng;
+                context.IsFalloutStorm = isStorm;
+                context.AmbientRadRate = 5f;
+                context.GrowLightActive = growLight;
+                context.OnRequestSurvey = RequestSurveyForSurvivor;
+                context.BeliefSystem = BeliefSystem;
+                context.MedicalSystem = MedicalSystem;
+                context.MentalBreak = MentalBreakSystem;
+                context.PowerNetwork = PowerNetwork;
+                context.HatchDefense = HatchDefenseSystem;
+                context.RaidThreatLevel = raidThreat;
+                context.CurrentDay = day;
+                context.IndoorTemperatureC = indoorTemp;
+                context.SleepRoomId = SleepQualitySystem.DefaultSleepRoomId;
+                context.AreRoomsAdjacent = Shelter != null ? Shelter.AreRoomsAdjacent : null;
+                context.WaterStorage = WaterStorage;
+                context.NeedsElectronicScrapForCriticalRepair = needsScrap;
+                context.JunkScavengeUrgency = junkUrgency;
+                context.RadiationSystem = RadiationSystem;
+                context.GetSurvivors = _getSurvivorsCached;
+
+                for (int si = 0; si < Survivors.Count; si++)
                 {
-                    if (!sv.IsAlive) continue;
+                    var sv = Survivors[si];
+                    if (sv == null || !sv.IsAlive) continue;
                     float mapUncertainty = GetMapUncertaintyFor(sv);
                     BeliefSystem.Tick(sv, mapUncertainty, gameHours);
-                    int scrapDeficit = WorkbenchSystem != null
-                        ? WorkbenchSystem.GetCriticalElectronicScrapDeficit()
-                        : 0;
-                    var context = new AIContext(sv, Shelter, Inventory, new System.Random(_worldSeed + sv.Id.GetHashCode()))
-                    {
-                        IsFalloutStorm  = WeatherSystem.Current == WeatherKind.FalloutStorm,
-                        AmbientRadRate  = 5f,
-                        IsListless      = sv.IsListless,
-                        GrowLightActive = Shelter.IsGrowLightActive,
-                        OnRequestSurvey = RequestSurveyForSurvivor,
-                        MapUncertainty  = mapUncertainty,
-                        BeliefSystem    = BeliefSystem,
-                        IsAnxious       = sv.HasRadiationAnxietyStatus,
-                        IsNumb          = sv.IsNumb,
-                        MedicalSystem   = MedicalSystem,
-                        PowerNetwork    = PowerNetwork,
-                        HatchDefense    = HatchDefenseSystem,
-                        RaidThreatLevel = raidThreat,
-                        CurrentDay      = day,
-                        IndoorTemperatureC = indoorTemp,
-                        SleepRoomId     = SleepQualitySystem.DefaultSleepRoomId,
-                        AreRoomsAdjacent = Shelter.AreRoomsAdjacent,
-                        WaterStorage    = WaterStorage,
-                        NeedsElectronicScrapForCriticalRepair = scrapDeficit > 0,
-                        JunkScavengeUrgency = scrapDeficit > 0
-                            ? Mathf.Clamp01(scrapDeficit / 4f)
-                            : 0f,
-                        RadiationSystem = RadiationSystem,
-                        GetSurvivors    = () => Survivors
-                    };
+
+                    context.Survivor = sv;
+                    context.IsListless = sv.IsListless;
+                    context.MapUncertainty = mapUncertainty;
+                    context.IsAnxious = sv.HasRadiationAnxietyStatus;
+                    context.IsNumb = sv.IsNumb;
+
                     var action = UtilityAI.SelectAction(context, Actions);
                     action?.Execute(context);
 
@@ -2228,39 +2298,41 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private EventContext BuildEventContext(int day, float hour = 12f, float? indoorTempC = null)
         {
+            if (_eventCtxRng == null) WarmDayTickCaches();
+
             float indoor = indoorTempC ?? (TemperatureSystem != null
                 ? TemperatureSystem.GetIndoorTemperature(Shelter)
                 : 15f);
 
-            var ctx = new EventContext(
-                Survivors != null && Survivors.Count > 0 ? Survivors[0] : null,
-                Shelter,
-                Inventory,
-                new System.Random(_worldSeed + day))
-            {
-                CurrentDay = day,
-                CurrentHour = hour,
-                IsFalloutStorm = WeatherSystem != null && WeatherSystem.Current == WeatherKind.FalloutStorm,
-                CurrentWeather = WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear,
-                AllSurvivors = Survivors,
-                MentalBreak = MentalBreakSystem,
-                CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f,
-                IndoorTemperatureC = indoor,
-                GetFactionTrust = factionId =>
-                    EconomySystem != null ? EconomySystem.GetTrust(factionId) : 0f,
-                OnEventFlagChanged = (flagId, value) =>
-                {
-                    if (SaveSystem != null)
-                        SaveSystem.SetWorldFlag(flagId, value);
-                },
-                // Primary survivor is POV for mystery suspect exclusion.
-                PlayerSurvivorId = Survivors != null && Survivors.Count > 0 && Survivors[0] != null
-                    ? Survivors[0].Id
-                    : null,
-                Suspicion = SuspicionTracker
-            };
+            // Reuse one EventContext each hour — ImportFlags clears WorldFlags in place.
+            var ctx = _eventContextScratch;
+            ctx.PrimarySurvivor = Survivors != null && Survivors.Count > 0 ? Survivors[0] : null;
+            ctx.Shelter = Shelter;
+            ctx.Inventory = Inventory;
+            ctx.Random = _eventCtxRng;
+            ctx.CurrentDay = day;
+            ctx.CurrentHour = hour;
+            ctx.IsFalloutStorm = WeatherSystem != null && WeatherSystem.Current == WeatherKind.FalloutStorm;
+            ctx.CurrentWeather = WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear;
+            ctx.AllSurvivors = Survivors;
+            ctx.MentalBreak = MentalBreakSystem;
+            ctx.CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f;
+            ctx.IndoorTemperatureC = indoor;
+            ctx.GetFactionTrust = _getFactionTrustStored;
+            ctx.OnEventFlagChanged = _onEventFlagChangedCached;
+            ctx.PlayerSurvivorId = Survivors != null && Survivors.Count > 0 && Survivors[0] != null
+                ? Survivors[0].Id
+                : null;
+            ctx.Suspicion = SuspicionTracker;
+            ctx.ActiveIntelReliability = IntelReliability.Unverified;
+            ctx.IsOnRadio = false;
+            ctx.IsResourceStarved = false;
+
             if (SaveSystem != null)
                 ctx.ImportFlags(SaveSystem.WorldFlags);
+            else if (ctx.WorldFlags != null)
+                ctx.WorldFlags.Clear();
+
             if (SuspicionTracker != null)
             {
                 SuspicionTracker.RefreshStarved(Inventory);

@@ -49,6 +49,8 @@ namespace AtomicWar._Game.Core
         private int _lastShiftDay = -999;
         private int _shiftCount;
         private readonly List<HotspotShiftRecord> _history = new List<HotspotShiftRecord>();
+        /// <summary>Cached undirected adjacency; rebuilt when map is rebound.</summary>
+        private Dictionary<string, List<string>> _adjacencyCache;
 
         public int LastShiftDay => _lastShiftDay;
         public int ShiftCount => _shiftCount;
@@ -66,6 +68,8 @@ namespace AtomicWar._Game.Core
         {
             _map = map;
             _knowledge = knowledge;
+            // Map topology is fixed after bind — rebuild adjacency once.
+            _adjacencyCache = null;
         }
 
         /// <summary>Count current death-zone nodes on the bound map.</summary>
@@ -252,6 +256,13 @@ namespace AtomicWar._Game.Core
 
         private Dictionary<string, List<string>> BuildAdjacency()
         {
+            if (_adjacencyCache != null) return _adjacencyCache;
+            if (_map == null)
+            {
+                _adjacencyCache = new Dictionary<string, List<string>>();
+                return _adjacencyCache;
+            }
+
             var map = new Dictionary<string, List<string>>();
             void Ensure(string id)
             {
@@ -276,7 +287,8 @@ namespace AtomicWar._Game.Core
                     map[p.ToNodeId].Add(p.FromNodeId);
                 }
             }
-            return map;
+            _adjacencyCache = map;
+            return _adjacencyCache;
         }
 
         /// <summary>

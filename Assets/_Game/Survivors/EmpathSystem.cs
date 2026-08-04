@@ -54,7 +54,7 @@ namespace AtomicWar._Game.Survivors
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
-                if (sv == null || !sv.IsAlive) continue;
+                if (sv == null || !sv.IsAlive || sv.Needs == null) continue;
 
                 if (sv.RiskBias == RiskBiasTrait.Empath)
                 {
@@ -67,6 +67,7 @@ namespace AtomicWar._Game.Survivors
 
         private void ApplyEmpathCoupling(Survivor empath, float bunkerAvg, float gameHours)
         {
+            if (empath?.Needs == null) return;
             float currentMorale = empath.Needs.Morale;
             float diff = bunkerAvg - currentMorale;
 
@@ -117,6 +118,7 @@ namespace AtomicWar._Game.Survivors
 
                 // Sociopath is immune to death morale loss
                 if (sv.RiskBias == RiskBiasTrait.Sociopath) continue;
+                if (sv.Needs == null) continue;
 
                 sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - DeathMoralePenalty, 0f, 100f);
 
@@ -145,7 +147,7 @@ namespace AtomicWar._Game.Survivors
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
-                if (sv != null && sv.IsAlive && sv != excludeSurvivor)
+                if (sv != null && sv.IsAlive && sv.Needs != null && sv != excludeSurvivor)
                 {
                     sum += sv.Needs.Morale;
                     count++;

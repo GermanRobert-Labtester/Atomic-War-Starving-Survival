@@ -429,8 +429,10 @@ namespace AtomicWar._Game.Editor
                         errors.Add($"[{typeName}:{id}] title is null or empty");
                     if (string.IsNullOrEmpty(evt.bodyText))
                         errors.Add($"[{typeName}:{id}] bodyText is null or empty");
-                    if (evt.weight <= 0)
-                        errors.Add($"[{typeName}:{id}] weight must be > 0");
+                    // weight 0 is valid: scheduled-only / tracker-fired chain steps
+                    // (must not enter the random pool — see EventRunner.SelectEvent).
+                    if (evt.weight < 0)
+                        errors.Add($"[{typeName}:{id}] weight must be >= 0");
                     break;
             }
         }

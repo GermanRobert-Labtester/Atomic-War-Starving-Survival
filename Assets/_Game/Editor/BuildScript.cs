@@ -38,7 +38,8 @@ namespace AtomicWar._Game.Editor
                 }
                 AppendLog("\n=== BUILD PIPELINE HALTED DUE TO DATA VALIDATION FAILURE ===");
                 Debug.LogError($"[BuildPipeline] Data Validation Failed:\n{string.Join("\n", validationErrors)}");
-                if (Application.isBatchMode)
+                // Never quit the Editor during EditMode/PlayMode test runs — Exit aborts the suite.
+                if (Application.isBatchMode && !IsRunningAutomatedTests())
                 {
                     EditorApplication.Exit(1);
                 }
@@ -70,11 +71,26 @@ namespace AtomicWar._Game.Editor
             else
             {
                 AppendLog("\n=== BUILD PIPELINE HALTED DUE TO COMPILATION FAILURE ===");
-                if (Application.isBatchMode)
+                if (Application.isBatchMode && !IsRunningAutomatedTests())
                 {
                     EditorApplication.Exit(1);
                 }
             }
+        }
+
+        /// <summary>
+        /// True when Unity was launched with -runTests (EditMode/PlayMode suite).
+        /// PerformBuildPipeline must not call EditorApplication.Exit in that case.
+        /// </summary>
+        private static bool IsRunningAutomatedTests()
+        {
+            string[] args = System.Environment.GetCommandLineArgs();
+            for (int i = 0; i < args.Length; i++)
+            {
+                if (string.Equals(args[i], "-runTests", System.StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
         }
 
         public static bool BuildWindows(string[] scenes)

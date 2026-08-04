@@ -214,7 +214,7 @@
     "id": "silent_knock_part1",
     "title": "A Knock in the Ash",
     "bodyText": "Three slow knocks on the outer hatch. Deliberate. Not debris, not wind. High fallout outside — the ash is coming down like grey snow. Whoever is out there cannot see, and neither can you.",
-    "weight": 0.0,
+    "weight": 1.5,
     "minDay": 35,
     "conditions": {
       "MinDay": 35,

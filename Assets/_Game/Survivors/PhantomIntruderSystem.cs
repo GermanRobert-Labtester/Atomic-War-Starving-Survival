@@ -67,6 +67,9 @@ namespace AtomicWar._Game.Survivors
         /// intruder trigger condition (Anxiety >= 1.0 AND Fatigue >= 100),
         /// respects the per-survivor cooldown, and fires the event.
         /// </summary>
+        // Reused buffer so Tick does not allocate a keys list every hour.
+        private readonly List<string> _cooldownKeyBuffer = new List<string>(8);
+
         public void Tick(
             float gameHours,
             IReadOnlyList<Survivor> survivors,
@@ -75,18 +78,25 @@ namespace AtomicWar._Game.Survivors
             if (gameHours <= 0f || survivors == null) return;
             if (rng == null) rng = new System.Random();
 
-            // Decay cooldowns
-            var keys = new List<string>(Cooldowns.Keys);
-            foreach (var key in keys)
+            // Decay cooldowns without LINQ / per-tick Keys enumerator allocation.
+            if (Cooldowns.Count > 0)
             {
-                Cooldowns[key] = Mathf.Max(0f, Cooldowns[key] - gameHours);
-                if (Cooldowns[key] <= 0f) Cooldowns.Remove(key);
+                _cooldownKeyBuffer.Clear();
+                foreach (var key in Cooldowns.Keys)
+                    _cooldownKeyBuffer.Add(key);
+                for (int k = 0; k < _cooldownKeyBuffer.Count; k++)
+                {
+                    string key = _cooldownKeyBuffer[k];
+                    float next = Mathf.Max(0f, Cooldowns[key] - gameHours);
+                    if (next <= 0f) Cooldowns.Remove(key);
+                    else Cooldowns[key] = next;
+                }
             }
 
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
-                if (sv == null || !sv.IsAlive) continue;
+                if (sv == null || !sv.IsAlive || sv.Needs == null) continue;
 
                 // Check cooldown
                 if (Cooldowns.TryGetValue(sv.Id, out float cd) && cd > 0f) continue;
@@ -120,10 +130,11 @@ namespace AtomicWar._Game.Survivors
             }
 
             // 4. Bunker-wide morale hit (the gunshot terrifies everyone)
+            if (allSurvivors == null) return;
             for (int i = 0; i < allSurvivors.Count; i++)
             {
                 var sv = allSurvivors[i];
-                if (sv == null || !sv.IsAlive) continue;
+                if (sv == null || !sv.IsAlive || sv.Needs == null) continue;
 
                 float hit = sv == paranoid ? ParanoidMoraleHit : BunkerMoraleHit;
                 sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
