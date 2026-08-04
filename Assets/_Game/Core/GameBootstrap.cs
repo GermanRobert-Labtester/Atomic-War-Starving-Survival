@@ -76,6 +76,17 @@ namespace AtomicWar._Game.Core
         public SaveSystem SaveSystem { get; private set; }
         public LocationScavengingSystem ScavengingSystem { get; private set; }
         public ExpeditionSystem ExpeditionSystem { get; private set; }
+        /// <summary>Weather-driven hatch seal / DigOut / suffocation (Prompt #48).</summary>
+        public HatchEntrapmentSystem HatchEntrapmentSystem { get; private set; }
+        /// <summary>Entry room used for DigOut CO2 spikes (atmospheric engineering).</summary>
+        private ShelterRoom _entryRoom;
+        /// <summary>Internal Horror — room O2/CO/humidity/fire.</summary>
+        public ShelterAtmosphereSystem AtmosphereSystem { get; private set; }
+        /// <summary>Internal Horror — death → corpse item, rot, bury/fertilizer.</summary>
+        public CorpseManagementSystem CorpseSystem { get; private set; }
+        /// <summary>Internal Horror — humidity rusts food → botulism risk.</summary>
+        public PantryContaminationSystem PantrySystem { get; private set; }
+        private ShelterRoom _storesRoom;
         public RadiationKnowledgeMap KnowledgeMap { get; private set; }
         /// <summary>Seeded wasteland node graph for expeditions (#23).</summary>
         public GeneratedMap GeneratedMap { get; private set; }
@@ -89,6 +100,12 @@ namespace AtomicWar._Game.Core
         public PowerNetwork PowerNetwork { get; private set; }
         public WaterStorage WaterStorage { get; private set; }
         public WaterEconomySystem WaterEconomySystem { get; private set; }
+        /// <summary>Prompt #11 — Black Rain dread + hazmat melt helpers.</summary>
+        public BlackRainHazardSystem BlackRainHazardSystem { get; private set; }
+        /// <summary>Prompt #13 — hostile factions plant poisoned medical caches.</summary>
+        public SabotagedCacheSystem SabotagedCacheSystem { get; private set; }
+        /// <summary>Prompt #14 — windstorms move lethal death-zone rad pockets.</summary>
+        public ShiftingHotspotSystem ShiftingHotspotSystem { get; private set; }
         public FlashpointChoreographer FlashpointChoreographer { get; private set; }
         public MentalBreakSystem MentalBreakSystem { get; private set; }
         public HatchDilemmaPrompt HatchDilemmaPromptField { get; private set; }
@@ -96,12 +113,38 @@ namespace AtomicWar._Game.Core
         public ParleyOfferPrompt ParleyOfferPromptField { get; private set; }
         /// <summary>Faction succession / parley / hatch-bounce radio chatter.</summary>
         public FactionRadioInterceptSystem FactionRadioIntercepts { get; private set; }
+        /// <summary>Prompt #17 — inter-faction raid plan wiretaps (antenna required).</summary>
+        public FactionRaidPlanSystem FactionRaidPlanSystem { get; private set; }
+        /// <summary>Prompt #18 — delayed dig-out debt collector (day + 20).</summary>
+        public DebtCollectorSystem DebtCollectorSystem { get; private set; }
+        /// <summary>Prompt #19 — post-EMP ghost stations (pre-war loops, no live intel).</summary>
+        public GhostStationSystem GhostStationSystem { get; private set; }
+        /// <summary>Prompt #20 — Lifeboat Transmission (one seat; rest condemned).</summary>
+        public LifeboatTransmissionSystem LifeboatTransmissionSystem { get; private set; }
         /// <summary>Diegetic journal book + discovery knowledge (immersive tutorial).</summary>
         public JournalSystem JournalSystem { get; private set; }
         /// <summary>Campaign win/loss projects (radio extraction + vehicle escape).</summary>
         public VictoryProjectManager VictoryProject { get; private set; }
         /// <summary>Campaign endgame evaluation engine (Prompt #41).</summary>
         public EndgameEngine EndgameEngine { get; private set; }
+
+        // Prompt #10 — Skill Atrophy: morale < 20 for 14 days → permanent skill downgrade.
+        public SkillAtrophySystem SkillAtrophy { get; private set; }
+
+        // Prompt #8 — Empath & Sociopath trait variance.
+        public EmpathSystem EmpathSystem { get; private set; }
+
+        // Prompt #7 — Addiction & Withdrawal pipeline.
+        public AddictionSystem Addiction { get; private set; }
+
+        // Prompt #6 — Phantom Intruders (fake hatch breach alerts).
+        public PhantomIntruderSystem PhantomIntruders { get; private set; }
+
+        // Prompt #9 — The Child dependent mechanic.
+        public ChildDependentSystem ChildSystem { get; private set; }
+
+        // Prompt #5 — Diary fragment catalog for Previous Tenants.
+        public List<DiaryFragmentSO> DiaryCatalog { get; private set; }
         public List<Survivor> Survivors { get; private set; }
         public List<SurvivorAction> Actions { get; private set; }
 
@@ -186,6 +229,8 @@ namespace AtomicWar._Game.Core
                 _hud.OnShelterUpdated(Shelter);
                 // Live radio hardware (signal + tuned label) on the intercept strip.
                 PushRadioLiveStateToHud();
+                // Internal Horror status strip (corpses / fire / coma / rust).
+                RefreshInternalHorrorHud();
             }
         }
 
@@ -235,6 +280,23 @@ namespace AtomicWar._Game.Core
                 SleepQualitySystem.DefaultSleepRoomId,
                 SleepQualitySystem.DefaultGeneratorRoomId);
 
+            // Prompt #5 — Previous Tenants: a sealed deep vault with diaries.
+            // The player must clear rubble to access it. Contains diary warnings
+            // about the filter, water, and shielding — diegetic system intel.
+            var deepVault = new ShelterRoom("deep_vault", null)
+            {
+                UnlockState = RoomUnlockState.Sealed,
+                RubbleClearHoursRemaining = 16f,
+                RubbleClearHoursTotal = 16f,
+                DiaryFragmentIds = new System.Collections.Generic.List<string>
+                {
+                    "diary_filter_is_a_lie",
+                    "diary_water_truth",
+                    "diary_shielding_rot"
+                }
+            };
+            Shelter.RegisterRoom(deepVault);
+
             // Shelter power grid: finite watts, load-shedding, diesel + bicycle generators.
             // Fully-qualified type: property name PowerNetwork shadows the class.
             PowerNetwork = AtomicWar._Game.Shelter.PowerNetwork.CreateDefault(dieselFuel: 40f);
@@ -252,6 +314,10 @@ namespace AtomicWar._Game.Core
             // Bunker water economy: roof catchment + 3-tier purifier (Prompt #28).
             WaterStorage = new WaterStorage();
             WaterEconomySystem = new WaterEconomySystem();
+            // Prompt #11 — Black Rain (constructed after WeatherSystem exists; see late bind).
+            // WeatherSystem is created earlier in Awake — safe to construct here.
+            if (WeatherSystem != null)
+                BlackRainHazardSystem = new BlackRainHazardSystem(WeatherSystem);
 
             // Needs + Radiation
             NeedsSystem = new NeedsSystem(_needsProfile, sv => true);
@@ -323,10 +389,13 @@ namespace AtomicWar._Game.Core
                 CreateAction<ScavengeActionSO>(),
                 CreateAction<SurveyActionSO>(),
                 CreateAction<TreatPatientActionSO>(),
+                CreateAction<CaregiveActionSO>(),
                 CreateAction<MentalBreakComfortActionSO>(),
                 CreateAction<CraftActionSO>(),
                 CreateAction<GuardActionSO>(),
-                CreateAction<PedalGeneratorActionSO>()
+                CreateAction<PedalGeneratorActionSO>(),
+                CreateAction<SearchForChemsActionSO>(),
+                CreateAction<ClearRubbleActionSO>()
             };
 
             // Medical triage (afflictions drain health; treatments halt/cure)
@@ -371,6 +440,10 @@ namespace AtomicWar._Game.Core
             // when a faction at Rob/HostileRaid trade-stance visits the
             // hatch with an empty inventory).
             EnsurePoolHasBiologicalTradeEvents(eventPool);
+            // Prompt #48 — Buried Alive + faction outside dig-out.
+            EnsurePoolHasHatchEntrapmentEvents(eventPool);
+            // Prompt #9 — Child Found in the Ash event.
+            EnsurePoolHasChildFoundEvent(eventPool);
             EventRunner.SetPool(eventPool);
 
             SuspicionTracker = new SuspicionTracker();
@@ -439,6 +512,170 @@ namespace AtomicWar._Game.Core
             // assembly directly. Same asmdef-boundary pattern.
             MentalBreakSystem.ComfortCureHandler = (sv, br) => ForceMentalBreakComfortCure(sv, br);
 
+            // ───────────────────────────────────────────────────────────
+            // Prompt #10 — Skill Atrophy System
+            // ───────────────────────────────────────────────────────────
+            SkillAtrophy = new SkillAtrophySystem();
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #8 — Empath & Sociopath System
+            // ───────────────────────────────────────────────────────────
+            EmpathSystem = new EmpathSystem();
+            // Wire death hook into NeedsSystem.OnDied
+            NeedsSystem.OnDied += deceased =>
+            {
+                EmpathSystem.OnSurvivorDied(deceased, Survivors);
+                ChildSystem?.CheckChildDeath(Survivors);
+            };
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #7 — Addiction & Withdrawal System
+            // ───────────────────────────────────────────────────────────
+            Addiction = new AddictionSystem(new System.Random(_worldSeed + 71));
+            // Register addictive items from the catalog
+            if (_itemCatalog != null)
+            {
+                // Register known addictive item ids
+                string[] addictiveIds = { "morphine", "anti_rad", "painkiller", "stimulant" };
+                foreach (var id in addictiveIds)
+                {
+                    var item = _itemCatalog.GetById(id);
+                    if (item != null)
+                        Addiction.RegisterAddictiveItem(item.id);
+                }
+            }
+            Addiction.RegisterAddictiveItem("morphine");
+            Addiction.RegisterAddictiveItem("anti_rad");
+            Addiction.PanicDestroyHandler = (sv, rng) => ForceAddictionPanicDestroy(sv, rng);
+
+            // Wire medical treatment pathway into addiction tracking
+            if (MedicalSystem != null)
+            {
+                MedicalSystem.GetCurrentDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                MedicalSystem.OnTreatmentItemConsumed = (sv, itemId, day) =>
+                {
+                    Addiction?.OnItemConsumed(sv, itemId, day);
+                };
+            }
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #6 — Phantom Intruders System
+            // ───────────────────────────────────────────────────────────
+            PhantomIntruders = new PhantomIntruderSystem();
+            PhantomIntruders.ConsumeAmmoHandler = amount =>
+            {
+                if (Inventory == null || _itemCatalog == null) return false;
+                // Try common ammo types
+                var ammoTypes = new[] { "ammo_9mm", "ammo_shotgun", "ammo_rifle" };
+                foreach (var ammoId in ammoTypes)
+                {
+                    var def = _itemCatalog.GetById(ammoId);
+                    if (def != null && Inventory.Remove(def, amount)) return true;
+                }
+                return false;
+            };
+            PhantomIntruders.OnWeaponFiredHandler = () =>
+            {
+                Debug.Log("[Phantom Intruder] Weapon fired at the hatch door!");
+            };
+            PhantomIntruders.OnPhantomIntruderTriggered += paranoid =>
+            {
+                Debug.Log($"[Phantom Intruder] {paranoid.DisplayName} sees a Hatch Breach that isn't there!");
+            };
+            PhantomIntruders.OnPhantomIntruderResolved += paranoid =>
+            {
+                Debug.Log($"[Phantom Intruder] {paranoid.DisplayName} realizes nothing was out there.");
+            };
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #9 — The Child Dependent System
+            // ───────────────────────────────────────────────────────────
+            ChildSystem = new ChildDependentSystem();
+            ChildSystem.ConsumeChildRationsHandler = (food, water) =>
+            {
+                if (Inventory == null || _itemCatalog == null) return;
+                var foodItem = _itemCatalog.GetById("canned_food");
+                if (foodItem != null) Inventory.Remove(foodItem, Mathf.CeilToInt(food / 20f));
+                var waterItem = _itemCatalog.GetById("clean_water");
+                if (waterItem != null) Inventory.Remove(waterItem, Mathf.CeilToInt(water / 20f));
+            };
+            ChildSystem.OnChildFound += child =>
+            {
+                if (Survivors != null)
+                {
+                    Survivors.Add(child);
+                    NeedsSystem.Register(child);
+                }
+                Debug.Log("[Child] The child has been found and brought into the bunker. Hope rises.");
+            };
+            ChildSystem.OnChildDied += _ =>
+            {
+                Debug.Log("[Child] The child has died. The bunker's hope shatters.");
+                if (SaveSystem != null)
+                    SaveSystem.SetWorldFlag(ChildDependentSystem.ChildDiedFlag, true);
+            };
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #5 — Diary Fragment Catalog (Previous Tenants)
+            // ───────────────────────────────────────────────────────────
+            DiaryCatalog = new List<DiaryFragmentSO>();
+            // Load diary fragments from Resources or StreamingAssets
+            var loadedDiaries = Resources.LoadAll<DiaryFragmentSO>("Diaries");
+            if (loadedDiaries != null && loadedDiaries.Length > 0)
+            {
+                DiaryCatalog.AddRange(loadedDiaries);
+            }
+            // If no authored diaries exist, create default ones inline so the
+            // rubble-clearing system has content to reveal.
+            if (DiaryCatalog.Count == 0)
+            {
+                DiaryCatalog.Add(CreateDefaultDiary("diary_filter_is_a_lie", "Torn Notebook Page",
+                    "The filter is a lie. I watched them install it. It doesn't purify anything — " +
+                    "it just pushes the radon deeper into the vents. The reading at the intake looks " +
+                    "clean because it bypasses the sensor. We've been breathing poison for three weeks. " +
+                    "I don't know how to tell the others. — M.",
+                    "M.", "deep_vault", "air_filtration", 0, 3));
+
+                DiaryCatalog.Add(CreateDefaultDiary("diary_water_truth", "Water-Stained Journal",
+                    "The catchment on the roof is cracked. Has been since the first mortar. " +
+                    "Every time it rains, we cheer — but the water tastes like metal and the " +
+                    "geiger clicks faster every time we boil it. I tried to patch it last week " +
+                    "but the suit tore and I couldn't stay out there. The crack is getting wider. " +
+                    "— Unknown",
+                    "Unknown", "deep_vault", "water_purifier", 1, 3));
+
+                DiaryCatalog.Add(CreateDefaultDiary("diary_shielding_rot", "Last Entry of the Engineer",
+                    "The shielding in the deep vault was never finished. They poured half the " +
+                    "concrete and ran out of aggregate. The plans say six inches. There's maybe " +
+                    "two. I've been sleeping against the wrong wall for a month. The skin on " +
+                    "my back is peeling and I don't think it's just dry air anymore. " +
+                    "If you're reading this — check the east wall. Check it with a dosimeter, " +
+                    "not the panel. The panel lies. — Engineer Kostya",
+                    "Engineer Kostya", "deep_vault", "radiation_shielding", 2, 3));
+            }
+            // Wire diary reveal into JournalSystem (simplified — logs via debug; full
+            // JournalSystem integration can use AddEntryFactory when needed)
+            var clearRubbleAction = Actions.Find(a => a is ClearRubbleActionSO) as ClearRubbleActionSO;
+            if (clearRubbleAction != null)
+            {
+                clearRubbleAction.OnDiaryRevealed = (roomId, fragmentIndex) =>
+                {
+                    if (DiaryCatalog != null)
+                    {
+                        foreach (var diary in DiaryCatalog)
+                        {
+                            if (diary != null && diary.foundInRoomId == roomId && diary.pageOrder == fragmentIndex && !diary.IsFound)
+                            {
+                                diary.IsFound = true;
+                                Debug.Log($"[Diary] Found in {roomId}: \"{diary.title}\" — {diary.text}");
+                                return diary.text;
+                            }
+                        }
+                    }
+                    return null;
+                };
+            }
+
             // Hatch-dilemma prompt: tracks the active "knock at the
             // hatch" decision and provides a timeout so the survivor
             // doesn't sit in AtHatchDilemma forever. The UI flow is
@@ -473,6 +710,11 @@ namespace AtomicWar._Game.Core
                 EconomySystem.RegisterFaction(fac);
             EconomySystem.SetHatchDefense(HatchDefenseSystem);
             EconomySystem.SetDayProvider(() => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+            // Cult of the Glow (trustInversion): disposition tracks party radiation dose.
+            EconomySystem.SetPartyRadiationProvider(GetPartyAverageRadiationDose);
+            // #16 polish: ARS reverence + intact-hazmat contempt providers.
+            EconomySystem.SetPartyHasArsProvider(PartyHasAcuteRadiationSyndrome);
+            EconomySystem.SetPartyIntactHazmatProvider(PartyWearsIntactHazmat);
             EconomySystem.BindEventRunner(EventRunner);
 
             // Post-repel parley modal + faction radio intercept log
@@ -489,6 +731,19 @@ namespace AtomicWar._Game.Core
                 PushRadioInterceptToHud(entry);
             };
 
+            // Prompt #17 — inter-faction raid plans / wiretap choices.
+            // Antenna gate uses RadioTunerSystem once it is constructed later in
+            // InitializeSystems; the provider reads live state each call.
+            // Map is rebound after GeneratedMap is created below.
+            FactionRaidPlanSystem = new FactionRaidPlanSystem(new System.Random(_worldSeed + 21));
+            FactionRaidPlanSystem.Bind(
+                EconomySystem,
+                FactionRadioIntercepts,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                isAntennaOperational: IsWiretapAntennaOperational,
+                map: null);
+            FactionRaidPlanSystem.OnInterceptOffered += HandleRaidPlanInterceptOffered;
+
             WorldPhaseSystem.OnPhaseChanged += phase =>
             {
                 EconomySystem.NotifyPhaseChanged(phase);
@@ -501,6 +756,7 @@ namespace AtomicWar._Game.Core
 
             // Proc-gen wasteland map (seed-stable layout for this playthrough)
             GeneratedMap = MapGenerator.Generate(_worldSeed);
+            FactionRaidPlanSystem?.SetMap(GeneratedMap);
 
             // Knowledge map must exist before SaveSystem can capture it
             KnowledgeMap = new RadiationKnowledgeMap();
@@ -510,7 +766,17 @@ namespace AtomicWar._Game.Core
             SaveSystem = new SaveSystem(
                 GameState, WeatherSystem, TemperatureSystem, NeedsSystem,
                 RadiationSystem, Shelter, () => Survivors,
-                id => _itemCatalog?.GetById(id),
+                id =>
+                {
+                    var fromCatalog = _itemCatalog?.GetById(id);
+                    if (fromCatalog != null) return fromCatalog;
+                    // Prompt #13 — poisoned iodine may only exist as a runtime plant.
+                    if (SabotagedCacheSystem != null
+                        && string.Equals(id, SabotagedCacheSystem.PoisonedIodineItemId,
+                            System.StringComparison.OrdinalIgnoreCase))
+                        return SabotagedCacheSystem.PoisonedIodineDefinition;
+                    return null;
+                },
                 id => null);
             SaveSystem.SetPhotoPeriodSystem(PhotoperiodSystem);
             SaveSystem.SetKnowledgeMap(KnowledgeMap);
@@ -522,6 +788,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetPowerNetwork(PowerNetwork);
             SaveSystem.SetHatchDefense(HatchDefenseSystem);
             SaveSystem.SetFactionRadioIntercepts(FactionRadioIntercepts);
+            SaveSystem.SetFactionRaidPlanSystem(FactionRaidPlanSystem);
             SaveSystem.SetJournalSystem(JournalSystem);
             SaveSystem.SetVictoryProjectManager(VictoryProject);
             SaveSystem.SetEventRunner(EventRunner);
@@ -557,6 +824,88 @@ namespace AtomicWar._Game.Core
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
             SaveSystem.SetExpeditionSystem(ExpeditionSystem);
 
+            // Prompt #13 — hostile factions learn scavenging habits and plant
+            // poisoned medical crates. High Medical skill / Paranoid spots them.
+            SabotagedCacheSystem = new SabotagedCacheSystem(new System.Random(_worldSeed + 19));
+            SabotagedCacheSystem.BindEconomy(EconomySystem);
+            SabotagedCacheSystem.SetPoisonedIodineDefinition(
+                SabotagedCacheSystem.CreatePoisonedIodineDefinition());
+            ExpeditionSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
+            SaveSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
+            ExpeditionSystem.OnSabotagedCacheDetected += (exp, msg) =>
+            {
+                Debug.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
+            };
+
+            // Prompt #14 — post-Day-30 windstorms move death-zone rad two path-hops.
+            ShiftingHotspotSystem = new ShiftingHotspotSystem(new System.Random(_worldSeed + 20));
+            ShiftingHotspotSystem.Bind(GeneratedMap, KnowledgeMap);
+            SaveSystem.SetShiftingHotspotSystem(ShiftingHotspotSystem);
+            ShiftingHotspotSystem.OnHotspotShifted += shift =>
+            {
+                if (shift == null) return;
+                Debug.Log(
+                    $"[Shifting Hotspot] Windstorm day {shift.Day}: " +
+                    $"{shift.FromNodeId} → {shift.ToNodeId} " +
+                    $"(moved {shift.MovedRad:F0} rad/hr)");
+                RefreshMapKnowledgeHUD();
+            };
+
+            // Prompt #48 — weather buries/freezes the hatch after 72 continuous
+            // hours of Blizzard/FalloutStorm; DigOut spikes entry CO2; broken
+            // air filter while sealed starts suffocation countdown.
+            HatchEntrapmentSystem = new HatchEntrapmentSystem();
+            _entryRoom = new ShelterRoom(HatchEntrapmentSystem.EntryRoomId, null);
+            HatchEntrapmentSystem.OnHatchStateChanged += (prev, next) =>
+            {
+                SyncHatchExpeditionLock();
+                Debug.Log($"[Hatch Entrapment] HatchState {prev} → {next}");
+            };
+            HatchEntrapmentSystem.OnBuriedAliveTriggered += () =>
+            {
+                // Present the Buried Alive event immediately when the seal lands.
+                if (EventRunner == null) return;
+                var buried = EventRunner.FindInPool(EventRunner.BuriedAliveEventId)
+                             ?? EventRunner.CreateBuriedAliveEvent();
+                var ctx = BuildEventContext(TimeSystem != null ? TimeSystem.CurrentDay : 1);
+                ctx.SetEventFlag(HatchEntrapmentSystem.FlagBuriedAliveOffered, true);
+                if (buried != null && buried.CanTrigger(ctx))
+                    EventRunner.Run(buried, ctx);
+            };
+            SaveSystem.SetHatchEntrapment(HatchEntrapmentSystem);
+            SaveSystem.SetChildDependentSystem(ChildSystem);
+            SyncHatchExpeditionLock();
+
+            // ───────────────────────────────────────────────────────────
+            // Internal Horror — atmosphere / corpses / pantry rust
+            // ───────────────────────────────────────────────────────────
+            _storesRoom = new ShelterRoom("stores", null);
+            AtmosphereSystem = new ShelterAtmosphereSystem(new System.Random(_worldSeed + 16));
+            AtmosphereSystem.RegisterRoom(_entryRoom);
+            AtmosphereSystem.RegisterRoom(_storesRoom);
+            AtmosphereSystem.RegisterRoom(new ShelterRoom("quarters", null));
+            AtmosphereSystem.RegisterRoom(new ShelterRoom("plant", null));
+
+            CorpseSystem = new CorpseManagementSystem(
+                NeedsSystem, Inventory, MedicalSystem, RadiationSystem,
+                new System.Random(_worldSeed + 17));
+            CorpseSystem.SetItemDefinitions(
+                CorpseManagementSystem.CreateCorpseDefinition(),
+                CorpseManagementSystem.CreateFertilizerDefinition());
+            CorpseSystem.SetStoresRoom(_storesRoom);
+            CorpseSystem.SetSurvivorProvider(() => Survivors);
+            CorpseSystem.BindDeathHandler();
+
+            PantrySystem = new PantryContaminationSystem(
+                Inventory, new System.Random(_worldSeed + 18));
+            PantrySystem.SetContaminatedFoodDefinition(
+                PantryContaminationSystem.CreateContaminatedFoodDefinition());
+            PantrySystem.SetStoresRoom(_storesRoom);
+
+            SaveSystem.SetAtmosphereSystem(AtmosphereSystem);
+            SaveSystem.SetCorpseSystem(CorpseSystem);
+            SaveSystem.SetPantrySystem(PantrySystem);
+
             // Hatch dilemma: when a comms-severed expedition arrives at the
             // bunker, run a forced dilemma GameEventSO with three choices
             // (let them in, force decon, deny). The ExpeditionSystem raises
@@ -580,7 +929,9 @@ namespace AtomicWar._Game.Core
             RadioSystem.SetCatalog(_radioCatalog);
             
             // Radio Tuner System (intel extraction)
-            RadioTunerSystem = new RadioTunerSystem(new System.Random(_worldSeed + 31));
+            RadioTunerSystem = new RadioTunerSystem(
+                new System.Random(_worldSeed + 31),
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             InitializeRadioFrequencies();
             
             // Wire up radio module fuel supply to RadioTunerSystem
@@ -590,11 +941,53 @@ namespace AtomicWar._Game.Core
                 RadioTunerSystem.State.AvailableFuel = radioModule.Fuel;
                 RadioTunerSystem.State.PowerConsumptionPerHour = 0.5f; // Default consumption
             }
+
+            // Prompt #18 — Debt Collector (day+20 after faction dig-out).
+            // Constructed after RadioTuner so antenna cut can EMP the live RadioState.
+            DebtCollectorSystem = new DebtCollectorSystem();
+            DebtCollectorSystem.Bind(
+                EconomySystem,
+                FactionRadioIntercepts,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                shelter: Shelter,
+                water: WaterStorage,
+                inventory: Inventory,
+                radioState: RadioTunerSystem?.State);
+            if (HatchEntrapmentSystem != null)
+                HatchEntrapmentSystem.OnFactionRescueApplied += HandleFactionRescueApplied_ScheduleDebt;
+            DebtCollectorSystem.OnCollectorArrived += HandleDebtCollectorArrived;
+            SaveSystem.SetDebtCollectorSystem(DebtCollectorSystem);
+
+            // Prompt #19 — Ghost Stations (unlock after EMP; never live/extraction intel).
+            GhostStationSystem = new GhostStationSystem();
+            GhostStationSystem.Bind(
+                RadioTunerSystem,
+                JournalSystem,
+                getSurvivors: () => Survivors,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+            EventBus.Subscribe<FlashpointEmptiedDevices>(OnFlashpointEmp_UnlockGhosts);
+            SaveSystem.SetGhostStationSystem(GhostStationSystem);
+
+            // Prompt #20 — Lifeboat Transmission (late-game single-seat extraction).
+            LifeboatTransmissionSystem = new LifeboatTransmissionSystem();
+            LifeboatTransmissionSystem.Bind(
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                getSurvivors: () => Survivors,
+                isCampaignTerminal: () =>
+                    (VictoryProject != null && VictoryProject.IsTerminal)
+                    || (EndgameEngine != null && EndgameEngine.Result.IsTerminal)
+                    || IsGameOver,
+                endgame: EndgameEngine,
+                victory: VictoryProject);
+            LifeboatTransmissionSystem.OnContactOffered += HandleLifeboatContactOffered;
+            SaveSystem.SetLifeboatTransmissionSystem(LifeboatTransmissionSystem);
             
             // Wire up intel extraction events
             RadioTunerSystem.OnIntelExtracted += intel =>
             {
                 Debug.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
+                // Ghost loops intentionally skip VictoryProject / plume map paths.
+                if (intel != null && intel.Type == IntelType.GhostLoop) return;
                 VictoryProject?.NotifyIntel(intel);
                 if (intel.Type == IntelType.PlumeReport)
                 {
@@ -614,12 +1007,25 @@ namespace AtomicWar._Game.Core
             RadioSystem.OnBroadcastStarted += HandleRadioBroadcastTrigger;
             EventRunner.OnChoiceApplied += HandleSafeHavenChoiceApplied;
             EventRunner.OnChoiceApplied += HandleBloodForWaterChoiceApplied;
+            EventRunner.OnChoiceApplied += HandleHatchEntrapmentChoiceApplied;
+            EventRunner.OnChoiceApplied += HandleChildFoundChoiceApplied;
+            EventRunner.OnChoiceApplied += HandleRaidPlanChoiceApplied;
+            EventRunner.OnChoiceApplied += HandleDebtCollectorChoiceApplied;
+            EventRunner.OnChoiceApplied += HandleLifeboatChoiceApplied;
 
             TimeSystem.OnDayTick += day =>
             {
                 RadioSystem.CheckForBroadcast(day);
                 Inventory?.DriftAllDevices(1f);
                 KnowledgeMap?.TickDay(day);
+                // Prompt #14 — rare windstorm may move a death-zone after Day 30.
+                ShiftingHotspotSystem?.TickDay(day);
+                // Prompt #17 — latent inter-faction raid plans + wiretap window.
+                FactionRaidPlanSystem?.TickDay(day);
+                // Prompt #18 — delayed dig-out debt collectors.
+                DebtCollectorSystem?.TickDay(day);
+                // Prompt #20 — late-game lifeboat contact (Day ≥ 80).
+                LifeboatTransmissionSystem?.TickDay(day, Survivors);
                 RefreshMapKnowledgeHUD();
                 // Radio win path: extraction coords + survive to Day 100.
                 VictoryProject?.TickDay(day, Survivors);
@@ -669,6 +1075,7 @@ namespace AtomicWar._Game.Core
                     FlashpointChoreographer.CaptureState,
                     FlashpointChoreographer.RestoreState);
                 SaveSystem.SetMentalBreakSystem(MentalBreakSystem);
+                SaveSystem.SetPhantomIntruderSystem(PhantomIntruders);
             }
         }
 
@@ -758,10 +1165,46 @@ namespace AtomicWar._Game.Core
                         sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
                     }
                 }
+                // Prompt #19 — ghost bands appear in the static after EMP.
+                GhostStationSystem?.NotifyEmpOccurred();
                 return;
             }
 
             FlashpointChoreographer.OnNuclearExchange();
+        }
+
+        /// <summary>Flashpoint EMP step → unlock ghost stations (Prompt #19).</summary>
+        private void OnFlashpointEmp_UnlockGhosts(FlashpointEmptiedDevices _)
+        {
+            GhostStationSystem?.NotifyEmpOccurred();
+        }
+
+        // -----------------------------------------------------------------
+        // Prompt #20 — Lifeboat Transmission
+        // -----------------------------------------------------------------
+
+        private void HandleLifeboatContactOffered(GameEvent ev)
+        {
+            if (ev == null || EventRunner == null) return;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            var ctx = BuildEventContext(day);
+            ctx.SetEventFlag(LifeboatTransmissionSystem.FlagContacted, true);
+            EventRunner.Run(ev, ctx);
+            Debug.Log("[Lifeboat] Two-way contact. One seat. Choose who walks.");
+        }
+
+        private void HandleLifeboatChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null || LifeboatTransmissionSystem == null) return;
+            if (!string.Equals(ev.id, LifeboatTransmissionSystem.EventId, StringComparison.Ordinal))
+                return;
+            if (LifeboatTransmissionSystem.ApplyChoiceFromEvent(ev, choice, ctx))
+            {
+                Debug.Log(
+                    $"[Lifeboat] Sent {LifeboatTransmissionSystem.ExtractedSurvivorName}. " +
+                    $"{LifeboatTransmissionSystem.LeftBehindIds.Count} left behind.");
+                // VictoryProject.OnEndgameTriggered → ApplyEndgame already wired.
+            }
         }
 
         // ─────────────────────────────────────────────────────────────────
@@ -1070,6 +1513,323 @@ namespace AtomicWar._Game.Core
             var strip = _hud.InventoryStripUI;
             if (strip != null)
                 strip.Sync(Inventory);
+            // Corpse / rusted-can counts also drive the Internal Horror strip.
+            RefreshInternalHorrorHud();
+        }
+
+        /// <summary>Room ids we already auto-prompted for (avoid reopening every frame).</summary>
+        private readonly HashSet<string> _fireAlertShownRooms = new HashSet<string>();
+
+        /// <summary>
+        /// Push corpse / fire / coma / contaminated-food state into InternalHorrorHUD.
+        /// Safe when systems are not yet constructed.
+        /// </summary>
+        private void RefreshInternalHorrorHud()
+        {
+            if (_hud == null) return;
+            var horror = _hud.EnsureInternalHorrorHud();
+            if (horror == null) return;
+
+            var snap = BuildInternalHorrorSnapshot();
+            horror.ApplySnapshot(snap);
+
+            // Auto-open fire panel once per room when a new blaze starts.
+            if (snap?.Fires != null)
+            {
+                var live = new HashSet<string>();
+                for (int i = 0; i < snap.Fires.Length; i++)
+                {
+                    var f = snap.Fires[i];
+                    if (f == null || !f.IsOnFire || string.IsNullOrEmpty(f.RoomId)) continue;
+                    live.Add(f.RoomId);
+                    if (_fireAlertShownRooms.Add(f.RoomId) && !horror.IsFirePanelOpen)
+                        horror.OpenFirePanel(f.RoomId);
+                }
+                // Drop rooms that are no longer on fire so a re-ignition re-prompts.
+                _fireAlertShownRooms.RemoveWhere(id => !live.Contains(id));
+            }
+            else
+            {
+                _fireAlertShownRooms.Clear();
+            }
+        }
+
+        private AtomicWar._Game.UI.InternalHorrorSnapshot BuildInternalHorrorSnapshot()
+        {
+            var snap = new AtomicWar._Game.UI.InternalHorrorSnapshot
+            {
+                CareIntervalHours = AtomicWar._Game.Medical.MedicalSystem.ComaCareIntervalHours
+            };
+
+            // Corpses
+            int corpses = CorpseSystem != null
+                ? CorpseSystem.CorpseCount
+                : (Inventory != null ? Inventory.CountByType(ItemType.Corpse) : 0);
+            snap.CorpseCount = corpses;
+            float daylight = PhotoperiodSystem != null
+                ? PhotoperiodSystem.EffectiveDaylightHours
+                : 8f;
+            snap.DaylightHoursAvailable = daylight;
+            snap.CanBury = corpses > 0 && daylight >= CorpseManagementSystem.BuryHours
+                && FindFirstLivingSurvivor() != null;
+
+            // Contaminated food
+            snap.ContaminatedFoodCount = Inventory != null
+                ? Inventory.CountByType(ItemType.ContaminatedFood)
+                : 0;
+
+            // Fires
+            if (AtmosphereSystem != null && AtmosphereSystem.Rooms != null)
+            {
+                var fireList = new List<AtomicWar._Game.UI.FireRoomSnapshot>();
+                var rooms = AtmosphereSystem.Rooms;
+                for (int i = 0; i < rooms.Count; i++)
+                {
+                    var r = rooms[i];
+                    if (r == null || !r.IsOnFire) continue;
+                    fireList.Add(new AtomicWar._Game.UI.FireRoomSnapshot
+                    {
+                        RoomId = r.RoomId,
+                        IsOnFire = true,
+                        Intensity = r.FireIntensity,
+                        OxygenFraction = r.OxygenFraction,
+                        LocalCoPpm = r.LocalCoPpm,
+                        BulkheadSealed = r.BulkheadSealed
+                    });
+                }
+                snap.Fires = fireList.ToArray();
+            }
+
+            // Coma patients
+            if (MedicalSystem != null && Survivors != null)
+            {
+                var comaList = new List<AtomicWar._Game.UI.ComaPatientSnapshot>();
+                bool anyUrgent = false;
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    var sv = Survivors[i];
+                    if (sv == null || !sv.IsAlive) continue;
+                    if (!MedicalSystem.IsComatose(sv)) continue;
+                    float sinceCare = 0f;
+                    var active = MedicalSystem.GetActive(sv);
+                    for (int a = 0; a < active.Count; a++)
+                    {
+                        if (active[a].AfflictionId == AtomicWar._Game.Medical.AfflictionSO.Ids.Coma)
+                        {
+                            sinceCare = active[a].HoursSinceLastCare;
+                            break;
+                        }
+                    }
+                    bool needs = MedicalSystem.NeedsCare(sv);
+                    if (needs) anyUrgent = true;
+                    comaList.Add(new AtomicWar._Game.UI.ComaPatientSnapshot
+                    {
+                        SurvivorId = sv.Id,
+                        DisplayName = sv.DisplayName,
+                        HoursSinceLastCare = sinceCare,
+                        NeedsCare = needs
+                    });
+                }
+                snap.Comas = comaList.ToArray();
+                snap.ComaCareUrgent = anyUrgent;
+            }
+
+            return snap;
+        }
+
+        private Survivor FindFirstLivingSurvivor()
+        {
+            if (Survivors == null) return null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                if (Survivors[i] != null && Survivors[i].IsAlive)
+                    return Survivors[i];
+            }
+            return null;
+        }
+
+        /// <summary>Wire Internal Horror HUD action callbacks once.</summary>
+        private void WireInternalHorrorHud()
+        {
+            if (_hud == null) return;
+            var horror = _hud.EnsureInternalHorrorHud();
+            if (horror == null) return;
+
+            horror.OnBuryRequested -= HandleBuryTheDead;
+            horror.OnBuryRequested += HandleBuryTheDead;
+            horror.OnProcessFertilizerRequested -= HandleProcessFertilizer;
+            horror.OnProcessFertilizerRequested += HandleProcessFertilizer;
+            horror.OnFightFireRequested -= HandleFightFire;
+            horror.OnFightFireRequested += HandleFightFire;
+            horror.OnSealBulkheadRequested -= HandleSealBulkhead;
+            horror.OnSealBulkheadRequested += HandleSealBulkhead;
+
+            // Inventory corpse "click" → open dispose panel.
+            var strip = _hud.InventoryStripUI;
+            if (strip != null)
+            {
+                strip.OnIconActivated -= HandleInventoryIconActivated;
+                strip.OnIconActivated += HandleInventoryIconActivated;
+            }
+
+            RefreshInternalHorrorHud();
+        }
+
+        /// <summary>
+        /// Inventory strip activate (click / Enter): corpse stacks open dispose UI.
+        /// </summary>
+        private void HandleInventoryIconActivated(AtomicWar._Game.UI.InventoryIcon icon)
+        {
+            if (icon == null) return;
+            if (icon.IsCorpse || icon.HasDisposeActions)
+            {
+                OpenCorpseDisposePanel();
+            }
+        }
+
+        private void HandleBuryTheDead()
+        {
+            if (CorpseSystem == null) return;
+            var digger = FindFirstLivingSurvivor();
+            if (digger == null) return;
+            float daylight = PhotoperiodSystem != null
+                ? PhotoperiodSystem.EffectiveDaylightHours
+                : CorpseManagementSystem.BuryHours;
+            if (CorpseSystem.BuryTheDead(digger, daylight))
+            {
+                Debug.Log($"[Internal Horror] {digger.DisplayName} buried the dead. Four hours of light, gone.");
+                RefreshInventoryStrip();
+            }
+        }
+
+        private void HandleProcessFertilizer()
+        {
+            if (CorpseSystem == null) return;
+            var processor = FindFirstLivingSurvivor();
+            if (processor == null) return;
+            if (CorpseSystem.ProcessForFertilizer(processor))
+            {
+                Debug.Log($"[Internal Horror] {processor.DisplayName} processed a body for fertilizer. Nobody speaks.");
+                RefreshInventoryStrip();
+            }
+        }
+
+        private void HandleFightFire(string roomId)
+        {
+            if (AtmosphereSystem == null || string.IsNullOrEmpty(roomId)) return;
+            var fighter = FindFirstLivingSurvivor();
+            if (fighter == null) return;
+            bool out_ = AtmosphereSystem.FightFire(roomId, fighter, NeedsSystem);
+            Debug.Log(out_
+                ? $"[Internal Horror] {fighter.DisplayName} put out the fire in {roomId}."
+                : $"[Internal Horror] {fighter.DisplayName} fought the fire in {roomId}. Still burning.");
+            RefreshInternalHorrorHud();
+        }
+
+        private void HandleSealBulkhead(string roomId)
+        {
+            if (AtmosphereSystem == null || string.IsNullOrEmpty(roomId)) return;
+            if (AtmosphereSystem.SealBulkhead(roomId, Shelter))
+            {
+                Debug.Log($"[Internal Horror] Bulkhead sealed on {roomId}. Whatever was inside stays inside.");
+                RefreshInternalHorrorHud();
+            }
+        }
+
+        /// <summary>
+        /// Player API: open corpse dispose panel (bury / fertilizer) from inventory body slot.
+        /// </summary>
+        public bool OpenCorpseDisposePanel()
+        {
+            if (_hud == null) return false;
+            RefreshInternalHorrorHud();
+            var horror = _hud.EnsureInternalHorrorHud();
+            if (horror == null || horror.CorpseCount <= 0) return false;
+            horror.OpenCorpsePanel();
+            return true;
+        }
+
+        /// <summary>Player API: choose bury or fertilizer on the open corpse panel.</summary>
+        public bool SelectCorpseDispose(AtomicWar._Game.UI.CorpseDisposeChoice choice)
+        {
+            if (_hud == null) return false;
+            var horror = _hud.EnsureInternalHorrorHud();
+            return horror != null && horror.SelectCorpseDispose(choice);
+        }
+
+        /// <summary>Player API: fight fire in a room (or active fire room).</summary>
+        public bool SelectFightFire(string roomId = null)
+        {
+            if (_hud == null) return false;
+            var horror = _hud.EnsureInternalHorrorHud();
+            return horror != null && horror.SelectFightFire(roomId);
+        }
+
+        /// <summary>Player API: seal bulkhead on a burning room.</summary>
+        public bool SelectSealBulkhead(string roomId = null)
+        {
+            if (_hud == null) return false;
+            var horror = _hud.EnsureInternalHorrorHud();
+            return horror != null && horror.SelectSealBulkhead(roomId);
+        }
+
+        /// <summary>Close corpse dispose and/or fire panels (Esc).</summary>
+        public void CloseInternalHorrorPanels()
+        {
+            if (_hud == null) return;
+            var horror = _hud.EnsureInternalHorrorHud();
+            if (horror == null) return;
+            if (horror.IsCorpsePanelOpen) horror.CloseCorpsePanel();
+            if (horror.IsFirePanelOpen) horror.CloseFirePanel();
+        }
+
+        /// <summary>
+        /// Simulate inventory strip click at index. Corpse icons open dispose panel.
+        /// </summary>
+        public bool ActivateInventoryIcon(int index)
+        {
+            if (_hud == null) return false;
+            var strip = _hud.InventoryStripUI;
+            return strip != null && strip.ActivateIndex(index);
+        }
+
+        /// <summary>Cycle inventory strip focus (keyboard path).</summary>
+        public bool SelectNextInventoryIcon()
+        {
+            if (_hud == null) return false;
+            var strip = _hud.InventoryStripUI;
+            return strip != null && strip.SelectNext();
+        }
+
+        /// <summary>Confirm focused inventory icon (Enter/E). Corpses open dispose.</summary>
+        public bool ActivateSelectedInventoryIcon()
+        {
+            if (_hud == null) return false;
+            var strip = _hud.InventoryStripUI;
+            return strip != null && strip.ActivateSelected();
+        }
+
+        /// <summary>Click first corpse stack in inventory (if any).</summary>
+        public bool ActivateFirstCorpseInInventory()
+        {
+            if (_hud == null) return false;
+            RefreshInventoryStrip();
+            var strip = _hud.InventoryStripUI;
+            return strip != null && strip.ActivateFirstCorpse();
+        }
+
+        /// <summary>True when corpse dispose panel is open (input priority).</summary>
+        public bool IsCorpseDisposePanelOpen()
+        {
+            var horror = _hud != null ? _hud.InternalHorrorHUD : null;
+            return horror != null && horror.IsCorpsePanelOpen;
+        }
+
+        /// <summary>True when fire fight/seal panel is open (input priority).</summary>
+        public bool IsFirePanelOpen()
+        {
+            var horror = _hud != null ? _hud.InternalHorrorHUD : null;
+            return horror != null && horror.IsFirePanelOpen;
         }
 
         private void SeedStartingInventory()
@@ -1222,6 +1982,25 @@ namespace AtomicWar._Game.Core
             TemperatureSystem.Tick(gameHours);
             PhotoperiodSystem.Tick(gameHours);
 
+            // Prompt #48 — continuous extreme weather seals the hatch.
+            if (HatchEntrapmentSystem != null && WeatherSystem != null)
+            {
+                int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                HatchEntrapmentSystem.Tick(
+                    gameHours,
+                    WeatherSystem.Current,
+                    Shelter,
+                    // Effective trust so Cult of the Glow (trustInversion) can dig
+                    // out a highly-irradiated party even when stored trust is low.
+                    factionId => EconomySystem != null
+                        ? EconomySystem.GetEffectiveTrust(factionId)
+                        : 0f,
+                    (eventId, fireDay, originFlag) =>
+                        EventRunner?.ScheduleEvent(eventId, fireDay, originFlag),
+                    day);
+                SyncHatchExpeditionLock();
+            }
+
             // Shelter
             Shelter.Tick(gameHours);
 
@@ -1260,6 +2039,11 @@ namespace AtomicWar._Game.Core
             // Hatch defense: outdoor generator noise + periodic post-Day-30 raid rolls
             HatchDefenseSystem?.Tick(gameHours, PowerNetwork);
 
+            // Internal Horror — fire/O2/CO/humidity, corpse rot, pantry rust
+            AtmosphereSystem?.Tick(gameHours, PowerNetwork, Shelter);
+            CorpseSystem?.Tick(gameHours, Survivors);
+            PantrySystem?.Tick(gameHours, _storesRoom);
+
             // Needs
             NeedsSystem.Tick(gameHours);
 
@@ -1274,6 +2058,22 @@ namespace AtomicWar._Game.Core
                 MentalBreakSystem.Tick(gameHours, Survivors, new System.Random(_worldSeed));
             }
 
+            // Prompt #10 — Skill Atrophy: morale < 20 for 14 days → skill downgrade.
+            SkillAtrophy?.Tick(gameHours, Survivors);
+
+            // Prompt #8 — Empath coupling: Empath's morale tracks bunker average.
+            EmpathSystem?.Tick(gameHours, Survivors);
+
+            // Prompt #7 — Addiction & Withdrawal: dose counting, withdrawal drains, panic destruction.
+            int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+            Addiction?.Tick(gameHours, Survivors, currentDay);
+
+            // Prompt #6 — Phantom Intruders: fake hatch breach when Anxiety+Fatigue max out.
+            PhantomIntruders?.Tick(gameHours, Survivors, new System.Random(_worldSeed + 61));
+
+            // Prompt #9 — Child: Hope buff, rations consumption, death check.
+            ChildSystem?.Tick(gameHours, Survivors);
+
             // Hatch-dilemma prompt: advance the timeout. On expiry the
             // prompt auto-resolves with ForceDeconOutside.
             HatchDilemmaPromptField?.Tick(gameHours);
@@ -1281,9 +2081,21 @@ namespace AtomicWar._Game.Core
 
             // Radiation
             RadiationSystem.Tick(gameHours);
+            // Cult of the Glow: rad drop across healthy ceiling → hatch raid cascade.
+            EconomySystem?.NotifyPartyRadiationChanged();
 
             // Water economy: catchment collection + purifier conversion queue.
             WaterEconomySystem?.Tick(gameHours, WeatherSystem.Current, TimeSystem.CurrentDay, Shelter, WaterStorage);
+
+            // Prompt #11 — Black Rain dread for outdoor scavengers + hatch listeners.
+            if (BlackRainHazardSystem != null && Survivors != null)
+            {
+                BlackRainHazardSystem.TickDread(
+                    Survivors,
+                    isOutdoor: IsSurvivorOnExpedition,
+                    isHatchListener: IsSurvivorHatchListener,
+                    gameHours);
+            }
 
             // Crafting
             CraftingSystem.Tick(gameHours);
@@ -1371,6 +2183,13 @@ namespace AtomicWar._Game.Core
                     };
                     var action = UtilityAI.SelectAction(context, Actions);
                     action?.Execute(context);
+
+                    // Prompt #7 — track addictive chem consumption
+                    if (action != null && Addiction != null)
+                    {
+                        if (action.id == "action_use_antirad")
+                            Addiction.OnItemConsumed(sv, "anti_rad", day);
+                    }
                 }
             }
 
@@ -1422,6 +2241,7 @@ namespace AtomicWar._Game.Core
                 CurrentDay = day,
                 CurrentHour = hour,
                 IsFalloutStorm = WeatherSystem != null && WeatherSystem.Current == WeatherKind.FalloutStorm,
+                CurrentWeather = WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear,
                 AllSurvivors = Survivors,
                 MentalBreak = MentalBreakSystem,
                 CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f,
@@ -1527,6 +2347,133 @@ namespace AtomicWar._Game.Core
                 if (pool[j] != null && pool[j].id == blood.id) return;
             }
             pool.Add(blood);
+        }
+
+        /// <summary>
+        /// Register Prompt #48 Buried Alive + faction dig-out events.
+        /// </summary>
+        private static void EnsurePoolHasHatchEntrapmentEvents(List<GameEvent> pool)
+        {
+            if (pool == null) return;
+            EnsurePoolHasEvent(pool, EventRunner.CreateBuriedAliveEvent());
+            EnsurePoolHasEvent(pool, EventRunner.CreateFactionDigOutEvent());
+        }
+
+        private static void EnsurePoolHasEvent(List<GameEvent> pool, GameEvent ev)
+        {
+            if (pool == null || ev == null || string.IsNullOrEmpty(ev.id)) return;
+            for (int j = 0; j < pool.Count; j++)
+            {
+                if (pool[j] != null && pool[j].id == ev.id) return;
+            }
+            pool.Add(ev);
+        }
+
+        /// <summary>
+        /// Keep expedition hard-lock + map UI in sync with HatchState.
+        /// </summary>
+        private void SyncHatchExpeditionLock()
+        {
+            bool locked = HatchEntrapmentSystem != null && HatchEntrapmentSystem.AreExpeditionsLocked;
+            if (ExpeditionSystem != null)
+                ExpeditionSystem.HatchBlocksExpeditions = locked;
+            if (_hud != null && _hud.MapScreenUI != null)
+                _hud.MapScreenUI.IsExpeditionUiEnabled = !locked;
+        }
+
+        /// <summary>
+        /// Buried Alive / faction dig-out choice side effects (Prompt #48).
+        /// DigOut spikes entry-room CO2; faction rescue clears the hatch.
+        /// </summary>
+        private void HandleHatchEntrapmentChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null || HatchEntrapmentSystem == null) return;
+
+            if (ev.id == EventRunner.BuriedAliveEventId
+                && choice.ChoiceId == EventRunner.ChoiceDigOut)
+            {
+                if (_entryRoom == null)
+                    _entryRoom = new ShelterRoom(HatchEntrapmentSystem.EntryRoomId, null);
+                HatchEntrapmentSystem.DigOut(_entryRoom, ctx);
+                SyncHatchExpeditionLock();
+                Debug.Log($"[Hatch Entrapment] DigOut complete. Entry CO2={_entryRoom.Co2Ppm:F0} ppm.");
+                return;
+            }
+
+            if (ev.id == EventRunner.FactionDigOutEventId
+                && choice.ChoiceId == EventRunner.ChoiceAcceptFactionRescue)
+            {
+                HatchEntrapmentSystem.ApplyFactionRescue(ctx);
+                SyncHatchExpeditionLock();
+                Debug.Log("[Hatch Entrapment] Faction dug the hatch open. Debt recorded.");
+            }
+        }
+
+        // -----------------------------------------------------------------
+        // Prompt #17 — Raid plan wiretap
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// High-tier radio/antenna operational for inter-faction wiretaps.
+        /// Requires powered radio with remaining fuel and EMP damage below destroy.
+        /// </summary>
+        private bool IsWiretapAntennaOperational()
+        {
+            var state = RadioTunerSystem?.State;
+            return state != null && state.IsOperational;
+        }
+
+        private void HandleRaidPlanInterceptOffered(FactionRaidPlan plan, GameEvent ev)
+        {
+            if (ev == null || EventRunner == null) return;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            var ctx = BuildEventContext(day);
+            EventRunner.Run(ev, ctx);
+            Debug.Log($"[Raid Plan] Wiretap offered: {plan?.AttackerFactionId} → {plan?.TargetFactionId}");
+        }
+
+        private void HandleRaidPlanChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null || FactionRaidPlanSystem == null) return;
+            if (string.IsNullOrEmpty(ev.id)
+                || !ev.id.StartsWith(FactionRaidPlanSystem.EventIdPrefix, StringComparison.Ordinal))
+                return;
+            FactionRaidPlanSystem.ApplyChoiceFromEvent(ev, choice);
+        }
+
+        // -----------------------------------------------------------------
+        // Prompt #18 — Debt Collector
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Faction dig-out accepted → schedule collector for day + 20.
+        /// Short-term dig-out debt flag is already set by HatchEntrapmentSystem.
+        /// </summary>
+        private void HandleFactionRescueApplied_ScheduleDebt(string factionId)
+        {
+            if (DebtCollectorSystem == null || string.IsNullOrEmpty(factionId)) return;
+            if (DebtCollectorSystem.HasPendingDebtFor(factionId)) return;
+            var entry = DebtCollectorSystem.ScheduleDebt(factionId);
+            if (entry != null)
+                Debug.Log($"[Debt Collector] Scheduled for {factionId} on day {entry.CollectorDay}.");
+        }
+
+        private void HandleDebtCollectorArrived(DebtEntry debt, GameEvent ev)
+        {
+            if (ev == null || EventRunner == null) return;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            var ctx = BuildEventContext(day);
+            EventRunner.Run(ev, ctx);
+            Debug.Log($"[Debt Collector] {debt?.FactionId} demands half fuel + half clean water.");
+        }
+
+        private void HandleDebtCollectorChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null || DebtCollectorSystem == null) return;
+            if (string.IsNullOrEmpty(ev.id)
+                || !ev.id.StartsWith(DebtCollectorSystem.EventIdPrefix, StringComparison.Ordinal))
+                return;
+            DebtCollectorSystem.ApplyChoiceFromEvent(ev, choice, ctx);
         }
 
         // -----------------------------------------------------------------
@@ -1674,6 +2621,7 @@ namespace AtomicWar._Game.Core
             _hud.EnsureJournalBook();
             SyncJournalBookFromSystem();
             RefreshInventoryStrip(); // initial pooled icon sync
+            WireInternalHorrorHud();
             _hud.EnsureEndgameSummary();
             if (VictoryProject != null && VictoryProject.IsTerminal && VictoryProject.LastSummary != null)
                 PushEndgameSummaryToHud(VictoryProject.LastSummary);
@@ -1703,6 +2651,9 @@ namespace AtomicWar._Game.Core
                 {
                     _hud.OnRadiationUpdated(sv.LifetimeRadiationExposure, sv.RadiationDose);
                 }
+                // Anti-rad / scripted dose changes outside Tick still drive
+                // trust-inversion raid cascades (healthy-ceiling cross).
+                EconomySystem?.NotifyPartyRadiationChanged();
             };
 
             // Wire needs updates
@@ -1781,6 +2732,8 @@ namespace AtomicWar._Game.Core
                 // Intercept log + open/unread/tuner restored — refresh HUD strip.
                 SyncRadioInterceptHudFromLog();
                 SyncJournalBookFromSystem();
+                // Corpse counts / fire rooms / care urgency after atmosphere+inventory restore.
+                RefreshInventoryStrip();
             }
         }
 
@@ -1827,7 +2780,11 @@ namespace AtomicWar._Game.Core
         public void ConsumeItem(Survivor sv, ItemDefinition item)
         {
             if (sv == null || item == null || !sv.IsAlive) return;
-            Inventory.Consume(item, sv, RadiationSystem, NeedsSystem);
+            if (Inventory == null || !Inventory.Consume(item, sv, RadiationSystem, NeedsSystem))
+                return;
+
+            // Prompt #13 — poisoned iodine looks clean until swallowed.
+            SabotagedCacheSystem?.TryApplyPoisonOnConsume(item, sv, MedicalSystem);
         }
 
         public void CraftRecipe(Recipe recipe)
@@ -2048,6 +3005,62 @@ namespace AtomicWar._Game.Core
             }
             if (count == 0) return hasWorkingGeiger ? 0.5f : 1f;
             return Mathf.Clamp01(1f - (totalConfidence / count));
+        }
+
+        /// <summary>
+        /// Average RadiationDose across living survivors (0..100). Used by
+        /// DynamicEconomySystem for trust-inversion factions (Cult of the Glow).
+        /// </summary>
+        private float GetPartyAverageRadiationDose()
+        {
+            if (Survivors == null || Survivors.Count == 0) return 0f;
+            float sum = 0f;
+            int n = 0;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var s = Survivors[i];
+                if (s == null || !s.IsAlive) continue;
+                sum += s.RadiationDose;
+                n++;
+            }
+            return n > 0 ? sum / n : 0f;
+        }
+
+        /// <summary>
+        /// True when any living survivor has Acute Radiation Syndrome (flag or status).
+        /// Cult of the Glow ARS reverence (#16 polish).
+        /// </summary>
+        private bool PartyHasAcuteRadiationSyndrome()
+        {
+            if (Survivors == null) return false;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var s = Survivors[i];
+                if (s == null || !s.IsAlive) continue;
+                if (s.HasAcuteRadiationSyndrome
+                    || s.HasStatus(SurvivorStatus.AcuteRadiationSyndrome))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// True when any living survivor wears an intact full hazmat suit.
+        /// Cult of the Glow sealed-blood contempt (#16 polish).
+        /// </summary>
+        private bool PartyWearsIntactHazmat()
+        {
+            if (Survivors == null) return false;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var s = Survivors[i];
+                if (s == null || !s.IsAlive) continue;
+                if (s.HasFullSuitEquipped) return true;
+            }
+            // Fallback: equipped protective gear with remaining durability on shared inventory.
+            if (Inventory != null && Inventory.GetEquippedProtection() > 0f)
+                return true;
+            return false;
         }
 
         // -----------------------------------------------------------------
@@ -2434,6 +3447,187 @@ namespace AtomicWar._Game.Core
                 if (e != null && e.Phase == ExpeditionPhase.AtHatchDilemma) return e.ExpeditionId;
             }
             return string.Empty;
+        }
+
+        /// <summary>True when the survivor is currently on an outdoor expedition (Black Rain exposure).</summary>
+        private bool IsSurvivorOnExpedition(Survivor s)
+        {
+            if (s == null || ExpeditionSystem?.ActiveExpeditions == null) return false;
+            for (int i = 0; i < ExpeditionSystem.ActiveExpeditions.Count; i++)
+            {
+                var e = ExpeditionSystem.ActiveExpeditions[i];
+                if (e?.Survivor != null && e.Survivor.Id == s.Id) return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Black Rain hatch listeners: anyone in the entry room, or anyone
+        /// underground while the hatch is sealed/open and rain is audible.
+        /// Simplified: entry-room assignment OR hatch not Clear during BlackRain.
+        /// </summary>
+        private bool IsSurvivorHatchListener(Survivor s)
+        {
+            if (s == null || !s.IsAlive) return false;
+            if (string.Equals(s.CurrentRoomId, HatchEntrapmentSystem.EntryRoomId, StringComparison.OrdinalIgnoreCase))
+                return true;
+            // Sealed hatch transmits the hammer of rain into the bunker.
+            if (HatchEntrapmentSystem != null
+                && HatchEntrapmentSystem.State != HatchState.Clear
+                && BlackRainHazardSystem != null
+                && BlackRainHazardSystem.IsActive)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #9 — Child Found: create child survivor on "take in" choice.
+        // ─────────────────────────────────────────────────────────────────
+
+        private void HandleChildFoundChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null) return;
+            if (ev.id != "child_found_in_ash") return;
+
+            if (choice.ChoiceId == "take_the_child")
+            {
+                if (ChildSystem != null && !ChildSystem.WasChildFound)
+                {
+                    ChildSystem.CreateChild();
+                    Debug.Log("[Child] The bunker has taken in the child. A fragile hope settles over the shelter.");
+                }
+            }
+
+            // Either choice resolves the event — prevent re-triggering
+            if (SaveSystem != null)
+            {
+                SaveSystem.SetWorldFlag(ChildDependentSystem.ChildFoundFlag, true);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #7 — Addiction: panic-destroy items during withdrawal.
+        // ─────────────────────────────────────────────────────────────────
+
+        private bool ForceAddictionPanicDestroy(Survivor sv, System.Random rng)
+        {
+            if (sv == null || Inventory == null || rng == null) return false;
+
+            // Destroy 1-3 random inventory items, each from a different slot
+            int count = rng.Next(1, 4);
+            bool destroyed = false;
+            var targetedIndices = new System.Collections.Generic.HashSet<int>();
+            for (int i = 0; i < count; i++)
+            {
+                if (Inventory.Slots == null || Inventory.Slots.Count == 0) break;
+                // Find a non-empty slot we haven't targeted yet
+                int attempts = 0;
+                int idx;
+                InventorySlot slot;
+                do
+                {
+                    idx = rng.Next(0, Inventory.Slots.Count);
+                    slot = (idx >= 0 && idx < Inventory.Slots.Count) ? Inventory.Slots[idx] : null;
+                    attempts++;
+                } while ((slot == null || slot.Item == null || slot.Amount <= 0 || targetedIndices.Contains(idx)) && attempts < 20);
+
+                if (slot == null || slot.Item == null || slot.Amount <= 0) continue;
+                targetedIndices.Add(idx);
+                int toRemove = rng.Next(1, Mathf.Min(slot.Amount, 3));
+                if (Inventory.Remove(slot.Item, toRemove))
+                {
+                    destroyed = true;
+                    Debug.Log($"[Addiction] {sv.DisplayName} destroyed {toRemove}x {slot.Item.id} in a withdrawal panic.");
+                }
+            }
+            return destroyed;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #9 — Child Found event factory.
+        // ─────────────────────────────────────────────────────────────────
+
+        private static void EnsurePoolHasChildFoundEvent(List<GameEvent> pool)
+        {
+            if (pool == null) return;
+            var ev = CreateChildFoundEvent();
+            if (ev != null && !string.IsNullOrEmpty(ev.id))
+            {
+                bool exists = false;
+                for (int i = 0; i < pool.Count; i++)
+                {
+                    if (pool[i] != null && pool[i].id == ev.id)
+                    {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (!exists) pool.Add(ev);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #5 — Default diary factory for when no authored assets exist.
+        // ─────────────────────────────────────────────────────────────────
+
+        private static DiaryFragmentSO CreateDefaultDiary(
+            string id, string title, string text, string author,
+            string roomId, string warnsSystem, int page, int total)
+        {
+            var diary = ScriptableObject.CreateInstance<DiaryFragmentSO>();
+            diary.id = id;
+            diary.title = title;
+            diary.text = text;
+            diary.authorName = author;
+            diary.foundInRoomId = roomId;
+            diary.warnsAboutSystemId = warnsSystem;
+            diary.pageOrder = page;
+            diary.totalPages = total;
+            return diary;
+        }
+
+        private static GameEvent CreateChildFoundEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = "child_found_in_ash";
+            ev.title = "A Small Figure in the Ash";
+            ev.bodyText = "During a scavenging run, one of your survivors spots movement in the ash drifts. " +
+                "At first it looks like an animal — but then the shape resolves. It's a child. Maybe eight years old. " +
+                "Filthy, shivering, barely able to stand. They don't speak. They just stare at the scavenger with hollow, " +
+                "exhausted eyes.\n\nThe child cannot work. Cannot fight. Cannot scavenge. They will consume food and " +
+                "water like anyone else. But keeping them alive might mean something. Something the bunker has been losing.";
+            ev.minDay = 8;
+            ev.weight = 1f;
+
+            // Choice 1: Take them in
+            var takeIn = new EventChoice
+            {
+                ChoiceId = "take_the_child",
+                Text = "Bring them into the bunker. They're just a child.",
+                MoraleDelta = 15f,
+                Effects = new List<EventEffect>
+                {
+                    new EventEffect
+                    {
+                        SetWorldFlag = ChildDependentSystem.ChildFoundFlag,
+                        WorldFlagValue = true
+                    }
+                },
+                SetEventFlags = new List<string> { ChildDependentSystem.ChildFoundFlag }
+            };
+
+            // Choice 2: Leave them
+            var leave = new EventChoice
+            {
+                ChoiceId = "leave_them",
+                Text = "We can barely feed ourselves. Keep moving.",
+                MoraleDelta = -10f
+            };
+
+            ev.choices = new List<EventChoice> { takeIn, leave };
+            return ev;
         }
     }
 }

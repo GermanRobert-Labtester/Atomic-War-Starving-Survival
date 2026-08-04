@@ -31,6 +31,11 @@ namespace AtomicWar._Game.AI
                 score -= ListlessScorePenalty;
             }
 
+            // Override actions (e.g. withdrawal SearchForChems) are not clamped;
+            // they must reliably win against any 0..1 action.
+            if (action.isOverrideAction)
+                return Mathf.Max(0f, score);
+
             return Mathf.Clamp01(score);
         }
 

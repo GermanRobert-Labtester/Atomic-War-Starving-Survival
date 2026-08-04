@@ -1425,5 +1425,95 @@ namespace AtomicWar._Game.Events
             }
             return null;
         }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Prompt #48 — weather-driven hatch entrapment ("Buried Alive")
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string BuriedAliveEventId = "buried_alive";
+        public const string FactionDigOutEventId = "faction_dig_out";
+        public const string ChoiceDigOut = "dig_out";
+        public const string ChoiceWaitOutStorm = "wait_out_storm";
+        public const string ChoiceAcceptFactionRescue = "accept_faction_rescue";
+
+        /// <summary>
+        /// Opening beat of the Buried Alive chain: continuous blizzard sealed
+        /// the hatch. Expeditions are hard-locked until DigOut (or outside rescue).
+        /// </summary>
+        public static GameEvent CreateBuriedAliveEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = BuriedAliveEventId;
+            ev.title = "Buried Alive";
+            ev.bodyText =
+                "The hatch will not open. We are snowed in. " +
+                "The wheel turns half a degree and stops. Snow has packed the shaft " +
+                "into a single white mass. Outside, the wind is a continuous pressure " +
+                "on the metal. No one leaves. No one comes. The air already tastes thinner.";
+            ev.weight = 2f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequireExtremeWeather = true,
+                RequiredFlagId = "is_buried_alive_offered"
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = ChoiceDigOut,
+                    Text = "Dig out from the inside. Heavy work. Bad air.",
+                    MoraleDelta = -8f,
+                    SetEventFlags = new List<string> { "hatch_dig_out_started" }
+                },
+                new EventChoice
+                {
+                    ChoiceId = ChoiceWaitOutStorm,
+                    Text = "Wait. Conserve air. Hope the filter holds.",
+                    MoraleDelta = -4f,
+                    SetEventFlags = new List<string> { "hatch_wait_out_storm" }
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// Faction arrives and digs the hatch open from outside — saves lives,
+        /// demands a massive debt in return (trust slam + debt flag).
+        /// Scheduled when any faction trust is strictly above 80.
+        /// </summary>
+        public static GameEvent CreateFactionDigOutEvent(string factionId = null)
+        {
+            string fid = string.IsNullOrEmpty(factionId)
+                ? "scavenger_camp"
+                : factionId;
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = FactionDigOutEventId;
+            ev.title = "Outside the Hatch";
+            ev.bodyText =
+                "Shovels. Voices. Someone is cutting a path down to the wheel from above. " +
+                "They do not ask permission. When the light comes through, the first face " +
+                "is not kind. They have the debt ledger open before the snow is cleared. " +
+                "You will pay. That is not a request.";
+            ev.weight = 1.5f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredFlagId = "faction_dig_out_debt"
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = ChoiceAcceptFactionRescue,
+                    Text = "Take the debt. Open the hatch.",
+                    MoraleDelta = 6f,
+                    FactionId = fid,
+                    TrustDelta = -45f,
+                    SetEventFlags = new List<string> { "faction_dig_out_accepted", "faction_dig_out_debt" }
+                }
+            };
+            return ev;
+        }
     }
 }

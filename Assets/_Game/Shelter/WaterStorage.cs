@@ -31,6 +31,26 @@ namespace AtomicWar._Game.Shelter
             if (amount > 0f) IrradiatedWater += amount;
         }
 
+        /// <summary>
+        /// Black Rain / catchment sabotage: move all clean and dirty volume into
+        /// the irradiated tier. Idempotent when already empty of clean/dirty.
+        /// </summary>
+        public void RuinCleanAndDirtyToIrradiated()
+        {
+            float ruined = 0f;
+            if (CleanWater > 0f)
+            {
+                ruined += CleanWater;
+                CleanWater = 0f;
+            }
+            if (DirtyWater > 0f)
+            {
+                ruined += DirtyWater;
+                DirtyWater = 0f;
+            }
+            if (ruined > 0f) IrradiatedWater += ruined;
+        }
+
         /// <summary>Draw up to <paramref name="amount"/> from the clean pool; returns the actual amount taken.</summary>
         public float ConsumeClean(float amount) => Consume(ref CleanWater, amount);
 

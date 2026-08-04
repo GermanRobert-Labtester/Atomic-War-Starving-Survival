@@ -22,6 +22,10 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null) return 0f;
+
+            // Cannot survey (child, etc.)
+            if (context.Survivor.CannotScavenge) return 0f;
+
             if (context.IsFalloutStorm && !context.Survivor.HasFullSuitEquipped) return 0f;
 
             // Prefer surveying when ambient uncertainty is high and a device is available.

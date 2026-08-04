@@ -192,6 +192,31 @@ namespace AtomicWar._Game.Core
             return Trigger(state, screen, reason, day, survivors, finalizeSummary);
         }
 
+        /// <summary>
+        /// Prompt #20 — Lifeboat Transmission resolved: one extracted, rest already dead.
+        /// Bittersweet victory; mutually exclusive with full Rescued / Escaped for this run.
+        /// </summary>
+        public EndgameSummaryData ApplyLifeboat(
+            string extractedName,
+            int leftBehindCount,
+            int day,
+            IReadOnlyList<Survivor> survivors,
+            Func<EndgameSummaryData, EndgameSummaryData> finalizeSummary = null)
+        {
+            if (IsTerminal) return _lastSummary;
+            string who = string.IsNullOrEmpty(extractedName) ? "One of us" : extractedName;
+            string reason = leftBehindCount <= 0
+                ? $"{who} walked into the ash toward the contact. The hatch closed behind them."
+                : $"{who} walked into the ash toward the contact. {leftBehindCount} stayed. The hatch closed.";
+            return Trigger(
+                EndgameState.Lifeboat,
+                DeathScreenKind.None,
+                reason,
+                day,
+                survivors,
+                finalizeSummary);
+        }
+
         /// <summary>Build a summary DTO without changing state (for UI / tests).</summary>
         public EndgameSummaryData BuildSummary(
             int day,
@@ -348,6 +373,11 @@ namespace AtomicWar._Game.Core
         public static bool IsMilitaryIntel(IntelNode intel)
         {
             if (intel == null) return false;
+            // Prompt #19 — ghost loops never count toward extraction.
+            if (intel.Type == IntelType.GhostLoop) return false;
+            if (!string.IsNullOrEmpty(intel.SourceFrequencyId)
+                && intel.SourceFrequencyId.StartsWith(GhostStationSystem.IdPrefix, StringComparison.Ordinal))
+                return false;
             if (!string.IsNullOrEmpty(intel.SourceFrequencyId)
                 && string.Equals(intel.SourceFrequencyId, MilitaryFrequencyId, StringComparison.Ordinal))
                 return true;
@@ -458,6 +488,12 @@ namespace AtomicWar._Game.Core
                     data.OutcomeTitle = "RESCUED";
                     data.OutcomeBody = string.IsNullOrEmpty(data.Reason)
                         ? "Extraction coordinates held. The chopper came."
+                        : data.Reason;
+                    break;
+                case EndgameState.Lifeboat:
+                    data.OutcomeTitle = "LIFEBOAT";
+                    data.OutcomeBody = string.IsNullOrEmpty(data.Reason)
+                        ? "One seat. One name. The rest stayed under concrete."
                         : data.Reason;
                     break;
                 case EndgameState.Escaped:

@@ -61,6 +61,33 @@ namespace AtomicWar._Game.Events
             if (!_knowledge.Discover(knowledgeKey)) return null;
 
             var bias = author != null ? author.RiskBias : RiskBiasTrait.Realist;
+            string text = JournalVoice.ComposeFullText(knowledgeKey, bias, day);
+            return InsertEntry(knowledgeKey, text, author, day, hour);
+        }
+
+        /// <summary>
+        /// Record a freeform narrative entry once per knowledge key (Prompt #19
+        /// ghost-station diary fragments). Deduped via <see cref="KnowledgeBase"/>.
+        /// </summary>
+        public JournalEntry TryAddRawEntry(
+            string knowledgeKey,
+            string text,
+            Survivor author,
+            int day,
+            float hour = -1f)
+        {
+            if (string.IsNullOrEmpty(knowledgeKey) || string.IsNullOrEmpty(text)) return null;
+            if (!_knowledge.Discover(knowledgeKey)) return null;
+            return InsertEntry(knowledgeKey, text, author, day, hour);
+        }
+
+        private JournalEntry InsertEntry(
+            string knowledgeKey,
+            string text,
+            Survivor author,
+            int day,
+            float hour)
+        {
             string name = author != null && !string.IsNullOrEmpty(author.DisplayName)
                 ? author.DisplayName
                 : (author != null && !string.IsNullOrEmpty(author.Id) ? author.Id : "Unknown");
@@ -68,7 +95,7 @@ namespace AtomicWar._Game.Events
 
             var entry = _entryFactory != null ? _entryFactory() : new JournalEntry();
             entry.Id = $"journal_{++_seq}_{knowledgeKey}";
-            entry.Text = JournalVoice.ComposeFullText(knowledgeKey, bias, day);
+            entry.Text = text ?? string.Empty;
             entry.Timestamp = JournalVoice.FormatTimestamp(day, hour);
             entry.AuthorName = name;
             entry.AuthorId = authorId;

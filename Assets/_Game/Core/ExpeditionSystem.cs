@@ -53,6 +53,8 @@ namespace AtomicWar._Game.Core
         private readonly Shelter.Shelter _shelter;
         private readonly IReadOnlyList<Survivor> _survivors;
         private GeneratedMap _generatedMap;
+        private SabotagedCacheSystem _sabotagedCaches;
+        private ItemDefinition _deserterStandRifle;
 
         private readonly List<ExpeditionState> _activeExpeditions = new List<ExpeditionState>();
         private readonly List<EncounterSO> _encounterPool = new List<EncounterSO>();
@@ -60,6 +62,7 @@ namespace AtomicWar._Game.Core
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
         public GeneratedMap GeneratedMap => _generatedMap;
+        public SabotagedCacheSystem SabotagedCaches => _sabotagedCaches;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;
@@ -73,6 +76,18 @@ namespace AtomicWar._Game.Core
         public event Action<ExpeditionState> OnFlashpointIntercepted;
         public event Action<ExpeditionState> OnHatchDilemmaReady;
         public event Action<ExpeditionState> OnHatchDilemmaResolved;
+
+        /// <summary>Prompt #12 — UXO landmine detonated under the scavenger.</summary>
+        public event Action<ExpeditionState, string> OnUxoDetonated;
+
+        /// <summary>Prompt #13 — medical loot discarded after spotting a poisoned cache.</summary>
+        public event Action<ExpeditionState, string> OnSabotagedCacheDetected;
+
+        /// <summary>Prompt #13 — medical loot swapped for poisoned iodine (undetected).</summary>
+        public event Action<ExpeditionState> OnSabotagedCachePlanted;
+
+        /// <summary>Prompt #15 — Deserter's Stand narrative beat resolved (no combat).</summary>
+        public event Action<ExpeditionState, string> OnDesertersStandResolved;
 
         public ExpeditionSystem(
             RadiationSystem radSystem,
@@ -103,6 +118,12 @@ namespace AtomicWar._Game.Core
             // subscriptions are ignored.
             EventBus.Subscribe<FlashpointInterceptSignal>(HandleFlashpointIntercept);
             EventBus.Subscribe<HatchDilemmaResolvedSignal>(HandleHatchDilemmaResolved);
+        }
+
+        /// <summary>Inject Prompt #13 sabotaged-cache system (optional; safe to skip in tests).</summary>
+        public void SetSabotagedCacheSystem(SabotagedCacheSystem system)
+        {
+            _sabotagedCaches = system;
         }
 
         /// <summary>
@@ -395,6 +416,7 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// First forceOnArrival encounter bound to this location (highest weight wins).
+        /// Also returns Deserter's Stand when the proc-gen node is flagged (Prompt #15).
         /// </summary>
         public EncounterSO FindForcedLocationEncounter(string locationId)
         {
@@ -405,9 +427,25 @@ namespace AtomicWar._Game.Core
             {
                 var enc = _encounterPool[i];
                 if (enc == null || !enc.forceOnArrival) continue;
-                if (!string.Equals(enc.requiredLocationId, locationId, StringComparison.Ordinal))
-                    continue;
+                // Location-bound (Safe Haven etc.)
+                if (!string.IsNullOrEmpty(enc.requiredLocationId))
+                {
+                    if (!string.Equals(enc.requiredLocationId, locationId, StringComparison.Ordinal))
+                        continue;
+                }
+                else
+                {
+                    // Flag-driven narrative (Deserter's Stand): only if node tagged.
+                    if (!DesertersStandSystem.IsDesertersStandEncounter(enc))
+                        continue;
+                    if (!DesertersStandSystem.NodeHasStand(_generatedMap, locationId))
+                        continue;
+                }
                 float w = enc.GetEffectiveWeight(ExpeditionStance.Stealth, 99f, locationId);
+                // Flag-driven encounters have empty requiredLocationId — weight still applies.
+                if (string.IsNullOrEmpty(enc.requiredLocationId)
+                    && DesertersStandSystem.IsDesertersStandEncounter(enc))
+                    w = Mathf.Max(w, enc.baseWeight);
                 if (w > bestW)
                 {
                     bestW = w;
@@ -415,6 +453,12 @@ namespace AtomicWar._Game.Core
                 }
             }
             return best;
+        }
+
+        /// <summary>Optional override for the Deserter's Stand service rifle loot.</summary>
+        public void SetDeserterStandRifle(ItemDefinition rifle)
+        {
+            if (rifle != null) _deserterStandRifle = rifle;
         }
 
         /// <summary>Inject proc-gen wasteland map (visit/reveal on arrival).</summary>
@@ -428,12 +472,22 @@ namespace AtomicWar._Game.Core
         /// Returns false if survivor is invalid, dead, or already on an expedition.
         /// Travel hours are multiplied by current weather (blizzards ×2).
         /// </summary>
+        /// <summary>
+        /// When true, all StartExpedition* paths return false (Prompt #48 —
+        /// hatch Buried/Frozen). Expedition UI should treat this as disabled.
+        /// </summary>
+        public bool HatchBlocksExpeditions { get; set; }
+
+        /// <summary>False while the hatch is sealed — drives map/expedition UI disable.</summary>
+        public bool IsExpeditionUiEnabled => !HatchBlocksExpeditions;
+
         public bool StartExpedition(
             Survivor survivor,
             LocationDefinitionSO location,
             ExpeditionStance stance = ExpeditionStance.Stealth,
             float maxLootCapacity = MaxCarryingCapacityDefault)
         {
+            if (HatchBlocksExpeditions) return false;
             if (survivor == null || !survivor.IsAlive || location == null) return false;
             if (IsOnExpedition(survivor.Id)) return false;
 
@@ -476,6 +530,7 @@ namespace AtomicWar._Game.Core
             ExpeditionStance stance = ExpeditionStance.Stealth,
             float maxLootCapacity = MaxCarryingCapacityDefault)
         {
+            if (HatchBlocksExpeditions) return false;
             if (survivor == null || !survivor.IsAlive || node == null || node.IsShelter) return false;
             if (IsOnExpedition(survivor.Id)) return false;
 
@@ -537,6 +592,7 @@ namespace AtomicWar._Game.Core
             ExpeditionStance stance = ExpeditionStance.Stealth,
             float maxLootCapacity = MaxCarryingCapacityDefault)
         {
+            if (HatchBlocksExpeditions) return false;
             if (survivor == null || !survivor.IsAlive || string.IsNullOrEmpty(nodeId)) return false;
             if (IsOnExpedition(survivor.Id)) return false;
             if (nodeId == GeneratedMap.ShelterNodeId) return false;
@@ -710,6 +766,19 @@ namespace AtomicWar._Game.Core
                         exp.LootingTicksCompleted++;
                         PerformLootRoll(exp);
 
+                        // Prompt #12 — Reckless loot on a UXO node may detonate a mine.
+                        if (TryProcessUxoLoot(exp))
+                        {
+                            if (exp.Phase == ExpeditionPhase.Failed)
+                            {
+                                OnExpeditionFailed?.Invoke(exp, UxoHazardSystem.DetonationLogMessage);
+                                _activeExpeditions.RemoveAt(i);
+                                continue;
+                            }
+                            OnExpeditionTick?.Invoke(exp);
+                            continue;
+                        }
+
                         // Check psychological auto-retreat trigger
                         if (exp.Survivor.RiskBias == RiskBiasTrait.Paranoid || exp.Survivor.HasRadiationAnxietyStatus)
                         {
@@ -784,16 +853,21 @@ namespace AtomicWar._Game.Core
             // Weather penalty
             if (_weatherSystem != null)
             {
-                if (_weatherSystem.Current == WeatherKind.Blizzard || _weatherSystem.Current == WeatherKind.FalloutStorm)
+                if (_weatherSystem.Current == WeatherKind.Blizzard
+                    || _weatherSystem.Current == WeatherKind.FalloutStorm
+                    || _weatherSystem.Current == WeatherKind.BlackRain)
                 {
                     drain += 10f * hours;
                 }
             }
 
-            // Suit wear & degradation
+            // Suit wear & degradation (Black Rain melts hazmat aggressively — Prompt #11)
             if (exp.Survivor.HasFullSuitEquipped)
             {
-                exp.SuitDegradation = Mathf.Clamp(exp.SuitDegradation + 2f * hours, 0f, 100f);
+                float suitWearPerHour = 2f;
+                if (_weatherSystem != null)
+                    suitWearPerHour *= _weatherSystem.HazmatDegradeMultiplier;
+                exp.SuitDegradation = Mathf.Clamp(exp.SuitDegradation + suitWearPerHour * hours, 0f, 100f);
                 drain += 3f * hours; // suit heat & movement restriction
             }
 
@@ -816,6 +890,26 @@ namespace AtomicWar._Game.Core
                 var item = _itemCatalog.items[_rng.Next(_itemCatalog.items.Count)];
                 if (item != null)
                 {
+                    // Prompt #13 — hostile factions may swap medical loot for poison.
+                    if (_sabotagedCaches != null && exp.Survivor != null)
+                    {
+                        _sabotagedCaches.RecordScavengeLoot(exp.TargetLocationId);
+                        var outcome = _sabotagedCaches.ProcessLootCandidate(
+                            exp.Survivor, item, out var resultItem);
+                        if (outcome == SabotagedLootOutcome.DetectedAndDiscarded)
+                        {
+                            OnSabotagedCacheDetected?.Invoke(exp,
+                                "The seals are wrong. Left the crate.");
+                            return;
+                        }
+                        if (outcome == SabotagedLootOutcome.Poisoned && resultItem != null)
+                        {
+                            exp.TryAddLoot(resultItem);
+                            OnSabotagedCachePlanted?.Invoke(exp);
+                            return;
+                        }
+                    }
+
                     exp.TryAddLoot(item);
                 }
             }
@@ -829,6 +923,15 @@ namespace AtomicWar._Game.Core
             exp.LocationEncounterFired = true;
             OnEncounterTriggered?.Invoke(exp, forced);
             ResolveEncounterWithPsychology(exp, forced);
+        }
+
+        /// <summary>Test hook: force the location-bound / flag-driven arrival beat.</summary>
+        public bool ForceFireLocationEncounterForTests(ExpeditionState exp)
+        {
+            if (exp == null) return false;
+            exp.LocationEncounterFired = false;
+            TryFireForcedLocationEncounter(exp);
+            return exp.LocationEncounterFired;
         }
 
         private void RollAndResolveEncounter(ExpeditionState exp)
@@ -856,6 +959,7 @@ namespace AtomicWar._Game.Core
         {
             EventChoice chosen = null;
             var survivor = exp.Survivor;
+            bool fled = false;
 
             // 1. Trait-based forced auto-resolution
             if (selected.enableAutoResolution && survivor != null)
@@ -869,12 +973,15 @@ namespace AtomicWar._Game.Core
                     }
                     // Direct outcome for Reckless engagement
                     PerformLootRoll(exp);
+                    // Reckless loot after engage can still step on UXO
+                    TryProcessUxoLoot(exp);
                 }
                 else if (survivor.RiskBias == selected.autoFleeTrait || survivor.HasRadiationAnxietyStatus)
                 {
                     // Paranoid: flee and drop loot
                     exp.DropLoot(0.5f);
                     exp.Phase = ExpeditionPhase.Inbound;
+                    fled = true;
                     if (selected.choices != null && selected.choices.Count > 1)
                     {
                         chosen = selected.choices[selected.choices.Count - 1]; // Retreat choice
@@ -899,9 +1006,99 @@ namespace AtomicWar._Game.Core
                 {
                     survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + chosen.MoraleDelta, 0f, 100f);
                 }
+
+                // Explicit flee choice (ChoiceId "flee") on a UXO node can still detonate.
+                if (!fled && string.Equals(chosen.ChoiceId, "flee", StringComparison.OrdinalIgnoreCase))
+                {
+                    exp.DropLoot(0.5f);
+                    exp.Phase = ExpeditionPhase.Inbound;
+                    fled = true;
+                }
             }
 
+            // Prompt #15 — Deserter's Stand: trauma + high-tier weapons (no combat).
+            if (DesertersStandSystem.IsDesertersStandEncounter(selected) && survivor != null)
+            {
+                EnsureDeserterStandRifle();
+                string choiceId = chosen != null ? chosen.ChoiceId : "gather_the_weapons";
+                DesertersStandSystem.Apply(exp, survivor, _deserterStandRifle, choiceId);
+                OnDesertersStandResolved?.Invoke(exp, DesertersStandSystem.LogMessage);
+                Debug.Log($"[Deserter's Stand] {DesertersStandSystem.LogMessage}");
+            }
+
+            if (fled)
+                TryProcessUxoFlee(exp);
+
             OnEncounterResolved?.Invoke(exp, selected, chosen);
+        }
+
+        private void EnsureDeserterStandRifle()
+        {
+            if (_deserterStandRifle != null) return;
+            // Prefer catalog entry if present
+            if (_itemCatalog?.items != null)
+            {
+                for (int i = 0; i < _itemCatalog.items.Count; i++)
+                {
+                    var it = _itemCatalog.items[i];
+                    if (it != null
+                        && string.Equals(it.id, DesertersStandSystem.ServiceRifleItemId,
+                            StringComparison.OrdinalIgnoreCase))
+                    {
+                        _deserterStandRifle = it;
+                        return;
+                    }
+                }
+            }
+            _deserterStandRifle = DesertersStandSystem.CreateServiceRifleDefinition();
+        }
+
+        /// <summary>
+        /// Prompt #12 — if the target node has UXO and the scavenger is Reckless,
+        /// roll detonation after a loot action.
+        /// </summary>
+        private bool TryProcessUxoLoot(ExpeditionState exp)
+        {
+            if (exp == null || exp.UxoDetonated) return false;
+            if (!NodeHasUxo(exp.TargetLocationId)) return false;
+            if (exp.Survivor == null) return false;
+            if (!UxoHazardSystem.ShouldDetonateOnLoot(exp.Survivor.RiskBias, _rng)) return false;
+            return DetonateUxo(exp);
+        }
+
+        /// <summary>
+        /// Prompt #12 — fleeing an encounter on a UXO node may trigger a mine.
+        /// </summary>
+        private bool TryProcessUxoFlee(ExpeditionState exp)
+        {
+            if (exp == null || exp.UxoDetonated) return false;
+            if (!NodeHasUxo(exp.TargetLocationId)) return false;
+            if (!UxoHazardSystem.ShouldDetonateOnFlee(_rng)) return false;
+            return DetonateUxo(exp);
+        }
+
+        private bool NodeHasUxo(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId) || _generatedMap == null) return false;
+            var node = _generatedMap.GetNode(nodeId);
+            return node != null && node.HasUxo;
+        }
+
+        private bool DetonateUxo(ExpeditionState exp)
+        {
+            if (!UxoHazardSystem.ApplyDetonation(exp, _medicalSystem)) return false;
+            OnUxoDetonated?.Invoke(exp, UxoHazardSystem.DetonationLogMessage);
+            Debug.Log($"[UXO] {UxoHazardSystem.DetonationLogMessage}");
+            return true;
+        }
+
+        /// <summary>
+        /// Test / scripted hook: force a UXO check with an explicit detonation decision.
+        /// </summary>
+        public bool ForceUxoDetonationForTests(ExpeditionState exp)
+        {
+            if (exp == null) return false;
+            return DetonateUxo(exp);
         }
 
         private void CompleteExpedition(ExpeditionState exp)
@@ -960,9 +1157,9 @@ namespace AtomicWar._Game.Core
             };
             _encounterPool.Add(feralDogs);
 
-            // 2. Civil War Deserters
+            // 2. Civil War Deserters (combat toll — distinct from Deserter's Stand)
             var deserters = ScriptableObject.CreateInstance<EncounterSO>();
-            deserters.id = "enc_deserters";
+            deserters.id = DesertersStandSystem.CombatDesertersEncounterId;
             deserters.title = "Civil War Deserters";
             deserters.description = "Armed scavengers demand a toll to pass through their sector.";
             deserters.category = EncounterCategory.Combat;
@@ -990,6 +1187,9 @@ namespace AtomicWar._Game.Core
                 new EventChoice { ChoiceId = "detour", Text = "Take a long detour", MoraleDelta = -5f }
             };
             _encounterPool.Add(rubble);
+
+            // 4. Prompt #15 — Deserter's Stand (narrative discovery; fires via map flag)
+            _encounterPool.Add(DesertersStandSystem.CreateEncounter());
         }
     }
 }

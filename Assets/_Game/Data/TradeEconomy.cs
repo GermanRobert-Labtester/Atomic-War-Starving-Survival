@@ -43,6 +43,7 @@ namespace AtomicWar._Game.Data
             switch (item.type)
             {
                 case ItemType.Food: return 12f;
+                case ItemType.ContaminatedFood: return 1f;
                 case ItemType.Water: return 15f;
                 case ItemType.IrradiatedWater: return 2f;
                 case ItemType.AntiRad: return 8f;
@@ -56,6 +57,7 @@ namespace AtomicWar._Game.Data
                 case ItemType.Filter: return 20f;
                 case ItemType.Device: return 30f;
                 case ItemType.Comfort: return 8f;
+                case ItemType.Corpse: return 0f;
                 default: return 5f;
             }
         }

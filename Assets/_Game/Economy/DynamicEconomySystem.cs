@@ -36,6 +36,26 @@ namespace AtomicWar._Game.Economy
         /// <summary>After parley / surrender, player buy prices drop by this fraction.</summary>
         public const float ParleyBarterBuyDiscount = 0.10f;
 
+        /// <summary>
+        /// Cult of the Glow (#16 polish): when any party member has Acute Radiation
+        /// Syndrome, player buy prices on high-value gear drop by this fraction
+        /// (they revere the dying and open the cache).
+        /// </summary>
+        public const float ArsReverenceBuyDiscount = 0.35f;
+
+        /// <summary>
+        /// Trust-inversion factions (Cult of the Glow) only open after the exchange.
+        /// Pre-Day-30 they refuse trade / intel; day provider null keeps them active
+        /// for pure unit tests that never set a day clock.
+        /// </summary>
+        public const int CultActivationDay = 30;
+
+        /// <summary>
+        /// Fallback barter multiplier for <see cref="ItemType.IrradiatedWater"/> when a
+        /// trust-inversion faction has a non-positive SO multiplier.
+        /// </summary>
+        public const float DefaultTrustInversionIrradiatedWaterMult = 12f;
+
         /// <summary>Supply pressure clamp: demand mult stays in [min, max].</summary>
         public const float MinDemandMult = 0.25f;
         public const float MaxDemandMult = 4f;
@@ -67,6 +87,26 @@ namespace AtomicWar._Game.Economy
         private System.Random _rng;
         private HatchDefenseSystem _hatchDefense;
         private Func<int> _getDay;
+        /// <summary>
+        /// Living-party average RadiationDose (0..100). Used by trust-inversion
+        /// factions (Cult of the Glow). Null = inversion falls back to stored trust.
+        /// </summary>
+        private Func<float> _getPartyAverageRadiation;
+        /// <summary>
+        /// True when any living party member has Acute Radiation Syndrome.
+        /// Cult reverence path (#16 polish). Null = false.
+        /// </summary>
+        private Func<bool> _getPartyHasArs;
+        /// <summary>
+        /// True when the party wears intact hazmat / full suit. Cult contempt path
+        /// for healthy sealed blood (#16 polish). Null = false.
+        /// </summary>
+        private Func<bool> _getPartyIntactHazmat;
+        /// <summary>
+        /// Last sampled party avg radiation for trust-inversion raid cascade.
+        /// NaN = never sampled (first <see cref="NotifyPartyRadiationChanged"/> only seeds).
+        /// </summary>
+        private float _lastObservedPartyRadiation = float.NaN;
 
         public event Action<string, float, float> OnTrustChanged; // factionId, old, new
         public event Action<WorldPhase> OnEconomyPhaseChanged;
@@ -105,10 +145,72 @@ namespace AtomicWar._Game.Economy
 
         public void SetDayProvider(Func<int> getDay) => _getDay = getDay;
 
+        /// <summary>
+        /// Wire living-party average radiation (0..100) for trust-inversion factions.
+        /// When unset, inversion factions use stored trust like everyone else.
+        /// Resets the radiation-sample seed so the next
+        /// <see cref="NotifyPartyRadiationChanged"/> only records a baseline.
+        /// </summary>
+        public void SetPartyRadiationProvider(Func<float> getPartyAverageRadiation)
+        {
+            _getPartyAverageRadiation = getPartyAverageRadiation;
+            _lastObservedPartyRadiation = float.NaN;
+        }
+
+        /// <summary>
+        /// Wire "any living party member has Acute Radiation Syndrome" for Cult
+        /// reverence (#16 polish). Null / unset = false.
+        /// </summary>
+        public void SetPartyHasArsProvider(Func<bool> getPartyHasArs)
+        {
+            _getPartyHasArs = getPartyHasArs;
+        }
+
+        /// <summary>
+        /// Wire "party wears intact hazmat / full suit" for Cult contempt
+        /// (#16 polish). Null / unset = false.
+        /// </summary>
+        public void SetPartyIntactHazmatProvider(Func<bool> getPartyIntactHazmat)
+        {
+            _getPartyIntactHazmat = getPartyIntactHazmat;
+        }
+
         public void NotifyPhaseChanged(WorldPhase phase)
         {
             OnEconomyPhaseChanged?.Invoke(phase);
             OnEconomyChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Sample party average radiation and mirror <see cref="ModifyTrust"/>'s
+        /// raid cascade for trust-inversion factions: when dose crosses a faction's
+        /// <see cref="FactionSO.healthyRadiationCeiling"/> downward (was above,
+        /// now at/below), call <see cref="TryLaunchRaid"/> once. First call only
+        /// seeds the baseline — no raid. No-op without a radiation provider.
+        /// Wire after dose ticks / anti-rad use (see GameBootstrap).
+        /// </summary>
+        public void NotifyPartyRadiationChanged()
+        {
+            float rad = GetPartyAverageRadiation();
+            if (rad < 0f) return;
+
+            float prev = _lastObservedPartyRadiation;
+            _lastObservedPartyRadiation = rad;
+
+            // First sample: establish baseline only (no false raid on load/boot).
+            if (float.IsNaN(prev)) return;
+
+            foreach (var kv in _factions)
+            {
+                var fac = kv.Value;
+                if (fac == null || !fac.trustInversion || string.IsNullOrEmpty(fac.id))
+                    continue;
+
+                float ceiling = Mathf.Clamp(fac.healthyRadiationCeiling, 0f, 100f);
+                // Downward cross through the healthy ceiling → fully hostile.
+                if (prev > ceiling && rad <= ceiling)
+                    TryLaunchRaid(fac.id);
+            }
         }
 
         // -----------------------------------------------------------------
@@ -147,6 +249,94 @@ namespace AtomicWar._Game.Economy
             return _trust.TryGetValue(factionId, out float t) ? t : 0f;
         }
 
+        /// <summary>
+        /// Living-party average RadiationDose (0..100), or −1 when no provider is wired.
+        /// </summary>
+        public float GetPartyAverageRadiation()
+        {
+            if (_getPartyAverageRadiation == null) return -1f;
+            return Mathf.Clamp(_getPartyAverageRadiation(), 0f, 100f);
+        }
+
+        /// <summary>
+        /// True when the ARS provider reports any living party member with
+        /// Acute Radiation Syndrome. False when unset.
+        /// </summary>
+        public bool PartyHasAcuteRadiationSyndrome()
+        {
+            return _getPartyHasArs != null && _getPartyHasArs();
+        }
+
+        /// <summary>
+        /// True when the hazmat provider reports intact full-suit protection.
+        /// False when unset.
+        /// </summary>
+        public bool PartyWearsIntactHazmat()
+        {
+            return _getPartyIntactHazmat != null && _getPartyIntactHazmat();
+        }
+
+        /// <summary>
+        /// Whether a faction is available for trade / intel / raid pressure.
+        /// Trust-inversion factions (Cult of the Glow) activate on
+        /// <see cref="CultActivationDay"/> when a day provider is wired.
+        /// Without a day provider they stay active (unit-test default).
+        /// </summary>
+        public bool IsFactionActive(string factionId)
+        {
+            var fac = GetFaction(factionId);
+            if (fac == null) return false;
+            if (!fac.trustInversion) return true;
+            if (_getDay == null) return true;
+            return _getDay() >= CultActivationDay;
+        }
+
+        /// <summary>
+        /// Trust used for stance and barter. For <see cref="FactionSO.trustInversion"/>
+        /// factions with a radiation provider, maps party dose to disposition:
+        /// healthy (≤ ceiling) → hostile, highly irradiated (≥ floor) → friendly.
+        /// #16 polish: ARS → MaxTrust (reverence); healthy + intact hazmat → MinTrust
+        /// (contempt, including when stored trust is high / no rad provider).
+        /// Stored trust is unchanged and still used for events / save.
+        /// </summary>
+        public float GetEffectiveTrust(string factionId)
+        {
+            float stored = GetTrust(factionId);
+            var fac = GetFaction(factionId);
+            if (fac == null || !fac.trustInversion) return stored;
+
+            // ARS reverence outranks dose and hazmat: the glow is already in the blood.
+            if (PartyHasAcuteRadiationSyndrome())
+                return MaxTrust;
+
+            float rad = GetPartyAverageRadiation();
+            bool intactHazmat = PartyWearsIntactHazmat();
+
+            // Hazmat / zero-rad contempt: sealed clean blood is heresy.
+            // - With rad provider: healthy (≤ ceiling) + intact hazmat → MinTrust
+            // - Without rad provider: intact hazmat alone floors trust (even if stored high)
+            if (intactHazmat)
+            {
+                if (rad < 0f)
+                    return MinTrust;
+                float hazCeiling = Mathf.Clamp(fac.healthyRadiationCeiling, 0f, 100f);
+                if (rad <= hazCeiling)
+                    return MinTrust;
+            }
+
+            if (rad < 0f) return stored; // no provider → fall back
+
+            float ceiling = Mathf.Clamp(fac.healthyRadiationCeiling, 0f, 100f);
+            float floor = Mathf.Clamp(fac.highRadiationFloor, 0f, 100f);
+            if (floor <= ceiling) floor = Mathf.Min(100f, ceiling + 1f);
+
+            if (rad <= ceiling) return MinTrust;
+            if (rad >= floor) return MaxTrust;
+
+            float t = (rad - ceiling) / (floor - ceiling);
+            return Mathf.Lerp(MinTrust, MaxTrust, t);
+        }
+
         public float ModifyTrust(string factionId, float delta)
         {
             if (string.IsNullOrEmpty(factionId) || Mathf.Approximately(delta, 0f)) return GetTrust(factionId);
@@ -157,13 +347,16 @@ namespace AtomicWar._Game.Economy
             OnTrustChanged?.Invoke(factionId, old, next);
             OnEconomyChanged?.Invoke();
 
-            // Crossing into raid territory may trigger an immediate hatch check
-            float threshold = _factions.TryGetValue(factionId, out var fac)
-                ? fac.raidThreshold
-                : DefaultRaidThreshold;
-            if (old > threshold && next <= threshold)
+            // Crossing into raid territory may trigger an immediate hatch check.
+            // Trust-inversion factions with a radiation provider gate disposition on
+            // dose, not stored trust — skip the trust-delta raid cascade for them.
+            var fac = GetFaction(factionId);
+            bool radDriven = fac != null && fac.trustInversion && GetPartyAverageRadiation() >= 0f;
+            if (!radDriven)
             {
-                TryLaunchRaid(factionId);
+                float threshold = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
+                if (old > threshold && next <= threshold)
+                    TryLaunchRaid(factionId);
             }
 
             return next;
@@ -184,7 +377,11 @@ namespace AtomicWar._Game.Economy
 
         public TradeStance GetStance(string factionId)
         {
-            float trust = GetTrust(factionId);
+            // Pre-activation (Cult Day gate): refuse without raid pressure.
+            if (!IsFactionActive(factionId))
+                return TradeStance.Refuse;
+
+            float trust = GetEffectiveTrust(factionId);
             var fac = GetFaction(factionId);
             float raidAt = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
             float robAt = fac != null ? fac.robThreshold : -20f;
@@ -471,6 +668,10 @@ namespace AtomicWar._Game.Economy
         /// player's selling price and softens buy prices; low trust does the reverse.
         /// After a hatch parley / surrender, prices soften further in the player's favor
         /// (see <see cref="ParleyBarterSellBonus"/> / <see cref="ParleyBarterBuyDiscount"/>).
+        /// Trust-inversion factions (Cult of the Glow) use effective (radiation-driven)
+        /// trust and multiply <see cref="ItemType.IrradiatedWater"/> heavily — the glow
+        /// is sacrament, not waste. With party ARS, high-value gear buy prices drop
+        /// further (<see cref="ArsReverenceBuyDiscount"/>).
         /// </summary>
         /// <param name="playerSelling">True when the player is offering the item to the faction.</param>
         public float GetBarterUnitValue(ItemDefinition item, string factionId, bool playerSelling)
@@ -478,7 +679,17 @@ namespace AtomicWar._Game.Economy
             float baseVal = GetTradeValue(item);
             if (baseVal <= 0f) return 0f;
 
-            float trust = GetTrust(factionId);
+            var fac = GetFaction(factionId);
+            // Cult of the Glow / trust-inversion: irradiated water is prized currency.
+            if (fac != null && fac.trustInversion && item.type == ItemType.IrradiatedWater)
+            {
+                float mult = fac.irradiatedWaterValueMultiplier > 0f
+                    ? fac.irradiatedWaterValueMultiplier
+                    : DefaultTrustInversionIrradiatedWaterMult;
+                baseVal *= mult;
+            }
+
+            float trust = GetEffectiveTrust(factionId);
             // trust -100..100 → factor ~0.7..1.3 for seller favor when player sells
             float trustNorm = Mathf.Clamp(trust, MinTrust, MaxTrust) / MaxTrust; // -1..1
             float factor = playerSelling
@@ -493,7 +704,39 @@ namespace AtomicWar._Game.Economy
                     : 1f - ParleyBarterBuyDiscount;
             }
 
+            // ARS reverence: steep discount when the player buys high-value gear
+            // from a trust-inversion faction (they gift the dying).
+            if (!playerSelling
+                && fac != null
+                && fac.trustInversion
+                && PartyHasAcuteRadiationSyndrome()
+                && IsArsReverenceHighValueItem(item))
+            {
+                factor *= 1f - ArsReverenceBuyDiscount;
+            }
+
             return Mathf.Max(0f, baseVal * factor);
+        }
+
+        /// <summary>
+        /// High-value gear types that receive the ARS reverence buy discount at
+        /// trust-inversion factions (Protective / Weapon / Medical / AntiRad / Device / Tool).
+        /// </summary>
+        public static bool IsArsReverenceHighValueItem(ItemDefinition item)
+        {
+            if (item == null) return false;
+            switch (item.type)
+            {
+                case ItemType.Protective:
+                case ItemType.Weapon:
+                case ItemType.Medical:
+                case ItemType.AntiRad:
+                case ItemType.Device:
+                case ItemType.Tool:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         /// <summary>
@@ -623,12 +866,13 @@ namespace AtomicWar._Game.Economy
         /// Attempt a hatch raid when trust is at/below the faction's raid threshold.
         /// Delegates to HatchDefenseSystem (security + weapons vs raid strength).
         /// Post-Day 30 only unless hatch defense is forced for tests.
+        /// Trust-inversion factions use radiation-driven effective trust.
         /// </summary>
         public FactionRaidResult TryLaunchRaid(string factionId, bool ignoreDayGate = false)
         {
             var result = new FactionRaidResult { FactionId = factionId };
             var fac = GetFaction(factionId);
-            float trust = GetTrust(factionId);
+            float trust = GetEffectiveTrust(factionId);
             float threshold = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
 
             // Surrender outranks the trust gate (surrender lifts trust on purpose).
@@ -636,6 +880,14 @@ namespace AtomicWar._Game.Economy
             {
                 result.Launched = false;
                 result.Message = "Faction already stood down after the last push.";
+                return result;
+            }
+
+            // Cult pre-activation: no hatch pressure until Day ≥ CultActivationDay.
+            if (!IsFactionActive(factionId))
+            {
+                result.Launched = false;
+                result.Message = "Faction not active yet.";
                 return result;
             }
 
@@ -843,13 +1095,26 @@ namespace AtomicWar._Game.Economy
                     "Bunker neighbors who stocked early. Paranoid, but solvent.",
                     startingTrust: 5f, raidAggression: 0.35f, raidThreshold: -55f,
                     minTrade: -30f, rob: -25f, intel: 50f),
+                // Concept 16 — The Cult of the Glow: clean blood is heresy.
+                MakeFaction(FactionSO.Ids.CultOfTheGlow, "Cult of the Glow",
+                    "They drink the fallout and call it grace. Clean blood is heresy; the glow is kin.",
+                    startingTrust: -10f, raidAggression: 0.6f, raidThreshold: -50f,
+                    minTrade: -40f, rob: -20f, intel: 40f,
+                    trustInversion: true,
+                    healthyRadiationCeiling: 20f,
+                    highRadiationFloor: 60f,
+                    irradiatedWaterValueMultiplier: 12f),
             };
         }
 
         private static FactionSO MakeFaction(
             string id, string name, string desc,
             float startingTrust, float raidAggression, float raidThreshold,
-            float minTrade, float rob, float intel)
+            float minTrade, float rob, float intel,
+            bool trustInversion = false,
+            float healthyRadiationCeiling = 20f,
+            float highRadiationFloor = 60f,
+            float irradiatedWaterValueMultiplier = 12f)
         {
             var f = ScriptableObject.CreateInstance<FactionSO>();
             f.id = id;
@@ -861,6 +1126,10 @@ namespace AtomicWar._Game.Economy
             f.minTrustToTrade = minTrade;
             f.robThreshold = rob;
             f.intelShareThreshold = intel;
+            f.trustInversion = trustInversion;
+            f.healthyRadiationCeiling = healthyRadiationCeiling;
+            f.highRadiationFloor = highRadiationFloor;
+            f.irradiatedWaterValueMultiplier = irradiatedWaterValueMultiplier;
             return f;
         }
 
@@ -963,6 +1232,7 @@ namespace AtomicWar._Game.Economy
                 case FactionSO.Ids.MilitaryRemnants: return "CH-7 MILBAND";
                 case FactionSO.Ids.ScavengerCamp: return "CH-3 ASH ROAD";
                 case FactionSO.Ids.DoomsdayPreppers: return "CH-11 STOCKPILE";
+                case FactionSO.Ids.CultOfTheGlow: return "CH-13 GLOWBAND";
                 default: return "CH-OPEN";
             }
         }
@@ -1022,6 +1292,18 @@ namespace AtomicWar._Game.Economy
                     parleyChoice = "Answer the hymn. Demand the raid is over. [parley]";
                     tradeChoice = "Offer a sealed trade. Keep the hatch blind. [trade]";
                     dismissChoice = "Silence. Let them recount their stores alone.";
+                    break;
+
+                case FactionSO.Ids.CultOfTheGlow:
+                    title = "They Flinched at the Hatch";
+                    body =
+                        $"[{tag}] A wet cough on the band — {leader} of {name}. " +
+                        "They sound disappointed, not angry. The plate held; the glow " +
+                        "did not get in. You can make them name a stand-down, or open " +
+                        "trade and offer what they actually want: the dirty water.";
+                    parleyChoice = "Answer the glowband. Demand the raid is over. [parley]";
+                    tradeChoice = "Offer irradiated water first. Keep the hatch sealed. [trade]";
+                    dismissChoice = "Cut the band. Let them pray to the ash alone.";
                     break;
 
                 default:

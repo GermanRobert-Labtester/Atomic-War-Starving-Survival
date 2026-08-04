@@ -1,12 +1,15 @@
 using UnityEngine;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 
 namespace AtomicWar._Game.Core
 {
     /// <summary>
     /// Keyboard/mouse input handler that routes player actions to GameBootstrap.
     /// Attach to the same GameObject as GameBootstrap.
+    /// Internal Horror: inventory activate → corpse dispose; [C] quick dispose;
+    /// fire/corpse panels steal [1]/[2]/Esc while open.
     /// </summary>
     public class PlayerInputHandler : MonoBehaviour
     {
@@ -32,6 +35,11 @@ namespace AtomicWar._Game.Core
         [SerializeField] private KeyCode _radioTunerNextKey = KeyCode.RightBracket;
         [SerializeField] private KeyCode _journalKey = KeyCode.J;
         [SerializeField] private KeyCode _fastForwardKey = KeyCode.F;
+        [Header("Internal Horror / Inventory")]
+        [SerializeField] private KeyCode _corpseDisposeKey = KeyCode.C;
+        [SerializeField] private KeyCode _inventoryCycleKey = KeyCode.I;
+        [SerializeField] private KeyCode _inventoryActivateKey = KeyCode.E;
+        [SerializeField] private KeyCode _closePanelKey = KeyCode.Escape;
 
         /// <summary>Exposed for tests / rebinding docs.</summary>
         public KeyCode WorkbenchKey => _workbenchKey;
@@ -43,6 +51,10 @@ namespace AtomicWar._Game.Core
         public KeyCode RadioTunerPrevKey => _radioTunerPrevKey;
         public KeyCode RadioTunerNextKey => _radioTunerNextKey;
         public KeyCode JournalKey => _journalKey;
+        public KeyCode CorpseDisposeKey => _corpseDisposeKey;
+        public KeyCode InventoryCycleKey => _inventoryCycleKey;
+        public KeyCode InventoryActivateKey => _inventoryActivateKey;
+        public KeyCode ClosePanelKey => _closePanelKey;
 
         private void Awake()
         {
@@ -68,6 +80,10 @@ namespace AtomicWar._Game.Core
             if (Input.GetKeyDown(_quickLoadKey))
                 _bootstrap.LoadGame("quicksave");
 
+            // Internal Horror panels take number/Esc priority over workbench & events.
+            if (HandleInternalHorrorPanelInput())
+                return;
+
             // Screens
             if (Input.GetKeyDown(_workbenchKey))
                 _bootstrap.ToggleWorkbench();
@@ -87,6 +103,16 @@ namespace AtomicWar._Game.Core
             // Fast-forward toggle: 1x <-> 3x simulation speed
             if (Input.GetKeyDown(_fastForwardKey))
                 _bootstrap.ToggleFastForward();
+
+            // Inventory strip: cycle focus [I], activate/click [E] (corpse → dispose).
+            if (Input.GetKeyDown(_inventoryCycleKey))
+                _bootstrap.SelectNextInventoryIcon();
+            if (Input.GetKeyDown(_inventoryActivateKey) || Input.GetKeyDown(KeyCode.Return))
+                _bootstrap.ActivateSelectedInventoryIcon();
+
+            // Quick open corpse dispose when a body is in stores [C].
+            if (Input.GetKeyDown(_corpseDisposeKey))
+                _bootstrap.OpenCorpseDisposePanel();
 
             // Trade: demand parley / surrender after a hatch repel
             if (Input.GetKeyDown(_parleyKey) && IsTradeOpen())
@@ -129,6 +155,54 @@ namespace AtomicWar._Game.Core
             if (Input.GetKeyDown(_eventChoice1Key)) TrySelectChoice(0);
             if (Input.GetKeyDown(_eventChoice2Key)) TrySelectChoice(1);
             if (Input.GetKeyDown(_eventChoice3Key)) TrySelectChoice(2);
+        }
+
+        /// <summary>
+        /// Corpse dispose / fire fight-seal panels: [1] [2] [Esc].
+        /// Returns true only when a key was consumed (digits while open, or Esc).
+        /// Other hotkeys (pause, journal, …) still work with a panel up.
+        /// </summary>
+        private bool HandleInternalHorrorPanelInput()
+        {
+            bool corpseOpen = _bootstrap.IsCorpseDisposePanelOpen();
+            bool fireOpen = _bootstrap.IsFirePanelOpen();
+            if (!corpseOpen && !fireOpen) return false;
+
+            if (Input.GetKeyDown(_closePanelKey))
+            {
+                _bootstrap.CloseInternalHorrorPanels();
+                return true;
+            }
+
+            // Digit keys: panel choices first; swallow 3–9 so workbench/events don't fire.
+            bool digitPressed = false;
+            int digit = -1;
+            for (int i = 0; i < 9; i++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1 + i) || Input.GetKeyDown(KeyCode.Keypad1 + i))
+                {
+                    digitPressed = true;
+                    digit = i + 1;
+                    break;
+                }
+            }
+            if (!digitPressed) return false;
+
+            if (corpseOpen)
+            {
+                if (digit == 1)
+                    _bootstrap.SelectCorpseDispose(CorpseDisposeChoice.Bury);
+                else if (digit == 2)
+                    _bootstrap.SelectCorpseDispose(CorpseDisposeChoice.ProcessFertilizer);
+                return true;
+            }
+
+            // Fire panel (when corpse panel is not also open).
+            if (digit == 1)
+                _bootstrap.SelectFightFire();
+            else if (digit == 2)
+                _bootstrap.SelectSealBulkhead();
+            return true;
         }
 
         private bool IsWorkbenchOpen()

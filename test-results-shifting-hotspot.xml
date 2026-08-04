@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="10" result="Passed" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.1388122">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="562" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.138812" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1621" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="562" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.121895" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="110667" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1622" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="562" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.115870" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1623" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="562" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.110735" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1624" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="562" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.104102" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1507" name="ShiftingHotspotTests" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.092067" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1515" name="CaptureRestore_ReplaysHistory_Idempotent" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.CaptureRestore_ReplaysHistory_Idempotent" methodname="CaptureRestore_ReplaysHistory_Idempotent" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="1511326829" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.054143" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1510" name="CollectNodesAtHopDistance_ReturnsExactlyTwoHops_ExcludesShelter" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.CollectNodesAtHopDistance_ReturnsExactlyTwoHops_ExcludesShelter" methodname="CollectNodesAtHopDistance_ReturnsExactlyTwoHops_ExcludesShelter" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="1721122488" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.003429" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1517" name="DeterministicShift_SameSeedSameSequence" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.DeterministicShift_SameSeedSameSequence" methodname="DeterministicShift_SameSeedSameSequence" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="558835392" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.001388" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1516" name="InvalidateKnowledge_ClearsSurvey_MaxUncertainty" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.InvalidateKnowledge_ClearsSurvey_MaxUncertainty" methodname="InvalidateKnowledge_ClearsSurvey_MaxUncertainty" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="552312522" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.001056" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1508" name="MapGenerator_TagsDeathZones_Deterministically_ShelterNever" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.MapGenerator_TagsDeathZones_Deterministically_ShelterNever" methodname="MapGenerator_TagsDeathZones_Deterministically_ShelterNever" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="1926189008" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.001927" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1509" name="SameSeed_IsDeathZone_InLayoutFingerprint" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.SameSeed_IsDeathZone_InLayoutFingerprint" methodname="SameSeed_IsDeathZone_InLayoutFingerprint" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="1591905275" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.002480" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1513" name="TickDay_AfterDay30_WithAlwaysRng_CanShift" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.TickDay_AfterDay30_WithAlwaysRng_CanShift" methodname="TickDay_AfterDay30_WithAlwaysRng_CanShift" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="191013615" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.000702" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1512" name="TickDay_BeforeDay30_NeverShifts" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.TickDay_BeforeDay30_NeverShifts" methodname="TickDay_BeforeDay30_NeverShifts" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="886090954" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.000490" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1514" name="TickDay_RespectsMinDaysBetweenShifts" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.TickDay_RespectsMinDaysBetweenShifts" methodname="TickDay_RespectsMinDaysBetweenShifts" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="1088208698" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.000657" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1511" name="TryShift_MovesLethalRad_OldNodeNoLongerDeathZone" fullname="AtomicWar.Tests.EditMode.ShiftingHotspotTests.TryShift_MovesLethalRad_OldNodeNoLongerDeathZone" methodname="TryShift_MovesLethalRad_OldNodeNoLongerDeathZone" classname="AtomicWar.Tests.EditMode.ShiftingHotspotTests" runstate="Runnable" seed="226261387" result="Passed" start-time="2026-08-04 10:18:39Z" end-time="2026-08-04 10:18:39Z" duration="0.001511" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

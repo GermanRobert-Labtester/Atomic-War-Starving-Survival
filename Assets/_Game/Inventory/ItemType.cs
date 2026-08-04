@@ -22,6 +22,10 @@ namespace AtomicWar._Game.Inventory
         Quest,
         Device,
         /// <summary>Firearms, melee, ammo, ballistic gear used in hatch defense.</summary>
-        Weapon
+        Weapon,
+        /// <summary>Dead body occupying bunker storage (Internal Horror — corpse management).</summary>
+        Corpse,
+        /// <summary>Food spoiled by humidity/rust; eating risks botulism.</summary>
+        ContaminatedFood
     }
 }

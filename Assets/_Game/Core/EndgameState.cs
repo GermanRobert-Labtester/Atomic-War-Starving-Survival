@@ -12,10 +12,12 @@ namespace AtomicWar._Game.Core
         Starved,
         /// <summary>Loss — radiation dominant.</summary>
         Irradiated,
-        /// <summary>Win — radio extraction / chopper.</summary>
+        /// <summary>Win — radio extraction / chopper (all living).</summary>
         Rescued,
         /// <summary>Win — vehicle drive-out.</summary>
-        Escaped
+        Escaped,
+        /// <summary>Win (bittersweet) — Lifeboat Transmission: one extracted, rest left behind.</summary>
+        Lifeboat
     }
 
     /// <summary>

@@ -1178,10 +1178,32 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(prepEv.choices.Find(c => c.ChoiceId == "dismiss").Text,
                 Does.Contain("stores").IgnoreCase.Or.Contain("Silence").IgnoreCase);
 
+            // Cult of the Glow — CH-13 GLOWBAND
+            string cult = FactionSO.Ids.CultOfTheGlow;
+            float partyRad = 10f; // healthy → HostileRaid for trust-inversion
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetTrust(cult, 0f);
+            Assert.That(eco.GetStance(cult), Is.EqualTo(TradeStance.HostileRaid));
+            Assert.That(eco.TryLaunchRaid(cult, ignoreDayGate: true).Repelled, Is.True);
+            var cultEv = eco.CreateParleyOfferEvent(cult);
+            _toDestroy.Add(cultEv);
+            Assert.That(cultEv.bodyText, Does.Contain("CH-13").Or.Contain("GLOWBAND"));
+            Assert.That(cultEv.bodyText, Does.Contain("glow").IgnoreCase
+                .Or.Contain("dirty water").IgnoreCase);
+            Assert.That(cultEv.choices.Find(c => c.ChoiceId == "open_trade").Text,
+                Does.Contain("irradiated").IgnoreCase.Or.Contain("water").IgnoreCase);
+            Assert.That(cultEv.choices.Find(c => c.ChoiceId == "dismiss").Text,
+                Does.Contain("ash").IgnoreCase.Or.Contain("glowband").IgnoreCase
+                    .Or.Contain("band").IgnoreCase);
+
             // Distinct channel tags across factions
             Assert.That(DynamicEconomySystem.GetParleyChannelTag(mil),
                 Is.Not.EqualTo(DynamicEconomySystem.GetParleyChannelTag(scav)));
             Assert.That(DynamicEconomySystem.GetParleyChannelTag(scav),
+                Is.Not.EqualTo(DynamicEconomySystem.GetParleyChannelTag(prep)));
+            Assert.That(DynamicEconomySystem.GetParleyChannelTag(cult),
+                Is.EqualTo("CH-13 GLOWBAND"));
+            Assert.That(DynamicEconomySystem.GetParleyChannelTag(cult),
                 Is.Not.EqualTo(DynamicEconomySystem.GetParleyChannelTag(prep)));
         }
     }

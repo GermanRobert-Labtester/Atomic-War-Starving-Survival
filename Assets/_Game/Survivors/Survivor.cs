@@ -128,6 +128,12 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public bool IsFractured;
 
+        /// <summary>
+        /// Black Rain dread (Prompt #11). True while outdoors in BlackRain or
+        /// listening to it hit the hatch. Owned by BlackRainHazardSystem.
+        /// </summary>
+        public bool HasDread;
+
         // -------------------------------------------------------------------
         // Medical triage — skill for Treat Patient actions. Affliction instances
         // live in MedicalSystem (keyed by survivor id); this is the only skill
@@ -145,6 +151,55 @@ namespace AtomicWar._Game.Survivors
         /// at the dial. Used by EventContext.HasTraitInBunker("Science").
         /// </summary>
         public float ScienceSkill = 0.3f;
+
+        /// <summary>
+        /// 0..1 crafting/repair competence. Drives workbench speed, scrap yield,
+        /// and shelter-module repair efficacy. Subject to Skill Atrophy (Prompt #10).
+        /// </summary>
+        public float CraftingSkill = 0.3f;
+
+        // -------------------------------------------------------------------
+        // Skill Atrophy (Prompt #10). When Morale stays below the atrophy
+        // threshold for the configured window, MedicalSkill and CraftingSkill
+        // permanently degrade. Owned by SkillAtrophySystem.
+        // -------------------------------------------------------------------
+
+        /// <summary>Consecutive days with morale below the atrophy threshold.
+        /// Reset when morale climbs above it. Owned by SkillAtrophySystem.</summary>
+        public float ConsecutiveLowMoraleDays;
+
+        /// <summary>Set of skill names that have already atrophied (e.g. "medical", "crafting").
+        /// Prevents double-atrophy. Owned by SkillAtrophySystem.</summary>
+        public System.Collections.Generic.List<string> AtrophiedSkills = new System.Collections.Generic.List<string>();
+
+        // -------------------------------------------------------------------
+        // Addiction & Withdrawal (Prompt #7). Owned by AddictionSystem.
+        // -------------------------------------------------------------------
+
+        /// <summary>Rolling 7-day consumption log of addictive items (morphine, anti-rads).
+        /// Owned by AddictionSystem.</summary>
+        public System.Collections.Generic.List<ConsumptionRecord> ConsumptionHistory = new System.Collections.Generic.List<ConsumptionRecord>();
+
+        /// <summary>Game-hours since last dose of an addictive chem while Addicted.
+        /// When this exceeds the withdrawal threshold, WithdrawalSickness begins.</summary>
+        public float HoursSinceLastDose;
+
+        /// <summary>True when the survivor is in active withdrawal (shaking, panicking,
+        /// AI override to SearchForChems). Owned by AddictionSystem.</summary>
+        public bool IsInWithdrawal;
+
+        // -------------------------------------------------------------------
+        // Dependent / Child mechanic (Prompt #9).
+        // -------------------------------------------------------------------
+
+        /// <summary>True for survivors who cannot scavenge, craft, or fight (e.g. children).
+        /// The AI skips actions that require these flags.</summary>
+        public bool CannotScavenge;
+        public bool CannotCraft;
+        public bool CannotFight;
+
+        /// <summary>True if this survivor is a child dependent. Drives the Hope buff.</summary>
+        public bool IsChild;
 
         /// <summary>
         /// Snake-case id of the <see cref="AtomicWar._Game.Shelter.ShelterRoom"/>
@@ -190,6 +245,7 @@ namespace AtomicWar._Game.Survivors
                 case SurvivorStatus.RadiationAnxiety: return HasRadiationAnxietyStatus;
                 case SurvivorStatus.Numb: return IsNumb;
                 case SurvivorStatus.Fractured: return IsFractured;
+                case SurvivorStatus.Dread: return HasDread;
                 default: return false;
             }
         }
@@ -291,6 +347,29 @@ namespace AtomicWar._Game.Survivors
                 if (!ActiveChronicIllness.HasValue) return 100f;
                 return ActiveChronicIllness.Value == ChronicIllnessKind.LungFibrosis ? 60f : 100f;
             }
+        }
+
+        /// <summary>Effective MedicalSkill after atrophy penalties.</summary>
+        public float EffectiveMedicalSkill => AtrophiedSkills != null && AtrophiedSkills.Contains("medical") ? MedicalSkill * 0.5f : MedicalSkill;
+
+        /// <summary>Effective CraftingSkill after atrophy penalties.</summary>
+        public float EffectiveCraftingSkill => AtrophiedSkills != null && AtrophiedSkills.Contains("crafting") ? CraftingSkill * 0.5f : CraftingSkill;
+    }
+
+    /// <summary>
+    /// A single consumption event of a tracked (addictive) item. Logged per survivor
+    /// so AddictionSystem can count uses within a rolling 7-day window.
+    /// </summary>
+    [System.Serializable]
+    public struct ConsumptionRecord
+    {
+        public string ItemId;
+        public int DayConsumed;
+
+        public ConsumptionRecord(string itemId, int dayConsumed)
+        {
+            ItemId = itemId;
+            DayConsumed = dayConsumed;
         }
     }
 }

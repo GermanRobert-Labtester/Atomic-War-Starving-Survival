@@ -13,6 +13,11 @@ namespace AtomicWar._Game.Core
         /// <summary>Victory: Radio broadcast contact completed military rescue countdown (Day >= 60).</summary>
         RescueExtractionSuccess,
         /// <summary>Victory: Shelter operates for 100 days with functioning hydroponics and zero deaths.</summary>
-        LongTermSelfSufficiency
+        LongTermSelfSufficiency,
+        /// <summary>
+        /// Victory (bittersweet): Lifeboat Transmission — exactly one survivor extracted;
+        /// the rest condemned (Prompt #20). Mutually exclusive with full RescueExtractionSuccess.
+        /// </summary>
+        LifeboatPartialExtraction
     }
 }

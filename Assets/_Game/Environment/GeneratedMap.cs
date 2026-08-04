@@ -19,6 +19,9 @@ namespace AtomicWar._Game.Environment
 
         public event Action OnMapChanged;
 
+        /// <summary>Raise <see cref="OnMapChanged"/> after external mutations (e.g. hotspot shift).</summary>
+        public void NotifyMapChanged() => OnMapChanged?.Invoke();
+
         public MapNode GetNode(string nodeId)
         {
             if (string.IsNullOrEmpty(nodeId) || Nodes == null) return null;
@@ -51,6 +54,7 @@ namespace AtomicWar._Game.Environment
             switch (weather)
             {
                 case WeatherKind.Blizzard: return 2f;
+                case WeatherKind.BlackRain: return 2f;
                 case WeatherKind.FalloutStorm: return 1.75f;
                 case WeatherKind.Ashfall: return 1.35f;
                 case WeatherKind.Rain: return 1.15f;
@@ -276,7 +280,10 @@ namespace AtomicWar._Game.Environment
                         .Append(n.RadZoneProfileId).Append('|')
                         .Append(n.DangerLevel.ToString("R")).Append('|')
                         .Append(n.AngleRadians.ToString("R")).Append('|')
-                        .Append(n.LayoutRadius.ToString("R")).Append('|');
+                        .Append(n.LayoutRadius.ToString("R")).Append('|')
+                        .Append(n.HasUxo ? '1' : '0').Append('|')
+                        .Append(n.IsDeathZone ? '1' : '0').Append('|')
+                        .Append(n.HasDeserterStand ? '1' : '0').Append('|');
                     if (n.EncounterDeckIds != null)
                     {
                         for (int e = 0; e < n.EncounterDeckIds.Count; e++)

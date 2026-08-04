@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="11" result="Passed" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.1536282">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="395" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.153628" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1442" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="395" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.126956" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="443084" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1443" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="395" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.118095" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1444" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="395" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.112937" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1445" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="395" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.107610" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1394" name="TraitGateEventTests" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.099105" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1400" name="ApplyChoice_BlocksGatedChoice_EvenIfForced" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.ApplyChoice_BlocksGatedChoice_EvenIfForced" methodname="ApplyChoice_BlocksGatedChoice_EvenIfForced" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="523822829" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.047722" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1399" name="ApplyChoice_SetsEventFlags_AndPushesToSaveCallback" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.ApplyChoice_SetsEventFlags_AndPushesToSaveCallback" methodname="ApplyChoice_SetsEventFlags_AndPushesToSaveCallback" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="231588358" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.011520" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1405" name="CreateEmissaryEvent_IdAndChoiceSchema" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.CreateEmissaryEvent_IdAndChoiceSchema" methodname="CreateEmissaryEvent_IdAndChoiceSchema" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="1969598483" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.003174" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1396" name="Emissary_AddParanoidSurvivor_LieChoiceBecomesAvailable" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.Emissary_AddParanoidSurvivor_LieChoiceBecomesAvailable" methodname="Emissary_AddParanoidSurvivor_LieChoiceBecomesAvailable" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="1189436948" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.001503" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1395" name="Emissary_AllCautiousCrew_LieChoiceIsHidden" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.Emissary_AllCautiousCrew_LieChoiceIsHidden" methodname="Emissary_AllCautiousCrew_LieChoiceIsHidden" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="534253274" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.001214" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1398" name="Emissary_TrustAtMinus20_ShowsLieNotFire" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.Emissary_TrustAtMinus20_ShowsLieNotFire" methodname="Emissary_TrustAtMinus20_ShowsLieNotFire" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="819724619" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.000816" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1397" name="Emissary_TrustBelowMinus20_ReplacesLieWithPreemptiveFire" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.Emissary_TrustBelowMinus20_ReplacesLieWithPreemptiveFire" methodname="Emissary_TrustBelowMinus20_ReplacesLieWithPreemptiveFire" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="468693057" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.000470" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1403" name="EventModalUI_CannotSelectGrayedOrHidden" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.EventModalUI_CannotSelectGrayedOrHidden" methodname="EventModalUI_CannotSelectGrayedOrHidden" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="1689248898" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.002419" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1402" name="EventModalUI_HidesLie_ForCautious_ShowsForParanoid" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.EventModalUI_HidesLie_ForCautious_ShowsForParanoid" methodname="EventModalUI_HidesLie_ForCautious_ShowsForParanoid" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="1142673151" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.001260" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1404" name="HasTraitInBunker_MedicalSkill_Threshold" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.HasTraitInBunker_MedicalSkill_Threshold" methodname="HasTraitInBunker_MedicalSkill_Threshold" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="550837596" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.000548" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1401" name="RequiredEventFlags_GateFutureChoice" fullname="AtomicWar.Tests.EditMode.TraitGateEventTests.RequiredEventFlags_GateFutureChoice" methodname="RequiredEventFlags_GateFutureChoice" classname="AtomicWar.Tests.EditMode.TraitGateEventTests" runstate="Runnable" seed="436135369" result="Passed" start-time="2026-08-03 19:11:35Z" end-time="2026-08-03 19:11:35Z" duration="0.001524" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -22,6 +22,9 @@ namespace AtomicWar._Game.AI.Actions
         {
             if (context?.Survivor == null) return 0f;
 
+            // Cannot fight / guard (child, incapacitated, etc.)
+            if (context.Survivor.CannotFight) return 0f;
+
             // Too exhausted to stand a post
             if (context.Survivor.Needs.Fatigue >= 90f) return 0f;
 

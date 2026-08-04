@@ -96,6 +96,38 @@ namespace AtomicWar._Game.Environment
         }
 
         /// <summary>
+        /// Update sim-truth ambient rad without creating a tile if missing.
+        /// Used when a shifting hotspot moves (Prompt #14).
+        /// </summary>
+        public bool SetTrueRad(string locationId, float trueRad)
+        {
+            var tile = GetTile(locationId);
+            if (tile == null) return false;
+            tile.TrueRad = Mathf.Max(0f, trueRad);
+            OnKnowledgeChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Force re-survey: clear measurement, max uncertainty (Prompt #14 windstorm).
+        /// Optionally updates rumor toward a guessed residual value.
+        /// </summary>
+        public bool InvalidateKnowledge(string locationId, float rumoredRad = -1f)
+        {
+            var tile = GetTile(locationId);
+            if (tile == null) return false;
+            tile.Surveyed = false;
+            tile.MeasuredAtDay = -1;
+            tile.MeasuredRad = 0f;
+            tile.MeasuredWithCalibration = 0f;
+            tile.RumorUncertainty = MaxUncertainty;
+            if (rumoredRad >= 0f)
+                tile.RumoredRad = Mathf.Max(0f, rumoredRad);
+            OnKnowledgeChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
         /// Daily fog growth: uncertainty rises on every tile that is unsurveyed or
         /// whose last measurement is past freshness.
         /// </summary>

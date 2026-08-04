@@ -121,8 +121,15 @@ namespace AtomicWar._Game.UI
         /// Confirm expedition to the selected node. Core handles StartExpedition;
         /// returns false if selection/path invalid.
         /// </summary>
+        /// <summary>
+        /// When false, RequestExpedition is a no-op (Prompt #48 hatch seal).
+        /// Wired from ExpeditionSystem.IsExpeditionUiEnabled / HatchEntrapmentSystem.
+        /// </summary>
+        public bool IsExpeditionUiEnabled { get; set; } = true;
+
         public bool RequestExpedition(Survivor survivor)
         {
+            if (!IsExpeditionUiEnabled) return false;
             if (_map == null || survivor == null || !survivor.IsAlive) return false;
             if (string.IsNullOrEmpty(SelectedNodeId)) return false;
             var node = _map.GetNode(SelectedNodeId);

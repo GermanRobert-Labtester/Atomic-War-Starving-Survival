@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AtomicWar._Game.Environment;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
@@ -44,6 +45,15 @@ namespace AtomicWar._Game.Events
         public int CurrentDay = 1;
         public float CurrentHour = 12f;
         public bool IsFalloutStorm;
+        /// <summary>Live weather kind for EventConditions.RequireBlizzard / RequireExtremeWeather.</summary>
+        public WeatherKind CurrentWeather = WeatherKind.Clear;
+        /// <summary>True when CurrentWeather is Blizzard (Prompt #48).</summary>
+        public bool IsBlizzard => CurrentWeather == WeatherKind.Blizzard;
+        /// <summary>Blizzard or FalloutStorm — hatch-entrapment weather gate.</summary>
+        public bool IsExtremeWeather =>
+            CurrentWeather == WeatherKind.Blizzard
+            || CurrentWeather == WeatherKind.FalloutStorm
+            || IsFalloutStorm;
         public Survivor PrimarySurvivor;
         public Shelter.Shelter Shelter;
         public Inventory.Inventory Inventory;

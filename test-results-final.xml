@@ -1,103 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<test-run id="2" testcasecount="14" result="Passed" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.1288129">
-  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="223" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.128813" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+<test-run id="2" testcasecount="6" result="Passed" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.115277">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="342" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.115277" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
     <properties>
       <property name="platform" value="EditMode" />
     </properties>
-    <test-suite type="Assembly" id="1253" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="223" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.111733" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <test-suite type="Assembly" id="1382" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="342" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.097472" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
       <properties>
-        <property name="_PID" value="243206" />
+        <property name="_PID" value="337259" />
         <property name="_APPDOMAIN" value="Unity Child Domain" />
         <property name="platform" value="EditMode" />
         <property name="EditorOnly" value="True" />
       </properties>
-      <test-suite type="TestSuite" id="1254" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="223" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.109365" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="TestSuite" id="1383" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="342" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.094766" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
         <properties />
-        <test-suite type="TestSuite" id="1255" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="223" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.107885" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestSuite" id="1384" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="342" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.092770" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
           <properties />
-          <test-suite type="TestSuite" id="1256" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="223" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.106410" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestSuite" id="1385" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="342" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.090715" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-suite type="TestFixture" id="1112" name="MentalBreakTests" fullname="AtomicWar.Tests.EditMode.MentalBreakTests" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.100893" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-suite type="TestFixture" id="1226" name="PermanentConsequencesTests" fullname="AtomicWar.Tests.EditMode.PermanentConsequencesTests" classname="AtomicWar.Tests.EditMode.PermanentConsequencesTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.071534" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
               <properties />
-              <test-case id="1121" name="Affinity_Adjust_ClampedToRange" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.Affinity_Adjust_ClampedToRange" methodname="Affinity_Adjust_ClampedToRange" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1929523923" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.047665" asserts="0">
+              <test-case id="1227" name="CuringSepsis_After75Hours_GrantsScarredLungs_AndCapsHealthAt75" fullname="AtomicWar.Tests.EditMode.PermanentConsequencesTests.CuringSepsis_After75Hours_GrantsScarredLungs_AndCapsHealthAt75" methodname="CuringSepsis_After75Hours_GrantsScarredLungs_AndCapsHealthAt75" classname="AtomicWar.Tests.EditMode.PermanentConsequencesTests" runstate="Runnable" seed="1304868504" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.035386" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />
                 </properties>
               </test-case>
-              <test-case id="1122" name="Affinity_IsSymmetric" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.Affinity_IsSymmetric" methodname="Affinity_IsSymmetric" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1116687603" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000809" asserts="0">
+              <test-case id="1228" name="LimpDisability_DoublesExpeditionStaminaDrain" fullname="AtomicWar.Tests.EditMode.PermanentConsequencesTests.LimpDisability_DoublesExpeditionStaminaDrain" methodname="LimpDisability_DoublesExpeditionStaminaDrain" classname="AtomicWar.Tests.EditMode.PermanentConsequencesTests" runstate="Runnable" seed="622075577" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.012006" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />
                 </properties>
               </test-case>
-              <test-case id="1113" name="BingeEater_ConsumesThreeTimesDailyRations_RegardlessOfAiScoring" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.BingeEater_ConsumesThreeTimesDailyRations_RegardlessOfAiScoring" methodname="BingeEater_ConsumesThreeTimesDailyRations_RegardlessOfAiScoring" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1456365944" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.003624" asserts="0">
+              <test-case id="1229" name="TremorsDisability_ReducesActionSpeedBy50Percent" fullname="AtomicWar.Tests.EditMode.PermanentConsequencesTests.TremorsDisability_ReducesActionSpeedBy50Percent" methodname="TremorsDisability_ReducesActionSpeedBy50Percent" classname="AtomicWar.Tests.EditMode.PermanentConsequencesTests" runstate="Runnable" seed="865254293" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.000629" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />
                 </properties>
               </test-case>
-              <test-case id="1119" name="Break_NaturalCure_ResolvesAfterCureHours" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.Break_NaturalCure_ResolvesAfterCureHours" methodname="Break_NaturalCure_ResolvesAfterCureHours" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="954162933" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.001768" asserts="0">
+            </test-suite>
+            <test-suite type="TestFixture" id="1230" name="PetSystemTests" fullname="AtomicWar.Tests.EditMode.PetSystemTests" classname="AtomicWar.Tests.EditMode.PetSystemTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.013055" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1231" name="ContaminatedDogInRoom_RaisesAmbientRoomRadiation" fullname="AtomicWar.Tests.EditMode.PetSystemTests.ContaminatedDogInRoom_RaisesAmbientRoomRadiation" methodname="ContaminatedDogInRoom_RaisesAmbientRoomRadiation" classname="AtomicWar.Tests.EditMode.PetSystemTests" runstate="Runnable" seed="1153835208" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.008432" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />
                 </properties>
               </test-case>
-              <test-case id="1118" name="BrokenSurvivor_DrainsMoraleOfOthers" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.BrokenSurvivor_DrainsMoraleOfOthers" methodname="BrokenSurvivor_DrainsMoraleOfOthers" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1351616633" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000527" asserts="0">
+              <test-case id="1233" name="PetDecontamination_ClearsFurContamination" fullname="AtomicWar.Tests.EditMode.PetSystemTests.PetDecontamination_ClearsFurContamination" methodname="PetDecontamination_ClearsFurContamination" classname="AtomicWar.Tests.EditMode.PetSystemTests" runstate="Runnable" seed="481218659" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.000887" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />
                 </properties>
               </test-case>
-              <test-case id="1120" name="Cure_ManualCall_ResetsBreakAndCounter" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.Cure_ManualCall_ResetsBreakAndCounter" methodname="Cure_ManualCall_ResetsBreakAndCounter" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1150913768" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000541" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1124" name="EventEffect_AffinityDelta_IgnoresEqualPair" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.EventEffect_AffinityDelta_IgnoresEqualPair" methodname="EventEffect_AffinityDelta_IgnoresEqualPair" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1619735415" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.003985" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1123" name="EventEffect_AffinityDelta_MutatesMatrixViaEventRunner" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.EventEffect_AffinityDelta_MutatesMatrixViaEventRunner" methodname="EventEffect_AffinityDelta_MutatesMatrixViaEventRunner" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1598500643" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000874" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1114" name="LowMorale_For48Hours_RollsForBreak_AndAssignsMatchingTraitBreak" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.LowMorale_For48Hours_RollsForBreak_AndAssignsMatchingTraitBreak" methodname="LowMorale_For48Hours_RollsForBreak_AndAssignsMatchingTraitBreak" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="687270931" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.003915" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1115" name="Morale_RecoversAboveThreshold_ResetsLowMoraleCounter" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.Morale_RecoversAboveThreshold_ResetsLowMoraleCounter" methodname="Morale_RecoversAboveThreshold_ResetsLowMoraleCounter" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="284500509" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000489" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1117" name="TryRollForBreak_AlreadyBroken_Overwrites" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.TryRollForBreak_AlreadyBroken_Overwrites" methodname="TryRollForBreak_AlreadyBroken_Overwrites" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1934968831" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000715" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1116" name="TryRollForBreak_NoBreaksRegistered_NoOp" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.TryRollForBreak_NoBreaksRegistered_NoOp" methodname="TryRollForBreak_NoBreaksRegistered_NoOp" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="689062329" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000523" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1125" name="WeightForTrait_EmptyTraitList_DefaultsToOne" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.WeightForTrait_EmptyTraitList_DefaultsToOne" methodname="WeightForTrait_EmptyTraitList_DefaultsToOne" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="961632532" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.001829" asserts="0">
-                <properties>
-                  <property name="retryIteration" value="0" />
-                  <property name="repeatIteration" value="0" />
-                </properties>
-              </test-case>
-              <test-case id="1126" name="WeightForTrait_ReturnsConfiguredWeight" fullname="AtomicWar.Tests.EditMode.MentalBreakTests.WeightForTrait_ReturnsConfiguredWeight" methodname="WeightForTrait_ReturnsConfiguredWeight" classname="AtomicWar.Tests.EditMode.MentalBreakTests" runstate="Runnable" seed="1726055333" result="Passed" start-time="2026-08-03 13:33:32Z" end-time="2026-08-03 13:33:32Z" duration="0.000537" asserts="0">
+              <test-case id="1232" name="PetStarvation_TriggersCatastrophicMoraleDrop" fullname="AtomicWar.Tests.EditMode.PetSystemTests.PetStarvation_TriggersCatastrophicMoraleDrop" methodname="PetStarvation_TriggersCatastrophicMoraleDrop" classname="AtomicWar.Tests.EditMode.PetSystemTests" runstate="Runnable" seed="807359740" result="Passed" start-time="2026-08-03 16:37:03Z" end-time="2026-08-03 16:37:03Z" duration="0.001241" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />

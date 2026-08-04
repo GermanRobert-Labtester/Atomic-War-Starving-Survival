@@ -35,6 +35,17 @@ namespace AtomicWar._Game.Shelter
         public event Action OnLoadShed;
         public event Action<float> OnCoChanged;
 
+        /// <summary>
+        /// Inject carbon monoxide from external sources (room fire, sealed smoke).
+        /// Internal Horror — Fire in the Hole.
+        /// </summary>
+        public void AddCarbonMonoxide(float ppm)
+        {
+            if (ppm <= 0f) return;
+            CarbonMonoxidePpm = Mathf.Max(0f, CarbonMonoxidePpm + ppm);
+            OnCoChanged?.Invoke(CarbonMonoxidePpm);
+        }
+
         // -----------------------------------------------------------------
         // Registration
         // -----------------------------------------------------------------
@@ -249,6 +260,8 @@ namespace AtomicWar._Game.Shelter
                         src.Fuel = Mathf.Max(0f, src.Fuel - burn);
                         if (def.CoPpmPerHour > 0f)
                             coDelta += def.CoPpmPerHour * gameHours;
+                        // Mechanical wear: overworked gens become fire risks (Internal Horror).
+                        src.Durability = Mathf.Max(0f, src.Durability - 0.15f * gameHours);
                         break;
 
                     case PowerSourceKind.Bicycle:
@@ -463,7 +476,9 @@ namespace AtomicWar._Game.Shelter
                     SourceId = s.SourceId,
                     IsEnabled = s.IsEnabled,
                     Fuel = s.Fuel,
-                    PedalingSurvivorId = s.PedalingSurvivorId
+                    Durability = s.Durability,
+                    PedalingSurvivorId = s.PedalingSurvivorId,
+                    RoomId = s.RoomId
                 };
             }
             for (int i = 0; i < _consumers.Count; i++)
@@ -505,7 +520,9 @@ namespace AtomicWar._Game.Shelter
                         SourceId = row.SourceId,
                         IsEnabled = row.IsEnabled,
                         Fuel = row.Fuel,
-                        PedalingSurvivorId = row.PedalingSurvivorId
+                        Durability = row.Durability > 0f ? row.Durability : 100f,
+                        PedalingSurvivorId = row.PedalingSurvivorId,
+                        RoomId = row.RoomId
                     };
                     if (_defs.TryGetValue(row.SourceId, out var def))
                         inst.Definition = def;
@@ -550,7 +567,9 @@ namespace AtomicWar._Game.Shelter
         public string SourceId;
         public bool IsEnabled;
         public float Fuel;
+        public float Durability = 100f;
         public string PedalingSurvivorId;
+        public string RoomId;
     }
 
     [Serializable]

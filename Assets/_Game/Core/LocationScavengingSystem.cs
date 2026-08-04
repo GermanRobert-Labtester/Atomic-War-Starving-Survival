@@ -259,7 +259,7 @@ namespace AtomicWar._Game.Core
                 return loot;
             }
 
-            if (_itemCatalog == null || _itemCatalog.items.Count == 0) return loot;
+            if (_itemCatalog == null || _itemCatalog.items == null || _itemCatalog.items.Count == 0) return loot;
 
             for (int i = 0; i < itemCount; i++)
             {

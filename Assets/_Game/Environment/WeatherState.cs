@@ -15,5 +15,7 @@ namespace AtomicWar._Game.Environment
         public int RollCount;
         public float HoursUntilNextCheck;
         public float TotalElapsedHours;
+        /// <summary>Pre-Day-30 hazard lock: true before the nuclear exchange.</summary>
+        public bool RestrictToNonHazardWeather = true;
     }
 }

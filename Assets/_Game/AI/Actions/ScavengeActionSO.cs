@@ -18,6 +18,9 @@ namespace AtomicWar._Game.AI.Actions
         {
             if (context?.Survivor == null) return 0f;
 
+            // Cannot scavenge (child, injured, etc.)
+            if (context.Survivor.CannotScavenge) return 0f;
+
             // Scavenge score suppressed to 0 during FalloutStorm unless full suit equipped
             if (context.IsFalloutStorm)
             {

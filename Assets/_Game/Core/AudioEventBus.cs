@@ -58,8 +58,10 @@ namespace AtomicWar._Game.Core
         public bool IsEmergencySirenActive => _isEmergencySirenActive;
         public int AnxiousSurvivorCount => _anxiousSurvivorIds.Count;
 
-        /// <summary>True when FalloutStorm wind is playing.</summary>
-        public bool IsWindPlaying => _currentWeather == WeatherKind.FalloutStorm;
+        /// <summary>True when FalloutStorm / BlackRain wind is playing.</summary>
+        public bool IsWindPlaying =>
+            _currentWeather == WeatherKind.FalloutStorm
+            || _currentWeather == WeatherKind.BlackRain;
 
         /// <summary>
         /// Muffling filter is active when storm wind is playing, camera is underground,

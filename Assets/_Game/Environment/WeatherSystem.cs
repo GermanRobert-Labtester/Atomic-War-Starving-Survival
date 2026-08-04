@@ -14,7 +14,9 @@ namespace AtomicWar._Game.Environment
         Overcast,
         Ashfall,
         FalloutStorm,
-        Blizzard
+        Blizzard,
+        /// <summary>Rare oily hyper-radioactive rain (Prompt #11 Black Rain).</summary>
+        BlackRain
     }
 
     /// <summary>
@@ -33,10 +35,16 @@ namespace AtomicWar._Game.Environment
     {
         /// <summary>Outdoor dose-rate added (same abstract units as RadZoneProfile.radLevel) while a FalloutStorm is active.</summary>
         public const float FalloutStormOutdoorRadModifier = 150f;
+        /// <summary>Outdoor dose-rate while BlackRain is active (Prompt #11) — worse than FalloutStorm.</summary>
+        public const float BlackRainOutdoorRadModifier = 250f;
+        /// <summary>Hazmat / protective-gear durability multiplier during BlackRain.</summary>
+        public const float BlackRainHazmatMeltMultiplier = 5f;
         /// <summary>Perceived-temperature penalty (°C) applied to unsheltered survivors during a Blizzard.</summary>
         public const float BlizzardTemperaturePenaltyC = -15f;
         /// <summary>Perceived-temperature penalty (°C) applied to unsheltered survivors during a FalloutStorm.</summary>
         public const float FalloutStormTemperaturePenaltyC = -5f;
+        /// <summary>Perceived-temperature penalty (°C) during BlackRain (cold oily rain).</summary>
+        public const float BlackRainTemperaturePenaltyC = -8f;
         /// <summary>Visibility factor (0..1) during a Blizzard: reduced, but not the total blackout of a FalloutStorm.</summary>
         public const float BlizzardVisibilityFactor = 0.4f;
 
@@ -51,8 +59,19 @@ namespace AtomicWar._Game.Environment
         /// <summary>0.0 to 1.0 storm intensity for active FalloutStorm (Prompt #40).</summary>
         public float StormIntensity { get; set; } = 1.0f;
 
-        /// <summary>Air filter degradation multiplier: doubles (2.0x) during intense FalloutStorm (intensity >= 0.7).</summary>
-        public float AirFilterDegradationMultiplier => (Current == WeatherKind.FalloutStorm && StormIntensity >= 0.7f) ? 2.0f : 1.0f;
+        /// <summary>
+        /// Air filter degradation multiplier: doubles (2.0x) during intense FalloutStorm
+        /// (intensity &gt;= 0.7); BlackRain always 2.5x (oily hyper-radioactive residue).
+        /// </summary>
+        public float AirFilterDegradationMultiplier
+        {
+            get
+            {
+                if (Current == WeatherKind.BlackRain) return 2.5f;
+                if (Current == WeatherKind.FalloutStorm && StormIntensity >= 0.7f) return 2.0f;
+                return 1.0f;
+            }
+        }
 
         /// <summary>
         /// When true, RollNextState excludes Ashfall/FalloutStorm/Blizzard from the weighted
@@ -107,25 +126,43 @@ namespace AtomicWar._Game.Environment
             SetCurrent(kind);
         }
 
-        /// <summary>Visibility factor (0..1): zero during a FalloutStorm, reduced during a Blizzard, full otherwise.</summary>
+        /// <summary>Visibility factor (0..1): zero during FalloutStorm/BlackRain, reduced during Blizzard, full otherwise.</summary>
         public float VisibilityFactor
         {
             get
             {
                 switch (Current)
                 {
-                    case WeatherKind.FalloutStorm: return 0f;
+                    case WeatherKind.FalloutStorm:
+                    case WeatherKind.BlackRain:
+                        return 0f;
                     case WeatherKind.Blizzard: return BlizzardVisibilityFactor;
                     default: return 1f;
                 }
             }
         }
 
-        /// <summary>Extra outdoor dose-rate contributed by the current weather (FalloutStorm only).</summary>
-        public float OutdoorRadModifier => Current == WeatherKind.FalloutStorm ? FalloutStormOutdoorRadModifier : 0f;
+        /// <summary>Extra outdoor dose-rate contributed by the current weather.</summary>
+        public float OutdoorRadModifier
+        {
+            get
+            {
+                switch (Current)
+                {
+                    case WeatherKind.BlackRain: return BlackRainOutdoorRadModifier;
+                    case WeatherKind.FalloutStorm: return FalloutStormOutdoorRadModifier;
+                    default: return 0f;
+                }
+            }
+        }
 
-        /// <summary>True when a FalloutStorm's zero visibility blocks scavenging for a survivor without a full (hazmat) suit.</summary>
-        public bool IsScavengingBlocked(bool hasFullSuit) => Current == WeatherKind.FalloutStorm && !hasFullSuit;
+        /// <summary>True when zero-visibility storm weather blocks scavenging without a full hazmat suit.</summary>
+        public bool IsScavengingBlocked(bool hasFullSuit) =>
+            (Current == WeatherKind.FalloutStorm || Current == WeatherKind.BlackRain) && !hasFullSuit;
+
+        /// <summary>Hazmat durability multiplier for the current weather (BlackRain melts suits).</summary>
+        public float HazmatDegradeMultiplier =>
+            Current == WeatherKind.BlackRain ? BlackRainHazmatMeltMultiplier : 1f;
 
         /// <summary>Perceived-temperature penalty (°C) contributed by a given weather kind; 0 for Clear/Ashfall.</summary>
         public static float TemperaturePenaltyForWeather(WeatherKind kind)
@@ -134,9 +171,14 @@ namespace AtomicWar._Game.Environment
             {
                 case WeatherKind.Blizzard: return BlizzardTemperaturePenaltyC;
                 case WeatherKind.FalloutStorm: return FalloutStormTemperaturePenaltyC;
+                case WeatherKind.BlackRain: return BlackRainTemperaturePenaltyC;
                 default: return 0f;
             }
         }
+
+        /// <summary>True for post-war hyper-hazard weather (storm / black rain).</summary>
+        public static bool IsHyperHazardWeather(WeatherKind kind) =>
+            kind == WeatherKind.FalloutStorm || kind == WeatherKind.BlackRain;
 
         /// <summary>Export a save-safe snapshot sufficient to resume the exact same deterministic sequence.</summary>
         public WeatherState GetState()
@@ -147,7 +189,8 @@ namespace AtomicWar._Game.Environment
                 Seed = _seed,
                 RollCount = _rollCount,
                 HoursUntilNextCheck = _hoursUntilNextCheck,
-                TotalElapsedHours = _totalElapsedHours
+                TotalElapsedHours = _totalElapsedHours,
+                RestrictToNonHazardWeather = RestrictToNonHazardWeather
             };
         }
 
@@ -163,6 +206,7 @@ namespace AtomicWar._Game.Environment
             _rollCount = state.RollCount;
             _hoursUntilNextCheck = state.HoursUntilNextCheck;
             _totalElapsedHours = state.TotalElapsedHours;
+            RestrictToNonHazardWeather = state.RestrictToNonHazardWeather;
         }
 
         private WeatherKind RollNextState()
@@ -177,7 +221,8 @@ namespace AtomicWar._Game.Environment
             float ashfall = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.Ashfall));
             float storm = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.FalloutStorm));
             float blizzard = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.Blizzard));
-            float total = clear + rain + overcast + ashfall + storm + blizzard;
+            float blackRain = RestrictToNonHazardWeather ? 0f : Mathf.Max(0f, season.GetWeight(WeatherKind.BlackRain));
+            float total = clear + rain + overcast + ashfall + storm + blizzard + blackRain;
             if (total <= 0f)
             {
                 return WeatherKind.Clear;
@@ -208,7 +253,12 @@ namespace AtomicWar._Game.Environment
             {
                 return WeatherKind.FalloutStorm;
             }
-            return WeatherKind.Blizzard;
+            roll -= storm;
+            if (roll < blizzard)
+            {
+                return WeatherKind.Blizzard;
+            }
+            return WeatherKind.BlackRain;
         }
 
         private void SetCurrent(WeatherKind next)

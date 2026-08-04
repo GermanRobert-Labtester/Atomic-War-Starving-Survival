@@ -33,6 +33,25 @@ namespace AtomicWar._Game.Medical
         /// </summary>
         public const string ComfortStationModuleId = "comfort_station";
 
+        /// <summary>
+        /// Hours between required Caregive actions for a comatose patient.
+        /// Past this window, neglect accelerates hunger/thirst/health collapse.
+        /// Internal Horror — The Bedridden.
+        /// </summary>
+        public const float ComaCareIntervalHours = 6f;
+
+        /// <summary>Extra health drain/hr while a coma patient is past care interval.</summary>
+        public const float ComaNeglectHealthDrainPerHour = 6f;
+
+        /// <summary>Hunger/thirst gained per hour while comatose (cannot self-feed).</summary>
+        public const float ComaNeedRisePerHour = 4f;
+
+        /// <summary>Clean water units consumed per Caregive action.</summary>
+        public const int CaregiveWaterCost = 1;
+
+        /// <summary>Optional medicine units consumed per Caregive (0 if none held).</summary>
+        public const int CaregiveMedicineCost = 1;
+
         private readonly NeedsSystem _needs;
         private readonly Inventory.Inventory _inventory;
         private readonly Shelter.Shelter _shelter;
@@ -45,6 +64,18 @@ namespace AtomicWar._Game.Medical
         public event Action<Survivor, ActiveAffliction> OnAfflictionCured;
         public event Action<Survivor, ActiveAffliction, ActiveAffliction> OnAfflictionProgressed;
         public event Action<Survivor, ActiveAffliction> OnProgressionHalted;
+
+        /// <summary>
+        /// Host hook: called when an item is consumed during a treatment
+        /// (e.g. morphine, anti-rad). Injected by GameBootstrap so Medical
+        /// stays free of AddictionSystem refs. Signature: (survivor, itemId, currentDay).
+        /// </summary>
+        public System.Action<Survivor, string, int> OnTreatmentItemConsumed;
+
+        /// <summary>
+        /// Host hook: returns the current campaign day. Injected by GameBootstrap.
+        /// </summary>
+        public System.Func<int> GetCurrentDay;
         public event Action OnMedicalStateChanged;
 
         public MedicalSystem(
@@ -125,11 +156,103 @@ namespace AtomicWar._Game.Medical
 
             var active = ActiveAffliction.Create(def);
             list.Add(active);
-            if (survivor.State == SurvivorState.Idle || survivor.State == SurvivorState.Working)
+            if (afflictionId == AfflictionSO.Ids.Coma)
+            {
+                survivor.State = SurvivorState.Incapacitated;
+                active.HoursSinceLastCare = 0f;
+            }
+            else if (survivor.State == SurvivorState.Idle || survivor.State == SurvivorState.Working)
             {
                 survivor.State = SurvivorState.Sick;
             }
             OnAfflictionGained?.Invoke(survivor, active);
+            OnMedicalStateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>True when the survivor has an active coma affliction.</summary>
+        public bool IsComatose(Survivor survivor)
+        {
+            return HasAffliction(survivor, AfflictionSO.Ids.Coma);
+        }
+
+        /// <summary>True when a comatose patient is overdue for Caregive.</summary>
+        public bool NeedsCare(Survivor patient)
+        {
+            if (patient == null || !patient.IsAlive) return false;
+            var list = GetActive(patient);
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].AfflictionId != AfflictionSO.Ids.Coma) continue;
+                return list[i].HoursSinceLastCare >= ComaCareIntervalHours * 0.5f;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Caregive: another survivor feeds water (+ optional medicine) to a
+        /// comatose patient, resetting the neglect clock. Returns false if
+        /// no coma, no caregiver, or insufficient water.
+        /// </summary>
+        public bool TryCaregive(
+            Survivor caregiver,
+            Survivor patient,
+            Func<string, ItemDefinition> itemLookup = null)
+        {
+            if (caregiver == null || !caregiver.IsAlive) return false;
+            if (patient == null || !patient.IsAlive) return false;
+            if (caregiver.Id == patient.Id) return false;
+            if (!IsComatose(patient)) return false;
+            if (!_bySurvivor.TryGetValue(patient.Id, out var list)) return false;
+
+            ActiveAffliction coma = null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].AfflictionId == AfflictionSO.Ids.Coma)
+                {
+                    coma = list[i];
+                    break;
+                }
+            }
+            if (coma == null) return false;
+
+            // Water is mandatory when inventory is present.
+            if (_inventory != null)
+            {
+                ItemDefinition water = null;
+                var waterSlot = _inventory.FindSlot("clean_water")
+                    ?? _inventory.FindSlot("water");
+                if (waterSlot?.Item != null)
+                    water = waterSlot.Item;
+                if (water == null && itemLookup != null)
+                    water = itemLookup("clean_water") ?? itemLookup("water");
+
+                if (water == null || _inventory.Count(water) < CaregiveWaterCost)
+                    return false;
+                if (!_inventory.Remove(water, CaregiveWaterCost))
+                    return false;
+
+                // Medicine optional — consume if available, don't fail without it.
+                ItemDefinition med = null;
+                var medSlot = _inventory.FindSlot("antibiotics")
+                    ?? _inventory.FindSlot("medicine")
+                    ?? _inventory.FindSlot("bandage");
+                if (medSlot?.Item != null && medSlot.Item.type == ItemType.Medical)
+                    med = medSlot.Item;
+                if (med != null && _inventory.Count(med) >= CaregiveMedicineCost)
+                    _inventory.Remove(med, CaregiveMedicineCost);
+            }
+
+            coma.HoursSinceLastCare = 0f;
+
+            // Mild recovery from care
+            _needs.Modify(patient, NeedKind.Thirst, -25f);
+            _needs.Modify(patient, NeedKind.Hunger, -15f);
+            _needs.Modify(patient, NeedKind.Health, 3f);
+
+            // Caregiver fatigue
+            _needs.Modify(caregiver, NeedKind.Fatigue, 8f);
+
             OnMedicalStateChanged?.Invoke();
             return true;
         }
@@ -211,6 +334,20 @@ namespace AtomicWar._Game.Medical
             if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup))
                 return false;
 
+            // Notify host (AddictionSystem) of consumed treatment items
+            if (OnTreatmentItemConsumed != null && recipe.ingredients != null)
+            {
+                int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+                for (int i = 0; i < recipe.ingredients.Count; i++)
+                {
+                    var ing = recipe.ingredients[i];
+                    if (ing != null && ing.item != null && !string.IsNullOrEmpty(ing.item.id))
+                    {
+                        OnTreatmentItemConsumed(patient, ing.item.id, day);
+                    }
+                }
+            }
+
             float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill, medic);
             target.IsTreating = true;
             target.ProgressionHalted = true; // treatment freezes progression
@@ -246,6 +383,24 @@ namespace AtomicWar._Game.Medical
                     if (!_afflictions.TryGetValue(active.AfflictionId, out var def)) continue;
 
                     active.HoursActive += gameHours;
+
+                    // Coma care clock + neglect (Internal Horror — The Bedridden)
+                    if (active.AfflictionId == AfflictionSO.Ids.Coma)
+                    {
+                        active.HoursSinceLastCare += gameHours;
+                        ApplyComaNeeds(survivor, gameHours);
+                        if (active.HoursSinceLastCare >= ComaCareIntervalHours)
+                        {
+                            // Past care window: accelerated collapse
+                            _needs.Modify(survivor, NeedKind.Health,
+                                -ComaNeglectHealthDrainPerHour * gameHours);
+                            _needs.Modify(survivor, NeedKind.Hunger,
+                                ComaNeedRisePerHour * 1.5f * gameHours);
+                            _needs.Modify(survivor, NeedKind.Thirst,
+                                ComaNeedRisePerHour * 1.5f * gameHours);
+                        }
+                        survivor.State = SurvivorState.Incapacitated;
+                    }
 
                     // Active treatment countdown (frozen progression, still drains)
                     if (active.IsTreating)
@@ -302,6 +457,17 @@ namespace AtomicWar._Game.Medical
             float drain = def.healthDrainPerHour * EffectiveLethality(survivor, def) * hours;
             if (drain > 0f)
                 _needs.Modify(survivor, NeedKind.Health, -drain);
+        }
+
+        /// <summary>
+        /// Comatose survivors cannot feed or water themselves — hunger/thirst rise
+        /// even if the rest of the bunker is stocked.
+        /// </summary>
+        private void ApplyComaNeeds(Survivor survivor, float hours)
+        {
+            if (survivor == null || hours <= 0f || !survivor.IsAlive) return;
+            _needs.Modify(survivor, NeedKind.Hunger, ComaNeedRisePerHour * hours);
+            _needs.Modify(survivor, NeedKind.Thirst, ComaNeedRisePerHour * hours);
         }
 
         /// <summary>
@@ -404,7 +570,8 @@ namespace AtomicWar._Game.Medical
                         ProgressionHalted = a.ProgressionHalted,
                         IsTreating = a.IsTreating,
                         TreatmentHoursRemaining = a.TreatmentHoursRemaining,
-                        ActiveTreatmentRecipeId = a.ActiveTreatmentRecipeId
+                        ActiveTreatmentRecipeId = a.ActiveTreatmentRecipeId,
+                        HoursSinceLastCare = a.HoursSinceLastCare
                     };
                 }
                 rows.Add(row);
@@ -435,7 +602,8 @@ namespace AtomicWar._Game.Medical
                         ProgressionHalted = a.ProgressionHalted,
                         IsTreating = a.IsTreating,
                         TreatmentHoursRemaining = a.TreatmentHoursRemaining,
-                        ActiveTreatmentRecipeId = a.ActiveTreatmentRecipeId
+                        ActiveTreatmentRecipeId = a.ActiveTreatmentRecipeId,
+                        HoursSinceLastCare = a.HoursSinceLastCare
                     });
                 }
                 if (list.Count > 0) _bySurvivor[row.SurvivorId] = list;
@@ -466,7 +634,7 @@ namespace AtomicWar._Game.Medical
                     healthDrain: 2f, progressionHours: 24f, progressesTo: AfflictionSO.Ids.Sepsis,
                     haltItem: null, infection: true),
                 MakeAffliction(AfflictionSO.Ids.Sepsis, "Sepsis", AfflictionPhase.Phase1,
-                    healthDrain: 8f, progressionHours: 12f, progressesTo: null,
+                    healthDrain: 8f, progressionHours: 12f, progressesTo: AfflictionSO.Ids.Coma,
                     haltItem: null, infection: true, lethality: 1.5f),
                 MakeAffliction(AfflictionSO.Ids.RadBurns, "Radiation Burns", AfflictionPhase.Phase2,
                     healthDrain: 2.5f, progressionHours: 36f, progressesTo: AfflictionSO.Ids.Sepsis,
@@ -488,6 +656,23 @@ namespace AtomicWar._Game.Medical
                     haltItem: null, infection: false,
                     requiresBed: false, lethality: 0.5f,
                     fatigueDrain: 2f, staminaCap: 30f),
+                // Internal Horror — bedridden triage. Cannot self-feed;
+                // Caregive resets neglect clock. Slow base drain; neglect multiplies it.
+                MakeAffliction(AfflictionSO.Ids.Coma, "Coma", AfflictionPhase.Phase1,
+                    healthDrain: 0.5f, progressionHours: 0f, progressesTo: null,
+                    haltItem: null, infection: false, requiresBed: true, lethality: 1f),
+                // Internal Horror — botulism from rusted canned goods.
+                // Respiratory paralysis; progresses to coma if untreated.
+                MakeAffliction(AfflictionSO.Ids.Botulism, "Botulism", AfflictionPhase.Phase1,
+                    healthDrain: 3.5f, progressionHours: 18f,
+                    progressesTo: AfflictionSO.Ids.Coma,
+                    haltItem: null, infection: false, requiresBed: true, lethality: 1.4f,
+                    fatigueDrain: 4f, staminaCap: 20f),
+                // Prompt #13 — rat poison planted in medical cache iodine foil.
+                MakeAffliction(AfflictionSO.Ids.PoisonIngestion, "Poison Ingestion", AfflictionPhase.Phase1,
+                    healthDrain: 6f, progressionHours: 18f,
+                    progressesTo: AfflictionSO.Ids.Sepsis,
+                    haltItem: "anti_toxin", infection: false, requiresBed: false, lethality: 1.4f),
             };
             return list;
         }

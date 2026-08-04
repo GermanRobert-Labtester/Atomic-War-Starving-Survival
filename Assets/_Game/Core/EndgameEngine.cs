@@ -70,7 +70,8 @@ namespace AtomicWar._Game.Core
                     summary: "Bunker air filtration and radiation shielding completely failed.");
             }
 
-            // 3. Victory: Rescue extraction success (Day >= 60 with active military channel / extraction unlocked)
+            // 3. Victory: Rescue extraction success (Day >= 60 with active military channel / extraction unlocked).
+            // Skipped if LifeboatPartialExtraction already terminal (mutual exclusion, Prompt #20).
             if (isExtractionUnlocked && currentDay >= 60)
             {
                 return TriggerEndgame(
@@ -89,6 +90,28 @@ namespace AtomicWar._Game.Core
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Prompt #20 — resolve the Lifeboat Transmission: one extracted, rest condemned.
+        /// Victory is true but the summary is bittersweet. Blocks full RescueExtractionSuccess
+        /// for the same run via <see cref="CampaignResult.IsTerminal"/>.
+        /// </summary>
+        public bool ApplyLifeboatPartialExtraction(
+            int day,
+            string extractedName,
+            int leftBehindCount)
+        {
+            if (Result.IsTerminal) return false;
+            Result.DaysSurvived = Math.Max(1, day);
+            string who = string.IsNullOrEmpty(extractedName) ? "One of us" : extractedName;
+            string summary = leftBehindCount <= 0
+                ? $"{who} took the only seat. The channel went quiet."
+                : $"{who} took the only seat. {leftBehindCount} stayed under concrete.";
+            return TriggerEndgame(
+                EndgameConditionKind.LifeboatPartialExtraction,
+                isVictory: true,
+                summary: summary);
         }
 
         private bool TriggerEndgame(EndgameConditionKind condition, bool isVictory, string summary)

@@ -6,8 +6,8 @@ namespace AtomicWar._Game.Core
 {
     /// <summary>
     /// Diegetic faction radio traffic: succession banners, parley stand-downs,
-    /// and hatch-bounce chatter. Surfaces as short intercept lines for the
-    /// radio / log UI without requiring a tuned frequency.
+    /// hatch-bounce chatter, and inter-faction raid-plan wiretaps (Prompt #17).
+    /// Surfaces as short intercept lines for the radio / log UI.
     /// </summary>
     public class FactionRadioInterceptSystem
     {
@@ -18,7 +18,9 @@ namespace AtomicWar._Game.Core
             Succession,
             Surrender,
             Parley,
-            HatchRepel
+            HatchRepel,
+            /// <summary>Inter-faction raid plan traffic (wiretap / Prompt #17).</summary>
+            RaidPlan
         }
 
         [Serializable]

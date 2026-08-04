@@ -52,6 +52,12 @@ namespace AtomicWar._Game.Core
         public event Action<GamePhase> OnPhaseChanged;
 
         /// <summary>Reset to a fresh new-game state.</summary>
-        public void Reset() => throw new System.NotImplementedException();
+        public void Reset()
+        {
+            _phase = GamePhase.MainMenu;
+            Day = 1;
+            IsPaused = false;
+            AccessibilitySafeMode = false;
+        }
     }
 }

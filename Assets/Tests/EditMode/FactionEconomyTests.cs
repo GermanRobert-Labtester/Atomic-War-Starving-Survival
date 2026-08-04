@@ -284,5 +284,327 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(TradeEconomy.GetEffectiveValue(jewelry, phaseSys.CurrentPhase), Is.EqualTo(0f));
             Object.DestroyImmediate(jewelry);
         }
+
+        // -----------------------------------------------------------------
+        // Concept 16 — Cult of the Glow (trust inversion)
+        // -----------------------------------------------------------------
+
+        [Test]
+        public void CultOfTheGlow_DefaultFaction_HasTrustInversionFields()
+        {
+            var cult = _factions.Find(f => f.id == FactionSO.Ids.CultOfTheGlow);
+            Assert.IsNotNull(cult, "CreateDefaultFactions must include cult_of_the_glow");
+            Assert.IsTrue(cult.trustInversion);
+            Assert.That(cult.healthyRadiationCeiling, Is.EqualTo(20f).Within(Eps));
+            Assert.That(cult.highRadiationFloor, Is.EqualTo(60f).Within(Eps));
+            Assert.That(cult.irradiatedWaterValueMultiplier, Is.EqualTo(12f).Within(Eps));
+            Assert.That(cult.id, Is.EqualTo("cult_of_the_glow"));
+        }
+
+        [Test]
+        public void TrustInversion_HealthyParty_IsHostile_HighRadParty_IsFriendly()
+        {
+            float partyRad = 10f; // healthy
+            var eco = MakeEconomy();
+            eco.SetPartyRadiationProvider(() => partyRad);
+            // Stored trust is mid-range; inversion must override it.
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 0f);
+
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MinTrust).Within(Eps));
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.HostileRaid));
+            Assert.IsFalse(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+
+            partyRad = 75f; // highly irradiated
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MaxTrust).Within(Eps));
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.ShareIntel));
+            Assert.IsTrue(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+
+            // Non-inversion factions ignore the rad provider.
+            eco.SetTrust(FactionSO.Ids.ScavengerCamp, 0f);
+            partyRad = 10f;
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.ScavengerCamp),
+                Is.EqualTo(0f).Within(Eps));
+            Assert.That(eco.GetStance(FactionSO.Ids.ScavengerCamp),
+                Is.EqualTo(TradeStance.Trade));
+        }
+
+        [Test]
+        public void TrustInversion_ValuesIrradiatedWaterHeavily_VsNormalFaction()
+        {
+            float partyRad = 70f; // friendly with the cult so barter opens
+            var eco = MakeEconomy();
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 0f);
+            eco.SetTrust(FactionSO.Ids.ScavengerCamp, 0f);
+
+            var glowWater = MakeItem("irradiated_water", ItemType.IrradiatedWater, 2f);
+            var cleanWater = MakeItem("clean_water", ItemType.Water, 15f);
+
+            float cultIrrad = eco.GetBarterUnitValue(
+                glowWater, FactionSO.Ids.CultOfTheGlow, playerSelling: true);
+            float scavIrrad = eco.GetBarterUnitValue(
+                glowWater, FactionSO.Ids.ScavengerCamp, playerSelling: true);
+            float cultClean = eco.GetBarterUnitValue(
+                cleanWater, FactionSO.Ids.CultOfTheGlow, playerSelling: true);
+
+            // Cult multiplies irradiated water by SO multiplier (12×) then trust factor.
+            // At MaxTrust (high rad), sell factor = 1 + 0.3 = 1.3.
+            float expectedCult = 2f * 12f * 1.3f;
+            Assert.That(cultIrrad, Is.EqualTo(expectedCult).Within(Eps),
+                "Cult of the Glow must value irradiated water heavily");
+            Assert.That(cultIrrad, Is.GreaterThan(scavIrrad * 5f),
+                "Cult irradiated-water price must dwarf normal-faction price");
+            // Clean water is not inverted-prized — no special multiplier.
+            Assert.That(cultClean, Is.LessThan(cultIrrad),
+                "Irradiated water should outprice clean water at the cult table");
+
+            Object.DestroyImmediate(glowWater);
+            Object.DestroyImmediate(cleanWater);
+        }
+
+        [Test]
+        public void TrustInversion_WithoutRadiationProvider_FallsBackToStoredTrust()
+        {
+            var eco = MakeEconomy();
+            // No SetPartyRadiationProvider — inversion inactive for disposition.
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 50f);
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(50f).Within(Eps));
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.ShareIntel));
+        }
+
+        [Test]
+        public void TrustInversion_RadDropAcrossHealthyCeiling_LaunchesRaid_WithoutModifyTrust()
+        {
+            // Cult + rad 70 → 10 crosses healthyRadiationCeiling (20) downward
+            // → TryLaunchRaid once. No ModifyTrust call.
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance("air_filtration", 1) { FilterHealth = 100f });
+            shelter.AddModule(new ShelterModuleInstance("radiation_shielding", 1));
+
+            float partyRad = 70f;
+            var eco = MakeEconomy(shelter);
+            // Post-activation so cult raids are live (no day provider = active; set explicitly).
+            eco.SetDayProvider(() => DynamicEconomySystem.CultActivationDay);
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 0f); // stored trust unused while rad-driven
+
+            int raidLaunches = 0;
+            FactionRaidResult lastRaid = null;
+            eco.OnRaidResolved += r =>
+            {
+                lastRaid = r;
+                if (r != null && r.Launched) raidLaunches++;
+            };
+
+            // Seed baseline at high rad (friendly) — must not raid.
+            eco.NotifyPartyRadiationChanged();
+            Assert.That(raidLaunches, Is.EqualTo(0), "First radiation sample only seeds baseline");
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.ShareIntel));
+
+            // Cross ceiling downward: 70 → 10 (ceiling default 20).
+            partyRad = 10f;
+            eco.NotifyPartyRadiationChanged();
+
+            Assert.That(raidLaunches, Is.EqualTo(1),
+                "Crossing healthyRadiationCeiling downward must TryLaunchRaid once");
+            Assert.IsNotNull(lastRaid);
+            Assert.That(lastRaid.FactionId, Is.EqualTo(FactionSO.Ids.CultOfTheGlow));
+            Assert.IsTrue(lastRaid.Launched);
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.HostileRaid));
+
+            // Stay healthy: further notifies must not re-fire the cascade.
+            eco.NotifyPartyRadiationChanged();
+            Assert.That(raidLaunches, Is.EqualTo(1),
+                "Raid cascade fires only on the downward ceiling cross, not every sample");
+
+            // Climb back above ceiling then drop again → second launch.
+            partyRad = 50f;
+            eco.NotifyPartyRadiationChanged();
+            Assert.That(raidLaunches, Is.EqualTo(1));
+            partyRad = 5f;
+            eco.NotifyPartyRadiationChanged();
+            Assert.That(raidLaunches, Is.EqualTo(2),
+                "A new downward ceiling cross must launch again");
+        }
+
+        // -----------------------------------------------------------------
+        // Concept 16 polish — hazmat contempt, ARS reverence, Day≥30 gate
+        // -----------------------------------------------------------------
+
+        [Test]
+        public void CultPolish_HealthyWithIntactHazmat_FloorsTrust_AndRefusesTrade()
+        {
+            float partyRad = 10f; // healthy
+            bool intactHazmat = true;
+            var eco = MakeEconomy();
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetPartyIntactHazmatProvider(() => intactHazmat);
+            // Stored trust high — contempt must still floor disposition.
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 80f);
+
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MinTrust).Within(Eps));
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.HostileRaid));
+            Assert.IsFalse(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+
+            // Damaged / unequipped suit: healthy still hostile via rad inversion,
+            // but without hazmat the path is pure rad (still MinTrust at 10).
+            intactHazmat = false;
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MinTrust).Within(Eps));
+        }
+
+        [Test]
+        public void CultPolish_IntactHazmat_WithoutRadProvider_FloorsEvenHighStoredTrust()
+        {
+            var eco = MakeEconomy();
+            // No radiation provider — stored trust would normally drive stance.
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 90f);
+            eco.SetPartyIntactHazmatProvider(() => true);
+
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MinTrust).Within(Eps),
+                "Sealed suit alone is heresy when the cult cannot read the glow");
+            Assert.IsFalse(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+        }
+
+        [Test]
+        public void CultPolish_PartyArs_ForcesMaxTrust_AndBuyDiscountOnHighValueGear()
+        {
+            float partyRad = 5f; // would be healthy/hostile without ARS
+            bool hasArs = true;
+            var eco = MakeEconomy();
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetPartyHasArsProvider(() => hasArs);
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, -50f);
+
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MaxTrust).Within(Eps),
+                "Any party ARS must revere to MaxTrust");
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.ShareIntel));
+            Assert.IsTrue(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+
+            var hazmat = MakeItem("hazmat_suit", ItemType.Protective, 40f);
+            var food = MakeItem("canned_food", ItemType.Food, 10f);
+
+            // Buy (playerSelling: false): MaxTrust factor = 1 - 0.25 = 0.75, then ARS discount.
+            float buyProtective = eco.GetBarterUnitValue(
+                hazmat, FactionSO.Ids.CultOfTheGlow, playerSelling: false);
+            float expectedProtective = 40f * 0.75f * (1f - DynamicEconomySystem.ArsReverenceBuyDiscount);
+            Assert.That(buyProtective, Is.EqualTo(expectedProtective).Within(Eps),
+                "ARS reverence must steeply discount high-value gear buys");
+
+            float buyFood = eco.GetBarterUnitValue(
+                food, FactionSO.Ids.CultOfTheGlow, playerSelling: false);
+            // CivilWar food phase mult (2.5×) then MaxTrust buy factor — no ARS discount.
+            float expectedFood = 10f * TradeEconomy.PreFlashpointFoodMultiplier * 0.75f;
+            Assert.That(buyFood, Is.EqualTo(expectedFood).Within(Eps),
+                "Non high-value items must not receive ARS buy discount");
+
+            // Sell path unchanged by ARS discount constant.
+            float sellProtective = eco.GetBarterUnitValue(
+                hazmat, FactionSO.Ids.CultOfTheGlow, playerSelling: true);
+            Assert.That(sellProtective, Is.EqualTo(40f * 1.3f).Within(Eps));
+
+            // ARS outranks hazmat contempt.
+            eco.SetPartyIntactHazmatProvider(() => true);
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MaxTrust).Within(Eps),
+                "ARS reverence must outrank hazmat contempt");
+
+            hasArs = false;
+            Assert.That(eco.GetEffectiveTrust(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(DynamicEconomySystem.MinTrust).Within(Eps),
+                "Without ARS, healthy + hazmat floors again");
+
+            Object.DestroyImmediate(hazmat);
+            Object.DestroyImmediate(food);
+        }
+
+        [Test]
+        public void CultPolish_DayGate_InactiveBeforeDay30_ActiveAtAndAfter()
+        {
+            int day = 10;
+            float partyRad = 80f; // would be friendly if active
+            var eco = MakeEconomy();
+            eco.SetDayProvider(() => day);
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 0f);
+
+            Assert.IsFalse(eco.IsFactionActive(FactionSO.Ids.CultOfTheGlow),
+                "Cult must be inactive before Day 30");
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.Refuse));
+            Assert.IsFalse(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+            // Non-cult factions ignore the day gate.
+            Assert.IsTrue(eco.IsFactionActive(FactionSO.Ids.ScavengerCamp));
+
+            day = DynamicEconomySystem.CultActivationDay;
+            Assert.IsTrue(eco.IsFactionActive(FactionSO.Ids.CultOfTheGlow));
+            Assert.That(eco.GetStance(FactionSO.Ids.CultOfTheGlow),
+                Is.EqualTo(TradeStance.ShareIntel),
+                "At Day 30 high-rad party must open ShareIntel with the cult");
+            Assert.IsTrue(eco.WillTrade(FactionSO.Ids.CultOfTheGlow));
+
+            day = 45;
+            Assert.IsTrue(eco.IsFactionActive(FactionSO.Ids.CultOfTheGlow));
+        }
+
+        [Test]
+        public void CultPolish_PreActivation_BlocksRaidEvenWhenHostile()
+        {
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance("air_filtration", 1) { FilterHealth = 100f });
+
+            float partyRad = 5f; // hostile under inversion
+            int day = 12;
+            var eco = MakeEconomy(shelter);
+            eco.SetDayProvider(() => day);
+            eco.SetPartyRadiationProvider(() => partyRad);
+            eco.SetTrust(FactionSO.Ids.CultOfTheGlow, 0f);
+
+            var raid = eco.TryLaunchRaid(FactionSO.Ids.CultOfTheGlow, ignoreDayGate: true);
+            Assert.IsFalse(raid.Launched, "Pre-Day-30 cult must not launch hatch raids");
+            Assert.That(raid.Message, Does.Contain("not active").IgnoreCase);
+
+            day = DynamicEconomySystem.CultActivationDay;
+            raid = eco.TryLaunchRaid(FactionSO.Ids.CultOfTheGlow, ignoreDayGate: true);
+            Assert.IsTrue(raid.Launched, "Day ≥ 30 cult may raid when hostile");
+        }
+
+        [Test]
+        public void CultPolish_IsArsReverenceHighValueItem_MatchesSpecTypes()
+        {
+            var items = new List<ItemDefinition>
+            {
+                MakeItem("p", ItemType.Protective, 1f),
+                MakeItem("w", ItemType.Weapon, 1f),
+                MakeItem("m", ItemType.Medical, 1f),
+                MakeItem("a", ItemType.AntiRad, 1f),
+                MakeItem("d", ItemType.Device, 1f),
+                MakeItem("t", ItemType.Tool, 1f),
+                MakeItem("f", ItemType.Food, 1f),
+            };
+            Assert.IsTrue(DynamicEconomySystem.IsArsReverenceHighValueItem(items[0]));
+            Assert.IsTrue(DynamicEconomySystem.IsArsReverenceHighValueItem(items[1]));
+            Assert.IsTrue(DynamicEconomySystem.IsArsReverenceHighValueItem(items[2]));
+            Assert.IsTrue(DynamicEconomySystem.IsArsReverenceHighValueItem(items[3]));
+            Assert.IsTrue(DynamicEconomySystem.IsArsReverenceHighValueItem(items[4]));
+            Assert.IsTrue(DynamicEconomySystem.IsArsReverenceHighValueItem(items[5]));
+            Assert.IsFalse(DynamicEconomySystem.IsArsReverenceHighValueItem(items[6]));
+            Assert.IsFalse(DynamicEconomySystem.IsArsReverenceHighValueItem(null));
+            for (int i = 0; i < items.Count; i++)
+                Object.DestroyImmediate(items[i]);
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace AtomicWar._Game.Data
         Propaganda,         // Pre-war propaganda (flavor only)
         EmergencyLoop,      // Post-Day 30 automated emergency broadcast
         NumbersStation,     // Encoded numbers station transmission
+        /// <summary>Post-EMP ghost station loop (Prompt #19). Never grants map/extraction intel.</summary>
+        GhostLoop,
         Unknown             // Unparseable static
     }
 
@@ -123,6 +125,30 @@ namespace AtomicWar._Game.Data
                 ExtractedDay = extractedDay,
                 ExpirationDay = expirationDay,
                 Text = text
+            };
+        }
+
+        /// <summary>
+        /// Create a ghost-station loop node (Prompt #19). Low confidence, no target
+        /// location, never a PlumeReport / military payload.
+        /// </summary>
+        public static IntelNode CreateGhostLoop(
+            string sourceFrequencyId,
+            int extractedDay,
+            string text,
+            float confidence = 0.15f)
+        {
+            return new IntelNode
+            {
+                Id = Guid.NewGuid().ToString("N").Substring(0, 8),
+                Type = IntelType.GhostLoop,
+                SourceFrequencyId = sourceFrequencyId ?? string.Empty,
+                TargetLocationId = string.Empty,
+                Confidence = Mathf.Clamp01(confidence),
+                ExtractedDay = extractedDay,
+                ExpirationDay = -1, // loops do not expire as tactical intel
+                Text = text ?? string.Empty,
+                NumericValue = 0f
             };
         }
     }

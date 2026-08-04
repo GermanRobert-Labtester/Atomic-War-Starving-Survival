@@ -14,6 +14,11 @@ namespace AtomicWar._Game.Shelter
         public bool IsEnabled = true;
         /// <summary>On-board fuel for diesel sources (separate from heater fuel).</summary>
         public float Fuel;
+        /// <summary>
+        /// Mechanical condition 0..100. Below the ignition threshold, overworked
+        /// diesel gens / makeshift heaters may spark a room fire (Internal Horror).
+        /// </summary>
+        public float Durability = 100f;
         /// <summary>Survivor currently pedaling a bicycle generator (null if none).</summary>
         public string PedalingSurvivorId;
         /// <summary>Room where this source is installed (noise adjacency for sleep quality).</summary>

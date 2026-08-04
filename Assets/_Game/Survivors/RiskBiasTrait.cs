@@ -12,6 +12,12 @@ namespace AtomicWar._Game.Survivors
         Realist,
         Reckless,
         Denialist,
-        Fatalist
+        Fatalist,
+        /// <summary>Gains/loses morale based on the bunker's average morale.
+        /// A fragile barometer for the group.</summary>
+        Empath,
+        /// <summary>Suffers zero morale loss when another survivor dies.
+        /// Terrifies others but makes a perfect cold-blooded scavenger.</summary>
+        Sociopath
     }
 }

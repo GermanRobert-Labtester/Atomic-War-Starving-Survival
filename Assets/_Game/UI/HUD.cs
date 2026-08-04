@@ -35,6 +35,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private JournalBookUI _journalBookUi;
         [SerializeField] private InventoryStripUI _inventoryStripUi;
         [SerializeField] private EndgameSummaryUI _endgameSummaryUi;
+        [SerializeField] private InternalHorrorHUD _internalHorrorHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -56,6 +57,7 @@ namespace AtomicWar._Game.UI
         public JournalBookUI JournalBookUI { get { EnsureWidgetReferences(); return _journalBookUi; } }
         public InventoryStripUI InventoryStripUI { get { EnsureWidgetReferences(); return _inventoryStripUi; } }
         public EndgameSummaryUI EndgameSummaryUI { get { EnsureWidgetReferences(); return _endgameSummaryUi; } }
+        public InternalHorrorHUD InternalHorrorHUD { get { EnsureWidgetReferences(); return _internalHorrorHud; } }
         public FactionRadioVoHook FactionRadioVoHook
         {
             get
@@ -92,6 +94,7 @@ namespace AtomicWar._Game.UI
             if (_journalBookUi == null) _journalBookUi = GetComponentInChildren<JournalBookUI>() ?? gameObject.AddComponent<JournalBookUI>();
             if (_inventoryStripUi == null) _inventoryStripUi = GetComponentInChildren<InventoryStripUI>() ?? gameObject.AddComponent<InventoryStripUI>();
             if (_endgameSummaryUi == null) _endgameSummaryUi = GetComponentInChildren<EndgameSummaryUI>() ?? gameObject.AddComponent<EndgameSummaryUI>();
+            if (_internalHorrorHud == null) _internalHorrorHud = GetComponentInChildren<InternalHorrorHUD>() ?? gameObject.AddComponent<InternalHorrorHUD>();
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
@@ -112,6 +115,20 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             return _endgameSummaryUi;
+        }
+
+        /// <summary>Ensure Internal Horror status / dispose / fire panels exist.</summary>
+        public InternalHorrorHUD EnsureInternalHorrorHud()
+        {
+            EnsureWidgetReferences();
+            return _internalHorrorHud;
+        }
+
+        /// <summary>Push Internal Horror snapshot (corpses, fire, coma, rusted food).</summary>
+        public void OnInternalHorrorUpdated(InternalHorrorSnapshot snap)
+        {
+            EnsureWidgetReferences();
+            _internalHorrorHud?.ApplySnapshot(snap);
         }
 
         /// <summary>

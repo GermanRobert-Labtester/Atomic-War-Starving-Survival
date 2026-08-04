@@ -13,6 +13,8 @@ namespace AtomicWar._Game.Data
         Military,
         Emergency,
         NumbersStation,
+        /// <summary>Post-EMP pre-war loops / dead operators (Prompt #19). No live intel.</summary>
+        GhostStation,
         Unknown
     }
 
@@ -64,6 +66,10 @@ namespace AtomicWar._Game.Data
             public const string Military = "102.1_military";
             public const string Numbers = "99.0_numbers";
             public const string Emergency = "107.0_emergency";
+            // Prompt #19 — ghost bands (unlocked after EMP only).
+            public const string GhostWeatherLoop = "ghost_station_weather_loop";
+            public const string GhostDeadOperator = "ghost_station_dead_operator";
+            public const string GhostCivilDefense = "ghost_station_civil_defense";
         }
 
         /// <summary>
@@ -89,6 +95,7 @@ namespace AtomicWar._Game.Data
                 case RadioFrequencyType.Civilian: return "CH-3 ASH ROAD";
                 case RadioFrequencyType.Emergency: return "CH-11 STOCKPILE";
                 case RadioFrequencyType.NumbersStation: return "CH-11 STOCKPILE";
+                case RadioFrequencyType.GhostStation: return string.Empty; // no faction intercepts
                 default: return string.Empty;
             }
         }

@@ -13,7 +13,16 @@ namespace AtomicWar._Game.Data
         public List<LocationDefinitionSO> locations = new List<LocationDefinitionSO>();
 
         /// <summary>Look up a location by its snake_case id.</summary>
-        public LocationDefinitionSO GetById(string id) => throw new System.NotImplementedException();
+        public LocationDefinitionSO GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id) || locations == null) return null;
+            for (int i = 0; i < locations.Count; i++)
+            {
+                if (locations[i] != null && locations[i].id == id)
+                    return locations[i];
+            }
+            return null;
+        }
     }
 
     /// <summary>Static definition of a scavenge location: danger, travel time, base radiation.</summary>

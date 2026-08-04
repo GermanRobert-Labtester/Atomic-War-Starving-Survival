@@ -225,7 +225,9 @@ namespace AtomicWar._Game.Environment
 
             switch (_weatherSystem.Current)
             {
-                case WeatherKind.FalloutStorm: return ClarityForFalloutStorm;
+                case WeatherKind.FalloutStorm:
+                case WeatherKind.BlackRain:
+                    return ClarityForFalloutStorm;
                 case WeatherKind.Ashfall:      return ClarityForAshfall;
                 case WeatherKind.Blizzard:     return ClarityForBlizzard;
                 default:                       return ClarityForClear;

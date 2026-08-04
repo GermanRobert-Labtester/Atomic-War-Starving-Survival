@@ -248,6 +248,13 @@ namespace AtomicWar._Game.Events
         public float MinHour = 0f;
         public float MaxHour = 24f;
         public bool RequireFalloutStorm;
+        /// <summary>When true, event only fires during a Blizzard (Prompt #48).</summary>
+        public bool RequireBlizzard;
+        /// <summary>
+        /// When true, event only fires during Blizzard OR FalloutStorm
+        /// (Prompt #48 — weather-driven hatch entrapment gates).
+        /// </summary>
+        public bool RequireExtremeWeather;
         public float MinShelterAirQuality = -1f;
         public float MaxShelterAirQuality = -1f;
         public float MinSurvivorRad = -1f;
@@ -296,6 +303,8 @@ namespace AtomicWar._Game.Events
             if (context.CurrentDay < conditions.MinDay) return false;
             if (context.CurrentHour < conditions.MinHour || context.CurrentHour > conditions.MaxHour) return false;
             if (conditions.RequireFalloutStorm && !context.IsFalloutStorm) return false;
+            if (conditions.RequireBlizzard && !context.IsBlizzard) return false;
+            if (conditions.RequireExtremeWeather && !context.IsExtremeWeather) return false;
 
             if (conditions.MinShelterAirQuality >= 0f && (context.Shelter == null || context.Shelter.AirQuality < conditions.MinShelterAirQuality))
                 return false;

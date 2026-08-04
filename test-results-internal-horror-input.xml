@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="45" result="Passed" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.1834414">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="514" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.183441" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1569" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="514" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.169608" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="33417" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1570" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="514" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.166594" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1571" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="514" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.164271" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1572" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="514" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.162232" total="45" passed="45" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1207" name="InternalHorrorHudTests" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" testcasecount="24" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.101805" total="24" passed="24" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1218" name="ApplySnapshot_FireOpensAlertState" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.ApplySnapshot_FireOpensAlertState" methodname="ApplySnapshot_FireOpensAlertState" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="153426315" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.037951" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1217" name="ApplySnapshot_PopulatesCorpseAndIcons" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.ApplySnapshot_PopulatesCorpseAndIcons" methodname="ApplySnapshot_PopulatesCorpseAndIcons" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1941900766" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001631" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1229" name="CareRisingEdge_RaisesCarePing" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.CareRisingEdge_RaisesCarePing" methodname="CareRisingEdge_RaisesCarePing" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="763935583" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.002968" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1223" name="ComaSnapshot_SetsUrgentIcon" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.ComaSnapshot_SetsUrgentIcon" methodname="ComaSnapshot_SetsUrgentIcon" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1662210043" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001159" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1230" name="CorpsePanel_ShowsHotkeyChoices" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.CorpsePanel_ShowsHotkeyChoices" methodname="CorpsePanel_ShowsHotkeyChoices" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="2074279020" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000874" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1228" name="FireRisingEdge_RaisesHorrorPing_ClearsWhenPanelOpened" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.FireRisingEdge_RaisesHorrorPing_ClearsWhenPanelOpened" methodname="FireRisingEdge_RaisesHorrorPing_ClearsWhenPanelOpened" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="584266993" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001861" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1215" name="Formatter_ComaStatus_MarksOverdue" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_ComaStatus_MarksOverdue" methodname="Formatter_ComaStatus_MarksOverdue" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="270052909" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.004333" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1216" name="Formatter_ContaminatedFood_LabelsRustedCans" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_ContaminatedFood_LabelsRustedCans" methodname="Formatter_ContaminatedFood_LabelsRustedCans" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1211084551" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000562" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1210" name="Formatter_CorpseDetail_MentionsBuryOrLight" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_CorpseDetail_MentionsBuryOrLight" methodname="Formatter_CorpseDetail_MentionsBuryOrLight" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="674161461" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000458" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1208" name="Formatter_CorpseStatus_EmptyWhenNone" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_CorpseStatus_EmptyWhenNone" methodname="Formatter_CorpseStatus_EmptyWhenNone" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="142471757" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000372" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1209" name="Formatter_CorpseStatus_ShowsBodyCount" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_CorpseStatus_ShowsBodyCount" methodname="Formatter_CorpseStatus_ShowsBodyCount" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="19415016" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000353" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1211" name="Formatter_FireAlert_EmptyWhenClear" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_FireAlert_EmptyWhenClear" methodname="Formatter_FireAlert_EmptyWhenClear" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1952889119" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000342" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1212" name="Formatter_FireAlert_ShowsWhenBurning" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_FireAlert_ShowsWhenBurning" methodname="Formatter_FireAlert_ShowsWhenBurning" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="820770710" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000357" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1213" name="Formatter_IconStrip_CombinesActiveThreats" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_IconStrip_CombinesActiveThreats" methodname="Formatter_IconStrip_CombinesActiveThreats" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="39740413" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000384" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1214" name="Formatter_IconStrip_EmptyWhenAllClear" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.Formatter_IconStrip_EmptyWhenAllClear" methodname="Formatter_IconStrip_EmptyWhenAllClear" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="387648900" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000337" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1226" name="InventoryStrip_ActivateCorpse_RaisesClickAndMarksSelected" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.InventoryStrip_ActivateCorpse_RaisesClickAndMarksSelected" methodname="InventoryStrip_ActivateCorpse_RaisesClickAndMarksSelected" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="543070395" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.011281" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1227" name="InventoryStrip_ActivateFirstCorpse_IsClickEntryPoint" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.InventoryStrip_ActivateFirstCorpse_IsClickEntryPoint" methodname="InventoryStrip_ActivateFirstCorpse_IsClickEntryPoint" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1438993213" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000931" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1225" name="InventoryStrip_FlagsCorpseAndContaminatedFood" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.InventoryStrip_FlagsCorpseAndContaminatedFood" methodname="InventoryStrip_FlagsCorpseAndContaminatedFood" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="320778409" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001078" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1231" name="KeybindDocs_PlayerInputHandler_ExposesHorrorInventoryKeys" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.KeybindDocs_PlayerInputHandler_ExposesHorrorInventoryKeys" methodname="KeybindDocs_PlayerInputHandler_ExposesHorrorInventoryKeys" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1921606382" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001289" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1224" name="OpenCorpsePanel_RequiresBody" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.OpenCorpsePanel_RequiresBody" methodname="OpenCorpsePanel_RequiresBody" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1625269056" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000550" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1220" name="SelectCorpseDispose_Bury_BlockedWithoutDaylight" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.SelectCorpseDispose_Bury_BlockedWithoutDaylight" methodname="SelectCorpseDispose_Bury_BlockedWithoutDaylight" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1219167085" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000836" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1219" name="SelectCorpseDispose_Bury_FiresCallback_WhenAllowed" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.SelectCorpseDispose_Bury_FiresCallback_WhenAllowed" methodname="SelectCorpseDispose_Bury_FiresCallback_WhenAllowed" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="909668017" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000852" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1221" name="SelectFightAndSeal_Fire_FiresCallbacks" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.SelectFightAndSeal_Fire_FiresCallbacks" methodname="SelectFightAndSeal_Fire_FiresCallbacks" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1305489707" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001237" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1222" name="SelectFightFire_FailsWhenNoFire" fullname="AtomicWar.Tests.EditMode.InternalHorrorHudTests.SelectFightFire_FailsWhenNoFire" methodname="SelectFightFire_FailsWhenNoFire" classname="AtomicWar.Tests.EditMode.InternalHorrorHudTests" runstate="Runnable" seed="1707446528" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000384" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1232" name="InternalHorrorTests" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" testcasecount="21" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.051263" total="21" passed="21" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1239" name="Atmosphere_RoundTripsThroughSave" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Atmosphere_RoundTripsThroughSave" methodname="Atmosphere_RoundTripsThroughSave" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="2140193958" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.006885" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1253" name="Botulism_ProgressesToComa" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Botulism_ProgressesToComa" methodname="Botulism_ProgressesToComa" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="477722255" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.005780" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1242" name="BuryTheDead_RemovesCorpse_AndExposesDigger" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.BuryTheDead_RemovesCorpse_AndExposesDigger" methodname="BuryTheDead_RemovesCorpse_AndExposesDigger" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="188067179" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.004261" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1246" name="Caregive_ResetsNeglectClock_AndConsumesWater" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Caregive_ResetsNeglectClock_AndConsumesWater" methodname="Caregive_ResetsNeglectClock_AndConsumesWater" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1184619832" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001548" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1248" name="CaregiveAction_ScoresHigh_WhenPatientNeedsCare" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.CaregiveAction_ScoresHigh_WhenPatientNeedsCare" methodname="CaregiveAction_ScoresHigh_WhenPatientNeedsCare" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="67037024" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.002524" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1245" name="Coma_SetsIncapacitated_AndBlocksSelfFeed" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Coma_SetsIncapacitated_AndBlocksSelfFeed" methodname="Coma_SetsIncapacitated_AndBlocksSelfFeed" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="398714423" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001504" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1247" name="Coma_WithoutCare_AcceleratesHealthDrain" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Coma_WithoutCare_AcceleratesHealthDrain" methodname="Coma_WithoutCare_AcceleratesHealthDrain" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1121125163" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001327" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1241" name="Corpse_InBunker_DrainsMorale_AndGrowsMold" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Corpse_InBunker_DrainsMorale_AndGrowsMold" methodname="Corpse_InBunker_DrainsMorale_AndGrowsMold" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1807570092" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001292" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1244" name="CorpseManagement_RoundTripsSourceIdsThroughSave" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.CorpseManagement_RoundTripsSourceIdsThroughSave" methodname="CorpseManagement_RoundTripsSourceIdsThroughSave" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1587029895" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001909" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1240" name="Death_CreatesCorpseItem_InInventory" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Death_CreatesCorpseItem_InInventory" methodname="Death_CreatesCorpseItem_InInventory" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1439283255" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000730" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1252" name="EatingContaminatedFood_CanInflictBotulism" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.EatingContaminatedFood_CanInflictBotulism" methodname="EatingContaminatedFood_CanInflictBotulism" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1586830781" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001750" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1237" name="FightFire_DamagesFighter_AndCanExtinguish" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.FightFire_DamagesFighter_AndCanExtinguish" methodname="FightFire_DamagesFighter_AndCanExtinguish" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1064086884" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000985" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1235" name="Fire_AddsCoToPowerNetwork" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Fire_AddsCoToPowerNetwork" methodname="Fire_AddsCoToPowerNetwork" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1623007424" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.006201" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1234" name="Fire_ConsumesOxygen_AndSpikesLocalCo" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Fire_ConsumesOxygen_AndSpikesLocalCo" methodname="Fire_ConsumesOxygen_AndSpikesLocalCo" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="2105062434" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000748" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1250" name="HighHumidity_RustsFood_IntoContaminatedFood" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.HighHumidity_RustsFood_IntoContaminatedFood" methodname="HighHumidity_RustsFood_IntoContaminatedFood" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="2131775325" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001737" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1238" name="LowDurabilityDiesel_CanIgniteRoom" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.LowDurabilityDiesel_CanIgniteRoom" methodname="LowDurabilityDiesel_CanIgniteRoom" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1055786351" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000625" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1251" name="LowHumidity_DoesNotRustFood" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.LowHumidity_DoesNotRustFood" methodname="LowHumidity_DoesNotRustFood" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="287116947" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000793" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1233" name="PowerNetwork_AddCarbonMonoxide_RaisesLevel" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.PowerNetwork_AddCarbonMonoxide_RaisesLevel" methodname="PowerNetwork_AddCarbonMonoxide_RaisesLevel" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="2095274856" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.000483" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1243" name="ProcessForFertilizer_AddsMaterial_AndShattersMorale" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.ProcessForFertilizer_AddsMaterial_AndShattersMorale" methodname="ProcessForFertilizer_AddsMaterial_AndShattersMorale" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1632064093" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001320" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1236" name="SealBulkhead_StarvesFire_WhenO2Depleted" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.SealBulkhead_StarvesFire_WhenO2Depleted" methodname="SealBulkhead_StarvesFire_WhenO2Depleted" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="996289122" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.002378" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1249" name="Sepsis_ProgressesToComa" fullname="AtomicWar.Tests.EditMode.InternalHorrorTests.Sepsis_ProgressesToComa" methodname="Sepsis_ProgressesToComa" classname="AtomicWar.Tests.EditMode.InternalHorrorTests" runstate="Runnable" seed="1214155288" result="Passed" start-time="2026-08-03 21:57:32Z" end-time="2026-08-03 21:57:32Z" duration="0.001097" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

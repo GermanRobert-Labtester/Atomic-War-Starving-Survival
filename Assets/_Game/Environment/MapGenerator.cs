@@ -115,8 +115,93 @@ namespace AtomicWar._Game.Environment
                 n.DistanceFromShelter = ComputeBaseDistance(map, n.NodeId);
             }
 
+            // Prompt #12 — UXO flags via derived RNG so layout path/rad rolls stay stable.
+            AssignUxoFlags(map, seed);
+
+            // Prompt #14 — death-zone tags from high TrueRad (deterministic from seed layout).
+            AssignDeathZones(map);
+
+            // Prompt #15 — one narrative Deserter's Stand site (derived RNG, layout-stable).
+            AssignDeserterStandFlags(map, seed);
+
             return map;
         }
+
+        /// <summary>
+        /// Place exactly one Deserter's Stand narrative site on an outskirts or
+        /// ground-zero node (Prompt #15). Derived RNG keeps layout/UXO rolls stable.
+        /// </summary>
+        public static void AssignDeserterStandFlags(GeneratedMap map, int seed)
+        {
+            if (map?.Nodes == null) return;
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                if (map.Nodes[i] != null)
+                    map.Nodes[i].HasDeserterStand = false;
+            }
+
+            var candidates = new List<MapNode>();
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (n.Ring == DangerRing.CityOutskirts || n.Ring == DangerRing.GroundZero)
+                    candidates.Add(n);
+            }
+            if (candidates.Count == 0) return;
+
+            candidates.Sort((a, b) => string.CompareOrdinal(a.NodeId, b.NodeId));
+            var rng = new Random(unchecked(seed * 1664525 + 1013904223));
+            int pick = rng.Next(candidates.Count);
+            candidates[pick].HasDeserterStand = true;
+        }
+
+        /// <summary>
+        /// Tag non-shelter nodes with lethal ambient rad as death zones (Prompt #14).
+        /// Pure function of TrueRad — same seed always yields the same tags.
+        /// </summary>
+        public static void AssignDeathZones(GeneratedMap map)
+        {
+            if (map?.Nodes == null) return;
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null) continue;
+                if (n.IsShelter)
+                {
+                    n.IsDeathZone = false;
+                    continue;
+                }
+                n.IsDeathZone = n.TrueRad >= DeathZoneRadThreshold;
+            }
+        }
+
+        /// <summary>TrueRad at/above this marks a node as a death zone at gen (Prompt #14).</summary>
+        public const float DeathZoneRadThreshold = 200f;
+
+        /// <summary>
+        /// Seed ~20% of non-shelter nodes with hidden civil-war UXO (Prompt #12).
+        /// Uses a hash-derived stream so existing layout draws are unchanged.
+        /// </summary>
+        public static void AssignUxoFlags(GeneratedMap map, int seed)
+        {
+            if (map?.Nodes == null) return;
+            // Separate stream — does not advance the layout RNG used above.
+            var rng = new Random(unchecked(seed * 1103515245 + 12345));
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter)
+                {
+                    if (n != null) n.HasUxo = false;
+                    continue;
+                }
+                n.HasUxo = rng.NextDouble() < UxoMapChance;
+            }
+        }
+
+        /// <summary>Exposed for tests; matches <see cref="AtomicWar._Game.Core.UxoHazardSystem.MapUxoChance"/>.</summary>
+        public const float UxoMapChance = 0.20f;
 
         // -----------------------------------------------------------------
         // Internals

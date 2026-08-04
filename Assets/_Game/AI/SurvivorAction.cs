@@ -16,6 +16,13 @@ namespace AtomicWar._Game.AI
         public float weight = 1.0f;
         public AnimationCurve responseCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
+        /// <summary>
+        /// When true, the final utility score is NOT clamped to 0..1.
+        /// Use for override actions that must always win (e.g. withdrawal panic).
+        /// The raw score should still be reasonable — the evaluator just skips Clamp01.
+        /// </summary>
+        public bool isOverrideAction;
+
         /// <summary>Calculates raw uncurved desirability score (0..1) given AIContext.</summary>
         public abstract float EvaluateRaw(AIContext context);
 

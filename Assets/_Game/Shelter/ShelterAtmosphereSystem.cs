@@ -1,0 +1,395 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using AtomicWar._Game.Survivors;
+
+namespace AtomicWar._Game.Shelter
+{
+    /// <summary>
+    /// Room atmosphere: humidity, oxygen, local CO, fire ignition / fight / seal.
+    /// Internal Horror — Fire in the Hole + humidity foundation for pantry rust.
+    /// </summary>
+    public class ShelterAtmosphereSystem
+    {
+        /// <summary>Durability at/below which diesel/heater may spark a fire.</summary>
+        public const float IgnitionDurabilityThreshold = 25f;
+
+        /// <summary>Base chance per game-hour that a low-durability source ignites its room.</summary>
+        public const float IgnitionChancePerHour = 0.15f;
+
+        /// <summary>Oxygen fraction consumed by fire per intensity-hour.</summary>
+        public const float FireO2ConsumptionPerHour = 0.06f;
+
+        /// <summary>Local CO ppm added by fire per intensity-hour.</summary>
+        public const float FireCoPpmPerHour = 140f;
+
+        /// <summary>Bunker-wide CO ppm mirrored onto PowerNetwork per intensity-hour.</summary>
+        public const float FireNetworkCoPpmPerHour = 40f;
+
+        /// <summary>O2 fraction at which a sealed fire starves out.</summary>
+        public const float FireExtinguishO2Threshold = 0.08f;
+
+        /// <summary>O2 below which survivors take hypoxia pressure (hook for needs).</summary>
+        public const float HypoxiaO2Threshold = 0.16f;
+
+        /// <summary>Burn health damage when fighting a fire (per attempt).</summary>
+        public const float FightFireBurnDamage = 12f;
+
+        /// <summary>Fire intensity removed by one FightFire action.</summary>
+        public const float FightFireIntensityReduction = 0.45f;
+
+        /// <summary>Humidity rise per hour when mold is present.</summary>
+        public const float HumidityFromMoldPerHour = 0.015f;
+
+        /// <summary>Natural humidity bleed toward ambient baseline when dry.</summary>
+        public const float HumidityBaseline = 0.35f;
+
+        private readonly List<ShelterRoom> _rooms = new List<ShelterRoom>();
+        private readonly System.Random _rng;
+
+        public event Action<ShelterRoom> OnFireStarted;
+        public event Action<ShelterRoom> OnFireExtinguished;
+        public event Action<ShelterRoom> OnBulkheadSealed;
+        public event Action OnAtmosphereChanged;
+
+        public IReadOnlyList<ShelterRoom> Rooms => _rooms;
+
+        public ShelterAtmosphereSystem(System.Random rng = null)
+        {
+            _rng = rng ?? new System.Random(17);
+        }
+
+        public void RegisterRoom(ShelterRoom room)
+        {
+            if (room == null || string.IsNullOrEmpty(room.RoomId)) return;
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                if (_rooms[i] != null && _rooms[i].RoomId == room.RoomId)
+                {
+                    _rooms[i] = room;
+                    return;
+                }
+            }
+            _rooms.Add(room);
+        }
+
+        public ShelterRoom GetRoom(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return null;
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                if (_rooms[i] != null && _rooms[i].RoomId == roomId)
+                    return _rooms[i];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Advance humidity, fire O2/CO consumption, and low-durability ignition rolls.
+        /// </summary>
+        public void Tick(
+            float gameHours,
+            PowerNetwork power = null,
+            Shelter shelter = null)
+        {
+            if (gameHours <= 0f) return;
+
+            TryIgniteFromLowDurability(gameHours, power, shelter);
+
+            bool changed = false;
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                var room = _rooms[i];
+                if (room == null) continue;
+
+                // Humidity: mold drives it up; otherwise drift slowly toward baseline.
+                if (room.HasMold || room.MoldLevel > 0.05f)
+                {
+                    float mold = Mathf.Max(room.MoldLevel, room.HasMold ? 0.2f : 0f);
+                    room.Humidity = Mathf.Clamp01(
+                        room.Humidity + HumidityFromMoldPerHour * mold * gameHours);
+                    changed = true;
+                }
+                else if (room.Humidity > HumidityBaseline)
+                {
+                    room.Humidity = Mathf.Max(
+                        HumidityBaseline,
+                        room.Humidity - 0.005f * gameHours);
+                    changed = true;
+                }
+
+                if (!room.IsOnFire) continue;
+
+                float intensity = Mathf.Clamp01(room.FireIntensity);
+                if (intensity <= 0f)
+                {
+                    ClearFire(room, raiseEvent: true);
+                    changed = true;
+                    continue;
+                }
+
+                // Consume oxygen; sealed rooms cannot exchange gas.
+                float o2Loss = FireO2ConsumptionPerHour * intensity * gameHours;
+                room.OxygenFraction = Mathf.Clamp(
+                    room.OxygenFraction - o2Loss, 0f, ShelterRoom.DefaultOxygenFraction);
+
+                float localCo = FireCoPpmPerHour * intensity * gameHours;
+                room.LocalCoPpm = Mathf.Max(0f, room.LocalCoPpm + localCo);
+
+                if (power != null)
+                {
+                    power.AddCarbonMonoxide(FireNetworkCoPpmPerHour * intensity * gameHours);
+                }
+
+                // Sealed bulkhead + low O2 starves the fire.
+                if (room.BulkheadSealed && room.OxygenFraction <= FireExtinguishO2Threshold)
+                {
+                    ClearFire(room, raiseEvent: true);
+                    changed = true;
+                    continue;
+                }
+
+                // Open room: fire slowly grows unless fought.
+                if (!room.BulkheadSealed)
+                {
+                    room.FireIntensity = Mathf.Clamp01(room.FireIntensity + 0.05f * gameHours);
+                }
+                else
+                {
+                    // Sealed but not yet starved: intensity bleeds as O2 drops.
+                    room.FireIntensity = Mathf.Clamp01(
+                        room.FireIntensity - 0.12f * gameHours);
+                }
+
+                changed = true;
+            }
+
+            if (changed) OnAtmosphereChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Overworked generators / heaters with low durability may ignite their room.
+        /// </summary>
+        public void TryIgniteFromLowDurability(
+            float gameHours,
+            PowerNetwork power,
+            Shelter shelter = null)
+        {
+            if (gameHours <= 0f || power == null) return;
+
+            var sources = power.Sources;
+            if (sources == null) return;
+
+            for (int i = 0; i < sources.Count; i++)
+            {
+                var src = sources[i];
+                if (src == null || !src.IsEnabled) continue;
+                if (src.Durability > IgnitionDurabilityThreshold) continue;
+                if (src.Definition == null) continue;
+
+                // Diesel gens and any source running in a room with fuel heat risk.
+                bool isRiskKind = src.Definition.Kind == PowerSourceKind.Diesel
+                    || src.Definition.Kind == PowerSourceKind.Bicycle;
+                if (!isRiskKind && string.IsNullOrEmpty(src.RoomId)) continue;
+
+                float chance = IgnitionChancePerHour * gameHours
+                    * (1f - src.Durability / IgnitionDurabilityThreshold);
+                if (_rng.NextDouble() > chance) continue;
+
+                string roomId = !string.IsNullOrEmpty(src.RoomId) ? src.RoomId : "plant";
+                var room = GetRoom(roomId);
+                if (room == null)
+                {
+                    room = new ShelterRoom(roomId, null);
+                    RegisterRoom(room);
+                }
+                if (room.IsOnFire) continue;
+
+                StartFire(room, intensity: 0.55f);
+            }
+
+            // Heater module wear mirrors generator durability risk.
+            if (shelter != null)
+            {
+                var heater = shelter.GetModule("heater");
+                if (heater != null && heater.IsOperational && heater.FilterHealth <= IgnitionDurabilityThreshold)
+                {
+                    float chance = IgnitionChancePerHour * gameHours
+                        * (1f - heater.FilterHealth / IgnitionDurabilityThreshold);
+                    if (_rng.NextDouble() <= chance)
+                    {
+                        string roomId = !string.IsNullOrEmpty(heater.RoomId) ? heater.RoomId : "quarters";
+                        var room = GetRoom(roomId);
+                        if (room == null)
+                        {
+                            room = new ShelterRoom(roomId, null);
+                            RegisterRoom(room);
+                        }
+                        if (!room.IsOnFire)
+                            StartFire(room, intensity: 0.4f);
+                    }
+                }
+            }
+        }
+
+        public void StartFire(ShelterRoom room, float intensity = 0.5f)
+        {
+            if (room == null) return;
+            room.IsOnFire = true;
+            room.FireIntensity = Mathf.Clamp01(intensity);
+            OnFireStarted?.Invoke(room);
+            OnAtmosphereChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Fight the fire in person: take burn damage, reduce intensity.
+        /// Returns true if the fire was fully extinguished.
+        /// </summary>
+        public bool FightFire(string roomId, Survivor fighter, NeedsSystem needs)
+        {
+            var room = GetRoom(roomId);
+            if (room == null || !room.IsOnFire) return false;
+            if (fighter == null || !fighter.IsAlive) return false;
+
+            if (needs != null)
+                needs.Modify(fighter, NeedKind.Health, -FightFireBurnDamage);
+
+            room.FireIntensity = Mathf.Clamp01(
+                room.FireIntensity - FightFireIntensityReduction);
+
+            if (room.FireIntensity <= 0.05f)
+            {
+                ClearFire(room, raiseEvent: true);
+                return true;
+            }
+
+            OnAtmosphereChanged?.Invoke();
+            return false;
+        }
+
+        /// <summary>
+        /// Seal the bulkhead: sacrifice modules in the room to starve the fire of O2.
+        /// </summary>
+        public bool SealBulkhead(string roomId, Shelter shelter)
+        {
+            var room = GetRoom(roomId);
+            if (room == null) return false;
+
+            room.BulkheadSealed = true;
+            room.ModulesSacrificed = true;
+
+            if (shelter != null)
+            {
+                var mods = shelter.Modules;
+                for (int i = 0; i < mods.Count; i++)
+                {
+                    var m = mods[i];
+                    if (m == null) continue;
+                    if (!string.Equals(m.RoomId, roomId, StringComparison.OrdinalIgnoreCase))
+                        continue;
+                    m.IsEnabled = false;
+                }
+            }
+
+            OnBulkheadSealed?.Invoke(room);
+            OnAtmosphereChanged?.Invoke();
+            return true;
+        }
+
+        public void ClearFire(ShelterRoom room, bool raiseEvent)
+        {
+            if (room == null) return;
+            bool wasOnFire = room.IsOnFire;
+            room.IsOnFire = false;
+            room.FireIntensity = 0f;
+            if (raiseEvent && wasOnFire)
+                OnFireExtinguished?.Invoke(room);
+            OnAtmosphereChanged?.Invoke();
+        }
+
+        public ShelterAtmosphereSave CaptureState()
+        {
+            var save = new ShelterAtmosphereSave
+            {
+                Rooms = new ShelterRoomAtmosphereSave[_rooms.Count]
+            };
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                var r = _rooms[i];
+                if (r == null) continue;
+                save.Rooms[i] = new ShelterRoomAtmosphereSave
+                {
+                    RoomId = r.RoomId,
+                    Humidity = r.Humidity,
+                    OxygenFraction = r.OxygenFraction,
+                    LocalCoPpm = r.LocalCoPpm,
+                    IsOnFire = r.IsOnFire,
+                    FireIntensity = r.FireIntensity,
+                    BulkheadSealed = r.BulkheadSealed,
+                    ModulesSacrificed = r.ModulesSacrificed,
+                    HasMold = r.HasMold,
+                    MoldLevel = r.MoldLevel,
+                    Co2Ppm = r.Co2Ppm,
+                    AmbientContamination = r.AmbientContamination,
+                    AmbientRadiation = r.AmbientRadiation
+                };
+            }
+            return save;
+        }
+
+        public void RestoreState(ShelterAtmosphereSave save)
+        {
+            if (save?.Rooms == null) return;
+            for (int i = 0; i < save.Rooms.Length; i++)
+            {
+                var row = save.Rooms[i];
+                if (row == null || string.IsNullOrEmpty(row.RoomId)) continue;
+                var room = GetRoom(row.RoomId);
+                if (room == null)
+                {
+                    room = new ShelterRoom(row.RoomId, null);
+                    RegisterRoom(room);
+                }
+                room.Humidity = row.Humidity;
+                room.OxygenFraction = row.OxygenFraction > 0f
+                    ? row.OxygenFraction
+                    : ShelterRoom.DefaultOxygenFraction;
+                room.LocalCoPpm = row.LocalCoPpm;
+                room.IsOnFire = row.IsOnFire;
+                room.FireIntensity = row.FireIntensity;
+                room.BulkheadSealed = row.BulkheadSealed;
+                room.ModulesSacrificed = row.ModulesSacrificed;
+                room.HasMold = row.HasMold;
+                room.MoldLevel = row.MoldLevel;
+                room.Co2Ppm = row.Co2Ppm;
+                room.AmbientContamination = row.AmbientContamination;
+                room.AmbientRadiation = row.AmbientRadiation;
+            }
+            OnAtmosphereChanged?.Invoke();
+        }
+    }
+
+    [Serializable]
+    public class ShelterAtmosphereSave
+    {
+        public ShelterRoomAtmosphereSave[] Rooms;
+    }
+
+    [Serializable]
+    public class ShelterRoomAtmosphereSave
+    {
+        public string RoomId;
+        public float Humidity;
+        public float OxygenFraction;
+        public float LocalCoPpm;
+        public bool IsOnFire;
+        public float FireIntensity;
+        public bool BulkheadSealed;
+        public bool ModulesSacrificed;
+        public bool HasMold;
+        public float MoldLevel;
+        public float Co2Ppm;
+        public float AmbientContamination;
+        public float AmbientRadiation;
+    }
+}

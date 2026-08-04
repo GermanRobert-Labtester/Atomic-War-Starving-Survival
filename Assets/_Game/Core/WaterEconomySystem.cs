@@ -40,6 +40,19 @@ namespace AtomicWar._Game.Core
             var catchment = shelter.GetModule(CatchmentModuleId);
             if (catchment == null || !catchment.IsOperational) return; // trap closed or not installed
 
+            // Black Rain (Prompt #11): open catchment is instantly ruined — any
+            // clean/dirty cistern water becomes irradiated, then oily rain fills
+            // only the irradiated tier.
+            if (weather == WeatherKind.BlackRain)
+            {
+                storage.RuinCleanAndDirtyToIrradiated();
+                var blackDef = catchment.Definition as CatchmentSurfaceModuleSO;
+                float blackRate = blackDef != null ? blackDef.CollectionRatePerHour : DefaultCollectionRatePerHour;
+                float blackCollected = blackRate * gameHours;
+                if (blackCollected > 0f) storage.AddIrradiated(blackCollected);
+                return;
+            }
+
             if (weather != WeatherKind.Rain && weather != WeatherKind.FalloutStorm) return;
 
             var def = catchment.Definition as CatchmentSurfaceModuleSO;

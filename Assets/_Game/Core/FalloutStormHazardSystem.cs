@@ -52,7 +52,9 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public bool ProcessBreachedHatch(ShelterRoom entryRoom)
         {
-            if (_weather == null || _weather.Current != WeatherKind.FalloutStorm) return false;
+            // FalloutStorm and BlackRain both flood the entry on hatch breach.
+            if (_weather == null || !WeatherSystem.IsHyperHazardWeather(_weather.Current))
+                return false;
 
             if (entryRoom != null)
             {

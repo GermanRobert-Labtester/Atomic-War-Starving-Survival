@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Failed(Child)" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.114564">
+  <test-suite type="TestSuite" id="1035" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.114564" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1028" name="AtomicWar.Tests.PlayMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.PlayMode.dll" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.103885" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="390636" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1029" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.102632" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1030" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.102010" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1031" name="PlayMode" fullname="AtomicWar.Tests.PlayMode" runstate="Runnable" testcasecount="19" result="Failed" site="Child" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.101294" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1020" name="InventoryPlayModeTests" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.099016" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1022" name="ConsumeIodine_GrantsTimedRadResistance" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.ConsumeIodine_GrantsTimedRadResistance" methodname="ConsumeIodine_GrantsTimedRadResistance" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="643931941" result="Passed" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.043747" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="EquipSuit_ReducesRadiationExposure" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.EquipSuit_ReducesRadiationExposure" methodname="EquipSuit_ReducesRadiationExposure" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="756678621" result="Failed" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.019303" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: 100.0f +/- 9.99999975E-05f
+  But was:  0.0f
+]]></message>
+                  <stack-trace><![CDATA[at AtomicWar.Tests.PlayMode.InventoryPlayModeTests+<EquipSuit_ReducesRadiationExposure>d__3.MoveNext () [0x0013b] in /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Assets/Tests/PlayMode/InventoryPlayModeTests.cs:85
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@773a3a4953ad/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1023" name="SaveLoad_InventoryStaysIntact" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.SaveLoad_InventoryStaysIntact" methodname="SaveLoad_InventoryStaysIntact" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="1055183302" result="Passed" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.010784" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="WeightLimit_BlocksAdd_And_TransferMovesStock" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.WeightLimit_BlocksAdd_And_TransferMovesStock" methodname="WeightLimit_BlocksAdd_And_TransferMovesStock" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="1793931006" result="Passed" start-time="2026-08-03 18:01:34Z" end-time="2026-08-03 18:01:34Z" duration="0.004089" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

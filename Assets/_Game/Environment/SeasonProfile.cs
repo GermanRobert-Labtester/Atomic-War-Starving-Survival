@@ -91,7 +91,9 @@ namespace AtomicWar._Game.Environment
             overcastWeight = 1f,
             ashfallWeight = 1f,
             falloutStormWeight = 1f,
-            blizzardWeight = 1f
+            blizzardWeight = 1f,
+            // Default season keeps Black Rain rare (0) — designers opt in post-Day-30.
+            blackRainWeight = 0f
         };
 
         public string id;
@@ -106,6 +108,8 @@ namespace AtomicWar._Game.Environment
         public float ashfallWeight = 1f;
         public float falloutStormWeight = 1f;
         public float blizzardWeight = 1f;
+        /// <summary>Rare oily hyper-radioactive rain (Prompt #11). Keep near 0 outside late seasons.</summary>
+        public float blackRainWeight = 0f;
 
         /// <summary>Designer-tunable weight for one WeatherKind within this season.</summary>
         public float GetWeight(WeatherKind kind)
@@ -118,6 +122,7 @@ namespace AtomicWar._Game.Environment
                 case WeatherKind.Ashfall: return ashfallWeight;
                 case WeatherKind.FalloutStorm: return falloutStormWeight;
                 case WeatherKind.Blizzard: return blizzardWeight;
+                case WeatherKind.BlackRain: return blackRainWeight;
                 default: return 0f;
             }
         }

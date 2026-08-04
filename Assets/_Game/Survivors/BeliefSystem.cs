@@ -279,6 +279,18 @@ namespace AtomicWar._Game.Survivors
                     [RiskBiasTrait.Fatalist] = new BeliefProfileDefaults(
                         0.1f, 0.1f, 0.8f, 1.2f, 0.4f, 0.02f, 0.04f, 0.5f, 1.1f,
                         AnimationCurve.Linear(0f, 0f, 1f, 0.5f)),
+
+                    // Empath: high anxiety gain (feels the bunker's pain), normal scavenge.
+                    // Morale coupling is handled by EmpathSystem, not belief profiles.
+                    [RiskBiasTrait.Empath] = new BeliefProfileDefaults(
+                        0.15f, 0.08f, 1.4f, 0.7f, 0.4f, 0.10f, 0.02f, 0.2f, 1.0f,
+                        AnimationCurve.Linear(0f, 0f, 1f, 0.5f)),
+
+                    // Sociopath: nearly zero anxiety gain, very high numbness proneness,
+                    // high scavenge baseline (cold-blooded efficiency).
+                    [RiskBiasTrait.Sociopath] = new BeliefProfileDefaults(
+                        0.05f, 0.25f, 0.2f, 2.5f, 0.1f, 0.01f, 0.1f, 0.9f, 1.8f,
+                        AnimationCurve.Linear(0f, 0f, 1f, 0.05f)),
                 };
         }
     }

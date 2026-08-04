@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="7" result="Passed" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.1050092">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="351" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.105009" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1392" name="AtomicWar.Tests.EditMode.dll" fullname="/tmp/ashfall-journal-test/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="351" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.092796" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="353676" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1393" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="351" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.090763" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1394" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="351" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.089476" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1395" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="351" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.088095" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1151" name="JournalSystemTests" fullname="AtomicWar.Tests.EditMode.JournalSystemTests" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.082770" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1152" name="HighCo2_FirstTime_AddsJournalEntry_AndPingsBookUI" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.HighCo2_FirstTime_AddsJournalEntry_AndPingsBookUI" methodname="HighCo2_FirstTime_AddsJournalEntry_AndPingsBookUI" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="1007384972" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.052673" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1153" name="HighCo2_SecondObserve_DoesNotDuplicateEntry" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.HighCo2_SecondObserve_DoesNotDuplicateEntry" methodname="HighCo2_SecondObserve_DoesNotDuplicateEntry" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="202127277" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.000842" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1154" name="HighCo2_TraitVoice_ParanoidDiffersFromCautious" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.HighCo2_TraitVoice_ParanoidDiffersFromCautious" methodname="HighCo2_TraitVoice_ParanoidDiffersFromCautious" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="690327130" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.001856" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1157" name="Journal_SaveRestore_PreservesEntriesWithoutRefiringEvents" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.Journal_SaveRestore_PreservesEntriesWithoutRefiringEvents" methodname="Journal_SaveRestore_PreservesEntriesWithoutRefiringEvents" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="703652957" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.001719" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1156" name="JournalBook_Open_ClearsUnreadAndPing" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.JournalBook_Open_ClearsUnreadAndPing" methodname="JournalBook_Open_ClearsUnreadAndPing" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="569858657" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.000995" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1155" name="JournalSystem_TryDiscover_UnknownKeyStillRecords_WhenKnowledgeAdds" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.JournalSystem_TryDiscover_UnknownKeyStillRecords_WhenKnowledgeAdds" methodname="JournalSystem_TryDiscover_UnknownKeyStillRecords_WhenKnowledgeAdds" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="2113783187" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.000448" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1158" name="ObserveDiscoveries_AirQualityThreshold_AlsoTriggersHighCo2" fullname="AtomicWar.Tests.EditMode.JournalSystemTests.ObserveDiscoveries_AirQualityThreshold_AlsoTriggersHighCo2" methodname="ObserveDiscoveries_AirQualityThreshold_AlsoTriggersHighCo2" classname="AtomicWar.Tests.EditMode.JournalSystemTests" runstate="Runnable" seed="1710505179" result="Passed" start-time="2026-08-03 17:05:48Z" end-time="2026-08-03 17:05:48Z" duration="0.000467" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -76,6 +76,12 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public bool LocationEncounterFired;
 
+        /// <summary>
+        /// True after UXO detonation on this expedition (Prompt #12). Prevents
+        /// double-trigger and surfaces cold log text for UI.
+        /// </summary>
+        public bool UxoDetonated;
+
         // -----------------------------------------------------------------
         // Day-30 Flashpoint intercept state (Prompt #26)
         // -----------------------------------------------------------------

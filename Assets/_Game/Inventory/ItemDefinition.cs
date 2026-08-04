@@ -72,6 +72,7 @@ namespace AtomicWar._Game.Inventory
             switch (type)
             {
                 case ItemType.Food:
+                case ItemType.ContaminatedFood:
                 case ItemType.Water:
                 case ItemType.IrradiatedWater:
                 case ItemType.Medical:

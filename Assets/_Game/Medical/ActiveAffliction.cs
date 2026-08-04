@@ -15,6 +15,11 @@ namespace AtomicWar._Game.Medical
         public bool IsTreating;
         public float TreatmentHoursRemaining;
         public string ActiveTreatmentRecipeId;
+        /// <summary>
+        /// Hours since last Caregive (coma). Starts at 0 on inflict;
+        /// MedicalSystem kills via neglect when this exceeds CareIntervalHours.
+        /// </summary>
+        public float HoursSinceLastCare;
 
         public static ActiveAffliction Create(AfflictionSO def)
         {
@@ -27,7 +32,8 @@ namespace AtomicWar._Game.Medical
                 ProgressionHalted = false,
                 IsTreating = false,
                 TreatmentHoursRemaining = 0f,
-                ActiveTreatmentRecipeId = null
+                ActiveTreatmentRecipeId = null,
+                HoursSinceLastCare = 0f
             };
         }
     }
@@ -42,6 +48,7 @@ namespace AtomicWar._Game.Medical
         public bool IsTreating;
         public float TreatmentHoursRemaining;
         public string ActiveTreatmentRecipeId;
+        public float HoursSinceLastCare;
     }
 
     [Serializable]

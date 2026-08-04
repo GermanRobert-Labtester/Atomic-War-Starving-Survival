@@ -49,6 +49,24 @@ namespace AtomicWar._Game.Environment
         /// <summary>Danger score used by expedition encounter weighting (1..5).</summary>
         public float DangerLevel = 1f;
 
+        /// <summary>
+        /// Civil-war unexploded ordnance remnant (Prompt #12). Hidden from the
+        /// player; Reckless loot or Flee may detonate.
+        /// </summary>
+        public bool HasUxo;
+
+        /// <summary>
+        /// Prompt #14 — lethal rad pocket (shifting hotspot). Windstorms can
+        /// move the pocket two path-hops away.
+        /// </summary>
+        public bool IsDeathZone;
+
+        /// <summary>
+        /// Prompt #15 — narrative Deserter's Stand site (empty checkpoint,
+        /// mutual kill over food). Forced discovery beat on first arrival.
+        /// </summary>
+        public bool HasDeserterStand;
+
         public bool IsShelter => Ring == DangerRing.Shelter
             || string.Equals(NodeId, GeneratedMap.ShelterNodeId, StringComparison.Ordinal);
 
@@ -90,6 +108,9 @@ namespace AtomicWar._Game.Environment
                 IsRevealed = IsRevealed,
                 IsVisited = IsVisited,
                 DangerLevel = DangerLevel,
+                HasUxo = HasUxo,
+                IsDeathZone = IsDeathZone,
+                HasDeserterStand = HasDeserterStand,
                 EncounterDeckIds = new List<string>()
             };
             if (EncounterDeckIds != null)

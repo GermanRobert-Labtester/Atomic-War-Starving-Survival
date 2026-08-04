@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -12,6 +13,8 @@ namespace AtomicWar._Game.UI
     /// churns — never instantiated or destroyed at runtime, so long sessions
     /// and 3x fast-forward produce zero icon garbage.
     /// Data-only view-model like JournalBookUI: no GameObjects, string summary.
+    /// Player "click" path = <see cref="ActivateIndex"/> / <see cref="ActivateSelected"/>
+    /// (corpse icons open dispose UI via <see cref="OnIconActivated"/>).
     /// </summary>
     public class InventoryStripUI : MonoBehaviour
     {
@@ -25,6 +28,10 @@ namespace AtomicWar._Game.UI
                 icon.Amount = 0;
                 icon.TotalWeight = 0f;
                 icon.Type = ItemType.Material;
+                icon.IsCorpse = false;
+                icon.IsContaminatedFood = false;
+                icon.HasDisposeActions = false;
+                icon.IsSelected = false;
             });
 
         /// <summary>Active icons, one per stocked slot (newest-stock order = slot order).</summary>
@@ -35,6 +42,19 @@ namespace AtomicWar._Game.UI
 
         public int IconCount => _icons.Count;
         public string StripSummary { get; private set; } = "STORES: empty";
+
+        /// <summary>Keyboard / mouse focus index into <see cref="Icons"/> (-1 = none).</summary>
+        public int SelectedIndex { get; private set; } = -1;
+
+        /// <summary>Currently focused icon, or null.</summary>
+        public InventoryIcon SelectedIcon =>
+            SelectedIndex >= 0 && SelectedIndex < _icons.Count ? _icons[SelectedIndex] : null;
+
+        /// <summary>Raised when the player activates (clicks) an icon.</summary>
+        public event Action<InventoryIcon> OnIconActivated;
+
+        /// <summary>Raised when selection index changes.</summary>
+        public event Action OnSelectionChanged;
 
         /// <summary>
         /// Resync icons from live inventory state. Reuses pooled instances for
@@ -68,6 +88,10 @@ namespace AtomicWar._Game.UI
                     icon.Amount = slot.Amount;
                     icon.TotalWeight = slot.Item.weight * slot.Amount;
                     icon.Type = slot.Item.type;
+                    icon.IsCorpse = slot.Item.type == ItemType.Corpse;
+                    icon.IsContaminatedFood = slot.Item.type == ItemType.ContaminatedFood;
+                    // Corpse slots surface dispose actions (bury / fertilizer) via HUD.
+                    icon.HasDisposeActions = icon.IsCorpse;
                     slotIndex++;
                 }
             }
@@ -80,6 +104,7 @@ namespace AtomicWar._Game.UI
                 _iconPool.Release(surplus);
             }
 
+            ClampSelection();
             RebuildSummary();
         }
 
@@ -89,7 +114,108 @@ namespace AtomicWar._Game.UI
             for (int i = 0; i < _icons.Count; i++)
                 _iconPool.Release(_icons[i]);
             _icons.Clear();
+            SelectedIndex = -1;
             RebuildSummary();
+        }
+
+        /// <summary>Focus an icon by strip index. Returns false if out of range.</summary>
+        public bool SelectIndex(int index)
+        {
+            if (index < 0 || index >= _icons.Count) return false;
+            if (SelectedIndex == index)
+            {
+                ApplySelectionFlags();
+                return true;
+            }
+            SelectedIndex = index;
+            ApplySelectionFlags();
+            RebuildSummary();
+            OnSelectionChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>Cycle focus forward (wraps). Selects 0 if nothing focused.</summary>
+        public bool SelectNext()
+        {
+            if (_icons.Count == 0) return false;
+            int next = SelectedIndex < 0 ? 0 : (SelectedIndex + 1) % _icons.Count;
+            return SelectIndex(next);
+        }
+
+        /// <summary>Cycle focus backward (wraps).</summary>
+        public bool SelectPrev()
+        {
+            if (_icons.Count == 0) return false;
+            int prev = SelectedIndex < 0
+                ? _icons.Count - 1
+                : (SelectedIndex - 1 + _icons.Count) % _icons.Count;
+            return SelectIndex(prev);
+        }
+
+        /// <summary>
+        /// Player click / confirm on focused icon. Corpses raise
+        /// <see cref="OnIconActivated"/> so Core can open dispose UI.
+        /// </summary>
+        public bool ActivateSelected()
+        {
+            if (SelectedIndex < 0) return false;
+            return ActivateIndex(SelectedIndex);
+        }
+
+        /// <summary>
+        /// Simulate a click on strip icon <paramref name="index"/>.
+        /// Focuses the icon, then fires <see cref="OnIconActivated"/>.
+        /// </summary>
+        public bool ActivateIndex(int index)
+        {
+            if (!SelectIndex(index)) return false;
+            var icon = _icons[index];
+            if (icon == null) return false;
+            OnIconActivated?.Invoke(icon);
+            return true;
+        }
+
+        /// <summary>Click the first corpse stack, if any (dispose entry point).</summary>
+        public bool ActivateFirstCorpse()
+        {
+            for (int i = 0; i < _icons.Count; i++)
+            {
+                if (_icons[i] != null && _icons[i].IsCorpse)
+                    return ActivateIndex(i);
+            }
+            return false;
+        }
+
+        private void ClampSelection()
+        {
+            if (_icons.Count == 0)
+            {
+                if (SelectedIndex != -1)
+                {
+                    SelectedIndex = -1;
+                    OnSelectionChanged?.Invoke();
+                }
+                return;
+            }
+            if (SelectedIndex >= _icons.Count)
+            {
+                SelectedIndex = _icons.Count - 1;
+                ApplySelectionFlags();
+                OnSelectionChanged?.Invoke();
+            }
+            else
+            {
+                ApplySelectionFlags();
+            }
+        }
+
+        private void ApplySelectionFlags()
+        {
+            for (int i = 0; i < _icons.Count; i++)
+            {
+                if (_icons[i] != null)
+                    _icons[i].IsSelected = i == SelectedIndex;
+            }
         }
 
         private void RebuildSummary()
@@ -105,9 +231,59 @@ namespace AtomicWar._Game.UI
             {
                 if (i > 0) sb.Append("  ");
                 var icon = _icons[i];
-                sb.Append(icon.DisplayName ?? icon.ItemId).Append(' ').Append('x').Append(icon.Amount);
+                string name = icon.DisplayName ?? icon.ItemId;
+                if (icon.IsCorpse) name = (name ?? "Body") + " [dispose]";
+                else if (icon.IsContaminatedFood) name = (name ?? "Can") + " [rust]";
+                if (icon.IsSelected) name = ">" + name;
+                sb.Append(name).Append(' ').Append('x').Append(icon.Amount);
             }
             StripSummary = sb.ToString();
+        }
+
+        /// <summary>First corpse icon in the strip, if any (opens dispose UI).</summary>
+        public InventoryIcon FindFirstCorpseIcon()
+        {
+            for (int i = 0; i < _icons.Count; i++)
+            {
+                if (_icons[i] != null && _icons[i].IsCorpse)
+                    return _icons[i];
+            }
+            return null;
+        }
+
+        /// <summary>Index of first corpse icon, or -1.</summary>
+        public int FindFirstCorpseIndex()
+        {
+            for (int i = 0; i < _icons.Count; i++)
+            {
+                if (_icons[i] != null && _icons[i].IsCorpse)
+                    return i;
+            }
+            return -1;
+        }
+
+        /// <summary>Total units of ContaminatedFood currently shown.</summary>
+        public int ContaminatedFoodCount()
+        {
+            int n = 0;
+            for (int i = 0; i < _icons.Count; i++)
+            {
+                if (_icons[i] != null && _icons[i].IsContaminatedFood)
+                    n += _icons[i].Amount;
+            }
+            return n;
+        }
+
+        /// <summary>Total corpse units currently shown.</summary>
+        public int CorpseCount()
+        {
+            int n = 0;
+            for (int i = 0; i < _icons.Count; i++)
+            {
+                if (_icons[i] != null && _icons[i].IsCorpse)
+                    n += _icons[i].Amount;
+            }
+            return n;
         }
     }
 
@@ -122,5 +298,13 @@ namespace AtomicWar._Game.UI
         public int Amount;
         public float TotalWeight;
         public ItemType Type;
+        /// <summary>True when this stack is a dead body (Internal Horror dispose UI).</summary>
+        public bool IsCorpse;
+        /// <summary>True when this stack is humidity-rusted food (botulism risk).</summary>
+        public bool IsContaminatedFood;
+        /// <summary>True when selecting this icon should open corpse dispose choices.</summary>
+        public bool HasDisposeActions;
+        /// <summary>True when this icon has keyboard/mouse focus in the strip.</summary>
+        public bool IsSelected;
     }
 }

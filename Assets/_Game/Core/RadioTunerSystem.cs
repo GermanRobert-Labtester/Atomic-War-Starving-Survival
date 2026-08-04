@@ -35,10 +35,14 @@ namespace AtomicWar._Game.Core
         /// <summary>Fired when the current frequency changes.</summary>
         public event Action<string> OnFrequencyChanged;
 
-        public RadioTunerSystem(System.Random rng = null)
+        /// <summary>Injected delegate returning the current campaign day (from TimeSystem).</summary>
+        private Func<int> _getDay;
+
+        public RadioTunerSystem(System.Random rng = null, Func<int> getDay = null)
         {
             State = new RadioState();
             _rng = rng ?? new System.Random();
+            _getDay = getDay ?? (() => 0);
         }
 
         /// <summary>Load frequency definitions from a catalog.</summary>
@@ -55,6 +59,22 @@ namespace AtomicWar._Game.Core
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Append a frequency if its id is not already registered (Prompt #19 ghosts).
+        /// Returns true when the frequency was added.
+        /// </summary>
+        public bool AddFrequency(RadioFrequencySO frequency)
+        {
+            if (frequency == null || string.IsNullOrEmpty(frequency.id)) return false;
+            for (int i = 0; i < _frequencies.Count; i++)
+            {
+                if (_frequencies[i] != null && _frequencies[i].id == frequency.id)
+                    return false;
+            }
+            _frequencies.Add(frequency);
+            return true;
         }
 
         /// <summary>Get all registered frequencies.</summary>
@@ -171,6 +191,7 @@ namespace AtomicWar._Game.Core
                 case WeatherKind.Ashfall: return 0.8f;
                 case WeatherKind.Blizzard: return 0.6f;
                 case WeatherKind.FalloutStorm: return 0.2f; // Heavy static
+                case WeatherKind.BlackRain: return 0.1f; // Oily storm static (Prompt #11)
                 default: return 1.0f;
             }
         }
@@ -253,6 +274,18 @@ namespace AtomicWar._Game.Core
         {
             int expirationDay = currentDay + 5; // Intel expires in 5 days
             IntelNode intel = null;
+
+            // Prompt #19 — ghost stations never yield plume/military/extraction intel.
+            if (freq.type == RadioFrequencyType.GhostStation)
+            {
+                intel = IntelNode.CreateGhostLoop(
+                    freq.id,
+                    currentDay,
+                    broadcast != null ? broadcast.message : string.Empty,
+                    confidence: 0.15f);
+                intel.SourceFrequencyId = freq.id;
+                return intel;
+            }
 
             // Pre-Day 30: Military/civilian frequencies provide tactical intel
             if (currentDay < MilitarySilenceDay)
@@ -391,13 +424,12 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
-        /// Get the current day (placeholder - should be injected from TimeSystem).
+        /// Current campaign day, resolved from the injected TimeSystem delegate.
+        /// Returns 0 when not yet wired (safe default: no intel expiration).
         /// </summary>
         private int GetCurrentDay()
         {
-            // This should be injected from the game loop, but for now use a placeholder
-            // In production, this would be a delegate or injected value
-            return 0; // TODO: Inject current day from TimeSystem
+            return _getDay != null ? _getDay() : 0;
         }
 
         /// <summary>

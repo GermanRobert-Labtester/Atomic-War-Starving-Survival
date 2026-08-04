@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="14" result="Passed" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.2495794">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="430" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.249579" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1480" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="430" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.184094" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="462548" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1481" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="430" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.174436" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1482" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="430" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.166305" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1483" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="430" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.155548" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1357" name="RadioTriggeredEventTests" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.129856" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1367" name="FindSafeHavenAnalyst_ReturnsMedicFirst" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.FindSafeHavenAnalyst_ReturnsMedicFirst" methodname="FindSafeHavenAnalyst_ReturnsMedicFirst" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1923373710" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.061988" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1366" name="FindSafeHavenAnalyst_ReturnsNullForLowSkillCrew" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.FindSafeHavenAnalyst_ReturnsNullForLowSkillCrew" methodname="FindSafeHavenAnalyst_ReturnsNullForLowSkillCrew" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1271311886" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.001098" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1368" name="FindSafeHavenAnalyst_ReturnsTechWhenNoMedic" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.FindSafeHavenAnalyst_ReturnsTechWhenNoMedic" methodname="FindSafeHavenAnalyst_ReturnsTechWhenNoMedic" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="2106627590" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.000432" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1371" name="IntelReliability_DefaultsToUnverified_OnNewContext" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.IntelReliability_DefaultsToUnverified_OnNewContext" methodname="IntelReliability_DefaultsToUnverified_OnNewContext" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1874790021" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.003983" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1360" name="SafeHaven_HighSkillMedic_AnalyzeChoiceAppears_AndFlipsReliability" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_HighSkillMedic_AnalyzeChoiceAppears_AndFlipsReliability" methodname="SafeHaven_HighSkillMedic_AnalyzeChoiceAppears_AndFlipsReliability" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="526204906" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.010929" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1361" name="SafeHaven_HighSkillTech_AnalyzeChoiceAppears" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_HighSkillTech_AnalyzeChoiceAppears" methodname="SafeHaven_HighSkillTech_AnalyzeChoiceAppears" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1728083500" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.000859" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1370" name="SafeHaven_IgnoresDeadSurvivors_WhenFindingAnalyst" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_IgnoresDeadSurvivors_WhenFindingAnalyst" methodname="SafeHaven_IgnoresDeadSurvivors_WhenFindingAnalyst" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1125287819" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.000852" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1369" name="SafeHaven_IsOnRadioFlag_GatesEventTrigger" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_IsOnRadioFlag_GatesEventTrigger" methodname="SafeHaven_IsOnRadioFlag_GatesEventTrigger" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1098369994" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.001144" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1359" name="SafeHaven_LowSkillCrew_AnalyzeChoiceIsHidden" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_LowSkillCrew_AnalyzeChoiceIsHidden" methodname="SafeHaven_LowSkillCrew_AnalyzeChoiceIsHidden" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1133846827" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.001272" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1358" name="SafeHaven_PoolContainsEventAfterBootstrap" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_PoolContainsEventAfterBootstrap" methodname="SafeHaven_PoolContainsEventAfterBootstrap" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="2044495596" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.002287" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1364" name="SafeHaven_SendExpedition_AfterAnalyze_SetsVerifiedFlag" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_SendExpedition_AfterAnalyze_SetsVerifiedFlag" methodname="SafeHaven_SendExpedition_AfterAnalyze_SetsVerifiedFlag" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="561335208" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.001330" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1363" name="SafeHaven_SendExpedition_UnverifiedIntel_SetsTrapFlag" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_SendExpedition_UnverifiedIntel_SetsTrapFlag" methodname="SafeHaven_SendExpedition_UnverifiedIntel_SetsTrapFlag" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1640980985" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.000825" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1362" name="SafeHaven_WarnOthers_RequiresRadioTransmitter" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.SafeHaven_WarnOthers_RequiresRadioTransmitter" methodname="SafeHaven_WarnOthers_RequiresRadioTransmitter" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="312506641" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.002211" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1365" name="ShouldInjectSafeHavenAmbush_Unverified_True_Trap_False" fullname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests.ShouldInjectSafeHavenAmbush_Unverified_True_Trap_False" methodname="ShouldInjectSafeHavenAmbush_Unverified_True_Trap_False" classname="AtomicWar.Tests.EditMode.RadioTriggeredEventTests" runstate="Runnable" seed="1049082856" result="Passed" start-time="2026-08-03 19:42:08Z" end-time="2026-08-03 19:42:08Z" duration="0.000528" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

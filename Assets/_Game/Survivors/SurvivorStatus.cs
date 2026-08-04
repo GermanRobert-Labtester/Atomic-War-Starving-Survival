@@ -40,6 +40,12 @@ namespace AtomicWar._Game.Survivors
         /// Permanent social fracture after an internal mystery (forgiven theft).
         /// Never auto-clears; the bunker remembers.
         /// </summary>
-        Fractured
+        Fractured,
+        /// <summary>
+        /// Psychological dread from Black Rain (Prompt #11): outdoors in the oily
+        /// storm, or listening to it hammer the hatch. Morale drain while active.
+        /// Cleared when the storm ends (and optional recovery hours elapse).
+        /// </summary>
+        Dread
     }
 }

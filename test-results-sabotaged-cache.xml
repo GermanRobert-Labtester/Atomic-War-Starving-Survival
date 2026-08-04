@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="17" result="Passed" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.1535419">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="552" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.153542" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1610" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="552" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.136810" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="107476" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1611" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="552" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.131381" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1612" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="552" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.124488" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1613" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="552" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.118963" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1466" name="SabotagedCacheTests" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" testcasecount="17" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.106725" total="17" passed="17" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1475" name="CanDetectTampering_MedicalTrait_Works" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.CanDetectTampering_MedicalTrait_Works" methodname="CanDetectTampering_MedicalTrait_Works" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="473712269" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.030374" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1479" name="CaptureRestore_PreservesHabitAndCounters" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.CaptureRestore_PreservesHabitAndCounters" methodname="CaptureRestore_PreservesHabitAndCounters" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="641807723" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.014429" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1477" name="ConsumePoisoned_InflictsPoisonIngestion_AndDamagesHealth" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ConsumePoisoned_InflictsPoisonIngestion_AndDamagesHealth" methodname="ConsumePoisoned_InflictsPoisonIngestion_AndDamagesHealth" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1458635909" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.007359" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1482" name="CreateDefaultAfflictions_IncludesPoisonIngestion" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.CreateDefaultAfflictions_IncludesPoisonIngestion" methodname="CreateDefaultAfflictions_IncludesPoisonIngestion" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1151517723" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.001878" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1481" name="CreatePoisonIngestionAffliction_HasCanonicalId" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.CreatePoisonIngestionAffliction_HasCanonicalId" methodname="CreatePoisonIngestionAffliction_HasCanonicalId" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1055491848" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.005556" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1483" name="ExpeditionLootRoll_WithActiveSabotage_CanPlantPoison" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ExpeditionLootRoll_WithActiveSabotage_CanPlantPoison" methodname="ExpeditionLootRoll_WithActiveSabotage_CanPlantPoison" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1166803967" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.006522" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1476" name="IsMedicalLootCandidate_IodineAntiRadMedical_Yes_Scrap_No" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.IsMedicalLootCandidate_IodineAntiRadMedical_Yes_Scrap_No" methodname="IsMedicalLootCandidate_IodineAntiRadMedical_Yes_Scrap_No" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="934280646" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000592" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1468" name="IsSabotageActive_RequiresHabitAndHostileFaction" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.IsSabotageActive_RequiresHabitAndHostileFaction" methodname="IsSabotageActive_RequiresHabitAndHostileFaction" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="725629984" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000674" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1471" name="ProcessLootCandidate_Active_Undetected_ReplacesWithPoisonedIodine" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ProcessLootCandidate_Active_Undetected_ReplacesWithPoisonedIodine" methodname="ProcessLootCandidate_Active_Undetected_ReplacesWithPoisonedIodine" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1514360326" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.005299" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1470" name="ProcessLootCandidate_BelowHabit_CleanEvenWithHostile" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ProcessLootCandidate_BelowHabit_CleanEvenWithHostile" methodname="ProcessLootCandidate_BelowHabit_CleanEvenWithHostile" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="583085945" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000808" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1472" name="ProcessLootCandidate_HighMedicalSkill_DetectsAndDiscards" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ProcessLootCandidate_HighMedicalSkill_DetectsAndDiscards" methodname="ProcessLootCandidate_HighMedicalSkill_DetectsAndDiscards" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1936655905" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000948" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1474" name="ProcessLootCandidate_NeverSabotageRng_StaysCleanWhenActive" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ProcessLootCandidate_NeverSabotageRng_StaysCleanWhenActive" methodname="ProcessLootCandidate_NeverSabotageRng_StaysCleanWhenActive" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="580542123" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000736" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1469" name="ProcessLootCandidate_NonMedical_AlwaysClean" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ProcessLootCandidate_NonMedical_AlwaysClean" methodname="ProcessLootCandidate_NonMedical_AlwaysClean" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="212894232" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000596" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1473" name="ProcessLootCandidate_Paranoid_DetectsAndDiscards" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.ProcessLootCandidate_Paranoid_DetectsAndDiscards" methodname="ProcessLootCandidate_Paranoid_DetectsAndDiscards" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1511542499" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000547" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1467" name="RecordScavengeLoot_IncrementsHabitScore" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.RecordScavengeLoot_IncrementsHabitScore" methodname="RecordScavengeLoot_IncrementsHabitScore" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="791718034" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000437" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1480" name="RestoreState_Null_ResetsCounters" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.RestoreState_Null_ResetsCounters" methodname="RestoreState_Null_ResetsCounters" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1017000317" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000570" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1478" name="TryApplyPoisonOnConsume_IgnoresRealIodine" fullname="AtomicWar.Tests.EditMode.SabotagedCacheTests.TryApplyPoisonOnConsume_IgnoresRealIodine" methodname="TryApplyPoisonOnConsume_IgnoresRealIodine" classname="AtomicWar.Tests.EditMode.SabotagedCacheTests" runstate="Runnable" seed="1354167488" result="Passed" start-time="2026-08-04 10:12:58Z" end-time="2026-08-04 10:12:58Z" duration="0.000567" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

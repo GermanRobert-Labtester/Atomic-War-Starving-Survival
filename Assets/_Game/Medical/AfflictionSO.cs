@@ -82,6 +82,15 @@ namespace AtomicWar._Game.Medical
             // for water/iodine; the cure window is ~7 days of high food
             // and water. Carries infection risk from the dirty needle.
             public const string BloodLoss = "blood_loss";
+
+            // Internal Horror — triage / pantry
+            /// <summary>Bedridden: cannot self-feed; requires Caregive or dies of neglect.</summary>
+            public const string Coma = "coma";
+            /// <summary>Foodborne toxin; paralyzes respiratory drive (Phase 1).</summary>
+            public const string Botulism = "botulism";
+
+            /// <summary>Prompt #13 — sabotaged medical cache (rat poison in iodine foil).</summary>
+            public const string PoisonIngestion = "poison_ingestion";
         }
     }
 }

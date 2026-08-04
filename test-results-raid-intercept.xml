@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="12" result="Passed" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.123283">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="591" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.123283" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1652" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="591" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.110763" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="115910" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1653" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="591" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.108812" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1654" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="591" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.106222" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1655" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="591" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.104557" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1163" name="FactionRaidInterceptTests" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.094221" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1175" name="AntennaDead_AfterEmp_CannotHearNewPlans" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.AntennaDead_AfterEmp_CannotHearNewPlans" methodname="AntennaDead_AfterEmp_CannotHearNewPlans" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="1724402462" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.036288" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1174" name="ApplyChoiceFromEvent_UsesEventIdPlanLink" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.ApplyChoiceFromEvent_UsesEventIdPlanLink" methodname="ApplyChoiceFromEvent_UsesEventIdPlanLink" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="765776332" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.001649" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1172" name="CultAttacker_InterceptMentionsGlowbandChannel" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.CultAttacker_InterceptMentionsGlowbandChannel" methodname="CultAttacker_InterceptMentionsGlowbandChannel" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="871297176" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.007501" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1168" name="DoNothing_OnFireDay_PlanSucceeds" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.DoNothing_OnFireDay_PlanSucceeds" methodname="DoNothing_OnFireDay_PlanSucceeds" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="1785953028" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.001521" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1173" name="SaveLoad_RoundTripsPendingPlanAndBattlefield" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.SaveLoad_RoundTripsPendingPlanAndBattlefield" methodname="SaveLoad_RoundTripsPendingPlanAndBattlefield" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="684645841" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.007348" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1167" name="ScavengeBattlefield_SpawnsHighRadLootNode_Claimable" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.ScavengeBattlefield_SpawnsHighRadLootNode_Claimable" methodname="ScavengeBattlefield_SpawnsHighRadLootNode_Claimable" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="856471" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.010106" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1164" name="SchedulePlan_WithAntenna_PresentsInterceptAndRaidPlanLog" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.SchedulePlan_WithAntenna_PresentsInterceptAndRaidPlanLog" methodname="SchedulePlan_WithAntenna_PresentsInterceptAndRaidPlanLog" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="491563270" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.001899" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1165" name="SchedulePlan_WithoutAntenna_SilentNoIntercept" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.SchedulePlan_WithoutAntenna_SilentNoIntercept" methodname="SchedulePlan_WithoutAntenna_SilentNoIntercept" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="1361488874" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.000755" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1169" name="SilentPlan_WithoutAntenna_StillResolvesOnFireDay" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.SilentPlan_WithoutAntenna_StillResolvesOnFireDay" methodname="SilentPlan_WithoutAntenna_StillResolvesOnFireDay" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="1371751070" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.000343" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1171" name="TickDay_AfterMinDay_WithAlwaysRng_SchedulesPlan" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.TickDay_AfterMinDay_WithAlwaysRng_SchedulesPlan" methodname="TickDay_AfterMinDay_WithAlwaysRng_SchedulesPlan" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="809071745" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.000927" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1170" name="TickDay_BeforeMinDay_NeverAutoSchedules" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.TickDay_BeforeMinDay_NeverAutoSchedules" methodname="TickDay_BeforeMinDay_NeverAutoSchedules" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="1481143094" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.000319" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1166" name="WarnTarget_BoostsTargetTrust_AngersAttacker_CancelsRaid" fullname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests.WarnTarget_BoostsTargetTrust_AngersAttacker_CancelsRaid" methodname="WarnTarget_BoostsTargetTrust_AngersAttacker_CancelsRaid" classname="AtomicWar.Tests.EditMode.FactionRaidInterceptTests" runstate="Runnable" seed="2007221688" result="Passed" start-time="2026-08-04 10:35:22Z" end-time="2026-08-04 10:35:22Z" duration="0.000773" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="39" result="Failed(Child)" total="39" passed="38" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.7850492">
+  <test-suite type="TestSuite" id="1058" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="39" result="Failed" site="Child" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.785049" total="39" passed="38" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1051" name="AtomicWar.Tests.PlayMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.PlayMode.dll" runstate="Runnable" testcasecount="39" result="Failed" site="Child" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.770463" total="39" passed="38" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="440617" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1052" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="39" result="Failed" site="Child" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.769252" total="39" passed="38" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1053" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="39" result="Failed" site="Child" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.768863" total="39" passed="38" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1054" name="PlayMode" fullname="AtomicWar.Tests.PlayMode" runstate="Runnable" testcasecount="39" result="Failed" site="Child" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.768363" total="39" passed="38" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1001" name="AudioSystemPlayModeTests" fullname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests" classname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-08-03 19:07:50Z" end-time="2026-08-03 19:07:51Z" duration="0.079245" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="FalloutStorm_Underground_IsMuffled_And_BreachRemovesMuffle" fullname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests.FalloutStorm_Underground_IsMuffled_And_BreachRemovesMuffle" methodname="FalloutStorm_Underground_IsMuffled_And_BreachRemovesMuffle" classname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests" runstate="Runnable" seed="1029741570" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.041050" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="GeigerCadence_IsLogarithmic_And_ScreamsAtHighRads" fullname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests.GeigerCadence_IsLogarithmic_And_ScreamsAtHighRads" methodname="GeigerCadence_IsLogarithmic_And_ScreamsAtHighRads" classname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests" runstate="Runnable" seed="977820619" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.012013" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="PowerBlackout_Or_RadiationAnxiety_TriggersHeartbeatAudio" fullname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests.PowerBlackout_Or_RadiationAnxiety_TriggersHeartbeatAudio" methodname="PowerBlackout_Or_RadiationAnxiety_TriggersHeartbeatAudio" classname="AtomicWar.Tests.PlayMode.AudioSystemPlayModeTests" runstate="Runnable" seed="1539474000" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002846" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1005" name="ChronicDiseasePlayModeTests" fullname="AtomicWar.Tests.PlayMode.ChronicDiseasePlayModeTests" classname="AtomicWar.Tests.PlayMode.ChronicDiseasePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.007404" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1006" name="Accumulate300PlusLifetimeRadExposure_TriggersChronicIllnessAssignment" fullname="AtomicWar.Tests.PlayMode.ChronicDiseasePlayModeTests.Accumulate300PlusLifetimeRadExposure_TriggersChronicIllnessAssignment" methodname="Accumulate300PlusLifetimeRadExposure_TriggersChronicIllnessAssignment" classname="AtomicWar.Tests.PlayMode.ChronicDiseasePlayModeTests" runstate="Runnable" seed="1942484211" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.003373" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="ChronicIllness_AppliesStatPenalties_And_CanBeManagedWithMedicalSupplies" fullname="AtomicWar.Tests.PlayMode.ChronicDiseasePlayModeTests.ChronicIllness_AppliesStatPenalties_And_CanBeManagedWithMedicalSupplies" methodname="ChronicIllness_AppliesStatPenalties_And_CanBeManagedWithMedicalSupplies" classname="AtomicWar.Tests.PlayMode.ChronicDiseasePlayModeTests" runstate="Runnable" seed="159660207" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002953" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1008" name="EndgameEnginePlayModeTests" fullname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" classname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.021393" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1009" name="AllSurvivorsDeceased_TriggersDefeatCondition" fullname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests.AllSurvivorsDeceased_TriggersDefeatCondition" methodname="AllSurvivorsDeceased_TriggersDefeatCondition" classname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" runstate="Runnable" seed="1839724535" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.006952" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="BunkerStructuralCollapse_ZeroFilterAndShielding_TriggersDefeatCondition" fullname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests.BunkerStructuralCollapse_ZeroFilterAndShielding_TriggersDefeatCondition" methodname="BunkerStructuralCollapse_ZeroFilterAndShielding_TriggersDefeatCondition" classname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" runstate="Runnable" seed="575478836" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.003956" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="CampaignResult_CustomAndExpertModes_ConfigureCorrectParameters" fullname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests.CampaignResult_CustomAndExpertModes_ConfigureCorrectParameters" methodname="CampaignResult_CustomAndExpertModes_ConfigureCorrectParameters" classname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" runstate="Runnable" seed="2048655234" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002416" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="LongTermSelfSufficiency_Day100ZeroDeathsHydroponics_TriggersVictoryCondition" fullname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests.LongTermSelfSufficiency_Day100ZeroDeathsHydroponics_TriggersVictoryCondition" methodname="LongTermSelfSufficiency_Day100ZeroDeathsHydroponics_TriggersVictoryCondition" classname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" runstate="Runnable" seed="1101345464" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.003803" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="RescueExtractionSuccess_Day60_TriggersVictoryCondition" fullname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests.RescueExtractionSuccess_Day60_TriggersVictoryCondition" methodname="RescueExtractionSuccess_Day60_TriggersVictoryCondition" classname="AtomicWar.Tests.PlayMode.EndgameEnginePlayModeTests" runstate="Runnable" seed="611363490" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002014" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1014" name="FalloutStormHazardPlayModeTests" fullname="AtomicWar.Tests.PlayMode.FalloutStormHazardPlayModeTests" classname="AtomicWar.Tests.PlayMode.FalloutStormHazardPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.007905" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1016" name="HatchBreach_DuringFalloutStorm_FloodsEntryRoomWithRadiation_And_FiresEmergencySiren" fullname="AtomicWar.Tests.PlayMode.FalloutStormHazardPlayModeTests.HatchBreach_DuringFalloutStorm_FloodsEntryRoomWithRadiation_And_FiresEmergencySiren" methodname="HatchBreach_DuringFalloutStorm_FloodsEntryRoomWithRadiation_And_FiresEmergencySiren" classname="AtomicWar.Tests.PlayMode.FalloutStormHazardPlayModeTests" runstate="Runnable" seed="2068307002" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.004942" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="HighIntensityFalloutStorm_DoublesAirFilterDegradationRate" fullname="AtomicWar.Tests.PlayMode.FalloutStormHazardPlayModeTests.HighIntensityFalloutStorm_DoublesAirFilterDegradationRate" methodname="HighIntensityFalloutStorm_DoublesAirFilterDegradationRate" classname="AtomicWar.Tests.PlayMode.FalloutStormHazardPlayModeTests" runstate="Runnable" seed="1482223102" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.001886" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1017" name="FastForwardStabilityPlayModeTests" fullname="AtomicWar.Tests.PlayMode.FastForwardStabilityPlayModeTests" classname="AtomicWar.Tests.PlayMode.FastForwardStabilityPlayModeTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.483421" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1018" name="HundredDays_AtThreeX_Stable_NoUiChurn_NoGcGrowth" fullname="AtomicWar.Tests.PlayMode.FastForwardStabilityPlayModeTests.HundredDays_AtThreeX_Stable_NoUiChurn_NoGcGrowth" methodname="HundredDays_AtThreeX_Stable_NoUiChurn_NoGcGrowth" classname="AtomicWar.Tests.PlayMode.FastForwardStabilityPlayModeTests" runstate="Runnable" seed="884289186" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.482363" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1019" name="GameBootstrapStubTests" fullname="AtomicWar.Tests.PlayMode.GameBootstrapStubTests" classname="AtomicWar.Tests.PlayMode.GameBootstrapStubTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.011401" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1020" name="Bootstrap_Scene_IsStubbed" fullname="AtomicWar.Tests.PlayMode.GameBootstrapStubTests.Bootstrap_Scene_IsStubbed" methodname="Bootstrap_Scene_IsStubbed" classname="AtomicWar.Tests.PlayMode.GameBootstrapStubTests" runstate="Runnable" seed="1209324236" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.010037" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <reason>
+                  <message><![CDATA[Stub: bootstrap integration not yet implemented.]]></message>
+                </reason>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1021" name="HydroponicsPlayModeTests" fullname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests" classname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.034289" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1024" name="IrrigatingWithDirtyWater_RuinsCrop_And_IntroducesRoomMold" fullname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests.IrrigatingWithDirtyWater_RuinsCrop_And_IntroducesRoomMold" methodname="IrrigatingWithDirtyWater_RuinsCrop_And_IntroducesRoomMold" classname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests" runstate="Runnable" seed="96161350" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.010214" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1022" name="PlantSeeds_ProvideWaterAndLight_ReachesMaturityAndYields" fullname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests.PlantSeeds_ProvideWaterAndLight_ReachesMaturityAndYields" methodname="PlantSeeds_ProvideWaterAndLight_ReachesMaturityAndYields" classname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests" runstate="Runnable" seed="1558220544" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.006914" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="TemperatureDropTo5C_KillsCrop" fullname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests.TemperatureDropTo5C_KillsCrop" methodname="TemperatureDropTo5C_KillsCrop" classname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests" runstate="Runnable" seed="968755183" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.005019" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="UnpoweredGrowLightsForMoreThan24Hours_StallsCrop" fullname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests.UnpoweredGrowLightsForMoreThan24Hours_StallsCrop" methodname="UnpoweredGrowLightsForMoreThan24Hours_StallsCrop" classname="AtomicWar.Tests.PlayMode.HydroponicsPlayModeTests" runstate="Runnable" seed="1503514550" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.010003" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1026" name="InventoryPlayModeTests" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.033497" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1028" name="ConsumeIodine_GrantsTimedRadResistance" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.ConsumeIodine_GrantsTimedRadResistance" methodname="ConsumeIodine_GrantsTimedRadResistance" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="1534721916" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.010712" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="EquipSuit_ReducesRadiationExposure" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.EquipSuit_ReducesRadiationExposure" methodname="EquipSuit_ReducesRadiationExposure" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="128191719" result="Failed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.008563" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: 100.0f +/- 9.99999975E-05f
+  But was:  0.0f
+]]></message>
+                  <stack-trace><![CDATA[at AtomicWar.Tests.PlayMode.InventoryPlayModeTests+<EquipSuit_ReducesRadiationExposure>d__3.MoveNext () [0x0013b] in /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Assets/Tests/PlayMode/InventoryPlayModeTests.cs:85
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in ./Library/PackageCache/com.unity.test-framework@773a3a4953ad/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:44
+]]></stack-trace>
+                </failure>
+              </test-case>
+              <test-case id="1029" name="SaveLoad_InventoryStaysIntact" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.SaveLoad_InventoryStaysIntact" methodname="SaveLoad_InventoryStaysIntact" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="1239273829" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.008487" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="WeightLimit_BlocksAdd_And_TransferMovesStock" fullname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests.WeightLimit_BlocksAdd_And_TransferMovesStock" methodname="WeightLimit_BlocksAdd_And_TransferMovesStock" classname="AtomicWar.Tests.PlayMode.InventoryPlayModeTests" runstate="Runnable" seed="926000975" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.003686" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1031" name="MoralChroniclePlayModeTests" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.045723" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1038" name="Bridge_OnCampaignEndedEvent_PopulatesChronicleUI" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.Bridge_OnCampaignEndedEvent_PopulatesChronicleUI" methodname="Bridge_OnCampaignEndedEvent_PopulatesChronicleUI" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="1783931959" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.024154" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[EventBus] Slow event: CampaignEndedEvent took 13.62ms (> 2.0ms budget) across 1 handler(s); slowest: MoralChronicleBridge.OnCampaignEnded (13.31ms)
+]]></output>
+              </test-case>
+              <test-case id="1033" name="DefeatEvent_ShowsChronicle_WithCorrectMetadata" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.DefeatEvent_ShowsChronicle_WithCorrectMetadata" methodname="DefeatEvent_ShowsChronicle_WithCorrectMetadata" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="633501024" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.004180" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1037" name="JournalSnapshotButton_ShowsSnapshotText" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.JournalSnapshotButton_ShowsSnapshotText" methodname="JournalSnapshotButton_ShowsSnapshotText" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="917246" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.003108" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1036" name="MainMenuButton_SetsFlag_AndFiresEvent" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.MainMenuButton_SetsFlag_AndFiresEvent" methodname="MainMenuButton_SetsFlag_AndFiresEvent" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="1464502505" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002198" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1035" name="MoralTimeline_IsSortedChronologically" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.MoralTimeline_IsSortedChronologically" methodname="MoralTimeline_IsSortedChronologically" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="1696866693" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002452" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="SurvivorFates_DisplayBothAliveAndDead" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.SurvivorFates_DisplayBothAliveAndDead" methodname="SurvivorFates_DisplayBothAliveAndDead" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="1916840567" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002598" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="VictoryEvent_ShowsChronicle_WithCorrectMetadata" fullname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests.VictoryEvent_ShowsChronicle_WithCorrectMetadata" methodname="VictoryEvent_ShowsChronicle_WithCorrectMetadata" classname="AtomicWar.Tests.PlayMode.MoralChroniclePlayModeTests" runstate="Runnable" seed="235379606" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.004213" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1039" name="MoralDilemmaPlayModeTests" fullname="AtomicWar.Tests.PlayMode.MoralDilemmaPlayModeTests" classname="AtomicWar.Tests.PlayMode.MoralDilemmaPlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.009921" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1041" name="Butchering_RestoresFood_AppliesTraitMorale_And_InflictsTrauma" fullname="AtomicWar.Tests.PlayMode.MoralDilemmaPlayModeTests.Butchering_RestoresFood_AppliesTraitMorale_And_InflictsTrauma" methodname="Butchering_RestoresFood_AppliesTraitMorale_And_InflictsTrauma" classname="AtomicWar.Tests.PlayMode.MoralDilemmaPlayModeTests" runstate="Runnable" seed="1324314637" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.006545" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1040" name="CriticalHunger_WithZeroFood_TriggersMoralDilemma" fullname="AtomicWar.Tests.PlayMode.MoralDilemmaPlayModeTests.CriticalHunger_WithZeroFood_TriggersMoralDilemma" methodname="CriticalHunger_WithZeroFood_TriggersMoralDilemma" classname="AtomicWar.Tests.PlayMode.MoralDilemmaPlayModeTests" runstate="Runnable" seed="605551086" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002180" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1042" name="NarrativeChainPlayModeTests" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.031000" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1048" name="CleanWater_GivenToStranger_ResolvesPart3AsRealCache" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.CleanWater_GivenToStranger_ResolvesPart3AsRealCache" methodname="CleanWater_GivenToStranger_ResolvesPart3AsRealCache" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="2009716544" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.007042" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1050" name="DuplicateScheduleEvent_IsIgnored" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.DuplicateScheduleEvent_IsIgnored" methodname="DuplicateScheduleEvent_IsIgnored" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="1347287029" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.003034" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="IrradiatedWater_GivenToStranger_ResolvesPart3AsAmbush" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.IrradiatedWater_GivenToStranger_ResolvesPart3AsAmbush" methodname="IrradiatedWater_GivenToStranger_ResolvesPart3AsAmbush" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="1558909451" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.001935" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="Part1_IgnoreChoice_SchedulesPart2b_OnDay38" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.Part1_IgnoreChoice_SchedulesPart2b_OnDay38" methodname="Part1_IgnoreChoice_SchedulesPart2b_OnDay38" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="868384453" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.005873" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1044" name="Part1_OpenChoice_SchedulesPart2a_OnDay37" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.Part1_OpenChoice_SchedulesPart2a_OnDay37" methodname="Part1_OpenChoice_SchedulesPart2a_OnDay37" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="1100918439" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002538" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1049" name="ScheduledQueue_SaveLoad_RoundTrip_Preserves_Entries" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.ScheduledQueue_SaveLoad_RoundTrip_Preserves_Entries" methodname="ScheduledQueue_SaveLoad_RoundTrip_Preserves_Entries" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="1342232129" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002451" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1043" name="ScheduleEvent_TickDay_FiresOnCorrectDay" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.ScheduleEvent_TickDay_FiresOnCorrectDay" methodname="ScheduleEvent_TickDay_FiresOnCorrectDay" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="548798857" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002946" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1046" name="TickDay37_FiresPart2a_WhenStrangerInsideIsSet" fullname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests.TickDay37_FiresPart2a_WhenStrangerInsideIsSet" methodname="TickDay37_FiresPart2a_WhenStrangerInsideIsSet" classname="AtomicWar.Tests.PlayMode.NarrativeChainPlayModeTests" runstate="Runnable" seed="1301026037" result="Passed" start-time="2026-08-03 19:07:51Z" end-time="2026-08-03 19:07:51Z" duration="0.002413" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

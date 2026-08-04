@@ -18,6 +18,9 @@ namespace AtomicWar._Game.AI.Actions
         {
             if (context?.Survivor == null) return 0f;
 
+            // Cannot craft (child, severe injury, etc.)
+            if (context.Survivor.CannotCraft) return 0f;
+
             bool workbenchPresent = context.Shelter != null && context.Shelter.GetModule("workbench") != null;
             if (!workbenchPresent) return 0f;
 

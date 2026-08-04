@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="19" result="Passed" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.1914926">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="535" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.191493" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1592" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="535" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.173286" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="9665" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1593" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="535" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.168049" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1594" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="535" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.164316" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1595" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="535" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.160692" total="19" passed="19" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1276" name="MapGeneratorTests" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.119575" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1280" name="AllNodes_ReachableFromShelter_ViaPaths" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.AllNodes_ReachableFromShelter_ViaPaths" methodname="AllNodes_ReachableFromShelter_ViaPaths" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1900314642" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.040241" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1281" name="Blizzard_DoublesTravelTime" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.Blizzard_DoublesTravelTime" methodname="Blizzard_DoublesTravelTime" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1537708943" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.006084" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1286" name="CaptureRestore_PreservesRevealFlags_AcrossRegenerate" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.CaptureRestore_PreservesRevealFlags_AcrossRegenerate" methodname="CaptureRestore_PreservesRevealFlags_AcrossRegenerate" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1989247253" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.003400" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1278" name="DifferentSeeds_ProduceDifferentLayouts" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.DifferentSeeds_ProduceDifferentLayouts" methodname="DifferentSeeds_ProduceDifferentLayouts" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1711858410" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.002898" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1285" name="ExpeditionSystem_StartFromMapNode_UsesWeatherScaledDistance_AndMarksVisited" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.ExpeditionSystem_StartFromMapNode_UsesWeatherScaledDistance_AndMarksVisited" methodname="ExpeditionSystem_StartFromMapNode_UsesWeatherScaledDistance_AndMarksVisited" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="2008972367" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.020560" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1279" name="Generate_CreatesThreeDangerRings_AndShelterHub" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.Generate_CreatesThreeDangerRings_AndShelterHub" methodname="Generate_CreatesThreeDangerRings_AndShelterHub" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="334958632" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.001317" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1284" name="MapScreenUI_Pathing_UsesWeatherMultiplier" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.MapScreenUI_Pathing_UsesWeatherMultiplier" methodname="MapScreenUI_Pathing_UsesWeatherMultiplier" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1979019537" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.009606" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1283" name="MarkVisited_RevealsNode" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.MarkVisited_RevealsNode" methodname="MarkVisited_RevealsNode" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="2069333054" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.000554" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1287" name="RadioPlume_SetsRumoredRad_AndCanRevealNode" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.RadioPlume_SetsRumoredRad_AndCanRevealNode" methodname="RadioPlume_SetsRumoredRad_AndCanRevealNode" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1364259365" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.002566" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1277" name="Seed_12345_Twice_ProducesIdenticalLayout_LootTables_AndDistances" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.Seed_12345_Twice_ProducesIdenticalLayout_LootTables_AndDistances" methodname="Seed_12345_Twice_ProducesIdenticalLayout_LootTables_AndDistances" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="1333146018" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.001832" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1282" name="UnsurveyedNode_ShowsSilhouetteAndRumoredRadOnly" fullname="AtomicWar.Tests.EditMode.MapGeneratorTests.UnsurveyedNode_ShowsSilhouetteAndRumoredRadOnly" methodname="UnsurveyedNode_ShowsSilhouetteAndRumoredRadOnly" classname="AtomicWar.Tests.EditMode.MapGeneratorTests" runstate="Runnable" seed="141272281" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.001363" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1554" name="UxoHazardTests" fullname="AtomicWar.Tests.EditMode.UxoHazardTests" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.026809" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1559" name="ApplyDetonation_DropsLoot_DamagesHealth_InflictsBrokenBone_ForcesInbound" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.ApplyDetonation_DropsLoot_DamagesHealth_InflictsBrokenBone_ForcesInbound" methodname="ApplyDetonation_DropsLoot_DamagesHealth_InflictsBrokenBone_ForcesInbound" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="325632811" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.010466" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1560" name="ExpeditionSystem_RecklessLoot_OnUxoNode_DetonatesWithForcedHook" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.ExpeditionSystem_RecklessLoot_OnUxoNode_DetonatesWithForcedHook" methodname="ExpeditionSystem_RecklessLoot_OnUxoNode_DetonatesWithForcedHook" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="250854881" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.004481" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[UXO] The ground gave way. Something left over from a war that does not matter anymore.
+]]></output>
+              </test-case>
+              <test-case id="1558" name="Flee_OnUxo_CanDetonate" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.Flee_OnUxo_CanDetonate" methodname="Flee_OnUxo_CanDetonate" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="72317764" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.001157" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1562" name="HasUxo_PersistsAcrossRegenerateFromSameSeed" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.HasUxo_PersistsAcrossRegenerateFromSameSeed" methodname="HasUxo_PersistsAcrossRegenerateFromSameSeed" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="1683907100" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.002390" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1555" name="MapGenerator_AssignsUxo_Deterministically_AndShelterNeverHasUxo" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.MapGenerator_AssignsUxo_Deterministically_AndShelterNeverHasUxo" methodname="MapGenerator_AssignsUxo_Deterministically_AndShelterNeverHasUxo" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="2073446846" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.001767" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1561" name="NonReckless_LootRoll_NeverDetonates_EvenOnUxoNode" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.NonReckless_LootRoll_NeverDetonates_EvenOnUxoNode" methodname="NonReckless_LootRoll_NeverDetonates_EvenOnUxoNode" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="679106612" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.000693" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1557" name="RecklessLoot_OnUxo_CanDetonate_CarefulLoot_DoesNot" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.RecklessLoot_OnUxo_CanDetonate_CarefulLoot_DoesNot" methodname="RecklessLoot_OnUxo_CanDetonate_CarefulLoot_DoesNot" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="860400796" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.001110" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1556" name="SameSeed_HasUxo_IncludedInLayoutFingerprint" fullname="AtomicWar.Tests.EditMode.UxoHazardTests.SameSeed_HasUxo_IncludedInLayoutFingerprint" methodname="SameSeed_HasUxo_IncludedInLayoutFingerprint" classname="AtomicWar.Tests.EditMode.UxoHazardTests" runstate="Runnable" seed="1863245627" result="Passed" start-time="2026-08-04 10:06:24Z" end-time="2026-08-04 10:06:24Z" duration="0.000919" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

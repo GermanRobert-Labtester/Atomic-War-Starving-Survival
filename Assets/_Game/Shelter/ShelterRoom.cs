@@ -5,6 +5,21 @@ using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.Shelter
 {
+        /// <summary>
+    /// Unlock state for sealed/caved-in rooms (Prompt #5 — Previous Tenants).
+    /// </summary>
+    public enum RoomUnlockState
+    {
+        /// <summary>Room is accessible from game start.</summary>
+        Unlocked,
+        /// <summary>Room is sealed; requires rubble clearing (SurvivorAction).</summary>
+        Sealed,
+        /// <summary>Rubble is being cleared; in progress with work-hours remaining.</summary>
+        Clearing,
+        /// <summary>Room was sealed but has been cleared and is now accessible.</summary>
+        Cleared
+    }
+
     /// <summary>
     /// A room within the shelter: owns a set of storage slots with spatial adjacency,
     /// tracks ambient contamination level, and contributes to the shelter's indoor
@@ -22,11 +37,75 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Ambient radiation level in rads/hr (Prompt #40).</summary>
         public float AmbientRadiation { get; set; }
 
+        /// <summary>
+        /// Room CO2 concentration in ppm (Prompt #20 / #48). DigOut exertion
+        /// and sealed-hatch labor spike this in the entry room; high values
+        /// drive atmosphere headache via SleepQuality foul-air thresholds.
+        /// </summary>
+        public float Co2Ppm { get; set; }
+
         /// <summary>True when room has mold infestation (#20, #37).</summary>
         public bool HasMold { get; set; }
 
         /// <summary>Mold severity level (0..1).</summary>
         public float MoldLevel { get; set; }
+
+        /// <summary>Relative humidity 0..1 (Internal Horror — pantry rust / mold).</summary>
+        public float Humidity { get; set; }
+
+        /// <summary>
+        /// Oxygen volume fraction 0..1 (ambient air ≈ 0.209). Fire and sealed
+        /// bulkheads drive this down (Internal Horror — Fire in the Hole).
+        /// </summary>
+        public float OxygenFraction { get; set; } = DefaultOxygenFraction;
+
+        /// <summary>Room-local CO ppm from fire / fouled air (bunker CO also on PowerNetwork).</summary>
+        public float LocalCoPpm { get; set; }
+
+        /// <summary>True while a fire is active in this room.</summary>
+        public bool IsOnFire { get; set; }
+
+        /// <summary>Fire intensity 0..1 while IsOnFire.</summary>
+        public float FireIntensity { get; set; }
+
+        /// <summary>
+        /// When true, bulkhead is sealed: no gas exchange with adjacent rooms.
+        /// Used to starve a fire of oxygen at the cost of modules inside.
+        /// </summary>
+        public bool BulkheadSealed { get; set; }
+
+        /// <summary>True after seal-to-extinguish sacrificed modules in this room.</summary>
+        public bool ModulesSacrificed { get; set; }
+
+        /// <summary>Ambient oxygen fraction of unpolluted air.</summary>
+        public const float DefaultOxygenFraction = 0.209f;
+
+        // -------------------------------------------------------------------
+        // Room Unlock State (Prompt #5 — Previous Tenants)
+        // -------------------------------------------------------------------
+
+        /// <summary>Current unlock state for this room.</summary>
+        public RoomUnlockState UnlockState = RoomUnlockState.Unlocked;
+
+        /// <summary>Work-hours required to clear the rubble. Set when the room
+        /// is Sealed; decremented by ClearRubbleActionSO. When zero, the room
+        /// transitions to Cleared. Typical: 8-24 hours.</summary>
+        public float RubbleClearHoursRemaining;
+
+        /// <summary>Total rubble-clearing work-hours at seal (for UI bar).</summary>
+        public float RubbleClearHoursTotal;
+
+        /// <summary>
+        /// Diary fragment ids found in this room. Populated when the room
+        /// is sealed; revealed one by one as clearing progresses. These ids
+        /// index into a DiaryFragmentSO catalog held by the game system.
+        /// </summary>
+        public System.Collections.Generic.List<string> DiaryFragmentIds = new System.Collections.Generic.List<string>();
+
+        /// <summary>
+        /// Which diary fragments have been revealed so far (indexes into DiaryFragmentIds).
+        /// </summary>
+        public System.Collections.Generic.List<int> RevealedDiaryIndices = new System.Collections.Generic.List<int>();
 
         /// <summary>Layout defining slot positions, adjacency, and transfer rates.</summary>
         [NonSerialized]
@@ -48,6 +127,13 @@ namespace AtomicWar._Game.Shelter
             RoomId = roomId;
             Layout = layout;
             AmbientContamination = 0f;
+            Humidity = 0.35f;
+            OxygenFraction = DefaultOxygenFraction;
+            LocalCoPpm = 0f;
+            IsOnFire = false;
+            FireIntensity = 0f;
+            BulkheadSealed = false;
+            ModulesSacrificed = false;
             if (layout != null)
             {
                 _slots = layout.BuildSlots();

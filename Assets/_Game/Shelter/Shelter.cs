@@ -16,11 +16,18 @@ namespace AtomicWar._Game.Shelter
         [SerializeField]
         private List<ShelterModuleInstance> _modules = new List<ShelterModuleInstance>();
 
+        /// <summary>Runtime shelter rooms (atmosphere, rubble, storage). Prompt #5 + Internal Horror.</summary>
+        [SerializeField]
+        private List<ShelterRoom> _rooms = new List<ShelterRoom>();
+
         /// <summary>Undirected room adjacency pairs ("a|b" with a &lt; b) for noise/sleep.</summary>
         [SerializeField]
         private List<string> _roomAdjacencyKeys = new List<string>();
 
         public IReadOnlyList<ShelterModuleInstance> Modules => _modules;
+
+        /// <summary>Registered bunker rooms (entry, stores, sealed wings, …).</summary>
+        public IReadOnlyList<ShelterRoom> Rooms => _rooms;
 
         public event Action<ShelterModuleInstance> OnModuleAdded;
         public event Action<string> OnModuleRemoved;
@@ -221,6 +228,16 @@ namespace AtomicWar._Game.Shelter
         public float BunkerContamination { get; private set; }
 
         /// <summary>
+        /// Restore the bunker contamination level from a save snapshot.
+        /// Only the SaveSystem should call this; normal accumulation uses
+        /// <see cref="AddBunkerContamination"/>.
+        /// </summary>
+        public void SetBunkerContamination(float radsPerHour)
+        {
+            BunkerContamination = Mathf.Max(0f, radsPerHour);
+        }
+
+        /// <summary>
         /// Add a contamination spike to the bunker's ambient level. Used by
         /// the hatch-dilemma handler when the player lets a comms-severed
         /// survivor in. Clamped to non-negative; never goes down via this method.
@@ -271,16 +288,50 @@ namespace AtomicWar._Game.Shelter
         }
 
         // -----------------------------------------------------------------
-        // Room ids (derived from modules)
+        // Room registry + ids
         // -----------------------------------------------------------------
 
-        /// <summary>Every unique RoomId across all installed modules. Empty
-        /// list when no modules have a RoomId. Used by the RoomAssignmentHUD
-        /// to build the room dropdown and by the MentalBreakSystem to filter
-        /// passive morale drain by room.</summary>
+        /// <summary>Register or replace a room by RoomId.</summary>
+        public void RegisterRoom(ShelterRoom room)
+        {
+            if (room == null || string.IsNullOrEmpty(room.RoomId)) return;
+            if (_rooms == null) _rooms = new List<ShelterRoom>();
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                if (_rooms[i] != null && _rooms[i].RoomId == room.RoomId)
+                {
+                    _rooms[i] = room;
+                    return;
+                }
+            }
+            _rooms.Add(room);
+        }
+
+        /// <summary>Lookup a registered room by id.</summary>
+        public ShelterRoom GetRoom(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId) || _rooms == null) return null;
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                if (_rooms[i] != null && _rooms[i].RoomId == roomId)
+                    return _rooms[i];
+            }
+            return null;
+        }
+
+        /// <summary>Every unique RoomId across registered rooms and modules.</summary>
         public List<string> GetRoomIds()
         {
             var ids = new List<string>();
+            if (_rooms != null)
+            {
+                for (int i = 0; i < _rooms.Count; i++)
+                {
+                    var r = _rooms[i];
+                    if (r == null || string.IsNullOrEmpty(r.RoomId)) continue;
+                    if (!ids.Contains(r.RoomId)) ids.Add(r.RoomId);
+                }
+            }
             if (_modules == null) return ids;
             for (int i = 0; i < _modules.Count; i++)
             {

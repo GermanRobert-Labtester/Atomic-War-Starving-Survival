@@ -13,7 +13,16 @@ namespace AtomicWar._Game.Data
         public List<SurvivorArchetypeSO> archetypes = new List<SurvivorArchetypeSO>();
 
         /// <summary>Look up an archetype by its snake_case id.</summary>
-        public SurvivorArchetypeSO GetById(string id) => throw new System.NotImplementedException();
+        public SurvivorArchetypeSO GetById(string id)
+        {
+            if (string.IsNullOrEmpty(id) || archetypes == null) return null;
+            for (int i = 0; i < archetypes.Count; i++)
+            {
+                if (archetypes[i] != null && archetypes[i].id == id)
+                    return archetypes[i];
+            }
+            return null;
+        }
     }
 
     /// <summary>Static definition of a survivor archetype: identity, profession, base stats.</summary>
