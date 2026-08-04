@@ -89,3 +89,63 @@ integration/audit-p1
 ```
 
 Prefer PRs from that branch (or stacked feature branches cut from it) rather than force-pushing `main`. See `docs/audit/ISSUE_REGISTER.md` AUDIT-002.
+
+---
+
+## Setting secrets from a local machine (operator)
+
+GitHub repo currently has **zero** Actions secrets (`gh secret list` empty).  
+game-ci EditMode fails immediately with:
+
+```text
+Missing Unity License File and no Serial was found
+```
+
+### Option A — Personal license (`.ulf`) via game-ci activation
+
+1. Follow https://game.ci/docs/github/activation
+2. Produce a license file, then:
+
+```bash
+# From a machine that has the .ulf contents (do NOT commit the file)
+gh secret set UNITY_LICENSE < Unity_v6000.x.ulf
+gh secret set UNITY_EMAIL -b 'you@example.com'
+gh secret set UNITY_PASSWORD -b 'your-unity-password'
+```
+
+3. Re-run failed workflows on the PR:
+
+```bash
+gh workflow run "ASHFALL CI" --ref integration/audit-p1
+# or:
+gh run rerun <run-id> --failed
+```
+
+### Option B — Serial-based Pro/Enterprise
+
+```bash
+gh secret set UNITY_SERIAL -b 'XXXX-XXXX-XXXX-XXXX-XXXX'
+gh secret set UNITY_EMAIL -b 'you@example.com'
+gh secret set UNITY_PASSWORD -b 'your-unity-password'
+```
+
+(Requires workflow to also pass serial — current YAML uses license env vars; add `UNITY_SERIAL` to `env:` if using this path.)
+
+### What already passes without secrets
+
+| Job | Needs license? | Status on PR #1 |
+|-----|----------------|-----------------|
+| Data Validation Gate (JSON + ProjectVersion pin) | No | **PASS** |
+| EditMode Tests (game-ci) | **Yes** | **FAIL** (empty secrets) |
+| Build Linux64 | Yes | skipped when tests fail |
+
+### Local trust signal (this machine)
+
+Full EditMode on Unity **6000.5.5f1** (no GitHub secrets needed):
+
+```bash
+Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode \
+  -testResults test-results-ci-local-editmode.xml -logFile test-log-ci-local-editmode.txt
+```
+
+Last local run: **780 passed / 0 failed** (`test-results-ci-local-editmode.xml`).
