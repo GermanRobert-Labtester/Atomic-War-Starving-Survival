@@ -201,6 +201,16 @@ namespace AtomicWar._Game.Survivors
         /// <summary>True if this survivor is a child dependent. Drives the Hope buff.</summary>
         public bool IsChild;
 
+        /// <summary>Prompt #61: True if survivor caught player reading diary and created a hidden stash.</summary>
+        public bool HasHiddenStash;
+        public System.Collections.Generic.List<string> HiddenItemIds = new System.Collections.Generic.List<string>();
+
+        /// <summary>Prompt #63: True if survivor is currently deployed on an expedition outdoors.</summary>
+        public bool IsOnExpedition;
+
+        /// <summary>Prompt #64: List of keepsake item IDs hoarded by survivor in memory of deceased friends.</summary>
+        public System.Collections.Generic.List<string> KeepsakeItemIds = new System.Collections.Generic.List<string>();
+
         /// <summary>
         /// Snake-case id of the <see cref="AtomicWar._Game.Shelter.ShelterRoom"/>
         /// the survivor currently occupies (e.g. "entry", "stores", "quarters").

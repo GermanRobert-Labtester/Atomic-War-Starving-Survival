@@ -119,6 +119,16 @@ namespace AtomicWar._Game.Core
         public DebtCollectorSystem DebtCollectorSystem { get; private set; }
         /// <summary>Prompt #19 — post-EMP ghost stations (pre-war loops, no live intel).</summary>
         public GhostStationSystem GhostStationSystem { get; private set; }
+        /// <summary>Prompt #49 — structural integrity + cave-ins.</summary>
+        public StructuralIntegritySystem StructuralIntegrity { get; private set; }
+        /// <summary>Prompt #50 — waste management + hygiene.</summary>
+        public WasteSystem WasteSystem { get; private set; }
+        /// <summary>Prompt #51 — vermin infestations.</summary>
+        public VerminSystem VerminSystem { get; private set; }
+        /// <summary>Prompt #52 — module jury-rigging.</summary>
+        public JuryRigSystem JuryRigSystem { get; private set; }
+        /// <summary>Prompt #53 — freezing pipes + water loss.</summary>
+        public FreezePipeSystem FreezePipeSystem { get; private set; }
         /// <summary>Prompt #20 — Lifeboat Transmission (one seat; rest condemned).</summary>
         public LifeboatTransmissionSystem LifeboatTransmissionSystem { get; private set; }
         /// <summary>Diegetic journal book + discovery knowledge (immersive tutorial).</summary>
@@ -133,9 +143,29 @@ namespace AtomicWar._Game.Core
 
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
+        // Prompt #61 — Survivor diaries & privacy violations.
+        public SurvivorDiariesSystem SurvivorDiaries { get; private set; }
+        // Prompt #62 — Internal door locks & guard assignments.
+        public InternalLockSystem InternalLockSystem { get; private set; }
+        // Prompt #63 — Spatial psychology traits (Claustrophobia / Agoraphobia).
+        public SpatialPsychologySystem SpatialPsychology { get; private set; }
+        // Prompt #64 — Grief Keepsakes & inventory locking.
+        public GriefKeepsakeSystem GriefKeepsakes { get; private set; }
+        // Prompt #65 — UI hallucinations & phantom utility actions.
+        public AI.HallucinationSystem HallucinationSystem { get; private set; }
+        // Prompt #66 — Skill mentorship action.
+        public MentorshipSystem MentorshipSystem { get; private set; }
 
         // Prompt #7 — Addiction & Withdrawal pipeline.
         public AddictionSystem Addiction { get; private set; }
+        // Prompt #55 — blood typing + transfusions.
+        public BloodTransfusionSystem BloodTransfusion { get; private set; }
+        // Prompt #56 — surgical amputation + phantom pain.
+        public AmputationSystem AmputationSystem { get; private set; }
+        // Prompt #57 — scurvy / VitaminC deficiency.
+        public ScurvySystem ScurvySystem { get; private set; }
+        // Prompt #60 — radiation mutagenesis stages.
+        public RadiationMutagenesisSystem Mutagenesis { get; private set; }
 
         // Prompt #6 — Phantom Intruders (fake hatch breach alerts).
         public PhantomIntruderSystem PhantomIntruders { get; private set; }
@@ -170,6 +200,13 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Reusable fog-of-war view buffer (no per-refresh list allocation).</summary>
         private readonly List<MapTilePlayerView> _knowledgeViewBuffer = new List<MapTilePlayerView>();
+
+        /// <summary>Last day phantom pain was rolled (Prompt #56).</summary>
+        private int _lastPhantomPainDay;
+        /// <summary>Last day scurvy was advanced (Prompt #57).</summary>
+        private int _lastScurvyDay;
+        /// <summary>Last day mutagenesis was evaluated (Prompt #60).</summary>
+        private int _lastMutagenesisDay;
 
         // ── Day-tick GC caches (no per-hour new Random / context / lambda) ──
         private System.Random _mentalBreakRng;
@@ -409,7 +446,9 @@ namespace AtomicWar._Game.Core
                 CreateAction<GuardActionSO>(),
                 CreateAction<PedalGeneratorActionSO>(),
                 CreateAction<SearchForChemsActionSO>(),
-                CreateAction<ClearRubbleActionSO>()
+                CreateAction<ClearRubbleActionSO>(),
+                CreateAction<HuntRatsActionSO>(),
+                CreateAction<MercyKillActionSO>()
             };
 
             // Medical triage (afflictions drain health; treatments halt/cure)
@@ -535,11 +574,18 @@ namespace AtomicWar._Game.Core
             // Prompt #8 — Empath & Sociopath System
             // ───────────────────────────────────────────────────────────
             EmpathSystem = new EmpathSystem();
+            SurvivorDiaries = new SurvivorDiariesSystem();
+            InternalLockSystem = new InternalLockSystem();
+            SpatialPsychology = new SpatialPsychologySystem();
+            GriefKeepsakes = new GriefKeepsakeSystem();
+            HallucinationSystem = new AI.HallucinationSystem();
+            MentorshipSystem = new MentorshipSystem();
             // Wire death hook into NeedsSystem.OnDied
             NeedsSystem.OnDied += deceased =>
             {
                 EmpathSystem.OnSurvivorDied(deceased, Survivors);
                 ChildSystem?.CheckChildDeath(Survivors);
+                GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");
             };
 
             // ───────────────────────────────────────────────────────────
@@ -560,7 +606,46 @@ namespace AtomicWar._Game.Core
             }
             Addiction.RegisterAddictiveItem("morphine");
             Addiction.RegisterAddictiveItem("anti_rad");
+            Addiction.RegisterAddictiveItem("amphetamines"); // Prompt #59
             Addiction.PanicDestroyHandler = (sv, rng) => ForceAddictionPanicDestroy(sv, rng);
+
+            // Prompt #55 — Blood Types & Transfusions
+            // ───────────────────────────────────────────────────────────
+            BloodTransfusion = new BloodTransfusionSystem(new System.Random(_worldSeed + 55));
+            BloodTransfusion.Bind(
+                id => Survivors?.Find(s => s.Id == id),
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Prompt #56 — Amputation & Phantom Pain
+            // ───────────────────────────────────────────────────────────
+            AmputationSystem = new AmputationSystem();
+            AmputationSystem.Bind(
+                id => Survivors?.Find(s => s.Id == id),
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Prompt #57 — Scurvy / VitaminC Deficiency
+            // ───────────────────────────────────────────────────────────
+            ScurvySystem = new ScurvySystem();
+            ScurvySystem.Bind(
+                id => Survivors?.Find(s => s.Id == id),
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Prompt #60 — Radiation Mutagenesis
+            // ───────────────────────────────────────────────────────────
+            Mutagenesis = new RadiationMutagenesisSystem();
+            Mutagenesis.Bind(
+                getPartyAverageRadiation: () =>
+                {
+                    if (Survivors == null || Survivors.Count == 0) return 0f;
+                    float sum = 0f; int n = 0;
+                    for (int i = 0; i < Survivors.Count; i++)
+                    {
+                        if (Survivors[i] != null && Survivors[i].IsAlive)
+                        { sum += Survivors[i].LifetimeRadiationExposure; n++; }
+                    }
+                    return n > 0 ? sum / n : 0f;
+                },
+                inflictAffliction: (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
 
             // Wire medical treatment pathway into addiction tracking
             if (MedicalSystem != null)
@@ -628,6 +713,61 @@ namespace AtomicWar._Game.Core
                 if (SaveSystem != null)
                     SaveSystem.SetWorldFlag(ChildDependentSystem.ChildDiedFlag, true);
             };
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #49 — Structural Integrity & Cave-ins
+            // ───────────────────────────────────────────────────────────
+            StructuralIntegrity = new StructuralIntegritySystem(
+                new System.Random(_worldSeed + 49));
+            StructuralIntegrity.Bind(
+                () => Shelter,
+                () => Survivors,
+                (sv, traumaId) =>
+                {
+                    if (sv != null && !sv.HasTrauma(traumaId))
+                        sv.Traumas.Add(traumaId);
+                });
+
+            // Prompt #50 — Waste Management & Hygiene
+            // ───────────────────────────────────────────────────────────
+            WasteSystem = new WasteSystem(new System.Random(_worldSeed + 50));
+            WasteSystem.Bind(() => Shelter, () => Survivors);
+
+            // Prompt #51 — Vermin Infestations
+            // ───────────────────────────────────────────────────────────
+            VerminSystem = new VerminSystem(new System.Random(_worldSeed + 51));
+            VerminSystem.Bind(
+                () => Shelter,
+                () => null, // PetSystem wired after construction
+                () => WasteSystem != null ? WasteSystem.Hygiene : 100f);
+
+            // Prompt #52 — Module Jury-Rigging
+            // ───────────────────────────────────────────────────────────
+            JuryRigSystem = new JuryRigSystem(new System.Random(_worldSeed + 52));
+            JuryRigSystem.Bind(() => Shelter);
+            JuryRigSystem.StartFireInRoom = (roomId, intensity) =>
+            {
+                if (AtmosphereSystem != null && Shelter != null)
+                {
+                    var room = AtmosphereSystem.GetRoom(roomId);
+                    if (room == null)
+                    {
+                        room = new ShelterRoom(roomId, null);
+                        AtmosphereSystem.RegisterRoom(room);
+                    }
+                    if (!room.IsOnFire)
+                        AtmosphereSystem.StartFire(room, intensity);
+                }
+            };
+
+            // Prompt #53 — Freezing Pipes & Water Loss
+            // ───────────────────────────────────────────────────────────
+            FreezePipeSystem = new FreezePipeSystem();
+            FreezePipeSystem.Bind(
+                () => TemperatureSystem != null && Shelter != null
+                    ? TemperatureSystem.GetIndoorTemperature(Shelter)
+                    : 20f,
+                () => WaterStorage);
 
             // ───────────────────────────────────────────────────────────
             // Prompt #5 — Diary Fragment Catalog (Previous Tenants)
@@ -797,6 +937,10 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetGeneratedMap(GeneratedMap);
             SaveSystem.SetInventory(Inventory);
             SaveSystem.SetMedicalSystem(MedicalSystem);
+            SaveSystem.SetBloodTransfusionSystem(BloodTransfusion);
+            SaveSystem.SetAmputationSystem(AmputationSystem);
+            SaveSystem.SetScurvySystem(ScurvySystem);
+            SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);
             SaveSystem.SetPowerNetwork(PowerNetwork);
@@ -888,6 +1032,11 @@ namespace AtomicWar._Game.Core
             };
             SaveSystem.SetHatchEntrapment(HatchEntrapmentSystem);
             SaveSystem.SetChildDependentSystem(ChildSystem);
+            SaveSystem.SetStructuralIntegritySystem(StructuralIntegrity);
+            SaveSystem.SetWasteSystem(WasteSystem);
+            SaveSystem.SetVerminSystem(VerminSystem);
+            SaveSystem.SetJuryRigSystem(JuryRigSystem);
+            SaveSystem.SetFreezePipeSystem(FreezePipeSystem);
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -2060,6 +2209,8 @@ namespace AtomicWar._Game.Core
             if (gameHours <= 0f) return;
             if (_mentalBreakRng == null) WarmDayTickCaches();
 
+            int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+
             // Environment
             WeatherSystem.Tick(gameHours);
             TemperatureSystem.Tick(gameHours);
@@ -2068,7 +2219,7 @@ namespace AtomicWar._Game.Core
             // Prompt #48 — continuous extreme weather seals the hatch.
             if (HatchEntrapmentSystem != null && WeatherSystem != null)
             {
-                int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                int day = currentDay;
                 HatchEntrapmentSystem.Tick(
                     gameHours,
                     WeatherSystem.Current,
@@ -2100,11 +2251,82 @@ namespace AtomicWar._Game.Core
             CorpseSystem?.Tick(gameHours, Survivors);
             PantrySystem?.Tick(gameHours, _storesRoom);
 
+            // Prompt #49 — structural integrity dust leaks + cave-in checks.
+            // Apply damage from severe weather: FalloutStorms (post-Day30) and
+            // Blizzards (pre-Day30 mortar strikes are weather-driven too).
+            if (StructuralIntegrity != null && WeatherSystem != null)
+            {
+                var weather = WeatherSystem.Current;
+                if (weather == WeatherKind.FalloutStorm)
+                {
+                    StructuralIntegrity.ApplyDamage(
+                        StructuralIntegritySystem.FalloutStormDamagePerHour * gameHours,
+                        "fallout_storm");
+                }
+                else if (weather == WeatherKind.Blizzard && WorldPhaseSystem != null
+                    && WorldPhaseSystem.CurrentPhase == AtomicWar._Game.Survivors.WorldPhase.CivilWar)
+                {
+                    // Pre-Day30: blizzards include mortar shelling that shakes the ceiling.
+                    StructuralIntegrity.ApplyDamage(
+                        StructuralIntegritySystem.MortarStrikeDamage * 0.3f * gameHours,
+                        "mortar_strike");
+                }
+                StructuralIntegrity.Tick(gameHours, Shelter);
+            }
+
+            // Prompt #50 — waste generation + hygiene decay
+            WasteSystem?.Tick(gameHours, currentDay);
+
+            // Prompt #51 — vermin growth + food theft + contamination
+            VerminSystem?.Tick(gameHours, Inventory);
+
+            // Prompt #52 — jury-rig catastrophic failure rolls
+            JuryRigSystem?.Tick(gameHours, currentDay);
+
+            // Prompt #53 — freeze pipe checks
+            FreezePipeSystem?.Tick(gameHours);
+
             // Needs
             NeedsSystem.Tick(gameHours);
 
             // Medical triage — Health pressure from active afflictions
             MedicalSystem?.Tick(Survivors, gameHours);
+
+            // Prompt #55 — blood typing (no per-tick work; transfusion is event-driven).
+            // Prompt #56 — phantom pain daily roll.
+            if (AmputationSystem != null && TimeSystem != null)
+            {
+                // Roll once per day for phantom pain.
+                int day = TimeSystem.CurrentDay;
+                if (_lastPhantomPainDay != day)
+                {
+                    _lastPhantomPainDay = day;
+                    AmputationSystem.TickDaily(Survivors);
+                }
+            }
+
+            // Prompt #57 — scurvy daily advance.
+            if (ScurvySystem != null && TimeSystem != null)
+            {
+                int day = TimeSystem.CurrentDay;
+                if (_lastScurvyDay != day)
+                {
+                    _lastScurvyDay = day;
+                    ScurvySystem.TickDaily(Survivors);
+                }
+            }
+
+            // Prompt #60 — mutagenesis evaluate + tick.
+            if (Mutagenesis != null && TimeSystem != null)
+            {
+                int day = TimeSystem.CurrentDay;
+                if (_lastMutagenesisDay != day)
+                {
+                    _lastMutagenesisDay = day;
+                    Mutagenesis.Evaluate(Survivors);
+                }
+                Mutagenesis.Tick(gameHours, Survivors);
+            }
 
             // Mental breaks: low-morale tracking, break rolls, BingeEater
             // consumption, ViolentParanoia sabotage, passive morale drain
@@ -2120,8 +2342,16 @@ namespace AtomicWar._Game.Core
             // Prompt #8 — Empath coupling: Empath's morale tracks bunker average.
             EmpathSystem?.Tick(gameHours, Survivors);
 
+            // Prompt #61 — Survivor Diaries & Privacy Violations.
+            SurvivorDiaries?.Tick(gameHours, Survivors, currentDay, _mentalBreakRng);
+
+            // Prompt #63 — Spatial Psychology Traits (Claustrophobia / Agoraphobia).
+            SpatialPsychology?.Tick(gameHours, Survivors);
+
+            // Prompt #65 — UI Hallucinations & Phantom Utility Actions.
+            HallucinationSystem?.Tick(gameHours, Survivors, _mentalBreakRng);
+
             // Prompt #7 — Addiction & Withdrawal: dose counting, withdrawal drains, panic destruction.
-            int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
             Addiction?.Tick(gameHours, Survivors, currentDay);
 
             // Prompt #6 — Phantom Intruders: fake hatch breach when Anxiety+Fatigue max out.
@@ -2236,6 +2466,10 @@ namespace AtomicWar._Game.Core
                 context.NeedsElectronicScrapForCriticalRepair = needsScrap;
                 context.JunkScavengeUrgency = junkUrgency;
                 context.RadiationSystem = RadiationSystem;
+                context.VerminSystem = VerminSystem;
+                context.WasteSystem = WasteSystem;
+                context.JuryRigSystem = JuryRigSystem;
+                context.StructuralIntegrity = StructuralIntegrity;
                 context.GetSurvivors = _getSurvivorsCached;
 
                 for (int si = 0; si < Survivors.Count; si++)
