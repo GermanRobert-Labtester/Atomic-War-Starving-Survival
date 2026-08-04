@@ -190,6 +190,7 @@ namespace AtomicWar._Game.Survivors
                 case NeedKind.Warmth: return needs.Warmth;
                 case NeedKind.Morale: return needs.Morale;
                 case NeedKind.Health: return needs.Health;
+                case NeedKind.Hygiene: return needs.Hygiene;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
@@ -205,6 +206,7 @@ namespace AtomicWar._Game.Survivors
                 case NeedKind.Warmth: needs.Warmth = value; break;
                 case NeedKind.Morale: needs.Morale = value; break;
                 case NeedKind.Health: needs.Health = value; break;
+                case NeedKind.Hygiene: needs.Hygiene = value; break;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
             OnNeedChanged?.Invoke(survivor, kind, value);

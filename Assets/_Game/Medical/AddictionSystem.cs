@@ -68,6 +68,15 @@ namespace AtomicWar._Game.Medical
         /// <summary>Chance per withdrawal tick that the survivor destroys items.</summary>
         public const float PanicDestroyChancePerHour = 0.25f;
 
+        /// <summary>Prompt #59 — hours of continuous withdrawal required to break addiction.</summary>
+        public const float RecoveryHours = 336f; // 14 days
+
+        /// <summary>Fired when a survivor breaks their addiction after surviving full withdrawal.</summary>
+        public event Action<Survivors.Survivor> OnAddictionBroken;
+
+        /// <summary>Per-survivor hours spent in continuous withdrawal (toward recovery).</summary>
+        private readonly Dictionary<string, float> _recoveryHours = new Dictionary<string, float>();
+
         public AddictionSystem(System.Random rng = null)
         {
             _rng = rng ?? new System.Random();
@@ -113,11 +122,12 @@ namespace AtomicWar._Game.Medical
             // Prune old records outside the rolling window
             PruneHistory(sv, currentDay);
 
-            // Reset withdrawal state on dose
+            // Reset withdrawal state on dose — also resets recovery progress.
             if (sv.IsInWithdrawal)
             {
                 sv.IsInWithdrawal = false;
                 sv.HoursSinceLastDose = 0f;
+                _recoveryHours.Remove(sv.Id);
                 OnWithdrawalEnded?.Invoke(sv);
             }
             else
@@ -185,11 +195,34 @@ namespace AtomicWar._Game.Medical
                         sv.Needs.Fatigue + WithdrawalFatigueDrainPerHour * gameHours, 0f, 100f);
                 }
 
+                // Accumulate recovery hours toward breaking the addiction.
+                float prevRecovery = _recoveryHours.TryGetValue(sv.Id, out float rh) ? rh : 0f;
+                float newRecovery = prevRecovery + gameHours;
+                _recoveryHours[sv.Id] = newRecovery;
+
+                // After 14 days (336h) of continuous withdrawal, addiction breaks.
+                if (prevRecovery < RecoveryHours && newRecovery >= RecoveryHours)
+                {
+                    sv.Traits.Remove(AddictedTraitId);
+                    sv.IsInWithdrawal = false;
+                    sv.HoursSinceLastDose = 0f;
+                    _recoveryHours.Remove(sv.Id);
+                    if (!sv.HasTrauma(WithdrawalTraumaId))
+                        sv.Traumas.Add(WithdrawalTraumaId);
+                    OnAddictionBroken?.Invoke(sv);
+                    OnWithdrawalEnded?.Invoke(sv);
+                }
+
                 // Panic item destruction
                 if (PanicDestroyHandler != null && _rng.NextDouble() < PanicDestroyChancePerHour * gameHours)
                 {
                     PanicDestroyHandler(sv, _rng);
                 }
+            }
+            else
+            {
+                // Not in withdrawal: decay recovery hours.
+                _recoveryHours.Remove(sv.Id);
             }
         }
 

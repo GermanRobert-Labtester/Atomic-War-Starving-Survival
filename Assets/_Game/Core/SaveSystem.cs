@@ -49,6 +49,10 @@ namespace AtomicWar._Game.Core
         private Inventory.Inventory _inventory;
         private ExpeditionSystem _expeditionSystem;
         private MedicalSystem _medicalSystem;
+        private BloodTransfusionSystem _bloodTransfusion;
+        private AmputationSystem _amputationSystem;
+        private ScurvySystem _scurvySystem;
+        private RadiationMutagenesisSystem _mutagenesisSystem;
         private DynamicEconomySystem _economySystem;
         private WorldPhaseSystem _worldPhaseSystem;
         private PowerNetwork _powerNetwork;
@@ -72,6 +76,22 @@ namespace AtomicWar._Game.Core
         private DebtCollectorSystem _debtCollector;
         private GhostStationSystem _ghostStations;
         private ChildDependentSystem _childSystem;
+        private StructuralIntegritySystem _structuralIntegrity;
+        private WasteSystem _wasteSystem;
+        private VerminSystem _verminSystem;
+        private JuryRigSystem _juryRigSystem;
+        private FreezePipeSystem _freezePipeSystem;
+        private CartographySystem _cartographySystem;
+        private BicycleSystem _bicycleSystem;
+        private TrackerSystem _trackerSystem;
+        private DeadDropSystem _deadDropSystem;
+        private HostageSystem _hostageSystem;
+        private PropagandaSystem _propagandaSystem;
+        private DeserterSystem _deserterSystem;
+        private WeatherScapegoatSystem _scapegoatSystem;
+        private LaborCampSystem _laborCampSystem;
+        private CultMoralDisgustSystem _cultMoralSystem;
+        private MutatedEcosystemSystem _ecosystemSystem;
         private LifeboatTransmissionSystem _lifeboat;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
@@ -139,6 +159,30 @@ namespace AtomicWar._Game.Core
         public void SetMedicalSystem(MedicalSystem medicalSystem)
         {
             _medicalSystem = medicalSystem;
+        }
+
+        /// <summary>Inject Prompt #55 blood transfusion for save/load.</summary>
+        public void SetBloodTransfusionSystem(BloodTransfusionSystem sys)
+        {
+            _bloodTransfusion = sys;
+        }
+
+        /// <summary>Inject Prompt #56 amputation for save/load.</summary>
+        public void SetAmputationSystem(AmputationSystem sys)
+        {
+            _amputationSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #57 scurvy for save/load.</summary>
+        public void SetScurvySystem(ScurvySystem sys)
+        {
+            _scurvySystem = sys;
+        }
+
+        /// <summary>Inject Prompt #60 mutagenesis for save/load.</summary>
+        public void SetMutagenesisSystem(RadiationMutagenesisSystem sys)
+        {
+            _mutagenesisSystem = sys;
         }
 
         /// <summary>Inject world phase system so CurrentPhase/HasTriggeredExchange persist across save/load.</summary>
@@ -258,6 +302,69 @@ namespace AtomicWar._Game.Core
         {
             _childSystem = childSystem;
         }
+
+        /// <summary>Inject Prompt #49 structural integrity for save/load.</summary>
+        public void SetStructuralIntegritySystem(StructuralIntegritySystem sys)
+        {
+            _structuralIntegrity = sys;
+        }
+
+        /// <summary>Inject Prompt #50 waste/hygiene for save/load.</summary>
+        public void SetWasteSystem(WasteSystem sys)
+        {
+            _wasteSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #51 vermin for save/load.</summary>
+        public void SetVerminSystem(VerminSystem sys)
+        {
+            _verminSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #52 jury-rig for save/load.</summary>
+        public void SetJuryRigSystem(JuryRigSystem sys)
+        {
+            _juryRigSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #53 freeze-pipe for save/load.</summary>
+        public void SetFreezePipeSystem(FreezePipeSystem sys)
+        {
+            _freezePipeSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #67 cartography for save/load.</summary>
+        public void SetCartographySystem(CartographySystem sys)
+        {
+            _cartographySystem = sys;
+        }
+
+        /// <summary>Inject Prompt #71 tracker for save/load.</summary>
+        public void SetTrackerSystem(TrackerSystem sys)
+        {
+            _trackerSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #72 dead-drop for save/load.</summary>
+        public void SetDeadDropSystem(DeadDropSystem sys)
+        {
+            _deadDropSystem = sys;
+        }
+
+        /// <summary>Inject Prompt #73 hostage for save/load.</summary>
+        public void SetHostageSystem(HostageSystem sys) { _hostageSystem = sys; }
+        /// <summary>Inject Prompt #74 propaganda for save/load.</summary>
+        public void SetPropagandaSystem(PropagandaSystem sys) { _propagandaSystem = sys; }
+        /// <summary>Inject Prompt #75 deserter for save/load.</summary>
+        public void SetDeserterSystem(DeserterSystem sys) { _deserterSystem = sys; }
+        /// <summary>Inject Prompt #76 scapegoat for save/load.</summary>
+        public void SetScapegoatSystem(WeatherScapegoatSystem sys) { _scapegoatSystem = sys; }
+        /// <summary>Inject Prompt #77 labor camp for save/load.</summary>
+        public void SetLaborCampSystem(LaborCampSystem sys) { _laborCampSystem = sys; }
+        /// <summary>Inject Prompt #78 cult moral for save/load.</summary>
+        public void SetCultMoralSystem(CultMoralDisgustSystem sys) { _cultMoralSystem = sys; }
+        /// <summary>Inject Prompt #79 mutated ecosystem for save/load.</summary>
+        public void SetEcosystemSystem(MutatedEcosystemSystem sys) { _ecosystemSystem = sys; }
 
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
@@ -530,6 +637,18 @@ namespace AtomicWar._Game.Core
             if (_medicalSystem != null)
                 data.Medical = _medicalSystem.CaptureState();
 
+            if (_bloodTransfusion != null)
+                data.BloodTransfusion = _bloodTransfusion.CaptureState();
+
+            if (_amputationSystem != null)
+                data.Amputation = _amputationSystem.CaptureState();
+
+            if (_scurvySystem != null)
+                data.Scurvy = _scurvySystem.CaptureState();
+
+            if (_mutagenesisSystem != null)
+                data.Mutagenesis = _mutagenesisSystem.CaptureState();
+
             if (_worldPhaseSystem != null)
                 data.WorldPhase = _worldPhaseSystem.CaptureState();
 
@@ -590,6 +709,44 @@ namespace AtomicWar._Game.Core
             if (_childSystem != null)
                 data.ChildDependent = _childSystem.CaptureState();
 
+            if (_structuralIntegrity != null)
+                data.StructuralIntegrity = _structuralIntegrity.CaptureState();
+
+            if (_wasteSystem != null)
+                data.Waste = _wasteSystem.CaptureState();
+
+            if (_verminSystem != null)
+                data.Vermin = _verminSystem.CaptureState();
+
+            if (_juryRigSystem != null)
+                data.JuryRig = _juryRigSystem.CaptureState();
+
+            if (_freezePipeSystem != null)
+                data.FreezePipe = _freezePipeSystem.CaptureState();
+
+            if (_cartographySystem != null)
+                data.Cartography = _cartographySystem.CaptureState();
+
+            if (_trackerSystem != null)
+                data.Tracker = _trackerSystem.CaptureState();
+
+            if (_deadDropSystem != null)
+                data.DeadDrops = _deadDropSystem.CaptureState();
+            if (_hostageSystem != null)
+                data.Hostages = _hostageSystem.CaptureState();
+            if (_propagandaSystem != null)
+                data.Propaganda = _propagandaSystem.CaptureState();
+            if (_deserterSystem != null)
+                data.Deserters = _deserterSystem.CaptureState();
+            if (_scapegoatSystem != null)
+                data.Scapegoat = _scapegoatSystem.CaptureState();
+            if (_laborCampSystem != null)
+                data.LaborCamps = _laborCampSystem.CaptureState();
+            if (_cultMoralSystem != null)
+                data.CultMoral = _cultMoralSystem.CaptureState();
+            if (_ecosystemSystem != null)
+                data.Ecosystem = _ecosystemSystem.CaptureState();
+
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
 
@@ -635,7 +792,13 @@ namespace AtomicWar._Game.Core
                         IsPushingLuck = exp.IsPushingLuck,
                         IsRetreating = exp.IsRetreating,
                         LocationEncounterFired = exp.LocationEncounterFired,
-                        UxoDetonated = exp.UxoDetonated
+                        UxoDetonated = exp.UxoDetonated,
+                        HasBicycle = exp.HasBicycle,
+                        BicycleDurability = exp.BicycleDurability,
+                        IsWading = exp.IsWading,
+                        IsNightScavenge = exp.IsNightScavenge,
+                        HasFlashlight = exp.HasFlashlight,
+                        FlashlightBattery = exp.FlashlightBattery
                     };
                     if (exp.CollectedLootItemIds != null)
                     {
@@ -853,6 +1016,18 @@ namespace AtomicWar._Game.Core
                 _medicalSystem.RestoreState(data.Medical);
             }
 
+            if (_bloodTransfusion != null)
+                _bloodTransfusion.RestoreState(data.BloodTransfusion);
+
+            if (_amputationSystem != null)
+                _amputationSystem.RestoreState(data.Amputation);
+
+            if (_scurvySystem != null)
+                _scurvySystem.RestoreState(data.Scurvy);
+
+            if (_mutagenesisSystem != null)
+                _mutagenesisSystem.RestoreState(data.Mutagenesis);
+
             if (_worldPhaseSystem != null && data.WorldPhase != null)
             {
                 _worldPhaseSystem.RestoreState(data.WorldPhase);
@@ -956,6 +1131,44 @@ namespace AtomicWar._Game.Core
                 var survivors = _getSurvivors?.Invoke();
                 _childSystem.RestoreState(data.ChildDependent, survivors);
             }
+
+            if (_structuralIntegrity != null)
+                _structuralIntegrity.RestoreState(data.StructuralIntegrity);
+
+            if (_wasteSystem != null)
+                _wasteSystem.RestoreState(data.Waste);
+
+            if (_verminSystem != null)
+                _verminSystem.RestoreState(data.Vermin);
+
+            if (_juryRigSystem != null)
+                _juryRigSystem.RestoreState(data.JuryRig);
+
+            if (_freezePipeSystem != null)
+                _freezePipeSystem.RestoreState(data.FreezePipe);
+
+            if (_cartographySystem != null)
+                _cartographySystem.RestoreState(data.Cartography);
+
+            if (_trackerSystem != null)
+                _trackerSystem.RestoreState(data.Tracker);
+
+            if (_deadDropSystem != null)
+                _deadDropSystem.RestoreState(data.DeadDrops);
+            if (_hostageSystem != null)
+                _hostageSystem.RestoreState(data.Hostages);
+            if (_propagandaSystem != null)
+                _propagandaSystem.RestoreState(data.Propaganda);
+            if (_deserterSystem != null)
+                _deserterSystem.RestoreState(data.Deserters);
+            if (_scapegoatSystem != null)
+                _scapegoatSystem.RestoreState(data.Scapegoat);
+            if (_laborCampSystem != null)
+                _laborCampSystem.RestoreState(data.LaborCamps);
+            if (_cultMoralSystem != null)
+                _cultMoralSystem.RestoreState(data.CultMoral);
+            if (_ecosystemSystem != null)
+                _ecosystemSystem.RestoreState(data.Ecosystem);
 
             if (_waterStorage != null && data.Water != null)
             {
@@ -1209,6 +1422,12 @@ namespace AtomicWar._Game.Core
                 state.returnSpeedDivisor = saveExp.ReturnSpeedDivisor;
                 state.LocationEncounterFired = saveExp.LocationEncounterFired;
                 state.UxoDetonated = saveExp.UxoDetonated;
+                state.HasBicycle = saveExp.HasBicycle;
+                state.BicycleDurability = saveExp.BicycleDurability;
+                state.IsWading = saveExp.IsWading;
+                state.IsNightScavenge = saveExp.IsNightScavenge;
+                state.HasFlashlight = saveExp.HasFlashlight;
+                state.FlashlightBattery = saveExp.FlashlightBattery;
                 state.Survivor = survivor;
 
                 state.CollectedLootItemIds.Clear();
@@ -1306,6 +1525,46 @@ namespace AtomicWar._Game.Core
         public LifeboatTransmissionSave Lifeboat;
         /// <summary>Child Dependent system state (Prompt #9).</summary>
         public ChildDependentSystem.SaveState ChildDependent;
+        /// <summary>Prompt #49 — structural integrity + cave-in state.</summary>
+        public StructuralIntegritySave StructuralIntegrity;
+        /// <summary>Prompt #50 — waste accumulation + hygiene.</summary>
+        public WasteSystemSave Waste;
+        /// <summary>Prompt #51 — vermin pest level.</summary>
+        public VerminSave Vermin;
+        /// <summary>Prompt #52 — jury-rigged modules.</summary>
+        public JuryRigSave JuryRig;
+        /// <summary>Prompt #53 — frozen pipes + burst state.</summary>
+        public FreezePipeSave FreezePipe;
+        /// <summary>Prompt #55 — blood types + transfusion state.</summary>
+        public BloodTransfusionSave BloodTransfusion;
+        /// <summary>Prompt #56 — amputee tracking.</summary>
+        public AmputationSave Amputation;
+        /// <summary>Prompt #57 — scurvy deficiency + toothache.</summary>
+        public ScurvySave Scurvy;
+        /// <summary>Prompt #60 — radiation mutagenesis stages.</summary>
+        public MutagenesisSave Mutagenesis;
+        /// <summary>Prompt #67 — cartography charted nodes + supplies.</summary>
+        public CartographySave Cartography;
+        /// <summary>Prompt #69 — flooded map nodes.</summary>
+        public FloodedNodeSave FloodedNodes;
+        /// <summary>Prompt #71 — faction tracker entries.</summary>
+        public TrackerSave Tracker;
+        /// <summary>Prompt #72 — dead drop entries.</summary>
+        public DeadDropSave DeadDrops;
+        /// <summary>Prompt #73 — hostage situations.</summary>
+        public HostageSave Hostages;
+        /// <summary>Prompt #74 — propaganda broadcasts.</summary>
+        public PropagandaSave Propaganda;
+        /// <summary>Prompt #75 — deserter/spy entries.</summary>
+        public DeserterSave Deserters;
+        /// <summary>Prompt #76 — weather scapegoat state.</summary>
+        public ScapegoatSave Scapegoat;
+        /// <summary>Prompt #77 — labor camp slave tracking.</summary>
+        public LaborCampSave LaborCamps;
+        /// <summary>Prompt #78 — cult moral disgust.</summary>
+        public CultMoralSave CultMoral;
+        /// <summary>Prompt #79 — mutated ecosystem radiation days.</summary>
+        public EcosystemSave Ecosystem;
         public WaterStorageSave Water;
         /// <summary>Accumulated bunker ambient contamination (rads/hr) from hatch dilemmas.</summary>
         public float BunkerContamination;
@@ -1357,6 +1616,18 @@ namespace AtomicWar._Game.Core
         public bool LocationEncounterFired;
         /// <summary>Prevents double-trigger of UXO landmine across save/load.</summary>
         public bool UxoDetonated;
+
+        // Prompt #68 — bicycle logistics
+        public bool HasBicycle;
+        public float BicycleDurability;
+
+        // Prompt #69 — flooded node wading
+        public bool IsWading;
+
+        // Prompt #70 — night scavenging
+        public bool IsNightScavenge;
+        public bool HasFlashlight;
+        public float FlashlightBattery;
 
         public List<string> CollectedLootItemIds = new List<string>();
     }

@@ -166,6 +166,30 @@ namespace AtomicWar._Game.Core
         public ScurvySystem ScurvySystem { get; private set; }
         // Prompt #60 — radiation mutagenesis stages.
         public RadiationMutagenesisSystem Mutagenesis { get; private set; }
+        // Prompt #67 — cartography table.
+        public CartographySystem CartographySystem { get; private set; }
+        // Prompt #68 — bicycle logistics.
+        public BicycleSystem BicycleSystem { get; private set; }
+        // Prompt #69 — flooded ruins.
+        public FloodedNodeSystem FloodedNodeSystem { get; private set; }
+        // Prompt #71 — tracker (footprints in ash).
+        public TrackerSystem TrackerSystem { get; private set; }
+        // Prompt #72 — dead drops.
+        public DeadDropSystem DeadDropSystem { get; private set; }
+        // Prompt #73 — hostage situations.
+        public HostageSystem HostageSystem { get; private set; }
+        // Prompt #74 — propaganda broadcasting.
+        public PropagandaSystem PropagandaSystem { get; private set; }
+        // Prompt #75 — deserter/spy mechanic.
+        public DeserterSystem DeserterSystem { get; private set; }
+        // Prompt #76 — weather scapegoating.
+        public WeatherScapegoatSystem ScapegoatSystem { get; private set; }
+        // Prompt #77 — slave labor camps.
+        public LaborCampSystem LaborCampSystem { get; private set; }
+        // Prompt #78 — cult moral disgust.
+        public CultMoralDisgustSystem CultMoralSystem { get; private set; }
+        // Prompt #79 — mutated ecosystem (flora/fauna).
+        public MutatedEcosystemSystem EcosystemSystem { get; private set; }
 
         // Prompt #6 — Phantom Intruders (fake hatch breach alerts).
         public PhantomIntruderSystem PhantomIntruders { get; private set; }
@@ -207,6 +231,10 @@ namespace AtomicWar._Game.Core
         private int _lastScurvyDay;
         /// <summary>Last day mutagenesis was evaluated (Prompt #60).</summary>
         private int _lastMutagenesisDay;
+        /// <summary>Last day deserter spy check was run (Prompt #75).</summary>
+        private int _lastDeserterDay;
+        /// <summary>Last day ecosystem mutation was advanced (Prompt #79).</summary>
+        private int _lastEcosystemDay;
 
         // ── Day-tick GC caches (no per-hour new Random / context / lambda) ──
         private System.Random _mentalBreakRng;
@@ -448,7 +476,8 @@ namespace AtomicWar._Game.Core
                 CreateAction<SearchForChemsActionSO>(),
                 CreateAction<ClearRubbleActionSO>(),
                 CreateAction<HuntRatsActionSO>(),
-                CreateAction<MercyKillActionSO>()
+                CreateAction<MercyKillActionSO>(),
+                CreateAction<ChartMapActionSO>()
             };
 
             // Medical triage (afflictions drain health; treatments halt/cure)
@@ -656,6 +685,93 @@ namespace AtomicWar._Game.Core
                     Addiction?.OnItemConsumed(sv, itemId, day);
                 };
             }
+
+            // Prompt #67 — Cartography Table
+            // ───────────────────────────────────────────────────────────
+            CartographySystem = new CartographySystem();
+            CartographySystem.Bind(
+                () => Shelter,
+                itemId => Inventory?.CountById(itemId) ?? 0,
+                (itemId, amount) => { if (Inventory != null) Inventory.RemoveByType(AtomicWar._Game.Inventory.ItemType.Material, amount); });
+
+            // Prompt #68 — Bicycle Logistics
+            // ───────────────────────────────────────────────────────────
+            BicycleSystem = new BicycleSystem();
+
+            // Prompt #69 — Flooded Ruins
+            // ───────────────────────────────────────────────────────────
+            FloodedNodeSystem = new FloodedNodeSystem();
+            // Mark some nodes as flooded from proc-gen seed.
+            if (GeneratedMap != null)
+            {
+                var rng = new System.Random(_worldSeed + 69);
+                for (int i = 0; i < GeneratedMap.Nodes.Count; i++)
+                {
+                    var node = GeneratedMap.Nodes[i];
+                    if (node == null || node.IsShelter) continue;
+                    if (rng.NextDouble() < 0.2f) // 20% of nodes flooded
+                        FloodedNodeSystem.SetFlooded(node.NodeId, true);
+                }
+            }
+
+            // Prompt #71 — Tracker System
+            // ───────────────────────────────────────────────────────────
+            TrackerSystem = new TrackerSystem(new System.Random(_worldSeed + 71));
+
+            // Prompt #72 — Dead Drops
+            // ───────────────────────────────────────────────────────────
+            DeadDropSystem = new DeadDropSystem(new System.Random(_worldSeed + 72));
+            // Mark some nodes as dead-drop sites.
+            if (GeneratedMap != null)
+            {
+                var rng = new System.Random(_worldSeed + 72);
+                for (int i = 0; i < GeneratedMap.Nodes.Count; i++)
+                {
+                    var node = GeneratedMap.Nodes[i];
+                    if (node == null || node.IsShelter) continue;
+                    if (rng.NextDouble() < 0.15f) // 15% of nodes are dead-drops
+                        DeadDropSystem.SetDeadDropNode(node.NodeId, true);
+                }
+            }
+
+            // Prompt #73 — Hostage Situations
+            // ───────────────────────────────────────────────────────────
+            HostageSystem = new HostageSystem();
+
+            // Prompt #74 — Propaganda Broadcasting
+            // ───────────────────────────────────────────────────────────
+            PropagandaSystem = new PropagandaSystem();
+
+            // Prompt #75 — Deserter/Spy System
+            // ───────────────────────────────────────────────────────────
+            DeserterSystem = new DeserterSystem(new System.Random(_worldSeed + 75));
+
+            // Prompt #76 — Weather Scapegoating
+            // ───────────────────────────────────────────────────────────
+            ScapegoatSystem = new WeatherScapegoatSystem(new System.Random(_worldSeed + 76));
+
+            // Prompt #77 — Slave Labor Camps
+            // ───────────────────────────────────────────────────────────
+            LaborCampSystem = new LaborCampSystem();
+            if (GeneratedMap != null)
+            {
+                var rng = new System.Random(_worldSeed + 77);
+                for (int i = 0; i < GeneratedMap.Nodes.Count; i++)
+                {
+                    var node = GeneratedMap.Nodes[i];
+                    if (node == null || node.IsShelter) continue;
+                    if (rng.NextDouble() < 0.1f) // 10% of nodes are labor camps
+                        LaborCampSystem.SetLaborCamp(node.NodeId, true);
+                }
+            }
+
+            // Prompt #78 — Cult Moral Disgust
+            // ───────────────────────────────────────────────────────────
+            CultMoralSystem = new CultMoralDisgustSystem();
+
+            // Prompt #79 — Mutated Ecosystem (Flora & Fauna)
+            // ───────────────────────────────────────────────────────────
+            EcosystemSystem = new MutatedEcosystemSystem(new System.Random(_worldSeed + 79));
 
             // ───────────────────────────────────────────────────────────
             // Prompt #6 — Phantom Intruders System
@@ -1037,6 +1153,16 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVerminSystem(VerminSystem);
             SaveSystem.SetJuryRigSystem(JuryRigSystem);
             SaveSystem.SetFreezePipeSystem(FreezePipeSystem);
+            SaveSystem.SetCartographySystem(CartographySystem);
+            SaveSystem.SetTrackerSystem(TrackerSystem);
+            SaveSystem.SetDeadDropSystem(DeadDropSystem);
+            SaveSystem.SetHostageSystem(HostageSystem);
+            SaveSystem.SetPropagandaSystem(PropagandaSystem);
+            SaveSystem.SetDeserterSystem(DeserterSystem);
+            SaveSystem.SetScapegoatSystem(ScapegoatSystem);
+            SaveSystem.SetLaborCampSystem(LaborCampSystem);
+            SaveSystem.SetCultMoralSystem(CultMoralSystem);
+            SaveSystem.SetEcosystemSystem(EcosystemSystem);
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -2285,6 +2411,65 @@ namespace AtomicWar._Game.Core
 
             // Prompt #53 — freeze pipe checks
             FreezePipeSystem?.Tick(gameHours);
+
+            // Prompt #71 — tracker: footprints in ash countdown.
+            TrackerSystem?.Tick(gameHours,
+                setFactionRaidChance: (factionId, chance) =>
+                {
+                    if (HatchDefenseSystem != null)
+                        HatchDefenseSystem.SetRaidChanceOverride(factionId, chance);
+                },
+                scheduleEvent: (eventId, fireDay, originFlag) =>
+                    EventRunner?.ScheduleEvent(eventId, fireDay, originFlag),
+                currentDay: TimeSystem != null ? TimeSystem.CurrentDay : 1);
+
+            // Prompt #72 — dead drops: resolve timers.
+            DeadDropSystem?.Tick(gameHours);
+
+            // Prompt #73 — hostage expiration countdown.
+            HostageSystem?.Tick(gameHours);
+
+            // Prompt #74 — propaganda effect fade.
+            PropagandaSystem?.Tick(gameHours,
+                modifyFactionTrust: (fid, delta) => EconomySystem?.ModifyTrust(fid, delta),
+                reduceRaidChance: (fid, reduction) =>
+                {
+                    if (HatchDefenseSystem != null)
+                        HatchDefenseSystem.AdjustRaidChance(fid, -reduction);
+                });
+
+            // Prompt #75 — spy sabotage countdown (daily).
+            if (DeserterSystem != null && TimeSystem != null)
+            {
+                int day = TimeSystem.CurrentDay;
+                if (_lastDeserterDay != day)
+                {
+                    _lastDeserterDay = day;
+                    DeserterSystem.TickDaily(Shelter,
+                        scheduleEvent: (eventId) =>
+                            EventRunner?.ScheduleEvent(eventId, day + 1, null));
+                }
+            }
+
+            // Prompt #76 — weather scapegoat tracking.
+            ScapegoatSystem?.Tick(gameHours, WeatherSystem.Current,
+                scheduleEvent: (eventId, fireDay, flag) =>
+                    EventRunner?.ScheduleEvent(eventId, fireDay, flag),
+                currentDay: TimeSystem != null ? TimeSystem.CurrentDay : 1);
+
+            // Prompt #79 — mutated ecosystem daily advance.
+            if (EcosystemSystem != null && TimeSystem != null)
+            {
+                int day = TimeSystem.CurrentDay;
+                if (_lastEcosystemDay != day)
+                {
+                    _lastEcosystemDay = day;
+                    float outdoorRad = RadiationSystem != null ? 15f : 0f;
+                    bool exchangeTriggered = WorldPhaseSystem != null
+                        && WorldPhaseSystem.HasTriggeredExchange;
+                    EcosystemSystem.TickDaily(outdoorRad, exchangeTriggered);
+                }
+            }
 
             // Needs
             NeedsSystem.Tick(gameHours);

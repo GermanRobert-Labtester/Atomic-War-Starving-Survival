@@ -79,6 +79,18 @@ namespace AtomicWar._Game.AI
         /// <summary>Bunker water cisterns (clean/dirty/irradiated), fed by the catchment + purifier.</summary>
         public WaterStorage WaterStorage;
 
+        /// <summary>Prompt #51 — vermin infestation (HuntRats action).</summary>
+        public VerminSystem VerminSystem;
+
+        /// <summary>Prompt #50 — waste/hygiene system (latrine, disposal).</summary>
+        public WasteSystem WasteSystem;
+
+        /// <summary>Prompt #52 — jury-rigged modules (repair decisions).</summary>
+        public JuryRigSystem JuryRigSystem;
+
+        /// <summary>Prompt #49 — structural integrity (shoring priority).</summary>
+        public StructuralIntegritySystem StructuralIntegrity;
+
         /// <summary>
         /// True when ElectronicScrap is short for a critical workbench repair
         /// (water purifier / hard-broken geiger). Scavenge actions prioritize junk.

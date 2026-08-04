@@ -12,7 +12,8 @@ namespace AtomicWar._Game.Survivors
         Fatigue,
         Warmth,
         Morale,
-        Health
+        Health,
+        Hygiene
     }
 
     /// <summary>
@@ -29,6 +30,7 @@ namespace AtomicWar._Game.Survivors
         public float Warmth = 100f;
         public float Morale = 75f;
         public float Health = 100f;
+        public float Hygiene = 100f;
 
         // Edge-detection for NeedsSystem.OnNeedCritical: lets the system fire the
         // event once on the transition into critical range instead of every tick.
@@ -45,6 +47,7 @@ namespace AtomicWar._Game.Survivors
             Warmth = Mathf.Clamp(Warmth, 0f, 100f);
             Morale = Mathf.Clamp(Morale, 0f, 100f);
             Health = Mathf.Clamp(Health, 0f, 100f);
+            Hygiene = Mathf.Clamp(Hygiene, 0f, 100f);
         }
     }
 }

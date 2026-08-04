@@ -91,6 +91,20 @@ namespace AtomicWar._Game.Medical
 
             /// <summary>Prompt #13 — sabotaged medical cache (rat poison in iodine foil).</summary>
             public const string PoisonIngestion = "poison_ingestion";
+
+            // Prompt #55 — incompatible blood transfusion.
+            public const string AnaphylacticShock = "anaphylactic_shock";
+
+            // Prompt #56 — surgical aftermath.
+            public const string PhantomPain = "phantom_pain";
+
+            // Prompt #57 — dietary deficiency.
+            public const string Toothache = "toothache";
+            public const string Scurvy = "scurvy";
+
+            // Prompt #60 — radiation mutagenesis stages.
+            public const string HairLoss = "hair_loss";
+            public const string CellularBreakdown = "cellular_breakdown";
         }
     }
 }

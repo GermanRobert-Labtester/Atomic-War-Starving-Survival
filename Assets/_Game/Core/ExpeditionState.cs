@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
         Looting,         // At target location node (Push-Your-Luck phase)
         Inbound,         // Returning to shelter
         AtHatchDilemma,  // At the hatch; the player must decide whether to let them in
+        Captured,        // Prompt #73 — taken hostage by a faction
         Completed,       // Returned safely with loot unloaded
         Failed           // Survivor died or collapsed
     }
@@ -81,6 +82,23 @@ namespace AtomicWar._Game.Core
         /// double-trigger and surfaces cold log text for UI.
         /// </summary>
         public bool UxoDetonated;
+
+        // Prompt #68 — Bicycle logistics
+        public bool HasBicycle;
+        public float BicycleDurability;
+
+        // Prompt #69 — Flooded node wading
+        public bool IsWading;
+
+        // Prompt #70 — Night scavenging
+        public bool IsNightScavenge;
+        public bool HasFlashlight;
+        public float FlashlightBattery;
+
+        // Prompt #73 — hostage capture
+        public string CaptorFactionId;
+        public float RansomCleanWater;
+        public float RansomAntiRad;
 
         // -----------------------------------------------------------------
         // Day-30 Flashpoint intercept state (Prompt #26)

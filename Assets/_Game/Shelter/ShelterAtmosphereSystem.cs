@@ -35,8 +35,20 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Burn health damage when fighting a fire (per attempt).</summary>
         public const float FightFireBurnDamage = 12f;
 
-        /// <summary>Fire intensity removed by one FightFire action.</summary>
+        /// <summary>Fire intensity removed by one FightFire action (bare hands).</summary>
         public const float FightFireIntensityReduction = 0.45f;
+
+        /// <summary>Fire intensity removed by one ExtinguishFire action (with water/sand).</summary>
+        public const float ExtinguishFireIntensityReduction = 0.7f;
+
+        /// <summary>Water units consumed per ExtinguishFire action.</summary>
+        public const float ExtinguishFireWaterCost = 2f;
+
+        /// <summary>Fire intensity above which spread to adjacent rooms is possible.</summary>
+        public const float FireSpreadIntensityThreshold = 0.5f;
+
+        /// <summary>Chance per hour that fire spreads to an adjacent room at max intensity.</summary>
+        public const float FireSpreadChancePerHour = 0.25f;
 
         /// <summary>Humidity rise per hour when mold is present.</summary>
         public const float HumidityFromMoldPerHour = 0.015f;
@@ -163,6 +175,9 @@ namespace AtomicWar._Game.Shelter
 
                 changed = true;
             }
+
+            // Fire spread: cellular automaton to adjacent rooms (Prompt #54).
+            changed |= SpreadFireToAdjacentRooms(gameHours, shelter);
 
             if (changed) OnAtmosphereChanged?.Invoke();
         }
@@ -294,6 +309,99 @@ namespace AtomicWar._Game.Shelter
             OnBulkheadSealed?.Invoke(room);
             OnAtmosphereChanged?.Invoke();
             return true;
+        }
+
+        /// <summary>
+        /// Extinguish fire with water or sand. More effective than bare-handed
+        /// fighting but consumes clean water. Returns true if fire is out.
+        /// </summary>
+        public bool ExtinguishFire(string roomId, Survivor fighter, NeedsSystem needs,
+            WaterStorage water = null)
+        {
+            var room = GetRoom(roomId);
+            if (room == null || !room.IsOnFire) return false;
+            if (fighter == null || !fighter.IsAlive) return false;
+
+            // Consume water if available; fall back to sand (less effective).
+            float reduction = ExtinguishFireIntensityReduction;
+            bool usedWater = false;
+            if (water != null && water.CleanWater >= ExtinguishFireWaterCost)
+            {
+                water.ConsumeClean(ExtinguishFireWaterCost);
+                usedWater = true;
+            }
+            else if (water != null && water.DirtyWater >= ExtinguishFireWaterCost)
+            {
+                water.ConsumeDirty(ExtinguishFireWaterCost);
+                usedWater = true;
+            }
+            else
+            {
+                // Sand / blanket: less effective, more fatigue.
+                reduction *= 0.6f;
+                if (needs != null)
+                    needs.Modify(fighter, NeedKind.Fatigue, 5f);
+            }
+
+            if (needs != null)
+                needs.Modify(fighter, NeedKind.Health, -FightFireBurnDamage * 0.5f);
+
+            room.FireIntensity = Mathf.Clamp01(room.FireIntensity - reduction);
+
+            if (room.FireIntensity <= 0.05f)
+            {
+                ClearFire(room, raiseEvent: true);
+                return true;
+            }
+
+            OnAtmosphereChanged?.Invoke();
+            return false;
+        }
+
+        /// <summary>
+        /// Fire spread: each room on fire may ignite adjacent rooms (Prompt #54).
+        /// Uses shelter room adjacency. Spread chance scales with fire intensity.
+        /// </summary>
+        private bool SpreadFireToAdjacentRooms(float gameHours, Shelter shelter)
+        {
+            if (shelter == null || gameHours <= 0f) return false;
+            bool spread = false;
+
+            // Snapshot burning rooms so spread doesn't cascade infinitely in one tick.
+            var burning = new List<ShelterRoom>();
+            for (int i = 0; i < _rooms.Count; i++)
+            {
+                if (_rooms[i] != null && _rooms[i].IsOnFire
+                    && _rooms[i].FireIntensity >= FireSpreadIntensityThreshold)
+                    burning.Add(_rooms[i]);
+            }
+
+            for (int i = 0; i < burning.Count; i++)
+            {
+                var fireRoom = burning[i];
+                float spreadChance = FireSpreadChancePerHour * fireRoom.FireIntensity * gameHours;
+                if (_rng.NextDouble() >= spreadChance) continue;
+
+                // Find adjacent rooms.
+                var allRooms = shelter.Rooms;
+                if (allRooms == null) continue;
+                var candidates = new List<ShelterRoom>();
+                for (int j = 0; j < allRooms.Count; j++)
+                {
+                    var other = allRooms[j];
+                    if (other == null || other == fireRoom) continue;
+                    if (other.IsOnFire) continue;
+                    if (shelter.AreRoomsAdjacent(fireRoom.RoomId, other.RoomId))
+                        candidates.Add(other);
+                }
+
+                if (candidates.Count == 0) continue;
+                var target = candidates[_rng.Next(candidates.Count)];
+                StartFire(target, intensity: 0.35f);
+                spread = true;
+            }
+
+            return spread;
         }
 
         public void ClearFire(ShelterRoom room, bool raiseEvent)

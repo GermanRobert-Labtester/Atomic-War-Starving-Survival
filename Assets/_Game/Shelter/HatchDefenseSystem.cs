@@ -378,6 +378,21 @@ namespace AtomicWar._Game.Shelter
         // Noise / day gates
         // -----------------------------------------------------------------
 
+        private readonly Dictionary<string, float> _raidChanceOverrides = new Dictionary<string, float>();
+
+        public void SetRaidChanceOverride(string factionId, float chance)
+        {
+            if (string.IsNullOrEmpty(factionId)) return;
+            _raidChanceOverrides[factionId] = Mathf.Clamp01(chance);
+        }
+
+        public void AdjustRaidChance(string factionId, float delta)
+        {
+            if (string.IsNullOrEmpty(factionId)) return;
+            float cur = _raidChanceOverrides.TryGetValue(factionId, out var val) ? val : 0.2f;
+            _raidChanceOverrides[factionId] = Mathf.Clamp01(cur + delta);
+        }
+
         public void SetExternalNoise(float noise01)
         {
             ExternalNoise = Mathf.Clamp01(noise01);
