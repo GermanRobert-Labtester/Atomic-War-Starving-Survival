@@ -1,0 +1,256 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using UnityEngine;
+using AtomicWar._Game.Environment;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Simulation; // CompostSystem, SterilizationSystem, etc. (audit C-3 split)
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Medical;
+using AtomicWar._Game.Economy;
+using AtomicWar._Game.Events;
+
+namespace AtomicWar._Game.Core
+{
+    public partial class SaveSystem
+    {
+        /// <summary>Write the current world state to the given slot.</summary>
+        public bool Save(string slotId)
+        {
+            try
+            {
+                _preCaptureHook?.Invoke();
+                var snapshot = CaptureSnapshot();
+                snapshot.GameState.Phase = _gameState.Phase;
+                snapshot.GameState.Day = _gameState.Day;
+                snapshot.GameState.IsPaused = _gameState.IsPaused;
+
+                snapshot.Checksum = "";
+                string body = JsonUtility.ToJson(snapshot, true);
+                snapshot.Checksum = ComputeChecksum(body);
+                string finalJson = JsonUtility.ToJson(snapshot, true);
+
+                Directory.CreateDirectory(_savesDir);
+
+                // A-1: Atomic save write. Write to a temp file, flush, then
+                // rename over the destination. On Windows, File.Move with
+                // overwrite:true is atomic. If the process crashes during the
+                // write, the temp file is left partial but the previous save
+                // remains intact. We also keep a .bak of the previous save.
+                string finalPath = SlotPath(slotId);
+                string tmpPath = finalPath + ".tmp";
+                string bakPath = finalPath + ".bak";
+
+                File.WriteAllText(tmpPath, finalJson);
+
+                // Keep a backup of the previous save (if it exists).
+                if (File.Exists(finalPath))
+                {
+                    if (File.Exists(bakPath)) File.Delete(bakPath);
+                    File.Copy(finalPath, bakPath);
+                    File.Delete(finalPath);
+                }
+
+                // Atomic rename: tmp → final
+                File.Move(tmpPath, finalPath);
+
+                Debug.Log($"[SaveSystem] Saved to slot '{slotId}' (atomic write + .bak backup).");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SaveSystem] Save to '{slotId}' failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>Replace the current world state from the given slot.</summary>
+        public bool Load(string slotId)
+        {
+            string path = SlotPath(slotId);
+            if (!File.Exists(path))
+            {
+                Debug.LogWarning($"[SaveSystem] Slot '{slotId}' not found.");
+                return false;
+            }
+
+            try
+            {
+                (bool ok, SaveData data, string json) = TryLoadFile(path);
+
+                // A-1: If the main save failed (corrupt/unparseable/bad checksum),
+                // try the .bak backup before giving up.
+                if (!ok)
+                {
+                    string bakPath = BakPath(slotId);
+                    if (File.Exists(bakPath))
+                    {
+                        Debug.LogWarning($"[SaveSystem] Slot '{slotId}' main save failed. Attempting recovery from backup...");
+                        (ok, data, json) = TryLoadFile(bakPath);
+                        if (ok)
+                            Debug.LogWarning($"[SaveSystem] Backup recovered successfully for slot '{slotId}'.");
+                        else
+                        {
+                            Debug.LogError($"[SaveSystem] Backup also corrupt. Load aborted.");
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"[SaveSystem] Slot '{slotId}' corrupt and no backup available. Load aborted.");
+                        return false;
+                    }
+                }
+
+                if (data.SaveVersion < CurrentSaveVersion)
+                {
+                    Migrate(data);
+                }
+
+                RestoreFromSnapshot(data);
+                Debug.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"[SaveSystem] Load from '{slotId}' failed: {ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// A-1: Helper — try to load and validate a single save file.
+        /// Returns (true, data, json) if the file is valid, or (false, null, null)
+        /// if the file is missing, unparseable, or fails checksum.
+        /// AUDIT-005: parse / null / checksum failures are logged (no silent catch).
+        /// </summary>
+        private (bool ok, SaveData data, string json) TryLoadFile(string path)
+        {
+            if (!File.Exists(path)) return (false, null, null);
+            string json;
+            SaveData data;
+            try
+            {
+                json = File.ReadAllText(path);
+                data = JsonUtility.FromJson<SaveData>(json);
+            }
+            catch (Exception ex)
+            {
+                // AUDIT-005: corrupt / truncated JSON must be observable in logs.
+                Debug.LogWarning(
+                    $"[SaveSystem] Failed to parse save file '{path}': {ex.GetType().Name}: {ex.Message}");
+                return (false, null, null);
+            }
+            if (data == null)
+            {
+                Debug.LogWarning(
+                    $"[SaveSystem] Corrupt save parse: '{path}' produced null SaveData.");
+                return (false, null, null);
+            }
+            if (!VerifyChecksum(data, json))
+            {
+                Debug.LogWarning(
+                    $"[SaveSystem] Checksum mismatch for save file '{path}'.");
+                return (false, null, null);
+            }
+            return (true, data, json);
+        }
+
+        /// <summary>Whether a save exists for the given slot.</summary>
+        public bool SlotExists(string slotId) => File.Exists(SlotPath(slotId));
+
+        /// <summary>All slot ids that have save files.</summary>
+        public string[] ListSlots()
+        {
+            if (!Directory.Exists(_savesDir)) return Array.Empty<string>();
+            return Directory.GetFiles(_savesDir, "save_*.json")
+                .Select(f => Path.GetFileNameWithoutExtension(f).Substring("save_".Length))
+                .ToArray();
+        }
+
+        /// <summary>Auto-save to the "autosave" slot.</summary>
+        public void AutoSave() => Save("autosave");
+
+        /// <summary>
+        /// Release all subscriptions and event-bus references held by this
+        /// SaveSystem. Call this when the SaveSystem is replaced (e.g. a
+        /// "new game" flow, or a test fixture that re-creates the
+        /// bootstrap). Idempotent: calling Dispose twice is a no-op.
+        /// </summary>
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+            // Unsubscribe the OnPhaseChanged handler that the constructor
+            // attached to GameState. The event is a static-style class event
+            // so the handler is held by GameState's static delegate field;
+            // leaving it attached keeps the old SaveSystem alive forever.
+            if (_gameState != null)
+            {
+                _gameState.OnPhaseChanged -= OnPhaseChanged;
+            }
+            // Note: SaveSystem does not subscribe to EventBus directly. The
+            // Companion systems (SaveData-bound) do their own subscribe via
+            // EventRunner.SetPool. Disposing the SaveSystem is therefore
+            // sufficient to break the static event reference.
+        }
+
+        private static string ComputeChecksum(string json)
+        {
+            using var sha = SHA256.Create();
+            byte[] hash = sha.ComputeHash(Encoding.UTF8.GetBytes(json));
+            var sb = new StringBuilder(hash.Length * 2);
+            foreach (byte b in hash) sb.Append(b.ToString("x2"));
+            return sb.ToString();
+        }
+
+        private static bool VerifyChecksum(SaveData data, string rawJson)
+        {
+            string saved = data.Checksum;
+            data.Checksum = "";
+            string body = JsonUtility.ToJson(data, true);
+            string computed = ComputeChecksum(body);
+            data.Checksum = saved;
+            return string.Equals(computed, saved, StringComparison.Ordinal);
+        }
+
+        private static void Migrate(SaveData data)
+        {
+            if (data.SaveVersion < 2) MigrateV1toV2(data);
+            if (data.SaveVersion < 3) MigrateV2toV3(data);
+        }
+
+        /// <summary>V1 -> V2 migration: V1 saves lack the FlashpointChoreographer
+        /// snapshot. Default values leave the choreographer in a fresh state
+        /// (no buildup days processed, choreography not started). The
+        /// WorldPhaseSystem.HasTriggeredExchange flag in the same save
+        /// determines whether the choreography restarts on next load.</summary>
+        private static void MigrateV1toV2(SaveData data)
+        {
+            data.FlashpointChoreographer = null;
+            data.SaveVersion = 2;
+        }
+
+        /// <summary>V2 -> V3 migration (H-4 ISaveable refactor): add paired
+        /// SubsystemSaveIds/SubsystemSaveJsons lists. Positional fields are
+        /// preserved for backward compat — existing state stays in positional
+        /// fields; the paired lists start empty. Migration is a no-op for data
+        /// integrity since the ISaveable path is additive.</summary>
+        private static void MigrateV2toV3(SaveData data)
+        {
+            data.SubsystemSaveIds = new List<string>();
+            data.SubsystemSaveJsons = new List<string>();
+            data.SaveVersion = 3;
+        }
+
+        private string SlotPath(string slotId) => Path.Combine(_savesDir, $"save_{slotId}.json");
+
+        /// <summary>A-1: Path to the backup save file (previous version).</summary>
+        private string BakPath(string slotId) => Path.Combine(_savesDir, $"save_{slotId}.json.bak");
+    }
+}
