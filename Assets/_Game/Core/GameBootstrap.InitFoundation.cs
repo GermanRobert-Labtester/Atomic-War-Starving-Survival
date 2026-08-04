@@ -1,0 +1,429 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using AtomicWar._Game.AI;
+using AtomicWar._Game.AI.Actions;
+using AtomicWar._Game.Crafting;
+using AtomicWar._Game.Data;
+using AtomicWar._Game.Environment;
+using AtomicWar._Game.Events;
+using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Flashpoint;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
+using AtomicWar._Game.Simulation;
+using AtomicWar._Game.UI;
+using AtomicWar._Game.Medical;
+using AtomicWar._Game.Economy;
+using AtomicWar._Game.Utilities;
+
+namespace AtomicWar._Game.Core
+{
+    public partial class GameBootstrap
+    {
+        private void InitFoundation()
+        {
+            // H-5: System registry for centralized tick dispatch and diagnostics.
+            _registry = new SystemRegistry();
+
+            // Core
+            GameState = new GameState();
+            TimeSystem = new TimeSystem { SecondsPerGameHour = _secondsPerGameHour };
+
+            // Environment
+            WeatherSystem = new WeatherSystem(_seasonProfile, _worldSeed);
+            TemperatureSystem = new TemperatureSystem(_seasonProfile, WeatherSystem);
+            PhotoperiodSystem = new PhotoperiodSystem(_seasonProfile, WeatherSystem);
+
+            // Shelter
+            Shelter = new Shelter.Shelter();
+            Shelter.AddModule(new ShelterModuleInstance("air_filtration", 2) { FilterHealth = 100f });
+            Shelter.AddModule(new ShelterModuleInstance("radiation_shielding", 2));
+            Shelter.AddModule(new ShelterModuleInstance("heater", 1) { Fuel = 50f });
+            Shelter.AddModule(new ShelterModuleInstance("workbench", 1));
+            // Grow-light starts installed but dry (no fuel). Player must scavenge fuel to light it.
+            Shelter.AddModule(new ShelterModuleInstance("grow_light", 1) { Fuel = 0f });
+            // Roof catchment starts open (player can close it to stop collecting during a storm).
+            Shelter.AddModule(new ShelterModuleInstance("catchment_surface", 1) { IsEnabled = true });
+            Shelter.AddModule(new ShelterModuleInstance("water_purifier", 1) { FilterHealth = 100f });
+            // Sleep quarters: bed in "quarters"; diesel lives in "plant" next door (Prompt #32).
+            Shelter.AddModule(new ShelterModuleInstance("bed", 1)
+            {
+                RoomId = SleepQualitySystem.DefaultSleepRoomId,
+                ComfortLevel = 1f,
+                Capacity = 2
+            });
+            // Comfort station: a quiet corner of the quarters where the AI
+            // is willing to spend comfort items on a broken survivor. Always
+            // on (no fuel cost in the current tuning); the
+            // MentalBreakComfortActionSO reads it via MedicalSystem.ComfortStationModuleId.
+            Shelter.AddModule(new ShelterModuleInstance("comfort_station", 1)
+            {
+                RoomId = SleepQualitySystem.DefaultSleepRoomId,
+                IsEnabled = true
+            });
+            Shelter.SetRoomsAdjacent(
+                SleepQualitySystem.DefaultSleepRoomId,
+                SleepQualitySystem.DefaultGeneratorRoomId);
+
+            // Prompt #5 — Previous Tenants: a sealed deep vault with diaries.
+            // The player must clear rubble to access it. Contains diary warnings
+            // about the filter, water, and shielding — diegetic system intel.
+            var deepVault = new ShelterRoom("deep_vault", null)
+            {
+                UnlockState = RoomUnlockState.Sealed,
+                RubbleClearHoursRemaining = 16f,
+                RubbleClearHoursTotal = 16f,
+                DiaryFragmentIds = new System.Collections.Generic.List<string>
+                {
+                    "diary_filter_is_a_lie",
+                    "diary_water_truth",
+                    "diary_shielding_rot"
+                }
+            };
+            Shelter.RegisterRoom(deepVault);
+
+            // Shelter power grid: finite watts, load-shedding, diesel + bicycle generators.
+            // Fully-qualified type: property name PowerNetwork shadows the class.
+            PowerNetwork = AtomicWar._Game.Shelter.PowerNetwork.CreateDefault(dieselFuel: 40f);
+            var diesel = PowerNetwork.GetSource("diesel_generator");
+            if (diesel != null)
+            {
+                diesel.RoomId = SleepQualitySystem.DefaultGeneratorRoomId;
+            }
+            // Heater/filter are installed and requested; grow light stays optional until fuel/power allow.
+            PowerNetwork.SetRequested("grow_light", false);
+            PowerNetwork.SetRequested("radio", false);
+            PowerNetwork.SetRequested("water_purifier", true);
+            PowerNetwork.ApplyToShelter(Shelter);
+
+            // Bunker water economy: roof catchment + 3-tier purifier (Prompt #28).
+            WaterStorage = new WaterStorage();
+            WaterEconomySystem = new WaterEconomySystem();
+            // Prompt #11 — Black Rain (constructed after WeatherSystem exists; see late bind).
+            // WeatherSystem is created earlier in Awake — safe to construct here.
+            if (WeatherSystem != null)
+                BlackRainHazardSystem = new BlackRainHazardSystem(WeatherSystem);
+
+            // Needs + Radiation
+            NeedsSystem = new NeedsSystem(_needsProfile, sv => true);
+
+            // Wire photoperiod into NeedsSystem (null-safe: skipped if LightProfile not assigned)
+            if (_lightProfile != null)
+            {
+                NeedsSystem.SetPhotoPeriodSystem(
+                    () => PhotoperiodSystem.EffectiveDaylightHours,
+                    _lightProfile,
+                    () => Shelter.IsGrowLightActive);
+            }
+
+            RadiationSystem = new RadiationSystem(NeedsSystem);
+
+            BeliefSystem = new BeliefSystem(rng: new System.Random(_worldSeed + 31));
+            RadiationSystem.OnStatusGained += (sv, status) =>
+            {
+                if (status == SurvivorStatus.AcuteRadiationSyndrome)
+                {
+                    BeliefSystem.ShockRecoverNumbness(sv);
+                }
+            };
+
+            // World Phase (Civil War -> Flashpoint -> Nuclear Winter). Phase 1 defaults:
+            // no radiation, no post-war weather hazards, until the exchange fires.
+            WorldPhaseSystem = new WorldPhaseSystem(_worldPhaseConfig);
+            RadiationSystem.IsPaused = true;
+            WeatherSystem.RestrictToNonHazardWeather = true;
+            WorldPhaseSystem.OnNuclearExchange += HandleNuclearExchange;
+            TimeSystem.OnDayTick += WorldPhaseSystem.OnDayTick;
+
+            // Inventory + Crafting + Workbench scrap economy
+            Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
+            CraftingSystem = new CraftingSystem(Inventory);
+            CraftingSystem.AddStation(new CraftingStation
+            {
+                id = WorkbenchSystem.StationId,
+                displayName = "Workbench",
+                Condition = 100f
+            });
+            WorkbenchSystem = new WorkbenchSystem(
+                Inventory,
+                id => _itemCatalog?.GetById(id),
+                CraftingSystem,
+                () => Shelter,
+                () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+
+            // Seed inventory
+            SeedStartingInventory();
+
+            // Survivors
+            Survivors = new List<Survivor>();
+            CreateSurvivor("sv_elena", "Elena Vasquez");
+            CreateSurvivor("sv_marcus", "Marcus Olejnik");
+            CreateSurvivor("sv_suki", "Suki Tanaka");
+
+        }
+
+        private void InitUtilityAI()
+        {
+            // AI
+            UtilityAI = new UtilityAI();
+            Actions = new List<SurvivorAction>
+            {
+                CreateAction<EatActionSO>(),
+                CreateAction<DrinkActionSO>(),
+                CreateAction<DrinkContaminatedWaterActionSO>(),
+                CreateAction<SleepActionSO>(),
+                CreateAction<RestActionSO>(),
+                CreateAction<WarmUpActionSO>(),
+                CreateAction<TakeIodineActionSO>(),
+                CreateAction<ScavengeActionSO>(),
+                CreateAction<SurveyActionSO>(),
+                CreateAction<TreatPatientActionSO>(),
+                CreateAction<CaregiveActionSO>(),
+                CreateAction<MentalBreakComfortActionSO>(),
+                CreateAction<CraftActionSO>(),
+                CreateAction<GuardActionSO>(),
+                CreateAction<PedalGeneratorActionSO>(),
+                CreateAction<SearchForChemsActionSO>(),
+                CreateAction<ClearRubbleActionSO>(),
+                CreateAction<HuntRatsActionSO>(),
+                CreateAction<MercyKillActionSO>(),
+                CreateAction<ChartMapActionSO>(),
+                // Audit C-3: AI actions for the systems wired in C-1. Each
+                // action scores when the system has work to do; the action's
+                // Execute method calls the system's primary method. The new
+                // AIContext fields (ExcavationSystem, HaulingSystem, etc.) are
+                // bound in WarmDayTickCaches so these actions can run on the
+                // survivor decision pass.
+                CreateAction<ExcavateActionSO>(),
+                CreateAction<CompostWasteActionSO>(),
+                CreateAction<BoilToolsActionSO>(),
+                CreateAction<BeginChelationActionSO>(),
+                CreateAction<BuildWindTurbineActionSO>(),
+                CreateAction<HaulLootActionSO>(),
+                CreateAction<DeconAndEnterActionSO>(),
+                CreateAction<ExcavateEscapeHatchActionSO>(),
+                CreateAction<UpgradeShieldingActionSO>(),
+                CreateAction<TunnelActionSO>()
+            };
+
+        }
+
+        private void InitMedicalSystems()
+        {
+            // Medical triage (afflictions drain health; treatments halt/cure)
+            MedicalSystem = new MedicalSystem(NeedsSystem, Inventory, Shelter);
+            foreach (var aff in AtomicWar._Game.Medical.MedicalSystem.CreateDefaultAfflictions())
+                MedicalSystem.RegisterAffliction(aff);
+            // Register common treatment recipes if items exist
+            var bandage = _itemCatalog?.GetById("bandage");
+            var tweezers = _itemCatalog?.GetById("tweezers");
+            if (bandage != null)
+            {
+                MedicalSystem.RegisterTreatment(
+                    AtomicWar._Game.Medical.MedicalSystem.CreateGunshotBandageHaltRecipe(bandage));
+                if (tweezers != null)
+                {
+                    MedicalSystem.RegisterTreatment(
+                        AtomicWar._Game.Medical.MedicalSystem.CreateGunshotFullRecipe(bandage, tweezers));
+                }
+            }
+
+        }
+
+        private void InitEventsAndSurvivors()
+        {
+            InitEventRunnerCore();
+            InitMentalBreakAndTraits();
+            InitAddictionAndMedicalPrompts();
+            InitWorldSideSystems();
+            InitShelterTacticalSystems();
+            InitNarrativeDependentSystems();
+            InitAtmosphereHygieneSystems();
+            InitDiaryAndHatchSystems();
+            InitFactionMapSystems();
+        }
+
+        private void InitEventRunnerCore()
+        {
+            // Events
+            EventRunner = new EventRunner();
+
+            // H-6: Unified event pool construction. All event sources
+            // (catalog, 6 Ensure* chains, encounter factory) are merged
+            // into a single call with built-in duplicate-id detection.
+            var eventPool = EventPoolBuilder.Build(_eventCatalog);
+            EventRunner.SetPool(eventPool);
+
+            SuspicionTracker = new SuspicionTracker();
+            SuspicionTracker.Bind(EventRunner);
+
+            // Diegetic journal — survivors write discoveries (no tutorial popups).
+            // Entries run through a pool: evicted/cleared entries are recycled,
+            // never collected, so 100-day fast-forward runs stay GC-flat.
+            JournalSystem = new JournalSystem();
+            _journalEntryPool = new GenericObjectPool<JournalEntry>(
+                () => new JournalEntry(),
+                e =>
+                {
+                    e.Id = null;
+                    e.Text = null;
+                    e.Timestamp = null;
+                    e.AuthorName = null;
+                    e.AuthorId = null;
+                    e.KnowledgeKey = null;
+                    e.Day = 0;
+                    e.Hour = 0f;
+                },
+                // +1: at a full list the new entry is acquired before the
+                // evicted one is released, so steady state needs cap+1 stock.
+                initialCapacity: JournalSystem.MaxEntries + 1);
+            JournalSystem.SetEntryFactory(_journalEntryPool.Acquire, _journalEntryPool.Release);
+            JournalSystem.OnEntryAdded += entry =>
+            {
+                if (entry == null || string.IsNullOrEmpty(entry.Text)) return;
+                Debug.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
+                PushJournalEntryToHud(entry);
+            };
+
+            // Campaign win/loss — radio extraction + vehicle escape projects
+            VictoryProject = new VictoryProjectManager();
+            EndgameEngine = new EndgameEngine(GameModeKind.Story, _campaignLengthDays);
+            VictoryProject.OnExtractionUnlocked += () =>
+            {
+                Debug.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
+            };
+            VictoryProject.OnEndgameTriggered += summary =>
+            {
+                if (summary == null) return;
+                ApplyEndgame(summary);
+            };
+
+        }
+
+        private void InitMentalBreakAndTraits()
+        {
+            // Mental Break System (Prompt #29). Designers populate the catalog
+            // with MentalBreakSO assets (BingeEater, ViolentParanoia, etc.).
+            // If the catalog is null, the system is still constructed — just
+            // empty — so the rest of the game continues to work; the Survivor
+            // just never rolls for a break.
+            MentalBreakSystem = new MentalBreakSystem();
+            if (_mentalBreakCatalog != null)
+            {
+                foreach (var br in _mentalBreakCatalog.breaks)
+                {
+                    if (br != null) MentalBreakSystem.RegisterBreak(br);
+                }
+            }
+            // Host-side binge/sabotage so Survivors assembly stays free of
+            // Inventory/Shelter refs (avoids asmdef cycles).
+            MentalBreakSystem.BingeEatHandler = (sv, br) => ForceMentalBreakBingeEat(sv, br);
+            MentalBreakSystem.SabotageHandler = (sv, br, rng) => ForceMentalBreakSabotage(rng);
+            // Host-side comfort-cure so the system can consume a Comfort
+            // item from the Inventory without referencing the Inventory
+            // assembly directly. Same asmdef-boundary pattern.
+            MentalBreakSystem.ComfortCureHandler = (sv, br) => ForceMentalBreakComfortCure(sv, br);
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #10 — Skill Atrophy System
+            // ───────────────────────────────────────────────────────────
+            SkillAtrophy = new SkillAtrophySystem();
+
+            // ───────────────────────────────────────────────────────────
+            // Prompt #8 — Empath & Sociopath System
+            // ───────────────────────────────────────────────────────────
+            EmpathSystem = new EmpathSystem();
+            SurvivorDiaries = new SurvivorDiariesSystem();
+            InternalLockSystem = new InternalLockSystem();
+            SpatialPsychology = new SpatialPsychologySystem();
+            GriefKeepsakes = new GriefKeepsakeSystem();
+            HallucinationSystem = new AI.HallucinationSystem();
+            MentorshipSystem = new MentorshipSystem();
+            // Wire death hook into NeedsSystem.OnDied
+            _onNeedsDied = deceased =>
+            {
+                EmpathSystem.OnSurvivorDied(deceased, Survivors);
+                ChildSystem?.CheckChildDeath(Survivors);
+                GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");
+            };
+            NeedsSystem.OnDied += _onNeedsDied;
+
+            // ───────────────────────────────────────────────────────────
+        }
+
+        private void InitAddictionAndMedicalPrompts()
+        {
+            // Prompt #7 — Addiction & Withdrawal System
+            // ───────────────────────────────────────────────────────────
+            Addiction = new AddictionSystem(new System.Random(_worldSeed + 71));
+            // Register addictive items from the catalog
+            if (_itemCatalog != null)
+            {
+                // Register known addictive item ids
+                string[] addictiveIds = { "morphine", "anti_rad", "painkiller", "stimulant" };
+                foreach (var id in addictiveIds)
+                {
+                    var item = _itemCatalog.GetById(id);
+                    if (item != null)
+                        Addiction.RegisterAddictiveItem(item.id);
+                }
+            }
+            Addiction.RegisterAddictiveItem("morphine");
+            Addiction.RegisterAddictiveItem("anti_rad");
+            Addiction.RegisterAddictiveItem("amphetamines"); // Prompt #59
+            Addiction.PanicDestroyHandler = (sv, rng) => ForceAddictionPanicDestroy(sv, rng);
+
+            // Prompt #55 — Blood Types & Transfusions
+            // ───────────────────────────────────────────────────────────
+            BloodTransfusion = new BloodTransfusionSystem(new System.Random(_worldSeed + 55));
+            BloodTransfusion.Bind(
+                id => Survivors?.Find(s => s.Id == id),
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Prompt #56 — Amputation & Phantom Pain
+            // ───────────────────────────────────────────────────────────
+            AmputationSystem = new AmputationSystem();
+            AmputationSystem.Bind(
+                id => Survivors?.Find(s => s.Id == id),
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Prompt #57 — Scurvy / VitaminC Deficiency
+            // ───────────────────────────────────────────────────────────
+            ScurvySystem = new ScurvySystem();
+            ScurvySystem.Bind(
+                id => Survivors?.Find(s => s.Id == id),
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Prompt #60 — Radiation Mutagenesis
+            // ───────────────────────────────────────────────────────────
+            Mutagenesis = new RadiationMutagenesisSystem();
+            Mutagenesis.Bind(
+                getPartyAverageRadiation: () =>
+                {
+                    if (Survivors == null || Survivors.Count == 0) return 0f;
+                    float sum = 0f; int n = 0;
+                    for (int i = 0; i < Survivors.Count; i++)
+                    {
+                        if (Survivors[i] != null && Survivors[i].IsAlive)
+                        { sum += Survivors[i].LifetimeRadiationExposure; n++; }
+                    }
+                    return n > 0 ? sum / n : 0f;
+                },
+                inflictAffliction: (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Wire medical treatment pathway into addiction tracking
+            if (MedicalSystem != null)
+            {
+                MedicalSystem.GetCurrentDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                MedicalSystem.OnTreatmentItemConsumed = (sv, itemId, day) =>
+                {
+                    Addiction?.OnItemConsumed(sv, itemId, day);
+                };
+            }
+
+        }
+    }
+}

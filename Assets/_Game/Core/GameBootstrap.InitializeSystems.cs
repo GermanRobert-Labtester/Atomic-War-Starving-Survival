@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using AtomicWar._Game.AI;
+using AtomicWar._Game.AI.Actions;
+using AtomicWar._Game.Crafting;
+using AtomicWar._Game.Data;
+using AtomicWar._Game.Environment;
+using AtomicWar._Game.Events;
+using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Flashpoint;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
+using AtomicWar._Game.Simulation;
+using AtomicWar._Game.UI;
+using AtomicWar._Game.Medical;
+using AtomicWar._Game.Economy;
+using AtomicWar._Game.Utilities;
+
+namespace AtomicWar._Game.Core
+{
+    public partial class GameBootstrap
+    {
+        private void InitializeSystems()
+        {
+            InitFoundation();
+            InitUtilityAI();
+            InitMedicalSystems();
+            InitEventsAndSurvivors();
+            InitSaveAndExpeditions();
+            InitRadioAndEndgame();
+            FinishSystemRegistration();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void FinishSystemRegistration()
+        {
+            // H-5: Batch-register all systems with the registry so diagnostics
+            // can detect dead (constructed-but-unticked) systems.
+            RegisterSystemsInRegistry();
+
+            // AUDIT-003: hard-fail if foundation systems required by TickSystems
+            // were never constructed (partial init / test-host misuse).
+            AssertFoundationSystems();
+        }
+
+
+    }
+}
