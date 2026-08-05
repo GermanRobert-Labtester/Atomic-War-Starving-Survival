@@ -60,6 +60,7 @@ namespace AtomicWar._Game.Core
         private ShelterRoom _storesRoom;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
         private CombatPerkSystem _combatPerks;
+        private PersonalQuestSystem _personalQuests;
         private SurvivalPerkSystem _survivalPerks;
         private Func<int> _getDay;
         private bool _boundToDeath;
@@ -104,6 +105,14 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Prompt #188 — Desensitized skips corpse morale penalties.</summary>
         public void BindCombatPerks(CombatPerkSystem combatPerks) => _combatPerks = combatPerks;
+
+        /// <summary>Prompt #219 — Death-Blind: zero corpse morale penalties.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
+        private bool IsImmuneToDeathMorale(Survivor sv) =>
+            (_combatPerks != null && _combatPerks.IsImmuneToCorpseMorale(sv))
+            || (_personalQuests != null && _personalQuests.IsImmuneToDeathMorale(sv));
 
         /// <summary>Prompt #192 — The Butcher: half process time, +1 bones/meat, bloodstained tag.</summary>
         public void BindSurvivalPerks(SurvivalPerkSystem survivalPerks, Func<int> getDay = null)
@@ -217,9 +226,10 @@ namespace AtomicWar._Game.Core
                 var sv = survivors[i];
                 if (sv == null || !sv.IsAlive) continue;
 
-                // Prompt #188 — Desensitized: no morale drain from living with corpses.
-                bool immuneCorpseMorale = _combatPerks != null
-                    && _combatPerks.IsImmuneToCorpseMorale(sv);
+                // Prompt #188 — Desensitized / #219 Death-Blind: no corpse morale drain.
+                bool immuneCorpseMorale =
+                    (_combatPerks != null && _combatPerks.IsImmuneToCorpseMorale(sv))
+                    || (_personalQuests != null && _personalQuests.IsImmuneToDeathMorale(sv));
                 if (!immuneCorpseMorale)
                 {
                     _needs.Modify(sv, NeedKind.Morale,
@@ -301,13 +311,13 @@ namespace AtomicWar._Game.Core
                 {
                     var sv = survivors[i];
                     if (sv == null || !sv.IsAlive) continue;
-                    // Prompt #188 — Desensitized: no fertilizer-process morale shatter.
-                    if (_combatPerks != null && _combatPerks.IsImmuneToCorpseMorale(sv))
+                    // Prompt #188 / #219 — Desensitized or Death-Blind: no butchery morale shatter.
+                    if (IsImmuneToDeathMorale(sv))
                         continue;
                     _needs.Modify(sv, NeedKind.Morale, -FertilizerMoraleHit);
                 }
             }
-            else if (_combatPerks == null || !_combatPerks.IsImmuneToCorpseMorale(processor))
+            else if (!IsImmuneToDeathMorale(processor))
             {
                 _needs.Modify(processor, NeedKind.Morale, -FertilizerMoraleHit);
             }
