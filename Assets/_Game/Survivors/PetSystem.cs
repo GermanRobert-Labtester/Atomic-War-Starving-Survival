@@ -23,8 +23,50 @@ namespace AtomicWar._Game.Survivors
         private readonly Action<string, float> _depositRoomContamination; // (roomId, amount) -> deposits contamination into room
         private readonly Action<float> _addBunkerContamination;           // (amount) -> adds bunker contamination
         private readonly List<PetState> _pets = new List<PetState>();
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
 
         public IReadOnlyList<PetState> Pets => _pets;
+
+        /// <summary>Prompt #217 — Zoonotic Expert taming.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
+        /// <summary>
+        /// Prompt #217 — tame a wasteland animal. Requires Zoonotic Expert owner
+        /// and fewer than 3 living pets already tamed by them.
+        /// </summary>
+        public bool TryTameWastelandAnimal(Survivor owner, PetState animal)
+        {
+            if (owner == null || !owner.IsAlive || animal == null) return false;
+            if (_personalQuests == null || !_personalQuests.HasZoonoticExpert(owner))
+                return false;
+            int owned = CountPetsOwnedBy(owner.Id);
+            if (owned >= PersonalQuestSystem.ZoonoticMaxTamedAnimals) return false;
+            animal.OwnerSurvivorId = owner.Id;
+            animal.EatsSpoiledMeatOnly = true;
+            AddPet(animal);
+            return true;
+        }
+
+        public int CountPetsOwnedBy(string ownerId)
+        {
+            if (string.IsNullOrEmpty(ownerId)) return 0;
+            int n = 0;
+            for (int i = 0; i < _pets.Count; i++)
+            {
+                var p = _pets[i];
+                if (p != null && p.IsAlive
+                    && string.Equals(p.OwnerSurvivorId, ownerId, System.StringComparison.Ordinal))
+                    n++;
+            }
+            return n;
+        }
 
         public event Action<PetState> OnPetAdded;
         public event Action<PetState> OnPetDied;
