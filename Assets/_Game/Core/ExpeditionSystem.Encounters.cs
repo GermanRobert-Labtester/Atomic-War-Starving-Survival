@@ -194,7 +194,20 @@ namespace AtomicWar._Game.Core
             if (chosen == null) return alreadyFled;
 
             if (chosen.MoraleDelta != 0f && survivor != null)
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + chosen.MoraleDelta, 0f, 100f);
+            {
+                float moraleDelta = chosen.MoraleDelta;
+                // Prompt #209 — Night Terror: combat success at night boosts morale gains
+                // from aggressive choices (engage/fight) by the combat bonus factor.
+                if (_expeditionPerks != null && exp != null && exp.IsNightScavenge
+                    && moraleDelta > 0f
+                    && (string.Equals(chosen.ChoiceId, "engage", StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(chosen.ChoiceId, "fight", StringComparison.OrdinalIgnoreCase)))
+                {
+                    float combat = _expeditionPerks.GetNightCombatMultiplier(survivor, isNight: true);
+                    moraleDelta *= combat;
+                }
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+            }
 
             // Explicit flee choice (ChoiceId "flee") on a UXO node can still detonate.
             if (!alreadyFled && string.Equals(chosen.ChoiceId, "flee", StringComparison.OrdinalIgnoreCase))
