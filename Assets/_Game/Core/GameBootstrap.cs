@@ -154,6 +154,10 @@ namespace AtomicWar._Game.Core
         // Prompts #182–#188 — combat milestone perks (jams, stealth, ammo, CQ, traps, flee, desensitized).
         public CombatPerkSystem CombatPerks { get; private set; }
 
+        // Prompts #189–#194 — survival cooking / illness / brew / butcher / pharma / mycology.
+        public SurvivalPerkSystem SurvivalPerks { get; private set; }
+        public CookingSystem CookingSystem { get; private set; }
+
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
         // Prompt #61 — Survivor diaries & privacy violations.

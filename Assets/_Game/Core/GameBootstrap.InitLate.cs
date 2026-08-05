@@ -251,7 +251,9 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetPolypharmacySystem(PolypharmacySystem);
             SaveSystem.SetSkillProgressionSystem(SkillProgression);
             SaveSystem.SetCombatPerkSystem(CombatPerks);
+            SaveSystem.SetSurvivalPerkSystem(SurvivalPerks);
             WireCombatPerkBindings();
+            WireSurvivalPerkBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -274,6 +276,10 @@ namespace AtomicWar._Game.Core
             CorpseSystem.SetSurvivorProvider(() => Survivors);
             // Prompt #188 — Desensitized: no corpse morale drain
             CorpseSystem.BindCombatPerks(CombatPerks);
+            // Prompt #192 — The Butcher yields / process time
+            CorpseSystem.BindSurvivalPerks(
+                SurvivalPerks,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             CorpseSystem.BindDeathHandler();
 
             PantrySystem = new PantryContaminationSystem(
@@ -342,6 +348,41 @@ namespace AtomicWar._Game.Core
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
                 affinity: MentalBreakSystem != null ? MentalBreakSystem.Affinity : null,
                 getAllSurvivors: () => Survivors);
+        }
+
+        /// <summary>
+        /// Prompts #189–#194 — bind survival perk milestones into cooking, medical
+        /// cures, crafting, corpse processing, and AI context.
+        /// </summary>
+        private void WireSurvivalPerkBindings()
+        {
+            if (SurvivalPerks == null) return;
+
+            CookingSystem = new CookingSystem(Inventory, WaterStorage, new System.Random(_worldSeed + 189));
+            CookingSystem.BindSurvivalPerks(
+                SurvivalPerks,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+            CookingSystem.SetMealDefinition(CookingSystem.CreateCookedMealDefinition());
+
+            CraftingSystem?.BindSurvivalPerks(
+                SurvivalPerks,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+
+            WorkbenchSystem?.BindSurvivalPerks(SurvivalPerks, NeedsSystem);
+            WorkbenchSystem?.SetMoonshineItems(
+                WorkbenchSystem.CreateMoonshineDefinition(),
+                WorkbenchSystem.CreateMutatedFungiDefinition());
+
+            // Prompt #190 — gastric illness recoveries grant Iron Stomach
+            if (MedicalSystem != null)
+            {
+                MedicalSystem.OnAfflictionCured += (sv, active) =>
+                {
+                    if (active == null) return;
+                    int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+                    SurvivalPerks.RecordIllnessRecovery(sv, active.AfflictionId, day);
+                };
+            }
         }
 
     }

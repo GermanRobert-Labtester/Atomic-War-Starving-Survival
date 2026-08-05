@@ -80,6 +80,7 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk("perk_trail_memory", "Trail Memory", "scavenging", 50f, 0.10f, false));
             RegisterPerk(MakeRuntimePerk("perk_hard_living", "Hard Living", "survival", 50f, 0.10f, false));
             RegisterCombatPerks();
+            RegisterSurvivalPerks();
         }
 
         /// <summary>
@@ -96,6 +97,21 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(CombatPerkSystem.TrapSetterId, "Trap Setter", "combat", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(CombatPerkSystem.LootersReflexId, "Looter's Reflex", "scavenging", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(CombatPerkSystem.DesensitizedId, "Desensitized", "combat", milestoneOnly, 0f, false));
+        }
+
+        /// <summary>
+        /// Milestone survival perks (Prompts #189–#194). xpThreshold is unreachable via
+        /// action XP — granted only through <see cref="TryGrantPerk"/>.
+        /// </summary>
+        public void RegisterSurvivalPerks()
+        {
+            const float milestoneOnly = 999999f;
+            RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.RationStretcherId, "Ration Stretcher", "survival", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.IronStomachId, "Iron Stomach", "survival", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.WastelandBrewerId, "Wasteland Brewer", "survival", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.ButcherId, "The Butcher", "survival", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.PharmacologistId, "Pharmacologist", "medical", milestoneOnly, 0.10f, false));
+            RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.MycologyId, "Mycology", "science", milestoneOnly, 0.05f, false));
         }
 
         /// <summary>

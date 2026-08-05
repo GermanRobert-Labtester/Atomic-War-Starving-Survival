@@ -342,6 +342,9 @@ namespace AtomicWar._Game.Core
             // Prompts #182–#188 — combat milestone perks (jam/stealth/ammo/CQ/traps/flee/kills)
             CombatPerks = new CombatPerkSystem();
             CombatPerks.Bind(SkillProgression);
+            // Prompts #189–#194 — survival / wasteland-digestion milestone perks
+            SurvivalPerks = new SurvivalPerkSystem();
+            SurvivalPerks.Bind(SkillProgression);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

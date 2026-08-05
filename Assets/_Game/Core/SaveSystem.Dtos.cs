@@ -131,6 +131,8 @@ namespace AtomicWar._Game.Core
         public SkillProgressionSave SkillProgression;
         /// <summary>Prompts #182–#188 — combat milestone counters (jams, kills, flees…).</summary>
         public CombatPerkSave CombatPerks;
+        /// <summary>Prompts #189–#194 — survival milestone counters (meals, crops, planter…).</summary>
+        public SurvivalPerkSave SurvivalPerks;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;

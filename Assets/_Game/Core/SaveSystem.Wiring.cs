@@ -299,6 +299,11 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((CombatPerkSave)o));
 
+        public void SetSurvivalPerkSystem(SurvivalPerkSystem s) =>
+            RegisterSystem(ref _survivalPerkSystem, s, "survival_perks",
+                () => s.CaptureState(),
+                o => s.RestoreState((SurvivalPerkSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

@@ -157,6 +157,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Prompts #182–#188 — combat milestone perks.</summary>
         public CombatPerkSystem CombatPerks;
 
+        /// <summary>Prompts #189–#194 — survival / wasteland-digestion perks.</summary>
+        public SurvivalPerkSystem SurvivalPerks;
+
         /// <summary>Prompt #177 — triage board medication permissions.</summary>
         public TriageBoardSystem TriageSystem;
 
