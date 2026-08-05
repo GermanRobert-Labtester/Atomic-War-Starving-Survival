@@ -80,7 +80,14 @@ namespace AtomicWar._Game.Core
                 PowerNetwork.ApplyToShelter(Shelter);
             });
             _registry.RegisterPerSubstep("hatch_defense", h => HatchDefenseSystem?.Tick(h, PowerNetwork));
-            _registry.RegisterPerSubstep("atmosphere", h => AtmosphereSystem?.Tick(h, PowerNetwork, Shelter));
+            _registry.RegisterPerSubstep("atmosphere", h =>
+            {
+                if (AtmosphereSystem == null) return;
+                if (ShelterPerks != null)
+                    AtmosphereSystem.VentilationClearMultiplier =
+                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
+                AtmosphereSystem.Tick(h, PowerNetwork, Shelter);
+            });
             _registry.RegisterPerSubstep("corpses", h => CorpseSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("pantry", h => PantrySystem?.Tick(h, _storesRoom));
             _registry.RegisterPerSubstep("structural_integrity", h =>
@@ -208,6 +215,9 @@ namespace AtomicWar._Game.Core
 
         private SystemWiring.DailyContext BuildDailyWiringContext(int day)
         {
+            float indoor = TemperatureSystem != null
+                ? TemperatureSystem.GetIndoorTemperature(Shelter)
+                : 15f;
             return new SystemWiring.DailyContext
             {
                 CurrentDay = day,
@@ -224,7 +234,9 @@ namespace AtomicWar._Game.Core
                 Rooms = Shelter?.Rooms != null
                     ? new System.Collections.Generic.List<Shelter.ShelterRoom>(Shelter.Rooms)
                     : null,
-                Rng = new System.Random(_worldSeed)
+                Rng = new System.Random(_worldSeed),
+                ShelterPerks = ShelterPerks,
+                IndoorTemperatureC = indoor
             };
         }
 

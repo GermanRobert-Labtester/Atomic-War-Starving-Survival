@@ -48,10 +48,17 @@ namespace AtomicWar._Game.AI.Actions
 
         public override void Execute(AIContext context)
         {
-            if (context?.Shelter != null)
+            if (context?.Shelter == null) return;
+            var airModule = context.Shelter.GetModule("air_filtration");
+            if (airModule == null) return;
+
+            airModule.ReplaceFilter();
+
+            // Prompt #197 — HVAC Tech: count filter ops during FalloutStorms.
+            if (context.IsFalloutStorm && context.ShelterPerks != null && context.Survivor != null)
             {
-                var airModule = context.Shelter.GetModule("air_filtration");
-                airModule?.ReplaceFilter();
+                context.ShelterPerks.RecordStormAirFilterOp(
+                    context.Survivor, context.CurrentDay);
             }
         }
     }

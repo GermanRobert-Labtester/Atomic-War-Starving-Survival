@@ -56,8 +56,15 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Natural humidity bleed toward ambient baseline when dry.</summary>
         public const float HumidityBaseline = 0.35f;
 
+        /// <summary>Base CO2 clear rate (ppm/hour) when air filtration is operational.</summary>
+        public const float BaseCo2ClearPerHour = 20f;
+
+        /// <summary>Base mold clear rate (0..1 per hour) when air filtration is operational.</summary>
+        public const float BaseMoldClearPerHour = 0.02f;
+
         private readonly List<ShelterRoom> _rooms = new List<ShelterRoom>();
         private readonly System.Random _rng;
+        private float _ventilationClearMultiplier = 1f;
 
         public event Action<ShelterRoom> OnFireStarted;
         public event Action<ShelterRoom> OnFireExtinguished;
@@ -65,6 +72,15 @@ namespace AtomicWar._Game.Shelter
         public event Action OnAtmosphereChanged;
 
         public IReadOnlyList<ShelterRoom> Rooms => _rooms;
+
+        /// <summary>
+        /// Prompt #197 — HVAC Tech: 1.3 when tech is in bunker (clears CO2/mold 30% faster).
+        /// </summary>
+        public float VentilationClearMultiplier
+        {
+            get => _ventilationClearMultiplier;
+            set => _ventilationClearMultiplier = Mathf.Max(0.01f, value);
+        }
 
         public ShelterAtmosphereSystem(System.Random rng = null)
         {
@@ -97,6 +113,53 @@ namespace AtomicWar._Game.Shelter
         }
 
         /// <summary>
+        /// Prompt #20 / #197 — clear room CO2 and mold via ventilation.
+        /// Returns true when any value changed.
+        /// </summary>
+        public bool ApplyVentilationClear(ShelterRoom room, float gameHours, float speedMultiplier = 1f)
+        {
+            if (room == null || gameHours <= 0f) return false;
+            float mult = Mathf.Max(0.01f, speedMultiplier);
+            bool changed = false;
+
+            if (room.Co2Ppm > 0f)
+            {
+                float cleared = BaseCo2ClearPerHour * mult * gameHours;
+                float next = Mathf.Max(0f, room.Co2Ppm - cleared);
+                if (!Mathf.Approximately(next, room.Co2Ppm))
+                {
+                    room.Co2Ppm = next;
+                    changed = true;
+                }
+            }
+
+            if (room.MoldLevel > 0f || room.HasMold)
+            {
+                float cleared = BaseMoldClearPerHour * mult * gameHours;
+                float next = Mathf.Max(0f, room.MoldLevel - cleared);
+                if (!Mathf.Approximately(next, room.MoldLevel))
+                {
+                    room.MoldLevel = next;
+                    changed = true;
+                }
+                if (room.MoldLevel <= 0.001f)
+                {
+                    room.MoldLevel = 0f;
+                    room.HasMold = false;
+                    changed = true;
+                }
+            }
+
+            return changed;
+        }
+
+        public static bool IsAirFilterOperational(Shelter shelter)
+        {
+            var air = shelter?.GetModule("air_filtration");
+            return air != null && air.IsOperational && air.FilterHealth > 0f;
+        }
+
+        /// <summary>
         /// Advance humidity, fire O2/CO consumption, and low-durability ignition rolls.
         /// </summary>
         public void Tick(
@@ -108,11 +171,16 @@ namespace AtomicWar._Game.Shelter
 
             TryIgniteFromLowDurability(gameHours, power, shelter);
 
+            bool filterOk = IsAirFilterOperational(shelter);
             bool changed = false;
             for (int i = 0; i < _rooms.Count; i++)
             {
                 var room = _rooms[i];
                 if (room == null) continue;
+
+                // Prompt #20 / #197 — operational filtration clears CO2 and mold.
+                if (filterOk && ApplyVentilationClear(room, gameHours, _ventilationClearMultiplier))
+                    changed = true;
 
                 // Humidity: mold drives it up; otherwise drift slowly toward baseline.
                 if (room.HasMold || room.MoldLevel > 0.05f)

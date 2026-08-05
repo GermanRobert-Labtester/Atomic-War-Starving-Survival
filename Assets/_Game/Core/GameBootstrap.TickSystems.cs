@@ -77,7 +77,16 @@ namespace AtomicWar._Game.Core
             }
 
             HatchDefenseSystem?.Tick(gameHours, PowerNetwork);
-            AtmosphereSystem?.Tick(gameHours, PowerNetwork, Shelter);
+
+            // Prompt #197 — HVAC Tech passive ventilation buff while tech is in bunker.
+            if (AtmosphereSystem != null)
+            {
+                if (ShelterPerks != null)
+                    AtmosphereSystem.VentilationClearMultiplier =
+                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
+                AtmosphereSystem.Tick(gameHours, PowerNetwork, Shelter);
+            }
+
             CorpseSystem?.Tick(gameHours, Survivors);
             PantrySystem?.Tick(gameHours, _storesRoom);
         }
