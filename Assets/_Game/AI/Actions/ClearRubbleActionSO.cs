@@ -95,9 +95,12 @@ namespace AtomicWar._Game.AI.Actions
 
             room.RubbleClearHoursRemaining = Mathf.Max(0f, room.RubbleClearHoursRemaining - effectiveRate);
 
-            // Fatigue cost for hard labor
+            // Fatigue cost for hard labor (Prompt #199 — Sandhog: half fatigue).
+            float fatMult = context.ShelterPerks != null
+                ? context.ShelterPerks.GetExcavationFatigueMultiplier(context.Survivor)
+                : 1f;
             context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                context.Survivor.Needs.Fatigue + 1.5f, 0f, 100f);
+                context.Survivor.Needs.Fatigue + 1.5f * fatMult, 0f, 100f);
 
             // Check for diary fragment reveals at progress milestones
             TryRevealDiary(room);
@@ -106,6 +109,8 @@ namespace AtomicWar._Game.AI.Actions
             if (room.RubbleClearHoursRemaining <= 0f)
             {
                 room.UnlockState = RoomUnlockState.Cleared;
+                context.ShelterPerks?.RecordRoomCleared(
+                    context.Survivor, context.CurrentDay);
                 OnRoomCleared?.Invoke(room.RoomId);
             }
         }
