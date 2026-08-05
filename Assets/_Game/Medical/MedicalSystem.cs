@@ -85,6 +85,8 @@ namespace AtomicWar._Game.Medical
         /// </summary>
         public System.Func<bool> IsRaidWindowActive;
 
+        private PersonalQuestSystem _personalQuests;
+
         public event Action OnMedicalStateChanged;
 
         /// <summary>Optional medical milestone perks (#201–#205).</summary>
@@ -97,6 +99,10 @@ namespace AtomicWar._Game.Medical
             _findSurvivor = findSurvivor;
             _surgeryRng = surgeryRng;
         }
+
+        /// <summary>Prompt #222 — Juggernaut trauma immunity.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         public MedicalSystem(
             NeedsSystem needs,
@@ -165,6 +171,10 @@ namespace AtomicWar._Game.Medical
         public bool Inflict(Survivor survivor, string afflictionId)
         {
             if (survivor == null || !survivor.IsAlive || string.IsNullOrEmpty(afflictionId)) return false;
+            // Prompt #222 — Juggernaut: cannot suffer BrokenBones or Lacerations.
+            if (_personalQuests != null
+                && _personalQuests.IsImmuneToTraumaAffliction(survivor, afflictionId))
+                return false;
             if (!_afflictions.TryGetValue(afflictionId, out var def)) return false;
             if (HasAffliction(survivor, afflictionId)) return false;
 
@@ -697,6 +707,9 @@ namespace AtomicWar._Game.Medical
                 MakeAffliction(AfflictionSO.Ids.BrokenBone, "Broken Bone", AfflictionPhase.Phase1,
                     healthDrain: 0.5f, progressionHours: 0f, progressesTo: null,
                     haltItem: "splint", infection: false, requiresBed: true),
+                MakeAffliction(AfflictionSO.Ids.Laceration, "Laceration", AfflictionPhase.Phase1,
+                    healthDrain: 1f, progressionHours: 18f, progressesTo: AfflictionSO.Ids.Sepsis,
+                    haltItem: "bandage", infection: false),
                 MakeAffliction(AfflictionSO.Ids.Dysentery, "Dysentery", AfflictionPhase.Phase1,
                     healthDrain: 1f, progressionHours: 36f, progressesTo: AfflictionSO.Ids.BacterialInfection,
                     haltItem: null, infection: true),

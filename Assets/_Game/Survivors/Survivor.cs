@@ -342,13 +342,19 @@ namespace AtomicWar._Game.Survivors
             return false;
         }
 
+        /// <summary>
+        /// Base max health before disabilities. Juggernaut (#222) doubles this permanently.
+        /// </summary>
+        public float BaseMaxHealth = 100f;
+
         /// <summary>Maximum dynamic health cap for this survivor (caps at 75 if ScarredLungs present).</summary>
         public float MaxHealthCap
         {
             get
             {
-                if (HasDisability("scarred_lungs")) return 75f;
-                return 100f;
+                float cap = BaseMaxHealth > 0f ? BaseMaxHealth : 100f;
+                if (HasDisability("scarred_lungs")) return Mathf.Min(75f, cap);
+                return cap;
             }
         }
 

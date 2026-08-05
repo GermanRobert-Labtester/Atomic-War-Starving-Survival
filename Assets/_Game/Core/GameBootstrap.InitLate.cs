@@ -527,6 +527,7 @@ namespace AtomicWar._Game.Core
             CraftingSystem?.BindPersonalQuests(PersonalQuests, new System.Random(_worldSeed + 214));
             CorpseSystem?.BindPersonalQuests(PersonalQuests);
             CombatPerks?.BindPersonalQuests(PersonalQuests);
+            MedicalSystem?.BindPersonalQuests(PersonalQuests);
             HatchDefenseSystem?.BindPersonalQuests(PersonalQuests);
             ExpeditionSystem?.BindPersonalQuests(PersonalQuests);
             EventRunner?.BindPersonalQuests(PersonalQuests);

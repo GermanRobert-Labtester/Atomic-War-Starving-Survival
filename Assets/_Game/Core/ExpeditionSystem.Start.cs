@@ -114,6 +114,9 @@ namespace AtomicWar._Game.Core
             // Prompt #206 — Pack Mule +10 kg base carry weight.
             if (_expeditionPerks != null)
                 capacity += _expeditionPerks.GetCarryCapacityBonus(survivor);
+            // Prompt #222 — Juggernaut: encumbrance limits removed entirely.
+            if (_personalQuests != null)
+                capacity = _personalQuests.GetExpeditionCarryCapacity(survivor, capacity);
 
             float travelHours = request.TravelHours;
             // Prompt #208 — Urban Pathfinder −30% City/Ruin travel (stacks with Bicycle).

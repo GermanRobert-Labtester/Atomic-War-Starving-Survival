@@ -68,6 +68,8 @@ namespace AtomicWar._Game.Medical
             public const string Bleeding = "bleeding";
             public const string GunshotWound = "gunshot_wound";
             public const string BrokenBone = "broken_bone";
+            /// <summary>Prompt #222 — Juggernaut is immune to lacerations.</summary>
+            public const string Laceration = "laceration";
             public const string Dysentery = "dysentery";
             public const string BacterialInfection = "bacterial_infection";
             public const string Sepsis = "sepsis";
