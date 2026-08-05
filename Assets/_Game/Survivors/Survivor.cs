@@ -343,6 +343,34 @@ namespace AtomicWar._Game.Survivors
         }
 
         // -------------------------------------------------------------------
+        // Aesthetic portrait tags (Prompt #192 Bloodstained, etc.).
+        // Subtle UI flags — not gameplay stats. snake_case ids.
+        // -------------------------------------------------------------------
+        public System.Collections.Generic.List<string> AestheticTags =
+            new System.Collections.Generic.List<string>();
+
+        public bool HasAestheticTag(string tagId)
+        {
+            if (string.IsNullOrEmpty(tagId) || AestheticTags == null) return false;
+            for (int i = 0; i < AestheticTags.Count; i++)
+            {
+                if (string.Equals(AestheticTags[i], tagId, System.StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>Adds a portrait aesthetic tag. Returns true if newly added.</summary>
+        public bool AddAestheticTag(string tagId)
+        {
+            if (string.IsNullOrEmpty(tagId)) return false;
+            if (AestheticTags == null) AestheticTags = new System.Collections.Generic.List<string>();
+            if (HasAestheticTag(tagId)) return false;
+            AestheticTags.Add(tagId);
+            return true;
+        }
+
+        // -------------------------------------------------------------------
         // Chronic Disease Pipeline (Prompt #39).
         // -------------------------------------------------------------------
         public ChronicIllnessKind? ActiveChronicIllness;

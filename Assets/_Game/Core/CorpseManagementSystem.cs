@@ -19,6 +19,15 @@ namespace AtomicWar._Game.Core
     {
         public const string CorpseItemId = "corpse";
         public const string FertilizerItemId = "fertilizer";
+        public const string BonesItemId = "bones";
+        public const string MeatItemId = "meat";
+
+        /// <summary>Base game-hours to break down a corpse for parts (Prompt #192).</summary>
+        public const float BaseProcessHours = 2f;
+
+        /// <summary>Base bones / meat yield when processing a corpse.</summary>
+        public const int BaseBonesYield = 1;
+        public const int BaseMeatYield = 1;
 
         /// <summary>Game-hours of daylight required to bury outside.</summary>
         public const float BuryHours = 4f;
@@ -46,9 +55,13 @@ namespace AtomicWar._Game.Core
 
         private ItemDefinition _corpseDef;
         private ItemDefinition _fertilizerDef;
+        private ItemDefinition _bonesDef;
+        private ItemDefinition _meatDef;
         private ShelterRoom _storesRoom;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
         private CombatPerkSystem _combatPerks;
+        private SurvivalPerkSystem _survivalPerks;
+        private Func<int> _getDay;
         private bool _boundToDeath;
 
         /// <summary>Corpse metadata: which survivor the body belonged to (by stack order, best-effort).</summary>
@@ -57,6 +70,7 @@ namespace AtomicWar._Game.Core
         public event Action<Survivor, ItemDefinition> OnCorpseCreated;
         public event Action<string> OnCorpseBuried;
         public event Action<string> OnCorpseProcessedForFertilizer;
+        public event Action<Survivor, int, int, float> OnCorpseProcessedForParts; // processor, bones, meat, hours
         public event Action OnCorpseStateChanged;
 
         public int CorpseCount => _inventory != null ? _inventory.CountByType(ItemType.Corpse) : 0;
@@ -90,6 +104,19 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Prompt #188 — Desensitized skips corpse morale penalties.</summary>
         public void BindCombatPerks(CombatPerkSystem combatPerks) => _combatPerks = combatPerks;
+
+        /// <summary>Prompt #192 — The Butcher: half process time, +1 bones/meat, bloodstained tag.</summary>
+        public void BindSurvivalPerks(SurvivalPerkSystem survivalPerks, Func<int> getDay = null)
+        {
+            _survivalPerks = survivalPerks;
+            _getDay = getDay ?? (() => 0);
+        }
+
+        public void SetButcherYieldDefinitions(ItemDefinition bones, ItemDefinition meat)
+        {
+            _bonesDef = bones;
+            _meatDef = meat;
+        }
 
         /// <summary>Subscribe to NeedsSystem.OnDied once. Safe to call multiple times.</summary>
         public void BindDeathHandler()
@@ -250,6 +277,7 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Cold process: body → fertilizer for the greenhouse. Shatters group morale.
+        /// Also records butchery for Prompt #192.
         /// </summary>
         public bool ProcessForFertilizer(Survivor processor)
         {
@@ -263,6 +291,8 @@ namespace AtomicWar._Game.Core
 
             if (_fertilizerDef != null)
                 _inventory.Add(_fertilizerDef, 3);
+
+            RecordButcheryMilestone(processor);
 
             var survivors = _getSurvivors?.Invoke();
             if (survivors != null)
@@ -285,6 +315,108 @@ namespace AtomicWar._Game.Core
             OnCorpseProcessedForFertilizer?.Invoke(sourceId);
             OnCorpseStateChanged?.Invoke();
             return true;
+        }
+
+        /// <summary>
+        /// Prompt #192 — Break a corpse into bones + meat. Butcher perk halves time
+        /// and adds +1 bones and +1 meat. Fatigue scales with process hours.
+        /// </summary>
+        public bool ProcessForParts(Survivor processor, out int bonesYield, out int meatYield, out float hoursUsed)
+        {
+            bonesYield = 0;
+            meatYield = 0;
+            hoursUsed = 0f;
+            if (processor == null || !processor.IsAlive) return false;
+            if (CorpseCount <= 0) return false;
+            EnsureCorpseDef();
+            EnsureBonesDef();
+            EnsureMeatDef();
+            if (_corpseDef == null || !_inventory.Remove(_corpseDef, 1)) return false;
+
+            PopCorpseSource(out _);
+
+            float timeMult = _survivalPerks != null
+                ? _survivalPerks.GetCorpseProcessTimeMultiplier(processor)
+                : 1f;
+            hoursUsed = BaseProcessHours * timeMult;
+
+            bonesYield = BaseBonesYield
+                + (_survivalPerks != null ? _survivalPerks.GetExtraBonesYield(processor) : 0);
+            meatYield = BaseMeatYield
+                + (_survivalPerks != null ? _survivalPerks.GetExtraMeatYield(processor) : 0);
+
+            if (_bonesDef != null && bonesYield > 0)
+                _inventory.Add(_bonesDef, bonesYield);
+            if (_meatDef != null && meatYield > 0)
+                _inventory.Add(_meatDef, meatYield);
+
+            // Fatigue from the work (half time → half fatigue for Butchers)
+            _needs.Modify(processor, NeedKind.Fatigue, 12f * timeMult);
+            _needs.Modify(processor, NeedKind.Morale, -FertilizerMoraleHit * 0.5f);
+
+            RecordButcheryMilestone(processor);
+            OnCorpseProcessedForParts?.Invoke(processor, bonesYield, meatYield, hoursUsed);
+            OnCorpseStateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Prompt #192 — Harvesting animals (dogs, bears) also earns The Butcher.
+        /// Call when an animal carcass is processed into meat/bones.
+        /// </summary>
+        public void RecordAnimalHarvest(Survivor hunter)
+        {
+            RecordButcheryMilestone(hunter);
+        }
+
+        private void RecordButcheryMilestone(Survivor sv)
+        {
+            if (sv == null || _survivalPerks == null) return;
+            int day = _getDay != null ? _getDay() : 0;
+            _survivalPerks.RecordButchery(sv, day);
+        }
+
+        public static ItemDefinition CreateBonesDefinition()
+        {
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = BonesItemId;
+            item.displayName = "Bones";
+            item.description = "Cleaned. Mostly. Useful for tools, broth, or fertilizer.";
+            item.type = ItemType.Material;
+            item.stackMax = 30;
+            item.weight = 0.5f;
+            item.tradeValue = 1f;
+            return item;
+        }
+
+        public static ItemDefinition CreateMeatDefinition()
+        {
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = MeatItemId;
+            item.displayName = "Meat";
+            item.description = "Protein. Don't ask which animal.";
+            item.type = ItemType.Food;
+            item.stackMax = 15;
+            item.weight = 1.5f;
+            item.hungerRestore = 30f;
+            item.tradeValue = 3f;
+            return item;
+        }
+
+        private void EnsureBonesDef()
+        {
+            if (_bonesDef != null) return;
+            var slot = _inventory?.FindSlot(BonesItemId);
+            if (slot?.Item != null) { _bonesDef = slot.Item; return; }
+            _bonesDef = CreateBonesDefinition();
+        }
+
+        private void EnsureMeatDef()
+        {
+            if (_meatDef != null) return;
+            var slot = _inventory?.FindSlot(MeatItemId);
+            if (slot?.Item != null) { _meatDef = slot.Item; return; }
+            _meatDef = CreateMeatDefinition();
         }
 
         private void PopCorpseSource(out string sourceId)
