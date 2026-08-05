@@ -110,11 +110,14 @@ namespace AtomicWar._Game.Medical
             if (surgeon.EffectiveMedicalSkill < RequiredMedicalSkill) return false;
 
             // Requires SurgicalTools and Morphine.
+            // Prompt #215 — Miracle Worker: tools present optional; never consumed.
             if (countItem == null || consumeItem == null) return false;
-            if (countItem(SurgicalToolsItemId) < 1) return false;
+            bool consumeTools = _medicalPerks == null || _medicalPerks.ConsumesSurgicalTools(surgeon);
+            if (consumeTools && countItem(SurgicalToolsItemId) < 1) return false;
             if (countItem(MorphineItemId) < 1) return false;
 
-            consumeItem(SurgicalToolsItemId, 1);
+            if (consumeTools)
+                consumeItem(SurgicalToolsItemId, 1);
             consumeItem(MorphineItemId, 1);
 
             // Surgery costs.

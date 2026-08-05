@@ -46,6 +46,7 @@ namespace AtomicWar._Game.Survivors
         public const string BleedingAfflictionId = "bleeding";
 
         private SkillProgressionSystem _progression;
+        private PersonalQuestSystem _personalQuests;
         private readonly Dictionary<string, MedicalCounters> _bySurvivor =
             new Dictionary<string, MedicalCounters>();
 
@@ -81,6 +82,10 @@ namespace AtomicWar._Game.Survivors
 
         public void SetSurvivorProvider(Func<IReadOnlyList<Survivor>> getSurvivors) =>
             _getSurvivors = getSurvivors;
+
+        /// <summary>Prompt #214–#215 — latent expert traits (Miracle Worker surgery).</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         // ── Queries ──────────────────────────────────────────────────────
 
@@ -137,6 +142,9 @@ namespace AtomicWar._Game.Survivors
             OnMilestoneProgress?.Invoke(medic, "phase2_cures", c.Phase2Cures);
             if (c.Phase2Cures >= Phase2CuresForSteadyHands)
                 TryGrant(medic, SteadyHandsId, currentDay);
+
+            // Prompt #215 — Surgeon quest: Phase-2 ops under extreme stress (Morale &lt; 30).
+            _personalQuests?.RecordStressPhase2Operation(medic, currentDay);
         }
 
         public static bool IsPhase2Cure(string afflictionId, bool isPhase2)
@@ -148,9 +156,25 @@ namespace AtomicWar._Game.Survivors
 
         public bool HasSteadyHands(Survivor sv) => Has(sv, SteadyHandsId);
 
-        /// <summary>Duration multiplier for surgical actions (0.7 with perk).</summary>
-        public float GetSurgeryDurationMultiplier(Survivor medic) =>
-            HasSteadyHands(medic) ? SteadyHandsSurgeryDurationMult : 1f;
+        /// <summary>
+        /// Duration multiplier for surgical actions.
+        /// Steady Hands → 0.7; Miracle Worker (#215) → 0.5; stacked when both.
+        /// </summary>
+        public float GetSurgeryDurationMultiplier(Survivor medic)
+        {
+            float m = HasSteadyHands(medic) ? SteadyHandsSurgeryDurationMult : 1f;
+            if (_personalQuests != null)
+                m *= _personalQuests.GetSurgeryDurationMultiplier(medic);
+            return m;
+        }
+
+        /// <summary>Prompt #215 — Miracle Worker: surgical tools not consumed.</summary>
+        public bool ConsumesSurgicalTools(Survivor medic) =>
+            _personalQuests == null || _personalQuests.ConsumesSurgicalTools(medic);
+
+        /// <summary>Prompt #215 — Miracle Worker: cure ARS without chelation.</summary>
+        public bool CanCureArsWithoutChelation(Survivor medic) =>
+            _personalQuests != null && _personalQuests.CanCureArsWithoutChelation(medic);
 
         /// <summary>
         /// Chance (0..1) of accidental Bleeding after a surgical action.
