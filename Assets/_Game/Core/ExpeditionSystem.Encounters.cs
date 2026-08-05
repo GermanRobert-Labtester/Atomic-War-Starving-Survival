@@ -40,6 +40,7 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Prompt #207 — Light Step: skip FeralDog / SleepingGhoul with no stealth roll.
+        /// Does not raise a hostile trigger; logs a silent bypass resolution only.
         /// </summary>
         private bool TryLightStepBypass(ExpeditionState exp, EncounterSO selected, Survivor survivor)
         {
@@ -52,7 +53,7 @@ namespace AtomicWar._Game.Core
                 Text = "Slip past unseen.",
                 MoraleDelta = 0f
             };
-            OnEncounterTriggered?.Invoke(exp, selected);
+            // Silent pass — no OnEncounterTriggered (would surface as a combat beat).
             OnEncounterResolved?.Invoke(exp, selected, bypass);
             return true;
         }

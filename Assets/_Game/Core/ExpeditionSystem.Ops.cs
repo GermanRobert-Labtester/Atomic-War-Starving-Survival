@@ -228,11 +228,28 @@ namespace AtomicWar._Game.Core
             if (exp.Stance == ExpeditionStance.Speed) encounterChance *= 1.4f;
             else if (exp.Stance == ExpeditionStance.Stealth) encounterChance *= 0.6f;
 
+            // Prompt #70 night risk; Prompt #209 Night Terror stealth at night.
+            encounterChance *= NightScavengeSystem.GetEncounterRiskMultiplier(exp);
+            if (_expeditionPerks != null && exp.Survivor != null && exp.IsNightScavenge)
+            {
+                float stealth = _expeditionPerks.GetNightStealthMultiplier(exp.Survivor, isNight: true);
+                if (stealth > 1f)
+                    encounterChance /= stealth; // better stealth → fewer ambushes
+            }
+
             if (_rng.NextDouble() >= encounterChance) return;
 
             // Location-filtered weighted pick (Prompt #47)
             EncounterSO selected = PickEncounter(exp.TargetLocationId, exp.Stance, exp.DangerLevel);
             if (selected == null) return;
+
+            // Prompt #207 — Light Step: skip dogs/ghouls before the trigger event fires.
+            if (_expeditionPerks != null && exp.Survivor != null
+                && _expeditionPerks.CanBypassEncounter(exp.Survivor, selected.id))
+            {
+                ResolveEncounterWithPsychology(exp, selected);
+                return;
+            }
 
             OnEncounterTriggered?.Invoke(exp, selected);
 
