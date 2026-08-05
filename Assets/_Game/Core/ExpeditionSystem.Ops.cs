@@ -343,6 +343,24 @@ namespace AtomicWar._Game.Core
                 return;
             }
 
+            // #258 Saboteur: auto-disarm traps with no player prompt.
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.AutoDisarmsTraps(exp.Survivor)
+                && IsTrapEncounter(selected))
+            {
+                ResolveSilentTrapDisarm(exp, selected);
+                return;
+            }
+
+            // #259 Ghost Shooter: map-layer ranged kills without Hostile Encounter UI.
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.SuppressesHostileEncounterUi(exp.Survivor)
+                && IsHostileEncounter(selected))
+            {
+                ResolveGhostShooterKill(exp, selected);
+                return;
+            }
+
             // Prompt #207 — Light Step: skip dogs/ghouls before the trigger event fires.
             if (_expeditionPerks != null && exp.Survivor != null
                 && _expeditionPerks.CanBypassEncounter(exp.Survivor, selected.id))
@@ -354,6 +372,48 @@ namespace AtomicWar._Game.Core
             OnEncounterTriggered?.Invoke(exp, selected);
 
             // Psychological auto-resolution
+            ResolveEncounterWithPsychology(exp, selected);
+        }
+
+        private static bool IsTrapEncounter(EncounterSO encounter)
+        {
+            if (encounter == null) return false;
+            string id = encounter.id ?? string.Empty;
+            string name = encounter.title ?? string.Empty;
+            return id.IndexOf("trap", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("mine", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("snare", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("trap", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("mine", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static bool IsHostileEncounter(EncounterSO encounter)
+        {
+            if (encounter == null) return false;
+            if (IsHumanEncounter(encounter)) return true;
+            string id = encounter.id ?? string.Empty;
+            string name = encounter.title ?? string.Empty;
+            return id.IndexOf("hostile", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("ambush", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("dog", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("ghoul", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("hostile", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("ambush", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>#258 Silent trap disarm — no OnEncounterTriggered UI.</summary>
+        private void ResolveSilentTrapDisarm(ExpeditionState exp, EncounterSO selected)
+        {
+            if (exp == null || selected == null) return;
+            // Resolve without surfacing the encounter UI.
+            ResolveEncounterWithPsychology(exp, selected);
+        }
+
+        /// <summary>#259 Ghost Shooter silent kill — no Hostile Encounter UI.</summary>
+        private void ResolveGhostShooterKill(ExpeditionState exp, EncounterSO selected)
+        {
+            if (exp?.Survivor == null || selected == null) return;
+            // Deliberately skip OnEncounterTriggered so the combat UI never opens.
             ResolveEncounterWithPsychology(exp, selected);
         }
 

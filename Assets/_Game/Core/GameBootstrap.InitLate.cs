@@ -554,6 +554,11 @@ namespace AtomicWar._Game.Core
             JournalSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             RadioTunerSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             // Prompts #249–#256 bond/burden host loops
+            // Prompts #257–#266 civil-war / interpersonal host loops
+            // (HatchDefense Art of War + Sacrificial; Economy Hated military trust;
+            //  Crafting Supply Chain cost; PowerNetwork fuel mult; Expedition trap/ghost;
+            //  Needs Living Saint / Hyper-Empath; Medical God Complex / Humbled;
+            //  Sleep bed-only; ActionScorer labor filters; NeedsBar Denialist anxiety)
             NeedsSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             MentalBreakSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 

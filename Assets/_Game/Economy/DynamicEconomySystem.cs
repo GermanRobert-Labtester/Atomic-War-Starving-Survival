@@ -259,7 +259,32 @@ namespace AtomicWar._Game.Economy
         public float GetTrust(string factionId)
         {
             if (string.IsNullOrEmpty(factionId)) return 0f;
-            return _trust.TryGetValue(factionId, out float t) ? t : 0f;
+            float t = _trust.TryGetValue(factionId, out float stored) ? stored : 0f;
+            // #257 Hated: stored military trust floors at −100 while a Hated survivor lives.
+            if (_personalQuests != null && _getSurvivors != null && IsMilitaryFaction(factionId))
+            {
+                var list = _getSurvivors();
+                if (list != null)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i] != null && list[i].IsAlive
+                            && _personalQuests.IsShotOnSightByMilitary(list[i]))
+                            return Mathf.Min(t, PersonalQuestSystem.HatedMilitaryTrust);
+                    }
+                }
+            }
+            return t;
+        }
+
+        /// <summary>Military remnant factions that Hated Generals are shot on sight by.</summary>
+        public static bool IsMilitaryFaction(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return false;
+            return string.Equals(factionId, FactionSO.Ids.MilitaryRemnants, StringComparison.Ordinal)
+                   || factionId.IndexOf("military", StringComparison.OrdinalIgnoreCase) >= 0
+                   || factionId.IndexOf("army", StringComparison.OrdinalIgnoreCase) >= 0
+                   || factionId.IndexOf("militia", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>
@@ -315,6 +340,23 @@ namespace AtomicWar._Game.Economy
         public float GetEffectiveTrust(string factionId)
         {
             float stored = GetTrust(factionId);
+            // #257 Hated: all military factions are shot-on-sight (−100 trust).
+            if (_personalQuests != null && _getSurvivors != null
+                && IsMilitaryFaction(factionId))
+            {
+                var list = _getSurvivors();
+                if (list != null)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        var sv = list[i];
+                        if (sv == null || !sv.IsAlive) continue;
+                        if (_personalQuests.IsShotOnSightByMilitary(sv))
+                            return PersonalQuestSystem.HatedMilitaryTrust;
+                    }
+                }
+            }
+
             var fac = GetFaction(factionId);
             if (fac == null || !fac.trustInversion) return stored;
 

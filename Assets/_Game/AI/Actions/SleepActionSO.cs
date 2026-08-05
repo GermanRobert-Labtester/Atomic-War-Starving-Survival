@@ -34,6 +34,15 @@ namespace AtomicWar._Game.AI.Actions
                 && context.PersonalQuests.ShouldIgnoreRestAction(context.Survivor))
                 return 0f;
 
+            // #257 Tactician: refuses floor sleep — only beds.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.WillRefuseFloorSleep(context.Survivor))
+            {
+                var bedCheck = ResolveConditions(context);
+                if (!bedCheck.HasBed)
+                    return 0f;
+            }
+
             return Mathf.Clamp01(context.Survivor.Needs.Fatigue / 100f);
         }
 
@@ -47,6 +56,20 @@ namespace AtomicWar._Game.AI.Actions
                 return;
 
             var conditions = ResolveConditions(context);
+
+            // #257 Tactician forced onto the floor: massive fatigue penalty, no rest.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.RequiresBedModuleToSleep(context.Survivor)
+                && !conditions.HasBed)
+            {
+                float pen = context.PersonalQuests.GetFloorSleepFatiguePenaltyPerHour(
+                    context.Survivor, hasBedModule: false);
+                context.Survivor.Needs.Fatigue = Mathf.Min(
+                    100f, context.Survivor.Needs.Fatigue + pen);
+                context.Survivor.State = SurvivorState.Resting;
+                return;
+            }
+
             var result = SleepQualitySystem.Evaluate(conditions);
             // #250 Workaholic: sleep restores fatigue at half speed.
             float restoreMult = context.PersonalQuests != null
@@ -54,6 +77,25 @@ namespace AtomicWar._Game.AI.Actions
                 : 1f;
             if (!Mathf.Approximately(restoreMult, 1f))
                 result.FatigueRestored *= restoreMult;
+
+            // #261 Night Terrors: roommates of a Child Soldier get disrupted sleep.
+            if (context.PersonalQuests != null && context.GetSurvivors != null)
+            {
+                var all = context.GetSurvivors();
+                if (all != null)
+                {
+                    for (int i = 0; i < all.Count; i++)
+                    {
+                        var source = all[i];
+                        if (source == null || !source.IsAlive) continue;
+                        float disrupt = context.PersonalQuests.GetNightTerrorSleepDisruption(
+                            source, context.Survivor);
+                        if (disrupt > 0f)
+                            result.FatigueRestored = Mathf.Max(0f, result.FatigueRestored - disrupt);
+                    }
+                }
+            }
+
             ApplySleepResult(context.Survivor, result);
         }
 

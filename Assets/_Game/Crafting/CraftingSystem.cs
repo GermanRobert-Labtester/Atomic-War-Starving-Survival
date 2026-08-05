@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
 
@@ -137,7 +138,13 @@ namespace AtomicWar._Game.Crafting
         /// Whether a recipe can be started right now: required station present and
         /// operational, all ingredients held, and the result can fit the inventory.
         /// </summary>
-        public bool CanCraft(Recipe recipe)
+        public bool CanCraft(Recipe recipe) => CanCraft(recipe, crafter: null);
+
+        /// <summary>
+        /// Whether ingredients + station allow a craft. Optional crafter applies
+        /// #260 Supply Chain Master material cost mult.
+        /// </summary>
+        public bool CanCraft(Recipe recipe, Survivor crafter)
         {
             if (recipe == null)
             {
@@ -153,6 +160,7 @@ namespace AtomicWar._Game.Crafting
                 }
             }
 
+            float costMult = GetCraftCostMultiplier(crafter);
             if (recipe.ingredients != null)
             {
                 for (int i = 0; i < recipe.ingredients.Count; i++)
@@ -162,7 +170,8 @@ namespace AtomicWar._Game.Crafting
                     {
                         return false;
                     }
-                    if (_inventory.Count(ingredient.item) < ingredient.amount)
+                    int need = ScaleIngredientAmount(ingredient.amount, costMult);
+                    if (_inventory.Count(ingredient.item) < need)
                     {
                         return false;
                     }
@@ -180,7 +189,7 @@ namespace AtomicWar._Game.Crafting
         /// <summary>Start crafting: consume the ingredients and queue the craft. False if it can't start.</summary>
         public bool StartCraft(Recipe recipe, Survivor crafter = null)
         {
-            if (!CanCraft(recipe))
+            if (!CanCraft(recipe, crafter))
             {
                 return false;
             }
@@ -192,12 +201,14 @@ namespace AtomicWar._Game.Crafting
                 return false;
             }
 
+            float costMult = GetCraftCostMultiplier(crafter);
             if (recipe.ingredients != null)
             {
                 for (int i = 0; i < recipe.ingredients.Count; i++)
                 {
                     var ingredient = recipe.ingredients[i];
-                    _inventory.Remove(ingredient.item, ingredient.amount);
+                    int need = ScaleIngredientAmount(ingredient.amount, costMult);
+                    _inventory.Remove(ingredient.item, need);
                 }
             }
 
@@ -314,6 +325,20 @@ namespace AtomicWar._Game.Crafting
             return recipe.result != null
                    && string.Equals(recipe.result.id, SurvivalPerkSystem.MoonshineId,
                        StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>#260 Supply Chain Master: 20% fewer materials when crafter has the latent.</summary>
+        private float GetCraftCostMultiplier(Survivor crafter)
+        {
+            if (crafter == null || _personalQuests == null) return 1f;
+            return _personalQuests.GetCraftMaterialCostMultiplier(crafter);
+        }
+
+        private static int ScaleIngredientAmount(int baseAmount, float costMult)
+        {
+            if (baseAmount <= 0) return 0;
+            if (costMult >= 0.999f) return baseAmount;
+            return Mathf.Max(1, Mathf.RoundToInt(baseAmount * costMult));
         }
 
         /// <summary>Clone base med definition with high-yield id / display name.</summary>

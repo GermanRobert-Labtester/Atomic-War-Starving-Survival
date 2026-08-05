@@ -279,7 +279,12 @@ namespace AtomicWar._Game.Shelter
                 {
                     case PowerSourceKind.Diesel:
                         if (src.Fuel <= 0f) break;
-                        float burn = def.FuelPerHour * gameHours * src.EffectiveFuelBurnMultiplier;
+                        // #260 Supply Chain Master: bunker-wide diesel burn mult (0.7).
+                        float bunkerFuelMult = _personalQuests != null
+                            ? _personalQuests.GetBunkerFuelBurnMultiplier(_getSurvivors?.Invoke())
+                            : 1f;
+                        float burn = def.FuelPerHour * gameHours
+                                     * src.EffectiveFuelBurnMultiplier * bunkerFuelMult;
                         src.Fuel = Mathf.Max(0f, src.Fuel - burn);
                         if (def.CoPpmPerHour > 0f)
                             coDelta += def.CoPpmPerHour * gameHours;

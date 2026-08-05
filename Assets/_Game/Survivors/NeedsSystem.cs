@@ -53,8 +53,8 @@ namespace AtomicWar._Game.Survivors
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
 
         /// <summary>
-        /// Prompts #249–#256 — Selfless morale absorb, Traumatized morale cap,
-        /// Pillar-of-Atlas death debuff notification.
+        /// Prompts #249–#266 — Selfless morale absorb, Traumatized morale cap,
+        /// Pillar-of-Atlas death, Living Saint floor, Hyper-Empath drift.
         /// </summary>
         public void BindPersonalQuests(
             PersonalQuestSystem personalQuests,
@@ -152,6 +152,33 @@ namespace AtomicWar._Game.Survivors
             {
                 Modify(survivor, NeedKind.Morale, -_profile.moraleLossPerHourWhileCritical * gameHours);
             }
+
+            // #262 Hyper-Empathetic: morale drifts toward bunker average.
+            if (_personalQuests != null && _personalQuests.HasHyperEmpathetic(survivor))
+            {
+                float avg = ComputeBunkerAverageMorale(survivor);
+                _personalQuests.ApplyHyperEmpatheticMorale(survivor, avg, gameHours);
+            }
+
+            // #265 Living Saint: permanent Inspired morale floor for the bunker.
+            _personalQuests?.ApplyLivingSaintMoraleFloor(survivor);
+        }
+
+        private float ComputeBunkerAverageMorale(Survivor exclude = null)
+        {
+            var all = _getSurvivors != null ? _getSurvivors() : _survivors;
+            if (all == null || all.Count == 0) return 50f;
+            float sum = 0f;
+            int n = 0;
+            for (int i = 0; i < all.Count; i++)
+            {
+                var s = all[i];
+                if (s == null || !s.IsAlive || s.Needs == null) continue;
+                if (exclude != null && ReferenceEquals(s, exclude)) continue;
+                sum += s.Needs.Morale;
+                n++;
+            }
+            return n > 0 ? sum / n : 50f;
         }
 
         /// <summary>Apply a clamped delta to a single need of a survivor.</summary>
@@ -169,6 +196,8 @@ namespace AtomicWar._Game.Survivors
                 _personalQuests.ApplyMoraleDamageWithSelfless(survivor, -delta, all);
                 float after = survivor.Needs.Morale;
                 _personalQuests.ClampMoraleToCap(survivor);
+                // #265 Living Saint Inspired: floor applies after any morale damage path.
+                _personalQuests.ApplyLivingSaintMoraleFloor(survivor);
                 OnNeedChanged?.Invoke(survivor, NeedKind.Morale, survivor.Needs.Morale);
                 // Still fire critical if applicable (morale has no critical threshold here).
                 _ = after;
@@ -190,7 +219,11 @@ namespace AtomicWar._Game.Survivors
             SetValue(survivor, need, newValue);
 
             if (need == NeedKind.Morale && _personalQuests != null)
+            {
                 _personalQuests.ClampMoraleToCap(survivor);
+                // #265 Living Saint Inspired: Morale never drops below 50 bunker-wide.
+                _personalQuests.ApplyLivingSaintMoraleFloor(survivor);
+            }
 
             switch (need)
             {

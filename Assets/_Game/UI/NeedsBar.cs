@@ -78,6 +78,12 @@ namespace AtomicWar._Game.UI
         /// UI may report Hunger/Thirst/Health as full so the player cannot trust the bars.
         /// Mask decision is rolled once per refresh for a consistent snapshot.
         /// </summary>
+        /// <summary>
+        /// #264 Denialist: last displayed RadiationAnxiety (0 while denial holds).
+        /// Tests and HUD read this instead of raw Survivor.RadiationAnxiety.
+        /// </summary>
+        public float DisplayedRadiationAnxiety { get; private set; }
+
         public void SetNeeds(
             Needs needs,
             float health,
@@ -100,6 +106,12 @@ namespace AtomicWar._Game.UI
             UpdateNeed("morale", needs.Morale);
             UpdateNeed("health", mask ? 100f : health);
             UpdateNeed("radiation", radiation);
+
+            // #264 Denialist: UI always reports RadiationAnxiety as 0.
+            float realAnxiety = survivor != null ? survivor.RadiationAnxiety : 0f;
+            DisplayedRadiationAnxiety = personalQuests != null && survivor != null
+                ? personalQuests.GetDisplayedRadiationAnxiety(survivor, realAnxiety)
+                : realAnxiety;
         }
 
         public void UpdateNeed(string needId, float value)

@@ -225,7 +225,11 @@ namespace AtomicWar._Game.Shelter
         {
             if (SecurityOverride >= 0f)
             {
-                return SecurityOverride + GetGuardBonus();
+                float over = SecurityOverride + GetGuardBonus();
+                // #257 Art of War: +25% ShelterSecurity while a living General is in-bunker.
+                if (_personalQuests != null)
+                    over = _personalQuests.ApplyArtOfWarShelterSecurity(over, _getSurvivors?.Invoke());
+                return over;
             }
 
             var shelter = _getShelter != null ? _getShelter() : null;
@@ -264,6 +268,9 @@ namespace AtomicWar._Game.Shelter
             }
 
             score += GetGuardBonus();
+            // #257 Art of War: +25% ShelterSecurity while a living General is in-bunker.
+            if (_personalQuests != null)
+                score = _personalQuests.ApplyArtOfWarShelterSecurity(score, _getSurvivors?.Invoke());
             return Mathf.Max(0f, score);
         }
 
@@ -639,6 +646,8 @@ namespace AtomicWar._Game.Shelter
                     : raid.Message + " Held.";
                 ApplyMoraleToSurvivors(result.MoraleDelta);
                 ApplyHatchWear(result.HatchDamage);
+                // #259 Holding the Line: defended hatch without Coward flee.
+                RecordDeserterRaidHold(result, day);
             }
             else
             {
@@ -865,6 +874,19 @@ namespace AtomicWar._Game.Shelter
                     ? "broken_bone"
                     : "gunshot_wound";
 
+                // #265 Sacrificial: Martyr intercepts breach trauma meant for others.
+                if (_personalQuests != null)
+                {
+                    Survivor interceptor = FindSacrificialInterceptor(survivors, sv);
+                    if (interceptor != null)
+                    {
+                        const float interceptDmg = 15f;
+                        _personalQuests.InterceptHatchBreachDamage(interceptor, sv, interceptDmg);
+                        result.TraumatizedSurvivorIds.Add(interceptor.Id);
+                        continue;
+                    }
+                }
+
                 if (_inflictTrauma != null)
                 {
                     _inflictTrauma(sv, traumaId);
@@ -879,6 +901,39 @@ namespace AtomicWar._Game.Shelter
                 }
 
                 result.TraumatizedSurvivorIds.Add(sv.Id);
+            }
+        }
+
+        /// <summary>#265 Find a living Sacrificial martyr who will take hatch-breach damage.</summary>
+        private Survivor FindSacrificialInterceptor(IReadOnlyList<Survivor> survivors, Survivor intended)
+        {
+            if (_personalQuests == null || survivors == null || intended == null) return null;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var m = survivors[i];
+                if (m == null || !m.IsAlive) continue;
+                if (_personalQuests.ShouldInterceptHatchBreachDamage(m, intended))
+                    return m;
+            }
+            return null;
+        }
+
+        /// <summary>#259 Deserter quest: repel while defending hatch without auto-flee.</summary>
+        private void RecordDeserterRaidHold(RaidResolution result, int day)
+        {
+            if (_personalQuests == null || result == null || !result.Repelled) return;
+            var survivors = _getSurvivors?.Invoke();
+            if (survivors == null) return;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var sv = survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                // Must have been on guard or present at hatch defense.
+                bool defended = _activeGuards.Count == 0 || _activeGuards.ContainsKey(sv.Id);
+                if (!defended) continue;
+                bool fled = _personalQuests.ShouldAutoFleeCombat(sv);
+                _personalQuests.RecordRaidDefenseWithoutFleeing(
+                    sv, raidSurvived: true, fled: fled, defendedHatch: true, currentDay: day);
             }
         }
 

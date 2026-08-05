@@ -549,6 +549,43 @@ namespace AtomicWar._Game.Inventory
             return state;
         }
 
+        /// <summary>
+        /// #260 Quartermaster Strict: re-sort slots by item type then id, overriding
+        /// player placement so the inventory stays "neatly sorted."
+        /// </summary>
+        public void ResortSlotsByType()
+        {
+            if (_slots == null || _slots.Count <= 1) return;
+            _slots.Sort((a, b) =>
+            {
+                if (a?.Item == null && b?.Item == null) return 0;
+                if (a?.Item == null) return 1;
+                if (b?.Item == null) return -1;
+                int typeCmp = ((int)a.Item.type).CompareTo((int)b.Item.type);
+                if (typeCmp != 0) return typeCmp;
+                return string.CompareOrdinal(a.Item.id ?? string.Empty, b.Item.id ?? string.Empty);
+            });
+            OnInventoryChanged?.Invoke();
+        }
+
+        /// <summary>True when slots are ordered by type then id (Strict inventory check).</summary>
+        public bool IsSortedByType()
+        {
+            if (_slots == null || _slots.Count <= 1) return true;
+            for (int i = 1; i < _slots.Count; i++)
+            {
+                var prev = _slots[i - 1];
+                var cur = _slots[i];
+                if (prev?.Item == null || cur?.Item == null) continue;
+                int typeCmp = ((int)prev.Item.type).CompareTo((int)cur.Item.type);
+                if (typeCmp > 0) return false;
+                if (typeCmp == 0
+                    && string.CompareOrdinal(prev.Item.id ?? string.Empty, cur.Item.id ?? string.Empty) > 0)
+                    return false;
+            }
+            return true;
+        }
+
         /// <summary>Rebuild the inventory from a snapshot, resolving item ids via a catalog lookup.</summary>
         public void RestoreState(InventorySaveState state, Func<string, ItemDefinition> lookup)
         {

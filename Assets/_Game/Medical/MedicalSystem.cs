@@ -896,6 +896,9 @@ namespace AtomicWar._Game.Medical
                 // Prompt #205 — curing Coma earns Paramedic.
                 if (string.Equals(curedId, AfflictionSO.Ids.Coma, StringComparison.OrdinalIgnoreCase))
                     _medicalPerks?.RecordComaRevive(medic, day);
+
+                // #266 God Complex: verbally abuse patients after heal (−10 morale).
+                _personalQuests?.ApplyPatientMoraleAfterHeal(medic, survivor);
             }
 
             // Prompt #201 — accidental Bleeding on surgical completion (0% with Steady Hands).
@@ -908,6 +911,21 @@ namespace AtomicWar._Game.Medical
 
             OnAfflictionCured?.Invoke(survivor, active);
             OnMedicalStateChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// #266 Humbled Healer: permanently cure a chronic disability (limp / tremors / scarred lungs).
+        /// </summary>
+        public bool TryCureChronicDisability(Survivor medic, Survivor patient, string disabilityId)
+        {
+            if (medic == null || !medic.IsAlive || patient == null || !patient.IsAlive) return false;
+            if (string.IsNullOrEmpty(disabilityId)) return false;
+            if (_personalQuests == null || !_personalQuests.CanCureChronicDisabilities(medic))
+                return false;
+            if (!patient.HasDisability(disabilityId)) return false;
+            patient.DisabilityIds.Remove(disabilityId);
+            OnMedicalStateChanged?.Invoke();
+            return true;
         }
 
         private Survivor ResolveMedic(string medicId)
