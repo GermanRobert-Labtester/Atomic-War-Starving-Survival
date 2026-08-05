@@ -187,6 +187,33 @@ namespace AtomicWar._Game.UI
             _healthTrajectoryHud.SetReading(radiationSystem.ExaminePrognosis(survivor));
         }
 
+        /// <summary>
+        /// Prompt #203 — medical exam with optional LatentDamage/OnsetTimer reveal.
+        /// Radiologist examiners reveal without a kit; others need tryConsumeKit to succeed.
+        /// </summary>
+        public void OnMedicalExam(
+            Survivor examiner,
+            Survivor patient,
+            RadiationSystem radiationSystem,
+            MedicalPerkSystem medicalPerks,
+            System.Func<bool> tryConsumeKit = null)
+        {
+            if (patient == null || radiationSystem == null) return;
+            EnsureWidgetReferences();
+            var estimate = radiationSystem.ExaminePrognosis(patient);
+            if (medicalPerks != null
+                && medicalPerks.TryRevealLatentDamage(
+                    examiner, patient, tryConsumeKit,
+                    out float latent, out float onset))
+            {
+                _healthTrajectoryHud.SetReading(estimate, latent, onset);
+            }
+            else
+            {
+                _healthTrajectoryHud.SetReading(estimate);
+            }
+        }
+
         /// <summary>Bind shelter aggregate stats to Environment status strip.</summary>
         public void OnShelterUpdated(Shelter.Shelter shelter)
         {
