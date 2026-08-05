@@ -127,6 +127,27 @@ namespace AtomicWar._Game.Survivors
             public const string TheBigScore = "quest_the_big_score";
             public const string ThePerfectFake = "quest_the_perfect_fake";
             public const string TheEscape = "quest_the_escape";
+            // Prompts #299–#318 ashes / improbable / final flawed
+            public const string TheRealWorld = "quest_the_real_world";
+            public const string TheGladiator = "quest_the_gladiator";
+            public const string TheFirstSave = "quest_the_first_save";
+            public const string PlayerOne = "quest_player_one";
+            public const string LossOfFaith = "quest_loss_of_faith";
+            public const string SeparationAnxiety = "quest_separation_anxiety";
+            public const string TheIndependent = "quest_the_independent";
+            public const string Vindicated = "quest_vindicated";
+            public const string TheOldWoods = "quest_the_old_woods";
+            public const string TheAwakening = "quest_the_awakening";
+            public const string BreakingChains = "quest_breaking_chains";
+            public const string EarningKeep = "quest_earning_keep";
+            public const string WorthlessPaper = "quest_worthless_paper";
+            public const string TheMastersFate = "quest_the_masters_fate";
+            public const string TheBackdraft = "quest_the_backdraft";
+            public const string TheProsthetic = "quest_the_prosthetic";
+            public const string AGoodDeath = "quest_a_good_death";
+            public const string TearsInRain = "quest_tears_in_rain";
+            public const string MansBestFriend = "quest_mans_best_friend";
+            public const string TheTuringTest = "quest_the_turing_test";
         }
     }
 }

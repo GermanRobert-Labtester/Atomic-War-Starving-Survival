@@ -289,6 +289,27 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ShadowId, "Shadow", "scavenging", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterOfDisguiseId, "Master of Disguise", "social", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MechanicProdigyId, "Mechanic Prodigy", "scavenging", milestoneOnly, 0.25f, false));
+            // Prompts #299–#318
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DiplomatId, "Diplomat", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.WastelandGladiatorId, "Wasteland Gladiator", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ChiefOfMedicineId, "Chief of Medicine", "medical", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DroneOperatorId, "Drone Operator", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ChoirOfOneId, "Choir of One", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.HiveTacticsId, "Hive Tactics", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.HiveHealingId, "Hive Healing", "medical", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.TruthSeekerId, "Truth Seeker", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.WildmanId, "Wildman", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SecondLifeId, "Second Life", "medical", milestoneOnly, 0.30f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.IronWillId, "Iron Will", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.UnseenListenerId, "Unseen Listener", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.RuthlessCapitalistId, "Ruthless Capitalist", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ProdigyId, "Prodigy", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.CommanderId, "Commander", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.CyberArmId, "Cyber-Arm", "scavenging", milestoneOnly, 0.30f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.RedemptionId, "Redemption", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.OverclockedId, "Overclocked", "scavenging", milestoneOnly, 0.30f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.WastelandGuardianId, "Wasteland Guardian", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.OmniscienceId, "Omniscience", "social", milestoneOnly, 0.30f, false));
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// Prompts #214–#298 — Personal Quest Engine + latent expert traits.
+    /// Prompts #214–#318 — Personal Quest Engine + latent expert traits.
     /// </summary>
     [TestFixture]
     public class PersonalQuestTests
@@ -2238,6 +2238,411 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(2, restored.GetState(lib.Id).UniqueIntelIds.Count);
             Assert.IsTrue(restored.GetState(acct.Id).StorageLockedByAccountant);
             Assert.AreEqual(2, restored.GetState(driver.Id).GetawayInsideDays);
+        }
+
+        // ── #299 Prom Queen / Diplomat ───────────────────────────────────
+
+        [Test]
+        public void PromQueen_Spoiled_RealWorld_UnlocksDiplomat()
+        {
+            var q = MakeArchetype(PersonalQuestSystem.PromQueenId);
+            Assert.IsTrue(_quests.HasSpoiled(q));
+            Assert.IsTrue(_quests.ShouldRefuseFoodItem(q, PersonalQuestSystem.SpoiledMeatItemId));
+            Assert.AreEqual(1f, _quests.GetCharisma01(q), 0.01f);
+            Assert.AreEqual(2f, _quests.GetMakeupHygieneHoursPerDay(q), 0.01f);
+
+            _quests.TryStartQuestline(q, "test", 1);
+            _quests.RecordRealWorldSoloRaidDefense(q, leftAloneToDefend: true, killedRaider: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasDiplomat(q));
+            _quests.RecordRealWorldSoloRaidDefense(q, leftAloneToDefend: true, killedRaider: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasDiplomat(q));
+            Assert.IsTrue(_quests.CanTalkDownRaiderRaid(q));
+            Assert.IsTrue(_quests.TryConvertRaidToTrade(q, raidAtHatch: true));
+        }
+
+        // ── #300 Jock / Wasteland Gladiator ──────────────────────────────
+
+        [Test]
+        public void Jock_HighMetabolism_Gladiator_UnlocksWastelandGladiator()
+        {
+            var j = MakeArchetype(PersonalQuestSystem.JockId);
+            Assert.IsTrue(_quests.HasHighMetabolism(j));
+            Assert.AreEqual(2f, _quests.GetHighMetabolismRationMultiplier(j), 0.01f);
+            j.Needs.Morale = 10f;
+            Assert.IsTrue(_quests.ShouldPunchWallsWhenMoraleLow(j, j.Needs.Morale));
+            Assert.Greater(_quests.GetWallPunchStructuralDamage(j), 0f);
+
+            _quests.TryStartQuestline(j, "test", 1);
+            _quests.RecordGladiatorBossDefeat(j, pureHandToHand: true, weaponsEquipped: true, bossDefeated: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasWastelandGladiator(j));
+            _quests.RecordGladiatorBossDefeat(j, pureHandToHand: true, weaponsEquipped: false, bossDefeated: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasWastelandGladiator(j));
+            Assert.IsTrue(_quests.CanThrowRaidersFromAirlock(j));
+            Assert.Greater(_quests.GetUnarmedDamageMultiplier(j), 1f);
+        }
+
+        // ── #301 Med Student / Chief of Medicine ─────────────────────────
+
+        [Test]
+        public void MedStudent_Textbook_FirstSave_UnlocksChiefOfMedicine()
+        {
+            var m = MakeArchetype(PersonalQuestSystem.MedStudentId);
+            Assert.IsTrue(_quests.HasTextbookKnowledge(m));
+            Assert.AreEqual(2f, _quests.GetTextbookHealingDurationMultiplier(m), 0.01f);
+            Assert.IsTrue(_quests.TryMedStudentFirstTraumaPuke(m, "gunshot_wound"));
+            Assert.IsFalse(_quests.TryMedStudentFirstTraumaPuke(m, "gunshot_wound")); // once
+            Assert.Less(m.Needs.Hygiene, 100f);
+
+            _quests.TryStartQuestline(m, "test", 1);
+            _quests.RecordFirstSaveComaRevive(m, usedAdrenaline: true, patientRevivedFromComa: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasChiefOfMedicine(m));
+            _quests.RecordFirstSaveComaRevive(m, usedAdrenaline: true, patientRevivedFromComa: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasChiefOfMedicine(m));
+            Assert.AreEqual(0.50f, _quests.GetMedicalSupplyCostMultiplier(m), 0.01f);
+            Assert.IsTrue(_quests.CanInstantlyDiagnosePhase2(m));
+        }
+
+        // ── #302 Gamer / Drone Operator ──────────────────────────────────
+
+        [Test]
+        public void Gamer_Agoraphobic_PlayerOne_UnlocksDroneOperator()
+        {
+            var g = MakeArchetype(PersonalQuestSystem.GamerId);
+            Assert.IsTrue(_quests.HasAgoraphobic(g));
+            Assert.IsTrue(_quests.TryTriggerAgoraphobicExpeditionBreak(g));
+            Assert.IsNotNull(g.currentMentalBreakId);
+            Assert.Less(_quests.GetGamerCoopTaskSpeedMultiplier(g, isNight: false), 1f);
+
+            _quests.TryStartQuestline(g, "test", 1);
+            for (int i = 0; i < 9; i++)
+                _quests.RecordPlayerOneDroneMap(g, "node_" + i, droneRepaired: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasDroneOperator(g));
+            _quests.RecordPlayerOneDroneMap(g, "node_9", droneRepaired: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasDroneOperator(g));
+            Assert.IsTrue(_quests.CanRemoteScavengeWithDrone(g));
+        }
+
+        // ── #303 Choir Boy / Choir of One ────────────────────────────────
+
+        [Test]
+        public void ChoirBoy_Innocent_LossOfFaith_UnlocksChoirOfOne()
+        {
+            var c = MakeArchetype(PersonalQuestSystem.ChoirBoyId);
+            Assert.IsTrue(_quests.HasInnocent(c));
+            _quests.ApplyInnocentMurderShock(c);
+            Assert.AreEqual("shock", c.currentMentalBreakId);
+            Assert.Less(_quests.GetCorpseMoralePenaltyMultiplier(_survivors), 1f);
+
+            _quests.TryStartQuestline(c, "test", 1);
+            _quests.RecordLossOfFaithStarvation(c, bunkerOutOfFood: true, consecutiveFoodlessDays: 4, currentDay: 1);
+            Assert.IsFalse(_quests.HasChoirOfOne(c));
+            _quests.RecordLossOfFaithStarvation(c, bunkerOutOfFood: true, consecutiveFoodlessDays: 5, currentDay: 2);
+            Assert.IsTrue(_quests.HasChoirOfOne(c));
+            Assert.IsTrue(_quests.NegatesBunkerRadiationAnxiety(_survivors));
+        }
+
+        // ── #304 Twin Alpha / Hive Tactics ───────────────────────────────
+
+        [Test]
+        public void TwinAlpha_Symbiotic_Separation_UnlocksHiveTactics()
+        {
+            var a = MakeArchetype(PersonalQuestSystem.TwinAlphaId, "alpha");
+            var b = MakeArchetype(PersonalQuestSystem.TwinBetaId, "beta");
+            _quests.LinkTwins(a, b);
+            Assert.IsTrue(_quests.HasSymbioticBond(a));
+            a.CurrentRoomId = "quarters";
+            b.CurrentRoomId = "airlock";
+            Assert.IsFalse(_quests.CanExecuteUtilityAction(a, b));
+            b.CurrentRoomId = "quarters";
+            Assert.IsTrue(_quests.CanExecuteUtilityAction(a, b));
+
+            _quests.TryStartQuestline(a, "test", 1);
+            _quests.RecordSeparationAnxietyExpedition(a, alphaOnExpedition: true, betaStayedInBunker: false, expeditionCompleted: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasHiveTactics(a));
+            _quests.RecordSeparationAnxietyExpedition(a, alphaOnExpedition: true, betaStayedInBunker: true, expeditionCompleted: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasHiveTactics(a));
+            Assert.AreEqual(3f, _quests.GetHiveTacticsCombatMultiplier(a, b), 0.01f);
+        }
+
+        // ── #305 Twin Beta / Hive Healing ────────────────────────────────
+
+        [Test]
+        public void TwinBeta_MirrorNeeds_Independent_UnlocksHiveHealing()
+        {
+            var a = MakeArchetype(PersonalQuestSystem.TwinAlphaId, "alpha2");
+            var b = MakeArchetype(PersonalQuestSystem.TwinBetaId, "beta2");
+            _quests.LinkTwins(a, b);
+            a.Needs.Hunger = 80f;
+            b.Needs.Hunger = 10f;
+            _quests.MirrorTwinAlphaNeeds(b, a);
+            Assert.AreEqual(80f, b.Needs.Hunger, 0.01f);
+
+            _quests.TryStartQuestline(b, "test", 1);
+            _quests.RecordIndependentHealAlpha(b, a, alphaHadPhase2Lethal: true, alphaHealed: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasHiveHealing(b));
+            _quests.RecordIndependentHealAlpha(b, a, alphaHadPhase2Lethal: true, alphaHealed: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasHiveHealing(b));
+            a.Needs.Health = 40f;
+            float applied = _quests.ApplyHiveHealingDuplicate(b, a, healthDelta: 20f);
+            Assert.Greater(applied, 0f);
+            Assert.Greater(a.Needs.Health, 40f);
+        }
+
+        // ── #306 Theorist / Truth Seeker ─────────────────────────────────
+
+        [Test]
+        public void Theorist_Tinfoil_Vindicated_UnlocksTruthSeeker()
+        {
+            var t = MakeArchetype(PersonalQuestSystem.TheoristId);
+            Assert.IsTrue(_quests.HasTinfoilHat(t));
+            Assert.IsTrue(_quests.CannotEquipHelmets(t));
+            Assert.IsTrue(_quests.RefusesAntibiotics(t));
+
+            _quests.TryStartQuestline(t, "test", 1);
+            _quests.RecordVindicatedNumbersStation(t, decodedNumbersStation: true, governmentStillActive: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasTruthSeeker(t));
+            _quests.RecordVindicatedNumbersStation(t, decodedNumbersStation: true, governmentStillActive: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasTruthSeeker(t));
+            Assert.AreEqual(3f, _quests.GetTruthSeekerIntelMultiplier(t), 0.01f);
+            Assert.IsTrue(_quests.IntelAlwaysVerifiedNeverTrap(t));
+        }
+
+        // ── #307 Hermit / Wildman ────────────────────────────────────────
+
+        [Test]
+        public void Hermit_Uncivilized_OldWoods_UnlocksWildman()
+        {
+            var h = MakeArchetype(PersonalQuestSystem.HermitId);
+            Assert.IsTrue(_quests.HasUncivilized(h));
+            Assert.IsTrue(_quests.CannotUseStovePurifierOrMedicalBed(h));
+            Assert.IsTrue(_quests.RefusesIndoorSleepWhenCrowded(h, bunkerPopulation: 5));
+            Assert.AreEqual(PersonalQuestSystem.AirlockRoomId, _quests.GetPreferredSleepRoomWhenCrowded(h, 5));
+
+            _quests.TryStartQuestline(h, "test", 1);
+            _quests.RecordOldWoodsCleared(h, PersonalQuestSystem.MutatedForestNodeId, usedOnlyKnife: false, allHostilesCleared: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasWildman(h));
+            _quests.RecordOldWoodsCleared(h, PersonalQuestSystem.MutatedForestNodeId, usedOnlyKnife: true, allHostilesCleared: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasWildman(h));
+            Assert.IsTrue(_quests.CanEatRawIrradiatedFloraSafely(h));
+        }
+
+        // ── #308 Patient / Second Life ───────────────────────────────────
+
+        [Test]
+        public void Patient_Comatose_Awakening_UnlocksSecondLife()
+        {
+            var p = MakeArchetype(PersonalQuestSystem.PatientId);
+            Assert.IsTrue(_quests.HasComatoseBurden(p));
+            Assert.IsTrue(_quests.HasZeroAiUntilAwakening(p));
+            Assert.AreEqual(SurvivorState.Incapacitated, p.State);
+
+            for (int d = 0; d < 14; d++)
+                _quests.TickAwakeningDay(p, keptAliveAndHydrated: true, currentDay: d + 1);
+            Assert.IsFalse(_quests.HasSecondLife(p));
+            _quests.TickAwakeningDay(p, keptAliveAndHydrated: true, currentDay: 15);
+            Assert.IsTrue(_quests.HasSecondLife(p));
+            Assert.AreEqual(SurvivorState.Idle, p.State);
+            Assert.GreaterOrEqual(p.BaseMaxHealth, 150f - 0.01f);
+        }
+
+        // ── #309 Escapee / Iron Will ─────────────────────────────────────
+
+        [Test]
+        public void Escapee_Branded_BreakingChains_UnlocksIronWill()
+        {
+            var e = MakeArchetype(PersonalQuestSystem.EscapeeId);
+            Assert.IsTrue(_quests.HasBranded(e));
+            Assert.AreEqual(2f, _quests.GetCultOfTheGlowDamageMultiplier(e), 0.01f);
+            Assert.IsTrue(_quests.CannotTradeWithCultOfTheGlow(e));
+            Assert.IsTrue(_quests.DestroysReligiousItems(e));
+            Assert.IsTrue(_quests.IsReligiousItemId("cult_scripture"));
+
+            _quests.TryStartQuestline(e, "test", 1);
+            _quests.RecordBreakingChainsEmissaryKill(e, assassinatedCultEmissaryAtHatch: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasIronWill(e));
+            _quests.RecordBreakingChainsEmissaryKill(e, assassinatedCultEmissaryAtHatch: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasIronWill(e));
+            Assert.IsTrue(_quests.IsImmuneToAllMentalBreaks(e));
+        }
+
+        // ── #310 Stowaway / Unseen Listener ──────────────────────────────
+
+        [Test]
+        public void Stowaway_Undocumented_EarningKeep_UnlocksUnseenListener()
+        {
+            var s = MakeArchetype(PersonalQuestSystem.StowawayId);
+            Assert.IsTrue(_quests.HasBlind(s));
+            Assert.IsTrue(_quests.HasUndocumented(s));
+            Assert.AreEqual(1.20f, _quests.GetUndocumentedRationMultiplier(s), 0.01f);
+            Assert.IsTrue(_quests.SneaksFoodWhileOthersSleep(s));
+
+            _quests.TryStartQuestline(s, "test", 1);
+            _quests.RecordEarningKeepHiddenWater(s, discoveredHiddenWaterSource: true, savedGroupFromDehydration: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasUnseenListener(s));
+            _quests.RecordEarningKeepHiddenWater(s, discoveredHiddenWaterSource: true, savedGroupFromDehydration: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasUnseenListener(s));
+            Assert.IsTrue(_quests.ProvidesExactRaiderPlanLogs(s));
+        }
+
+        // ── #311 Billionaire / Ruthless Capitalist ───────────────────────
+
+        [Test]
+        public void Billionaire_Entitled_WorthlessPaper_UnlocksRuthlessCapitalist()
+        {
+            var b = MakeArchetype(PersonalQuestSystem.BillionaireId);
+            Assert.IsTrue(_quests.HasEntitled(b));
+            Assert.AreEqual(5000f, _quests.GetStartingPreWarMoney(b), 0.01f);
+            b.Needs.Morale = 80f;
+            _quests.ApplyEntitledLaborDay(b, didPhysicalLabor: true);
+            Assert.Less(b.Needs.Morale, 80f);
+
+            _quests.TryStartQuestline(b, "test", 1);
+            _quests.RecordWorthlessPaperBurn(b, moneyBurned: 1000f, heaterUsedToPreventFreeze: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasRuthlessCapitalist(b));
+            _quests.RecordWorthlessPaperBurn(b, moneyBurned: 5000f, heaterUsedToPreventFreeze: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasRuthlessCapitalist(b));
+            Assert.AreEqual(0.10f, _quests.GetRuthlessCapitalistFactionSellMult(b), 0.01f);
+        }
+
+        // ── #312 Apprentice / Prodigy ────────────────────────────────────
+
+        [Test]
+        public void Apprentice_Clumsy_MastersFate_UnlocksProdigy()
+        {
+            var a = MakeArchetype(PersonalQuestSystem.ApprenticeId);
+            Assert.IsTrue(_quests.HasClumsy(a));
+            Assert.AreEqual(0.10f, _quests.GetClumsyToolBreakChance(a), 0.01f);
+            Assert.Less(_quests.GetApprenticeQuestionSpeedMultOnTarget(a), 1f);
+
+            _quests.TryStartQuestline(a, "test", 1);
+            _quests.RecordMastersFateBurial(a, retrievedHistorianBody: true, buried: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasProdigy(a));
+            _quests.RecordMastersFateBurial(a, retrievedHistorianBody: true, buried: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasProdigy(a));
+            var mentor = MakeArchetype(PersonalQuestSystem.SurgeonId, "mentor");
+            mentor.MedicalSkill = 0.95f;
+            a.MedicalSkill = 0.2f;
+            _quests.ApplyProdigySkillInherit(a, mentor);
+            Assert.AreEqual(0.95f, a.MedicalSkill, 0.01f);
+        }
+
+        // ── #313 Fire Chief / Commander ──────────────────────────────────
+
+        [Test]
+        public void FireChief_BurnScars_Backdraft_UnlocksCommander()
+        {
+            var f = MakeArchetype(PersonalQuestSystem.FireChiefId);
+            Assert.IsTrue(_quests.HasBurnScars(f));
+            Assert.IsTrue(_quests.IsImmuneToSuperficialFireDamage(f));
+            Assert.IsTrue(_quests.PrioritizesAirFilterUpgrades(f));
+
+            _quests.TryStartQuestline(f, "test", 1);
+            _quests.RecordBackdraftSaves(f, trappedSurvivorsSaved: 2, currentDay: 1);
+            Assert.IsFalse(_quests.HasCommander(f));
+            _quests.RecordBackdraftSaves(f, trappedSurvivorsSaved: 1, currentDay: 2);
+            Assert.IsTrue(_quests.HasCommander(f));
+            Assert.IsTrue(_quests.IsEmergencyAiPerfectlyEfficient(_survivors, fireOrRaidEvent: true));
+        }
+
+        // ── #314 Amputee / Cyber-Arm ─────────────────────────────────────
+
+        [Test]
+        public void Amputee_MissingArm_Prosthetic_UnlocksCyberArm()
+        {
+            var a = MakeArchetype(PersonalQuestSystem.AmputeeId);
+            Assert.IsTrue(_quests.HasMissingArm(a));
+            Assert.IsTrue(a.HasDisability(PersonalQuestSystem.MissingArmDisabilityId));
+            Assert.AreEqual(0.50f, _quests.GetMissingArmSpeedMultiplier(a), 0.01f);
+            Assert.Greater(_quests.GetAmputeeTinkerNoise(a), 0f);
+
+            _quests.TryStartQuestline(a, "test", 1);
+            _quests.RecordProstheticParts(a, mechanicalPartsTotal: 49, electronicScrapTotal: 10, currentDay: 1);
+            Assert.IsFalse(_quests.HasCyberArm(a));
+            _quests.RecordProstheticParts(a, mechanicalPartsTotal: 50, electronicScrapTotal: 10, currentDay: 2);
+            Assert.IsTrue(_quests.HasCyberArm(a));
+            Assert.AreEqual(3f, _quests.GetCyberArmMeleeMultiplier(a), 0.01f);
+            Assert.IsTrue(_quests.CanPunchThroughBlockedDoors(a));
+            Assert.IsFalse(a.HasDisability(PersonalQuestSystem.MissingArmDisabilityId));
+        }
+
+        // ── #315 Inmate / Redemption ─────────────────────────────────────
+
+        [Test]
+        public void Inmate_Untrusted_GoodDeath_UnlocksRedemption()
+        {
+            var i = MakeArchetype(PersonalQuestSystem.InmateId);
+            Assert.IsTrue(_quests.HasLethal(i));
+            Assert.IsTrue(_quests.HasUntrusted(i));
+            Assert.AreEqual(0f, _quests.GetFactionTrustWithUntrusted(i, 50f), 0.01f);
+            Assert.IsTrue(_quests.CraftsAndHidesShivs(i));
+
+            _quests.TryStartQuestline(i, "test", 1);
+            _quests.RecordGoodDeathAirlockHold(i, heldAirlockAlone: true, bunkerSurvived: true, inmateSurvived: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasRedemption(i)); // dead path no latent
+            // Restart for survive path
+            var i2 = MakeArchetype(PersonalQuestSystem.InmateId, "inmate2");
+            _quests.TryStartQuestline(i2, "test", 1);
+            _quests.RecordGoodDeathAirlockHold(i2, heldAirlockAlone: true, bunkerSurvived: true, inmateSurvived: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasRedemption(i2));
+            Assert.IsTrue(_quests.MeleeCausesFearAndRout(i2));
+            Assert.IsFalse(_quests.HasUntrusted(i2));
+        }
+
+        // ── #316 Synth / Overclocked ─────────────────────────────────────
+
+        [Test]
+        public void Synth_Android_TearsInRain_UnlocksOverclocked()
+        {
+            var s = MakeArchetype(PersonalQuestSystem.SynthId);
+            Assert.IsTrue(_quests.HasAndroid(s));
+            Assert.IsFalse(_quests.NeedsFoodOrWater(s));
+            Assert.IsTrue(_quests.HealsWithPowerAndMechanicalParts(s));
+
+            _quests.TryStartQuestline(s, "test", 1);
+            _quests.RecordTearsInRainEmp(s, empEventOccurred: true, memoryCoreIntact: false, currentDay: 30);
+            Assert.IsFalse(_quests.HasOverclocked(s));
+            _quests.RecordTearsInRainEmp(s, empEventOccurred: true, memoryCoreIntact: true, currentDay: 30);
+            Assert.IsTrue(_quests.HasOverclocked(s));
+            Assert.IsFalse(_quests.NeedsSleep(s));
+            Assert.IsTrue(_quests.IsImmuneToRadiationAsAndroid(s));
+        }
+
+        // ── #317 Dog / Wasteland Guardian ────────────────────────────────
+
+        [Test]
+        public void Dog_GoodBoy_MansBestFriend_UnlocksWastelandGuardian()
+        {
+            var d = MakeArchetype(PersonalQuestSystem.DogId);
+            Assert.IsTrue(_quests.HasGoodBoy(d));
+            Assert.IsTrue(_quests.CannotCraftOrBuild(d));
+            Assert.Greater(_quests.GetGoodBoyRoomMoraleAura(d), 0f);
+            Assert.IsTrue(d.CannotCraft);
+
+            _quests.TryStartQuestline(d, "test", 1);
+            _quests.RecordMansBestFriendIntercept(d, interceptedLethalAttackOnOwner: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasWastelandGuardian(d));
+            _quests.RecordMansBestFriendIntercept(d, interceptedLethalAttackOnOwner: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasWastelandGuardian(d));
+            Assert.IsTrue(_quests.AutoHuntsVermin(d));
+            Assert.IsTrue(_quests.TracksHumanScentsPerfectly(d));
+        }
+
+        // ── #318 Core / Omniscience ──────────────────────────────────────
+
+        [Test]
+        public void Core_BunkerCore_TuringTest_UnlocksOmniscience()
+        {
+            var c = MakeArchetype(PersonalQuestSystem.CoreId);
+            Assert.IsTrue(_quests.HasBunkerCore(c));
+            Assert.IsTrue(_quests.IsBunkerCore(c));
+            Assert.IsTrue(_quests.DiesWhenPowerNetworkFails(c));
+
+            _quests.TryStartQuestline(c, "test", 1);
+            _quests.RecordTuringTestDecryption(c, decryptedMilitaryRadioNetwork: true, currentDay: 101);
+            Assert.IsFalse(_quests.HasOmniscience(c)); // past deadline
+            _quests.RecordTuringTestDecryption(c, decryptedMilitaryRadioNetwork: true, currentDay: 50);
+            Assert.IsTrue(_quests.HasOmniscience(c));
+            Assert.IsTrue(_quests.CanProgramAutomationMacros(c));
         }
     }
 }
