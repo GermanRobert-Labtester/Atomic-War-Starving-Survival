@@ -49,6 +49,21 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public Func<Survivor, bool> IgnoresDarknessMorale;
 
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>
+        /// Prompts #249–#256 — Selfless morale absorb, Traumatized morale cap,
+        /// Pillar-of-Atlas death debuff notification.
+        /// </summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
         public NeedsSystem(NeedsProfile profile, Func<Survivor, bool> isNearHeatSource = null)
         {
             _profile = profile != null ? profile : throw new ArgumentNullException(nameof(profile));
@@ -147,9 +162,35 @@ namespace AtomicWar._Game.Survivors
                 return;
             }
 
+            // #249 Selfless: redistribute morale damage onto Selfless absorbers.
+            if (need == NeedKind.Morale && delta < 0f && _personalQuests != null)
+            {
+                var all = _getSurvivors != null ? _getSurvivors() : _survivors;
+                _personalQuests.ApplyMoraleDamageWithSelfless(survivor, -delta, all);
+                float after = survivor.Needs.Morale;
+                _personalQuests.ClampMoraleToCap(survivor);
+                OnNeedChanged?.Invoke(survivor, NeedKind.Morale, survivor.Needs.Morale);
+                // Still fire critical if applicable (morale has no critical threshold here).
+                _ = after;
+                return;
+            }
+
             float maxCap = need == NeedKind.Health ? survivor.MaxHealthCap : 100f;
+            // #252 Traumatized: permanent 50% max Morale cap.
+            if (need == NeedKind.Morale && _personalQuests != null)
+                maxCap = Mathf.Min(maxCap, _personalQuests.GetMaxMoraleCap(survivor));
+            // #249 Matriarch: room-mates gain +20 effective health cap.
+            if (need == NeedKind.Health && _personalQuests != null)
+            {
+                var all = _getSurvivors != null ? _getSurvivors() : _survivors;
+                maxCap += _personalQuests.GetMatriarchRoomHealthBonus(survivor, all);
+            }
+
             float newValue = Mathf.Clamp(GetValue(survivor.Needs, need) + delta, 0f, maxCap);
             SetValue(survivor, need, newValue);
+
+            if (need == NeedKind.Morale && _personalQuests != null)
+                _personalQuests.ClampMoraleToCap(survivor);
 
             switch (need)
             {
@@ -192,6 +233,8 @@ namespace AtomicWar._Game.Survivors
                 if (TryDeferDeath != null && TryDeferDeath(survivor))
                     return;
                 survivor.State = SurvivorState.Dead;
+                // #250 Pillar of Atlas death → permanent shelter repair debuff.
+                _personalQuests?.NotifySurvivorDied(survivor);
                 OnDied?.Invoke(survivor);
             }
         }

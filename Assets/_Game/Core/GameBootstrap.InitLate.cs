@@ -553,6 +553,9 @@ namespace AtomicWar._Game.Core
             CookingSystem?.BindPersonalQuests(PersonalQuests);
             JournalSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             RadioTunerSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            // Prompts #249–#256 bond/burden host loops
+            NeedsSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            MentalBreakSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

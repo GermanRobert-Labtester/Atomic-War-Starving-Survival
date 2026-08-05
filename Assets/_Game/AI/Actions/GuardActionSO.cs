@@ -44,7 +44,11 @@ namespace AtomicWar._Game.AI.Actions
                 if (sec < 40f) threat = Mathf.Max(threat, 0.35f);
             }
 
-            return Mathf.Clamp01(readiness + threat * 0.5f);
+            float score = Mathf.Clamp01(readiness + threat * 0.5f);
+            // #252 Hardened Daughter: Utility AI heavily favors Guard.
+            if (context.PersonalQuests != null)
+                score = Mathf.Clamp01(score * context.PersonalQuests.GetTrainGuardUtilityBias(context.Survivor));
+            return score;
         }
 
         public override void Execute(AIContext context)

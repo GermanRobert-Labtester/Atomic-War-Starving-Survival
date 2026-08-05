@@ -289,6 +289,10 @@ namespace AtomicWar._Game.Core
             var freq = GetCurrentFrequency();
             if (freq == null) return;
 
+            // #255 Pathological Liar: randomly plant false stash intel on the radio.
+            if (TryInjectFalseLiarIntel(currentDay))
+                return;
+
             // Get a broadcast from the frequency's pool
             var broadcast = freq.GetRandomBroadcast(_rng);
             if (broadcast == null) return;
@@ -301,6 +305,45 @@ namespace AtomicWar._Game.Core
                 _extractedIntel.Add(intel);
                 OnIntelExtracted?.Invoke(intel);
             }
+        }
+
+        /// <summary>
+        /// #255 — if a living Deceptive Liar is in the bunker, ~30% chance the
+        /// radio reports a fake stash node instead of real intel.
+        /// </summary>
+        private bool TryInjectFalseLiarIntel(int currentDay)
+        {
+            if (_personalQuests == null || _getSurvivors == null) return false;
+            var list = _getSurvivors();
+            if (list == null) return false;
+            Survivor liar = null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var s = list[i];
+                if (s != null && s.IsAlive && _personalQuests.HasDeceptive(s))
+                {
+                    liar = s;
+                    break;
+                }
+            }
+            if (liar == null) return false;
+            if (_rng.NextDouble() > 0.30) return false;
+
+            string fakeId = _personalQuests.GenerateFalseIntelNode(liar, _rng);
+            if (string.IsNullOrEmpty(fakeId)) return false;
+
+            var fake = IntelNode.CreateLootLocation(
+                locationId: fakeId,
+                supplyValue: 0.9f,
+                confidence: 0.25f,
+                extractedDay: currentDay,
+                expirationDay: currentDay + 3,
+                text: "Stash report — coordinates look wrong. " + fakeId);
+            fake.Id = fakeId;
+            fake.SourceFrequencyId = State.CurrentFrequencyId;
+            _extractedIntel.Add(fake);
+            OnIntelExtracted?.Invoke(fake);
+            return true;
         }
 
         /// <summary>

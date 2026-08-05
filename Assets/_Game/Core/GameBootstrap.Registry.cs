@@ -155,6 +155,32 @@ namespace AtomicWar._Game.Core
                 for (int i = 0; i < Survivors.Count; i++)
                     PersonalQuests.ApplyRoomMoraleFloor(Survivors[i], Survivors);
             });
+            // #249–#256: hoarder internal theft from main storage into personal stash.
+            _registry.RegisterPerSubstep("personal_quests_hoarder_theft", h =>
+            {
+                if (PersonalQuests == null || Survivors == null || Inventory == null || h <= 0f) return;
+                // ~5% chance per game-hour per Selfish hoarder to steal one unit.
+                var rng = _mentalBreakRng ?? new System.Random(256);
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    var sv = Survivors[i];
+                    if (sv == null || !sv.IsAlive) continue;
+                    if (!PersonalQuests.HasSelfish(sv)) continue;
+                    if (rng.NextDouble() > 0.05 * h) continue;
+                    if (Inventory.Slots == null || Inventory.Slots.Count == 0) continue;
+                    int start = rng.Next(0, Inventory.Slots.Count);
+                    for (int k = 0; k < Inventory.Slots.Count; k++)
+                    {
+                        var slot = Inventory.Slots[(start + k) % Inventory.Slots.Count];
+                        if (slot?.Item == null || slot.Amount <= 0) continue;
+                        string itemId = slot.Item.id;
+                        if (string.IsNullOrEmpty(itemId)) continue;
+                        if (!Inventory.Remove(slot.Item, 1)) continue;
+                        PersonalQuests.TryStealToPersonalInventory(sv, itemId);
+                        break;
+                    }
+                }
+            });
             _registry.RegisterPerSubstep("empath", h => EmpathSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("survivor_diaries", h => SurvivorDiaries?.Tick(h, Survivors, TimeSystem?.CurrentDay ?? 1, _mentalBreakRng));
             _registry.RegisterPerSubstep("spatial_psychology", h => SpatialPsychology?.Tick(h, Survivors));

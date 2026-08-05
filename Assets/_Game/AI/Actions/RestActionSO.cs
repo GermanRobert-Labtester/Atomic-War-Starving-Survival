@@ -16,6 +16,18 @@ namespace AtomicWar._Game.AI.Actions
 
         public override float EvaluateRaw(AIContext context)
         {
+            if (context?.Survivor == null) return 0f;
+
+            // #250 Workaholic: ignore Rest until fatigue is near collapse.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.ShouldIgnoreRestAction(context.Survivor))
+                return 0f;
+
+            // #252 Hardened Daughter: refuses idle Play/Rest comfort.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.RefusesPlayOrComfort(context.Survivor))
+                return 0f;
+
             // Low urgency baseline fallback
             return 0.1f;
         }

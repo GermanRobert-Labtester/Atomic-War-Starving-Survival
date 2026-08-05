@@ -28,6 +28,12 @@ namespace AtomicWar._Game.AI.Actions
             if (context.MedicalSystem != null && context.MedicalSystem.IsComatose(context.Survivor))
                 return 0f;
 
+            // #249 Fierce Mother: cancel Eat when a child need is critical.
+            if (context.PersonalQuests != null && context.GetSurvivors != null
+                && context.PersonalQuests.ShouldCancelEatOrSleepForChild(
+                    context.Survivor, context.GetSurvivors()))
+                return 0f;
+
             float hunger = context.Survivor.Needs.Hunger;
 
             // If inventory check is required, check if food exists
@@ -60,11 +66,37 @@ namespace AtomicWar._Game.AI.Actions
             if (context.MedicalSystem != null && context.MedicalSystem.IsComatose(survivor))
                 return;
 
+            // #249 Fierce Mother: cancel Eat mid-select if a child needs care.
+            if (context.PersonalQuests != null && context.GetSurvivors != null
+                && context.PersonalQuests.ShouldCancelEatOrSleepForChild(
+                    survivor, context.GetSurvivors()))
+                return;
+
             ItemDefinition food = FindFood(context);
             if (food != null && context.Inventory != null)
             {
-                if (!context.Inventory.Consume(food, survivor, context.RadiationSystem, null))
-                    return;
+                // #256 Selfish: consumes 2× normal rations.
+                int units = 1;
+                if (context.PersonalQuests != null
+                    && context.PersonalQuests.HasSelfish(survivor))
+                    units = Mathf.Max(1, Mathf.RoundToInt(
+                        context.PersonalQuests.GetRationConsumptionMultiplier(survivor)));
+
+                for (int u = 0; u < units; u++)
+                {
+                    if (!context.Inventory.Consume(food, survivor, context.RadiationSystem, null))
+                    {
+                        // Missed full double-ration → morale hit for Selfish.
+                        if (u == 0) return;
+                        if (context.PersonalQuests != null)
+                        {
+                            float hit = context.PersonalQuests.GetSelfishMissedRationMoraleHit(survivor);
+                            if (hit > 0f)
+                                survivor.Needs.Morale = Mathf.Max(0f, survivor.Needs.Morale - hit);
+                        }
+                        break;
+                    }
+                }
 
                 // Apply hunger via needs if available; Consume already applied hungerRestore
                 // when NeedsSystem is passed — pass null above and apply here for parity.

@@ -375,6 +375,8 @@ namespace AtomicWar._Game.Core
             // Wire death hook into NeedsSystem.OnDied
             _onNeedsDied = deceased =>
             {
+                // #250 Pillar of Atlas: permanent repair debuff if he dies with the trait.
+                PersonalQuests?.NotifySurvivorDied(deceased);
                 EmpathSystem.OnSurvivorDied(deceased, Survivors);
                 ChildSystem?.CheckChildDeath(Survivors);
                 GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");

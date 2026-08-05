@@ -681,6 +681,29 @@ namespace AtomicWar._Game.Economy
         }
 
         /// <summary>
+        /// #255 Master Manipulator: Junk offered by the Liar trades at high-tier
+        /// Medicine prices when the trader has the latent trait.
+        /// </summary>
+        public float GetTradeValue(ItemDefinition item, Survivor trader)
+        {
+            float baseVal = GetTradeValue(item);
+            if (item == null || trader == null || _personalQuests == null) return baseVal;
+            if (!_personalQuests.TradesJunkAsMedicine(trader)) return baseVal;
+            bool isJunk = item.type == ItemType.Material
+                || (!string.IsNullOrEmpty(item.id)
+                    && item.id.IndexOf("junk", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                || (!string.IsNullOrEmpty(item.displayName)
+                    && item.displayName.IndexOf("junk", System.StringComparison.OrdinalIgnoreCase) >= 0);
+            // Prefer explicit junk ids / low-value scrap materials.
+            if (!isJunk && item.tradeValue > 8f) return baseVal;
+            if (!isJunk && item.type != ItemType.Material) return baseVal;
+            // High-tier medicine reference (~antibiotics baseline under demand).
+            float medicineTier = 40f * GetDemandMultiplier("antibiotics");
+            if (medicineTier <= 0f) medicineTier = 40f;
+            return _personalQuests.GetJunkTradeValueAsMedicine(trader, baseVal, medicineTier);
+        }
+
+        /// <summary>
         /// Unit value in a barter with a specific faction. High trust improves the
         /// player's selling price and softens buy prices; low trust does the reverse.
         /// After a hatch parley / surrender, prices soften further in the player's favor

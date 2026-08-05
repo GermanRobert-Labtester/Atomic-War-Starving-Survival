@@ -218,12 +218,15 @@ namespace AtomicWar._Game.Shelter
             SetIntegrity(_integrity - actual);
         }
 
-        /// <summary>Repair integrity by spending work-hours. Rate scales with strut level.</summary>
+        /// <summary>Repair integrity by spending work-hours. Rate scales with strut level.
+        /// #250 Pillar of Atlas death applies a permanent 20% repair speed debuff.</summary>
         public float Repair(float workHours)
         {
             if (workHours <= 0f) return 0f;
             int level = StrutLevel;
             float repairRate = StrutRepairPerLevelPerHour * Mathf.Max(1, level);
+            if (_personalQuests != null)
+                repairRate *= _personalQuests.GetShelterRepairSpeedMultiplier();
             float repaired = Mathf.Min(workHours * repairRate, MaxIntegrity - _integrity);
             if (repaired > 0f)
                 SetIntegrity(_integrity + repaired);

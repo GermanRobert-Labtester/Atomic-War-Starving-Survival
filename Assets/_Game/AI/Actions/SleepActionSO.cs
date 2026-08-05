@@ -22,6 +22,18 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null) return 0f;
+
+            // #249 Fierce Mother: cancel Sleep when a child need is critical.
+            if (context.PersonalQuests != null && context.GetSurvivors != null
+                && context.PersonalQuests.ShouldCancelEatOrSleepForChild(
+                    context.Survivor, context.GetSurvivors()))
+                return 0f;
+
+            // #250 Workaholic: ignore rest/sleep until fatigue is near collapse.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.ShouldIgnoreRestAction(context.Survivor))
+                return 0f;
+
             return Mathf.Clamp01(context.Survivor.Needs.Fatigue / 100f);
         }
 
@@ -29,8 +41,19 @@ namespace AtomicWar._Game.AI.Actions
         {
             if (context?.Survivor == null || !context.Survivor.IsAlive) return;
 
+            if (context.PersonalQuests != null && context.GetSurvivors != null
+                && context.PersonalQuests.ShouldCancelEatOrSleepForChild(
+                    context.Survivor, context.GetSurvivors()))
+                return;
+
             var conditions = ResolveConditions(context);
             var result = SleepQualitySystem.Evaluate(conditions);
+            // #250 Workaholic: sleep restores fatigue at half speed.
+            float restoreMult = context.PersonalQuests != null
+                ? context.PersonalQuests.GetSleepFatigueRestoreMultiplier(context.Survivor)
+                : 1f;
+            if (!Mathf.Approximately(restoreMult, 1f))
+                result.FatigueRestored *= restoreMult;
             ApplySleepResult(context.Survivor, result);
         }
 

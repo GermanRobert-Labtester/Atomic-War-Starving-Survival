@@ -366,6 +366,10 @@ namespace AtomicWar._Game.Medical
             if (recipe == null || string.IsNullOrEmpty(recipe.targetAfflictionId)) return false;
             if (!HasAffliction(patient, recipe.targetAfflictionId)) return false;
 
+            // #253 Arrogant: refuses healing from anyone but self.
+            if (_personalQuests != null && !_personalQuests.CanBeHealedBy(patient, medic))
+                return false;
+
             if (recipe.requiresMedicalBed && !HasOperationalMedicalBed())
                 return false;
 

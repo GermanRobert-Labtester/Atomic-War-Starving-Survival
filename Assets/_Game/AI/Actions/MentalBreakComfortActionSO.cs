@@ -32,6 +32,10 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null) return 0f;
+            // #252 Hardened Daughter: refuses Comfort actions.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.RefusesPlayOrComfort(context.Survivor))
+                return 0f;
             if (context.MentalBreak == null) return 0f;
             if (context.MentalBreak.ComfortCureHandler == null) return 0f;
             if (context.GetSurvivors == null) return 0f;

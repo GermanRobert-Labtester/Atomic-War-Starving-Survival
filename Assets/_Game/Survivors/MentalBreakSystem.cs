@@ -77,6 +77,21 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public Action<Survivor, MentalBreakSO, System.Random> SabotageHandler;
 
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>
+        /// #249 Matriarch / #251 Pollyanna — block mental breaks when trait rules say so.
+        /// #253 Psychopath — affinity drain while living among others.
+        /// </summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
         // -----------------------------------------------------------------
         // Construction
         // -----------------------------------------------------------------
@@ -177,6 +192,46 @@ namespace AtomicWar._Game.Survivors
 
             // 4. Passive morale drain on other survivors (room approximation).
             ApplyPassiveDrain(gameHours, survivors, rng);
+
+            // 5. #253 Psychopath InterpersonalAffinity drain + #254 Urge tick.
+            TickBondBurdenQuirks(gameHours, survivors, rng);
+        }
+
+        /// <summary>
+        /// #253 affinity drain around psychopaths; #254 Serial Killer Urge buildup.
+        /// </summary>
+        public void TickBondBurdenQuirks(
+            float gameHours,
+            IReadOnlyList<Survivor> survivors,
+            System.Random rng)
+        {
+            if (gameHours <= 0f || survivors == null || _personalQuests == null) return;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var src = survivors[i];
+                if (src == null || !src.IsAlive) continue;
+
+                float drain = _personalQuests.GetInterpersonalAffinityDrainPerHour(src);
+                if (drain > 0f)
+                {
+                    float delta = -drain * gameHours;
+                    for (int j = 0; j < survivors.Count; j++)
+                    {
+                        var other = survivors[j];
+                        if (other == null || !other.IsAlive || other.Id == src.Id) continue;
+                        Affinity.Adjust(src.Id, other.Id, delta);
+                    }
+                }
+
+                // Serial Killer Urge grows slowly every hour (~4/hour → max in ~25h).
+                if (string.Equals(src.ArchetypeId, PersonalQuestSystem.SerialKillerId,
+                        StringComparison.Ordinal))
+                {
+                    _personalQuests.TickUrge(src, 4f * gameHours, survivors);
+                }
+
+                _personalQuests.ClampMoraleToCap(src);
+            }
         }
 
         // -----------------------------------------------------------------
@@ -204,10 +259,16 @@ namespace AtomicWar._Game.Survivors
         {
             if (sv == null || _breaksById.Count == 0 || rng == null) return false;
 
+            var all = _getSurvivors != null ? _getSurvivors() : null;
+
             float totalWeight = 0f;
             foreach (var br in _breaksById.Values)
             {
                 if (br == null) continue;
+                // #249 Matriarch / #251 Pollyanna block specific or all breaks.
+                if (_personalQuests != null
+                    && _personalQuests.BlocksMentalBreak(sv, br.id, all))
+                    continue;
                 totalWeight += WeightForTrait(br, sv.RiskBias);
             }
             if (totalWeight <= 0f) return false;
@@ -218,10 +279,18 @@ namespace AtomicWar._Game.Survivors
             foreach (var br in _breaksById.Values)
             {
                 if (br == null) continue;
+                if (_personalQuests != null
+                    && _personalQuests.BlocksMentalBreak(sv, br.id, all))
+                    continue;
                 accum += WeightForTrait(br, sv.RiskBias);
                 if (roll <= accum) { chosen = br; break; }
             }
             if (chosen == null) return false;
+
+            // Final gate (e.g. Matriarch while others live).
+            if (_personalQuests != null
+                && _personalQuests.BlocksMentalBreak(sv, chosen.id, all))
+                return false;
 
             sv.currentMentalBreakId = chosen.id;
             sv.mentalBreakCureProgress = 0f;

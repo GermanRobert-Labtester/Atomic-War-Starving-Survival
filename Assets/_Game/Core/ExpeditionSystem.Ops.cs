@@ -293,11 +293,14 @@ namespace AtomicWar._Game.Core
             if (exp.Stance == ExpeditionStance.Speed) encounterChance *= 1.4f;
             else if (exp.Stance == ExpeditionStance.Stealth) encounterChance *= 0.6f;
 
-            // Prompt #223 — Apex Predator: stealth permanently 100% (no random encounters).
-            if (_personalQuests != null && exp.Survivor != null
-                && _personalQuests.GetStealthFactor(exp.Survivor) >= 1f)
+            // Prompt #223 Apex Predator / #254 Butcher: full stealth (no random encounters).
+            if (_personalQuests != null && exp.Survivor != null)
             {
-                encounterChance = 0f;
+                float stealth = _personalQuests.GetExpeditionStealthFactor(exp.Survivor);
+                if (stealth < 0f)
+                    stealth = _personalQuests.GetStealthFactor(exp.Survivor);
+                if (stealth >= 1f)
+                    encounterChance = 0f;
             }
 
             // Prompt #70 night risk; Prompt #209 Night Terror stealth at night.
@@ -315,6 +318,23 @@ namespace AtomicWar._Game.Core
             EncounterSO selected = PickEncounter(exp.TargetLocationId, exp.Stance, exp.DangerLevel);
             if (selected == null) return;
 
+            // #251 Wasteland Scout: immune to Sniper encounters (small hitbox).
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.IsImmuneToSniperEncounters(exp.Survivor)
+                && IsSniperEncounter(selected))
+            {
+                return;
+            }
+
+            // #254 Butcher of Day 30: silent assassination of human encounters + loot gear.
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.AutoClearsHumanEncounters(exp.Survivor)
+                && IsHumanEncounter(selected))
+            {
+                ResolveButcherAssassination(exp, selected);
+                return;
+            }
+
             // Prompt #207 — Light Step: skip dogs/ghouls before the trigger event fires.
             if (_expeditionPerks != null && exp.Survivor != null
                 && _expeditionPerks.CanBypassEncounter(exp.Survivor, selected.id))
@@ -326,6 +346,48 @@ namespace AtomicWar._Game.Core
             OnEncounterTriggered?.Invoke(exp, selected);
 
             // Psychological auto-resolution
+            ResolveEncounterWithPsychology(exp, selected);
+        }
+
+        private static bool IsSniperEncounter(EncounterSO encounter)
+        {
+            if (encounter == null) return false;
+            if (!string.IsNullOrEmpty(encounter.id)
+                && encounter.id.IndexOf("sniper", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            if (!string.IsNullOrEmpty(encounter.title)
+                && encounter.title.IndexOf("sniper", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            return false;
+        }
+
+        private static bool IsHumanEncounter(EncounterSO encounter)
+        {
+            if (encounter == null) return false;
+            string id = encounter.id ?? string.Empty;
+            string name = encounter.title ?? string.Empty;
+            return id.IndexOf("looter", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("raider", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("bandit", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("human", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("faction", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("looter", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("raider", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("bandit", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>#254 silent kill: clear human encounter and bring back their gear tag.</summary>
+        private void ResolveButcherAssassination(ExpeditionState exp, EncounterSO selected)
+        {
+            if (exp?.Survivor == null || selected == null) return;
+            OnEncounterTriggered?.Invoke(exp, selected);
+            // Mark resolved without combat — host loot via gear tag in survivor hidden stash.
+            if (exp.Survivor.HiddenItemIds == null)
+                exp.Survivor.HiddenItemIds = new System.Collections.Generic.List<string>();
+            string gearTag = "butcher_loot_" + (selected.id ?? "human");
+            if (!exp.Survivor.HiddenItemIds.Contains(gearTag))
+                exp.Survivor.HiddenItemIds.Add(gearTag);
+            // Still run psychology path as a no-damage resolve when available.
             ResolveEncounterWithPsychology(exp, selected);
         }
 
