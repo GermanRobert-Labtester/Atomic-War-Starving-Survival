@@ -149,6 +149,12 @@ namespace AtomicWar._Game.Core
             ExpeditionSystem.SetHasItem(itemId =>
                 Inventory != null && !string.IsNullOrEmpty(itemId)
                 && Inventory.CountById(itemId) > 0);
+            // Prompts #182–#188 — combat milestone tracking on encounters / flee
+            ExpeditionSystem.BindCombatPerks(
+                CombatPerks,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                affinity: MentalBreakSystem != null ? MentalBreakSystem.Affinity : null,
+                getAllSurvivors: () => Survivors);
             SaveSystem.SetExpeditionSystem(ExpeditionSystem);
             SaveSystem.SetFloodedNodeSystem(FloodedNodeSystem);
 
@@ -244,6 +250,8 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetTriageSystem(TriageSystem);
             SaveSystem.SetPolypharmacySystem(PolypharmacySystem);
             SaveSystem.SetSkillProgressionSystem(SkillProgression);
+            SaveSystem.SetCombatPerkSystem(CombatPerks);
+            WireCombatPerkBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -264,6 +272,8 @@ namespace AtomicWar._Game.Core
                 CorpseManagementSystem.CreateFertilizerDefinition());
             CorpseSystem.SetStoresRoom(_storesRoom);
             CorpseSystem.SetSurvivorProvider(() => Survivors);
+            // Prompt #188 — Desensitized: no corpse morale drain
+            CorpseSystem.BindCombatPerks(CombatPerks);
             CorpseSystem.BindDeathHandler();
 
             PantrySystem = new PantryContaminationSystem(
@@ -294,6 +304,44 @@ namespace AtomicWar._Game.Core
                 KnowledgeMap.OnKnowledgeChanged += RefreshMapKnowledgeHUD;
             }
 
+        }
+
+        /// <summary>
+        /// Prompts #182–#188 — bind combat perk milestones into hatch defense,
+        /// perimeter traps, weapon jam hooks, and expedition encounter tracking.
+        /// </summary>
+        private void WireCombatPerkBindings()
+        {
+            if (CombatPerks == null) return;
+
+            HatchDefenseSystem?.BindCombatPerks(CombatPerks);
+            HatchDefenseSystem?.BindPerimeterTraps(PerimeterTrapSystem);
+
+            // Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.
+            if (HatchDefenseSystem != null && WeaponMaintenanceSystem != null)
+            {
+                HatchDefenseSystem.TryJamWeapon = (weaponId, clearTicks) =>
+                    WeaponMaintenanceSystem.TryJam(weaponId, clearTicks: clearTicks);
+            }
+
+            PerimeterTrapSystem?.BindCombatPerks(
+                CombatPerks,
+                getSurvivor: id =>
+                {
+                    if (Survivors == null || string.IsNullOrEmpty(id)) return null;
+                    for (int i = 0; i < Survivors.Count; i++)
+                    {
+                        if (Survivors[i] != null && Survivors[i].Id == id)
+                            return Survivors[i];
+                    }
+                    return null;
+                });
+
+            ExpeditionSystem?.BindCombatPerks(
+                CombatPerks,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                affinity: MentalBreakSystem != null ? MentalBreakSystem.Affinity : null,
+                getAllSurvivors: () => Survivors);
         }
 
     }

@@ -6,6 +6,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Simulation; // CompostSystem, SterilizationSystem, ChelationSystem, etc. (audit C-3 split)
 using Random = System.Random;
 
 namespace AtomicWar._Game.AI
@@ -102,6 +103,86 @@ namespace AtomicWar._Game.AI
 
         /// <summary>Applies radiation dose exposure (e.g. from drinking irradiated water).</summary>
         public RadiationSystem RadiationSystem;
+
+        // --- C-3: bindings for newly wired systems (audit C-1) ---
+
+        /// <summary>Prompt #119 — room rubble clearing (ExcavationSystem).</summary>
+        public ExcavationSystem ExcavationSystem;
+
+        /// <summary>Prompt #120 — pre-Day-30 room flooding (RoomFloodingSystem).</summary>
+        public RoomFloodingSystem FloodingSystem;
+
+        /// <summary>Prompt #121 — hidden storage stashes (HiddenStorageSystem).</summary>
+        public HiddenStorageSystem HiddenStorageSystem;
+
+        /// <summary>Prompt #122 — ceiling collapse tracker (CeilingCollapseSystem).</summary>
+        public CeilingCollapseSystem CeilingCollapseSystem;
+
+        /// <summary>Prompt #123 — perimeter traps (PerimeterTrapSystem).</summary>
+        public PerimeterTrapSystem PerimeterTrapSystem;
+
+        /// <summary>Prompt #124 — tunneling (TunnelingSystem).</summary>
+        public TunnelingSystem TunnelingSystem;
+
+        /// <summary>Prompt #125 — material shielding upgrades (MaterialShieldingSystem).</summary>
+        public MaterialShieldingSystem MaterialShieldingSystem;
+
+        /// <summary>Prompt #126 — escape hatch excavation (EscapeHatchSystem).</summary>
+        public EscapeHatchSystem EscapeHatchSystem;
+
+        /// <summary>Prompt #128 — airlock contamination gating (AirlockSystem).</summary>
+        public AirlockSystem AirlockSystem;
+
+        /// <summary>Prompt #167 — compost bin (CompostSystem).</summary>
+        public CompostSystem CompostSystem;
+
+        /// <summary>Prompt #169 — surgical sterilization (SterilizationSystem).</summary>
+        public SterilizationSystem SterilizationSystem;
+
+        /// <summary>Prompt #170 — chelation therapy (ChelationSystem).</summary>
+        public ChelationSystem ChelationSystem;
+
+        /// <summary>Prompt #171 — overworld wind turbine (WindTurbineSystem).</summary>
+        public WindTurbineSystem WindTurbineSystem;
+
+        /// <summary>Prompt #173 — internal hauling (InternalHaulingSystem).</summary>
+        public InternalHaulingSystem HaulingSystem;
+
+        /// <summary>Prompt #168 — scrap pipe guns (misfire risk).</summary>
+        public ScrapWeaponSystem ScrapWeaponSystem;
+
+        /// <summary>Prompt #174 — weapon oiling / durability.</summary>
+        public WeaponMaintenanceSystem WeaponMaintenanceSystem;
+
+        /// <summary>Prompts #182–#188 — combat milestone perks.</summary>
+        public CombatPerkSystem CombatPerks;
+
+        /// <summary>Prompt #177 — triage board medication permissions.</summary>
+        public TriageBoardSystem TriageSystem;
+
+        /// <summary>Prompt #166 — trauma resilience buffer.</summary>
+        public ResilienceSystem ResilienceSystem;
+
+        /// <summary>Prompt #172 — antibiotic resistance tracking.</summary>
+        public AntibioticResistanceSystem AntibioticResistSystem;
+
+        /// <summary>Prompt #67 — cartography table (Chart Map action).</summary>
+        public CartographySystem CartographySystem;
+
+        /// <summary>Prompt #64 — internal door locks (sleepwalk blocking).</summary>
+        public InternalLockSystem InternalLockSystem;
+
+        /// <summary>Prompt #66 — mentorship / teach skill sessions.</summary>
+        public MentorshipSystem MentorshipSystem;
+
+        /// <summary>Affinity matrix for mentorship scoring (from MentalBreakSystem).</summary>
+        public InterpersonalAffinity Affinity;
+
+        /// <summary>
+        /// Optional: pick an uncharted intel node id for ChartMap. Injected by
+        /// GameBootstrap so AI actions stay free of Core map types.
+        /// </summary>
+        public Func<string> GetUnchartedNodeId;
 
         /// <summary>All living survivors (for Treat Patient target selection).</summary>
         public Func<IReadOnlyList<Survivor>> GetSurvivors;

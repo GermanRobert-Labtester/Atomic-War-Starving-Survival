@@ -134,6 +134,7 @@ namespace AtomicWar._Game.Core
             context.HaulingSystem = HaulingSystem;
             context.ScrapWeaponSystem = ScrapWeaponSystem;
             context.WeaponMaintenanceSystem = WeaponMaintenanceSystem;
+            context.CombatPerks = CombatPerks;
             context.TriageSystem = TriageSystem;
             context.ResilienceSystem = ResilienceSystem;
             context.AntibioticResistSystem = AntibioticResistSystem;

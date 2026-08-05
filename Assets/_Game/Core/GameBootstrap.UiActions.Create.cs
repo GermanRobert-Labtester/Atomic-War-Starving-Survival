@@ -226,7 +226,8 @@ namespace AtomicWar._Game.Core
                     a.progressionDiscipline = "science";
                     a.progressionXp = 5f;
                 }
-                else if (typeName.Contains("Guard") || typeName.Contains("Hunt"))
+                else if (typeName.Contains("Guard") || typeName.Contains("Hunt")
+                    || typeName.Contains("SuppressingFire"))
                 {
                     a.progressionDiscipline = "combat";
                     a.progressionXp = 5f;
