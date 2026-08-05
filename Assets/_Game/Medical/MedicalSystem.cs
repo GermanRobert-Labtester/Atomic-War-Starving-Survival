@@ -445,6 +445,9 @@ namespace AtomicWar._Game.Medical
             if (IsBandageAction(recipe) && IsRaidWindowActive != null && IsRaidWindowActive())
                 _medicalPerks?.RecordBandageDuringRaid(medic, raidActive: true, day);
 
+            // #301 Med Student: first trauma treatment triggers a puke.
+            _personalQuests?.TryMedStudentFirstTraumaPuke(medic, recipe.targetAfflictionId);
+
             OnMedicalStateChanged?.Invoke();
             return true;
         }

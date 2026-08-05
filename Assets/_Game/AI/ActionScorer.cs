@@ -128,6 +128,12 @@ namespace AtomicWar._Game.AI
                     context.Survivor, context.IsNight);
                 if (!Mathf.Approximately(nightOwl, 1f))
                     score *= nightOwl;
+
+                // #302 Gamer: works nights, sleeps days (coop task speed bias).
+                float gamerCoop = context.PersonalQuests.GetGamerCoopTaskSpeedMultiplier(
+                    context.Survivor, context.IsNight);
+                if (!Mathf.Approximately(gamerCoop, 1f))
+                    score *= gamerCoop;
             }
 
             // Listless penalty: light-deprived survivors are sluggish about everything.

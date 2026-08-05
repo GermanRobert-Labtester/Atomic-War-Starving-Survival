@@ -255,8 +255,24 @@ namespace AtomicWar._Game.Shelter
 
             if (gameHours <= 0f || shelter == null) return;
 
+            ApplyWallPunchDamage();
             UpdateDustLeaks(gameHours, shelter);
             CheckCaveIn(shelter);
+        }
+
+        /// <summary>Prompt #300 — Jock punches walls when morale is low, damaging integrity.</summary>
+        private void ApplyWallPunchDamage()
+        {
+            if (_personalQuests == null) return;
+            var survivors = _getSurvivors?.Invoke();
+            if (survivors == null) return;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var sv = survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                float damage = _personalQuests.GetWallPunchStructuralDamage(sv);
+                if (damage > 0f) ApplyDamage(damage, "wall_punch");
+            }
         }
 
         private void UpdateDustLeaks(float gameHours, Shelter shelter)

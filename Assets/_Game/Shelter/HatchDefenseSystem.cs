@@ -492,6 +492,13 @@ namespace AtomicWar._Game.Shelter
             return _personalQuests.AnySonarEarlyWarning(_getSurvivors?.Invoke());
         }
 
+        /// <summary>#310 Stowaway Unseen Listener: overhears exact raider plans in advance.</summary>
+        public bool HasUnseenListenerRaidWarning()
+        {
+            if (_personalQuests == null) return false;
+            return _personalQuests.AnyUnseenListenerWarning(_getSurvivors?.Invoke());
+        }
+
         /// <summary>#278 Sheriff AI: auto-assign to guard when nobody else is.</summary>
         public void TryAutoAssignSheriffGuard()
         {

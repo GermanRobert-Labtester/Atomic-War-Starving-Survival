@@ -49,6 +49,7 @@ namespace AtomicWar._Game.Core
             CollectCatchment(gameHours, weather, currentDay, shelter, storage);
             RunPurifier(gameHours, shelter, storage);
             ExtractHumidityWater(gameHours, shelter, storage);
+            ApplyMakeupWaterBurn(gameHours, storage);
         }
 
         private static void CollectCatchment(float gameHours, WeatherKind weather, int currentDay, Shelter.Shelter shelter, WaterStorage storage)
@@ -159,6 +160,23 @@ namespace AtomicWar._Game.Core
             float extracted = PersonalQuestSystem.HumidityWaterExtractPerHour * gameHours * humidity;
             if (extracted > 0f)
                 storage.AddClean(extracted);
+        }
+
+        /// <summary>Prompt #299 — Prom Queen's makeup/hygiene ritual burns clean water daily.</summary>
+        private void ApplyMakeupWaterBurn(float gameHours, WaterStorage storage)
+        {
+            if (_personalQuests == null || storage == null) return;
+            var survivors = _getSurvivors?.Invoke();
+            if (survivors == null) return;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var sv = survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                float burnPerDay = _personalQuests.GetMakeupCleanWaterBurn(sv);
+                if (burnPerDay <= 0f) continue;
+                float burn = burnPerDay * (gameHours / 24f);
+                if (burn > 0f) storage.ConsumeClean(burn);
+            }
         }
     }
 }

@@ -226,6 +226,10 @@ namespace AtomicWar._Game.Radiation
                 return;
             }
 
+            // #316 Overclocked Synth: immune to radiation exposure entirely.
+            if (_personalQuests != null && _personalQuests.IsImmuneToRadiationAsAndroid(survivor))
+                return;
+
             // #273 Radiotrophic: high-rad zones heal Health/Fatigue instead of damaging.
             if (_personalQuests != null && _personalQuests.IsRadiotrophic(survivor) && radsPerHour >= 50f)
             {

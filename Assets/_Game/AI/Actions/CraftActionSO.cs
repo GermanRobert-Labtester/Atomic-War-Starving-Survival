@@ -82,6 +82,10 @@ namespace AtomicWar._Game.AI.Actions
                 }
                 m *= context.PersonalQuests.GetUtilityExecutionSpeedMultiplier(
                     context.Survivor, pop);
+
+                // #312 Apprentice Clumsy: chance to break a tool mid-craft, slowing the work.
+                if (context.PersonalQuests.RollClumsyToolBreak(context.Survivor, context.Random))
+                    m *= 0.5f;
             }
             return m;
         }

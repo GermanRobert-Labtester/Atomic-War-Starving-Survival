@@ -130,9 +130,16 @@ namespace AtomicWar._Game.Survivors
             float needsMult = 1f;
             if (_personalQuests != null)
                 needsMult = _personalQuests.GetZenNeedsDecayMultiplier(survivor);
-            Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours * needsMult);
-            Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours * needsMult);
-            Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours * needsMult);
+            // #316 Synth: androids don't need food/water; Overclocked doesn't need sleep.
+            bool needsFoodWater = _personalQuests == null || _personalQuests.NeedsFoodOrWater(survivor);
+            bool needsSleep = _personalQuests == null || _personalQuests.NeedsSleep(survivor);
+            if (needsFoodWater)
+            {
+                Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours * needsMult);
+                Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours * needsMult);
+            }
+            if (needsSleep)
+                Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours * needsMult);
             ApplyWarmth(survivor, gameHours);
 
             // Light / photoperiod tick — null-safe; skipped when not wired
@@ -257,6 +264,25 @@ namespace AtomicWar._Game.Survivors
             float healthCap = _personalQuests.GetMaxHealthCapForQuests(survivor);
             if (survivor.Needs.Health > healthCap)
                 survivor.Needs.Health = healthCap;
+
+            // #305 Twin Beta: mirror Twin Alpha's needs until Hive Healing unlocks independence.
+            string twinPartnerId = _personalQuests.GetTwinPartnerId(survivor);
+            if (!string.IsNullOrEmpty(twinPartnerId))
+            {
+                var crew = _getSurvivors != null ? _getSurvivors() : _survivors;
+                if (crew != null)
+                {
+                    for (int i = 0; i < crew.Count; i++)
+                    {
+                        var partner = crew[i];
+                        if (partner != null && string.Equals(partner.Id, twinPartnerId, StringComparison.Ordinal))
+                        {
+                            _personalQuests.MirrorTwinAlphaNeeds(survivor, partner);
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         private static bool IsSmallUndergroundRoomId(string roomId)
@@ -382,6 +408,9 @@ namespace AtomicWar._Game.Survivors
                 survivor.State = SurvivorState.Dead;
                 // #250 Pillar of Atlas death → permanent shelter repair debuff.
                 _personalQuests?.NotifySurvivorDied(survivor);
+                // #304/#305 Twin: partner suffers a symbiotic-bond death reaction.
+                _personalQuests?.NotifyTwinDeath(
+                    survivor, _getSurvivors != null ? _getSurvivors() : _survivors);
                 OnDied?.Invoke(survivor);
             }
         }

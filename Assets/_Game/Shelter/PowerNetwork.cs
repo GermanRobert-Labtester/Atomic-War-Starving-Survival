@@ -452,7 +452,25 @@ namespace AtomicWar._Game.Shelter
 
             OnPowerStateChanged?.Invoke();
             if (anyShed) OnLoadShed?.Invoke();
-            if (IsBlackout && !wasBlackout) OnBlackout?.Invoke();
+            if (IsBlackout && !wasBlackout)
+            {
+                OnBlackout?.Invoke();
+
+                // #318 Core: dies the instant the power network fails (unless Omniscience).
+                if (_personalQuests != null && _getSurvivors != null)
+                {
+                    var survivors = _getSurvivors();
+                    if (survivors != null)
+                    {
+                        for (int i = 0; i < survivors.Count; i++)
+                        {
+                            var sv = survivors[i];
+                            if (sv != null && sv.IsAlive)
+                                _personalQuests.NotifyPowerNetworkFailure(sv);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>

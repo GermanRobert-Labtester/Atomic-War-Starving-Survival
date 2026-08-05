@@ -109,7 +109,10 @@ namespace AtomicWar._Game.Shelter
         public float ClearRubble(string roomId, Survivors.Survivor worker,
             bool hasShovel, bool hatchBlocked, float workHours = 1f)
         {
-            if (hatchBlocked) return 0f; // Can't dump rubble if hatch is blocked.
+            // #314 Amputee/Cyber-Arm: punches through a blocked hatch instead of stalling.
+            bool cyberArmBypass = hatchBlocked && _personalQuests != null
+                && _personalQuests.CanPunchThroughBlockedDoors(worker);
+            if (hatchBlocked && !cyberArmBypass) return 0f; // Can't dump rubble if hatch is blocked.
             if (worker == null || !worker.IsAlive) return 0f;
             if (!HasRubble(roomId)) return 0f;
             if (workHours <= 0f) return 0f;

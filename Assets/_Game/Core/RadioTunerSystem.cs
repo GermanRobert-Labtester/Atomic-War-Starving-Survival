@@ -240,6 +240,13 @@ namespace AtomicWar._Game.Core
         {
             if (gameHours <= 0f) return false;
 
+            // #306 Theorist/Tinfoil Hat: paranoid sabotage detunes the radio.
+            if (TryRollRadioSabotage())
+            {
+                Detune();
+                return false;
+            }
+
             // Consume fuel — Voice of the Wastes (#239) pays zero power/fuel.
             if (!IsRadioPowerFree())
                 State.ConsumeFuel(gameHours);
@@ -277,6 +284,22 @@ namespace AtomicWar._Game.Core
                 return tuningComplete;
             }
 
+            return false;
+        }
+
+        /// <summary>Prompt #306 — Theorist/Tinfoil Hat randomly sabotages the tuned radio.</summary>
+        private bool TryRollRadioSabotage()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return false;
+            if (string.IsNullOrEmpty(State.CurrentFrequencyId)) return false;
+            var list = _getSurvivors();
+            if (list == null) return false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv != null && sv.IsAlive && _personalQuests.ShouldSabotageRadio(sv, _rng))
+                    return true;
+            }
             return false;
         }
 

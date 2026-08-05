@@ -71,8 +71,12 @@ namespace AtomicWar._Game.Core
                 if (action != null && PersonalQuests != null)
                 {
                     PersonalQuests.ApplyDirtyLaborMorale(sv, action.id);
-                    if (PersonalQuests.IsDirtyLaborAction(action.id))
+                    bool didPhysicalLabor = PersonalQuests.IsDirtyLaborAction(action.id);
+                    if (didPhysicalLabor)
                         PersonalQuests.MarkDirtyLaborPerformed(sv);
+
+                    // #311 Billionaire Entitled: physical labor tanks morale.
+                    PersonalQuests.ApplyEntitledLaborDay(sv, didPhysicalLabor);
                 }
             }
         }

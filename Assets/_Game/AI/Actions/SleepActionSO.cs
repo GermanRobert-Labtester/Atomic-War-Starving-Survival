@@ -134,6 +134,22 @@ namespace AtomicWar._Game.AI.Actions
                 ? SleepQualitySystem.DefaultSleepRoomId
                 : context.SleepRoomId;
 
+            // #307 Hermit/Uncivilized: refuses crowded rooms, sleeps in the airlock instead.
+            if (context.PersonalQuests != null && context.GetSurvivors != null)
+            {
+                var list = context.GetSurvivors();
+                if (list != null)
+                {
+                    int pop = 0;
+                    for (int i = 0; i < list.Count; i++)
+                        if (list[i] != null && list[i].IsAlive) pop++;
+                    string preferred = context.PersonalQuests.GetPreferredSleepRoomWhenCrowded(
+                        context.Survivor, pop);
+                    if (!string.IsNullOrEmpty(preferred))
+                        sleepRoom = preferred;
+                }
+            }
+
             return SleepQualitySystem.BuildConditions(
                 context.Shelter,
                 context.PowerNetwork,

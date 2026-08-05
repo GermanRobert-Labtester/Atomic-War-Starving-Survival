@@ -727,6 +727,7 @@ namespace AtomicWar._Game.Survivors
         public const string AirlockRoomId = "airlock";
         public const string MutatedForestNodeId = "the_mutated_forest";
         public const int PatientAwakeningDaysRequired = 15;
+        public const float PatientAwakeningHydrationThreshold = 80f;
         public const float SecondLifeStatMaxMult = 1.50f;
         public const float BrandedCultDamageMult = 2f;
         public const float UndocumentedRationMult = 1.20f;
@@ -1654,6 +1655,9 @@ namespace AtomicWar._Game.Survivors
 
                 // ── #284–#298 rebuilders / scholars / outlaws ─────────────
                 TickRebuildersDaily(sv, state, survivors, currentDay);
+
+                // ── #299–#318 ashes / improbable / final flawed ───────────
+                TickAshesDaily(sv, state, survivors, currentDay);
             }
         }
 
@@ -1733,6 +1737,30 @@ namespace AtomicWar._Game.Survivors
             // #287 Neat Freak: hygiene below 80% hits morale once per day.
             if (HasNeatFreak(sv) && sv.Needs != null)
                 ApplyNeatFreakHygienePressure(sv, sv.Needs.Hygiene / 100f);
+        }
+
+        /// <summary>
+        /// Daily host orchestration for #299–#318 ashes quirks that advance
+        /// from survivor state alone (patient hydration streak, dog aura).
+        /// </summary>
+        private void TickAshesDaily(
+            Survivor sv,
+            PersonalQuestState state,
+            IReadOnlyList<Survivor> survivors,
+            int currentDay)
+        {
+            // #308 Patient: a day kept alive and hydrated advances The Awakening.
+            if (IsComatoseBurden(sv))
+            {
+                bool hydrated = sv.Needs != null
+                    && sv.Needs.Thirst < PatientAwakeningHydrationThreshold
+                    && sv.Needs.Hunger < PatientAwakeningHydrationThreshold;
+                TickAwakeningDay(sv, keptAliveAndHydrated: hydrated, currentDay);
+            }
+
+            // #317 Dog: room-mates enjoy a small passive morale aura.
+            if (ProvidesGoodBoyRoomMorale(sv) && survivors != null)
+                ApplyGoodBoyMoraleAura(sv, survivors);
         }
 
         /// <summary>
@@ -3692,9 +3720,12 @@ namespace AtomicWar._Game.Survivors
 
         // ── #242 Asbestos ────────────────────────────────────────────────
 
-        /// <summary>#243 Asbestos or #286 Calloused: immune to fire/temperature damage.</summary>
+        /// <summary>
+        /// #243 Asbestos, #286 Calloused, or #313 Fire Chief (Burn Scars/Commander):
+        /// immune to fire/temperature damage.
+        /// </summary>
         public bool IsImmuneToFireAndTemperature(Survivor sv) =>
-            HasAsbestos(sv) || HasCalloused(sv);
+            HasAsbestos(sv) || HasCalloused(sv) || IsImmuneToSuperficialFireDamage(sv);
 
         public bool IgnoresColdSleepQuality(Survivor sv) => HasAsbestos(sv);
 

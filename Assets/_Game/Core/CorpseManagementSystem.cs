@@ -221,6 +221,11 @@ namespace AtomicWar._Game.Core
 
             if (survivors == null) return;
 
+            // #303 Choir Boy: praying over the dead softens the ambient morale drain.
+            float corpseMoraleMult = _personalQuests != null
+                ? _personalQuests.GetCorpseMoralePenaltyMultiplier(survivors)
+                : 1f;
+
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
@@ -233,7 +238,7 @@ namespace AtomicWar._Game.Core
                 if (!immuneCorpseMorale)
                 {
                     _needs.Modify(sv, NeedKind.Morale,
-                        -MoraleDrainPerCorpsePerHour * corpses * gameHours);
+                        -MoraleDrainPerCorpsePerHour * corpses * gameHours * corpseMoraleMult);
                 }
 
                 if (_medical != null && _rng.NextDouble() < DiseaseChancePerHour * corpses * gameHours)

@@ -638,6 +638,17 @@ namespace AtomicWar._Game.Survivors
 
         public bool ProvidesExactRaiderPlanLogs(Survivor sv) => HasUnseenListener(sv);
 
+        /// <summary>Host raid-warning gate: any living Unseen Listener overhears raider plans.</summary>
+        public bool AnyUnseenListenerWarning(IReadOnlyList<Survivor> survivors)
+        {
+            if (survivors == null) return false;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                if (ProvidesExactRaiderPlanLogs(survivors[i])) return true;
+            }
+            return false;
+        }
+
         public void RecordEarningKeepHiddenWater(
             Survivor stowaway,
             bool discoveredHiddenWaterSource,
@@ -964,6 +975,22 @@ namespace AtomicWar._Game.Survivors
 
         public float GetGoodBoyRoomMoraleAura(Survivor sv) =>
             HasGoodBoy(sv) ? GoodBoyRoomMoraleAura : 0f;
+
+        /// <summary>Host daily tick: room-mates sharing the dog's room gain a small morale aura.</summary>
+        public void ApplyGoodBoyMoraleAura(Survivor dog, IReadOnlyList<Survivor> survivors)
+        {
+            float aura = GetGoodBoyRoomMoraleAura(dog);
+            if (aura <= 0f || dog == null || survivors == null) return;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s == null || !s.IsAlive || s.Id == dog.Id) continue;
+                if (string.IsNullOrEmpty(dog.CurrentRoomId)
+                    || !string.Equals(s.CurrentRoomId, dog.CurrentRoomId, StringComparison.Ordinal))
+                    continue;
+                s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
+            }
+        }
 
         public bool CannotCraftOrBuild(Survivor sv) =>
             HasGoodBoy(sv) || string.Equals(sv?.ArchetypeId, DogId, StringComparison.Ordinal);

@@ -739,7 +739,33 @@ namespace AtomicWar._Game.Economy
                     }
                 }
             }
+            // #311 Ruthless Capitalist: sells to factions at a steep markup.
+            if (_personalQuests != null && _getSurvivors != null)
+            {
+                var list = _getSurvivors();
+                if (list != null)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        float sellMult = _personalQuests.GetRuthlessCapitalistFactionSellMult(list[i]);
+                        if (!Mathf.Approximately(sellMult, 1f))
+                        {
+                            v *= sellMult;
+                            break;
+                        }
+                    }
+                }
+            }
             return v;
+        }
+
+        /// <summary>#315 Inmate Untrusted: this survivor's personal standing with a faction is zero.</summary>
+        public float GetTrustForSurvivor(string factionId, Survivor survivor)
+        {
+            float baseTrust = GetTrust(factionId);
+            return _personalQuests != null
+                ? _personalQuests.GetFactionTrustWithUntrusted(survivor, baseTrust)
+                : baseTrust;
         }
 
         /// <summary>

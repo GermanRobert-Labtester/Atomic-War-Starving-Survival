@@ -212,7 +212,9 @@ namespace AtomicWar._Game.Survivors
                 if (src == null || !src.IsAlive) continue;
 
                 // #287 Invisible: no affinity gains or losses involving this survivor.
-                if (_personalQuests.BlocksInterpersonalAffinity(src))
+                // #309 Escapee Iron Will: also immune to affinity drain.
+                if (_personalQuests.BlocksInterpersonalAffinity(src)
+                    || _personalQuests.IsImmuneToInterpersonalAffinityDrain(src))
                     continue;
 
                 float drain = _personalQuests.GetInterpersonalAffinityDrainPerHour(src);
@@ -223,7 +225,8 @@ namespace AtomicWar._Game.Survivors
                     {
                         var other = survivors[j];
                         if (other == null || !other.IsAlive || other.Id == src.Id) continue;
-                        if (_personalQuests.BlocksInterpersonalAffinity(other)) continue;
+                        if (_personalQuests.BlocksInterpersonalAffinity(other)
+                            || _personalQuests.IsImmuneToInterpersonalAffinityDrain(other)) continue;
                         Affinity.Adjust(src.Id, other.Id, delta);
                     }
                 }
@@ -263,6 +266,9 @@ namespace AtomicWar._Game.Survivors
         public bool TryRollForBreak(Survivor sv, System.Random rng)
         {
             if (sv == null || _breaksById.Count == 0 || rng == null) return false;
+            // #309 Escapee Iron Will: immune to all mental breaks.
+            if (_personalQuests != null && _personalQuests.IsImmuneToAllMentalBreaks(sv))
+                return false;
 
             var all = _getSurvivors != null ? _getSurvivors() : null;
 
