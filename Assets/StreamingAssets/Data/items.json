@@ -677,5 +677,37 @@
       }
     ],
     "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "roots",
+    "displayName": "Roots",
+    "description": "Low-nutrition forage. Staves off starvation.",
+    "type": "Food",
+    "stackMax": 20,
+    "weight": 0.2,
+    "hungerRestore": 8.0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "tradeValue": 1,
+    "contamination": 0,
+    "isEquipable": false
+  },
+  {
+    "id": "berries",
+    "displayName": "Berries",
+    "description": "Low-nutrition forage. Staves off starvation.",
+    "type": "Food",
+    "stackMax": 20,
+    "weight": 0.15,
+    "hungerRestore": 6.0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "tradeValue": 1,
+    "contamination": 0,
+    "isEquipable": false
   }
 ]

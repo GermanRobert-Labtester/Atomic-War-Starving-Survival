@@ -364,6 +364,11 @@ namespace AtomicWar.Tests.EditMode
             Assert.LessOrEqual(n, ExpeditionPerkSystem.ForagerMaxFood);
 
             Assert.AreEqual(0, _perks.GetForagerGuaranteedFoodCount(_sv, existingLootCount: 3, rng));
+
+            string foodId = ExpeditionPerkSystem.PickForagerFoodId(rng);
+            Assert.IsTrue(
+                foodId == ExpeditionPerkSystem.RootsItemId
+                || foodId == ExpeditionPerkSystem.BerriesItemId);
         }
 
         [Test]
