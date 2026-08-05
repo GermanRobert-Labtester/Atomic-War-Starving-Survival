@@ -178,7 +178,7 @@ namespace AtomicWar._Game.Survivors
         }
 
         /// <summary>
-        /// Latent expert traits (Prompts #214–#219). Unreachable via action XP —
+        /// Latent expert traits (Prompts #214–#224). Unreachable via action XP —
         /// granted only when a personal questline completes.
         /// Marked isExpertPerk so only the predetermined expert track may hold them
         /// (PersonalQuestSystem also grants via TryGrantPerk after quest finish).
@@ -193,6 +193,12 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ZoonoticExpertId, "Zoonotic Expert", "medical", milestoneOnly, 0.15f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.AnchorId, "Anchor", "survival", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DeathBlindId, "Death-Blind", "survival", milestoneOnly, 0.15f, false));
+            // Prompts #220–#224
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.WarlordId, "Warlord", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.PeacekeeperId, "Peacekeeper", "combat", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.JuggernautId, "Juggernaut", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ApexPredatorId, "Apex Predator", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SurvivalistId, "Survivalist", "survival", milestoneOnly, 0.20f, false));
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
-    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#219).
+    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#224).
     /// Survivors do not start with their Expert Trait. After 30 days alive OR
     /// a Morale 0→100 recovery, their assigned questline begins. Completing
     /// the final stage permanently unlocks the latent expert trait.
@@ -19,6 +19,12 @@ namespace AtomicWar._Game.Survivors
         public const string ZoonoticExpertId = "trait_zoonotic_expert";
         public const string AnchorId = "trait_anchor";
         public const string DeathBlindId = "trait_death_blind";
+        // Prompts #220–#224
+        public const string WarlordId = "trait_warlord";
+        public const string PeacekeeperId = "trait_peacekeeper";
+        public const string JuggernautId = "trait_juggernaut";
+        public const string ApexPredatorId = "trait_apex_predator";
+        public const string SurvivalistId = "trait_survivalist";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -26,6 +32,11 @@ namespace AtomicWar._Game.Survivors
         public const string VetId = "the_vet";
         public const string TherapistId = "the_therapist";
         public const string UndertakerId = "the_undertaker";
+        public const string VeteranId = "the_veteran";
+        public const string CopId = "the_cop";
+        public const string BouncerId = "the_bouncer";
+        public const string HunterId = "the_hunter";
+        public const string PrisonerId = "the_prisoner";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -50,8 +61,28 @@ namespace AtomicWar._Game.Survivors
         public const float AnchorRoomMoraleFloor = 20f;
         public const float DeathBlindDebrisSleepMoralePerHour = 1.5f;
 
+        // #220 Warlord
+        public const float AssaultRifleWeaponPower = 28f;
+        public const float Level3RaidStrength = 75f;
+        public const float WarlordUnarmedDefensePower = 80f;
+
+        // #222 Juggernaut
+        public const float JuggernautHealthMultiplier = 2f;
+
+        // #223 Apex Predator
+        public const int WhiteElkNodesRequired = 3;
+        public const int ApexPredatorMeatYield = 50;
+        public const float ApexPredatorStealth = 1f; // 100% stealth
+
+        // #224 Survivalist
+        public const float SurvivalistAloneStaminaMult = 0.25f; // 75% reduced drain
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
+        public const string FortifiedSquadNodeId = "fortified_squad_holdout";
+        public const string RuinedPrecinctNodeId = "the_ruined_precinct";
+        public const string WhiteElkNodeId = "the_white_elk";
+        public const string PenitentiaryNodeId = "the_penitentiary";
         public const string EncounterLooters = "encounter_looters";
         public const string PharmacyLogbookItemId = "pharmacy_logbook";
         public const string SpoiledMeatItemId = "spoiled_meat";
@@ -59,6 +90,17 @@ namespace AtomicWar._Game.Survivors
         public const string DirtyWaterItemId = "dirty_water";
         public const string AntibioticsItemId = "antibiotics";
         public const string MedicalKitItemId = "medical_kit";
+        public const string PipeWeaponId = "pipe_weapon";
+        public const string PipeShotgunId = "pipe_shotgun";
+        public const string ScrapBowId = "scrap_bow";
+        public const string MeatItemId = "meat";
+        public const string EvidenceLockboxItemId = "evidence_lockbox";
+        public const string FamilyPhotosItemId = "family_photos";
+        public const string WardenKeysItemId = "warden_keys";
+        public const string InternalSaboteurEventId = "shelter_saboteur";
+        public const string RationThiefEventId = "missing_rations";
+        public const string RationThiefAgainEventId = "missing_rations_again";
+        public const string SquadDistressRadioEventId = "evt_squad_distress_signal";
 
         private SkillProgressionSystem _progression;
         private readonly Dictionary<string, QuestlineSO> _questlines =
@@ -127,7 +169,7 @@ namespace AtomicWar._Game.Survivors
             state.MoraleHitZero = false;
         }
 
-        /// <summary>Built-in archetype profiles for Prompts #215–#219.</summary>
+        /// <summary>Built-in archetype profiles for Prompts #215–#224.</summary>
         public static SurvivorProfile ProfileForArchetype(string archetypeId)
         {
             switch (archetypeId)
@@ -142,6 +184,16 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(TherapistId, AnchorId, QuestlineSO.Ids.BrokenMind);
                 case UndertakerId:
                     return new SurvivorProfile(UndertakerId, DeathBlindId, QuestlineSO.Ids.MassGrave);
+                case VeteranId:
+                    return new SurvivorProfile(VeteranId, WarlordId, QuestlineSO.Ids.GhostsOfDay1);
+                case CopId:
+                    return new SurvivorProfile(CopId, PeacekeeperId, QuestlineSO.Ids.ThePrecinct);
+                case BouncerId:
+                    return new SurvivorProfile(BouncerId, JuggernautId, QuestlineSO.Ids.TheHoldout);
+                case HunterId:
+                    return new SurvivorProfile(HunterId, ApexPredatorId, QuestlineSO.Ids.TheWhiteElk);
+                case PrisonerId:
+                    return new SurvivorProfile(PrisonerId, SurvivalistId, QuestlineSO.Ids.TheWardensKey);
                 default:
                     return null;
             }
@@ -158,14 +210,27 @@ namespace AtomicWar._Game.Survivors
                 VetId => "The Vet",
                 TherapistId => "The Therapist",
                 UndertakerId => "The Undertaker",
+                VeteranId => "The Veteran",
+                CopId => "The Cop",
+                BouncerId => "The Bouncer",
+                HunterId => "The Hunter",
+                PrisonerId => "The Prisoner",
                 _ => archetypeId
             };
+            string discipline = "survival";
+            if (archetypeId == SurgeonId || archetypeId == PharmacistId
+                || archetypeId == VetId || archetypeId == TherapistId)
+                discipline = "medical";
+            else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId)
+                discipline = "combat";
+            else if (archetypeId == HunterId)
+                discipline = "scavenging";
             var sv = new Survivor
             {
                 Id = runtimeId ?? archetypeId,
                 DisplayName = name,
                 State = SurvivorState.Idle,
-                ExpertDisciplineId = "medical"
+                ExpertDisciplineId = discipline
             };
             sv.Needs.Morale = 60f;
             sv.Needs.Health = 100f;
@@ -393,6 +458,145 @@ namespace AtomicWar._Game.Survivors
             }
         }
 
+        // ── #220 Veteran — Ghosts of Day 1 ───────────────────────────────
+
+        /// <summary>
+        /// Record that the Veteran alone executed their feral cannibal squad
+        /// at the fortified holdout. Completes Ghosts of Day 1.
+        /// </summary>
+        public void RecordFeralSquadExecuted(Survivor veteran, int currentDay = 0)
+        {
+            if (veteran == null || !veteran.IsAlive) return;
+            var state = GetOrCreate(veteran.Id);
+            SyncFromSurvivor(veteran, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.GhostsOfDay1, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            veteran.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(veteran, "feral_squad_executed", 1);
+            CompleteQuestline(veteran, currentDay);
+        }
+
+        // ── #221 Cop — The Precinct ──────────────────────────────────────
+
+        /// <summary>
+        /// Record that the Cop returned the evidence lockbox and cracked it
+        /// (finding only family photos). Completes The Precinct.
+        /// </summary>
+        public void RecordEvidenceLockboxCracked(Survivor cop, int currentDay = 0)
+        {
+            if (cop == null || !cop.IsAlive) return;
+            var state = GetOrCreate(cop.Id);
+            SyncFromSurvivor(cop, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.ThePrecinct, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            cop.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(cop, "lockbox_cracked", 1);
+            CompleteQuestline(cop, currentDay);
+        }
+
+        // ── #222 Bouncer — The Holdout ───────────────────────────────────
+
+        /// <summary>
+        /// Record a HatchBreach raid where the Bouncer was the sole guard and survived.
+        /// Completes The Holdout.
+        /// </summary>
+        public void RecordSoloHatchDefense(
+            Survivor bouncer,
+            int activeGuardCount,
+            bool survived,
+            int currentDay = 0)
+        {
+            if (bouncer == null || !bouncer.IsAlive || !survived) return;
+            var state = GetOrCreate(bouncer.Id);
+            SyncFromSurvivor(bouncer, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheHoldout, StringComparison.Ordinal))
+                return;
+            if (activeGuardCount != 1) return;
+
+            state.Progress = 1f;
+            bouncer.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(bouncer, "solo_hatch_holdout", 1);
+            CompleteQuestline(bouncer, currentDay);
+        }
+
+        // ── #223 Hunter — The White Elk ──────────────────────────────────
+
+        /// <summary>
+        /// Record a tracking visit on a White Elk node. After 3 distinct nodes
+        /// the Hunter may finish with a ScrapBow kill.
+        /// </summary>
+        public void RecordWhiteElkNodeVisit(Survivor hunter, string nodeId, int currentDay = 0)
+        {
+            if (hunter == null || !hunter.IsAlive || string.IsNullOrEmpty(nodeId)) return;
+            var state = GetOrCreate(hunter.Id);
+            SyncFromSurvivor(hunter, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheWhiteElk, StringComparison.Ordinal))
+                return;
+
+            if (state.VisitedNodeIds == null)
+                state.VisitedNodeIds = new List<string>();
+            for (int i = 0; i < state.VisitedNodeIds.Count; i++)
+            {
+                if (string.Equals(state.VisitedNodeIds[i], nodeId, StringComparison.Ordinal))
+                    return;
+            }
+            state.VisitedNodeIds.Add(nodeId);
+            state.Progress = state.VisitedNodeIds.Count;
+            hunter.QuestProgress = state.Progress;
+            OnQuestProgress?.Invoke(hunter, "white_elk_nodes", state.VisitedNodeIds.Count);
+        }
+
+        /// <summary>
+        /// Finish the White Elk hunt. Requires 3 nodes tracked and ScrapBow (no firearm).
+        /// </summary>
+        public void RecordWhiteElkKill(
+            Survivor hunter,
+            bool usedScrapBow,
+            bool usedFirearm,
+            int currentDay = 0)
+        {
+            if (hunter == null || !hunter.IsAlive) return;
+            var state = GetOrCreate(hunter.Id);
+            SyncFromSurvivor(hunter, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheWhiteElk, StringComparison.Ordinal))
+                return;
+            if (!usedScrapBow || usedFirearm) return;
+            int nodes = state.VisitedNodeIds != null ? state.VisitedNodeIds.Count : 0;
+            if (nodes < WhiteElkNodesRequired) return;
+
+            CompleteQuestline(hunter, currentDay);
+        }
+
+        // ── #224 Prisoner — The Warden's Key ─────────────────────────────
+
+        /// <summary>
+        /// Record that the Prisoner confronted the ghoulified Warden and took the keys.
+        /// Completes The Warden's Key.
+        /// </summary>
+        public void RecordWardenKeysRetrieved(Survivor prisoner, int currentDay = 0)
+        {
+            if (prisoner == null || !prisoner.IsAlive) return;
+            var state = GetOrCreate(prisoner.Id);
+            SyncFromSurvivor(prisoner, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheWardensKey, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            prisoner.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(prisoner, "warden_keys", 1);
+            CompleteQuestline(prisoner, currentDay);
+        }
+
         // ── Completion / unlock ──────────────────────────────────────────
 
         public bool CompleteQuestline(Survivor sv, int currentDay = 0)
@@ -422,11 +626,25 @@ namespace AtomicWar._Game.Survivors
             if (!sv.HasTrait(state.LatentTraitId))
                 sv.Traits.Add(state.LatentTraitId);
 
+            ApplyLatentTraitSideEffects(sv, state.LatentTraitId);
+
             string display = _progression?.GetPerk(state.LatentTraitId)?.displayName
                              ?? state.LatentTraitId;
             OnLatentTraitUnlocked?.Invoke(sv, state.LatentTraitId);
             OnCharacterEvolution?.Invoke(sv, state.LatentTraitId, display);
             return granted || state.TraitUnlocked;
+        }
+
+        /// <summary>#222 — permanent health doubling when Juggernaut unlocks.</summary>
+        private static void ApplyLatentTraitSideEffects(Survivor sv, string traitId)
+        {
+            if (sv == null || string.IsNullOrEmpty(traitId)) return;
+            if (string.Equals(traitId, JuggernautId, StringComparison.Ordinal))
+            {
+                float baseHp = sv.BaseMaxHealth > 0f ? sv.BaseMaxHealth : 100f;
+                sv.BaseMaxHealth = baseHp * JuggernautHealthMultiplier;
+                sv.Needs.Health = Mathf.Min(sv.Needs.Health * JuggernautHealthMultiplier, sv.MaxHealthCap);
+            }
         }
 
         // ── Trait queries ────────────────────────────────────────────────
@@ -450,6 +668,11 @@ namespace AtomicWar._Game.Survivors
         public bool HasZoonoticExpert(Survivor sv) => HasTrait(sv, ZoonoticExpertId);
         public bool HasAnchor(Survivor sv) => HasTrait(sv, AnchorId);
         public bool HasDeathBlind(Survivor sv) => HasTrait(sv, DeathBlindId);
+        public bool HasWarlord(Survivor sv) => HasTrait(sv, WarlordId);
+        public bool HasPeacekeeper(Survivor sv) => HasTrait(sv, PeacekeeperId);
+        public bool HasJuggernaut(Survivor sv) => HasTrait(sv, JuggernautId);
+        public bool HasApexPredator(Survivor sv) => HasTrait(sv, ApexPredatorId);
+        public bool HasSurvivalist(Survivor sv) => HasTrait(sv, SurvivalistId);
 
         /// <summary>#215 — surgery duration mult (0.5 with Miracle Worker).</summary>
         public float GetSurgeryDurationMultiplier(Survivor medic) =>
@@ -533,6 +756,112 @@ namespace AtomicWar._Game.Survivors
         public float GetDebrisSleepMoraleRegen(Survivor sv, bool nearDebris) =>
             HasDeathBlind(sv) && nearDebris ? DeathBlindDebrisSleepMoralePerHour : 0f;
 
+        // ── #220 Warlord trait queries ───────────────────────────────────
+
+        public static bool IsPipeWeaponId(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return false;
+            return string.Equals(itemId, PipeWeaponId, StringComparison.OrdinalIgnoreCase)
+                   || string.Equals(itemId, PipeShotgunId, StringComparison.OrdinalIgnoreCase)
+                   || itemId.StartsWith("pipe_", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>#220 — pipe weapons deal assault-rifle power when Warlord owns them.</summary>
+        public float GetWeaponPowerOverride(Survivor wielder, string weaponId, float basePower)
+        {
+            if (!HasWarlord(wielder) || !IsPipeWeaponId(weaponId)) return basePower;
+            return AssaultRifleWeaponPower;
+        }
+
+        /// <summary>
+        /// #220 — unarmed Warlord hatch defense power vs Level 3 raids.
+        /// Returns bonus defense when a living Warlord is among active guards.
+        /// </summary>
+        public float GetWarlordUnarmedDefenseBonus(
+            IReadOnlyList<Survivor> guards,
+            bool weaponsPresent)
+        {
+            if (weaponsPresent || guards == null) return 0f;
+            for (int i = 0; i < guards.Count; i++)
+            {
+                if (guards[i] != null && guards[i].IsAlive && HasWarlord(guards[i]))
+                    return WarlordUnarmedDefensePower;
+            }
+            return 0f;
+        }
+
+        public bool CanDefendLevel3Unarmed(Survivor sv) => HasWarlord(sv);
+
+        // ── #221 Peacekeeper trait queries ───────────────────────────────
+
+        /// <summary>#221 — Warning Shot: 100% safe flee during encounters.</summary>
+        public bool CanUseWarningShot(Survivor sv) => HasPeacekeeper(sv);
+
+        /// <summary>#221 — blocks Internal Saboteur / Ration Thief bunker events.</summary>
+        public bool BlocksInternalCrimeEvent(string eventId, IReadOnlyList<Survivor> survivors)
+        {
+            if (string.IsNullOrEmpty(eventId) || survivors == null) return false;
+            if (!IsInternalCrimeEventId(eventId)) return false;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s != null && s.IsAlive && HasPeacekeeper(s))
+                    return true;
+            }
+            return false;
+        }
+
+        public static bool IsInternalCrimeEventId(string eventId)
+        {
+            if (string.IsNullOrEmpty(eventId)) return false;
+            return string.Equals(eventId, InternalSaboteurEventId, StringComparison.OrdinalIgnoreCase)
+                   || string.Equals(eventId, RationThiefEventId, StringComparison.OrdinalIgnoreCase)
+                   || string.Equals(eventId, RationThiefAgainEventId, StringComparison.OrdinalIgnoreCase)
+                   || string.Equals(eventId, "missing_rations_caught", StringComparison.OrdinalIgnoreCase);
+        }
+
+        // ── #222 Juggernaut trait queries ────────────────────────────────
+
+        /// <summary>#222 — immune to Broken Bone and Laceration.</summary>
+        public bool IsImmuneToTraumaAffliction(Survivor sv, string afflictionId)
+        {
+            if (!HasJuggernaut(sv) || string.IsNullOrEmpty(afflictionId)) return false;
+            return string.Equals(afflictionId, "broken_bone", StringComparison.OrdinalIgnoreCase)
+                   || string.Equals(afflictionId, "laceration", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>#222 — encumbrance weight limits removed on expeditions.</summary>
+        public bool IgnoresEncumbrance(Survivor sv) => HasJuggernaut(sv);
+
+        /// <summary>#222 — effective carry capacity (unlimited sentinel when Juggernaut).</summary>
+        public float GetExpeditionCarryCapacity(Survivor sv, float baseCapacity)
+        {
+            if (HasJuggernaut(sv)) return 99999f;
+            return baseCapacity;
+        }
+
+        // ── #223 Apex Predator trait queries ─────────────────────────────
+
+        /// <summary>#223 — stealth permanently 100% (1.0 factor / full stealth).</summary>
+        public float GetStealthFactor(Survivor sv) =>
+            HasApexPredator(sv) ? ApexPredatorStealth : -1f; // -1 = no override
+
+        /// <summary>#223 — guaranteed meat on forest/swamp scavenge.</summary>
+        public int GetApexPredatorMeatYield(Survivor sv, bool isForestOrSwamp) =>
+            HasApexPredator(sv) && isForestOrSwamp ? ApexPredatorMeatYield : 0;
+
+        // ── #224 Survivalist trait queries ───────────────────────────────
+
+        /// <summary>#224 — raw ContaminatedFood without sickness.</summary>
+        public bool CanEatContaminatedWithoutSickness(Survivor sv) => HasSurvivalist(sv);
+
+        /// <summary>#224 — stamina drain mult when alone on the map (0.25 = 75% reduced).</summary>
+        public float GetAloneStaminaDrainMultiplier(Survivor sv, bool isAloneOnMap)
+        {
+            if (!HasSurvivalist(sv) || !isAloneOnMap) return 1f;
+            return SurvivalistAloneStaminaMult;
+        }
+
         public PersonalQuestState GetState(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId)) return new PersonalQuestState();
@@ -553,6 +882,16 @@ namespace AtomicWar._Game.Survivors
                 maxStages: TherapistDeEscalationsRequired, node: null, evt: null);
             RegisterDefault(QuestlineSO.Ids.MassGrave, "The Mass Grave", DeathBlindId,
                 maxStages: 1, node: MassGraveNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.GhostsOfDay1, "Ghosts of Day 1", WarlordId,
+                maxStages: 1, node: FortifiedSquadNodeId, evt: SquadDistressRadioEventId);
+            RegisterDefault(QuestlineSO.Ids.ThePrecinct, "The Precinct", PeacekeeperId,
+                maxStages: 1, node: RuinedPrecinctNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheHoldout, "The Holdout", JuggernautId,
+                maxStages: 1, node: null, evt: "evt_hatch_breach_holdout");
+            RegisterDefault(QuestlineSO.Ids.TheWhiteElk, "The White Elk", ApexPredatorId,
+                maxStages: WhiteElkNodesRequired, node: WhiteElkNodeId, evt: "evt_white_elk_rumor");
+            RegisterDefault(QuestlineSO.Ids.TheWardensKey, "The Warden's Key", SurvivalistId,
+                maxStages: 1, node: PenitentiaryNodeId, evt: null);
         }
 
         private void RegisterDefault(
@@ -613,7 +952,10 @@ namespace AtomicWar._Game.Survivors
                     DaysAlive = s.DaysAlive,
                     MoraleHitZero = s.MoraleHitZero,
                     VetAirlockHours = s.VetAirlockHours,
-                    VetKitsSpent = s.VetKitsSpent
+                    VetKitsSpent = s.VetKitsSpent,
+                    VisitedNodeIds = s.VisitedNodeIds != null
+                        ? new List<string>(s.VisitedNodeIds)
+                        : new List<string>()
                 });
             }
             return save;
@@ -639,7 +981,10 @@ namespace AtomicWar._Game.Survivors
                     DaysAlive = e.DaysAlive,
                     MoraleHitZero = e.MoraleHitZero,
                     VetAirlockHours = e.VetAirlockHours,
-                    VetKitsSpent = e.VetKitsSpent
+                    VetKitsSpent = e.VetKitsSpent,
+                    VisitedNodeIds = e.VisitedNodeIds != null
+                        ? new List<string>(e.VisitedNodeIds)
+                        : new List<string>()
                 };
             }
         }
@@ -657,6 +1002,8 @@ namespace AtomicWar._Game.Survivors
             public bool MoraleHitZero;
             public float VetAirlockHours;
             public int VetKitsSpent;
+            /// <summary>#223 White Elk nodes visited (distinct).</summary>
+            public List<string> VisitedNodeIds = new List<string>();
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
@@ -670,7 +1017,10 @@ namespace AtomicWar._Game.Survivors
                 DaysAlive = DaysAlive,
                 MoraleHitZero = MoraleHitZero,
                 VetAirlockHours = VetAirlockHours,
-                VetKitsSpent = VetKitsSpent
+                VetKitsSpent = VetKitsSpent,
+                VisitedNodeIds = VisitedNodeIds != null
+                    ? new List<string>(VisitedNodeIds)
+                    : new List<string>()
             };
         }
     }
@@ -717,5 +1067,6 @@ namespace AtomicWar._Game.Survivors
         public bool MoraleHitZero;
         public float VetAirlockHours;
         public int VetKitsSpent;
+        public List<string> VisitedNodeIds = new List<string>();
     }
 }

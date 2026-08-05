@@ -116,6 +116,7 @@ namespace AtomicWar._Game.Shelter
         private float _raidWindowHoursRemaining;
         private CombatPerkSystem _combatPerks;
         private PerimeterTrapSystem _perimeterTraps;
+        private PersonalQuestSystem _personalQuests;
 
         /// <summary>Default duration of the active-raid bandaging window after a launch.</summary>
         public const float RaidWindowHours = 2f;
@@ -178,6 +179,10 @@ namespace AtomicWar._Game.Shelter
 
         /// <summary>Optional combat milestone perks (#182–#188).</summary>
         public void BindCombatPerks(CombatPerkSystem combatPerks) => _combatPerks = combatPerks;
+
+        /// <summary>Prompt #220 — Warlord pipe weapons + unarmed Level-3 hatch hold.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         /// <summary>Optional perimeter traps for raid damage (#123 / #186).</summary>
         public void BindPerimeterTraps(PerimeterTrapSystem traps) => _perimeterTraps = traps;
@@ -322,7 +327,7 @@ namespace AtomicWar._Game.Shelter
                     float dur = maxDur > 0f
                         ? Mathf.Clamp01(eq.CurrentDurability / maxDur)
                         : 1f;
-                    power += GetWeaponBasePower(eq.Item) * dur;
+                    power += GetEffectiveWeaponBasePower(eq.Item) * dur;
                 }
             }
 
@@ -368,7 +373,9 @@ namespace AtomicWar._Game.Shelter
             switch (item.id)
             {
                 case "pipe_shotgun": return 18f;
+                case "pipe_weapon": return 12f;
                 case "revolver": return 14f;
+                case "assault_rifle": return PersonalQuestSystem.AssaultRifleWeaponPower;
                 case "trench_knife": return 6f;
                 case "kevlar_vest": return 4f;
                 default:
@@ -378,7 +385,28 @@ namespace AtomicWar._Game.Shelter
             }
         }
 
-        private static float GetItemDefenseContribution(InventorySlot slot)
+        /// <summary>
+        /// Prompt #220 — Warlord: pipe weapons deal assault-rifle power when a
+        /// living Warlord is present in the colony (or is a guard).
+        /// </summary>
+        public float GetEffectiveWeaponBasePower(ItemDefinition item)
+        {
+            float basePower = GetWeaponBasePower(item);
+            if (item == null || _personalQuests == null) return basePower;
+            if (!PersonalQuestSystem.IsPipeWeaponId(item.id)) return basePower;
+
+            var survivors = _getSurvivors?.Invoke();
+            if (survivors == null) return basePower;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var sv = survivors[i];
+                if (sv != null && sv.IsAlive && _personalQuests.HasWarlord(sv))
+                    return PersonalQuestSystem.AssaultRifleWeaponPower;
+            }
+            return basePower;
+        }
+
+        private float GetItemDefenseContribution(InventorySlot slot)
         {
             var item = slot.Item;
             if (IsAmmoItem(item) || IsAmmoId(item.id))
@@ -390,7 +418,7 @@ namespace AtomicWar._Game.Shelter
 
             if (!IsWeaponItem(item) && !IsWeaponId(item.id)) return 0f;
 
-            float basePower = GetWeaponBasePower(item);
+            float basePower = GetEffectiveWeaponBasePower(item);
             float durFrac = 1f;
             if (slot.CurrentDurability >= 0f && item.durability > 0f)
                 durFrac = Mathf.Clamp01(slot.CurrentDurability / item.durability);
@@ -557,10 +585,49 @@ namespace AtomicWar._Game.Shelter
                 }
             }
             result.WeaponPower *= cqMult;
+
+            // Prompt #220 — Warlord unarmed Level-3 hatch hold.
+            if (_personalQuests != null && result.WeaponPower <= 0.01f)
+            {
+                var warlordGuards = new List<Survivor>();
+                foreach (var kv in _activeGuards)
+                {
+                    var list = survivorsForCq;
+                    if (list == null) break;
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (list[i] != null && list[i].Id == kv.Key)
+                            warlordGuards.Add(list[i]);
+                    }
+                }
+                float warlordBonus = _personalQuests.GetWarlordUnarmedDefenseBonus(
+                    warlordGuards, weaponsPresent: false);
+                if (warlordBonus > 0f)
+                    result.WeaponPower = Mathf.Max(result.WeaponPower, warlordBonus);
+            }
+
             result.DefenseScore = result.ShelterSecurity + result.WeaponPower;
 
             // Strict: Defense must exceed raid to repel (equal still breaches under pressure)
             result.Repelled = result.DefenseScore > result.RaidStrength;
+
+            // Prompt #222 — Bouncer Holdout quest: sole guard survives a repel.
+            if (result.Repelled && _personalQuests != null && survivorsForCq != null
+                && _activeGuards.Count == 1)
+            {
+                string soleId = null;
+                foreach (var kv in _activeGuards) { soleId = kv.Key; break; }
+                for (int i = 0; i < survivorsForCq.Count; i++)
+                {
+                    var g = survivorsForCq[i];
+                    if (g != null && g.Id == soleId && g.IsAlive)
+                    {
+                        int dayQ = raid.Day > 0 ? raid.Day : day;
+                        _personalQuests.RecordSoloHatchDefense(g, 1, survived: true, dayQ);
+                        break;
+                    }
+                }
+            }
 
             if (result.Repelled)
             {

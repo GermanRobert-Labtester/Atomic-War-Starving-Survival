@@ -64,5 +64,50 @@
     "baseHealth": 100,
     "latentExpertTrait": "trait_death_blind",
     "activeQuestlineId": "quest_the_mass_grave"
+  },
+  {
+    "id": "the_veteran",
+    "displayName": "The Veteran",
+    "profession": "Soldier",
+    "bio": "Day 1 never ended for them. The old squad still calls on the radio — and something answers back.",
+    "baseHealth": 110,
+    "latentExpertTrait": "trait_warlord",
+    "activeQuestlineId": "quest_ghosts_of_day_1"
+  },
+  {
+    "id": "the_cop",
+    "displayName": "The Cop",
+    "profession": "Police Officer",
+    "bio": "They still wear the badge under the coat. The precinct lockbox is still there — if the streets allow it.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_peacekeeper",
+    "activeQuestlineId": "quest_the_precinct"
+  },
+  {
+    "id": "the_bouncer",
+    "displayName": "The Bouncer",
+    "profession": "Bouncer",
+    "bio": "Door security before the war. Now the only door that matters is the hatch, and they still stand it alone.",
+    "baseHealth": 120,
+    "latentExpertTrait": "trait_juggernaut",
+    "activeQuestlineId": "quest_the_holdout"
+  },
+  {
+    "id": "the_hunter",
+    "displayName": "The Hunter",
+    "profession": "Hunter",
+    "bio": "They tracked game before the blast. Something white still moves out there — and only a bow feels honest.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_apex_predator",
+    "activeQuestlineId": "quest_the_white_elk"
+  },
+  {
+    "id": "the_prisoner",
+    "displayName": "The Prisoner",
+    "profession": "Convict",
+    "bio": "Left to die when the walls opened. The Warden's keys still hang on a ghoul's belt inside the Penitentiary.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_survivalist",
+    "activeQuestlineId": "quest_the_wardens_key"
   }
 ]

@@ -75,6 +75,9 @@ namespace AtomicWar._Game.Core
         private Func<bool> _isStormActive;
         private ItemDefinition _foragerRoots;
         private ItemDefinition _foragerBerries;
+        // Prompts #220–#224 — latent expert traits on expeditions.
+        private PersonalQuestSystem _personalQuests;
+        private ItemDefinition _apexMeat;
 
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
@@ -236,6 +239,13 @@ namespace AtomicWar._Game.Core
             _isStormActive = isStormActive;
             EnsureForagerFoodItems();
         }
+
+        /// <summary>
+        /// Prompts #220–#224 — Warlord/Peacekeeper/Juggernaut/Apex/Survivalist
+        /// expedition hooks (carry, stealth, meat, alone stamina).
+        /// </summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         /// <summary>Optional override for Forager wild-food item definitions.</summary>
         public void SetForagerFoodItems(ItemDefinition roots, ItemDefinition berries)

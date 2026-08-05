@@ -387,7 +387,7 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
-        public void Profiles_AllFiveArchetypes_HaveDistinctTraits()
+        public void Profiles_AllTenArchetypes_HaveDistinctTraits()
         {
             string[] ids =
             {
@@ -395,17 +395,150 @@ namespace AtomicWar.Tests.EditMode
                 PersonalQuestSystem.PharmacistId,
                 PersonalQuestSystem.VetId,
                 PersonalQuestSystem.TherapistId,
-                PersonalQuestSystem.UndertakerId
+                PersonalQuestSystem.UndertakerId,
+                PersonalQuestSystem.VeteranId,
+                PersonalQuestSystem.CopId,
+                PersonalQuestSystem.BouncerId,
+                PersonalQuestSystem.HunterId,
+                PersonalQuestSystem.PrisonerId
             };
             var traits = new HashSet<string>();
             foreach (var id in ids)
             {
                 var p = PersonalQuestSystem.ProfileForArchetype(id);
-                Assert.IsNotNull(p);
+                Assert.IsNotNull(p, id);
                 Assert.IsFalse(string.IsNullOrEmpty(p.LatentExpertTraitId));
                 Assert.IsFalse(string.IsNullOrEmpty(p.ActiveQuestlineId));
                 Assert.IsTrue(traits.Add(p.LatentExpertTraitId), "duplicate trait " + p.LatentExpertTraitId);
             }
+        }
+
+        // ── #220 Veteran / Warlord ───────────────────────────────────────
+
+        [Test]
+        public void Veteran_FeralSquadExecuted_UnlocksWarlord()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.VeteranId);
+            string node = null;
+            _quests.OnMapNodeSpawnRequested += (n, o) => node = n;
+            _quests.TryStartQuestline(sv, "test", 1);
+            Assert.AreEqual(PersonalQuestSystem.FortifiedSquadNodeId, node);
+
+            _quests.RecordFeralSquadExecuted(sv, 2);
+            Assert.IsTrue(_quests.HasWarlord(sv));
+            Assert.AreEqual(
+                PersonalQuestSystem.AssaultRifleWeaponPower,
+                _quests.GetWeaponPowerOverride(sv, PersonalQuestSystem.PipeWeaponId, 12f),
+                0.01f);
+            Assert.IsTrue(_quests.CanDefendLevel3Unarmed(sv));
+            float bonus = _quests.GetWarlordUnarmedDefenseBonus(
+                new List<Survivor> { sv }, weaponsPresent: false);
+            Assert.AreEqual(PersonalQuestSystem.WarlordUnarmedDefensePower, bonus, 0.01f);
+        }
+
+        // ── #221 Cop / Peacekeeper ───────────────────────────────────────
+
+        [Test]
+        public void Cop_LockboxCracked_UnlocksPeacekeeper()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.CopId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordEvidenceLockboxCracked(sv, 2);
+            Assert.IsTrue(_quests.HasPeacekeeper(sv));
+            Assert.IsTrue(_quests.CanUseWarningShot(sv));
+            Assert.IsTrue(_quests.BlocksInternalCrimeEvent(
+                PersonalQuestSystem.InternalSaboteurEventId, _survivors));
+            Assert.IsTrue(_quests.BlocksInternalCrimeEvent(
+                PersonalQuestSystem.RationThiefEventId, _survivors));
+        }
+
+        [Test]
+        public void Peacekeeper_WarningShot_DropsNoLoot()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.CopId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.CompleteQuestline(sv, 1);
+            var combat = new CombatPerkSystem();
+            combat.Bind(_progression);
+            combat.BindPersonalQuests(_quests);
+            var drops = combat.ComputeFleeDropIndices(
+                sv, lootCount: 5, tradeValueAt: i => 1f, weightAt: i => 1f);
+            Assert.AreEqual(0, drops.Count);
+        }
+
+        // ── #222 Bouncer / Juggernaut ────────────────────────────────────
+
+        [Test]
+        public void Bouncer_SoloHatchDefense_UnlocksJuggernaut()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.BouncerId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            float before = sv.BaseMaxHealth;
+            _quests.RecordSoloHatchDefense(sv, activeGuardCount: 1, survived: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasJuggernaut(sv));
+            Assert.AreEqual(before * 2f, sv.BaseMaxHealth, 0.01f);
+            Assert.IsTrue(_quests.IsImmuneToTraumaAffliction(sv, "broken_bone"));
+            Assert.IsTrue(_quests.IsImmuneToTraumaAffliction(sv, "laceration"));
+            Assert.IsTrue(_quests.IgnoresEncumbrance(sv));
+            Assert.Greater(_quests.GetExpeditionCarryCapacity(sv, 20f), 1000f);
+        }
+
+        [Test]
+        public void Bouncer_NotAlone_DoesNotComplete()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.BouncerId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordSoloHatchDefense(sv, activeGuardCount: 2, survived: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasJuggernaut(sv));
+        }
+
+        // ── #223 Hunter / Apex Predator ──────────────────────────────────
+
+        [Test]
+        public void Hunter_WhiteElkTrackAndKill_UnlocksApexPredator()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.HunterId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordWhiteElkNodeVisit(sv, "node_a");
+            _quests.RecordWhiteElkNodeVisit(sv, "node_b");
+            _quests.RecordWhiteElkKill(sv, usedScrapBow: true, usedFirearm: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasApexPredator(sv)); // need 3 nodes
+
+            _quests.RecordWhiteElkNodeVisit(sv, "node_c");
+            _quests.RecordWhiteElkKill(sv, usedScrapBow: false, usedFirearm: false, currentDay: 2);
+            Assert.IsFalse(_quests.HasApexPredator(sv)); // need scrap bow
+
+            _quests.RecordWhiteElkKill(sv, usedScrapBow: true, usedFirearm: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasApexPredator(sv)); // no firearms
+
+            _quests.RecordWhiteElkKill(sv, usedScrapBow: true, usedFirearm: false, currentDay: 3);
+            Assert.IsTrue(_quests.HasApexPredator(sv));
+            Assert.AreEqual(1f, _quests.GetStealthFactor(sv), 0.001f);
+            Assert.AreEqual(50, _quests.GetApexPredatorMeatYield(sv, isForestOrSwamp: true));
+            Assert.AreEqual(0, _quests.GetApexPredatorMeatYield(sv, isForestOrSwamp: false));
+        }
+
+        // ── #224 Prisoner / Survivalist ──────────────────────────────────
+
+        [Test]
+        public void Prisoner_WardenKeys_UnlocksSurvivalist()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.PrisonerId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            string node = null;
+            _quests.OnMapNodeSpawnRequested += (n, o) => node = n;
+            // quest already started; verify questline has penitentiary node
+            var ql = _quests.GetQuestline(QuestlineSO.Ids.TheWardensKey);
+            Assert.AreEqual(PersonalQuestSystem.PenitentiaryNodeId, ql.spawnMapNodeId);
+
+            _quests.RecordWardenKeysRetrieved(sv, 2);
+            Assert.IsTrue(_quests.HasSurvivalist(sv));
+            Assert.IsTrue(_quests.CanEatContaminatedWithoutSickness(sv));
+            Assert.AreEqual(
+                PersonalQuestSystem.SurvivalistAloneStaminaMult,
+                _quests.GetAloneStaminaDrainMultiplier(sv, isAloneOnMap: true),
+                0.001f);
+            Assert.AreEqual(1f, _quests.GetAloneStaminaDrainMultiplier(sv, isAloneOnMap: false), 0.001f);
         }
     }
 }
