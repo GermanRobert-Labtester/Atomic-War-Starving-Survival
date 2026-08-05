@@ -896,7 +896,39 @@ namespace AtomicWar._Game.Economy
 
             // Tiny trust bump for completing a deal
             ModifyTrust(factionId, +1f);
+
+            // #283 Exec Golden Parachute: track bunker inventory trade value after deals.
+            RecordExecBunkerTradeValue(playerInv);
+
             return true;
+        }
+
+        private void RecordExecBunkerTradeValue(Inventory.Inventory playerInv)
+        {
+            if (_personalQuests == null || _getSurvivors == null || playerInv == null) return;
+            float total = SumInventoryTradeValue(playerInv);
+            if (total <= 0f) return;
+            var list = _getSurvivors();
+            if (list == null) return;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                _personalQuests.RecordBunkerTradeValue(sv, total);
+            }
+        }
+
+        private static float SumInventoryTradeValue(Inventory.Inventory inv)
+        {
+            if (inv?.Slots == null) return 0f;
+            float total = 0f;
+            for (int i = 0; i < inv.Slots.Count; i++)
+            {
+                var slot = inv.Slots[i];
+                if (slot?.Item == null || slot.Amount <= 0) continue;
+                total += slot.Item.tradeValue * slot.Amount;
+            }
+            return total;
         }
 
         private void NudgeDemandFromTrade(IReadOnlyList<BarterLine> lines, bool soldByPlayer)

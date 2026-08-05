@@ -34,6 +34,24 @@ namespace AtomicWar._Game.AI
                 if (!context.PersonalQuests.CanFireGuns(context.Survivor)
                     && IsGunAction(actionId))
                     return 0f;
+                // #277 Ex-Con: refuse order-tagged actions when order-giver is Cop/General.
+                // Order-giver is approximated as any living Cop/General in the bunker.
+                if (IsOrderAction(actionId) && context.GetSurvivors != null)
+                {
+                    var all = context.GetSurvivors();
+                    if (all != null)
+                    {
+                        for (int oi = 0; oi < all.Count; oi++)
+                        {
+                            var giver = all[oi];
+                            if (giver == null || !giver.IsAlive) continue;
+                            if (context.PersonalQuests.RefusesOrdersFrom(context.Survivor, giver))
+                                return 0f;
+                        }
+                    }
+                }
+                // #279 Politician still *can* do dirty labor (quest needs it) but
+                // scores it lower so they prefer delegating when alternatives exist.
             }
 
             float rawScore = action.EvaluateRaw(context);
@@ -55,7 +73,18 @@ namespace AtomicWar._Game.AI
                 if (context.PersonalQuests.PrioritizesHydroponicsOverSleep(context.Survivor)
                     && context.PersonalQuests.IsHydroponicsAction(action.id))
                     score *= 2f;
-                // #279 Dirty labor still scores but ApplyDirtyLaborMorale is host-side on Execute.
+                // #277 Ex-Con: physical labor speed/utility bias.
+                float laborMult = context.PersonalQuests.GetExConPhysicalLaborMultiplier(context.Survivor);
+                if (laborMult > 1f && IsPhysicalLaborAction(action.id))
+                    score *= laborMult;
+                // #276 Grieving: action efficiency drag.
+                float grief = context.PersonalQuests.GetGrievingActionEfficiencyMultiplier(context.Survivor);
+                if (grief < 1f)
+                    score *= grief;
+                // #279 Politician: dirty labor is distasteful (lower utility, still possible).
+                if (context.PersonalQuests.TriesToDelegateTasks(context.Survivor)
+                    && context.PersonalQuests.IsDirtyLaborAction(action.id))
+                    score *= 0.35f;
             }
 
             // Listless penalty: light-deprived survivors are sluggish about everything.
@@ -100,6 +129,26 @@ namespace AtomicWar._Game.AI
                    || actionId.IndexOf("gun", System.StringComparison.OrdinalIgnoreCase) >= 0
                    || actionId.IndexOf("rifle", System.StringComparison.OrdinalIgnoreCase) >= 0
                    || actionId.IndexOf("suppress", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool IsOrderAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("order", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("command", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("assign", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("guard", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool IsPhysicalLaborAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("dig", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("excavat", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("haul", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("build", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("clear", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("tunnel", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
 

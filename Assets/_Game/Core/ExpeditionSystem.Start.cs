@@ -83,6 +83,9 @@ namespace AtomicWar._Game.Core
         {
             if (HatchBlocksExpeditions) return false;
             if (survivor == null || !survivor.IsAlive) return false;
+            // #271 Blind Preacher: cannot leave on expeditions.
+            if (_personalQuests != null && !_personalQuests.CanGoOnExpedition(survivor))
+                return false;
             return !IsOnExpedition(survivor.Id);
         }
 

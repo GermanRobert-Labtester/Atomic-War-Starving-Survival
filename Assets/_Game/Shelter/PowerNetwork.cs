@@ -55,7 +55,27 @@ namespace AtomicWar._Game.Shelter
             if (c.ModuleId == "radio" && _personalQuests != null
                 && _personalQuests.RadioPowerIsFree(_getSurvivors?.Invoke()))
                 return 0f;
-            return c.Watts;
+            float watts = c.Watts;
+            // #283 Ruthless Exec: +20% module efficiency → same work for less draw.
+            if (watts > 0f && _personalQuests != null && _getSurvivors != null)
+            {
+                var list = _getSurvivors();
+                if (list != null)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        var ex = list[i];
+                        if (ex == null || !ex.IsAlive) continue;
+                        float m = _personalQuests.GetRuthlessModuleEfficiencyMultiplier(ex);
+                        if (m > 1f)
+                        {
+                            watts /= m;
+                            break;
+                        }
+                    }
+                }
+            }
+            return watts;
         }
 
         /// <summary>#280 Tech Bro offline-tablet waste (watts) when unsupervised.</summary>
@@ -309,7 +329,25 @@ namespace AtomicWar._Game.Shelter
                         bool immune = _personalQuests != null
                             && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke());
                         if (!immune)
-                            src.Durability = Mathf.Max(0f, src.Durability - 0.15f * gameHours);
+                        {
+                            float wear = 0.15f * gameHours;
+                            // #283 Ruthless Exec: modules work harder and die faster.
+                            if (_personalQuests != null && _getSurvivors != null)
+                            {
+                                var list = _getSurvivors();
+                                if (list != null)
+                                {
+                                    for (int wi = 0; wi < list.Count; wi++)
+                                    {
+                                        var ex = list[wi];
+                                        if (ex == null || !ex.IsAlive) continue;
+                                        float m = _personalQuests.GetRuthlessModuleWearMultiplier(ex);
+                                        if (m > 1f) { wear *= m; break; }
+                                    }
+                                }
+                            }
+                            src.Durability = Mathf.Max(0f, src.Durability - wear);
+                        }
                         break;
 
                     case PowerSourceKind.Bicycle:

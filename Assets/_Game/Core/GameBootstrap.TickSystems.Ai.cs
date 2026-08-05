@@ -66,6 +66,14 @@ namespace AtomicWar._Game.Core
                 // Prompt #7 — track addictive chem consumption
                 if (action != null && Addiction != null && action.id == "action_use_antirad")
                     Addiction.OnItemConsumed(sv, "anti_rad", day);
+
+                // #279 Former Politician: dirty labor morale + daily quest credit.
+                if (action != null && PersonalQuests != null)
+                {
+                    PersonalQuests.ApplyDirtyLaborMorale(sv, action.id);
+                    if (PersonalQuests.IsDirtyLaborAction(action.id))
+                        PersonalQuests.MarkDirtyLaborPerformed(sv);
+                }
             }
         }
 

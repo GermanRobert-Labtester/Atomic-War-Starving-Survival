@@ -909,6 +909,11 @@ namespace AtomicWar._Game.Medical
                 _personalQuests?.ApplyPatientMoraleAfterHeal(medic, survivor);
             }
 
+            // #269 Hypochondriac: surviving real Sepsis unlocks Hyper-Aware.
+            if (string.Equals(curedId, AfflictionSO.Ids.Sepsis, StringComparison.OrdinalIgnoreCase))
+                _personalQuests?.RecordSepsisSurvived(
+                    survivor, contractedSepsis: true, survived: true, currentDay: day);
+
             // Prompt #201 — accidental Bleeding on surgical completion (0% with Steady Hands).
             if (recipe != null && recipe.isSurgical && medic != null
                 && _medicalPerks != null

@@ -193,6 +193,16 @@ namespace AtomicWar._Game.Survivors
                    || actionId.IndexOf("septic", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
+        /// <summary>Host: mark dirty labor done today (TickDaily credits Real Leader day).</summary>
+        public void MarkDirtyLaborPerformed(Survivor politician)
+        {
+            if (politician == null || string.IsNullOrEmpty(politician.Id)) return;
+            if (!TriesToDelegateTasks(politician) && !HasSilverTongue(politician)
+                && !string.Equals(politician.ArchetypeId, FormerPoliticianId, StringComparison.Ordinal))
+                return;
+            GetOrCreate(politician.Id).DidDirtyLaborThisDay = true;
+        }
+
         public float ApplyDirtyLaborMorale(Survivor politician, string actionId)
         {
             if (!TriesToDelegateTasks(politician) || !IsDirtyLaborAction(actionId)) return 0f;

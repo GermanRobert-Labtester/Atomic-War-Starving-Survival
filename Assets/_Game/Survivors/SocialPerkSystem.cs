@@ -118,15 +118,37 @@ namespace AtomicWar._Game.Survivors
             MentalBreakSystem mentalBreak,
             int currentDay = 0)
         {
-            if (speaker == null || !speaker.IsAlive || !HasDeEscalator(speaker)) return false;
+            if (speaker == null || !speaker.IsAlive) return false;
             if (target == null || !target.IsAlive || !target.HasMentalBreak) return false;
             if (mentalBreak == null) return false;
+
+            // #271 Blind Preacher: dialogue conversion of Despair → Hope (no De-Escalator required).
+            if (IsDespairBreak(target.currentMentalBreakId)
+                && _personalQuests != null
+                && _personalQuests.CanConvertDespairViaDialogue(speaker))
+            {
+                mentalBreak.Cure(target);
+                _personalQuests.RecordDespairToHopeConversion(
+                    speaker, target, viaDialogue: true, currentDay);
+                return true;
+            }
+
+            if (!HasDeEscalator(speaker)) return false;
             if (!IsViolentParanoia(target.currentMentalBreakId)) return false;
 
             mentalBreak.Cure(target);
             // Talk Down itself is also a peaceful de-escalation (idempotent grant).
             RecordPeacefulDeEscalation(speaker, currentDay);
+            // Crisis-of-faith priests can be saved by any De-Escalator talk-down.
+            _personalQuests?.RecordTalkDownSavedPriest(target, speaker, currentDay);
             return true;
+        }
+
+        public static bool IsDespairBreak(string breakId)
+        {
+            if (string.IsNullOrEmpty(breakId)) return false;
+            return string.Equals(breakId, PersonalQuestSystem.DespairBreakId, StringComparison.OrdinalIgnoreCase)
+                   || string.Equals(breakId, "despair", StringComparison.OrdinalIgnoreCase);
         }
 
         public static bool IsViolentParanoia(string breakId)

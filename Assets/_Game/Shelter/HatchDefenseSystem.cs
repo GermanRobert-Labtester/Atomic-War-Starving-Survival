@@ -545,16 +545,29 @@ namespace AtomicWar._Game.Shelter
 
             if (noise < ExternalGeneratorNoiseThreshold) return null;
 
-            // One-in-three chance per check when noisy (caller controls cadence)
-            if (_rng.NextDouble() > 0.34 + noise * 0.2) return null;
+            // #278 Legend: global raid frequency mult (0.25 = −75%).
+            float freqMult = GetPersonalQuestRaidFrequencyMultiplier();
+            float basePass = 0.34f + noise * 0.2f;
+            if (_rng.NextDouble() > basePass * Mathf.Max(0f, freqMult)) return null;
+
+            float strength = NoiseRaidStrength * (0.75f + noise * 0.5f);
+            string msg = "Something heard the generator. Footsteps on the hatch.";
+            // #271 Sonar: early warning text when a Blind Preacher latent is present.
+            if (HasSonarRaidWarning())
+            {
+                float hours = _personalQuests != null
+                    ? PersonalQuestSystem.SonarRaidWarningHours
+                    : 12f;
+                msg = "The walls spoke first. Footsteps in " + hours.ToString("0") + " hours.";
+            }
 
             return new RaidEvent
             {
                 Id = "raid_noise_" + day,
                 Trigger = RaidTrigger.Noise,
-                Strength = NoiseRaidStrength * (0.75f + noise * 0.5f),
+                Strength = strength,
                 Day = day,
-                Message = "Something heard the generator. Footsteps on the hatch."
+                Message = msg
             };
         }
 
@@ -693,6 +706,8 @@ namespace AtomicWar._Game.Shelter
                 RollTrauma(result);
                 ApplyMoraleToSurvivors(result.MoraleDelta);
                 ApplyHatchWear(result.HatchDamage);
+                // #272 Prepper: hatch destroyed (severe breach wear) + survived.
+                RecordPrepperHatchDestroyedIfAny(result, day);
             }
 
             if (result.Launched)
@@ -1007,6 +1022,40 @@ namespace AtomicWar._Game.Shelter
                 var shield = shelter.GetModule("radiation_shielding");
                 if (shield != null && shield.Level > 0)
                     shield.Level = Mathf.Max(0, shield.Level - 1);
+            }
+        }
+
+        /// <summary>
+        /// #272: after a severe breach, credit living preppers when hatch integrity is gone.
+        /// Treats hatch FilterHealth ≤ 0 or HatchDamage ≥ 40 as "completely destroyed."
+        /// </summary>
+        private void RecordPrepperHatchDestroyedIfAny(RaidResolution result, int day)
+        {
+            if (_personalQuests == null || result == null || !result.Breached) return;
+            bool destroyed = result.HatchDamage >= 40f;
+            if (!destroyed)
+            {
+                var shelter = _getShelter != null ? _getShelter() : null;
+                if (shelter?.Modules != null)
+                {
+                    for (int i = 0; i < shelter.Modules.Count; i++)
+                    {
+                        var mod = shelter.Modules[i];
+                        if (mod == null || !IsHatchModuleId(mod.ModuleId)) continue;
+                        if (mod.FilterHealth <= 0f) { destroyed = true; break; }
+                    }
+                }
+            }
+            if (!destroyed) return;
+
+            var list = _getSurvivors?.Invoke();
+            if (list == null) return;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                _personalQuests.RecordHatchDestroyedRaidSurvived(
+                    sv, hatchDestroyed: true, survived: true, currentDay: day);
             }
         }
 

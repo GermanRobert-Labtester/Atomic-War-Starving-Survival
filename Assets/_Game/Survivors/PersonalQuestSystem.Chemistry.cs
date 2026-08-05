@@ -244,6 +244,15 @@ namespace AtomicWar._Game.Survivors
             return false;
         }
 
+        /// <summary>
+        /// #271: Blind Preacher (or Sonar latent) may convert Despair via dialogue.
+        /// </summary>
+        public bool CanConvertDespairViaDialogue(Survivor speaker) =>
+            speaker != null && speaker.IsAlive
+            && (HasBlind(speaker)
+                || HasSonar(speaker)
+                || string.Equals(speaker.ArchetypeId, BlindPreacherId, StringComparison.Ordinal));
+
         /// <summary>Convert one survivor Despair → Hope via dialogue.</summary>
         public void RecordDespairToHopeConversion(
             Survivor preacher,

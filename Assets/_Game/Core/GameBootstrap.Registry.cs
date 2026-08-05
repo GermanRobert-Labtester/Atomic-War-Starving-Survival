@@ -233,6 +233,17 @@ namespace AtomicWar._Game.Core
                 _registry.DayGated("house_to_bunker", TickHouseToBunkerDaily));
             _registry.RegisterPerSubstep("system_wiring",
                 _registry.DayGated("system_wiring", RegisterTickSystemWiringDaily));
+            // #267–#283 chemistry/titles daily host helpers (pyro fire, sheriff guard, journal spam).
+            _registry.RegisterPerSubstep("chemistry_titles_daily",
+                _registry.DayGated("chemistry_titles", RegisterTickChemistryTitlesDaily));
+        }
+
+        private void RegisterTickChemistryTitlesDaily(int day)
+        {
+            var rng = _mentalBreakRng ?? new System.Random(day + 270);
+            AtmosphereSystem?.TryPyromaniacDeliberateFire(rng);
+            HatchDefenseSystem?.TryAutoAssignSheriffGuard();
+            JournalSystem?.TickNewsAnchorJournalSpam(day);
         }
 
         private void RegisterTickDeserterDaily(int day)

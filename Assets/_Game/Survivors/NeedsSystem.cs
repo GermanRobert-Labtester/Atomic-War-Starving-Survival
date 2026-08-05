@@ -53,6 +53,12 @@ namespace AtomicWar._Game.Survivors
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
 
         /// <summary>
+        /// #267 Relapsing Addict: host supplies inventory drain for forced chem.
+        /// Return true only when stock was actually consumed.
+        /// </summary>
+        public Func<Survivor, bool> ForcedChemConsumeHandler;
+
+        /// <summary>
         /// Prompts #249–#266 — Selfless morale absorb, Traumatized morale cap,
         /// Pillar-of-Atlas death, Living Saint floor, Hyper-Empath drift.
         /// </summary>
@@ -187,24 +193,40 @@ namespace AtomicWar._Game.Survivors
             if (compass > 0f)
                 survivor.Needs.Morale = UnityEngine.Mathf.Min(100f, survivor.Needs.Morale + compass * gameHours * 0.1f);
 
-            // #282 Agoraphile: bunker ticks count as inside time (host can call RecordOutsideDay when out).
+            // #282 Agoraphile: fractional bunker morale hit (day counter advances in TickDaily).
             if (_personalQuests.HasAgoraphile(survivor) && !survivor.IsOnExpedition)
             {
-                // Fractional day accumulation via morale hit scaled by hours.
                 float hit = _personalQuests.GetAgoraphileBunkerMoraleHitPerDay(survivor) * (gameHours / 24f);
                 if (hit > 0f)
                     survivor.Needs.Morale = UnityEngine.Mathf.Max(0f, survivor.Needs.Morale - hit);
             }
 
-            // #267 Forced chem consume signal: drop "medical" hunger via HoursSinceLastDose reset path.
-            // Host AddictionSystem / inventory consumes amphetamines when this is true.
-            // (AI override is separate; here we only advance addiction clock if not forced.)
+            // #267 Forced chem: only reset dose clock when host actually drains stock.
+            // No free withdrawal immunity — missing stock leaves HoursSinceLastDose running.
             if (_personalQuests.ShouldForceConsumeMedicalChems(survivor))
-                survivor.HoursSinceLastDose = 0f; // treated as just-dosed once host drains stock
+            {
+                bool consumed = ForcedChemConsumeHandler != null
+                    && ForcedChemConsumeHandler(survivor);
+                if (consumed)
+                {
+                    survivor.HoursSinceLastDose = 0f;
+                    _personalQuests.NotifyChemUsed(survivor);
+                }
+            }
 
-            // #278 Failing Heart: decay max stamina proxy (stored on quest state).
+            // #278 Failing Heart: decay max stamina proxy + extra fatigue pressure.
             if (_personalQuests.HasFailingHeart(survivor))
+            {
                 _personalQuests.TickFailingHeart(survivor, currentDay: survivor.DaysAlive);
+                float stam = _personalQuests.GetFailingHeartStaminaMax(
+                    survivor, survivor.DaysAlive);
+                if (stam < 100f && gameHours > 0f)
+                {
+                    float pressure = (1f - stam / 100f) * 2f * gameHours;
+                    survivor.Needs.Fatigue = UnityEngine.Mathf.Min(
+                        100f, survivor.Needs.Fatigue + pressure);
+                }
+            }
         }
 
         private float ComputeBunkerAverageMorale(Survivor exclude = null)

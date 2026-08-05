@@ -336,10 +336,12 @@ namespace AtomicWar._Game.Inventory
             if (Count(item) < amount) return false;
 
             int remaining = amount;
+            ItemDefinition removedDef = item;
             for (int i = _slots.Count - 1; i >= 0; i--)
             {
                 if (_slots[i] != null && _slots[i].Item != null && _slots[i].Item.id == item.id)
                 {
+                    removedDef = _slots[i].Item;
                     if (_slots[i].Amount <= remaining)
                     {
                         remaining -= _slots[i].Amount;
@@ -355,9 +357,62 @@ namespace AtomicWar._Game.Inventory
                 }
             }
 
-            OnItemRemoved?.Invoke(item, amount);
+            OnItemRemoved?.Invoke(removedDef, amount);
             OnInventoryChanged?.Invoke();
             return true;
+        }
+
+        /// <summary>Remove by item id (first matching stacks). Returns false if insufficient.</summary>
+        public bool RemoveById(string itemId, int amount)
+        {
+            if (string.IsNullOrEmpty(itemId) || amount <= 0) return false;
+            if (CountById(itemId) < amount) return false;
+
+            int remaining = amount;
+            ItemDefinition removedDef = null;
+            for (int i = _slots.Count - 1; i >= 0 && remaining > 0; i--)
+            {
+                if (_slots[i] == null || _slots[i].Item == null) continue;
+                if (_slots[i].Item.id != itemId) continue;
+                removedDef = _slots[i].Item;
+                if (_slots[i].Amount <= remaining)
+                {
+                    remaining -= _slots[i].Amount;
+                    _slots.RemoveAt(i);
+                }
+                else
+                {
+                    _slots[i].Amount -= remaining;
+                    remaining = 0;
+                }
+            }
+
+            if (removedDef != null)
+                OnItemRemoved?.Invoke(removedDef, amount);
+            OnInventoryChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// #277 Ex-Con: true when any distrusted survivor shares the owner's room
+        /// (personal stash locked for <paramref name="owner"/>).
+        /// </summary>
+        public bool IsPersonalStashLockedFor(
+            Survivor owner,
+            PersonalQuestSystem personalQuests,
+            System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> getSurvivors)
+        {
+            if (owner == null || personalQuests == null || getSurvivors == null) return false;
+            var list = getSurvivors();
+            if (list == null) return false;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var other = list[i];
+                if (other == null || !other.IsAlive) continue;
+                if (personalQuests.CausesPersonalStashLock(other, owner))
+                    return true;
+            }
+            return false;
         }
 
         /// <summary>

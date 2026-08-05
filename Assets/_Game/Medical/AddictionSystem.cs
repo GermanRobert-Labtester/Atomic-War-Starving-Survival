@@ -136,6 +136,9 @@ namespace AtomicWar._Game.Medical
             // Log the consumption
             sv.ConsumptionHistory.Add(new Survivors.ConsumptionRecord(itemId, currentDay));
 
+            // #267 Cold Turkey: any addictive dose counts as a chem day.
+            _personalQuests?.NotifyChemUsed(sv);
+
             // Prune old records outside the rolling window
             PruneHistory(sv, currentDay);
 

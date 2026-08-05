@@ -103,15 +103,59 @@ namespace AtomicWar.Tests.EditMode
         // ── #267 Relapsing Addict forced chem via NeedsSystem ────────────
 
         [Test]
-        public void NeedsSystem_RelapsingAddict_ResetsDoseClockWhenMoraleLow()
+        public void NeedsSystem_RelapsingAddict_ResetsDoseClockOnlyWhenStockConsumed()
         {
             var ad = MakeArchetype(PersonalQuestSystem.RelapsingAddictId, "addict");
             ad.Needs.Morale = 10f;
             ad.HoursSinceLastDose = 40f;
             Assert.IsTrue(_quests.ShouldForceConsumeMedicalChems(ad));
 
+            // No handler → no free dose reset.
+            _needs.Tick(ad, 1f);
+            Assert.AreEqual(40f, ad.HoursSinceLastDose, Eps);
+
+            var chem = Track(MakeItem(PersonalQuestSystem.AmphetaminesItemId, ItemType.Medical));
+            var inv = new InventoryClass();
+            inv.Add(chem, 1);
+            _needs.ForcedChemConsumeHandler = sv =>
+            {
+                if (inv.CountById(PersonalQuestSystem.AmphetaminesItemId) < 1) return false;
+                if (!inv.RemoveById(PersonalQuestSystem.AmphetaminesItemId, 1)) return false;
+                _quests.NotifyChemUsed(sv);
+                return true;
+            };
+
             _needs.Tick(ad, 1f);
             Assert.AreEqual(0f, ad.HoursSinceLastDose, Eps);
+            Assert.AreEqual(0, inv.CountById(PersonalQuestSystem.AmphetaminesItemId));
+        }
+
+        [Test]
+        public void PersonalQuests_ColdTurkey_AdvancesOnCleanDayViaTickDaily()
+        {
+            var ad = MakeArchetype(PersonalQuestSystem.RelapsingAddictId, "clean");
+            Assert.IsTrue(_quests.TryStartQuestline(ad, "test", 1));
+            ad.Needs.Morale = 80f; // not forcing chem
+
+            _quests.TickDaily(_survivors, currentDay: 2);
+            Assert.GreaterOrEqual(ad.QuestProgress, 1f - Eps);
+        }
+
+        [Test]
+        public void PowerNetwork_Ruthless_ReducesConsumerDraw()
+        {
+            var ex = MakeArchetype(PersonalQuestSystem.ExecId, "exec");
+            Assert.IsTrue(_quests.HasRuthless(ex));
+            Assert.AreEqual(1.20f, _quests.GetRuthlessModuleEfficiencyMultiplier(ex), Eps);
+
+            var net = PowerNetwork.CreateDefault(dieselFuel: 40f);
+            net.BindPersonalQuests(_quests, () => _survivors);
+            var consumer = new PowerConsumer("heater", "Heater", 12f, 2);
+            consumer.IsRequested = true;
+            net.AddConsumer(consumer);
+
+            float watts = net.GetConsumerWatts(consumer);
+            Assert.AreEqual(12f / 1.20f, watts, Eps);
         }
 
         // ── #268 Restless fatigue cap + night noise ──────────────────────

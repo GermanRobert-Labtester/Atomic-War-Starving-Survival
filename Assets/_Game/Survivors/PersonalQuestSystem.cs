@@ -1156,6 +1156,57 @@ namespace AtomicWar._Game.Survivors
                 // Anchor: lock morale at 100 every day tick.
                 if (HasTrait(sv, AnchorId))
                     sv.Needs.Morale = 100f;
+
+                // ── #267–#283 daily host quest progress (production paths) ──
+                TickChemistryTitlesDaily(sv, state, survivors, currentDay);
+            }
+        }
+
+        /// <summary>#267: mark that this survivor used an addictive chem today.</summary>
+        public void NotifyChemUsed(Survivor sv)
+        {
+            if (sv == null || string.IsNullOrEmpty(sv.Id)) return;
+            GetOrCreate(sv.Id).UsedChemThisDay = true;
+        }
+
+        /// <summary>
+        /// Daily host orchestration for chemistry/titles quests that can advance
+        /// from survivor state alone (no external event).
+        /// </summary>
+        private void TickChemistryTitlesDaily(
+            Survivor sv,
+            PersonalQuestState state,
+            IReadOnlyList<Survivor> survivors,
+            int currentDay)
+        {
+            // #267 Cold Turkey: one clean day when no chem was used.
+            if (state.QuestActive
+                && string.Equals(state.QuestlineId, QuestlineSO.Ids.ColdTurkey, StringComparison.Ordinal))
+            {
+                RecordColdTurkeyCleanDay(sv, usedAnyChem: state.UsedChemThisDay, currentDay);
+            }
+            state.UsedChemThisDay = false;
+
+            // #282 Agoraphile: full day inside advances flee counter + morale hit.
+            if (HasAgoraphile(sv) && !sv.IsOnExpedition)
+                ApplyAgoraphileBunkerDay(sv, spentDayInside: true);
+            else if (HasAgoraphile(sv) && sv.IsOnExpedition)
+                RecordOutsideDay(sv);
+
+            // #273 Radiotrophic unlock: lifetime mSv milestone.
+            if (state.QuestActive
+                && string.Equals(state.QuestlineId, QuestlineSO.Ids.EmbracingTheGlow, StringComparison.Ordinal)
+                && sv.LifetimeRadiationExposure >= EmbracingGlowLifetimeRads)
+            {
+                RecordLifetimeRadsMilestone(
+                    sv, sv.LifetimeRadiationExposure, isAlive: true, currentDay);
+            }
+
+            // #279 Real Leader: if they did dirty labor today, credit the day.
+            if (state.DidDirtyLaborThisDay)
+            {
+                RecordDirtyLaborDay(sv, didDirtyJob: true, currentDay);
+                state.DidDirtyLaborThisDay = false;
             }
         }
 
@@ -3817,6 +3868,10 @@ namespace AtomicWar._Game.Survivors
             public bool HungerStrikeActive;
             public bool TechTabletDead;
             public float SheriffStaminaMax;
+            /// <summary>Ephemeral: chem use between daily ticks (#267). Not saved.</summary>
+            public bool UsedChemThisDay;
+            /// <summary>Ephemeral: dirty labor performed today (#279). Not saved.</summary>
+            public bool DidDirtyLaborThisDay;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
