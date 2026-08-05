@@ -246,6 +246,8 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_perks.Has(_sv, CombatPerkSystem.LootersReflexId));
 
             // trade values: 1, 50, 10 → keep index 1
+            int retainedIdx = -1;
+            _perks.OnLootRetainedOnFlee += (sv, idx) => retainedIdx = idx;
             var drop = _perks.ComputeFleeDropIndices(
                 _sv, 3,
                 i => i == 0 ? 1f : i == 1 ? 50f : 10f,
@@ -254,6 +256,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsFalse(drop.Contains(1), "Most valuable index retained");
             Assert.IsTrue(drop.Contains(0));
             Assert.IsTrue(drop.Contains(2));
+            Assert.AreEqual(1, retainedIdx, "OnLootRetainedOnFlee fires with keep index");
         }
 
         [Test]

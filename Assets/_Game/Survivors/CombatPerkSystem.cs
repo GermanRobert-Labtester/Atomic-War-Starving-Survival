@@ -56,6 +56,8 @@ namespace AtomicWar._Game.Survivors
 
         public event Action<Survivor, string> OnCombatPerkEarned; // sv, perkId
         public event Action<Survivor, string, int> OnMilestoneProgress; // sv, counterKey, newValue
+        /// <summary>Prompt #187 — raised when Looter's Reflex keeps the best item on flee (sv, keepIndex).</summary>
+        public event Action<Survivor, int> OnLootRetainedOnFlee;
 
         public void Bind(SkillProgressionSystem progression)
         {
@@ -331,6 +333,8 @@ namespace AtomicWar._Game.Survivors
                 {
                     if (i != keep) drop.Add(i);
                 }
+                if (keep >= 0)
+                    OnLootRetainedOnFlee?.Invoke(sv, keep);
                 return drop;
             }
 
