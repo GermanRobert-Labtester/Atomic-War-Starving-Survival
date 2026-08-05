@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
@@ -128,6 +130,10 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public bool IsFractured;
 
+        // Prompt #165 — clothing degradation
+        public float ClothingDurability = 100f;
+        public bool IsRagged;
+
         /// <summary>
         /// Black Rain dread (Prompt #11). True while outdoors in BlackRain or
         /// listening to it hit the hatch. Owned by BlackRainHazardSystem.
@@ -140,23 +146,43 @@ namespace AtomicWar._Game.Survivors
         // field needed on the survivor for treatment speed / resource sparing.
         // -------------------------------------------------------------------
 
-        /// <summary>0..1 medical competence. Higher = faster treatments, fewer spare parts used.</summary>
+        /// <summary>
+        /// 0..1 medical aptitude base. Varied per character at creation; not a final
+        /// "level". Action-driven perks (SkillProgressionSystem) stack on top.
+        /// </summary>
         public float MedicalSkill = 0.3f;
 
         /// <summary>
-        /// 0..1 scientific/technical competence. Drives audio/signal analysis, circuit
-        /// diagnostics, and "is this a recording loop?" inference. Default 0.3 means
-        /// the average survivor cannot reliably scrutinize a broadcast — the radio
-        /// only becomes a safe narrative tool if the bunker has a medic or a tech
-        /// at the dial. Used by EventContext.HasTraitInBunker("Science").
+        /// 0..1 scientific aptitude base. Varied per character. Used by
+        /// EventContext.HasTraitInBunker("Science") and cartography speed.
         /// </summary>
         public float ScienceSkill = 0.3f;
 
         /// <summary>
-        /// 0..1 crafting/repair competence. Drives workbench speed, scrap yield,
-        /// and shelter-module repair efficacy. Subject to Skill Atrophy (Prompt #10).
+        /// 0..1 crafting aptitude base. Varied per character. Subject to Skill
+        /// Atrophy (Prompt #10) and action-driven perks (Prompt #179).
         /// </summary>
         public float CraftingSkill = 0.3f;
+
+        /// <summary>
+        /// Predetermined expert discipline this survivor may master (one only).
+        /// snake_case: medical / crafting / science / combat / scavenging / survival.
+        /// Empty = no expert track. Owned by SkillProgressionSystem (Prompt #179).
+        /// </summary>
+        public string ExpertDisciplineId;
+
+        /// <summary>Active (non-dormant) perk bonus for medical. Written by SkillProgressionSystem.</summary>
+        public float ProgressionMedicalBonus;
+        /// <summary>Active perk bonus for crafting.</summary>
+        public float ProgressionCraftingBonus;
+        /// <summary>Active perk bonus for science.</summary>
+        public float ProgressionScienceBonus;
+        /// <summary>Active perk bonus for combat/guard work.</summary>
+        public float ProgressionCombatBonus;
+        /// <summary>Active perk bonus for scavenging.</summary>
+        public float ProgressionScavengingBonus;
+        /// <summary>Active perk bonus for survival chores.</summary>
+        public float ProgressionSurvivalBonus;
 
         // -------------------------------------------------------------------
         // Skill Atrophy (Prompt #10). When Morale stays below the atrophy
@@ -245,19 +271,19 @@ namespace AtomicWar._Game.Survivors
         /// <summary>Whether the given status is currently active on this survivor.</summary>
         public bool HasStatus(SurvivorStatus status)
         {
-            switch (status)
+            return status switch
             {
-                case SurvivorStatus.AcuteRadiationSickness: return HasAcuteRadiationSickness;
-                case SurvivorStatus.ChronicIllness: return HasChronicIllness;
-                case SurvivorStatus.RadResistance: return HasRadResistance;
-                case SurvivorStatus.Listless: return IsListless;
-                case SurvivorStatus.AcuteRadiationSyndrome: return HasAcuteRadiationSyndrome;
-                case SurvivorStatus.RadiationAnxiety: return HasRadiationAnxietyStatus;
-                case SurvivorStatus.Numb: return IsNumb;
-                case SurvivorStatus.Fractured: return IsFractured;
-                case SurvivorStatus.Dread: return HasDread;
-                default: return false;
-            }
+                SurvivorStatus.AcuteRadiationSickness => HasAcuteRadiationSickness,
+                SurvivorStatus.ChronicIllness => HasChronicIllness,
+                SurvivorStatus.RadResistance => HasRadResistance,
+                SurvivorStatus.Listless => IsListless,
+                SurvivorStatus.AcuteRadiationSyndrome => HasAcuteRadiationSyndrome,
+                SurvivorStatus.RadiationAnxiety => HasRadiationAnxietyStatus,
+                SurvivorStatus.Numb => IsNumb,
+                SurvivorStatus.Fractured => IsFractured,
+                SurvivorStatus.Dread => HasDread,
+                _ => false
+            };
         }
 
         /// <summary>Convenience: true if the survivor is currently broken
@@ -359,11 +385,31 @@ namespace AtomicWar._Game.Survivors
             }
         }
 
-        /// <summary>Effective MedicalSkill after atrophy penalties.</summary>
-        public float EffectiveMedicalSkill => AtrophiedSkills != null && AtrophiedSkills.Contains("medical") ? MedicalSkill * 0.5f : MedicalSkill;
+        /// <summary>Effective MedicalSkill after atrophy + active progression perks.</summary>
+        public float EffectiveMedicalSkill
+        {
+            get
+            {
+                float v = AtrophiedSkills != null && AtrophiedSkills.Contains("medical")
+                    ? MedicalSkill * 0.5f : MedicalSkill;
+                return Mathf.Clamp01(v + ProgressionMedicalBonus);
+            }
+        }
 
-        /// <summary>Effective CraftingSkill after atrophy penalties.</summary>
-        public float EffectiveCraftingSkill => AtrophiedSkills != null && AtrophiedSkills.Contains("crafting") ? CraftingSkill * 0.5f : CraftingSkill;
+        /// <summary>Effective CraftingSkill after atrophy + active progression perks.</summary>
+        public float EffectiveCraftingSkill
+        {
+            get
+            {
+                float v = AtrophiedSkills != null && AtrophiedSkills.Contains("crafting")
+                    ? CraftingSkill * 0.5f : CraftingSkill;
+                return Mathf.Clamp01(v + ProgressionCraftingBonus);
+            }
+        }
+
+        /// <summary>Effective ScienceSkill with active progression perks.</summary>
+        public float EffectiveScienceSkill =>
+            Mathf.Clamp01(ScienceSkill + ProgressionScienceBonus);
     }
 
     /// <summary>

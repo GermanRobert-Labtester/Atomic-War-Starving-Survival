@@ -16,6 +16,12 @@ namespace AtomicWar._Game.AI
         public float weight = 1.0f;
         public AnimationCurve responseCurve = AnimationCurve.Linear(0f, 0f, 1f, 1f);
 
+        [Header("Progression (Prompt #179)")]
+        [Tooltip("snake_case discipline XP awarded on execute. Empty = no progression XP.")]
+        public string progressionDiscipline;
+        [Tooltip("Hidden XP granted each time this action is executed.")]
+        public float progressionXp = 5f;
+
         /// <summary>
         /// When true, the final utility score is NOT clamped to 0..1.
         /// Use for override actions that must always win (e.g. withdrawal panic).
@@ -37,5 +43,17 @@ namespace AtomicWar._Game.AI
 
         /// <summary>Legacy single-survivor execution overload.</summary>
         public virtual void Execute(Survivor survivor) { }
+
+        /// <summary>True when context has a living survivor actor.</summary>
+        protected static bool HasLivingSurvivor(AIContext context)
+            => context?.Survivor != null && context.Survivor.IsAlive;
+
+        /// <summary>Living survivor who can craft/construct (not child/disabled).</summary>
+        protected static bool CanCraft(AIContext context)
+            => HasLivingSurvivor(context) && !context.Survivor.CannotCraft;
+
+        /// <summary>Living survivor who can scavenge/haul.</summary>
+        protected static bool CanScavenge(AIContext context)
+            => HasLivingSurvivor(context) && !context.Survivor.CannotScavenge;
     }
 }
