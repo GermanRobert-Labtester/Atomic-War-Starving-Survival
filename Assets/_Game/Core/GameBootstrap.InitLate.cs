@@ -537,6 +537,8 @@ namespace AtomicWar._Game.Core
             WaterEconomySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             PowerNetwork?.BindPersonalQuests(PersonalQuests, () => Survivors);
             AtmosphereSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            StructuralIntegrity?.BindPersonalQuests(PersonalQuests);
+            ExcavationSystem?.BindPersonalQuests(PersonalQuests);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

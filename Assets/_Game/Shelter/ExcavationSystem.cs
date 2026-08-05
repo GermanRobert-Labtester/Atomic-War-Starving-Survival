@@ -44,6 +44,7 @@ namespace AtomicWar._Game.Shelter
         private int _pendingRubbleUnits; // Rubble waiting at hatch for surface dump
         private readonly System.Random _rng;
         private ShelterPerkSystem _shelterPerks;
+        private PersonalQuestSystem _personalQuests;
         private Func<int> _getDay;
 
         // -- Events --
@@ -101,6 +102,10 @@ namespace AtomicWar._Game.Shelter
         /// Returns units cleared. Requires Shovel for full speed.
         /// Prompt #213 — Taskmaster passes workHours &gt; 1 for Pacing Aura.
         /// </summary>
+        /// <summary>Prompt #227 — Vault Builder room build fatigue/materials.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
         public float ClearRubble(string roomId, Survivors.Survivor worker,
             bool hasShovel, bool hatchBlocked, float workHours = 1f)
         {
@@ -121,6 +126,9 @@ namespace AtomicWar._Game.Shelter
             float fatMult = _shelterPerks != null
                 ? _shelterPerks.GetExcavationFatigueMultiplier(worker)
                 : 1f;
+            // Prompt #227 — Vault Builder: 50% less fatigue when excavating/building rooms.
+            if (_personalQuests != null)
+                fatMult *= _personalQuests.GetRoomBuildCostMultiplier(worker);
             worker.Needs.Fatigue = Mathf.Clamp(
                 worker.Needs.Fatigue + FatiguePerHour * workHours * fatMult, 0f, 100f);
 

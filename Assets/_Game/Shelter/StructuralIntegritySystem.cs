@@ -60,6 +60,7 @@ namespace AtomicWar._Game.Shelter
         private ShelterPerkSystem _shelterPerks;
         private Func<int> _getDay;
         private CeilingCollapseSystem _ceilingCollapse;
+        private PersonalQuestSystem _personalQuests;
 
         // -- Public state --
         public float Integrity => _integrity;
@@ -119,6 +120,10 @@ namespace AtomicWar._Game.Shelter
             _getDay = getDay ?? (() => 0);
             _ceilingCollapse = ceiling;
         }
+
+        /// <summary>Prompt #227 — Vault Builder locks integrity at 100%.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         /// <summary>
         /// Build one shoring strut level. Consumes wood (50% less with Structural Engineer).
@@ -194,6 +199,19 @@ namespace AtomicWar._Game.Shelter
         /// Damage is reduced by installed shoring struts.</summary>
         public void ApplyDamage(float rawDamage, string cause = null)
         {
+            // Prompt #227 — Vault Builder: structural integrity permanently locked at 100%.
+            if (_personalQuests != null
+                && _personalQuests.LocksStructuralIntegrityAtMax(_getSurvivors?.Invoke()))
+            {
+                if (_integrity < MaxIntegrity)
+                {
+                    float old = _integrity;
+                    _integrity = MaxIntegrity;
+                    _hasDustLeaks = false;
+                    OnIntegrityChanged?.Invoke(old, _integrity);
+                }
+                return;
+            }
             if (rawDamage <= 0f) return;
             float resist = DamageResistance;
             float actual = rawDamage * (1f - resist);
@@ -219,6 +237,19 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Apply dust-leak contamination and check for cave-ins.</summary>
         public void Tick(float gameHours, Shelter shelter)
         {
+            if (_personalQuests != null
+                && _personalQuests.LocksStructuralIntegrityAtMax(_getSurvivors?.Invoke()))
+            {
+                if (_integrity < MaxIntegrity)
+                {
+                    float old = _integrity;
+                    _integrity = MaxIntegrity;
+                    _hasDustLeaks = false;
+                    OnIntegrityChanged?.Invoke(old, _integrity);
+                }
+                return;
+            }
+
             if (gameHours <= 0f || shelter == null) return;
 
             UpdateDustLeaks(gameHours, shelter);
