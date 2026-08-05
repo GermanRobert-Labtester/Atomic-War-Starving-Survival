@@ -324,6 +324,11 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((SocialPerkSave)o));
 
+        public void SetPersonalQuestSystem(PersonalQuestSystem s) =>
+            RegisterSystem(ref _personalQuestSystem, s, "personal_quests",
+                () => s.CaptureState(),
+                o => s.RestoreState((PersonalQuestSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

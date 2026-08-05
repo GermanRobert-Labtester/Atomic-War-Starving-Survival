@@ -143,6 +143,18 @@ namespace AtomicWar._Game.Core
             // Prompt #213 — Taskmaster high-morale streak.
             _registry.RegisterPerSubstep("social_perks_daily",
                 _registry.DayGated("social_perks", day => SocialPerks?.TickDailyMorale(Survivors, day)));
+            // Prompts #214–#219 — personal quest days-alive + Anchor lock.
+            _registry.RegisterPerSubstep("personal_quests_daily",
+                _registry.DayGated("personal_quests", day => PersonalQuests?.TickDaily(Survivors, day)));
+            // Morale 0→100 quest trigger + Anchor room floor each needs substep.
+            _registry.RegisterPerSubstep("personal_quests_morale", h =>
+            {
+                if (PersonalQuests == null || Survivors == null) return;
+                int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+                PersonalQuests.WatchMoraleAll(Survivors, day);
+                for (int i = 0; i < Survivors.Count; i++)
+                    PersonalQuests.ApplyRoomMoraleFloor(Survivors[i], Survivors);
+            });
             _registry.RegisterPerSubstep("empath", h => EmpathSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("survivor_diaries", h => SurvivorDiaries?.Tick(h, Survivors, TimeSystem?.CurrentDay ?? 1, _mentalBreakRng));
             _registry.RegisterPerSubstep("spatial_psychology", h => SpatialPsychology?.Tick(h, Survivors));

@@ -101,6 +101,7 @@ namespace AtomicWar._Game.Core
             CapIf(_medicalPerkSystem, s => data.MedicalPerks = s.CaptureState());
             CapIf(_expeditionPerkSystem, s => data.ExpeditionPerks = s.CaptureState());
             CapIf(_socialPerkSystem, s => data.SocialPerks = s.CaptureState());
+            CapIf(_personalQuestSystem, s => data.PersonalQuests = s.CaptureState());
         }
     }
 }

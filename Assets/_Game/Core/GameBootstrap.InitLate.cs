@@ -256,12 +256,14 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetMedicalPerkSystem(MedicalPerks);
             SaveSystem.SetExpeditionPerkSystem(ExpeditionPerks);
             SaveSystem.SetSocialPerkSystem(SocialPerks);
+            SaveSystem.SetPersonalQuestSystem(PersonalQuests);
             WireCombatPerkBindings();
             WireSurvivalPerkBindings();
             WireShelterPerkBindings();
             WireMedicalPerkBindings();
             WireExpeditionPerkBindings();
             WireSocialPerkBindings();
+            WirePersonalQuestBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -510,6 +512,40 @@ namespace AtomicWar._Game.Core
             // Prompt #212 — food spoil 50% slower in Quartermaster's room.
             PantrySystem?.BindDegradationMultiplier(roomId =>
                 SocialPerks.GetItemDegradationMultiplier(roomId, Survivors));
+        }
+
+        /// <summary>
+        /// Prompts #214–#219 — bind personal quests into medical, social, crafting,
+        /// corpse, and (when present) pet systems. UI evolution toast is logged.
+        /// </summary>
+        private void WirePersonalQuestBindings()
+        {
+            if (PersonalQuests == null) return;
+
+            MedicalPerks?.BindPersonalQuests(PersonalQuests);
+            SocialPerks?.BindPersonalQuests(PersonalQuests);
+            CraftingSystem?.BindPersonalQuests(PersonalQuests, new System.Random(_worldSeed + 214));
+            CorpseSystem?.BindPersonalQuests(PersonalQuests);
+
+            PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
+            {
+                string name = sv != null ? sv.DisplayName : "?";
+                GameLog.Log(
+                    "CharacterEvolution",
+                    $"{name} unlocked latent expert trait: {display} ({traitId})");
+            };
+            PersonalQuests.OnMapNodeSpawnRequested += (nodeId, ownerId) =>
+            {
+                GameLog.Log(
+                    "PersonalQuest",
+                    $"Map node requested: {nodeId} for survivor {ownerId}");
+            };
+            PersonalQuests.OnBunkerEventRequested += (eventId, ownerId) =>
+            {
+                GameLog.Log(
+                    "PersonalQuest",
+                    $"Bunker event requested: {eventId} for survivor {ownerId}");
+            };
         }
 
     }

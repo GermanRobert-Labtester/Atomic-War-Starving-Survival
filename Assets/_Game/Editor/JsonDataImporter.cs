@@ -286,6 +286,10 @@ namespace AtomicWar._Game.Editor
             public string profession;
             public string bio;
             public float  baseHealth = 100f;
+            /// <summary>Prompt #214 — predetermined latent expert trait id.</summary>
+            public string latentExpertTrait;
+            /// <summary>Prompt #214 — personal questline id.</summary>
+            public string activeQuestlineId;
         }
 
         [Serializable]
@@ -558,6 +562,8 @@ namespace AtomicWar._Game.Editor
                 so.profession   = json.profession;
                 so.bio          = json.bio;
                 so.baseHealth   = json.baseHealth;
+                so.latentExpertTrait = json.latentExpertTrait;
+                so.activeQuestlineId = json.activeQuestlineId;
                 EditorUtility.SetDirty(so);
             }
         }

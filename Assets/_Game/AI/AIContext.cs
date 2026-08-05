@@ -172,6 +172,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Prompts #211–#213 — social / leadership milestone perks.</summary>
         public SocialPerkSystem SocialPerks;
 
+        /// <summary>Prompts #214–#219 — personal questlines + latent expert traits.</summary>
+        public PersonalQuestSystem PersonalQuests;
+
         /// <summary>Prompt #177 — triage board medication permissions.</summary>
         public TriageBoardSystem TriageSystem;
 

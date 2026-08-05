@@ -357,6 +357,9 @@ namespace AtomicWar._Game.Core
             // Prompts #211–#213 — social / leadership milestone perks
             SocialPerks = new SocialPerkSystem();
             SocialPerks.Bind(SkillProgression);
+            // Prompts #214–#219 — personal quest engine + latent expert traits
+            PersonalQuests = new PersonalQuestSystem();
+            PersonalQuests.Bind(SkillProgression);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

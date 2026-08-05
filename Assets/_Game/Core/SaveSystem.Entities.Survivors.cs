@@ -104,7 +104,18 @@ namespace AtomicWar._Game.Core
 
                 // Prompt #165 — Clothing degradation (round-trip safe).
                 ClothingDurability = sv.ClothingDurability,
-                IsRagged           = sv.IsRagged
+                IsRagged           = sv.IsRagged,
+
+                // Prompts #214–#219 — personal quest destiny.
+                ArchetypeId          = sv.ArchetypeId ?? string.Empty,
+                LatentExpertTraitId  = sv.LatentExpertTraitId ?? string.Empty,
+                ActiveQuestlineId    = sv.ActiveQuestlineId ?? string.Empty,
+                QuestlineActive      = sv.QuestlineActive,
+                LatentTraitUnlocked  = sv.LatentTraitUnlocked,
+                QuestStage           = sv.QuestStage,
+                QuestProgress        = sv.QuestProgress,
+                DaysAlive            = sv.DaysAlive,
+                MoraleHitZero        = sv.MoraleHitZero
             };
 
             if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
@@ -207,6 +218,17 @@ namespace AtomicWar._Game.Core
             // survivor stays Ragged across sessions and the morale drain continues.
             sv.ClothingDurability = save.ClothingDurability;
             sv.IsRagged           = save.IsRagged;
+
+            // Prompts #214–#219 — personal quest destiny.
+            sv.ArchetypeId         = save.ArchetypeId ?? string.Empty;
+            sv.LatentExpertTraitId = save.LatentExpertTraitId ?? string.Empty;
+            sv.ActiveQuestlineId   = save.ActiveQuestlineId ?? string.Empty;
+            sv.QuestlineActive     = save.QuestlineActive;
+            sv.LatentTraitUnlocked = save.LatentTraitUnlocked;
+            sv.QuestStage          = save.QuestStage;
+            sv.QuestProgress       = save.QuestProgress;
+            sv.DaysAlive           = save.DaysAlive;
+            sv.MoraleHitZero       = save.MoraleHitZero;
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)

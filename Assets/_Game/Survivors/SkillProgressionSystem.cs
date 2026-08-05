@@ -85,6 +85,7 @@ namespace AtomicWar._Game.Survivors
             RegisterMedicalPerks();
             RegisterExpeditionPerks();
             RegisterSocialPerks();
+            RegisterLatentExpertTraits();
         }
 
         /// <summary>
@@ -174,6 +175,24 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(SocialPerkSystem.DeEscalatorId, "De-Escalator", "survival", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(SocialPerkSystem.QuartermasterId, "Quartermaster", "scavenging", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(SocialPerkSystem.TaskmasterId, "Taskmaster", "survival", milestoneOnly, 0.10f, false));
+        }
+
+        /// <summary>
+        /// Latent expert traits (Prompts #214–#219). Unreachable via action XP —
+        /// granted only when a personal questline completes.
+        /// Marked isExpertPerk so only the predetermined expert track may hold them
+        /// (PersonalQuestSystem also grants via TryGrantPerk after quest finish).
+        /// </summary>
+        public void RegisterLatentExpertTraits()
+        {
+            const float milestoneOnly = 999999f;
+            // Expert-flag false: quest grant must work for any assigned survivor
+            // without requiring ExpertDisciplineId match mid-quest.
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MiracleWorkerId, "Miracle Worker", "medical", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.AlchemistId, "Alchemist", "medical", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ZoonoticExpertId, "Zoonotic Expert", "medical", milestoneOnly, 0.15f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.AnchorId, "Anchor", "survival", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DeathBlindId, "Death-Blind", "survival", milestoneOnly, 0.15f, false));
         }
 
         /// <summary>

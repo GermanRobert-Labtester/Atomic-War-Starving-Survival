@@ -171,6 +171,42 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public string ExpertDisciplineId;
 
+        // -------------------------------------------------------------------
+        // Personal Quest Engine & Latent Expert Traits (Prompt #214).
+        // Survivors do NOT start with their expert trait — they earn it via
+        // activeQuestline completion. Owned by PersonalQuestSystem.
+        // -------------------------------------------------------------------
+
+        /// <summary>snake_case archetype id (e.g. the_surgeon).</summary>
+        public string ArchetypeId;
+
+        /// <summary>
+        /// Predetermined latent expert trait perk id (e.g. trait_miracle_worker).
+        /// Stored at creation; granted only when the personal questline finishes.
+        /// </summary>
+        public string LatentExpertTraitId;
+
+        /// <summary>Active personal questline id (QuestlineSO.id), or empty.</summary>
+        public string ActiveQuestlineId;
+
+        /// <summary>True once the questline has been triggered (day 30 or morale recovery).</summary>
+        public bool QuestlineActive;
+
+        /// <summary>True once the latent expert trait has been permanently unlocked.</summary>
+        public bool LatentTraitUnlocked;
+
+        /// <summary>Quest stage index (0..max). Owned by PersonalQuestSystem.</summary>
+        public int QuestStage;
+
+        /// <summary>Generic quest progress accumulator (ops, hours, etc.).</summary>
+        public float QuestProgress;
+
+        /// <summary>Campaign days this survivor has been alive in the bunker.</summary>
+        public int DaysAlive;
+
+        /// <summary>True after morale has hit 0 (arm for 0→100 quest trigger).</summary>
+        public bool MoraleHitZero;
+
         /// <summary>Active (non-dormant) perk bonus for medical. Written by SkillProgressionSystem.</summary>
         public float ProgressionMedicalBonus;
         /// <summary>Active perk bonus for crafting.</summary>

@@ -140,6 +140,7 @@ namespace AtomicWar._Game.Core
             context.MedicalPerks = MedicalPerks;
             context.ExpeditionPerks = ExpeditionPerks;
             context.SocialPerks = SocialPerks;
+            context.PersonalQuests = PersonalQuests;
             context.TriageSystem = TriageSystem;
             context.ResilienceSystem = ResilienceSystem;
             context.AntibioticResistSystem = AntibioticResistSystem;

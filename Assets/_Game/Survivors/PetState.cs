@@ -35,6 +35,12 @@ namespace AtomicWar._Game.Survivors
 
         public bool IsAlive = true;
 
+        /// <summary>Prompt #217 — Zoonotic Expert owner id (empty when free-roaming).</summary>
+        public string OwnerSurvivorId;
+
+        /// <summary>Prompt #217 — tamed wasteland animals eat SpoiledMeat only.</summary>
+        public bool EatsSpoiledMeatOnly;
+
         public bool HasTrait(PetTraits trait)
         {
             return (Traits & trait) == trait;

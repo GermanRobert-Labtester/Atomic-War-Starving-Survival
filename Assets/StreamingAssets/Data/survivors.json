@@ -19,5 +19,50 @@
     "profession": "Farmer",
     "bio": "Her family's greenhouse survived the initial blast. She knows which soil still grows and which poisons the roots.",
     "baseHealth": 95
+  },
+  {
+    "id": "the_surgeon",
+    "displayName": "The Surgeon",
+    "profession": "Surgeon",
+    "bio": "Haunted by a patient lost on Day 1. Their hands still remember the cut they couldn't finish.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_miracle_worker",
+    "activeQuestlineId": "quest_the_shaking_hand"
+  },
+  {
+    "id": "the_pharmacist",
+    "displayName": "The Pharmacist",
+    "profession": "Pharmacist",
+    "bio": "Empty bottles line their pockets. The old CVS still has their logbook — if they dare go alone.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_alchemist",
+    "activeQuestlineId": "quest_the_empty_bottles"
+  },
+  {
+    "id": "the_vet",
+    "displayName": "The Vet",
+    "profession": "Veterinarian",
+    "bio": "They treated dogs before the war. Now the dogs glow, and something in them still wants to heal.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_zoonotic_expert",
+    "activeQuestlineId": "quest_the_rabid_pack"
+  },
+  {
+    "id": "the_therapist",
+    "displayName": "The Therapist",
+    "profession": "Therapist",
+    "bio": "They used to sit across from people and wait. The bunker still needs someone who can listen when the walls start talking.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_anchor",
+    "activeQuestlineId": "quest_the_broken_mind"
+  },
+  {
+    "id": "the_undertaker",
+    "displayName": "The Undertaker",
+    "profession": "Undertaker",
+    "bio": "They buried the first dead after the exchange. Closure is a trench and a shovel and the quiet that follows.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_death_blind",
+    "activeQuestlineId": "quest_the_mass_grave"
   }
 ]

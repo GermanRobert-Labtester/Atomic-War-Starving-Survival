@@ -141,6 +141,8 @@ namespace AtomicWar._Game.Core
         public ExpeditionPerkSave ExpeditionPerks;
         /// <summary>Prompts #211–#213 — social / leadership counters (de-escalator, haul, morale…).</summary>
         public SocialPerkSave SocialPerks;
+        /// <summary>Prompts #214–#219 — personal quest progress + latent trait unlock flags.</summary>
+        public PersonalQuestSave PersonalQuests;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;
@@ -325,6 +327,17 @@ namespace AtomicWar._Game.Core
 
         // Internal mysteries (Prompt #45) — permanent Fractured status
         public bool IsFractured;
+
+        // Prompts #214–#219 — personal quest destiny (latent trait not Day-0 granted).
+        public string ArchetypeId;
+        public string LatentExpertTraitId;
+        public string ActiveQuestlineId;
+        public bool QuestlineActive;
+        public bool LatentTraitUnlocked;
+        public int QuestStage;
+        public float QuestProgress;
+        public int DaysAlive;
+        public bool MoraleHitZero;
     }
 
     /// <summary>Serializable mirror of Survivors.ConsumptionRecord for save/load.</summary>
