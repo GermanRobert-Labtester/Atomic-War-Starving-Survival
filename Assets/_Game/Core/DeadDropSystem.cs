@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -43,6 +44,9 @@ namespace AtomicWar._Game.Core
         private readonly HashSet<string> _deadDropNodeIds = new HashSet<string>();
         private readonly System.Random _rng;
         private int _dropSeq;
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+        private Func<string, Survivor> _resolveCourier; // optional: map drop to courier
 
         // -- Events --
         public event Action<DeadDrop> OnDeadDropPlaced;
@@ -56,6 +60,17 @@ namespace AtomicWar._Game.Core
         public DeadDropSystem(System.Random rng = null)
         {
             _rng = rng ?? new System.Random(72);
+        }
+
+        /// <summary>Prompt #231 — Lost Route dead-drop progress for The Courier.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null,
+            Func<string, Survivor> resolveCourier = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+            _resolveCourier = resolveCourier;
         }
 
         /// <summary>Mark a node as a dead-drop site.</summary>
@@ -123,11 +138,13 @@ namespace AtomicWar._Game.Core
                     drop.WasStolen = true;
                     OnDeadDropStolen?.Invoke(drop);
                     onTheft?.Invoke(drop);
+                    NotifyCourierFailure(drop);
                 }
                 else
                 {
                     OnDeadDropResolved?.Invoke(drop);
                     onSuccess?.Invoke(drop);
+                    NotifyCourierSuccess(drop);
                 }
 
                 _activeDrops.RemoveAt(i);
@@ -143,6 +160,42 @@ namespace AtomicWar._Game.Core
             if (string.IsNullOrEmpty(dropId)) return null;
             for (int i = 0; i < _activeDrops.Count; i++)
                 if (_activeDrops[i].DropId == dropId) return _activeDrops[i];
+            return null;
+        }
+
+        private void NotifyCourierSuccess(DeadDrop drop)
+        {
+            if (_personalQuests == null) return;
+            var courier = ResolveCourierForDrop(drop);
+            if (courier != null)
+                _personalQuests.RecordDeadDropSuccess(courier);
+        }
+
+        private void NotifyCourierFailure(DeadDrop drop)
+        {
+            if (_personalQuests == null) return;
+            var courier = ResolveCourierForDrop(drop);
+            if (courier != null)
+                _personalQuests.RecordDeadDropFailure(courier);
+        }
+
+        private Survivor ResolveCourierForDrop(DeadDrop drop)
+        {
+            if (_resolveCourier != null && drop != null)
+            {
+                var c = _resolveCourier(drop.DropId);
+                if (c != null) return c;
+            }
+            var list = _getSurvivors?.Invoke();
+            if (list == null) return null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var s = list[i];
+                if (s == null || !s.IsAlive) continue;
+                if (string.Equals(s.ArchetypeId, PersonalQuestSystem.CourierId, StringComparison.Ordinal)
+                    || string.Equals(s.Id, PersonalQuestSystem.CourierId, StringComparison.Ordinal))
+                    return s;
+            }
             return null;
         }
 

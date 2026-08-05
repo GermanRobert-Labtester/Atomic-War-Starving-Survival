@@ -542,6 +542,7 @@ namespace AtomicWar._Game.Core
             VictoryProject?.BindPersonalQuests(PersonalQuests, () => Survivors);
             BicycleSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             RadiationSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            DeadDropSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

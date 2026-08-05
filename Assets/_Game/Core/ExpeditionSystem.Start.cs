@@ -119,6 +119,19 @@ namespace AtomicWar._Game.Core
                 capacity = _personalQuests.GetExpeditionCarryCapacity(survivor, capacity);
 
             float travelHours = request.TravelHours;
+            // Prompt #231 — Wasteland Runner: travel time permanently halved; ignore weather.
+            if (_personalQuests != null)
+            {
+                if (_personalQuests.IgnoresWeatherMovementPenalty(survivor)
+                    && request.TravelHours > 0f)
+                {
+                    // Undo weather multiplier baked into request by re-deriving base hours.
+                    float weatherMul = CurrentWeatherTravelMultiplier();
+                    if (weatherMul > 1.001f)
+                        travelHours = travelHours / weatherMul;
+                }
+                travelHours *= _personalQuests.GetExpeditionTravelTimeMultiplier(survivor);
+            }
             // Prompt #208 — Urban Pathfinder −30% City/Ruin travel (stacks with Bicycle).
             travelHours = ApplyUrbanPathfinderTravel(survivor, request.NodeId, travelHours);
 
