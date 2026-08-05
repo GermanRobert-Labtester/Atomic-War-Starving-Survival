@@ -48,6 +48,7 @@ namespace AtomicWar._Game.Survivors
         public const string TagConfinedSpace = "confined_space";
 
         private SkillProgressionSystem _progression;
+        private PersonalQuestSystem _personalQuests;
         private readonly Dictionary<string, CombatCounters> _bySurvivor =
             new Dictionary<string, CombatCounters>();
 
@@ -64,6 +65,16 @@ namespace AtomicWar._Game.Survivors
             _progression = progression;
             _progression?.RegisterCombatPerks();
         }
+
+        /// <summary>Prompt #221 — Peacekeeper Warning Shot (100% safe flee).</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
+        /// <summary>
+        /// Prompt #221 — Warning Shot: Peacekeeper flees with zero loot drop risk.
+        /// </summary>
+        public bool CanUseWarningShot(Survivor sv) =>
+            _personalQuests != null && _personalQuests.CanUseWarningShot(sv);
 
         public void RegisterCatalog()
         {
@@ -325,6 +336,10 @@ namespace AtomicWar._Game.Survivors
         {
             var drop = new List<int>();
             if (lootCount <= 0) return drop;
+
+            // Prompt #221 — Warning Shot: 100% safe flee, drop nothing.
+            if (CanUseWarningShot(sv))
+                return drop;
 
             if (ShouldRetainBestLootOnFlee(sv))
             {

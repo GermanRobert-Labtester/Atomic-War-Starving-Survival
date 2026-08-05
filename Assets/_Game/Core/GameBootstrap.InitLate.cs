@@ -526,8 +526,10 @@ namespace AtomicWar._Game.Core
             SocialPerks?.BindPersonalQuests(PersonalQuests);
             CraftingSystem?.BindPersonalQuests(PersonalQuests, new System.Random(_worldSeed + 214));
             CorpseSystem?.BindPersonalQuests(PersonalQuests);
+            CombatPerks?.BindPersonalQuests(PersonalQuests);
             HatchDefenseSystem?.BindPersonalQuests(PersonalQuests);
             ExpeditionSystem?.BindPersonalQuests(PersonalQuests);
+            EventRunner?.BindPersonalQuests(PersonalQuests);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {
