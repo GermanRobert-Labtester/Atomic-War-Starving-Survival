@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Survivors;
+using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -35,6 +38,11 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Max shoring strut levels installable.</summary>
         public const int MaxStrutLevels = 5;
 
+        /// <summary>Base wood units consumed to build one shoring strut level.</summary>
+        public const int WoodPerStrut = 4;
+
+        public const string WoodItemId = "wood";
+
         private float _integrity = MaxIntegrity;
         private bool _hasDustLeaks;
         private readonly HashSet<string> _cavedInRoomIds = new HashSet<string>();
@@ -48,6 +56,10 @@ namespace AtomicWar._Game.Shelter
 
         /// <summary>Delegate: inflict trauma on a survivor (crushed limb).</summary>
         private Action<Survivors.Survivor, string> _inflictTrauma;
+
+        private ShelterPerkSystem _shelterPerks;
+        private Func<int> _getDay;
+        private CeilingCollapseSystem _ceilingCollapse;
 
         // -- Public state --
         public float Integrity => _integrity;
@@ -95,6 +107,83 @@ namespace AtomicWar._Game.Shelter
             _getShelter = getShelter;
             _getSurvivors = getSurvivors;
             _inflictTrauma = inflictTrauma;
+        }
+
+        /// <summary>Prompt #196 — Structural Engineer strut cost / ceiling load.</summary>
+        public void BindShelterPerks(
+            ShelterPerkSystem perks,
+            Func<int> getDay = null,
+            CeilingCollapseSystem ceiling = null)
+        {
+            _shelterPerks = perks;
+            _getDay = getDay ?? (() => 0);
+            _ceilingCollapse = ceiling;
+        }
+
+        /// <summary>
+        /// Build one shoring strut level. Consumes wood (50% less with Structural Engineer).
+        /// When <paramref name="roomId"/> is set and builder has the perk, that room
+        /// gains 2× ceiling-load capacity.
+        /// </summary>
+        public bool TryInstallShoringStrut(
+            Survivor builder,
+            InventoryClass inventory,
+            ItemDefinition woodItem,
+            string roomId = null)
+        {
+            if (builder == null || !builder.IsAlive || inventory == null || woodItem == null)
+                return false;
+            if (StrutLevel >= MaxStrutLevels) return false;
+
+            float woodMult = _shelterPerks != null
+                ? _shelterPerks.GetShoringWoodCostMultiplier(builder)
+                : 1f;
+            int woodCost = Mathf.Max(1, Mathf.RoundToInt(WoodPerStrut * woodMult));
+            if (inventory.Count(woodItem) < woodCost) return false;
+            if (!inventory.Remove(woodItem, woodCost)) return false;
+
+            var shelter = _getShelter?.Invoke();
+            if (shelter == null) return false;
+
+            var mod = shelter.GetModule(ShoringStrutModuleId);
+            if (mod == null)
+            {
+                mod = new ShelterModuleInstance(ShoringStrutModuleId, 1)
+                {
+                    IsEnabled = true,
+                    FilterHealth = 100f,
+                    RoomId = roomId ?? "plant"
+                };
+                shelter.AddModule(mod);
+            }
+            else
+            {
+                mod.Level = Mathf.Min(MaxStrutLevels, mod.Level + 1);
+                mod.IsEnabled = true;
+                if (!string.IsNullOrEmpty(roomId))
+                    mod.RoomId = roomId;
+            }
+
+            // Structural Engineer: reinforced rooms gain 2× ceiling load capacity.
+            if (_shelterPerks != null && _shelterPerks.IsStructuralEngineer(builder)
+                && !string.IsNullOrEmpty(roomId) && _ceilingCollapse != null)
+            {
+                _ceilingCollapse.ReinforceRoom(
+                    roomId,
+                    _shelterPerks.GetCeilingLoadMultiplier(builder));
+            }
+
+            _shelterPerks?.RecordShoringStrutBuilt(builder, 1, _getDay?.Invoke() ?? 0);
+            return true;
+        }
+
+        /// <summary>Wood cost for next strut given optional builder perk.</summary>
+        public int GetShoringWoodCost(Survivor builder)
+        {
+            float mult = _shelterPerks != null
+                ? _shelterPerks.GetShoringWoodCostMultiplier(builder)
+                : 1f;
+            return Mathf.Max(1, Mathf.RoundToInt(WoodPerStrut * mult));
         }
 
         // -----------------------------------------------------------------
