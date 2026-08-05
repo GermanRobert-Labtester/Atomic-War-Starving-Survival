@@ -144,7 +144,13 @@ namespace AtomicWar._Game.Core
                     Seed = _worldSeed
                 });
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
+            ExpeditionSystem.SetBicycleSystem(BicycleSystem);
+            ExpeditionSystem.SetFloodedNodeSystem(FloodedNodeSystem);
+            ExpeditionSystem.SetHasItem(itemId =>
+                Inventory != null && !string.IsNullOrEmpty(itemId)
+                && Inventory.CountById(itemId) > 0);
             SaveSystem.SetExpeditionSystem(ExpeditionSystem);
+            SaveSystem.SetFloodedNodeSystem(FloodedNodeSystem);
 
             // Prompt #13 — hostile factions learn scavenging habits and plant
             // poisoned medical crates. High Medical skill / Paranoid spots them.
@@ -237,6 +243,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetHamRadioSystem(HamRadioSystem);
             SaveSystem.SetTriageSystem(TriageSystem);
             SaveSystem.SetPolypharmacySystem(PolypharmacySystem);
+            SaveSystem.SetSkillProgressionSystem(SkillProgression);
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -289,166 +296,5 @@ namespace AtomicWar._Game.Core
 
         }
 
-        private void InitRadioAndEndgame()
-        {
-            // Radio (broadcast only; tuner/intel extraction is separate)
-            RadioSystem = new RadioBroadcastSystem();
-            RadioSystem.SetCatalog(_radioCatalog);
-            
-            // Radio Tuner System (intel extraction)
-            RadioTunerSystem = new RadioTunerSystem(
-                new System.Random(_worldSeed + 31),
-                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
-            InitializeRadioFrequencies();
-            
-            // Wire up radio module fuel supply to RadioTunerSystem
-            var radioModule = Shelter.GetModule("radio");
-            if (radioModule != null && radioModule.IsOperational)
-            {
-                RadioTunerSystem.State.AvailableFuel = radioModule.Fuel;
-                RadioTunerSystem.State.PowerConsumptionPerHour = 0.5f; // Default consumption
-            }
-
-            // Prompt #18 — Debt Collector (day+20 after faction dig-out).
-            // Constructed after RadioTuner so antenna cut can EMP the live RadioState.
-            DebtCollectorSystem = new DebtCollectorSystem();
-            DebtCollectorSystem.Bind(
-                EconomySystem,
-                FactionRadioIntercepts,
-                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
-                shelter: Shelter,
-                water: WaterStorage,
-                inventory: Inventory,
-                radioState: RadioTunerSystem?.State);
-            if (HatchEntrapmentSystem != null)
-                HatchEntrapmentSystem.OnFactionRescueApplied += HandleFactionRescueApplied_ScheduleDebt;
-            DebtCollectorSystem.OnCollectorArrived += HandleDebtCollectorArrived;
-            SaveSystem.SetDebtCollectorSystem(DebtCollectorSystem);
-
-            // Prompt #19 — Ghost Stations (unlock after EMP; never live/extraction intel).
-            GhostStationSystem = new GhostStationSystem();
-            GhostStationSystem.Bind(
-                RadioTunerSystem,
-                JournalSystem,
-                getSurvivors: () => Survivors,
-                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
-            EventBus.Subscribe<FlashpointEmptiedDevices>(OnFlashpointEmp_UnlockGhosts);
-            SaveSystem.SetGhostStationSystem(GhostStationSystem);
-
-            // Prompt #20 — Lifeboat Transmission (late-game single-seat extraction).
-            LifeboatTransmissionSystem = new LifeboatTransmissionSystem();
-            LifeboatTransmissionSystem.Bind(
-                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
-                getSurvivors: () => Survivors,
-                isCampaignTerminal: () =>
-                    (VictoryProject != null && VictoryProject.IsTerminal)
-                    || (EndgameEngine != null && EndgameEngine.Result.IsTerminal)
-                    || IsGameOver,
-                endgame: EndgameEngine,
-                victory: VictoryProject);
-            LifeboatTransmissionSystem.OnContactOffered += HandleLifeboatContactOffered;
-            SaveSystem.SetLifeboatTransmissionSystem(LifeboatTransmissionSystem);
-            
-            // Wire up intel extraction events
-            RadioTunerSystem.OnIntelExtracted += intel =>
-            {
-                Debug.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
-                // Ghost loops intentionally skip VictoryProject / plume map paths.
-                if (intel != null && intel.Type == IntelType.GhostLoop) return;
-                VictoryProject?.NotifyIntel(intel);
-                if (intel.Type == IntelType.PlumeReport)
-                {
-                    // Apply plume reports to knowledge map + proc-gen node reveal
-                    RadioTunerSystem.ApplyPlumeReportToMap(intel, KnowledgeMap, GeneratedMap);
-                    RefreshMapKnowledgeHUD();
-                    _hud?.MapScreenUI?.Refresh();
-                }
-            };
-
-            // Prompt #46 — Radio-triggered GameEvents. When a broadcast with
-            // a non-empty triggerEventId plays AND a survivor is currently
-            // at the radio (IsOnRadio on the EventContext), raise the named
-            // event through the standard EventRunner path. This is how the
-            // Safe Haven broadcast surfaces as a player choice: the radio
-            // plays the loop, the player is at the dial, the event fires.
-            RadioSystem.OnBroadcastStarted += HandleRadioBroadcastTrigger;
-            EventRunner.OnChoiceApplied += HandleSafeHavenChoiceApplied;
-            EventRunner.OnChoiceApplied += HandleBloodForWaterChoiceApplied;
-            EventRunner.OnChoiceApplied += HandleHatchEntrapmentChoiceApplied;
-            EventRunner.OnChoiceApplied += HandleChildFoundChoiceApplied;
-            EventRunner.OnChoiceApplied += HandleRaidPlanChoiceApplied;
-            EventRunner.OnChoiceApplied += HandleDebtCollectorChoiceApplied;
-            EventRunner.OnChoiceApplied += HandleLifeboatChoiceApplied;
-
-            TimeSystem.OnDayTick += day =>
-            {
-                RadioSystem.CheckForBroadcast(day);
-                Inventory?.DriftAllDevices(1f);
-                KnowledgeMap?.TickDay(day);
-                // Prompt #14 — rare windstorm may move a death-zone after Day 30.
-                ShiftingHotspotSystem?.TickDay(day);
-                // Prompt #17 — latent inter-faction raid plans + wiretap window.
-                FactionRaidPlanSystem?.TickDay(day);
-                // Prompt #18 — delayed dig-out debt collectors.
-                DebtCollectorSystem?.TickDay(day);
-                // Prompt #20 — late-game lifeboat contact (Day ≥ 80).
-                LifeboatTransmissionSystem?.TickDay(day, Survivors);
-                RefreshMapKnowledgeHUD();
-                // Radio win path: extraction coords + survive to Day 100.
-                VictoryProject?.TickDay(day, Survivors);
-                // Multi-stage narrative chains (Prompt #43): fire day-gated follow-ups.
-                if (EventRunner != null)
-                {
-                    var dayCtx = BuildEventContext(day);
-                    EventRunner.TickDay(day, dayCtx);
-                }
-            };
-
-            // Cache day-tick RNGs / lambdas once so TickSystems allocates no
-            // System.Random or closure per hour (see DayTickGcProfileTests).
-            WarmDayTickCaches();
-
-            // Day-30 Flashpoint Choreographer (narrative/UX layer over the
-            // mechanical EMP/weather cascade). Owns the buildup days 25-29
-            // and the second-by-second choreography. The mechanical side
-            // effects of the exchange fire from the choreography's 'emp' step
-            // so the EMP happens after the white flash, not before.
-            //
-            // Created at the END of InitializeSystems so the systems bundle
-            // (Inventory, Survivors, EconomySystem, RadioTunerSystem) all have
-            // real references; the EMP step needs every one of them on day 30.
-            FlashpointChoreographer = new FlashpointChoreographer(
-                sequence: _flashpointSequence,
-                accessibilitySafeMode: () => GameState != null && GameState.AccessibilitySafeMode,
-                systems: new FlashpointChoreographerSystems
-                {
-                    Inventory = Inventory,
-                    Shelter = Shelter,
-                    RadioState = RadioTunerSystem?.State,
-                    WeatherSystem = WeatherSystem,
-                    RadiationSystem = RadiationSystem,
-                    EconomySystem = EconomySystem,
-                    Survivors = Survivors,
-                    ExchangeMoraleHit = WorldPhaseSystem.ExchangeMoraleHit,
-                    ExpeditionSystem = ExpeditionSystem
-                },
-                hasFlashpointTriggered: () => WorldPhaseSystem != null && WorldPhaseSystem.HasTriggeredExchange);
-            TimeSystem.OnDayTick += FlashpointChoreographer.OnDayTick;
-
-            // Wire the Choreographer into SaveSystem so the buildup-day and
-            // choreography-step state persist across save/load. Done here
-            // (after the Choreographer is created) rather than near the
-            // other SetXSystem calls because the Choreographer depends on
-            // systems that are wired after SaveSystem in InitializeSystems.
-            if (SaveSystem != null)
-            {
-                SaveSystem.SetFlashpointChoreographer(
-                    FlashpointChoreographer.CaptureState,
-                    FlashpointChoreographer.RestoreState);
-                SaveSystem.SetMentalBreakSystem(MentalBreakSystem);
-                SaveSystem.SetPhantomIntruderSystem(PhantomIntruders);
-            }
-
-        }
     }
 }

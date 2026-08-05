@@ -333,6 +333,13 @@ namespace AtomicWar._Game.Core
             SkillAtrophy = new SkillAtrophySystem();
 
             // ───────────────────────────────────────────────────────────
+            // Prompts #179–#181 — Action-driven progression
+            // ───────────────────────────────────────────────────────────
+            SkillProgression = new SkillProgressionSystem();
+            SkillProgression.RegisterDefaultPerks();
+            AssignActionProgressionDisciplines();
+
+            // ───────────────────────────────────────────────────────────
             // Prompt #8 — Empath & Sociopath System
             // ───────────────────────────────────────────────────────────
             EmpathSystem = new EmpathSystem();
@@ -354,76 +361,5 @@ namespace AtomicWar._Game.Core
             // ───────────────────────────────────────────────────────────
         }
 
-        private void InitAddictionAndMedicalPrompts()
-        {
-            // Prompt #7 — Addiction & Withdrawal System
-            // ───────────────────────────────────────────────────────────
-            Addiction = new AddictionSystem(new System.Random(_worldSeed + 71));
-            // Register addictive items from the catalog
-            if (_itemCatalog != null)
-            {
-                // Register known addictive item ids
-                string[] addictiveIds = { "morphine", "anti_rad", "painkiller", "stimulant" };
-                foreach (var id in addictiveIds)
-                {
-                    var item = _itemCatalog.GetById(id);
-                    if (item != null)
-                        Addiction.RegisterAddictiveItem(item.id);
-                }
-            }
-            Addiction.RegisterAddictiveItem("morphine");
-            Addiction.RegisterAddictiveItem("anti_rad");
-            Addiction.RegisterAddictiveItem("amphetamines"); // Prompt #59
-            Addiction.PanicDestroyHandler = (sv, rng) => ForceAddictionPanicDestroy(sv, rng);
-
-            // Prompt #55 — Blood Types & Transfusions
-            // ───────────────────────────────────────────────────────────
-            BloodTransfusion = new BloodTransfusionSystem(new System.Random(_worldSeed + 55));
-            BloodTransfusion.Bind(
-                id => Survivors?.Find(s => s.Id == id),
-                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
-
-            // Prompt #56 — Amputation & Phantom Pain
-            // ───────────────────────────────────────────────────────────
-            AmputationSystem = new AmputationSystem();
-            AmputationSystem.Bind(
-                id => Survivors?.Find(s => s.Id == id),
-                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
-
-            // Prompt #57 — Scurvy / VitaminC Deficiency
-            // ───────────────────────────────────────────────────────────
-            ScurvySystem = new ScurvySystem();
-            ScurvySystem.Bind(
-                id => Survivors?.Find(s => s.Id == id),
-                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
-
-            // Prompt #60 — Radiation Mutagenesis
-            // ───────────────────────────────────────────────────────────
-            Mutagenesis = new RadiationMutagenesisSystem();
-            Mutagenesis.Bind(
-                getPartyAverageRadiation: () =>
-                {
-                    if (Survivors == null || Survivors.Count == 0) return 0f;
-                    float sum = 0f; int n = 0;
-                    for (int i = 0; i < Survivors.Count; i++)
-                    {
-                        if (Survivors[i] != null && Survivors[i].IsAlive)
-                        { sum += Survivors[i].LifetimeRadiationExposure; n++; }
-                    }
-                    return n > 0 ? sum / n : 0f;
-                },
-                inflictAffliction: (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
-
-            // Wire medical treatment pathway into addiction tracking
-            if (MedicalSystem != null)
-            {
-                MedicalSystem.GetCurrentDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 1;
-                MedicalSystem.OnTreatmentItemConsumed = (sv, itemId, day) =>
-                {
-                    Addiction?.OnItemConsumed(sv, itemId, day);
-                };
-            }
-
-        }
     }
 }
