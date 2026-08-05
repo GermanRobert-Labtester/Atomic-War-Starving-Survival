@@ -9,7 +9,7 @@ using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// Prompts #214–#283 — Personal Quest Engine + latent expert traits.
+    /// Prompts #214–#298 — Personal Quest Engine + latent expert traits.
     /// </summary>
     [TestFixture]
     public class PersonalQuestTests
@@ -1872,6 +1872,372 @@ namespace AtomicWar.Tests.EditMode
             _quests.RecordBunkerTradeValue(ex, totalTradeValue: 10000f, currentDay: 2);
             Assert.IsTrue(_quests.HasMonopolist(ex));
             Assert.IsTrue(_quests.CanBuyOutFactionInventories(ex));
+        }
+
+        // ── #284 Coal Miner / Deep Delver ────────────────────────────────
+
+        [Test]
+        public void CoalMiner_BlackLung_CoLeak_UnlocksDeepDelver()
+        {
+            var m = MakeArchetype(PersonalQuestSystem.CoalMinerId);
+            Assert.IsTrue(_quests.HasBlackLung(m));
+            Assert.IsTrue(_quests.HasClaustrophilic(m));
+            Assert.AreEqual(0.80f, _quests.GetBlackLungStaminaMaxMultiplier(m), 0.01f);
+            Assert.IsTrue(_quests.PrefersDeepestRoomToSleep(m));
+            m.Needs.Morale = 40f;
+            _quests.ApplyClaustrophilicMorale(m, inSmallUndergroundRoom: true, gameHours: 1f);
+            Assert.Greater(m.Needs.Morale, 40f);
+
+            _quests.TryStartQuestline(m, "test", 1);
+            _quests.RecordCanaryCoLeakSurvived(m, coLeakEvent: true, healthDamageTaken: 1f, savedAnother: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasDeepDelver(m));
+            _quests.RecordCanaryCoLeakSurvived(m, coLeakEvent: true, healthDamageTaken: 0f, savedAnother: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasDeepDelver(m));
+            Assert.IsFalse(_quests.HasBlackLung(m));
+            Assert.IsTrue(_quests.IsImmuneToAtmosphereGasPenalties(m));
+            Assert.AreEqual(0.25f, _quests.GetDeepDelverExcavationDurationMultiplier(m), 0.01f);
+        }
+
+        // ── #285 Truck Driver / Logistics Master ─────────────────────────
+
+        [Test]
+        public void TruckDriver_Caffeinated_LongHaul_UnlocksLogisticsMaster()
+        {
+            var d = MakeArchetype(PersonalQuestSystem.TruckDriverId);
+            Assert.IsTrue(_quests.HasCaffeinated(d));
+            Assert.AreEqual(0.50f, _quests.GetCaffeinatedSleepRestoreMultiplier(d), 0.01f);
+            Assert.AreEqual(2f, _quests.GetCabinFeverRateMultiplier(d), 0.01f);
+            d.Needs.Fatigue = 10f;
+            _quests.ApplyCaffeinatedWaterCrash(d, drankCleanWaterToday: false);
+            Assert.Greater(d.Needs.Fatigue, 10f);
+
+            _quests.TryStartQuestline(d, "test", 1);
+            _quests.RecordLongHaulOverencumberedRun(d, encumbranceRatio: 1.5f, runCompleted: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasLogisticsMaster(d));
+            _quests.RecordLongHaulOverencumberedRun(d, encumbranceRatio: 2f, runCompleted: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasLogisticsMaster(d));
+            Assert.AreEqual(3f, _quests.GetLogisticsMasterCarryCapacityMultiplier(d), 0.01f);
+            Assert.IsTrue(_quests.HaulsStacksInstantly(d));
+        }
+
+        // ── #286 Welder / Forge Master ───────────────────────────────────
+
+        [Test]
+        public void Welder_Calloused_IronGate_UnlocksForgeMaster()
+        {
+            var w = MakeArchetype(PersonalQuestSystem.WelderId);
+            Assert.IsTrue(_quests.HasCalloused(w));
+            Assert.IsTrue(_quests.HasDeafInOneEar(w));
+            Assert.IsTrue(_quests.IsImmuneToFireAndTemperatureDamage(w));
+            Assert.AreEqual(0.50f, _quests.GetDeafStealthFailChance(w), 0.01f);
+            Assert.AreEqual(2f, _quests.GetWelderRepairScrapMultiplier(w), 0.01f);
+            Assert.AreEqual(1.50f, _quests.GetWelderRepairMaxDurabilityMultiplier(w), 0.01f);
+
+            _quests.TryStartQuestline(w, "test", 1);
+            _quests.RecordIronGateHatchMaxed(w, hatchLevel: 4, maxLevel: 5, currentDay: 1);
+            Assert.IsFalse(_quests.HasForgeMaster(w));
+            _quests.RecordIronGateHatchMaxed(w, hatchLevel: 5, maxLevel: 5, currentDay: 2);
+            Assert.IsTrue(_quests.HasForgeMaster(w));
+            Assert.IsTrue(_quests.CanCraftMilitaryArmorFromScrap(w));
+            Assert.IsTrue(_quests.RepairsNeverDegradePassively(w));
+        }
+
+        // ── #287 Custodian / Sanitization Expert ─────────────────────────
+
+        [Test]
+        public void Custodian_Invisible_Mess_UnlocksSanitizationExpert()
+        {
+            var c = MakeArchetype(PersonalQuestSystem.CustodianId);
+            Assert.IsTrue(_quests.HasInvisible(c));
+            Assert.IsTrue(_quests.HasNeatFreak(c));
+            Assert.IsTrue(_quests.BlocksInterpersonalAffinity(c));
+            Assert.IsTrue(_quests.PrioritizesCleaningOverNeeds(c));
+            c.Needs.Morale = 50f;
+            _quests.ApplyNeatFreakHygienePressure(c, hygiene01: 0.5f);
+            Assert.Less(c.Needs.Morale, 50f);
+
+            _quests.TryStartQuestline(c, "test", 1);
+            for (int i = 0; i < 4; i++)
+                _quests.RecordCorpseCleaned(c, humanCorpse: true, currentDay: i + 1);
+            Assert.IsFalse(_quests.HasSanitizationExpert(c));
+            _quests.RecordCorpseCleaned(c, humanCorpse: true, currentDay: 5);
+            Assert.IsTrue(_quests.HasSanitizationExpert(c));
+            Assert.IsTrue(_quests.BunkerImmuneToPestsAndDisease(_survivors));
+        }
+
+        // ── #288 Lumberjack / Deforester ─────────────────────────────────
+
+        [Test]
+        public void Lumberjack_Brawn_Clearcut_UnlocksDeforester()
+        {
+            var l = MakeArchetype(PersonalQuestSystem.LumberjackId);
+            Assert.IsTrue(_quests.HasBrawn(l));
+            Assert.AreEqual(2f, _quests.GetBrawnMeleeDamageMultiplier(l), 0.01f);
+            Assert.AreEqual(0.50f, _quests.GetBrawnFirearmsAccuracyMultiplier(l), 0.01f);
+            Assert.IsTrue(_quests.ShouldSalvageBrokenWoodWhenMoraleLow(l, morale: 10f));
+
+            _quests.TryStartQuestline(l, "test", 1);
+            _quests.RecordClearcutBearKill(l, enemyId: "mutated_bear", weaponId: "rifle", killed: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasDeforester(l));
+            _quests.RecordClearcutBearKill(l, enemyId: PersonalQuestSystem.MutatedBearEnemyId, weaponId: PersonalQuestSystem.AxeWeaponId, killed: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasDeforester(l));
+            Assert.AreEqual(5f, _quests.GetDeforesterWoodYieldMultiplier(l), 0.01f);
+            Assert.IsTrue(_quests.MeleeCausesBleedingAndDismember(l));
+        }
+
+        // ── #289 Microbiologist / Epidemiologist ─────────────────────────
+
+        [Test]
+        public void Microbiologist_Germaphobe_Strain_UnlocksEpidemiologist()
+        {
+            var m = MakeArchetype(PersonalQuestSystem.MicrobiologistId);
+            Assert.IsTrue(_quests.HasGermaphobe(m));
+            Assert.IsTrue(_quests.RequiresHazmatForTriage(m));
+            Assert.IsFalse(_quests.CanPerformTriage(m, hazmatEquipped: false, inBunker: true));
+            Assert.IsTrue(_quests.CanPerformTriage(m, hazmatEquipped: true, inBunker: true));
+
+            _quests.TryStartQuestline(m, "test", 1);
+            _quests.RecordStrainSepsisSample(m, cultivatedSepsis: true, extractedSample: true, curedPatient: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasEpidemiologist(m));
+            _quests.RecordStrainSepsisSample(m, cultivatedSepsis: true, extractedSample: true, curedPatient: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasEpidemiologist(m));
+            Assert.IsTrue(_quests.CanCraftPhase1Vaccines(m));
+        }
+
+        // ── #290 Astronomer / Celestial Navigator ────────────────────────
+
+        [Test]
+        public void Astronomer_NightOwl_DeadStars_UnlocksCelestialNavigator()
+        {
+            var a = MakeArchetype(PersonalQuestSystem.AstronomerId);
+            Assert.IsTrue(_quests.HasNightOwl(a));
+            Assert.AreEqual(0.50f, _quests.GetNightOwlActionSpeedMultiplier(a, isNight: false), 0.01f);
+            Assert.AreEqual(1.50f, _quests.GetNightOwlActionSpeedMultiplier(a, isNight: true), 0.01f);
+            Assert.IsTrue(_quests.SeeksSurfaceSkyAtNight(a, isNight: true));
+
+            _quests.TryStartQuestline(a, "test", 1);
+            for (int i = 0; i < 2; i++)
+                _quests.RecordDeadStarsStormExposed(a, falloutStorm: true, surfaceExposed: true, survived: true, currentDay: i + 1);
+            Assert.IsFalse(_quests.HasCelestialNavigator(a));
+            _quests.RecordDeadStarsStormExposed(a, falloutStorm: true, surfaceExposed: true, survived: true, currentDay: 3);
+            Assert.IsTrue(_quests.HasCelestialNavigator(a));
+            Assert.AreEqual(0.50f, _quests.GetCelestialNavigatorNightTravelMultiplier(a), 0.01f);
+            Assert.IsTrue(_quests.GuaranteesZeroNightAmbushes(a));
+        }
+
+        // ── #291 Librarian / Archivist ───────────────────────────────────
+
+        [Test]
+        public void Librarian_QuietFrail_Archive_UnlocksArchivist()
+        {
+            var lib = MakeArchetype(PersonalQuestSystem.LibrarianId);
+            Assert.IsTrue(_quests.HasQuiet(lib));
+            Assert.IsTrue(_quests.HasFrail(lib));
+            Assert.IsTrue(_quests.GeneratesZeroNoise(lib));
+            Assert.AreEqual(60f, _quests.GetFrailMaxHealthCap(lib), 0.01f);
+            Assert.IsTrue(_quests.HoardsBooksInPersonalStash(lib));
+
+            _quests.TryStartQuestline(lib, "test", 1);
+            for (int i = 0; i < 49; i++)
+                _quests.RecordArchiveIntelCollected(lib, intelId: "intel_" + i, currentDay: 1);
+            Assert.IsFalse(_quests.HasArchivist(lib));
+            _quests.RecordArchiveIntelCollected(lib, intelId: "intel_49", currentDay: 2);
+            Assert.IsTrue(_quests.HasArchivist(lib));
+            Assert.IsTrue(_quests.BunkerSkillDecayStopped(_survivors));
+            Assert.IsFalse(_quests.HasFrail(lib));
+        }
+
+        // ── #292 Accountant / Auditor ────────────────────────────────────
+
+        [Test]
+        public void Accountant_PennyPincher_InTheBlack_UnlocksAuditor()
+        {
+            var ac = MakeArchetype(PersonalQuestSystem.AccountantId);
+            Assert.IsTrue(_quests.HasPennyPincher(ac));
+            Assert.IsTrue(_quests.OnlyEatsWhenStarving(ac));
+            Assert.IsTrue(_quests.ShouldRefuseFoodUntilCritical(ac, hunger01: 0.5f));
+            Assert.IsFalse(_quests.ShouldRefuseFoodUntilCritical(ac, hunger01: 0.96f));
+            for (int d = 0; d < 3; d++)
+                _quests.RecordResourceDeficitDay(ac, deficit: true, currentDay: d + 1);
+            Assert.IsTrue(_quests.IsStorageLockedByAccountant(ac));
+            _quests.OverrideAccountantStorageLock(ac);
+            Assert.IsFalse(_quests.IsStorageLockedByAccountant(ac));
+
+            _quests.TryStartQuestline(ac, "test", 1);
+            _quests.RecordInTheBlackCapacities(ac, foodFill01: 1f, waterFill01: 1f, fuelFill01: 0.9f, currentDay: 1);
+            Assert.IsFalse(_quests.HasAuditor(ac));
+            _quests.RecordInTheBlackCapacities(ac, foodFill01: 1f, waterFill01: 1f, fuelFill01: 1f, currentDay: 2);
+            Assert.IsTrue(_quests.HasAuditor(ac));
+            Assert.IsTrue(_quests.HasFavorableTradeValues(ac));
+            Assert.IsTrue(_quests.RevealsScavengeRemainingCounts(ac));
+        }
+
+        // ── #293 Musician / Maestro ──────────────────────────────────────
+
+        [Test]
+        public void Musician_FragileEgo_Masterpiece_UnlocksMaestro()
+        {
+            var mu = MakeArchetype(PersonalQuestSystem.MusicianId);
+            Assert.IsTrue(_quests.HasFragileEgo(mu));
+            Assert.AreEqual(2f, _quests.GetFragileEgoFailureMoraleMultiplier(mu), 0.01f);
+            Assert.IsTrue(_quests.CanPlayInstrument(mu));
+            var neighbor = new Survivor { Id = "n1", DisplayName = "N", State = SurvivorState.Idle };
+            neighbor.Needs.Morale = 40f;
+            neighbor.currentMentalBreakId = "panic";
+            _survivors.Add(neighbor);
+            _quests.ApplyPlayInstrumentAura(mu, new List<Survivor> { neighbor }, currentDay: 1);
+            Assert.Greater(neighbor.Needs.Morale, 40f);
+            Assert.AreEqual("panic", neighbor.currentMentalBreakId); // only Maestro cures breaks
+
+            _quests.TryStartQuestline(mu, "test", 1);
+            _quests.RecordMasterpieceBroadcast(mu, nodeId: "wrong", livePerformance: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasMaestro(mu));
+            _quests.RecordMasterpieceBroadcast(mu, nodeId: PersonalQuestSystem.RadioTowerNodeId, livePerformance: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasMaestro(mu));
+            neighbor.Needs.Morale = 40f;
+            neighbor.currentMentalBreakId = "panic";
+            _quests.ApplyPlayInstrumentAura(mu, new List<Survivor> { neighbor }, currentDay: 10);
+            Assert.IsNull(neighbor.currentMentalBreakId);
+            Assert.IsTrue(_quests.IsRadAnxietySuppressedByMaestro(_survivors, currentDay: 10));
+        }
+
+        // ── #294 Smuggler / Blockade Runner ──────────────────────────────
+
+        [Test]
+        public void Smuggler_Shady_Stash_UnlocksBlockadeRunner()
+        {
+            var s = MakeArchetype(PersonalQuestSystem.SmugglerId);
+            Assert.IsTrue(_quests.HasShady(s));
+            Assert.AreEqual(1.75f, _quests.GetShadySuspicionMultiplier(s), 0.01f);
+            Assert.IsTrue(_quests.GeneratesContrabandLoot(s));
+
+            _quests.TryStartQuestline(s, "test", 1);
+            _quests.RecordStashRetrieved(s, guardedVault: true, retrieved: true, killedGuards: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasBlockadeRunner(s));
+            _quests.RecordStashRetrieved(s, guardedVault: true, retrieved: true, killedGuards: false, currentDay: 2);
+            Assert.IsTrue(_quests.HasBlockadeRunner(s));
+            Assert.IsTrue(_quests.CanBypassFactionBlockades(s));
+            Assert.IsTrue(_quests.GuaranteesDeadDropSuccess(s));
+        }
+
+        // ── #295 Hitman / Executioner ────────────────────────────────────
+
+        [Test]
+        public void Hitman_Professional_LastContract_UnlocksExecutioner()
+        {
+            var h = MakeArchetype(PersonalQuestSystem.HitmanId);
+            Assert.IsTrue(_quests.HasProfessional(h));
+            Assert.IsTrue(_quests.IgnoresCombatMoraleLoss(h));
+            Assert.IsTrue(_quests.RefusesMedicalAndFarming(h));
+            Assert.AreEqual(0.10f, _quests.GetAccidentalDischargeChance(h), 0.01f);
+
+            _quests.TryStartQuestline(h, "test", 1);
+            _quests.RecordLastContractAssassination(h, wasFactionLeader: false, assassinated: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasExecutioner(h));
+            _quests.RecordLastContractAssassination(h, wasFactionLeader: true, assassinated: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasExecutioner(h));
+            Assert.AreEqual(3f, _quests.GetExecutionerHumanCritMultiplier(h), 0.01f);
+            Assert.IsTrue(_quests.CanExecuteCapturedRaiders(h));
+        }
+
+        // ── #296 Pickpocket / Shadow ─────────────────────────────────────
+
+        [Test]
+        public void Pickpocket_SlightOfHand_BigScore_UnlocksShadow()
+        {
+            var p = MakeArchetype(PersonalQuestSystem.PickpocketId);
+            Assert.IsTrue(_quests.HasSlightOfHand(p));
+            Assert.IsTrue(_quests.CanStealFromFactionTraders(p));
+            Assert.IsTrue(_quests.ShufflesStorageContainers(p));
+
+            _quests.TryStartQuestline(p, "test", 1);
+            _quests.RecordBigScoreKeycard(p, sleepingBoss: true, stoleKeycard: true, wokeBoss: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasShadow(p));
+            _quests.RecordBigScoreKeycard(p, sleepingBoss: true, stoleKeycard: true, wokeBoss: false, currentDay: 2);
+            Assert.IsTrue(_quests.HasShadow(p));
+            Assert.AreEqual(1f, _quests.GetShadowStealth(p), 0.01f);
+            Assert.IsTrue(_quests.CanStealRaiderEquippedWeapons(p));
+        }
+
+        // ── #297 Forger / Master of Disguise ─────────────────────────────
+
+        [Test]
+        public void Forger_Counterfeiter_PerfectFake_UnlocksMasterOfDisguise()
+        {
+            var f = MakeArchetype(PersonalQuestSystem.ForgerId);
+            Assert.IsTrue(_quests.HasCounterfeiter(f));
+            Assert.IsTrue(_quests.CanCraftFakeCurrencyAndJewelry(f));
+            Assert.AreEqual(0.40f, _quests.GetFakeJournalLoreChance(f), 0.01f);
+
+            _quests.TryStartQuestline(f, "test", 1);
+            _quests.RecordPerfectFakeCheckpoint(f, forgedMilitaryPass: true, checkpointLevel: 4, passedUnharmed: true, currentDay: 1);
+            Assert.IsFalse(_quests.HasMasterOfDisguise(f));
+            _quests.RecordPerfectFakeCheckpoint(f, forgedMilitaryPass: true, checkpointLevel: 5, passedUnharmed: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasMasterOfDisguise(f));
+            Assert.IsTrue(_quests.CanWearFactionDisguise(f));
+            Assert.AreEqual(100f, _quests.GetDisguiseFactionTrust(f, wearingMatchingUniform: true), 0.01f);
+        }
+
+        // ── #298 Getaway Driver / Mechanic Prodigy ───────────────────────
+
+        [Test]
+        public void GetawayDriver_Antsy_Escape_UnlocksMechanicProdigy()
+        {
+            var g = MakeArchetype(PersonalQuestSystem.GetawayDriverId);
+            Assert.IsTrue(_quests.HasAntsy(g));
+            Assert.IsTrue(_quests.IgnoresVehicleExpeditionFatigue(g));
+            g.Needs.Morale = 80f;
+            for (int d = 0; d < 4; d++)
+                _quests.TickAntsyBunkerDay(g, spentDayInside: true, currentDay: d + 1);
+            Assert.Less(g.Needs.Morale, 80f);
+
+            _quests.TryStartQuestline(g, "test", 1);
+            _quests.RecordEscapeVehicleStorm(g, repairedVehicle: true, outranStorm: false, currentDay: 1);
+            Assert.IsFalse(_quests.HasMechanicProdigy(g));
+            _quests.RecordEscapeVehicleStorm(g, repairedVehicle: true, outranStorm: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasMechanicProdigy(g));
+            Assert.AreEqual(0.50f, _quests.GetMechanicProdigyFuelMultiplier(g), 0.01f);
+            Assert.IsTrue(_quests.VehiclesNeverBreakDown(g));
+            Assert.IsTrue(_quests.GuaranteesSafeMapEscape(g));
+        }
+
+        [Test]
+        public void Rebuilders_SaveRestore_PreservesProgressCounters()
+        {
+            var cust = MakeArchetype(PersonalQuestSystem.CustodianId, "cust_save");
+            var astro = MakeArchetype(PersonalQuestSystem.AstronomerId, "astro_save");
+            var lib = MakeArchetype(PersonalQuestSystem.LibrarianId, "lib_save");
+            var acct = MakeArchetype(PersonalQuestSystem.AccountantId, "acct_save");
+            var driver = MakeArchetype(PersonalQuestSystem.GetawayDriverId, "driver_save");
+
+            _quests.TryStartQuestline(cust, "test", 1);
+            _quests.RecordCorpseCleaned(cust, humanCorpse: true, currentDay: 1);
+            _quests.RecordCorpseCleaned(cust, humanCorpse: true, currentDay: 2);
+
+            _quests.TryStartQuestline(astro, "test", 1);
+            _quests.RecordDeadStarsStormExposed(astro, true, true, true, 1);
+
+            _quests.TryStartQuestline(lib, "test", 1);
+            _quests.RecordArchiveIntelCollected(lib, "lore_a", 1);
+            _quests.RecordArchiveIntelCollected(lib, "lore_b", 1);
+
+            for (int d = 0; d < 3; d++)
+                _quests.RecordResourceDeficitDay(acct, deficit: true, currentDay: d + 1);
+            Assert.IsTrue(_quests.IsStorageLockedByAccountant(acct));
+
+            _quests.TickAntsyBunkerDay(driver, spentDayInside: true, currentDay: 1);
+            _quests.TickAntsyBunkerDay(driver, spentDayInside: true, currentDay: 2);
+
+            var save = _quests.CaptureState();
+            var restored = new PersonalQuestSystem();
+            restored.Bind(_progression);
+            restored.RestoreState(save);
+
+            Assert.AreEqual(2, restored.GetState(cust.Id).CorpsesCleaned);
+            Assert.AreEqual(1, restored.GetState(astro.Id).FalloutStormsSurvivedExposed);
+            Assert.AreEqual(2, restored.GetState(lib.Id).UniqueIntelIds.Count);
+            Assert.IsTrue(restored.GetState(acct.Id).StorageLockedByAccountant);
+            Assert.AreEqual(2, restored.GetState(driver.Id).GetawayInsideDays);
         }
     }
 }

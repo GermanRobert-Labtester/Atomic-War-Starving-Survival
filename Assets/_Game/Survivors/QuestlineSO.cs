@@ -109,6 +109,24 @@ namespace AtomicWar._Game.Survivors
             public const string TheFinalBroadcast = "quest_the_final_broadcast";
             public const string PuttingDownRoots = "quest_putting_down_roots";
             public const string TheGoldenParachute = "quest_the_golden_parachute";
+            // Prompts #284–#288 rebuilders
+            public const string TheCanary = "quest_the_canary";
+            public const string TheLongHaul = "quest_the_long_haul";
+            public const string TheIronGate = "quest_the_iron_gate";
+            public const string TheMess = "quest_the_mess";
+            public const string TheClearcut = "quest_the_clearcut";
+            // Prompts #289–#293 scholars
+            public const string TheStrain = "quest_the_strain";
+            public const string TheDeadStars = "quest_the_dead_stars";
+            public const string TheArchive = "quest_the_archive";
+            public const string InTheBlack = "quest_in_the_black";
+            public const string TheMasterpiece = "quest_the_masterpiece";
+            // Prompts #294–#298 outlaws
+            public const string TheStash = "quest_the_stash";
+            public const string TheLastContract = "quest_the_last_contract";
+            public const string TheBigScore = "quest_the_big_score";
+            public const string ThePerfectFake = "quest_the_perfect_fake";
+            public const string TheEscape = "quest_the_escape";
         }
     }
 }

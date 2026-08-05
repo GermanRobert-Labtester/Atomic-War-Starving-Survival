@@ -273,6 +273,22 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.BeaconOfTruthId, "Beacon of Truth", "social", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterPathologistId, "Master Pathologist", "scavenging", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MonopolistId, "Monopolist", "scavenging", milestoneOnly, 0.25f, false));
+            // Prompts #284–#298
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DeepDelverId, "Deep Delver", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.LogisticsMasterId, "Logistics Master", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ForgeMasterId, "Forge Master", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SanitizationExpertId, "Sanitization Expert", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DeforesterId, "Deforester", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.EpidemiologistId, "Epidemiologist", "medical", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.CelestialNavigatorId, "Celestial Navigator", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ArchivistId, "Archivist", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.AuditorId, "Auditor", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MaestroId, "Maestro", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.BlockadeRunnerId, "Blockade Runner", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ExecutionerId, "Executioner", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ShadowId, "Shadow", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterOfDisguiseId, "Master of Disguise", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MechanicProdigyId, "Mechanic Prodigy", "scavenging", milestoneOnly, 0.25f, false));
         }
 
         /// <summary>

@@ -91,6 +91,22 @@ namespace AtomicWar._Game.Survivors
         public const string BeaconOfTruthId = "trait_beacon_of_truth";
         public const string MasterPathologistId = "trait_master_pathologist";
         public const string MonopolistId = "trait_monopolist";
+        // Prompts #284–#298 latent
+        public const string DeepDelverId = "trait_deep_delver";
+        public const string LogisticsMasterId = "trait_logistics_master";
+        public const string ForgeMasterId = "trait_forge_master";
+        public const string SanitizationExpertId = "trait_sanitization_expert";
+        public const string DeforesterId = "trait_deforester";
+        public const string EpidemiologistId = "trait_epidemiologist";
+        public const string CelestialNavigatorId = "trait_celestial_navigator";
+        public const string ArchivistId = "trait_archivist";
+        public const string AuditorId = "trait_auditor";
+        public const string MaestroId = "trait_maestro";
+        public const string BlockadeRunnerId = "trait_blockade_runner";
+        public const string ExecutionerId = "trait_executioner";
+        public const string ShadowId = "trait_shadow";
+        public const string MasterOfDisguiseId = "trait_master_of_disguise";
+        public const string MechanicProdigyId = "trait_mechanic_prodigy";
 
         // ── Base personality traits (granted on profile assign) ──────────
         public const string SelflessId = "trait_selfless";
@@ -134,6 +150,26 @@ namespace AtomicWar._Game.Survivors
         public const string PhotogenicId = "trait_photogenic";
         public const string AgoraphileId = "trait_agoraphile";
         public const string RuthlessId = "trait_ruthless";
+        // Prompts #284–#298 base
+        public const string BlackLungId = "trait_black_lung";
+        public const string ClaustrophilicId = "trait_claustrophilic";
+        public const string CaffeinatedId = "trait_caffeinated";
+        public const string CallousedId = "trait_calloused";
+        public const string DeafInOneEarId = "trait_deaf_in_one_ear";
+        public const string InvisibleId = "trait_invisible";
+        public const string NeatFreakId = "trait_neat_freak";
+        public const string BrawnId = "trait_brawn";
+        public const string GermaphobeId = "trait_germaphobe";
+        public const string NightOwlId = "trait_night_owl";
+        public const string QuietId = "trait_quiet";
+        public const string FrailId = "trait_frail";
+        public const string PennyPincherId = "trait_penny_pincher";
+        public const string FragileEgoId = "trait_fragile_ego";
+        public const string ShadyId = "trait_shady";
+        public const string ProfessionalId = "trait_professional";
+        public const string SlightOfHandId = "trait_slight_of_hand";
+        public const string CounterfeiterId = "trait_counterfeiter";
+        public const string AntsyId = "trait_antsy";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -210,6 +246,22 @@ namespace AtomicWar._Game.Survivors
         public const string NewsAnchorId = "the_news_anchor";
         public const string NomadId = "the_nomad";
         public const string ExecId = "the_exec";
+        // Prompts #284–#298
+        public const string CoalMinerId = "the_coal_miner";
+        public const string TruckDriverId = "the_truck_driver";
+        public const string WelderId = "the_welder";
+        public const string CustodianId = "the_custodian";
+        public const string LumberjackId = "the_lumberjack";
+        public const string MicrobiologistId = "the_microbiologist";
+        public const string AstronomerId = "the_astronomer";
+        public const string LibrarianId = "the_librarian";
+        public const string AccountantId = "the_accountant";
+        public const string MusicianId = "the_musician";
+        public const string SmugglerId = "the_smuggler";
+        public const string HitmanId = "the_hitman";
+        public const string PickpocketId = "the_pickpocket";
+        public const string ForgerId = "the_forger";
+        public const string GetawayDriverId = "the_getaway_driver";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -516,6 +568,80 @@ namespace AtomicWar._Game.Survivors
         public const float RuthlessModuleWearMult = 1.35f;
         public const float GoldenParachuteTradeValue = 10000f;
 
+        // #284 Coal Miner / Deep Delver
+        public const float BlackLungStaminaMaxMult = 0.80f;
+        public const float ClaustrophilicMoralePerHour = 4f;
+        public const float DeepDelverExcavationDurationMult = 0.25f;
+
+        // #285 Truck Driver / Logistics Master
+        public const float CaffeinatedSleepRestoreMult = 0.50f;
+        public const float CaffeinatedFatigueCrash = 35f;
+        public const float TruckDriverCabinFeverMult = 2f;
+        public const float LongHaulEncumbranceRatio = 2f;
+        public const float LogisticsMasterCarryCapacityMult = 3f;
+
+        // #286 Welder / Forge Master
+        public const float DeafStealthFailChance = 0.50f;
+        public const float WelderRepairScrapMult = 2f;
+        public const float WelderRepairMaxDurabilityMult = 1.50f;
+
+        // #287 Custodian / Sanitization Expert
+        public const float NeatFreakHygieneThreshold = 0.80f;
+        public const float NeatFreakMoraleHit = 6f;
+        public const int MessCorpsesRequired = 5;
+
+        // #288 Lumberjack / Deforester
+        public const float BrawnMeleeDamageMult = 2f;
+        public const float BrawnFirearmsAccuracyMult = 0.50f;
+        public const float LumberjackSalvageMoraleThreshold = 30f;
+        public const float DeforesterWoodYieldMult = 5f;
+        public const string MutatedBearEnemyId = "mutated_bear";
+        public const string AxeWeaponId = "axe";
+
+        // #289 Microbiologist / Epidemiologist
+        public const float MicrobiologistRefuseRationChance = 0.20f;
+
+        // #290 Astronomer / Celestial Navigator
+        public const float NightOwlDaySpeedMult = 0.50f;
+        public const float NightOwlNightSpeedMult = 1.50f;
+        public const int DeadStarsStormsRequired = 3;
+        public const float CelestialNavigatorNightTravelMult = 0.50f;
+
+        // #291 Librarian / Archivist
+        public const float FrailMaxHealthCap = 60f;
+        public const int ArchiveIntelRequired = 50;
+
+        // #292 Accountant / Auditor
+        public const float PennyPincherHungerEatThreshold = 0.95f; // hunger need 0..1 (eat at 5% remaining)
+        public const int AccountantDeficitDaysToLock = 3;
+
+        // #293 Musician / Maestro
+        public const float FragileEgoFailureMoraleMult = 2f;
+        public const float PlayInstrumentMoraleAura = 8f;
+        public const float MaestroPlayMoraleAura = 15f;
+        public const int MaestroSuppressDays = 1;
+        public const string RadioTowerNodeId = "the_radio_tower";
+
+        // #294 Smuggler / Blockade Runner
+        public const float ShadySuspicionMult = 1.75f;
+        public const float SmugglerContrabandChance = 0.25f;
+
+        // #295 Hitman / Executioner
+        public const float HitmanAccidentalDischargeChance = 0.10f;
+        public const float ExecutionerHumanCritMult = 3f;
+
+        // #296 Pickpocket / Shadow
+        public const float PickpocketCatchChance = 0.30f;
+
+        // #297 Forger / Master of Disguise
+        public const float ForgerFakeJournalChance = 0.40f;
+        public const int PerfectFakeCheckpointLevel = 5;
+
+        // #298 Getaway Driver / Mechanic Prodigy
+        public const int GetawayAntsyDays = 3;
+        public const float GetawayAntsyMoraleHitPerDay = 10f;
+        public const float MechanicProdigyFuelMult = 0.50f;
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
         public const string FortifiedSquadNodeId = "fortified_squad_holdout";
@@ -771,6 +897,56 @@ namespace AtomicWar._Game.Survivors
                 case ExecId:
                     GrantBaseTrait(sv, RuthlessId);
                     break;
+                // #284–#298
+                case CoalMinerId:
+                    GrantBaseTrait(sv, BlackLungId);
+                    GrantBaseTrait(sv, ClaustrophilicId);
+                    break;
+                case TruckDriverId:
+                    GrantBaseTrait(sv, CaffeinatedId);
+                    break;
+                case WelderId:
+                    GrantBaseTrait(sv, CallousedId);
+                    GrantBaseTrait(sv, DeafInOneEarId);
+                    break;
+                case CustodianId:
+                    GrantBaseTrait(sv, InvisibleId);
+                    GrantBaseTrait(sv, NeatFreakId);
+                    break;
+                case LumberjackId:
+                    GrantBaseTrait(sv, BrawnId);
+                    break;
+                case MicrobiologistId:
+                    GrantBaseTrait(sv, GermaphobeId);
+                    break;
+                case AstronomerId:
+                    GrantBaseTrait(sv, NightOwlId);
+                    break;
+                case LibrarianId:
+                    GrantBaseTrait(sv, QuietId);
+                    GrantBaseTrait(sv, FrailId);
+                    break;
+                case AccountantId:
+                    GrantBaseTrait(sv, PennyPincherId);
+                    break;
+                case MusicianId:
+                    GrantBaseTrait(sv, FragileEgoId);
+                    break;
+                case SmugglerId:
+                    GrantBaseTrait(sv, ShadyId);
+                    break;
+                case HitmanId:
+                    GrantBaseTrait(sv, ProfessionalId);
+                    break;
+                case PickpocketId:
+                    GrantBaseTrait(sv, SlightOfHandId);
+                    break;
+                case ForgerId:
+                    GrantBaseTrait(sv, CounterfeiterId);
+                    break;
+                case GetawayDriverId:
+                    GrantBaseTrait(sv, AntsyId);
+                    break;
             }
         }
 
@@ -995,6 +1171,36 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(NomadId, MasterPathologistId, QuestlineSO.Ids.PuttingDownRoots);
                 case ExecId:
                     return new SurvivorProfile(ExecId, MonopolistId, QuestlineSO.Ids.TheGoldenParachute);
+                case CoalMinerId:
+                    return new SurvivorProfile(CoalMinerId, DeepDelverId, QuestlineSO.Ids.TheCanary);
+                case TruckDriverId:
+                    return new SurvivorProfile(TruckDriverId, LogisticsMasterId, QuestlineSO.Ids.TheLongHaul);
+                case WelderId:
+                    return new SurvivorProfile(WelderId, ForgeMasterId, QuestlineSO.Ids.TheIronGate);
+                case CustodianId:
+                    return new SurvivorProfile(CustodianId, SanitizationExpertId, QuestlineSO.Ids.TheMess);
+                case LumberjackId:
+                    return new SurvivorProfile(LumberjackId, DeforesterId, QuestlineSO.Ids.TheClearcut);
+                case MicrobiologistId:
+                    return new SurvivorProfile(MicrobiologistId, EpidemiologistId, QuestlineSO.Ids.TheStrain);
+                case AstronomerId:
+                    return new SurvivorProfile(AstronomerId, CelestialNavigatorId, QuestlineSO.Ids.TheDeadStars);
+                case LibrarianId:
+                    return new SurvivorProfile(LibrarianId, ArchivistId, QuestlineSO.Ids.TheArchive);
+                case AccountantId:
+                    return new SurvivorProfile(AccountantId, AuditorId, QuestlineSO.Ids.InTheBlack);
+                case MusicianId:
+                    return new SurvivorProfile(MusicianId, MaestroId, QuestlineSO.Ids.TheMasterpiece);
+                case SmugglerId:
+                    return new SurvivorProfile(SmugglerId, BlockadeRunnerId, QuestlineSO.Ids.TheStash);
+                case HitmanId:
+                    return new SurvivorProfile(HitmanId, ExecutionerId, QuestlineSO.Ids.TheLastContract);
+                case PickpocketId:
+                    return new SurvivorProfile(PickpocketId, ShadowId, QuestlineSO.Ids.TheBigScore);
+                case ForgerId:
+                    return new SurvivorProfile(ForgerId, MasterOfDisguiseId, QuestlineSO.Ids.ThePerfectFake);
+                case GetawayDriverId:
+                    return new SurvivorProfile(GetawayDriverId, MechanicProdigyId, QuestlineSO.Ids.TheEscape);
                 default:
                     return null;
             }
@@ -1075,6 +1281,21 @@ namespace AtomicWar._Game.Survivors
                 NewsAnchorId => "The News Anchor",
                 NomadId => "The Nomad",
                 ExecId => "The Exec",
+                CoalMinerId => "The Coal Miner",
+                TruckDriverId => "The Truck Driver",
+                WelderId => "The Welder",
+                CustodianId => "The Custodian",
+                LumberjackId => "The Lumberjack",
+                MicrobiologistId => "The Microbiologist",
+                AstronomerId => "The Astronomer",
+                LibrarianId => "The Librarian",
+                AccountantId => "The Accountant",
+                MusicianId => "The Musician",
+                SmugglerId => "The Smuggler",
+                HitmanId => "The Hitman",
+                PickpocketId => "The Pickpocket",
+                ForgerId => "The Forger",
+                GetawayDriverId => "The Getaway Driver",
                 _ => archetypeId
             };
             string discipline = "survival";
@@ -1082,7 +1303,8 @@ namespace AtomicWar._Game.Survivors
                 || archetypeId == VetId || archetypeId == TherapistId
                 || archetypeId == ChemistId || archetypeId == AddictId
                 || archetypeId == ArrogantSurgeonId || archetypeId == RelapsingAddictId
-                || archetypeId == HypochondriacId || archetypeId == OutcastId)
+                || archetypeId == HypochondriacId || archetypeId == OutcastId
+                || archetypeId == MicrobiologistId)
                 discipline = "medical";
             else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId
                 || archetypeId == FirefighterId || archetypeId == DefectorId
@@ -1090,7 +1312,8 @@ namespace AtomicWar._Game.Survivors
                 || archetypeId == SerialKillerId || archetypeId == GeneralId
                 || archetypeId == DeserterId || archetypeId == ChildSoldierId
                 || archetypeId == SaboteurId || archetypeId == SheriffId
-                || archetypeId == ExConId || archetypeId == PyromaniacId)
+                || archetypeId == ExConId || archetypeId == PyromaniacId
+                || archetypeId == LumberjackId || archetypeId == HitmanId)
                 discipline = "combat";
             else if (archetypeId == HunterId || archetypeId == CourierId
                 || archetypeId == BurglarId || archetypeId == MechanicId
@@ -1098,7 +1321,10 @@ namespace AtomicWar._Game.Survivors
                 || archetypeId == NaiveSonId || archetypeId == HoarderId
                 || archetypeId == QuartermasterId || archetypeId == PrepperId
                 || archetypeId == NomadId || archetypeId == FeralOrphanId
-                || archetypeId == ExecId || archetypeId == TechBroId)
+                || archetypeId == ExecId || archetypeId == TechBroId
+                || archetypeId == TruckDriverId || archetypeId == SmugglerId
+                || archetypeId == PickpocketId || archetypeId == GetawayDriverId
+                || archetypeId == WelderId || archetypeId == CoalMinerId)
                 discipline = "scavenging";
             else if (archetypeId == TeacherId || archetypeId == PoliticianId
                 || archetypeId == PriestId || archetypeId == RadioHostId
@@ -1108,7 +1334,10 @@ namespace AtomicWar._Game.Survivors
                 || archetypeId == MartyrId || archetypeId == ThePollyannaId
                 || archetypeId == BlindPreacherId || archetypeId == PacifistId
                 || archetypeId == WidowId || archetypeId == FormerPoliticianId
-                || archetypeId == NewsAnchorId)
+                || archetypeId == NewsAnchorId || archetypeId == LibrarianId
+                || archetypeId == AccountantId || archetypeId == MusicianId
+                || archetypeId == ForgerId || archetypeId == CustodianId
+                || archetypeId == AstronomerId)
                 discipline = "social";
             else if (archetypeId == ExhaustedFatherId || archetypeId == MisanthropeId
                 || archetypeId == InsomniacId)
@@ -1124,6 +1353,8 @@ namespace AtomicWar._Game.Survivors
             sv.Needs.Health = 100f;
             if (archetypeId == HardenedDaughterId)
                 sv.Needs.Morale = Mathf.Min(sv.Needs.Morale, TraumatizedMoraleCap);
+            if (archetypeId == LibrarianId)
+                sv.Needs.Health = Mathf.Min(sv.Needs.Health, FrailMaxHealthCap);
             return sv;
         }
 
@@ -2682,6 +2913,22 @@ namespace AtomicWar._Game.Survivors
         public bool HasBeaconOfTruth(Survivor sv) => HasTrait(sv, BeaconOfTruthId);
         public bool HasMasterPathologist(Survivor sv) => HasTrait(sv, MasterPathologistId);
         public bool HasMonopolist(Survivor sv) => HasTrait(sv, MonopolistId);
+        // Prompts #284–#298 latent
+        public bool HasDeepDelver(Survivor sv) => HasTrait(sv, DeepDelverId);
+        public bool HasLogisticsMaster(Survivor sv) => HasTrait(sv, LogisticsMasterId);
+        public bool HasForgeMaster(Survivor sv) => HasTrait(sv, ForgeMasterId);
+        public bool HasSanitizationExpert(Survivor sv) => HasTrait(sv, SanitizationExpertId);
+        public bool HasDeforester(Survivor sv) => HasTrait(sv, DeforesterId);
+        public bool HasEpidemiologist(Survivor sv) => HasTrait(sv, EpidemiologistId);
+        public bool HasCelestialNavigator(Survivor sv) => HasTrait(sv, CelestialNavigatorId);
+        public bool HasArchivist(Survivor sv) => HasTrait(sv, ArchivistId);
+        public bool HasAuditor(Survivor sv) => HasTrait(sv, AuditorId);
+        public bool HasMaestro(Survivor sv) => HasTrait(sv, MaestroId);
+        public bool HasBlockadeRunner(Survivor sv) => HasTrait(sv, BlockadeRunnerId);
+        public bool HasExecutioner(Survivor sv) => HasTrait(sv, ExecutionerId);
+        public bool HasShadow(Survivor sv) => HasTrait(sv, ShadowId);
+        public bool HasMasterOfDisguise(Survivor sv) => HasTrait(sv, MasterOfDisguiseId);
+        public bool HasMechanicProdigy(Survivor sv) => HasTrait(sv, MechanicProdigyId);
 
         // Base traits
         public bool HasSelfless(Survivor sv) => HasBaseTrait(sv, SelflessId);
@@ -2725,6 +2972,26 @@ namespace AtomicWar._Game.Survivors
         public bool HasPhotogenic(Survivor sv) => HasBaseTrait(sv, PhotogenicId);
         public bool HasAgoraphile(Survivor sv) => HasBaseTrait(sv, AgoraphileId) && !HasMasterPathologist(sv);
         public bool HasRuthless(Survivor sv) => HasBaseTrait(sv, RuthlessId) && !HasMonopolist(sv);
+        // #284–#298 base (cleared when latent replaces the burden where noted)
+        public bool HasBlackLung(Survivor sv) => HasBaseTrait(sv, BlackLungId) && !HasDeepDelver(sv);
+        public bool HasClaustrophilic(Survivor sv) => HasBaseTrait(sv, ClaustrophilicId);
+        public bool HasCaffeinated(Survivor sv) => HasBaseTrait(sv, CaffeinatedId) && !HasLogisticsMaster(sv);
+        public bool HasCalloused(Survivor sv) => HasBaseTrait(sv, CallousedId);
+        public bool HasDeafInOneEar(Survivor sv) => HasBaseTrait(sv, DeafInOneEarId) && !HasForgeMaster(sv);
+        public bool HasInvisible(Survivor sv) => HasBaseTrait(sv, InvisibleId);
+        public bool HasNeatFreak(Survivor sv) => HasBaseTrait(sv, NeatFreakId) && !HasSanitizationExpert(sv);
+        public bool HasBrawn(Survivor sv) => HasBaseTrait(sv, BrawnId);
+        public bool HasGermaphobe(Survivor sv) => HasBaseTrait(sv, GermaphobeId) && !HasEpidemiologist(sv);
+        public bool HasNightOwl(Survivor sv) => HasBaseTrait(sv, NightOwlId);
+        public bool HasQuiet(Survivor sv) => HasBaseTrait(sv, QuietId);
+        public bool HasFrail(Survivor sv) => HasBaseTrait(sv, FrailId) && !HasArchivist(sv);
+        public bool HasPennyPincher(Survivor sv) => HasBaseTrait(sv, PennyPincherId) && !HasAuditor(sv);
+        public bool HasFragileEgo(Survivor sv) => HasBaseTrait(sv, FragileEgoId) && !HasMaestro(sv);
+        public bool HasShady(Survivor sv) => HasBaseTrait(sv, ShadyId) && !HasBlockadeRunner(sv);
+        public bool HasProfessional(Survivor sv) => HasBaseTrait(sv, ProfessionalId);
+        public bool HasSlightOfHand(Survivor sv) => HasBaseTrait(sv, SlightOfHandId);
+        public bool HasCounterfeiter(Survivor sv) => HasBaseTrait(sv, CounterfeiterId);
+        public bool HasAntsy(Survivor sv) => HasBaseTrait(sv, AntsyId) && !HasMechanicProdigy(sv);
 
         public static bool HasBaseTrait(Survivor sv, string traitId)
         {
@@ -3622,6 +3889,37 @@ namespace AtomicWar._Game.Survivors
                 maxStages: 1, node: null, evt: null);
             RegisterDefault(QuestlineSO.Ids.TheGoldenParachute, "The Golden Parachute", MonopolistId,
                 maxStages: 1, node: null, evt: null);
+            // #284–#298 rebuilders / scholars / outlaws
+            RegisterDefault(QuestlineSO.Ids.TheCanary, "The Canary", DeepDelverId,
+                maxStages: 1, node: null, evt: "shelter_event_co_leak");
+            RegisterDefault(QuestlineSO.Ids.TheLongHaul, "The Long Haul", LogisticsMasterId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheIronGate, "The Iron Gate", ForgeMasterId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheMess, "The Mess", SanitizationExpertId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheClearcut, "The Clearcut", DeforesterId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheStrain, "The Strain", EpidemiologistId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheDeadStars, "The Dead Stars", CelestialNavigatorId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheArchive, "The Archive", ArchivistId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.InTheBlack, "In the Black", AuditorId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheMasterpiece, "The Masterpiece", MaestroId,
+                maxStages: 1, node: RadioTowerNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheStash, "The Stash", BlockadeRunnerId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLastContract, "The Last Contract", ExecutionerId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheBigScore, "The Big Score", ShadowId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.ThePerfectFake, "The Perfect Fake", MasterOfDisguiseId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheEscape, "The Escape", MechanicProdigyId,
+                maxStages: 1, node: null, evt: null);
         }
 
         private void RegisterDefault(
@@ -3728,7 +4026,15 @@ namespace AtomicWar._Game.Survivors
                     PrepperMreRemaining = s.PrepperMreRemaining,
                     HungerStrikeActive = s.HungerStrikeActive,
                     TechTabletDead = s.TechTabletDead,
-                    SheriffStaminaMax = s.SheriffStaminaMax
+                    SheriffStaminaMax = s.SheriffStaminaMax,
+                    CorpsesCleaned = s.CorpsesCleaned,
+                    FalloutStormsSurvivedExposed = s.FalloutStormsSurvivedExposed,
+                    UniqueIntelIds = s.UniqueIntelIds != null
+                        ? new List<string>(s.UniqueIntelIds) : new List<string>(),
+                    ResourceDeficitDays = s.ResourceDeficitDays,
+                    StorageLockedByAccountant = s.StorageLockedByAccountant,
+                    MaestroRadAnxietySuppressUntilDay = s.MaestroRadAnxietySuppressUntilDay,
+                    GetawayInsideDays = s.GetawayInsideDays
                 });
             }
             save.PillarOfAtlasDeathDebuffActive = PillarOfAtlasDeathDebuffActive;
@@ -3803,7 +4109,16 @@ namespace AtomicWar._Game.Survivors
                     PrepperMreRemaining = e.PrepperMreRemaining,
                     HungerStrikeActive = e.HungerStrikeActive,
                     TechTabletDead = e.TechTabletDead,
-                    SheriffStaminaMax = e.SheriffStaminaMax
+                    SheriffStaminaMax = e.SheriffStaminaMax,
+                    // #284–#298
+                    CorpsesCleaned = e.CorpsesCleaned,
+                    FalloutStormsSurvivedExposed = e.FalloutStormsSurvivedExposed,
+                    UniqueIntelIds = e.UniqueIntelIds != null
+                        ? new List<string>(e.UniqueIntelIds) : new List<string>(),
+                    ResourceDeficitDays = e.ResourceDeficitDays,
+                    StorageLockedByAccountant = e.StorageLockedByAccountant,
+                    MaestroRadAnxietySuppressUntilDay = e.MaestroRadAnxietySuppressUntilDay,
+                    GetawayInsideDays = e.GetawayInsideDays
                 };
             }
         }
@@ -3868,6 +4183,14 @@ namespace AtomicWar._Game.Survivors
             public bool HungerStrikeActive;
             public bool TechTabletDead;
             public float SheriffStaminaMax;
+            // #284–#298
+            public int CorpsesCleaned;
+            public int FalloutStormsSurvivedExposed;
+            public List<string> UniqueIntelIds = new List<string>();
+            public int ResourceDeficitDays;
+            public bool StorageLockedByAccountant;
+            public int MaestroRadAnxietySuppressUntilDay;
+            public int GetawayInsideDays;
             /// <summary>Ephemeral: chem use between daily ticks (#267). Not saved.</summary>
             public bool UsedChemThisDay;
             /// <summary>Ephemeral: dirty labor performed today (#279). Not saved.</summary>
@@ -3930,7 +4253,15 @@ namespace AtomicWar._Game.Survivors
                 PrepperMreRemaining = PrepperMreRemaining,
                 HungerStrikeActive = HungerStrikeActive,
                 TechTabletDead = TechTabletDead,
-                SheriffStaminaMax = SheriffStaminaMax
+                SheriffStaminaMax = SheriffStaminaMax,
+                CorpsesCleaned = CorpsesCleaned,
+                FalloutStormsSurvivedExposed = FalloutStormsSurvivedExposed,
+                UniqueIntelIds = UniqueIntelIds != null
+                    ? new List<string>(UniqueIntelIds) : new List<string>(),
+                ResourceDeficitDays = ResourceDeficitDays,
+                StorageLockedByAccountant = StorageLockedByAccountant,
+                MaestroRadAnxietySuppressUntilDay = MaestroRadAnxietySuppressUntilDay,
+                GetawayInsideDays = GetawayInsideDays
             };
         }
     }
@@ -4025,5 +4356,13 @@ namespace AtomicWar._Game.Survivors
         public bool HungerStrikeActive;
         public bool TechTabletDead;
         public float SheriffStaminaMax;
+        // #284–#298
+        public int CorpsesCleaned;
+        public int FalloutStormsSurvivedExposed;
+        public List<string> UniqueIntelIds = new List<string>();
+        public int ResourceDeficitDays;
+        public bool StorageLockedByAccountant;
+        public int MaestroRadAnxietySuppressUntilDay;
+        public int GetawayInsideDays;
     }
 }
