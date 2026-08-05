@@ -535,6 +535,8 @@ namespace AtomicWar._Game.Core
 
             // Prompts #225–#234 host hooks
             WaterEconomySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            PowerNetwork?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            AtmosphereSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

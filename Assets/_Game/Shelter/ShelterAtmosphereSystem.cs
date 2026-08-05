@@ -65,6 +65,8 @@ namespace AtomicWar._Game.Shelter
         private readonly List<ShelterRoom> _rooms = new List<ShelterRoom>();
         private readonly System.Random _rng;
         private float _ventilationClearMultiplier = 1f;
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
 
         public event Action<ShelterRoom> OnFireStarted;
         public event Action<ShelterRoom> OnFireExtinguished;
@@ -72,6 +74,15 @@ namespace AtomicWar._Game.Shelter
         public event Action OnAtmosphereChanged;
 
         public IReadOnlyList<ShelterRoom> Rooms => _rooms;
+
+        /// <summary>Prompt #226 — Grid Walker prevents generator fires.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
 
         /// <summary>
         /// Prompt #197 — HVAC Tech: 1.3 when tech is in bunker (clears CO2/mold 30% faster).
@@ -258,6 +269,11 @@ namespace AtomicWar._Game.Shelter
             PowerNetwork power,
             Shelter shelter = null)
         {
+            // Prompt #226 — Grid Walker: generators never cause fires.
+            if (_personalQuests != null
+                && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke()))
+                return;
+
             if (gameHours <= 0f || power == null) return;
 
             var sources = power.Sources;

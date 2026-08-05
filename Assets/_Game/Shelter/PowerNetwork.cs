@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -34,6 +35,18 @@ namespace AtomicWar._Game.Shelter
         public event Action OnBlackout;
         public event Action OnLoadShed;
         public event Action<float> OnCoChanged;
+
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #226 — Grid Walker: no gen breakdown/fire; 150% capacity.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
 
         /// <summary>
         /// Inject carbon monoxide from external sources (room fire, sealed smoke).
@@ -261,7 +274,11 @@ namespace AtomicWar._Game.Shelter
                         if (def.CoPpmPerHour > 0f)
                             coDelta += def.CoPpmPerHour * gameHours;
                         // Mechanical wear: overworked gens become fire risks (Internal Horror).
-                        src.Durability = Mathf.Max(0f, src.Durability - 0.15f * gameHours);
+                        // Prompt #226 — Grid Walker: generators never break down.
+                        bool immune = _personalQuests != null
+                            && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke());
+                        if (!immune)
+                            src.Durability = Mathf.Max(0f, src.Durability - 0.15f * gameHours);
                         break;
 
                     case PowerSourceKind.Bicycle:
@@ -409,6 +426,12 @@ namespace AtomicWar._Game.Shelter
                 if (def == null) continue;
                 if (!CanSourceGenerate(src, def, weatherName)) continue;
                 gen += Mathf.Max(0f, def.OutputWatts);
+            }
+            // Prompt #226 — Grid Walker hotwire: 150% power capacity.
+            if (_personalQuests != null)
+            {
+                float mult = _personalQuests.GetPowerCapacityMultiplier(_getSurvivors?.Invoke());
+                if (mult > 1f) gen *= mult;
             }
             return gen;
         }
