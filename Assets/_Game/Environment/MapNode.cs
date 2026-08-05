@@ -67,6 +67,29 @@ namespace AtomicWar._Game.Environment
         /// </summary>
         public bool HasDeserterStand;
 
+        /// <summary>
+        /// Optional tags (snake_case): urban, subway, confined_space (Prompt #185).
+        /// </summary>
+        public List<string> Tags = new List<string>();
+
+        public bool HasTag(string tag)
+        {
+            if (string.IsNullOrEmpty(tag) || Tags == null) return false;
+            for (int i = 0; i < Tags.Count; i++)
+            {
+                if (string.Equals(Tags[i], tag, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>True when combat here benefits Close Quarters (confined / urban / subway).</summary>
+        public bool IsConfinedSpace =>
+            HasTag("confined_space") || HasTag("urban") || HasTag("subway");
+
+        /// <summary>Urban or Subway — counts toward Close Quarters milestone.</summary>
+        public bool IsUrbanOrSubway => HasTag("urban") || HasTag("subway");
+
         public bool IsShelter => Ring == DangerRing.Shelter
             || string.Equals(NodeId, GeneratedMap.ShelterNodeId, StringComparison.Ordinal);
 
@@ -111,12 +134,18 @@ namespace AtomicWar._Game.Environment
                 HasUxo = HasUxo,
                 IsDeathZone = IsDeathZone,
                 HasDeserterStand = HasDeserterStand,
-                EncounterDeckIds = new List<string>()
+                EncounterDeckIds = new List<string>(),
+                Tags = new List<string>()
             };
             if (EncounterDeckIds != null)
             {
                 for (int i = 0; i < EncounterDeckIds.Count; i++)
                     copy.EncounterDeckIds.Add(EncounterDeckIds[i]);
+            }
+            if (Tags != null)
+            {
+                for (int i = 0; i < Tags.Count; i++)
+                    copy.Tags.Add(Tags[i]);
             }
             return copy;
         }
