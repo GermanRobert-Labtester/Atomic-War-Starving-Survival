@@ -148,6 +148,9 @@ namespace AtomicWar._Game.Core
         // Prompt #10 — Skill Atrophy: morale < 20 for 14 days → permanent skill downgrade.
         public SkillAtrophySystem SkillAtrophy { get; private set; }
 
+        // Prompts #179–#181 — action-driven XP, dormant perks, stress epiphany.
+        public SkillProgressionSystem SkillProgression { get; private set; }
+
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
         // Prompt #61 — Survivor diaries & privacy violations.
@@ -310,6 +313,7 @@ namespace AtomicWar._Game.Core
         private readonly List<MapTilePlayerView> _knowledgeViewBuffer = new List<MapTilePlayerView>();
 
         /// <summary>Last day phantom pain was rolled (Prompt #56).</summary>
+        private int _lastSkillProgressionDay = -1;
         private int _lastPhantomPainDay;
         /// <summary>Last day scurvy was advanced (Prompt #57).</summary>
         private int _lastScurvyDay;

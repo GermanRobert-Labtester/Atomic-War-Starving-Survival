@@ -128,6 +128,7 @@ namespace AtomicWar._Game.Core
         public CeilingCollapseSave CeilingCollapse;
         public ChelationSave Chelation;
         public CompostSave Compost;
+        public SkillProgressionSave SkillProgression;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;
@@ -268,6 +269,8 @@ namespace AtomicWar._Game.Core
         // Prompt #10/8/7 — new skill & trait fields
         public float ScienceSkill = 0.3f;
         public float CraftingSkill = 0.3f;
+        /// <summary>Predetermined expert discipline (Prompt #179). One per survivor.</summary>
+        public string ExpertDisciplineId;
         public float ConsecutiveLowMoraleDays;
         public List<string> AtrophiedSkills = new List<string>();
         public List<string> Traits = new List<string>();

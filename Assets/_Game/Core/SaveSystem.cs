@@ -113,6 +113,7 @@ namespace AtomicWar._Game.Core
         private FreezePipeSystem _freezePipeSystem;
         private CartographySystem _cartographySystem;
         private BicycleSystem _bicycleSystem;
+        private FloodedNodeSystem _floodedNodeSystem;
         private TrackerSystem _trackerSystem;
         private DeadDropSystem _deadDropSystem;
         private HostageSystem _hostageSystem;
@@ -150,6 +151,7 @@ namespace AtomicWar._Game.Core
         private TriageBoardSystem _triageSystem;
         private PolypharmacySystem _polypharmacySystem;
         private LifeboatTransmissionSystem _lifeboat;
+        private SkillProgressionSystem _skillProgression;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;
@@ -216,33 +218,8 @@ namespace AtomicWar._Game.Core
             }
         }
 
-        /// <summary>Convenience factory for call sites that still list core deps positionally.</summary>
-        public static SaveSystem Create(
-            GameState gameState,
-            WeatherSystem weatherSystem,
-            TemperatureSystem temperatureSystem,
-            NeedsSystem needsSystem,
-            RadiationSystem radiationSystem,
-            Shelter.Shelter shelter,
-            Func<IReadOnlyList<Survivor>> getSurvivors,
-            Func<string, ItemDefinition> itemLookup,
-            Func<string, ShelterModule> moduleLookup,
-            string savesDir = null)
-        {
-            return new SaveSystem(new CoreDeps
-            {
-                GameState = gameState,
-                WeatherSystem = weatherSystem,
-                TemperatureSystem = temperatureSystem,
-                NeedsSystem = needsSystem,
-                RadiationSystem = radiationSystem,
-                Shelter = shelter,
-                GetSurvivors = getSurvivors,
-                ItemLookup = itemLookup,
-                ModuleLookup = moduleLookup,
-                SavesDir = savesDir
-            });
-        }
+        /// <summary>Factory that mirrors the CoreDeps constructor (single parameter object).</summary>
+        public static SaveSystem Create(CoreDeps deps) => new SaveSystem(deps);
 
 
         /// <summary>

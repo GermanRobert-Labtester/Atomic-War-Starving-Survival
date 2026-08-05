@@ -227,6 +227,11 @@ namespace AtomicWar._Game.Core
             _cartographySystem = sys;
         }
 
+        /// <summary>Inject Prompt #69 flooded map nodes for save/load.</summary>
+        public void SetFloodedNodeSystem(FloodedNodeSystem sys) =>
+            RegisterSystem(ref _floodedNodeSystem, sys, "flooded_node",
+                () => sys.CaptureState(), o => sys.RestoreState((FloodedNodeSave)o));
+
         /// <summary>Inject Prompt #71 tracker for save/load.</summary>
         public void SetTrackerSystem(TrackerSystem sys)
         {
@@ -282,6 +287,12 @@ namespace AtomicWar._Game.Core
         public void SetHamRadioSystem(HamRadioSystem s) => RegisterSystem(ref _hamRadioSystem, s, "ham_radio", () => s.CaptureState(), o => s.RestoreState((HamRadioSave)o));
         public void SetTriageSystem(TriageBoardSystem s) => RegisterSystem(ref _triageSystem, s, "triage", () => s.CaptureState(), o => s.RestoreState((TriageSave)o));
         public void SetPolypharmacySystem(PolypharmacySystem s) => RegisterSystem(ref _polypharmacySystem, s, "polypharmacy", () => s.CaptureState(), o => s.RestoreState((PolypharmSave)o));
+
+        /// <summary>Inject Prompts #179–#181 skill progression for save/load.</summary>
+        public void SetSkillProgressionSystem(SkillProgressionSystem s) =>
+            RegisterSystem(ref _skillProgression, s, "skill_progression",
+                () => s.CaptureState(),
+                o => s.RestoreState((SkillProgressionSave)o, _getSurvivors?.Invoke()));
 
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
