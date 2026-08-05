@@ -28,7 +28,8 @@ namespace AtomicWar._Game.Survivors
             float        gameHours,
             float        effectiveDaylightHours,
             bool         growLightActive,
-            LightProfile lightProfile)
+            LightProfile lightProfile,
+            bool         ignoreDarknessMorale = false)
         {
             if (sv == null || !sv.IsAlive || lightProfile == null || gameHours <= 0f)
                 return;
@@ -59,7 +60,8 @@ namespace AtomicWar._Game.Survivors
             sv.IsListless = sv.LightExposure <= lightProfile.listlessThreshold;
 
             // 4. Listless morale drain
-            if (sv.IsListless)
+            // Prompt #209 — Night Terror: zero Morale penalty from total darkness.
+            if (sv.IsListless && !ignoreDarknessMorale)
             {
                 sv.Needs.Morale = Mathf.Clamp(
                     sv.Needs.Morale - lightProfile.listlessMoraleDrainPerHour * gameHours,
@@ -79,6 +81,7 @@ namespace AtomicWar._Game.Survivors
             sv.VitaminDProxy = Mathf.Clamp(sv.VitaminDProxy + vitDDelta, 0f, 100f);
 
             // 6. Hidden vitaminD penalty: silently drains health + morale when low
+            // Night Terror also skips the darkness morale half of vit-D depletion.
             if (sv.VitaminDProxy <= lightProfile.vitaminDLowThreshold)
             {
                 float depletionRatio = lightProfile.vitaminDLowThreshold > 0f
@@ -87,9 +90,12 @@ namespace AtomicWar._Game.Survivors
                 sv.Needs.Health = Mathf.Clamp(
                     sv.Needs.Health - lightProfile.vitaminDHealthPenaltyPerHour * depletionRatio * gameHours,
                     0f, 100f);
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale - lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours,
-                    0f, 100f);
+                if (!ignoreDarknessMorale)
+                {
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale - lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours,
+                        0f, 100f);
+                }
             }
         }
 

@@ -137,6 +137,8 @@ namespace AtomicWar._Game.Core
         public ShelterPerkSave ShelterPerks;
         /// <summary>Prompts #201–#205 — medical milestone counters (Phase-2 cures, Death's Door…).</summary>
         public MedicalPerkSave MedicalPerks;
+        /// <summary>Prompts #206–#210 — expedition milestone counters (pack mule, light step…).</summary>
+        public ExpeditionPerkSave ExpeditionPerks;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;

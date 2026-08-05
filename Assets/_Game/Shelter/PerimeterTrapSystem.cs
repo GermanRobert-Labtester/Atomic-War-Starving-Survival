@@ -20,7 +20,9 @@ namespace AtomicWar._Game.Shelter
         private bool _raidWarningActive;
         private string _lastDeployerId;
         private CombatPerkSystem _combatPerks;
+        private ExpeditionPerkSystem _expeditionPerks;
         private Func<string, Survivor> _getSurvivor;
+        private Func<int> _getDay;
         private System.Random _rng = new System.Random(123);
 
         public int BearTraps => _bearTraps;
@@ -39,6 +41,13 @@ namespace AtomicWar._Game.Shelter
         {
             _combatPerks = combatPerks;
             _getSurvivor = getSurvivor;
+        }
+
+        /// <summary>Prompt #207 — successful wasteland disarms count toward Light Step.</summary>
+        public void BindExpeditionPerks(ExpeditionPerkSystem expeditionPerks, Func<int> getDay = null)
+        {
+            _expeditionPerks = expeditionPerks;
+            _getDay = getDay;
         }
 
         public void SetRng(System.Random rng) => _rng = rng ?? new System.Random(123);
@@ -102,12 +111,21 @@ namespace AtomicWar._Game.Shelter
             return dmg;
         }
 
-        /// <summary>Wasteland trap disarm (100% with Trap Setter).</summary>
+        /// <summary>Wasteland trap disarm (100% with Trap Setter). Light Step counts successes.</summary>
         public bool TryDisarmWastelandTrap(Survivor scavenger)
         {
+            bool success;
             if (_combatPerks != null)
-                return _combatPerks.TryDisarmWastelandTrap(scavenger, _rng);
-            return _rng.NextDouble() < CombatPerkSystem.DefaultDisarmSuccess;
+                success = _combatPerks.TryDisarmWastelandTrap(scavenger, _rng);
+            else
+                success = _rng.NextDouble() < CombatPerkSystem.DefaultDisarmSuccess;
+
+            if (success && scavenger != null)
+            {
+                int day = _getDay != null ? _getDay() : 0;
+                _expeditionPerks?.RecordTrapDisarmed(scavenger, day);
+            }
+            return success;
         }
 
         /// <summary>When a raid is detected early, set the warning timer.</summary>

@@ -95,6 +95,9 @@ namespace AtomicWar._Game.Core
         public bool HasFlashlight;
         public float FlashlightBattery;
 
+        // Prompt #210 — Forager empty-loot grant applied once per expedition.
+        public bool ForagerLootApplied;
+
         // Prompt #73 — hostage capture
         public string CaptorFactionId;
         public float RansomCleanWater;

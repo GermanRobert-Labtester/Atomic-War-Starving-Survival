@@ -7,6 +7,7 @@ using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
@@ -67,6 +68,13 @@ namespace AtomicWar._Game.Core
         private Func<int> _getDay;
         private InterpersonalAffinity _affinity;
         private Func<IReadOnlyList<Survivor>> _getAllSurvivors;
+
+        // Prompts #206–#210 — expedition / wasteland milestone perks.
+        private ExpeditionPerkSystem _expeditionPerks;
+        private NoiseSystem _noiseSystem;
+        private Func<bool> _isStormActive;
+        private ItemDefinition _foragerRoots;
+        private ItemDefinition _foragerBerries;
 
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
@@ -211,6 +219,32 @@ namespace AtomicWar._Game.Core
             _affinity = affinity;
             _getAllSurvivors = getAllSurvivors;
         }
+
+        /// <summary>
+        /// Prompts #206–#210 — expedition milestone perks (Pack Mule, Light Step,
+        /// Urban Pathfinder, Night Terror, Forager).
+        /// </summary>
+        public void BindExpeditionPerks(
+            ExpeditionPerkSystem expeditionPerks,
+            Func<int> getDay = null,
+            NoiseSystem noiseSystem = null,
+            Func<bool> isStormActive = null)
+        {
+            _expeditionPerks = expeditionPerks;
+            if (getDay != null) _getDay = getDay;
+            _noiseSystem = noiseSystem;
+            _isStormActive = isStormActive;
+            EnsureForagerFoodItems();
+        }
+
+        /// <summary>Optional override for Forager wild-food item definitions.</summary>
+        public void SetForagerFoodItems(ItemDefinition roots, ItemDefinition berries)
+        {
+            if (roots != null) _foragerRoots = roots;
+            if (berries != null) _foragerBerries = berries;
+        }
+
+        public ExpeditionPerkSystem ExpeditionPerks => _expeditionPerks;
 
         public void SetEncounterPool(IEnumerable<EncounterSO> encounters)
         {

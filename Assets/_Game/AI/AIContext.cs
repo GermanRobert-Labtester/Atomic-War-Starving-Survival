@@ -166,6 +166,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Prompts #201–#205 — medical milestone perks.</summary>
         public MedicalPerkSystem MedicalPerks;
 
+        /// <summary>Prompts #206–#210 — expedition / wasteland milestone perks.</summary>
+        public ExpeditionPerkSystem ExpeditionPerks;
+
         /// <summary>Prompt #177 — triage board medication permissions.</summary>
         public TriageBoardSystem TriageSystem;
 

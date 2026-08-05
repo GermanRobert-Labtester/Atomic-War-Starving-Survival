@@ -16,6 +16,11 @@ namespace AtomicWar._Game.Core
         private void ResolveEncounterWithPsychology(ExpeditionState exp, EncounterSO selected)
         {
             var survivor = exp.Survivor;
+
+            // Prompt #207 — Light Step completely bypasses Feral Dog / Sleeping Ghoul.
+            if (TryLightStepBypass(exp, selected, survivor))
+                return;
+
             bool fled;
             EventChoice chosen = TryAutoResolveByTrait(exp, selected, survivor, out fled);
 
@@ -25,11 +30,47 @@ namespace AtomicWar._Game.Core
             fled = ApplyEncounterChoice(exp, survivor, chosen, fled);
             ApplyDesertersStandIfNeeded(exp, selected, survivor, chosen);
             ApplyCombatPerkMilestones(exp, selected, survivor, chosen, fled);
+            ApplyExpeditionPerkEncounterMilestones(exp, selected, survivor, chosen, fled);
 
             if (fled)
                 TryProcessUxoFlee(exp);
 
             OnEncounterResolved?.Invoke(exp, selected, chosen);
+        }
+
+        /// <summary>
+        /// Prompt #207 — Light Step: skip FeralDog / SleepingGhoul with no stealth roll.
+        /// </summary>
+        private bool TryLightStepBypass(ExpeditionState exp, EncounterSO selected, Survivor survivor)
+        {
+            if (_expeditionPerks == null || survivor == null || selected == null) return false;
+            if (!_expeditionPerks.CanBypassEncounter(survivor, selected.id)) return false;
+
+            var bypass = new EventChoice
+            {
+                ChoiceId = "light_step_bypass",
+                Text = "Slip past unseen.",
+                MoraleDelta = 0f
+            };
+            OnEncounterTriggered?.Invoke(exp, selected);
+            OnEncounterResolved?.Invoke(exp, selected, bypass);
+            return true;
+        }
+
+        /// <summary>Prompt #207 — sneak successes count toward Light Step.</summary>
+        private void ApplyExpeditionPerkEncounterMilestones(
+            ExpeditionState exp, EncounterSO selected, Survivor survivor, EventChoice chosen, bool fled)
+        {
+            if (_expeditionPerks == null || survivor == null || !survivor.IsAlive) return;
+            if (fled || chosen == null) return;
+
+            int day = _getDay != null ? _getDay() : 0;
+            string choiceId = chosen.ChoiceId ?? string.Empty;
+            if (string.Equals(choiceId, "sneak", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(choiceId, "sneak_past", StringComparison.OrdinalIgnoreCase))
+            {
+                _expeditionPerks.RecordSneakPast(survivor, day);
+            }
         }
 
         /// <summary>

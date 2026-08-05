@@ -351,6 +351,9 @@ namespace AtomicWar._Game.Core
             // Prompts #201–#205 — medical milestone perks (Steady Hands … Paramedic)
             MedicalPerks = new MedicalPerkSystem();
             MedicalPerks.Bind(SkillProgression, () => Survivors);
+            // Prompts #206–#210 — expedition / wasteland milestone perks
+            ExpeditionPerks = new ExpeditionPerkSystem();
+            ExpeditionPerks.Bind(SkillProgression);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

@@ -43,6 +43,12 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public Func<Survivor, bool> TryDeferDeath;
 
+        /// <summary>
+        /// Prompt #209 Night Terror — when true, skip Listless / darkness morale drain
+        /// for this survivor. Null = always apply darkness morale penalties.
+        /// </summary>
+        public Func<Survivor, bool> IgnoresDarknessMorale;
+
         public NeedsSystem(NeedsProfile profile, Func<Survivor, bool> isNearHeatSource = null)
         {
             _profile = profile != null ? profile : throw new ArgumentNullException(nameof(profile));
@@ -108,12 +114,14 @@ namespace AtomicWar._Game.Survivors
             if (_getEffectiveDaylightHours != null && _lightProfile != null)
             {
                 bool growLight = _isGrowLightActive != null && _isGrowLightActive();
+                bool ignoreDark = IgnoresDarknessMorale != null && IgnoresDarknessMorale(survivor);
                 LightSystemHelper.TickSurvivorLight(
                     survivor,
                     gameHours,
                     _getEffectiveDaylightHours(),
                     growLight,
-                    _lightProfile);
+                    _lightProfile,
+                    ignoreDarknessMorale: ignoreDark);
             }
 
             var needs = survivor.Needs;

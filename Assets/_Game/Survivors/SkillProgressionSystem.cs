@@ -83,6 +83,7 @@ namespace AtomicWar._Game.Survivors
             RegisterSurvivalPerks();
             RegisterShelterPerks();
             RegisterMedicalPerks();
+            RegisterExpeditionPerks();
         }
 
         /// <summary>
@@ -146,6 +147,20 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.RadiologistId, "Radiologist", "medical", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.AnatomistId, "Anatomist", "medical", milestoneOnly, 0.10f, false));
             RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.ParamedicId, "Paramedic", "medical", milestoneOnly, 0.10f, false));
+        }
+
+        /// <summary>
+        /// Milestone expedition / wasteland perks (Prompts #206–#210). xpThreshold is
+        /// unreachable via action XP — granted only through <see cref="TryGrantPerk"/>.
+        /// </summary>
+        public void RegisterExpeditionPerks()
+        {
+            const float milestoneOnly = 999999f;
+            RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.PackMuleId, "Pack Mule", "scavenging", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.LightStepId, "Light Step", "scavenging", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.UrbanPathfinderId, "Urban Pathfinder", "scavenging", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.NightTerrorId, "Night Terror", "combat", milestoneOnly, 0.10f, false));
+            RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.ForagerId, "Forager", "survival", milestoneOnly, 0.05f, false));
         }
 
         /// <summary>

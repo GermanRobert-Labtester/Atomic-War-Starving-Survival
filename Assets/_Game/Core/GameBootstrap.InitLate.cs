@@ -254,10 +254,12 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetSurvivalPerkSystem(SurvivalPerks);
             SaveSystem.SetShelterPerkSystem(ShelterPerks);
             SaveSystem.SetMedicalPerkSystem(MedicalPerks);
+            SaveSystem.SetExpeditionPerkSystem(ExpeditionPerks);
             WireCombatPerkBindings();
             WireSurvivalPerkBindings();
             WireShelterPerkBindings();
             WireMedicalPerkBindings();
+            WireExpeditionPerkBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -449,6 +451,49 @@ namespace AtomicWar._Game.Core
             if (NeedsSystem != null)
             {
                 NeedsSystem.TryDeferDeath = sv => MedicalPerks.TryEnterDeathsDoor(sv);
+            }
+        }
+
+        /// <summary>
+        /// Prompts #206–#210 — bind expedition milestone perks into carry weight,
+        /// stealth, city travel, night combat, darkness morale, and foraging.
+        /// </summary>
+        private void WireExpeditionPerkBindings()
+        {
+            if (ExpeditionPerks == null) return;
+
+            Func<int> getDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 0;
+
+            ExpeditionSystem?.BindExpeditionPerks(
+                ExpeditionPerks,
+                getDay: getDay,
+                noiseSystem: NoiseSystem,
+                isStormActive: () =>
+                    WeatherSystem != null
+                    && (WeatherSystem.Current == WeatherKind.FalloutStorm
+                        || WeatherSystem.Current == WeatherKind.Blizzard
+                        || WeatherSystem.Current == WeatherKind.BlackRain));
+
+            PerimeterTrapSystem?.BindExpeditionPerks(ExpeditionPerks, getDay);
+
+            ScavengingSystem?.BindExpeditionPerks(
+                ExpeditionPerks,
+                getNodeTags: id =>
+                {
+                    var n = GeneratedMap?.GetNode(id);
+                    return n?.Tags;
+                },
+                getNodeRingName: id =>
+                {
+                    var n = GeneratedMap?.GetNode(id);
+                    return n != null ? n.Ring.ToString() : null;
+                });
+
+            // Prompt #209 — Night Terror: zero darkness morale penalty.
+            if (NeedsSystem != null)
+            {
+                NeedsSystem.IgnoresDarknessMorale = sv =>
+                    ExpeditionPerks != null && ExpeditionPerks.IgnoresDarknessMorale(sv);
             }
         }
 

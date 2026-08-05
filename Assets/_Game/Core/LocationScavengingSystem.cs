@@ -28,6 +28,12 @@ namespace AtomicWar._Game.Core
         private readonly List<ActiveMission> _active = new List<ActiveMission>();
         private readonly LootTableSO _lootTable;
         private readonly Func<WorldPhase> _getCurrentPhase;
+        private ExpeditionPerkSystem _expeditionPerks;
+        private Func<string, IList<string>> _getNodeTags;
+        private Func<string, string> _getNodeRingName;
+        private ItemDefinition _foragerRoots;
+        private ItemDefinition _foragerBerries;
+        private System.Random _foragerRng = new System.Random(210);
 
         public event Action<ActiveMission> OnMissionStarted;
         public event Action<ActiveMission, List<ItemDefinition>> OnMissionCompleted;
@@ -55,6 +61,27 @@ namespace AtomicWar._Game.Core
 
         public IReadOnlyList<ActiveMission> ActiveMissions => _active;
         public RadiationKnowledgeMap Knowledge => _knowledge;
+
+        /// <summary>
+        /// Prompts #208 / #210 — city surveys (Urban Pathfinder) and forest/swamp
+        /// scavenges (Forager). Optional tag/ring resolvers for MapNode metadata.
+        /// </summary>
+        public void BindExpeditionPerks(
+            ExpeditionPerkSystem expeditionPerks,
+            Func<string, IList<string>> getNodeTags = null,
+            Func<string, string> getNodeRingName = null)
+        {
+            _expeditionPerks = expeditionPerks;
+            _getNodeTags = getNodeTags;
+            _getNodeRingName = getNodeRingName;
+            EnsureForagerFood();
+        }
+
+        public void SetForagerFoodItems(ItemDefinition roots, ItemDefinition berries)
+        {
+            if (roots != null) _foragerRoots = roots;
+            if (berries != null) _foragerBerries = berries;
+        }
 
         /// <summary>Start a scavenging mission to a location. Returns false if survivor is dead or already on mission.</summary>
         public bool StartMission(Survivor survivor, LocationDefinitionSO location)
@@ -173,6 +200,10 @@ namespace AtomicWar._Game.Core
         private void CompleteMission(ActiveMission mission)
         {
             var loot = RollLoot(mission.DangerLevel);
+
+            // Prompt #210 — forest/swamp scavenge milestone + empty-loot forager food.
+            ApplyForagerOnScavenge(mission, loot);
+
             if (_inventory != null && loot.Count > 0)
             {
                 foreach (var item in loot)
@@ -199,9 +230,88 @@ namespace AtomicWar._Game.Core
                 }
             }
 
+            // Prompt #208 — fully surveying a City node counts toward Urban Pathfinder.
+            if (success && _expeditionPerks != null && mission.Survivor != null)
+            {
+                var tags = _getNodeTags?.Invoke(mission.LocationId);
+                string ring = _getNodeRingName?.Invoke(mission.LocationId);
+                bool isCity = ExpeditionPerkSystem.IsCityOrRuinNode(tags, ring)
+                              || (!string.IsNullOrEmpty(mission.LocationId)
+                                  && mission.LocationId.IndexOf("city", StringComparison.OrdinalIgnoreCase) >= 0)
+                              || (!string.IsNullOrEmpty(mission.LocationName)
+                                  && mission.LocationName.IndexOf("city", StringComparison.OrdinalIgnoreCase) >= 0);
+                // Only city (not pure ruin) for the earn condition "City Map Nodes".
+                bool isCityEarn = ExpeditionPerkSystem.IsCityOrRuinTags(tags)
+                                  || (!string.IsNullOrEmpty(ring)
+                                      && ring.IndexOf("city", StringComparison.OrdinalIgnoreCase) >= 0)
+                                  || (!string.IsNullOrEmpty(ring)
+                                      && ring.IndexOf("outskirt", StringComparison.OrdinalIgnoreCase) >= 0)
+                                  || (!string.IsNullOrEmpty(mission.LocationId)
+                                      && (mission.LocationId.IndexOf("city", StringComparison.OrdinalIgnoreCase) >= 0
+                                          || mission.LocationId.IndexOf("outskirt", StringComparison.OrdinalIgnoreCase) >= 0));
+                if (isCityEarn)
+                    _expeditionPerks.RecordCityNodeSurvey(mission.Survivor, _getCurrentDay());
+            }
+
             // Survey still returns empty loot list for API symmetry
             OnMissionCompleted?.Invoke(mission, new List<ItemDefinition>());
             OnSurveyCompleted?.Invoke(mission, success);
+        }
+
+        private void ApplyForagerOnScavenge(ActiveMission mission, List<ItemDefinition> loot)
+        {
+            if (_expeditionPerks == null || mission?.Survivor == null || loot == null) return;
+
+            var tags = _getNodeTags?.Invoke(mission.LocationId);
+            bool forestSwamp = ExpeditionPerkSystem.IsForestOrSwampTags(tags)
+                               || (!string.IsNullOrEmpty(mission.LocationId)
+                                   && (mission.LocationId.IndexOf("forest", StringComparison.OrdinalIgnoreCase) >= 0
+                                       || mission.LocationId.IndexOf("swamp", StringComparison.OrdinalIgnoreCase) >= 0));
+
+            if (forestSwamp)
+                _expeditionPerks.RecordForestOrSwampScavenge(mission.Survivor, _getCurrentDay());
+
+            int add = _expeditionPerks.GetForagerGuaranteedFoodCount(
+                mission.Survivor, loot.Count, _foragerRng);
+            if (add <= 0) return;
+
+            EnsureForagerFood();
+            for (int i = 0; i < add; i++)
+            {
+                string id = ExpeditionPerkSystem.PickForagerFoodId(_foragerRng);
+                var item = string.Equals(id, ExpeditionPerkSystem.BerriesItemId, StringComparison.OrdinalIgnoreCase)
+                    ? _foragerBerries
+                    : _foragerRoots;
+                if (item != null) loot.Add(item);
+            }
+        }
+
+        private void EnsureForagerFood()
+        {
+            if (_foragerRoots == null)
+            {
+                _foragerRoots = ScriptableObject.CreateInstance<ItemDefinition>();
+                _foragerRoots.id = ExpeditionPerkSystem.RootsItemId;
+                _foragerRoots.displayName = "Roots";
+                _foragerRoots.description = "Low-nutrition forage. Staves off starvation.";
+                _foragerRoots.type = ItemType.Food;
+                _foragerRoots.weight = 0.2f;
+                _foragerRoots.stackMax = 20;
+                _foragerRoots.hungerRestore = 8f;
+                _foragerRoots.tradeValue = 1f;
+            }
+            if (_foragerBerries == null)
+            {
+                _foragerBerries = ScriptableObject.CreateInstance<ItemDefinition>();
+                _foragerBerries.id = ExpeditionPerkSystem.BerriesItemId;
+                _foragerBerries.displayName = "Berries";
+                _foragerBerries.description = "Low-nutrition forage. Staves off starvation.";
+                _foragerBerries.type = ItemType.Food;
+                _foragerBerries.weight = 0.15f;
+                _foragerBerries.stackMax = 20;
+                _foragerBerries.hungerRestore = 6f;
+                _foragerBerries.tradeValue = 1f;
+            }
         }
 
         private float ResolveTrueRad(LocationDefinitionSO location)
