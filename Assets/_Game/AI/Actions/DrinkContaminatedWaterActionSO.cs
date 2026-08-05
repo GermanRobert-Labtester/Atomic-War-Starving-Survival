@@ -67,9 +67,23 @@ namespace AtomicWar._Game.AI.Actions
             {
                 context.RadiationSystem?.Expose(context.Survivor, IrradiatedDoseAmount, 1f);
             }
-            else if (context.Random != null && context.Random.NextDouble() < DirtyWaterIllnessChance)
+            else
             {
-                context.Survivor.Needs.Health = Mathf.Max(0f, context.Survivor.Needs.Health - DirtyWaterIllnessHealthLoss);
+                // Prompt #190 — Iron Stomach: 90% reduced chance of Phase-1 illness from dirty water
+                float chance = DirtyWaterIllnessChance;
+                if (context.SurvivalPerks != null)
+                    chance = context.SurvivalPerks.ScaleIllnessChance(context.Survivor, chance);
+
+                double roll = context.Random != null
+                    ? context.Random.NextDouble()
+                    : UnityEngine.Random.value;
+                if (roll < chance)
+                {
+                    context.Survivor.Needs.Health = Mathf.Max(
+                        0f, context.Survivor.Needs.Health - DirtyWaterIllnessHealthLoss);
+                    // Prefer dysentery affliction when medical is available
+                    context.MedicalSystem?.Inflict(context.Survivor, "dysentery");
+                }
             }
         }
 

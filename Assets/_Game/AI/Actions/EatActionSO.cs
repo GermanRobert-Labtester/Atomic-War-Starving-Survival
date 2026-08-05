@@ -75,13 +75,21 @@ namespace AtomicWar._Game.AI.Actions
                 if (food.healthEffect != 0f)
                     survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + food.healthEffect, 0f, 100f);
 
-                // ContaminatedFood → botulism roll (Internal Horror)
-                if (food.type == ItemType.ContaminatedFood && context.MedicalSystem != null)
+                // ContaminatedFood / spoiled meat → Phase-1 gastric illness roll
+                // Prompt #190 — Iron Stomach multiplies chance by 0.10
+                if (context.MedicalSystem != null
+                    && (food.type == ItemType.ContaminatedFood
+                        || string.Equals(food.id, "spoiled_meat", System.StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(food.id, SurvivalPerkSystem.SpoiledMeatId,
+                            System.StringComparison.OrdinalIgnoreCase)))
                 {
+                    float chance = ContaminatedBotulismChance;
+                    if (context.SurvivalPerks != null)
+                        chance = context.SurvivalPerks.ScaleIllnessChance(survivor, chance);
                     double roll = context.Random != null
                         ? context.Random.NextDouble()
                         : UnityEngine.Random.value;
-                    if (roll < ContaminatedBotulismChance)
+                    if (roll < chance)
                         context.MedicalSystem.Inflict(survivor, AfflictionSO.Ids.Botulism);
                 }
                 return;
