@@ -85,8 +85,19 @@ namespace AtomicWar._Game.AI.Actions
             var room = FindClearingTarget(context);
             if (room == null) return;
 
-            // Calculate effective clear rate (CraftingSkill boosts it)
-            float effectiveRate = baseClearRatePerHour * (1f + context.Survivor.EffectiveCraftingSkill);
+            // Calculate effective clear rate (CraftingSkill boosts it).
+            // Prompt #213 — Taskmaster Pacing Aura: +15% work rate nearby.
+            float pace = 1f;
+            if (context.SocialPerks != null && context.GetSurvivors != null)
+            {
+                pace = context.SocialPerks.GetPacingAuraMultiplier(
+                    context.Survivor,
+                    context.GetSurvivors(),
+                    context.AreRoomsAdjacent);
+            }
+            float effectiveRate = baseClearRatePerHour
+                                  * (1f + context.Survivor.EffectiveCraftingSkill)
+                                  * pace;
 
             if (room.UnlockState == RoomUnlockState.Sealed)
             {

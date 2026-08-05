@@ -96,18 +96,23 @@ namespace AtomicWar._Game.Shelter
             return false;
         }
 
-        /// <summary>Clear rubble for one hour of work. Returns units cleared. Requires Shovel.</summary>
+        /// <summary>
+        /// Clear rubble for <paramref name="workHours"/> of work (default 1).
+        /// Returns units cleared. Requires Shovel for full speed.
+        /// Prompt #213 — Taskmaster passes workHours &gt; 1 for Pacing Aura.
+        /// </summary>
         public float ClearRubble(string roomId, Survivors.Survivor worker,
-            bool hasShovel, bool hatchBlocked)
+            bool hasShovel, bool hatchBlocked, float workHours = 1f)
         {
             if (hatchBlocked) return 0f; // Can't dump rubble if hatch is blocked.
             if (worker == null || !worker.IsAlive) return 0f;
             if (!HasRubble(roomId)) return 0f;
+            if (workHours <= 0f) return 0f;
 
             var room = _rooms[roomId];
             float shovelMult = hasShovel ? 1.5f : 0.5f;
             float skillMult = 1f + worker.EffectiveCraftingSkill * 0.5f;
-            float cleared = (1f / BaseClearHoursPerUnit) * shovelMult * skillMult;
+            float cleared = (workHours / BaseClearHoursPerUnit) * shovelMult * skillMult;
             cleared = Mathf.Min(cleared, room.RubbleUnitsRemaining);
 
             room.RubbleUnitsRemaining -= cleared;
@@ -117,7 +122,7 @@ namespace AtomicWar._Game.Shelter
                 ? _shelterPerks.GetExcavationFatigueMultiplier(worker)
                 : 1f;
             worker.Needs.Fatigue = Mathf.Clamp(
-                worker.Needs.Fatigue + FatiguePerHour * fatMult, 0f, 100f);
+                worker.Needs.Fatigue + FatiguePerHour * workHours * fatMult, 0f, 100f);
 
             // Prompt #199 — cave-in mini-event while digging (Sandhog never triggers).
             if (_shelterPerks != null

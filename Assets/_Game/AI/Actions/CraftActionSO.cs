@@ -29,5 +29,19 @@ namespace AtomicWar._Game.AI.Actions
 
             return Mathf.Clamp01((60f - avgNeed) / 100f + 0.1f);
         }
+
+        /// <summary>
+        /// Prompt #213 — Taskmaster Pacing Aura work-rate for craft ticks.
+        /// Callers with duration-based craft should multiply hours by this.
+        /// </summary>
+        public static float GetCraftSpeedMultiplier(AIContext context)
+        {
+            if (context?.SocialPerks == null || context.Survivor == null) return 1f;
+            if (context.GetSurvivors == null) return 1f;
+            return context.SocialPerks.GetPacingAuraMultiplier(
+                context.Survivor,
+                context.GetSurvivors(),
+                context.AreRoomsAdjacent);
+        }
     }
 }
