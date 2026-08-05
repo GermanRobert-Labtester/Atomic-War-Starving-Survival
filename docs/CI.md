@@ -77,6 +77,25 @@ Override any instance with `saveSystem.FailFastRestore = …` after construction
 
 - Keep **`com.unity.modules.physicscore2d`** — required by `com.unity.modules.physics2d` and present as `ProjectSettings/PhysicsCoreProjectSettings2D.asset`.
 - Do **not** open this project on Unity **6000.3.x**; module resolution fails there. Use **6000.5.5f1** only (CI and local).
+- `com.unity.multiplayer.center` was removed: this is a single-player game and nothing referenced it.
+
+---
+
+## Git LFS is not in use (read before touching `.gitattributes`)
+
+`.gitattributes` is the upstream Unity template, which marks most binary types
+as `lfs`. **This project never adopted LFS** — `git lfs ls-files` reports zero
+objects — and the only tracked files matching any `lfs` pattern are the six
+radio `.wav` clips, committed as ordinary blobs.
+
+That mismatch was a live data-loss trap: the LFS clean filter turned each real
+`.wav` into a 130-byte pointer, so every fresh clone reported all six as
+modified, and any `git add -A` would have replaced the audio with pointers whose
+LFS objects exist nowhere. The audio extensions are now pinned back to plain
+binary at the bottom of `.gitattributes`.
+
+If you ever want LFS for real, remove that override **and** run `git lfs migrate`
+against a remote with LFS enabled — do not do one without the other.
 
 ---
 
@@ -148,7 +167,24 @@ Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode \
   -testResults test-results-ci-local-editmode.xml -logFile test-log-ci-local-editmode.txt
 ```
 
-Last local run: **1035 passed / 0 failed** (2026-08-05, audit pass).
+Last local run: EditMode **1037 passed / 0 failed**, PlayMode **61 passed / 0 failed**
+(2026-08-05, audit pass).
+
+**Run PlayMode too.** It is a separate `-testPlatform` and is easy to forget; it
+was red at 59/61 for an unknown period while EditMode was green, because nothing
+in this file told anyone to run it:
+
+```bash
+Unity -batchmode -nographics -projectPath . -runTests -testPlatform PlayMode \
+  -testResults test-results-playmode.xml -logFile test-log-playmode.txt
+```
+
+Additionally verified from a **cold clone** on the same date — `git clone` of
+`integration/audit-p1` into an empty directory, no `Library/`, full asset
+reimport — which also produced **1035 passed / 0 failed, 0 compile errors**
+(the count predates the two save-hardening tests added afterwards). This is
+the check that actually proves a fresh checkout builds; running the suite in
+a working tree that already has a populated `Library/` does not.
 
 > **Keep this number current.** It was previously recorded as `780 passed / 0 failed`, which had gone
 > stale: roughly 250 tests had been added since that run, and the suite was actually **red** (2

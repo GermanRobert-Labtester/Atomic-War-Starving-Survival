@@ -118,6 +118,16 @@ namespace AtomicWar._Game.Events
         {
             if (_scheduledEvents.Count == 0) return;
 
+            // Keep the context's day consistent with the day being ticked.
+            // The dequeue below matches on the currentDay argument, but the
+            // CanTrigger gate reads context.CurrentDay (which defaults to 1).
+            // When the two disagreed, an event scheduled for its own minDay
+            // failed the "CurrentDay < MinDay" check and was dropped -- dequeued
+            // without ever presenting, with only a Debug.Log to show for it, so
+            // a stage of a narrative arc could vanish mid-chain. currentDay is
+            // the authoritative value at this call site.
+            if (context != null) context.CurrentDay = currentDay;
+
             for (int i = _scheduledEvents.Count - 1; i >= 0; i--)
             {
                 var scheduled = _scheduledEvents[i];

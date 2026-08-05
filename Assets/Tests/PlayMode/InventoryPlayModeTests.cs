@@ -82,9 +82,24 @@ namespace AtomicWar.Tests.PlayMode
             radExposed.Register(exposed);
             radExposed.Tick(1f);
 
-            Assert.That(exposed.RadiationDose, Is.EqualTo(100f).Within(Eps)); // clamped ceiling
-            Assert.That(suited.RadiationDose, Is.EqualTo(20f).Within(Eps));   // 100 - 80 protection
-            Assert.That(suited.RadiationDose, Is.LessThan(exposed.RadiationDose));
+            // RadiationDose is a *transient* acute reading, not a running total.
+            // Once a dose crosses PrognosisPipeline's prodromal trigger, the
+            // injury is carried forward as LatentDamage and the dose is
+            // deliberately reset to zero -- see PrognosisPipeline.TriggerProdromal,
+            // which does this so RadiationSystem's "dose >= AcuteThreshold" check
+            // stops re-firing health loss on every subsequent tick.
+            //
+            // A 100 rad/h zone trips that path within this single one-hour tick,
+            // so asserting a retained dose of 100 encoded the pre-pipeline model
+            // and had to fail. LifetimeRadiationExposure is the monotonic record
+            // of what a survivor actually absorbed, so that is what "the suit
+            // reduced exposure" is asserted against.
+            Assert.That(exposed.LifetimeRadiationExposure, Is.EqualTo(100f).Within(Eps),
+                "Unprotected survivor absorbs the full 100 rad/h for one hour");
+            Assert.That(suited.LifetimeRadiationExposure, Is.EqualTo(20f).Within(Eps),
+                "Suited survivor absorbs 100 - 80 protection");
+            Assert.That(suited.LifetimeRadiationExposure, Is.LessThan(exposed.LifetimeRadiationExposure),
+                "Wearing the suit must reduce absorbed exposure");
 
             yield return null;
         }
