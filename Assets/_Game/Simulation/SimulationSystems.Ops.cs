@@ -141,11 +141,16 @@ namespace AtomicWar._Game.Simulation
             _jamTicksRemaining.Remove(weaponId);
         }
 
-        public void TickRust(string weaponId, float gameHours, float humidity)
+        /// <summary>
+        /// Humidity rust. <paramref name="rateMult"/> scales the rust rate
+        /// (Prompt #212 Quartermaster → 0.5 when weapon is stored in their room).
+        /// </summary>
+        public void TickRust(string weaponId, float gameHours, float humidity, float rateMult = 1f)
         {
             if (humidity <= 0.5f) return;
+            if (rateMult <= 0f) return;
             float d = GetDurability(weaponId);
-            _weaponDurability[weaponId] = Mathf.Max(0f, d - RustPerHourInHumidity * gameHours);
+            _weaponDurability[weaponId] = Mathf.Max(0f, d - RustPerHourInHumidity * gameHours * rateMult);
         }
         public void OilWeapon(string weaponId)
         {

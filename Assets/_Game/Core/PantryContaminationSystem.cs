@@ -31,6 +31,8 @@ namespace AtomicWar._Game.Core
         private readonly System.Random _rng;
         private ItemDefinition _contaminatedFoodDef;
         private ShelterRoom _storesRoom;
+        /// <summary>Prompt #212 — Quartermaster degradation mult for the active room.</summary>
+        private Func<string, float> _getDegradationMult;
 
         public event Action<int> OnFoodRusted;
         public event Action<Survivor> OnBotulismContracted;
@@ -43,6 +45,13 @@ namespace AtomicWar._Game.Core
             _inventory = inventory ?? throw new ArgumentNullException(nameof(inventory));
             _rng = rng ?? new System.Random(73);
         }
+
+        /// <summary>
+        /// Prompt #212 — inject room degradation multiplier (Quartermaster → 0.5).
+        /// Signature: roomId → rate mult (1 = normal, 0.5 = half spoil).
+        /// </summary>
+        public void BindDegradationMultiplier(Func<string, float> getMult) =>
+            _getDegradationMult = getMult;
 
         public void SetContaminatedFoodDefinition(ItemDefinition def)
         {
@@ -70,6 +79,7 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Convert Food → ContaminatedFood while room humidity is high.
+        /// Prompt #212 — Quartermaster in the room halves spoil chance.
         /// </summary>
         public void Tick(float gameHours, ShelterRoom humiditySource = null)
         {
@@ -81,6 +91,12 @@ namespace AtomicWar._Game.Core
 
             EnsureContaminatedDef();
             if (_contaminatedFoodDef == null) return;
+
+            string roomId = room != null ? room.RoomId : null;
+            float degMult = 1f;
+            if (_getDegradationMult != null && !string.IsNullOrEmpty(roomId))
+                degMult = Mathf.Clamp(_getDegradationMult(roomId), 0f, 1f);
+            float effectiveHours = gameHours * degMult;
 
             int converted = 0;
             var slots = _inventory.Slots;
@@ -97,7 +113,7 @@ namespace AtomicWar._Game.Core
                 int toConvert = 0;
                 for (int u = 0; u < amount; u++)
                 {
-                    if (_rng.NextDouble() < RustChancePerUnitPerHour * gameHours)
+                    if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
                         toConvert++;
                 }
                 if (toConvert <= 0) continue;
@@ -121,7 +137,7 @@ namespace AtomicWar._Game.Core
                     int toConvert = 0;
                     for (int u = 0; u < slot.Amount; u++)
                     {
-                        if (_rng.NextDouble() < RustChancePerUnitPerHour * gameHours)
+                        if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
                             toConvert++;
                     }
                     if (toConvert <= 0) continue;
