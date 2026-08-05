@@ -211,6 +211,10 @@ namespace AtomicWar._Game.Survivors
                 var src = survivors[i];
                 if (src == null || !src.IsAlive) continue;
 
+                // #287 Invisible: no affinity gains or losses involving this survivor.
+                if (_personalQuests.BlocksInterpersonalAffinity(src))
+                    continue;
+
                 float drain = _personalQuests.GetInterpersonalAffinityDrainPerHour(src);
                 if (drain > 0f)
                 {
@@ -219,6 +223,7 @@ namespace AtomicWar._Game.Survivors
                     {
                         var other = survivors[j];
                         if (other == null || !other.IsAlive || other.Id == src.Id) continue;
+                        if (_personalQuests.BlocksInterpersonalAffinity(other)) continue;
                         Affinity.Adjust(src.Id, other.Id, delta);
                     }
                 }

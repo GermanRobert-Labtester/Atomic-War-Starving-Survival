@@ -563,6 +563,9 @@ namespace AtomicWar._Game.Core
             MentalBreakSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             // Prompts #267–#283 chemistry / titles host loops
             NoiseSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            // Prompts #284–#298 rebuilders / scholars / outlaws
+            HaulingSystem?.BindPersonalQuests(PersonalQuests);
+            AtmosphereSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             // #267 Relapsing Addict: force-chem drains amphetamines stock (no free dose).
             if (NeedsSystem != null)

@@ -236,6 +236,9 @@ namespace AtomicWar._Game.Core
             // #267–#283 chemistry/titles daily host helpers (pyro fire, sheriff guard, journal spam).
             _registry.RegisterPerSubstep("chemistry_titles_daily",
                 _registry.DayGated("chemistry_titles", RegisterTickChemistryTitlesDaily));
+            // #284–#298 rebuilders: accountant capacity quest + storage lock pressure.
+            _registry.RegisterPerSubstep("rebuilders_daily",
+                _registry.DayGated("rebuilders", RegisterTickRebuildersDaily));
         }
 
         private void RegisterTickChemistryTitlesDaily(int day)
@@ -244,6 +247,28 @@ namespace AtomicWar._Game.Core
             AtmosphereSystem?.TryPyromaniacDeliberateFire(rng);
             HatchDefenseSystem?.TryAutoAssignSheriffGuard();
             JournalSystem?.TickNewsAnchorJournalSpam(day);
+        }
+
+        private void RegisterTickRebuildersDaily(int day)
+        {
+            if (PersonalQuests == null || Survivors == null || Inventory == null) return;
+            float food = Inventory.FoodFillRatio();
+            float water = Inventory.WaterFillRatio();
+            float fuel = Inventory.FuelFillRatio();
+            bool deficit = food < 0.5f || water < 0.5f || fuel < 0.5f;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (string.Equals(sv.ArchetypeId, PersonalQuestSystem.AccountantId,
+                        System.StringComparison.Ordinal)
+                    || PersonalQuests.HasPennyPincher(sv)
+                    || PersonalQuests.HasAuditor(sv))
+                {
+                    PersonalQuests.RecordResourceDeficitDay(sv, deficit, day);
+                    PersonalQuests.NotifyResourceCapacities(sv, food, water, fuel, day);
+                }
+            }
         }
 
         private void RegisterTickDeserterDaily(int day)

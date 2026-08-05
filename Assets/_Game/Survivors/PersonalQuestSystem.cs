@@ -1390,6 +1390,9 @@ namespace AtomicWar._Game.Survivors
 
                 // ── #267–#283 daily host quest progress (production paths) ──
                 TickChemistryTitlesDaily(sv, state, survivors, currentDay);
+
+                // ── #284–#298 rebuilders / scholars / outlaws ─────────────
+                TickRebuildersDaily(sv, state, survivors, currentDay);
             }
         }
 
@@ -1439,6 +1442,36 @@ namespace AtomicWar._Game.Survivors
                 RecordDirtyLaborDay(sv, didDirtyJob: true, currentDay);
                 state.DidDirtyLaborThisDay = false;
             }
+        }
+
+        /// <summary>
+        /// Daily host orchestration for #284–#298 quirks that advance from
+        /// survivor state alone (antsy bunker days, caffeinated water crash).
+        /// </summary>
+        private void TickRebuildersDaily(
+            Survivor sv,
+            PersonalQuestState state,
+            IReadOnlyList<Survivor> survivors,
+            int currentDay)
+        {
+            // #298 Antsy: full day inside advances flee-from-bunker pressure.
+            if ((HasAntsy(sv) || string.Equals(sv.ArchetypeId, GetawayDriverId, StringComparison.Ordinal))
+                && !sv.IsOnExpedition)
+                TickAntsyBunkerDay(sv, spentDayInside: true, currentDay);
+            else if (string.Equals(sv.ArchetypeId, GetawayDriverId, StringComparison.Ordinal)
+                     || HasAntsy(sv) || HasMechanicProdigy(sv))
+                TickAntsyBunkerDay(sv, spentDayInside: false, currentDay);
+
+            // #285 Caffeinated: miss clean water → fatigue crash.
+            if (NeedsConstantCleanWater(sv))
+            {
+                ApplyCaffeinatedWaterCrash(sv, drankCleanWaterToday: state.DrankCleanWaterThisDay);
+                state.DrankCleanWaterThisDay = false;
+            }
+
+            // #287 Neat Freak: hygiene below 80% hits morale once per day.
+            if (HasNeatFreak(sv) && sv.Needs != null)
+                ApplyNeatFreakHygienePressure(sv, sv.Needs.Hygiene / 100f);
         }
 
         /// <summary>
@@ -3355,7 +3388,9 @@ namespace AtomicWar._Game.Survivors
 
         // ── #242 Asbestos ────────────────────────────────────────────────
 
-        public bool IsImmuneToFireAndTemperature(Survivor sv) => HasAsbestos(sv);
+        /// <summary>#243 Asbestos or #286 Calloused: immune to fire/temperature damage.</summary>
+        public bool IsImmuneToFireAndTemperature(Survivor sv) =>
+            HasAsbestos(sv) || HasCalloused(sv);
 
         public bool IgnoresColdSleepQuality(Survivor sv) => HasAsbestos(sv);
 
@@ -3534,9 +3569,25 @@ namespace AtomicWar._Game.Survivors
         {
             // #268 Restless: sleep restores only 20% fatigue per cycle.
             if (HasRestless(sv)) return RestlessSleepRestoreFrac;
+            // #285 Caffeinated: sleeps 50% less (half fatigue restore).
+            if (HasCaffeinated(sv)) return CaffeinatedSleepRestoreMult;
             // #250 Workaholic: half restore.
             if (HasWorkaholic(sv)) return WorkaholicSleepRestoreMult;
             return 1f;
+        }
+
+        /// <summary>#291 Frail: max health capped at 60 until Archivist unlocks.</summary>
+        public float GetMaxHealthCapForQuests(Survivor sv)
+        {
+            if (HasFrail(sv)) return FrailMaxHealthCap;
+            return sv != null ? sv.MaxHealthCap : 100f;
+        }
+
+        /// <summary>#284 Black Lung: max stamina permanently −20%.</summary>
+        public float GetEffectiveMaxStamina(Survivor sv)
+        {
+            float baseStam = sv != null ? sv.MaxStaminaCap : 100f;
+            return baseStam * GetBlackLungStaminaMaxMultiplier(sv);
         }
 
         /// <summary>#250 AI quirk: ignore Rest until fatigue ≥ 95%.</summary>
@@ -4195,6 +4246,8 @@ namespace AtomicWar._Game.Survivors
             public bool UsedChemThisDay;
             /// <summary>Ephemeral: dirty labor performed today (#279). Not saved.</summary>
             public bool DidDirtyLaborThisDay;
+            /// <summary>Ephemeral: clean water consumed today (#285). Not saved.</summary>
+            public bool DrankCleanWaterThisDay;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {

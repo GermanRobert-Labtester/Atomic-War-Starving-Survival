@@ -446,6 +446,41 @@ namespace AtomicWar._Game.Shelter
         }
 
         /// <summary>
+        /// #284 Apply O2/CO2 atmospheric health penalty (Deep Delver immune).
+        /// </summary>
+        public float ApplyGasPenaltyToSurvivor(
+            Survivor sv, float rawHealthDamage, bool isO2OrCo2Penalty = true)
+        {
+            if (_personalQuests == null || sv == null) return 0f;
+            return _personalQuests.ApplyAtmosphereGasPenalty(sv, rawHealthDamage, isO2OrCo2Penalty);
+        }
+
+        /// <summary>
+        /// #284 CO leak shelter event: resolve for all coal miners (Canary quest).
+        /// </summary>
+        public void ResolveCoLeakEvent(
+            float healthDamageTakenByMiner,
+            bool minerSavedAnother,
+            int currentDay = 0)
+        {
+            if (_personalQuests == null || _getSurvivors == null) return;
+            var list = _getSurvivors();
+            if (list == null) return;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!string.Equals(sv.ArchetypeId, PersonalQuestSystem.CoalMinerId,
+                        StringComparison.Ordinal)
+                    && !_personalQuests.HasBlackLung(sv)
+                    && !_personalQuests.HasDeepDelver(sv))
+                    continue;
+                _personalQuests.ResolveCoLeakShelterEvent(
+                    sv, healthDamageTakenByMiner, minerSavedAnother, currentDay);
+            }
+        }
+
+        /// <summary>
         /// #270 Pyromaniac AI quirk: 5% daily chance to start a fire when morale &lt; 30.
         /// Call once per day from host.
         /// </summary>

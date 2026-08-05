@@ -131,6 +131,13 @@ namespace AtomicWar._Game.Inventory
             return Mathf.Clamp01(units / (float)cap);
         }
 
+        /// <summary>Fuel fill ratio (Fuel units / Capacity) for #292 In the Black.</summary>
+        public float FuelFillRatio()
+        {
+            int cap = Mathf.Max(1, Capacity);
+            return Mathf.Clamp01(CountByType(ItemType.Fuel) / (float)cap);
+        }
+
         /// <summary>First inventory slot whose item id matches (for device state access).</summary>
         public InventorySlot FindSlot(string itemId)
         {

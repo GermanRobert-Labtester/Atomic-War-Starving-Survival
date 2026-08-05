@@ -85,6 +85,9 @@ namespace AtomicWar._Game.Medical
         /// </summary>
         public System.Func<bool> IsRaidWindowActive;
 
+        /// <summary>#289 Germaphobe: host reports whether medic has hazmat equipped.</summary>
+        public System.Func<Survivor, bool> IsHazmatEquipped;
+
         private PersonalQuestSystem _personalQuests;
 
         public event Action OnMedicalStateChanged;
@@ -369,6 +372,18 @@ namespace AtomicWar._Game.Medical
             // #253 Arrogant: refuses healing from anyone but self.
             if (_personalQuests != null && !_personalQuests.CanBeHealedBy(patient, medic))
                 return false;
+
+            // #295 Hitman Professional: refuses medical triage.
+            if (_personalQuests != null && _personalQuests.RefusesMedicalAndFarming(medic))
+                return false;
+
+            // #289 Germaphobe: refuses bunker triage without hazmat.
+            if (_personalQuests != null && _personalQuests.RequiresHazmatForTriage(medic))
+            {
+                bool hazmat = IsHazmatEquipped != null && IsHazmatEquipped(medic);
+                if (!_personalQuests.CanPerformTriage(medic, hazmatEquipped: hazmat, inBunker: true))
+                    return false;
+            }
 
             // #274 Feral Orphan: bites strangers who try to heal them.
             if (_personalQuests != null

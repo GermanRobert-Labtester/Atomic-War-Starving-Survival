@@ -39,6 +39,12 @@ namespace AtomicWar._Game.AI.Actions
                 && context.PersonalQuests.RefusesToEat(context.Survivor))
                 return 0f;
 
+            // #292 Penny Pincher: only eats when hunger is critical (≥95% on 0..100 scale).
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.ShouldRefuseFoodUntilCritical(
+                    context.Survivor, context.Survivor.Needs.Hunger / 100f))
+                return 0f;
+
             float hunger = context.Survivor.Needs.Hunger;
 
             // If inventory check is required, check if food exists
@@ -81,6 +87,21 @@ namespace AtomicWar._Game.AI.Actions
             if (context.PersonalQuests != null
                 && context.PersonalQuests.RefusesToEat(survivor))
                 return;
+
+            // #292 Penny Pincher.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.ShouldRefuseFoodUntilCritical(
+                    survivor, survivor.Needs.Hunger / 100f))
+                return;
+
+            // #289 Microbiologist: 20% chance to refuse rations as tainted.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.RollRefuseRationsAsTainted(survivor, context.Random))
+            {
+                // Spikes own hunger by refusing — leave hunger high.
+                survivor.Needs.Hunger = Mathf.Min(100f, survivor.Needs.Hunger + 15f);
+                return;
+            }
 
             // #272 Prepper: only eats own pre-war MREs until stash empty.
             if (context.PersonalQuests != null

@@ -1236,6 +1236,32 @@ namespace AtomicWar._Game.Shelter
             }
 
             OnSecurityChanged?.Invoke();
+
+            // #286 Iron Gate: welder who maxes hatch unlocks Forge Master.
+            if (_personalQuests != null && IsHatchModuleId(moduleId))
+            {
+                int maxLevel = existing?.Definition != null
+                    ? existing.Definition.MaxLevel
+                    : 5;
+                maxLevel = Mathf.Min(maxLevel, 5);
+                var crew = _getSurvivors != null ? _getSurvivors() : null;
+                if (crew != null)
+                {
+                    int day = _getDay != null ? _getDay() : 0;
+                    for (int i = 0; i < crew.Count; i++)
+                    {
+                        var sv = crew[i];
+                        if (sv == null || !sv.IsAlive) continue;
+                        if (!string.Equals(sv.ArchetypeId, PersonalQuestSystem.WelderId,
+                                StringComparison.Ordinal)
+                            && !_personalQuests.HasCalloused(sv)
+                            && !_personalQuests.HasForgeMaster(sv))
+                            continue;
+                        _personalQuests.NotifyHatchUpgradeInstalled(sv, targetLevel, maxLevel, day);
+                    }
+                }
+            }
+
             return true;
         }
 

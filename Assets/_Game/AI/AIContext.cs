@@ -27,6 +27,10 @@ namespace AtomicWar._Game.AI
         public bool IsListless;
         /// <summary>True when the shelter's grow-light module is running; relevant to morale-seeking actions.</summary>
         public bool GrowLightActive;
+        /// <summary>#290 Night Owl / Astronomer: host sets true during night phase.</summary>
+        public bool IsNight;
+        /// <summary>#289 Germaphobe: host sets true when survivor has hazmat equipped.</summary>
+        public bool HazmatEquipped;
 
         /// <summary>0..1 current uncertainty in the survivor's picture of danger (e.g.
         /// 1 - RadiationKnowledgeMap map-tile confidence).</summary>

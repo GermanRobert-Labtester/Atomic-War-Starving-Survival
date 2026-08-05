@@ -46,13 +46,29 @@ namespace AtomicWar._Game.Simulation
         public const float HaulFatiguePerKg = 0.5f;
         public const string AirlockRoomId = "airlock";
         private float _airlockDumpedWeight;
+        private Survivors.PersonalQuestSystem _personalQuests;
         public float AirlockDumpedWeight => _airlockDumpedWeight;
         public event Action<float> OnLootDumped;
+
+        /// <summary>#285 Logistics Master: instant stack hauls.</summary>
+        public void BindPersonalQuests(Survivors.PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
         public void DumpLootInAirlock(float weightKg) { _airlockDumpedWeight += weightKg; OnLootDumped?.Invoke(weightKg); }
         public float HaulFromAirlock(Survivors.Survivor hauler, float hours)
         {
             if (hauler == null || _airlockDumpedWeight <= 0f) return 0f;
+            // #285 Logistics Master: move entire airlock dump instantly, no fatigue.
+            if (_personalQuests != null && _personalQuests.HaulsStacksInstantly(hauler))
+            {
+                float all = _airlockDumpedWeight;
+                _airlockDumpedWeight = 0f;
+                return all;
+            }
             float capacity = 20f * hours;
+            // #285 carry capacity ×3 after Logistics Master unlock.
+            if (_personalQuests != null)
+                capacity *= _personalQuests.GetLogisticsMasterCarryCapacityMultiplier(hauler);
             float moved = Mathf.Min(_airlockDumpedWeight, capacity);
             _airlockDumpedWeight -= moved;
             hauler.Needs.Fatigue = Mathf.Clamp(hauler.Needs.Fatigue + moved * HaulFatiguePerKg, 0f, 100f);

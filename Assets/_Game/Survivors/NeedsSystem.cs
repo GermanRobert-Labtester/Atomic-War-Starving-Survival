@@ -227,6 +227,49 @@ namespace AtomicWar._Game.Survivors
                         100f, survivor.Needs.Fatigue + pressure);
                 }
             }
+
+            // #284 Black Lung: reduced max stamina → proportional fatigue pressure.
+            if (_personalQuests.HasBlackLung(survivor) && gameHours > 0f)
+            {
+                float stamMult = _personalQuests.GetBlackLungStaminaMaxMultiplier(survivor);
+                if (stamMult < 1f)
+                {
+                    float pressure = (1f - stamMult) * 3f * gameHours;
+                    survivor.Needs.Fatigue = UnityEngine.Mathf.Min(
+                        100f, survivor.Needs.Fatigue + pressure);
+                }
+            }
+
+            // #284 Claustrophilic: morale gain when already deep/underground (room id hint).
+            if (_personalQuests.HasClaustrophilic(survivor)
+                && IsSmallUndergroundRoomId(survivor.CurrentRoomId))
+            {
+                _personalQuests.ApplyClaustrophilicMorale(
+                    survivor, inSmallUndergroundRoom: true, gameHours: gameHours);
+            }
+
+            // #287 Neat Freak + #281 Photogenic: hygiene-driven morale pressure.
+            float hygiene01 = survivor.Needs.Hygiene / 100f;
+            _personalQuests.ApplyNeatFreakHygienePressure(survivor, hygiene01);
+            _personalQuests.ApplyPhotogenicHygieneMorale(survivor, hygiene01);
+
+            // #291 Frail: clamp health to cap.
+            float healthCap = _personalQuests.GetMaxHealthCapForQuests(survivor);
+            if (survivor.Needs.Health > healthCap)
+                survivor.Needs.Health = healthCap;
+        }
+
+        private static bool IsSmallUndergroundRoomId(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return false;
+            return roomId.IndexOf("bunker", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("cellar", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("tunnel", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("shaft", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("deep", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("mine", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("sublevel", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || roomId.IndexOf("basement", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private float ComputeBunkerAverageMorale(Survivor exclude = null)
@@ -276,6 +319,9 @@ namespace AtomicWar._Game.Survivors
             // #268 Restless: permanent max Fatigue cap at 80%.
             if (need == NeedKind.Fatigue && _personalQuests != null)
                 maxCap = Mathf.Min(maxCap, _personalQuests.GetMaxFatigueCap(survivor));
+            // #291 Frail: permanent max Health cap at 60.
+            if (need == NeedKind.Health && _personalQuests != null)
+                maxCap = Mathf.Min(maxCap, _personalQuests.GetMaxHealthCapForQuests(survivor));
             // #249 Matriarch: room-mates gain +20 effective health cap.
             if (need == NeedKind.Health && _personalQuests != null)
             {

@@ -135,7 +135,15 @@ namespace AtomicWar._Game.Shelter
 
             float shovelMult = hasShovel ? 1.5f : 0.5f;
             float skillMult = 1f + worker.EffectiveCraftingSkill * 0.5f;
-            float cleared = (workHours / BaseClearHoursPerUnit) * shovelMult * skillMult;
+            // #284 Deep Delver: excavating rubble takes 75% less time (0.25× duration → 4× rate).
+            float delverMult = 1f;
+            if (_personalQuests != null)
+            {
+                float durationMult = _personalQuests.GetDeepDelverExcavationDurationMultiplier(worker);
+                if (durationMult > 0f && durationMult < 1f)
+                    delverMult = 1f / durationMult;
+            }
+            float cleared = (workHours / BaseClearHoursPerUnit) * shovelMult * skillMult * delverMult;
             cleared = Mathf.Min(cleared, room.RubbleUnitsRemaining);
 
             room.RubbleUnitsRemaining -= cleared;

@@ -85,6 +85,13 @@ namespace AtomicWar._Game.Survivors
             sv.Needs.Fatigue = Mathf.Min(100f, sv.Needs.Fatigue + CaffeinatedFatigueCrash);
         }
 
+        /// <summary>Host: mark that this survivor drank clean water today (#285).</summary>
+        public void NotifyCleanWaterConsumed(Survivor sv)
+        {
+            if (sv == null || string.IsNullOrEmpty(sv.Id)) return;
+            GetOrCreate(sv.Id).DrankCleanWaterThisDay = true;
+        }
+
         /// <summary>Cabin fever builds twice as fast; needs expeditions.</summary>
         public float GetCabinFeverRateMultiplier(Survivor sv) =>
             string.Equals(sv?.ArchetypeId, TruckDriverId, StringComparison.Ordinal)
@@ -841,5 +848,133 @@ namespace AtomicWar._Game.Survivors
             OnQuestProgress?.Invoke(driver, "escape_storm", 1);
             CompleteQuestline(driver, currentDay);
         }
+
+        // ── Host action-id helpers (#284–#298) ───────────────────────────
+
+        public bool IsCleaningAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("clean", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("waste", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("mold", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("sanit", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("sweep", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public bool IsFarmingAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("farm", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("plant", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("harvest", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("hydropon", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("tend_crop", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public bool IsMedicalTriageAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("triage", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("treat", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("heal", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("surgery", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("bandage", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("medical", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public bool IsPlayInstrumentAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("play_instrument", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("instrument", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("music", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public bool IsSalvageWoodAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("salvage", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("dismantle", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("scrap_wood", StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("wood_scrap", StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// Atmosphere O2/CO2 health penalty multiplier (0 when Deep Delver immune).
+        /// </summary>
+        public float GetAtmosphereGasPenaltyMultiplier(Survivor sv) =>
+            IsImmuneToAtmosphereGasPenalties(sv) ? 0f : 1f;
+
+        /// <summary>
+        /// Apply hypoxia/CO2 health damage unless Deep Delver. Returns damage applied.
+        /// </summary>
+        public float ApplyAtmosphereGasPenalty(
+            Survivor sv, float rawHealthDamage, bool isO2OrCo2Penalty)
+        {
+            if (sv == null || !sv.IsAlive || !isO2OrCo2Penalty || rawHealthDamage <= 0f)
+                return 0f;
+            float mult = GetAtmosphereGasPenaltyMultiplier(sv);
+            float dmg = rawHealthDamage * mult;
+            if (dmg <= 0f) return 0f;
+            sv.Needs.Health = Mathf.Max(0f, sv.Needs.Health - dmg);
+            return dmg;
+        }
+
+        /// <summary>
+        /// Host CO-leak shelter event resolution for The Canary.
+        /// Zero health damage + saved another → quest complete.
+        /// </summary>
+        public void ResolveCoLeakShelterEvent(
+            Survivor miner,
+            float healthDamageTaken,
+            bool savedAnother,
+            int currentDay = 0)
+        {
+            RecordCanaryCoLeakSurvived(
+                miner,
+                coLeakEvent: true,
+                healthDamageTaken: healthDamageTaken,
+                savedAnother: savedAnother,
+                currentDay: currentDay);
+        }
+
+        /// <summary>Host corpse dispose → The Mess progress.</summary>
+        public void NotifyHumanCorpseCleaned(Survivor cleaner, int currentDay = 0) =>
+            RecordCorpseCleaned(cleaner, humanCorpse: true, currentDay);
+
+        /// <summary>
+        /// Host: when hatch module reaches absolute max level, credit Iron Gate.
+        /// </summary>
+        public void NotifyHatchUpgradeInstalled(
+            Survivor welder, int hatchLevel, int maxLevel, int currentDay = 0) =>
+            RecordIronGateHatchMaxed(welder, hatchLevel, maxLevel, currentDay);
+
+        /// <summary>
+        /// Host: inventory fill ratios at 100% food/water/fuel → In the Black.
+        /// </summary>
+        public void NotifyResourceCapacities(
+            Survivor accountant,
+            float foodFill01,
+            float waterFill01,
+            float fuelFill01,
+            int currentDay = 0) =>
+            RecordInTheBlackCapacities(accountant, foodFill01, waterFill01, fuelFill01, currentDay);
+
+        /// <summary>
+        /// Fragile Ego: scale morale loss after a failed craft/repair.
+        /// </summary>
+        public void ApplyFragileEgoCraftFailure(Survivor sv, float baseMoraleLoss)
+        {
+            if (sv == null || !sv.IsAlive || baseMoraleLoss <= 0f) return;
+            float mult = GetFragileEgoFailureMoraleMultiplier(sv);
+            float hit = baseMoraleLoss * mult;
+            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - hit);
+        }
+
+        /// <summary>
+        /// Professional: combat morale loss is ignored (returns 0 when active).
+        /// </summary>
+        public float GetCombatMoraleLoss(Survivor sv, float baseLoss) =>
+            IgnoresCombatMoraleLoss(sv) ? 0f : baseLoss;
     }
 }

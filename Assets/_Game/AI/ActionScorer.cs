@@ -52,6 +52,21 @@ namespace AtomicWar._Game.AI
                 }
                 // #279 Politician still *can* do dirty labor (quest needs it) but
                 // scores it lower so they prefer delegating when alternatives exist.
+
+                // #295 Hitman Professional: refuses medical triage and farming.
+                if (context.PersonalQuests.RefusesMedicalAndFarming(context.Survivor)
+                    && (context.PersonalQuests.IsMedicalTriageAction(actionId)
+                        || context.PersonalQuests.IsFarmingAction(actionId)))
+                    return 0f;
+
+                // #289 Germaphobe: no bunker triage without hazmat (host sets HazmatEquipped).
+                if (context.PersonalQuests.RequiresHazmatForTriage(context.Survivor)
+                    && context.PersonalQuests.IsMedicalTriageAction(actionId)
+                    && !context.PersonalQuests.CanPerformTriage(
+                        context.Survivor,
+                        hazmatEquipped: context.HazmatEquipped,
+                        inBunker: !context.Survivor.IsOnExpedition))
+                    return 0f;
             }
 
             float rawScore = action.EvaluateRaw(context);
@@ -85,6 +100,34 @@ namespace AtomicWar._Game.AI
                 if (context.PersonalQuests.TriesToDelegateTasks(context.Survivor)
                     && context.PersonalQuests.IsDirtyLaborAction(action.id))
                     score *= 0.35f;
+
+                // #287 Custodian: clean waste/mold before thirst or hunger.
+                if (context.PersonalQuests.PrioritizesCleaningOverNeeds(context.Survivor)
+                    && context.PersonalQuests.IsCleaningAction(action.id))
+                    score = Mathf.Max(score, 0.95f);
+
+                // #288 Lumberjack low-morale salvage wood instead of repair.
+                if (context.PersonalQuests.ShouldSalvageBrokenWoodWhenMoraleLow(
+                        context.Survivor, context.Survivor.Needs.Morale)
+                    && context.PersonalQuests.IsSalvageWoodAction(action.id))
+                    score *= 1.8f;
+
+                // #293 Musician: periodically prefer Play Instrument.
+                if (context.PersonalQuests.CanPlayInstrument(context.Survivor)
+                    && context.PersonalQuests.IsPlayInstrumentAction(action.id))
+                    score = Mathf.Max(score, 0.55f);
+
+                // #290 Astronomer: climb to surface hatch at night.
+                if (context.IsNight
+                    && context.PersonalQuests.SeeksSurfaceSkyAtNight(context.Survivor, isNight: true)
+                    && IsSurfaceSkyAction(action.id))
+                    score = Mathf.Max(score, 0.7f);
+
+                // #290 Night Owl: action speed bias via utility (day slow / night fast).
+                float nightOwl = context.PersonalQuests.GetNightOwlActionSpeedMultiplier(
+                    context.Survivor, context.IsNight);
+                if (!Mathf.Approximately(nightOwl, 1f))
+                    score *= nightOwl;
             }
 
             // Listless penalty: light-deprived survivors are sluggish about everything.
@@ -149,6 +192,15 @@ namespace AtomicWar._Game.AI
                    || actionId.IndexOf("build", System.StringComparison.OrdinalIgnoreCase) >= 0
                    || actionId.IndexOf("clear", System.StringComparison.OrdinalIgnoreCase) >= 0
                    || actionId.IndexOf("tunnel", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool IsSurfaceSkyAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("surface", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("hatch", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("sky", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("stargaz", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
 

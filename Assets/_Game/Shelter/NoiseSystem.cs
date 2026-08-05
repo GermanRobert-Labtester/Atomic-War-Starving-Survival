@@ -38,6 +38,16 @@ namespace AtomicWar._Game.Shelter
             SetNoise(Mathf.Min(MaxNoise, _noiseLevel + effective));
         }
 
+        /// <summary>
+        /// Add noise attributed to a survivor action. Quiet (#291) contributes zero.
+        /// </summary>
+        public void AddNoiseFromSurvivor(Survivor sv, float amount, bool isStormActive)
+        {
+            if (_personalQuests != null && _personalQuests.GeneratesZeroNoise(sv))
+                return;
+            AddNoise(amount, isStormActive);
+        }
+
         public void Tick(float gameHours)
         {
             if (_noiseLevel > 0f) SetNoise(Mathf.Max(0f, _noiseLevel - DecayPerHour * gameHours));

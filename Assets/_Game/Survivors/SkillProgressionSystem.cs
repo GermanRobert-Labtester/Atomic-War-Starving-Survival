@@ -424,6 +424,9 @@ namespace AtomicWar._Game.Survivors
         public void TickDaily(int currentDay, IReadOnlyList<Survivor> survivors)
         {
             if (survivors == null) return;
+            // #291 Archivist: bunker-wide skill decay stops completely.
+            if (_personalQuests != null && _personalQuests.BunkerSkillDecayStopped(survivors))
+                return;
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];

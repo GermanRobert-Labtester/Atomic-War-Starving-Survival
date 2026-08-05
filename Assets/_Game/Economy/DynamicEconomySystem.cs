@@ -723,6 +723,22 @@ namespace AtomicWar._Game.Economy
             // #281 Beacon of Truth: global trade prices −30%.
             if (_personalQuests != null && _getSurvivors != null)
                 v *= _personalQuests.GetBeaconTradePriceMultiplier(_getSurvivors());
+            // #292 Auditor: trade values heavily skewed in player's favor (buy cheaper).
+            if (_personalQuests != null && _getSurvivors != null)
+            {
+                var list = _getSurvivors();
+                if (list != null)
+                {
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        if (_personalQuests.HasFavorableTradeValues(list[i]))
+                        {
+                            v *= 0.55f;
+                            break;
+                        }
+                    }
+                }
+            }
             return v;
         }
 
