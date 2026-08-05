@@ -13,9 +13,19 @@ namespace AtomicWar._Game.Simulation
         public const float MaxResistance = 5f;
         private readonly Dictionary<string, float> _resistance = new Dictionary<string, float>();
         public float GetResistance(string id) => _resistance.TryGetValue(id, out float r) ? r : 0f;
-        public bool TryUseExpired(string id, System.Random rng)
+        /// <summary>
+        /// Attempt to use an expired antibiotic. Fails more often as resistance builds.
+        /// Prompt #193 — high-yield meds completely ignore resistance (always succeed, no build).
+        /// </summary>
+        public bool TryUseExpired(string id, System.Random rng, string itemId = null)
         {
+            // Prompt #193 — High-Yield Antibiotics/Iodine ignore AntibioticResistance entirely.
+            if (SurvivalPerkSystem.IgnoresAntibioticResistance(itemId)
+                || SurvivalPerkSystem.IgnoresAntibioticResistance(id))
+                return true;
+
             float r = GetResistance(id);
+            if (rng == null) rng = new System.Random();
             if (rng.NextDouble() < r * ExpiredFailureChancePerResistance) return false;
             _resistance[id] = Mathf.Min(MaxResistance, r + 1f); return true;
         }

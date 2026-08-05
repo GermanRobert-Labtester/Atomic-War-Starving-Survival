@@ -543,6 +543,20 @@ namespace AtomicWar._Game.Medical
             {
                 hours *= 2.0f; // Reduces action speed by 50%
             }
+
+            // Prompt #193 — High-Yield antibiotics/iodine act twice as fast
+            if (recipe.ingredients != null)
+            {
+                for (int i = 0; i < recipe.ingredients.Count; i++)
+                {
+                    var item = recipe.ingredients[i]?.item;
+                    if (item != null && SurvivalPerkSystem.IsHighYieldMed(item.id))
+                    {
+                        hours *= SurvivalPerkSystem.HighYieldTreatmentSpeedMult;
+                        break;
+                    }
+                }
+            }
             return hours;
         }
 
