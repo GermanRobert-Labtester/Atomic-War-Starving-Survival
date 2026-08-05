@@ -133,6 +133,7 @@ namespace AtomicWar._Game.Core
             RestIf(_hamRadioSystem, s => s.RestoreState(data.HamRadio));
             if (_skillProgression != null && data.SkillProgression != null)
                 _skillProgression.RestoreState(data.SkillProgression, _getSurvivors?.Invoke());
+            RestIf(_combatPerkSystem, s => s.RestoreState(data.CombatPerks));
         }
 
     }

@@ -79,6 +79,40 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk("perk_watchful", "Watchful", "combat", 50f, 0.10f, false));
             RegisterPerk(MakeRuntimePerk("perk_trail_memory", "Trail Memory", "scavenging", 50f, 0.10f, false));
             RegisterPerk(MakeRuntimePerk("perk_hard_living", "Hard Living", "survival", 50f, 0.10f, false));
+            RegisterCombatPerks();
+        }
+
+        /// <summary>
+        /// Milestone combat perks (Prompts #182–#188). xpThreshold is unreachable via
+        /// action XP — granted only through <see cref="TryGrantPerk"/>.
+        /// </summary>
+        public void RegisterCombatPerks()
+        {
+            const float milestoneOnly = 999999f;
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.TapRackBangId, "Tap-Rack-Bang", "combat", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.ColdBoreId, "Cold Bore", "combat", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.SuppressingFireId, "Suppressing Fire", "combat", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.CloseQuartersId, "Close Quarters", "combat", milestoneOnly, 0.10f, false));
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.TrapSetterId, "Trap Setter", "combat", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.LootersReflexId, "Looter's Reflex", "scavenging", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(CombatPerkSystem.DesensitizedId, "Desensitized", "combat", milestoneOnly, 0f, false));
+        }
+
+        /// <summary>
+        /// Grant a catalog perk by id without XP (milestone / narrative awards).
+        /// Returns true if newly granted.
+        /// </summary>
+        public bool TryGrantPerk(Survivor survivor, string perkId, int currentDay = 0)
+        {
+            if (survivor == null || !survivor.IsAlive || string.IsNullOrEmpty(perkId)) return false;
+            var perk = GetPerk(perkId);
+            if (perk == null) return false;
+            var state = GetOrCreate(survivor.Id);
+            if (!CanEarnPerk(survivor, state, perk)) return false;
+            GrantPerk(survivor, state, perk);
+            if (!string.IsNullOrEmpty(perk.disciplineId))
+                state.LastUsedDay[perk.disciplineId] = currentDay;
+            return true;
         }
 
         private static PerkSO MakeRuntimePerk(

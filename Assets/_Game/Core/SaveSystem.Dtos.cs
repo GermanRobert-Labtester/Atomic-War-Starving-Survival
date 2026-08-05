@@ -129,6 +129,8 @@ namespace AtomicWar._Game.Core
         public ChelationSave Chelation;
         public CompostSave Compost;
         public SkillProgressionSave SkillProgression;
+        /// <summary>Prompts #182–#188 — combat milestone counters (jams, kills, flees…).</summary>
+        public CombatPerkSave CombatPerks;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;

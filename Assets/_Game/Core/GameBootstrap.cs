@@ -151,6 +151,9 @@ namespace AtomicWar._Game.Core
         // Prompts #179–#181 — action-driven XP, dormant perks, stress epiphany.
         public SkillProgressionSystem SkillProgression { get; private set; }
 
+        // Prompts #182–#188 — combat milestone perks (jams, stealth, ammo, CQ, traps, flee, desensitized).
+        public CombatPerkSystem CombatPerks { get; private set; }
+
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
         // Prompt #61 — Survivor diaries & privacy violations.

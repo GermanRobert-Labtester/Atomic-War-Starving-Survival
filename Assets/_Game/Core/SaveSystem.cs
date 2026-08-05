@@ -152,6 +152,7 @@ namespace AtomicWar._Game.Core
         private PolypharmacySystem _polypharmacySystem;
         private LifeboatTransmissionSystem _lifeboat;
         private SkillProgressionSystem _skillProgression;
+        private CombatPerkSystem _combatPerkSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;

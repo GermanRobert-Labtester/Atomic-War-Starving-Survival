@@ -206,7 +206,9 @@ namespace AtomicWar._Game.Core
                 CreateAction<DeconAndEnterActionSO>(),
                 CreateAction<ExcavateEscapeHatchActionSO>(),
                 CreateAction<UpgradeShieldingActionSO>(),
-                CreateAction<TunnelActionSO>()
+                CreateAction<TunnelActionSO>(),
+                // Prompt #184 — Suppressing Fire (unlocked via perk_suppressing_fire)
+                CreateAction<SuppressingFireActionSO>()
             };
 
         }
@@ -337,6 +339,9 @@ namespace AtomicWar._Game.Core
             // ───────────────────────────────────────────────────────────
             SkillProgression = new SkillProgressionSystem();
             SkillProgression.RegisterDefaultPerks();
+            // Prompts #182–#188 — combat milestone perks (jam/stealth/ammo/CQ/traps/flee/kills)
+            CombatPerks = new CombatPerkSystem();
+            CombatPerks.Bind(SkillProgression);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

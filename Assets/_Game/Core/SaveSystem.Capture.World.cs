@@ -95,6 +95,7 @@ namespace AtomicWar._Game.Core
             CapIf(_aestheticsSystem, s => data.Aesthetics = s.CaptureState());
             CapIf(_hamRadioSystem, s => data.HamRadio = s.CaptureState());
             CapIf(_skillProgression, s => data.SkillProgression = s.CaptureState());
+            CapIf(_combatPerkSystem, s => data.CombatPerks = s.CaptureState());
         }
     }
 }

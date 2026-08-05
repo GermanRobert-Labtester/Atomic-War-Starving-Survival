@@ -294,6 +294,11 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((SkillProgressionSave)o, _getSurvivors?.Invoke()));
 
+        public void SetCombatPerkSystem(CombatPerkSystem s) =>
+            RegisterSystem(ref _combatPerkSystem, s, "combat_perks",
+                () => s.CaptureState(),
+                o => s.RestoreState((CombatPerkSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

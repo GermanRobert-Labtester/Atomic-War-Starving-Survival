@@ -111,9 +111,21 @@ namespace AtomicWar._Game.Shelter
 
         private float _noiseCheckAccumulator;
         private float _hoursSinceLastRaid = RaidCooldownHours;
+        private float _raidHaltHoursRemaining;
+        private CombatPerkSystem _combatPerks;
+        private PerimeterTrapSystem _perimeterTraps;
+        /// <summary>
+        /// Optional jam hook (Prompt #174/#182). Args: weaponId, clearTicks.
+        /// Returns true if a jam started. Host binds WeaponMaintenanceSystem.
+        /// </summary>
+        public Func<string, int, bool> TryJamWeapon;
 
         /// <summary>0..1 external noise (generator outside, loud work).</summary>
         public float ExternalNoise { get; private set; }
+
+        /// <summary>Prompt #184 — raider advance halted by suppressing fire (hours).</summary>
+        public float RaidHaltHoursRemaining => _raidHaltHoursRemaining;
+        public bool IsRaidHalted => _raidHaltHoursRemaining > 0f;
 
         /// <summary>True when a diesel/generator is running outside the sealed hatch.</summary>
         public bool GeneratorRunningOutside { get; set; }
@@ -150,6 +162,26 @@ namespace AtomicWar._Game.Shelter
             _getDay = getDay ?? (() => RaidUnlockDay);
             _inflictTrauma = inflictTrauma;
             _rng = rng ?? new System.Random(33);
+        }
+
+        /// <summary>Optional combat milestone perks (#182–#188).</summary>
+        public void BindCombatPerks(CombatPerkSystem combatPerks) => _combatPerks = combatPerks;
+
+        /// <summary>Optional perimeter traps for raid damage (#123 / #186).</summary>
+        public void BindPerimeterTraps(PerimeterTrapSystem traps) => _perimeterTraps = traps;
+
+        /// <summary>Prompt #184 — pin raiders for <paramref name="hours"/> (default 2).</summary>
+        public void ApplySuppressingFireHalt(float hours = CombatPerkSystem.SuppressingFireHaltHours)
+        {
+            _raidHaltHoursRemaining = Mathf.Max(_raidHaltHoursRemaining, Mathf.Max(0f, hours));
+            OnSecurityChanged?.Invoke();
+        }
+
+        /// <summary>Advance raid-halt timer (call from host Tick).</summary>
+        public void TickRaidHalt(float gameHours)
+        {
+            if (_raidHaltHoursRemaining <= 0f || gameHours <= 0f) return;
+            _raidHaltHoursRemaining = Mathf.Max(0f, _raidHaltHoursRemaining - gameHours);
         }
 
         // -----------------------------------------------------------------
@@ -465,11 +497,41 @@ namespace AtomicWar._Game.Shelter
                 return result;
             }
 
+            // Prompt #184 — suppressing fire pins raiders; no launch while halted.
+            if (IsRaidHalted && raid.Trigger != RaidTrigger.Forced)
+            {
+                result.Message = "Suppressing fire still pins them at the stairwell.";
+                return result;
+            }
+
             result.Launched = true;
             result.RaidStrength = Mathf.Max(0f, raid.Strength);
             result.ShelterSecurity = GetShelterSecurity();
             result.GuardBonusApplied = GetGuardBonus();
             result.WeaponPower = GetWeaponPower();
+
+            // Prompt #186 — trap damage softens raid strength before the clash.
+            if (_perimeterTraps != null)
+            {
+                float trapDmg = _perimeterTraps.GetTrapDamageAgainstRaiders();
+                if (trapDmg > 0f)
+                    result.RaidStrength = Mathf.Max(0f, result.RaidStrength - trapDmg);
+            }
+
+            // Prompt #185 — Close Quarters: breach fighting inside bunker boosts shotgun/melee power.
+            float cqMult = 1f;
+            var survivorsForCq = _getSurvivors?.Invoke();
+            if (survivorsForCq != null && _combatPerks != null)
+            {
+                for (int i = 0; i < survivorsForCq.Count; i++)
+                {
+                    var g = survivorsForCq[i];
+                    if (g == null || !_activeGuards.ContainsKey(g.Id)) continue;
+                    float m = _combatPerks.GetCloseQuartersDamageMultiplier(g, confinedOrBreach: true);
+                    if (m > cqMult) cqMult = m;
+                }
+            }
+            result.WeaponPower *= cqMult;
             result.DefenseScore = result.ShelterSecurity + result.WeaponPower;
 
             // Strict: Defense must exceed raid to repel (equal still breaches under pressure)
@@ -557,6 +619,22 @@ namespace AtomicWar._Game.Shelter
                 result.AmmoConsumed += take;
             }
 
+            // Prompt #184 — track ammo expended toward Suppressing Fire for active guards.
+            if (result.AmmoConsumed > 0 && _combatPerks != null)
+            {
+                int day = _getDay != null ? _getDay() : 0;
+                var survivors = _getSurvivors?.Invoke();
+                if (survivors != null)
+                {
+                    for (int i = 0; i < survivors.Count; i++)
+                    {
+                        var sv = survivors[i];
+                        if (sv == null || !_activeGuards.ContainsKey(sv.Id)) continue;
+                        _combatPerks.RecordAmmoExpended(sv, result.AmmoConsumed, day);
+                    }
+                }
+            }
+
             // Durability wear on first firearm if ammo short or always light wear
             float wear = 8f + (remaining > 0 ? remaining * 2f : 2f);
             for (int i = 0; i < inv.Slots.Count; i++)
@@ -572,6 +650,34 @@ namespace AtomicWar._Game.Shelter
                 float before = slot.CurrentDurability;
                 slot.CurrentDurability = Mathf.Max(0f, slot.CurrentDurability - wear);
                 result.WeaponDurabilityLost += before - slot.CurrentDurability;
+
+                // Prompt #174 / #182 — jam window during hatch defense via host hook.
+                if (TryJamWeapon != null && slot.CurrentDurability < maxDur * 0.5f)
+                {
+                    int clearTicks = CombatPerkSystem.DefaultJamClearTicks;
+                    Survivor jamSurvivor = null;
+                    var survivors = _getSurvivors?.Invoke();
+                    if (survivors != null)
+                    {
+                        for (int s = 0; s < survivors.Count; s++)
+                        {
+                            if (survivors[s] != null && _activeGuards.ContainsKey(survivors[s].Id))
+                            {
+                                jamSurvivor = survivors[s];
+                                if (_combatPerks != null)
+                                    clearTicks = _combatPerks.GetJamClearTicks(jamSurvivor);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (TryJamWeapon(slot.Item.id, clearTicks)
+                        && jamSurvivor != null && _combatPerks != null)
+                    {
+                        int day = _getDay != null ? _getDay() : 0;
+                        _combatPerks.RecordWeaponJamSurvived(jamSurvivor, day);
+                    }
+                }
                 break;
             }
         }
@@ -792,6 +898,7 @@ namespace AtomicWar._Game.Shelter
         {
             if (gameHours <= 0f) return null;
 
+            TickRaidHalt(gameHours);
             _hoursSinceLastRaid += gameHours;
             SyncGeneratorNoise(power);
 
@@ -939,7 +1046,8 @@ namespace AtomicWar._Game.Shelter
                 LastRaidStrength = LastResolution != null ? LastResolution.RaidStrength : 0f,
                 LastDefenseScore = LastResolution != null ? LastResolution.DefenseScore : 0f,
                 LastRepelled = LastResolution != null && LastResolution.Repelled,
-                LastBreached = LastResolution != null && LastResolution.Breached
+                LastBreached = LastResolution != null && LastResolution.Breached,
+                RaidHaltHoursRemaining = _raidHaltHoursRemaining
             };
         }
 
@@ -955,6 +1063,7 @@ namespace AtomicWar._Game.Shelter
             LastRaidSummary = string.IsNullOrEmpty(save.LastRaidSummary)
                 ? "Hatch quiet."
                 : save.LastRaidSummary;
+            _raidHaltHoursRemaining = Mathf.Max(0f, save.RaidHaltHoursRemaining);
 
             if (save.LastRaidStrength > 0f || save.LastBreached || save.LastRepelled)
             {
@@ -987,5 +1096,7 @@ namespace AtomicWar._Game.Shelter
         public float LastDefenseScore;
         public bool LastRepelled;
         public bool LastBreached;
+        /// <summary>Prompt #184 — suppressing-fire raid halt remaining hours.</summary>
+        public float RaidHaltHoursRemaining;
     }
 }
