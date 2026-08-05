@@ -27,6 +27,12 @@ namespace AtomicWar._Game.Shelter
         public float ContaminationYield = 0f;
 
         /// <summary>
+        /// Prompt #194 — toxic mutant strain. Mycology holders identify these
+        /// before harvest and can discard safely.
+        /// </summary>
+        public bool IsToxicStrain;
+
+        /// <summary>
         /// Create a runtime default instance for testing / fallback.
         /// </summary>
         public static CropSO CreatePotatoes()

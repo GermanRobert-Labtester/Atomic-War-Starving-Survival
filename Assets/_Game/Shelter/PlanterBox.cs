@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using AtomicWar._Game.Survivors;
 using UnityEngine;
 
 namespace AtomicWar._Game.Shelter
@@ -10,12 +12,15 @@ namespace AtomicWar._Game.Shelter
     ///   • Temperature < 10°C -> Crop dies.
     ///   • Unpowered GrowLights > 24 hours -> Crop stalls.
     ///   • Irrigating with dirty water -> Introduces mold to room and ruins crop.
+    /// Prompt #194 — Mycology: planter duty hours + Toxic Spore prevention.
     /// </summary>
     [Serializable]
     public class PlanterBox
     {
         public const float MinimumViableTemperatureC = 10f;
         public const float MaxUnpoweredHoursBeforeStall = 24f;
+        /// <summary>Base chance per day that Toxic Spore ruins the bay (no Mycology).</summary>
+        public const float ToxicSporeBaseChance = 0.08f;
 
         public CropSO ActiveCrop { get; private set; }
         public CropLifecycleStage Stage { get; private set; } = CropLifecycleStage.Dead;
@@ -23,10 +28,14 @@ namespace AtomicWar._Game.Shelter
         public float UnpoweredHours { get; private set; }
         public bool IsStalled { get; private set; }
         public bool HasWater { get; private set; }
+        /// <summary>Accumulated hours survivors have been assigned to this box (Prompt #194).</summary>
+        public float AssignedDutyHours { get; private set; }
 
         public event Action<CropLifecycleStage> OnStageChanged;
         public event Action OnCropStalled;
         public event Action OnCropDied;
+        public event Action OnToxicSporeEvent;
+        public event Action<Survivor, float> OnDutyHoursRecorded;
 
         /// <summary>Plant a seed into this planter box.</summary>
         public bool PlantSeed(CropSO crop)
@@ -110,14 +119,89 @@ namespace AtomicWar._Game.Shelter
         }
 
         /// <summary>
-        /// Harvest a mature crop. Returns true and yields calories and contamination if mature.
+        /// Record time a survivor spent assigned to this PlanterBox (Prompt #194 Mycology).
         /// </summary>
-        public bool Harvest(out float calories, out float contamination)
+        public void RecordDutyHours(
+            Survivor worker,
+            float hours,
+            SurvivalPerkSystem survivalPerks = null,
+            int currentDay = 0)
+        {
+            if (worker == null || !worker.IsAlive || hours <= 0f) return;
+            AssignedDutyHours += hours;
+            survivalPerks?.RecordPlanterHours(worker, hours, currentDay);
+            OnDutyHoursRecorded?.Invoke(worker, hours);
+        }
+
+        /// <summary>
+        /// Prompt #194 — Toxic Spore random event. Returns true if the bay was ruined.
+        /// Fully prevented when any living survivor has Mycology.
+        /// </summary>
+        public bool TryToxicSporeEvent(
+            IReadOnlyList<Survivor> survivors,
+            SurvivalPerkSystem survivalPerks,
+            System.Random rng = null,
+            float chance = ToxicSporeBaseChance)
+        {
+            if (ActiveCrop == null || Stage == CropLifecycleStage.Dead) return false;
+            if (survivalPerks != null && survivalPerks.PreventsToxicSporeEvent(survivors))
+                return false;
+
+            rng ??= new System.Random();
+            if (rng.NextDouble() >= chance) return false;
+
+            KillCrop();
+            OnToxicSporeEvent?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Mycology holders can identify toxic mutated-fungi strains before harvest.
+        /// Returns true when the active crop is mutated fungi and would be toxic.
+        /// </summary>
+        public bool IsActiveCropVisiblyToxic(Survivor observer, SurvivalPerkSystem survivalPerks)
+        {
+            if (ActiveCrop == null || survivalPerks == null || observer == null) return false;
+            if (!survivalPerks.CanIdentifyToxicFungi(observer)) return false;
+            if (!string.Equals(ActiveCrop.CropId, SurvivalPerkSystem.MutatedFungiId,
+                    StringComparison.OrdinalIgnoreCase))
+                return false;
+            return ActiveCrop.IsToxicStrain;
+        }
+
+        /// <summary>
+        /// Harvest a mature crop. Returns true and yields calories and contamination if mature.
+        /// When harvester is provided, counts toward Wasteland Brewer crop milestone (#191).
+        /// </summary>
+        public bool Harvest(
+            out float calories,
+            out float contamination,
+            Survivor harvester = null,
+            SurvivalPerkSystem survivalPerks = null,
+            int currentDay = 0)
         {
             if (Stage == CropLifecycleStage.Mature && ActiveCrop != null)
             {
                 calories = ActiveCrop.CalorieYield;
                 contamination = ActiveCrop.ContaminationYield;
+
+                // Prompt #194 — Mycology: refuse harvest of visibly toxic fungi
+                if (harvester != null && survivalPerks != null
+                    && IsActiveCropVisiblyToxic(harvester, survivalPerks))
+                {
+                    // Identified as toxic — discard without poisoning the bay inventory
+                    calories = 0f;
+                    contamination = 0f;
+                    ActiveCrop = null;
+                    SetStage(CropLifecycleStage.Dead);
+                    GrowthHours = 0f;
+                    IsStalled = false;
+                    HasWater = false;
+                    return true; // action succeeded (safe discard)
+                }
+
+                if (harvester != null && survivalPerks != null)
+                    survivalPerks.RecordCropHarvested(harvester, 1, currentDay);
 
                 // Reset box after harvest
                 ActiveCrop = null;
