@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
@@ -43,6 +44,34 @@ namespace AtomicWar._Game.Core
         public event Action<EndgameState> OnStateChanged;
         public event Action OnExtractionUnlocked;
         public event Action<EndgameSummaryData> OnEndgameTriggered;
+
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #228 — Grease Monkey vehicle escape half cost + unlock.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
+        public int GetVehiclePartsRequired()
+        {
+            float mult = _personalQuests != null
+                ? _personalQuests.GetVehicleEscapeCostMultiplier(_getSurvivors?.Invoke())
+                : 1f;
+            return Mathf.Max(1, Mathf.RoundToInt(VehiclePartsRequired * mult));
+        }
+
+        public int GetVehicleFuelRequired()
+        {
+            float mult = _personalQuests != null
+                ? _personalQuests.GetVehicleEscapeCostMultiplier(_getSurvivors?.Invoke())
+                : 1f;
+            return Mathf.Max(1, Mathf.RoundToInt(VehicleFuelRequired * mult));
+        }
 
         /// <summary>
         /// Record a decrypted intel node. Military-channel nodes count toward extraction.
@@ -128,16 +157,18 @@ namespace AtomicWar._Game.Core
             var engine = itemLookup(EngineItemId);
             if (parts == null || fuel == null || engine == null) return null;
 
-            if (!inventory.Remove(parts, VehiclePartsRequired)) return null;
-            if (!inventory.Remove(fuel, VehicleFuelRequired))
+            int partsNeed = GetVehiclePartsRequired();
+            int fuelNeed = GetVehicleFuelRequired();
+            if (!inventory.Remove(parts, partsNeed)) return null;
+            if (!inventory.Remove(fuel, fuelNeed))
             {
-                inventory.Add(parts, VehiclePartsRequired); // rollback
+                inventory.Add(parts, partsNeed); // rollback
                 return null;
             }
             if (!inventory.Remove(engine, 1))
             {
-                inventory.Add(parts, VehiclePartsRequired);
-                inventory.Add(fuel, VehicleFuelRequired);
+                inventory.Add(parts, partsNeed);
+                inventory.Add(fuel, fuelNeed);
                 return null;
             }
 
@@ -155,8 +186,13 @@ namespace AtomicWar._Game.Core
         public bool CanEscapeByVehicle(Inventory.Inventory inventory)
         {
             if (inventory == null || IsTerminal) return false;
-            if (inventory.CountById(MechanicalPartsId) < VehiclePartsRequired) return false;
-            if (inventory.CountById(FuelItemId) < VehicleFuelRequired) return false;
+            if (inventory.CountById(MechanicalPartsId) < GetVehiclePartsRequired()) return false;
+            if (inventory.CountById(FuelItemId) < GetVehicleFuelRequired()) return false;
+            // Prompt #228 — Grease Monkey instantly unlocks vehicle escape path.
+            if (_personalQuests != null
+                && _personalQuests.UnlocksVehicleEscape(_getSurvivors?.Invoke())
+                && HasRepairedEngine(inventory))
+                return true;
             return HasRepairedEngine(inventory);
         }
 

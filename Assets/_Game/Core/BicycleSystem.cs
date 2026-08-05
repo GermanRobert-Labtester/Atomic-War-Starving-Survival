@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Environment;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -25,6 +26,18 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Durability lost per hour of bicycle travel.</summary>
         public const float BicycleDegradePerHour = 1f;
+
+        private PersonalQuestSystem _personalQuests;
+        private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #228 — Grease Monkey: bicycles never degrade.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
 
         /// <summary>Durability restored by one TirePatchKit.</summary>
         public const float PatchKitRepairAmount = 25f;
@@ -81,7 +94,12 @@ namespace AtomicWar._Game.Core
             // Weather blocks bicycle use — survivor walks instead, no degradation.
             if (!CanUseBicycle(weather)) return false;
 
-            exp.BicycleDurability = Mathf.Max(0f, exp.BicycleDurability - BicycleDegradePerHour * travelHours);
+            // Prompt #228 — Grease Monkey: bicycles never degrade.
+            bool noDegrade = _personalQuests != null && (
+                _personalQuests.BicyclesNeverDegrade(_getSurvivors?.Invoke())
+                || (exp.Survivor != null && _personalQuests.BicyclesNeverDegrade(exp.Survivor)));
+            if (!noDegrade)
+                exp.BicycleDurability = Mathf.Max(0f, exp.BicycleDurability - BicycleDegradePerHour * travelHours);
 
             if (exp.BicycleDurability <= 0f)
             {
