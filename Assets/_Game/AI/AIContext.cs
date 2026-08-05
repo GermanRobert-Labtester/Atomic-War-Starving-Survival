@@ -160,6 +160,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Prompts #189–#194 — survival / wasteland-digestion perks.</summary>
         public SurvivalPerkSystem SurvivalPerks;
 
+        /// <summary>Prompts #195–#200 — shelter-engineering perks.</summary>
+        public ShelterPerkSystem ShelterPerks;
+
         /// <summary>Prompt #177 — triage board medication permissions.</summary>
         public TriageBoardSystem TriageSystem;
 

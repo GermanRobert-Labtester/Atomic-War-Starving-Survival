@@ -158,6 +158,9 @@ namespace AtomicWar._Game.Core
         public SurvivalPerkSystem SurvivalPerks { get; private set; }
         public CookingSystem CookingSystem { get; private set; }
 
+        // Prompts #195–#200 — shelter engineering perks (jury-rig, struts, HVAC, scrap, dig, fuel).
+        public ShelterPerkSystem ShelterPerks { get; private set; }
+
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
         // Prompt #61 — Survivor diaries & privacy violations.

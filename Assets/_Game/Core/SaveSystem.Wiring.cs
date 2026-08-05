@@ -304,6 +304,11 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((SurvivalPerkSave)o));
 
+        public void SetShelterPerkSystem(ShelterPerkSystem s) =>
+            RegisterSystem(ref _shelterPerkSystem, s, "shelter_perks",
+                () => s.CaptureState(),
+                o => s.RestoreState((ShelterPerkSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

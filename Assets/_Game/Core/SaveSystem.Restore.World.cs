@@ -135,6 +135,7 @@ namespace AtomicWar._Game.Core
                 _skillProgression.RestoreState(data.SkillProgression, _getSurvivors?.Invoke());
             RestIf(_combatPerkSystem, s => s.RestoreState(data.CombatPerks));
             RestIf(_survivalPerkSystem, s => s.RestoreState(data.SurvivalPerks));
+            RestIf(_shelterPerkSystem, s => s.RestoreState(data.ShelterPerks));
         }
 
     }

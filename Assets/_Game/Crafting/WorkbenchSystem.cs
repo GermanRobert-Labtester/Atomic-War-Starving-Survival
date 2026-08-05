@@ -30,11 +30,15 @@ namespace AtomicWar._Game.Crafting
         private readonly Func<int> _getDay;
         private HatchDefenseSystem _hatchDefense;
         private SurvivalPerkSystem _survivalPerks;
+        private ShelterPerkSystem _shelterPerks;
         private NeedsSystem _needs;
         private ItemDefinition _moonshineDef;
         private ItemDefinition _mutatedFungiDef;
         private ItemDefinition _dirtyWaterDef;
         private ItemDefinition _fuelDef;
+        private ItemDefinition _batteryDef;
+        private ItemDefinition _springDef;
+        private System.Random _rng = new System.Random(198);
 
         public event Action OnWorkbenchChanged;
         public event Action<ItemDefinition, List<ScrapYield>> OnDisassembled;
@@ -78,6 +82,45 @@ namespace AtomicWar._Game.Crafting
         {
             _survivalPerks = perks;
             _needs = needs;
+        }
+
+        /// <summary>Prompts #195/#198 — scrap substitution + rare component recovery.</summary>
+        public void BindShelterPerks(ShelterPerkSystem perks, System.Random rng = null)
+        {
+            _shelterPerks = perks;
+            if (rng != null) _rng = rng;
+        }
+
+        public void SetRareComponentItems(ItemDefinition battery, ItemDefinition spring)
+        {
+            _batteryDef = battery;
+            _springDef = spring;
+        }
+
+        public static ItemDefinition CreateBatteryDefinition()
+        {
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = ShelterPerkSystem.BatteryId;
+            item.displayName = "Battery";
+            item.description = "Intact cell. Uncraftable — only recovered from careful teardown.";
+            item.type = ItemType.Material;
+            item.stackMax = 20;
+            item.weight = 0.4f;
+            item.tradeValue = 12f;
+            return item;
+        }
+
+        public static ItemDefinition CreateSpringDefinition()
+        {
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = ShelterPerkSystem.SpringId;
+            item.displayName = "Spring";
+            item.description = "Tempered coil. Rare salvage — cannot be fabbed from scrap alone.";
+            item.type = ItemType.Material;
+            item.stackMax = 30;
+            item.weight = 0.1f;
+            item.tradeValue = 6f;
+            return item;
         }
 
         public void SetMoonshineItems(
@@ -354,7 +397,12 @@ namespace AtomicWar._Game.Crafting
         /// <summary>
         /// Destroy one unit of the item and grant a percentage of its ScrapValue.
         /// </summary>
-        public bool Disassemble(ItemDefinition item)
+        public bool Disassemble(ItemDefinition item) => Disassemble(item, null);
+
+        /// <summary>
+        /// Disassemble with optional worker for Scrapper milestone (#198) and rare recovery.
+        /// </summary>
+        public bool Disassemble(ItemDefinition item, Survivor worker)
         {
             if (!CanDisassemble(item)) return false;
 
@@ -374,6 +422,22 @@ namespace AtomicWar._Game.Crafting
                 _inventory.Add(mat, yield[i].amount);
             }
 
+            // Prompt #198 — Scrapper: high-tier teardown may yield battery/spring.
+            if (worker != null && _shelterPerks != null)
+            {
+                _shelterPerks.RecordDisassemble(worker, 1, _getDay());
+                bool highTier = ShelterPerkSystem.IsHighTierDisassembleTarget(item.id)
+                    || item.type == ItemType.Weapon
+                    || item.type == ItemType.Device;
+                string rareId = _shelterPerks.RollRareComponent(worker, highTier, _rng);
+                if (!string.IsNullOrEmpty(rareId))
+                {
+                    var rare = ResolveRareComponent(rareId);
+                    if (rare != null && _inventory.CanAdd(rare, 1))
+                        _inventory.Add(rare, 1);
+                }
+            }
+
             WearStation();
             OnDisassembled?.Invoke(item, yield);
             OnWorkbenchChanged?.Invoke();
@@ -381,17 +445,21 @@ namespace AtomicWar._Game.Crafting
         }
 
         /// <summary>Disassemble a specific slot (preserves broken device state for flavor only — item is destroyed).</summary>
-        public bool DisassembleSlot(InventorySlot slot)
+        public bool DisassembleSlot(InventorySlot slot) => DisassembleSlot(slot, null);
+
+        public bool DisassembleSlot(InventorySlot slot, Survivor worker)
         {
             if (slot?.Item == null) return false;
-            return Disassemble(slot.Item);
+            return Disassemble(slot.Item, worker);
         }
 
         // -----------------------------------------------------------------
         // Repair
         // -----------------------------------------------------------------
 
-        public bool CanRepair(InventorySlot slot)
+        public bool CanRepair(InventorySlot slot) => CanRepair(slot, null);
+
+        public bool CanRepair(InventorySlot slot, Survivor worker)
         {
             if (slot?.Item == null) return false;
             if (!HasOperationalWorkbench()) return false;
@@ -399,15 +467,17 @@ namespace AtomicWar._Game.Crafting
 
             var recipe = GetRepairRecipe(slot.Item);
             if (recipe.requiresTools && !HasOperationalWorkbench()) return false;
-            return HasScrapCosts(recipe.costs);
+            return HasScrapCosts(recipe.costs, worker);
         }
 
-        public bool Repair(InventorySlot slot)
+        public bool Repair(InventorySlot slot) => Repair(slot, null);
+
+        public bool Repair(InventorySlot slot, Survivor worker)
         {
-            if (!CanRepair(slot)) return false;
+            if (!CanRepair(slot, worker)) return false;
 
             var recipe = GetRepairRecipe(slot.Item);
-            if (!ConsumeScrapCosts(recipe.costs)) return false;
+            if (!ConsumeScrapCosts(recipe.costs, worker)) return false;
 
             if (slot.Item.type == ItemType.Device)
             {
@@ -689,30 +759,79 @@ namespace AtomicWar._Game.Crafting
             return _itemLookup?.Invoke(materialId);
         }
 
-        private bool HasScrapCosts(List<ScrapYield> costs)
+        private bool HasScrapCosts(List<ScrapYield> costs, Survivor worker = null)
         {
             if (costs == null) return true;
+            bool canSub = worker != null && _shelterPerks != null
+                && _shelterPerks.CanSubstituteScrap(worker);
             for (int i = 0; i < costs.Count; i++)
             {
                 var c = costs[i];
                 if (c == null || c.amount <= 0) continue;
-                var mat = ResolveMaterial(c.materialId);
-                if (mat == null || _inventory.Count(mat) < c.amount) return false;
+                if (CountMaterialWithSubstitute(c.materialId, canSub) < c.amount)
+                    return false;
             }
             return true;
         }
 
-        private bool ConsumeScrapCosts(List<ScrapYield> costs)
+        private bool ConsumeScrapCosts(List<ScrapYield> costs, Survivor worker = null)
         {
-            if (!HasScrapCosts(costs)) return false;
+            if (!HasScrapCosts(costs, worker)) return false;
+            bool canSub = worker != null && _shelterPerks != null
+                && _shelterPerks.CanSubstituteScrap(worker);
             for (int i = 0; i < costs.Count; i++)
             {
                 var c = costs[i];
                 if (c == null || c.amount <= 0) continue;
-                var mat = ResolveMaterial(c.materialId);
-                if (!_inventory.Remove(mat, c.amount)) return false;
+                if (!ConsumeMaterialWithSubstitute(c.materialId, c.amount, canSub))
+                    return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// Count available units of a material, optionally folding in the
+        /// MechanicalParts ↔ ElectronicScrap twin (#195 Jury-Rigger).
+        /// </summary>
+        private int CountMaterialWithSubstitute(string materialId, bool canSubstitute)
+        {
+            var mat = ResolveMaterial(materialId);
+            int count = mat != null ? _inventory.Count(mat) : 0;
+            if (!canSubstitute) return count;
+            string twinId = ShelterPerkSystem.GetScrapSubstituteId(materialId);
+            if (string.IsNullOrEmpty(twinId)) return count;
+            var twin = ResolveMaterial(twinId);
+            if (twin != null) count += _inventory.Count(twin);
+            return count;
+        }
+
+        private bool ConsumeMaterialWithSubstitute(string materialId, int amount, bool canSubstitute)
+        {
+            if (amount <= 0) return true;
+            var mat = ResolveMaterial(materialId);
+            int have = mat != null ? _inventory.Count(mat) : 0;
+            int fromPrimary = Mathf.Min(have, amount);
+            if (fromPrimary > 0 && mat != null)
+            {
+                if (!_inventory.Remove(mat, fromPrimary)) return false;
+            }
+            int remaining = amount - fromPrimary;
+            if (remaining <= 0) return true;
+            if (!canSubstitute) return false;
+            string twinId = ShelterPerkSystem.GetScrapSubstituteId(materialId);
+            if (string.IsNullOrEmpty(twinId)) return false;
+            var twin = ResolveMaterial(twinId);
+            if (twin == null || _inventory.Count(twin) < remaining) return false;
+            return _inventory.Remove(twin, remaining);
+        }
+
+        private ItemDefinition ResolveRareComponent(string id)
+        {
+            if (string.Equals(id, ShelterPerkSystem.BatteryId, StringComparison.OrdinalIgnoreCase))
+                return _batteryDef ?? ResolveMaterial(ShelterPerkSystem.BatteryId);
+            if (string.Equals(id, ShelterPerkSystem.SpringId, StringComparison.OrdinalIgnoreCase))
+                return _springDef ?? ResolveMaterial(ShelterPerkSystem.SpringId);
+            return ResolveMaterial(id);
         }
 
         private InventorySlot FindBrokenOrDegraded(string itemId)

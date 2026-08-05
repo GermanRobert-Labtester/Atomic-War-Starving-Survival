@@ -133,6 +133,8 @@ namespace AtomicWar._Game.Core
         public CombatPerkSave CombatPerks;
         /// <summary>Prompts #189–#194 — survival milestone counters (meals, crops, planter…).</summary>
         public SurvivalPerkSave SurvivalPerks;
+        /// <summary>Prompts #195–#200 — shelter engineering counters (jury-rigs, struts, dig…).</summary>
+        public ShelterPerkSave ShelterPerks;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;

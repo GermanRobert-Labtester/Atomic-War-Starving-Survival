@@ -136,6 +136,7 @@ namespace AtomicWar._Game.Core
             context.WeaponMaintenanceSystem = WeaponMaintenanceSystem;
             context.CombatPerks = CombatPerks;
             context.SurvivalPerks = SurvivalPerks;
+            context.ShelterPerks = ShelterPerks;
             context.TriageSystem = TriageSystem;
             context.ResilienceSystem = ResilienceSystem;
             context.AntibioticResistSystem = AntibioticResistSystem;

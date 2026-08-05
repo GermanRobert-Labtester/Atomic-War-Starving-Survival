@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -28,6 +29,9 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Delegate: get shelter for module lookup.</summary>
         private Func<Shelter> _getShelter;
 
+        private ShelterPerkSystem _shelterPerks;
+        private Func<int> _getDay;
+
         private readonly System.Random _rng;
         private float _dailyFailureAccumulator;
 
@@ -47,6 +51,13 @@ namespace AtomicWar._Game.Shelter
             _getShelter = getShelter;
         }
 
+        /// <summary>Prompt #195 — count successful jury-rig / overclock for Jury-Rigger.</summary>
+        public void BindShelterPerks(ShelterPerkSystem perks, Func<int> getDay = null)
+        {
+            _shelterPerks = perks;
+            _getDay = getDay ?? (() => 0);
+        }
+
         /// <summary>Whether a module is currently jury-rigged.</summary>
         public bool IsJuryRigged(string moduleId)
         {
@@ -60,7 +71,13 @@ namespace AtomicWar._Game.Shelter
         }
 
         /// <summary>Jury-rig a broken module. Returns false if already rigged or missing.</summary>
-        public bool JuryRig(string moduleId)
+        public bool JuryRig(string moduleId) => JuryRig(moduleId, null);
+
+        /// <summary>
+        /// Jury-rig a broken module. When <paramref name="operator"/> is provided,
+        /// counts toward Jury-Rigger milestone (#195).
+        /// </summary>
+        public bool JuryRig(string moduleId, Survivor operator_)
         {
             if (string.IsNullOrEmpty(moduleId)) return false;
             if (_riggedModules.ContainsKey(moduleId)) return false;
@@ -83,10 +100,17 @@ namespace AtomicWar._Game.Shelter
                 HoursRigged = 0f
             };
 
+            _shelterPerks?.RecordJuryRigOrOverclock(operator_, _getDay?.Invoke() ?? 0);
             OnModuleJuryRigged?.Invoke(moduleId);
             OnStateChanged?.Invoke();
             return true;
         }
+
+        /// <summary>
+        /// Overclock alias for jury-rig (same mechanical effect; both count for #195).
+        /// </summary>
+        public bool Overclock(string moduleId, Survivor operator_ = null) =>
+            JuryRig(moduleId, operator_);
 
         /// <summary>Remove jury-rig from a module, returning it to broken state.</summary>
         public bool Unrig(string moduleId)

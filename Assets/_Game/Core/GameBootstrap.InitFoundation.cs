@@ -345,6 +345,9 @@ namespace AtomicWar._Game.Core
             // Prompts #189–#194 — survival / wasteland-digestion milestone perks
             SurvivalPerks = new SurvivalPerkSystem();
             SurvivalPerks.Bind(SkillProgression);
+            // Prompts #195–#200 — shelter-engineering milestone perks
+            ShelterPerks = new ShelterPerkSystem();
+            ShelterPerks.Bind(SkillProgression);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

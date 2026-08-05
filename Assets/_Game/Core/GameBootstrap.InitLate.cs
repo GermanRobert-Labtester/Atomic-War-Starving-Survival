@@ -252,8 +252,10 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetSkillProgressionSystem(SkillProgression);
             SaveSystem.SetCombatPerkSystem(CombatPerks);
             SaveSystem.SetSurvivalPerkSystem(SurvivalPerks);
+            SaveSystem.SetShelterPerkSystem(ShelterPerks);
             WireCombatPerkBindings();
             WireSurvivalPerkBindings();
+            WireShelterPerkBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -383,6 +385,28 @@ namespace AtomicWar._Game.Core
                     SurvivalPerks.RecordIllnessRecovery(sv, active.AfflictionId, day);
                 };
             }
+        }
+
+        /// <summary>
+        /// Prompts #195–#200 — bind shelter-engineering perks into jury-rig,
+        /// workbench scrap, struts, excavation, tunneling, and atmosphere.
+        /// </summary>
+        private void WireShelterPerkBindings()
+        {
+            if (ShelterPerks == null) return;
+
+            Func<int> getDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 0;
+
+            JuryRigSystem?.BindShelterPerks(ShelterPerks, getDay);
+            WorkbenchSystem?.BindShelterPerks(ShelterPerks, new System.Random(_worldSeed + 198));
+            WorkbenchSystem?.SetRareComponentItems(
+                WorkbenchSystem.CreateBatteryDefinition(),
+                WorkbenchSystem.CreateSpringDefinition());
+
+            StructuralIntegrity?.BindShelterPerks(
+                ShelterPerks, getDay, CeilingCollapseSystem);
+            ExcavationSystem?.BindShelterPerks(ShelterPerks, getDay);
+            TunnelingSystem?.BindShelterPerks(ShelterPerks, new System.Random(_worldSeed + 199));
         }
 
     }

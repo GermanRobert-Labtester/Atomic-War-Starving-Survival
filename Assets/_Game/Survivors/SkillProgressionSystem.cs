@@ -81,6 +81,7 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk("perk_hard_living", "Hard Living", "survival", 50f, 0.10f, false));
             RegisterCombatPerks();
             RegisterSurvivalPerks();
+            RegisterShelterPerks();
         }
 
         /// <summary>
@@ -112,6 +113,21 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.ButcherId, "The Butcher", "survival", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.PharmacologistId, "Pharmacologist", "medical", milestoneOnly, 0.10f, false));
             RegisterPerk(MakeRuntimePerk(SurvivalPerkSystem.MycologyId, "Mycology", "science", milestoneOnly, 0.05f, false));
+        }
+
+        /// <summary>
+        /// Milestone shelter-engineering perks (Prompts #195–#200). xpThreshold is
+        /// unreachable via action XP — granted only through <see cref="TryGrantPerk"/>.
+        /// </summary>
+        public void RegisterShelterPerks()
+        {
+            const float milestoneOnly = 999999f;
+            RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.JuryRiggerId, "Jury-Rigger", "crafting", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.StructuralEngineerId, "Structural Engineer", "crafting", milestoneOnly, 0.10f, false));
+            RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.HvacTechId, "HVAC Technician", "crafting", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.ScrapperId, "Scrapper", "crafting", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.SandhogId, "The Sandhog", "crafting", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.ThermodynamicsId, "Thermodynamics", "science", milestoneOnly, 0.05f, false));
         }
 
         /// <summary>
