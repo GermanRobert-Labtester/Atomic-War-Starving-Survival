@@ -9,7 +9,7 @@ using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// Prompts #214–#219 — Personal Quest Engine + latent expert traits.
+    /// Prompts #214–#234 — Personal Quest Engine + latent expert traits.
     /// </summary>
     [TestFixture]
     public class PersonalQuestTests
@@ -387,7 +387,7 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
-        public void Profiles_AllTenArchetypes_HaveDistinctTraits()
+        public void Profiles_AllTwentyArchetypes_HaveDistinctTraits()
         {
             string[] ids =
             {
@@ -400,7 +400,17 @@ namespace AtomicWar.Tests.EditMode
                 PersonalQuestSystem.CopId,
                 PersonalQuestSystem.BouncerId,
                 PersonalQuestSystem.HunterId,
-                PersonalQuestSystem.PrisonerId
+                PersonalQuestSystem.PrisonerId,
+                PersonalQuestSystem.PlumberId,
+                PersonalQuestSystem.ElectricianId,
+                PersonalQuestSystem.ArchitectId,
+                PersonalQuestSystem.MechanicId,
+                PersonalQuestSystem.ChemistId,
+                PersonalQuestSystem.BotanistId,
+                PersonalQuestSystem.CourierId,
+                PersonalQuestSystem.BurglarId,
+                PersonalQuestSystem.MeteorologistId,
+                PersonalQuestSystem.HazmatTechId
             };
             var traits = new HashSet<string>();
             foreach (var id in ids)
@@ -539,6 +549,168 @@ namespace AtomicWar.Tests.EditMode
                 _quests.GetAloneStaminaDrainMultiplier(sv, isAloneOnMap: true),
                 0.001f);
             Assert.AreEqual(1f, _quests.GetAloneStaminaDrainMultiplier(sv, isAloneOnMap: false), 0.001f);
+        }
+
+        // ── #225 Plumber / Hydraulic Master ──────────────────────────────
+
+        [Test]
+        public void Plumber_PipeBurst_UnlocksHydraulicMaster()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.PlumberId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            float radBefore = sv.RadiationDose;
+            _quests.RecordPipeBurstFixed(sv, submergedInIrradiatedWater: false, currentDay: 2);
+            Assert.IsFalse(_quests.HasHydraulicMaster(sv));
+            _quests.RecordPipeBurstFixed(sv, submergedInIrradiatedWater: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasHydraulicMaster(sv));
+            Assert.Greater(sv.RadiationDose, radBefore);
+            Assert.AreEqual(3f, _quests.GetPurifierSpeedMultiplier(_survivors), 0.01f);
+            Assert.IsTrue(_quests.CanExtractWaterFromHumidity(sv));
+        }
+
+        // ── #226 Electrician / Grid Walker ───────────────────────────────
+
+        [Test]
+        public void Electrician_Substation_UnlocksGridWalker()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.ElectricianId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordSubstationRepaired(sv, duringFalloutStorm: false, currentDay: 2);
+            Assert.IsFalse(_quests.HasGridWalker(sv));
+            _quests.RecordSubstationRepaired(sv, duringFalloutStorm: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasGridWalker(sv));
+            Assert.IsTrue(_quests.GeneratorsImmuneToBreakdown(_survivors));
+            Assert.AreEqual(1.5f, _quests.GetPowerCapacityMultiplier(_survivors), 0.01f);
+        }
+
+        // ── #227 Architect / Vault Builder ───────────────────────────────
+
+        [Test]
+        public void Architect_Blueprints_UnlocksVaultBuilder()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.ArchitectId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            string node = null;
+            _quests.OnMapNodeSpawnRequested += (n, o) => node = n;
+            // already started — check questline node
+            Assert.AreEqual(PersonalQuestSystem.TheFirmNodeId,
+                _quests.GetQuestline(QuestlineSO.Ids.TheBlueprints).spawnMapNodeId);
+            _quests.RecordBlueprintsRecovered(sv, 2);
+            Assert.IsTrue(_quests.HasVaultBuilder(sv));
+            Assert.AreEqual(0.5f, _quests.GetRoomBuildCostMultiplier(sv), 0.01f);
+            Assert.IsTrue(_quests.LocksStructuralIntegrityAtMax(_survivors));
+        }
+
+        // ── #228 Mechanic / Grease Monkey ────────────────────────────────
+
+        [Test]
+        public void Mechanic_EngineBlock_UnlocksGreaseMonkey()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.MechanicId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordEngineBlockRetrieved(sv, 2);
+            Assert.IsTrue(_quests.HasGreaseMonkey(sv));
+            Assert.AreEqual(0.5f, _quests.GetVehicleEscapeCostMultiplier(_survivors), 0.01f);
+            Assert.IsTrue(_quests.UnlocksVehicleEscape(_survivors));
+            Assert.IsTrue(_quests.BicyclesNeverDegrade(sv));
+        }
+
+        // ── #229 Chemist / Synthesizer ───────────────────────────────────
+
+        [Test]
+        public void Chemist_ChlorineTank_UnlocksSynthesizer_AndScarredLungs()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.ChemistId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordChlorineTankCapped(sv, 2);
+            Assert.IsTrue(_quests.HasSynthesizer(sv));
+            Assert.IsTrue(sv.HasDisability(PersonalQuestSystem.ScarredLungsId));
+            Assert.IsTrue(_quests.CanCraftAntiRadFromChemicalScrap(sv));
+            Assert.AreEqual(2f, _quests.GetRadAwayEfficiencyMultiplier(_survivors), 0.01f);
+        }
+
+        // ── #230 Botanist / Gaia ─────────────────────────────────────────
+
+        [Test]
+        public void Botanist_FourteenPerfectDays_UnlocksGaia()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.BotanistId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            for (int d = 0; d < 10; d++)
+                _quests.RecordPlanterPerfectDay(sv, planterAtFullHealth: true, currentDay: d + 1);
+            Assert.IsFalse(_quests.HasGaia(sv));
+            _quests.RecordPlanterPerfectDay(sv, planterAtFullHealth: false, currentDay: 11);
+            Assert.AreEqual(0, _quests.GetState(sv.Id).PerfectPlanterDays);
+            for (int d = 0; d < PersonalQuestSystem.SeedVaultPerfectDaysRequired; d++)
+                _quests.RecordPlanterPerfectDay(sv, planterAtFullHealth: true, currentDay: 20 + d);
+            Assert.IsTrue(_quests.HasGaia(sv));
+            Assert.AreEqual(3, _quests.GetCropYieldMultiplier(sv));
+            Assert.IsTrue(_quests.CropsImmuneToMold(_survivors));
+            Assert.IsTrue(_quests.CanGrowMedicinalHerbs(sv));
+        }
+
+        // ── #231 Courier / Wasteland Runner ──────────────────────────────
+
+        [Test]
+        public void Courier_FiveDeadDrops_UnlocksWastelandRunner()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.CourierId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            for (int i = 0; i < 3; i++)
+                _quests.RecordDeadDropSuccess(sv, i + 1);
+            _quests.RecordDeadDropFailure(sv);
+            Assert.AreEqual(0, _quests.GetState(sv.Id).DeadDropSuccesses);
+            for (int i = 0; i < PersonalQuestSystem.LostRouteDeadDropsRequired; i++)
+                _quests.RecordDeadDropSuccess(sv, 10 + i);
+            Assert.IsTrue(_quests.HasWastelandRunner(sv));
+            Assert.AreEqual(0.5f, _quests.GetExpeditionTravelTimeMultiplier(sv), 0.01f);
+            Assert.IsTrue(_quests.IgnoresWeatherMovementPenalty(sv));
+        }
+
+        // ── #232 Burglar / Ghost ─────────────────────────────────────────
+
+        [Test]
+        public void Burglar_VaultNoAlarm_UnlocksGhost()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.BurglarId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordVaultCracked(sv, alarmTriggered: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasGhost(sv));
+            _quests.RecordVaultCracked(sv, alarmTriggered: false, currentDay: 2);
+            Assert.IsTrue(_quests.HasGhost(sv));
+            Assert.IsTrue(_quests.BypassesLocksAndSafes(sv));
+            Assert.IsTrue(_quests.ForcesZeroHatchVisibilityWhenOutside(sv));
+        }
+
+        // ── #233 Meteorologist / Stormcaller ─────────────────────────────
+
+        [Test]
+        public void Meteorologist_RadarInStorm_UnlocksStormcaller()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.MeteorologistId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordRadarDishAligned(sv, duringFalloutStorm: false, currentDay: 2);
+            Assert.IsFalse(_quests.HasStormcaller(sv));
+            _quests.RecordRadarDishAligned(sv, duringFalloutStorm: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasStormcaller(sv));
+            Assert.IsTrue(_quests.HasPerfectTenDayForecast(_survivors));
+            Assert.AreEqual(15f, _quests.GetStormMoraleBuff(sv, outsideDuringStorm: true), 0.01f);
+            Assert.AreEqual(0f, _quests.GetStormMoraleBuff(sv, outsideDuringStorm: false), 0.01f);
+        }
+
+        // ── #234 Hazmat Tech / Rad-Walker ────────────────────────────────
+
+        [Test]
+        public void Hazmat_BlackBox_UnlocksRadWalker()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.HazmatTechId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            Assert.AreEqual(PersonalQuestSystem.GroundZeroCraterNodeId,
+                _quests.GetQuestline(QuestlineSO.Ids.GroundZero).spawnMapNodeId);
+            _quests.RecordBlackBoxRetrieved(sv, 2);
+            Assert.IsTrue(_quests.HasRadWalker(sv));
+            Assert.AreEqual(0.5f, _quests.GetRadiationAbsorbFactor(sv), 0.01f);
+            Assert.IsTrue(_quests.SkipsDeconOnReturn(sv));
         }
     }
 }

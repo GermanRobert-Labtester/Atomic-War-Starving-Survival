@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -27,12 +30,25 @@ namespace AtomicWar._Game.Core
         private const float DefaultConversionHoursPerUnit = 2f;
         private const float DefaultFilterDegradationPerUnitConverted = 5f;
 
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #225 — Hydraulic Master purifier speed + humidity extract.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
         public void Tick(float gameHours, WeatherKind weather, int currentDay, Shelter.Shelter shelter, WaterStorage storage)
         {
             if (gameHours <= 0f || shelter == null || storage == null) return;
 
             CollectCatchment(gameHours, weather, currentDay, shelter, storage);
             RunPurifier(gameHours, shelter, storage);
+            ExtractHumidityWater(gameHours, shelter, storage);
         }
 
         private static void CollectCatchment(float gameHours, WeatherKind weather, int currentDay, Shelter.Shelter shelter, WaterStorage storage)
@@ -74,7 +90,7 @@ namespace AtomicWar._Game.Core
             }
         }
 
-        private static void RunPurifier(float gameHours, Shelter.Shelter shelter, WaterStorage storage)
+        private void RunPurifier(float gameHours, Shelter.Shelter shelter, WaterStorage storage)
         {
             var purifier = shelter.GetModule(PurifierModuleId);
             if (purifier == null || !purifier.IsOperational || purifier.FilterHealth <= 0f) return;
@@ -83,6 +99,12 @@ namespace AtomicWar._Game.Core
             float hoursPerUnit = def != null && def.ConversionHoursPerUnit > 0f
                 ? def.ConversionHoursPerUnit
                 : DefaultConversionHoursPerUnit;
+            // Prompt #225 — Hydraulic Master triples purifier speed.
+            float speedMult = _personalQuests != null
+                ? _personalQuests.GetPurifierSpeedMultiplier(_getSurvivors?.Invoke())
+                : 1f;
+            if (speedMult > 1f)
+                hoursPerUnit = Mathf.Max(0.01f, hoursPerUnit / speedMult);
             float degradePerUnit = def != null ? def.FilterDegradationPerUnitConverted : DefaultFilterDegradationPerUnitConverted;
 
             purifier.WaterConversionProgress += gameHours;
@@ -109,6 +131,34 @@ namespace AtomicWar._Game.Core
                 purifier.FilterHealth = Mathf.Max(0f, purifier.FilterHealth - degradePerUnit);
                 safety++;
             }
+        }
+
+        /// <summary>
+        /// Prompt #225 — Hydraulic Master extracts CleanWater from room humidity
+        /// (negates need for rainfall catchment).
+        /// </summary>
+        private void ExtractHumidityWater(float gameHours, Shelter.Shelter shelter, WaterStorage storage)
+        {
+            if (_personalQuests == null || shelter?.Rooms == null || storage == null) return;
+            var survivors = _getSurvivors?.Invoke();
+            if (!_personalQuests.AnyHydraulicMaster(survivors)) return;
+
+            float humidity = 0f;
+            int n = 0;
+            for (int i = 0; i < shelter.Rooms.Count; i++)
+            {
+                var r = shelter.Rooms[i];
+                if (r == null) continue;
+                humidity += r.Humidity;
+                n++;
+            }
+            if (n <= 0) return;
+            humidity /= n;
+            if (humidity < 0.2f) return;
+
+            float extracted = PersonalQuestSystem.HumidityWaterExtractPerHour * gameHours * humidity;
+            if (extracted > 0f)
+                storage.AddClean(extracted);
         }
     }
 }

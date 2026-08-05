@@ -533,6 +533,9 @@ namespace AtomicWar._Game.Core
             EventRunner?.BindPersonalQuests(PersonalQuests);
             PantrySystem?.BindPersonalQuests(PersonalQuests);
 
+            // Prompts #225–#234 host hooks
+            WaterEconomySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {
                 string name = sv != null ? sv.DisplayName : "?";

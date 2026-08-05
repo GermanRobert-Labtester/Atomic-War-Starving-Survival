@@ -109,5 +109,95 @@
     "baseHealth": 90,
     "latentExpertTrait": "trait_survivalist",
     "activeQuestlineId": "quest_the_wardens_key"
+  },
+  {
+    "id": "the_plumber",
+    "displayName": "The Plumber",
+    "profession": "Plumber",
+    "bio": "They know every main under the city. When the walls scream water, they still answer.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_hydraulic_master",
+    "activeQuestlineId": "quest_the_city_mains"
+  },
+  {
+    "id": "the_electrician",
+    "displayName": "The Electrician",
+    "profession": "Electrician",
+    "bio": "The grid is a ghost. They walk its bones with rubber gloves and a prayer.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_grid_walker",
+    "activeQuestlineId": "quest_the_substation_ghost"
+  },
+  {
+    "id": "the_architect",
+    "displayName": "The Architect",
+    "profession": "Architect",
+    "bio": "The firm is a tomb of paper and low air. The city's underbelly is still drawn somewhere.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_vault_builder",
+    "activeQuestlineId": "quest_the_blueprints"
+  },
+  {
+    "id": "the_mechanic",
+    "displayName": "The Mechanic",
+    "profession": "Mechanic",
+    "bio": "Engines are honest. The highway pileup still has one heart left if they can drag it home.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_grease_monkey",
+    "activeQuestlineId": "quest_the_motorpool"
+  },
+  {
+    "id": "the_chemist",
+    "displayName": "The Chemist",
+    "profession": "Chemist",
+    "bio": "Chlorine does not negotiate. Someone has to put their body on the valve.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_synthesizer",
+    "activeQuestlineId": "quest_the_lab_ruin"
+  },
+  {
+    "id": "the_botanist",
+    "displayName": "The Botanist",
+    "profession": "Botanist",
+    "bio": "Green is a religion now. Fourteen perfect days is all the soil asks.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_gaia",
+    "activeQuestlineId": "quest_the_seed_vault"
+  },
+  {
+    "id": "the_courier",
+    "displayName": "The Courier",
+    "profession": "Courier",
+    "bio": "Routes over roads. Five clean drops and the map still believes in them.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_wasteland_runner",
+    "activeQuestlineId": "quest_the_lost_route"
+  },
+  {
+    "id": "the_burglar",
+    "displayName": "The Burglar",
+    "profession": "Burglar",
+    "bio": "Vaults remember hands. The ruined bank still has a lock that wants them.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_ghost",
+    "activeQuestlineId": "quest_the_bank_heist"
+  },
+  {
+    "id": "the_meteorologist",
+    "displayName": "The Meteorologist",
+    "profession": "Meteorologist",
+    "bio": "The sky still talks if you climb high enough into the storm.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_stormcaller",
+    "activeQuestlineId": "quest_the_radar_station"
+  },
+  {
+    "id": "the_hazmat_tech",
+    "displayName": "The Hazmat Tech",
+    "profession": "Hazmat Technician",
+    "bio": "Ground Zero keeps a black box. The suit and the iodine have to be perfect.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_rad_walker",
+    "activeQuestlineId": "quest_ground_zero"
   }
 ]

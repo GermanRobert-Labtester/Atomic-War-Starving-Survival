@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
-    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#224).
+    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#234).
     /// Survivors do not start with their Expert Trait. After 30 days alive OR
     /// a Morale 0→100 recovery, their assigned questline begins. Completing
     /// the final stage permanently unlocks the latent expert trait.
@@ -25,6 +25,17 @@ namespace AtomicWar._Game.Survivors
         public const string JuggernautId = "trait_juggernaut";
         public const string ApexPredatorId = "trait_apex_predator";
         public const string SurvivalistId = "trait_survivalist";
+        // Prompts #225–#234
+        public const string HydraulicMasterId = "trait_hydraulic_master";
+        public const string GridWalkerId = "trait_grid_walker";
+        public const string VaultBuilderId = "trait_vault_builder";
+        public const string GreaseMonkeyId = "trait_grease_monkey";
+        public const string SynthesizerId = "trait_synthesizer";
+        public const string GaiaId = "trait_gaia";
+        public const string WastelandRunnerId = "trait_wasteland_runner";
+        public const string GhostId = "trait_ghost";
+        public const string StormcallerId = "trait_stormcaller";
+        public const string RadWalkerId = "trait_rad_walker";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -37,6 +48,16 @@ namespace AtomicWar._Game.Survivors
         public const string BouncerId = "the_bouncer";
         public const string HunterId = "the_hunter";
         public const string PrisonerId = "the_prisoner";
+        public const string PlumberId = "the_plumber";
+        public const string ElectricianId = "the_electrician";
+        public const string ArchitectId = "the_architect";
+        public const string MechanicId = "the_mechanic";
+        public const string ChemistId = "the_chemist";
+        public const string BotanistId = "the_botanist";
+        public const string CourierId = "the_courier";
+        public const string BurglarId = "the_burglar";
+        public const string MeteorologistId = "the_meteorologist";
+        public const string HazmatTechId = "the_hazmat_tech";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -77,6 +98,40 @@ namespace AtomicWar._Game.Survivors
         // #224 Survivalist
         public const float SurvivalistAloneStaminaMult = 0.25f; // 75% reduced drain
 
+        // #225 Hydraulic Master
+        public const float HydraulicPurifierSpeedMult = 3f;
+        public const float HumidityWaterExtractPerHour = 2f;
+        public const float PipeBurstIrradiatedRadSpike = 40f;
+
+        // #226 Grid Walker
+        public const float GridWalkerPowerCapacityMult = 1.5f;
+
+        // #227 Vault Builder
+        public const float VaultBuilderBuildCostMult = 0.5f;
+
+        // #228 Grease Monkey
+        public const float GreaseMonkeyVehicleCostMult = 0.5f;
+        public const float EngineBlockWeightKg = 80f;
+
+        // #229 Synthesizer
+        public const float SynthesizerRadAwayMult = 2f;
+
+        // #230 Gaia
+        public const int GaiaCropYieldMult = 3;
+        public const int SeedVaultPerfectDaysRequired = 14;
+
+        // #231 Wasteland Runner
+        public const float WastelandRunnerTravelMult = 0.5f;
+        public const int LostRouteDeadDropsRequired = 5;
+
+        // #233 Stormcaller
+        public const int StormcallerForecastDays = 10;
+        public const float StormcallerStormMoraleBuff = 15f;
+
+        // #234 Rad-Walker
+        public const float RadWalkerAbsorbCap = 0.5f; // 50% max absorption
+        public const float GroundZeroRadPerHour = 10000f;
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
         public const string FortifiedSquadNodeId = "fortified_squad_holdout";
@@ -101,6 +156,21 @@ namespace AtomicWar._Game.Survivors
         public const string RationThiefEventId = "missing_rations";
         public const string RationThiefAgainEventId = "missing_rations_again";
         public const string SquadDistressRadioEventId = "evt_squad_distress_signal";
+        public const string SubstationNodeId = "the_substation";
+        public const string TheFirmNodeId = "the_firm";
+        public const string HighwayPileupNodeId = "the_highway_pileup";
+        public const string RuinedBankNodeId = "the_ruined_bank";
+        public const string WeatherTowerNodeId = "the_weather_tower";
+        public const string GroundZeroCraterNodeId = "the_ground_zero_crater";
+        public const string EngineBlockItemId = "engine_block";
+        public const string ChemicalScrapItemId = "chemical_scrap";
+        public const string AntiRadItemId = "anti_rad";
+        public const string BlackBoxItemId = "military_black_box";
+        public const string CityBlueprintsItemId = "city_blueprints";
+        public const string MedicinalHerbItemId = "medicinal_herb";
+        public const string ScarredLungsId = "scarred_lungs";
+        public const string PipeBurstEventId = "evt_pipe_burst_city_mains";
+        public const string ChlorineLeakEventId = "evt_chlorine_tank_leak";
 
         private SkillProgressionSystem _progression;
         private readonly Dictionary<string, QuestlineSO> _questlines =
@@ -169,7 +239,7 @@ namespace AtomicWar._Game.Survivors
             state.MoraleHitZero = false;
         }
 
-        /// <summary>Built-in archetype profiles for Prompts #215–#224.</summary>
+        /// <summary>Built-in archetype profiles for Prompts #215–#234.</summary>
         public static SurvivorProfile ProfileForArchetype(string archetypeId)
         {
             switch (archetypeId)
@@ -194,6 +264,26 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(HunterId, ApexPredatorId, QuestlineSO.Ids.TheWhiteElk);
                 case PrisonerId:
                     return new SurvivorProfile(PrisonerId, SurvivalistId, QuestlineSO.Ids.TheWardensKey);
+                case PlumberId:
+                    return new SurvivorProfile(PlumberId, HydraulicMasterId, QuestlineSO.Ids.TheCityMains);
+                case ElectricianId:
+                    return new SurvivorProfile(ElectricianId, GridWalkerId, QuestlineSO.Ids.TheSubstationGhost);
+                case ArchitectId:
+                    return new SurvivorProfile(ArchitectId, VaultBuilderId, QuestlineSO.Ids.TheBlueprints);
+                case MechanicId:
+                    return new SurvivorProfile(MechanicId, GreaseMonkeyId, QuestlineSO.Ids.TheMotorpool);
+                case ChemistId:
+                    return new SurvivorProfile(ChemistId, SynthesizerId, QuestlineSO.Ids.TheLabRuin);
+                case BotanistId:
+                    return new SurvivorProfile(BotanistId, GaiaId, QuestlineSO.Ids.TheSeedVault);
+                case CourierId:
+                    return new SurvivorProfile(CourierId, WastelandRunnerId, QuestlineSO.Ids.TheLostRoute);
+                case BurglarId:
+                    return new SurvivorProfile(BurglarId, GhostId, QuestlineSO.Ids.TheBankHeist);
+                case MeteorologistId:
+                    return new SurvivorProfile(MeteorologistId, StormcallerId, QuestlineSO.Ids.TheRadarStation);
+                case HazmatTechId:
+                    return new SurvivorProfile(HazmatTechId, RadWalkerId, QuestlineSO.Ids.GroundZero);
                 default:
                     return null;
             }
@@ -215,15 +305,27 @@ namespace AtomicWar._Game.Survivors
                 BouncerId => "The Bouncer",
                 HunterId => "The Hunter",
                 PrisonerId => "The Prisoner",
+                PlumberId => "The Plumber",
+                ElectricianId => "The Electrician",
+                ArchitectId => "The Architect",
+                MechanicId => "The Mechanic",
+                ChemistId => "The Chemist",
+                BotanistId => "The Botanist",
+                CourierId => "The Courier",
+                BurglarId => "The Burglar",
+                MeteorologistId => "The Meteorologist",
+                HazmatTechId => "The Hazmat Tech",
                 _ => archetypeId
             };
             string discipline = "survival";
             if (archetypeId == SurgeonId || archetypeId == PharmacistId
-                || archetypeId == VetId || archetypeId == TherapistId)
+                || archetypeId == VetId || archetypeId == TherapistId
+                || archetypeId == ChemistId)
                 discipline = "medical";
             else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId)
                 discipline = "combat";
-            else if (archetypeId == HunterId)
+            else if (archetypeId == HunterId || archetypeId == CourierId
+                || archetypeId == BurglarId || archetypeId == MechanicId)
                 discipline = "scavenging";
             var sv = new Survivor
             {
@@ -597,6 +699,235 @@ namespace AtomicWar._Game.Survivors
             CompleteQuestline(prisoner, currentDay);
         }
 
+
+        // ── #225 Plumber — The City Mains ────────────────────────────────
+
+        /// <summary>
+        /// Record fixing a massive pipe burst while submerged in irradiated water.
+        /// Completes The City Mains.
+        /// </summary>
+        public void RecordPipeBurstFixed(
+            Survivor plumber,
+            bool submergedInIrradiatedWater,
+            int currentDay = 0)
+        {
+            if (plumber == null || !plumber.IsAlive || !submergedInIrradiatedWater) return;
+            var state = GetOrCreate(plumber.Id);
+            SyncFromSurvivor(plumber, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheCityMains, StringComparison.Ordinal))
+                return;
+
+            plumber.RadiationDose = Mathf.Clamp(
+                plumber.RadiationDose + PipeBurstIrradiatedRadSpike, 0f, 100f);
+            state.Progress = 1f;
+            plumber.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(plumber, "pipe_burst_fixed", 1);
+            CompleteQuestline(plumber, currentDay);
+        }
+
+        // ── #226 Electrician — The Substation Ghost ──────────────────────
+
+        public void RecordSubstationRepaired(
+            Survivor electrician,
+            bool duringFalloutStorm,
+            int currentDay = 0)
+        {
+            if (electrician == null || !electrician.IsAlive || !duringFalloutStorm) return;
+            var state = GetOrCreate(electrician.Id);
+            SyncFromSurvivor(electrician, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheSubstationGhost, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            electrician.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(electrician, "substation_repaired", 1);
+            CompleteQuestline(electrician, currentDay);
+        }
+
+        // ── #227 Architect — The Blueprints ──────────────────────────────
+
+        public void RecordBlueprintsRecovered(Survivor architect, int currentDay = 0)
+        {
+            if (architect == null || !architect.IsAlive) return;
+            var state = GetOrCreate(architect.Id);
+            SyncFromSurvivor(architect, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheBlueprints, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            architect.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(architect, "blueprints_recovered", 1);
+            CompleteQuestline(architect, currentDay);
+        }
+
+        // ── #228 Mechanic — The Motorpool ────────────────────────────────
+
+        public void RecordEngineBlockRetrieved(Survivor mechanic, int currentDay = 0)
+        {
+            if (mechanic == null || !mechanic.IsAlive) return;
+            var state = GetOrCreate(mechanic.Id);
+            SyncFromSurvivor(mechanic, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheMotorpool, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            mechanic.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(mechanic, "engine_block", 1);
+            CompleteQuestline(mechanic, currentDay);
+        }
+
+        // ── #229 Chemist — The Lab Ruin ──────────────────────────────────
+
+        /// <summary>
+        /// Cap a leaking chlorine tank with the Chemist's body as a shield.
+        /// Grants permanent ScarredLungs and completes The Lab Ruin.
+        /// </summary>
+        public void RecordChlorineTankCapped(Survivor chemist, int currentDay = 0)
+        {
+            if (chemist == null || !chemist.IsAlive) return;
+            var state = GetOrCreate(chemist.Id);
+            SyncFromSurvivor(chemist, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheLabRuin, StringComparison.Ordinal))
+                return;
+
+            if (!chemist.HasDisability(ScarredLungsId))
+                chemist.DisabilityIds.Add(ScarredLungsId);
+
+            state.Progress = 1f;
+            chemist.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(chemist, "chlorine_capped", 1);
+            CompleteQuestline(chemist, currentDay);
+        }
+
+        // ── #230 Botanist — The Seed Vault ───────────────────────────────
+
+        /// <summary>
+        /// Record one day of perfect 100% PlanterBox health. Completes after 14 straight days.
+        /// </summary>
+        public void RecordPlanterPerfectDay(
+            Survivor botanist,
+            bool planterAtFullHealth,
+            int currentDay = 0)
+        {
+            if (botanist == null || !botanist.IsAlive) return;
+            var state = GetOrCreate(botanist.Id);
+            SyncFromSurvivor(botanist, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheSeedVault, StringComparison.Ordinal))
+                return;
+
+            if (!planterAtFullHealth)
+            {
+                state.PerfectPlanterDays = 0;
+                botanist.QuestProgress = 0f;
+                OnQuestProgress?.Invoke(botanist, "planter_streak_reset", 0);
+                return;
+            }
+
+            state.PerfectPlanterDays++;
+            state.Progress = state.PerfectPlanterDays;
+            botanist.QuestProgress = state.PerfectPlanterDays;
+            OnQuestProgress?.Invoke(botanist, "planter_perfect_days", state.PerfectPlanterDays);
+            if (state.PerfectPlanterDays >= SeedVaultPerfectDaysRequired)
+                CompleteQuestline(botanist, currentDay);
+        }
+
+        // ── #231 Courier — The Lost Route ────────────────────────────────
+
+        public void RecordDeadDropSuccess(Survivor courier, int currentDay = 0)
+        {
+            if (courier == null || !courier.IsAlive) return;
+            var state = GetOrCreate(courier.Id);
+            SyncFromSurvivor(courier, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheLostRoute, StringComparison.Ordinal))
+                return;
+
+            state.DeadDropSuccesses++;
+            state.Progress = state.DeadDropSuccesses;
+            courier.QuestProgress = state.DeadDropSuccesses;
+            OnQuestProgress?.Invoke(courier, "dead_drop_success", state.DeadDropSuccesses);
+            if (state.DeadDropSuccesses >= LostRouteDeadDropsRequired)
+                CompleteQuestline(courier, currentDay);
+        }
+
+        /// <summary>Stolen / robbed dead drop resets Lost Route progress.</summary>
+        public void RecordDeadDropFailure(Survivor courier)
+        {
+            if (courier == null) return;
+            var state = GetOrCreate(courier.Id);
+            SyncFromSurvivor(courier, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheLostRoute, StringComparison.Ordinal))
+                return;
+            state.DeadDropSuccesses = 0;
+            state.Progress = 0f;
+            courier.QuestProgress = 0f;
+            OnQuestProgress?.Invoke(courier, "dead_drop_reset", 0);
+        }
+
+        // ── #232 Burglar — The Bank Heist ────────────────────────────────
+
+        public void RecordVaultCracked(
+            Survivor burglar,
+            bool alarmTriggered,
+            int currentDay = 0)
+        {
+            if (burglar == null || !burglar.IsAlive || alarmTriggered) return;
+            var state = GetOrCreate(burglar.Id);
+            SyncFromSurvivor(burglar, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheBankHeist, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            burglar.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(burglar, "vault_cracked", 1);
+            CompleteQuestline(burglar, currentDay);
+        }
+
+        // ── #233 Meteorologist — The Radar Station ───────────────────────
+
+        public void RecordRadarDishAligned(
+            Survivor meteorologist,
+            bool duringFalloutStorm,
+            int currentDay = 0)
+        {
+            if (meteorologist == null || !meteorologist.IsAlive || !duringFalloutStorm) return;
+            var state = GetOrCreate(meteorologist.Id);
+            SyncFromSurvivor(meteorologist, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheRadarStation, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            meteorologist.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(meteorologist, "radar_aligned", 1);
+            CompleteQuestline(meteorologist, currentDay);
+        }
+
+        // ── #234 Hazmat Tech — Ground Zero ───────────────────────────────
+
+        public void RecordBlackBoxRetrieved(Survivor hazmat, int currentDay = 0)
+        {
+            if (hazmat == null || !hazmat.IsAlive) return;
+            var state = GetOrCreate(hazmat.Id);
+            SyncFromSurvivor(hazmat, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.GroundZero, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            hazmat.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(hazmat, "black_box", 1);
+            CompleteQuestline(hazmat, currentDay);
+        }
+
         // ── Completion / unlock ──────────────────────────────────────────
 
         public bool CompleteQuestline(Survivor sv, int currentDay = 0)
@@ -673,6 +1004,16 @@ namespace AtomicWar._Game.Survivors
         public bool HasJuggernaut(Survivor sv) => HasTrait(sv, JuggernautId);
         public bool HasApexPredator(Survivor sv) => HasTrait(sv, ApexPredatorId);
         public bool HasSurvivalist(Survivor sv) => HasTrait(sv, SurvivalistId);
+        public bool HasHydraulicMaster(Survivor sv) => HasTrait(sv, HydraulicMasterId);
+        public bool HasGridWalker(Survivor sv) => HasTrait(sv, GridWalkerId);
+        public bool HasVaultBuilder(Survivor sv) => HasTrait(sv, VaultBuilderId);
+        public bool HasGreaseMonkey(Survivor sv) => HasTrait(sv, GreaseMonkeyId);
+        public bool HasSynthesizer(Survivor sv) => HasTrait(sv, SynthesizerId);
+        public bool HasGaia(Survivor sv) => HasTrait(sv, GaiaId);
+        public bool HasWastelandRunner(Survivor sv) => HasTrait(sv, WastelandRunnerId);
+        public bool HasGhost(Survivor sv) => HasTrait(sv, GhostId);
+        public bool HasStormcaller(Survivor sv) => HasTrait(sv, StormcallerId);
+        public bool HasRadWalker(Survivor sv) => HasTrait(sv, RadWalkerId);
 
         /// <summary>#215 — surgery duration mult (0.5 with Miracle Worker).</summary>
         public float GetSurgeryDurationMultiplier(Survivor medic) =>
@@ -862,6 +1203,122 @@ namespace AtomicWar._Game.Survivors
             return SurvivalistAloneStaminaMult;
         }
 
+
+        // ── #225 Hydraulic Master ────────────────────────────────────────
+
+        public float GetPurifierSpeedMultiplier(IReadOnlyList<Survivor> survivors)
+        {
+            if (AnyLivingWithTrait(survivors, HydraulicMasterId))
+                return HydraulicPurifierSpeedMult;
+            return 1f;
+        }
+
+        public bool CanExtractWaterFromHumidity(Survivor sv) => HasHydraulicMaster(sv);
+
+        public bool AnyHydraulicMaster(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, HydraulicMasterId);
+
+        // ── #226 Grid Walker ─────────────────────────────────────────────
+
+        public bool GeneratorsImmuneToBreakdown(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, GridWalkerId);
+
+        public float GetPowerCapacityMultiplier(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, GridWalkerId) ? GridWalkerPowerCapacityMult : 1f;
+
+        public bool CanHotwireBunkerPower(Survivor sv) => HasGridWalker(sv);
+
+        // ── #227 Vault Builder ───────────────────────────────────────────
+
+        public float GetRoomBuildCostMultiplier(Survivor builder) =>
+            HasVaultBuilder(builder) ? VaultBuilderBuildCostMult : 1f;
+
+        public bool LocksStructuralIntegrityAtMax(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, VaultBuilderId);
+
+        // ── #228 Grease Monkey ───────────────────────────────────────────
+
+        public float GetVehicleEscapeCostMultiplier(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, GreaseMonkeyId) ? GreaseMonkeyVehicleCostMult : 1f;
+
+        public bool UnlocksVehicleEscape(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, GreaseMonkeyId);
+
+        public bool BicyclesNeverDegrade(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, GreaseMonkeyId);
+
+        public bool BicyclesNeverDegrade(Survivor sv) => HasGreaseMonkey(sv);
+
+        // ── #229 Synthesizer ─────────────────────────────────────────────
+
+        public bool CanCraftAntiRadFromChemicalScrap(Survivor sv) => HasSynthesizer(sv);
+
+        public float GetRadAwayEfficiencyMultiplier(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, SynthesizerId) ? SynthesizerRadAwayMult : 1f;
+
+        // ── #230 Gaia ────────────────────────────────────────────────────
+
+        public int GetCropYieldMultiplier(Survivor botanist) =>
+            HasGaia(botanist) ? GaiaCropYieldMult : 1;
+
+        public bool CropsImmuneToMold(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, GaiaId);
+
+        public bool CanGrowMedicinalHerbs(Survivor sv) => HasGaia(sv);
+
+        // ── #231 Wasteland Runner ────────────────────────────────────────
+
+        public float GetExpeditionTravelTimeMultiplier(Survivor sv) =>
+            HasWastelandRunner(sv) ? WastelandRunnerTravelMult : 1f;
+
+        public bool IgnoresWeatherMovementPenalty(Survivor sv) => HasWastelandRunner(sv);
+
+        // ── #232 Ghost ───────────────────────────────────────────────────
+
+        public bool ForcesZeroHatchVisibilityWhenOutside(Survivor sv) => HasGhost(sv);
+
+        public bool BypassesLocksAndSafes(Survivor sv) => HasGhost(sv);
+
+        public bool AnyGhostOutside(IReadOnlyList<Survivor> survivors)
+        {
+            if (survivors == null) return false;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s == null || !s.IsAlive || !HasGhost(s)) continue;
+                if (s.State == SurvivorState.Working || s.IsOnExpedition)
+                    return true;
+            }
+            return false;
+        }
+
+        // ── #233 Stormcaller ─────────────────────────────────────────────
+
+        public bool HasPerfectTenDayForecast(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, StormcallerId);
+
+        public float GetStormMoraleBuff(Survivor sv, bool outsideDuringStorm) =>
+            HasStormcaller(sv) && outsideDuringStorm ? StormcallerStormMoraleBuff : 0f;
+
+        // ── #234 Rad-Walker ──────────────────────────────────────────────
+
+        public float GetRadiationAbsorbFactor(Survivor sv) =>
+            HasRadWalker(sv) ? RadWalkerAbsorbCap : 1f;
+
+        public bool SkipsDeconOnReturn(Survivor sv) => HasRadWalker(sv);
+
+        private bool AnyLivingWithTrait(IReadOnlyList<Survivor> survivors, string traitId)
+        {
+            if (survivors == null || string.IsNullOrEmpty(traitId)) return false;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s != null && s.IsAlive && HasTrait(s, traitId))
+                    return true;
+            }
+            return false;
+        }
+
         public PersonalQuestState GetState(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId)) return new PersonalQuestState();
@@ -892,6 +1349,26 @@ namespace AtomicWar._Game.Survivors
                 maxStages: WhiteElkNodesRequired, node: WhiteElkNodeId, evt: "evt_white_elk_rumor");
             RegisterDefault(QuestlineSO.Ids.TheWardensKey, "The Warden's Key", SurvivalistId,
                 maxStages: 1, node: PenitentiaryNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheCityMains, "The City Mains", HydraulicMasterId,
+                maxStages: 1, node: null, evt: PipeBurstEventId);
+            RegisterDefault(QuestlineSO.Ids.TheSubstationGhost, "The Substation Ghost", GridWalkerId,
+                maxStages: 1, node: SubstationNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheBlueprints, "The Blueprints", VaultBuilderId,
+                maxStages: 1, node: TheFirmNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheMotorpool, "The Motorpool", GreaseMonkeyId,
+                maxStages: 1, node: HighwayPileupNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLabRuin, "The Lab Ruin", SynthesizerId,
+                maxStages: 1, node: null, evt: ChlorineLeakEventId);
+            RegisterDefault(QuestlineSO.Ids.TheSeedVault, "The Seed Vault", GaiaId,
+                maxStages: SeedVaultPerfectDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLostRoute, "The Lost Route", WastelandRunnerId,
+                maxStages: LostRouteDeadDropsRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheBankHeist, "The Bank Heist", GhostId,
+                maxStages: 1, node: RuinedBankNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheRadarStation, "The Radar Station", StormcallerId,
+                maxStages: 1, node: WeatherTowerNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.GroundZero, "Ground Zero", RadWalkerId,
+                maxStages: 1, node: GroundZeroCraterNodeId, evt: null);
         }
 
         private void RegisterDefault(
@@ -955,7 +1432,9 @@ namespace AtomicWar._Game.Survivors
                     VetKitsSpent = s.VetKitsSpent,
                     VisitedNodeIds = s.VisitedNodeIds != null
                         ? new List<string>(s.VisitedNodeIds)
-                        : new List<string>()
+                        : new List<string>(),
+                    PerfectPlanterDays = s.PerfectPlanterDays,
+                    DeadDropSuccesses = s.DeadDropSuccesses
                 });
             }
             return save;
@@ -984,7 +1463,9 @@ namespace AtomicWar._Game.Survivors
                     VetKitsSpent = e.VetKitsSpent,
                     VisitedNodeIds = e.VisitedNodeIds != null
                         ? new List<string>(e.VisitedNodeIds)
-                        : new List<string>()
+                        : new List<string>(),
+                    PerfectPlanterDays = e.PerfectPlanterDays,
+                    DeadDropSuccesses = e.DeadDropSuccesses
                 };
             }
         }
@@ -1004,6 +1485,10 @@ namespace AtomicWar._Game.Survivors
             public int VetKitsSpent;
             /// <summary>#223 White Elk nodes visited (distinct).</summary>
             public List<string> VisitedNodeIds = new List<string>();
+            /// <summary>#230 consecutive perfect planter days.</summary>
+            public int PerfectPlanterDays;
+            /// <summary>#231 successful dead drops (not robbed).</summary>
+            public int DeadDropSuccesses;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
@@ -1020,7 +1505,9 @@ namespace AtomicWar._Game.Survivors
                 VetKitsSpent = VetKitsSpent,
                 VisitedNodeIds = VisitedNodeIds != null
                     ? new List<string>(VisitedNodeIds)
-                    : new List<string>()
+                    : new List<string>(),
+                PerfectPlanterDays = PerfectPlanterDays,
+                DeadDropSuccesses = DeadDropSuccesses
             };
         }
     }
@@ -1068,5 +1555,7 @@ namespace AtomicWar._Game.Survivors
         public float VetAirlockHours;
         public int VetKitsSpent;
         public List<string> VisitedNodeIds = new List<string>();
+        public int PerfectPlanterDays;
+        public int DeadDropSuccesses;
     }
 }

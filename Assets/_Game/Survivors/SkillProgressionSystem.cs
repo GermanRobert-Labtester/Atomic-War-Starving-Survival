@@ -178,7 +178,7 @@ namespace AtomicWar._Game.Survivors
         }
 
         /// <summary>
-        /// Latent expert traits (Prompts #214–#224). Unreachable via action XP —
+        /// Latent expert traits (Prompts #214–#234). Unreachable via action XP —
         /// granted only when a personal questline completes.
         /// Marked isExpertPerk so only the predetermined expert track may hold them
         /// (PersonalQuestSystem also grants via TryGrantPerk after quest finish).
@@ -199,6 +199,17 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.JuggernautId, "Juggernaut", "combat", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ApexPredatorId, "Apex Predator", "scavenging", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SurvivalistId, "Survivalist", "survival", milestoneOnly, 0.20f, false));
+            // Prompts #225–#234
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.HydraulicMasterId, "Hydraulic Master", "survival", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GridWalkerId, "Grid Walker", "survival", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.VaultBuilderId, "Vault Builder", "survival", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GreaseMonkeyId, "Grease Monkey", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SynthesizerId, "Synthesizer", "medical", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GaiaId, "Gaia", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.WastelandRunnerId, "Wasteland Runner", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GhostId, "Ghost", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.StormcallerId, "Stormcaller", "survival", milestoneOnly, 0.15f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.RadWalkerId, "Rad-Walker", "survival", milestoneOnly, 0.25f, false));
         }
 
         /// <summary>
