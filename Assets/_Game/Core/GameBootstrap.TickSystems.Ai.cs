@@ -139,6 +139,7 @@ namespace AtomicWar._Game.Core
             context.ShelterPerks = ShelterPerks;
             context.MedicalPerks = MedicalPerks;
             context.ExpeditionPerks = ExpeditionPerks;
+            context.SocialPerks = SocialPerks;
             context.TriageSystem = TriageSystem;
             context.ResilienceSystem = ResilienceSystem;
             context.AntibioticResistSystem = AntibioticResistSystem;
@@ -263,6 +264,8 @@ namespace AtomicWar._Game.Core
                 {
                     _lastSkillProgressionDay = day;
                     SkillProgression.TickDaily(day, Survivors);
+                    // Prompt #213 — Taskmaster: consecutive high-morale days.
+                    SocialPerks?.TickDailyMorale(Survivors, day);
                 }
             }
 

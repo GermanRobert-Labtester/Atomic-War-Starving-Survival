@@ -105,12 +105,22 @@ namespace AtomicWar._Game.AI.Actions
             // The system handles item lookup + consumption via the
             // host-injected ComfortCureHandler. Try multiple times in case
             // the handler can supply more than one item per call.
+            string breakIdBefore = target.currentMentalBreakId;
+            bool wasViolent = SocialPerkSystem.IsViolentParanoia(breakIdBefore);
             int attempts = 0;
             while (attempts < 4 && target.HasMentalBreak
                    && target.mentalBreakCureProgress < (context.MentalBreak.GetBreak(target.currentMentalBreakId)?.cureHours ?? float.PositiveInfinity))
             {
                 if (!context.MentalBreak.TryCureWithComfortItem(target)) break;
                 attempts++;
+            }
+
+            // Prompt #211 — comfort cure of ViolentParanoia (no force/med bed)
+            // earns De-Escalator for the comforter.
+            if (wasViolent && !target.HasMentalBreak && context.SocialPerks != null)
+            {
+                context.SocialPerks.RecordPeacefulDeEscalation(
+                    context.Survivor, context.CurrentDay);
             }
         }
     }

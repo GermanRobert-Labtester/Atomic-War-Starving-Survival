@@ -140,6 +140,9 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("skill_atrophy", h => SkillAtrophy?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("skill_progression_daily",
                 _registry.DayGated("skill_progression", day => SkillProgression?.TickDaily(day, Survivors)));
+            // Prompt #213 — Taskmaster high-morale streak.
+            _registry.RegisterPerSubstep("social_perks_daily",
+                _registry.DayGated("social_perks", day => SocialPerks?.TickDailyMorale(Survivors, day)));
             _registry.RegisterPerSubstep("empath", h => EmpathSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("survivor_diaries", h => SurvivorDiaries?.Tick(h, Survivors, TimeSystem?.CurrentDay ?? 1, _mentalBreakRng));
             _registry.RegisterPerSubstep("spatial_psychology", h => SpatialPsychology?.Tick(h, Survivors));

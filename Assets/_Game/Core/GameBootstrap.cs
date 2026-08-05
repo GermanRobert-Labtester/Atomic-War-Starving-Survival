@@ -167,6 +167,9 @@ namespace AtomicWar._Game.Core
         // Prompts #206–#210 — expedition / wasteland perks (Pack Mule … Forager).
         public ExpeditionPerkSystem ExpeditionPerks { get; private set; }
 
+        // Prompts #211–#213 — social / leadership perks (De-Escalator, Quartermaster, Taskmaster).
+        public SocialPerkSystem SocialPerks { get; private set; }
+
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
         // Prompt #61 — Survivor diaries & privacy violations.

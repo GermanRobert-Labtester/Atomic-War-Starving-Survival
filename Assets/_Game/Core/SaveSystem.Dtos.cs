@@ -139,6 +139,8 @@ namespace AtomicWar._Game.Core
         public MedicalPerkSave MedicalPerks;
         /// <summary>Prompts #206–#210 — expedition milestone counters (pack mule, light step…).</summary>
         public ExpeditionPerkSave ExpeditionPerks;
+        /// <summary>Prompts #211–#213 — social / leadership counters (de-escalator, haul, morale…).</summary>
+        public SocialPerkSave SocialPerks;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;

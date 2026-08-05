@@ -84,6 +84,7 @@ namespace AtomicWar._Game.Survivors
             RegisterShelterPerks();
             RegisterMedicalPerks();
             RegisterExpeditionPerks();
+            RegisterSocialPerks();
         }
 
         /// <summary>
@@ -161,6 +162,18 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.UrbanPathfinderId, "Urban Pathfinder", "scavenging", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.NightTerrorId, "Night Terror", "combat", milestoneOnly, 0.10f, false));
             RegisterPerk(MakeRuntimePerk(ExpeditionPerkSystem.ForagerId, "Forager", "survival", milestoneOnly, 0.05f, false));
+        }
+
+        /// <summary>
+        /// Milestone social / leadership perks (Prompts #211–#213). xpThreshold is
+        /// unreachable via action XP — granted only through <see cref="TryGrantPerk"/>.
+        /// </summary>
+        public void RegisterSocialPerks()
+        {
+            const float milestoneOnly = 999999f;
+            RegisterPerk(MakeRuntimePerk(SocialPerkSystem.DeEscalatorId, "De-Escalator", "survival", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(SocialPerkSystem.QuartermasterId, "Quartermaster", "scavenging", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(SocialPerkSystem.TaskmasterId, "Taskmaster", "survival", milestoneOnly, 0.10f, false));
         }
 
         /// <summary>

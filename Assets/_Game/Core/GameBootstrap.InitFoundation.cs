@@ -354,6 +354,9 @@ namespace AtomicWar._Game.Core
             // Prompts #206–#210 — expedition / wasteland milestone perks
             ExpeditionPerks = new ExpeditionPerkSystem();
             ExpeditionPerks.Bind(SkillProgression);
+            // Prompts #211–#213 — social / leadership milestone perks
+            SocialPerks = new SocialPerkSystem();
+            SocialPerks.Bind(SkillProgression);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

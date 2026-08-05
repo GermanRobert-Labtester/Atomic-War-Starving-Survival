@@ -255,11 +255,13 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetShelterPerkSystem(ShelterPerks);
             SaveSystem.SetMedicalPerkSystem(MedicalPerks);
             SaveSystem.SetExpeditionPerkSystem(ExpeditionPerks);
+            SaveSystem.SetSocialPerkSystem(SocialPerks);
             WireCombatPerkBindings();
             WireSurvivalPerkBindings();
             WireShelterPerkBindings();
             WireMedicalPerkBindings();
             WireExpeditionPerkBindings();
+            WireSocialPerkBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -495,6 +497,19 @@ namespace AtomicWar._Game.Core
                 NeedsSystem.IgnoresDarknessMorale = sv =>
                     ExpeditionPerks != null && ExpeditionPerks.IgnoresDarknessMorale(sv);
             }
+        }
+
+        /// <summary>
+        /// Prompts #211–#213 — bind social perks into pantry spoil rate and
+        /// (optionally) weapon rust when a Quartermaster shares the room.
+        /// </summary>
+        private void WireSocialPerkBindings()
+        {
+            if (SocialPerks == null) return;
+
+            // Prompt #212 — food spoil 50% slower in Quartermaster's room.
+            PantrySystem?.BindDegradationMultiplier(roomId =>
+                SocialPerks.GetItemDegradationMultiplier(roomId, Survivors));
         }
 
     }

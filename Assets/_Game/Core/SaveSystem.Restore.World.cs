@@ -138,6 +138,7 @@ namespace AtomicWar._Game.Core
             RestIf(_shelterPerkSystem, s => s.RestoreState(data.ShelterPerks));
             RestIf(_medicalPerkSystem, s => s.RestoreState(data.MedicalPerks));
             RestIf(_expeditionPerkSystem, s => s.RestoreState(data.ExpeditionPerks));
+            RestIf(_socialPerkSystem, s => s.RestoreState(data.SocialPerks));
         }
 
     }
