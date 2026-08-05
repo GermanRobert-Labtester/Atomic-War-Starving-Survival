@@ -251,6 +251,25 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GroundedOptimistId, "Grounded Optimist", "social", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.LivingSaintId, "Living Saint", "social", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.HumbledHealerId, "Humbled Healer", "medical", milestoneOnly, 0.25f, false));
+            // Prompts #267–#276
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.CleanAndSoberId, "Clean & Sober", "medical", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.TheWatcherId, "The Watcher", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.HyperAwareId, "Hyper-Aware", "medical", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.FireBreatherId, "Fire-Breather", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SonarId, "Sonar", "survival", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ImprovisedEngineeringId, "Improvised Engineering", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.RadiotrophicId, "Radiotrophic", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ApexScavengerId, "Apex Scavenger", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ZenStateId, "Zen State", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterGeneticistId, "Master Geneticist", "survival", milestoneOnly, 0.25f, false));
+            // Prompts #277–#283
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.TheEnforcerId, "The Enforcer", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.LegendOfTheWastesId, "Legend of the Wastes", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.TheStatesmanId, "The Statesman", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.CyberneticsId, "Cybernetics", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.BeaconOfTruthId, "Beacon of Truth", "social", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterPathologistId, "Master Pathologist", "scavenging", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MonopolistId, "Monopolist", "scavenging", milestoneOnly, 0.25f, false));
         }
 
         /// <summary>

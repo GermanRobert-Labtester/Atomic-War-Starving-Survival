@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
-    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#266).
+    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#283).
     /// Survivors do not start with their Expert Trait. After 30 days alive OR
     /// a Morale 0→100 recovery, their assigned questline begins. Completing
     /// the final stage permanently unlocks the latent expert trait.
@@ -72,6 +72,25 @@ namespace AtomicWar._Game.Survivors
         public const string GroundedOptimistId = "trait_grounded_optimist";
         public const string LivingSaintId = "trait_living_saint";
         public const string HumbledHealerId = "trait_humbled_healer";
+        // Prompts #267–#276 latent
+        public const string CleanAndSoberId = "trait_clean_and_sober";
+        public const string TheWatcherId = "trait_the_watcher";
+        public const string HyperAwareId = "trait_hyper_aware";
+        public const string FireBreatherId = "trait_fire_breather";
+        public const string SonarId = "trait_sonar";
+        public const string ImprovisedEngineeringId = "trait_improvised_engineering";
+        public const string RadiotrophicId = "trait_radiotrophic";
+        public const string ApexScavengerId = "trait_apex_scavenger";
+        public const string ZenStateId = "trait_zen_state";
+        public const string MasterGeneticistId = "trait_master_geneticist";
+        // Prompts #277–#283 latent
+        public const string TheEnforcerId = "trait_the_enforcer";
+        public const string LegendOfTheWastesId = "trait_legend_of_the_wastes";
+        public const string TheStatesmanId = "trait_the_statesman";
+        public const string CyberneticsId = "trait_cybernetics";
+        public const string BeaconOfTruthId = "trait_beacon_of_truth";
+        public const string MasterPathologistId = "trait_master_pathologist";
+        public const string MonopolistId = "trait_monopolist";
 
         // ── Base personality traits (granted on profile assign) ──────────
         public const string SelflessId = "trait_selfless";
@@ -97,6 +116,24 @@ namespace AtomicWar._Game.Survivors
         public const string DenialistId = "trait_denialist";
         public const string SacrificialId = "trait_sacrificial";
         public const string GodComplexId = "trait_god_complex";
+        // Prompts #267–#276 base
+        public const string RestlessId = "trait_restless";
+        public const string ParanoidHealthId = "trait_paranoid_health";
+        public const string FascinationId = "trait_fascination";
+        public const string BlindId = "trait_blind";
+        public const string ParanoidId = "trait_paranoid";
+        public const string AnimalisticId = "trait_animalistic";
+        public const string VowOfNonviolenceId = "trait_vow_of_nonviolence";
+        public const string GrievingId = "trait_grieving";
+        // Prompts #277–#283 base
+        public const string DistrustedId = "trait_distrusted";
+        public const string MoralCompassId = "trait_moral_compass";
+        public const string FailingHeartId = "trait_failing_heart";
+        public const string SilverTongueId = "trait_silver_tongue";
+        public const string DelusionalId = "trait_delusional";
+        public const string PhotogenicId = "trait_photogenic";
+        public const string AgoraphileId = "trait_agoraphile";
+        public const string RuthlessId = "trait_ruthless";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -154,6 +191,25 @@ namespace AtomicWar._Game.Survivors
         public const string ThePollyannaId = "the_pollyanna";
         public const string MartyrId = "the_martyr";
         public const string ArrogantSurgeonId = "the_arrogant_surgeon";
+        // Prompts #267–#276 (relapsing addict is distinct from #247 the_addict)
+        public const string RelapsingAddictId = "the_relapsing_addict";
+        public const string InsomniacId = "the_insomniac";
+        public const string HypochondriacId = "the_hypochondriac";
+        public const string PyromaniacId = "the_pyromaniac";
+        public const string BlindPreacherId = "the_blind_preacher";
+        public const string PrepperId = "the_prepper";
+        public const string OutcastId = "the_outcast";
+        public const string FeralOrphanId = "the_feral_orphan";
+        public const string PacifistId = "the_pacifist";
+        public const string WidowId = "the_widow";
+        // Prompts #277–#283 (former politician distinct from #236 the_politician)
+        public const string ExConId = "the_ex_con";
+        public const string SheriffId = "the_sheriff";
+        public const string FormerPoliticianId = "the_former_politician";
+        public const string TechBroId = "the_tech_bro";
+        public const string NewsAnchorId = "the_news_anchor";
+        public const string NomadId = "the_nomad";
+        public const string ExecId = "the_exec";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -384,6 +440,82 @@ namespace AtomicWar._Game.Survivors
         public const string DepressionBreakId = "depression";
         public const float ArrogantSurgeonMedicalSkill = 100f;
 
+        // #267 Relapsing Addict / Clean & Sober
+        public const int ColdTurkeyDaysRequired = 21;
+        public const float ForcedChemMoraleThreshold = 40f;
+        public const float CleanAndSoberStaminaMult = 2f;
+        public const string AmphetaminesItemId = "amphetamines";
+
+        // #268 Insomniac / The Watcher
+        public const float RestlessSleepRestoreFrac = 0.20f;
+        public const float RestlessMaxFatigueCap = 80f;
+        public const int LongNightGuardNightsRequired = 5;
+        public const float InsomniacNightNoisePerHour = 8f;
+
+        // #269 Hypochondriac / Hyper-Aware
+        public const float PlaceboMoraleRestore = 8f;
+        public const float FakeIllnessMoraleHit = 6f;
+        public const float FakeIllnessFatigueHit = 4f;
+
+        // #270 Pyromaniac / Fire-Breather
+        public const float FascinationHeaterMoralePerHour = 4f;
+        public const float PyromaniacFireMoraleThreshold = 30f;
+        public const float PyromaniacDailyFireChance = 0.05f;
+        public const int TrialByFireExtinguishRequired = 5;
+
+        // #271 Blind Preacher / Sonar
+        public const int VoiceInDarkConvertsRequired = 3;
+        public const float SonarRaidWarningHours = 12f;
+
+        // #272 Prepper / Improvised Engineering
+        public const float PrepperBaseRadiationAnxiety = 0.75f;
+
+        // #273 Mutated Outcast / Radiotrophic
+        public const float OutcastStartLifetimeRads = 800f;
+        public const float EmbracingGlowLifetimeRads = 1000f;
+        public const float OutcastRoomMealMoraleHit = 3f;
+        public const float RadiotrophicHealPerHour = 4f;
+
+        // #274 Feral Orphan / Apex Scavenger
+        public const int PackTrainingDaysRequired = 30;
+        public const float AnimalisticAffinityDrain = 5f;
+
+        // #275 Pacifist / Zen State
+        public const float ZenNeedsDecayMult = 0.20f; // 80% reduced
+
+        // #276 Widow / Master Geneticist
+        public const float GrievingActionEfficiencyMult = 0.55f;
+        public const string PreWarRoseItemId = "pre_war_rose";
+
+        // #277 Ex-Con / Enforcer
+        // (no extra numeric thresholds)
+
+        // #278 Sheriff / Legend
+        public const float MoralCompassBunkerMorale = 3f;
+        public const float MoralCompassEvilHit = 25f;
+        public const float FailingHeartStaminaDecayPerDay = 0.5f;
+        public const float LegendRaidFrequencyMult = 0.25f; // 75% drop
+
+        // #279 Former Politician / Statesman
+        public const int RealLeaderDirtyDaysRequired = 14;
+        public const float SilverTongueLaborMoraleHit = 20f;
+
+        // #280 Tech Bro / Cybernetics
+        public const float TechBroPowerWasteWatts = 15f;
+
+        // #281 News Anchor / Beacon
+        public const float PhotogenicHygieneMoraleHit = 5f;
+        public const float BeaconTradePriceMult = 0.70f; // 30% cheaper
+
+        // #282 Nomad / Master Pathologist
+        public const int NomadInsideDaysBeforeFlee = 5;
+        public const float AgoraphileBunkerMoraleHitPerDay = 8f;
+
+        // #283 Exec / Monopolist
+        public const float RuthlessModuleEfficiencyMult = 1.20f;
+        public const float RuthlessModuleWearMult = 1.35f;
+        public const float GoldenParachuteTradeValue = 10000f;
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
         public const string FortifiedSquadNodeId = "fortified_squad_holdout";
@@ -584,6 +716,61 @@ namespace AtomicWar._Game.Survivors
                 case ArrogantSurgeonId:
                     GrantBaseTrait(sv, GodComplexId);
                     break;
+                // #267–#276
+                case RelapsingAddictId:
+                    // Starts addicted to amphetamines — host wires AddictionSystem.
+                    break;
+                case InsomniacId:
+                    GrantBaseTrait(sv, RestlessId);
+                    break;
+                case HypochondriacId:
+                    GrantBaseTrait(sv, ParanoidHealthId);
+                    break;
+                case PyromaniacId:
+                    GrantBaseTrait(sv, FascinationId);
+                    break;
+                case BlindPreacherId:
+                    GrantBaseTrait(sv, BlindId);
+                    break;
+                case PrepperId:
+                    GrantBaseTrait(sv, ParanoidId);
+                    break;
+                case OutcastId:
+                    // Lifetime rads / mutagenesis applied in ApplyArchetypeFlags.
+                    break;
+                case FeralOrphanId:
+                    GrantBaseTrait(sv, AnimalisticId);
+                    break;
+                case PacifistId:
+                    GrantBaseTrait(sv, VowOfNonviolenceId);
+                    break;
+                case WidowId:
+                    GrantBaseTrait(sv, GrievingId);
+                    break;
+                // #277–#283
+                case ExConId:
+                    GrantBaseTrait(sv, DistrustedId);
+                    break;
+                case SheriffId:
+                    GrantBaseTrait(sv, MoralCompassId);
+                    GrantBaseTrait(sv, FailingHeartId);
+                    break;
+                case FormerPoliticianId:
+                    GrantBaseTrait(sv, SilverTongueId);
+                    break;
+                case TechBroId:
+                    GrantBaseTrait(sv, DelusionalId);
+                    GrantBaseTrait(sv, ArrogantId);
+                    break;
+                case NewsAnchorId:
+                    GrantBaseTrait(sv, PhotogenicId);
+                    break;
+                case NomadId:
+                    GrantBaseTrait(sv, AgoraphileId);
+                    break;
+                case ExecId:
+                    GrantBaseTrait(sv, RuthlessId);
+                    break;
             }
         }
 
@@ -617,6 +804,51 @@ namespace AtomicWar._Game.Survivors
             {
                 // Medical skill starts maxed — hosts read GetStartingMedicalSkill.
                 sv.ExpertDisciplineId = "medical";
+            }
+            else if (archetypeId == RelapsingAddictId)
+            {
+                // AddictionSystem.AddictedTraitId — string to avoid Medical assembly ref.
+                if (sv.Traits == null) sv.Traits = new List<string>();
+                if (!sv.HasTrait("addicted"))
+                    sv.Traits.Add("addicted");
+                sv.HoursSinceLastDose = 0f;
+            }
+            else if (archetypeId == BlindPreacherId)
+            {
+                sv.CannotFight = true; // blind — no guns / no expeditions (host gates)
+            }
+            else if (archetypeId == PrepperId)
+            {
+                sv.RadiationAnxiety = PrepperBaseRadiationAnxiety;
+                if (sv.HiddenItemIds == null) sv.HiddenItemIds = new List<string>();
+                string[] stash = { "mre_prewar", "mre_prewar", "antibiotics", "battery", "ammo_box" };
+                for (int i = 0; i < stash.Length; i++)
+                {
+                    if (!sv.HiddenItemIds.Contains(stash[i]))
+                        sv.HiddenItemIds.Add(stash[i]);
+                }
+            }
+            else if (archetypeId == OutcastId)
+            {
+                sv.LifetimeRadiationExposure = OutcastStartLifetimeRads;
+                sv.HasChronicIllness = true;
+            }
+            else if (archetypeId == FeralOrphanId)
+            {
+                sv.IsChild = true;
+                sv.CannotFight = false;
+            }
+            else if (archetypeId == PacifistId)
+            {
+                sv.CannotFight = true;
+            }
+            else if (archetypeId == TechBroId)
+            {
+                sv.ExpertDisciplineId = "survival"; // engineering / power
+            }
+            else if (archetypeId == FormerPoliticianId)
+            {
+                sv.ExpertDisciplineId = "social";
             }
         }
 
@@ -729,6 +961,40 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(MartyrId, LivingSaintId, QuestlineSO.Ids.TheUltimatePrice);
                 case ArrogantSurgeonId:
                     return new SurvivorProfile(ArrogantSurgeonId, HumbledHealerId, QuestlineSO.Ids.TheBotchedJob);
+                case RelapsingAddictId:
+                    return new SurvivorProfile(RelapsingAddictId, CleanAndSoberId, QuestlineSO.Ids.ColdTurkey);
+                case InsomniacId:
+                    return new SurvivorProfile(InsomniacId, TheWatcherId, QuestlineSO.Ids.TheLongNight);
+                case HypochondriacId:
+                    return new SurvivorProfile(HypochondriacId, HyperAwareId, QuestlineSO.Ids.TheRealIllness);
+                case PyromaniacId:
+                    return new SurvivorProfile(PyromaniacId, FireBreatherId, QuestlineSO.Ids.TrialByFire);
+                case BlindPreacherId:
+                    return new SurvivorProfile(BlindPreacherId, SonarId, QuestlineSO.Ids.AVoiceInTheDark);
+                case PrepperId:
+                    return new SurvivorProfile(PrepperId, ImprovisedEngineeringId, QuestlineSO.Ids.TheBunkerBreached);
+                case OutcastId:
+                    return new SurvivorProfile(OutcastId, RadiotrophicId, QuestlineSO.Ids.EmbracingTheGlow);
+                case FeralOrphanId:
+                    return new SurvivorProfile(FeralOrphanId, ApexScavengerId, QuestlineSO.Ids.ThePack);
+                case PacifistId:
+                    return new SurvivorProfile(PacifistId, ZenStateId, QuestlineSO.Ids.TheUltimateTest);
+                case WidowId:
+                    return new SurvivorProfile(WidowId, MasterGeneticistId, QuestlineSO.Ids.TheLastSeed);
+                case ExConId:
+                    return new SurvivorProfile(ExConId, TheEnforcerId, QuestlineSO.Ids.RedemptionArc);
+                case SheriffId:
+                    return new SurvivorProfile(SheriffId, LegendOfTheWastesId, QuestlineSO.Ids.TheLastRide);
+                case FormerPoliticianId:
+                    return new SurvivorProfile(FormerPoliticianId, TheStatesmanId, QuestlineSO.Ids.ARealLeader);
+                case TechBroId:
+                    return new SurvivorProfile(TechBroId, CyberneticsId, QuestlineSO.Ids.TheHardReboot);
+                case NewsAnchorId:
+                    return new SurvivorProfile(NewsAnchorId, BeaconOfTruthId, QuestlineSO.Ids.TheFinalBroadcast);
+                case NomadId:
+                    return new SurvivorProfile(NomadId, MasterPathologistId, QuestlineSO.Ids.PuttingDownRoots);
+                case ExecId:
+                    return new SurvivorProfile(ExecId, MonopolistId, QuestlineSO.Ids.TheGoldenParachute);
                 default:
                     return null;
             }
@@ -792,35 +1058,60 @@ namespace AtomicWar._Game.Survivors
                 ThePollyannaId => "The Pollyanna",
                 MartyrId => "The Martyr",
                 ArrogantSurgeonId => "The Arrogant Surgeon",
+                RelapsingAddictId => "The Relapsing Addict",
+                InsomniacId => "The Insomniac",
+                HypochondriacId => "The Hypochondriac",
+                PyromaniacId => "The Pyromaniac",
+                BlindPreacherId => "The Blind Preacher",
+                PrepperId => "The Prepper",
+                OutcastId => "The Outcast",
+                FeralOrphanId => "The Feral Orphan",
+                PacifistId => "The Pacifist",
+                WidowId => "The Widow",
+                ExConId => "The Ex-Con",
+                SheriffId => "The Sheriff",
+                FormerPoliticianId => "The Former Politician",
+                TechBroId => "The Tech Bro",
+                NewsAnchorId => "The News Anchor",
+                NomadId => "The Nomad",
+                ExecId => "The Exec",
                 _ => archetypeId
             };
             string discipline = "survival";
             if (archetypeId == SurgeonId || archetypeId == PharmacistId
                 || archetypeId == VetId || archetypeId == TherapistId
                 || archetypeId == ChemistId || archetypeId == AddictId
-                || archetypeId == ArrogantSurgeonId)
+                || archetypeId == ArrogantSurgeonId || archetypeId == RelapsingAddictId
+                || archetypeId == HypochondriacId || archetypeId == OutcastId)
                 discipline = "medical";
             else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId
                 || archetypeId == FirefighterId || archetypeId == DefectorId
                 || archetypeId == AthleteId || archetypeId == HardenedDaughterId
                 || archetypeId == SerialKillerId || archetypeId == GeneralId
                 || archetypeId == DeserterId || archetypeId == ChildSoldierId
-                || archetypeId == SaboteurId)
+                || archetypeId == SaboteurId || archetypeId == SheriffId
+                || archetypeId == ExConId || archetypeId == PyromaniacId)
                 discipline = "combat";
             else if (archetypeId == HunterId || archetypeId == CourierId
                 || archetypeId == BurglarId || archetypeId == MechanicId
                 || archetypeId == ReporterId || archetypeId == TailorId
                 || archetypeId == NaiveSonId || archetypeId == HoarderId
-                || archetypeId == QuartermasterId)
+                || archetypeId == QuartermasterId || archetypeId == PrepperId
+                || archetypeId == NomadId || archetypeId == FeralOrphanId
+                || archetypeId == ExecId || archetypeId == TechBroId)
                 discipline = "scavenging";
             else if (archetypeId == TeacherId || archetypeId == PoliticianId
                 || archetypeId == PriestId || archetypeId == RadioHostId
                 || archetypeId == HistorianId || archetypeId == ParentId
                 || archetypeId == FierceMotherId || archetypeId == LiarId
                 || archetypeId == PsychopathId || archetypeId == EmpathId
-                || archetypeId == MartyrId || archetypeId == ThePollyannaId)
+                || archetypeId == MartyrId || archetypeId == ThePollyannaId
+                || archetypeId == BlindPreacherId || archetypeId == PacifistId
+                || archetypeId == WidowId || archetypeId == FormerPoliticianId
+                || archetypeId == NewsAnchorId)
                 discipline = "social";
-            else if (archetypeId == ExhaustedFatherId || archetypeId == MisanthropeId)
+            else if (archetypeId == ExhaustedFatherId || archetypeId == MisanthropeId
+                || archetypeId == InsomniacId)
                 discipline = "survival";
             var sv = new Survivor
             {
@@ -2319,7 +2610,27 @@ namespace AtomicWar._Game.Survivors
         public bool HasLoneWolf(Survivor sv) => HasTrait(sv, LoneWolfId);
         public bool HasGroundedOptimist(Survivor sv) => HasTrait(sv, GroundedOptimistId);
         public bool HasLivingSaint(Survivor sv) => HasTrait(sv, LivingSaintId);
-        public bool HasHumbledHealer(Survivor sv) => HasTrait(sv, HumbledHealerId);
+                public bool HasHumbledHealer(Survivor sv) => HasTrait(sv, HumbledHealerId);
+
+        // Prompts #267–#276 latent
+        public bool HasCleanAndSober(Survivor sv) => HasTrait(sv, CleanAndSoberId);
+        public bool HasTheWatcher(Survivor sv) => HasTrait(sv, TheWatcherId);
+        public bool HasHyperAware(Survivor sv) => HasTrait(sv, HyperAwareId);
+        public bool HasFireBreather(Survivor sv) => HasTrait(sv, FireBreatherId);
+        public bool HasSonar(Survivor sv) => HasTrait(sv, SonarId);
+        public bool HasImprovisedEngineering(Survivor sv) => HasTrait(sv, ImprovisedEngineeringId);
+        public bool HasRadiotrophic(Survivor sv) => HasTrait(sv, RadiotrophicId);
+        public bool HasApexScavenger(Survivor sv) => HasTrait(sv, ApexScavengerId);
+        public bool HasZenState(Survivor sv) => HasTrait(sv, ZenStateId);
+        public bool HasMasterGeneticist(Survivor sv) => HasTrait(sv, MasterGeneticistId);
+        // Prompts #277–#283 latent
+        public bool HasTheEnforcer(Survivor sv) => HasTrait(sv, TheEnforcerId);
+        public bool HasLegendOfTheWastes(Survivor sv) => HasTrait(sv, LegendOfTheWastesId);
+        public bool HasTheStatesman(Survivor sv) => HasTrait(sv, TheStatesmanId);
+        public bool HasCybernetics(Survivor sv) => HasTrait(sv, CyberneticsId);
+        public bool HasBeaconOfTruth(Survivor sv) => HasTrait(sv, BeaconOfTruthId);
+        public bool HasMasterPathologist(Survivor sv) => HasTrait(sv, MasterPathologistId);
+        public bool HasMonopolist(Survivor sv) => HasTrait(sv, MonopolistId);
 
         // Base traits
         public bool HasSelfless(Survivor sv) => HasBaseTrait(sv, SelflessId);
@@ -2345,6 +2656,24 @@ namespace AtomicWar._Game.Survivors
         public bool HasSacrificial(Survivor sv) => HasBaseTrait(sv, SacrificialId);
         public bool HasGodComplex(Survivor sv) =>
             HasBaseTrait(sv, GodComplexId) && !HasHumbledHealer(sv);
+        // #267–#276 base
+        public bool HasRestless(Survivor sv) => HasBaseTrait(sv, RestlessId) && !HasTheWatcher(sv);
+        public bool HasParanoidHealth(Survivor sv) => HasBaseTrait(sv, ParanoidHealthId) && !HasHyperAware(sv);
+        public bool HasFascination(Survivor sv) => HasBaseTrait(sv, FascinationId);
+        public bool HasBlind(Survivor sv) => HasBaseTrait(sv, BlindId);
+        public bool HasParanoid(Survivor sv) => HasBaseTrait(sv, ParanoidId);
+        public bool HasAnimalistic(Survivor sv) => HasBaseTrait(sv, AnimalisticId) && !HasApexScavenger(sv);
+        public bool HasVowOfNonviolence(Survivor sv) => HasBaseTrait(sv, VowOfNonviolenceId);
+        public bool HasGrieving(Survivor sv) => HasBaseTrait(sv, GrievingId) && !HasMasterGeneticist(sv);
+        // #277–#283 base
+        public bool HasDistrusted(Survivor sv) => HasBaseTrait(sv, DistrustedId) && !HasTheEnforcer(sv);
+        public bool HasMoralCompass(Survivor sv) => HasBaseTrait(sv, MoralCompassId);
+        public bool HasFailingHeart(Survivor sv) => HasBaseTrait(sv, FailingHeartId) && !HasLegendOfTheWastes(sv);
+        public bool HasSilverTongue(Survivor sv) => HasBaseTrait(sv, SilverTongueId);
+        public bool HasDelusional(Survivor sv) => HasBaseTrait(sv, DelusionalId) && !HasCybernetics(sv);
+        public bool HasPhotogenic(Survivor sv) => HasBaseTrait(sv, PhotogenicId);
+        public bool HasAgoraphile(Survivor sv) => HasBaseTrait(sv, AgoraphileId) && !HasMasterPathologist(sv);
+        public bool HasRuthless(Survivor sv) => HasBaseTrait(sv, RuthlessId) && !HasMonopolist(sv);
 
         public static bool HasBaseTrait(Survivor sv, string traitId)
         {
@@ -2744,7 +3073,7 @@ namespace AtomicWar._Game.Survivors
 
         // ── #247 Chem-Resistant ──────────────────────────────────────────
 
-        public bool ImmuneToAddiction(Survivor sv) => HasChemResistant(sv);
+        public bool ImmuneToAddiction(Survivor sv) => HasChemResistant(sv) || HasCleanAndSober(sv);
 
         public float GetMedicalHealMultiplier(Survivor patient) =>
             HasChemResistant(patient) ? ChemResistantHealMult : 1f;
@@ -2883,8 +3212,14 @@ namespace AtomicWar._Game.Survivors
         public float GetCraftRepairFatigueDrainMultiplier(Survivor sv) =>
             HasWorkaholic(sv) ? WorkaholicCraftFatigueDrainMult : 1f;
 
-        public float GetSleepFatigueRestoreMultiplier(Survivor sv) =>
-            HasWorkaholic(sv) ? WorkaholicSleepRestoreMult : 1f;
+        public float GetSleepFatigueRestoreMultiplier(Survivor sv)
+        {
+            // #268 Restless: sleep restores only 20% fatigue per cycle.
+            if (HasRestless(sv)) return RestlessSleepRestoreFrac;
+            // #250 Workaholic: half restore.
+            if (HasWorkaholic(sv)) return WorkaholicSleepRestoreMult;
+            return 1f;
+        }
 
         /// <summary>#250 AI quirk: ignore Rest until fatigue ≥ 95%.</summary>
         public bool ShouldIgnoreRestAction(Survivor sv) =>
@@ -3200,6 +3535,42 @@ namespace AtomicWar._Game.Survivors
                 maxStages: 1, node: null, evt: "evt_ultimate_price");
             RegisterDefault(QuestlineSO.Ids.TheBotchedJob, "The Botched Job", HumbledHealerId,
                 maxStages: BotchedJobDepressionDays, node: null, evt: null);
+            // Prompts #267–#276
+            RegisterDefault(QuestlineSO.Ids.ColdTurkey, "Cold Turkey", CleanAndSoberId,
+                maxStages: ColdTurkeyDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLongNight, "The Long Night", TheWatcherId,
+                maxStages: LongNightGuardNightsRequired, node: null, evt: "evt_long_night_guard");
+            RegisterDefault(QuestlineSO.Ids.TheRealIllness, "The Real Illness", HyperAwareId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TrialByFire, "Trial by Fire", FireBreatherId,
+                maxStages: TrialByFireExtinguishRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.AVoiceInTheDark, "A Voice in the Dark", SonarId,
+                maxStages: VoiceInDarkConvertsRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheBunkerBreached, "The Bunker Breached", ImprovisedEngineeringId,
+                maxStages: 1, node: null, evt: "evt_bunker_breached");
+            RegisterDefault(QuestlineSO.Ids.EmbracingTheGlow, "Embracing the Glow", RadiotrophicId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.ThePack, "The Pack", ApexScavengerId,
+                maxStages: PackTrainingDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheUltimateTest, "The Ultimate Test", ZenStateId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLastSeed, "The Last Seed", MasterGeneticistId,
+                maxStages: 1, node: null, evt: null);
+            // Prompts #277–#283
+            RegisterDefault(QuestlineSO.Ids.RedemptionArc, "Redemption Arc", TheEnforcerId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLastRide, "The Last Ride", LegendOfTheWastesId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.ARealLeader, "A Real Leader", TheStatesmanId,
+                maxStages: RealLeaderDirtyDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheHardReboot, "The Hard Reboot", CyberneticsId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheFinalBroadcast, "The Final Broadcast", BeaconOfTruthId,
+                maxStages: 1, node: "the_radio_tower", evt: null);
+            RegisterDefault(QuestlineSO.Ids.PuttingDownRoots, "Putting Down Roots", MasterPathologistId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheGoldenParachute, "The Golden Parachute", MonopolistId,
+                maxStages: 1, node: null, evt: null);
         }
 
         private void RegisterDefault(
@@ -3295,7 +3666,18 @@ namespace AtomicWar._Game.Survivors
                     CriticalSurgeryFailed = s.CriticalSurgeryFailed,
                     ScrapMechanicalParts = s.ScrapMechanicalParts,
                     ScrapElectronicScrap = s.ScrapElectronicScrap,
-                    ScrapChemicals = s.ScrapChemicals
+                    ScrapChemicals = s.ScrapChemicals,
+                    ColdTurkeyCleanDays = s.ColdTurkeyCleanDays,
+                    LongNightGuardNights = s.LongNightGuardNights,
+                    FiresExtinguished = s.FiresExtinguished,
+                    DespairToHopeConverts = s.DespairToHopeConverts,
+                    PackTrainingDays = s.PackTrainingDays,
+                    RealLeaderDirtyDays = s.RealLeaderDirtyDays,
+                    NomadInsideDays = s.NomadInsideDays,
+                    PrepperMreRemaining = s.PrepperMreRemaining,
+                    HungerStrikeActive = s.HungerStrikeActive,
+                    TechTabletDead = s.TechTabletDead,
+                    SheriffStaminaMax = s.SheriffStaminaMax
                 });
             }
             save.PillarOfAtlasDeathDebuffActive = PillarOfAtlasDeathDebuffActive;
@@ -3359,7 +3741,18 @@ namespace AtomicWar._Game.Survivors
                     CriticalSurgeryFailed = e.CriticalSurgeryFailed,
                     ScrapMechanicalParts = e.ScrapMechanicalParts,
                     ScrapElectronicScrap = e.ScrapElectronicScrap,
-                    ScrapChemicals = e.ScrapChemicals
+                    ScrapChemicals = e.ScrapChemicals,
+                    ColdTurkeyCleanDays = e.ColdTurkeyCleanDays,
+                    LongNightGuardNights = e.LongNightGuardNights,
+                    FiresExtinguished = e.FiresExtinguished,
+                    DespairToHopeConverts = e.DespairToHopeConverts,
+                    PackTrainingDays = e.PackTrainingDays,
+                    RealLeaderDirtyDays = e.RealLeaderDirtyDays,
+                    NomadInsideDays = e.NomadInsideDays,
+                    PrepperMreRemaining = e.PrepperMreRemaining,
+                    HungerStrikeActive = e.HungerStrikeActive,
+                    TechTabletDead = e.TechTabletDead,
+                    SheriffStaminaMax = e.SheriffStaminaMax
                 };
             }
         }
@@ -3412,6 +3805,18 @@ namespace AtomicWar._Game.Survivors
             public int ScrapMechanicalParts;
             public int ScrapElectronicScrap;
             public int ScrapChemicals;
+            // #267–#283
+            public int ColdTurkeyCleanDays;
+            public int LongNightGuardNights;
+            public int FiresExtinguished;
+            public int DespairToHopeConverts;
+            public int PackTrainingDays;
+            public int RealLeaderDirtyDays;
+            public int NomadInsideDays;
+            public float PrepperMreRemaining;
+            public bool HungerStrikeActive;
+            public bool TechTabletDead;
+            public float SheriffStaminaMax;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
@@ -3459,7 +3864,18 @@ namespace AtomicWar._Game.Survivors
                 CriticalSurgeryFailed = CriticalSurgeryFailed,
                 ScrapMechanicalParts = ScrapMechanicalParts,
                 ScrapElectronicScrap = ScrapElectronicScrap,
-                ScrapChemicals = ScrapChemicals
+                ScrapChemicals = ScrapChemicals,
+                ColdTurkeyCleanDays = ColdTurkeyCleanDays,
+                LongNightGuardNights = LongNightGuardNights,
+                FiresExtinguished = FiresExtinguished,
+                DespairToHopeConverts = DespairToHopeConverts,
+                PackTrainingDays = PackTrainingDays,
+                RealLeaderDirtyDays = RealLeaderDirtyDays,
+                NomadInsideDays = NomadInsideDays,
+                PrepperMreRemaining = PrepperMreRemaining,
+                HungerStrikeActive = HungerStrikeActive,
+                TechTabletDead = TechTabletDead,
+                SheriffStaminaMax = SheriffStaminaMax
             };
         }
     }
@@ -3542,5 +3958,17 @@ namespace AtomicWar._Game.Survivors
         public int ScrapMechanicalParts;
         public int ScrapElectronicScrap;
         public int ScrapChemicals;
+        // #267–#283
+        public int ColdTurkeyCleanDays;
+        public int LongNightGuardNights;
+        public int FiresExtinguished;
+        public int DespairToHopeConverts;
+        public int PackTrainingDays;
+        public int RealLeaderDirtyDays;
+        public int NomadInsideDays;
+        public float PrepperMreRemaining;
+        public bool HungerStrikeActive;
+        public bool TechTabletDead;
+        public float SheriffStaminaMax;
     }
 }

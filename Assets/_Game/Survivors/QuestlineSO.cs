@@ -90,6 +90,25 @@ namespace AtomicWar._Game.Survivors
             public const string ShatteredGlass = "quest_shattered_glass";
             public const string TheUltimatePrice = "quest_the_ultimate_price";
             public const string TheBotchedJob = "quest_the_botched_job";
+            // Prompts #267–#276 chemistry / adapted
+            public const string ColdTurkey = "quest_cold_turkey";
+            public const string TheLongNight = "quest_the_long_night";
+            public const string TheRealIllness = "quest_the_real_illness";
+            public const string TrialByFire = "quest_trial_by_fire";
+            public const string AVoiceInTheDark = "quest_a_voice_in_the_dark";
+            public const string TheBunkerBreached = "quest_the_bunker_breached";
+            public const string EmbracingTheGlow = "quest_embracing_the_glow";
+            public const string ThePack = "quest_the_pack";
+            public const string TheUltimateTest = "quest_the_ultimate_test";
+            public const string TheLastSeed = "quest_the_last_seed";
+            // Prompts #277–#283 titles
+            public const string RedemptionArc = "quest_redemption_arc";
+            public const string TheLastRide = "quest_the_last_ride";
+            public const string ARealLeader = "quest_a_real_leader";
+            public const string TheHardReboot = "quest_the_hard_reboot";
+            public const string TheFinalBroadcast = "quest_the_final_broadcast";
+            public const string PuttingDownRoots = "quest_putting_down_roots";
+            public const string TheGoldenParachute = "quest_the_golden_parachute";
         }
     }
 }

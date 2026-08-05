@@ -548,5 +548,210 @@
     "baseTraits": [
       "trait_god_complex"
     ]
+  },
+  {
+    "id": "the_relapsing_addict",
+    "displayName": "The Relapsing Addict",
+    "profession": "Addict",
+    "bio": "The hands shake for amphetamines. Below forty morale the locks mean nothing. Twenty-one clean days or the chemistry wins.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_clean_and_sober",
+    "activeQuestlineId": "quest_cold_turkey",
+    "baseTraits": [
+      "addicted"
+    ]
+  },
+  {
+    "id": "the_insomniac",
+    "displayName": "The Insomniac",
+    "profession": "Night Watch",
+    "bio": "Sleep is a rumor. Beds return almost nothing. Five nights alone on the hatch, or the pacing never ends.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_the_watcher",
+    "activeQuestlineId": "quest_the_long_night",
+    "baseTraits": [
+      "trait_restless"
+    ]
+  },
+  {
+    "id": "the_hypochondriac",
+    "displayName": "The Hypochondriac",
+    "profession": "Patient",
+    "bio": "Every cough is a death sentence until the placebo. Real sepsis is the only diagnosis that sticks.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_hyper_aware",
+    "activeQuestlineId": "quest_the_real_illness",
+    "baseTraits": [
+      "trait_paranoid_health"
+    ]
+  },
+  {
+    "id": "the_pyromaniac",
+    "displayName": "The Pyromaniac",
+    "profession": "Arsonist",
+    "bio": "Heaters are churches. Low morale smells like smoke. Five fires put out, or the bunker burns.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_fire_breather",
+    "activeQuestlineId": "quest_trial_by_fire",
+    "baseTraits": [
+      "trait_fascination"
+    ]
+  },
+  {
+    "id": "the_blind_preacher",
+    "displayName": "The Blind Preacher",
+    "profession": "Preacher",
+    "bio": "No expeditions. No guns. Only sound and three conversions from despair. The walls speak first.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_sonar",
+    "activeQuestlineId": "quest_a_voice_in_the_dark",
+    "baseTraits": [
+      "trait_blind"
+    ]
+  },
+  {
+    "id": "the_prepper",
+    "displayName": "The Prepper",
+    "profession": "Prepper",
+    "bio": "Paranoid before the sirens. Own MREs only. Survive the day the hatch is gone.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_improvised_engineering",
+    "activeQuestlineId": "quest_the_bunker_breached",
+    "baseTraits": [
+      "trait_paranoid"
+    ]
+  },
+  {
+    "id": "the_outcast",
+    "displayName": "The Outcast",
+    "profession": "Mutant",
+    "bio": "Eight hundred millisieverts and counting. Meals alone. One thousand without dying is the only home left.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_radiotrophic",
+    "activeQuestlineId": "quest_embracing_the_glow",
+    "baseTraits": []
+  },
+  {
+    "id": "the_feral_orphan",
+    "displayName": "The Feral Orphan",
+    "profession": "Child",
+    "bio": "No words. Raw meat. Sleeps on concrete. Thirty days under the Vet or the Fierce Mother.",
+    "baseHealth": 75,
+    "latentExpertTrait": "trait_apex_scavenger",
+    "activeQuestlineId": "quest_the_pack",
+    "baseTraits": [
+      "trait_animalistic"
+    ],
+    "isChild": true
+  },
+  {
+    "id": "the_pacifist",
+    "displayName": "The Pacifist",
+    "profession": "Monk",
+    "bio": "No weapons. Always flees. A needless kill and the hunger strike begins. Level five, zero damage.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_zen_state",
+    "activeQuestlineId": "quest_the_ultimate_test",
+    "baseTraits": [
+      "trait_vow_of_nonviolence"
+    ]
+  },
+  {
+    "id": "the_widow",
+    "displayName": "The Widow",
+    "profession": "Botanist",
+    "bio": "Grief steals the work. Hydroponics before sleep. One Pre-War Rose, and the crying stops.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_master_geneticist",
+    "activeQuestlineId": "quest_the_last_seed",
+    "baseTraits": [
+      "trait_grieving"
+    ]
+  },
+  {
+    "id": "the_ex_con",
+    "displayName": "The Ex-Con",
+    "profession": "Laborer",
+    "bio": "Stashes lock when the door opens. No orders from cops or generals. Drag one dying body home.",
+    "baseHealth": 110,
+    "latentExpertTrait": "trait_the_enforcer",
+    "activeQuestlineId": "quest_redemption_arc",
+    "baseTraits": [
+      "trait_distrusted"
+    ]
+  },
+  {
+    "id": "the_sheriff",
+    "displayName": "The Sheriff",
+    "profession": "Lawman",
+    "bio": "Morale for the room. A failing heart. Guard duty when no one else stands. One raider boss.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_legend_of_the_wastes",
+    "activeQuestlineId": "quest_the_last_ride",
+    "baseTraits": [
+      "trait_moral_compass",
+      "trait_failing_heart"
+    ]
+  },
+  {
+    "id": "the_former_politician",
+    "displayName": "The Former Politician",
+    "profession": "Politician",
+    "bio": "Charisma maxed. Labor skill zero. Fourteen dirty days in a row, or the delegation never ends.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_the_statesman",
+    "activeQuestlineId": "quest_a_real_leader",
+    "baseTraits": [
+      "trait_silver_tongue"
+    ]
+  },
+  {
+    "id": "the_tech_bro",
+    "displayName": "The Tech Bro",
+    "profession": "Engineer",
+    "bio": "The old world is coming back. The tablet wastes power. EMP, then a purifier from scrap.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_cybernetics",
+    "activeQuestlineId": "quest_the_hard_reboot",
+    "baseTraits": [
+      "trait_delusional",
+      "trait_arrogant"
+    ]
+  },
+  {
+    "id": "the_news_anchor",
+    "displayName": "The News Anchor",
+    "profession": "Anchor",
+    "bio": "Hygiene is a career. The journal never stops. One true broadcast from the tower.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_beacon_of_truth",
+    "activeQuestlineId": "quest_the_final_broadcast",
+    "baseTraits": [
+      "trait_photogenic"
+    ]
+  },
+  {
+    "id": "the_nomad",
+    "displayName": "The Nomad",
+    "profession": "Scavenger",
+    "bio": "Walls are a cage. Five days inside and the hatch opens alone. Build a bed worth staying for.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_master_pathologist",
+    "activeQuestlineId": "quest_putting_down_roots",
+    "baseTraits": [
+      "trait_agoraphile"
+    ]
+  },
+  {
+    "id": "the_exec",
+    "displayName": "The Exec",
+    "profession": "Executive",
+    "bio": "Modules work harder and die faster. In fire, inventory first. Ten thousand in trade value.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_monopolist",
+    "activeQuestlineId": "quest_the_golden_parachute",
+    "baseTraits": [
+      "trait_ruthless"
+    ]
   }
 ]
