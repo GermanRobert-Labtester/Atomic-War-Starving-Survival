@@ -5,6 +5,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Crafting
 {
@@ -28,14 +29,28 @@ namespace AtomicWar._Game.Crafting
         private readonly Func<Shelter.Shelter> _getShelter;
         private readonly Func<int> _getDay;
         private HatchDefenseSystem _hatchDefense;
+        private SurvivalPerkSystem _survivalPerks;
+        private NeedsSystem _needs;
+        private ItemDefinition _moonshineDef;
+        private ItemDefinition _mutatedFungiDef;
+        private ItemDefinition _dirtyWaterDef;
+        private ItemDefinition _fuelDef;
 
         public event Action OnWorkbenchChanged;
         public event Action<ItemDefinition, List<ScrapYield>> OnDisassembled;
         public event Action<ItemDefinition> OnRepaired;
         public event Action<ItemDefinition> OnRecalibrated;
         public event Action<string> OnHatchUpgradeInstalled;
+        public event Action<Survivor> OnMoonshineCrafted;
+        public event Action<Survivor, bool> OnMoonshineConsumed; // sv, asFuel
 
         public HatchDefenseSystem HatchDefense => _hatchDefense;
+
+        public const string MoonshineRecipeId = "recipe_moonshine";
+        public const int MoonshineFungiCost = 2;
+        public const int MoonshineDirtyWaterCost = 1;
+        public const float MoonshineCraftHours = 2f;
+        public const float MoonshineAsFuelUnits = 1f;
 
         public WorkbenchSystem(
             Inventory.Inventory inventory,
@@ -56,6 +71,161 @@ namespace AtomicWar._Game.Crafting
         {
             _hatchDefense = hatchDefense;
             OnWorkbenchChanged?.Invoke();
+        }
+
+        /// <summary>Prompt #191 — Wasteland Brewer moonshine recipe gate.</summary>
+        public void BindSurvivalPerks(SurvivalPerkSystem perks, NeedsSystem needs = null)
+        {
+            _survivalPerks = perks;
+            _needs = needs;
+        }
+
+        public void SetMoonshineItems(
+            ItemDefinition moonshine,
+            ItemDefinition mutatedFungi = null,
+            ItemDefinition dirtyWater = null,
+            ItemDefinition fuel = null)
+        {
+            _moonshineDef = moonshine;
+            _mutatedFungiDef = mutatedFungi;
+            _dirtyWaterDef = dirtyWater;
+            _fuelDef = fuel;
+        }
+
+        public static ItemDefinition CreateMoonshineDefinition()
+        {
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = SurvivalPerkSystem.MoonshineId;
+            item.displayName = "Moonshine";
+            item.description =
+                "Still-run from mutated fungi and dirty water. Burns as low-grade fuel, " +
+                "or drowns the day in a glass — massive morale, massive hangover.";
+            item.type = ItemType.Fuel;
+            item.stackMax = 10;
+            item.weight = 1f;
+            item.tradeValue = 8f;
+            item.moraleEffect = SurvivalPerkSystem.MoonshineMoraleBoost;
+            return item;
+        }
+
+        public static ItemDefinition CreateMutatedFungiDefinition()
+        {
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = SurvivalPerkSystem.MutatedFungiId;
+            item.displayName = "Mutated Fungi";
+            item.description = "Pale fruiting bodies from the planter. Some are dinner. Some are death.";
+            item.type = ItemType.Material;
+            item.stackMax = 30;
+            item.weight = 0.3f;
+            item.contamination = 0.15f;
+            item.tradeValue = 2f;
+            return item;
+        }
+
+        // -----------------------------------------------------------------
+        // Prompt #191 — Moonshine distillation
+        // -----------------------------------------------------------------
+
+        public bool CanCraftMoonshine(Survivor brewer)
+        {
+            if (brewer == null || !brewer.IsAlive) return false;
+            if (_survivalPerks == null || !_survivalPerks.CanCraftMoonshine(brewer)) return false;
+            if (!HasOperationalWorkbench()) return false;
+            EnsureMoonshineItems();
+            if (_moonshineDef == null || !_inventory.CanAdd(_moonshineDef, 1)) return false;
+            if (_mutatedFungiDef == null || _inventory.Count(_mutatedFungiDef) < MoonshineFungiCost)
+                return false;
+            if (_dirtyWaterDef != null)
+            {
+                if (_inventory.Count(_dirtyWaterDef) < MoonshineDirtyWaterCost) return false;
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Convert MutatedFungi + DirtyWater → Moonshine (requires Wasteland Brewer).
+        /// </summary>
+        public bool CraftMoonshine(Survivor brewer)
+        {
+            if (!CanCraftMoonshine(brewer)) return false;
+            EnsureMoonshineItems();
+
+            if (!_inventory.Remove(_mutatedFungiDef, MoonshineFungiCost)) return false;
+            if (_dirtyWaterDef != null)
+                _inventory.Remove(_dirtyWaterDef, MoonshineDirtyWaterCost);
+
+            if (!_inventory.Add(_moonshineDef, 1))
+            {
+                // Best-effort refund fungi
+                _inventory.Add(_mutatedFungiDef, MoonshineFungiCost);
+                return false;
+            }
+
+            WearStation();
+            OnMoonshineCrafted?.Invoke(brewer);
+            OnWorkbenchChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Consume moonshine: asFuel → +low-grade fuel unit; otherwise morale boost + fatigue hangover.
+        /// </summary>
+        public bool ConsumeMoonshine(Survivor drinker, bool asFuel = false)
+        {
+            if (drinker == null || !drinker.IsAlive) return false;
+            EnsureMoonshineItems();
+            if (_moonshineDef == null || _inventory.Count(_moonshineDef) < 1) return false;
+            if (!_inventory.Remove(_moonshineDef, 1)) return false;
+
+            if (asFuel)
+            {
+                if (_fuelDef != null)
+                    _inventory.Add(_fuelDef, 1);
+                OnMoonshineConsumed?.Invoke(drinker, true);
+                OnWorkbenchChanged?.Invoke();
+                return true;
+            }
+
+            if (_needs != null)
+            {
+                _needs.Modify(drinker, NeedKind.Morale, SurvivalPerkSystem.MoonshineMoraleBoost);
+                _needs.Modify(drinker, NeedKind.Fatigue, SurvivalPerkSystem.MoonshineFatigueHit);
+            }
+            else
+            {
+                drinker.Needs.Morale = Mathf.Clamp(
+                    drinker.Needs.Morale + SurvivalPerkSystem.MoonshineMoraleBoost, 0f, 100f);
+                drinker.Needs.Fatigue = Mathf.Clamp(
+                    drinker.Needs.Fatigue + SurvivalPerkSystem.MoonshineFatigueHit, 0f, 100f);
+            }
+
+            OnMoonshineConsumed?.Invoke(drinker, false);
+            OnWorkbenchChanged?.Invoke();
+            return true;
+        }
+
+        private void EnsureMoonshineItems()
+        {
+            if (_moonshineDef == null)
+            {
+                var slot = _inventory.FindSlot(SurvivalPerkSystem.MoonshineId);
+                _moonshineDef = slot?.Item ?? CreateMoonshineDefinition();
+            }
+            if (_mutatedFungiDef == null)
+            {
+                var slot = _inventory.FindSlot(SurvivalPerkSystem.MutatedFungiId);
+                _mutatedFungiDef = slot?.Item ?? CreateMutatedFungiDefinition();
+            }
+            if (_dirtyWaterDef == null)
+            {
+                var slot = _inventory.FindSlot(SurvivalPerkSystem.DirtyWaterItemId);
+                if (slot?.Item != null) _dirtyWaterDef = slot.Item;
+            }
+            if (_fuelDef == null)
+            {
+                var slot = _inventory.FindSlot("fuel");
+                if (slot?.Item != null) _fuelDef = slot.Item;
+            }
         }
 
         public bool HasOperationalWorkbench()
