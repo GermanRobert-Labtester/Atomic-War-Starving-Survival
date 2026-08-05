@@ -104,6 +104,10 @@ namespace AtomicWar._Game.Medical
         public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
             _personalQuests = personalQuests;
 
+        /// <summary>Prompt #247 — Chem-Resistant meds heal 2x.</summary>
+        public float GetHealMultiplier(Survivor patient) =>
+            _personalQuests != null ? _personalQuests.GetMedicalHealMultiplier(patient) : 1f;
+
         public MedicalSystem(
             NeedsSystem needs,
             Inventory.Inventory inventory = null,

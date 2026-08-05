@@ -6,6 +6,12 @@ namespace AtomicWar._Game.Survivors
 {
     public class MentorshipSystem
     {
+        private PersonalQuestSystem _personalQuests;
+
+        /// <summary>Prompt #235 — Polymath mentors any skill.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
         public const float MentorSkillThreshold = 0.6f;
         public const float StudentSkillThreshold = 0.4f;
         public const float MoraleThreshold = 50f;
@@ -38,10 +44,12 @@ namespace AtomicWar._Game.Survivors
                 return false;
             }
 
-            // Skill thresholds
+            // Skill thresholds — Polymath (#235) may mentor any skill.
+            bool polymath = _personalQuests != null && _personalQuests.UnlocksSkillMentorshipForAllSkills(mentor);
             float mentorSkill = GetSkillValue(mentor, skillName);
             float studentSkill = GetSkillValue(student, skillName);
-
+            if (polymath)
+                return studentSkill <= StudentSkillThreshold;
             return mentorSkill >= MentorSkillThreshold && studentSkill <= StudentSkillThreshold;
         }
 

@@ -33,6 +33,12 @@ namespace AtomicWar._Game.Survivors
         private readonly Dictionary<string, PerkSO> _perkById =
             new Dictionary<string, PerkSO>();
 
+        private PersonalQuestSystem _personalQuests;
+
+        /// <summary>Prompt #235 — Polymath 3x action perk XP.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
         public event Action<Survivor, string, float> OnXpGained;          // sv, discipline, newXp
         public event Action<Survivor, PerkSO> OnPerkEarned;
         public event Action<Survivor, PerkSO> OnPerkDormant;
@@ -178,7 +184,7 @@ namespace AtomicWar._Game.Survivors
         }
 
         /// <summary>
-        /// Latent expert traits (Prompts #214–#234). Unreachable via action XP —
+        /// Latent expert traits (Prompts #214–#248). Unreachable via action XP —
         /// granted only when a personal questline completes.
         /// Marked isExpertPerk so only the predetermined expert track may hold them
         /// (PersonalQuestSystem also grants via TryGrantPerk after quest finish).
@@ -210,6 +216,21 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GhostId, "Ghost", "scavenging", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.StormcallerId, "Stormcaller", "survival", milestoneOnly, 0.15f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.RadWalkerId, "Rad-Walker", "survival", milestoneOnly, 0.25f, false));
+            // Prompts #235–#248
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.PolymathId, "Polymath", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DemagogueId, "Demagogue", "social", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ShepherdId, "Shepherd", "social", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MuckrakerId, "Muckraker", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.VoiceOfTheWastesId, "Voice of the Wastes", "social", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.IronChefId, "Iron Chef", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.TirelessId, "Tireless", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.AsbestosId, "Asbestos", "combat", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ArmorerId, "Armorer", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.TinkererId, "Tinkerer", "survival", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.LorekeeperId, "Lorekeeper", "social", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ZealotsBaneId, "Zealot's Bane", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ChemResistantId, "Chem-Resistant", "medical", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ProtectorId, "Protector", "social", milestoneOnly, 0.25f, false));
         }
 
         /// <summary>
@@ -277,8 +298,14 @@ namespace AtomicWar._Game.Survivors
             if (TryStressEpiphany(survivor, state, disciplineId, rng))
                 return;
 
+            // Prompt #235 — Polymath learns action-driven perks 3x faster.
+            float mult = _personalQuests != null
+                ? _personalQuests.GetActionPerkXpMultiplier(survivor)
+                : 1f;
+            float awarded = xpAmount * mult;
+
             float prev = state.Xp.TryGetValue(disciplineId, out float existing) ? existing : 0f;
-            float next = prev + xpAmount;
+            float next = prev + awarded;
             state.Xp[disciplineId] = next;
             OnXpGained?.Invoke(survivor, disciplineId, next);
 

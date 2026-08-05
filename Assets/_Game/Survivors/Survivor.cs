@@ -347,6 +347,11 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public float BaseMaxHealth = 100f;
 
+        /// <summary>
+        /// Base max stamina before disabilities. Tireless (#241) triples this permanently.
+        /// </summary>
+        public float BaseMaxStamina = 100f;
+
         /// <summary>Maximum dynamic health cap for this survivor (caps at 75 if ScarredLungs present).</summary>
         public float MaxHealthCap
         {
@@ -445,13 +450,15 @@ namespace AtomicWar._Game.Survivors
             }
         }
 
-        /// <summary>Maximum stamina cap (reduced to 60 by LungFibrosis).</summary>
+        /// <summary>Maximum stamina cap (reduced to 60 by LungFibrosis; Tireless multiplies base).</summary>
         public float MaxStaminaCap
         {
             get
             {
-                if (!ActiveChronicIllness.HasValue) return 100f;
-                return ActiveChronicIllness.Value == ChronicIllnessKind.LungFibrosis ? 60f : 100f;
+                float baseStam = BaseMaxStamina > 0f ? BaseMaxStamina : 100f;
+                if (!ActiveChronicIllness.HasValue) return baseStam;
+                return ActiveChronicIllness.Value == ChronicIllnessKind.LungFibrosis
+                    ? Mathf.Min(60f, baseStam) : baseStam;
             }
         }
 

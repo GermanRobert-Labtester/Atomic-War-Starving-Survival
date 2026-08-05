@@ -19,6 +19,12 @@ namespace AtomicWar._Game.Medical
     /// </summary>
     public class AddictionSystem
     {
+        private Survivors.PersonalQuestSystem _personalQuests;
+
+        /// <summary>Prompt #247 — Chem-Resistant: never re-addict from stims.</summary>
+        public void BindPersonalQuests(Survivors.PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
         /// <summary>Snake_case trait id added when the survivor becomes addicted.</summary>
         public const string AddictedTraitId = "addicted";
 
@@ -111,6 +117,17 @@ namespace AtomicWar._Game.Medical
         {
             if (sv == null || string.IsNullOrEmpty(itemId)) return;
             if (!IsAddictive(itemId)) return;
+            // Prompt #247 — Chem-Resistant never gains addiction again.
+            if (_personalQuests != null && _personalQuests.ImmuneToAddiction(sv))
+            {
+                sv.HoursSinceLastDose = 0f;
+                if (sv.IsInWithdrawal)
+                {
+                    sv.IsInWithdrawal = false;
+                    OnWithdrawalEnded?.Invoke(sv);
+                }
+                return;
+            }
 
             // Ensure list is initialized (JsonUtility leaves it null on empty save)
             if (sv.ConsumptionHistory == null)

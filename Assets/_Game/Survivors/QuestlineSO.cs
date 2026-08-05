@@ -30,7 +30,7 @@ namespace AtomicWar._Game.Survivors
         [Tooltip("Optional bunker narrative event id to queue when the questline begins.")]
         public string spawnBunkerEventId;
 
-        /// <summary>Canonical questline ids (Prompts #215–#234).</summary>
+        /// <summary>Canonical questline ids (Prompts #215–#248).</summary>
         public static class Ids
         {
             public const string ShakingHand = "quest_the_shaking_hand";
@@ -55,6 +55,21 @@ namespace AtomicWar._Game.Survivors
             public const string TheBankHeist = "quest_the_bank_heist";
             public const string TheRadarStation = "quest_the_radar_station";
             public const string GroundZero = "quest_ground_zero";
+            // Prompts #235–#248
+            public const string TheAbandonedSchool = "quest_the_abandoned_school";
+            public const string TheRally = "quest_the_rally";
+            public const string CrisisOfFaith = "quest_crisis_of_faith";
+            public const string TruthOfDay30 = "quest_truth_of_day_30";
+            public const string DeadAir = "quest_dead_air";
+            public const string TheFinalHarvest = "quest_the_final_harvest";
+            public const string TheMarathon = "quest_the_marathon";
+            public const string TheInferno = "quest_the_inferno";
+            public const string TheKevlarLoom = "quest_the_kevlar_loom";
+            public const string BrokenChronometer = "quest_broken_chronometer";
+            public const string MuseumArchive = "quest_museum_archive";
+            public const string TheCleansing = "quest_the_cleansing";
+            public const string TheLastStash = "quest_the_last_stash";
+            public const string TheLocket = "quest_the_locket";
         }
     }
 }

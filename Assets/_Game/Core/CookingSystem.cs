@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
         private readonly Inventory.Inventory _inventory;
         private readonly WaterStorage _water;
         private SurvivalPerkSystem _survivalPerks;
+        private PersonalQuestSystem _personalQuests;
         private readonly System.Random _rng;
         private Func<int> _getDay;
         private ItemDefinition _mealDef;
@@ -43,6 +44,22 @@ namespace AtomicWar._Game.Core
         {
             _survivalPerks = perks;
             _getDay = getDay ?? (() => 0);
+        }
+
+        /// <summary>Prompt #240 — Iron Chef full restore meals.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
+
+        /// <summary>Serve a cooked meal; Iron Chef fully restores needs.</summary>
+        public void ServeMeal(Survivor cook, Survivor eater)
+        {
+            if (eater == null || !eater.IsAlive) return;
+            if (_personalQuests != null && _personalQuests.MealsFullyRestoreNeeds(cook))
+            {
+                _personalQuests.ApplyIronChefMeal(eater);
+                return;
+            }
+            eater.Needs.Hunger = Mathf.Max(0f, eater.Needs.Hunger - 45f);
         }
 
         public void SetMealDefinition(ItemDefinition meal) => _mealDef = meal;

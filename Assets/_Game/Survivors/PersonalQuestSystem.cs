@@ -5,7 +5,7 @@ using UnityEngine;
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
-    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#234).
+    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#248).
     /// Survivors do not start with their Expert Trait. After 30 days alive OR
     /// a Morale 0→100 recovery, their assigned questline begins. Completing
     /// the final stage permanently unlocks the latent expert trait.
@@ -36,6 +36,21 @@ namespace AtomicWar._Game.Survivors
         public const string GhostId = "trait_ghost";
         public const string StormcallerId = "trait_stormcaller";
         public const string RadWalkerId = "trait_rad_walker";
+        // Prompts #235–#248
+        public const string PolymathId = "trait_polymath";
+        public const string DemagogueId = "trait_demagogue";
+        public const string ShepherdId = "trait_shepherd";
+        public const string MuckrakerId = "trait_muckraker";
+        public const string VoiceOfTheWastesId = "trait_voice_of_the_wastes";
+        public const string IronChefId = "trait_iron_chef";
+        public const string TirelessId = "trait_tireless";
+        public const string AsbestosId = "trait_asbestos";
+        public const string ArmorerId = "trait_armorer";
+        public const string TinkererId = "trait_tinkerer";
+        public const string LorekeeperId = "trait_lorekeeper";
+        public const string ZealotsBaneId = "trait_zealots_bane";
+        public const string ChemResistantId = "trait_chem_resistant";
+        public const string ProtectorId = "trait_protector";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -58,6 +73,21 @@ namespace AtomicWar._Game.Survivors
         public const string BurglarId = "the_burglar";
         public const string MeteorologistId = "the_meteorologist";
         public const string HazmatTechId = "the_hazmat_tech";
+        // Prompts #235–#248
+        public const string TeacherId = "the_teacher";
+        public const string PoliticianId = "the_politician";
+        public const string PriestId = "the_priest";
+        public const string ReporterId = "the_reporter";
+        public const string RadioHostId = "the_radio_host";
+        public const string ChefId = "the_chef";
+        public const string AthleteId = "the_athlete";
+        public const string FirefighterId = "the_firefighter";
+        public const string TailorId = "the_tailor";
+        public const string WatchmakerId = "the_watchmaker";
+        public const string HistorianId = "the_historian";
+        public const string DefectorId = "the_defector";
+        public const string AddictId = "the_addict";
+        public const string ParentId = "the_parent";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -132,6 +162,64 @@ namespace AtomicWar._Game.Survivors
         public const float RadWalkerAbsorbCap = 0.5f; // 50% max absorption
         public const float GroundZeroRadPerHour = 10000f;
 
+        // #235 Polymath
+        public const int TeacherMourningDaysRequired = 7;
+        public const float PolymathPerkXpMult = 3f;
+
+        // #236 Demagogue
+        public const int PropagandaResolutionsRequired = 3;
+        public const float DemagogueTrustFloor = 0f;
+
+        // #237 Shepherd
+        public const float SermonDurationHours = 2f;
+        public const float SermonMoraleBoost = 20f;
+        public const string CrisisOfFaithBreakId = "crisis_of_faith";
+
+        // #238 Muckraker
+        public const int FirstStrikeIntelRequired = 5;
+
+        // #239 Voice of the Wastes
+        public const float DeadAirBroadcastHoursRequired = 48f;
+
+        // #240 Iron Chef
+        public const float LastSupperCookHours = 24f;
+        public const string LastSupperItemId = "the_last_supper";
+
+        // #241 Tireless
+        public const int MarathonMinNodesAway = 15;
+        public const float MarathonMaxHours = 48f;
+        public const float TirelessPoolMult = 3f;
+        public const float TirelessSleepHoursPerDay = 1f;
+
+        // #242 Asbestos
+        public const string GeneratorRoomId = "plant";
+        public const float InfernoBurnDamage = 40f;
+
+        // #243 Armorer
+        public const int ClothingScrapsRequired = 10;
+        public const float ArmorerClothingDegradeMult = 0.25f; // 75% slower
+        public const string ReinforcedHazmatSuitId = "reinforced_hazmat_suit";
+
+        // #244 Tinkerer
+        public const int WatchRepairScrapRequired = 50;
+
+        // #245 Lorekeeper
+        public const float LorekeeperJournalMoraleBoost = 15f;
+        public const float LorekeeperArtifactTradeMult = 2f;
+
+        // #246 Zealot's Bane
+        public const float ZealotsBaneCombatMult = 1.5f;
+
+        // #247 Chem-Resistant
+        public const int WithdrawalCleanDaysRequired = 14;
+        public const float ChemResistantHealMult = 2f;
+
+        // #248 Protector
+        public const float ProtectorHealthTriggerFrac = 0.10f;
+        public const float ProtectorBoostMult = 3f; // +200% = 3x
+        public const string DespairBreakId = "despair";
+        public const float ParentMourningDaysRequired = 7f;
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
         public const string FortifiedSquadNodeId = "fortified_squad_holdout";
@@ -171,6 +259,14 @@ namespace AtomicWar._Game.Survivors
         public const string ScarredLungsId = "scarred_lungs";
         public const string PipeBurstEventId = "evt_pipe_burst_city_mains";
         public const string ChlorineLeakEventId = "evt_chlorine_tank_leak";
+        public const string AbandonedSchoolNodeId = "the_abandoned_school";
+        public const string RationManifestItemId = "ration_manifest";
+        public const string RuinedMuseumNodeId = "the_ruined_museum";
+        public const string ConstitutionItemId = "the_constitution";
+        public const string HeirloomWatchItemId = "heirloom_watch";
+        public const string CultLeaderId = "cult_leader";
+        public const string FirstStrikeIntelPrefix = "first_strike_intel_";
+        public const string ChildDeathIntelId = "intel_child_death";
 
         private SkillProgressionSystem _progression;
         private readonly Dictionary<string, QuestlineSO> _questlines =
@@ -284,6 +380,34 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(MeteorologistId, StormcallerId, QuestlineSO.Ids.TheRadarStation);
                 case HazmatTechId:
                     return new SurvivorProfile(HazmatTechId, RadWalkerId, QuestlineSO.Ids.GroundZero);
+                case TeacherId:
+                    return new SurvivorProfile(TeacherId, PolymathId, QuestlineSO.Ids.TheAbandonedSchool);
+                case PoliticianId:
+                    return new SurvivorProfile(PoliticianId, DemagogueId, QuestlineSO.Ids.TheRally);
+                case PriestId:
+                    return new SurvivorProfile(PriestId, ShepherdId, QuestlineSO.Ids.CrisisOfFaith);
+                case ReporterId:
+                    return new SurvivorProfile(ReporterId, MuckrakerId, QuestlineSO.Ids.TruthOfDay30);
+                case RadioHostId:
+                    return new SurvivorProfile(RadioHostId, VoiceOfTheWastesId, QuestlineSO.Ids.DeadAir);
+                case ChefId:
+                    return new SurvivorProfile(ChefId, IronChefId, QuestlineSO.Ids.TheFinalHarvest);
+                case AthleteId:
+                    return new SurvivorProfile(AthleteId, TirelessId, QuestlineSO.Ids.TheMarathon);
+                case FirefighterId:
+                    return new SurvivorProfile(FirefighterId, AsbestosId, QuestlineSO.Ids.TheInferno);
+                case TailorId:
+                    return new SurvivorProfile(TailorId, ArmorerId, QuestlineSO.Ids.TheKevlarLoom);
+                case WatchmakerId:
+                    return new SurvivorProfile(WatchmakerId, TinkererId, QuestlineSO.Ids.BrokenChronometer);
+                case HistorianId:
+                    return new SurvivorProfile(HistorianId, LorekeeperId, QuestlineSO.Ids.MuseumArchive);
+                case DefectorId:
+                    return new SurvivorProfile(DefectorId, ZealotsBaneId, QuestlineSO.Ids.TheCleansing);
+                case AddictId:
+                    return new SurvivorProfile(AddictId, ChemResistantId, QuestlineSO.Ids.TheLastStash);
+                case ParentId:
+                    return new SurvivorProfile(ParentId, ProtectorId, QuestlineSO.Ids.TheLocket);
                 default:
                     return null;
             }
@@ -315,18 +439,39 @@ namespace AtomicWar._Game.Survivors
                 BurglarId => "The Burglar",
                 MeteorologistId => "The Meteorologist",
                 HazmatTechId => "The Hazmat Tech",
+                TeacherId => "The Teacher",
+                PoliticianId => "The Politician",
+                PriestId => "The Priest",
+                ReporterId => "The Reporter",
+                RadioHostId => "The Radio Host",
+                ChefId => "The Chef",
+                AthleteId => "The Athlete",
+                FirefighterId => "The Firefighter",
+                TailorId => "The Tailor",
+                WatchmakerId => "The Watchmaker",
+                HistorianId => "The Historian",
+                DefectorId => "The Defector",
+                AddictId => "The Addict",
+                ParentId => "The Parent",
                 _ => archetypeId
             };
             string discipline = "survival";
             if (archetypeId == SurgeonId || archetypeId == PharmacistId
                 || archetypeId == VetId || archetypeId == TherapistId
-                || archetypeId == ChemistId)
+                || archetypeId == ChemistId || archetypeId == AddictId)
                 discipline = "medical";
-            else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId)
+            else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId
+                || archetypeId == FirefighterId || archetypeId == DefectorId
+                || archetypeId == AthleteId)
                 discipline = "combat";
             else if (archetypeId == HunterId || archetypeId == CourierId
-                || archetypeId == BurglarId || archetypeId == MechanicId)
+                || archetypeId == BurglarId || archetypeId == MechanicId
+                || archetypeId == ReporterId || archetypeId == TailorId)
                 discipline = "scavenging";
+            else if (archetypeId == TeacherId || archetypeId == PoliticianId
+                || archetypeId == PriestId || archetypeId == RadioHostId
+                || archetypeId == HistorianId || archetypeId == ParentId)
+                discipline = "social";
             var sv = new Survivor
             {
                 Id = runtimeId ?? archetypeId,
@@ -928,6 +1073,419 @@ namespace AtomicWar._Game.Survivors
             CompleteQuestline(hazmat, currentDay);
         }
 
+
+        // ── #235 Teacher — The Abandoned School ──────────────────────────
+
+        public void RecordRationManifestFound(Survivor teacher, int currentDay = 0)
+        {
+            if (teacher == null || !teacher.IsAlive) return;
+            var state = GetOrCreate(teacher.Id);
+            SyncFromSurvivor(teacher, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheAbandonedSchool, StringComparison.Ordinal))
+                return;
+            if (state.ManifestFound) return;
+            state.ManifestFound = true;
+            state.Progress = 0.5f;
+            teacher.QuestProgress = 0.5f;
+            OnQuestProgress?.Invoke(teacher, "ration_manifest", 1);
+        }
+
+        public void RecordTeacherMourningDay(Survivor teacher, int currentDay = 0)
+        {
+            if (teacher == null || !teacher.IsAlive) return;
+            var state = GetOrCreate(teacher.Id);
+            SyncFromSurvivor(teacher, state);
+            if (!state.QuestActive || !state.ManifestFound) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheAbandonedSchool, StringComparison.Ordinal))
+                return;
+            state.TeacherMourningDays++;
+            state.Progress = 0.5f + 0.5f * state.TeacherMourningDays / TeacherMourningDaysRequired;
+            teacher.QuestProgress = state.Progress;
+            OnQuestProgress?.Invoke(teacher, "mourning_days", state.TeacherMourningDays);
+            if (state.TeacherMourningDays >= TeacherMourningDaysRequired)
+                CompleteQuestline(teacher, currentDay);
+        }
+
+        // ── #236 Politician — The Rally ──────────────────────────────────
+
+        public void RecordPropagandaHostileResolution(Survivor politician, int currentDay = 0)
+        {
+            if (politician == null || !politician.IsAlive) return;
+            var state = GetOrCreate(politician.Id);
+            SyncFromSurvivor(politician, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheRally, StringComparison.Ordinal))
+                return;
+            state.PropagandaResolutions++;
+            state.Progress = state.PropagandaResolutions;
+            politician.QuestProgress = state.PropagandaResolutions;
+            OnQuestProgress?.Invoke(politician, "propaganda_resolution", state.PropagandaResolutions);
+            if (state.PropagandaResolutions >= PropagandaResolutionsRequired)
+                CompleteQuestline(politician, currentDay);
+        }
+
+        // ── #237 Priest — Crisis of Faith ────────────────────────────────
+
+        public void RecordCrisisOfFaith(Survivor priest, int currentDay = 0)
+        {
+            if (priest == null || !priest.IsAlive) return;
+            var state = GetOrCreate(priest.Id);
+            SyncFromSurvivor(priest, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.CrisisOfFaith, StringComparison.Ordinal))
+                return;
+            state.CrisisOfFaithActive = true;
+            priest.Needs.Morale = 0f;
+            priest.currentMentalBreakId = CrisisOfFaithBreakId;
+            state.Progress = 0.5f;
+            priest.QuestProgress = 0.5f;
+            OnQuestProgress?.Invoke(priest, "crisis_of_faith", 1);
+        }
+
+        public void RecordTalkDownSavedPriest(Survivor priest, Survivor savior, int currentDay = 0)
+        {
+            if (priest == null || !priest.IsAlive) return;
+            if (savior == null || !savior.IsAlive || savior.Id == priest.Id) return;
+            var state = GetOrCreate(priest.Id);
+            SyncFromSurvivor(priest, state);
+            if (!state.QuestActive || !state.CrisisOfFaithActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.CrisisOfFaith, StringComparison.Ordinal))
+                return;
+            state.CrisisOfFaithActive = false;
+            if (string.Equals(priest.currentMentalBreakId, CrisisOfFaithBreakId, StringComparison.OrdinalIgnoreCase))
+                priest.currentMentalBreakId = null;
+            state.Progress = 1f;
+            priest.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(priest, "talked_down", 1);
+            CompleteQuestline(priest, currentDay);
+        }
+
+        /// <summary>#237 Shepherd — 2h sermon raises every bunker survivor morale by 20, ignoring debuffs.</summary>
+        public bool TryPerformSermon(Survivor priest, IReadOnlyList<Survivor> survivors, float durationHours = SermonDurationHours)
+        {
+            if (priest == null || !priest.IsAlive || !HasShepherd(priest)) return false;
+            if (durationHours + 0.0001f < SermonDurationHours) return false;
+            if (survivors == null) return false;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s == null || !s.IsAlive) continue;
+                s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + SermonMoraleBoost, 0f, 100f);
+            }
+            priest.Needs.Fatigue = Mathf.Clamp(priest.Needs.Fatigue + 10f, 0f, 100f);
+            return true;
+        }
+
+        // ── #238 Reporter — Truth of Day 30 ──────────────────────────────
+
+        public void RecordFirstStrikeIntel(Survivor reporter, string intelId, int currentDay = 0)
+        {
+            if (reporter == null || !reporter.IsAlive || string.IsNullOrEmpty(intelId)) return;
+            var state = GetOrCreate(reporter.Id);
+            SyncFromSurvivor(reporter, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TruthOfDay30, StringComparison.Ordinal))
+                return;
+            if (state.FirstStrikeIntelIds == null)
+                state.FirstStrikeIntelIds = new List<string>();
+            for (int i = 0; i < state.FirstStrikeIntelIds.Count; i++)
+            {
+                if (string.Equals(state.FirstStrikeIntelIds[i], intelId, StringComparison.Ordinal))
+                    return;
+            }
+            state.FirstStrikeIntelIds.Add(intelId);
+            state.Progress = state.FirstStrikeIntelIds.Count;
+            reporter.QuestProgress = state.FirstStrikeIntelIds.Count;
+            OnQuestProgress?.Invoke(reporter, "first_strike_intel", state.FirstStrikeIntelIds.Count);
+            if (state.FirstStrikeIntelIds.Count >= FirstStrikeIntelRequired)
+                CompleteQuestline(reporter, currentDay);
+        }
+
+        // ── #239 Radio Host — Dead Air ───────────────────────────────────
+
+        public void RecordContinuousBroadcastHours(
+            Survivor host,
+            float hours,
+            bool duringBlizzard,
+            bool maxedFatigueAndThirst,
+            int currentDay = 0)
+        {
+            if (host == null || !host.IsAlive || hours <= 0f) return;
+            var state = GetOrCreate(host.Id);
+            SyncFromSurvivor(host, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.DeadAir, StringComparison.Ordinal))
+                return;
+            if (!duringBlizzard) return;
+            state.BroadcastHours += hours;
+            if (maxedFatigueAndThirst)
+            {
+                host.Needs.Fatigue = 100f;
+                host.Needs.Thirst = 100f;
+            }
+            state.Progress = state.BroadcastHours;
+            host.QuestProgress = state.BroadcastHours;
+            OnQuestProgress?.Invoke(host, "broadcast_hours", Mathf.FloorToInt(state.BroadcastHours));
+            if (state.BroadcastHours + 0.0001f >= DeadAirBroadcastHoursRequired)
+                CompleteQuestline(host, currentDay);
+        }
+
+        // ── #240 Chef — The Final Harvest ────────────────────────────────
+
+        public void RecordFoodItemHoarded(Survivor chef, string foodItemId, int currentDay = 0)
+        {
+            if (chef == null || !chef.IsAlive || string.IsNullOrEmpty(foodItemId)) return;
+            var state = GetOrCreate(chef.Id);
+            SyncFromSurvivor(chef, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheFinalHarvest, StringComparison.Ordinal))
+                return;
+            if (state.HoardedFoodIds == null)
+                state.HoardedFoodIds = new List<string>();
+            for (int i = 0; i < state.HoardedFoodIds.Count; i++)
+            {
+                if (string.Equals(state.HoardedFoodIds[i], foodItemId, StringComparison.Ordinal))
+                    return;
+            }
+            state.HoardedFoodIds.Add(foodItemId);
+            state.Progress = state.HoardedFoodIds.Count;
+            chef.QuestProgress = state.HoardedFoodIds.Count;
+            OnQuestProgress?.Invoke(chef, "food_hoarded", state.HoardedFoodIds.Count);
+        }
+
+        /// <summary>
+        /// Complete The Final Harvest after hoarding every required food id and cooking 24h.
+        /// </summary>
+        public void RecordLastSupperCooked(
+            Survivor chef,
+            IReadOnlyList<string> requiredFoodIds,
+            float cookHours,
+            int currentDay = 0)
+        {
+            if (chef == null || !chef.IsAlive) return;
+            var state = GetOrCreate(chef.Id);
+            SyncFromSurvivor(chef, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheFinalHarvest, StringComparison.Ordinal))
+                return;
+            if (cookHours + 0.0001f < LastSupperCookHours) return;
+            if (requiredFoodIds == null || requiredFoodIds.Count == 0) return;
+            if (state.HoardedFoodIds == null) return;
+            for (int i = 0; i < requiredFoodIds.Count; i++)
+            {
+                string need = requiredFoodIds[i];
+                bool found = false;
+                for (int j = 0; j < state.HoardedFoodIds.Count; j++)
+                {
+                    if (string.Equals(state.HoardedFoodIds[j], need, StringComparison.Ordinal))
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) return;
+            }
+            state.Progress = 1f;
+            chef.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(chef, "last_supper", 1);
+            CompleteQuestline(chef, currentDay);
+        }
+
+        /// <summary>#240 Iron Chef meal: full Hunger/Thirst/Fatigue restore (0 = sated).</summary>
+        public void ApplyIronChefMeal(Survivor eater)
+        {
+            if (eater == null || !eater.IsAlive) return;
+            eater.Needs.Hunger = 0f;
+            eater.Needs.Thirst = 0f;
+            eater.Needs.Fatigue = 0f;
+        }
+
+        // ── #241 Athlete — The Marathon ──────────────────────────────────
+
+        public void RecordMarathonExpedition(
+            Survivor athlete,
+            int nodesAway,
+            float hoursElapsed,
+            bool onFoot,
+            bool returnedHome,
+            int currentDay = 0)
+        {
+            if (athlete == null || !athlete.IsAlive) return;
+            var state = GetOrCreate(athlete.Id);
+            SyncFromSurvivor(athlete, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheMarathon, StringComparison.Ordinal))
+                return;
+            if (!onFoot || !returnedHome) return;
+            if (nodesAway < MarathonMinNodesAway) return;
+            if (hoursElapsed > MarathonMaxHours + 0.0001f) return;
+            state.Progress = 1f;
+            athlete.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(athlete, "marathon", 1);
+            CompleteQuestline(athlete, currentDay);
+        }
+
+        // ── #242 Firefighter — The Inferno ───────────────────────────────
+
+        public void RecordInfernoExtinguished(
+            Survivor firefighter,
+            string roomId,
+            bool woreHazmatSuit,
+            int currentDay = 0)
+        {
+            if (firefighter == null || !firefighter.IsAlive) return;
+            if (woreHazmatSuit) return;
+            var state = GetOrCreate(firefighter.Id);
+            SyncFromSurvivor(firefighter, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheInferno, StringComparison.Ordinal))
+                return;
+            if (!string.IsNullOrEmpty(roomId)
+                && !string.Equals(roomId, GeneratorRoomId, StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(roomId, "generator_room", StringComparison.OrdinalIgnoreCase))
+                return;
+            firefighter.Needs.Health = Mathf.Max(1f, firefighter.Needs.Health - InfernoBurnDamage);
+            state.Progress = 1f;
+            firefighter.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(firefighter, "inferno_extinguished", 1);
+            CompleteQuestline(firefighter, currentDay);
+        }
+
+        // ── #243 Tailor — The Kevlar Loom ────────────────────────────────
+
+        public void RecordClothingDisassembled(Survivor tailor, int currentDay = 0)
+        {
+            if (tailor == null || !tailor.IsAlive) return;
+            var state = GetOrCreate(tailor.Id);
+            SyncFromSurvivor(tailor, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheKevlarLoom, StringComparison.Ordinal))
+                return;
+            state.ClothingScrapsDisassembled++;
+            state.Progress = state.ClothingScrapsDisassembled;
+            tailor.QuestProgress = state.ClothingScrapsDisassembled;
+            OnQuestProgress?.Invoke(tailor, "clothing_scraps", state.ClothingScrapsDisassembled);
+            if (state.ClothingScrapsDisassembled >= ClothingScrapsRequired)
+                CompleteQuestline(tailor, currentDay);
+        }
+
+        // ── #244 Watchmaker — Broken Chronometer ─────────────────────────
+
+        public void RecordWatchRepaired(Survivor watchmaker, int electronicScrapSpent, int currentDay = 0)
+        {
+            if (watchmaker == null || !watchmaker.IsAlive) return;
+            if (electronicScrapSpent < WatchRepairScrapRequired) return;
+            var state = GetOrCreate(watchmaker.Id);
+            SyncFromSurvivor(watchmaker, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.BrokenChronometer, StringComparison.Ordinal))
+                return;
+            state.Progress = 1f;
+            watchmaker.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(watchmaker, "watch_repaired", electronicScrapSpent);
+            CompleteQuestline(watchmaker, currentDay);
+        }
+
+        // ── #245 Historian — Museum Archive ──────────────────────────────
+
+        public void RecordConstitutionRetrieved(
+            Survivor historian,
+            bool museumBurning,
+            int currentDay = 0)
+        {
+            if (historian == null || !historian.IsAlive || !museumBurning) return;
+            var state = GetOrCreate(historian.Id);
+            SyncFromSurvivor(historian, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.MuseumArchive, StringComparison.Ordinal))
+                return;
+            state.Progress = 1f;
+            historian.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(historian, "constitution", 1);
+            CompleteQuestline(historian, currentDay);
+        }
+
+        // ── #246 Cult Defector — The Cleansing ───────────────────────────
+
+        public void RecordCultLeaderKilled(Survivor defector, string killedId, int currentDay = 0)
+        {
+            if (defector == null || !defector.IsAlive) return;
+            if (!string.Equals(killedId, CultLeaderId, StringComparison.OrdinalIgnoreCase)
+                && !string.Equals(killedId, "the_cult_leader", StringComparison.OrdinalIgnoreCase))
+                return;
+            var state = GetOrCreate(defector.Id);
+            SyncFromSurvivor(defector, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheCleansing, StringComparison.Ordinal))
+                return;
+            state.Progress = 1f;
+            defector.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(defector, "cult_leader_killed", 1);
+            CompleteQuestline(defector, currentDay);
+        }
+
+        // ── #247 Addict — The Last Stash ─────────────────────────────────
+
+        public void RecordWithdrawalCleanDay(Survivor addict, bool relapsed, int currentDay = 0)
+        {
+            if (addict == null || !addict.IsAlive) return;
+            var state = GetOrCreate(addict.Id);
+            SyncFromSurvivor(addict, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheLastStash, StringComparison.Ordinal))
+                return;
+            if (relapsed)
+            {
+                state.WithdrawalCleanDays = 0;
+                state.Progress = 0f;
+                addict.QuestProgress = 0f;
+                OnQuestProgress?.Invoke(addict, "withdrawal_relapse", 0);
+                return;
+            }
+            state.WithdrawalCleanDays++;
+            state.Progress = state.WithdrawalCleanDays;
+            addict.QuestProgress = state.WithdrawalCleanDays;
+            OnQuestProgress?.Invoke(addict, "withdrawal_clean_days", state.WithdrawalCleanDays);
+            if (state.WithdrawalCleanDays >= WithdrawalCleanDaysRequired)
+                CompleteQuestline(addict, currentDay);
+        }
+
+        // ── #248 Parent — The Locket ─────────────────────────────────────
+
+        public void RecordChildDeathIntel(Survivor parent, int currentDay = 0)
+        {
+            if (parent == null || !parent.IsAlive) return;
+            var state = GetOrCreate(parent.Id);
+            SyncFromSurvivor(parent, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheLocket, StringComparison.Ordinal))
+                return;
+            state.ChildDeathKnown = true;
+            parent.Needs.Morale = 0f;
+            parent.currentMentalBreakId = DespairBreakId;
+            state.Progress = 0.5f;
+            parent.QuestProgress = 0.5f;
+            OnQuestProgress?.Invoke(parent, "child_death_intel", 1);
+        }
+
+        public void RecordParentMourningSurvived(Survivor parent, float mourningDays, int currentDay = 0)
+        {
+            if (parent == null || !parent.IsAlive) return;
+            var state = GetOrCreate(parent.Id);
+            SyncFromSurvivor(parent, state);
+            if (!state.QuestActive || !state.ChildDeathKnown) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheLocket, StringComparison.Ordinal))
+                return;
+            if (mourningDays + 0.0001f < ParentMourningDaysRequired) return;
+            if (string.Equals(parent.currentMentalBreakId, DespairBreakId, StringComparison.OrdinalIgnoreCase))
+                parent.currentMentalBreakId = null;
+            state.Progress = 1f;
+            parent.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(parent, "mourning_survived", 1);
+            CompleteQuestline(parent, currentDay);
+        }
+
         // ── Completion / unlock ──────────────────────────────────────────
 
         public bool CompleteQuestline(Survivor sv, int currentDay = 0)
@@ -976,6 +1534,11 @@ namespace AtomicWar._Game.Survivors
                 sv.BaseMaxHealth = baseHp * JuggernautHealthMultiplier;
                 sv.Needs.Health = Mathf.Min(sv.Needs.Health * JuggernautHealthMultiplier, sv.MaxHealthCap);
             }
+            if (string.Equals(traitId, TirelessId, StringComparison.Ordinal))
+            {
+                // Stamina/fatigue pools tripled — hosts read GetStaminaPoolMultiplier.
+                sv.BaseMaxStamina = (sv.BaseMaxStamina > 0f ? sv.BaseMaxStamina : 100f) * TirelessPoolMult;
+            }
         }
 
         // ── Trait queries ────────────────────────────────────────────────
@@ -1014,6 +1577,20 @@ namespace AtomicWar._Game.Survivors
         public bool HasGhost(Survivor sv) => HasTrait(sv, GhostId);
         public bool HasStormcaller(Survivor sv) => HasTrait(sv, StormcallerId);
         public bool HasRadWalker(Survivor sv) => HasTrait(sv, RadWalkerId);
+        public bool HasPolymath(Survivor sv) => HasTrait(sv, PolymathId);
+        public bool HasDemagogue(Survivor sv) => HasTrait(sv, DemagogueId);
+        public bool HasShepherd(Survivor sv) => HasTrait(sv, ShepherdId);
+        public bool HasMuckraker(Survivor sv) => HasTrait(sv, MuckrakerId);
+        public bool HasVoiceOfTheWastes(Survivor sv) => HasTrait(sv, VoiceOfTheWastesId);
+        public bool HasIronChef(Survivor sv) => HasTrait(sv, IronChefId);
+        public bool HasTireless(Survivor sv) => HasTrait(sv, TirelessId);
+        public bool HasAsbestos(Survivor sv) => HasTrait(sv, AsbestosId);
+        public bool HasArmorer(Survivor sv) => HasTrait(sv, ArmorerId);
+        public bool HasTinkerer(Survivor sv) => HasTrait(sv, TinkererId);
+        public bool HasLorekeeper(Survivor sv) => HasTrait(sv, LorekeeperId);
+        public bool HasZealotsBane(Survivor sv) => HasTrait(sv, ZealotsBaneId);
+        public bool HasChemResistant(Survivor sv) => HasTrait(sv, ChemResistantId);
+        public bool HasProtector(Survivor sv) => HasTrait(sv, ProtectorId);
 
         /// <summary>#215 — surgery duration mult (0.5 with Miracle Worker).</summary>
         public float GetSurgeryDurationMultiplier(Survivor medic) =>
@@ -1307,6 +1884,128 @@ namespace AtomicWar._Game.Survivors
 
         public bool SkipsDeconOnReturn(Survivor sv) => HasRadWalker(sv);
 
+        // ── #235 Polymath ────────────────────────────────────────────────
+
+        public bool UnlocksSkillMentorshipForAllSkills(Survivor sv) => HasPolymath(sv);
+
+        public float GetActionPerkXpMultiplier(Survivor sv) =>
+            HasPolymath(sv) ? PolymathPerkXpMult : 1f;
+
+        // ── #236 Demagogue ───────────────────────────────────────────────
+
+        public float GetFactionTrustFloor(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, DemagogueId) ? DemagogueTrustFloor : float.NegativeInfinity;
+
+        public float ClampFactionTrust(float trust, IReadOnlyList<Survivor> survivors)
+        {
+            float floor = GetFactionTrustFloor(survivors);
+            if (float.IsNegativeInfinity(floor)) return trust;
+            return Mathf.Max(trust, floor);
+        }
+
+        public bool FactionsDropTribute(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, DemagogueId);
+
+        // ── #237 Shepherd ────────────────────────────────────────────────
+
+        public bool CanPerformSermon(Survivor sv) => HasShepherd(sv);
+
+        // ── #238 Muckraker ───────────────────────────────────────────────
+
+        public bool RevealsAllMapFog(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, MuckrakerId);
+
+        public bool RevealsAllMapFog(Survivor sv) => HasMuckraker(sv);
+
+        // ── #239 Voice of the Wastes ─────────────────────────────────────
+
+        public bool RadioPowerIsFree(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, VoiceOfTheWastesId);
+
+        public bool RadioIntelIsInstant(Survivor sv) => HasVoiceOfTheWastes(sv);
+
+        public bool BlocksTrapIntel(Survivor sv) => HasVoiceOfTheWastes(sv);
+
+        // ── #240 Iron Chef ───────────────────────────────────────────────
+
+        public bool MealsFullyRestoreNeeds(Survivor cook) => HasIronChef(cook);
+
+        public bool MealsCurePhase1Afflictions(Survivor cook) => HasIronChef(cook);
+
+        // ── #241 Tireless ────────────────────────────────────────────────
+
+        public float GetStaminaPoolMultiplier(Survivor sv) =>
+            HasTireless(sv) ? TirelessPoolMult : 1f;
+
+        public float GetFatiguePoolMultiplier(Survivor sv) =>
+            HasTireless(sv) ? TirelessPoolMult : 1f;
+
+        public float GetDailySleepHoursRequired(Survivor sv) =>
+            HasTireless(sv) ? TirelessSleepHoursPerDay : 8f;
+
+        // ── #242 Asbestos ────────────────────────────────────────────────
+
+        public bool IsImmuneToFireAndTemperature(Survivor sv) => HasAsbestos(sv);
+
+        public bool IgnoresColdSleepQuality(Survivor sv) => HasAsbestos(sv);
+
+        // ── #243 Armorer ─────────────────────────────────────────────────
+
+        public bool CanCraftReinforcedHazmatSuits(Survivor sv) => HasArmorer(sv);
+
+        public float GetClothingDegradeMultiplier(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, ArmorerId) ? ArmorerClothingDegradeMult : 1f;
+
+        // ── #244 Tinkerer ────────────────────────────────────────────────
+
+        public bool DevicesNeverLoseCalibration(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, TinkererId);
+
+        public bool ShowsTrueRadiation(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, TinkererId);
+
+        // ── #245 Lorekeeper ──────────────────────────────────────────────
+
+        public float GetJournalMoraleBoost(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, LorekeeperId) ? LorekeeperJournalMoraleBoost : 0f;
+
+        public float GetArtifactTradeValueMultiplier(IReadOnlyList<Survivor> survivors) =>
+            AnyLivingWithTrait(survivors, LorekeeperId) ? LorekeeperArtifactTradeMult : 1f;
+
+        // ── #246 Zealot's Bane ───────────────────────────────────────────
+
+        public bool CultistsFleeFrom(Survivor sv) => HasZealotsBane(sv);
+
+        public float GetFactionCombatDamageMultiplier(Survivor sv) =>
+            HasZealotsBane(sv) ? ZealotsBaneCombatMult : 1f;
+
+        // ── #247 Chem-Resistant ──────────────────────────────────────────
+
+        public bool ImmuneToAddiction(Survivor sv) => HasChemResistant(sv);
+
+        public float GetMedicalHealMultiplier(Survivor patient) =>
+            HasChemResistant(patient) ? ChemResistantHealMult : 1f;
+
+        // ── #248 Protector ───────────────────────────────────────────────
+
+        public bool IsProtectorEnraged(Survivor parent, IReadOnlyList<Survivor> survivors)
+        {
+            if (!HasProtector(parent) || survivors == null) return false;
+            float cap = parent.MaxHealthCap > 0f ? parent.MaxHealthCap : 100f;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s == null || !s.IsAlive || s.Id == parent.Id) continue;
+                float otherCap = s.MaxHealthCap > 0f ? s.MaxHealthCap : 100f;
+                if (s.Needs.Health < otherCap * ProtectorHealthTriggerFrac)
+                    return true;
+            }
+            return false;
+        }
+
+        public float GetProtectorActionSpeedMultiplier(Survivor parent, IReadOnlyList<Survivor> survivors) =>
+            IsProtectorEnraged(parent, survivors) ? ProtectorBoostMult : 1f;
+
         private bool AnyLivingWithTrait(IReadOnlyList<Survivor> survivors, string traitId)
         {
             if (survivors == null || string.IsNullOrEmpty(traitId)) return false;
@@ -1369,6 +2068,34 @@ namespace AtomicWar._Game.Survivors
                 maxStages: 1, node: WeatherTowerNodeId, evt: null);
             RegisterDefault(QuestlineSO.Ids.GroundZero, "Ground Zero", RadWalkerId,
                 maxStages: 1, node: GroundZeroCraterNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheAbandonedSchool, "The Abandoned School", PolymathId,
+                maxStages: TeacherMourningDaysRequired, node: AbandonedSchoolNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheRally, "The Rally", DemagogueId,
+                maxStages: PropagandaResolutionsRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.CrisisOfFaith, "Crisis of Faith", ShepherdId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TruthOfDay30, "Truth of Day 30", MuckrakerId,
+                maxStages: FirstStrikeIntelRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.DeadAir, "Dead Air", VoiceOfTheWastesId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheFinalHarvest, "The Final Harvest", IronChefId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheMarathon, "The Marathon", TirelessId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheInferno, "The Inferno", AsbestosId,
+                maxStages: 1, node: null, evt: GeneratorRoomId);
+            RegisterDefault(QuestlineSO.Ids.TheKevlarLoom, "The Kevlar Loom", ArmorerId,
+                maxStages: ClothingScrapsRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.BrokenChronometer, "Broken Chronometer", TinkererId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.MuseumArchive, "Museum Archive", LorekeeperId,
+                maxStages: 1, node: RuinedMuseumNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheCleansing, "The Cleansing", ZealotsBaneId,
+                maxStages: 1, node: null, evt: "evt_cult_defector_raid");
+            RegisterDefault(QuestlineSO.Ids.TheLastStash, "The Last Stash", ChemResistantId,
+                maxStages: WithdrawalCleanDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheLocket, "The Locket", ProtectorId,
+                maxStages: 1, node: null, evt: null);
         }
 
         private void RegisterDefault(
@@ -1434,7 +2161,19 @@ namespace AtomicWar._Game.Survivors
                         ? new List<string>(s.VisitedNodeIds)
                         : new List<string>(),
                     PerfectPlanterDays = s.PerfectPlanterDays,
-                    DeadDropSuccesses = s.DeadDropSuccesses
+                    DeadDropSuccesses = s.DeadDropSuccesses,
+                    ManifestFound = s.ManifestFound,
+                    TeacherMourningDays = s.TeacherMourningDays,
+                    PropagandaResolutions = s.PropagandaResolutions,
+                    CrisisOfFaithActive = s.CrisisOfFaithActive,
+                    FirstStrikeIntelIds = s.FirstStrikeIntelIds != null
+                        ? new List<string>(s.FirstStrikeIntelIds) : new List<string>(),
+                    BroadcastHours = s.BroadcastHours,
+                    HoardedFoodIds = s.HoardedFoodIds != null
+                        ? new List<string>(s.HoardedFoodIds) : new List<string>(),
+                    ClothingScrapsDisassembled = s.ClothingScrapsDisassembled,
+                    WithdrawalCleanDays = s.WithdrawalCleanDays,
+                    ChildDeathKnown = s.ChildDeathKnown
                 });
             }
             return save;
@@ -1465,7 +2204,19 @@ namespace AtomicWar._Game.Survivors
                         ? new List<string>(e.VisitedNodeIds)
                         : new List<string>(),
                     PerfectPlanterDays = e.PerfectPlanterDays,
-                    DeadDropSuccesses = e.DeadDropSuccesses
+                    DeadDropSuccesses = e.DeadDropSuccesses,
+                    ManifestFound = e.ManifestFound,
+                    TeacherMourningDays = e.TeacherMourningDays,
+                    PropagandaResolutions = e.PropagandaResolutions,
+                    CrisisOfFaithActive = e.CrisisOfFaithActive,
+                    FirstStrikeIntelIds = e.FirstStrikeIntelIds != null
+                        ? new List<string>(e.FirstStrikeIntelIds) : new List<string>(),
+                    BroadcastHours = e.BroadcastHours,
+                    HoardedFoodIds = e.HoardedFoodIds != null
+                        ? new List<string>(e.HoardedFoodIds) : new List<string>(),
+                    ClothingScrapsDisassembled = e.ClothingScrapsDisassembled,
+                    WithdrawalCleanDays = e.WithdrawalCleanDays,
+                    ChildDeathKnown = e.ChildDeathKnown
                 };
             }
         }
@@ -1489,6 +2240,16 @@ namespace AtomicWar._Game.Survivors
             public int PerfectPlanterDays;
             /// <summary>#231 successful dead drops (not robbed).</summary>
             public int DeadDropSuccesses;
+            public bool ManifestFound;
+            public int TeacherMourningDays;
+            public int PropagandaResolutions;
+            public bool CrisisOfFaithActive;
+            public List<string> FirstStrikeIntelIds = new List<string>();
+            public float BroadcastHours;
+            public List<string> HoardedFoodIds = new List<string>();
+            public int ClothingScrapsDisassembled;
+            public int WithdrawalCleanDays;
+            public bool ChildDeathKnown;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
@@ -1507,7 +2268,19 @@ namespace AtomicWar._Game.Survivors
                     ? new List<string>(VisitedNodeIds)
                     : new List<string>(),
                 PerfectPlanterDays = PerfectPlanterDays,
-                DeadDropSuccesses = DeadDropSuccesses
+                DeadDropSuccesses = DeadDropSuccesses,
+                ManifestFound = ManifestFound,
+                TeacherMourningDays = TeacherMourningDays,
+                PropagandaResolutions = PropagandaResolutions,
+                CrisisOfFaithActive = CrisisOfFaithActive,
+                FirstStrikeIntelIds = FirstStrikeIntelIds != null
+                    ? new List<string>(FirstStrikeIntelIds) : new List<string>(),
+                BroadcastHours = BroadcastHours,
+                HoardedFoodIds = HoardedFoodIds != null
+                    ? new List<string>(HoardedFoodIds) : new List<string>(),
+                ClothingScrapsDisassembled = ClothingScrapsDisassembled,
+                WithdrawalCleanDays = WithdrawalCleanDays,
+                ChildDeathKnown = ChildDeathKnown
             };
         }
     }
@@ -1557,5 +2330,15 @@ namespace AtomicWar._Game.Survivors
         public List<string> VisitedNodeIds = new List<string>();
         public int PerfectPlanterDays;
         public int DeadDropSuccesses;
+        public bool ManifestFound;
+        public int TeacherMourningDays;
+        public int PropagandaResolutions;
+        public bool CrisisOfFaithActive;
+        public List<string> FirstStrikeIntelIds = new List<string>();
+        public float BroadcastHours;
+        public List<string> HoardedFoodIds = new List<string>();
+        public int ClothingScrapsDisassembled;
+        public int WithdrawalCleanDays;
+        public bool ChildDeathKnown;
     }
 }

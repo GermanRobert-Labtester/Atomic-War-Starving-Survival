@@ -544,6 +544,15 @@ namespace AtomicWar._Game.Core
             DeadDropSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             HatchVisibilitySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             WeatherSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            // Prompts #235–#248
+            SkillProgression?.BindPersonalQuests(PersonalQuests);
+            MentorshipSystem?.BindPersonalQuests(PersonalQuests);
+            EconomySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            ClothingSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            Addiction?.BindPersonalQuests(PersonalQuests);
+            CookingSystem?.BindPersonalQuests(PersonalQuests);
+            JournalSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            RadioTunerSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

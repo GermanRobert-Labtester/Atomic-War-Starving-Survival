@@ -48,6 +48,16 @@ namespace AtomicWar._Game.Shelter
             _getSurvivors = getSurvivors;
         }
 
+        /// <summary>Prompt #239 — Voice of the Wastes zeroes radio power draw.</summary>
+        public float GetConsumerWatts(PowerConsumer c)
+        {
+            if (c == null) return 0f;
+            if (c.ModuleId == "radio" && _personalQuests != null
+                && _personalQuests.RadioPowerIsFree(_getSurvivors?.Invoke()))
+                return 0f;
+            return c.Watts;
+        }
+
         /// <summary>
         /// Inject carbon monoxide from external sources (room fire, sealed smoke).
         /// Internal Horror — Fire in the Hole.
@@ -329,7 +339,7 @@ namespace AtomicWar._Game.Shelter
                 if (c == null) continue;
                 c.IsShed = false;
                 if (c.IsRequested)
-                    requested += Mathf.Max(0f, c.Watts);
+                    requested += Mathf.Max(0f, GetConsumerWatts(c));
             }
             RequestedDraw = requested;
 
@@ -341,7 +351,7 @@ namespace AtomicWar._Game.Shelter
                 for (int i = 0; i < _consumers.Count; i++)
                 {
                     var c = _consumers[i];
-                    if (c != null && c.IsRequested && c.Watts > 0f)
+                    if (c != null && c.IsRequested && GetConsumerWatts(c) > 0f)
                         order.Add(c);
                 }
                 order.Sort((a, b) =>
@@ -368,7 +378,9 @@ namespace AtomicWar._Game.Shelter
                 if (c == null) continue;
                 if (c.IsRequested) anyRequested = true;
                 if (c.IsShed) anyShed = true;
-                draw += c.EffectiveDraw;
+                // Prompt #239 — free radio draw when Voice of the Wastes is present.
+                if (!c.IsShed && c.IsRequested)
+                    draw += GetConsumerWatts(c);
             }
             TotalDraw = draw;
             IsLoadShedding = anyShed;

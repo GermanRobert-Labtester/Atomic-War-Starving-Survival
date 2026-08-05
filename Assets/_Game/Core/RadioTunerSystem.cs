@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -13,6 +14,24 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class RadioTunerSystem
     {
+        private PersonalQuestSystem _personalQuests;
+        private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #239 — Voice of the Wastes: free power, instant intel, no traps.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
+        public bool IsRadioPowerFree()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return false;
+            return _personalQuests.RadioPowerIsFree(_getSurvivors());
+        }
+
         /// <summary>Day when military frequencies go silent and automated loops begin.</summary>
         public const int MilitarySilenceDay = 30;
 
@@ -221,8 +240,9 @@ namespace AtomicWar._Game.Core
         {
             if (gameHours <= 0f) return false;
 
-            // Consume fuel
-            State.ConsumeFuel(gameHours);
+            // Consume fuel — Voice of the Wastes (#239) pays zero power/fuel.
+            if (!IsRadioPowerFree())
+                State.ConsumeFuel(gameHours);
 
             // Update signal strength
             UpdateSignalStrength(currentWeather);
@@ -230,7 +250,25 @@ namespace AtomicWar._Game.Core
             // Advance tuning if operational
             if (State.IsOperational && !string.IsNullOrEmpty(State.CurrentFrequencyId))
             {
-                bool tuningComplete = State.AdvanceTuning(gameHours, TuningRate);
+                float rate = TuningRate;
+                // Instant intel extraction for Voice of the Wastes.
+                if (_personalQuests != null && _getSurvivors != null)
+                {
+                    var list = _getSurvivors();
+                    if (list != null)
+                    {
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            if (list[i] != null && list[i].IsAlive
+                                && _personalQuests.RadioIntelIsInstant(list[i]))
+                            {
+                                rate = 1000f;
+                                break;
+                            }
+                        }
+                    }
+                }
+                bool tuningComplete = State.AdvanceTuning(gameHours, rate);
                 if (tuningComplete)
                 {
                     // Extract intel when tuning completes

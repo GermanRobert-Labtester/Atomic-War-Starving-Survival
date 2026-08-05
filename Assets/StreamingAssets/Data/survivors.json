@@ -33,7 +33,7 @@
     "id": "the_pharmacist",
     "displayName": "The Pharmacist",
     "profession": "Pharmacist",
-    "bio": "Empty bottles line their pockets. The old CVS still has their logbook — if they dare go alone.",
+    "bio": "Empty bottles line their pockets. The old CVS still has their logbook \u2014 if they dare go alone.",
     "baseHealth": 85,
     "latentExpertTrait": "trait_alchemist",
     "activeQuestlineId": "quest_the_empty_bottles"
@@ -69,7 +69,7 @@
     "id": "the_veteran",
     "displayName": "The Veteran",
     "profession": "Soldier",
-    "bio": "Day 1 never ended for them. The old squad still calls on the radio — and something answers back.",
+    "bio": "Day 1 never ended for them. The old squad still calls on the radio \u2014 and something answers back.",
     "baseHealth": 110,
     "latentExpertTrait": "trait_warlord",
     "activeQuestlineId": "quest_ghosts_of_day_1"
@@ -78,7 +78,7 @@
     "id": "the_cop",
     "displayName": "The Cop",
     "profession": "Police Officer",
-    "bio": "They still wear the badge under the coat. The precinct lockbox is still there — if the streets allow it.",
+    "bio": "They still wear the badge under the coat. The precinct lockbox is still there \u2014 if the streets allow it.",
     "baseHealth": 100,
     "latentExpertTrait": "trait_peacekeeper",
     "activeQuestlineId": "quest_the_precinct"
@@ -96,7 +96,7 @@
     "id": "the_hunter",
     "displayName": "The Hunter",
     "profession": "Hunter",
-    "bio": "They tracked game before the blast. Something white still moves out there — and only a bow feels honest.",
+    "bio": "They tracked game before the blast. Something white still moves out there \u2014 and only a bow feels honest.",
     "baseHealth": 95,
     "latentExpertTrait": "trait_apex_predator",
     "activeQuestlineId": "quest_the_white_elk"
@@ -199,5 +199,131 @@
     "baseHealth": 100,
     "latentExpertTrait": "trait_rad_walker",
     "activeQuestlineId": "quest_ground_zero"
+  },
+  {
+    "id": "the_teacher",
+    "displayName": "The Teacher",
+    "profession": "Teacher",
+    "bio": "The school still has a list of names. Someone has to write them down.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_polymath",
+    "activeQuestlineId": "quest_the_abandoned_school"
+  },
+  {
+    "id": "the_politician",
+    "displayName": "The Politician",
+    "profession": "Politician",
+    "bio": "Words still move people. The hatch is a podium if you broadcast hard enough.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_demagogue",
+    "activeQuestlineId": "quest_the_rally"
+  },
+  {
+    "id": "the_priest",
+    "displayName": "The Priest",
+    "profession": "Priest",
+    "bio": "Faith cracks under zero morale. Someone has to talk them down from the edge.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_shepherd",
+    "activeQuestlineId": "quest_crisis_of_faith"
+  },
+  {
+    "id": "the_reporter",
+    "displayName": "The Reporter",
+    "profession": "Reporter",
+    "bio": "Five military fragments still name who fired first. Truth is a kind of food.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_muckraker",
+    "activeQuestlineId": "quest_truth_of_day_30"
+  },
+  {
+    "id": "the_radio_host",
+    "displayName": "The Radio Host",
+    "profession": "Radio Host",
+    "bio": "Forty-eight hours of dead air would kill the allies. They keep talking through the storm.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_voice_of_the_wastes",
+    "activeQuestlineId": "quest_dead_air"
+  },
+  {
+    "id": "the_chef",
+    "displayName": "The Chef",
+    "profession": "Chef",
+    "bio": "One of every food left in the world. Then twenty-four hours for the last supper.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_iron_chef",
+    "activeQuestlineId": "quest_the_final_harvest"
+  },
+  {
+    "id": "the_athlete",
+    "displayName": "The Athlete",
+    "profession": "Athlete",
+    "bio": "Fifteen nodes out and back on foot before the clock hits forty-eight.",
+    "baseHealth": 110,
+    "latentExpertTrait": "trait_tireless",
+    "activeQuestlineId": "quest_the_marathon"
+  },
+  {
+    "id": "the_firefighter",
+    "displayName": "The Firefighter",
+    "profession": "Firefighter",
+    "bio": "The generator room burns. No suit. Just hands and the will not to run.",
+    "baseHealth": 105,
+    "latentExpertTrait": "trait_asbestos",
+    "activeQuestlineId": "quest_the_inferno"
+  },
+  {
+    "id": "the_tailor",
+    "displayName": "The Tailor",
+    "profession": "Tailor",
+    "bio": "Ten ragged skins become something that can stop a bullet and a rad.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_armorer",
+    "activeQuestlineId": "quest_the_kevlar_loom"
+  },
+  {
+    "id": "the_watchmaker",
+    "displayName": "The Watchmaker",
+    "profession": "Watchmaker",
+    "bio": "The EMP killed an heirloom. Fifty scraps of electronics for one tick.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_tinkerer",
+    "activeQuestlineId": "quest_broken_chronometer"
+  },
+  {
+    "id": "the_historian",
+    "displayName": "The Historian",
+    "profession": "Historian",
+    "bio": "The museum is on fire. The Constitution is still inside.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_lorekeeper",
+    "activeQuestlineId": "quest_museum_archive"
+  },
+  {
+    "id": "the_defector",
+    "displayName": "The Defector",
+    "profession": "Cult Defector",
+    "bio": "The Cult of the Glow remembers them. Only the leader's death ends the raid.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_zealots_bane",
+    "activeQuestlineId": "quest_the_cleansing"
+  },
+  {
+    "id": "the_addict",
+    "displayName": "The Addict",
+    "profession": "Addict",
+    "bio": "Fourteen clean days. Morphine in the cupboard. Hands stay empty.",
+    "baseHealth": 85,
+    "latentExpertTrait": "trait_chem_resistant",
+    "activeQuestlineId": "quest_the_last_stash"
+  },
+  {
+    "id": "the_parent",
+    "displayName": "The Parent",
+    "profession": "Parent",
+    "bio": "The radio says the child is gone. If they live through the mourning, the bunker is family.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_protector",
+    "activeQuestlineId": "quest_the_locket"
   }
 ]

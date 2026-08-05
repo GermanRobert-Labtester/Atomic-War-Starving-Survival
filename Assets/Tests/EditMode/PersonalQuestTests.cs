@@ -9,7 +9,7 @@ using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// Prompts #214–#234 — Personal Quest Engine + latent expert traits.
+    /// Prompts #214–#248 — Personal Quest Engine + latent expert traits.
     /// </summary>
     [TestFixture]
     public class PersonalQuestTests
@@ -711,6 +711,257 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_quests.HasRadWalker(sv));
             Assert.AreEqual(0.5f, _quests.GetRadiationAbsorbFactor(sv), 0.01f);
             Assert.IsTrue(_quests.SkipsDeconOnReturn(sv));
+        }
+
+        // ── #235 Teacher / Polymath ──────────────────────────────────────
+
+        [Test]
+        public void Teacher_ManifestAndMourning_UnlocksPolymath()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.TeacherId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordRationManifestFound(sv, 2);
+            Assert.IsFalse(_quests.HasPolymath(sv));
+            for (int d = 0; d < PersonalQuestSystem.TeacherMourningDaysRequired - 1; d++)
+                _quests.RecordTeacherMourningDay(sv, 3 + d);
+            Assert.IsFalse(_quests.HasPolymath(sv));
+            _quests.RecordTeacherMourningDay(sv, 20);
+            Assert.IsTrue(_quests.HasPolymath(sv));
+            Assert.IsTrue(_quests.UnlocksSkillMentorshipForAllSkills(sv));
+            Assert.AreEqual(3f, _quests.GetActionPerkXpMultiplier(sv), 0.01f);
+            _progression.BindPersonalQuests(_quests);
+            _progression.RecordAction(sv, "medical", 10f, 21);
+            Assert.AreEqual(30f, _progression.GetXp(sv.Id, "medical"), 0.01f);
+        }
+
+        // ── #236 Politician / Demagogue ──────────────────────────────────
+
+        [Test]
+        public void Politician_ThreePropaganda_UnlocksDemagogue()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.PoliticianId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            for (int i = 0; i < 2; i++)
+                _quests.RecordPropagandaHostileResolution(sv, i + 1);
+            Assert.IsFalse(_quests.HasDemagogue(sv));
+            _quests.RecordPropagandaHostileResolution(sv, 3);
+            Assert.IsTrue(_quests.HasDemagogue(sv));
+            Assert.AreEqual(0f, _quests.GetFactionTrustFloor(_survivors), 0.01f);
+            Assert.AreEqual(0f, _quests.ClampFactionTrust(-40f, _survivors), 0.01f);
+            Assert.IsTrue(_quests.FactionsDropTribute(_survivors));
+        }
+
+        // ── #237 Priest / Shepherd ───────────────────────────────────────
+
+        [Test]
+        public void Priest_CrisisTalkDown_UnlocksShepherd_Sermon()
+        {
+            var priest = MakeArchetype(PersonalQuestSystem.PriestId);
+            var other = new Survivor { Id = "ally", DisplayName = "Ally", State = SurvivorState.Idle };
+            other.Needs.Morale = 40f;
+            _survivors.Add(other);
+            _quests.TryStartQuestline(priest, "test", 1);
+            _quests.RecordCrisisOfFaith(priest, 2);
+            Assert.IsTrue(priest.HasMentalBreak);
+            Assert.IsFalse(_quests.HasShepherd(priest));
+            _quests.RecordTalkDownSavedPriest(priest, other, 3);
+            Assert.IsTrue(_quests.HasShepherd(priest));
+            Assert.IsFalse(priest.HasMentalBreak);
+            other.Needs.Morale = 40f;
+            Assert.IsTrue(_quests.TryPerformSermon(priest, _survivors));
+            Assert.AreEqual(60f, other.Needs.Morale, 0.01f);
+        }
+
+        // ── #238 Reporter / Muckraker ────────────────────────────────────
+
+        [Test]
+        public void Reporter_FiveIntel_UnlocksMuckraker()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.ReporterId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            for (int i = 0; i < 4; i++)
+                _quests.RecordFirstStrikeIntel(sv, "first_strike_intel_" + i, i + 1);
+            Assert.IsFalse(_quests.HasMuckraker(sv));
+            _quests.RecordFirstStrikeIntel(sv, "first_strike_intel_4", 5);
+            Assert.IsTrue(_quests.HasMuckraker(sv));
+            Assert.IsTrue(_quests.RevealsAllMapFog(sv));
+        }
+
+        // ── #239 Radio Host / Voice of the Wastes ────────────────────────
+
+        [Test]
+        public void RadioHost_48hBroadcast_UnlocksVoice()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.RadioHostId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordContinuousBroadcastHours(sv, 24f, duringBlizzard: true, maxedFatigueAndThirst: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasVoiceOfTheWastes(sv));
+            _quests.RecordContinuousBroadcastHours(sv, 24f, duringBlizzard: true, maxedFatigueAndThirst: true, currentDay: 3);
+            Assert.IsTrue(_quests.HasVoiceOfTheWastes(sv));
+            Assert.AreEqual(100f, sv.Needs.Fatigue, 0.01f);
+            Assert.IsTrue(_quests.RadioPowerIsFree(_survivors));
+            Assert.IsTrue(_quests.RadioIntelIsInstant(sv));
+            Assert.IsTrue(_quests.BlocksTrapIntel(sv));
+        }
+
+        // ── #240 Chef / Iron Chef ────────────────────────────────────────
+
+        [Test]
+        public void Chef_LastSupper_UnlocksIronChef()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.ChefId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            var foods = new List<string> { "canned_food", "pre_war_spice", "meat", "dirty_water_soup" };
+            foreach (var f in foods)
+                _quests.RecordFoodItemHoarded(sv, f, 1);
+            _quests.RecordLastSupperCooked(sv, foods, cookHours: 12f, currentDay: 2);
+            Assert.IsFalse(_quests.HasIronChef(sv));
+            _quests.RecordLastSupperCooked(sv, foods, cookHours: 24f, currentDay: 2);
+            Assert.IsTrue(_quests.HasIronChef(sv));
+            sv.Needs.Hunger = 80f;
+            sv.Needs.Thirst = 70f;
+            sv.Needs.Fatigue = 90f;
+            _quests.ApplyIronChefMeal(sv);
+            Assert.AreEqual(0f, sv.Needs.Hunger, 0.01f);
+            Assert.AreEqual(0f, sv.Needs.Thirst, 0.01f);
+            Assert.AreEqual(0f, sv.Needs.Fatigue, 0.01f);
+        }
+
+        // ── #241 Athlete / Tireless ──────────────────────────────────────
+
+        [Test]
+        public void Athlete_Marathon_UnlocksTireless()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.AthleteId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordMarathonExpedition(sv, nodesAway: 10, hoursElapsed: 20f, onFoot: true, returnedHome: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasTireless(sv));
+            _quests.RecordMarathonExpedition(sv, nodesAway: 15, hoursElapsed: 48f, onFoot: true, returnedHome: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasTireless(sv));
+            Assert.AreEqual(3f, _quests.GetStaminaPoolMultiplier(sv), 0.01f);
+            Assert.AreEqual(1f, _quests.GetDailySleepHoursRequired(sv), 0.01f);
+            Assert.AreEqual(300f, sv.BaseMaxStamina, 0.01f);
+        }
+
+        // ── #242 Firefighter / Asbestos ──────────────────────────────────
+
+        [Test]
+        public void Firefighter_InfernoNoSuit_UnlocksAsbestos()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.FirefighterId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            float hp = sv.Needs.Health;
+            _quests.RecordInfernoExtinguished(sv, "plant", woreHazmatSuit: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasAsbestos(sv));
+            _quests.RecordInfernoExtinguished(sv, "plant", woreHazmatSuit: false, currentDay: 2);
+            Assert.IsTrue(_quests.HasAsbestos(sv));
+            Assert.Less(sv.Needs.Health, hp);
+            Assert.IsTrue(_quests.IsImmuneToFireAndTemperature(sv));
+            Assert.IsTrue(_quests.IgnoresColdSleepQuality(sv));
+        }
+
+        // ── #243 Tailor / Armorer ────────────────────────────────────────
+
+        [Test]
+        public void Tailor_TenScraps_UnlocksArmorer()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.TailorId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            for (int i = 0; i < 9; i++)
+                _quests.RecordClothingDisassembled(sv, i + 1);
+            Assert.IsFalse(_quests.HasArmorer(sv));
+            _quests.RecordClothingDisassembled(sv, 10);
+            Assert.IsTrue(_quests.HasArmorer(sv));
+            Assert.IsTrue(_quests.CanCraftReinforcedHazmatSuits(sv));
+            Assert.AreEqual(0.25f, _quests.GetClothingDegradeMultiplier(_survivors), 0.01f);
+        }
+
+        // ── #244 Watchmaker / Tinkerer ───────────────────────────────────
+
+        [Test]
+        public void Watchmaker_50Scrap_UnlocksTinkerer()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.WatchmakerId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordWatchRepaired(sv, electronicScrapSpent: 20, currentDay: 2);
+            Assert.IsFalse(_quests.HasTinkerer(sv));
+            _quests.RecordWatchRepaired(sv, electronicScrapSpent: 50, currentDay: 2);
+            Assert.IsTrue(_quests.HasTinkerer(sv));
+            Assert.IsTrue(_quests.DevicesNeverLoseCalibration(_survivors));
+            Assert.IsTrue(_quests.ShowsTrueRadiation(_survivors));
+        }
+
+        // ── #245 Historian / Lorekeeper ──────────────────────────────────
+
+        [Test]
+        public void Historian_ConstitutionInFire_UnlocksLorekeeper()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.HistorianId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            Assert.AreEqual(PersonalQuestSystem.RuinedMuseumNodeId,
+                _quests.GetQuestline(QuestlineSO.Ids.MuseumArchive).spawnMapNodeId);
+            _quests.RecordConstitutionRetrieved(sv, museumBurning: false, currentDay: 2);
+            Assert.IsFalse(_quests.HasLorekeeper(sv));
+            _quests.RecordConstitutionRetrieved(sv, museumBurning: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasLorekeeper(sv));
+            Assert.AreEqual(15f, _quests.GetJournalMoraleBoost(_survivors), 0.01f);
+            Assert.AreEqual(2f, _quests.GetArtifactTradeValueMultiplier(_survivors), 0.01f);
+        }
+
+        // ── #246 Defector / Zealot's Bane ────────────────────────────────
+
+        [Test]
+        public void Defector_KillsCultLeader_UnlocksZealotsBane()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.DefectorId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordCultLeaderKilled(sv, "random_cultist", 2);
+            Assert.IsFalse(_quests.HasZealotsBane(sv));
+            _quests.RecordCultLeaderKilled(sv, PersonalQuestSystem.CultLeaderId, 2);
+            Assert.IsTrue(_quests.HasZealotsBane(sv));
+            Assert.IsTrue(_quests.CultistsFleeFrom(sv));
+            Assert.AreEqual(1.5f, _quests.GetFactionCombatDamageMultiplier(sv), 0.01f);
+        }
+
+        // ── #247 Addict / Chem-Resistant ─────────────────────────────────
+
+        [Test]
+        public void Addict_FourteenCleanDays_UnlocksChemResistant()
+        {
+            var sv = MakeArchetype(PersonalQuestSystem.AddictId);
+            _quests.TryStartQuestline(sv, "test", 1);
+            for (int d = 0; d < 5; d++)
+                _quests.RecordWithdrawalCleanDay(sv, relapsed: false, currentDay: d + 1);
+            _quests.RecordWithdrawalCleanDay(sv, relapsed: true, currentDay: 6);
+            Assert.AreEqual(0, _quests.GetState(sv.Id).WithdrawalCleanDays);
+            for (int d = 0; d < PersonalQuestSystem.WithdrawalCleanDaysRequired; d++)
+                _quests.RecordWithdrawalCleanDay(sv, relapsed: false, currentDay: 10 + d);
+            Assert.IsTrue(_quests.HasChemResistant(sv));
+            Assert.IsTrue(_quests.ImmuneToAddiction(sv));
+            Assert.AreEqual(2f, _quests.GetMedicalHealMultiplier(sv), 0.01f);
+        }
+
+        // ── #248 Parent / Protector ──────────────────────────────────────
+
+        [Test]
+        public void Parent_LocketMourning_UnlocksProtector()
+        {
+            var parent = MakeArchetype(PersonalQuestSystem.ParentId);
+            var ally = new Survivor { Id = "child_sub", DisplayName = "Ally", State = SurvivorState.Idle };
+            ally.Needs.Health = 5f;
+            ally.BaseMaxHealth = 100f;
+            _survivors.Add(ally);
+            _quests.TryStartQuestline(parent, "test", 1);
+            _quests.RecordChildDeathIntel(parent, 2);
+            Assert.IsTrue(parent.HasMentalBreak);
+            Assert.IsFalse(_quests.HasProtector(parent));
+            _quests.RecordParentMourningSurvived(parent, mourningDays: 3f, currentDay: 3);
+            Assert.IsFalse(_quests.HasProtector(parent));
+            _quests.RecordParentMourningSurvived(parent, mourningDays: 7f, currentDay: 10);
+            Assert.IsTrue(_quests.HasProtector(parent));
+            Assert.IsFalse(parent.HasMentalBreak);
+            Assert.IsTrue(_quests.IsProtectorEnraged(parent, _survivors));
+            Assert.AreEqual(3f, _quests.GetProtectorActionSpeedMultiplier(parent, _survivors), 0.01f);
         }
     }
 }

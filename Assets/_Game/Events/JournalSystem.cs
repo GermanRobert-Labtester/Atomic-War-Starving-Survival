@@ -13,6 +13,33 @@ namespace AtomicWar._Game.Events
     {
         public const int MaxEntries = 64;
 
+        private PersonalQuestSystem _personalQuests;
+        private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #245 — Lorekeeper passive journal morale.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
+        /// <summary>Apply Lorekeeper bunker-wide journal morale boost once per day.</summary>
+        public void ApplyLorekeeperMoraleTick()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return;
+            var list = _getSurvivors();
+            float boost = _personalQuests.GetJournalMoraleBoost(list);
+            if (boost <= 0f || list == null) return;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var s = list[i];
+                if (s == null || !s.IsAlive) continue;
+                s.Needs.Morale = UnityEngine.Mathf.Clamp(s.Needs.Morale + boost, 0f, 100f);
+            }
+        }
+
         private readonly List<JournalEntry> _entries = new List<JournalEntry>();
         private readonly KnowledgeBase _knowledge = new KnowledgeBase();
         private int _seq;

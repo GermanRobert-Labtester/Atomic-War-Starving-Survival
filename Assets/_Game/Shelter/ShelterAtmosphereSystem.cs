@@ -427,7 +427,8 @@ namespace AtomicWar._Game.Shelter
                     needs.Modify(fighter, NeedKind.Fatigue, 5f);
             }
 
-            if (needs != null)
+            if (needs != null
+                && (_personalQuests == null || !_personalQuests.IsImmuneToFireAndTemperature(fighter)))
                 needs.Modify(fighter, NeedKind.Health, -FightFireBurnDamage * 0.5f);
 
             room.FireIntensity = Mathf.Clamp01(room.FireIntensity - reduction);

@@ -18,6 +18,19 @@ namespace AtomicWar._Game.Economy
     /// </summary>
     public class DynamicEconomySystem
     {
+        private PersonalQuestSystem _personalQuests;
+        private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #236 — Demagogue: FactionTrust floor 0 + tribute drops.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
+
         public const float MinTrust = -100f;
         public const float MaxTrust = 100f;
         public const float DefaultRaidThreshold = -50f;
@@ -343,6 +356,8 @@ namespace AtomicWar._Game.Economy
 
             float old = GetTrust(factionId);
             float next = Mathf.Clamp(old + delta, MinTrust, MaxTrust);
+            if (_personalQuests != null && _getSurvivors != null)
+                next = _personalQuests.ClampFactionTrust(next, _getSurvivors());
             _trust[factionId] = next;
             OnTrustChanged?.Invoke(factionId, old, next);
             OnEconomyChanged?.Invoke();
@@ -367,6 +382,8 @@ namespace AtomicWar._Game.Economy
             if (string.IsNullOrEmpty(factionId)) return;
             float old = GetTrust(factionId);
             float next = Mathf.Clamp(value, MinTrust, MaxTrust);
+            if (_personalQuests != null && _getSurvivors != null)
+                next = _personalQuests.ClampFactionTrust(next, _getSurvivors());
             _trust[factionId] = next;
             if (!Mathf.Approximately(old, next))
             {
