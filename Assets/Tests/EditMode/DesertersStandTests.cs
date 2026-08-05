@@ -52,6 +52,10 @@ namespace AtomicWar.Tests.EditMode
             if (_scrap != null) Object.DestroyImmediate(_scrap);
             if (_rifle != null) Object.DestroyImmediate(_rifle);
             if (_catalog != null) Object.DestroyImmediate(_catalog);
+
+            // See UxoHazardTests.TearDown: ExpeditionSystem instances created
+            // in tests leak EventBus subscriptions that nothing unsubscribes.
+            EventBus.Clear();
         }
 
         [Test]

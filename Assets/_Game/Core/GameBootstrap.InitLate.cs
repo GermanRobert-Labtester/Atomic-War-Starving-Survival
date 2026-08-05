@@ -278,7 +278,7 @@ namespace AtomicWar._Game.Core
 
             CorpseSystem = new CorpseManagementSystem(
                 NeedsSystem, Inventory, MedicalSystem, RadiationSystem,
-                new System.Random(_worldSeed + 17));
+                CreateSaltedRng(_worldSeed, "corpse"));
             CorpseSystem.SetItemDefinitions(
                 CorpseManagementSystem.CreateCorpseDefinition(),
                 CorpseManagementSystem.CreateFertilizerDefinition());

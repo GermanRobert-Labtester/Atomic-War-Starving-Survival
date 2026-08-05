@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
@@ -24,7 +23,14 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null) return 0f;
-            return ScoreAction(context.Survivor, null);
+            return ScoreAction(context.Survivor, context.InternalLockSystem);
+        }
+
+        public override void Execute(AIContext context)
+        {
+            if (context?.Survivor == null) return;
+            var rng = context.Random ?? new System.Random();
+            ExecuteSleepwalk(context.Survivor, context.InternalLockSystem, rng, out _);
         }
 
         public float ScoreAction(Survivor sv, InternalLockSystem lockSystem)

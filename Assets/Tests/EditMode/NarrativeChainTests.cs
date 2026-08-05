@@ -208,34 +208,38 @@ namespace AtomicWar.Tests.EditMode
             _runner.ScheduleEvent(EventRunner.EmissaryReturnCaughtId, 18, EventRunner.FlagLiedPurifierBroken);
 
             var gameState = new GameState();
-            var saveSys = new SaveSystem(
-                gameState,
-                weatherSystem: null,
-                temperatureSystem: null,
-                needsSystem: null,
-                radiationSystem: null,
-                shelter: null,
-                getSurvivors: () => new List<Survivor>(),
-                itemLookup: null,
-                moduleLookup: null,
-                savesDir: _savesDir);
+            var saveSys = new SaveSystem(new SaveSystem.CoreDeps
+            {
+                GameState = gameState,
+                WeatherSystem = null,
+                TemperatureSystem = null,
+                NeedsSystem = null,
+                RadiationSystem = null,
+                Shelter = null,
+                GetSurvivors = () => new List<Survivor>(),
+                ItemLookup = null,
+                ModuleLookup = null,
+                SavesDir = _savesDir
+            });
             saveSys.SetEventRunner(_runner);
 
             Assert.That(saveSys.Save("chain_slot"), Is.True);
 
             var runner2 = new EventRunner();
             runner2.SetPool(_pool);
-            var saveSys2 = new SaveSystem(
-                gameState,
-                weatherSystem: null,
-                temperatureSystem: null,
-                needsSystem: null,
-                radiationSystem: null,
-                shelter: null,
-                getSurvivors: () => new List<Survivor>(),
-                itemLookup: null,
-                moduleLookup: null,
-                savesDir: _savesDir);
+            var saveSys2 = new SaveSystem(new SaveSystem.CoreDeps
+            {
+                GameState = gameState,
+                WeatherSystem = null,
+                TemperatureSystem = null,
+                NeedsSystem = null,
+                RadiationSystem = null,
+                Shelter = null,
+                GetSurvivors = () => new List<Survivor>(),
+                ItemLookup = null,
+                ModuleLookup = null,
+                SavesDir = _savesDir
+            });
             saveSys2.SetEventRunner(runner2);
 
             Assert.That(saveSys2.Load("chain_slot"), Is.True);

@@ -13,7 +13,22 @@ namespace AtomicWar._Game.Survivors
     public class MedicalPerkSystem
     {
         // ── Perk ids ─────────────────────────────────────────────────────
-        public const string SteadyHandsId = "perk_steady_hands";
+        /// <summary>
+        /// Milestone Steady Hands (earned via Phase-2 cures, not XP).
+        /// Renamed away from "perk_steady_hands": that id collided with the
+        /// XP-threshold medical *expert* perk registered in
+        /// <see cref="SkillProgressionSystem.RegisterDefaultPerks"/>, and the
+        /// later registration silently overwrote it — leaving medical-track
+        /// experts with no XP-earnable expert perk at all.
+        /// </summary>
+        public const string SteadyHandsId = "perk_steady_hands_field";
+
+        /// <summary>
+        /// Pre-migration id for the milestone perk, still present in saves
+        /// written before the collision fix. See
+        /// <see cref="SkillProgressionSystem.MigrateLegacySteadyHands"/>.
+        /// </summary>
+        public const string LegacySteadyHandsId = "perk_steady_hands";
         public const string TriageUnderFireId = "perk_triage_under_fire";
         public const string RadiologistId = "perk_radiologist";
         public const string AnatomistId = "perk_anatomist";

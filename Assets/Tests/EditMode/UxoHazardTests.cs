@@ -60,6 +60,13 @@ namespace AtomicWar.Tests.EditMode
             if (_needsProfile != null) Object.DestroyImmediate(_needsProfile);
             if (_scrap != null) Object.DestroyImmediate(_scrap);
             if (_itemCatalog != null) Object.DestroyImmediate(_itemCatalog);
+
+            // ExpeditionSystem subscribes to the static EventBus in its
+            // constructor and only unsubscribes via UnsubscribeAll(), which
+            // GameBootstrap calls but tests cannot (the instance is local to
+            // each test). Without this, handlers bound to dead systems
+            // accumulate for the whole run and fire on later tests.
+            EventBus.Clear();
         }
 
         [Test]
@@ -192,7 +199,8 @@ namespace AtomicWar.Tests.EditMode
             }
 
             var expedition = new ExpeditionSystem(
-                _radSystem, _inventory, _itemCatalog, medicalSystem: _medical, seed: 1);
+                _radSystem, _inventory, _itemCatalog,
+                new ExpeditionSystem.Config { MedicalSystem = _medical, Seed = 1 });
             expedition.SetGeneratedMap(map);
 
             var reckless = new Survivor

@@ -105,3 +105,34 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Audit artifacts (this codebase includes a per-prompt audit pass; the
+# output is large and ephemeral. Commit if you need to share evidence.)
+/audit/
+/test-results-*.xml
+/test-log-*.txt
+/test-log-*.log
+/test-*.log
+/unity-*.log
+/test-*.xml
+/narrative-chain-test.log
+/trait-gate-test.log
+
+# Legacy / quarantine prototype code (not compiled, reference-only)
+/_quarantine_legacy/
+
+# Solution files (Unity regenerates)
+*.slnx
+*.sln
+/build_log.txt
+
+# Test artifacts, capitalised variants. The lowercase rules above
+# (/test-results-*.xml, /test-*.log) do not match these on case-sensitive
+# filesystems, so they were showing up as untracked noise alongside real source.
+/TestResults-*.xml
+/TestResults-*.log
+/*_test_log.txt
+/*_recheck_log.txt
+
+# qlty tooling cache
+/.qlty/

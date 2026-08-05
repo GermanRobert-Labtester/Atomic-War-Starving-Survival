@@ -22,27 +22,38 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null || !context.Survivor.IsAlive) return 0f;
+            if (context.CartographySystem == null) return 0f;
+            if (!context.CartographySystem.HasModule) return 0f;
 
             // Science-skilled survivors are more drawn to cartography work.
             float scienceSkill = context.Survivor.ScienceSkill;
             if (scienceSkill < 0.2f) return 0f;
 
+            string uncharted = context.GetUnchartedNodeId?.Invoke();
+            if (string.IsNullOrEmpty(uncharted)) return 0f;
+
             float score = baseScore;
             score += scienceSkill * 0.3f;
-
-            // Higher score when there are unexplored nodes on the map.
-            // (Map context would be wired by GameBootstrap.)
+            if (context.CartographySystem.HasSupplies)
+                score += suppliesBonus;
 
             return Mathf.Clamp01(score);
         }
 
         public override void Execute(AIContext context)
         {
-            if (context?.Survivor == null) return;
+            if (context?.Survivor == null || context.CartographySystem == null) return;
 
-            // Actual charting is handled by CartographySystem.ChartNode() called
-            // from GameBootstrap via the AI action dispatch.
-            Debug.Log($"[ChartMap] {context.Survivor.DisplayName} is working at the cartography table.");
+            string nodeId = context.GetUnchartedNodeId?.Invoke();
+            if (string.IsNullOrEmpty(nodeId)) return;
+
+            bool charted = context.CartographySystem.ChartNode(
+                nodeId, context.Survivor.ScienceSkill);
+            if (charted)
+            {
+                context.Survivor.Needs.Fatigue = Mathf.Clamp(
+                    context.Survivor.Needs.Fatigue + 5f, 0f, 100f);
+            }
         }
     }
 }

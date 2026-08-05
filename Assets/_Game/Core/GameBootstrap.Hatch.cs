@@ -112,7 +112,7 @@ namespace AtomicWar._Game.Core
             // Build a minimal EventContext (no choices to apply directly; the
             // side effects are handled by the ExpeditionSystem on the resolve
             // signal). Run so the event modal is presented to the player.
-            var ctx = new EventContext(exp.Survivor, Shelter, Inventory, new System.Random(_worldSeed));
+            var ctx = new EventContext(exp.Survivor, Shelter, Inventory, CreateSaltedRng(_worldSeed, "hatch_event"));
             EventRunner.Run(eventSo, ctx);
         }
 

@@ -118,6 +118,14 @@ namespace AtomicWar._Game.Core
             public Shelter.Shelter Shelter;
             public IReadOnlyList<Survivor> Survivors;
             public int Seed = 42;
+
+            /// <summary>
+            /// Populate the built-in encounter pool on construction (default true).
+            /// Set false when a test needs a deterministic expedition: random
+            /// encounters can resolve to "flee", which flips the expedition to
+            /// Inbound mid-travel and prevents arrival entirely.
+            /// </summary>
+            public bool CreateDefaultEncounters = true;
         }
 
         /// <summary>Precomputed path request from map UI (travel hours + hazard snapshot).</summary>
@@ -149,12 +157,19 @@ namespace AtomicWar._Game.Core
             _survivors = config.Survivors;
             _rng = new System.Random(config.Seed);
 
-            CreateDefaultEncounters();
+            if (config.CreateDefaultEncounters)
+                CreateDefaultEncounters();
 
             // Subscribe to the typed intercept signal published by the
-            // FlashpointChoreographer's EMP step. Idempotent: the
-            // EventBus uses a singleton dictionary so duplicate
-            // subscriptions are ignored.
+            // FlashpointChoreographer's EMP step.
+            //
+            // NOT idempotent across instances: EventBus dedupes by delegate
+            // equality (Target + Method), so a delegate bound to a *different*
+            // ExpeditionSystem instance is a distinct handler and is added
+            // alongside the existing one. Every instance that subscribes here
+            // must be paired with UnsubscribeAll() or it leaks into the static
+            // bus for the rest of the process. GameBootstrap.OnDestroy does
+            // this; tests that construct an ExpeditionSystem directly must too.
             EventBus.Subscribe<FlashpointInterceptSignal>(HandleFlashpointIntercept);
             EventBus.Subscribe<HatchDilemmaResolvedSignal>(HandleHatchDilemmaResolved);
         }

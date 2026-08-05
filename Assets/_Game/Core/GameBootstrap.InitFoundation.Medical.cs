@@ -33,7 +33,7 @@ namespace AtomicWar._Game.Core
 
         private void InitAddictionSystem()
         {
-            Addiction = new AddictionSystem(new System.Random(_worldSeed + 71));
+            Addiction = new AddictionSystem(CreateSaltedRng(_worldSeed, "addiction"));
             if (_itemCatalog != null)
             {
                 string[] addictiveIds = { "morphine", "anti_rad", "painkiller", "stimulant" };

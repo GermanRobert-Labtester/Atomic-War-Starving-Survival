@@ -203,8 +203,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void Audit003_CollectMissingFoundation_ReportsAllNulls()
         {
-            var missing = GameBootstrap.CollectMissingFoundationSystems(
-                null, null, null, null, null, null, null, null);
+            var missing = GameBootstrap.CollectMissingFoundationSystems(null);
 
             Assert.AreEqual(GameBootstrap.FoundationSystemNames.Length, missing.Count);
             CollectionAssert.AreEquivalent(GameBootstrap.FoundationSystemNames, missing);
@@ -224,7 +223,17 @@ namespace AtomicWar.Tests.EditMode
             var time = new TimeSystem();
 
             var missing = GameBootstrap.CollectMissingFoundationSystems(
-                gs, time, weather, temperature, photo, needs, radiation, shelter);
+                new GameBootstrap.FoundationSystemsSnapshot
+                {
+                    GameState = gs,
+                    TimeSystem = time,
+                    WeatherSystem = weather,
+                    TemperatureSystem = temperature,
+                    PhotoperiodSystem = photo,
+                    NeedsSystem = needs,
+                    RadiationSystem = radiation,
+                    Shelter = shelter
+                });
 
             Assert.AreEqual(0, missing.Count,
                 "Full foundation set must produce no missing names.");
@@ -237,7 +246,11 @@ namespace AtomicWar.Tests.EditMode
             var weather = new WeatherSystem(null, 1);
 
             var missing = GameBootstrap.CollectMissingFoundationSystems(
-                gs, null, weather, null, null, null, null, null);
+                new GameBootstrap.FoundationSystemsSnapshot
+                {
+                    GameState = gs,
+                    WeatherSystem = weather
+                });
 
             CollectionAssert.Contains(missing, nameof(GameBootstrap.TimeSystem));
             CollectionAssert.Contains(missing, nameof(GameBootstrap.NeedsSystem));

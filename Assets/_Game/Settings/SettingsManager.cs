@@ -74,6 +74,12 @@ namespace AtomicWar._Game.Settings
             Application.targetFrameRate = TargetFPS;
         }
 
+        /// <summary>A-12: Persist settings on application quit.</summary>
+        private void OnApplicationQuit()
+        {
+            Save();
+        }
+
         public void SetVolume(float master, float music, float sfx)
         {
             MasterVolume = Mathf.Clamp01(master);

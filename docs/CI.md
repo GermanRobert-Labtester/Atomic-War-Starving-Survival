@@ -148,4 +148,9 @@ Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode \
   -testResults test-results-ci-local-editmode.xml -logFile test-log-ci-local-editmode.txt
 ```
 
-Last local run: **780 passed / 0 failed** (`test-results-ci-local-editmode.xml`).
+Last local run: **1035 passed / 0 failed** (2026-08-05, audit pass).
+
+> **Keep this number current.** It was previously recorded as `780 passed / 0 failed`, which had gone
+> stale: roughly 250 tests had been added since that run, and the suite was actually **red** (2
+> failures) while this line still read green. A stale pass count is worse than no pass count — it is
+> a false trust signal. Re-run the full command above and update this line whenever you rely on it.

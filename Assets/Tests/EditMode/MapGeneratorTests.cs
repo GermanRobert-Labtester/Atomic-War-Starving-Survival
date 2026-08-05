@@ -21,6 +21,16 @@ namespace AtomicWar.Tests.EditMode
         private const int AcceptanceSeed = 12345;
         private const float Eps = 1e-4f;
 
+        [TearDown]
+        public void TearDown()
+        {
+            // ExpeditionSystem subscribes to the static EventBus on construction
+            // and is only unsubscribed by UnsubscribeAll(), which tests cannot
+            // call for instances local to a test method. Clear between tests so
+            // handlers bound to dead systems don't fire on later fixtures.
+            EventBus.Clear();
+        }
+
         [Test]
         public void Seed_12345_Twice_ProducesIdenticalLayout_LootTables_AndDistances()
         {
@@ -280,7 +290,16 @@ namespace AtomicWar.Tests.EditMode
             var rad = new RadiationSystem(needs);
             rad.Register(survivor);
 
-            var exp = new ExpeditionSystem(rad, inv, null, weather, null, null, null, null, seed: 1);
+            // Encounters disabled: a random encounter can resolve to "flee",
+            // which flips the expedition to Inbound mid-travel so it never
+            // arrives. This test is about arrival marking a node visited, so
+            // arrival must be guaranteed rather than left to the RNG stream.
+            var exp = new ExpeditionSystem(rad, inv, null, new ExpeditionSystem.Config
+            {
+                WeatherSystem = weather,
+                Seed = 1,
+                CreateDefaultEncounters = false
+            });
             exp.SetGeneratedMap(map);
 
             float expectedHours = map.GetTravelHoursFromShelter(target.NodeId, WeatherKind.Blizzard);
@@ -295,9 +314,14 @@ namespace AtomicWar.Tests.EditMode
             while (state.Phase == ExpeditionPhase.Outbound && safety-- > 0)
                 exp.Tick(1f);
 
-            Assert.That(state.Phase, Is.EqualTo(ExpeditionPhase.Looting)
-                .Or.EqualTo(ExpeditionPhase.Inbound)
-                .Or.EqualTo(ExpeditionPhase.Completed));
+            // Assert arrival explicitly. Phase alone is not sufficient evidence:
+            // an aborted trip also leaves the expedition in Inbound, so a phase-only
+            // check cannot distinguish "arrived, then turned back" from
+            // "fled before ever arriving".
+            Assert.That(state.TravelTicksCompleted, Is.GreaterThanOrEqualTo(state.TotalDistanceTicks),
+                "Expedition must actually cover the full outbound distance");
+            Assert.That(state.Phase, Is.EqualTo(ExpeditionPhase.Looting),
+                "Reaching the node begins the Looting phase");
             Assert.That(map.GetNode(target.NodeId).IsVisited, Is.True,
                 "Arriving at a node must mark it visited/revealed");
 

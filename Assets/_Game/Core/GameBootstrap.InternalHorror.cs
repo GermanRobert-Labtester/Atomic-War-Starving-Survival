@@ -30,7 +30,17 @@ namespace AtomicWar._Game.Core
                 CareIntervalHours = AtomicWar._Game.Medical.MedicalSystem.ComaCareIntervalHours
             };
 
-            // Corpses
+            FillCorpseSnapshot(snap);
+            snap.ContaminatedFoodCount = Inventory != null
+                ? Inventory.CountByType(ItemType.ContaminatedFood)
+                : 0;
+            snap.Fires = BuildFireRoomSnapshots();
+            FillComaSnapshot(snap);
+            return snap;
+        }
+
+        private void FillCorpseSnapshot(AtomicWar._Game.UI.InternalHorrorSnapshot snap)
+        {
             int corpses = CorpseSystem != null
                 ? CorpseSystem.CorpseCount
                 : (Inventory != null ? Inventory.CountByType(ItemType.Corpse) : 0);
@@ -39,72 +49,71 @@ namespace AtomicWar._Game.Core
                 ? PhotoperiodSystem.EffectiveDaylightHours
                 : 8f;
             snap.DaylightHoursAvailable = daylight;
-            snap.CanBury = corpses > 0 && daylight >= CorpseManagementSystem.BuryHours
+            snap.CanBury = corpses > 0
+                && daylight >= CorpseManagementSystem.BuryHours
                 && FindFirstLivingSurvivor() != null;
-
-            // Contaminated food
-            snap.ContaminatedFoodCount = Inventory != null
-                ? Inventory.CountByType(ItemType.ContaminatedFood)
-                : 0;
-
-            // Fires
-            if (AtmosphereSystem != null && AtmosphereSystem.Rooms != null)
-            {
-                var fireList = new List<AtomicWar._Game.UI.FireRoomSnapshot>();
-                var rooms = AtmosphereSystem.Rooms;
-                for (int i = 0; i < rooms.Count; i++)
-                {
-                    var r = rooms[i];
-                    if (r == null || !r.IsOnFire) continue;
-                    fireList.Add(new AtomicWar._Game.UI.FireRoomSnapshot
-                    {
-                        RoomId = r.RoomId,
-                        IsOnFire = true,
-                        Intensity = r.FireIntensity,
-                        OxygenFraction = r.OxygenFraction,
-                        LocalCoPpm = r.LocalCoPpm,
-                        BulkheadSealed = r.BulkheadSealed
-                    });
-                }
-                snap.Fires = fireList.ToArray();
-            }
-
-            // Coma patients
-            if (MedicalSystem != null && Survivors != null)
-            {
-                var comaList = new List<AtomicWar._Game.UI.ComaPatientSnapshot>();
-                bool anyUrgent = false;
-                for (int i = 0; i < Survivors.Count; i++)
-                {
-                    var sv = Survivors[i];
-                    if (sv == null || !sv.IsAlive) continue;
-                    if (!MedicalSystem.IsComatose(sv)) continue;
-                    float sinceCare = 0f;
-                    var active = MedicalSystem.GetActive(sv);
-                    for (int a = 0; a < active.Count; a++)
-                    {
-                        if (active[a].AfflictionId == AtomicWar._Game.Medical.AfflictionSO.Ids.Coma)
-                        {
-                            sinceCare = active[a].HoursSinceLastCare;
-                            break;
-                        }
-                    }
-                    bool needs = MedicalSystem.NeedsCare(sv);
-                    if (needs) anyUrgent = true;
-                    comaList.Add(new AtomicWar._Game.UI.ComaPatientSnapshot
-                    {
-                        SurvivorId = sv.Id,
-                        DisplayName = sv.DisplayName,
-                        HoursSinceLastCare = sinceCare,
-                        NeedsCare = needs
-                    });
-                }
-                snap.Comas = comaList.ToArray();
-                snap.ComaCareUrgent = anyUrgent;
-            }
-
-            return snap;
         }
 
+        private AtomicWar._Game.UI.FireRoomSnapshot[] BuildFireRoomSnapshots()
+        {
+            if (AtmosphereSystem?.Rooms == null)
+                return Array.Empty<AtomicWar._Game.UI.FireRoomSnapshot>();
+
+            var fireList = new List<AtomicWar._Game.UI.FireRoomSnapshot>();
+            var rooms = AtmosphereSystem.Rooms;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                var r = rooms[i];
+                if (r == null || !r.IsOnFire) continue;
+                fireList.Add(new AtomicWar._Game.UI.FireRoomSnapshot
+                {
+                    RoomId = r.RoomId,
+                    IsOnFire = true,
+                    Intensity = r.FireIntensity,
+                    OxygenFraction = r.OxygenFraction,
+                    LocalCoPpm = r.LocalCoPpm,
+                    BulkheadSealed = r.BulkheadSealed
+                });
+            }
+            return fireList.ToArray();
+        }
+
+        private void FillComaSnapshot(AtomicWar._Game.UI.InternalHorrorSnapshot snap)
+        {
+            if (MedicalSystem == null || Survivors == null) return;
+
+            var comaList = new List<AtomicWar._Game.UI.ComaPatientSnapshot>();
+            bool anyUrgent = false;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!MedicalSystem.IsComatose(sv)) continue;
+
+                float sinceCare = ResolveComaHoursSinceCare(sv);
+                bool needs = MedicalSystem.NeedsCare(sv);
+                if (needs) anyUrgent = true;
+                comaList.Add(new AtomicWar._Game.UI.ComaPatientSnapshot
+                {
+                    SurvivorId = sv.Id,
+                    DisplayName = sv.DisplayName,
+                    HoursSinceLastCare = sinceCare,
+                    NeedsCare = needs
+                });
+            }
+            snap.Comas = comaList.ToArray();
+            snap.ComaCareUrgent = anyUrgent;
+        }
+
+        private float ResolveComaHoursSinceCare(Survivor sv)
+        {
+            var active = MedicalSystem.GetActive(sv);
+            for (int a = 0; a < active.Count; a++)
+            {
+                if (active[a].AfflictionId == AtomicWar._Game.Medical.AfflictionSO.Ids.Coma)
+                    return active[a].HoursSinceLastCare;
+            }
+            return 0f;
+        }
     }
 }

@@ -260,7 +260,9 @@ namespace AtomicWar.Tests.PlayMode
 
             // Act — fire endgame via EndgameEngine
             var engine = new EndgameEngine(GameModeKind.Story, 120);
+#pragma warning disable CS0219 // engineFired is used for debugging in PlayMode; keep the assignment.
             bool engineFired = false;
+#pragma warning restore CS0219
             engine.OnCampaignEnded += _ => engineFired = true;
 
             // Build minimal passing state (rescue victory at Day 60)

@@ -86,7 +86,9 @@ namespace AtomicWar._Game.Core
 
         // -- Events --
         public event Action<int> OnMutationStageAdvanced;   // newStage
+#pragma warning disable CS0067 // Event is part of the public API; consumers may subscribe in future.
         public event Action<ExpeditionState> OnFloraEncountered;
+#pragma warning restore CS0067
         public event Action<ExpeditionState, bool> OnFaunaEncountered; // exp, wasApex
 
         public MutatedEcosystemSystem(System.Random rng = null)

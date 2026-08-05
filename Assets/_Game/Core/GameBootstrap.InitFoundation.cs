@@ -121,7 +121,7 @@ namespace AtomicWar._Game.Core
 
             RadiationSystem = new RadiationSystem(NeedsSystem);
 
-            BeliefSystem = new BeliefSystem(rng: new System.Random(_worldSeed + 31));
+            BeliefSystem = new BeliefSystem(rng: CreateSaltedRng(_worldSeed, "belief"));
             RadiationSystem.OnStatusGained += (sv, status) =>
             {
                 if (status == SurvivorStatus.AcuteRadiationSyndrome)

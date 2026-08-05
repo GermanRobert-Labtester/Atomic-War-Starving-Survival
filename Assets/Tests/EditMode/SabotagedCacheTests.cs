@@ -360,7 +360,8 @@ namespace AtomicWar.Tests.EditMode
             catalog.items = new List<ItemDefinition> { _iodine };
 
             var expedition = new ExpeditionSystem(
-                null, _inventory, catalog, medicalSystem: _medical, seed: 1);
+                null, _inventory, catalog,
+                new ExpeditionSystem.Config { MedicalSystem = _medical, Seed = 1 });
 
             var sys = MakeActiveSystem(new AlwaysSabotageRng());
             expedition.SetSabotagedCacheSystem(sys);

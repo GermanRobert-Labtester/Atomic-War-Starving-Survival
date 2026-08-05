@@ -35,7 +35,7 @@ namespace AtomicWar._Game.Core
             RadioSystem.SetCatalog(_radioCatalog);
 
             RadioTunerSystem = new RadioTunerSystem(
-                new System.Random(_worldSeed + 31),
+                CreateSaltedRng(_worldSeed, "radio_tuner"),
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             InitializeRadioFrequencies();
 

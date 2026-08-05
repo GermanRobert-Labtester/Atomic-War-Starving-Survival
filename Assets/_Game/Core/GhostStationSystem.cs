@@ -13,7 +13,7 @@ namespace AtomicWar._Game.Core
     /// only (morale scrape / journal scrap) — never plume reports, faction
     /// coords, or extraction unlocks.
     /// </summary>
-    public class GhostStationSystem
+    public partial class GhostStationSystem
     {
         public const string IdPrefix = "ghost_station_";
         public const float DefaultMoraleHit = 4f;
@@ -33,7 +33,9 @@ namespace AtomicWar._Game.Core
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
         private Func<int> _getDay;
         private bool _unlocked;
+#pragma warning disable CS0414 // State flag retained for future save/load and diagnostics.
         private bool _frequenciesInjected;
+#pragma warning restore CS0414
 
         public bool IsUnlocked => _unlocked;
         public IReadOnlyCollection<string> HeardStationIds => _heard;
@@ -78,20 +80,6 @@ namespace AtomicWar._Game.Core
 
         public int CurrentDay => _getDay != null ? _getDay() : 0;
 
-        /// <summary>
-        /// Call when the nuclear-exchange EMP fires (Flashpoint or fallback).
-        /// Idempotent — unlocks ghost bands once.
-        /// </summary>
-        public bool NotifyEmpOccurred()
-        {
-            if (_unlocked) return false;
-            _unlocked = true;
-            EnsureFrequenciesInjected();
-            OnUnlocked?.Invoke();
-            OnStateChanged?.Invoke();
-            return true;
-        }
-
         /// <summary>True if frequency id is a registered ghost station.</summary>
         public bool IsGhostFrequencyId(string frequencyId)
         {
@@ -115,16 +103,6 @@ namespace AtomicWar._Game.Core
         public bool HasHeard(string stationId)
         {
             return !string.IsNullOrEmpty(stationId) && _heard.Contains(stationId);
-        }
-
-        /// <summary>
-        /// Apply ghost-station hear effects for an intel node (or force by id in tests).
-        /// Returns true if effects applied (first hear of this station).
-        /// </summary>
-        public bool ApplyGhostHear(IntelNode intel)
-        {
-            if (intel == null || intel.Type != IntelType.GhostLoop) return false;
-            return ApplyGhostHear(intel.SourceFrequencyId, intel);
         }
 
         /// <summary>Force-hear a catalog station (tests / scripted).</summary>
@@ -164,62 +142,6 @@ namespace AtomicWar._Game.Core
             return IntelNode.CreateGhostLoop(def.Id, day, def.LoopText, confidence: 0.15f);
         }
 
-        /// <summary>
-        /// Create runtime RadioFrequencySO assets for all catalog ghosts and
-        /// inject them into the bound tuner. Safe to call repeatedly.
-        /// </summary>
-        public void EnsureFrequenciesInjected()
-        {
-            if (!_unlocked || _tuner == null) return;
-
-            for (int i = 0; i < _catalog.Count; i++)
-            {
-                var def = _catalog[i];
-                if (def == null || string.IsNullOrEmpty(def.Id)) continue;
-                if (_tuner.GetFrequency(def.Id) != null) continue;
-
-                var freq = BuildFrequency(def);
-                if (freq == null) continue;
-                _runtimeFreqs.Add(freq);
-                _tuner.AddFrequency(freq);
-            }
-
-            _frequenciesInjected = true;
-        }
-
-        public GhostStationSave CaptureState()
-        {
-            var heard = new string[_heard.Count];
-            int i = 0;
-            foreach (var id in _heard)
-                heard[i++] = id;
-            return new GhostStationSave
-            {
-                Unlocked = _unlocked,
-                HeardStationIds = heard
-            };
-        }
-
-        public void RestoreState(GhostStationSave save)
-        {
-            _heard.Clear();
-            _unlocked = false;
-            _frequenciesInjected = false;
-            if (save == null) return;
-            _unlocked = save.Unlocked;
-            if (save.HeardStationIds != null)
-            {
-                for (int i = 0; i < save.HeardStationIds.Length; i++)
-                {
-                    string id = save.HeardStationIds[i];
-                    if (!string.IsNullOrEmpty(id))
-                        _heard.Add(id);
-                }
-            }
-            if (_unlocked)
-                EnsureFrequenciesInjected();
-        }
-
         public void Clear()
         {
             _heard.Clear();
@@ -242,14 +164,6 @@ namespace AtomicWar._Game.Core
                     UnityEngine.Object.DestroyImmediate(_runtimeBroadcasts[i]);
             }
             _runtimeBroadcasts.Clear();
-        }
-
-        // -----------------------------------------------------------------
-
-        private void HandleIntelExtracted(IntelNode intel)
-        {
-            if (intel == null || intel.Type != IntelType.GhostLoop) return;
-            ApplyGhostHear(intel);
         }
 
         private void ApplyMoraleHit(float amount)

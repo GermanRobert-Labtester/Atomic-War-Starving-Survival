@@ -41,7 +41,7 @@ namespace AtomicWar._Game.Core
 
             // Also seed catalog locations if present (legacy / static sites)
             if (_locationCatalog?.locations == null) return;
-            var rng = new System.Random(_worldSeed + 17);
+            var rng = CreateSaltedRng(_worldSeed, "catalog_location_seed");
             foreach (var loc in _locationCatalog.locations)
             {
                 if (loc == null || string.IsNullOrEmpty(loc.id)) continue;

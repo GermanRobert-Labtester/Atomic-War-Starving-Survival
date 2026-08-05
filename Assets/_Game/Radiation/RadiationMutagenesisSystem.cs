@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Radiation
 {
@@ -184,17 +185,12 @@ namespace AtomicWar._Game.Radiation
 
         public MutagenesisSave CaptureState()
         {
-            var keys = new string[_stages.Count];
-            var values = new int[_stages.Count];
-            int i = 0;
-            foreach (var kv in _stages) { keys[i] = kv.Key; values[i] = kv.Value; i++; }
-            var hairLoss = new string[_hairLossApplied.Count];
-            _hairLossApplied.CopyTo(hairLoss);
+            SaveCollectionHelpers.CaptureStringIntDict(_stages, out var keys, out var values);
             return new MutagenesisSave
             {
                 StageKeys = keys,
                 StageValues = values,
-                HairLossAppliedIds = hairLoss
+                HairLossAppliedIds = SaveCollectionHelpers.CaptureStringSet(_hairLossApplied)
             };
         }
 
@@ -203,23 +199,10 @@ namespace AtomicWar._Game.Radiation
             _stages.Clear();
             _hairLossApplied.Clear();
             if (save == null) return;
-            if (save.StageKeys != null)
-            {
-                for (int i = 0; i < save.StageKeys.Length; i++)
-                {
-                    if (string.IsNullOrEmpty(save.StageKeys[i])) continue;
-                    int v = save.StageValues != null && i < save.StageValues.Length ? save.StageValues[i] : 0;
-                    _stages[save.StageKeys[i]] = Mathf.Clamp(v, 0, 3);
-                }
-            }
-            if (save.HairLossAppliedIds != null)
-            {
-                for (int i = 0; i < save.HairLossAppliedIds.Length; i++)
-                {
-                    if (!string.IsNullOrEmpty(save.HairLossAppliedIds[i]))
-                        _hairLossApplied.Add(save.HairLossAppliedIds[i]);
-                }
-            }
+            SaveCollectionHelpers.RestoreStringIntDict(
+                _stages, save.StageKeys, save.StageValues,
+                SaveCollectionHelpers.IntClamp.Range(0, 3));
+            SaveCollectionHelpers.RestoreStringSet(_hairLossApplied, save.HairLossAppliedIds);
         }
     }
 

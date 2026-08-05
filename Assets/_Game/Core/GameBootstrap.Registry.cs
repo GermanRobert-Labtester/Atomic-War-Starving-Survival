@@ -286,7 +286,7 @@ namespace AtomicWar._Game.Core
                 Rooms = Shelter?.Rooms != null
                     ? new System.Collections.Generic.List<Shelter.ShelterRoom>(Shelter.Rooms)
                     : null,
-                Rng = new System.Random(_worldSeed),
+                Rng = CreateSaltedRng(_worldSeed, "registry_ctx"),
                 ShelterPerks = ShelterPerks,
                 IndoorTemperatureC = indoor
             };

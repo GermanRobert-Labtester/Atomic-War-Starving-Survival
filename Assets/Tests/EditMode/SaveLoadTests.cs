@@ -169,17 +169,25 @@ namespace AtomicWar.Tests.EditMode
         }
 
         private SaveSystem MakeSaveSystem(
-            GameState gs, WeatherSystem ws, TemperatureSystem ts,
-            NeedsSystem ns, RadiationSystem rs, Shelter shelter,
-            Survivor survivor, Dictionary<string, ItemDefinition> items)
+            (GameState gs, WeatherSystem ws, TemperatureSystem ts, NeedsSystem ns,
+             RadiationSystem rs, Shelter shelter, Survivor survivor,
+             Dictionary<string, ItemDefinition> items) state)
         {
-            var survivorsList = new List<Survivor> { survivor };
-            return new SaveSystem(
-                gs, ws, ts, ns, rs, shelter,
-                () => survivorsList,
-                id => items.TryGetValue(id, out var item) ? item : null,
-                id => null,
-                _testDir);
+            var survivorsList = new List<Survivor> { state.survivor };
+            var items = state.items;
+            return new SaveSystem(new SaveSystem.CoreDeps
+            {
+                GameState = state.gs,
+                WeatherSystem = state.ws,
+                TemperatureSystem = state.ts,
+                NeedsSystem = state.ns,
+                RadiationSystem = state.rs,
+                Shelter = state.shelter,
+                GetSurvivors = () => survivorsList,
+                ItemLookup = id => items.TryGetValue(id, out var item) ? item : null,
+                ModuleLookup = id => null,
+                SavesDir = _testDir
+            });
         }
 
         // -----------------------------------------------------------------
@@ -191,7 +199,7 @@ namespace AtomicWar.Tests.EditMode
         {
             // Arrange: build nasty state
             var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
-            var saveSys = MakeSaveSystem(gs, ws, ts, ns, rs, shelter, survivor, items);
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
             saveSys.SetWorldFlag("stranger_sheltered", true);
             saveSys.SetWorldFlag("filter_breach_active", true);
 
@@ -214,7 +222,7 @@ namespace AtomicWar.Tests.EditMode
             survivor2.HasAcuteRadiationSickness = false;
             survivor2.State = SurvivorState.Idle;
 
-            var loadSys = MakeSaveSystem(gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2);
+            var loadSys = MakeSaveSystem((gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2));
 
             // Act: load
             Assert.IsTrue(loadSys.Load("test_slot"));
@@ -286,7 +294,7 @@ namespace AtomicWar.Tests.EditMode
         public void Load_DetectsCorruptSave_ReturnsFalse()
         {
             var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
-            var saveSys = MakeSaveSystem(gs, ws, ts, ns, rs, shelter, survivor, items);
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
             saveSys.Save("corrupt_slot");
 
             // Corrupt the file
@@ -298,7 +306,7 @@ namespace AtomicWar.Tests.EditMode
             // Load should fail
             var (gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2) = BuildNastyState();
             survivor2.Needs.Hunger = 0f;
-            var loadSys = MakeSaveSystem(gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2);
+            var loadSys = MakeSaveSystem((gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2));
             UnityEngine.TestTools.LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex(".*corrupt.*"));
             Assert.IsFalse(loadSys.Load("corrupt_slot"));
 
@@ -314,7 +322,7 @@ namespace AtomicWar.Tests.EditMode
         public void Load_NonexistentSlot_ReturnsFalse()
         {
             var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
-            var saveSys = MakeSaveSystem(gs, ws, ts, ns, rs, shelter, survivor, items);
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
             Assert.IsFalse(saveSys.Load("ghost_slot"));
         }
 
@@ -326,7 +334,7 @@ namespace AtomicWar.Tests.EditMode
         public void Save_TwiceToSameSlot_OverwritesCleanly()
         {
             var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
-            var saveSys = MakeSaveSystem(gs, ws, ts, ns, rs, shelter, survivor, items);
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
 
             Assert.IsTrue(saveSys.Save("overwrite_slot"));
             survivor.Needs.Hunger = 99f;
@@ -335,7 +343,7 @@ namespace AtomicWar.Tests.EditMode
             // Load and verify the updated value
             var (gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2) = BuildNastyState();
             survivor2.Needs.Hunger = 0f;
-            var loadSys = MakeSaveSystem(gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2);
+            var loadSys = MakeSaveSystem((gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2));
             Assert.IsTrue(loadSys.Load("overwrite_slot"));
             Assert.AreEqual(99f, survivor2.Needs.Hunger, Eps);
         }
@@ -348,7 +356,7 @@ namespace AtomicWar.Tests.EditMode
         public void Delete_RemovesSaveFile()
         {
             var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
-            var saveSys = MakeSaveSystem(gs, ws, ts, ns, rs, shelter, survivor, items);
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
 
             saveSys.Save("delete_me");
             Assert.IsTrue(saveSys.SlotExists("delete_me"));
@@ -366,12 +374,12 @@ namespace AtomicWar.Tests.EditMode
         public void Save_FileContainsSaveVersion()
         {
             var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
-            var saveSys = MakeSaveSystem(gs, ws, ts, ns, rs, shelter, survivor, items);
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
             saveSys.Save("version_check");
 
             string path = Path.Combine(_testDir, "save_version_check.json");
             string json = File.ReadAllText(path);
-            Assert.IsTrue(json.Contains("\"SaveVersion\": 2"), "Save file should contain SaveVersion field");
+            Assert.IsTrue(json.Contains("\"SaveVersion\": 3"), "Save file should contain SaveVersion field");
             Assert.IsTrue(json.Contains("\"Checksum\":"), "Save file should contain Checksum field");
         }
     }

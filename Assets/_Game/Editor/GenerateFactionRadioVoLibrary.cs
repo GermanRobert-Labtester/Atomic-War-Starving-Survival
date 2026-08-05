@@ -51,14 +51,14 @@ namespace AtomicWar._Game.Editor
             // Assign library to any live HUD hooks in open scenes
             int assigned = 0;
             foreach (var hook in Object.FindObjectsByType<FactionRadioVoHook>(
-                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+                         FindObjectsInactive.Include))
             {
                 hook.SetLibrary(lib);
                 EditorUtility.SetDirty(hook);
                 assigned++;
             }
             foreach (var strip in Object.FindObjectsByType<RadioInterceptHUD>(
-                         FindObjectsInactive.Include, FindObjectsSortMode.None))
+                         FindObjectsInactive.Include))
             {
                 strip.VoHook.SetLibrary(lib);
                 EditorUtility.SetDirty(strip);

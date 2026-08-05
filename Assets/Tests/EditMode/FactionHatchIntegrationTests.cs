@@ -723,12 +723,19 @@ namespace AtomicWar.Tests.EditMode
                 radio.HudHasUnread = true;
                 radio.HudTunerIndex = 1;
 
-                var saveSys = new SaveSystem(
-                    gs, ws, ts, ns, rs, shelter,
-                    () => survivors,
-                    id => null,
-                    id => null,
-                    testDir);
+                var saveSys = new SaveSystem(new SaveSystem.CoreDeps
+            {
+                GameState = gs,
+                WeatherSystem = ws,
+                TemperatureSystem = ts,
+                NeedsSystem = ns,
+                RadiationSystem = rs,
+                Shelter = shelter,
+                GetSurvivors = () => survivors,
+                ItemLookup = id => null,
+                ModuleLookup = id => null,
+                SavesDir = testDir
+            });
                 saveSys.SetFactionRadioIntercepts(radio);
                 Assert.IsTrue(saveSys.Save("radio_slot"));
 
@@ -744,12 +751,19 @@ namespace AtomicWar.Tests.EditMode
                 var survivor2 = new Survivor { Id = "s1", DisplayName = "Op" };
                 var survivors2 = new List<Survivor> { survivor2 };
 
-                var loadSys = new SaveSystem(
-                    gs2, ws2, ts2, ns2, rs2, shelter2,
-                    () => survivors2,
-                    id => null,
-                    id => null,
-                    testDir);
+                var loadSys = new SaveSystem(new SaveSystem.CoreDeps
+            {
+                GameState = gs2,
+                WeatherSystem = ws2,
+                TemperatureSystem = ts2,
+                NeedsSystem = ns2,
+                RadiationSystem = rs2,
+                Shelter = shelter2,
+                GetSurvivors = () => survivors2,
+                ItemLookup = id => null,
+                ModuleLookup = id => null,
+                SavesDir = testDir
+            });
                 loadSys.SetFactionRadioIntercepts(radio2);
                 Assert.IsTrue(loadSys.Load("radio_slot"));
 

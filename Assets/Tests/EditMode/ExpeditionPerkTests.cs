@@ -33,6 +33,14 @@ namespace AtomicWar.Tests.EditMode
             _sv = MakeSurvivor("sv_scout", "Scout");
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            // See MapGeneratorTests.TearDown: ExpeditionSystem instances created
+            // in tests leak EventBus subscriptions that nothing unsubscribes.
+            EventBus.Clear();
+        }
+
         private static Survivor MakeSurvivor(string id, string name)
         {
             var sv = new Survivor

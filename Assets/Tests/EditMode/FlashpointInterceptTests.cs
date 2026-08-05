@@ -96,9 +96,13 @@ namespace AtomicWar.Tests.EditMode
             _allSurvivors = new List<Survivor>();
             _expeditionSystem = new ExpeditionSystem(
                 _radSystem, _inventory, _itemCatalog,
-                weatherSystem: null, knowledgeMap: null,
-                medicalSystem: _medicalSystem, _shelter, _allSurvivors,
-                seed: 42);
+                new ExpeditionSystem.Config
+                {
+                    MedicalSystem = _medicalSystem,
+                    Shelter = _shelter,
+                    Survivors = _allSurvivors,
+                    Seed = 42
+                });
         }
 
         [TearDown]

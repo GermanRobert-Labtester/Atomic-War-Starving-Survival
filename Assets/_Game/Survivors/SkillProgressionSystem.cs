@@ -143,14 +143,17 @@ namespace AtomicWar._Game.Survivors
         /// <summary>
         /// Milestone medical perks (Prompts #201–#205). xpThreshold is unreachable via
         /// action XP — granted only through <see cref="TryGrantPerk"/>.
-        /// Replaces the old XP-threshold Steady Hands entry with the milestone version.
         /// </summary>
         public void RegisterMedicalPerks()
         {
             const float milestoneOnly = 999999f;
-            // Supersedes the XP-threshold perk_steady_hands registered in RegisterDefaultPerks.
-            // Milestone awards are not expert-track gated (any medic can earn via Phase-2 cures).
-            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.SteadyHandsId, "Steady Hands", "medical", milestoneOnly, 0.20f, false));
+            // Distinct id from the XP-threshold expert perk "perk_steady_hands"
+            // registered in RegisterDefaultPerks. These are two different perks:
+            // the expert one is earned at 120 medical XP and is expert-track
+            // gated; this one is earned via Phase-2 cures by any medic. They
+            // previously shared an id, so this registration silently destroyed
+            // the expert perk (see MedicalPerkSystem.SteadyHandsId).
+            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.SteadyHandsId, "Steady Hands (Field)", "medical", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.TriageUnderFireId, "Triage Under Fire", "medical", milestoneOnly, 0.10f, false));
             RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.RadiologistId, "Radiologist", "medical", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.AnatomistId, "Anatomist", "medical", milestoneOnly, 0.10f, false));
@@ -699,8 +702,64 @@ namespace AtomicWar._Game.Survivors
                 var sv = survivors[i];
                 if (sv == null) continue;
                 if (_bySurvivor.TryGetValue(sv.Id, out var st))
+                {
+                    MigrateLegacySteadyHands(sv, st);
                     SyncSkillBonuses(sv, st);
+                }
             }
+        }
+
+        /// <summary>
+        /// Save migration for the perk-id collision fix.
+        ///
+        /// Before the fix, the milestone medical perk and the XP-threshold medical
+        /// *expert* perk shared the id "perk_steady_hands", and the milestone
+        /// registration overwrote the expert one. Saves therefore contain the bare
+        /// string "perk_steady_hands" for what was, in practice, always the
+        /// milestone perk.
+        ///
+        /// Disambiguation rule: a survivor whose expert track is not "medical"
+        /// could never have held the medical expert perk, so their stored id is
+        /// unambiguously the milestone award and is remapped. Medical-track
+        /// survivors are genuinely ambiguous under the old build; we keep the
+        /// legacy id, which now resolves to the expert perk — the more valuable
+        /// reading, and the one their track entitles them to.
+        /// </summary>
+        private void MigrateLegacySteadyHands(Survivor sv, ProgressionState st)
+        {
+            if (sv == null || st == null) return;
+            if (string.Equals(sv.ExpertDisciplineId, "medical", StringComparison.OrdinalIgnoreCase))
+                return;
+
+            bool migrated = RemapPerkId(st.ActivePerkIds);
+            migrated |= RemapPerkId(st.DormantPerkIds);
+
+            if (migrated)
+            {
+                UnityEngine.Debug.Log(
+                    $"[SkillProgression] Migrated legacy '{MedicalPerkSystem.LegacySteadyHandsId}' → " +
+                    $"'{MedicalPerkSystem.SteadyHandsId}' for survivor {sv.Id} (expert track: " +
+                    $"{(string.IsNullOrEmpty(sv.ExpertDisciplineId) ? "none" : sv.ExpertDisciplineId)}).");
+            }
+        }
+
+        private static bool RemapPerkId(List<string> ids)
+        {
+            if (ids == null) return false;
+            bool changed = false;
+            for (int i = ids.Count - 1; i >= 0; i--)
+            {
+                if (!string.Equals(ids[i], MedicalPerkSystem.LegacySteadyHandsId, StringComparison.Ordinal))
+                    continue;
+
+                // Collapse rather than duplicate if the new id is already present.
+                if (ids.Contains(MedicalPerkSystem.SteadyHandsId))
+                    ids.RemoveAt(i);
+                else
+                    ids[i] = MedicalPerkSystem.SteadyHandsId;
+                changed = true;
+            }
+            return changed;
         }
 
         /// <summary>Per-survivor runtime progression bookkeeping.</summary>
