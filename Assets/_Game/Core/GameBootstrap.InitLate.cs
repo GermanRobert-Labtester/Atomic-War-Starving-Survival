@@ -544,6 +544,7 @@ namespace AtomicWar._Game.Core
             RadiationSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             DeadDropSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             HatchVisibilitySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            WeatherSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

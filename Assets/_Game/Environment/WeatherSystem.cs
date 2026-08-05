@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 using Random = System.Random;
 
 namespace AtomicWar._Game.Environment
@@ -85,6 +87,48 @@ namespace AtomicWar._Game.Environment
 
         /// <summary>Fired whenever Current actually changes (never on a roll that repeats the current state).</summary>
         public event Action<WeatherKind> OnWeatherChanged;
+
+        private PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #233 — Stormcaller 10-day perfect forecast.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
+        /// <summary>
+        /// When a Stormcaller is present, returns a perfect forecast of future weather
+        /// states (deterministic from seed + roll count). Length is forecastDays.
+        /// </summary>
+        public WeatherKind[] GetPerfectForecast(int forecastDays = PersonalQuestSystem.StormcallerForecastDays)
+        {
+            if (forecastDays <= 0) return Array.Empty<WeatherKind>();
+            if (_personalQuests == null
+                || !_personalQuests.HasPerfectTenDayForecast(_getSurvivors?.Invoke()))
+                return Array.Empty<WeatherKind>();
+
+            var result = new WeatherKind[forecastDays];
+            // Deterministic preview: reseed from Seed + RollCount + day offset without mutating state.
+            int baseRoll = _rollCount;
+            for (int d = 0; d < forecastDays; d++)
+            {
+                int previewSeed = unchecked(_seed * 397) ^ (baseRoll + d + 1) ^ (d * 911);
+                var rng = new Random(previewSeed);
+                // Simple deterministic map: cycle through kinds weighted by roll.
+                double r = rng.NextDouble();
+                if (r < 0.35) result[d] = WeatherKind.Clear;
+                else if (r < 0.5) result[d] = WeatherKind.Overcast;
+                else if (r < 0.65) result[d] = WeatherKind.Rain;
+                else if (r < 0.78) result[d] = WeatherKind.Ashfall;
+                else if (r < 0.9) result[d] = WeatherKind.FalloutStorm;
+                else result[d] = WeatherKind.Blizzard;
+            }
+            return result;
+        }
 
         /// <summary>Legacy/manual mode: no SeasonProfile, Tick is a no-op. Drive Current via ForceWeather only.</summary>
         public WeatherSystem() : this(null, 0)
