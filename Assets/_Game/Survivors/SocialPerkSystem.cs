@@ -38,6 +38,7 @@ namespace AtomicWar._Game.Survivors
         public const float TaskmasterActionSpeedMult = 1.15f;
 
         private SkillProgressionSystem _progression;
+        private PersonalQuestSystem _personalQuests;
         private readonly Dictionary<string, SocialCounters> _bySurvivor =
             new Dictionary<string, SocialCounters>();
 
@@ -49,6 +50,10 @@ namespace AtomicWar._Game.Survivors
             _progression = progression;
             _progression?.RegisterSocialPerks();
         }
+
+        /// <summary>Prompt #218 — Therapist quest tracks ViolentParanoia de-escalations.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         public void RegisterCatalog() => _progression?.RegisterSocialPerks();
 
@@ -96,6 +101,9 @@ namespace AtomicWar._Game.Survivors
             OnMilestoneProgress?.Invoke(intervener, "peaceful_de_escalations", c.PeacefulDeEscalations);
             if (c.PeacefulDeEscalations >= PeacefulDeEscalationsForPerk)
                 TryGrant(intervener, DeEscalatorId, currentDay);
+
+            // Prompt #218 — Therapist personal quest: 3 ViolentParanoia de-escalations.
+            _personalQuests?.RecordTherapistDeEscalation(intervener, currentDay);
         }
 
         public bool HasDeEscalator(Survivor sv) => Has(sv, DeEscalatorId);
