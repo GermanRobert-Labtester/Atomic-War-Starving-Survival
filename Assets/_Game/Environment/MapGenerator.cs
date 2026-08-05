@@ -80,9 +80,16 @@ namespace AtomicWar._Game.Environment
                 lootId: LootOutskirts,
                 radZoneId: RadOutskirts,
                 danger: 2.5f,
-                encounters: new[] { "enc_deserters", "enc_feral_dogs", "enc_collapsed_rubble" });
+                encounters: new[] { "enc_deserters", "enc_feral_dogs", "enc_collapsed_rubble", "enc_sleeping_ghoul" });
             for (int i = 0; i < outskirts.Count; i++)
+            {
+                // Prompt #208 — City Outskirts count as City map nodes (Urban Pathfinder).
+                if (outskirts[i].Tags == null) outskirts[i].Tags = new List<string>();
+                if (!outskirts[i].HasTag("city")) outskirts[i].Tags.Add("city");
+                if (!outskirts[i].HasTag("urban")) outskirts[i].Tags.Add("urban");
+                if (!outskirts[i].HasTag("ruin")) outskirts[i].Tags.Add("ruin");
                 map.Nodes.Add(outskirts[i]);
+            }
 
             // --- Ring 2: Ground Zero (far, military loot, extreme rads) ---
             var groundZero = CreateRing(
