@@ -1198,5 +1198,271 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_quests.PersonalInventoryNeverDegrades(hoarder));
             Assert.IsTrue(_quests.GetState(hoarder.Id).SafeWasEmpty);
         }
+
+        // ── #257 Disgraced General / Art of War ──────────────────────────
+
+        [Test]
+        public void General_HatedTactician_HitSquad_UnlocksArtOfWar()
+        {
+            var gen = MakeArchetype(PersonalQuestSystem.GeneralId);
+            Assert.IsTrue(_quests.HasTactician(gen));
+            Assert.IsTrue(_quests.HasHated(gen));
+            Assert.AreEqual(-100f, _quests.GetMilitaryFactionTrustOffset(gen), 0.01f);
+            Assert.IsTrue(_quests.IsShotOnSightByMilitary(gen));
+            Assert.IsTrue(_quests.RequiresBedModuleToSleep(gen));
+            Assert.AreEqual(12f, _quests.GetFloorSleepFatiguePenaltyPerHour(gen, hasBedModule: false), 0.01f);
+            Assert.AreEqual(0f, _quests.GetFloorSleepFatiguePenaltyPerHour(gen, hasBedModule: true), 0.01f);
+
+            _quests.TryStartQuestline(gen, "test", 1);
+            _quests.RecordHitSquadWiped(gen, targetedAtGeneral: false, squadWiped: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasArtOfWar(gen));
+            _quests.RecordHitSquadWiped(gen, targetedAtGeneral: true, squadWiped: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasArtOfWar(gen));
+            Assert.AreEqual(1.25f, _quests.GetArtOfWarShelterSecurityMultiplier(_survivors), 0.01f);
+            Assert.AreEqual(125f, _quests.ApplyArtOfWarShelterSecurity(100f, _survivors), 0.01f);
+        }
+
+        // ── #258 Rebel Saboteur / Demolitions Expert ─────────────────────
+
+        [Test]
+        public void Saboteur_AntiAuthority_Checkpoint_UnlocksDemolitions()
+        {
+            var sab = MakeArchetype(PersonalQuestSystem.SaboteurId);
+            var qm = MakeArchetype(PersonalQuestSystem.QuartermasterId, "qm_ord");
+            Assert.IsTrue(_quests.HasAntiAuthority(sab));
+            Assert.IsTrue(_quests.AutoDisarmsTraps(sab));
+            Assert.IsTrue(_quests.LosesMoraleFromAuthorityOrder(sab, qm));
+            sab.Needs.Morale = 50f;
+            _quests.ApplyAntiAuthorityOrderMorale(sab, qm);
+            Assert.AreEqual(38f, sab.Needs.Morale, 0.01f);
+
+            _quests.TryStartQuestline(sab, "test", 1);
+            _quests.RecordMilitaryCheckpointDestroyed(sab, "wrong_node", usedIed: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasDemolitionsExpert(sab));
+            _quests.RecordMilitaryCheckpointDestroyed(
+                sab, PersonalQuestSystem.MilitaryCheckpointNodeId, usedIed: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasDemolitionsExpert(sab));
+            Assert.IsTrue(_quests.CanBreachVaultsInstantly(sab));
+            Assert.AreEqual(3f, _quests.GetExplosiveDamageMultiplier(sab), 0.01f);
+        }
+
+        // ── #259 Deserter Sniper / Ghost Shooter ─────────────────────────
+
+        [Test]
+        public void Deserter_CowardFlee_HoldLine_UnlocksGhostShooter()
+        {
+            var des = MakeArchetype(PersonalQuestSystem.DeserterId);
+            Assert.IsTrue(_quests.HasCoward(des));
+            Assert.IsTrue(_quests.RefusesLoudLabor(des));
+            Assert.IsTrue(_quests.IsLoudLaborAction("build_wall"));
+            des.Needs.Health = 40f;
+            Assert.IsTrue(_quests.ShouldAutoFleeCombat(des));
+            des.Needs.Health = 80f;
+            Assert.IsFalse(_quests.ShouldAutoFleeCombat(des));
+
+            _quests.TryStartQuestline(des, "test", 1);
+            _quests.RecordRaidDefenseWithoutFleeing(des, raidSurvived: true, fled: true, defendedHatch: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasGhostShooter(des));
+            _quests.RecordRaidDefenseWithoutFleeing(des, raidSurvived: true, fled: false, defendedHatch: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasGhostShooter(des));
+            Assert.IsTrue(_quests.SuppressesHostileEncounterUi(des));
+            Assert.IsTrue(_quests.CanMapLayerRangedEngage(des));
+        }
+
+        // ── #260 Quartermaster / Supply Chain Master ─────────────────────
+
+        [Test]
+        public void Quartermaster_Strict_Audit_UnlocksSupplyChain()
+        {
+            var qm = MakeArchetype(PersonalQuestSystem.QuartermasterId);
+            Assert.IsTrue(_quests.HasStrict(qm));
+            Assert.IsTrue(_quests.ShouldAutoResortInventory(qm));
+            Assert.AreEqual(2f, _quests.GetStrictInventoryMoraleDelta(qm, true, true, 0.5f), 0.01f);
+            Assert.AreEqual(-4f, _quests.GetStrictInventoryMoraleDelta(qm, true, true, 0.1f), 0.01f);
+
+            _quests.TryStartQuestline(qm, "test", 1);
+            _quests.RecordScrapStockpile(qm, 100, 50, 100, currentDay: 2);
+            Assert.IsFalse(_quests.HasSupplyChainMaster(qm));
+            _quests.RecordScrapStockpile(qm, 100, 100, 100, currentDay: 3);
+            Assert.IsTrue(_quests.HasSupplyChainMaster(qm));
+            Assert.AreEqual(0.8f, _quests.GetCraftMaterialCostMultiplier(qm), 0.01f);
+            Assert.AreEqual(0.7f, _quests.GetBunkerFuelBurnMultiplier(_survivors), 0.01f);
+        }
+
+        // ── #261 Child Soldier / Reclaimed Youth ─────────────────────────
+
+        [Test]
+        public void ChildSoldier_Stunted_DropRifle_UnlocksReclaimedYouth()
+        {
+            var kid = MakeArchetype(PersonalQuestSystem.ChildSoldierId);
+            Assert.IsTrue(kid.IsChild);
+            Assert.IsTrue(_quests.HasStunted(kid));
+            Assert.IsFalse(_quests.CanLearnScienceSkill(kid));
+            Assert.IsFalse(_quests.CanLearnMedicalSkill(kid));
+            Assert.IsTrue(_quests.CausesNightTerrors(kid));
+            var roomie = new Survivor { Id = "roomie", DisplayName = "R", State = SurvivorState.Idle, CurrentRoomId = "bunk" };
+            kid.CurrentRoomId = "bunk";
+            _survivors.Add(roomie);
+            Assert.IsTrue(_quests.DisruptsRoomSleep(kid, roomie));
+
+            _quests.TryStartQuestline(kid, "test", 1);
+            for (int d = 0; d < 29; d++)
+                _quests.RecordUnequippedWeaponDay(kid, weaponUnequipped: true, currentDay: d + 1);
+            Assert.IsFalse(_quests.HasReclaimedYouth(kid));
+            // Re-equip resets streak
+            _quests.RecordUnequippedWeaponDay(kid, weaponUnequipped: false, currentDay: 30);
+            Assert.AreEqual(0, _quests.GetState(kid.Id).UnequippedWeaponDays);
+            for (int d = 0; d < 30; d++)
+                _quests.RecordUnequippedWeaponDay(kid, weaponUnequipped: true, currentDay: 40 + d);
+            Assert.IsTrue(_quests.HasReclaimedYouth(kid));
+            Assert.IsFalse(_quests.HasStunted(kid));
+            Assert.IsTrue(_quests.CanLearnScienceSkill(kid));
+            Assert.IsTrue(_quests.HasHopeAura(kid));
+            Assert.IsFalse(_quests.CausesNightTerrors(kid));
+        }
+
+        // ── #262 Pure Empath / Soul Weaver ───────────────────────────────
+
+        [Test]
+        public void Empath_HyperEmpathy_Sponge_UnlocksSoulWeaver()
+        {
+            var emp = MakeArchetype(PersonalQuestSystem.EmpathId);
+            Assert.IsTrue(_quests.HasHyperEmpathetic(emp));
+            Assert.IsTrue(_quests.PrioritizesComfortOverSurvival(emp));
+            emp.Needs.Morale = 40f;
+            _quests.ApplyHyperEmpatheticMorale(emp, bunkerAverageMorale: 80f, gameHours: 1f);
+            Assert.Greater(emp.Needs.Morale, 40f);
+
+            var patient = new Survivor { Id = "p1", DisplayName = "P", State = SurvivorState.Idle };
+            _survivors.Add(patient);
+            _quests.TryStartQuestline(emp, "test", 1);
+            emp.Needs.Health = 80f;
+            _quests.RecordMentalBreakCured(emp, patient, curedSuccessfully: true, currentDay: 1);
+            Assert.AreEqual(1f, emp.Needs.Health, 0.01f);
+            _quests.RecordMentalBreakCured(emp, patient, curedSuccessfully: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasSoulWeaver(emp));
+            _quests.RecordMentalBreakCured(emp, patient, curedSuccessfully: true, currentDay: 3);
+            Assert.IsTrue(_quests.HasSoulWeaver(emp));
+
+            emp.Needs.Health = 50f;
+            emp.Needs.Morale = 60f;
+            patient.Needs.Health = 5f;
+            patient.Needs.Morale = 10f;
+            Assert.IsTrue(_quests.TrySoulWeaverTransfer(emp, patient, 20f, 15f));
+            Assert.AreEqual(30f, emp.Needs.Health, 0.01f);
+            Assert.AreEqual(45f, emp.Needs.Morale, 0.01f);
+            Assert.AreEqual(25f, patient.Needs.Health, 0.01f);
+            Assert.AreEqual(25f, patient.Needs.Morale, 0.01f);
+        }
+
+        // ── #263 Bitter Misanthrope / Lone Wolf ──────────────────────────
+
+        [Test]
+        public void Misanthrope_Rude_SoloExpedition_UnlocksLoneWolf()
+        {
+            var mis = MakeArchetype(PersonalQuestSystem.MisanthropeId);
+            Assert.IsTrue(_quests.HasRude(mis));
+            Assert.AreEqual(6f, _quests.GetRudeAffinityDrainPerHour(mis), 0.01f);
+            Assert.AreEqual(1.25f, _quests.GetSoloRoomActionSpeedMultiplier(mis, othersInRoom: 0), 0.01f);
+            Assert.AreEqual(1f, _quests.GetSoloRoomActionSpeedMultiplier(mis, othersInRoom: 1), 0.01f);
+
+            _quests.TryStartQuestline(mis, "test", 1);
+            for (int d = 0; d < 14; d++)
+                _quests.RecordSoloExpeditionDay(mis, entirelyAlone: true, returnedToBunker: false, currentDay: d + 1);
+            Assert.IsFalse(_quests.HasLoneWolf(mis));
+            _quests.RecordSoloExpeditionDay(mis, entirelyAlone: true, returnedToBunker: true, currentDay: 15);
+            Assert.AreEqual(0, _quests.GetState(mis.Id).SoloExpeditionDays);
+            for (int d = 0; d < 15; d++)
+                _quests.RecordSoloExpeditionDay(mis, entirelyAlone: true, returnedToBunker: false, currentDay: 20 + d);
+            Assert.IsTrue(_quests.HasLoneWolf(mis));
+            Assert.AreEqual(0.5f, _quests.GetLoneWolfNeedsDecayMultiplier(mis, outsideBunker: true), 0.01f);
+            Assert.AreEqual(1.75f, _quests.GetLoneWolfCombatMultiplier(mis, outsideBunker: true), 0.01f);
+        }
+
+        // ── #264 Pollyanna Denialist / Grounded Optimist ─────────────────
+
+        [Test]
+        public void Pollyanna_Denialist_ArsSurvive_UnlocksGroundedOptimist()
+        {
+            var pol = MakeArchetype(PersonalQuestSystem.ThePollyannaId);
+            Assert.IsTrue(_quests.HasDenialist(pol));
+            Assert.IsFalse(_quests.HasPollyanna(pol)); // distinct from Naive Son trait_pollyanna
+            Assert.AreEqual(0f, _quests.GetDisplayedRadiationAnxiety(pol, 90f), 0.01f);
+            Assert.IsTrue(_quests.WantsToWalkOutsideInFalloutStorm(pol));
+
+            _quests.TryStartQuestline(pol, "test", 1);
+            _quests.RecordSurvivedAcuteRadiationSyndrome(pol, contractedArs: true, survived: false, currentDay: 2);
+            Assert.IsFalse(_quests.HasGroundedOptimist(pol));
+            _quests.RecordSurvivedAcuteRadiationSyndrome(pol, contractedArs: true, survived: true, currentDay: 3);
+            Assert.IsTrue(_quests.HasGroundedOptimist(pol));
+            Assert.IsFalse(_quests.HasDenialist(pol));
+            Assert.Greater(_quests.GetGroundedOptimistMoraleBuff(pol, hardship01: 0.8f),
+                _quests.GetGroundedOptimistMoraleBuff(pol, hardship01: 0.1f));
+        }
+
+        // ── #265 Selfless Martyr / Living Saint ──────────────────────────
+
+        [Test]
+        public void Martyr_Sacrificial_UltimatePrice_UnlocksLivingSaint()
+        {
+            var mar = MakeArchetype(PersonalQuestSystem.MartyrId);
+            var ally = new Survivor { Id = "ally_m", DisplayName = "Ally", State = SurvivorState.Idle };
+            ally.Needs.Health = 80f;
+            ally.Needs.Hunger = 10f;
+            _survivors.Add(ally);
+            Assert.IsTrue(_quests.HasSacrificial(mar));
+            Assert.IsTrue(_quests.ShouldInterceptHatchBreachDamage(mar, ally));
+            mar.Needs.Health = 100f;
+            float left = _quests.InterceptHatchBreachDamage(mar, ally, 30f);
+            Assert.AreEqual(0f, left, 0.01f);
+            Assert.AreEqual(70f, mar.Needs.Health, 0.01f);
+            Assert.AreEqual(80f, ally.Needs.Health, 0.01f);
+            mar.Needs.Hunger = 20f;
+            Assert.IsTrue(_quests.TrySecretlyGiveFoodRation(mar, ally));
+            Assert.Greater(mar.Needs.Hunger, 20f);
+
+            _quests.TryStartQuestline(mar, "test", 1);
+            _quests.RecordTookLethalPhase2ForOther(mar, viaEventChoice: true, isPhase2Lethal: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasLivingSaint(mar));
+            _quests.NotifySurvivorDied(mar);
+            Assert.IsTrue(_quests.LivingSaintInspiredActive);
+            Assert.AreEqual(50f, _quests.GetLivingSaintMoraleFloor(), 0.01f);
+            ally.Needs.Morale = 20f;
+            _quests.ApplyLivingSaintMoraleFloor(ally);
+            Assert.AreEqual(50f, ally.Needs.Morale, 0.01f);
+        }
+
+        // ── #266 Arrogant Surgeon / Humbled Healer ───────────────────────
+
+        [Test]
+        public void ArrogantSurgeon_GodComplex_BotchedJob_UnlocksHumbled()
+        {
+            var surg = MakeArchetype(PersonalQuestSystem.ArrogantSurgeonId);
+            Assert.IsTrue(_quests.HasGodComplex(surg));
+            Assert.IsTrue(_quests.RefusesMenialLabor(surg));
+            Assert.IsTrue(_quests.IsMenialLaborAction("clean_floor"));
+            Assert.AreEqual(100f, _quests.GetStartingMedicalSkill(surg), 0.01f);
+            Assert.AreEqual(-10f, _quests.GetPatientMoraleAfterHealDelta(surg), 0.01f);
+
+            var patient = new Survivor { Id = "pat_s", DisplayName = "Pat", State = SurvivorState.Idle };
+            patient.Needs.Morale = 50f;
+            _survivors.Add(patient);
+            _quests.ApplyPatientMoraleAfterHeal(surg, patient);
+            Assert.AreEqual(40f, patient.Needs.Morale, 0.01f);
+
+            _quests.TryStartQuestline(surg, "test", 1);
+            _quests.RecordDepressionDay(surg, currentDay: 1); // no fail yet
+            Assert.IsFalse(_quests.HasHumbledHealer(surg));
+            _quests.RecordCriticalSurgeryFailed(surg, wasCritical: true, currentDay: 2);
+            Assert.AreEqual(PersonalQuestSystem.DepressionBreakId, surg.currentMentalBreakId);
+            for (int d = 0; d < 9; d++)
+                _quests.RecordDepressionDay(surg, currentDay: 3 + d);
+            Assert.IsFalse(_quests.HasHumbledHealer(surg));
+            _quests.RecordDepressionDay(surg, currentDay: 20);
+            Assert.IsTrue(_quests.HasHumbledHealer(surg));
+            Assert.IsFalse(_quests.HasGodComplex(surg));
+            Assert.AreEqual(0f, _quests.GetPatientMoraleAfterHealDelta(surg), 0.01f);
+            Assert.IsTrue(_quests.CanCureChronicDisabilities(surg));
+        }
     }
 }

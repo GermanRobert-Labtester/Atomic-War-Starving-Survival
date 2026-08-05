@@ -240,6 +240,17 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ButcherOfDay30Id, "Butcher of Day 30", "combat", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterManipulatorId, "Master Manipulator", "social", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DragonsHoardId, "Dragon's Hoard", "scavenging", milestoneOnly, 0.20f, false));
+            // Prompts #257–#266
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ArtOfWarId, "The Art of War", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DemolitionsExpertId, "Demolitions Expert", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GhostShooterId, "Ghost Shooter", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SupplyChainMasterId, "Supply Chain Master", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ReclaimedYouthId, "Reclaimed Youth", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.SoulWeaverId, "Soul Weaver", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.LoneWolfId, "Lone Wolf", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.GroundedOptimistId, "Grounded Optimist", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.LivingSaintId, "Living Saint", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.HumbledHealerId, "Humbled Healer", "medical", milestoneOnly, 0.25f, false));
         }
 
         /// <summary>

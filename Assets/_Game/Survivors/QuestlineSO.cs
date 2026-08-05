@@ -30,7 +30,7 @@ namespace AtomicWar._Game.Survivors
         [Tooltip("Optional bunker narrative event id to queue when the questline begins.")]
         public string spawnBunkerEventId;
 
-        /// <summary>Canonical questline ids (Prompts #215–#256).</summary>
+        /// <summary>Canonical questline ids (Prompts #215–#266).</summary>
         public static class Ids
         {
             public const string ShakingHand = "quest_the_shaking_hand";
@@ -79,6 +79,17 @@ namespace AtomicWar._Game.Survivors
             public const string TheMaskSlips = "quest_the_mask_slips";
             public const string TheBoyWhoCriedWolf = "quest_the_boy_who_cried_wolf";
             public const string TheWeightOfGold = "quest_the_weight_of_gold";
+            // Prompts #257–#266
+            public const string CourtMartial = "quest_court_martial";
+            public const string TheFinalPayload = "quest_the_final_payload";
+            public const string HoldingTheLine = "quest_holding_the_line";
+            public const string InventoryAudit = "quest_inventory_audit";
+            public const string DroppingTheRifle = "quest_dropping_the_rifle";
+            public const string TheSponge = "quest_the_sponge";
+            public const string HellIsOtherPeople = "quest_hell_is_other_people";
+            public const string ShatteredGlass = "quest_shattered_glass";
+            public const string TheUltimatePrice = "quest_the_ultimate_price";
+            public const string TheBotchedJob = "quest_the_botched_job";
         }
     }
 }

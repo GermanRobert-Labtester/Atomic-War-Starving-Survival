@@ -426,5 +426,127 @@
     "baseTraits": [
       "trait_selfish"
     ]
+  },
+  {
+    "id": "the_general",
+    "displayName": "The General",
+    "profession": "Military",
+    "bio": "Day-1 command died with the first court-martial. Every remnant uniform is a death sentence. He still draws the map.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_art_of_war",
+    "activeQuestlineId": "quest_court_martial",
+    "baseTraits": [
+      "trait_tactician",
+      "trait_hated"
+    ]
+  },
+  {
+    "id": "the_saboteur",
+    "displayName": "The Saboteur",
+    "profession": "Rebel",
+    "bio": "Orders taste like ash. Traps open for them without a word. The checkpoint still stands.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_demolitions_expert",
+    "activeQuestlineId": "quest_the_final_payload",
+    "baseTraits": [
+      "trait_anti_authority"
+    ]
+  },
+  {
+    "id": "the_deserter",
+    "displayName": "The Deserter",
+    "profession": "Sniper",
+    "bio": "Ran once. Still flinches at hammers and generators. The hatch will ask if they can stay.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_ghost_shooter",
+    "activeQuestlineId": "quest_holding_the_line",
+    "baseTraits": [
+      "trait_coward"
+    ]
+  },
+  {
+    "id": "the_quartermaster",
+    "displayName": "The Quartermaster",
+    "profession": "Logistics",
+    "bio": "Counts beans like lives. A messy shelf is a personal insult. One hundred of everything.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_supply_chain_master",
+    "activeQuestlineId": "quest_inventory_audit",
+    "baseTraits": [
+      "trait_strict"
+    ]
+  },
+  {
+    "id": "the_child_soldier",
+    "displayName": "The Child Soldier",
+    "profession": "Child",
+    "bio": "Adult hands on a child's frame. Science and medicine will not stick. The rifle will not leave.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_reclaimed_youth",
+    "activeQuestlineId": "quest_dropping_the_rifle",
+    "baseTraits": [
+      "trait_stunted"
+    ],
+    "isChild": true
+  },
+  {
+    "id": "the_empath",
+    "displayName": "The Empath",
+    "profession": "Counselor",
+    "bio": "Feels every room. Comfort before food. Three broken minds, and their own body pays.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_soul_weaver",
+    "activeQuestlineId": "quest_the_sponge",
+    "baseTraits": [
+      "trait_hyper_empathetic"
+    ]
+  },
+  {
+    "id": "the_misanthrope",
+    "displayName": "The Misanthrope",
+    "profession": "Hermit",
+    "bio": "Shared air is an injury. Alone, they are fast. Fifteen days of no one.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_lone_wolf",
+    "activeQuestlineId": "quest_hell_is_other_people",
+    "baseTraits": [
+      "trait_rude"
+    ]
+  },
+  {
+    "id": "the_pollyanna",
+    "displayName": "The Pollyanna",
+    "profession": "Optimist",
+    "bio": "The meter never shows fear. Fallout rain is weather. Denial ends only when the body fails and lives.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_grounded_optimist",
+    "activeQuestlineId": "quest_shattered_glass",
+    "baseTraits": [
+      "trait_denialist"
+    ]
+  },
+  {
+    "id": "the_martyr",
+    "displayName": "The Martyr",
+    "profession": "Caregiver",
+    "bio": "Steps into the breach for strangers. Food leaves their tray without a word. Someone has to pay.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_living_saint",
+    "activeQuestlineId": "quest_the_ultimate_price",
+    "baseTraits": [
+      "trait_sacrificial"
+    ]
+  },
+  {
+    "id": "the_arrogant_surgeon",
+    "displayName": "The Arrogant Surgeon",
+    "profession": "Surgeon",
+    "bio": "Gods do not mop floors. Patients leave smaller. One failed cut, ten days of the dark.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_humbled_healer",
+    "activeQuestlineId": "quest_the_botched_job",
+    "baseTraits": [
+      "trait_god_complex"
+    ]
   }
 ]

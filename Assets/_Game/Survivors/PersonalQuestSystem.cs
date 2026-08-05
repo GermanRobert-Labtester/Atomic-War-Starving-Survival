@@ -5,14 +5,14 @@ using UnityEngine;
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
-    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#256).
+    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#266).
     /// Survivors do not start with their Expert Trait. After 30 days alive OR
     /// a Morale 0→100 recovery, their assigned questline begins. Completing
     /// the final stage permanently unlocks the latent expert trait.
     /// Base personality traits (Selfless, Workaholic, …) are granted on assign.
     /// Plain C#, save/load safe, inventory-free (Survivors leaf assembly).
     /// </summary>
-    public class PersonalQuestSystem
+    public partial class PersonalQuestSystem
     {
         // ── Latent expert trait ids ──────────────────────────────────────
         public const string MiracleWorkerId = "trait_miracle_worker";
@@ -61,6 +61,17 @@ namespace AtomicWar._Game.Survivors
         public const string ButcherOfDay30Id = "trait_butcher_of_day_30";
         public const string MasterManipulatorId = "trait_master_manipulator";
         public const string DragonsHoardId = "trait_dragons_hoard";
+        // Prompts #257–#266 latent
+        public const string ArtOfWarId = "trait_art_of_war";
+        public const string DemolitionsExpertId = "trait_demolitions_expert";
+        public const string GhostShooterId = "trait_ghost_shooter";
+        public const string SupplyChainMasterId = "trait_supply_chain_master";
+        public const string ReclaimedYouthId = "trait_reclaimed_youth";
+        public const string SoulWeaverId = "trait_soul_weaver";
+        public const string LoneWolfId = "trait_lone_wolf";
+        public const string GroundedOptimistId = "trait_grounded_optimist";
+        public const string LivingSaintId = "trait_living_saint";
+        public const string HumbledHealerId = "trait_humbled_healer";
 
         // ── Base personality traits (granted on profile assign) ──────────
         public const string SelflessId = "trait_selfless";
@@ -74,6 +85,18 @@ namespace AtomicWar._Game.Survivors
         public const string CharismaticId = "trait_charismatic";
         public const string DeceptiveId = "trait_deceptive";
         public const string SelfishId = "trait_selfish";
+        // Prompts #257–#266 base
+        public const string TacticianId = "trait_tactician";
+        public const string HatedId = "trait_hated";
+        public const string AntiAuthorityId = "trait_anti_authority";
+        public const string CowardId = "trait_coward";
+        public const string StrictId = "trait_strict";
+        public const string StuntedId = "trait_stunted";
+        public const string HyperEmpatheticId = "trait_hyper_empathetic";
+        public const string RudeId = "trait_rude";
+        public const string DenialistId = "trait_denialist";
+        public const string SacrificialId = "trait_sacrificial";
+        public const string GodComplexId = "trait_god_complex";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -120,6 +143,17 @@ namespace AtomicWar._Game.Survivors
         public const string SerialKillerId = "the_serial_killer";
         public const string LiarId = "the_liar";
         public const string HoarderId = "the_hoarder";
+        // Prompts #257–#266
+        public const string GeneralId = "the_general";
+        public const string SaboteurId = "the_saboteur";
+        public const string DeserterId = "the_deserter";
+        public const string QuartermasterId = "the_quartermaster";
+        public const string ChildSoldierId = "the_child_soldier";
+        public const string EmpathId = "the_empath";
+        public const string MisanthropeId = "the_misanthrope";
+        public const string ThePollyannaId = "the_pollyanna";
+        public const string MartyrId = "the_martyr";
+        public const string ArrogantSurgeonId = "the_arrogant_surgeon";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -294,6 +328,62 @@ namespace AtomicWar._Game.Survivors
         public const int WeightOfGoldNodesRequired = 3;
         public const string EmptySafeItemId = "empty_safe";
 
+        // #257 Disgraced General / Art of War
+        public const float HatedMilitaryTrust = -100f;
+        public const float FloorSleepFatiguePenaltyPerHour = 12f;
+        public const float ArtOfWarShelterSecurityMult = 1.25f;
+        public const string HitSquadNodeId = "the_hit_squad";
+
+        // #258 Rebel Saboteur / Demolitions Expert
+        public const float AntiAuthorityOrderMoraleHit = 12f;
+        public const float DemolitionsExplosiveDamageMult = 3f;
+        public const string MilitaryCheckpointNodeId = "the_military_checkpoint";
+        public const string IedItemId = "improvised_explosive";
+
+        // #259 Deserter Sniper / Ghost Shooter
+        public const float CowardFleeHealthFrac = 0.5f;
+        public const float GhostShooterCombatBonus = 1.5f;
+
+        // #260 Quartermaster / Supply Chain Master
+        public const float StrictInventoryFullMorale = 2f;
+        public const float StrictInventoryLowMoraleHit = 4f;
+        public const float StrictResourceLowFrac = 0.2f;
+        public const float SupplyChainCraftCostMult = 0.8f;
+        public const float SupplyChainFuelBurnMult = 0.7f;
+        public const int InventoryAuditScrapEach = 100;
+
+        // #261 Child Soldier / Reclaimed Youth
+        public const int DroppingRifleDaysRequired = 30;
+        public const float ChildSoldierAnxietyDebuff = 8f;
+        public const float ReclaimedYouthHopeAura = 10f;
+        public const string NightTerrorsBreakId = "night_terrors";
+
+        // #262 Pure Empath / Soul Weaver
+        public const int SpongeCuresRequired = 3;
+        public const float SpongeAbsorbHealthFloor = 1f;
+        public const float ComfortTalkUtilityBias = 2.5f;
+
+        // #263 Bitter Misanthrope / Lone Wolf
+        public const float RudeAffinityDrainPerHour = 6f;
+        public const float SoloRoomActionSpeedMult = 1.25f;
+        public const int HellIsOtherPeopleDaysRequired = 15;
+        public const float LoneWolfNeedsDecayMult = 0.5f;
+        public const float LoneWolfCombatMult = 1.75f;
+
+        // #264 Pollyanna Denialist / Grounded Optimist
+        public const float GroundedOptimistBaseMorale = 5f;
+        public const float GroundedOptimistHardshipScale = 0.25f;
+
+        // #265 Selfless Martyr / Living Saint
+        public const float LivingSaintMoraleFloor = 50f;
+        public const float MartyrSecretFoodHungerSpike = 25f;
+
+        // #266 Arrogant Surgeon / Humbled Healer
+        public const float GodComplexPatientMoraleHit = 10f;
+        public const int BotchedJobDepressionDays = 10;
+        public const string DepressionBreakId = "depression";
+        public const float ArrogantSurgeonMedicalSkill = 100f;
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
         public const string FortifiedSquadNodeId = "fortified_squad_holdout";
@@ -353,6 +443,12 @@ namespace AtomicWar._Game.Survivors
         /// once a living Pillar dies. Hosts read via GetShelterRepairSpeedMultiplier.
         /// </summary>
         public bool PillarOfAtlasDeathDebuffActive { get; private set; }
+
+        /// <summary>
+        /// #265 Living Saint death — bunker-wide Inspired buff; hosts read via
+        /// GetLivingSaintMoraleFloor (minimum Morale capped at 50 forever).
+        /// </summary>
+        public bool LivingSaintInspiredActive { get; private set; }
 
         public event Action<Survivor, string> OnQuestlineStarted;       // sv, questlineId
         public event Action<Survivor, string, int> OnQuestProgress;     // sv, key, value
@@ -457,6 +553,37 @@ namespace AtomicWar._Game.Survivors
                 case HoarderId:
                     GrantBaseTrait(sv, SelfishId);
                     break;
+                case GeneralId:
+                    GrantBaseTrait(sv, TacticianId);
+                    GrantBaseTrait(sv, HatedId);
+                    break;
+                case SaboteurId:
+                    GrantBaseTrait(sv, AntiAuthorityId);
+                    break;
+                case DeserterId:
+                    GrantBaseTrait(sv, CowardId);
+                    break;
+                case QuartermasterId:
+                    GrantBaseTrait(sv, StrictId);
+                    break;
+                case ChildSoldierId:
+                    GrantBaseTrait(sv, StuntedId);
+                    break;
+                case EmpathId:
+                    GrantBaseTrait(sv, HyperEmpatheticId);
+                    break;
+                case MisanthropeId:
+                    GrantBaseTrait(sv, RudeId);
+                    break;
+                case ThePollyannaId:
+                    GrantBaseTrait(sv, DenialistId);
+                    break;
+                case MartyrId:
+                    GrantBaseTrait(sv, SacrificialId);
+                    break;
+                case ArrogantSurgeonId:
+                    GrantBaseTrait(sv, GodComplexId);
+                    break;
             }
         }
 
@@ -480,6 +607,16 @@ namespace AtomicWar._Game.Survivors
             {
                 sv.IsChild = true;
                 // Can fight; Traumatized caps morale via GetMaxMoraleCap.
+            }
+            else if (archetypeId == ChildSoldierId)
+            {
+                sv.IsChild = true;
+                // Adult weapon damage; cannot learn Science/Medical until Reclaimed Youth.
+            }
+            else if (archetypeId == ArrogantSurgeonId)
+            {
+                // Medical skill starts maxed — hosts read GetStartingMedicalSkill.
+                sv.ExpertDisciplineId = "medical";
             }
         }
 
@@ -572,6 +709,26 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(LiarId, MasterManipulatorId, QuestlineSO.Ids.TheBoyWhoCriedWolf);
                 case HoarderId:
                     return new SurvivorProfile(HoarderId, DragonsHoardId, QuestlineSO.Ids.TheWeightOfGold);
+                case GeneralId:
+                    return new SurvivorProfile(GeneralId, ArtOfWarId, QuestlineSO.Ids.CourtMartial);
+                case SaboteurId:
+                    return new SurvivorProfile(SaboteurId, DemolitionsExpertId, QuestlineSO.Ids.TheFinalPayload);
+                case DeserterId:
+                    return new SurvivorProfile(DeserterId, GhostShooterId, QuestlineSO.Ids.HoldingTheLine);
+                case QuartermasterId:
+                    return new SurvivorProfile(QuartermasterId, SupplyChainMasterId, QuestlineSO.Ids.InventoryAudit);
+                case ChildSoldierId:
+                    return new SurvivorProfile(ChildSoldierId, ReclaimedYouthId, QuestlineSO.Ids.DroppingTheRifle);
+                case EmpathId:
+                    return new SurvivorProfile(EmpathId, SoulWeaverId, QuestlineSO.Ids.TheSponge);
+                case MisanthropeId:
+                    return new SurvivorProfile(MisanthropeId, LoneWolfId, QuestlineSO.Ids.HellIsOtherPeople);
+                case ThePollyannaId:
+                    return new SurvivorProfile(ThePollyannaId, GroundedOptimistId, QuestlineSO.Ids.ShatteredGlass);
+                case MartyrId:
+                    return new SurvivorProfile(MartyrId, LivingSaintId, QuestlineSO.Ids.TheUltimatePrice);
+                case ArrogantSurgeonId:
+                    return new SurvivorProfile(ArrogantSurgeonId, HumbledHealerId, QuestlineSO.Ids.TheBotchedJob);
                 default:
                     return null;
             }
@@ -625,30 +782,45 @@ namespace AtomicWar._Game.Survivors
                 SerialKillerId => "The Serial Killer",
                 LiarId => "The Liar",
                 HoarderId => "The Hoarder",
+                GeneralId => "The General",
+                SaboteurId => "The Saboteur",
+                DeserterId => "The Deserter",
+                QuartermasterId => "The Quartermaster",
+                ChildSoldierId => "The Child Soldier",
+                EmpathId => "The Empath",
+                MisanthropeId => "The Misanthrope",
+                ThePollyannaId => "The Pollyanna",
+                MartyrId => "The Martyr",
+                ArrogantSurgeonId => "The Arrogant Surgeon",
                 _ => archetypeId
             };
             string discipline = "survival";
             if (archetypeId == SurgeonId || archetypeId == PharmacistId
                 || archetypeId == VetId || archetypeId == TherapistId
-                || archetypeId == ChemistId || archetypeId == AddictId)
+                || archetypeId == ChemistId || archetypeId == AddictId
+                || archetypeId == ArrogantSurgeonId)
                 discipline = "medical";
             else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId
                 || archetypeId == FirefighterId || archetypeId == DefectorId
                 || archetypeId == AthleteId || archetypeId == HardenedDaughterId
-                || archetypeId == SerialKillerId)
+                || archetypeId == SerialKillerId || archetypeId == GeneralId
+                || archetypeId == DeserterId || archetypeId == ChildSoldierId
+                || archetypeId == SaboteurId)
                 discipline = "combat";
             else if (archetypeId == HunterId || archetypeId == CourierId
                 || archetypeId == BurglarId || archetypeId == MechanicId
                 || archetypeId == ReporterId || archetypeId == TailorId
-                || archetypeId == NaiveSonId || archetypeId == HoarderId)
+                || archetypeId == NaiveSonId || archetypeId == HoarderId
+                || archetypeId == QuartermasterId)
                 discipline = "scavenging";
             else if (archetypeId == TeacherId || archetypeId == PoliticianId
                 || archetypeId == PriestId || archetypeId == RadioHostId
                 || archetypeId == HistorianId || archetypeId == ParentId
                 || archetypeId == FierceMotherId || archetypeId == LiarId
-                || archetypeId == PsychopathId)
+                || archetypeId == PsychopathId || archetypeId == EmpathId
+                || archetypeId == MartyrId || archetypeId == ThePollyannaId)
                 discipline = "social";
-            else if (archetypeId == ExhaustedFatherId)
+            else if (archetypeId == ExhaustedFatherId || archetypeId == MisanthropeId)
                 discipline = "survival";
             var sv = new Survivor
             {
@@ -2058,6 +2230,26 @@ namespace AtomicWar._Game.Survivors
             {
                 sv.CannotFight = false; // still no firearms via Dependent; host uses CanEquipFirearms
             }
+            // #261 Reclaimed Youth — clear Stunted learning block + Night Terrors.
+            if (string.Equals(traitId, ReclaimedYouthId, StringComparison.Ordinal))
+            {
+                if (sv.Traits != null)
+                    sv.Traits.Remove(StuntedId);
+                if (string.Equals(sv.currentMentalBreakId, NightTerrorsBreakId, StringComparison.OrdinalIgnoreCase))
+                    sv.currentMentalBreakId = null;
+            }
+            // #264 Grounded Optimist — denial permanently broken.
+            if (string.Equals(traitId, GroundedOptimistId, StringComparison.Ordinal))
+            {
+                if (sv.Traits != null)
+                    sv.Traits.Remove(DenialistId);
+            }
+            // #266 Humbled Healer — remove God Complex labor refusal / patient abuse.
+            if (string.Equals(traitId, HumbledHealerId, StringComparison.Ordinal))
+            {
+                if (sv.Traits != null)
+                    sv.Traits.Remove(GodComplexId);
+            }
         }
 
         // ── Trait queries ────────────────────────────────────────────────
@@ -2118,6 +2310,16 @@ namespace AtomicWar._Game.Survivors
         public bool HasButcherOfDay30(Survivor sv) => HasTrait(sv, ButcherOfDay30Id);
         public bool HasMasterManipulator(Survivor sv) => HasTrait(sv, MasterManipulatorId);
         public bool HasDragonsHoard(Survivor sv) => HasTrait(sv, DragonsHoardId);
+        public bool HasArtOfWar(Survivor sv) => HasTrait(sv, ArtOfWarId);
+        public bool HasDemolitionsExpert(Survivor sv) => HasTrait(sv, DemolitionsExpertId);
+        public bool HasGhostShooter(Survivor sv) => HasTrait(sv, GhostShooterId);
+        public bool HasSupplyChainMaster(Survivor sv) => HasTrait(sv, SupplyChainMasterId);
+        public bool HasReclaimedYouth(Survivor sv) => HasTrait(sv, ReclaimedYouthId);
+        public bool HasSoulWeaver(Survivor sv) => HasTrait(sv, SoulWeaverId);
+        public bool HasLoneWolf(Survivor sv) => HasTrait(sv, LoneWolfId);
+        public bool HasGroundedOptimist(Survivor sv) => HasTrait(sv, GroundedOptimistId);
+        public bool HasLivingSaint(Survivor sv) => HasTrait(sv, LivingSaintId);
+        public bool HasHumbledHealer(Survivor sv) => HasTrait(sv, HumbledHealerId);
 
         // Base traits
         public bool HasSelfless(Survivor sv) => HasBaseTrait(sv, SelflessId);
@@ -2130,6 +2332,19 @@ namespace AtomicWar._Game.Survivors
         public bool HasArrogant(Survivor sv) => HasBaseTrait(sv, ArrogantId);
         public bool HasDeceptive(Survivor sv) => HasBaseTrait(sv, DeceptiveId);
         public bool HasSelfish(Survivor sv) => HasBaseTrait(sv, SelfishId);
+        public bool HasTactician(Survivor sv) => HasBaseTrait(sv, TacticianId);
+        public bool HasHated(Survivor sv) => HasBaseTrait(sv, HatedId);
+        public bool HasAntiAuthority(Survivor sv) => HasBaseTrait(sv, AntiAuthorityId);
+        public bool HasCoward(Survivor sv) => HasBaseTrait(sv, CowardId);
+        public bool HasStrict(Survivor sv) => HasBaseTrait(sv, StrictId);
+        public bool HasStunted(Survivor sv) =>
+            HasBaseTrait(sv, StuntedId) && !HasReclaimedYouth(sv);
+        public bool HasHyperEmpathetic(Survivor sv) => HasBaseTrait(sv, HyperEmpatheticId);
+        public bool HasRude(Survivor sv) => HasBaseTrait(sv, RudeId);
+        public bool HasDenialist(Survivor sv) => HasBaseTrait(sv, DenialistId);
+        public bool HasSacrificial(Survivor sv) => HasBaseTrait(sv, SacrificialId);
+        public bool HasGodComplex(Survivor sv) =>
+            HasBaseTrait(sv, GodComplexId) && !HasHumbledHealer(sv);
 
         public static bool HasBaseTrait(Survivor sv, string traitId)
         {
@@ -2696,6 +2911,11 @@ namespace AtomicWar._Game.Survivors
             {
                 PillarOfAtlasDeathDebuffActive = true;
             }
+            if (HasLivingSaint(sv) || (sv.LatentTraitUnlocked
+                && string.Equals(sv.LatentExpertTraitId, LivingSaintId, StringComparison.Ordinal)))
+            {
+                LivingSaintInspiredActive = true;
+            }
         }
 
         public float GetShelterRepairSpeedMultiplier() =>
@@ -2959,6 +3179,27 @@ namespace AtomicWar._Game.Survivors
                 maxStages: 1, node: null, evt: null);
             RegisterDefault(QuestlineSO.Ids.TheWeightOfGold, "The Weight of Gold", DragonsHoardId,
                 maxStages: WeightOfGoldNodesRequired, node: null, evt: null);
+            // Prompts #257–#266
+            RegisterDefault(QuestlineSO.Ids.CourtMartial, "Court Martial", ArtOfWarId,
+                maxStages: 1, node: HitSquadNodeId, evt: "evt_hit_squad_intercept");
+            RegisterDefault(QuestlineSO.Ids.TheFinalPayload, "The Final Payload", DemolitionsExpertId,
+                maxStages: 1, node: MilitaryCheckpointNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.HoldingTheLine, "Holding the Line", GhostShooterId,
+                maxStages: 1, node: null, evt: "evt_raid_holding_the_line");
+            RegisterDefault(QuestlineSO.Ids.InventoryAudit, "Inventory Audit", SupplyChainMasterId,
+                maxStages: InventoryAuditScrapEach, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.DroppingTheRifle, "Dropping the Rifle", ReclaimedYouthId,
+                maxStages: DroppingRifleDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheSponge, "The Sponge", SoulWeaverId,
+                maxStages: SpongeCuresRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.HellIsOtherPeople, "Hell is Other People", LoneWolfId,
+                maxStages: HellIsOtherPeopleDaysRequired, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.ShatteredGlass, "Shattered Glass", GroundedOptimistId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheUltimatePrice, "The Ultimate Price", LivingSaintId,
+                maxStages: 1, node: null, evt: "evt_ultimate_price");
+            RegisterDefault(QuestlineSO.Ids.TheBotchedJob, "The Botched Job", HumbledHealerId,
+                maxStages: BotchedJobDepressionDays, node: null, evt: null);
         }
 
         private void RegisterDefault(
@@ -3045,10 +3286,20 @@ namespace AtomicWar._Game.Survivors
                     MaskSlipsResolved = s.MaskSlipsResolved,
                     SerialKillerEmbraced = s.SerialKillerEmbraced,
                     FalseIntelCount = s.FalseIntelCount,
-                    ItemsStolen = s.ItemsStolen
+                    ItemsStolen = s.ItemsStolen,
+                    // #257–#266
+                    UnequippedWeaponDays = s.UnequippedWeaponDays,
+                    MentalBreaksCured = s.MentalBreaksCured,
+                    SoloExpeditionDays = s.SoloExpeditionDays,
+                    DepressionDays = s.DepressionDays,
+                    CriticalSurgeryFailed = s.CriticalSurgeryFailed,
+                    ScrapMechanicalParts = s.ScrapMechanicalParts,
+                    ScrapElectronicScrap = s.ScrapElectronicScrap,
+                    ScrapChemicals = s.ScrapChemicals
                 });
             }
             save.PillarOfAtlasDeathDebuffActive = PillarOfAtlasDeathDebuffActive;
+            save.LivingSaintInspiredActive = LivingSaintInspiredActive;
             return save;
         }
 
@@ -3056,6 +3307,7 @@ namespace AtomicWar._Game.Survivors
         {
             _bySurvivor.Clear();
             PillarOfAtlasDeathDebuffActive = save != null && save.PillarOfAtlasDeathDebuffActive;
+            LivingSaintInspiredActive = save != null && save.LivingSaintInspiredActive;
             if (save?.Entries == null) return;
             for (int i = 0; i < save.Entries.Count; i++)
             {
@@ -3099,7 +3351,15 @@ namespace AtomicWar._Game.Survivors
                     MaskSlipsResolved = e.MaskSlipsResolved,
                     SerialKillerEmbraced = e.SerialKillerEmbraced,
                     FalseIntelCount = e.FalseIntelCount,
-                    ItemsStolen = e.ItemsStolen
+                    ItemsStolen = e.ItemsStolen,
+                    UnequippedWeaponDays = e.UnequippedWeaponDays,
+                    MentalBreaksCured = e.MentalBreaksCured,
+                    SoloExpeditionDays = e.SoloExpeditionDays,
+                    DepressionDays = e.DepressionDays,
+                    CriticalSurgeryFailed = e.CriticalSurgeryFailed,
+                    ScrapMechanicalParts = e.ScrapMechanicalParts,
+                    ScrapElectronicScrap = e.ScrapElectronicScrap,
+                    ScrapChemicals = e.ScrapChemicals
                 };
             }
         }
@@ -3143,6 +3403,15 @@ namespace AtomicWar._Game.Survivors
             public bool SerialKillerEmbraced;
             public int FalseIntelCount;
             public int ItemsStolen;
+            // #257–#266
+            public int UnequippedWeaponDays;
+            public int MentalBreaksCured;
+            public int SoloExpeditionDays;
+            public int DepressionDays;
+            public bool CriticalSurgeryFailed;
+            public int ScrapMechanicalParts;
+            public int ScrapElectronicScrap;
+            public int ScrapChemicals;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
@@ -3182,7 +3451,15 @@ namespace AtomicWar._Game.Survivors
                 MaskSlipsResolved = MaskSlipsResolved,
                 SerialKillerEmbraced = SerialKillerEmbraced,
                 FalseIntelCount = FalseIntelCount,
-                ItemsStolen = ItemsStolen
+                ItemsStolen = ItemsStolen,
+                UnequippedWeaponDays = UnequippedWeaponDays,
+                MentalBreaksCured = MentalBreaksCured,
+                SoloExpeditionDays = SoloExpeditionDays,
+                DepressionDays = DepressionDays,
+                CriticalSurgeryFailed = CriticalSurgeryFailed,
+                ScrapMechanicalParts = ScrapMechanicalParts,
+                ScrapElectronicScrap = ScrapElectronicScrap,
+                ScrapChemicals = ScrapChemicals
             };
         }
     }
@@ -3214,6 +3491,8 @@ namespace AtomicWar._Game.Survivors
         public List<PersonalQuestEntrySave> Entries = new List<PersonalQuestEntrySave>();
         /// <summary>#250 permanent shelter repair debuff after Pillar of Atlas dies.</summary>
         public bool PillarOfAtlasDeathDebuffActive;
+        /// <summary>#265 permanent bunker Inspired floor after Living Saint dies.</summary>
+        public bool LivingSaintInspiredActive;
     }
 
     [Serializable]
@@ -3254,5 +3533,14 @@ namespace AtomicWar._Game.Survivors
         public bool SerialKillerEmbraced;
         public int FalseIntelCount;
         public int ItemsStolen;
+        // #257–#266
+        public int UnequippedWeaponDays;
+        public int MentalBreaksCured;
+        public int SoloExpeditionDays;
+        public int DepressionDays;
+        public bool CriticalSurgeryFailed;
+        public int ScrapMechanicalParts;
+        public int ScrapElectronicScrap;
+        public int ScrapChemicals;
     }
 }
