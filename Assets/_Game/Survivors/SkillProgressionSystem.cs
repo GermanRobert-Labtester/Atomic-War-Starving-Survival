@@ -231,6 +231,15 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ZealotsBaneId, "Zealot's Bane", "combat", milestoneOnly, 0.25f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ChemResistantId, "Chem-Resistant", "medical", milestoneOnly, 0.20f, false));
             RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ProtectorId, "Protector", "social", milestoneOnly, 0.25f, false));
+            // Prompts #249–#256
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MatriarchId, "Matriarch", "social", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.PillarOfAtlasId, "Pillar of Atlas", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.WastelandScoutId, "Wasteland Scout", "scavenging", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ChildOfTheAshId, "Child of the Ash", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ColdCalculusId, "Cold Calculus", "survival", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.ButcherOfDay30Id, "Butcher of Day 30", "combat", milestoneOnly, 0.25f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.MasterManipulatorId, "Master Manipulator", "social", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(PersonalQuestSystem.DragonsHoardId, "Dragon's Hoard", "scavenging", milestoneOnly, 0.20f, false));
         }
 
         /// <summary>

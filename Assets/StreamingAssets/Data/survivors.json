@@ -325,5 +325,106 @@
     "baseHealth": 95,
     "latentExpertTrait": "trait_protector",
     "activeQuestlineId": "quest_the_locket"
+  },
+  {
+    "id": "the_fierce_mother",
+    "displayName": "The Fierce Mother",
+    "profession": "Mother",
+    "bio": "She will cancel her own meal if a child is hungry. The daycare still has the toy.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_matriarch",
+    "activeQuestlineId": "quest_the_empty_crib",
+    "baseTraits": [
+      "trait_selfless"
+    ]
+  },
+  {
+    "id": "the_exhausted_father",
+    "displayName": "The Exhausted Father",
+    "profession": "Father",
+    "bio": "He works until he collapses. Five tier-three modules before day fifty was the promise.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_pillar_of_atlas",
+    "activeQuestlineId": "quest_the_broken_promise",
+    "baseTraits": [
+      "trait_workaholic"
+    ]
+  },
+  {
+    "id": "the_naive_son",
+    "displayName": "The Naive Son",
+    "profession": "Child",
+    "bio": "He wanders the bunker playing. Adults feel hope just looking at him.",
+    "baseHealth": 70,
+    "latentExpertTrait": "trait_wasteland_scout",
+    "activeQuestlineId": "quest_growing_up_fast",
+    "baseTraits": [
+      "trait_dependent",
+      "trait_pollyanna"
+    ],
+    "isChild": true
+  },
+  {
+    "id": "the_hardened_daughter",
+    "displayName": "The Hardened Daughter",
+    "profession": "Child",
+    "bio": "She will not play. She will not be comforted. First blood at the hatch will change her.",
+    "baseHealth": 75,
+    "latentExpertTrait": "trait_child_of_the_ash",
+    "activeQuestlineId": "quest_first_blood",
+    "baseTraits": [
+      "trait_traumatized"
+    ],
+    "isChild": true
+  },
+  {
+    "id": "the_psychopath",
+    "displayName": "The Psychopath",
+    "profession": "Outsider",
+    "bio": "Death does not move them. They refuse other hands. Empty rooms make them sharp.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_cold_calculus",
+    "activeQuestlineId": "quest_the_perfect_equation",
+    "baseTraits": [
+      "trait_sociopath",
+      "trait_arrogant"
+    ]
+  },
+  {
+    "id": "the_serial_killer",
+    "displayName": "The Serial Killer",
+    "profession": "Neighbor",
+    "bio": "Kind. Charismatic. Something under the smile keeps score.",
+    "baseHealth": 100,
+    "latentExpertTrait": "trait_butcher_of_day_30",
+    "activeQuestlineId": "quest_the_mask_slips",
+    "baseTraits": [
+      "trait_kind",
+      "trait_charismatic"
+    ]
+  },
+  {
+    "id": "the_liar",
+    "displayName": "The Liar",
+    "profession": "Storyteller",
+    "bio": "The UI says they are fine. The radio says the stash is real. Neither is true.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_master_manipulator",
+    "activeQuestlineId": "quest_the_boy_who_cried_wolf",
+    "baseTraits": [
+      "trait_deceptive"
+    ]
+  },
+  {
+    "id": "the_hoarder",
+    "displayName": "The Hoarder",
+    "profession": "Collector",
+    "bio": "Double rations or the mood sours. Storage sheds weight into a private vault.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_dragons_hoard",
+    "activeQuestlineId": "quest_the_weight_of_gold",
+    "baseTraits": [
+      "trait_selfish"
+    ]
   }
 ]

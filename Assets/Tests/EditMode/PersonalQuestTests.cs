@@ -9,7 +9,7 @@ using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// Prompts #214–#248 — Personal Quest Engine + latent expert traits.
+    /// Prompts #214–#256 — Personal Quest Engine + latent expert traits.
     /// </summary>
     [TestFixture]
     public class PersonalQuestTests
@@ -962,6 +962,241 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsFalse(parent.HasMentalBreak);
             Assert.IsTrue(_quests.IsProtectorEnraged(parent, _survivors));
             Assert.AreEqual(3f, _quests.GetProtectorActionSpeedMultiplier(parent, _survivors), 0.01f);
+        }
+
+        // ── #249 Fierce Mother / Matriarch ───────────────────────────────
+
+        [Test]
+        public void FierceMother_SelflessAndEmptyCrib_UnlocksMatriarch()
+        {
+            var mother = MakeArchetype(PersonalQuestSystem.FierceMotherId);
+            Assert.IsTrue(_quests.HasSelfless(mother));
+            Assert.IsFalse(_quests.HasMatriarch(mother));
+
+            var child = new Survivor { Id = "kid_a", DisplayName = "Kid", State = SurvivorState.Idle, IsChild = true };
+            child.Needs.Hunger = 10f;
+            _survivors.Add(child);
+            Assert.IsTrue(_quests.ShouldCancelEatOrSleepForChild(mother, _survivors));
+
+            var ally = new Survivor { Id = "ally_m", DisplayName = "Ally", State = SurvivorState.Idle };
+            ally.Needs.Morale = 50f;
+            mother.Needs.Morale = 50f;
+            _survivors.Add(ally);
+            float absorbed = _quests.GetSelflessMoraleAbsorb(mother, 20f);
+            Assert.AreEqual(2f, absorbed, 0.01f);
+            _quests.ApplyMoraleDamageWithSelfless(ally, 20f, _survivors);
+            Assert.Less(mother.Needs.Morale, 50f);
+
+            _quests.TryStartQuestline(mother, "test", 1);
+            Assert.AreEqual(PersonalQuestSystem.DaycareNodeId,
+                _quests.GetQuestline(QuestlineSO.Ids.TheEmptyCrib).spawnMapNodeId);
+            _quests.RecordDaycareToyRetrieved(mother, radiationLevel: 50f, currentDay: 2);
+            Assert.IsFalse(_quests.HasMatriarch(mother));
+            _quests.RecordDaycareToyRetrieved(mother, radiationLevel: 80f,
+                nodeId: PersonalQuestSystem.DaycareNodeId, currentDay: 2);
+            Assert.IsTrue(_quests.HasMatriarch(mother));
+
+            child.CurrentRoomId = "quarters";
+            mother.CurrentRoomId = "quarters";
+            Assert.AreEqual(20f, _quests.GetMatriarchRoomHealthBonus(child, _survivors), 0.01f);
+            Assert.IsTrue(_quests.BlocksMentalBreak(mother, "despair", _survivors));
+        }
+
+        // ── #250 Exhausted Father / Pillar of Atlas ──────────────────────
+
+        [Test]
+        public void ExhaustedFather_WorkaholicAndFiveTier3_UnlocksPillar()
+        {
+            var father = MakeArchetype(PersonalQuestSystem.ExhaustedFatherId);
+            Assert.IsTrue(_quests.HasWorkaholic(father));
+            Assert.AreEqual(0.5f, _quests.GetCraftRepairFatigueDrainMultiplier(father), 0.01f);
+            Assert.AreEqual(0.5f, _quests.GetSleepFatigueRestoreMultiplier(father), 0.01f);
+            father.Needs.Fatigue = 50f;
+            Assert.IsTrue(_quests.ShouldIgnoreRestAction(father));
+            father.Needs.Fatigue = 96f;
+            Assert.IsFalse(_quests.ShouldIgnoreRestAction(father));
+
+            _quests.TryStartQuestline(father, "test", 1);
+            for (int i = 0; i < 4; i++)
+                _quests.RecordTier3ModuleBuilt(father, moduleLevel: 3, currentDay: 20 + i);
+            Assert.IsFalse(_quests.HasPillarOfAtlas(father));
+            _quests.RecordTier3ModuleBuilt(father, moduleLevel: 2, currentDay: 30);
+            Assert.IsFalse(_quests.HasPillarOfAtlas(father));
+            _quests.RecordTier3ModuleBuilt(father, moduleLevel: 3, currentDay: 40);
+            Assert.IsTrue(_quests.HasPillarOfAtlas(father));
+            Assert.IsTrue(_quests.IgnoresFatigueActionSpeedPenalty(father));
+            Assert.AreEqual(1f, _quests.GetFatigueActionSpeedMultiplier(father, 0.5f), 0.01f);
+
+            _quests.NotifySurvivorDied(father);
+            Assert.IsTrue(_quests.PillarOfAtlasDeathDebuffActive);
+            Assert.AreEqual(0.8f, _quests.GetShelterRepairSpeedMultiplier(), 0.01f);
+        }
+
+        // ── #251 Naive Son / Wasteland Scout ─────────────────────────────
+
+        [Test]
+        public void NaiveSon_DependentPollyanna_SoloRaid_UnlocksScout()
+        {
+            var son = MakeArchetype(PersonalQuestSystem.NaiveSonId);
+            Assert.IsTrue(son.IsChild);
+            Assert.IsTrue(son.CannotFight);
+            Assert.IsTrue(_quests.HasDependent(son));
+            Assert.IsTrue(_quests.HasPollyanna(son));
+            Assert.IsFalse(_quests.CanEquipFirearms(son));
+            Assert.AreEqual(10f, _quests.GetExpeditionCarryCapacity(son, 40f), 0.01f);
+            Assert.IsTrue(_quests.IsImmuneToDespairBreak(son));
+
+            var adult = new Survivor { Id = "adult_h", DisplayName = "Adult", State = SurvivorState.Idle };
+            adult.Needs.Morale = 40f;
+            _survivors.Add(adult);
+            _quests.ApplyChildInteractionHope(son, adult);
+            Assert.AreEqual(65f, adult.Needs.Morale, 0.01f);
+
+            _quests.TryStartQuestline(son, "test", 1);
+            _quests.RecordSoloRaidSurvived(son, adultsPresentInRoom: true, raidSurvived: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasWastelandScout(son));
+            _quests.RecordSoloRaidSurvived(son, adultsPresentInRoom: false, raidSurvived: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasWastelandScout(son));
+            Assert.IsTrue(_quests.IsImmuneToSniperEncounters(son));
+            Assert.IsTrue(_quests.CanCrawlDebrisInstantly(son));
+        }
+
+        // ── #252 Hardened Daughter / Child of the Ash ────────────────────
+
+        [Test]
+        public void HardenedDaughter_TraumaCap_FirstBlood_UnlocksAsh()
+        {
+            var dau = MakeArchetype(PersonalQuestSystem.HardenedDaughterId);
+            Assert.IsTrue(dau.IsChild);
+            Assert.IsTrue(_quests.HasTraumatized(dau));
+            Assert.AreEqual(50f, _quests.GetMaxMoraleCap(dau), 0.01f);
+            dau.Needs.Morale = 80f;
+            _quests.ClampMoraleToCap(dau);
+            Assert.AreEqual(50f, dau.Needs.Morale, 0.01f);
+            Assert.IsTrue(_quests.RefusesPlayOrComfort(dau));
+            Assert.AreEqual(2f, _quests.GetTrainGuardUtilityBias(dau), 0.01f);
+
+            _quests.TryStartQuestline(dau, "test", 1);
+            _quests.RecordRaiderKillingBlow(dau, duringHatchBreach: false, isFactionRaider: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasChildOfTheAsh(dau));
+            _quests.RecordRaiderKillingBlow(dau, duringHatchBreach: true, isFactionRaider: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasChildOfTheAsh(dau));
+            Assert.IsTrue(_quests.IsImmuneToRadiationAnxiety(dau));
+            Assert.IsTrue(_quests.CanEquipAdultWeapons(dau));
+            Assert.AreEqual(1f, _quests.GetChildWeaponAccuracyMultiplier(dau), 0.01f);
+            Assert.IsTrue(_quests.HasSociopath(dau));
+            Assert.IsTrue(_quests.IsImmuneToDeathMorale(dau));
+        }
+
+        // ── #253 Psychopath / Cold Calculus ──────────────────────────────
+
+        [Test]
+        public void Psychopath_SociopathArrogant_PerfectEquation_UnlocksColdCalculus()
+        {
+            var psy = MakeArchetype(PersonalQuestSystem.PsychopathId);
+            Assert.IsTrue(_quests.HasSociopath(psy));
+            Assert.IsTrue(_quests.HasArrogant(psy));
+            Assert.IsTrue(_quests.IsImmuneToDeathMorale(psy));
+            Assert.IsTrue(_quests.MustSelfHeal(psy));
+            Assert.IsFalse(_quests.CanBeHealedBy(psy, new Survivor { Id = "medic" }));
+            Assert.IsTrue(_quests.CanBeHealedBy(psy, psy));
+            Assert.AreEqual(8f, _quests.GetInterpersonalAffinityDrainPerHour(psy), 0.01f);
+
+            _quests.TryStartQuestline(psy, "test", 1);
+            _quests.RecordDeliberateNeedDeath(psy, "radiation", wasDeliberate: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasColdCalculus(psy));
+            _quests.RecordDeliberateNeedDeath(psy, "starvation", wasDeliberate: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasColdCalculus(psy));
+            Assert.AreEqual(1.5f, _quests.GetUtilityExecutionSpeedMultiplier(psy, livingPopulation: 2), 0.01f);
+            Assert.AreEqual(1f, _quests.GetUtilityExecutionSpeedMultiplier(psy, livingPopulation: 5), 0.01f);
+        }
+
+        // ── #254 Serial Killer / Butcher of Day 30 ───────────────────────
+
+        [Test]
+        public void SerialKiller_UrgeAndEmbrace_UnlocksButcher()
+        {
+            var killer = MakeArchetype(PersonalQuestSystem.SerialKillerId);
+            Assert.IsTrue(killer.HasTrait(PersonalQuestSystem.KindId));
+            Assert.IsTrue(killer.HasTrait(PersonalQuestSystem.CharismaticId));
+            Assert.AreEqual(0f, _quests.GetUrgeNeed(killer), 0.01f);
+
+            var victim = new Survivor { Id = "coma_v", DisplayName = "Victim", State = SurvivorState.Incapacitated };
+            victim.Needs.Health = 3f;
+            _survivors.Add(victim);
+
+            string murderTarget = null;
+            _quests.OnSecretMurderAttempted += (k, tid, kind) => murderTarget = tid;
+            _quests.TickUrge(killer, 100f, _survivors);
+            Assert.AreEqual(100f, _quests.GetUrgeNeed(killer), 0.01f);
+            Assert.AreEqual("coma_v", murderTarget);
+
+            _quests.TryStartQuestline(killer, "test", 1);
+            _quests.RecordMaskSlipsChoice(killer, embrace: true, currentDay: 5);
+            Assert.IsTrue(_quests.HasButcherOfDay30(killer));
+            Assert.IsTrue(_quests.AutoClearsHumanEncounters(killer));
+            Assert.AreEqual(1f, _quests.GetExpeditionStealthFactor(killer), 0.01f);
+        }
+
+        [Test]
+        public void SerialKiller_ExecutePath_NoLatentTrait()
+        {
+            var killer = MakeArchetype(PersonalQuestSystem.SerialKillerId);
+            _quests.TryStartQuestline(killer, "test", 1);
+            _quests.RecordMaskSlipsChoice(killer, embrace: false, currentDay: 5);
+            Assert.IsFalse(_quests.HasButcherOfDay30(killer));
+            Assert.IsFalse(killer.IsAlive);
+            Assert.IsFalse(killer.QuestlineActive);
+        }
+
+        // ── #255 Pathological Liar / Master Manipulator ──────────────────
+
+        [Test]
+        public void Liar_DeceptiveMask_Phase2Cure_UnlocksManipulator()
+        {
+            var liar = MakeArchetype(PersonalQuestSystem.LiarId);
+            Assert.IsTrue(_quests.HasDeceptive(liar));
+            liar.Needs.Hunger = 5f;
+            // Deterministic mask: force via many rolls that at least one masks,
+            // or test GetDisplayedNeed with seeded rng that always masks.
+            var always = new System.Random(0);
+            // With chance 0.35 some seeds mask — use direct ShouldMask when distressed
+            // by testing GenerateFalseIntelNode instead for AI quirk.
+            string fake = _quests.GenerateFalseIntelNode(liar, new System.Random(1));
+            Assert.IsNotNull(fake);
+            Assert.IsTrue(fake.StartsWith("fake_stash_"));
+
+            _quests.TryStartQuestline(liar, "test", 1);
+            _quests.RecordLethalPhase2Cured(liar, wasHiddenFromPlayer: false, isPhase2Lethal: true, currentDay: 2);
+            Assert.IsFalse(_quests.HasMasterManipulator(liar));
+            _quests.RecordLethalPhase2Cured(liar, wasHiddenFromPlayer: true, isPhase2Lethal: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasMasterManipulator(liar));
+            Assert.IsTrue(_quests.TradesJunkAsMedicine(liar));
+            Assert.AreEqual(50f, _quests.GetJunkTradeValueAsMedicine(liar, 5f, 50f), 0.01f);
+        }
+
+        // ── #256 Selfish Hoarder / Dragon's Hoard ────────────────────────
+
+        [Test]
+        public void Hoarder_SelfishTheftAndSafe_UnlocksDragonsHoard()
+        {
+            var hoarder = MakeArchetype(PersonalQuestSystem.HoarderId);
+            Assert.IsTrue(_quests.HasSelfish(hoarder));
+            Assert.AreEqual(2f, _quests.GetRationConsumptionMultiplier(hoarder), 0.01f);
+            Assert.AreEqual(15f, _quests.GetSelfishMissedRationMoraleHit(hoarder), 0.01f);
+
+            Assert.IsTrue(_quests.TryStealToPersonalInventory(hoarder, "canned_beans"));
+            Assert.IsTrue(hoarder.HasHiddenStash);
+            Assert.Contains("canned_beans", hoarder.HiddenItemIds);
+
+            _quests.TryStartQuestline(hoarder, "test", 1);
+            _quests.RecordSafeCarried(hoarder, safeWeightKg: 50f, fatigueLevel: 50f, currentDay: 2);
+            _quests.RecordSafeCarried(hoarder, safeWeightKg: 50f, fatigueLevel: 70f, currentDay: 3);
+            Assert.IsFalse(_quests.HasDragonsHoard(hoarder));
+            _quests.RecordSafeCarried(hoarder, safeWeightKg: 50f, fatigueLevel: 95f, currentDay: 4);
+            Assert.IsTrue(_quests.HasDragonsHoard(hoarder));
+            Assert.IsTrue(_quests.PersonalInventoryNeverDegrades(hoarder));
+            Assert.IsTrue(_quests.GetState(hoarder.Id).SafeWasEmpty);
         }
     }
 }

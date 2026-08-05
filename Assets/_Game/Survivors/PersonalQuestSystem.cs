@@ -5,10 +5,11 @@ using UnityEngine;
 namespace AtomicWar._Game.Survivors
 {
     /// <summary>
-    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#248).
+    /// Personal Quest Engine &amp; Latent Expert Traits (Prompts #214–#256).
     /// Survivors do not start with their Expert Trait. After 30 days alive OR
     /// a Morale 0→100 recovery, their assigned questline begins. Completing
     /// the final stage permanently unlocks the latent expert trait.
+    /// Base personality traits (Selfless, Workaholic, …) are granted on assign.
     /// Plain C#, save/load safe, inventory-free (Survivors leaf assembly).
     /// </summary>
     public class PersonalQuestSystem
@@ -51,6 +52,28 @@ namespace AtomicWar._Game.Survivors
         public const string ZealotsBaneId = "trait_zealots_bane";
         public const string ChemResistantId = "trait_chem_resistant";
         public const string ProtectorId = "trait_protector";
+        // Prompts #249–#256 latent
+        public const string MatriarchId = "trait_matriarch";
+        public const string PillarOfAtlasId = "trait_pillar_of_atlas";
+        public const string WastelandScoutId = "trait_wasteland_scout";
+        public const string ChildOfTheAshId = "trait_child_of_the_ash";
+        public const string ColdCalculusId = "trait_cold_calculus";
+        public const string ButcherOfDay30Id = "trait_butcher_of_day_30";
+        public const string MasterManipulatorId = "trait_master_manipulator";
+        public const string DragonsHoardId = "trait_dragons_hoard";
+
+        // ── Base personality traits (granted on profile assign) ──────────
+        public const string SelflessId = "trait_selfless";
+        public const string WorkaholicId = "trait_workaholic";
+        public const string DependentId = "trait_dependent";
+        public const string PollyannaId = "trait_pollyanna";
+        public const string TraumatizedId = "trait_traumatized";
+        public const string SociopathId = "trait_sociopath";
+        public const string ArrogantId = "trait_arrogant";
+        public const string KindId = "trait_kind";
+        public const string CharismaticId = "trait_charismatic";
+        public const string DeceptiveId = "trait_deceptive";
+        public const string SelfishId = "trait_selfish";
 
         // ── Archetype ids ────────────────────────────────────────────────
         public const string SurgeonId = "the_surgeon";
@@ -88,6 +111,15 @@ namespace AtomicWar._Game.Survivors
         public const string DefectorId = "the_defector";
         public const string AddictId = "the_addict";
         public const string ParentId = "the_parent";
+        // Prompts #249–#256
+        public const string FierceMotherId = "the_fierce_mother";
+        public const string ExhaustedFatherId = "the_exhausted_father";
+        public const string NaiveSonId = "the_naive_son";
+        public const string HardenedDaughterId = "the_hardened_daughter";
+        public const string PsychopathId = "the_psychopath";
+        public const string SerialKillerId = "the_serial_killer";
+        public const string LiarId = "the_liar";
+        public const string HoarderId = "the_hoarder";
 
         // ── Quest thresholds ─────────────────────────────────────────────
         public const int DaysAliveToStartQuest = 30;
@@ -220,6 +252,48 @@ namespace AtomicWar._Game.Survivors
         public const string DespairBreakId = "despair";
         public const float ParentMourningDaysRequired = 7f;
 
+        // #249 Selfless / Matriarch
+        public const float SelflessMoraleAbsorbFrac = 0.10f;
+        public const float ChildNeedsCancelThreshold = 20f;
+        public const float MatriarchRoomHealthBonus = 20f;
+        public const float SevereRadiationThreshold = 70f;
+        public const string DaycareNodeId = "the_daycare";
+        public const string PrewarToyItemId = "prewar_daycare_toy";
+
+        // #250 Workaholic / Pillar of Atlas
+        public const float WorkaholicCraftFatigueDrainMult = 0.5f;
+        public const float WorkaholicSleepRestoreMult = 0.5f;
+        public const float WorkaholicRestIgnoreFatigue = 95f;
+        public const int BrokenPromiseTier3Required = 5;
+        public const int BrokenPromiseDayDeadline = 50;
+        public const float PillarDeathRepairSpeedMult = 0.8f; // permanent -20%
+
+        // #251 Dependent / Wasteland Scout
+        public const float DependentCarryKg = 10f;
+        public const float NaiveSonHopeBuff = 25f;
+
+        // #252 Traumatized / Child of the Ash
+        public const float TraumatizedMoraleCap = 50f;
+
+        // #253 Sociopath / Cold Calculus
+        public const float PsychopathAffinityDrainPerHour = 8f;
+        public const float ColdCalculusPopThreshold = 3f;
+        public const float ColdCalculusExecSpeedMult = 1.5f;
+
+        // #254 Serial Killer / The Urge
+        public const float UrgeMax = 100f;
+        public const float UrgeMurderThreshold = 100f;
+
+        // #255 Deceptive / Master Manipulator
+        public const float DeceptiveMaskChance = 0.35f;
+
+        // #256 Selfish / Dragon's Hoard
+        public const float SelfishRationMult = 2f;
+        public const float SelfishMissRationMoraleHit = 15f;
+        public const float WeightOfGoldSafeKg = 50f;
+        public const int WeightOfGoldNodesRequired = 3;
+        public const string EmptySafeItemId = "empty_safe";
+
         public const string RuinedCvsNodeId = "the_ruined_cvs";
         public const string MassGraveNodeId = "the_mass_grave";
         public const string FortifiedSquadNodeId = "fortified_squad_holdout";
@@ -274,6 +348,12 @@ namespace AtomicWar._Game.Survivors
         private readonly Dictionary<string, PersonalQuestState> _bySurvivor =
             new Dictionary<string, PersonalQuestState>();
 
+        /// <summary>
+        /// #250 Pillar of Atlas death fallout — permanent shelter repair speed debuff
+        /// once a living Pillar dies. Hosts read via GetShelterRepairSpeedMultiplier.
+        /// </summary>
+        public bool PillarOfAtlasDeathDebuffActive { get; private set; }
+
         public event Action<Survivor, string> OnQuestlineStarted;       // sv, questlineId
         public event Action<Survivor, string, int> OnQuestProgress;     // sv, key, value
         public event Action<Survivor, string> OnQuestlineCompleted;     // sv, questlineId
@@ -284,6 +364,10 @@ namespace AtomicWar._Game.Survivors
         public event Action<string, string> OnBunkerEventRequested;
         /// <summary>UI: monumental character evolution (sv, traitId, displayName).</summary>
         public event Action<Survivor, string, string> OnCharacterEvolution;
+        /// <summary>#254 Serial Killer attempted murder (killer, targetId, targetKind).</summary>
+        public event Action<Survivor, string, string> OnSecretMurderAttempted;
+        /// <summary>#255 Liar planted a false intel node id for the radio.</summary>
+        public event Action<Survivor, string> OnFalseIntelReported;
 
         public void Bind(SkillProgressionSystem progression)
         {
@@ -308,7 +392,8 @@ namespace AtomicWar._Game.Survivors
 
         /// <summary>
         /// Apply predetermined latent trait + questline from an archetype profile.
-        /// Does NOT grant the trait — only stores the destiny.
+        /// Does NOT grant the latent trait — only stores the destiny.
+        /// Grants base personality traits (Selfless, Workaholic, …) immediately.
         /// </summary>
         public void AssignProfile(Survivor sv, SurvivorProfile profile)
         {
@@ -333,6 +418,69 @@ namespace AtomicWar._Game.Survivors
             state.Progress = 0f;
             state.DaysAlive = 0;
             state.MoraleHitZero = false;
+
+            ApplyBaseTraits(sv, profile.ArchetypeId);
+            ApplyArchetypeFlags(sv, profile.ArchetypeId);
+        }
+
+        /// <summary>Grant day-0 personality traits for bond/burden archetypes.</summary>
+        public static void ApplyBaseTraits(Survivor sv, string archetypeId)
+        {
+            if (sv == null || string.IsNullOrEmpty(archetypeId)) return;
+            switch (archetypeId)
+            {
+                case FierceMotherId:
+                    GrantBaseTrait(sv, SelflessId);
+                    break;
+                case ExhaustedFatherId:
+                    GrantBaseTrait(sv, WorkaholicId);
+                    break;
+                case NaiveSonId:
+                    GrantBaseTrait(sv, DependentId);
+                    GrantBaseTrait(sv, PollyannaId);
+                    break;
+                case HardenedDaughterId:
+                    GrantBaseTrait(sv, TraumatizedId);
+                    break;
+                case PsychopathId:
+                    GrantBaseTrait(sv, SociopathId);
+                    GrantBaseTrait(sv, ArrogantId);
+                    break;
+                case SerialKillerId:
+                    // Appears Kind + Charismatic; true nature is hidden.
+                    GrantBaseTrait(sv, KindId);
+                    GrantBaseTrait(sv, CharismaticId);
+                    break;
+                case LiarId:
+                    GrantBaseTrait(sv, DeceptiveId);
+                    break;
+                case HoarderId:
+                    GrantBaseTrait(sv, SelfishId);
+                    break;
+            }
+        }
+
+        private static void GrantBaseTrait(Survivor sv, string traitId)
+        {
+            if (sv.Traits == null) sv.Traits = new List<string>();
+            if (!sv.HasTrait(traitId))
+                sv.Traits.Add(traitId);
+        }
+
+        /// <summary>Child / combat flags for kid archetypes.</summary>
+        public static void ApplyArchetypeFlags(Survivor sv, string archetypeId)
+        {
+            if (sv == null) return;
+            if (archetypeId == NaiveSonId)
+            {
+                sv.IsChild = true;
+                sv.CannotFight = true; // Dependent — no firearms
+            }
+            else if (archetypeId == HardenedDaughterId)
+            {
+                sv.IsChild = true;
+                // Can fight; Traumatized caps morale via GetMaxMoraleCap.
+            }
         }
 
         /// <summary>Built-in archetype profiles for Prompts #215–#234.</summary>
@@ -408,6 +556,22 @@ namespace AtomicWar._Game.Survivors
                     return new SurvivorProfile(AddictId, ChemResistantId, QuestlineSO.Ids.TheLastStash);
                 case ParentId:
                     return new SurvivorProfile(ParentId, ProtectorId, QuestlineSO.Ids.TheLocket);
+                case FierceMotherId:
+                    return new SurvivorProfile(FierceMotherId, MatriarchId, QuestlineSO.Ids.TheEmptyCrib);
+                case ExhaustedFatherId:
+                    return new SurvivorProfile(ExhaustedFatherId, PillarOfAtlasId, QuestlineSO.Ids.TheBrokenPromise);
+                case NaiveSonId:
+                    return new SurvivorProfile(NaiveSonId, WastelandScoutId, QuestlineSO.Ids.GrowingUpFast);
+                case HardenedDaughterId:
+                    return new SurvivorProfile(HardenedDaughterId, ChildOfTheAshId, QuestlineSO.Ids.FirstBlood);
+                case PsychopathId:
+                    return new SurvivorProfile(PsychopathId, ColdCalculusId, QuestlineSO.Ids.ThePerfectEquation);
+                case SerialKillerId:
+                    return new SurvivorProfile(SerialKillerId, ButcherOfDay30Id, QuestlineSO.Ids.TheMaskSlips);
+                case LiarId:
+                    return new SurvivorProfile(LiarId, MasterManipulatorId, QuestlineSO.Ids.TheBoyWhoCriedWolf);
+                case HoarderId:
+                    return new SurvivorProfile(HoarderId, DragonsHoardId, QuestlineSO.Ids.TheWeightOfGold);
                 default:
                     return null;
             }
@@ -453,6 +617,14 @@ namespace AtomicWar._Game.Survivors
                 DefectorId => "The Defector",
                 AddictId => "The Addict",
                 ParentId => "The Parent",
+                FierceMotherId => "The Fierce Mother",
+                ExhaustedFatherId => "The Exhausted Father",
+                NaiveSonId => "The Naive Son",
+                HardenedDaughterId => "The Hardened Daughter",
+                PsychopathId => "The Psychopath",
+                SerialKillerId => "The Serial Killer",
+                LiarId => "The Liar",
+                HoarderId => "The Hoarder",
                 _ => archetypeId
             };
             string discipline = "survival";
@@ -462,16 +634,22 @@ namespace AtomicWar._Game.Survivors
                 discipline = "medical";
             else if (archetypeId == VeteranId || archetypeId == CopId || archetypeId == BouncerId
                 || archetypeId == FirefighterId || archetypeId == DefectorId
-                || archetypeId == AthleteId)
+                || archetypeId == AthleteId || archetypeId == HardenedDaughterId
+                || archetypeId == SerialKillerId)
                 discipline = "combat";
             else if (archetypeId == HunterId || archetypeId == CourierId
                 || archetypeId == BurglarId || archetypeId == MechanicId
-                || archetypeId == ReporterId || archetypeId == TailorId)
+                || archetypeId == ReporterId || archetypeId == TailorId
+                || archetypeId == NaiveSonId || archetypeId == HoarderId)
                 discipline = "scavenging";
             else if (archetypeId == TeacherId || archetypeId == PoliticianId
                 || archetypeId == PriestId || archetypeId == RadioHostId
-                || archetypeId == HistorianId || archetypeId == ParentId)
+                || archetypeId == HistorianId || archetypeId == ParentId
+                || archetypeId == FierceMotherId || archetypeId == LiarId
+                || archetypeId == PsychopathId)
                 discipline = "social";
+            else if (archetypeId == ExhaustedFatherId)
+                discipline = "survival";
             var sv = new Survivor
             {
                 Id = runtimeId ?? archetypeId,
@@ -481,6 +659,8 @@ namespace AtomicWar._Game.Survivors
             };
             sv.Needs.Morale = 60f;
             sv.Needs.Health = 100f;
+            if (archetypeId == HardenedDaughterId)
+                sv.Needs.Morale = Mathf.Min(sv.Needs.Morale, TraumatizedMoraleCap);
             return sv;
         }
 
@@ -1486,6 +1666,331 @@ namespace AtomicWar._Game.Survivors
             CompleteQuestline(parent, currentDay);
         }
 
+        // ── #249 Fierce Mother — The Empty Crib ──────────────────────────
+
+        /// <summary>
+        /// Recover the pre-war daycare toy from The Daycare node while severely
+        /// irradiated (radiation ≥ SevereRadiationThreshold). Completes Empty Crib.
+        /// </summary>
+        public void RecordDaycareToyRetrieved(
+            Survivor mother,
+            float radiationLevel,
+            string nodeId = null,
+            int currentDay = 0)
+        {
+            if (mother == null || !mother.IsAlive) return;
+            var state = GetOrCreate(mother.Id);
+            SyncFromSurvivor(mother, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheEmptyCrib, StringComparison.Ordinal))
+                return;
+            if (radiationLevel + 0.0001f < SevereRadiationThreshold) return;
+            if (!string.IsNullOrEmpty(nodeId)
+                && !string.Equals(nodeId, DaycareNodeId, StringComparison.OrdinalIgnoreCase))
+                return;
+
+            state.Progress = 1f;
+            mother.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(mother, "daycare_toy", 1);
+            CompleteQuestline(mother, currentDay);
+        }
+
+        // ── #250 Exhausted Father — The Broken Promise ───────────────────
+
+        /// <summary>
+        /// Record a Tier-3 shelter module completed by the father.
+        /// Completes when count ≥ 5 and currentDay ≤ 50.
+        /// </summary>
+        public void RecordTier3ModuleBuilt(Survivor father, int moduleLevel, int currentDay = 0)
+        {
+            if (father == null || !father.IsAlive) return;
+            if (moduleLevel < 3) return;
+            var state = GetOrCreate(father.Id);
+            SyncFromSurvivor(father, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheBrokenPromise, StringComparison.Ordinal))
+                return;
+            if (currentDay > BrokenPromiseDayDeadline) return;
+
+            state.Tier3ModulesBuilt++;
+            state.Progress = state.Tier3ModulesBuilt;
+            father.QuestProgress = state.Tier3ModulesBuilt;
+            OnQuestProgress?.Invoke(father, "tier3_modules", state.Tier3ModulesBuilt);
+            if (state.Tier3ModulesBuilt >= BrokenPromiseTier3Required
+                && currentDay <= BrokenPromiseDayDeadline)
+            {
+                CompleteQuestline(father, currentDay);
+            }
+        }
+
+        // ── #251 Naive Son — Growing Up Fast ─────────────────────────────
+
+        /// <summary>
+        /// Survive a raid event alone in a room with no adults present.
+        /// </summary>
+        public void RecordSoloRaidSurvived(
+            Survivor son,
+            bool adultsPresentInRoom,
+            bool raidSurvived,
+            int currentDay = 0)
+        {
+            if (son == null || !son.IsAlive) return;
+            if (adultsPresentInRoom || !raidSurvived) return;
+            var state = GetOrCreate(son.Id);
+            SyncFromSurvivor(son, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.GrowingUpFast, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            son.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(son, "solo_raid", 1);
+            CompleteQuestline(son, currentDay);
+        }
+
+        // ── #252 Hardened Daughter — First Blood ─────────────────────────
+
+        /// <summary>
+        /// Land the killing blow on a Faction Raider during a hatch breach.
+        /// </summary>
+        public void RecordRaiderKillingBlow(
+            Survivor daughter,
+            bool duringHatchBreach,
+            bool isFactionRaider,
+            int currentDay = 0)
+        {
+            if (daughter == null || !daughter.IsAlive) return;
+            if (!duringHatchBreach || !isFactionRaider) return;
+            var state = GetOrCreate(daughter.Id);
+            SyncFromSurvivor(daughter, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.FirstBlood, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            daughter.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(daughter, "first_blood", 1);
+            CompleteQuestline(daughter, currentDay);
+        }
+
+        // ── #253 Psychopath — The Perfect Equation ───────────────────────
+
+        /// <summary>
+        /// Deliberately allow a survivor to die of starvation or thirst
+        /// "to preserve resources." Completes Perfect Equation.
+        /// </summary>
+        public void RecordDeliberateNeedDeath(
+            Survivor psychopath,
+            string causeOfDeath,
+            bool wasDeliberate,
+            int currentDay = 0)
+        {
+            if (psychopath == null || !psychopath.IsAlive) return;
+            if (!wasDeliberate) return;
+            if (string.IsNullOrEmpty(causeOfDeath)) return;
+            bool starvationOrThirst =
+                causeOfDeath.IndexOf("starv", StringComparison.OrdinalIgnoreCase) >= 0
+                || causeOfDeath.IndexOf("thirst", StringComparison.OrdinalIgnoreCase) >= 0
+                || string.Equals(causeOfDeath, "hunger", StringComparison.OrdinalIgnoreCase);
+            if (!starvationOrThirst) return;
+
+            var state = GetOrCreate(psychopath.Id);
+            SyncFromSurvivor(psychopath, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.ThePerfectEquation, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            psychopath.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(psychopath, "perfect_equation", 1);
+            CompleteQuestline(psychopath, currentDay);
+        }
+
+        // ── #254 Serial Killer — The Mask Slips ──────────────────────────
+
+        /// <summary>Advance The Urge hidden need (0–100). At max, may attempt murder.</summary>
+        public void TickUrge(Survivor killer, float delta, IReadOnlyList<Survivor> survivors = null)
+        {
+            if (killer == null || !killer.IsAlive) return;
+            var state = GetOrCreate(killer.Id);
+            SyncFromSurvivor(killer, state);
+            bool isKiller =
+                string.Equals(state.ArchetypeId, SerialKillerId, StringComparison.Ordinal)
+                || string.Equals(killer.ArchetypeId, SerialKillerId, StringComparison.Ordinal);
+            if (!isKiller) return;
+
+            state.UrgeNeed = Mathf.Clamp(state.UrgeNeed + Mathf.Max(0f, delta), 0f, UrgeMax);
+            if (state.UrgeNeed + 0.0001f >= UrgeMurderThreshold)
+                TrySecretMurder(killer, survivors);
+        }
+
+        public float GetUrgeNeed(Survivor killer)
+        {
+            if (killer == null) return 0f;
+            return GetOrCreate(killer.Id).UrgeNeed;
+        }
+
+        /// <summary>
+        /// Attempt secret murder of a disabled/comatose survivor or hatch emissary.
+        /// Fires OnSecretMurderAttempted; host resolves capture vs success.
+        /// </summary>
+        public bool TrySecretMurder(Survivor killer, IReadOnlyList<Survivor> survivors)
+        {
+            if (killer == null || !killer.IsAlive) return false;
+            var state = GetOrCreate(killer.Id);
+            if (state.UrgeNeed + 0.0001f < UrgeMurderThreshold) return false;
+
+            string targetId = null;
+            string targetKind = "emissary";
+            if (survivors != null)
+            {
+                for (int i = 0; i < survivors.Count; i++)
+                {
+                    var s = survivors[i];
+                    if (s == null || !s.IsAlive || s.Id == killer.Id) continue;
+                    // Disabled / comatose proxies: low health or active mental break / zero health near death.
+                    if (s.Needs.Health <= 5f || s.HasMentalBreak
+                        || string.Equals(s.State.ToString(), "Comatose", StringComparison.OrdinalIgnoreCase)
+                        || string.Equals(s.State.ToString(), "Disabled", StringComparison.OrdinalIgnoreCase))
+                    {
+                        targetId = s.Id;
+                        targetKind = "disabled";
+                        break;
+                    }
+                }
+            }
+            if (string.IsNullOrEmpty(targetId))
+                targetId = "faction_emissary";
+
+            state.MurderAttempted = true;
+            OnSecretMurderAttempted?.Invoke(killer, targetId, targetKind);
+            OnQuestProgress?.Invoke(killer, "murder_attempt", 1);
+            return true;
+        }
+
+        /// <summary>
+        /// Player catches the killer. Execute = quest ends without latent.
+        /// Embrace = unlocks Butcher of Day 30.
+        /// </summary>
+        public void RecordMaskSlipsChoice(Survivor killer, bool embrace, int currentDay = 0)
+        {
+            if (killer == null || !killer.IsAlive) return;
+            var state = GetOrCreate(killer.Id);
+            SyncFromSurvivor(killer, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheMaskSlips, StringComparison.Ordinal))
+                return;
+
+            state.MaskSlipsResolved = true;
+            state.SerialKillerEmbraced = embrace;
+            state.Progress = 1f;
+            killer.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(killer, embrace ? "embraced" : "executed", 1);
+
+            if (embrace)
+            {
+                CompleteQuestline(killer, currentDay);
+            }
+            else
+            {
+                // Execute: quest complete, no latent trait.
+                state.QuestActive = false;
+                killer.QuestlineActive = false;
+                state.TraitUnlocked = false;
+                killer.LatentTraitUnlocked = false;
+                killer.State = SurvivorState.Dead;
+                OnQuestlineCompleted?.Invoke(killer, state.QuestlineId);
+            }
+        }
+
+        // ── #255 Pathological Liar — The Boy Who Cried Wolf ──────────────
+
+        /// <summary>Liar randomly plants a false intel node id (AI quirk).</summary>
+        public string GenerateFalseIntelNode(Survivor liar, System.Random rng = null)
+        {
+            if (liar == null || !HasDeceptive(liar)) return null;
+            rng ??= new System.Random();
+            string fakeId = "fake_stash_" + rng.Next(1000, 9999);
+            var state = GetOrCreate(liar.Id);
+            state.FalseIntelCount++;
+            OnFalseIntelReported?.Invoke(liar, fakeId);
+            return fakeId;
+        }
+
+        /// <summary>
+        /// Cure a lethal Phase-2 affliction the Liar tried to hide.
+        /// Completes Boy Who Cried Wolf.
+        /// </summary>
+        public void RecordLethalPhase2Cured(
+            Survivor liar,
+            bool wasHiddenFromPlayer,
+            bool isPhase2Lethal,
+            int currentDay = 0)
+        {
+            if (liar == null || !liar.IsAlive) return;
+            if (!wasHiddenFromPlayer || !isPhase2Lethal) return;
+            var state = GetOrCreate(liar.Id);
+            SyncFromSurvivor(liar, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheBoyWhoCriedWolf, StringComparison.Ordinal))
+                return;
+
+            state.Progress = 1f;
+            liar.QuestProgress = 1f;
+            OnQuestProgress?.Invoke(liar, "hidden_affliction_cured", 1);
+            CompleteQuestline(liar, currentDay);
+        }
+
+        // ── #256 Selfish Hoarder — The Weight of Gold ────────────────────
+
+        /// <summary>
+        /// Carry the 50kg safe across map nodes. Completes after 3 nodes when
+        /// nearly dead of fatigue; the safe is empty.
+        /// </summary>
+        public void RecordSafeCarried(
+            Survivor hoarder,
+            float safeWeightKg,
+            float fatigueLevel,
+            int currentDay = 0)
+        {
+            if (hoarder == null || !hoarder.IsAlive) return;
+            if (safeWeightKg + 0.0001f < WeightOfGoldSafeKg) return;
+            var state = GetOrCreate(hoarder.Id);
+            SyncFromSurvivor(hoarder, state);
+            if (!state.QuestActive) return;
+            if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheWeightOfGold, StringComparison.Ordinal))
+                return;
+
+            state.SafeNodesCarried++;
+            state.Progress = state.SafeNodesCarried;
+            hoarder.QuestProgress = state.SafeNodesCarried;
+            OnQuestProgress?.Invoke(hoarder, "safe_nodes", state.SafeNodesCarried);
+
+            if (state.SafeNodesCarried >= WeightOfGoldNodesRequired
+                && fatigueLevel >= 90f)
+            {
+                // Empty safe reveal — host may grant EmptySafeItemId.
+                state.SafeWasEmpty = true;
+                CompleteQuestline(hoarder, currentDay);
+            }
+        }
+
+        /// <summary>#256 AI quirk — steal item id from main storage into personal stash.</summary>
+        public bool TryStealToPersonalInventory(Survivor hoarder, string itemId)
+        {
+            if (hoarder == null || !hoarder.IsAlive || string.IsNullOrEmpty(itemId)) return false;
+            if (!HasSelfish(hoarder) && !string.Equals(hoarder.ArchetypeId, HoarderId, StringComparison.Ordinal))
+                return false;
+            if (hoarder.HiddenItemIds == null)
+                hoarder.HiddenItemIds = new List<string>();
+            hoarder.HiddenItemIds.Add(itemId);
+            hoarder.HasHiddenStash = true;
+            var state = GetOrCreate(hoarder.Id);
+            state.ItemsStolen++;
+            OnQuestProgress?.Invoke(hoarder, "stolen_item", state.ItemsStolen);
+            return true;
+        }
+
         // ── Completion / unlock ──────────────────────────────────────────
 
         public bool CompleteQuestline(Survivor sv, int currentDay = 0)
@@ -1539,6 +2044,20 @@ namespace AtomicWar._Game.Survivors
                 // Stamina/fatigue pools tripled — hosts read GetStaminaPoolMultiplier.
                 sv.BaseMaxStamina = (sv.BaseMaxStamina > 0f ? sv.BaseMaxStamina : 100f) * TirelessPoolMult;
             }
+            // #252 Child of the Ash inherits Sociopath benefits.
+            if (string.Equals(traitId, ChildOfTheAshId, StringComparison.Ordinal))
+            {
+                if (sv.Traits == null) sv.Traits = new List<string>();
+                if (!sv.HasTrait(SociopathId))
+                    sv.Traits.Add(SociopathId);
+                // Adult weapons unlocked — clear child fight restriction if any.
+                sv.CannotFight = false;
+            }
+            // #251 Wasteland Scout can fight/scavenge as a scout.
+            if (string.Equals(traitId, WastelandScoutId, StringComparison.Ordinal))
+            {
+                sv.CannotFight = false; // still no firearms via Dependent; host uses CanEquipFirearms
+            }
         }
 
         // ── Trait queries ────────────────────────────────────────────────
@@ -1591,6 +2110,32 @@ namespace AtomicWar._Game.Survivors
         public bool HasZealotsBane(Survivor sv) => HasTrait(sv, ZealotsBaneId);
         public bool HasChemResistant(Survivor sv) => HasTrait(sv, ChemResistantId);
         public bool HasProtector(Survivor sv) => HasTrait(sv, ProtectorId);
+        public bool HasMatriarch(Survivor sv) => HasTrait(sv, MatriarchId);
+        public bool HasPillarOfAtlas(Survivor sv) => HasTrait(sv, PillarOfAtlasId);
+        public bool HasWastelandScout(Survivor sv) => HasTrait(sv, WastelandScoutId);
+        public bool HasChildOfTheAsh(Survivor sv) => HasTrait(sv, ChildOfTheAshId);
+        public bool HasColdCalculus(Survivor sv) => HasTrait(sv, ColdCalculusId);
+        public bool HasButcherOfDay30(Survivor sv) => HasTrait(sv, ButcherOfDay30Id);
+        public bool HasMasterManipulator(Survivor sv) => HasTrait(sv, MasterManipulatorId);
+        public bool HasDragonsHoard(Survivor sv) => HasTrait(sv, DragonsHoardId);
+
+        // Base traits
+        public bool HasSelfless(Survivor sv) => HasBaseTrait(sv, SelflessId);
+        public bool HasWorkaholic(Survivor sv) => HasBaseTrait(sv, WorkaholicId);
+        public bool HasDependent(Survivor sv) => HasBaseTrait(sv, DependentId);
+        public bool HasPollyanna(Survivor sv) => HasBaseTrait(sv, PollyannaId);
+        public bool HasTraumatized(Survivor sv) => HasBaseTrait(sv, TraumatizedId);
+        public bool HasSociopath(Survivor sv) =>
+            HasBaseTrait(sv, SociopathId) || HasChildOfTheAsh(sv);
+        public bool HasArrogant(Survivor sv) => HasBaseTrait(sv, ArrogantId);
+        public bool HasDeceptive(Survivor sv) => HasBaseTrait(sv, DeceptiveId);
+        public bool HasSelfish(Survivor sv) => HasBaseTrait(sv, SelfishId);
+
+        public static bool HasBaseTrait(Survivor sv, string traitId)
+        {
+            if (sv == null || string.IsNullOrEmpty(traitId)) return false;
+            return sv.HasTrait(traitId);
+        }
 
         /// <summary>#215 — surgery duration mult (0.5 with Miracle Worker).</summary>
         public float GetSurgeryDurationMultiplier(Survivor medic) =>
@@ -1667,8 +2212,9 @@ namespace AtomicWar._Game.Survivors
                 sv.Needs.Morale = floor;
         }
 
-        /// <summary>#219 — zero morale penalty from corpses / murder / butchering.</summary>
-        public bool IsImmuneToDeathMorale(Survivor sv) => HasDeathBlind(sv);
+        /// <summary>#219 / #253 — zero morale penalty from corpses / murder / butchering.</summary>
+        public bool IsImmuneToDeathMorale(Survivor sv) =>
+            HasDeathBlind(sv) || HasSociopath(sv);
 
         /// <summary>#219 — morale regen per hour while sleeping near debris.</summary>
         public float GetDebrisSleepMoraleRegen(Survivor sv, bool nearDebris) =>
@@ -1751,10 +2297,12 @@ namespace AtomicWar._Game.Survivors
         /// <summary>#222 — encumbrance weight limits removed on expeditions.</summary>
         public bool IgnoresEncumbrance(Survivor sv) => HasJuggernaut(sv);
 
-        /// <summary>#222 — effective carry capacity (unlimited sentinel when Juggernaut).</summary>
+        /// <summary>#222 — effective carry capacity (unlimited sentinel when Juggernaut).
+        /// #251 Dependent children cap at 10kg.</summary>
         public float GetExpeditionCarryCapacity(Survivor sv, float baseCapacity)
         {
             if (HasJuggernaut(sv)) return 99999f;
+            if (HasDependent(sv)) return DependentCarryKg;
             return baseCapacity;
         }
 
@@ -2006,6 +2554,305 @@ namespace AtomicWar._Game.Survivors
         public float GetProtectorActionSpeedMultiplier(Survivor parent, IReadOnlyList<Survivor> survivors) =>
             IsProtectorEnraged(parent, survivors) ? ProtectorBoostMult : 1f;
 
+        // ── #249 Selfless / Matriarch ────────────────────────────────────
+
+        /// <summary>
+        /// #249 Selfless: absorber takes 10% of morale damage aimed at others.
+        /// Returns the amount the Selfless survivor should absorb (caller applies).
+        /// </summary>
+        public float GetSelflessMoraleAbsorb(Survivor absorber, float moraleDamageToOther)
+        {
+            if (!HasSelfless(absorber) || moraleDamageToOther <= 0f) return 0f;
+            return moraleDamageToOther * SelflessMoraleAbsorbFrac;
+        }
+
+        /// <summary>
+        /// Apply morale damage with Selfless redistribution. Returns final damage
+        /// applied to <paramref name="target"/> after Selfless absorbers take 10%.
+        /// </summary>
+        public float ApplyMoraleDamageWithSelfless(
+            Survivor target,
+            float damage,
+            IReadOnlyList<Survivor> survivors)
+        {
+            if (target == null || damage <= 0f) return 0f;
+            float remaining = damage;
+            if (survivors != null)
+            {
+                for (int i = 0; i < survivors.Count; i++)
+                {
+                    var s = survivors[i];
+                    if (s == null || !s.IsAlive || s.Id == target.Id) continue;
+                    float absorb = GetSelflessMoraleAbsorb(s, remaining);
+                    if (absorb <= 0f) continue;
+                    s.Needs.Morale = Mathf.Max(0f, s.Needs.Morale - absorb);
+                    remaining -= absorb;
+                }
+            }
+            target.Needs.Morale = Mathf.Max(0f, target.Needs.Morale - remaining);
+            return remaining;
+        }
+
+        /// <summary>
+        /// #249 AI quirk: cancel Eat/Sleep if any living child has a need below 20%.
+        /// </summary>
+        public bool ShouldCancelEatOrSleepForChild(Survivor mother, IReadOnlyList<Survivor> survivors)
+        {
+            if (mother == null || !HasSelfless(mother)) return false;
+            if (survivors == null) return false;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var c = survivors[i];
+                if (c == null || !c.IsAlive || !c.IsChild || c.Id == mother.Id) continue;
+                if (c.Needs.Hunger < ChildNeedsCancelThreshold
+                    || c.Needs.Thirst < ChildNeedsCancelThreshold
+                    || c.Needs.Fatigue > (100f - ChildNeedsCancelThreshold)
+                    || c.Needs.Health < ChildNeedsCancelThreshold
+                    || c.Needs.Warmth < ChildNeedsCancelThreshold
+                    || c.Needs.Morale < ChildNeedsCancelThreshold)
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>#249 Matriarch: +20 max health for others sharing her room.</summary>
+        public float GetMatriarchRoomHealthBonus(Survivor subject, IReadOnlyList<Survivor> survivors)
+        {
+            if (subject == null || survivors == null) return 0f;
+            if (HasMatriarch(subject)) return 0f; // bonus is for others
+            string room = subject.CurrentRoomId;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var m = survivors[i];
+                if (m == null || !m.IsAlive || !HasMatriarch(m)) continue;
+                if (string.Equals(m.CurrentRoomId, room, StringComparison.Ordinal)
+                    || (string.IsNullOrEmpty(room) && string.IsNullOrEmpty(m.CurrentRoomId)))
+                    return MatriarchRoomHealthBonus;
+            }
+            return 0f;
+        }
+
+        /// <summary>#249 Matriarch cannot suffer mental breaks while another survivor is alive.</summary>
+        public bool CanSufferMentalBreak(Survivor sv, IReadOnlyList<Survivor> survivors)
+        {
+            if (sv == null) return false;
+            if (HasPollyanna(sv) && string.Equals(sv.currentMentalBreakId, DespairBreakId, StringComparison.OrdinalIgnoreCase))
+                return false;
+            if (!HasMatriarch(sv)) return true;
+            if (survivors == null) return true;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var s = survivors[i];
+                if (s != null && s.IsAlive && s.Id != sv.Id)
+                    return false;
+            }
+            return true;
+        }
+
+        /// <summary>Block Despair breaks for Pollyanna (#251).</summary>
+        public bool IsImmuneToDespairBreak(Survivor sv) => HasPollyanna(sv);
+
+        /// <summary>Block any mental break for Matriarch when others live.</summary>
+        public bool BlocksMentalBreak(Survivor sv, string breakId, IReadOnlyList<Survivor> survivors)
+        {
+            if (IsImmuneToDespairBreak(sv)
+                && string.Equals(breakId, DespairBreakId, StringComparison.OrdinalIgnoreCase))
+                return true;
+            if (HasMatriarch(sv) && !CanSufferMentalBreak(sv, survivors))
+                return true;
+            return false;
+        }
+
+        // ── #250 Workaholic / Pillar of Atlas ────────────────────────────
+
+        public float GetCraftRepairFatigueDrainMultiplier(Survivor sv) =>
+            HasWorkaholic(sv) ? WorkaholicCraftFatigueDrainMult : 1f;
+
+        public float GetSleepFatigueRestoreMultiplier(Survivor sv) =>
+            HasWorkaholic(sv) ? WorkaholicSleepRestoreMult : 1f;
+
+        /// <summary>#250 AI quirk: ignore Rest until fatigue ≥ 95%.</summary>
+        public bool ShouldIgnoreRestAction(Survivor sv) =>
+            HasWorkaholic(sv) && sv.Needs.Fatigue < WorkaholicRestIgnoreFatigue;
+
+        /// <summary>#250 Pillar: no fatigue penalties to action speed.</summary>
+        public bool IgnoresFatigueActionSpeedPenalty(Survivor sv) => HasPillarOfAtlas(sv);
+
+        public float GetFatigueActionSpeedMultiplier(Survivor sv, float baseMultFromFatigue)
+        {
+            if (HasPillarOfAtlas(sv)) return 1f;
+            return baseMultFromFatigue;
+        }
+
+        /// <summary>
+        /// Call when any survivor dies. If they had Pillar of Atlas, permanent
+        /// 20% repair speed debuff is applied to the shelter.
+        /// </summary>
+        public void NotifySurvivorDied(Survivor sv)
+        {
+            if (sv == null) return;
+            if (HasPillarOfAtlas(sv) || (sv.LatentTraitUnlocked
+                && string.Equals(sv.LatentExpertTraitId, PillarOfAtlasId, StringComparison.Ordinal)))
+            {
+                PillarOfAtlasDeathDebuffActive = true;
+            }
+        }
+
+        public float GetShelterRepairSpeedMultiplier() =>
+            PillarOfAtlasDeathDebuffActive ? PillarDeathRepairSpeedMult : 1f;
+
+        // ── #251 Dependent / Wasteland Scout / Pollyanna ──────────────────
+
+        public bool CanEquipFirearms(Survivor sv) => !HasDependent(sv);
+
+        /// <summary>#251 AI: interacting with Naive Son grants Hope to adults.</summary>
+        public float GetChildInteractionHopeBuff(Survivor child, Survivor adult)
+        {
+            if (child == null || adult == null || !adult.IsAlive) return 0f;
+            if (adult.IsChild) return 0f;
+            if (string.Equals(child.ArchetypeId, NaiveSonId, StringComparison.Ordinal)
+                || (child.IsChild && HasPollyanna(child)))
+                return NaiveSonHopeBuff;
+            return 0f;
+        }
+
+        public void ApplyChildInteractionHope(Survivor child, Survivor adult)
+        {
+            float buff = GetChildInteractionHopeBuff(child, adult);
+            if (buff > 0f)
+                adult.Needs.Morale = Mathf.Min(100f, adult.Needs.Morale + buff);
+        }
+
+        /// <summary>#251 Wasteland Scout: immune to Sniper encounters.</summary>
+        public bool IsImmuneToSniperEncounters(Survivor sv) => HasWastelandScout(sv);
+
+        /// <summary>#251 Wasteland Scout: crawl through Debris instantly for rare loot.</summary>
+        public bool CanCrawlDebrisInstantly(Survivor sv) => HasWastelandScout(sv);
+
+        // ── #252 Traumatized / Child of the Ash ──────────────────────────
+
+        public float GetMaxMoraleCap(Survivor sv)
+        {
+            if (HasTraumatized(sv)) return TraumatizedMoraleCap;
+            return 100f;
+        }
+
+        public void ClampMoraleToCap(Survivor sv)
+        {
+            if (sv == null) return;
+            float cap = GetMaxMoraleCap(sv);
+            if (sv.Needs.Morale > cap)
+                sv.Needs.Morale = cap;
+        }
+
+        /// <summary>#252 AI: refuses Play / Comfort actions.</summary>
+        public bool RefusesPlayOrComfort(Survivor sv) => HasTraumatized(sv);
+
+        /// <summary>#252 AI: favor Train / Guard utility scores.</summary>
+        public float GetTrainGuardUtilityBias(Survivor sv) =>
+            HasTraumatized(sv) ? 2f : 1f;
+
+        public bool IsImmuneToRadiationAnxiety(Survivor sv) => HasChildOfTheAsh(sv);
+
+        /// <summary>#252 Child of the Ash: adult weapons, zero accuracy penalty.</summary>
+        public float GetChildWeaponAccuracyMultiplier(Survivor sv) =>
+            HasChildOfTheAsh(sv) ? 1f : (sv != null && sv.IsChild ? 0.5f : 1f);
+
+        public bool CanEquipAdultWeapons(Survivor sv) =>
+            HasChildOfTheAsh(sv) || (sv != null && !sv.IsChild && !HasDependent(sv));
+
+        // ── #253 Sociopath / Arrogant / Cold Calculus ────────────────────
+
+        /// <summary>#253 / #219: zero morale loss from death/murder (Sociopath or Death-Blind).</summary>
+        public bool IsImmuneToDeathMoraleLoss(Survivor sv) =>
+            IsImmuneToDeathMorale(sv) || HasSociopath(sv);
+
+        /// <summary>#253 Arrogant: refuses heal from others; must self-heal.</summary>
+        public bool MustSelfHeal(Survivor sv) => HasArrogant(sv);
+
+        public bool CanBeHealedBy(Survivor patient, Survivor healer)
+        {
+            if (patient == null) return false;
+            if (!HasArrogant(patient)) return true;
+            if (healer == null) return false;
+            return string.Equals(patient.Id, healer.Id, StringComparison.Ordinal);
+        }
+
+        /// <summary>#253 AI: high InterpersonalAffinity drain on everyone nearby.</summary>
+        public float GetInterpersonalAffinityDrainPerHour(Survivor source) =>
+            (HasArrogant(source) || HasSociopath(source)
+             || string.Equals(source?.ArchetypeId, PsychopathId, StringComparison.Ordinal))
+                ? PsychopathAffinityDrainPerHour
+                : 0f;
+
+        /// <summary>#253 Cold Calculus: 50% faster task execution when pop &lt; 3.</summary>
+        public float GetUtilityExecutionSpeedMultiplier(Survivor sv, int livingPopulation)
+        {
+            if (HasColdCalculus(sv) && livingPopulation < ColdCalculusPopThreshold)
+                return ColdCalculusExecSpeedMult;
+            return 1f;
+        }
+
+        // ── #254 Butcher of Day 30 ───────────────────────────────────────
+
+        public bool HasFullExpeditionStealth(Survivor sv) =>
+            HasButcherOfDay30(sv) || (HasApexPredator(sv) && GetStealthFactor(sv) >= 1f);
+
+        public float GetExpeditionStealthFactor(Survivor sv)
+        {
+            if (HasButcherOfDay30(sv)) return 1f;
+            float apex = GetStealthFactor(sv);
+            return apex >= 0f ? apex : -1f;
+        }
+
+        /// <summary>#254 Embraced Butcher: auto-clear human encounters via silent kill.</summary>
+        public bool AutoClearsHumanEncounters(Survivor sv) => HasButcherOfDay30(sv);
+
+        public bool BringsBackAssassinatedGear(Survivor sv) => HasButcherOfDay30(sv);
+
+        // ── #255 Deceptive / Master Manipulator ──────────────────────────
+
+        /// <summary>
+        /// #255 Deceptive UI mask: randomly report Needs as 100% while starving.
+        /// Returns true if UI should lie this frame.
+        /// </summary>
+        public bool ShouldMaskNeedsInUi(Survivor sv, System.Random rng = null)
+        {
+            if (!HasDeceptive(sv)) return false;
+            // Only mask when actually in distress.
+            if (sv.Needs.Hunger > 40f && sv.Needs.Thirst > 40f && sv.Needs.Health > 40f)
+                return false;
+            rng ??= new System.Random(sv.Id?.GetHashCode() ?? 0 ^ (int)sv.Needs.Hunger);
+            return rng.NextDouble() < DeceptiveMaskChance;
+        }
+
+        /// <summary>Displayed need value for UI (100 when masked).</summary>
+        public float GetDisplayedNeed(Survivor sv, float realValue, System.Random rng = null) =>
+            ShouldMaskNeedsInUi(sv, rng) ? 100f : realValue;
+
+        /// <summary>#255 Master Manipulator: Junk trades as high-tier Medicine price.</summary>
+        public bool TradesJunkAsMedicine(Survivor trader) => HasMasterManipulator(trader);
+
+        public float GetJunkTradeValueAsMedicine(Survivor trader, float junkBaseValue, float medicineTierValue)
+        {
+            if (!HasMasterManipulator(trader)) return junkBaseValue;
+            return medicineTierValue;
+        }
+
+        // ── #256 Selfish / Dragon's Hoard ────────────────────────────────
+
+        public float GetRationConsumptionMultiplier(Survivor sv) =>
+            HasSelfish(sv) ? SelfishRationMult : 1f;
+
+        public float GetSelfishMissedRationMoraleHit(Survivor sv) =>
+            HasSelfish(sv) ? SelfishMissRationMoraleHit : 0f;
+
+        /// <summary>#256 Dragon's Hoard: personal/hidden inventory never degrades.</summary>
+        public bool PersonalInventoryNeverDegrades(Survivor sv) => HasDragonsHoard(sv);
+
+        public bool ItemInPersonalStashNeverSpoils(Survivor sv, string itemId = null) =>
+            HasDragonsHoard(sv);
+
         private bool AnyLivingWithTrait(IReadOnlyList<Survivor> survivors, string traitId)
         {
             if (survivors == null || string.IsNullOrEmpty(traitId)) return false;
@@ -2096,6 +2943,22 @@ namespace AtomicWar._Game.Survivors
                 maxStages: WithdrawalCleanDaysRequired, node: null, evt: null);
             RegisterDefault(QuestlineSO.Ids.TheLocket, "The Locket", ProtectorId,
                 maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheEmptyCrib, "The Empty Crib", MatriarchId,
+                maxStages: 1, node: DaycareNodeId, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheBrokenPromise, "The Broken Promise", PillarOfAtlasId,
+                maxStages: BrokenPromiseTier3Required, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.GrowingUpFast, "Growing Up Fast", WastelandScoutId,
+                maxStages: 1, node: null, evt: "evt_raid_solo_child");
+            RegisterDefault(QuestlineSO.Ids.FirstBlood, "First Blood", ChildOfTheAshId,
+                maxStages: 1, node: null, evt: "evt_hatch_breach_first_blood");
+            RegisterDefault(QuestlineSO.Ids.ThePerfectEquation, "The Perfect Equation", ColdCalculusId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheMaskSlips, "The Mask Slips", ButcherOfDay30Id,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheBoyWhoCriedWolf, "The Boy Who Cried Wolf", MasterManipulatorId,
+                maxStages: 1, node: null, evt: null);
+            RegisterDefault(QuestlineSO.Ids.TheWeightOfGold, "The Weight of Gold", DragonsHoardId,
+                maxStages: WeightOfGoldNodesRequired, node: null, evt: null);
         }
 
         private void RegisterDefault(
@@ -2173,15 +3036,26 @@ namespace AtomicWar._Game.Survivors
                         ? new List<string>(s.HoardedFoodIds) : new List<string>(),
                     ClothingScrapsDisassembled = s.ClothingScrapsDisassembled,
                     WithdrawalCleanDays = s.WithdrawalCleanDays,
-                    ChildDeathKnown = s.ChildDeathKnown
+                    ChildDeathKnown = s.ChildDeathKnown,
+                    Tier3ModulesBuilt = s.Tier3ModulesBuilt,
+                    SafeNodesCarried = s.SafeNodesCarried,
+                    SafeWasEmpty = s.SafeWasEmpty,
+                    UrgeNeed = s.UrgeNeed,
+                    MurderAttempted = s.MurderAttempted,
+                    MaskSlipsResolved = s.MaskSlipsResolved,
+                    SerialKillerEmbraced = s.SerialKillerEmbraced,
+                    FalseIntelCount = s.FalseIntelCount,
+                    ItemsStolen = s.ItemsStolen
                 });
             }
+            save.PillarOfAtlasDeathDebuffActive = PillarOfAtlasDeathDebuffActive;
             return save;
         }
 
         public void RestoreState(PersonalQuestSave save)
         {
             _bySurvivor.Clear();
+            PillarOfAtlasDeathDebuffActive = save != null && save.PillarOfAtlasDeathDebuffActive;
             if (save?.Entries == null) return;
             for (int i = 0; i < save.Entries.Count; i++)
             {
@@ -2216,7 +3090,16 @@ namespace AtomicWar._Game.Survivors
                         ? new List<string>(e.HoardedFoodIds) : new List<string>(),
                     ClothingScrapsDisassembled = e.ClothingScrapsDisassembled,
                     WithdrawalCleanDays = e.WithdrawalCleanDays,
-                    ChildDeathKnown = e.ChildDeathKnown
+                    ChildDeathKnown = e.ChildDeathKnown,
+                    Tier3ModulesBuilt = e.Tier3ModulesBuilt,
+                    SafeNodesCarried = e.SafeNodesCarried,
+                    SafeWasEmpty = e.SafeWasEmpty,
+                    UrgeNeed = e.UrgeNeed,
+                    MurderAttempted = e.MurderAttempted,
+                    MaskSlipsResolved = e.MaskSlipsResolved,
+                    SerialKillerEmbraced = e.SerialKillerEmbraced,
+                    FalseIntelCount = e.FalseIntelCount,
+                    ItemsStolen = e.ItemsStolen
                 };
             }
         }
@@ -2250,6 +3133,16 @@ namespace AtomicWar._Game.Survivors
             public int ClothingScrapsDisassembled;
             public int WithdrawalCleanDays;
             public bool ChildDeathKnown;
+            // #249–#256
+            public int Tier3ModulesBuilt;
+            public int SafeNodesCarried;
+            public bool SafeWasEmpty;
+            public float UrgeNeed;
+            public bool MurderAttempted;
+            public bool MaskSlipsResolved;
+            public bool SerialKillerEmbraced;
+            public int FalseIntelCount;
+            public int ItemsStolen;
 
             public PersonalQuestState Clone() => new PersonalQuestState
             {
@@ -2280,7 +3173,16 @@ namespace AtomicWar._Game.Survivors
                     ? new List<string>(HoardedFoodIds) : new List<string>(),
                 ClothingScrapsDisassembled = ClothingScrapsDisassembled,
                 WithdrawalCleanDays = WithdrawalCleanDays,
-                ChildDeathKnown = ChildDeathKnown
+                ChildDeathKnown = ChildDeathKnown,
+                Tier3ModulesBuilt = Tier3ModulesBuilt,
+                SafeNodesCarried = SafeNodesCarried,
+                SafeWasEmpty = SafeWasEmpty,
+                UrgeNeed = UrgeNeed,
+                MurderAttempted = MurderAttempted,
+                MaskSlipsResolved = MaskSlipsResolved,
+                SerialKillerEmbraced = SerialKillerEmbraced,
+                FalseIntelCount = FalseIntelCount,
+                ItemsStolen = ItemsStolen
             };
         }
     }
@@ -2310,6 +3212,8 @@ namespace AtomicWar._Game.Survivors
     public class PersonalQuestSave
     {
         public List<PersonalQuestEntrySave> Entries = new List<PersonalQuestEntrySave>();
+        /// <summary>#250 permanent shelter repair debuff after Pillar of Atlas dies.</summary>
+        public bool PillarOfAtlasDeathDebuffActive;
     }
 
     [Serializable]
@@ -2340,5 +3244,15 @@ namespace AtomicWar._Game.Survivors
         public int ClothingScrapsDisassembled;
         public int WithdrawalCleanDays;
         public bool ChildDeathKnown;
+        // #249–#256
+        public int Tier3ModulesBuilt;
+        public int SafeNodesCarried;
+        public bool SafeWasEmpty;
+        public float UrgeNeed;
+        public bool MurderAttempted;
+        public bool MaskSlipsResolved;
+        public bool SerialKillerEmbraced;
+        public int FalseIntelCount;
+        public int ItemsStolen;
     }
 }
