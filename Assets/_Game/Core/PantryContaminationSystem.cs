@@ -30,6 +30,7 @@ namespace AtomicWar._Game.Core
         private readonly Inventory.Inventory _inventory;
         private readonly System.Random _rng;
         private ItemDefinition _contaminatedFoodDef;
+        private Survivors.PersonalQuestSystem _personalQuests;
         private ShelterRoom _storesRoom;
         /// <summary>Prompt #212 — Quartermaster degradation mult for the active room.</summary>
         private Func<string, float> _getDegradationMult;
@@ -52,6 +53,10 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void BindDegradationMultiplier(Func<string, float> getMult) =>
             _getDegradationMult = getMult;
+
+        /// <summary>Prompt #224 — Survivalist: contaminated food without botulism.</summary>
+        public void BindPersonalQuests(Survivors.PersonalQuestSystem personalQuests) =>
+            _personalQuests = personalQuests;
 
         public void SetContaminatedFoodDefinition(ItemDefinition def)
         {
@@ -164,6 +169,10 @@ namespace AtomicWar._Game.Core
         public bool TryRollBotulism(Survivor eater, MedicalSystem medical)
         {
             if (eater == null || !eater.IsAlive || medical == null) return false;
+            // Prompt #224 — Survivalist eats raw ContaminatedFood without sickness.
+            if (_personalQuests != null
+                && _personalQuests.CanEatContaminatedWithoutSickness(eater))
+                return false;
             if (_rng.NextDouble() > BotulismChanceOnEat) return false;
 
             if (medical.HasAffliction(eater, AfflictionSO.Ids.Botulism)) return false;

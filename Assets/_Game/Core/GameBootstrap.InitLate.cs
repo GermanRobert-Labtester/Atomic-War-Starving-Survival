@@ -531,6 +531,7 @@ namespace AtomicWar._Game.Core
             HatchDefenseSystem?.BindPersonalQuests(PersonalQuests);
             ExpeditionSystem?.BindPersonalQuests(PersonalQuests);
             EventRunner?.BindPersonalQuests(PersonalQuests);
+            PantrySystem?.BindPersonalQuests(PersonalQuests);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {
