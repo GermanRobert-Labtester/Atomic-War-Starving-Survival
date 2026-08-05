@@ -70,6 +70,16 @@ namespace AtomicWar._Game.UI
         }
         public bool DebugModeEnabled => _debugModeEnabled;
 
+        private PersonalQuestSystem _personalQuests;
+        private System.Random _needsUiRng;
+
+        /// <summary>#255 Deceptive UI mask — bind PersonalQuestSystem for NeedsBar lies.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests, System.Random rng = null)
+        {
+            _personalQuests = personalQuests;
+            _needsUiRng = rng;
+        }
+
         private void Awake()
         {
             EnsureWidgetReferences();
@@ -164,7 +174,14 @@ namespace AtomicWar._Game.UI
         {
             if (survivor == null) return;
             EnsureWidgetReferences();
-            _needsBar.SetNeeds(survivor.Needs, 100f, survivor.RadiationDose);
+            float health = survivor.Needs != null ? survivor.Needs.Health : 100f;
+            _needsBar.SetNeeds(
+                survivor.Needs,
+                health,
+                survivor.RadiationDose,
+                survivor,
+                _personalQuests,
+                _needsUiRng);
         }
 
         /// <summary>Bind radiation system readings to Dosimeter and Geiger Audio.</summary>

@@ -531,7 +531,7 @@ namespace AtomicWar._Game.Core
             HatchDefenseSystem?.BindPersonalQuests(PersonalQuests);
             ExpeditionSystem?.BindPersonalQuests(PersonalQuests);
             EventRunner?.BindPersonalQuests(PersonalQuests);
-            PantrySystem?.BindPersonalQuests(PersonalQuests);
+            PantrySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             // Prompts #225–#234 host hooks
             WaterEconomySystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             PowerNetwork?.BindPersonalQuests(PersonalQuests, () => Survivors);

@@ -32,6 +32,9 @@ namespace AtomicWar._Game.Survivors
         public void Tick(Survivor sv, float gameHours, float roomHumidity)
         {
             if (sv == null || !sv.IsAlive) return;
+            // #256 Dragon's Hoard: personal inventory (clothing included) never degrades.
+            if (_personalQuests != null && _personalQuests.PersonalInventoryNeverDegrades(sv))
+                return;
             float rate = DegradePerHour * (roomHumidity > 0.6f ? HighHumidityMultiplier : 1f);
             if (_personalQuests != null && _getSurvivors != null)
                 rate *= _personalQuests.GetClothingDegradeMultiplier(_getSurvivors());

@@ -326,6 +326,14 @@ namespace AtomicWar._Game.Core
                 return;
             }
 
+            // #251 Wasteland Scout: crawl collapsed debris / rubble instantly (skip hazard).
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.CanCrawlDebrisInstantly(exp.Survivor)
+                && IsDebrisEncounter(selected))
+            {
+                return;
+            }
+
             // #254 Butcher of Day 30: silent assassination of human encounters + loot gear.
             if (_personalQuests != null && exp.Survivor != null
                 && _personalQuests.AutoClearsHumanEncounters(exp.Survivor)
@@ -359,6 +367,19 @@ namespace AtomicWar._Game.Core
                 && encounter.title.IndexOf("sniper", StringComparison.OrdinalIgnoreCase) >= 0)
                 return true;
             return false;
+        }
+
+        private static bool IsDebrisEncounter(EncounterSO encounter)
+        {
+            if (encounter == null) return false;
+            string id = encounter.id ?? string.Empty;
+            string name = encounter.title ?? string.Empty;
+            return id.IndexOf("rubble", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("debris", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("collapsed", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("rubble", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("debris", StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("collapsed", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         private static bool IsHumanEncounter(EncounterSO encounter)

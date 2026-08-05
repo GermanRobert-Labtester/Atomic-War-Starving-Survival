@@ -115,6 +115,24 @@ namespace AtomicWar._Game.Shelter
             if (workHours <= 0f) return 0f;
 
             var room = _rooms[roomId];
+
+            // #251 Wasteland Scout: crawl through debris instantly (full clear, no fatigue).
+            if (_personalQuests != null && _personalQuests.CanCrawlDebrisInstantly(worker))
+            {
+                float instant = room.RubbleUnitsRemaining;
+                room.RubbleUnitsRemaining = 0f;
+                _pendingRubbleUnits = Mathf.Min(
+                    _pendingRubbleUnits + Mathf.CeilToInt(instant), MaxRubblePileUnits * 2);
+                if (!room.IsCleared)
+                {
+                    room.IsCleared = true;
+                    _shelterPerks?.RecordRoomCleared(worker, _getDay?.Invoke() ?? 0);
+                    OnRoomCleared?.Invoke(roomId);
+                }
+                if (NeedsSurfaceDump) OnRubblePileFull?.Invoke();
+                return instant;
+            }
+
             float shovelMult = hasShovel ? 1.5f : 0.5f;
             float skillMult = 1f + worker.EffectiveCraftingSkill * 0.5f;
             float cleared = (workHours / BaseClearHoursPerUnit) * shovelMult * skillMult;

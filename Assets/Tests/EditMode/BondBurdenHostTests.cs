@@ -3,12 +3,14 @@ using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.AI;
 using AtomicWar._Game.AI.Actions;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 
 namespace AtomicWar.Tests.EditMode
@@ -96,6 +98,15 @@ namespace AtomicWar.Tests.EditMode
             item.stackMax = 99;
             item.weight = 0.1f;
             return item;
+        }
+
+        private void UnlockDragonsHoard(Survivor hoarder)
+        {
+            _quests.TryStartQuestline(hoarder, "test", 1);
+            _quests.RecordSafeCarried(hoarder, safeWeightKg: 50f, fatigueLevel: 50f, currentDay: 2);
+            _quests.RecordSafeCarried(hoarder, safeWeightKg: 50f, fatigueLevel: 70f, currentDay: 3);
+            _quests.RecordSafeCarried(hoarder, safeWeightKg: 50f, fatigueLevel: 95f, currentDay: 4);
+            Assert.IsTrue(_quests.HasDragonsHoard(hoarder));
         }
 
         // ── #249 NeedsSystem Selfless absorb ─────────────────────────────
@@ -328,5 +339,153 @@ namespace AtomicWar.Tests.EditMode
                 hoarder.Needs.Morale,
                 Eps);
         }
+
+        // ── #255 Deceptive UI need-masking ───────────────────────────────
+
+        [Test]
+        public void NeedsBar_Deceptive_MasksDistressNeedsWhenRolled()
+        {
+            var liar = MakeArchetype(PersonalQuestSystem.LiarId, "liar_ui");
+            Assert.IsTrue(_quests.HasDeceptive(liar));
+            liar.Needs.Hunger = 5f;
+            liar.Needs.Thirst = 10f;
+            liar.Needs.Health = 15f;
+            liar.Needs.Fatigue = 40f;
+
+            int maskSeed = -1;
+            for (int s = 0; s < 4000; s++)
+            {
+                if (_quests.ShouldMaskNeedsInUi(liar, new System.Random(s)))
+                {
+                    maskSeed = s;
+                    break;
+                }
+            }
+            Assert.GreaterOrEqual(maskSeed, 0, "Expected a seed that triggers Deceptive mask.");
+
+            var go = new GameObject("needs_bar_test");
+            var bar = go.AddComponent<NeedsBar>();
+            bar.SetNeeds(
+                liar.Needs,
+                liar.Needs.Health,
+                radiation: 0f,
+                liar,
+                _quests,
+                new System.Random(maskSeed));
+
+            Assert.AreEqual(100f, bar.NeedBars["hunger"].CurrentValue, Eps);
+            Assert.AreEqual(100f, bar.NeedBars["thirst"].CurrentValue, Eps);
+            Assert.AreEqual(100f, bar.NeedBars["health"].CurrentValue, Eps);
+            // Fatigue is not masked by the Deceptive UI lie.
+            Assert.AreEqual(40f, bar.NeedBars["fatigue"].CurrentValue, Eps);
+
+            Object.DestroyImmediate(go);
+        }
+
+        [Test]
+        public void HUD_Bind_UsesPersonalQuestMask()
+        {
+            var liar = MakeArchetype(PersonalQuestSystem.LiarId, "liar_hud");
+            liar.Needs.Hunger = 8f;
+            liar.Needs.Thirst = 8f;
+            liar.Needs.Health = 8f;
+
+            int maskSeed = -1;
+            for (int s = 0; s < 4000; s++)
+            {
+                if (_quests.ShouldMaskNeedsInUi(liar, new System.Random(s)))
+                {
+                    maskSeed = s;
+                    break;
+                }
+            }
+            Assert.GreaterOrEqual(maskSeed, 0);
+
+            var go = new GameObject("hud_mask_test");
+            var hud = go.AddComponent<HUD>();
+            hud.BindPersonalQuests(_quests, new System.Random(maskSeed));
+            hud.Bind(liar);
+
+            Assert.AreEqual(100f, hud.NeedsBar.NeedBars["hunger"].CurrentValue, Eps);
+            Object.DestroyImmediate(go);
+        }
+
+        // ── #256 Dragon's Hoard personal stash never spoils ───────────────
+
+        [Test]
+        public void Pantry_PersonalStash_SpoilsWithoutDragonsHoard()
+        {
+            var hoarder = MakeArchetype(PersonalQuestSystem.HoarderId, "stash_spoil");
+            Assert.IsTrue(_quests.TryStealToPersonalInventory(hoarder, "canned_beans"));
+            Assert.Contains("canned_beans", hoarder.HiddenItemIds);
+
+            var inv = new InventoryClass { Capacity = 10, MaxWeight = 50f };
+            // Deterministic rng that always rolls low enough to spoil.
+            var pantry = new PantryContaminationSystem(inv, new System.Random(0));
+            pantry.BindPersonalQuests(_quests, () => _survivors);
+
+            int spoiled = pantry.TickPersonalStashes(_survivors, gameHours: 100f);
+            Assert.Greater(spoiled, 0);
+            Assert.Contains(PantryContaminationSystem.SpoiledMeatItemId, hoarder.HiddenItemIds);
+        }
+
+        [Test]
+        public void Pantry_PersonalStash_NeverSpoilsWithDragonsHoard()
+        {
+            var hoarder = MakeArchetype(PersonalQuestSystem.HoarderId, "stash_safe");
+            Assert.IsTrue(_quests.TryStealToPersonalInventory(hoarder, "canned_beans"));
+            UnlockDragonsHoard(hoarder);
+            Assert.IsTrue(_quests.ItemInPersonalStashNeverSpoils(hoarder));
+
+            var inv = new InventoryClass { Capacity = 10, MaxWeight = 50f };
+            var pantry = new PantryContaminationSystem(inv, new System.Random(0));
+            pantry.BindPersonalQuests(_quests, () => _survivors);
+
+            int spoiled = pantry.TickPersonalStashes(_survivors, gameHours: 100f);
+            Assert.AreEqual(0, spoiled);
+            Assert.Contains("canned_beans", hoarder.HiddenItemIds);
+            Assert.IsFalse(hoarder.HiddenItemIds.Contains(PantryContaminationSystem.SpoiledMeatItemId));
+        }
+
+        [Test]
+        public void Clothing_DragonsHoard_NeverDegrades()
+        {
+            var hoarder = MakeArchetype(PersonalQuestSystem.HoarderId, "clothes");
+            UnlockDragonsHoard(hoarder);
+            Assert.IsTrue(_quests.PersonalInventoryNeverDegrades(hoarder));
+
+            hoarder.ClothingDurability = 50f;
+            var clothing = new ClothingDegradationSystem();
+            clothing.BindPersonalQuests(_quests, () => _survivors);
+            clothing.Tick(hoarder, gameHours: 50f, roomHumidity: 0.9f);
+
+            Assert.AreEqual(50f, hoarder.ClothingDurability, Eps);
+            Assert.IsFalse(hoarder.IsRagged);
+        }
+
+        // ── #251 Wasteland Scout crawl debris instantly ───────────────────
+
+        [Test]
+        public void Excavation_WastelandScout_ClearsDebrisInstantly()
+        {
+            var son = MakeArchetype(PersonalQuestSystem.NaiveSonId, "scout");
+            _quests.TryStartQuestline(son, "test", 1);
+            _quests.RecordSoloRaidSurvived(son, adultsPresentInRoom: false, raidSurvived: true, currentDay: 2);
+            Assert.IsTrue(_quests.HasWastelandScout(son));
+            Assert.IsTrue(_quests.CanCrawlDebrisInstantly(son));
+
+            son.Needs.Fatigue = 10f;
+            var excavation = new ExcavationSystem(new System.Random(1));
+            excavation.BindPersonalQuests(_quests);
+            excavation.SealRoom("crawl_room", 25f);
+
+            float cleared = excavation.ClearRubble(
+                "crawl_room", son, hasShovel: false, hatchBlocked: false, workHours: 1f);
+
+            Assert.AreEqual(25f, cleared, Eps);
+            Assert.IsFalse(excavation.HasRubble("crawl_room"));
+            Assert.AreEqual(10f, son.Needs.Fatigue, Eps, "Instant crawl costs no fatigue.");
+        }
     }
 }
+

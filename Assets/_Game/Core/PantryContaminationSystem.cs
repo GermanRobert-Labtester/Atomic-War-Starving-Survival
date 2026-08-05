@@ -31,9 +31,14 @@ namespace AtomicWar._Game.Core
         private readonly System.Random _rng;
         private ItemDefinition _contaminatedFoodDef;
         private Survivors.PersonalQuestSystem _personalQuests;
+        private Func<IReadOnlyList<Survivor>> _getSurvivors;
         private ShelterRoom _storesRoom;
         /// <summary>Prompt #212 — Quartermaster degradation mult for the active room.</summary>
         private Func<string, float> _getDegradationMult;
+
+        /// <summary>#256 personal-stash food spoil chance per unit per game-hour (when not Dragon's Hoard).</summary>
+        public const float PersonalStashSpoilChancePerHour = 0.03f;
+        public const string SpoiledMeatItemId = "spoiled_meat";
 
         public event Action<int> OnFoodRusted;
         public event Action<Survivor> OnBotulismContracted;
@@ -54,9 +59,16 @@ namespace AtomicWar._Game.Core
         public void BindDegradationMultiplier(Func<string, float> getMult) =>
             _getDegradationMult = getMult;
 
-        /// <summary>Prompt #224 — Survivalist: contaminated food without botulism.</summary>
-        public void BindPersonalQuests(Survivors.PersonalQuestSystem personalQuests) =>
+        /// <summary>
+        /// Prompt #224 Survivalist + #256 Dragon's Hoard personal-stash never-spoils.
+        /// </summary>
+        public void BindPersonalQuests(
+            Survivors.PersonalQuestSystem personalQuests,
+            Func<IReadOnlyList<Survivor>> getSurvivors = null)
+        {
             _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
 
         public void SetContaminatedFoodDefinition(ItemDefinition def)
         {
@@ -88,70 +100,79 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void Tick(float gameHours, ShelterRoom humiditySource = null)
         {
-            if (gameHours <= 0f || _inventory == null) return;
-
-            var room = humiditySource ?? _storesRoom;
-            float humidity = room != null ? room.Humidity : 0f;
-            if (humidity < HumidityRustThreshold) return;
-
-            EnsureContaminatedDef();
-            if (_contaminatedFoodDef == null) return;
-
-            string roomId = room != null ? room.RoomId : null;
-            float degMult = 1f;
-            if (_getDegradationMult != null && !string.IsNullOrEmpty(roomId))
-                degMult = Mathf.Clamp(_getDegradationMult(roomId), 0f, 1f);
-            float effectiveHours = gameHours * degMult;
+            if (gameHours <= 0f) return;
 
             int converted = 0;
-            var slots = _inventory.Slots;
-            if (slots == null) return;
 
-            // Snapshot candidates first (mutate carefully)
-            for (int i = slots.Count - 1; i >= 0; i--)
+            // #256: personal hidden stashes may spoil unless Dragon's Hoard
+            // (independent of bunker humidity — stash sits on the person).
+            converted += TickPersonalStashes(_getSurvivors?.Invoke(), gameHours);
+
+            if (_inventory != null)
             {
-                var slot = slots[i];
-                if (slot?.Item == null || slot.Amount <= 0) continue;
-                if (slot.Item.type != ItemType.Food) continue;
-
-                int amount = slot.Amount;
-                int toConvert = 0;
-                for (int u = 0; u < amount; u++)
+                var room = humiditySource ?? _storesRoom;
+                float humidity = room != null ? room.Humidity : 0f;
+                if (humidity >= HumidityRustThreshold)
                 {
-                    if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
-                        toConvert++;
-                }
-                if (toConvert <= 0) continue;
-
-                var foodDef = slot.Item;
-                int removed = Mathf.Min(toConvert, slot.Amount);
-                if (!_inventory.Remove(foodDef, removed)) continue;
-                _inventory.Add(_contaminatedFoodDef, removed);
-                converted += removed;
-            }
-
-            // Also rust food sitting in room storage slots
-            if (room?.Slots != null)
-            {
-                for (int i = 0; i < room.Slots.Count; i++)
-                {
-                    var slot = room.Slots[i];
-                    if (slot == null || slot.IsEmpty || slot.Item == null) continue;
-                    if (slot.Item.type != ItemType.Food) continue;
-
-                    int toConvert = 0;
-                    for (int u = 0; u < slot.Amount; u++)
+                    EnsureContaminatedDef();
+                    if (_contaminatedFoodDef != null)
                     {
-                        if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
-                            toConvert++;
-                    }
-                    if (toConvert <= 0) continue;
+                        string roomId = room != null ? room.RoomId : null;
+                        float degMult = 1f;
+                        if (_getDegradationMult != null && !string.IsNullOrEmpty(roomId))
+                            degMult = Mathf.Clamp(_getDegradationMult(roomId), 0f, 1f);
+                        float effectiveHours = gameHours * degMult;
 
-                    int take = Mathf.Min(toConvert, slot.Amount);
-                    slot.RemoveItem(take);
-                    // Put contaminated into bunker inventory when room slot empties partially
-                    _inventory.Add(_contaminatedFoodDef, take);
-                    converted += take;
+                        var slots = _inventory.Slots;
+                        if (slots != null)
+                        {
+                            for (int i = slots.Count - 1; i >= 0; i--)
+                            {
+                                var slot = slots[i];
+                                if (slot?.Item == null || slot.Amount <= 0) continue;
+                                if (slot.Item.type != ItemType.Food) continue;
+
+                                int amount = slot.Amount;
+                                int toConvert = 0;
+                                for (int u = 0; u < amount; u++)
+                                {
+                                    if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
+                                        toConvert++;
+                                }
+                                if (toConvert <= 0) continue;
+
+                                var foodDef = slot.Item;
+                                int removed = Mathf.Min(toConvert, slot.Amount);
+                                if (!_inventory.Remove(foodDef, removed)) continue;
+                                _inventory.Add(_contaminatedFoodDef, removed);
+                                converted += removed;
+                            }
+                        }
+
+                        // Also rust food sitting in room storage slots
+                        if (room?.Slots != null)
+                        {
+                            for (int i = 0; i < room.Slots.Count; i++)
+                            {
+                                var slot = room.Slots[i];
+                                if (slot == null || slot.IsEmpty || slot.Item == null) continue;
+                                if (slot.Item.type != ItemType.Food) continue;
+
+                                int toConvert = 0;
+                                for (int u = 0; u < slot.Amount; u++)
+                                {
+                                    if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
+                                        toConvert++;
+                                }
+                                if (toConvert <= 0) continue;
+
+                                int take = Mathf.Min(toConvert, slot.Amount);
+                                slot.RemoveItem(take);
+                                _inventory.Add(_contaminatedFoodDef, take);
+                                converted += take;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -160,6 +181,60 @@ namespace AtomicWar._Game.Core
                 OnFoodRusted?.Invoke(converted);
                 OnPantryChanged?.Invoke();
             }
+        }
+
+        /// <summary>
+        /// #256 — food ids in <see cref="Survivor.HiddenItemIds"/> slowly convert to
+        /// spoiled meat unless the owner has Dragon's Hoard
+        /// (<see cref="PersonalQuestSystem.ItemInPersonalStashNeverSpoils"/>).
+        /// Returns number of units spoiled.
+        /// </summary>
+        public int TickPersonalStashes(IReadOnlyList<Survivor> survivors, float gameHours)
+        {
+            if (survivors == null || gameHours <= 0f) return 0;
+            int spoiled = 0;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var sv = survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (sv.HiddenItemIds == null || sv.HiddenItemIds.Count == 0) continue;
+                if (_personalQuests != null
+                    && _personalQuests.ItemInPersonalStashNeverSpoils(sv))
+                    continue;
+
+                for (int k = 0; k < sv.HiddenItemIds.Count; k++)
+                {
+                    string id = sv.HiddenItemIds[k];
+                    if (!IsSpoilablePersonalFoodId(id)) continue;
+                    if (_rng.NextDouble() >= PersonalStashSpoilChancePerHour * gameHours)
+                        continue;
+                    sv.HiddenItemIds[k] = SpoiledMeatItemId;
+                    spoiled++;
+                }
+            }
+            return spoiled;
+        }
+
+        /// <summary>Heuristic: hidden ids that look like food/rations can spoil.</summary>
+        public static bool IsSpoilablePersonalFoodId(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return false;
+            if (string.Equals(itemId, SpoiledMeatItemId, StringComparison.OrdinalIgnoreCase))
+                return false;
+            if (string.Equals(itemId, ContaminatedFoodItemId, StringComparison.OrdinalIgnoreCase))
+                return false;
+            // Gear tags / non-food never spoil.
+            if (itemId.StartsWith("butcher_loot_", StringComparison.OrdinalIgnoreCase))
+                return false;
+            if (itemId.StartsWith("fake_stash_", StringComparison.OrdinalIgnoreCase))
+                return false;
+            return itemId.IndexOf("food", StringComparison.OrdinalIgnoreCase) >= 0
+                || itemId.IndexOf("ration", StringComparison.OrdinalIgnoreCase) >= 0
+                || itemId.IndexOf("can", StringComparison.OrdinalIgnoreCase) >= 0
+                || itemId.IndexOf("bean", StringComparison.OrdinalIgnoreCase) >= 0
+                || itemId.IndexOf("meat", StringComparison.OrdinalIgnoreCase) >= 0
+                || itemId.IndexOf("bread", StringComparison.OrdinalIgnoreCase) >= 0
+                || itemId.IndexOf("grain", StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
         /// <summary>

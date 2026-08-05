@@ -31,7 +31,8 @@ namespace AtomicWar._Game.Core
         {
             if (_hud == null) return;
 
-
+            // #255 Deceptive: NeedsBar may lie about hunger/thirst/health.
+            _hud.BindPersonalQuests(PersonalQuests);
             _hud.BindEventRunner(EventRunner);
             _hud.BindEconomy(EconomySystem);
             _hud.BindRoomAssignment(Survivors, Shelter);
@@ -62,9 +63,14 @@ namespace AtomicWar._Game.Core
                     else
                         ExpeditionSystem.StartExpeditionFromPath(
                             survivor,
-                            ExpeditionSystem.PathRequest.Create(
-                                nodeId, pathReq.TravelHours, pathReq.TrueRad,
-                                pathReq.DangerLevel, pathReq.NodeId));
+                            new ExpeditionSystem.PathRequest
+                            {
+                                NodeId = nodeId,
+                                TravelHours = pathReq.TravelHours,
+                                TrueRad = pathReq.TrueRad,
+                                DangerLevel = pathReq.DangerLevel,
+                                DisplayName = pathReq.NodeId
+                            });
                 };
             }
 

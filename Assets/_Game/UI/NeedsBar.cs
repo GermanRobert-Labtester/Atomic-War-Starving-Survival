@@ -70,14 +70,35 @@ namespace AtomicWar._Game.UI
 
         public void SetNeeds(Needs needs, float health = 100f, float radiation = 0f)
         {
+            SetNeeds(needs, health, radiation, survivor: null, personalQuests: null, rng: null);
+        }
+
+        /// <summary>
+        /// #255 Pathological Liar / Deceptive: when the survivor is distressed,
+        /// UI may report Hunger/Thirst/Health as full so the player cannot trust the bars.
+        /// Mask decision is rolled once per refresh for a consistent snapshot.
+        /// </summary>
+        public void SetNeeds(
+            Needs needs,
+            float health,
+            float radiation,
+            Survivor survivor,
+            PersonalQuestSystem personalQuests,
+            System.Random rng = null)
+        {
             EnsureInitialized();
             if (needs == null) return;
-            UpdateNeed("hunger", needs.Hunger);
-            UpdateNeed("thirst", needs.Thirst);
+
+            bool mask = personalQuests != null
+                        && survivor != null
+                        && personalQuests.ShouldMaskNeedsInUi(survivor, rng);
+
+            UpdateNeed("hunger", mask ? 100f : needs.Hunger);
+            UpdateNeed("thirst", mask ? 100f : needs.Thirst);
             UpdateNeed("fatigue", needs.Fatigue);
             UpdateNeed("warmth", needs.Warmth);
             UpdateNeed("morale", needs.Morale);
-            UpdateNeed("health", health);
+            UpdateNeed("health", mask ? 100f : health);
             UpdateNeed("radiation", radiation);
         }
 
