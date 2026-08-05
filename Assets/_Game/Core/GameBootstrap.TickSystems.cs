@@ -78,6 +78,15 @@ namespace AtomicWar._Game.Core
 
             HatchDefenseSystem?.Tick(gameHours, PowerNetwork);
 
+            // Prompt #205 — Death's Door timer; expired → true death.
+            if (MedicalPerks != null && NeedsSystem != null)
+            {
+                MedicalPerks.TickDeathsDoor(
+                    gameHours,
+                    Survivors,
+                    forceDeath: sv => NeedsSystem.ForceDeath(sv));
+            }
+
             // Prompt #197 — HVAC Tech passive ventilation buff while tech is in bunker.
             if (AtmosphereSystem != null)
             {

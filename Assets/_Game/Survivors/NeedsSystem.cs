@@ -37,6 +37,12 @@ namespace AtomicWar._Game.Survivors
         /// <summary>Fired once when a survivor's health reaches zero.</summary>
         public event Action<Survivor> OnDied;
 
+        /// <summary>
+        /// Optional death gate (Prompt #205 Death's Door). Return true to defer death
+        /// while Health is at 0 (e.g. Paramedic colony). Null = always die at 0 HP.
+        /// </summary>
+        public Func<Survivor, bool> TryDeferDeath;
+
         public NeedsSystem(NeedsProfile profile, Func<Survivor, bool> isNearHeatSource = null)
         {
             _profile = profile != null ? profile : throw new ArgumentNullException(nameof(profile));
@@ -175,9 +181,22 @@ namespace AtomicWar._Game.Survivors
         {
             if (survivor.Needs.Health <= 0f && survivor.State != SurvivorState.Dead)
             {
+                if (TryDeferDeath != null && TryDeferDeath(survivor))
+                    return;
                 survivor.State = SurvivorState.Dead;
                 OnDied?.Invoke(survivor);
             }
+        }
+
+        /// <summary>
+        /// Force true death (bypasses TryDeferDeath). Used when Death's Door expires.
+        /// </summary>
+        public void ForceDeath(Survivor survivor)
+        {
+            if (survivor == null || survivor.State == SurvivorState.Dead) return;
+            survivor.Needs.Health = 0f;
+            survivor.State = SurvivorState.Dead;
+            OnDied?.Invoke(survivor);
         }
 
         private static float GetValue(Needs needs, NeedKind kind)

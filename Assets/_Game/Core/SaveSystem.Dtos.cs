@@ -135,6 +135,8 @@ namespace AtomicWar._Game.Core
         public SurvivalPerkSave SurvivalPerks;
         /// <summary>Prompts #195–#200 — shelter engineering counters (jury-rigs, struts, dig…).</summary>
         public ShelterPerkSave ShelterPerks;
+        /// <summary>Prompts #201–#205 — medical milestone counters (Phase-2 cures, Death's Door…).</summary>
+        public MedicalPerkSave MedicalPerks;
         public EscapeHatchSave EscapeHatch;
         public ExcavationSave Excavation;
         public FloodingSave Flooding;

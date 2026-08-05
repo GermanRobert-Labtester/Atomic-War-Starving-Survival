@@ -253,9 +253,11 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetCombatPerkSystem(CombatPerks);
             SaveSystem.SetSurvivalPerkSystem(SurvivalPerks);
             SaveSystem.SetShelterPerkSystem(ShelterPerks);
+            SaveSystem.SetMedicalPerkSystem(MedicalPerks);
             WireCombatPerkBindings();
             WireSurvivalPerkBindings();
             WireShelterPerkBindings();
+            WireMedicalPerkBindings();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -407,6 +409,47 @@ namespace AtomicWar._Game.Core
                 ShelterPerks, getDay, CeilingCollapseSystem);
             ExcavationSystem?.BindShelterPerks(ShelterPerks, getDay);
             TunnelingSystem?.BindShelterPerks(ShelterPerks, new System.Random(_worldSeed + 199));
+        }
+
+        /// <summary>
+        /// Prompts #201–#205 — bind medical milestone perks into surgery, amputation,
+        /// Death's Door, and raid-window bandaging.
+        /// </summary>
+        private void WireMedicalPerkBindings()
+        {
+            if (MedicalPerks == null) return;
+
+            Func<int> getDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            Func<string, Survivor> findSv = id =>
+            {
+                if (Survivors == null || string.IsNullOrEmpty(id)) return null;
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    if (Survivors[i] != null && Survivors[i].Id == id)
+                        return Survivors[i];
+                }
+                return null;
+            };
+
+            MedicalPerks.SetSurvivorProvider(() => Survivors);
+
+            MedicalSystem?.BindMedicalPerks(
+                MedicalPerks,
+                findSurvivor: findSv,
+                surgeryRng: new System.Random(_worldSeed + 201));
+            if (MedicalSystem != null)
+            {
+                MedicalSystem.IsRaidWindowActive = () =>
+                    HatchDefenseSystem != null && HatchDefenseSystem.IsRaidWindowActive;
+            }
+
+            AmputationSystem?.BindMedicalPerks(MedicalPerks, getDay);
+
+            // Prompt #205 — Death's Door when colony has a Paramedic.
+            if (NeedsSystem != null)
+            {
+                NeedsSystem.TryDeferDeath = sv => MedicalPerks.TryEnterDeathsDoor(sv);
+            }
         }
 
     }

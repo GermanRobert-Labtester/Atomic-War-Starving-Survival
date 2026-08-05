@@ -309,6 +309,11 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((ShelterPerkSave)o));
 
+        public void SetMedicalPerkSystem(MedicalPerkSystem s) =>
+            RegisterSystem(ref _medicalPerkSystem, s, "medical_perks",
+                () => s.CaptureState(),
+                o => s.RestoreState((MedicalPerkSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

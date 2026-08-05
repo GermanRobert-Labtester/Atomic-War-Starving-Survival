@@ -98,6 +98,7 @@ namespace AtomicWar._Game.Core
             CapIf(_combatPerkSystem, s => data.CombatPerks = s.CaptureState());
             CapIf(_survivalPerkSystem, s => data.SurvivalPerks = s.CaptureState());
             CapIf(_shelterPerkSystem, s => data.ShelterPerks = s.CaptureState());
+            CapIf(_medicalPerkSystem, s => data.MedicalPerks = s.CaptureState());
         }
     }
 }

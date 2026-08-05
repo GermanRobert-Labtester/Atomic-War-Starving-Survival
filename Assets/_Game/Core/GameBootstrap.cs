@@ -161,6 +161,9 @@ namespace AtomicWar._Game.Core
         // Prompts #195–#200 — shelter engineering perks (jury-rig, struts, HVAC, scrap, dig, fuel).
         public ShelterPerkSystem ShelterPerks { get; private set; }
 
+        // Prompts #201–#205 — medical milestone perks (surgery, triage, radiologist, anatomist, paramedic).
+        public MedicalPerkSystem MedicalPerks { get; private set; }
+
         // Prompt #8 — Empath & Sociopath trait variance.
         public EmpathSystem EmpathSystem { get; private set; }
         // Prompt #61 — Survivor diaries & privacy violations.

@@ -348,6 +348,9 @@ namespace AtomicWar._Game.Core
             // Prompts #195–#200 — shelter-engineering milestone perks
             ShelterPerks = new ShelterPerkSystem();
             ShelterPerks.Bind(SkillProgression);
+            // Prompts #201–#205 — medical milestone perks (Steady Hands … Paramedic)
+            MedicalPerks = new MedicalPerkSystem();
+            MedicalPerks.Bind(SkillProgression, () => Survivors);
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────
