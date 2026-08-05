@@ -16,6 +16,9 @@ namespace AtomicWar._Game.AI
 
             // #259 Coward: refuses loud labor (build / generator / maintain).
             // #266 God Complex: refuses menial labor (clean / dig / excavate).
+            // #275 Pacifist: cannot equip weapons / combat actions.
+            // #271 Blind: cannot fire guns / expedition combat.
+            // #277 Ex-Con: refuses orders from Cop/General (order-tagged actions).
             if (context.PersonalQuests != null && context.Survivor != null)
             {
                 string actionId = action.id ?? string.Empty;
@@ -24,6 +27,12 @@ namespace AtomicWar._Game.AI
                     return 0f;
                 if (context.PersonalQuests.RefusesMenialLabor(context.Survivor)
                     && context.PersonalQuests.IsMenialLaborAction(actionId))
+                    return 0f;
+                if (context.PersonalQuests.CannotEquipWeapons(context.Survivor)
+                    && IsWeaponOrCombatAction(actionId))
+                    return 0f;
+                if (!context.PersonalQuests.CanFireGuns(context.Survivor)
+                    && IsGunAction(actionId))
                     return 0f;
             }
 
@@ -42,6 +51,11 @@ namespace AtomicWar._Game.AI
                 float comfortBias = context.PersonalQuests.GetComfortTalkUtilityBias(context.Survivor);
                 if (comfortBias > 1f && IsComfortOrTalkAction(action.id))
                     score *= comfortBias;
+                // #276 Widow: hydroponics over sleep.
+                if (context.PersonalQuests.PrioritizesHydroponicsOverSleep(context.Survivor)
+                    && context.PersonalQuests.IsHydroponicsAction(action.id))
+                    score *= 2f;
+                // #279 Dirty labor still scores but ApplyDirtyLaborMorale is host-side on Execute.
             }
 
             // Listless penalty: light-deprived survivors are sluggish about everything.
@@ -66,6 +80,26 @@ namespace AtomicWar._Game.AI
             if (string.IsNullOrEmpty(actionId)) return false;
             return actionId.IndexOf("comfort", System.StringComparison.OrdinalIgnoreCase) >= 0
                    || actionId.IndexOf("talk", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool IsWeaponOrCombatAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("shoot", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("melee", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("attack", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("suppress", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("fight", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("weapon", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        public static bool IsGunAction(string actionId)
+        {
+            if (string.IsNullOrEmpty(actionId)) return false;
+            return actionId.IndexOf("shoot", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("gun", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("rifle", System.StringComparison.OrdinalIgnoreCase) >= 0
+                   || actionId.IndexOf("suppress", System.StringComparison.OrdinalIgnoreCase) >= 0;
         }
 
 

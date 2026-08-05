@@ -40,6 +40,28 @@ namespace AtomicWar._Game.Events
             }
         }
 
+        /// <summary>#281 News Anchor: dramatically increases lore output (extra journal lines).</summary>
+        public int TickNewsAnchorJournalSpam(int day)
+        {
+            if (_personalQuests == null || _getSurvivors == null) return 0;
+            var list = _getSurvivors();
+            if (list == null) return 0;
+            int written = 0;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var s = list[i];
+                if (s == null || !s.IsAlive) continue;
+                int n = _personalQuests.GetJournalEntriesPerDay(s);
+                for (int k = 0; k < n; k++)
+                {
+                    string id = "anchor_broadcast_" + s.Id + "_d" + day + "_" + k;
+                    if (TryAddRawEntry(id, "The airwaves fill with their voice. Day " + day + ".", s, day) != null)
+                        written++;
+                }
+            }
+            return written;
+        }
+
         private readonly List<JournalEntry> _entries = new List<JournalEntry>();
         private readonly KnowledgeBase _knowledge = new KnowledgeBase();
         private int _seq;

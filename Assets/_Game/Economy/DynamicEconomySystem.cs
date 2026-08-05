@@ -719,7 +719,11 @@ namespace AtomicWar._Game.Economy
             if (item == null) return 0f;
             float phaseVal = TradeEconomy.GetEffectiveValue(item, CurrentPhase);
             if (phaseVal <= 0f) return 0f;
-            return phaseVal * GetDemandMultiplier(item.id);
+            float v = phaseVal * GetDemandMultiplier(item.id);
+            // #281 Beacon of Truth: global trade prices −30%.
+            if (_personalQuests != null && _getSurvivors != null)
+                v *= _personalQuests.GetBeaconTradePriceMultiplier(_getSurvivors());
+            return v;
         }
 
         /// <summary>

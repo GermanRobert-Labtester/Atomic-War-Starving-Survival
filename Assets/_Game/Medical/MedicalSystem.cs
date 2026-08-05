@@ -370,6 +370,14 @@ namespace AtomicWar._Game.Medical
             if (_personalQuests != null && !_personalQuests.CanBeHealedBy(patient, medic))
                 return false;
 
+            // #274 Feral Orphan: bites strangers who try to heal them.
+            if (_personalQuests != null
+                && _personalQuests.BitesWhenHealedByStranger(patient, medic))
+            {
+                medic.Needs.Health = UnityEngine.Mathf.Max(1f, medic.Needs.Health - 8f);
+                // Still allow treatment after the bite.
+            }
+
             if (recipe.requiresMedicalBed && !HasOperationalMedicalBed())
                 return false;
 

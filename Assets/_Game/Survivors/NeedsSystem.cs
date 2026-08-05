@@ -120,9 +120,13 @@ namespace AtomicWar._Game.Survivors
                 return;
             }
 
-            Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours);
-            Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours);
-            Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours);
+            // #275 Zen State: 80% reduced hunger/thirst/fatigue decay.
+            float needsMult = 1f;
+            if (_personalQuests != null)
+                needsMult = _personalQuests.GetZenNeedsDecayMultiplier(survivor);
+            Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours * needsMult);
+            Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours * needsMult);
+            Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours * needsMult);
             ApplyWarmth(survivor, gameHours);
 
             // Light / photoperiod tick — null-safe; skipped when not wired
@@ -162,6 +166,45 @@ namespace AtomicWar._Game.Survivors
 
             // #265 Living Saint: permanent Inspired morale floor for the bunker.
             _personalQuests?.ApplyLivingSaintMoraleFloor(survivor);
+
+            if (_personalQuests == null) return;
+
+            // #268 Restless: clamp fatigue to permanent cap.
+            float fatCap = _personalQuests.GetMaxFatigueCap(survivor);
+            if (survivor.Needs.Fatigue > fatCap)
+                survivor.Needs.Fatigue = fatCap;
+
+            // #275 Hunger strike tick (Pacifist Monk).
+            _personalQuests.TickHungerStrike(survivor);
+
+            // #269 Hypochondriac: fake illness without placebo → real morale/fatigue hit.
+            if (_personalQuests.ShouldGenerateFakeAfflictionAlert(survivor))
+                _personalQuests.ApplyHypochondriacPlaceboTick(survivor, givenPlacebo: false);
+
+            // #278 Moral Compass aura (bunker-wide small morale).
+            float compass = _personalQuests.GetMoralCompassBunkerMorale(
+                _getSurvivors != null ? _getSurvivors() : _survivors);
+            if (compass > 0f)
+                survivor.Needs.Morale = UnityEngine.Mathf.Min(100f, survivor.Needs.Morale + compass * gameHours * 0.1f);
+
+            // #282 Agoraphile: bunker ticks count as inside time (host can call RecordOutsideDay when out).
+            if (_personalQuests.HasAgoraphile(survivor) && !survivor.IsOnExpedition)
+            {
+                // Fractional day accumulation via morale hit scaled by hours.
+                float hit = _personalQuests.GetAgoraphileBunkerMoraleHitPerDay(survivor) * (gameHours / 24f);
+                if (hit > 0f)
+                    survivor.Needs.Morale = UnityEngine.Mathf.Max(0f, survivor.Needs.Morale - hit);
+            }
+
+            // #267 Forced chem consume signal: drop "medical" hunger via HoursSinceLastDose reset path.
+            // Host AddictionSystem / inventory consumes amphetamines when this is true.
+            // (AI override is separate; here we only advance addiction clock if not forced.)
+            if (_personalQuests.ShouldForceConsumeMedicalChems(survivor))
+                survivor.HoursSinceLastDose = 0f; // treated as just-dosed once host drains stock
+
+            // #278 Failing Heart: decay max stamina proxy (stored on quest state).
+            if (_personalQuests.HasFailingHeart(survivor))
+                _personalQuests.TickFailingHeart(survivor, currentDay: survivor.DaysAlive);
         }
 
         private float ComputeBunkerAverageMorale(Survivor exclude = null)
@@ -208,6 +251,9 @@ namespace AtomicWar._Game.Survivors
             // #252 Traumatized: permanent 50% max Morale cap.
             if (need == NeedKind.Morale && _personalQuests != null)
                 maxCap = Mathf.Min(maxCap, _personalQuests.GetMaxMoraleCap(survivor));
+            // #268 Restless: permanent max Fatigue cap at 80%.
+            if (need == NeedKind.Fatigue && _personalQuests != null)
+                maxCap = Mathf.Min(maxCap, _personalQuests.GetMaxFatigueCap(survivor));
             // #249 Matriarch: room-mates gain +20 effective health cap.
             if (need == NeedKind.Health && _personalQuests != null)
             {

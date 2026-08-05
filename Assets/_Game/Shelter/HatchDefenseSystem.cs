@@ -478,6 +478,39 @@ namespace AtomicWar._Game.Shelter
             _raidChanceOverrides[factionId] = Mathf.Clamp01(chance);
         }
 
+        /// <summary>#278 Legend of the Wastes: global raid frequency mult (0.25 = −75%).</summary>
+        public float GetPersonalQuestRaidFrequencyMultiplier()
+        {
+            if (_personalQuests == null) return 1f;
+            return _personalQuests.GetLegendRaidFrequencyMultiplier(_getSurvivors?.Invoke());
+        }
+
+        /// <summary>#271 Sonar: 12h advanced raid/storm warning if any living Blind Preacher latent.</summary>
+        public bool HasSonarRaidWarning()
+        {
+            if (_personalQuests == null) return false;
+            return _personalQuests.AnySonarEarlyWarning(_getSurvivors?.Invoke());
+        }
+
+        /// <summary>#278 Sheriff AI: auto-assign to guard when nobody else is.</summary>
+        public void TryAutoAssignSheriffGuard()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return;
+            if (_activeGuards != null && _activeGuards.Count > 0) return;
+            var list = _getSurvivors();
+            if (list == null) return;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (_personalQuests.ShouldAutoAssignGuard(sv, someoneElseGuarding: false))
+                {
+                    AssignGuard(sv);
+                    return;
+                }
+            }
+        }
+
         public void AdjustRaidChance(string factionId, float delta)
         {
             if (string.IsNullOrEmpty(factionId)) return;

@@ -226,6 +226,17 @@ namespace AtomicWar._Game.Radiation
                 return;
             }
 
+            // #273 Radiotrophic: high-rad zones heal Health/Fatigue instead of damaging.
+            if (_personalQuests != null && _personalQuests.IsRadiotrophic(survivor) && radsPerHour >= 50f)
+            {
+                _personalQuests.ApplyRadiotrophicTick(survivor, radsPerHour, hours);
+                // Still accumulate lifetime exposure for quest tracking, but no dose damage.
+                survivor.LifetimeRadiationExposure = Mathf.Max(
+                    0f, survivor.LifetimeRadiationExposure + radsPerHour * hours * 0.1f);
+                OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
+                return;
+            }
+
             if (radsPerHour != 0f)
             {
                 float absorb = 1f;

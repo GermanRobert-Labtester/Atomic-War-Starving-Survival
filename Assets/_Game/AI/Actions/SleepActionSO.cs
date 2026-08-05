@@ -97,6 +97,13 @@ namespace AtomicWar._Game.AI.Actions
             }
 
             ApplySleepResult(context.Survivor, result);
+            // #268 Restless: fatigue never recovers past 80% cap.
+            if (context.PersonalQuests != null)
+            {
+                float cap = context.PersonalQuests.GetMaxFatigueCap(context.Survivor);
+                if (context.Survivor.Needs.Fatigue > cap)
+                    context.Survivor.Needs.Fatigue = cap;
+            }
         }
 
         /// <summary>

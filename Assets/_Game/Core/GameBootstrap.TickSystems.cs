@@ -197,7 +197,16 @@ namespace AtomicWar._Game.Core
             FloodingSystem?.Tick(gameHours, WeatherSystem.Current == WeatherKind.Rain, preDay30, Shelter,
                 roomId => roomId == "cellar" || roomId == "coal_room");
             PerimeterTrapSystem?.Tick(gameHours);
-            NoiseSystem?.Tick(gameHours);
+            // #268 Restless night pacing: host night gate via TimeSystem hour.
+            bool isNight = TimeSystem != null
+                && (TimeSystem.CurrentHour < 6 || TimeSystem.CurrentHour >= 22);
+            if (NoiseSystem != null)
+            {
+                if (isNight)
+                    NoiseSystem.TickPersonalQuestNoise(gameHours, isNight: true);
+                else
+                    NoiseSystem.Tick(gameHours);
+            }
             if (HatchVisibilitySystem != null && TimeSystem != null && _lastHatchVisDay != currentDay)
             {
                 _lastHatchVisDay = currentDay;

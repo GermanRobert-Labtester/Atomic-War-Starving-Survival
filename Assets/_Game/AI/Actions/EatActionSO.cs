@@ -34,6 +34,11 @@ namespace AtomicWar._Game.AI.Actions
                     context.Survivor, context.GetSurvivors()))
                 return 0f;
 
+            // #275 Pacifist hunger strike: refuses to eat.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.RefusesToEat(context.Survivor))
+                return 0f;
+
             float hunger = context.Survivor.Needs.Hunger;
 
             // If inventory check is required, check if food exists
@@ -72,6 +77,20 @@ namespace AtomicWar._Game.AI.Actions
                     survivor, context.GetSurvivors()))
                 return;
 
+            // #275 Hunger strike.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.RefusesToEat(survivor))
+                return;
+
+            // #272 Prepper: only eats own pre-war MREs until stash empty.
+            if (context.PersonalQuests != null
+                && context.PersonalQuests.WillOnlyEatOwnMres(survivor))
+            {
+                if (context.PersonalQuests.TryConsumePrepperMre(survivor))
+                    return;
+                // Stash empty — fall through to shared food.
+            }
+
             ItemDefinition food = FindFood(context);
             if (food != null && context.Inventory != null)
             {
@@ -100,12 +119,37 @@ namespace AtomicWar._Game.AI.Actions
 
                 // Apply hunger via needs if available; Consume already applied hungerRestore
                 // when NeedsSystem is passed — pass null above and apply here for parity.
+                // #274 Animalistic: only raw meat.
+                if (context.PersonalQuests != null
+                    && context.PersonalQuests.EatsOnlyRawMeat(survivor)
+                    && food.type != ItemType.Food
+                    && food.id != null
+                    && food.id.IndexOf("meat", System.StringComparison.OrdinalIgnoreCase) < 0)
+                {
+                    return; // spit it out
+                }
+
                 float restore = food.hungerRestore > 0f ? food.hungerRestore : 40f;
                 survivor.Needs.Hunger = Mathf.Max(0f, survivor.Needs.Hunger - restore);
                 if (food.moraleEffect != 0f)
                     survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + food.moraleEffect, 0f, 100f);
                 if (food.healthEffect != 0f)
                     survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + food.healthEffect, 0f, 100f);
+
+                // #273 Outcast room-meal morale hit on others sharing the room.
+                if (context.PersonalQuests != null && context.GetSurvivors != null)
+                {
+                    var all = context.GetSurvivors();
+                    if (all != null)
+                    {
+                        for (int oi = 0; oi < all.Count; oi++)
+                        {
+                            var other = all[oi];
+                            if (other == null || !other.IsAlive) continue;
+                            context.PersonalQuests.ApplyOutcastRoomMealMorale(other, survivor);
+                        }
+                    }
+                }
 
                 // ContaminatedFood / spoiled meat → Phase-1 gastric illness roll
                 // Prompt #190 — Iron Stomach multiplies chance by 0.10

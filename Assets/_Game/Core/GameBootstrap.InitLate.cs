@@ -561,6 +561,8 @@ namespace AtomicWar._Game.Core
             //  Sleep bed-only; ActionScorer labor filters; NeedsBar Denialist anxiety)
             NeedsSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
             MentalBreakSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
+            // Prompts #267–#283 chemistry / titles host loops
+            NoiseSystem?.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
             {

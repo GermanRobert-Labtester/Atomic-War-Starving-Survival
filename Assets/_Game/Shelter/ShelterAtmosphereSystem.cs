@@ -436,10 +436,40 @@ namespace AtomicWar._Game.Shelter
             if (room.FireIntensity <= 0.05f)
             {
                 ClearFire(room, raiseEvent: true);
+                // #270 Trial by Fire: count extinguish toward Fire-Breather.
+                _personalQuests?.RecordBunkerFireExtinguished(fighter);
                 return true;
             }
 
             OnAtmosphereChanged?.Invoke();
+            return false;
+        }
+
+        /// <summary>
+        /// #270 Pyromaniac AI quirk: 5% daily chance to start a fire when morale &lt; 30.
+        /// Call once per day from host.
+        /// </summary>
+        public bool TryPyromaniacDeliberateFire(System.Random rng = null)
+        {
+            if (_personalQuests == null || _getSurvivors == null || _rooms == null || _rooms.Count == 0)
+                return false;
+            var list = _getSurvivors();
+            if (list == null) return false;
+            rng ??= new System.Random();
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!_personalQuests.ShouldDeliberatelyStartFire(sv, rng)) continue;
+                // Pick first non-burning room.
+                for (int r = 0; r < _rooms.Count; r++)
+                {
+                    var room = _rooms[r];
+                    if (room == null || room.IsOnFire) continue;
+                    StartFire(room, intensity: 0.45f);
+                    return true;
+                }
+            }
             return false;
         }
 

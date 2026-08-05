@@ -58,6 +58,22 @@ namespace AtomicWar._Game.Shelter
             return c.Watts;
         }
 
+        /// <summary>#280 Tech Bro offline-tablet waste (watts) when unsupervised.</summary>
+        public float GetTechBroPowerWasteWatts(bool supervised = false)
+        {
+            if (_personalQuests == null || _getSurvivors == null) return 0f;
+            var list = _getSurvivors();
+            if (list == null) return 0f;
+            float total = 0f;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                total += _personalQuests.GetTechBroPowerWasteWatts(sv, supervised);
+            }
+            return total;
+        }
+
         /// <summary>
         /// Inject carbon monoxide from external sources (room fire, sealed smoke).
         /// Internal Horror — Fire in the Hole.
@@ -346,6 +362,8 @@ namespace AtomicWar._Game.Shelter
                 if (c.IsRequested)
                     requested += Mathf.Max(0f, GetConsumerWatts(c));
             }
+            // #280 Tech Bro: unsupervised tablet wastes power.
+            requested += GetTechBroPowerWasteWatts();
             RequestedDraw = requested;
 
             // Shed highest priority number first until under budget.
