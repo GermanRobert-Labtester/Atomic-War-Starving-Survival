@@ -48,6 +48,7 @@ namespace AtomicWar._Game.Core
         private ItemDefinition _fertilizerDef;
         private ShelterRoom _storesRoom;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
+        private CombatPerkSystem _combatPerks;
         private bool _boundToDeath;
 
         /// <summary>Corpse metadata: which survivor the body belonged to (by stack order, best-effort).</summary>
@@ -86,6 +87,9 @@ namespace AtomicWar._Game.Core
         {
             _getSurvivors = getSurvivors;
         }
+
+        /// <summary>Prompt #188 — Desensitized skips corpse morale penalties.</summary>
+        public void BindCombatPerks(CombatPerkSystem combatPerks) => _combatPerks = combatPerks;
 
         /// <summary>Subscribe to NeedsSystem.OnDied once. Safe to call multiple times.</summary>
         public void BindDeathHandler()
@@ -186,8 +190,14 @@ namespace AtomicWar._Game.Core
                 var sv = survivors[i];
                 if (sv == null || !sv.IsAlive) continue;
 
-                _needs.Modify(sv, NeedKind.Morale,
-                    -MoraleDrainPerCorpsePerHour * corpses * gameHours);
+                // Prompt #188 — Desensitized: no morale drain from living with corpses.
+                bool immuneCorpseMorale = _combatPerks != null
+                    && _combatPerks.IsImmuneToCorpseMorale(sv);
+                if (!immuneCorpseMorale)
+                {
+                    _needs.Modify(sv, NeedKind.Morale,
+                        -MoraleDrainPerCorpsePerHour * corpses * gameHours);
+                }
 
                 if (_medical != null && _rng.NextDouble() < DiseaseChancePerHour * corpses * gameHours)
                 {
@@ -259,11 +269,15 @@ namespace AtomicWar._Game.Core
             {
                 for (int i = 0; i < survivors.Count; i++)
                 {
-                    if (survivors[i] != null && survivors[i].IsAlive)
-                        _needs.Modify(survivors[i], NeedKind.Morale, -FertilizerMoraleHit);
+                    var sv = survivors[i];
+                    if (sv == null || !sv.IsAlive) continue;
+                    // Prompt #188 — Desensitized: no fertilizer-process morale shatter.
+                    if (_combatPerks != null && _combatPerks.IsImmuneToCorpseMorale(sv))
+                        continue;
+                    _needs.Modify(sv, NeedKind.Morale, -FertilizerMoraleHit);
                 }
             }
-            else
+            else if (_combatPerks == null || !_combatPerks.IsImmuneToCorpseMorale(processor))
             {
                 _needs.Modify(processor, NeedKind.Morale, -FertilizerMoraleHit);
             }
