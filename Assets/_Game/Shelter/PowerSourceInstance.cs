@@ -15,6 +15,10 @@ namespace AtomicWar._Game.Shelter
         /// <summary>On-board fuel for diesel sources (separate from heater fuel).</summary>
         public float Fuel;
         /// <summary>
+        /// Prompt #200 — Thermodynamics burn mult from last loader (0.8 = 20% longer).
+        /// </summary>
+        public float FuelBurnMultiplier = 1f;
+        /// <summary>
         /// Mechanical condition 0..100. Below the ignition threshold, overworked
         /// diesel gens / makeshift heaters may spark a room fire (Internal Horror).
         /// </summary>
@@ -48,10 +52,18 @@ namespace AtomicWar._Game.Shelter
             IsEnabled = true;
         }
 
-        public void AddFuel(float amount)
+        public void AddFuel(float amount) => AddFuel(amount, 1f);
+
+        public void AddFuel(float amount, float burnMultiplier)
         {
+            if (amount <= 0f) return;
             Fuel = Mathf.Max(0f, Fuel + amount);
+            if (burnMultiplier > 0f)
+                FuelBurnMultiplier = burnMultiplier;
         }
+
+        public float EffectiveFuelBurnMultiplier =>
+            FuelBurnMultiplier > 0f ? FuelBurnMultiplier : 1f;
 
         public void AssignPedaler(string survivorId)
         {

@@ -16,6 +16,11 @@ namespace AtomicWar._Game.Shelter
         public bool IsEnabled = true;
         public float FilterHealth = 100f;
         public float Fuel = 0f;
+        /// <summary>
+        /// Prompt #200 — Thermodynamics: burn rate multiplier from last fuel loader
+        /// (0.8 = burns 20% longer). Defaults to 1.
+        /// </summary>
+        public float FuelBurnMultiplier = 1f;
         public float WaterConversionProgress = 0f;
 
         /// <summary>Shelter room this module is installed in (e.g. "quarters", "plant").</summary>
@@ -77,21 +82,24 @@ namespace AtomicWar._Game.Shelter
             {
                 if (Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - heaterSO.FuelConsumptionRatePerHour * gameHours);
+                    Fuel = Mathf.Max(0f, Fuel - heaterSO.FuelConsumptionRatePerHour
+                        * gameHours * EffectiveFuelBurnMultiplier);
                 }
             }
             else if (_definition is GrowLightModuleSO growSO)
             {
                 if (Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - growSO.FuelConsumptionRatePerHour * gameHours);
+                    Fuel = Mathf.Max(0f, Fuel - growSO.FuelConsumptionRatePerHour
+                        * gameHours * EffectiveFuelBurnMultiplier);
                 }
             }
             else if (_definition is RadioModuleSO radioSO)
             {
                 if (Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - radioSO.PowerConsumptionPerHour * gameHours);
+                    Fuel = Mathf.Max(0f, Fuel - radioSO.PowerConsumptionPerHour
+                        * gameHours * EffectiveFuelBurnMultiplier);
                 }
             }
             else
@@ -103,28 +111,39 @@ namespace AtomicWar._Game.Shelter
                 }
                 else if (ModuleId == "heater" && Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - 1f * gameHours);
+                    Fuel = Mathf.Max(0f, Fuel - 1f * gameHours * EffectiveFuelBurnMultiplier);
                 }
                 else if (ModuleId == "grow_light" && Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - 1.5f * gameHours);
+                    Fuel = Mathf.Max(0f, Fuel - 1.5f * gameHours * EffectiveFuelBurnMultiplier);
                 }
                 else if (ModuleId == "radio" && Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours);
+                    Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours * EffectiveFuelBurnMultiplier);
                 }
             }
 
         }
+
+        public float EffectiveFuelBurnMultiplier =>
+            FuelBurnMultiplier > 0f ? FuelBurnMultiplier : 1f;
 
         public void ReplaceFilter()
         {
             FilterHealth = 100f;
         }
 
-        public void AddFuel(float amount)
+        public void AddFuel(float amount) => AddFuel(amount, 1f);
+
+        /// <summary>
+        /// Add fuel and optionally set burn multiplier from the loader's Thermodynamics perk.
+        /// </summary>
+        public void AddFuel(float amount, float burnMultiplier)
         {
+            if (amount <= 0f) return;
             Fuel = Mathf.Max(0f, Fuel + amount);
+            if (burnMultiplier > 0f)
+                FuelBurnMultiplier = burnMultiplier;
         }
     }
 }

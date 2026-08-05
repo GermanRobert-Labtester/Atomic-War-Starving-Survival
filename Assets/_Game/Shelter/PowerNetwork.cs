@@ -256,7 +256,7 @@ namespace AtomicWar._Game.Shelter
                 {
                     case PowerSourceKind.Diesel:
                         if (src.Fuel <= 0f) break;
-                        float burn = def.FuelPerHour * gameHours;
+                        float burn = def.FuelPerHour * gameHours * src.EffectiveFuelBurnMultiplier;
                         src.Fuel = Mathf.Max(0f, src.Fuel - burn);
                         if (def.CoPpmPerHour > 0f)
                             coDelta += def.CoPpmPerHour * gameHours;

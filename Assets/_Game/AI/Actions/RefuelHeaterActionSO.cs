@@ -47,11 +47,15 @@ namespace AtomicWar._Game.AI.Actions
 
         public override void Execute(AIContext context)
         {
-            if (context?.Shelter != null)
-            {
-                var heaterModule = context.Shelter.GetModule("heater");
-                heaterModule?.AddFuel(5f);
-            }
+            if (context?.Shelter == null) return;
+            var heaterModule = context.Shelter.GetModule("heater");
+            if (heaterModule == null) return;
+
+            // Prompt #200 — Thermodynamics: fuel burns 20% longer when this survivor loads it.
+            float burnMult = context.ShelterPerks != null
+                ? context.ShelterPerks.GetFuelBurnMultiplier(context.Survivor)
+                : 1f;
+            heaterModule.AddFuel(5f, burnMult);
         }
     }
 }
