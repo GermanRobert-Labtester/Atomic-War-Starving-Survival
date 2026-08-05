@@ -67,19 +67,37 @@ systems are implemented.
 > ignored and never executed by `-runTests`, so the tests live at
 > `Assets/Tests/` to remain runnable.
 
-## Coexistence with `Assets/Scripts/`
-
-`Assets/Scripts/` holds an earlier prototype under the `AtomicWar.Data`,
-`AtomicWar.Core.*`, and `AtomicWar.Runtime.*` namespaces. The new
-`Assets/_Game/` tree uses the distinct `AtomicWar._Game.*` namespaces, so the
-two coexist without type collisions. Same-named types (e.g. `ItemType`,
-`ItemDefinition`, `NeedsSystem`) are different types in different namespaces.
-
 ## Current state
 
-Scaffold only: every file is a compiling stub — type shapes, member signatures,
-and XML-doc intent. Method bodies are `throw new System.NotImplementedException();`.
-No gameplay logic is implemented yet.
+**The simulation is implemented; the game is not yet wired into a scene.**
+
+- `Assets/_Game/` holds ~500 implemented C# files. There are **zero**
+  `NotImplementedException` bodies left.
+- Tests are green: **EditMode 1037 / PlayMode 61**, and the suites construct
+  every system directly in code.
+- A Linux player **builds** successfully (~100 MB).
+
+The gap is presentation and scene wiring:
+
+- `Assets/Scenes/SampleScene.unity` is the only scene in Build Settings, and it
+  contains just `Main Camera` and `Global Light 2D`. **`GameBootstrap` is not in
+  it**, and nothing else instantiates it (there is no
+  `RuntimeInitializeOnLoadMethod`). A built player therefore launches and idles —
+  verified by running it with `-batchmode -nographics`, whose log shows no game
+  activity at all.
+- To boot the game, `GameBootstrap` must be added to a scene GameObject and its
+  **12 `[SerializeField]` catalog/profile references** assigned in the Inspector
+  (`NeedsProfile`, `ItemCatalogSO`, `GameEventCatalogSO`, … — the matching assets
+  live in `Assets/_Game/Data/`). It will `NullReferenceException` on `Start` if
+  the component is added without them.
+- There is **no rendering or UI layer**: no sprites, prefabs, materials,
+  animations, Canvas, uGUI, UI Toolkit or TextMeshPro exist. The `*HUD` classes
+  are data/formatting models with no draw code; the only `OnGUI` is IMGUI debug
+  overlay. There is also no localization — all user-facing strings are inline
+  literals.
+
+None of the above is a regression; it is unbuilt work. It is recorded here
+because the passing test count makes the project look more finished than it is.
 
 ## Verify
 

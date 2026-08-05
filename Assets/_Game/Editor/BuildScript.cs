@@ -48,33 +48,70 @@ namespace AtomicWar._Game.Editor
 
             AppendLog("[PASS] JSON Data Validation passed with 0 errors.");
 
-            // 2. Standalone Builds (Windows & Mac)
+            // 2. Standalone Builds
             AppendLog("\n--- STEP 2: COMPILING STANDALONE BUILDS ---");
 
             string[] scenes = GetBuildScenes();
             if (scenes.Length == 0)
             {
-                AppendLog("[WARN] No scenes enabled in Build Settings.");
+                // A player with no scenes is not a build worth shipping, so this
+                // is an error rather than a warning.
+                AppendLog("[FAIL] No scenes enabled in Build Settings — nothing to build.");
+                Halt();
+                return;
             }
 
-            // Build Windows Standalone
-            bool winOk = BuildWindows(scenes);
-
-            // Build Mac Standalone
-            bool macOk = BuildMac(scenes);
-
-            if (winOk && macOk)
+            var outcomes = new[]
             {
-                AppendLog("\n=== ASHFALL BUILD PIPELINE COMPLETED SUCCESSFULLY ===");
-                Debug.Log("[BuildPipeline] Build pipeline completed successfully.");
-            }
-            else
+                BuildTargetIfSupported("Windows", BuildTarget.StandaloneWindows64, "Builds/Windows/ASHFALL.exe", scenes),
+                BuildTargetIfSupported("Mac", BuildTarget.StandaloneOSX, "Builds/Mac/ASHFALL.app", scenes),
+                // Linux was missing entirely, even though it is the platform this
+                // project is developed and tested on and the only build support
+                // module installed locally.
+                BuildTargetIfSupported("Linux", BuildTarget.StandaloneLinux64, "Builds/Linux/ASHFALL.x86_64", scenes),
+            };
+
+            int failed = outcomes.Count(o => o == BuildOutcome.Failed);
+            int built = outcomes.Count(o => o == BuildOutcome.Succeeded);
+
+            if (failed > 0)
             {
                 AppendLog("\n=== BUILD PIPELINE HALTED DUE TO COMPILATION FAILURE ===");
-                if (Application.isBatchMode && !IsRunningAutomatedTests())
-                {
-                    EditorApplication.Exit(1);
-                }
+                Halt();
+                return;
+            }
+
+            // Previously every uninstalled target returned "ok", so on a machine
+            // with no build support modules the pipeline printed COMPLETED
+            // SUCCESSFULLY and exited 0 having produced zero artifacts -- a green
+            // signal for a build that never happened. Verified: a local run
+            // skipped both Windows and Mac and still reported success.
+            if (built == 0)
+            {
+                AppendLog("\n=== BUILD PIPELINE PRODUCED NO ARTIFACTS ===");
+                AppendLog("Every target was skipped because no build support module is installed.");
+                AppendLog("Install a platform module, or this pipeline cannot verify anything.");
+                Debug.LogError("[BuildPipeline] No artifacts produced — every build target was skipped.");
+                Halt();
+                return;
+            }
+
+            AppendLog($"\n=== ASHFALL BUILD PIPELINE COMPLETED SUCCESSFULLY ({built} artifact(s)) ===");
+            Debug.Log($"[BuildPipeline] Build pipeline completed successfully ({built} artifact(s)).");
+        }
+
+        /// <summary>Outcome of a single platform build attempt.</summary>
+        private enum BuildOutcome { Skipped, Succeeded, Failed }
+
+        /// <summary>
+        /// Exit non-zero in batchmode, but never while the test suite is running
+        /// (EditorApplication.Exit would abort the whole run).
+        /// </summary>
+        private static void Halt()
+        {
+            if (Application.isBatchMode && !IsRunningAutomatedTests())
+            {
+                EditorApplication.Exit(1);
             }
         }
 
@@ -93,52 +130,32 @@ namespace AtomicWar._Game.Editor
             return false;
         }
 
-        public static bool BuildWindows(string[] scenes)
+        /// <summary>
+        /// Build one standalone target, reporting whether it actually produced an
+        /// artifact. A missing build support module is Skipped, not Succeeded --
+        /// the distinction is the whole point: treating "not installed" as success
+        /// is what let the pipeline report green with nothing built.
+        /// </summary>
+        private static BuildOutcome BuildTargetIfSupported(
+            string label, BuildTarget target, string path, string[] scenes)
         {
-            if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64))
+            if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, target))
             {
-                AppendLog("[SKIP] Windows build target (StandaloneWindows64) is not installed on this Editor instance.");
-                return true;
+                AppendLog($"[SKIP] {label} build target ({target}) is not installed on this Editor instance.");
+                return BuildOutcome.Skipped;
             }
 
-            string path = "Builds/Windows/ASHFALL.exe";
             EnsureDirectoryForFile(path);
 
-            var report = BuildPipeline.BuildPlayer(scenes, path, BuildTarget.StandaloneWindows64, BuildOptions.None);
+            var report = BuildPipeline.BuildPlayer(scenes, path, target, BuildOptions.None);
             if (report.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
             {
-                AppendLog($"[PASS] Windows build succeeded: {path} ({report.summary.totalSize} bytes)");
-                return true;
-            }
-            else
-            {
-                AppendLog($"[FAIL] Windows build failed: {report.summary.result}");
-                return false;
-            }
-        }
-
-        public static bool BuildMac(string[] scenes)
-        {
-            if (!BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX))
-            {
-                AppendLog("[SKIP] Mac build target (StandaloneOSX) is not installed on this Editor instance.");
-                return true;
+                AppendLog($"[PASS] {label} build succeeded: {path} ({report.summary.totalSize} bytes)");
+                return BuildOutcome.Succeeded;
             }
 
-            string path = "Builds/Mac/ASHFALL.app";
-            EnsureDirectoryForFile(path);
-
-            var report = BuildPipeline.BuildPlayer(scenes, path, BuildTarget.StandaloneOSX, BuildOptions.None);
-            if (report.summary.result == UnityEditor.Build.Reporting.BuildResult.Succeeded)
-            {
-                AppendLog($"[PASS] Mac build succeeded: {path} ({report.summary.totalSize} bytes)");
-                return true;
-            }
-            else
-            {
-                AppendLog($"[FAIL] Mac build failed: {report.summary.result}");
-                return false;
-            }
+            AppendLog($"[FAIL] {label} build failed: {report.summary.result}");
+            return BuildOutcome.Failed;
         }
 
         private static string[] GetBuildScenes()
