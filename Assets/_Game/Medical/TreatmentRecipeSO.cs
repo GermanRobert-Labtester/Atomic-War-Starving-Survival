@@ -42,5 +42,8 @@ namespace AtomicWar._Game.Medical
 
         [Tooltip("If true, treatment only halts progression (does not remove affliction).")]
         public bool haltOnly;
+
+        [Tooltip("Surgical procedure: Steady Hands shortens time and suppresses accidental Bleeding.")]
+        public bool isSurgical;
     }
 }

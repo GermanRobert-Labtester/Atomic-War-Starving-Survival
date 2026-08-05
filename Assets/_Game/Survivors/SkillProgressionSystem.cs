@@ -82,6 +82,7 @@ namespace AtomicWar._Game.Survivors
             RegisterCombatPerks();
             RegisterSurvivalPerks();
             RegisterShelterPerks();
+            RegisterMedicalPerks();
         }
 
         /// <summary>
@@ -128,6 +129,23 @@ namespace AtomicWar._Game.Survivors
             RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.ScrapperId, "Scrapper", "crafting", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.SandhogId, "The Sandhog", "crafting", milestoneOnly, 0.05f, false));
             RegisterPerk(MakeRuntimePerk(ShelterPerkSystem.ThermodynamicsId, "Thermodynamics", "science", milestoneOnly, 0.05f, false));
+        }
+
+        /// <summary>
+        /// Milestone medical perks (Prompts #201–#205). xpThreshold is unreachable via
+        /// action XP — granted only through <see cref="TryGrantPerk"/>.
+        /// Replaces the old XP-threshold Steady Hands entry with the milestone version.
+        /// </summary>
+        public void RegisterMedicalPerks()
+        {
+            const float milestoneOnly = 999999f;
+            // Supersedes the XP-threshold perk_steady_hands registered in RegisterDefaultPerks.
+            // Milestone awards are not expert-track gated (any medic can earn via Phase-2 cures).
+            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.SteadyHandsId, "Steady Hands", "medical", milestoneOnly, 0.20f, false));
+            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.TriageUnderFireId, "Triage Under Fire", "medical", milestoneOnly, 0.10f, false));
+            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.RadiologistId, "Radiologist", "medical", milestoneOnly, 0.05f, false));
+            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.AnatomistId, "Anatomist", "medical", milestoneOnly, 0.10f, false));
+            RegisterPerk(MakeRuntimePerk(MedicalPerkSystem.ParamedicId, "Paramedic", "medical", milestoneOnly, 0.10f, false));
         }
 
         /// <summary>

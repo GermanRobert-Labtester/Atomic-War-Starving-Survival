@@ -59,6 +59,9 @@ namespace AtomicWar._Game.Medical
         private readonly Dictionary<string, TreatmentRecipeSO> _treatments = new Dictionary<string, TreatmentRecipeSO>();
         private readonly Dictionary<string, List<ActiveAffliction>> _bySurvivor =
             new Dictionary<string, List<ActiveAffliction>>();
+        private MedicalPerkSystem _medicalPerks;
+        private System.Random _surgeryRng;
+        private Func<string, Survivor> _findSurvivor;
 
         public event Action<Survivor, ActiveAffliction> OnAfflictionGained;
         public event Action<Survivor, ActiveAffliction> OnAfflictionCured;
@@ -76,7 +79,24 @@ namespace AtomicWar._Game.Medical
         /// Host hook: returns the current campaign day. Injected by GameBootstrap.
         /// </summary>
         public System.Func<int> GetCurrentDay;
+
+        /// <summary>
+        /// Host hook: true while a HatchBreach raid window is active (Prompt #202).
+        /// </summary>
+        public System.Func<bool> IsRaidWindowActive;
+
         public event Action OnMedicalStateChanged;
+
+        /// <summary>Optional medical milestone perks (#201–#205).</summary>
+        public void BindMedicalPerks(
+            MedicalPerkSystem perks,
+            Func<string, Survivor> findSurvivor = null,
+            System.Random surgeryRng = null)
+        {
+            _medicalPerks = perks;
+            _findSurvivor = findSurvivor;
+            _surgeryRng = surgeryRng;
+        }
 
         public MedicalSystem(
             NeedsSystem needs,
@@ -261,7 +281,11 @@ namespace AtomicWar._Game.Medical
         /// Emergency field care: consume one halt item (e.g. bandage) and freeze
         /// progression on matching afflictions. Does not fully cure.
         /// </summary>
-        public bool TryEmergencyHalt(Survivor patient, string itemId, ItemDefinition itemDef = null)
+        public bool TryEmergencyHalt(
+            Survivor patient,
+            string itemId,
+            ItemDefinition itemDef = null,
+            Survivor medic = null)
         {
             if (patient == null || !patient.IsAlive || string.IsNullOrEmpty(itemId)) return false;
             if (!_bySurvivor.TryGetValue(patient.Id, out var list) || list.Count == 0) return false;
@@ -295,7 +319,19 @@ namespace AtomicWar._Game.Medical
                 a.ProgressionHalted = true;
                 a.IsTreating = false;
                 a.TreatmentHoursRemaining = 0f;
+                if (medic != null)
+                    a.TreatingMedicId = medic.Id;
                 OnProgressionHalted?.Invoke(patient, a);
+            }
+
+            // Prompt #202 — bandage during hatch-breach raid window.
+            if (medic != null
+                && string.Equals(itemId, MedicalPerkSystem.BandageItemId, StringComparison.OrdinalIgnoreCase)
+                && IsRaidWindowActive != null
+                && IsRaidWindowActive())
+            {
+                int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+                _medicalPerks?.RecordBandageDuringRaid(medic, raidActive: true, day);
             }
 
             OnMedicalStateChanged?.Invoke();
@@ -334,10 +370,11 @@ namespace AtomicWar._Game.Medical
             if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup))
                 return false;
 
+            int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+
             // Notify host (AddictionSystem) of consumed treatment items
             if (OnTreatmentItemConsumed != null && recipe.ingredients != null)
             {
-                int day = GetCurrentDay != null ? GetCurrentDay() : 0;
                 for (int i = 0; i < recipe.ingredients.Count; i++)
                 {
                     var ing = recipe.ingredients[i];
@@ -348,16 +385,24 @@ namespace AtomicWar._Game.Medical
                 }
             }
 
-            float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill, medic);
+            float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill, medic, _medicalPerks);
             target.IsTreating = true;
             target.ProgressionHalted = true; // treatment freezes progression
             target.TreatmentHoursRemaining = hours;
             target.ActiveTreatmentRecipeId = recipe.id;
+            target.TreatingMedicId = medic.Id;
 
             if (recipe.requiresPatientRest)
             {
                 patient.State = SurvivorState.Resting;
             }
+
+            // Prompt #203 — treating Manifest radiation sickness earns Radiologist.
+            _medicalPerks?.RecordManifestRadiationTreatment(medic, patient, day);
+
+            // Prompt #202 — bandaging during an active hatch-breach raid window.
+            if (IsBandageAction(recipe) && IsRaidWindowActive != null && IsRaidWindowActive())
+                _medicalPerks?.RecordBandageDuringRaid(medic, raidActive: true, day);
 
             OnMedicalStateChanged?.Invoke();
             return true;
@@ -532,7 +577,11 @@ namespace AtomicWar._Game.Medical
             return mod != null && mod.IsOperational;
         }
 
-        public static float ComputeTreatmentHours(TreatmentRecipeSO recipe, float medicalSkill, Survivor medic = null)
+        public static float ComputeTreatmentHours(
+            TreatmentRecipeSO recipe,
+            float medicalSkill,
+            Survivor medic = null,
+            MedicalPerkSystem medicalPerks = null)
         {
             if (recipe == null) return 1f;
             float skill = Mathf.Clamp01(medicalSkill);
@@ -557,6 +606,11 @@ namespace AtomicWar._Game.Medical
                     }
                 }
             }
+
+            // Prompt #201 — Steady Hands: surgical actions take 30% less time.
+            if (recipe.isSurgical && medicalPerks != null && medic != null)
+                hours *= medicalPerks.GetSurgeryDurationMultiplier(medic);
+
             return hours;
         }
 
@@ -585,6 +639,7 @@ namespace AtomicWar._Game.Medical
                         IsTreating = a.IsTreating,
                         TreatmentHoursRemaining = a.TreatmentHoursRemaining,
                         ActiveTreatmentRecipeId = a.ActiveTreatmentRecipeId,
+                        TreatingMedicId = a.TreatingMedicId,
                         HoursSinceLastCare = a.HoursSinceLastCare
                     };
                 }
@@ -617,6 +672,7 @@ namespace AtomicWar._Game.Medical
                         IsTreating = a.IsTreating,
                         TreatmentHoursRemaining = a.TreatmentHoursRemaining,
                         ActiveTreatmentRecipeId = a.ActiveTreatmentRecipeId,
+                        TreatingMedicId = a.TreatingMedicId,
                         HoursSinceLastCare = a.HoursSinceLastCare
                     });
                 }
@@ -719,6 +775,7 @@ namespace AtomicWar._Game.Medical
             r.requiresMedicalBed = true;
             r.requiresPatientRest = true;
             r.haltOnly = false;
+            r.isSurgical = true;
             r.healthRestoreOnCure = 25f;
             r.ingredients = new List<TreatmentIngredient>
             {
@@ -778,6 +835,9 @@ namespace AtomicWar._Game.Medical
             if (!string.IsNullOrEmpty(active.ActiveTreatmentRecipeId))
                 _treatments.TryGetValue(active.ActiveTreatmentRecipeId, out recipe);
 
+            Survivor medic = ResolveMedic(active.TreatingMedicId);
+            int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+
             active.IsTreating = false;
             active.TreatmentHoursRemaining = 0f;
 
@@ -794,6 +854,11 @@ namespace AtomicWar._Game.Medical
 
             EvaluateDisabilityForLongAffliction(survivor, active);
             float restore = recipe != null ? recipe.healthRestoreOnCure : 10f;
+            string curedId = active.AfflictionId;
+            AfflictionPhase phase = AfflictionPhase.Phase1;
+            if (_afflictions.TryGetValue(curedId, out var curedDef))
+                phase = curedDef.phase;
+
             list.Remove(active);
             if (restore > 0f)
                 _needs.Modify(survivor, NeedKind.Health, restore);
@@ -801,8 +866,51 @@ namespace AtomicWar._Game.Medical
             if (list.Count == 0 && survivor.State == SurvivorState.Sick)
                 survivor.State = SurvivorState.Idle;
 
+            // Prompt #201 — Phase-2 cures credit the treating medic toward Steady Hands.
+            if (medic != null)
+            {
+                _medicalPerks?.RecordPhase2Cure(
+                    medic, curedId, phase == AfflictionPhase.Phase2, day);
+
+                // Prompt #205 — curing Coma earns Paramedic.
+                if (string.Equals(curedId, AfflictionSO.Ids.Coma, StringComparison.OrdinalIgnoreCase))
+                    _medicalPerks?.RecordComaRevive(medic, day);
+            }
+
+            // Prompt #201 — accidental Bleeding on surgical completion (0% with Steady Hands).
+            if (recipe != null && recipe.isSurgical && medic != null
+                && _medicalPerks != null
+                && _medicalPerks.RollSurgeryBleed(medic, _surgeryRng))
+            {
+                Inflict(survivor, AfflictionSO.Ids.Bleeding);
+            }
+
             OnAfflictionCured?.Invoke(survivor, active);
             OnMedicalStateChanged?.Invoke();
+        }
+
+        private Survivor ResolveMedic(string medicId)
+        {
+            if (string.IsNullOrEmpty(medicId)) return null;
+            return _findSurvivor?.Invoke(medicId);
+        }
+
+        private static bool IsBandageAction(TreatmentRecipeSO recipe)
+        {
+            if (recipe == null) return false;
+            if (recipe.id != null
+                && recipe.id.IndexOf("bandage", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            if (recipe.ingredients == null) return false;
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                var ing = recipe.ingredients[i];
+                if (ing == null) continue;
+                string id = ing.ResolvedId;
+                if (string.Equals(id, MedicalPerkSystem.BandageItemId, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
         }
 
         private void ProgressAffliction(

@@ -15,6 +15,8 @@ namespace AtomicWar._Game.Medical
         public bool IsTreating;
         public float TreatmentHoursRemaining;
         public string ActiveTreatmentRecipeId;
+        /// <summary>Survivor id of the medic who started the active treatment (perk credit).</summary>
+        public string TreatingMedicId;
         /// <summary>
         /// Hours since last Caregive (coma). Starts at 0 on inflict;
         /// MedicalSystem kills via neglect when this exceeds CareIntervalHours.
@@ -33,6 +35,7 @@ namespace AtomicWar._Game.Medical
                 IsTreating = false,
                 TreatmentHoursRemaining = 0f,
                 ActiveTreatmentRecipeId = null,
+                TreatingMedicId = null,
                 HoursSinceLastCare = 0f
             };
         }
@@ -48,6 +51,7 @@ namespace AtomicWar._Game.Medical
         public bool IsTreating;
         public float TreatmentHoursRemaining;
         public string ActiveTreatmentRecipeId;
+        public string TreatingMedicId;
         public float HoursSinceLastCare;
     }
 
