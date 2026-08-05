@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Medical
 {
@@ -51,6 +52,8 @@ namespace AtomicWar._Game.Medical
 
         private Func<string, Survivors.Survivor> _findSurvivor;
         private Action<Survivors.Survivor, string> _inflictAffliction;
+        private MedicalPerkSystem _medicalPerks;
+        private Func<int> _getDay;
 
         // -- Events --
         public event Action<Survivors.Survivor, Survivors.Survivor> OnAmputationPerformed; // patient, surgeon
@@ -66,6 +69,13 @@ namespace AtomicWar._Game.Medical
         {
             _findSurvivor = findSurvivor;
             _inflictAffliction = inflictAffliction;
+        }
+
+        /// <summary>Optional medical milestone perks (#204 Anatomist).</summary>
+        public void BindMedicalPerks(MedicalPerkSystem perks, Func<int> getDay = null)
+        {
+            _medicalPerks = perks;
+            _getDay = getDay;
         }
 
         /// <summary>Whether the survivor has the Amputee disability.</summary>
@@ -124,12 +134,17 @@ namespace AtomicWar._Game.Medical
             if (!patient.HasDisability(AmputeeDisabilityId))
                 patient.DisabilityIds.Add(AmputeeDisabilityId);
 
+            // Prompt #204 — Anatomist: clean amputations (0% PhantomPain).
+            int day = _getDay != null ? _getDay() : 0;
+            _medicalPerks?.RecordAmputation(surgeon, patient, day);
+
             OnAmputationPerformed?.Invoke(patient, surgeon);
             return true;
         }
 
         /// <summary>
         /// Roll for PhantomPain episode on all amputees daily.
+        /// Anatomist patients: 0% chance (Prompt #204).
         /// </summary>
         public void TickDaily(IReadOnlyList<Survivors.Survivor> survivors)
         {
@@ -140,12 +155,13 @@ namespace AtomicWar._Game.Medical
                 var sv = _findSurvivor?.Invoke(id);
                 if (sv == null || !sv.IsAlive) continue;
 
-                // Phantom pain only fires if they have the affliction active.
-                bool hasPain = false;
-                // Check via injected affliction checker (handled externally).
+                float chance = _medicalPerks != null
+                    ? _medicalPerks.GetPhantomPainDailyChance(id)
+                    : PhantomPainDailyChance;
+                if (chance <= 0f) continue;
 
                 // Daily roll.
-                if (UnityEngine.Random.value < PhantomPainDailyChance)
+                if (UnityEngine.Random.value < chance)
                 {
                     sv.Needs.Fatigue = Mathf.Clamp(
                         sv.Needs.Fatigue + PhantomPainFatigueSpike, 0f, 100f);
