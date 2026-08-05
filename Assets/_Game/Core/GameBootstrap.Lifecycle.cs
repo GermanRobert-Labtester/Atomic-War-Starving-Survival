@@ -100,7 +100,7 @@ namespace AtomicWar._Game.Core
             // Push environment data to HUD every frame
             if (_hud != null)
             {
-                string weatherName = WeatherSystem.Current.ToString();
+                string weatherName = GetWeatherDisplayName(WeatherSystem.Current);
                 string seasonName = TemperatureSystem.CurrentSeason?.displayName ?? "Nuclear Winter";
                 _hud.Tick(TimeSystem.CurrentDay, TimeSystem.CurrentHourFloat, weatherName, seasonName, TimeSystem.TimeScale);
                 _hud.OnShelterUpdated(Shelter);
@@ -109,6 +109,27 @@ namespace AtomicWar._Game.Core
                 // Internal Horror status strip (corpses / fire / coma / rust).
                 RefreshInternalHorrorHud();
             }
+        }
+
+        private WeatherKind _cachedWeatherKind;
+        private string _cachedWeatherName;
+
+        /// <summary>
+        /// Enum-to-label lookup for the HUD's weather strip.
+        /// <c>Enum.ToString()</c> allocates a fresh string on every call, and
+        /// this sits in <see cref="Update"/>, so it was producing one dead
+        /// string per rendered frame. Weather changes at most a few times per
+        /// in-game day, so caching the last result removes the allocation
+        /// entirely without changing what the player sees.
+        /// </summary>
+        private string GetWeatherDisplayName(WeatherKind kind)
+        {
+            if (_cachedWeatherName == null || _cachedWeatherKind != kind)
+            {
+                _cachedWeatherKind = kind;
+                _cachedWeatherName = kind.ToString();
+            }
+            return _cachedWeatherName;
         }
 
         /// <summary>

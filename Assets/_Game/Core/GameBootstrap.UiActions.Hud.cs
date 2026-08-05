@@ -23,7 +23,17 @@ namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
     {
+        /// <summary>
+        /// Rooms burning as of the current frame. Reused by
+        /// <see cref="RefreshInternalHorrorHud"/>, which runs per frame.
+        /// </summary>
+        private readonly HashSet<string> _liveFireRooms = new HashSet<string>();
 
+        /// <summary>
+        /// Cached predicate for pruning <c>_fireAlertShownRooms</c>. Captures
+        /// only <c>this</c>, so it is allocated once instead of once per frame.
+        /// </summary>
+        private Predicate<string> _fireRoomNoLongerBurning;
 
         private void RefreshMapKnowledgeHUD()
         {
@@ -66,17 +76,25 @@ namespace AtomicWar._Game.Core
             // Auto-open fire panel once per room when a new blaze starts.
             if (snap?.Fires != null)
             {
-                var live = new HashSet<string>();
+                // This runs every frame, so the live-room set and the RemoveWhere
+                // predicate are both reused: allocating a HashSet plus a
+                // capturing closure per frame was pure garbage in the common
+                // case of zero fires.
+                _liveFireRooms.Clear();
                 for (int i = 0; i < snap.Fires.Length; i++)
                 {
                     var f = snap.Fires[i];
                     if (f == null || !f.IsOnFire || string.IsNullOrEmpty(f.RoomId)) continue;
-                    live.Add(f.RoomId);
+                    _liveFireRooms.Add(f.RoomId);
                     if (_fireAlertShownRooms.Add(f.RoomId) && !horror.IsFirePanelOpen)
                         horror.OpenFirePanel(f.RoomId);
                 }
                 // Drop rooms that are no longer on fire so a re-ignition re-prompts.
-                _fireAlertShownRooms.RemoveWhere(id => !live.Contains(id));
+                if (_fireAlertShownRooms.Count > 0)
+                {
+                    _fireRoomNoLongerBurning ??= id => !_liveFireRooms.Contains(id);
+                    _fireAlertShownRooms.RemoveWhere(_fireRoomNoLongerBurning);
+                }
             }
             else
             {

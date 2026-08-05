@@ -152,6 +152,34 @@ namespace AtomicWar._Game.Core
         /// Push RadioTunerSystem.State (signal, tuned label, lock progress) onto
         /// the intercept strip so StatusLine / TunerLine stay live each frame.
         /// </summary>
+        // Cached dial label for the per-frame radio strip push. Keyed on the
+        // tuned frequency asset plus its intercept tag, both of which only
+        // change when the player retunes.
+        private RadioFrequencySO _cachedDialFreq;
+        private string _cachedDialTag;
+        private string _cachedDialLabel;
+
+        /// <summary>
+        /// Build the tuned-frequency label shown on the intercept strip:
+        /// display name if the asset has one, else the frequency in MHz, else
+        /// the raw id -- with the intercept channel tag appended when it is not
+        /// already part of the label.
+        /// </summary>
+        private static string ComposeDialLabel(RadioFrequencySO freq, float mhz, string tag)
+        {
+            string label;
+            if (!string.IsNullOrEmpty(freq.displayName))
+                label = freq.displayName;
+            else if (mhz > 0f)
+                label = $"{mhz:0.#} MHz";
+            else
+                label = freq.id ?? string.Empty;
+
+            if (!string.IsNullOrEmpty(tag) && !label.Contains(tag))
+                label = $"{label} · {tag}";
+            return label;
+        }
+
         public void PushRadioLiveStateToHud()
         {
             if (_hud == null || RadioTunerSystem == null) return;
@@ -175,17 +203,20 @@ namespace AtomicWar._Game.Core
             if (freq != null)
             {
                 mhz = freq.frequencyMHz;
-                if (!string.IsNullOrEmpty(freq.displayName))
-                    label = freq.displayName;
-                else if (mhz > 0f)
-                    label = $"{mhz:0.#} MHz";
-                else
-                    label = freq.id ?? string.Empty;
 
-                // Append intercept channel tag when present (matches dial labels).
-                string tag = freq.ResolveInterceptChannelTag();
-                if (!string.IsNullOrEmpty(tag) && !label.Contains(tag))
-                    label = $"{label} · {tag}";
+                // This method runs every frame, but the dial label only changes
+                // when the player retunes. Composing it unconditionally meant a
+                // string interpolation -- one dead string per frame -- for a
+                // label that is almost always identical to the last one.
+                string tag = freq.ResolveInterceptChannelTag() ?? string.Empty;
+                if (!ReferenceEquals(_cachedDialFreq, freq)
+                    || !string.Equals(_cachedDialTag, tag, StringComparison.Ordinal))
+                {
+                    _cachedDialFreq = freq;
+                    _cachedDialTag = tag;
+                    _cachedDialLabel = ComposeDialLabel(freq, mhz, tag);
+                }
+                label = _cachedDialLabel;
             }
 
             strip.SetLiveRadioState(

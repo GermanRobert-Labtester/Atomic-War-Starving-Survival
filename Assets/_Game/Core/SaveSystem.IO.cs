@@ -37,27 +37,37 @@ namespace AtomicWar._Game.Core
 
                 Directory.CreateDirectory(_savesDir);
 
-                // A-1: Atomic save write. Write to a temp file, flush, then
-                // rename over the destination. On Windows, File.Move with
-                // overwrite:true is atomic. If the process crashes during the
-                // write, the temp file is left partial but the previous save
-                // remains intact. We also keep a .bak of the previous save.
+                // A-1: Atomic save write. Write to a temp file, then rename over
+                // the destination. If the process dies during the write, the temp
+                // file is left partial but the previous save remains intact. We
+                // also keep a .bak of the previous save.
                 string finalPath = SlotPath(slotId);
                 string tmpPath = finalPath + ".tmp";
                 string bakPath = finalPath + ".bak";
 
                 File.WriteAllText(tmpPath, finalJson);
 
-                // Keep a backup of the previous save (if it exists).
                 if (File.Exists(finalPath))
                 {
-                    if (File.Exists(bakPath)) File.Delete(bakPath);
-                    File.Copy(finalPath, bakPath);
-                    File.Delete(finalPath);
+                    // Single atomic replace that also rotates the previous save
+                    // into .bak. The previous implementation deleted the .bak,
+                    // copied final -> .bak, deleted final, and only then moved
+                    // tmp into place -- so there was a window in which the slot
+                    // did not exist at all, despite the comment claiming the
+                    // sequence was atomic. A crash inside that window cost the
+                    // main save and forced a .bak recovery on the next load.
+                    //
+                    // File.Replace is used rather than the three-argument
+                    // File.Move: the overwrite overload is .NET Core 3.0+, and
+                    // this project targets the .NET Standard 2.1 profile
+                    // (apiCompatibilityLevel 6), where it does not exist.
+                    File.Replace(tmpPath, finalPath, bakPath);
                 }
-
-                // Atomic rename: tmp → final
-                File.Move(tmpPath, finalPath);
+                else
+                {
+                    // First save into this slot: nothing to replace or back up.
+                    File.Move(tmpPath, finalPath);
+                }
 
                 Debug.Log($"[SaveSystem] Saved to slot '{slotId}' (atomic write + .bak backup).");
                 return true;
@@ -105,6 +115,22 @@ namespace AtomicWar._Game.Core
                         Debug.LogError($"[SaveSystem] Slot '{slotId}' corrupt and no backup available. Load aborted.");
                         return false;
                     }
+                }
+
+                // Forward compatibility: a save written by a newer build can
+                // contain fields and semantics this build has no migration for.
+                // Restoring it anyway silently produced a half-initialised world
+                // that the next autosave would then write back over the player's
+                // good save. Refuse instead -- a readable error beats silent
+                // corruption, and the file is left untouched for a newer build.
+                if (data.SaveVersion > CurrentSaveVersion)
+                {
+                    Debug.LogError(
+                        $"[SaveSystem] Slot '{slotId}' was written by a newer build " +
+                        $"(save version {data.SaveVersion}, this build supports up to " +
+                        $"{CurrentSaveVersion}). Refusing to load rather than restoring " +
+                        "partial state. Update the game to open this save.");
+                    return false;
                 }
 
                 if (data.SaveVersion < CurrentSaveVersion)
