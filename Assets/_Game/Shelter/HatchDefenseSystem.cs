@@ -112,8 +112,13 @@ namespace AtomicWar._Game.Shelter
         private float _noiseCheckAccumulator;
         private float _hoursSinceLastRaid = RaidCooldownHours;
         private float _raidHaltHoursRemaining;
+        /// <summary>Hours remaining in post-launch raid window (bandaging during breach).</summary>
+        private float _raidWindowHoursRemaining;
         private CombatPerkSystem _combatPerks;
         private PerimeterTrapSystem _perimeterTraps;
+
+        /// <summary>Default duration of the active-raid bandaging window after a launch.</summary>
+        public const float RaidWindowHours = 2f;
         /// <summary>
         /// Optional jam hook (Prompt #174/#182). Args: weaponId, clearTicks.
         /// Returns true if a jam started. Host binds WeaponMaintenanceSystem.
@@ -126,6 +131,13 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Prompt #184 — raider advance halted by suppressing fire (hours).</summary>
         public float RaidHaltHoursRemaining => _raidHaltHoursRemaining;
         public bool IsRaidHalted => _raidHaltHoursRemaining > 0f;
+
+        /// <summary>
+        /// Prompt #202 — true while a hatch raid window is open (launch through a short
+        /// aftermath). Bandaging during this window earns Triage Under Fire.
+        /// </summary>
+        public bool IsRaidWindowActive => _raidWindowHoursRemaining > 0f;
+        public float RaidWindowHoursRemaining => _raidWindowHoursRemaining;
 
         /// <summary>True when a diesel/generator is running outside the sealed hatch.</summary>
         public bool GeneratorRunningOutside { get; set; }
@@ -182,6 +194,19 @@ namespace AtomicWar._Game.Shelter
         {
             if (_raidHaltHoursRemaining <= 0f || gameHours <= 0f) return;
             _raidHaltHoursRemaining = Mathf.Max(0f, _raidHaltHoursRemaining - gameHours);
+        }
+
+        /// <summary>Advance active-raid bandaging window (call from host Tick).</summary>
+        public void TickRaidWindow(float gameHours)
+        {
+            if (_raidWindowHoursRemaining <= 0f || gameHours <= 0f) return;
+            _raidWindowHoursRemaining = Mathf.Max(0f, _raidWindowHoursRemaining - gameHours);
+        }
+
+        /// <summary>Test/host helper: open the raid bandaging window without resolving a raid.</summary>
+        public void OpenRaidWindow(float hours = RaidWindowHours)
+        {
+            _raidWindowHoursRemaining = Mathf.Max(_raidWindowHoursRemaining, Mathf.Max(0f, hours));
         }
 
         // -----------------------------------------------------------------
@@ -568,6 +593,8 @@ namespace AtomicWar._Game.Shelter
                 if (result.Breached) TotalBreaches++;
                 _hoursSinceLastRaid = 0f;
                 LastRaidSummary = BuildSummary(result);
+                // Prompt #202 — bandaging window while hatch-breach raid is "active".
+                _raidWindowHoursRemaining = Mathf.Max(_raidWindowHoursRemaining, RaidWindowHours);
             }
 
             OnRaidResolved?.Invoke(result);
@@ -899,6 +926,7 @@ namespace AtomicWar._Game.Shelter
             if (gameHours <= 0f) return null;
 
             TickRaidHalt(gameHours);
+            TickRaidWindow(gameHours);
             _hoursSinceLastRaid += gameHours;
             SyncGeneratorNoise(power);
 
@@ -1047,7 +1075,8 @@ namespace AtomicWar._Game.Shelter
                 LastDefenseScore = LastResolution != null ? LastResolution.DefenseScore : 0f,
                 LastRepelled = LastResolution != null && LastResolution.Repelled,
                 LastBreached = LastResolution != null && LastResolution.Breached,
-                RaidHaltHoursRemaining = _raidHaltHoursRemaining
+                RaidHaltHoursRemaining = _raidHaltHoursRemaining,
+                RaidWindowHoursRemaining = _raidWindowHoursRemaining
             };
         }
 
@@ -1064,6 +1093,7 @@ namespace AtomicWar._Game.Shelter
                 ? "Hatch quiet."
                 : save.LastRaidSummary;
             _raidHaltHoursRemaining = Mathf.Max(0f, save.RaidHaltHoursRemaining);
+            _raidWindowHoursRemaining = Mathf.Max(0f, save.RaidWindowHoursRemaining);
 
             if (save.LastRaidStrength > 0f || save.LastBreached || save.LastRepelled)
             {
@@ -1098,5 +1128,7 @@ namespace AtomicWar._Game.Shelter
         public bool LastBreached;
         /// <summary>Prompt #184 — suppressing-fire raid halt remaining hours.</summary>
         public float RaidHaltHoursRemaining;
+        /// <summary>Prompt #202 — active raid bandaging window remaining hours.</summary>
+        public float RaidWindowHoursRemaining;
     }
 }

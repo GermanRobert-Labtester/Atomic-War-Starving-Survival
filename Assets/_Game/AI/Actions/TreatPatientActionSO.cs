@@ -100,12 +100,17 @@ namespace AtomicWar._Game.AI.Actions
 
             if (patient == null || worst == null) return;
 
+            // Prompt #202 — mark medical action for uninterruptible triage.
+            context.MedicalPerks?.BeginMedicalAction(medic);
+            try
+            {
             // Prefer emergency halt item if available
             var defHalt = context.MedicalSystem.GetAfflictionDef(worst.AfflictionId);
             if (defHalt != null && !string.IsNullOrEmpty(defHalt.emergencyHaltItemId)
                 && !worst.ProgressionHalted)
             {
-                if (context.MedicalSystem.TryEmergencyHalt(patient, defHalt.emergencyHaltItemId))
+                if (context.MedicalSystem.TryEmergencyHalt(
+                        patient, defHalt.emergencyHaltItemId, medic: medic))
                     return;
             }
 
@@ -121,6 +126,11 @@ namespace AtomicWar._Game.AI.Actions
                 && context.MedicalSystem.CanCureMentalBreak(patient, context.MentalBreak, context.Shelter))
             {
                 context.MedicalSystem.TryCureMentalBreak(patient, context.MentalBreak, context.Shelter);
+            }
+            }
+            finally
+            {
+                context.MedicalPerks?.EndMedicalAction(medic);
             }
         }
 

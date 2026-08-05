@@ -163,6 +163,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Prompts #195–#200 — shelter-engineering perks.</summary>
         public ShelterPerkSystem ShelterPerks;
 
+        /// <summary>Prompts #201–#205 — medical milestone perks.</summary>
+        public MedicalPerkSystem MedicalPerks;
+
         /// <summary>Prompt #177 — triage board medication permissions.</summary>
         public TriageBoardSystem TriageSystem;
 
