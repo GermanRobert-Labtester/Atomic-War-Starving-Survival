@@ -79,6 +79,24 @@ namespace AtomicWar._Game.Core
                 drain *= 2f;
             }
 
+            // Prompt #222 — Juggernaut: no encumbrance stamina penalty.
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.IgnoresEncumbrance(exp.Survivor))
+            {
+                drain = BaseStaminaDrainPerHour * hours;
+                if (exp.Survivor.HasFullSuitEquipped)
+                    drain += 3f * hours;
+                if (exp.Survivor.HasDisability("limp"))
+                    drain *= 2f;
+            }
+
+            // Prompt #224 — Survivalist: 75% less stamina drain when alone on map.
+            if (_personalQuests != null && exp.Survivor != null)
+            {
+                bool alone = _activeExpeditions == null || _activeExpeditions.Count <= 1;
+                drain *= _personalQuests.GetAloneStaminaDrainMultiplier(exp.Survivor, alone);
+            }
+
             return drain;
         }
 
@@ -130,7 +148,25 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private void TryApplyForagerLoot(ExpeditionState exp)
         {
-            if (exp?.Survivor == null || _expeditionPerks == null) return;
+            if (exp?.Survivor == null) return;
+
+            // Prompt #223 — Apex Predator: 50 Meat on forest/swamp, no loot roll needed.
+            if (_personalQuests != null)
+            {
+                bool forestSwamp = IsForestOrSwampNode(exp.TargetLocationId);
+                int meat = _personalQuests.GetApexPredatorMeatYield(exp.Survivor, forestSwamp);
+                if (meat > 0)
+                {
+                    EnsureApexMeatItem();
+                    if (_apexMeat != null)
+                    {
+                        for (int i = 0; i < meat; i++)
+                            exp.TryAddLoot(_apexMeat);
+                    }
+                }
+            }
+
+            if (_expeditionPerks == null) return;
             if (exp.ForagerLootApplied) return;
 
             int existing = exp.CollectedLoot != null ? exp.CollectedLoot.Count : 0;
@@ -148,6 +184,35 @@ namespace AtomicWar._Game.Core
                     exp.TryAddLoot(item);
             }
             exp.ForagerLootApplied = true;
+        }
+
+        private bool IsForestOrSwampNode(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId) || _generatedMap == null) return false;
+            var node = _generatedMap.GetNode(nodeId);
+            if (node?.Tags == null) return false;
+            for (int i = 0; i < node.Tags.Count; i++)
+            {
+                string t = node.Tags[i];
+                if (string.Equals(t, ExpeditionPerkSystem.TagForest, StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(t, ExpeditionPerkSystem.TagSwamp, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
+        }
+
+        private void EnsureApexMeatItem()
+        {
+            if (_apexMeat != null) return;
+            _apexMeat = ScriptableObject.CreateInstance<ItemDefinition>();
+            _apexMeat.id = PersonalQuestSystem.MeatItemId;
+            _apexMeat.displayName = "Meat";
+            _apexMeat.description = "Field-dressed game. Heavy, honest calories.";
+            _apexMeat.type = ItemType.Food;
+            _apexMeat.weight = 0.5f;
+            _apexMeat.stackMax = 99;
+            _apexMeat.hungerRestore = 20f;
+            _apexMeat.tradeValue = 3f;
         }
 
         private void EnsureForagerFoodItems()
@@ -227,6 +292,13 @@ namespace AtomicWar._Game.Core
             float encounterChance = 0.25f + (exp.DangerLevel * 0.05f);
             if (exp.Stance == ExpeditionStance.Speed) encounterChance *= 1.4f;
             else if (exp.Stance == ExpeditionStance.Stealth) encounterChance *= 0.6f;
+
+            // Prompt #223 — Apex Predator: stealth permanently 100% (no random encounters).
+            if (_personalQuests != null && exp.Survivor != null
+                && _personalQuests.GetStealthFactor(exp.Survivor) >= 1f)
+            {
+                encounterChance = 0f;
+            }
 
             // Prompt #70 night risk; Prompt #209 Night Terror stealth at night.
             encounterChance *= NightScavengeSystem.GetEncounterRiskMultiplier(exp);
