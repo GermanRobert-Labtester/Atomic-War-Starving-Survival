@@ -49,6 +49,19 @@ namespace AtomicWar._Game.Radiation
 
         /// <summary>Fired whenever a survivor's current radiation dose changes.</summary>
         public event Action<Survivor, float> OnDoseChanged;
+
+        private PersonalQuestSystem _personalQuests;
+        private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+
+        /// <summary>Prompt #229/#234 — Synthesizer rad-away mult + Rad-Walker absorb cap.</summary>
+        public void BindPersonalQuests(
+            PersonalQuestSystem personalQuests,
+            System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> getSurvivors = null)
+        {
+            _personalQuests = personalQuests;
+            _getSurvivors = getSurvivors;
+        }
+
         /// <summary>Fired once when a survivor first gains a radiation-driven status.</summary>
         public event Action<Survivor, SurvivorStatus> OnStatusGained;
         /// <summary>Fired once when a timed radiation status (e.g. rad resistance) expires.</summary>
@@ -215,7 +228,10 @@ namespace AtomicWar._Game.Radiation
 
             if (radsPerHour != 0f)
             {
-                float delta = radsPerHour * hours;
+                float absorb = 1f;
+                if (_personalQuests != null)
+                    absorb = _personalQuests.GetRadiationAbsorbFactor(survivor);
+                float delta = radsPerHour * hours * absorb;
                 survivor.LifetimeRadiationExposure = Mathf.Max(0f, survivor.LifetimeRadiationExposure + delta);
                 survivor.RadiationDose = Mathf.Clamp(survivor.RadiationDose + delta, 0f, 100f);
                 OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
@@ -281,7 +297,10 @@ namespace AtomicWar._Game.Radiation
             {
                 return;
             }
-            survivor.RadiationDose = Mathf.Clamp(survivor.RadiationDose - radsRemoved, 0f, 100f);
+            float mult = 1f;
+            if (_personalQuests != null)
+                mult = _personalQuests.GetRadAwayEfficiencyMultiplier(_getSurvivors?.Invoke());
+            survivor.RadiationDose = Mathf.Clamp(survivor.RadiationDose - radsRemoved * mult, 0f, 100f);
             OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
         }
 

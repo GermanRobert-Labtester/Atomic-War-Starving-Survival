@@ -80,6 +80,24 @@ namespace AtomicWar._Game.Crafting
             return true;
         }
 
+        /// <summary>
+        /// Prompt #229 — Synthesizer crafts AntiRad from pure ChemicalScrap.
+        /// </summary>
+        public bool TryCraftAntiRadFromChemicalScrap(
+            Survivor crafter,
+            ItemDefinition chemicalScrap,
+            ItemDefinition antiRad)
+        {
+            if (crafter == null || !crafter.IsAlive) return false;
+            if (_personalQuests == null || !_personalQuests.CanCraftAntiRadFromChemicalScrap(crafter))
+                return false;
+            if (chemicalScrap == null || antiRad == null) return false;
+            if (_inventory.Count(chemicalScrap) < 1) return false;
+            if (!_inventory.Remove(chemicalScrap, 1)) return false;
+            _inventory.Add(antiRad, 1);
+            return true;
+        }
+
         /// <summary>Number of crafts currently in progress.</summary>
         public int ActiveCraftCount => _active.Count;
 
