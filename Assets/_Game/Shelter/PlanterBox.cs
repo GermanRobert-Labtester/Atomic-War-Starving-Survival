@@ -55,12 +55,22 @@ namespace AtomicWar._Game.Shelter
         /// Using clean water maintains growth.
         /// Using dirty water introduces room mold (#20) and ruins the crop (changes to Dead).
         /// </summary>
-        public bool Water(bool isCleanWater, ShelterRoom room = null)
+        public bool Water(
+            bool isCleanWater,
+            ShelterRoom room = null,
+            PersonalQuestSystem personalQuests = null,
+            System.Collections.Generic.IReadOnlyList<Survivor> survivors = null)
         {
             if (ActiveCrop == null || Stage == CropLifecycleStage.Dead) return false;
 
             if (!isCleanWater)
             {
+                // Prompt #230 — Gaia: crops never catch mold from dirty water.
+                if (personalQuests != null && personalQuests.CropsImmuneToMold(survivors))
+                {
+                    HasWater = true;
+                    return true;
+                }
                 // Dirty water ruins crop and causes room mold infestation
                 if (room != null)
                 {
@@ -141,10 +151,14 @@ namespace AtomicWar._Game.Shelter
             IReadOnlyList<Survivor> survivors,
             SurvivalPerkSystem survivalPerks,
             System.Random rng = null,
-            float chance = ToxicSporeBaseChance)
+            float chance = ToxicSporeBaseChance,
+            PersonalQuestSystem personalQuests = null)
         {
             if (ActiveCrop == null || Stage == CropLifecycleStage.Dead) return false;
             if (survivalPerks != null && survivalPerks.PreventsToxicSporeEvent(survivors))
+                return false;
+            // Prompt #230 — Gaia: crops never catch mold/spores.
+            if (personalQuests != null && personalQuests.CropsImmuneToMold(survivors))
                 return false;
 
             rng ??= new System.Random();
@@ -178,12 +192,19 @@ namespace AtomicWar._Game.Shelter
             out float contamination,
             Survivor harvester = null,
             SurvivalPerkSystem survivalPerks = null,
-            int currentDay = 0)
+            int currentDay = 0,
+            PersonalQuestSystem personalQuests = null)
         {
             if (Stage == CropLifecycleStage.Mature && ActiveCrop != null)
             {
                 calories = ActiveCrop.CalorieYield;
                 contamination = ActiveCrop.ContaminationYield;
+                // Prompt #230 — Gaia: 3x food yield.
+                if (personalQuests != null && harvester != null)
+                {
+                    int mult = personalQuests.GetCropYieldMultiplier(harvester);
+                    if (mult > 1) calories *= mult;
+                }
 
                 // Prompt #194 — Mycology: refuse harvest of visibly toxic fungi
                 if (harvester != null && survivalPerks != null
