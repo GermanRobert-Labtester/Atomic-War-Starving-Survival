@@ -21,7 +21,9 @@ namespace AtomicWar._Game.Crafting
         private readonly List<CraftingStation> _stations = new List<CraftingStation>();
         private readonly List<ActiveCraft> _active = new List<ActiveCraft>();
         private SurvivalPerkSystem _survivalPerks;
+        private PersonalQuestSystem _personalQuests;
         private Func<int> _getDay;
+        private System.Random _rng = new System.Random(42);
 
         /// <summary>When true, Tick advances no crafts (game paused).</summary>
         public bool IsPaused { get; set; }
@@ -43,6 +45,39 @@ namespace AtomicWar._Game.Crafting
         {
             _survivalPerks = perks;
             _getDay = getDay ?? (() => 0);
+        }
+
+        /// <summary>Prompt #216 — Alchemist double yield + mold antibiotics.</summary>
+        public void BindPersonalQuests(PersonalQuestSystem personalQuests, System.Random rng = null)
+        {
+            _personalQuests = personalQuests;
+            if (rng != null) _rng = rng;
+        }
+
+        /// <summary>
+        /// Prompt #216 — Alchemist can craft antibiotics from mold + dirty water
+        /// even without a formal recipe (host supplies item defs).
+        /// </summary>
+        public bool TryCraftAntibioticsFromMold(
+            Survivor crafter,
+            ItemDefinition mold,
+            ItemDefinition dirtyWater,
+            ItemDefinition antibiotics)
+        {
+            if (crafter == null || !crafter.IsAlive) return false;
+            if (_personalQuests == null || !_personalQuests.CanCraftAntibioticsFromMold(crafter))
+                return false;
+            if (mold == null || dirtyWater == null || antibiotics == null) return false;
+            if (_inventory.Count(mold) < 1 || _inventory.Count(dirtyWater) < 1) return false;
+            if (!_inventory.Remove(mold, 1)) return false;
+            if (!_inventory.Remove(dirtyWater, 1))
+            {
+                _inventory.Add(mold, 1);
+                return false;
+            }
+            int amount = _personalQuests.ApplyAlchemistYield(crafter, 1, _rng);
+            _inventory.Add(antibiotics, amount);
+            return true;
         }
 
         /// <summary>Number of crafts currently in progress.</summary>
@@ -213,6 +248,13 @@ namespace AtomicWar._Game.Crafting
                 {
                     result = CreateHighYieldItem(result, resolvedId);
                 }
+            }
+
+            // Prompt #216 — Alchemist: 30% chance to double med craft yield.
+            if (result != null && amount > 0 && crafter != null && _personalQuests != null
+                && IsMedicalCraftResult(recipe))
+            {
+                amount = _personalQuests.ApplyAlchemistYield(crafter, amount, _rng);
             }
 
             if (result != null && amount > 0)
