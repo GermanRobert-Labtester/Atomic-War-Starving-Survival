@@ -3,7 +3,7 @@ using System;
 namespace AtomicWar._Game.Core
 {
     [Serializable]
-    public class SinkholeState
+    public class FoundationSinkholeState
     {
         public string eventId;
         public int minLateralRooms = 8;
@@ -12,17 +12,17 @@ namespace AtomicWar._Game.Core
         public string collapsedRoomId = string.Empty;
     }
 
-    public class SinkholeSystem
+    public class FoundationSinkholeSystem
     {
-        private readonly SinkholeState _state;
+        private readonly FoundationSinkholeState _state;
 
-        public SinkholeState State => _state;
+        public FoundationSinkholeState State => _state;
 
         public event Action<string, string> OnCollapseTriggered;  // eventId, collapsedRoomId
 
-        public SinkholeSystem(string eventId)
+        public FoundationSinkholeSystem(string eventId)
         {
-            _state = new SinkholeState
+            _state = new FoundationSinkholeState
             {
                 eventId = eventId,
                 minLateralRooms = 8,
