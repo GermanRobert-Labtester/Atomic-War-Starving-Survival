@@ -28,6 +28,16 @@ namespace AtomicWar._Game.Shelter
         public event Action<string> OnRoomFlooded;
         public event Action<string> OnRoomDrained;
 
+        /// <summary>
+        /// Force a room flooded (Prompt #859 legacy start). Idempotent.
+        /// </summary>
+        public void ForceFlood(string roomId)
+        {
+            if (string.IsNullOrEmpty(roomId)) return;
+            if (_floodedRooms.Add(roomId))
+                OnRoomFlooded?.Invoke(roomId);
+        }
+
         /// <summary>Inject a seeded RNG for deterministic save/load replay (audit bugfix #1).</summary>
         public void SetRng(System.Random rng) => _rng = rng ?? new System.Random(120);
 

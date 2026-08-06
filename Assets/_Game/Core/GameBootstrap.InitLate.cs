@@ -105,6 +105,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetPheromoneMaskingSystem(PheromoneMasking);
             SaveSystem.SetChemToleranceSystem(ChemTolerance);
             SaveSystem.SetLastWillSystem(LastWill);
+            SaveSystem.SetLegacyStartSystem(LegacyStart);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);

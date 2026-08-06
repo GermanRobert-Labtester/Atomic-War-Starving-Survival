@@ -382,8 +382,9 @@ namespace AtomicWar._Game.Core
                 // Chem abuse bookkeeping (ticks only on treatment item consume):
                 "blood_toxicity",
                 "tolerance",
-                // Rogue-lite grave (fires on wipe) + river crossings (travel events):
+                // Rogue-lite grave (fires on wipe) + legacy bunker start + river crossings:
                 "last_will",
+                "legacy_start",
                 "river_nodes",
                 // Infrastructure / AI / UI systems that are not hour-ticked:
                 "workbench", "utility_ai", "radio", "time", "save", "game_state",

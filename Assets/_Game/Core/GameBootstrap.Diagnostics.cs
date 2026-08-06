@@ -117,6 +117,7 @@ namespace AtomicWar._Game.Core
             { "PheromoneMasking",        new[] { "pheromone_masking" } },
             { "ChemTolerance",           new[] { "tolerance" } },
             { "LastWill",                new[] { "last_will" } },
+            { "LegacyStart",             new[] { "legacy_start" } },
             { "RiverNodeSystem",         new[] { "river_nodes" } },
             // Tactical / world systems
             { "DeadDropSystem",          new[] { "dead_drops" } },

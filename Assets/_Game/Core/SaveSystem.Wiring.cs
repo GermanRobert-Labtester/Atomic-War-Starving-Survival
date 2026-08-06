@@ -431,6 +431,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((LastWillSave)o));
 
+        /// <summary>Prompt #859 — legacy ruined-bunker start seeded from Last Will.</summary>
+        public void SetLegacyStartSystem(System_LegacyStart s) =>
+            RegisterSystem(ref _legacyStartSystem, s, "legacy_start",
+                () => s.CaptureState(),
+                o => s.RestoreState((LegacyStartState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",

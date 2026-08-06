@@ -151,6 +151,78 @@ namespace AtomicWar._Game.Core
                 diaryEntries: diaries,
                 remainingLootIds: loot,
                 causeOfDeath: cause);
+
+            // Prompt #859 — seed legacy-start payload so the next run can choose ruined bunker.
+            PrepareLegacyStartFromLastWill();
+        }
+
+        /// <summary>
+        /// Seed <see cref="LegacyStart"/> from the current Last Will grave using bunker room ids.
+        /// Does not activate the legacy run — call <see cref="TryBeginLegacyStart"/> for that.
+        /// </summary>
+        public bool PrepareLegacyStartFromLastWill()
+        {
+            if (LegacyStart == null || LastWill == null || !LastWill.HasGraveSite)
+                return false;
+
+            IList<string> rooms = null;
+            if (Shelter != null)
+            {
+                var ids = Shelter.GetRoomIds();
+                if (ids != null && ids.Count > 0)
+                    rooms = ids;
+            }
+
+            return LegacyStart.PrepareFromLastWill(
+                LastWill,
+                rooms,
+                previousSaveId: LastWill.CurrentGraveSite?.locationId ?? "grave_player_bunker");
+        }
+
+        /// <summary>
+        /// Activate Prompt #859 legacy start: flood ruined rooms, grant leftover loot,
+        /// and fire discovery events. Returns true when a legacy run was begun.
+        /// </summary>
+        public bool TryBeginLegacyStart()
+        {
+            if (LegacyStart == null) return false;
+
+            if (!LegacyStart.IsPrepared && LastWill != null && LastWill.HasGraveSite)
+                PrepareLegacyStartFromLastWill();
+
+            if (!LegacyStart.CheckAvailability())
+                return false;
+            if (LegacyStart.IsLegacyRunActive)
+                return true;
+
+            var lootIds = LegacyStart.BeginLegacyRun();
+
+            // Apply floods into the live flooding system.
+            if (FloodingSystem != null)
+            {
+                var ruined = LegacyStart.GetRuinedRooms();
+                for (int i = 0; i < ruined.Count; i++)
+                    FloodingSystem.ForceFlood(ruined[i]);
+            }
+
+            // Starting bonus: one of each remaining loot id from the prior wipe.
+            if (Inventory != null && lootIds != null && _itemCatalog != null)
+            {
+                for (int i = 0; i < lootIds.Count; i++)
+                {
+                    string id = lootIds[i];
+                    if (string.IsNullOrEmpty(id)) continue;
+                    var item = _itemCatalog.GetById(id);
+                    if (item != null)
+                        Inventory.Add(item, 1);
+                }
+            }
+
+            Debug.Log(
+                $"[GameBootstrap] LEGACY START active (prior day {LegacyStart.PriorDayOfDeath}, " +
+                $"cause={LegacyStart.CauseOfDeath}, rooms={LegacyStart.GetRuinedRooms().Count}, " +
+                $"corpses={LegacyStart.GetCorpseLocations().Count}).");
+            return true;
         }
 
         private void PushEndgameSummaryToHud(EndgameSummaryData summary)

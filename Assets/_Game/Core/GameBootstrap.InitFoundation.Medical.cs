@@ -80,6 +80,8 @@ namespace AtomicWar._Game.Core
             ChemTolerance = new System_Tolerance();
             // Rogue-lite grave site (populated on wipe; restored from save mid-run).
             LastWill = new LastWillSystem();
+            // Prompt #859 — ruined-bunker legacy start (seeded from Last Will on wipe).
+            LegacyStart = new System_LegacyStart();
         }
 
         private float GetPartyAverageLifetimeRadiation()
