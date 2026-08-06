@@ -210,6 +210,8 @@ namespace AtomicWar._Game.Core
         public System_EpilogueStats EpilogueStats { get; private set; }
         // Prompt #839 — bunker gossip: crime witness → rumor spread → affinity rot.
         public System_Gossip Gossip { get; private set; }
+        // Prompt #861 — cross-wipe warlord counters from dominant player strategies.
+        public System_AdaptiveWarlords AdaptiveWarlords { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

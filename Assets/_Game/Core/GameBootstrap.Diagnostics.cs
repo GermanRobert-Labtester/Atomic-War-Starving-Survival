@@ -142,6 +142,7 @@ namespace AtomicWar._Game.Core
             { "PhantomIntruders",        new[] { "phantom_intruders" } },
             { "BunkerSocial",            new[] { "bunker_social" } },
             { "Gossip",                  new[] { "gossip", "gossip_daily" } },
+            { "AdaptiveWarlords",        new[] { "adaptive_warlords" } },
             { "PersonalQuests",          new[] { "personal_quests", "personal_quests_daily", "personal_quests_morale" } },
             { "SocialPerks",             new[] { "social_perks", "social_perks_daily" } },
             { "CombatPerks",             new[] { "combat_perks" } },

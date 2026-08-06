@@ -95,9 +95,41 @@ namespace AtomicWar._Game.Core
             }
             TryRecordLastWillGrave(summary);
             TryGenerateEpilogue(summary);
+            // Prompt #861 — freeze top strategies into warlord counters for the next run.
+            FinalizeAdaptiveWarlordsForNextRun();
             // Halt TimeSystem by not ticking (Update already gates on Phase/IsGameOver).
             PushEndgameSummaryToHud(summary);
             Debug.Log($"[GameBootstrap] ENDGAME ({summary.State}): {summary.OutcomeTitle} — {summary.Reason}");
+        }
+
+        /// <summary>
+        /// Prompt #861 — rank strategies used this run and bake warlord gear counters.
+        /// </summary>
+        private void FinalizeAdaptiveWarlordsForNextRun()
+        {
+            if (AdaptiveWarlords == null) return;
+            AdaptiveWarlords.OnPlaythroughEnd();
+            string gear = AdaptiveWarlords.GetWarlordGear("standard");
+            if (!string.IsNullOrEmpty(gear) && gear != "standard")
+                Debug.Log($"[GameBootstrap] ADAPTIVE WARLORDS next-run gear: {gear}");
+        }
+
+        /// <summary>
+        /// Prompt #861 — record a dominant combat/defense strategy for warlord adaptation.
+        /// </summary>
+        public void RecordPlayerStrategy(string strategyId)
+        {
+            if (AdaptiveWarlords == null || string.IsNullOrEmpty(strategyId)) return;
+            AdaptiveWarlords.RecordStrategy(strategyId);
+        }
+
+        /// <summary>
+        /// Prompt #861 — warlord encounter gear string with active counter tags.
+        /// </summary>
+        public string GetWarlordEncounterGear(string baseGear = "standard")
+        {
+            if (AdaptiveWarlords == null) return string.IsNullOrEmpty(baseGear) ? "standard" : baseGear;
+            return AdaptiveWarlords.GetWarlordGear(baseGear);
         }
 
         /// <summary>

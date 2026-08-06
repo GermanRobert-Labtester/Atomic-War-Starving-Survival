@@ -109,6 +109,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBloodTypesSystem(BloodTypes);
             SaveSystem.SetEpilogueStatsSystem(EpilogueStats);
             SaveSystem.SetGossipSystem(Gossip);
+            SaveSystem.SetAdaptiveWarlordsSystem(AdaptiveWarlords);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
@@ -380,12 +381,35 @@ namespace AtomicWar._Game.Core
             HatchDefenseSystem?.BindCombatPerks(CombatPerks);
             HatchDefenseSystem?.BindPerimeterTraps(PerimeterTrapSystem);
             // Prompt #768 — epilogue bullet tally from hatch raids.
+            // Prompt #861 — heavy ammo spend counts as sniper/suppression strategy.
             if (HatchDefenseSystem != null)
             {
                 HatchDefenseSystem.OnRaidResolved += result =>
                 {
                     if (result.AmmoConsumed > 0)
                         EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
+                    if (result.AmmoConsumed >= 10)
+                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
+                };
+            }
+
+            // Prompt #861 — trap deployments → traps strategy; combat milestones → stealth/snipers.
+            if (PerimeterTrapSystem != null)
+            {
+                PerimeterTrapSystem.OnTrapDeployed += () =>
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
+            }
+            if (CombatPerks != null)
+            {
+                CombatPerks.OnMilestoneProgress += (sv, key, value) =>
+                {
+                    if (string.IsNullOrEmpty(key)) return;
+                    if (string.Equals(key, "stealth_kills", StringComparison.Ordinal))
+                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
+                    else if (string.Equals(key, "ammo_expended", StringComparison.Ordinal) && value >= 20)
+                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
+                    else if (string.Equals(key, "traps_deployed", StringComparison.Ordinal))
+                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
                 };
             }
 

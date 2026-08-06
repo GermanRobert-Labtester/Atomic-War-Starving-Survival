@@ -88,6 +88,8 @@ namespace AtomicWar._Game.Core
             AssignBloodTypesToExistingSurvivors();
             // Prompt #768 — epilogue counters + empty-bunker narrative.
             EpilogueStats = new System_EpilogueStats();
+            // Prompt #861 — adaptive warlord gear across wipes (restored from save mid-run).
+            AdaptiveWarlords = new System_AdaptiveWarlords();
         }
 
         /// <summary>

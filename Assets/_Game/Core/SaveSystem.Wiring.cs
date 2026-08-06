@@ -455,6 +455,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((GossipSystemState)o));
 
+        /// <summary>Prompt #861 — adaptive warlord counters across playthroughs.</summary>
+        public void SetAdaptiveWarlordsSystem(System_AdaptiveWarlords s) =>
+            RegisterSystem(ref _adaptiveWarlordsSystem, s, "adaptive_warlords",
+                () => s.CaptureState(),
+                o => s.RestoreState((AdaptiveWarlordsState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",
