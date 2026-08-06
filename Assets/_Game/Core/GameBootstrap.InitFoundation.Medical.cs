@@ -98,13 +98,17 @@ namespace AtomicWar._Game.Core
 
         private void WireMedicalAddictionHooks()
         {
-            // Shared host path: inventory chems, treatments, emergency halt, amputation morphine.
+            // Shared host path: inventory, AI, treatments, emergency halt, amputation morphine.
+            ChemUse = new ChemUseRouter();
+            ChemUse.Bind(
+                Addiction,
+                BloodToxicity,
+                PolypharmacySystem,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 1,
+                getGameHours: () => TimeSystem != null ? TimeSystem.TotalElapsedHours : 0f);
+
             System.Action<Survivor, string, int> onChem = (sv, itemId, day) =>
-            {
-                Addiction?.OnItemConsumed(sv, itemId, day);
-                if (sv != null && !string.IsNullOrEmpty(sv.Id))
-                    BloodToxicity?.RecordChemUse(sv.Id, itemId);
-            };
+                ChemUse?.Notify(sv, itemId);
 
             if (MedicalSystem != null)
             {

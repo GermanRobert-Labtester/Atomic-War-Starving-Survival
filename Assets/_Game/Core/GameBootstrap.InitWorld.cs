@@ -136,6 +136,13 @@ namespace AtomicWar._Game.Core
             HamRadioSystem = new HamRadioSystem();
             TriageSystem = new TriageBoardSystem();
             PolypharmacySystem = new PolypharmacySystem();
+            // ChemUse is built during medical init (before this); re-bind so polypharmacy is live.
+            ChemUse?.Bind(
+                Addiction,
+                BloodToxicity,
+                PolypharmacySystem,
+                getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 1,
+                getGameHours: () => TimeSystem != null ? TimeSystem.TotalElapsedHours : 0f);
 
             // ───────────────────────────────────────────────────────────
         }

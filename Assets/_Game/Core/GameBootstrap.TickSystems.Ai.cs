@@ -52,6 +52,10 @@ namespace AtomicWar._Game.Core
                 context.IsNumb = sv.IsNumb;
 
                 var action = UtilityAI.SelectAction(context, Actions);
+                int antiRadBefore = -1;
+                if (action != null && action.id == "action_use_antirad" && Inventory != null)
+                    antiRadBefore = Inventory.CountById("anti_rad");
+
                 action?.Execute(context);
 
                 // Prompt #179–#181 — action-driven XP / dormant refresh / epiphany.
@@ -65,9 +69,16 @@ namespace AtomicWar._Game.Core
                         sv, action.progressionDiscipline, xp, day, _aiRng);
                 }
 
-                // Prompt #7 — track addictive chem consumption
-                if (action != null && Addiction != null && action.id == "action_use_antirad")
-                    Addiction.OnItemConsumed(sv, "anti_rad", day);
+                // Prompt #7 / #551 — AI anti-rad: addiction + blood toxicity + polypharmacy.
+                // Only when a dose was taken (inventory dropped) or inventory is unbound.
+                if (action != null && action.id == "action_use_antirad")
+                {
+                    bool doseTaken = Inventory == null
+                        || (antiRadBefore >= 0
+                            && Inventory.CountById("anti_rad") < antiRadBefore);
+                    if (doseTaken)
+                        ChemUse?.Notify(sv, "anti_rad");
+                }
 
                 // #279 Former Politician: dirty labor morale + daily quest credit.
                 if (action != null && PersonalQuests != null)

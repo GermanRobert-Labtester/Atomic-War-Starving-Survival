@@ -192,6 +192,8 @@ namespace AtomicWar._Game.Core
         public AddictionSystem Addiction { get; private set; }
         // Prompt #551 — chem-abuse blood toxicity (bite retaliation).
         public BloodToxicitySystem BloodToxicity { get; private set; }
+        /// <summary>Shared chem consumption side-effects (addiction, toxicity, polypharmacy).</summary>
+        public ChemUseRouter ChemUse { get; private set; }
         // Prompt #556 — graft/prosthetic rejection + immunosuppressants.
         public GraftRejectionSystem GraftRejection { get; private set; }
         // Prompt #558 — mutant pheromone camo (24h animal friendliness).

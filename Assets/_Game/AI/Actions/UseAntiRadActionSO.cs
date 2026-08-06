@@ -48,9 +48,33 @@ namespace AtomicWar._Game.AI.Actions
 
         public override void Execute(AIContext context)
         {
-            if (context?.Survivor != null)
+            if (context?.Survivor == null) return;
+
+            // Consume one anti-rad unit when present (host tracks chem side-effects).
+            bool consumed = false;
+            if (context.Inventory != null && context.Inventory.Slots != null)
             {
-                context.Survivor.RadiationDose = Mathf.Max(0f, context.Survivor.RadiationDose - 30f);
+                for (int i = 0; i < context.Inventory.Slots.Count; i++)
+                {
+                    var slot = context.Inventory.Slots[i];
+                    if (slot != null && slot.Item != null
+                        && slot.Item.id == AntiRadItemId && slot.Amount > 0)
+                    {
+                        if (context.Inventory.Remove(slot.Item, 1))
+                        {
+                            consumed = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Only apply therapeutic effect when a dose was actually taken.
+            // (Score already requires stock when rad is high; free doses are not allowed.)
+            if (consumed || context.Inventory == null)
+            {
+                context.Survivor.RadiationDose =
+                    Mathf.Max(0f, context.Survivor.RadiationDose - 30f);
             }
         }
     }

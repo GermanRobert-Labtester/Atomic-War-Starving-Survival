@@ -618,9 +618,7 @@ namespace AtomicWar._Game.Core
                     string chemId = PersonalQuestSystem.AmphetaminesItemId;
                     if (Inventory.CountById(chemId) < 1) return false;
                     if (!Inventory.RemoveById(chemId, 1)) return false;
-                    int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
-                    Addiction?.OnItemConsumed(sv, chemId, day);
-                    BloodToxicity?.RecordChemUse(sv.Id, chemId);
+                    ChemUse?.Notify(sv, chemId);
                     return true;
                 };
             }
