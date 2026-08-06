@@ -35,6 +35,9 @@ namespace AtomicWar._Game.Core
         private void InitBunkerSocial()
         {
             BunkerSocial = new BunkerSocialDirector();
+            // Prompt #839 — crime gossip chain (affinity rot as rumors spread).
+            Gossip = new System_Gossip();
+            WireGossipSystem();
             SubscribeBunkerSocialNarrative();
 
             // ── Host hooks (Inventory / Shelter / faction / AI edges) ──
@@ -86,9 +89,95 @@ namespace AtomicWar._Game.Core
             };
         }
 
+        /// <summary>
+        /// Prompt #839 — roster sync, affinity decay into InterpersonalAffinity,
+        /// and crime-witness hooks from tribunal / feud sabotage.
+        /// </summary>
+        private void WireGossipSystem()
+        {
+            if (Gossip == null) return;
+
+            RefreshGossipRoster();
+
+            // Rumor rot → shared affinity matrix (negative).
+            Gossip.OnAffinityDecayed += (criminalId, targetId, amount) =>
+            {
+                if (BunkerSocial?.Affinity == null || amount <= 0f) return;
+                BunkerSocial.Affinity.Adjust(criminalId, targetId, -amount);
+            };
+
+            Gossip.OnCrimeWitnessed += (witnessId, criminalId, crime) =>
+                BunkerSocialNarrative.Raise("gossip_crime", witnessId, criminalId, crime);
+            Gossip.OnRumorSpread += (fromId, toId, criminalId) =>
+                BunkerSocialNarrative.Raise("gossip_spread", fromId, toId, criminalId);
+
+            if (BunkerSocial == null) return;
+
+            // Tribunal crime → a living witness (first other living survivor) starts the chain.
+            BunkerSocial.Tribunal.OnTribunalStarted += (suspect, crimeId, severity) =>
+            {
+                if (suspect == null || string.IsNullOrEmpty(suspect.Id)) return;
+                string witness = FindGossipWitness(suspect.Id);
+                if (string.IsNullOrEmpty(witness)) return;
+                int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                RefreshGossipRoster();
+                Gossip.WitnessCrime(witness, suspect.Id, crimeId ?? "crime", day);
+            };
+
+            // Feud sabotage is witnessed by the victim.
+            BunkerSocial.Feuds.OnSabotageOccurred += (perp, victim, kind) =>
+            {
+                if (perp == null || victim == null) return;
+                if (string.IsNullOrEmpty(perp.Id) || string.IsNullOrEmpty(victim.Id)) return;
+                int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                RefreshGossipRoster();
+                Gossip.WitnessCrime(victim.Id, perp.Id, kind ?? "sabotage", day);
+            };
+        }
+
+        private void RefreshGossipRoster()
+        {
+            if (Gossip == null || Survivors == null) return;
+            var ids = new List<string>();
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || string.IsNullOrEmpty(sv.Id)) continue;
+                // Include dead in roster so mid-run deaths don't break rumor identity,
+                // but prefer living for spread (TickDay still walks all ids).
+                ids.Add(sv.Id);
+            }
+            Gossip.SetSurvivorRoster(ids);
+        }
+
+        private string FindGossipWitness(string criminalId)
+        {
+            if (Survivors == null) return null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive || string.IsNullOrEmpty(sv.Id)) continue;
+                if (string.Equals(sv.Id, criminalId, StringComparison.Ordinal)) continue;
+                return sv.Id;
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Public API: witness a crime for the gossip system (UI / events / tests).
+        /// </summary>
+        public void ReportCrimeWitness(string witnessId, string criminalId, string crimeType)
+        {
+            if (Gossip == null) return;
+            RefreshGossipRoster();
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+            Gossip.WitnessCrime(witnessId, criminalId, crimeType, day);
+        }
+
         /// <summary>Surface every major social state-change onto the EventBus for UI/journal.</summary>
         private void SubscribeBunkerSocialNarrative()
         {
+            if (BunkerSocial == null) return;
             BunkerSocial.Romance.OnBecomeLovers += (a, b) => BunkerSocialNarrative.Raise("lovers", a?.Id, b?.Id);
             BunkerSocial.Romance.OnBreakup += (a, b) => BunkerSocialNarrative.Raise("breakup", a?.Id, b?.Id);
             BunkerSocial.Feuds.OnFeudStarted += (a, b) => BunkerSocialNarrative.Raise("feud", a?.Id, b?.Id);

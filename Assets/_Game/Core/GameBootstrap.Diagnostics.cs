@@ -141,6 +141,7 @@ namespace AtomicWar._Game.Core
             { "GriefKeepsakes",          new[] { "grief_keepsakes" } },
             { "PhantomIntruders",        new[] { "phantom_intruders" } },
             { "BunkerSocial",            new[] { "bunker_social" } },
+            { "Gossip",                  new[] { "gossip", "gossip_daily" } },
             { "PersonalQuests",          new[] { "personal_quests", "personal_quests_daily", "personal_quests_morale" } },
             { "SocialPerks",             new[] { "social_perks", "social_perks_daily" } },
             { "CombatPerks",             new[] { "combat_perks" } },

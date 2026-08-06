@@ -108,6 +108,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetLegacyStartSystem(LegacyStart);
             SaveSystem.SetBloodTypesSystem(BloodTypes);
             SaveSystem.SetEpilogueStatsSystem(EpilogueStats);
+            SaveSystem.SetGossipSystem(Gossip);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);

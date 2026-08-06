@@ -208,6 +208,8 @@ namespace AtomicWar._Game.Core
         public System_BloodTypes BloodTypes { get; private set; }
         // Prompt #768 — empty-bunker epilogue (meals / bullets / death rooms).
         public System_EpilogueStats EpilogueStats { get; private set; }
+        // Prompt #839 — bunker gossip: crime witness → rumor spread → affinity rot.
+        public System_Gossip Gossip { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

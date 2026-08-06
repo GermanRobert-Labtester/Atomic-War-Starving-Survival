@@ -180,6 +180,7 @@ namespace AtomicWar._Game.Core
         private System_LegacyStart _legacyStartSystem;
         private System_BloodTypes _bloodTypesSystem;
         private System_EpilogueStats _epilogueStatsSystem;
+        private System_Gossip _gossipSystem;
         private RiverNodeSystem _riverNodeSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.

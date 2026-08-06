@@ -449,6 +449,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((EpilogueStatsState)o));
 
+        /// <summary>Prompt #839 — bunker gossip rumors + affinity decay totals.</summary>
+        public void SetGossipSystem(System_Gossip s) =>
+            RegisterSystem(ref _gossipSystem, s, "gossip",
+                () => s.CaptureState(),
+                o => s.RestoreState((GossipSystemState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",
