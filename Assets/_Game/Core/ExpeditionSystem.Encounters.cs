@@ -31,11 +31,59 @@ namespace AtomicWar._Game.Core
             ApplyDesertersStandIfNeeded(exp, selected, survivor, chosen);
             ApplyCombatPerkMilestones(exp, selected, survivor, chosen, fled);
             ApplyExpeditionPerkEncounterMilestones(exp, selected, survivor, chosen, fled);
+            ApplyBloodToxicityBiteRetaliation(exp, selected, survivor, chosen, fled);
 
             if (fled)
                 TryProcessUxoFlee(exp);
 
             OnEncounterResolved?.Invoke(exp, selected, chosen);
+        }
+
+        /// <summary>
+        /// Prompt #551 — chem-toxic blood poisons feral dogs / cannibals that bite
+        /// during an engaged combat encounter.
+        /// </summary>
+        private void ApplyBloodToxicityBiteRetaliation(
+            ExpeditionState exp, EncounterSO selected, Survivor survivor, EventChoice chosen, bool fled)
+        {
+            LastBiteRetaliationDamage = 0f;
+            if (fled || _bloodToxicity == null || survivor == null || selected == null) return;
+
+            bool isCombat = selected.category == EncounterCategory.Combat;
+            if (!isCombat) return;
+
+            string choiceId = chosen?.ChoiceId ?? string.Empty;
+            bool engaged = string.Equals(choiceId, "engage", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(choiceId, "fight", StringComparison.OrdinalIgnoreCase)
+                || (!string.Equals(choiceId, "flee", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "sneak", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "pay", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "detour", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "light_step_bypass", StringComparison.OrdinalIgnoreCase));
+            if (!engaged) return;
+
+            string attackerType = ResolveBiteAttackerType(selected);
+            if (attackerType == null) return;
+
+            float dmg = _bloodToxicity.GetBiteRetaliationDamage(survivor.Id, attackerType);
+            if (dmg <= 0f) return;
+
+            LastBiteRetaliationDamage = dmg;
+            // Grim win: poisoned attacker breaks off — small morale relief.
+            survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 3f, 0f, 100f);
+        }
+
+        private static string ResolveBiteAttackerType(EncounterSO selected)
+        {
+            if (selected == null) return null;
+            string id = selected.id ?? string.Empty;
+            if (id.IndexOf("feral_dog", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("feraldog", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("feral_dogs", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "feral_dog";
+            if (id.IndexOf("cannibal", StringComparison.OrdinalIgnoreCase) >= 0)
+                return "cannibal";
+            return null;
         }
 
         /// <summary>

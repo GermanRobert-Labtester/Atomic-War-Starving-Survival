@@ -138,6 +138,9 @@ namespace AtomicWar._Game.Core
             // Prompt #208 — Urban Pathfinder −30% City/Ruin travel (stacks with Bicycle).
             travelHours = ApplyUrbanPathfinderTravel(survivor, request.NodeId, travelHours);
 
+            // Prompt #569 — river node: bridge / boat / wade time + one-shot wade rads.
+            travelHours = ApplyRiverCrossingTravel(survivor, request.NodeId, travelHours);
+
             int distanceTicks = Mathf.Max(1, Mathf.RoundToInt(travelHours));
             var state = new ExpeditionState
             {
@@ -165,6 +168,60 @@ namespace AtomicWar._Game.Core
             _activeExpeditions.Add(state);
             OnExpeditionStarted?.Invoke(state);
             return true;
+        }
+
+        /// <summary>
+        /// Prompt #569 — if the destination is a river node, resolve crossing method
+        /// (clear bridge → boat → wade) and adjust travel hours / one-shot rad exposure.
+        /// </summary>
+        private float ApplyRiverCrossingTravel(Survivor survivor, string nodeId, float travelHours)
+        {
+            LastRiverCrossingMethod = null;
+            LastRiverWadeRad = 0f;
+            if (_riverNodeSystem == null || string.IsNullOrEmpty(nodeId)) return travelHours;
+            if (!_riverNodeSystem.RiverNodes.ContainsKey(nodeId)) return travelHours;
+
+            if (!_riverNodeSystem.RiverNodes.TryGetValue(nodeId, out var river) || river == null)
+                return travelHours;
+
+            int boatFuel = 0;
+            if (_hasItem != null && (_hasItem("rowboat") || _hasItem("boat")))
+                boatFuel = 1;
+
+            // Prefer clear bridge, then boat, then wade (blockaded bridge falls through).
+            RiverCrossingResult result = default;
+            if (river.hasBridge && !river.isBlockaded)
+                result = _riverNodeSystem.TryCrossRiver(nodeId, "bridge", boatFuel, _rng);
+
+            if (!result.success && boatFuel > 0)
+                result = _riverNodeSystem.TryCrossRiver(nodeId, "boat", boatFuel, _rng);
+
+            if (!result.success)
+                result = _riverNodeSystem.TryCrossRiver(nodeId, "wade", boatFuel, _rng);
+
+            if (!result.success)
+                return travelHours;
+
+            LastRiverCrossingMethod = result.method;
+            LastRiverWadeRad = result.radiationExposure;
+
+            // Crossing cost is additive for bridge/boat; multiplicative for wade (10x path).
+            if (string.Equals(result.method, "wade", System.StringComparison.Ordinal))
+            {
+                float mult = river.crossWithoutBridgeTimeMultiplier > 0f
+                    ? river.crossWithoutBridgeTimeMultiplier
+                    : 10f;
+                travelHours = Mathf.Max(0.1f, travelHours * mult);
+            }
+            else
+            {
+                travelHours = Mathf.Max(0.1f, travelHours + result.timeCostHours);
+            }
+
+            if (result.radiationExposure > 0f && survivor != null)
+                _radSystem?.Expose(survivor, result.radiationExposure, 1f);
+
+            return travelHours;
         }
 
         private float ApplyUrbanPathfinderTravel(Survivor survivor, string nodeId, float travelHours)

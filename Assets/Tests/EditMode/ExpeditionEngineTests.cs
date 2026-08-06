@@ -5,6 +5,7 @@ using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
+using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
@@ -303,6 +304,113 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(restored.IsFlooded("node_a"));
             Assert.IsTrue(restored.IsFlooded("node_b"));
             Assert.IsFalse(restored.IsFlooded("node_c"));
+        }
+
+        [Test]
+        public void RiverNodeWiring_Wade_MultipliesTravelAndAppliesRad()
+        {
+            var river = new RiverNodeSystem();
+            river.RestoreState(new RiverNodeSave
+            {
+                entries = new List<RiverNodeState>
+                {
+                    new RiverNodeState
+                    {
+                        nodeId = _location.id,
+                        hasBridge = false,
+                        isBlockaded = false,
+                        crossWithoutBridgeTimeMultiplier = 10f,
+                        crossWithoutBridgeRadExposure = 50f
+                    }
+                }
+            });
+            _expeditionSystem.SetRiverNodeSystem(river);
+            _expeditionSystem.SetHasItem(_ => false);
+
+            var survivor = new Survivor { Id = "sv_river", DisplayName = "River" };
+            _needsSystem.Register(survivor);
+            _radSystem.Register(survivor);
+            float radBefore = survivor.LifetimeRadiationExposure;
+
+            Assert.IsTrue(_expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth));
+            var state = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
+            Assert.IsNotNull(state);
+            Assert.AreEqual("wade", _expeditionSystem.LastRiverCrossingMethod);
+            // Base travelHours=3 × 10 wade mult → 30 ticks.
+            Assert.AreEqual(30, state.TotalDistanceTicks);
+            Assert.Greater(survivor.LifetimeRadiationExposure, radBefore,
+                "Wading should apply one-shot river rad exposure.");
+            Assert.Greater(_expeditionSystem.LastRiverWadeRad, 0f);
+        }
+
+        [Test]
+        public void RiverNodeWiring_ClearBridge_AddsModestTravelNotWadeMult()
+        {
+            var river = new RiverNodeSystem();
+            river.RestoreState(new RiverNodeSave
+            {
+                entries = new List<RiverNodeState>
+                {
+                    new RiverNodeState
+                    {
+                        nodeId = _location.id,
+                        hasBridge = true,
+                        isBlockaded = false
+                    }
+                }
+            });
+            _expeditionSystem.SetRiverNodeSystem(river);
+
+            var survivor = new Survivor { Id = "sv_bridge", DisplayName = "Bridge" };
+            _needsSystem.Register(survivor);
+            _radSystem.Register(survivor);
+
+            Assert.IsTrue(_expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth));
+            var state = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
+            Assert.AreEqual("bridge", _expeditionSystem.LastRiverCrossingMethod);
+            // 3h base + 1h bridge = 4 ticks (not ×10).
+            Assert.AreEqual(4, state.TotalDistanceTicks);
+            Assert.AreEqual(0f, _expeditionSystem.LastRiverWadeRad, Eps);
+        }
+
+        [Test]
+        public void BloodToxicityWiring_FeralDogEngage_PoisonsAttackerWhenToxic()
+        {
+            var blood = new BloodToxicitySystem();
+            for (int i = 0; i < 5; i++)
+                blood.RecordChemUse("sv_tox", "morphine");
+            Assert.IsTrue(blood.IsBloodToxic("sv_tox"));
+            _expeditionSystem.SetBloodToxicitySystem(blood);
+            // Deterministic: no random encounters mid-travel.
+            _expeditionSystem.SetEncounterPool(System.Array.Empty<EncounterSO>());
+
+            var survivor = new Survivor { Id = "sv_tox", DisplayName = "Toxic" };
+            survivor.Needs.Morale = 50f;
+            _needsSystem.Register(survivor);
+            _radSystem.Register(survivor);
+
+            Assert.IsTrue(_expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth));
+            var state = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
+
+            var enc = ScriptableObject.CreateInstance<EncounterSO>();
+            enc.id = "enc_feral_dogs";
+            enc.category = EncounterCategory.Combat;
+            enc.choices = new List<EventChoice>
+            {
+                new EventChoice { ChoiceId = "engage", Text = "Fight", MoraleDelta = 0f }
+            };
+
+            // ResolveEncounterWithPsychology is private — drive via public encounter path if any.
+            // Use reflection for the private method used by combat wiring.
+            var method = typeof(ExpeditionSystem).GetMethod(
+                "ResolveEncounterWithPsychology",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            Assert.IsNotNull(method);
+            method.Invoke(_expeditionSystem, new object[] { state, enc });
+
+            Assert.Greater(_expeditionSystem.LastBiteRetaliationDamage, 0f,
+                "Toxic blood should poison biting feral dogs on engage.");
+            Assert.Greater(survivor.Needs.Morale, 50f);
         }
     }
 }

@@ -57,6 +57,8 @@ namespace AtomicWar._Game.Core
         private SabotagedCacheSystem _sabotagedCaches;
         private BicycleSystem _bicycleSystem;
         private FloodedNodeSystem _floodedNodeSystem;
+        private RiverNodeSystem _riverNodeSystem;
+        private BloodToxicitySystem _bloodToxicity;
         private Func<string, bool> _hasItem;
         private ItemDefinition _deserterStandRifle;
 
@@ -213,6 +215,18 @@ namespace AtomicWar._Game.Core
             _floodedNodeSystem = system;
         }
 
+        /// <summary>Inject Prompt #569 river crossings / bridges (optional; safe to skip in tests).</summary>
+        public void SetRiverNodeSystem(RiverNodeSystem system)
+        {
+            _riverNodeSystem = system;
+        }
+
+        /// <summary>Inject Prompt #551 blood toxicity bite retaliation (optional).</summary>
+        public void SetBloodToxicitySystem(BloodToxicitySystem system)
+        {
+            _bloodToxicity = system;
+        }
+
         /// <summary>
         /// Inventory query for expedition gear (bicycle, pump). Injected by
         /// GameBootstrap so ExpeditionSystem stays free of Inventory write APIs.
@@ -221,6 +235,15 @@ namespace AtomicWar._Game.Core
         {
             _hasItem = hasItem;
         }
+
+        /// <summary>Last river crossing method applied on expedition start (tests / UI).</summary>
+        public string LastRiverCrossingMethod { get; private set; }
+
+        /// <summary>One-shot rad from last river wade on expedition start.</summary>
+        public float LastRiverWadeRad { get; private set; }
+
+        /// <summary>Poison damage dealt to last biting attacker via blood toxicity.</summary>
+        public float LastBiteRetaliationDamage { get; private set; }
 
         /// <summary>
         /// Prompts #182–#188 — combat milestone perks (stealth kills, flees,

@@ -156,6 +156,8 @@ namespace AtomicWar._Game.Core
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
             ExpeditionSystem.SetBicycleSystem(BicycleSystem);
             ExpeditionSystem.SetFloodedNodeSystem(FloodedNodeSystem);
+            ExpeditionSystem.SetRiverNodeSystem(RiverNodeSystem);
+            ExpeditionSystem.SetBloodToxicitySystem(BloodToxicity);
             ExpeditionSystem.SetHasItem(itemId =>
                 Inventory != null && !string.IsNullOrEmpty(itemId)
                 && Inventory.CountById(itemId) > 0);
