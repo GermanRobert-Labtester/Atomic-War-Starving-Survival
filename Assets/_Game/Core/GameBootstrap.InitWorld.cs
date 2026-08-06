@@ -48,6 +48,8 @@ namespace AtomicWar._Game.Core
             BicycleSystem = new BicycleSystem();
             FloodedNodeSystem = new FloodedNodeSystem();
             SeedMapNodes(0.2f, (nodeId) => FloodedNodeSystem.SetFlooded(nodeId, true), seedOffset: 69);
+            // River nodes generated after GeneratedMap exists (InitLate).
+            RiverNodeSystem = new RiverNodeSystem();
         }
 
         private void InitFactionSideSystems()

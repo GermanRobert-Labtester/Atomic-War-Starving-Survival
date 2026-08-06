@@ -419,6 +419,18 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((PheromoneMaskingSave)o));
 
+        /// <summary>Rogue-lite grave site from prior wipe (had CaptureState, never constructed/registered).</summary>
+        public void SetLastWillSystem(LastWillSystem s) =>
+            RegisterSystem(ref _lastWillSystem, s, "last_will",
+                () => s.CaptureState(),
+                o => s.RestoreState((LastWillSave)o));
+
+        /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
+        public void SetRiverNodeSystem(RiverNodeSystem s) =>
+            RegisterSystem(ref _riverNodeSystem, s, "river_nodes",
+                () => s.CaptureState(),
+                o => s.RestoreState((RiverNodeSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

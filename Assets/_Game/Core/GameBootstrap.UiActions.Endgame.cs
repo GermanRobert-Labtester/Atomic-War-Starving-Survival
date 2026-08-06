@@ -93,9 +93,64 @@ namespace AtomicWar._Game.Core
                 GameState.IsPaused = true;
                 GameState.Phase = GamePhase.GameOver;
             }
+            TryRecordLastWillGrave(summary);
             // Halt TimeSystem by not ticking (Update already gates on Phase/IsGameOver).
             PushEndgameSummaryToHud(summary);
             Debug.Log($"[GameBootstrap] ENDGAME ({summary.State}): {summary.OutcomeTitle} — {summary.Reason}");
+        }
+
+        /// <summary>
+        /// On wipe (all survivors dead), snapshot a grave site for rogue-lite discovery.
+        /// Wins do not generate a grave.
+        /// </summary>
+        private void TryRecordLastWillGrave(EndgameSummaryData summary)
+        {
+            if (LastWill == null || summary == null) return;
+            if (summary.State != EndgameState.Starved && summary.State != EndgameState.Irradiated)
+                return;
+            if (LastWill.HasGraveSite) return;
+
+            var names = new List<string>();
+            if (Survivors != null)
+            {
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    var sv = Survivors[i];
+                    if (sv == null) continue;
+                    names.Add(string.IsNullOrEmpty(sv.DisplayName) ? sv.Id : sv.DisplayName);
+                }
+            }
+
+            var loot = new List<string>();
+            if (Inventory?.Slots != null)
+            {
+                for (int i = 0; i < Inventory.Slots.Count && loot.Count < 12; i++)
+                {
+                    var slot = Inventory.Slots[i];
+                    if (slot?.Item == null || string.IsNullOrEmpty(slot.Item.id)) continue;
+                    if (!loot.Contains(slot.Item.id))
+                        loot.Add(slot.Item.id);
+                }
+            }
+
+            var diaries = new List<string>();
+            if (!string.IsNullOrEmpty(summary.Reason))
+                diaries.Add(summary.Reason);
+
+            string cause = summary.DeathScreen != DeathScreenKind.None
+                ? summary.DeathScreen.ToString().ToLowerInvariant()
+                : (summary.State.ToString().ToLowerInvariant());
+
+            LastWill.GenerateGraveSite(
+                locationId: "grave_player_bunker",
+                originalSeed: _worldSeed,
+                dayOfDeath: summary.DaysSurvived > 0
+                    ? summary.DaysSurvived
+                    : (TimeSystem != null ? TimeSystem.CurrentDay : 1),
+                deadSurvivorNames: names,
+                diaryEntries: diaries,
+                remainingLootIds: loot,
+                causeOfDeath: cause);
         }
 
         private void PushEndgameSummaryToHud(EndgameSummaryData summary)

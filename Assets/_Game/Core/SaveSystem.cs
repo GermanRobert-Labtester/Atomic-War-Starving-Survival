@@ -175,6 +175,8 @@ namespace AtomicWar._Game.Core
         private BloodToxicitySystem _bloodToxicitySystem;
         private GraftRejectionSystem _graftRejectionSystem;
         private PheromoneMaskingSystem _pheromoneMaskingSystem;
+        private LastWillSystem _lastWillSystem;
+        private RiverNodeSystem _riverNodeSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;

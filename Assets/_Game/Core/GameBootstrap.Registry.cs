@@ -381,6 +381,9 @@ namespace AtomicWar._Game.Core
                 "antibiotic_resist", "hauling", "weapon_maint", "triage", "scrap_weapon",
                 // Chem abuse bookkeeping (ticks only on treatment item consume):
                 "blood_toxicity",
+                // Rogue-lite grave (fires on wipe) + river crossings (travel events):
+                "last_will",
+                "river_nodes",
                 // Infrastructure / AI / UI systems that are not hour-ticked:
                 "workbench", "utility_ai", "radio", "time", "save", "game_state",
                 "endgame", "shelter_layout", "sleep_quality", "skill_progression",

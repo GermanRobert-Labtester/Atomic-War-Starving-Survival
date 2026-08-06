@@ -765,5 +765,143 @@ namespace AtomicWar.Tests.EditMode
                 try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
             }
         }
+
+        // -------------------------------------------------------------
+        // Test 9: Capture orphans — last_will, river_nodes
+        // -------------------------------------------------------------
+
+        [Test]
+        public void LastWill_And_RiverNode_CaptureRestore_RoundTripEqual()
+        {
+            var willA = new LastWillSystem();
+            willA.GenerateGraveSite(
+                "grave_bunker_a",
+                originalSeed: 4242,
+                dayOfDeath: 37,
+                deadSurvivorNames: new List<string> { "Mara", "Jen" },
+                diaryEntries: new List<string> { "The filters failed on day 30." },
+                remainingLootIds: new List<string> { "canned_beans", "iodine" },
+                causeOfDeath: "radiation");
+            Assert.IsTrue(willA.HasGraveSite);
+
+            var riverA = new RiverNodeSystem();
+            riverA.RestoreState(new RiverNodeSave
+            {
+                entries = new List<RiverNodeState>
+                {
+                    new RiverNodeState
+                    {
+                        nodeId = "node_cross_1",
+                        hasBridge = true,
+                        isBlockaded = true,
+                        blockadeTollCost = 7,
+                        crossWithoutBridgeRadExposure = 50f,
+                        crossWithoutBridgeTimeMultiplier = 10f
+                    },
+                    new RiverNodeState
+                    {
+                        nodeId = "node_cross_2",
+                        hasBridge = false,
+                        isBlockaded = false
+                    }
+                }
+            });
+            Assert.IsTrue(riverA.PayToll("node_cross_1", 10));
+            Assert.IsFalse(riverA.RiverNodes["node_cross_1"].isBlockaded);
+
+            var willSave = willA.CaptureState();
+            var riverSave = riverA.CaptureState();
+
+            var willB = new LastWillSystem();
+            willB.RestoreState(willSave);
+            var riverB = new RiverNodeSystem();
+            riverB.RestoreState(riverSave);
+
+            AssertDtoEqual(willSave, willB.CaptureState(), "LastWillSystem");
+            AssertDtoEqual(riverSave, riverB.CaptureState(), "RiverNodeSystem");
+            Assert.AreEqual("grave_bunker_a", willB.CurrentGraveSite.locationId);
+            Assert.AreEqual(2, willB.CurrentGraveSite.deadSurvivorNames.Count);
+            // Toll was paid before capture — blockade cleared and toll zeroed.
+            Assert.IsFalse(riverB.RiverNodes["node_cross_1"].isBlockaded);
+            Assert.AreEqual(0, riverB.RiverNodes["node_cross_1"].blockadeTollCost);
+            Assert.IsFalse(riverB.RiverNodes["node_cross_2"].hasBridge);
+        }
+
+        [Test]
+        public void LastWill_And_RiverNode_SaveSystemAdapter_RoundTrip()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "ashfall_lastwill_river_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            try
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var weather = new WeatherSystem(null, 3);
+                var temp = new TemperatureSystem(null, weather);
+                var rad = new RadiationSystem(needs);
+
+                var willA = new LastWillSystem();
+                willA.GenerateGraveSite(
+                    "grave_player_bunker",
+                    99,
+                    12,
+                    new List<string> { "Ash" },
+                    new List<string> { "We lasted twelve days." },
+                    new List<string> { "water_filter" },
+                    "hunger");
+
+                var riverA = new RiverNodeSystem();
+                riverA.RestoreState(new RiverNodeSave
+                {
+                    entries = new List<RiverNodeState>
+                    {
+                        new RiverNodeState
+                        {
+                            nodeId = "r1",
+                            hasBridge = true,
+                            isBlockaded = true,
+                            blockadeTollCost = 5
+                        }
+                    }
+                });
+
+                SaveSystem Make(LastWillSystem will, RiverNodeSystem river)
+                {
+                    var ss = new SaveSystem(new SaveSystem.CoreDeps
+                    {
+                        GameState = new GameState(),
+                        WeatherSystem = weather,
+                        TemperatureSystem = temp,
+                        NeedsSystem = needs,
+                        RadiationSystem = rad,
+                        Shelter = new ShelterClass(),
+                        GetSurvivors = () => new List<Survivor>(),
+                        ItemLookup = id => null,
+                        ModuleLookup = id => null,
+                        SavesDir = dir
+                    });
+                    ss.SetLastWillSystem(will);
+                    ss.SetRiverNodeSystem(river);
+                    return ss;
+                }
+
+                Assert.IsTrue(Make(willA, riverA).Save("orphan2_slot"));
+
+                var willB = new LastWillSystem();
+                var riverB = new RiverNodeSystem();
+                Assert.IsTrue(Make(willB, riverB).Load("orphan2_slot"));
+
+                AssertDtoEqual(willA.CaptureState(), willB.CaptureState(), "last_will_via_save_system");
+                AssertDtoEqual(riverA.CaptureState(), riverB.CaptureState(), "river_via_save_system");
+                Assert.IsTrue(willB.HasGraveSite);
+                Assert.AreEqual("Ash", willB.CurrentGraveSite.deadSurvivorNames[0]);
+                Assert.AreEqual(5, riverB.RiverNodes["r1"].blockadeTollCost);
+                Assert.IsTrue(riverB.RiverNodes["r1"].isBlockaded);
+            }
+            finally
+            {
+                try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
+            }
+        }
     }
 }

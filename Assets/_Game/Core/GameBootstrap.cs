@@ -196,6 +196,8 @@ namespace AtomicWar._Game.Core
         public GraftRejectionSystem GraftRejection { get; private set; }
         // Prompt #558 — mutant pheromone camo (24h animal friendliness).
         public PheromoneMaskingSystem PheromoneMasking { get; private set; }
+        // Prompt #563 — last-will grave site (rogue-lite wipe → next run discovery).
+        public LastWillSystem LastWill { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.
@@ -210,6 +212,8 @@ namespace AtomicWar._Game.Core
         public BicycleSystem BicycleSystem { get; private set; }
         // Prompt #69 — flooded ruins.
         public FloodedNodeSystem FloodedNodeSystem { get; private set; }
+        // Prompt #569 — river crossings, bridges, faction blockades.
+        public RiverNodeSystem RiverNodeSystem { get; private set; }
         // Prompt #71 — tracker (footprints in ash).
         public TrackerSystem TrackerSystem { get; private set; }
         // Prompt #72 — dead drops.

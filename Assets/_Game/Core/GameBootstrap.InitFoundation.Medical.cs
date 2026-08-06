@@ -77,6 +77,8 @@ namespace AtomicWar._Game.Core
             BloodToxicity = new BloodToxicitySystem();
             GraftRejection = new GraftRejectionSystem();
             PheromoneMasking = new PheromoneMaskingSystem();
+            // Rogue-lite grave site (populated on wipe; restored from save mid-run).
+            LastWill = new LastWillSystem();
         }
 
         private float GetPartyAverageLifetimeRadiation()

@@ -53,6 +53,10 @@ namespace AtomicWar._Game.Core
             GeneratedMap = MapGenerator.Generate(_worldSeed);
             FactionRaidPlanSystem?.SetMap(GeneratedMap);
 
+            // River crossings need the live node list (seed-stable with map).
+            if (RiverNodeSystem != null && GeneratedMap?.Nodes != null)
+                RiverNodeSystem.GenerateRiverNodes(GeneratedMap.Nodes, _worldSeed + 569);
+
             // Knowledge map must exist before SaveSystem can capture it
             KnowledgeMap = new RadiationKnowledgeMap();
             SeedKnowledgeMap();
@@ -99,6 +103,8 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBloodToxicitySystem(BloodToxicity);
             SaveSystem.SetGraftRejectionSystem(GraftRejection);
             SaveSystem.SetPheromoneMaskingSystem(PheromoneMasking);
+            SaveSystem.SetLastWillSystem(LastWill);
+            SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);
