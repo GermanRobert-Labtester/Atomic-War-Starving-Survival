@@ -419,6 +419,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((PheromoneMaskingSave)o));
 
+        /// <summary>Chem tolerance (Prompt #833) — morphine / amphetamines / anti_rad use counts.</summary>
+        public void SetChemToleranceSystem(System_Tolerance s) =>
+            RegisterSystem(ref _chemToleranceSystem, s, "tolerance",
+                () => s.CaptureState(),
+                o => s.RestoreState((ToleranceState)o));
+
         /// <summary>Rogue-lite grave site from prior wipe (had CaptureState, never constructed/registered).</summary>
         public void SetLastWillSystem(LastWillSystem s) =>
             RegisterSystem(ref _lastWillSystem, s, "last_will",

@@ -103,6 +103,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBloodToxicitySystem(BloodToxicity);
             SaveSystem.SetGraftRejectionSystem(GraftRejection);
             SaveSystem.SetPheromoneMaskingSystem(PheromoneMasking);
+            SaveSystem.SetChemToleranceSystem(ChemTolerance);
             SaveSystem.SetLastWillSystem(LastWill);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);

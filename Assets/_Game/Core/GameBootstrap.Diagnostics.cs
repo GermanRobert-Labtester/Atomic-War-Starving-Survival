@@ -115,6 +115,7 @@ namespace AtomicWar._Game.Core
             { "BloodToxicity",           new[] { "blood_toxicity" } },
             { "GraftRejection",          new[] { "graft_rejection_daily", "graft_rejection" } },
             { "PheromoneMasking",        new[] { "pheromone_masking" } },
+            { "ChemTolerance",           new[] { "tolerance" } },
             { "LastWill",                new[] { "last_will" } },
             { "RiverNodeSystem",         new[] { "river_nodes" } },
             // Tactical / world systems

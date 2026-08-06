@@ -28,17 +28,27 @@ namespace AtomicWar._Game.Core
 
     /// <summary>
     /// Prompt #833: Tolerance.
-    /// Morphine / Amphetamines build tolerance with repeated use.
-    /// 1st use = 24 h effect, 5th use = ~4 h. After 6+ uses the chemical
-    /// only prevents Withdrawal, providing no therapeutic benefit.
+    /// Morphine / Amphetamines / Anti-Rad build tolerance with repeated use.
+    /// Callers must query <see cref="GetDuration"/> / <see cref="GetEffectiveness"/>
+    /// BEFORE <see cref="UseChem"/> so the current dose uses pre-increment counts
+    /// (1st use = 24 h / full effect; after 6 uses = no therapeutic benefit).
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
     public class System_Tolerance
     {
         // ── Constants ──────────────────────────────────────────────────
-        private const float BASE_DURATION = 24f;
+        public const float BaseDurationHours = 24f;
         private const float WITHDRAWAL_WINDOW = 48f; // hours before withdrawal kicks in
         private const int TOLERANCE_THRESHOLD = 6;   // 6+ uses → only prevents withdrawal
+
+        /// <summary>Chems that build tolerance (Prompt #833 + anti_rad for rad meds).</summary>
+        private static readonly HashSet<string> TrackedChemIds =
+            new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+            {
+                "morphine",
+                "amphetamines",
+                "anti_rad"
+            };
 
         // ── Events ─────────────────────────────────────────────────────
         public event Action<string, string, int> OnChemUsed;              // survivorId, chemId, useCount
@@ -46,61 +56,73 @@ namespace AtomicWar._Game.Core
         public event Action<string, string> OnWithdrawalStarted;          // survivorId, chemId
 
         // ── State ──────────────────────────────────────────────────────
-        // survivorId → (chemId → ToleranceEntry)
+        // survivorId → (chemId → ToleranceEntry) — chem keys are lower-invariant
         private readonly Dictionary<string, Dictionary<string, ToleranceEntry>> _data
             = new Dictionary<string, Dictionary<string, ToleranceEntry>>();
 
         // ── Public API ─────────────────────────────────────────────────
 
+        public static bool IsToleranceChem(string chemId) =>
+            !string.IsNullOrEmpty(chemId) && TrackedChemIds.Contains(chemId);
+
         /// <summary>
         /// Record a chemical use. Increments the tolerance counter and
-        /// fires events.
+        /// fires events. No-op for non-tracked chem ids.
         /// </summary>
         public void UseChem(string survivorId, string chemId, float gameTime)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(chemId)) return;
+            if (!IsToleranceChem(chemId)) return;
 
-            var entry = GetOrCreate(survivorId, chemId);
+            string key = NormalizeChemId(chemId);
+            var entry = GetOrCreate(survivorId, key);
             entry.use_count++;
             entry.last_use_time = gameTime;
 
-            float newDuration = GetDuration(survivorId, chemId);
+            float newDuration = DurationFromUseCount(entry.use_count);
 
-            OnChemUsed?.Invoke(survivorId, chemId, entry.use_count);
-            OnToleranceIncreased?.Invoke(survivorId, chemId, newDuration);
+            OnChemUsed?.Invoke(survivorId, key, entry.use_count);
+            OnToleranceIncreased?.Invoke(survivorId, key, newDuration);
         }
 
         /// <summary>
-        /// Returns the effective duration in hours for the next dose.
-        /// Formula: 24 * (1 / (1 + useCount * 0.5)).
+        /// Effective duration in hours for the <em>next</em> dose (pre-increment).
+        /// Formula: 24 * (1 / (1 + useCount * 0.5)). First use → 24 h.
         /// </summary>
         public float GetDuration(string survivorId, string chemId)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(chemId))
-                return BASE_DURATION;
+                return BaseDurationHours;
+            if (!IsToleranceChem(chemId)) return BaseDurationHours;
 
-            var entry = GetEntry(survivorId, chemId);
-            if (entry == null) return BASE_DURATION;
+            var entry = GetEntry(survivorId, NormalizeChemId(chemId));
+            if (entry == null) return BaseDurationHours;
 
-            return BASE_DURATION * (1f / (1f + entry.use_count * 0.5f));
+            return DurationFromUseCount(entry.use_count);
         }
 
         /// <summary>
-        /// Returns the therapeutic effectiveness (0-1).
-        /// Formula: max(0.1, 1.0 - useCount * 0.15).
-        /// After 6+ uses the chem only prevents withdrawal (effectiveness 0).
+        /// Therapeutic effectiveness (0-1) for the <em>next</em> dose (pre-increment).
+        /// Formula: max(0.1, 1.0 - useCount * 0.15). After 6+ prior uses → 0.
         /// </summary>
         public float GetEffectiveness(string survivorId, string chemId)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(chemId))
                 return 1f;
+            if (!IsToleranceChem(chemId)) return 1f;
 
-            var entry = GetEntry(survivorId, chemId);
+            var entry = GetEntry(survivorId, NormalizeChemId(chemId));
             if (entry == null) return 1f;
 
             if (entry.use_count >= TOLERANCE_THRESHOLD) return 0f;
 
             return Mathf.Max(0.1f, 1f - entry.use_count * 0.15f);
+        }
+
+        public static float DurationFromUseCount(int useCount)
+        {
+            if (useCount < 0) useCount = 0;
+            return BaseDurationHours * (1f / (1f + useCount * 0.5f));
         }
 
         /// <summary>
@@ -112,15 +134,17 @@ namespace AtomicWar._Game.Core
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(chemId))
                 return false;
+            if (!IsToleranceChem(chemId)) return false;
 
-            var entry = GetEntry(survivorId, chemId);
+            string key = NormalizeChemId(chemId);
+            var entry = GetEntry(survivorId, key);
             if (entry == null || entry.use_count == 0) return false;
 
             float elapsed = gameTime - entry.last_use_time;
             bool inWithdrawal = elapsed > WITHDRAWAL_WINDOW;
 
             if (inWithdrawal)
-                OnWithdrawalStarted?.Invoke(survivorId, chemId);
+                OnWithdrawalStarted?.Invoke(survivorId, key);
 
             return inWithdrawal;
         }
@@ -130,12 +154,16 @@ namespace AtomicWar._Game.Core
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(chemId))
                 return 0;
+            if (!IsToleranceChem(chemId)) return 0;
 
-            var entry = GetEntry(survivorId, chemId);
+            var entry = GetEntry(survivorId, NormalizeChemId(chemId));
             return entry != null ? entry.use_count : 0;
         }
 
         // ── Helpers ────────────────────────────────────────────────────
+
+        private static string NormalizeChemId(string chemId) =>
+            chemId != null ? chemId.Trim().ToLowerInvariant() : "";
 
         private ToleranceEntry GetEntry(string survivorId, string chemId)
         {
@@ -151,7 +179,7 @@ namespace AtomicWar._Game.Core
         {
             if (!_data.TryGetValue(survivorId, out var chemMap))
             {
-                chemMap = new Dictionary<string, ToleranceEntry>();
+                chemMap = new Dictionary<string, ToleranceEntry>(StringComparer.OrdinalIgnoreCase);
                 _data[survivorId] = chemMap;
             }
 
@@ -202,21 +230,26 @@ namespace AtomicWar._Game.Core
         public void RestoreState(ToleranceState saved)
         {
             _data.Clear();
-            if (saved == null) return;
+            if (saved == null || saved.survivors == null) return;
 
             foreach (var survivorState in saved.survivors)
             {
-                if (string.IsNullOrEmpty(survivorState.survivor_id)) continue;
+                if (survivorState == null || string.IsNullOrEmpty(survivorState.survivor_id)) continue;
 
-                var chemMap = new Dictionary<string, ToleranceEntry>();
-                foreach (var entry in survivorState.entries)
+                var chemMap = new Dictionary<string, ToleranceEntry>(StringComparer.OrdinalIgnoreCase);
+                if (survivorState.entries != null)
                 {
-                    chemMap[entry.chem_id] = new ToleranceEntry
+                    foreach (var entry in survivorState.entries)
                     {
-                        chem_id = entry.chem_id,
-                        use_count = entry.use_count,
-                        last_use_time = entry.last_use_time
-                    };
+                        if (entry == null || string.IsNullOrEmpty(entry.chem_id)) continue;
+                        string key = NormalizeChemId(entry.chem_id);
+                        chemMap[key] = new ToleranceEntry
+                        {
+                            chem_id = key,
+                            use_count = entry.use_count,
+                            last_use_time = entry.last_use_time
+                        };
+                    }
                 }
 
                 _data[survivorState.survivor_id] = chemMap;

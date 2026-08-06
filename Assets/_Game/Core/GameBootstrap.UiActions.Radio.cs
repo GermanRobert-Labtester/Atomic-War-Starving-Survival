@@ -65,13 +65,35 @@ namespace AtomicWar._Game.Core
         public void ConsumeItem(Survivor sv, ItemDefinition item)
         {
             if (sv == null || item == null || !sv.IsAlive) return;
-            if (Inventory == null || !Inventory.Consume(item, sv, RadiationSystem, NeedsSystem))
+
+            // Prompt #833 — peek tolerance before recording use / applying effects.
+            float therapeuticScale = 1f;
+            float durationHours = 0f;
+            if (!string.IsNullOrEmpty(item.id) && ChemUseRouter.IsToleranceChem(item.id))
+            {
+                therapeuticScale = ChemUse?.PeekEffectiveness(sv, item.id) ?? 1f;
+                durationHours = ChemUse?.PeekDurationHours(sv, item.id) ?? 0f;
+            }
+
+            if (Inventory == null
+                || !Inventory.Consume(item, sv, RadiationSystem, NeedsSystem, therapeuticScale))
                 return;
+
+            // Anti-rad (and similar): duration tops up temporary rad resistance.
+            if (durationHours > 0f && therapeuticScale > 0f
+                && !string.IsNullOrEmpty(item.id)
+                && ChemUseRouter.IsToleranceChem(item.id)
+                && item.radCleanse > 0f)
+            {
+                float resist = durationHours * therapeuticScale;
+                sv.RadResistanceHoursRemaining = Mathf.Max(sv.RadResistanceHoursRemaining, resist);
+                sv.HasRadResistance = true;
+            }
 
             // Prompt #13 — poisoned iodine looks clean until swallowed.
             SabotagedCacheSystem?.TryApplyPoisonOnConsume(item, sv, MedicalSystem);
 
-            // Direct inventory use: addiction + blood toxicity + polypharmacy.
+            // Direct inventory use: addiction + blood toxicity + polypharmacy + tolerance.
             if (!string.IsNullOrEmpty(item.id))
                 ChemUse?.Notify(sv, item.id);
         }

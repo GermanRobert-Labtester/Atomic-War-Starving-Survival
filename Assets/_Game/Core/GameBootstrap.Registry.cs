@@ -381,6 +381,7 @@ namespace AtomicWar._Game.Core
                 "antibiotic_resist", "hauling", "weapon_maint", "triage", "scrap_weapon",
                 // Chem abuse bookkeeping (ticks only on treatment item consume):
                 "blood_toxicity",
+                "tolerance",
                 // Rogue-lite grave (fires on wipe) + river crossings (travel events):
                 "last_will",
                 "river_nodes",

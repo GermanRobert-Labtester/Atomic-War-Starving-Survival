@@ -541,26 +541,35 @@ namespace AtomicWar._Game.Inventory
         /// Consume one of an item, applying its effects: need changes via NeedsSystem,
         /// rad cleanse / iodine resistance / ingested contamination via RadiationSystem.
         /// Either system may be null to skip that category of effects.
+        /// <paramref name="therapeuticScale"/> scales health and rad-cleanse only
+        /// (Prompt #833 chem tolerance); hunger/thirst/morale/contamination unchanged.
         /// </summary>
-        public bool Consume(ItemDefinition item, Survivor survivor, RadiationSystem radiation = null, NeedsSystem needs = null)
+        public bool Consume(
+            ItemDefinition item,
+            Survivor survivor,
+            RadiationSystem radiation = null,
+            NeedsSystem needs = null,
+            float therapeuticScale = 1f)
         {
             if (item == null || survivor == null || !survivor.IsAlive) return false;
             if (Count(item) < 1) return false;
             if (!Remove(item, 1)) return false;
 
+            float scale = Mathf.Clamp01(therapeuticScale);
+
             if (needs != null)
             {
                 needs.Modify(survivor, NeedKind.Hunger, item.hungerRestore);
                 needs.Modify(survivor, NeedKind.Thirst, item.thirstRestore);
-                needs.Modify(survivor, NeedKind.Health, item.healthEffect);
+                needs.Modify(survivor, NeedKind.Health, item.healthEffect * scale);
                 needs.Modify(survivor, NeedKind.Morale, item.moraleEffect);
             }
 
             if (radiation != null)
             {
-                if (item.radCleanse > 0f)
+                if (item.radCleanse > 0f && scale > 0f)
                 {
-                    radiation.AdministerAntiRad(survivor, item.radCleanse);
+                    radiation.AdministerAntiRad(survivor, item.radCleanse * scale);
                 }
                 if (item.type == ItemType.Iodine)
                 {

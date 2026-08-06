@@ -77,6 +77,7 @@ namespace AtomicWar._Game.Core
             BloodToxicity = new BloodToxicitySystem();
             GraftRejection = new GraftRejectionSystem();
             PheromoneMasking = new PheromoneMaskingSystem();
+            ChemTolerance = new System_Tolerance();
             // Rogue-lite grave site (populated on wipe; restored from save mid-run).
             LastWill = new LastWillSystem();
         }
@@ -104,6 +105,7 @@ namespace AtomicWar._Game.Core
                 Addiction,
                 BloodToxicity,
                 PolypharmacySystem,
+                ChemTolerance,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 1,
                 getGameHours: () => TimeSystem != null ? TimeSystem.TotalElapsedHours : 0f);
 
@@ -118,6 +120,26 @@ namespace AtomicWar._Game.Core
 
             if (AmputationSystem != null)
                 AmputationSystem.OnChemConsumed = onChem;
+
+            WireAntiRadToleranceHooks();
+        }
+
+        /// <summary>Prompt #833 — UseAntiRad peeks duration/effectiveness before dose.</summary>
+        private void WireAntiRadToleranceHooks()
+        {
+            if (Actions == null) return;
+            for (int i = 0; i < Actions.Count; i++)
+            {
+                if (Actions[i] is UseAntiRadActionSO anti)
+                {
+                    anti.GetChemEffectiveness = (sv, id) =>
+                        ChemUse != null ? ChemUse.PeekEffectiveness(sv, id) : 1f;
+                    anti.GetChemDurationHours = (sv, id) =>
+                        ChemUse != null
+                            ? ChemUse.PeekDurationHours(sv, id)
+                            : System_Tolerance.BaseDurationHours;
+                }
+            }
         }
 
     }

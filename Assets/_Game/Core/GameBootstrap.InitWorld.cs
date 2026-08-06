@@ -141,6 +141,7 @@ namespace AtomicWar._Game.Core
                 Addiction,
                 BloodToxicity,
                 PolypharmacySystem,
+                ChemTolerance,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 1,
                 getGameHours: () => TimeSystem != null ? TimeSystem.TotalElapsedHours : 0f);
 

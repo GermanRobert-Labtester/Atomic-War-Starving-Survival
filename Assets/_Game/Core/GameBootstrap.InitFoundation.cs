@@ -183,6 +183,7 @@ namespace AtomicWar._Game.Core
                 CreateAction<RestActionSO>(),
                 CreateAction<WarmUpActionSO>(),
                 CreateAction<TakeIodineActionSO>(),
+                CreateAction<UseAntiRadActionSO>(),
                 CreateAction<ScavengeActionSO>(),
                 CreateAction<SurveyActionSO>(),
                 CreateAction<TreatPatientActionSO>(),

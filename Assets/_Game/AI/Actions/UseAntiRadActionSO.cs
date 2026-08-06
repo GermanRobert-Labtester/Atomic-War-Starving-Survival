@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 
@@ -6,7 +7,15 @@ namespace AtomicWar._Game.AI.Actions
     [CreateAssetMenu(fileName = "Action_UseAntiRad", menuName = "ASHFALL/AI/Use AntiRad Action")]
     public class UseAntiRadActionSO : SurvivorAction
     {
+        public const float BaseRadReduction = 30f;
+
         public string AntiRadItemId = "anti_rad";
+
+        /// <summary>Host: peek next-dose effectiveness (0..1) before recording use.</summary>
+        public Func<Survivor, string, float> GetChemEffectiveness;
+
+        /// <summary>Host: peek next-dose duration hours before recording use.</summary>
+        public Func<Survivor, string, float> GetChemDurationHours;
 
         public UseAntiRadActionSO()
         {
@@ -71,10 +80,30 @@ namespace AtomicWar._Game.AI.Actions
 
             // Only apply therapeutic effect when a dose was actually taken.
             // (Score already requires stock when rad is high; free doses are not allowed.)
-            if (consumed || context.Inventory == null)
+            if (!(consumed || context.Inventory == null)) return;
+
+            float effectiveness = GetChemEffectiveness != null
+                ? Mathf.Clamp01(GetChemEffectiveness(context.Survivor, AntiRadItemId))
+                : 1f;
+            float durationHours = GetChemDurationHours != null
+                ? Mathf.Max(0f, GetChemDurationHours(context.Survivor, AntiRadItemId))
+                : 24f;
+
+            // Prompt #833 — tolerance shrinks cleanse; 6+ uses → no therapeutic benefit.
+            float cleanse = BaseRadReduction * effectiveness;
+            if (cleanse > 0f)
             {
                 context.Survivor.RadiationDose =
-                    Mathf.Max(0f, context.Survivor.RadiationDose - 30f);
+                    Mathf.Max(0f, context.Survivor.RadiationDose - cleanse);
+            }
+
+            // Duration grants temporary rad resistance (half-strength window from iodine path).
+            if (effectiveness > 0f && durationHours > 0f)
+            {
+                float resistHours = durationHours * effectiveness;
+                context.Survivor.RadResistanceHoursRemaining =
+                    Mathf.Max(context.Survivor.RadResistanceHoursRemaining, resistHours);
+                context.Survivor.HasRadResistance = true;
             }
         }
     }

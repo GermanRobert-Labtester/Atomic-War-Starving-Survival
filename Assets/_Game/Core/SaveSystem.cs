@@ -175,6 +175,7 @@ namespace AtomicWar._Game.Core
         private BloodToxicitySystem _bloodToxicitySystem;
         private GraftRejectionSystem _graftRejectionSystem;
         private PheromoneMaskingSystem _pheromoneMaskingSystem;
+        private System_Tolerance _chemToleranceSystem;
         private LastWillSystem _lastWillSystem;
         private RiverNodeSystem _riverNodeSystem;
         // Choreographer is injected as capture/restore delegates rather than a

@@ -192,7 +192,9 @@ namespace AtomicWar._Game.Core
         public AddictionSystem Addiction { get; private set; }
         // Prompt #551 — chem-abuse blood toxicity (bite retaliation).
         public BloodToxicitySystem BloodToxicity { get; private set; }
-        /// <summary>Shared chem consumption side-effects (addiction, toxicity, polypharmacy).</summary>
+        /// <summary>Prompt #833 — morphine / amphetamines / anti_rad tolerance.</summary>
+        public System_Tolerance ChemTolerance { get; private set; }
+        /// <summary>Shared chem consumption side-effects (addiction, toxicity, polypharmacy, tolerance).</summary>
         public ChemUseRouter ChemUse { get; private set; }
         // Prompt #556 — graft/prosthetic rejection + immunosuppressants.
         public GraftRejectionSystem GraftRejection { get; private set; }
