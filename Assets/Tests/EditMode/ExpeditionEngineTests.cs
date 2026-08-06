@@ -374,6 +374,124 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RiverNodeWiring_BlockadeWithFuel_PaysTollAndUsesBridge()
+        {
+            const int tollCost = 5;
+            int fuelStock = 7;
+            var river = new RiverNodeSystem();
+            river.RestoreState(new RiverNodeSave
+            {
+                entries = new List<RiverNodeState>
+                {
+                    new RiverNodeState
+                    {
+                        nodeId = _location.id,
+                        hasBridge = true,
+                        isBlockaded = true,
+                        blockadeTollCost = tollCost
+                    }
+                }
+            });
+            _expeditionSystem.SetRiverNodeSystem(river);
+            _expeditionSystem.SetHasItem(_ => false);
+            _expeditionSystem.SetItemHandlers(
+                itemId => itemId == ExpeditionSystem.RiverTollFuelItemId ? fuelStock : 0,
+                (itemId, amount) =>
+                {
+                    if (itemId != ExpeditionSystem.RiverTollFuelItemId || fuelStock < amount)
+                        return false;
+                    fuelStock -= amount;
+                    return true;
+                });
+
+            var survivor = new Survivor { Id = "sv_toll", DisplayName = "Toll" };
+            _needsSystem.Register(survivor);
+            _radSystem.Register(survivor);
+
+            Assert.IsTrue(_expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth));
+            var state = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
+
+            Assert.AreEqual("bridge", _expeditionSystem.LastRiverCrossingMethod);
+            Assert.AreEqual(tollCost, _expeditionSystem.LastRiverTollPaid);
+            Assert.AreEqual(2, fuelStock, "Toll should consume exactly blockade cost in fuel.");
+            Assert.IsFalse(river.RiverNodes[_location.id].isBlockaded);
+            Assert.AreEqual(0, river.RiverNodes[_location.id].blockadeTollCost);
+            // 3h base + 1h bridge = 4 ticks (not wade ×10).
+            Assert.AreEqual(4, state.TotalDistanceTicks);
+            Assert.AreEqual(0f, _expeditionSystem.LastRiverWadeRad, Eps);
+        }
+
+        [Test]
+        public void RiverNodeWiring_BlockadeInsufficientFuel_WadesWithoutPaying()
+        {
+            const int tollCost = 5;
+            int fuelStock = 2;
+            var river = new RiverNodeSystem();
+            river.RestoreState(new RiverNodeSave
+            {
+                entries = new List<RiverNodeState>
+                {
+                    new RiverNodeState
+                    {
+                        nodeId = _location.id,
+                        hasBridge = true,
+                        isBlockaded = true,
+                        blockadeTollCost = tollCost,
+                        crossWithoutBridgeTimeMultiplier = 10f,
+                        crossWithoutBridgeRadExposure = 50f
+                    }
+                }
+            });
+            _expeditionSystem.SetRiverNodeSystem(river);
+            _expeditionSystem.SetHasItem(_ => false);
+            _expeditionSystem.SetItemHandlers(
+                itemId => itemId == ExpeditionSystem.RiverTollFuelItemId ? fuelStock : 0,
+                (itemId, amount) =>
+                {
+                    if (itemId != ExpeditionSystem.RiverTollFuelItemId || fuelStock < amount)
+                        return false;
+                    fuelStock -= amount;
+                    return true;
+                });
+
+            var survivor = new Survivor { Id = "sv_broke", DisplayName = "Broke" };
+            _needsSystem.Register(survivor);
+            _radSystem.Register(survivor);
+
+            Assert.IsTrue(_expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth));
+            var state = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
+
+            Assert.AreEqual("wade", _expeditionSystem.LastRiverCrossingMethod);
+            Assert.AreEqual(0, _expeditionSystem.LastRiverTollPaid);
+            Assert.AreEqual(2, fuelStock, "Insufficient fuel must not be partially consumed.");
+            Assert.IsTrue(river.RiverNodes[_location.id].isBlockaded);
+            Assert.AreEqual(tollCost, river.RiverNodes[_location.id].blockadeTollCost);
+            Assert.AreEqual(30, state.TotalDistanceTicks);
+            Assert.Greater(_expeditionSystem.LastRiverWadeRad, 0f);
+        }
+
+        [Test]
+        public void BloodToxicity_TrackedChems_AccumulateTowardToxicThreshold()
+        {
+            var blood = new BloodToxicitySystem();
+            // Mirrors inventory ConsumeItem / ForcedChem path: only tracked chem ids count.
+            blood.RecordChemUse("sv_chem", "morphine");
+            blood.RecordChemUse("sv_chem", "anti_rad");
+            blood.RecordChemUse("sv_chem", "amphetamines");
+            blood.RecordChemUse("sv_chem", "canned_food"); // ignored
+            blood.RecordChemUse("sv_chem", "morphine");
+
+            Assert.IsFalse(blood.IsBloodToxic("sv_chem"),
+                "Threshold is 5 tracked uses; food must not count.");
+            Assert.AreEqual(4, blood.States["sv_chem"].chemUsageCount);
+
+            blood.RecordChemUse("sv_chem", "anti_rad");
+            Assert.IsTrue(blood.IsBloodToxic("sv_chem"));
+            Assert.AreEqual(5, blood.States["sv_chem"].chemUsageCount);
+            Assert.AreEqual(100f, blood.States["sv_chem"].bloodToxicityLevel, Eps);
+        }
+
+        [Test]
         public void BloodToxicityWiring_FeralDogEngage_PoisonsAttackerWhenToxic()
         {
             var blood = new BloodToxicitySystem();

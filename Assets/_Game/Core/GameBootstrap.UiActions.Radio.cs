@@ -70,6 +70,14 @@ namespace AtomicWar._Game.Core
 
             // Prompt #13 — poisoned iodine looks clean until swallowed.
             SabotagedCacheSystem?.TryApplyPoisonOnConsume(item, sv, MedicalSystem);
+
+            // Direct inventory use (not only Medical treatment recipes): addiction + blood toxicity.
+            if (!string.IsNullOrEmpty(item.id))
+            {
+                int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+                Addiction?.OnItemConsumed(sv, item.id, day);
+                BloodToxicity?.RecordChemUse(sv.Id, item.id);
+            }
         }
 
         public void CraftRecipe(Recipe recipe)

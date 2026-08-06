@@ -178,11 +178,15 @@ namespace AtomicWar._Game.Core
         {
             LastRiverCrossingMethod = null;
             LastRiverWadeRad = 0f;
+            LastRiverTollPaid = 0;
             if (_riverNodeSystem == null || string.IsNullOrEmpty(nodeId)) return travelHours;
             if (!_riverNodeSystem.RiverNodes.ContainsKey(nodeId)) return travelHours;
 
             if (!_riverNodeSystem.RiverNodes.TryGetValue(nodeId, out var river) || river == null)
                 return travelHours;
+
+            // Blockaded bridge: auto-pay fuel toll when stocked (player chose to go there).
+            TryPayRiverBlockadeToll(nodeId, river);
 
             int boatFuel = 0;
             if (_hasItem != null && (_hasItem("rowboat") || _hasItem("boat")))
@@ -222,6 +226,33 @@ namespace AtomicWar._Game.Core
                 _radSystem?.Expose(survivor, result.radiationExposure, 1f);
 
             return travelHours;
+        }
+
+        /// <summary>
+        /// Prompt #569 — pay blockade toll in fuel to clear the bridge before crossing.
+        /// </summary>
+        private void TryPayRiverBlockadeToll(string nodeId, RiverNodeState river)
+        {
+            if (river == null || !river.hasBridge || !river.isBlockaded) return;
+            if (_countItem == null || _consumeItem == null) return;
+
+            int cost = river.blockadeTollCost;
+            if (cost <= 0) return;
+
+            int available = _countItem(RiverTollFuelItemId);
+            if (available < cost) return;
+
+            // PayToll only clears state when availableFuel >= cost; it does not deduct.
+            if (!_riverNodeSystem.PayToll(nodeId, available)) return;
+            if (!_consumeItem(RiverTollFuelItemId, cost))
+            {
+                // Rollback: inventory could not pay — re-blockade so state matches stock.
+                river.isBlockaded = true;
+                river.blockadeTollCost = cost;
+                return;
+            }
+
+            LastRiverTollPaid = cost;
         }
 
         private float ApplyUrbanPathfinderTravel(Survivor survivor, string nodeId, float travelHours)

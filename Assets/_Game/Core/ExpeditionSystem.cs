@@ -60,6 +60,8 @@ namespace AtomicWar._Game.Core
         private RiverNodeSystem _riverNodeSystem;
         private BloodToxicitySystem _bloodToxicity;
         private Func<string, bool> _hasItem;
+        private Func<string, int> _countItem;
+        private Func<string, int, bool> _consumeItem;
         private ItemDefinition _deserterStandRifle;
 
         private readonly List<ExpeditionState> _activeExpeditions = new List<ExpeditionState>();
@@ -236,14 +238,30 @@ namespace AtomicWar._Game.Core
             _hasItem = hasItem;
         }
 
+        /// <summary>
+        /// Inventory count/consume for river blockade tolls (fuel units).
+        /// Optional — without these, blockades force boat/wade instead of auto-pay.
+        /// </summary>
+        public void SetItemHandlers(Func<string, int> countItem, Func<string, int, bool> consumeItem)
+        {
+            _countItem = countItem;
+            _consumeItem = consumeItem;
+        }
+
         /// <summary>Last river crossing method applied on expedition start (tests / UI).</summary>
         public string LastRiverCrossingMethod { get; private set; }
 
         /// <summary>One-shot rad from last river wade on expedition start.</summary>
         public float LastRiverWadeRad { get; private set; }
 
+        /// <summary>Fuel units paid for last river blockade toll (0 if none).</summary>
+        public int LastRiverTollPaid { get; private set; }
+
         /// <summary>Poison damage dealt to last biting attacker via blood toxicity.</summary>
         public float LastBiteRetaliationDamage { get; private set; }
+
+        /// <summary>Item id used as river blockade toll currency.</summary>
+        public const string RiverTollFuelItemId = "fuel";
 
         /// <summary>
         /// Prompts #182–#188 — combat milestone perks (stealth kills, flees,

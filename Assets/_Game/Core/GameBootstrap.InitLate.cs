@@ -161,6 +161,13 @@ namespace AtomicWar._Game.Core
             ExpeditionSystem.SetHasItem(itemId =>
                 Inventory != null && !string.IsNullOrEmpty(itemId)
                 && Inventory.CountById(itemId) > 0);
+            ExpeditionSystem.SetItemHandlers(
+                itemId => Inventory != null && !string.IsNullOrEmpty(itemId)
+                    ? Inventory.CountById(itemId) : 0,
+                (itemId, amount) => Inventory != null
+                    && !string.IsNullOrEmpty(itemId)
+                    && amount > 0
+                    && Inventory.RemoveById(itemId, amount));
             // Prompts #182–#188 — combat milestone tracking on encounters / flee
             ExpeditionSystem.BindCombatPerks(
                 CombatPerks,
@@ -613,6 +620,7 @@ namespace AtomicWar._Game.Core
                     if (!Inventory.RemoveById(chemId, 1)) return false;
                     int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
                     Addiction?.OnItemConsumed(sv, chemId, day);
+                    BloodToxicity?.RecordChemUse(sv.Id, chemId);
                     return true;
                 };
             }
