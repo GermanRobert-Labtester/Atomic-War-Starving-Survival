@@ -54,6 +54,7 @@ namespace AtomicWar._Game.Medical
         private Action<Survivors.Survivor, string> _inflictAffliction;
         private MedicalPerkSystem _medicalPerks;
         private Func<int> _getDay;
+        private System.Random _rng;
 
         // -- Events --
         public event Action<Survivors.Survivor, Survivors.Survivor> OnAmputationPerformed; // patient, surgeon
@@ -70,6 +71,9 @@ namespace AtomicWar._Game.Medical
             _findSurvivor = findSurvivor;
             _inflictAffliction = inflictAffliction;
         }
+
+        /// <summary>Inject a seeded RNG for deterministic save/load replay (audit bugfix #4).</summary>
+        public void SetRng(System.Random rng) => _rng = rng ?? new System.Random(56);
 
         /// <summary>Optional medical milestone perks (#204 Anatomist).</summary>
         public void BindMedicalPerks(MedicalPerkSystem perks, Func<int> getDay = null)
@@ -163,8 +167,9 @@ namespace AtomicWar._Game.Medical
                     : PhantomPainDailyChance;
                 if (chance <= 0f) continue;
 
-                // Daily roll.
-                if (UnityEngine.Random.value < chance)
+                // Daily roll using seeded RNG for deterministic save/load (audit bugfix #4).
+                var rng = _rng ?? new System.Random(56);
+                if (rng.NextDouble() < chance)
                 {
                     sv.Needs.Fatigue = Mathf.Clamp(
                         sv.Needs.Fatigue + PhantomPainFatigueSpike, 0f, 100f);

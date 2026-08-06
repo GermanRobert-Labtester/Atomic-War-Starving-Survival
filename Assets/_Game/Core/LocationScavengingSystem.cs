@@ -386,6 +386,79 @@ namespace AtomicWar._Game.Core
 
             return loot;
         }
+
+        // -----------------------------------------------------------------
+        // Save / Load (audit wiring fix)
+        // ActiveMission.Survivor is [NonSerialized] — we save SurvivorId instead
+        // and restore it after load via the survivor lookup.
+        // -----------------------------------------------------------------
+        private Func<string, Survivor> _survivorLookup;
+        public void SetSurvivorLookup(Func<string, Survivor> lookup) => _survivorLookup = lookup;
+
+        public ScavengingSystemSave CaptureState()
+        {
+            var missions = new ActiveMissionSave[_active.Count];
+            for (int i = 0; i < _active.Count; i++)
+            {
+                var m = _active[i];
+                missions[i] = new ActiveMissionSave
+                {
+                    SurvivorId = m.SurvivorId,
+                    LocationId = m.LocationId,
+                    LocationName = m.LocationName,
+                    HoursRemaining = m.HoursRemaining,
+                    TotalHours = m.TotalHours,
+                    RadPerHour = m.RadPerHour,
+                    DangerLevel = m.DangerLevel,
+                    Kind = (int)m.Kind
+                };
+            }
+            return new ScavengingSystemSave { ActiveMissions = missions };
+        }
+
+        public void RestoreState(ScavengingSystemSave save)
+        {
+            _active.Clear();
+            if (save?.ActiveMissions == null) return;
+            for (int i = 0; i < save.ActiveMissions.Length; i++)
+            {
+                var sm = save.ActiveMissions[i];
+                if (sm == null || string.IsNullOrEmpty(sm.SurvivorId)) continue;
+                var sv = _survivorLookup?.Invoke(sm.SurvivorId);
+                var mission = new ActiveMission
+                {
+                    SurvivorId = sm.SurvivorId,
+                    LocationId = sm.LocationId,
+                    LocationName = sm.LocationName,
+                    HoursRemaining = sm.HoursRemaining,
+                    TotalHours = sm.TotalHours,
+                    RadPerHour = sm.RadPerHour,
+                    DangerLevel = sm.DangerLevel,
+                    Kind = (MissionKind)sm.Kind,
+                    Survivor = sv
+                };
+                _active.Add(mission);
+            }
+        }
+    }
+
+    [Serializable]
+    public class ScavengingSystemSave
+    {
+        public ActiveMissionSave[] ActiveMissions;
+    }
+
+    [Serializable]
+    public class ActiveMissionSave
+    {
+        public string SurvivorId;
+        public string LocationId;
+        public string LocationName;
+        public float HoursRemaining;
+        public float TotalHours;
+        public float RadPerHour;
+        public float DangerLevel;
+        public int Kind;
     }
 
     public enum MissionKind

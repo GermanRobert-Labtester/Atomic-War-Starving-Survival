@@ -162,5 +162,80 @@ namespace AtomicWar._Game.Survivors
             }
             return $"Day log ({trait}): Routine day. Dosimeter ticking constantly.";
         }
+
+        // -----------------------------------------------------------------
+        // Save / Load (audit wiring fix)
+        // -----------------------------------------------------------------
+        public DiarySystemSave CaptureState()
+        {
+            var sav = new DiarySystemSave();
+            sav.SurvivorKeys = new string[_diariesBySurvivor.Count];
+            sav.DiaryEntryArrays = new DiaryEntryArray[_diariesBySurvivor.Count];
+            int i = 0;
+            foreach (var kv in _diariesBySurvivor)
+            {
+                sav.SurvivorKeys[i] = kv.Key;
+                var entries = kv.Value;
+                var arr = new DiaryEntrySave[entries != null ? entries.Count : 0];
+                if (entries != null)
+                    for (int j = 0; j < entries.Count; j++)
+                    {
+                        var e = entries[j];
+                        arr[j] = new DiaryEntrySave
+                        {
+                            DayCreated = e.DayCreated,
+                            MoraleAtCreation = e.MoraleAtCreation,
+                            TraitId = e.TraitId,
+                            Content = e.Content
+                        };
+                    }
+                sav.DiaryEntryArrays[i] = new DiaryEntryArray { Entries = arr };
+                i++;
+            }
+            return sav;
+        }
+
+        public void RestoreState(DiarySystemSave save)
+        {
+            _diariesBySurvivor.Clear();
+            if (save?.SurvivorKeys == null) return;
+            for (int i = 0; i < save.SurvivorKeys.Length; i++)
+            {
+                if (string.IsNullOrEmpty(save.SurvivorKeys[i])) continue;
+                var list = new List<SurvivorDiaryEntry>();
+                if (save.DiaryEntryArrays != null && i < save.DiaryEntryArrays.Length
+                    && save.DiaryEntryArrays[i]?.Entries != null)
+                {
+                    foreach (var se in save.DiaryEntryArrays[i].Entries)
+                    {
+                        if (se == null) continue;
+                        list.Add(new SurvivorDiaryEntry(se.DayCreated, se.MoraleAtCreation, se.TraitId, se.Content));
+                    }
+                }
+                _diariesBySurvivor[save.SurvivorKeys[i]] = list;
+            }
+        }
+    }
+
+    [Serializable]
+    public class DiarySystemSave
+    {
+        public string[] SurvivorKeys;
+        public DiaryEntryArray[] DiaryEntryArrays;
+    }
+
+    [Serializable]
+    public class DiaryEntryArray
+    {
+        public DiaryEntrySave[] Entries;
+    }
+
+    [Serializable]
+    public class DiaryEntrySave
+    {
+        public int DayCreated;
+        public float MoraleAtCreation;
+        public string TraitId;
+        public string Content;
     }
 }

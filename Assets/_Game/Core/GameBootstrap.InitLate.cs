@@ -257,6 +257,27 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetExpeditionPerkSystem(ExpeditionPerks);
             SaveSystem.SetSocialPerkSystem(SocialPerks);
             SaveSystem.SetPersonalQuestSystem(PersonalQuests);
+            SaveSystem.SetHallucinationSystem(HallucinationSystem);
+            SaveSystem.SetInternalLockSystem(InternalLockSystem);
+            SaveSystem.SetSurvivorDiariesSystem(SurvivorDiaries);
+            SaveSystem.SetRadioBroadcastSystem(RadioSystem);
+
+            // CraftingSystem needs a recipe lookup for restoring active crafts.
+            CraftingSystem.SetRecipeLookup(id =>
+            {
+                if (_recipeCatalog == null || _recipeCatalog.recipes == null) return null;
+                for (int r = 0; r < _recipeCatalog.recipes.Count; r++)
+                    if (_recipeCatalog.recipes[r] != null && _recipeCatalog.recipes[r].id == id)
+                        return _recipeCatalog.recipes[r];
+                return null;
+            });
+            SaveSystem.SetCraftingSystem(CraftingSystem);
+            SaveSystem.SetWorkbenchSystem(WorkbenchSystem);
+
+            // ScavengingSystem needs a survivor lookup for restoring active missions.
+            ScavengingSystem.SetSurvivorLookup(id => Survivors?.Find(s => s.Id == id));
+            SaveSystem.SetScavengingSystem(ScavengingSystem);
+
             WireCombatPerkBindings();
             WireSurvivalPerkBindings();
             WireShelterPerkBindings();

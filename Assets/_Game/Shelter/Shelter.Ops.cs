@@ -10,10 +10,10 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Indoor radiation level for a given exterior radiation dose rate.</summary>
         public float GetInteriorRadsPerHour(float exteriorRads)
         {
-            float rads = exteriorRads;
-
-            // Overworld structure shielding (rubble, deep underground, etc.).
-            rads = exteriorRads * (1f - Mathf.Clamp01(OverworldShieldingBonus));
+            // Overworld structure shielding (rubble, deep underground, etc.) and
+            // bunker radiation-shielding module stack multiplicatively.
+            float overworldFactor = 1f - Mathf.Clamp01(OverworldShieldingBonus);
+            float rads = exteriorRads * overworldFactor;
 
             var shieldingModule = GetModule("radiation_shielding");
             if (shieldingModule != null && shieldingModule.IsOperational)
@@ -27,7 +27,8 @@ namespace AtomicWar._Game.Shelter
                 {
                     attenuation = Mathf.Clamp01(shieldingModule.Level * 0.15f);
                 }
-                rads = exteriorRads * (1f - attenuation);
+                // Module shielding stacks multiplicatively with overworld bonus (audit bugfix #2).
+                rads = exteriorRads * overworldFactor * (1f - attenuation);
             }
 
             var airModule = GetModule("air_filtration");

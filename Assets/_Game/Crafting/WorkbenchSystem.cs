@@ -893,4 +893,11 @@ namespace AtomicWar._Game.Crafting
         public string CostSummary;
         public bool CanExecute;
     }
+
+    /// <summary>Future-proof save DTO for WorkbenchSystem (currently stateless).</summary>
+    [Serializable]
+    public class WorkbenchSystemSave
+    {
+        // Reserved for future mutable state (e.g. station degradation, open/close).
+    }
 }

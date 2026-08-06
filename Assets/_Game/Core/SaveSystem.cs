@@ -14,6 +14,8 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.AI; // HallucinationSystem (audit wiring fix)
+using AtomicWar._Game.Crafting; // CraftingSystem, WorkbenchSystem (audit wiring fix)
 
 namespace AtomicWar._Game.Core
 {
@@ -159,6 +161,13 @@ namespace AtomicWar._Game.Core
         private ExpeditionPerkSystem _expeditionPerkSystem;
         private SocialPerkSystem _socialPerkSystem;
         private PersonalQuestSystem _personalQuestSystem;
+        private HallucinationSystem _hallucinationSystem;
+        private InternalLockSystem _internalLockSystem;
+        private SurvivorDiariesSystem _survivorDiariesSystem;
+        private RadioBroadcastSystem _radioBroadcastSystem;
+        private CraftingSystem _craftingSystem;
+        private WorkbenchSystem _workbenchSystem;
+        private LocationScavengingSystem _scavengingSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;

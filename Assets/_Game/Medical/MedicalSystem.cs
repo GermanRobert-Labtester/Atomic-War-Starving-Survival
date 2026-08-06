@@ -1095,9 +1095,15 @@ namespace AtomicWar._Game.Medical
             for (int i = 0; i < resolved.Count; i++)
             {
                 var (item, amount, secondary) = resolved[i];
-                // High skill may spare secondary ingredients (not the primary dressing)
-                if (secondary && skill > 0.6f && UnityEngine.Random.value < skill * 0.4f)
-                    continue;
+                // High skill may spare secondary ingredients (not the primary dressing).
+                // Use surgery RNG for deterministic save/load; fall back to UnityEngine.Random
+                // when no RNG has been injected (e.g. tests that don't wire MedicalSystem).
+                if (secondary && skill > 0.6f)
+                {
+                    double roll = _surgeryRng != null ? _surgeryRng.NextDouble() : UnityEngine.Random.value;
+                    if (roll < skill * 0.4f)
+                        continue;
+                }
                 if (!_inventory.Remove(item, amount)) return false;
             }
             return true;

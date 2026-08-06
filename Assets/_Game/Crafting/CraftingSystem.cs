@@ -327,6 +327,55 @@ namespace AtomicWar._Game.Crafting
                        StringComparison.OrdinalIgnoreCase);
         }
 
+        // -----------------------------------------------------------------
+        // Save / Load (audit wiring fix)
+        // Recipes are ScriptableObjects — we save recipe IDs and restore
+        // by lookup from the recipe catalog.
+        // -----------------------------------------------------------------
+        public CraftingSystemSave CaptureState()
+        {
+            var crafts = new ActiveCraftSave[_active.Count];
+            for (int i = 0; i < _active.Count; i++)
+            {
+                var c = _active[i];
+                crafts[i] = new ActiveCraftSave
+                {
+                    RecipeId = c.Recipe != null ? c.Recipe.id : "",
+                    HoursRemaining = c.HoursRemaining,
+                    CrafterId = c.Crafter != null ? c.Crafter.Id : ""
+                };
+            }
+            return new CraftingSystemSave { ActiveCrafts = crafts };
+        }
+
+        /// <summary>
+        /// Restore active crafts. Requires a recipe-lookup function (injected after
+        /// construction so CraftingSystem stays agnostic of the catalog). Call
+        /// <see cref="SetRecipeLookup"/> before <see cref="RestoreState"/>.
+        /// </summary>
+        private Func<string, Recipe> _recipeLookup;
+
+        public void SetRecipeLookup(Func<string, Recipe> lookup) => _recipeLookup = lookup;
+
+        public void RestoreState(CraftingSystemSave save)
+        {
+            _active.Clear();
+            if (save?.ActiveCrafts == null) return;
+            for (int i = 0; i < save.ActiveCrafts.Length; i++)
+            {
+                var sc = save.ActiveCrafts[i];
+                if (sc == null || string.IsNullOrEmpty(sc.RecipeId)) continue;
+                Recipe recipe = _recipeLookup?.Invoke(sc.RecipeId);
+                if (recipe == null) continue; // recipe removed from catalog — drop the craft
+                _active.Add(new ActiveCraft
+                {
+                    Recipe = recipe,
+                    HoursRemaining = Mathf.Max(0f, sc.HoursRemaining)
+                    // Crafter is [NonSerialized] — restored by caller if needed
+                });
+            }
+        }
+
         /// <summary>#260 Supply Chain Master: 20% fewer materials when crafter has the latent.</summary>
         private float GetCraftCostMultiplier(Survivor crafter)
         {
@@ -377,5 +426,19 @@ namespace AtomicWar._Game.Crafting
         public Recipe Recipe;
         public float HoursRemaining;
         [NonSerialized] public Survivor Crafter;
+    }
+
+    [Serializable]
+    public class CraftingSystemSave
+    {
+        public ActiveCraftSave[] ActiveCrafts;
+    }
+
+    [Serializable]
+    public class ActiveCraftSave
+    {
+        public string RecipeId;
+        public float HoursRemaining;
+        public string CrafterId;
     }
 }

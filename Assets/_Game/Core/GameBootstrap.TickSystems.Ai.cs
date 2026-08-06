@@ -201,8 +201,9 @@ namespace AtomicWar._Game.Core
             if (JournalSystem != null)
                 EventRunner.ObserveDiscoveries(JournalSystem, eventContext);
 
-            // Try to trigger an event occasionally
-            if (UnityEngine.Random.value < 0.05f) // ~5% chance per hour
+            // Try to trigger an event occasionally (~5% chance per hour).
+            // Use the cached AI RNG for deterministic save/load replay (audit bugfix #3).
+            if (_aiRng != null && _aiRng.NextDouble() < 0.05f)
             {
                 var selectedEvent = EventRunner.SelectEvent(eventContext);
                 if (selectedEvent != null)

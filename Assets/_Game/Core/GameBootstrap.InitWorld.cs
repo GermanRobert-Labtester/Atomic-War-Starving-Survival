@@ -102,6 +102,7 @@ namespace AtomicWar._Game.Core
             // Prompts #119–#128 — Shelter tactical systems
             ExcavationSystem = new ExcavationSystem(new System.Random(_worldSeed + 119));
             FloodingSystem = new RoomFloodingSystem();
+            FloodingSystem.SetRng(new System.Random(_worldSeed + 120));
             HiddenStorageSystem = new HiddenStorageSystem();
             CeilingCollapseSystem = new CeilingCollapseSystem();
             PerimeterTrapSystem = new PerimeterTrapSystem();

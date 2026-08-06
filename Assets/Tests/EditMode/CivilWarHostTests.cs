@@ -5,7 +5,6 @@ using AtomicWar._Game.AI;
 using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Data;
-using AtomicWar._Game.Economy;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
@@ -17,84 +16,10 @@ namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
     /// Host-integration tests for civil-war / interpersonal wiring (#257–#266).
-    /// Pure C# — exercises HatchDefense, Economy, Sleep, ActionScorer, Crafting,
-    /// PowerNetwork, NeedsSystem, Medical, Inventory, and NeedsBar with
-    /// PersonalQuestSystem bound, without GameBootstrap / scenes.
     /// </summary>
     [TestFixture]
-    public class CivilWarHostTests
+    public class CivilWarHostTests : PersonalQuestHostTestBase
     {
-        private const float Eps = 0.02f;
-
-        private SkillProgressionSystem _progression;
-        private PersonalQuestSystem _quests;
-        private List<Survivor> _survivors;
-        private NeedsProfile _profile;
-        private NeedsSystem _needs;
-        private readonly List<Object> _toDestroy = new List<Object>();
-
-        [SetUp]
-        public void SetUp()
-        {
-            _progression = new SkillProgressionSystem();
-            _progression.RegisterDefaultPerks();
-            _quests = new PersonalQuestSystem();
-            _quests.Bind(_progression);
-            _survivors = new List<Survivor>();
-
-            _profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            Track(_profile);
-            _profile.hungerPerHour = 0f;
-            _profile.thirstPerHour = 0f;
-            _profile.fatiguePerHour = 0f;
-            _profile.warmthLossPerHourInCold = 0f;
-            _profile.hungerCritical = 100f;
-            _profile.thirstCritical = 100f;
-            _profile.warmthCritical = 0f;
-            _profile.moraleLossPerHourWhileCritical = 0f;
-            _needs = new NeedsSystem(_profile);
-            _needs.BindPersonalQuests(_quests, () => _survivors);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            for (int i = 0; i < _toDestroy.Count; i++)
-            {
-                if (_toDestroy[i] != null)
-                    Object.DestroyImmediate(_toDestroy[i]);
-            }
-            _toDestroy.Clear();
-        }
-
-        private T Track<T>(T obj) where T : Object
-        {
-            _toDestroy.Add(obj);
-            return obj;
-        }
-
-        private Survivor MakeArchetype(string archetypeId, string runtimeId = null)
-        {
-            var sv = PersonalQuestSystem.MakeArchetypeSurvivor(archetypeId, runtimeId);
-            Assert.IsNotNull(sv, "archetype " + archetypeId);
-            _quests.AssignProfile(sv, PersonalQuestSystem.ProfileForArchetype(archetypeId));
-            _survivors.Add(sv);
-            _needs.Register(sv);
-            return sv;
-        }
-
-        private static ItemDefinition MakeItem(string id, ItemType type, float tradeValue = 0f)
-        {
-            var item = ScriptableObject.CreateInstance<ItemDefinition>();
-            item.id = id;
-            item.displayName = id;
-            item.type = type;
-            item.tradeValue = tradeValue;
-            item.stackMax = 99;
-            item.weight = 0.1f;
-            return item;
-        }
-
         // ── #257 HatchDefense Art of War ─────────────────────────────────
 
         [Test]
@@ -205,7 +130,6 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_quests.RefusesLoudLabor(des));
 
             var loud = Track(ScriptableObject.CreateInstance<BuildWindTurbineActionSO>());
-            // Ensure id contains "build"
             if (string.IsNullOrEmpty(loud.id)) loud.id = "action_build_wind_turbine";
 
             var scorer = new ActionScorer();
@@ -245,7 +169,6 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_quests.PrioritizesComfortOverSurvival(emp));
 
             var comfort = Track(ScriptableObject.CreateInstance<MentalBreakComfortActionSO>());
-            // Force a positive raw score path by using a simple sleep action with comfort id.
             var talk = Track(ScriptableObject.CreateInstance<TalkDownActionSO>());
             if (string.IsNullOrEmpty(talk.id)) talk.id = "action_talk_down";
 
@@ -256,13 +179,11 @@ namespace AtomicWar.Tests.EditMode
                 GetSurvivors = () => _survivors
             };
 
-            // Bias constant is applied when id matches comfort/talk.
             Assert.IsTrue(ActionScorer.IsComfortOrTalkAction(talk.id));
             Assert.AreEqual(
                 PersonalQuestSystem.ComfortTalkUtilityBias,
                 _quests.GetComfortTalkUtilityBias(emp),
                 Eps);
-            // Score may still be 0 if EvaluateRaw is 0 (no broken patient); bias is still wired.
             Assert.GreaterOrEqual(scorer.Score(talk, ctx), 0f);
             Assert.NotNull(comfort);
         }
@@ -294,7 +215,6 @@ namespace AtomicWar.Tests.EditMode
             craft.BindPersonalQuests(_quests, new System.Random(1));
 
             Assert.IsTrue(craft.StartCraft(recipe, qm));
-            // 5 * 0.8 = 4 → remaining 1
             Assert.AreEqual(1, inv.Count(cloth));
         }
 
@@ -341,7 +261,6 @@ namespace AtomicWar.Tests.EditMode
 
             inv.ResortSlotsByType();
             Assert.IsTrue(inv.IsSortedByType());
-            // Material < Food < Medical in enum order is not guaranteed — just sorted stable by type then id.
             Assert.AreEqual(3, inv.Slots.Count);
         }
 
@@ -354,7 +273,6 @@ namespace AtomicWar.Tests.EditMode
             _quests.TryStartQuestline(mar, "test", 1);
             _quests.RecordTookLethalPhase2ForOther(mar, viaEventChoice: true, isPhase2Lethal: true, currentDay: 2);
             Assert.IsTrue(_quests.HasLivingSaint(mar));
-            // Inspired floor activates when the Living Saint dies for the bunker.
             mar.Needs.Health = 0f;
             mar.State = SurvivorState.Dead;
             _quests.NotifySurvivorDied(mar);
@@ -416,7 +334,6 @@ namespace AtomicWar.Tests.EditMode
                 return null;
             });
 
-            // Non-halt cure path so CompleteTreatment applies God Complex patient abuse.
             var recipe = Track(MedicalSystem.CreateGunshotBandageHaltRecipe(bandage));
             recipe.haltOnly = false;
             recipe.healthRestoreOnCure = 5f;
@@ -425,7 +342,7 @@ namespace AtomicWar.Tests.EditMode
 
             var surg = MakeArchetype(PersonalQuestSystem.ArrogantSurgeonId, "surgeon");
             Assert.IsTrue(_quests.HasGodComplex(surg));
-            surg.MedicalSkill = 1f; // min treatment hours
+            surg.MedicalSkill = 1f;
 
             var patient = new Survivor
             {
@@ -434,7 +351,7 @@ namespace AtomicWar.Tests.EditMode
                 State = SurvivorState.Idle
             };
             patient.Needs.Morale = 70f;
-            patient.Needs.Health = 100f; // survive treatment drain
+            patient.Needs.Health = 100f;
             _survivors.Add(patient);
             _needs.Register(patient);
 
@@ -442,7 +359,6 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(med.TryStartTreatment(surg, patient, recipe));
             Assert.IsTrue(med.GetActive(patient)[0].IsTreating);
 
-            // Advance just past baseTreatmentHours (0.5h) so CompleteTreatment fires.
             med.Tick(_survivors, gameHours: 2f);
 
             Assert.IsTrue(patient.IsAlive, "Patient must survive treatment for God Complex abuse.");
@@ -518,7 +434,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsFalse(_quests.ShouldAutoFleeCombat(des));
         }
 
-        // ── #265 Sacrificial intercept API (host HatchDefense uses this) ─
+        // ── #265 Sacrificial intercept API ───────────────────────────────
 
         [Test]
         public void Sacrificial_InterceptsHatchBreachDamage()

@@ -14,7 +14,7 @@ namespace AtomicWar.Tests.EditMode
     /// Day-tick GC profile: measures managed allocations across a warm 100-day
     /// pure-C# tick loop (EventRunner + MentalBreak + Phantom + Addiction +
     /// Empath + SkillAtrophy + ShiftingHotspot). Guards regressions that re-
-    /// introduce per-tick <c>new System.Random</c> / list churn on the hot path.
+    /// introduce per-tick new System.Random / list churn on the hot path.
     ///
     /// Absolute budgets are editor-friendly; the primary signal is that the
     /// steady window is not dramatically worse than the early window.
@@ -33,6 +33,45 @@ namespace AtomicWar.Tests.EditMode
 
         /// <summary>Steady window may not grow more than 3x early + 1 MB slack.</summary>
         private const long GrowthSlackBytes = 1024L * 1024;
+
+        /// <summary>
+        /// Parameter object for TickOneDay — reduces 11-param signature (audit smell fix).
+        /// </summary>
+        private sealed class DayTickCtx
+        {
+            public int Day;
+            public List<Survivor> Survivors;
+            public MentalBreakSystem Mental;
+            public PhantomIntruderSystem Phantom;
+            public AddictionSystem Addiction;
+            public EmpathSystem Empath;
+            public SkillAtrophySystem Atrophy;
+            public ShiftingHotspotSystem Hotspots;
+            public EventRunner Runner;
+            public EventContext Ctx;
+            public System.Random Rng;
+
+            public void Tick()
+            {
+                Ctx.CurrentDay = Day;
+                // 24 hourly slices of pure systems (mirrors day advance without MonoBehaviour).
+                for (int h = 0; h < 24; h++)
+                {
+                    const float hours = 1f;
+                    Mental.Tick(hours, Survivors, Rng);
+                    Phantom.Tick(hours, Survivors, Rng);
+                    Addiction.Tick(hours, Survivors, Day);
+                    Empath.Tick(hours, Survivors);
+                    Atrophy.Tick(hours, Survivors);
+                    Runner.Tick(hours, Ctx);
+                    // Rare SelectEvent (matches bootstrap ~5%/hour)
+                    if (Rng.NextDouble() < 0.05)
+                        Runner.SelectEvent(Ctx);
+                }
+                Hotspots.TickDay(Day);
+                Runner.TickDay(Day, Ctx);
+            }
+        }
 
         [Test]
         public void HundredDayTickLoop_SteadyAlloc_WithinBudget()
@@ -64,11 +103,18 @@ namespace AtomicWar.Tests.EditMode
                 CurrentWeather = WeatherKind.Clear
             };
 
+            var tickCtx = new DayTickCtx
+            {
+                Survivors = survivors, Mental = mental, Phantom = phantom,
+                Addiction = addiction, Empath = empath, Atrophy = atrophy,
+                Hotspots = hotspots, Runner = runner, Ctx = ctx, Rng = rng
+            };
+
             // Warm-up: fill buffers / JIT so GC measurement is steady-state.
             for (int d = 1; d <= WarmupDays; d++)
             {
-                TickOneDay(d, survivors, mental, phantom, addiction, empath, atrophy,
-                    hotspots, runner, ctx, rng);
+                tickCtx.Day = d;
+                tickCtx.Tick();
             }
 
             GC.Collect();
@@ -78,8 +124,8 @@ namespace AtomicWar.Tests.EditMode
             long earlyBefore = GC.GetTotalMemory(false);
             for (int d = WarmupDays + 1; d <= EarlyEndDay; d++)
             {
-                TickOneDay(d, survivors, mental, phantom, addiction, empath, atrophy,
-                    hotspots, runner, ctx, rng);
+                tickCtx.Day = d;
+                tickCtx.Tick();
             }
             long earlyAfter = GC.GetTotalMemory(false);
             long earlyBytes = Math.Max(0, earlyAfter - earlyBefore);
@@ -92,8 +138,8 @@ namespace AtomicWar.Tests.EditMode
             long steadyBefore = GC.GetTotalMemory(false);
             for (int d = SteadyStartDay; d <= SteadyEndDay; d++)
             {
-                TickOneDay(d, survivors, mental, phantom, addiction, empath, atrophy,
-                    hotspots, runner, ctx, rng);
+                tickCtx.Day = d;
+                tickCtx.Tick();
             }
             long steadyAfter = GC.GetTotalMemory(false);
             long steadyBytes = Math.Max(0, steadyAfter - steadyBefore);
@@ -155,38 +201,6 @@ namespace AtomicWar.Tests.EditMode
             // 500 calls should be near-zero if the valid-events list is reused.
             Assert.That(delta, Is.LessThan(64L * 1024),
                 $"SelectEvent buffer reuse regression: {delta}B over 500 calls");
-        }
-
-        private static void TickOneDay(
-            int day,
-            List<Survivor> survivors,
-            MentalBreakSystem mental,
-            PhantomIntruderSystem phantom,
-            AddictionSystem addiction,
-            EmpathSystem empath,
-            SkillAtrophySystem atrophy,
-            ShiftingHotspotSystem hotspots,
-            EventRunner runner,
-            EventContext ctx,
-            System.Random rng)
-        {
-            ctx.CurrentDay = day;
-            // 24 hourly slices of pure systems (mirrors day advance without MonoBehaviour).
-            for (int h = 0; h < 24; h++)
-            {
-                const float hours = 1f;
-                mental.Tick(hours, survivors, rng);
-                phantom.Tick(hours, survivors, rng);
-                addiction.Tick(hours, survivors, day);
-                empath.Tick(hours, survivors);
-                atrophy.Tick(hours, survivors);
-                runner.Tick(hours, ctx);
-                // Rare SelectEvent (matches bootstrap ~5%/hour)
-                if (rng.NextDouble() < 0.05)
-                    runner.SelectEvent(ctx);
-            }
-            hotspots.TickDay(day);
-            runner.TickDay(day, ctx);
         }
 
         private static List<Survivor> BuildCrew()

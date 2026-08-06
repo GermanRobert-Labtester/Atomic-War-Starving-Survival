@@ -12,7 +12,9 @@ using AtomicWar._Game.Simulation; // CompostSystem, SterilizationSystem, etc. (a
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
+using AtomicWar._Game.AI; // HallucinationSystem (audit wiring fix)
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Crafting; // CraftingSystem, WorkbenchSystem (audit wiring fix)
 using AtomicWar._Game.Events;
 
 namespace AtomicWar._Game.Core
@@ -328,6 +330,52 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _personalQuestSystem, s, "personal_quests",
                 () => s.CaptureState(),
                 o => s.RestoreState((PersonalQuestSave)o));
+
+        /// <summary>Prompt #65 — hallucination phantom item state (audit wiring fix).</summary>
+        public void SetHallucinationSystem(HallucinationSystem s) =>
+            RegisterSystem(ref _hallucinationSystem, s, "hallucination",
+                () => s.CaptureState(),
+                o => s.RestoreState((HallucinationSave)o));
+
+        /// <summary>Prompt #62 — internal door locks + guard assignments (audit wiring fix).</summary>
+        public void SetInternalLockSystem(InternalLockSystem s) =>
+            RegisterSystem(ref _internalLockSystem, s, "internal_lock",
+                () => s.CaptureState(),
+                o => s.RestoreState((InternalLockSave)o));
+
+        /// <summary>Prompt #61 — survivor diary entries (audit wiring fix).</summary>
+        public void SetSurvivorDiariesSystem(SurvivorDiariesSystem s) =>
+            RegisterSystem(ref _survivorDiariesSystem, s, "survivor_diaries",
+                () => s.CaptureState(),
+                o => s.RestoreState((DiarySystemSave)o));
+
+        /// <summary>Radio broadcasts played-set (audit wiring fix).</summary>
+        public void SetRadioBroadcastSystem(RadioBroadcastSystem s) =>
+            RegisterSystem(ref _radioBroadcastSystem, s, "radio_broadcast",
+                () => s.CaptureState(),
+                o => s.RestoreState((RadioSave)o));
+
+        /// <summary>Active crafting queue (audit wiring fix).</summary>
+        public void SetCraftingSystem(CraftingSystem s) =>
+            RegisterSystem(ref _craftingSystem, s, "crafting",
+                () => s.CaptureState(),
+                o => s.RestoreState((CraftingSystemSave)o));
+
+        /// <summary>Workbench system (near-stateless; captured for RNG state & future-proofing).</summary>
+        public void SetWorkbenchSystem(WorkbenchSystem s)
+        {
+            _workbenchSystem = s;
+            if (s != null)
+                Register(new SaveableAdapter("workbench",
+                    () => new WorkbenchSystemSave(),
+                    _ => { }));
+        }
+
+        /// <summary>Active scavenging missions (audit wiring fix).</summary>
+        public void SetScavengingSystem(LocationScavengingSystem s) =>
+            RegisterSystem(ref _scavengingSystem, s, "scavenging",
+                () => s.CaptureState(),
+                o => s.RestoreState((ScavengingSystemSave)o));
 
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {

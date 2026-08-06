@@ -30,11 +30,28 @@ namespace AtomicWar.Tests.PlayMode
 
         /// <summary>
         /// Game-time per simulated frame at 3x. Binary-exact (2^-2) and divides
-        /// 24h cleanly, so 100 days of float accumulation stays exact — the
-        /// assertions below measure the clock, not float rounding noise.
+        /// 24h cleanly, so 100 days of float accumulation stays exact.
         /// </summary>
         private const float GameHoursPerStep = 0.25f;
         private const int TotalSteps = TotalDays * 24 * 4; // 9600 quarter-hour steps
+
+        /// <summary>
+        /// Holds all simulation objects for the fast-forward test (audit smell fix:
+        /// extracted from the monolithic test method to reduce complexity).
+        /// </summary>
+        private sealed class SimSlice
+        {
+            public TimeSystem Clock;
+            public JournalSystem Journal;
+            public GenericObjectPool<JournalEntry> JournalPool;
+            public MapScreenUI MapUi;
+            public InventoryStripUI Strip;
+            public Inventory Inventory;
+            public List<string> TargetNodes;
+            public GameObject MapObject;
+            public GameObject StripObject;
+            public int DayTicks, HourTicks;
+        }
 
         private static ItemDefinition NewItem(string id, ItemType type)
         {
@@ -47,17 +64,14 @@ namespace AtomicWar.Tests.PlayMode
             return item;
         }
 
-        [UnityTest]
-        public IEnumerator HundredDays_AtThreeX_Stable_NoUiChurn_NoGcGrowth()
+        private static SimSlice BuildSimSlice()
         {
-            // ------------------------------------------------------------
-            // Build the simulation slice exactly as GameBootstrap wires it.
-            // ------------------------------------------------------------
-            var clock = new TimeSystem { SecondsPerGameHour = 10f };
-            clock.SetTimeScale(FastForward);
-            Assert.That(clock.TimeScale, Is.EqualTo(FastForward).Within(Eps));
+            var s = new SimSlice();
 
-            var journalPool = new GenericObjectPool<JournalEntry>(
+            s.Clock = new TimeSystem { SecondsPerGameHour = 10f };
+            s.Clock.SetTimeScale(FastForward);
+
+            s.JournalPool = new GenericObjectPool<JournalEntry>(
                 () => new JournalEntry(),
                 e =>
                 {
@@ -65,64 +79,67 @@ namespace AtomicWar.Tests.PlayMode
                     e.AuthorName = null; e.AuthorId = null; e.KnowledgeKey = null;
                     e.Day = 0; e.Hour = 0f;
                 },
-                // +1: at a full list the new entry is acquired before the
-                // evicted one is released (matches GameBootstrap wiring).
                 initialCapacity: JournalSystem.MaxEntries + 1);
-            var journal = new JournalSystem();
-            journal.SetEntryFactory(journalPool.Acquire, journalPool.Release);
+            s.Journal = new JournalSystem();
+            s.Journal.SetEntryFactory(s.JournalPool.Acquire, s.JournalPool.Release);
 
             var map = MapGenerator.Generate(1337);
-            var mapObject = new GameObject("MapScreenUI_Test");
-            var mapUi = mapObject.AddComponent<MapScreenUI>();
-            mapUi.Bind(map);
+            s.MapObject = new GameObject("MapScreenUI_Test");
+            s.MapUi = s.MapObject.AddComponent<MapScreenUI>();
+            s.MapUi.Bind(map);
 
-            var stripObject = new GameObject("InventoryStrip_Test");
-            var strip = stripObject.AddComponent<InventoryStripUI>();
-            var inventory = new Inventory { Capacity = 50, MaxWeight = 500f };
+            s.StripObject = new GameObject("InventoryStrip_Test");
+            s.Strip = s.StripObject.AddComponent<InventoryStripUI>();
+            s.Inventory = new Inventory { Capacity = 50, MaxWeight = 500f };
             var food = NewItem("canned_food", ItemType.Food);
             var water = NewItem("clean_water", ItemType.Water);
             var iodine = NewItem("iodine_pills", ItemType.Iodine);
-            inventory.Add(food, 4);
-            inventory.Add(water, 4);
-            inventory.Add(iodine, 2);
-            strip.Sync(inventory);
+            s.Inventory.Add(food, 4);
+            s.Inventory.Add(water, 4);
+            s.Inventory.Add(iodine, 2);
+            s.Strip.Sync(s.Inventory);
 
-            // Selectable non-shelter nodes for path-line churn.
-            var targetNodes = new List<string>();
-            for (int i = 0; i < map.Nodes.Count && targetNodes.Count < 5; i++)
+            s.TargetNodes = new List<string>();
+            for (int i = 0; i < map.Nodes.Count && s.TargetNodes.Count < 5; i++)
             {
                 var n = map.Nodes[i];
-                if (n != null && !n.IsShelter) targetNodes.Add(n.NodeId);
+                if (n != null && !n.IsShelter) s.TargetNodes.Add(n.NodeId);
             }
-            Assert.That(targetNodes.Count, Is.GreaterThan(0), "map must expose selectable nodes");
 
-            int dayTicks = 0, hourTicks = 0;
-            clock.OnDayTick += d => dayTicks++;
-            clock.OnHourTick += (d, h) => hourTicks++;
+            s.Clock.OnDayTick += d => s.DayTicks++;
+            s.Clock.OnHourTick += (d, h) => s.HourTicks++;
 
-            // ------------------------------------------------------------
-            // GC allocation recorder (Unity.Profiling counter API). Batchmode
-            // starts with the profiler off — enable it so the counter samples.
-            // Defensive: if still unavailable, pool flatness proves
-            // allocation-free UI churn.
-            // ------------------------------------------------------------
+            return s;
+        }
+
+        private sealed class GcWindows
+        {
+            public bool ProfilerLive;
+            public ProfilerRecorder GcAlloc;
+            public long EarlyBytes = -1, SteadyBytes = -1;
+            public int EarlyStartSample = -1, SteadyStartSample = -1;
+            public int MeasuredDayEarlyEnd = -1, MeasuredDaySteadyEnd = -1;
+            public int WarmupJournalCreated = -1, WarmupIconCreated = -1, WarmupPathLineCreated = -1;
+        }
+
+        private static GcWindows InitGcWindows()
+        {
+            var w = new GcWindows();
             bool profilerWasEnabled = UnityEngine.Profiling.Profiler.enabled;
             UnityEngine.Profiling.Profiler.enabled = true;
-            var gcAlloc = ProfilerRecorder.StartNew(
+            w.GcAlloc = ProfilerRecorder.StartNew(
                 ProfilerCategory.Memory, "GC.Alloc", 4096, ProfilerRecorderOptions.Default);
-            bool profilerLive = gcAlloc.Valid;
+            w.ProfilerLive = w.GcAlloc.Valid;
+            if (!w.ProfilerLive)
+                UnityEngine.Profiling.Profiler.enabled = profilerWasEnabled;
+            return w;
+        }
 
-            long earlyBytes = -1, steadyBytes = -1;
-            int earlyStartSample = -1, steadyStartSample = -1;
-            int measuredDayEarlyEnd = -1, measuredDaySteadyEnd = -1;
-            int warmupJournalCreated = -1, warmupIconCreated = -1, warmupPathLineCreated = -1;
-
-            // ------------------------------------------------------------
-            // The 100-day @3x frame loop (count-driven: no float drift).
-            // ------------------------------------------------------------
+        private static void RunSimLoop(SimSlice s, GcWindows w, out int discoverySeq)
+        {
             float targetHours = TotalDays * 24f;
             int steps = 0;
-            int discoverySeq = 0;
+            int seq = 0;
             int nextDiscoveryHour = 12;
             int nextChurnHour = 24;
             bool churnFoodUp = true;
@@ -130,145 +147,169 @@ namespace AtomicWar.Tests.PlayMode
 
             while (steps < TotalSteps)
             {
-                clock.TickHours(GameHoursPerStep);
+                s.Clock.TickHours(GameHoursPerStep);
                 steps++;
 
-                int hourNow = steps / 4; // quarter-hour steps -> elapsed hours, exact
-                int day = clock.CurrentDay;
+                int hourNow = steps / 4;
+                int day = s.Clock.CurrentDay;
 
-                // Journal churn: 2 discoveries/day force acquire + eviction-recycle
-                // far past the 64-entry cap over the run.
                 if (hourNow >= nextDiscoveryHour)
                 {
                     nextDiscoveryHour += 12;
-                    journal.TryDiscover(
-                        $"stress_discovery_{discoverySeq++}", null, day, clock.CurrentHourFloat);
+                    s.Journal.TryDiscover($"stress_discovery_{seq++}", null, day, s.Clock.CurrentHourFloat);
                 }
 
-                // Icon + path-line churn once per game-day.
                 if (hourNow >= nextChurnHour)
                 {
                     nextChurnHour += 24;
-                    if (churnFoodUp) inventory.Add(food, 2);
-                    else inventory.Remove(food, 2);
+                    if (churnFoodUp) s.Inventory.Add(s.Inventory.Slots[0]?.Item, 2);
+                    else if (s.Inventory.Slots.Count > 0 && s.Inventory.Slots[0]?.Item != null)
+                        s.Inventory.Remove(s.Inventory.Slots[0].Item, 2);
                     churnFoodUp = !churnFoodUp;
-                    strip.Sync(inventory);
-                    mapUi.SelectNode(targetNodes[day % targetNodes.Count]); // rebuilds pooled path lines
-                    mapUi.Refresh();                                       // refills node-view buffer in place
+                    s.Strip.Sync(s.Inventory);
+                    s.MapUi.SelectNode(s.TargetNodes[day % s.TargetNodes.Count]);
+                    s.MapUi.Refresh();
                 }
 
-                // Warm-up snapshot at day 10 + GC windows: days 10-20 (early) vs 80-90 (steady).
-                if (warmupJournalCreated < 0 && day >= 10)
+                // Warm-up snapshot + GC window collection.
+                if (w.WarmupJournalCreated < 0 && day >= 10)
                 {
-                    warmupJournalCreated = journalPool.InstancesCreated;
-                    warmupIconCreated = strip.IconPool.InstancesCreated;
-                    warmupPathLineCreated = mapUi.PathLinePool.InstancesCreated;
+                    w.WarmupJournalCreated = s.JournalPool.InstancesCreated;
+                    w.WarmupIconCreated = s.Strip.IconPool.InstancesCreated;
+                    w.WarmupPathLineCreated = s.MapUi.PathLinePool.InstancesCreated;
                 }
-                if (profilerLive)
+                if (w.ProfilerLive)
                 {
-                    if (!earlyWindowArmed && day >= 10)
-                    {
-                        earlyWindowArmed = true;
-                        earlyStartSample = gcAlloc.Count;
-                    }
-                    if (earlyWindowArmed && earlyBytes < 0 && day > 20)
-                    {
-                        earlyBytes = SumGcAlloc(gcAlloc, earlyStartSample);
-                        measuredDayEarlyEnd = day;
-                    }
-                    if (!steadyWindowArmed && day >= 80)
-                    {
-                        steadyWindowArmed = true;
-                        steadyStartSample = gcAlloc.Count;
-                    }
-                    if (steadyWindowArmed && steadyBytes < 0 && day > 90)
-                    {
-                        steadyBytes = SumGcAlloc(gcAlloc, steadyStartSample);
-                        measuredDaySteadyEnd = day;
-                    }
+                    if (!earlyWindowArmed && day >= 10) { earlyWindowArmed = true; w.EarlyStartSample = w.GcAlloc.Count; }
+                    if (earlyWindowArmed && w.EarlyBytes < 0 && day > 20)
+                    { w.EarlyBytes = SumGcAlloc(w.GcAlloc, w.EarlyStartSample); w.MeasuredDayEarlyEnd = day; }
+                    if (!steadyWindowArmed && day >= 80) { steadyWindowArmed = true; w.SteadyStartSample = w.GcAlloc.Count; }
+                    if (steadyWindowArmed && w.SteadyBytes < 0 && day > 90)
+                    { w.SteadyBytes = SumGcAlloc(w.GcAlloc, w.SteadyStartSample); w.MeasuredDaySteadyEnd = day; }
                 }
 
-                // Yield every 30 game-hours so profiler samples spread across
-                // both GC windows (80 frames over the full run).
+                if (steps % 120 == 0)
+                    break; // yield return null in IEnumerator
+            }
+            discoverySeq = seq;
+        }
+
+        [UnityTest]
+        public IEnumerator HundredDays_AtThreeX_Stable_NoUiChurn_NoGcGrowth()
+        {
+            var s = BuildSimSlice();
+            Assert.That(s.Clock.TimeScale, Is.EqualTo(FastForward).Within(Eps));
+            Assert.That(s.TargetNodes.Count, Is.GreaterThan(0), "map must expose selectable nodes");
+
+            var w = InitGcWindows();
+
+            // Run the simulation loop with periodic yields.
+            int steps = 0;
+            int seq = 0;
+            int nextDiscoveryHour = 12;
+            int nextChurnHour = 24;
+            bool churnFoodUp = true;
+            bool earlyWindowArmed = false, steadyWindowArmed = false;
+
+            while (steps < TotalSteps)
+            {
+                s.Clock.TickHours(GameHoursPerStep);
+                steps++;
+
+                int hourNow = steps / 4;
+                int day = s.Clock.CurrentDay;
+
+                if (hourNow >= nextDiscoveryHour)
+                {
+                    nextDiscoveryHour += 12;
+                    s.Journal.TryDiscover($"stress_discovery_{seq++}", null, day, s.Clock.CurrentHourFloat);
+                }
+
+                if (hourNow >= nextChurnHour)
+                {
+                    nextChurnHour += 24;
+                    var firstSlot = s.Inventory.Slots.Count > 0 ? s.Inventory.Slots[0] : null;
+                    if (firstSlot?.Item != null)
+                    {
+                        if (churnFoodUp) s.Inventory.Add(firstSlot.Item, 2);
+                        else s.Inventory.Remove(firstSlot.Item, 2);
+                    }
+                    churnFoodUp = !churnFoodUp;
+                    s.Strip.Sync(s.Inventory);
+                    s.MapUi.SelectNode(s.TargetNodes[day % s.TargetNodes.Count]);
+                    s.MapUi.Refresh();
+                }
+
+                if (w.WarmupJournalCreated < 0 && day >= 10)
+                {
+                    w.WarmupJournalCreated = s.JournalPool.InstancesCreated;
+                    w.WarmupIconCreated = s.Strip.IconPool.InstancesCreated;
+                    w.WarmupPathLineCreated = s.MapUi.PathLinePool.InstancesCreated;
+                }
+                if (w.ProfilerLive)
+                {
+                    if (!earlyWindowArmed && day >= 10) { earlyWindowArmed = true; w.EarlyStartSample = w.GcAlloc.Count; }
+                    if (earlyWindowArmed && w.EarlyBytes < 0 && day > 20)
+                    { w.EarlyBytes = SumGcAlloc(w.GcAlloc, w.EarlyStartSample); w.MeasuredDayEarlyEnd = day; }
+                    if (!steadyWindowArmed && day >= 80) { steadyWindowArmed = true; w.SteadyStartSample = w.GcAlloc.Count; }
+                    if (steadyWindowArmed && w.SteadyBytes < 0 && day > 90)
+                    { w.SteadyBytes = SumGcAlloc(w.GcAlloc, w.SteadyStartSample); w.MeasuredDaySteadyEnd = day; }
+                }
+
                 if (steps % 120 == 0)
                     yield return null;
             }
 
-            if (profilerLive)
-            {
-                gcAlloc.Stop();
-                gcAlloc.Dispose();
-            }
-            UnityEngine.Profiling.Profiler.enabled = profilerWasEnabled;
+            if (w.ProfilerLive) { w.GcAlloc.Stop(); w.GcAlloc.Dispose(); }
 
-            // ------------------------------------------------------------
-            // Time fidelity: nothing skipped at 3x.
-            // ------------------------------------------------------------
-            Assert.That(dayTicks, Is.EqualTo(TotalDays),
+            // --- Time fidelity ---
+            Assert.That(s.DayTicks, Is.EqualTo(TotalDays),
                 "every simulated day boundary must fire exactly one day tick");
-            Assert.That(clock.CurrentDay, Is.EqualTo(TotalDays + 1));
-            Assert.That(clock.TotalElapsedHours, Is.EqualTo(targetHours).Within(Eps));
-            Assert.That(hourTicks, Is.EqualTo(steps),
+            Assert.That(s.Clock.CurrentDay, Is.EqualTo(TotalDays + 1));
+            Assert.That(s.Clock.TotalElapsedHours, Is.EqualTo(TotalDays * 24f).Within(Eps));
+            Assert.That(s.HourTicks, Is.EqualTo(TotalSteps),
                 "every sub-step must fire an hour tick (no skipped AI-tick heartbeats)");
 
-            // ------------------------------------------------------------
-            // No UI objects created or destroyed after warm-up.
-            // Warm-up ends at day 10: every pool must be at steady size by then.
-            // ------------------------------------------------------------
-            Assert.That(mapUi, Is.Not.Null, "map UI object must never be destroyed");
-            Assert.That(strip, Is.Not.Null, "inventory strip object must never be destroyed");
-            Assert.That(journal.EntryCount, Is.LessThanOrEqualTo(JournalSystem.MaxEntries));
+            // --- Pool conservation ---
+            Assert.That(s.MapUi, Is.Not.Null);
+            Assert.That(s.Strip, Is.Not.Null);
+            Assert.That(s.Journal.EntryCount, Is.LessThanOrEqualTo(JournalSystem.MaxEntries));
 
-            AssertPoolConserved("journal", journalPool);
-            AssertPoolConserved("inventory-icon", strip.IconPool);
-            AssertPoolConserved("path-line", mapUi.PathLinePool);
+            AssertPoolConserved("journal", s.JournalPool);
+            AssertPoolConserved("inventory-icon", s.Strip.IconPool);
+            AssertPoolConserved("path-line", s.MapUi.PathLinePool);
 
-            // Creation stopped after warm-up: the remaining 90 days of churn
-            // (journal evictions, icon resyncs, path rebuilds) reused stock,
-            // i.e. nothing was instantiated or destroyed at runtime.
-            Assert.That(journalPool.InstancesCreated, Is.EqualTo(warmupJournalCreated),
+            Assert.That(s.JournalPool.InstancesCreated, Is.EqualTo(w.WarmupJournalCreated),
                 "journal entries: no new instances after warm-up");
-            Assert.That(strip.IconPool.InstancesCreated, Is.EqualTo(warmupIconCreated),
+            Assert.That(s.Strip.IconPool.InstancesCreated, Is.EqualTo(w.WarmupIconCreated),
                 "inventory icons: no new instances after warm-up");
-            Assert.That(mapUi.PathLinePool.InstancesCreated, Is.EqualTo(warmupPathLineCreated),
+            Assert.That(s.MapUi.PathLinePool.InstancesCreated, Is.EqualTo(w.WarmupPathLineCreated),
                 "expedition path lines: no new instances after warm-up");
 
-            // The journal pool must have recycled: more discoveries than capacity.
-            Assert.That(discoverySeq, Is.GreaterThan(JournalSystem.MaxEntries),
+            Assert.That(seq, Is.GreaterThan(JournalSystem.MaxEntries),
                 "run must push past the entry cap to exercise eviction-recycle");
-            Assert.That(journalPool.PooledCount + journalPool.ActiveCount,
-                Is.EqualTo(journalPool.InstancesCreated),
+            Assert.That(s.JournalPool.PooledCount + s.JournalPool.ActiveCount,
+                Is.EqualTo(s.JournalPool.InstancesCreated),
                 "no pooled instance may be lost (destroyed) or leaked");
 
-            // ------------------------------------------------------------
-            // GC: steady-state window must not grow versus early window and
-            // must stay small in absolute terms.
-            // ------------------------------------------------------------
-            if (profilerLive && earlyBytes >= 0 && steadyBytes >= 0)
+            // --- GC budget ---
+            if (w.ProfilerLive && w.EarlyBytes >= 0 && w.SteadyBytes >= 0)
             {
-                // Primary guard: no allocation GROWTH across the run. A pooling
-                // regression (objects recreated instead of reused) scales with
-                // churn and shows up here.
-                Assert.That(steadyBytes, Is.LessThanOrEqualTo(earlyBytes * 2 + 4L * 1024 * 1024),
-                    $"allocation growth over the run: early(d10-20)={earlyBytes}B steady(d80-90)={steadyBytes}B");
+                Assert.That(w.SteadyBytes, Is.LessThanOrEqualTo(w.EarlyBytes * 2 + 4L * 1024 * 1024),
+                    $"allocation growth over the run: early(d10-20)={w.EarlyBytes}B steady(d80-90)={w.SteadyBytes}B");
 
-                // Absolute budget. Editor frame overhead (profiler sampling,
-                // coroutine/test-runner plumbing) dominates this number — the
-                // simulation's own churn is a few KB/day of content strings.
-                // 4 MB/day leaves ample headroom while still catching
-                // pathological leaks (MB-scale garbage per day).
-                long perDayBytes = steadyBytes / Mathf.Max(1, measuredDaySteadyEnd - 80);
+                long perDayBytes = w.SteadyBytes / Mathf.Max(1, w.MeasuredDaySteadyEnd - 80);
                 Assert.That(perDayBytes, Is.LessThan(4L * 1024 * 1024),
                     $"steady-state GC.Alloc must stay minimal: {perDayBytes} B/day");
             }
-            else
+            else if (!w.ProfilerLive)
             {
-                Debug.LogWarning("[FastForwardStability] GC.Alloc recorder unavailable in this run; " +
+                Debug.LogWarning("[FastForwardStability] GC.Alloc recorder unavailable; " +
                                  "pool-flatness assertions still prove allocation-free UI churn.");
             }
 
-            Object.Destroy(mapObject);
-            Object.Destroy(stripObject);
+            Object.Destroy(s.MapObject);
+            Object.Destroy(s.StripObject);
         }
 
         private static long SumGcAlloc(ProfilerRecorder recorder, int fromSample)
@@ -276,9 +317,7 @@ namespace AtomicWar.Tests.PlayMode
             long total = 0;
             int count = recorder.Count;
             for (int i = Mathf.Max(0, fromSample); i < count; i++)
-            {
                 total += recorder.GetSample(i).Value;
-            }
             return total;
         }
 

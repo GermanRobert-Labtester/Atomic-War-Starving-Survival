@@ -69,5 +69,31 @@ namespace AtomicWar._Game.Core
             _played.Clear();
             _currentBroadcast = null;
         }
+
+        // -----------------------------------------------------------------
+        // Save / Load (audit wiring fix)
+        // -----------------------------------------------------------------
+        public RadioSave CaptureState()
+        {
+            var ids = new string[_played.Count];
+            _played.CopyTo(ids);
+            return new RadioSave { PlayedBroadcastIds = ids };
+        }
+
+        public void RestoreState(RadioSave save)
+        {
+            _played.Clear();
+            _currentBroadcast = null;
+            if (save?.PlayedBroadcastIds == null) return;
+            for (int i = 0; i < save.PlayedBroadcastIds.Length; i++)
+                if (!string.IsNullOrEmpty(save.PlayedBroadcastIds[i]))
+                    _played.Add(save.PlayedBroadcastIds[i]);
+        }
+    }
+
+    [Serializable]
+    public class RadioSave
+    {
+        public string[] PlayedBroadcastIds;
     }
 }

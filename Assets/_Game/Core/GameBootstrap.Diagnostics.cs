@@ -83,104 +83,67 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Known mismatches between GameBootstrap property names and registry keys
         /// that cannot be derived by snake_case + strip "_system".
+        /// Replaced 46-return switch with a static dictionary (audit smell fix).
         /// </summary>
+        private static readonly Dictionary<string, string[]> RegistryAliases =
+            new Dictionary<string, string[]>
+        {
+            // Core systems
+            { "ExpeditionSystem",        new[] { "expeditions" } },
+            { "CorpseSystem",            new[] { "corpses" } },
+            { "BlackRainHazardSystem",   new[] { "black_rain" } },
+            { "HatchDilemmaPromptField",  new[] { "hatch_dilemma" } },
+            { "ParleyOfferPromptField",   new[] { "parley_offer" } },
+            { "LifeboatTransmissionSystem", new[] { "lifeboat" } },
+            { "EventRunner",             new[] { "event_runner" } },
+            { "SuspicionTracker",        new[] { "suspicion_tracker" } },
+            { "VictoryProject",          new[] { "victory_project" } },
+            { "TimeSystem",              new[] { "time" } },
+            { "SaveSystem",              new[] { "save" } },
+            { "GameState",               new[] { "game_state" } },
+            { "EndgameEngine",           new[] { "endgame" } },
+            { "ShelterLayout",           new[] { "shelter_layout" } },
+            { "SleepQualitySystem",      new[] { "sleep_quality" } },
+            { "UtilityAI",               new[] { "utility_ai" } },
+            { "RadioSystem",             new[] { "radio" } },
+            // Medical systems
+            { "AmputationSystem",        new[] { "amputation_daily" } },
+            { "ScurvySystem",            new[] { "scurvy_daily" } },
+            { "Mutagenesis",             new[] { "mutagenesis_tick", "mutagenesis_daily" } },
+            { "BloodTransfusion",        new[] { "blood_transfusion" } },
+            { "Addiction",               new[] { "addiction" } },
+            // Tactical / world systems
+            { "DeadDropSystem",          new[] { "dead_drops" } },
+            { "DeserterSystem",          new[] { "deserter_daily", "deserter" } },
+            { "EcosystemSystem",         new[] { "ecosystem_daily", "ecosystem" } },
+            { "HatchVisibilitySystem",    new[] { "hatch_visibility_daily", "hatch_visibility" } },
+            { "CultMoralSystem",         new[] { "cult_moral" } },
+            // Simulation systems
+            { "WeaponMaintenanceSystem",  new[] { "weapon_maint" } },
+            { "AntibioticResistSystem",   new[] { "antibiotic_resist" } },
+            { "HaulingSystem",           new[] { "hauling" } },
+            { "TriageSystem",            new[] { "triage" } },
+            { "ScrapWeaponSystem",       new[] { "scrap_weapon" } },
+            { "ClothingSystem",          new[] { "clothing" } },
+            { "AestheticsSystem",        new[] { "aesthetics" } },
+            // Perk / misc systems
+            { "SkillAtrophy",            new[] { "skill_atrophy" } },
+            { "SkillProgression",        new[] { "skill_progression", "skill_progression_daily" } },
+            { "GriefKeepsakes",          new[] { "grief_keepsakes" } },
+            { "PhantomIntruders",        new[] { "phantom_intruders" } },
+            // Infrastructure
+            { "StructuralIntegrity",      new[] { "structural_integrity" } },
+            { "FactionRadioIntercepts",   new[] { "faction_radio_intercepts" } },
+            { "PowerNetwork",            new[] { "power_network" } },
+            { "WaterStorage",            new[] { "water_storage" } },
+            { "KnowledgeMap",            new[] { "knowledge_map" } },
+            { "GeneratedMap",            new[] { "generated_map" } },
+            { "WorkbenchSystem",         new[] { "workbench" } },
+        };
+
         private static bool TryGetRegistryAliases(string propertyName, out string[] aliases)
         {
-            switch (propertyName)
-            {
-                case "ExpeditionSystem":
-                    aliases = new[] { "expeditions" }; return true;
-                case "CorpseSystem":
-                    aliases = new[] { "corpses" }; return true;
-                case "BlackRainHazardSystem":
-                    aliases = new[] { "black_rain" }; return true;
-                case "HatchDilemmaPromptField":
-                    aliases = new[] { "hatch_dilemma" }; return true;
-                case "ParleyOfferPromptField":
-                    aliases = new[] { "parley_offer" }; return true;
-                case "LifeboatTransmissionSystem":
-                    aliases = new[] { "lifeboat" }; return true;
-                case "AmputationSystem":
-                    aliases = new[] { "amputation_daily" }; return true;
-                case "ScurvySystem":
-                    aliases = new[] { "scurvy_daily" }; return true;
-                case "Mutagenesis":
-                    aliases = new[] { "mutagenesis_tick", "mutagenesis_daily" }; return true;
-                case "DeadDropSystem":
-                    aliases = new[] { "dead_drops" }; return true;
-                case "DeserterSystem":
-                    aliases = new[] { "deserter_daily", "deserter" }; return true;
-                case "EcosystemSystem":
-                    aliases = new[] { "ecosystem_daily", "ecosystem" }; return true;
-                case "HatchVisibilitySystem":
-                    aliases = new[] { "hatch_visibility_daily", "hatch_visibility" }; return true;
-                case "WeaponMaintenanceSystem":
-                    aliases = new[] { "weapon_maint" }; return true;
-                case "AntibioticResistSystem":
-                    aliases = new[] { "antibiotic_resist" }; return true;
-                case "HaulingSystem":
-                    aliases = new[] { "hauling" }; return true;
-                case "TriageSystem":
-                    aliases = new[] { "triage" }; return true;
-                case "ScrapWeaponSystem":
-                    aliases = new[] { "scrap_weapon" }; return true;
-                case "ClothingSystem":
-                    aliases = new[] { "clothing" }; return true;
-                case "AestheticsSystem":
-                    aliases = new[] { "aesthetics" }; return true;
-                case "CultMoralSystem":
-                    aliases = new[] { "cult_moral" }; return true;
-                case "BloodTransfusion":
-                    aliases = new[] { "blood_transfusion" }; return true;
-                case "GriefKeepsakes":
-                    aliases = new[] { "grief_keepsakes" }; return true;
-                case "SkillAtrophy":
-                    aliases = new[] { "skill_atrophy" }; return true;
-                case "SkillProgression":
-                    aliases = new[] { "skill_progression", "skill_progression_daily" }; return true;
-                case "Addiction":
-                    aliases = new[] { "addiction" }; return true;
-                case "PhantomIntruders":
-                    aliases = new[] { "phantom_intruders" }; return true;
-                case "StructuralIntegrity":
-                    aliases = new[] { "structural_integrity" }; return true;
-                case "FactionRadioIntercepts":
-                    aliases = new[] { "faction_radio_intercepts" }; return true;
-                case "PowerNetwork":
-                    aliases = new[] { "power_network" }; return true;
-                case "WaterStorage":
-                    aliases = new[] { "water_storage" }; return true;
-                case "KnowledgeMap":
-                    aliases = new[] { "knowledge_map" }; return true;
-                case "GeneratedMap":
-                    aliases = new[] { "generated_map" }; return true;
-                case "EventRunner":
-                    aliases = new[] { "event_runner" }; return true;
-                case "SuspicionTracker":
-                    aliases = new[] { "suspicion_tracker" }; return true;
-                case "VictoryProject":
-                    aliases = new[] { "victory_project" }; return true;
-                case "TimeSystem":
-                    aliases = new[] { "time" }; return true;
-                case "SaveSystem":
-                    aliases = new[] { "save" }; return true;
-                case "WorkbenchSystem":
-                    aliases = new[] { "workbench" }; return true;
-                case "UtilityAI":
-                    aliases = new[] { "utility_ai" }; return true;
-                case "RadioSystem":
-                    aliases = new[] { "radio" }; return true;
-                case "GameState":
-                    aliases = new[] { "game_state" }; return true;
-                case "EndgameEngine":
-                    aliases = new[] { "endgame" }; return true;
-                case "ShelterLayout":
-                    aliases = new[] { "shelter_layout" }; return true;
-                case "SleepQualitySystem":
-                    aliases = new[] { "sleep_quality" }; return true;
-                default:
-                    aliases = null; return false;
-            }
+            return RegistryAliases.TryGetValue(propertyName, out aliases);
         }
 
         /// <summary>

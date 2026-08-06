@@ -50,7 +50,15 @@ namespace AtomicWar.Tests.EditMode
         public void SetUp()
         {
             EventBus.Clear();
+            BuildNeedsAndInventory();
+            BuildShelterAndMedical();
+            BuildMentalBreakDefs();
+            BuildMentalBreakSystem();
+            _rng = new System.Random(42);
+        }
 
+        private void BuildNeedsAndInventory()
+        {
             _needsProfile = ScriptableObject.CreateInstance<NeedsProfile>();
             _needsProfile.hungerPerHour = 1f;
             _needsProfile.thirstPerHour = 1f;
@@ -82,13 +90,18 @@ namespace AtomicWar.Tests.EditMode
 
             _inventory.Add(_foodItem, 10);
             _inventory.Add(_waterItem, 10);
+        }
 
+        private void BuildShelterAndMedical()
+        {
             _shelter = new Shelter();
             _shelter.AddModule(new ShelterModuleInstance("air_filtration", 1) { FilterHealth = 100f });
             _shelter.AddModule(new ShelterModuleInstance("radio", 1) { Fuel = 10f });
-
             _medicalSystem = new MedicalSystem(_needsSystem, _inventory, _shelter);
+        }
 
+        private void BuildMentalBreakDefs()
+        {
             _bingeEater = ScriptableObject.CreateInstance<MentalBreakSO>();
             _bingeEater.id = "binge_eater";
             _bingeEater.displayName = "Binge Eater";
@@ -96,8 +109,8 @@ namespace AtomicWar.Tests.EditMode
             _bingeEater.minFoodValueForBinge = 0f;
             _bingeEater.passiveMoraleDrainPerHour = 1f;
             _bingeEater.cureHours = 48f;
-            _bingeEater.requiresMedicalBed = false; // comfort items + time
-            _bingeEater.comfortItemCureAmount = 24f; // 1 comfort item = 50% cure
+            _bingeEater.requiresMedicalBed = false;
+            _bingeEater.comfortItemCureAmount = 24f;
             _bingeEater.TraitWeights = new List<RiskBiasWeight>
             {
                 new RiskBiasWeight { Trait = RiskBiasTrait.Realist, Weight = 1f }
@@ -109,14 +122,17 @@ namespace AtomicWar.Tests.EditMode
             _violentParanoia.sabotageChancePerTick = 0.05f;
             _violentParanoia.passiveMoraleDrainPerHour = 2f;
             _violentParanoia.cureHours = 72f;
-            _violentParanoia.requiresMedicalBed = true; // only curable via medical bed
-            _violentParanoia.comfortItemCureAmount = 12f; // comfort items help too
+            _violentParanoia.requiresMedicalBed = true;
+            _violentParanoia.comfortItemCureAmount = 12f;
             _violentParanoia.TraitWeights = new List<RiskBiasWeight>
             {
                 new RiskBiasWeight { Trait = RiskBiasTrait.Paranoid, Weight = 2f },
                 new RiskBiasWeight { Trait = RiskBiasTrait.Realist, Weight = 1f }
             };
+        }
 
+        private void BuildMentalBreakSystem()
+        {
             _allSurvivors = new List<Survivor>();
 
             _mentalBreakSystem = new MentalBreakSystem();
@@ -129,7 +145,6 @@ namespace AtomicWar.Tests.EditMode
             // never touches Inventory directly.
             _mentalBreakSystem.BingeEatHandler = (sv, br) =>
             {
-                // Find the highest-value food slot.
                 InventorySlot best = null;
                 float bestValue = float.NegativeInfinity;
                 for (int i = 0; i < _inventory.Slots.Count; i++)
@@ -152,8 +167,6 @@ namespace AtomicWar.Tests.EditMode
                 sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - best.Item.hungerRestore * consumed);
                 return consumed;
             };
-
-            _rng = new System.Random(42);
         }
 
         [TearDown]
@@ -185,6 +198,148 @@ namespace AtomicWar.Tests.EditMode
         // BingeEater (the spec's headline test)
         // -------------------------------------------------------------------
 
+        [Test]
+        public void BingeEater_ConsumesThreeTimesDailyRations_RegardlessOfAiScoring()
+        {
+            var survivor = MakeSurvivor("sv_binger", RiskBiasTrait.Realist);
+            Assert.AreEqual(10, _inventory.Count(_foodItem), "Setup: 10 rations in inventory.");
+
+            survivor.currentMentalBreakId = "binge_eater";
+            survivor.mentalBreakCureProgress = 0f;
+
+            _mentalBreakSystem.Tick(1f, _allSurvivors, _rng);
+
+            Assert.AreEqual(7, _inventory.Count(_foodItem),
+                "BingeEater must consume 3 rations in a single tick (10 -> 7).");
+            Assert.AreEqual(0f, survivor.Needs.Hunger, Eps,
+                "Hunger should bottom out at 0 after 3x30=90 restore.");
+        }
+
+        // -------------------------------------------------------------------
+        // Low-morale threshold and break roll
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void LowMorale_For48Hours_RollsForBreak_AndAssignsMatchingTraitBreak()
+        {
+            var survivor = MakeSurvivor("sv_low", RiskBiasTrait.Realist);
+            survivor.Needs.Morale = 10f;
+            survivor.lowMoraleHours = 50f; // past the 48h threshold
+
+            bool rolled = _mentalBreakSystem.TryRollForBreak(survivor, _rng);
+            Assert.IsTrue(rolled, "Should roll a break after 48h of low morale.");
+            Assert.IsFalse(string.IsNullOrEmpty(survivor.currentMentalBreakId));
+            Assert.IsTrue(
+                survivor.currentMentalBreakId == _bingeEater.id ||
+                survivor.currentMentalBreakId == _violentParanoia.id);
+        }
+
+        [Test]
+        public void NormalMorale_NeverRollsBreak()
+        {
+            var survivor = MakeSurvivor("sv_ok", RiskBiasTrait.Realist);
+            survivor.Needs.Morale = 80f;
+            survivor.lowMoraleHours = 0f;
+
+            bool rolled = _mentalBreakSystem.TryRollForBreak(survivor, _rng);
+            Assert.IsFalse(rolled, "High morale must never trigger a break roll.");
+            Assert.IsTrue(string.IsNullOrEmpty(survivor.currentMentalBreakId));
+        }
+
+        // -------------------------------------------------------------------
+        // Sabotage and passive morale drain (Violent Paranoia)
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void ViolentParanoia_SabotagesRandomModule_WhenRollFires()
+        {
+            var survivor = MakeSurvivor("sv_violent", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = _violentParanoia.id;
+            survivor.mentalBreakCureProgress = 0f;
+
+            // Add a module that can be sabotaged.
+            _shelter.AddModule(new ShelterModuleInstance("heater", 1) { IsEnabled = true, FilterHealth = 100f });
+
+            var sabotaged = false;
+            _mentalBreakSystem.ModuleSabotaged += (modId, mod) =>
+            {
+                if (modId == "heater") sabotaged = true;
+            };
+
+            // Tick many hours — the 5% sabotage chance should fire eventually.
+            for (int i = 0; i < 500 && !sabotaged; i++)
+                _mentalBreakSystem.Tick(0.1f, _allSurvivors, _rng);
+
+            Assert.IsTrue(sabotaged, "ViolentParanoia must sabotage a module after enough ticks.");
+        }
+
+        [Test]
+        public void PassiveMoraleDrain_AppliesToOtherSurvivors()
+        {
+            var binger = MakeSurvivor("sv_drain", RiskBiasTrait.Realist);
+            binger.currentMentalBreakId = _bingeEater.id;
+
+            var other = MakeSurvivor("sv_other", RiskBiasTrait.Realist, morale: 60f);
+            other.currentMentalBreakId = null;
+
+            float before = other.Needs.Morale;
+            _mentalBreakSystem.Tick(1f, _allSurvivors, _rng);
+            Assert.Less(other.Needs.Morale, before,
+                "Passive drain from BingeEater must lower other survivors' morale.");
+        }
+
+        // -------------------------------------------------------------------
+        // Natural cure + comfort items
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void BingeEater_NaturallyCures_AfterCureHours()
+        {
+            var survivor = MakeSurvivor("sv_cure", RiskBiasTrait.Realist);
+            survivor.currentMentalBreakId = _bingeEater.id;
+
+            // Advance past the 48h cure timer.
+            _mentalBreakSystem.Tick(48f, _allSurvivors, _rng);
+            Assert.IsTrue(string.IsNullOrEmpty(survivor.currentMentalBreakId),
+                "BingeEater must naturally cure after 48h.");
+        }
+
+        [Test]
+        public void ViolentParanoia_RequiresMedicalBed_ComfortItemOnlyPartial()
+        {
+            var survivor = MakeSurvivor("sv_complex", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = _violentParanoia.id;
+
+            // Comfort item adds partial progress without bed.
+            float before = survivor.mentalBreakCureProgress;
+            _mentalBreakSystem.ApplyComfortCure(survivor);
+            Assert.Greater(survivor.mentalBreakCureProgress, before,
+                "Comfort item must contribute partial cure even without medical bed.");
+            Assert.Less(survivor.mentalBreakCureProgress, _violentParanoia.cureHours,
+                "Without medical bed, comfort item alone must not fully cure.");
+        }
+
+        // -------------------------------------------------------------------
+        // EventRunner affinity mutation
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void ViolentParanoiaEvent_MutatesAffinityMatrix()
+        {
+            var survivor = MakeSurvivor("sv_event", RiskBiasTrait.Paranoid);
+            survivor.currentMentalBreakId = _violentParanoia.id;
+
+            // The mental-break system exposes the affinity matrix.
+            var affinity = _mentalBreakSystem.Affinity;
+            Assert.IsNotNull(affinity);
+
+            float before = affinity.Get(survivor.Id, "bunker_leader");
+            _mentalBreakSystem.Tick(1f, _allSurvivors, _rng);
+            float after = affinity.Get(survivor.Id, "bunker_leader");
+            Assert.Less(after, before,
+                "ViolentParanoia's passive effect must lower affinity toward the leader.");
+        }
+    }
         [Test]
         public void BingeEater_ConsumesThreeTimesDailyRations_RegardlessOfAiScoring()
         {
@@ -679,5 +834,4 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps,
                 "Cure resets the progress counter to 0.");
         }
-    }
 }

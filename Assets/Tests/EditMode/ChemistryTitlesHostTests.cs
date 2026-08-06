@@ -22,83 +22,8 @@ namespace AtomicWar.Tests.EditMode
     /// and Journal with PersonalQuestSystem bound, without GameBootstrap / scenes.
     /// </summary>
     [TestFixture]
-    public class ChemistryTitlesHostTests
+    public class ChemistryTitlesHostTests : PersonalQuestHostTestBase
     {
-        private const float Eps = 0.02f;
-
-        private SkillProgressionSystem _progression;
-        private PersonalQuestSystem _quests;
-        private List<Survivor> _survivors;
-        private NeedsProfile _profile;
-        private NeedsSystem _needs;
-        private readonly List<Object> _toDestroy = new List<Object>();
-
-        [SetUp]
-        public void SetUp()
-        {
-            _progression = new SkillProgressionSystem();
-            _progression.RegisterDefaultPerks();
-            _quests = new PersonalQuestSystem();
-            _quests.Bind(_progression);
-            _survivors = new List<Survivor>();
-
-            _profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            Track(_profile);
-            _profile.hungerPerHour = 0f;
-            _profile.thirstPerHour = 0f;
-            _profile.fatiguePerHour = 0f;
-            _profile.warmthLossPerHourInCold = 0f;
-            _profile.hungerCritical = 100f;
-            _profile.thirstCritical = 100f;
-            _profile.warmthCritical = 0f;
-            _profile.moraleLossPerHourWhileCritical = 0f;
-            _needs = new NeedsSystem(_profile);
-            _needs.BindPersonalQuests(_quests, () => _survivors);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            for (int i = 0; i < _toDestroy.Count; i++)
-            {
-                if (_toDestroy[i] != null)
-                    Object.DestroyImmediate(_toDestroy[i]);
-            }
-            _toDestroy.Clear();
-        }
-
-        private T Track<T>(T obj) where T : Object
-        {
-            _toDestroy.Add(obj);
-            return obj;
-        }
-
-        private Survivor MakeArchetype(string archetypeId, string runtimeId = null)
-        {
-            var sv = PersonalQuestSystem.MakeArchetypeSurvivor(archetypeId, runtimeId);
-            Assert.IsNotNull(sv, "archetype " + archetypeId);
-            _quests.AssignProfile(sv, PersonalQuestSystem.ProfileForArchetype(archetypeId));
-            _survivors.Add(sv);
-            _needs.Register(sv);
-            return sv;
-        }
-
-        private static ItemDefinition MakeItem(
-            string id,
-            ItemType type,
-            float tradeValue = 0f,
-            float hungerRestore = 0f)
-        {
-            var item = ScriptableObject.CreateInstance<ItemDefinition>();
-            item.id = id;
-            item.displayName = id;
-            item.type = type;
-            item.tradeValue = tradeValue;
-            item.hungerRestore = hungerRestore;
-            item.stackMax = 99;
-            item.weight = 0.1f;
-            return item;
-        }
 
         // ── #267 Relapsing Addict forced chem via NeedsSystem ────────────
 

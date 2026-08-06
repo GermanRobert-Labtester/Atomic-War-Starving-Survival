@@ -20,30 +20,39 @@ namespace AtomicWar.Tests.PlayMode
     {
         private const float Eps = 1e-4f;
 
-        private static ItemDefinition NewItem(
-            string id,
-            ItemType type,
-            float radProtection = 0f,
-            float durability = 0f,
-            bool equipable = false,
-            EquipSlot slot = EquipSlot.None,
-            int stackMax = 10,
-            float weight = 1f,
-            float radCleanse = 0f,
-            float contamination = 0f)
+        /// <summary>Parameter object for NewItem — reduces the 10-param signature (audit smell fix).</summary>
+        private struct ItemCfg
+        {
+            public float RadProtection;
+            public float Durability;
+            public bool Equipable;
+            public EquipSlot Slot;
+            public int StackMax;
+            public float Weight;
+            public float RadCleanse;
+            public float Contamination;
+
+            public static readonly ItemCfg Default = new ItemCfg
+            {
+                StackMax = 10,
+                Weight = 1f
+            };
+        }
+
+        private static ItemDefinition NewItem(string id, ItemType type, ItemCfg cfg = default)
         {
             var item = ScriptableObject.CreateInstance<ItemDefinition>();
             item.id = id;
             item.displayName = id;
             item.type = type;
-            item.radProtection = radProtection;
-            item.durability = durability;
-            item.isEquipable = equipable;
-            item.equipSlot = slot;
-            item.stackMax = stackMax;
-            item.weight = weight;
-            item.radCleanse = radCleanse;
-            item.contamination = contamination;
+            item.radProtection = cfg.RadProtection;
+            item.durability = cfg.Durability;
+            item.isEquipable = cfg.Equipable;
+            item.equipSlot = cfg.Slot;
+            item.stackMax = cfg.StackMax > 0 ? cfg.StackMax : ItemCfg.Default.StackMax;
+            item.weight = cfg.Weight > 0f ? cfg.Weight : ItemCfg.Default.Weight;
+            item.radCleanse = cfg.RadCleanse;
+            item.contamination = cfg.Contamination;
             return item;
         }
 
@@ -55,8 +64,11 @@ namespace AtomicWar.Tests.PlayMode
         [UnityTest]
         public IEnumerator EquipSuit_ReducesRadiationExposure()
         {
-            var suit = NewItem("hazmat_suit", ItemType.Protective, radProtection: 80f, durability: 100f,
-                equipable: true, slot: EquipSlot.Body, stackMax: 1);
+            var suit = NewItem("hazmat_suit", ItemType.Protective, new ItemCfg
+            {
+                RadProtection = 80f, Durability = 100f, Equipable = true,
+                Slot = EquipSlot.Body, StackMax = 1
+            });
             var inventory = new Inventory { Capacity = 10, MaxWeight = 1000f };
             inventory.Add(suit, 1);
 
@@ -82,18 +94,6 @@ namespace AtomicWar.Tests.PlayMode
             radExposed.Register(exposed);
             radExposed.Tick(1f);
 
-            // RadiationDose is a *transient* acute reading, not a running total.
-            // Once a dose crosses PrognosisPipeline's prodromal trigger, the
-            // injury is carried forward as LatentDamage and the dose is
-            // deliberately reset to zero -- see PrognosisPipeline.TriggerProdromal,
-            // which does this so RadiationSystem's "dose >= AcuteThreshold" check
-            // stops re-firing health loss on every subsequent tick.
-            //
-            // A 100 rad/h zone trips that path within this single one-hour tick,
-            // so asserting a retained dose of 100 encoded the pre-pipeline model
-            // and had to fail. LifetimeRadiationExposure is the monotonic record
-            // of what a survivor actually absorbed, so that is what "the suit
-            // reduced exposure" is asserted against.
             Assert.That(exposed.LifetimeRadiationExposure, Is.EqualTo(100f).Within(Eps),
                 "Unprotected survivor absorbs the full 100 rad/h for one hour");
             Assert.That(suited.LifetimeRadiationExposure, Is.EqualTo(20f).Within(Eps),
@@ -107,7 +107,7 @@ namespace AtomicWar.Tests.PlayMode
         [UnityTest]
         public IEnumerator ConsumeIodine_GrantsTimedRadResistance()
         {
-            var iodine = NewItem("iodine_pills", ItemType.Iodine, stackMax: 5);
+            var iodine = NewItem("iodine_pills", ItemType.Iodine, new ItemCfg { StackMax = 5 });
             var inventory = new Inventory { Capacity = 10 };
             inventory.Add(iodine, 2);
 
@@ -138,9 +138,12 @@ namespace AtomicWar.Tests.PlayMode
         [UnityTest]
         public IEnumerator SaveLoad_InventoryStaysIntact()
         {
-            var food = NewItem("canned_food", ItemType.Food, stackMax: 10, weight: 0.5f);
-            var suit = NewItem("hazmat_suit", ItemType.Protective, radProtection: 80f, durability: 100f,
-                equipable: true, slot: EquipSlot.Body, stackMax: 1, weight: 5f);
+            var food = NewItem("canned_food", ItemType.Food, new ItemCfg { StackMax = 10, Weight = 0.5f });
+            var suit = NewItem("hazmat_suit", ItemType.Protective, new ItemCfg
+            {
+                RadProtection = 80f, Durability = 100f, Equipable = true,
+                Slot = EquipSlot.Body, StackMax = 1, Weight = 5f
+            });
             var lookup = new Dictionary<string, ItemDefinition> { { food.id, food }, { suit.id, suit } };
 
             var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
@@ -169,7 +172,7 @@ namespace AtomicWar.Tests.PlayMode
         [UnityTest]
         public IEnumerator WeightLimit_BlocksAdd_And_TransferMovesStock()
         {
-            var food = NewItem("canned_food", ItemType.Food, stackMax: 10, weight: 1f);
+            var food = NewItem("canned_food", ItemType.Food, new ItemCfg { StackMax = 10, Weight = 1f });
             var inventory = new Inventory { Capacity = 20, MaxWeight = 5f };
 
             Assert.That(inventory.Add(food, 5), Is.True);  // 5 * 1 == MaxWeight

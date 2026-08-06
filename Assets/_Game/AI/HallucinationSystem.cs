@@ -110,5 +110,52 @@ namespace AtomicWar._Game.AI
             }
             return false;
         }
+
+        // -----------------------------------------------------------------
+        // Save / Load (audit wiring fix)
+        // -----------------------------------------------------------------
+        public HallucinationSave CaptureState()
+        {
+            var items = new PhantomItemSave[_activePhantoms.Count];
+            for (int i = 0; i < _activePhantoms.Count; i++)
+            {
+                var p = _activePhantoms[i];
+                items[i] = new PhantomItemSave
+                {
+                    Id = p.Id,
+                    DisplayName = p.DisplayName,
+                    TargetSurvivorId = p.TargetSurvivorId,
+                    LifetimeHours = p.LifetimeHours
+                };
+            }
+            return new HallucinationSave { ActivePhantoms = items };
+        }
+
+        public void RestoreState(HallucinationSave save)
+        {
+            _activePhantoms.Clear();
+            if (save?.ActivePhantoms == null) return;
+            for (int i = 0; i < save.ActivePhantoms.Length; i++)
+            {
+                var s = save.ActivePhantoms[i];
+                if (s == null || string.IsNullOrEmpty(s.Id)) continue;
+                _activePhantoms.Add(new PhantomItem(s.Id, s.DisplayName, s.TargetSurvivorId, s.LifetimeHours));
+            }
+        }
+    }
+
+    [Serializable]
+    public class HallucinationSave
+    {
+        public PhantomItemSave[] ActivePhantoms;
+    }
+
+    [Serializable]
+    public class PhantomItemSave
+    {
+        public string Id;
+        public string DisplayName;
+        public string TargetSurvivorId;
+        public float LifetimeHours;
     }
 }

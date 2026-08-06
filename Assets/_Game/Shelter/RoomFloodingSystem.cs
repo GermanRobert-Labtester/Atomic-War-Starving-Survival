@@ -13,12 +13,14 @@ namespace AtomicWar._Game.Shelter
     public class RoomFloodingSystem
     {
         public const string SumpPumpModuleId = "sump_pump";
-        public const float FloodChancePerRainHour = 0.04f;
+        /// <summary>Per-24h-rain-period chance a lowest room floods (~62% = 1-(1-0.04)^24).</summary>
+        public const float FloodChancePer24hRain = 0.62f;
         public const float BucketClearHoursPerUnit = 1f;
         public const float BucketFatiguePerHour = 10f;
 
         private readonly HashSet<string> _floodedRooms = new HashSet<string>();
         private float _floodAccumulator;
+        private System.Random _rng;
 
         public IReadOnlyCollection<string> FloodedRooms => _floodedRooms;
         public bool IsFlooded(string roomId) => _floodedRooms.Contains(roomId);
@@ -26,12 +28,18 @@ namespace AtomicWar._Game.Shelter
         public event Action<string> OnRoomFlooded;
         public event Action<string> OnRoomDrained;
 
+        /// <summary>Inject a seeded RNG for deterministic save/load replay (audit bugfix #1).</summary>
+        public void SetRng(System.Random rng) => _rng = rng ?? new System.Random(120);
+
         public void Tick(float gameHours, bool isRaining, bool preDay30,
             Shelter shelter, Func<string, bool> isLowestRoom)
         {
             if (!preDay30 || !isRaining) { _floodAccumulator = 0f; return; }
             _floodAccumulator += gameHours;
             if (_floodAccumulator < 24f) return;
+
+            // Consume one 24h period; remainder stays in accumulator for
+            // correctness under large substeps (3× fast-forward, catch-up).
             _floodAccumulator -= 24f;
 
             var candidates = new List<string>();
@@ -43,11 +51,16 @@ namespace AtomicWar._Game.Shelter
                         candidates.Add(r.RoomId);
                 }
 
-            if (candidates.Count > 0 && UnityEngine.Random.value < FloodChancePerRainHour * gameHours)
+            if (candidates.Count > 0)
             {
-                string flooded = candidates[UnityEngine.Random.Range(0, candidates.Count)];
-                _floodedRooms.Add(flooded);
-                OnRoomFlooded?.Invoke(flooded);
+                // Use seeded System.Random so save/load replays are deterministic.
+                var rng = _rng ?? new System.Random(120);
+                if (rng.NextDouble() < FloodChancePer24hRain)
+                {
+                    string flooded = candidates[rng.Next(candidates.Count)];
+                    _floodedRooms.Add(flooded);
+                    OnRoomFlooded?.Invoke(flooded);
+                }
             }
         }
 
