@@ -32,7 +32,6 @@ namespace AtomicWar._Game.Core
         public event Action<string> OnHordeSpawned;   // (nodeId)
 
         private ChainsawState _state = new ChainsawState();
-        private string _pendingHordeNodeId = "";
 
         // Perform a chainsaw attack.
         // Returns damage dealt and whether fuel was consumed.
@@ -59,7 +58,6 @@ namespace AtomicWar._Game.Core
         public void FlushHordeSpawn(string nodeId)
         {
             if (string.IsNullOrEmpty(nodeId)) return;
-            _pendingHordeNodeId = "";
             OnHordeSpawned?.Invoke(nodeId);
         }
 
