@@ -106,6 +106,8 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetChemToleranceSystem(ChemTolerance);
             SaveSystem.SetLastWillSystem(LastWill);
             SaveSystem.SetLegacyStartSystem(LegacyStart);
+            SaveSystem.SetBloodTypesSystem(BloodTypes);
+            SaveSystem.SetEpilogueStatsSystem(EpilogueStats);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
@@ -376,6 +378,15 @@ namespace AtomicWar._Game.Core
 
             HatchDefenseSystem?.BindCombatPerks(CombatPerks);
             HatchDefenseSystem?.BindPerimeterTraps(PerimeterTrapSystem);
+            // Prompt #768 — epilogue bullet tally from hatch raids.
+            if (HatchDefenseSystem != null)
+            {
+                HatchDefenseSystem.OnRaidResolved += result =>
+                {
+                    if (result.AmmoConsumed > 0)
+                        EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
+                };
+            }
 
             // Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.
             if (HatchDefenseSystem != null && WeaponMaintenanceSystem != null)
@@ -417,6 +428,8 @@ namespace AtomicWar._Game.Core
                 SurvivalPerks,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             CookingSystem.SetMealDefinition(CookingSystem.CreateCookedMealDefinition());
+            // Prompt #768 — epilogue meal tally.
+            CookingSystem.OnMealCooked += (_, __) => EpilogueStats?.RecordMealCooked(1);
 
             CraftingSystem?.BindSurvivalPerks(
                 SurvivalPerks,

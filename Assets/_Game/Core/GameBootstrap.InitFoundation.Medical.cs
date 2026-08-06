@@ -82,6 +82,29 @@ namespace AtomicWar._Game.Core
             LastWill = new LastWillSystem();
             // Prompt #859 — ruined-bunker legacy start (seeded from Last Will on wipe).
             LegacyStart = new System_LegacyStart();
+            // Prompt #829 — blood types for bag transfusions (person-to-person stays on BloodTransfusion).
+            BloodTypes = new System_BloodTypes();
+            BloodTypes.SetRng(new System.Random(_worldSeed + 829));
+            AssignBloodTypesToExistingSurvivors();
+            // Prompt #768 — epilogue counters + empty-bunker narrative.
+            EpilogueStats = new System_EpilogueStats();
+        }
+
+        /// <summary>
+        /// Survivors are created in InitFoundation before medical systems exist;
+        /// assign types once BloodTypes is constructed (and for later recruits).
+        /// </summary>
+        private void AssignBloodTypesToExistingSurvivors()
+        {
+            if (BloodTypes == null || Survivors == null) return;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || string.IsNullOrEmpty(sv.Id)) continue;
+                string type = BloodTypes.EnsureBloodType(sv.Id);
+                if (BloodTransfusion != null && !string.IsNullOrEmpty(type))
+                    BloodTransfusion.SetBloodType(sv.Id, ParseBloodTypeEnum(type));
+            }
         }
 
         private float GetPartyAverageLifetimeRadiation()

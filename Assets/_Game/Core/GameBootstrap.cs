@@ -204,6 +204,10 @@ namespace AtomicWar._Game.Core
         public LastWillSystem LastWill { get; private set; }
         // Prompt #859 — start next run in ruined prior bunker (from Last Will wipe data).
         public System_LegacyStart LegacyStart { get; private set; }
+        // Prompt #829 — A/B/AB/O typing + bag transfusion hemolytic shock.
+        public System_BloodTypes BloodTypes { get; private set; }
+        // Prompt #768 — empty-bunker epilogue (meals / bullets / death rooms).
+        public System_EpilogueStats EpilogueStats { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

@@ -118,6 +118,8 @@ namespace AtomicWar._Game.Core
             { "ChemTolerance",           new[] { "tolerance" } },
             { "LastWill",                new[] { "last_will" } },
             { "LegacyStart",             new[] { "legacy_start" } },
+            { "BloodTypes",              new[] { "blood_types" } },
+            { "EpilogueStats",           new[] { "epilogue_stats" } },
             { "RiverNodeSystem",         new[] { "river_nodes" } },
             // Tactical / world systems
             { "DeadDropSystem",          new[] { "dead_drops" } },

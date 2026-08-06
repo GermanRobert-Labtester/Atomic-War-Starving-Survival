@@ -46,9 +46,12 @@ namespace AtomicWar._Game.Core
         private readonly HashSet<string> _testedIds = new HashSet<string>();
         private readonly HashSet<string> _hemolyticShockActive = new HashSet<string>();
 
-        private readonly System.Random _rng = new System.Random();
+        private System.Random _rng = new System.Random();
 
         // ── Public API ─────────────────────────────────────────────────
+
+        /// <summary>Inject seeded RNG (bootstrap world seed) for deterministic assign.</summary>
+        public void SetRng(System.Random rng) => _rng = rng ?? new System.Random();
 
         /// <summary>
         /// Assign a blood type to a survivor. Call once per survivor at
@@ -64,6 +67,59 @@ namespace AtomicWar._Game.Core
             }
 
             _bloodTypes[survivorId] = type;
+        }
+
+        /// <summary>
+        /// Assign a random blood type if none exists (O 44% / A 42% / B 10% / AB 4%).
+        /// Returns the assigned type.
+        /// </summary>
+        public string EnsureBloodType(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return null;
+            if (_bloodTypes.TryGetValue(survivorId, out var existing) && IsValidType(existing))
+                return existing;
+
+            double roll = _rng.NextDouble();
+            string type;
+            if (roll < 0.44) type = TYPE_O;
+            else if (roll < 0.86) type = TYPE_A;
+            else if (roll < 0.96) type = TYPE_B;
+            else type = TYPE_AB;
+            _bloodTypes[survivorId] = type;
+            return type;
+        }
+
+        /// <summary>
+        /// Bag transfusion path (Prompt #829). On incompatible bag → hemolytic shock,
+        /// then immediate ResolveShock (80% death). Returns true if compatible.
+        /// </summary>
+        public bool TryTransfuseBag(string recipientId, string bagType, out bool died)
+        {
+            died = false;
+            if (string.IsNullOrEmpty(recipientId) || string.IsNullOrEmpty(bagType))
+                return false;
+
+            EnsureBloodType(recipientId);
+            if (!_bloodTypes.TryGetValue(recipientId, out var recipientType))
+                return false;
+
+            OnTransfusionStarted?.Invoke(recipientId, bagType);
+
+            if (CheckCompatibility(recipientType, bagType))
+                return true;
+
+            _hemolyticShockActive.Add(recipientId);
+            OnHemolyticShock?.Invoke(recipientId);
+
+            // Resolve immediately for bag path (no separate wait UI yet).
+            bool death = false;
+            Action<string> onDeath = id => { if (id == recipientId) death = true; };
+            OnDeath += onDeath;
+            try { ResolveShock(recipientId); }
+            finally { OnDeath -= onDeath; }
+
+            died = death;
+            return false;
         }
 
         /// <summary>
@@ -206,17 +262,27 @@ namespace AtomicWar._Game.Core
 
             if (saved == null) return;
 
-            int count = Mathf.Min(saved.survivor_ids.Count, saved.blood_types.Count);
-            for (int i = 0; i < count; i++)
+            if (saved.survivor_ids != null && saved.blood_types != null)
             {
-                _bloodTypes[saved.survivor_ids[i]] = saved.blood_types[i];
+                int count = Mathf.Min(saved.survivor_ids.Count, saved.blood_types.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    if (string.IsNullOrEmpty(saved.survivor_ids[i])) continue;
+                    _bloodTypes[saved.survivor_ids[i]] = saved.blood_types[i];
+                }
             }
 
-            foreach (var id in saved.tested_ids)
-                _testedIds.Add(id);
+            if (saved.tested_ids != null)
+            {
+                foreach (var id in saved.tested_ids)
+                    if (!string.IsNullOrEmpty(id)) _testedIds.Add(id);
+            }
 
-            foreach (var id in saved.hemolytic_shock_ids)
-                _hemolyticShockActive.Add(id);
+            if (saved.hemolytic_shock_ids != null)
+            {
+                foreach (var id in saved.hemolytic_shock_ids)
+                    if (!string.IsNullOrEmpty(id)) _hemolyticShockActive.Add(id);
+            }
         }
     }
 }

@@ -8,6 +8,13 @@ namespace AtomicWar._Game.Core
     public class EpilogueStatsState
     {
         public string systemId = "system_epilogue_stats";
+        public int mealsCooked;
+        public int bulletsFired;
+        public int daysSurvived;
+        public List<string> survivorsDead = new List<string>();
+        public List<string> deathLocations = new List<string>();
+        public List<string> journalEntries = new List<string>();
+        public bool hasRecord;
     }
 
     [Serializable]
@@ -23,8 +30,8 @@ namespace AtomicWar._Game.Core
 
     /// <summary>
     /// Prompt #768: The Empty Bunker (Epilogue).
-    /// On game end, generate top-down view of ruined bunker.
-    /// Highlight where people died, meals cooked, bullets fired, final journal entries.
+    /// Tracks meals/bullets during the run; on game end generates a top-down
+    /// highlight record (where people died, meals cooked, bullets fired, final journals).
     /// </summary>
     public class System_EpilogueStats
     {
@@ -32,12 +39,34 @@ namespace AtomicWar._Game.Core
         private EpilogueRecord _lastRecord;
 
         public event Action<EpilogueRecord> OnEpilogueGenerated;
+        public event Action<int> OnMealRecorded;
+        public event Action<int> OnBulletRecorded;
 
         public EpilogueStatsState State => _state;
         public EpilogueRecord LastRecord => _lastRecord;
+        public int MealsCooked => _state.mealsCooked;
+        public int BulletsFired => _state.bulletsFired;
+        public bool HasRecord => _lastRecord != null || _state.hasRecord;
+
+        /// <summary>Running tally — call when a meal is cooked this run.</summary>
+        public void RecordMealCooked(int count = 1)
+        {
+            if (count <= 0) return;
+            _state.mealsCooked = Math.Max(0, _state.mealsCooked + count);
+            OnMealRecorded?.Invoke(_state.mealsCooked);
+        }
+
+        /// <summary>Running tally — call when ammo is expended in combat/defense.</summary>
+        public void RecordBulletsFired(int count = 1)
+        {
+            if (count <= 0) return;
+            _state.bulletsFired = Math.Max(0, _state.bulletsFired + count);
+            OnBulletRecorded?.Invoke(_state.bulletsFired);
+        }
 
         /// <summary>
         /// Generate the epilogue record from end-of-game statistics.
+        /// Uses live counters when meal/bullet args are negative.
         /// </summary>
         public EpilogueRecord GenerateEpilogue(
             int mealsCooked,
@@ -47,10 +76,13 @@ namespace AtomicWar._Game.Core
             List<string> deathRoomIds,
             List<string> finalJournalEntries)
         {
+            int meals = mealsCooked >= 0 ? mealsCooked : _state.mealsCooked;
+            int bullets = bulletsFired >= 0 ? bulletsFired : _state.bulletsFired;
+
             var record = new EpilogueRecord
             {
-                mealsCooked = Math.Max(0, mealsCooked),
-                bulletsFired = Math.Max(0, bulletsFired),
+                mealsCooked = Math.Max(0, meals),
+                bulletsFired = Math.Max(0, bullets),
                 daysSurvived = Math.Max(0, daysSurvived),
                 survivorsDead = deadSurvivors != null
                     ? new List<string>(deadSurvivors)
@@ -64,6 +96,15 @@ namespace AtomicWar._Game.Core
             };
 
             _lastRecord = record;
+            // Keep counters / snapshot in state for save.
+            _state.mealsCooked = record.mealsCooked;
+            _state.bulletsFired = record.bulletsFired;
+            _state.daysSurvived = record.daysSurvived;
+            _state.survivorsDead = new List<string>(record.survivorsDead);
+            _state.deathLocations = new List<string>(record.deathLocations);
+            _state.journalEntries = new List<string>(record.journalEntries);
+            _state.hasRecord = true;
+
             OnEpilogueGenerated?.Invoke(record);
             return record;
         }
@@ -131,6 +172,94 @@ namespace AtomicWar._Game.Core
                 return new List<string>();
 
             return new List<string>(record.deathLocations);
+        }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public EpilogueStatsState CaptureState()
+        {
+            var copy = new EpilogueStatsState
+            {
+                systemId = "system_epilogue_stats",
+                mealsCooked = _state.mealsCooked,
+                bulletsFired = _state.bulletsFired,
+                daysSurvived = _state.daysSurvived,
+                hasRecord = _state.hasRecord || _lastRecord != null,
+                survivorsDead = new List<string>(),
+                deathLocations = new List<string>(),
+                journalEntries = new List<string>()
+            };
+
+            if (_lastRecord != null)
+            {
+                copy.mealsCooked = _lastRecord.mealsCooked;
+                copy.bulletsFired = _lastRecord.bulletsFired;
+                copy.daysSurvived = _lastRecord.daysSurvived;
+                CopyList(_lastRecord.survivorsDead, copy.survivorsDead);
+                CopyList(_lastRecord.deathLocations, copy.deathLocations);
+                CopyList(_lastRecord.journalEntries, copy.journalEntries);
+                copy.hasRecord = true;
+            }
+            else
+            {
+                CopyList(_state.survivorsDead, copy.survivorsDead);
+                CopyList(_state.deathLocations, copy.deathLocations);
+                CopyList(_state.journalEntries, copy.journalEntries);
+            }
+
+            return copy;
+        }
+
+        public void RestoreState(EpilogueStatsState saved)
+        {
+            if (saved == null)
+            {
+                _state = new EpilogueStatsState();
+                _lastRecord = null;
+                return;
+            }
+
+            _state = new EpilogueStatsState
+            {
+                systemId = "system_epilogue_stats",
+                mealsCooked = Math.Max(0, saved.mealsCooked),
+                bulletsFired = Math.Max(0, saved.bulletsFired),
+                daysSurvived = Math.Max(0, saved.daysSurvived),
+                hasRecord = saved.hasRecord,
+                survivorsDead = new List<string>(),
+                deathLocations = new List<string>(),
+                journalEntries = new List<string>()
+            };
+            CopyList(saved.survivorsDead, _state.survivorsDead);
+            CopyList(saved.deathLocations, _state.deathLocations);
+            CopyList(saved.journalEntries, _state.journalEntries);
+
+            if (saved.hasRecord)
+            {
+                _lastRecord = new EpilogueRecord
+                {
+                    mealsCooked = _state.mealsCooked,
+                    bulletsFired = _state.bulletsFired,
+                    daysSurvived = _state.daysSurvived,
+                    survivorsDead = new List<string>(_state.survivorsDead),
+                    deathLocations = new List<string>(_state.deathLocations),
+                    journalEntries = new List<string>(_state.journalEntries)
+                };
+            }
+            else
+            {
+                _lastRecord = null;
+            }
+        }
+
+        private static void CopyList(List<string> src, List<string> dst)
+        {
+            if (src == null || dst == null) return;
+            for (int i = 0; i < src.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(src[i]))
+                    dst.Add(src[i]);
+            }
         }
     }
 }

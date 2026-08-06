@@ -94,9 +94,83 @@ namespace AtomicWar._Game.Core
                 GameState.Phase = GamePhase.GameOver;
             }
             TryRecordLastWillGrave(summary);
+            TryGenerateEpilogue(summary);
             // Halt TimeSystem by not ticking (Update already gates on Phase/IsGameOver).
             PushEndgameSummaryToHud(summary);
             Debug.Log($"[GameBootstrap] ENDGAME ({summary.State}): {summary.OutcomeTitle} — {summary.Reason}");
+        }
+
+        /// <summary>
+        /// Prompt #768 — freeze empty-bunker epilogue (meals, bullets, death rooms, journals).
+        /// </summary>
+        private void TryGenerateEpilogue(EndgameSummaryData summary)
+        {
+            if (EpilogueStats == null || summary == null) return;
+
+            var dead = new List<string>();
+            var deathRooms = new List<string>();
+            if (Survivors != null)
+            {
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    var sv = Survivors[i];
+                    if (sv == null) continue;
+                    if (sv.IsAlive) continue;
+                    string name = string.IsNullOrEmpty(sv.DisplayName) ? sv.Id : sv.DisplayName;
+                    dead.Add(name);
+                    if (!string.IsNullOrEmpty(sv.CurrentRoomId))
+                        deathRooms.Add(sv.CurrentRoomId);
+                }
+            }
+
+            var journals = new List<string>();
+            if (JournalSystem != null && JournalSystem.Entries != null)
+            {
+                int n = Mathf.Min(3, JournalSystem.EntryCount);
+                for (int i = 0; i < n; i++)
+                {
+                    var e = JournalSystem.Entries[i];
+                    if (e != null && !string.IsNullOrEmpty(e.Text))
+                        journals.Add(e.Text);
+                }
+            }
+            if (journals.Count == 0 && !string.IsNullOrEmpty(summary.Reason))
+                journals.Add(summary.Reason);
+
+            var record = EpilogueStats.GenerateEpilogue(
+                mealsCooked: -1, // use live counters
+                bulletsFired: -1,
+                daysSurvived: summary.DaysSurvived,
+                deadSurvivors: dead,
+                deathRoomIds: deathRooms,
+                finalJournalEntries: journals);
+
+            string narrative = EpilogueStats.GetNarrativeSummary(record);
+            if (!string.IsNullOrEmpty(narrative))
+                Debug.Log($"[GameBootstrap] EPILOGUE: {narrative}");
+        }
+
+        /// <summary>
+        /// Prompt #829 — bag transfusion. Incompatible bag → hemolytic shock (80% death).
+        /// Returns true if compatible. Person-to-person stays on <see cref="BloodTransfusion"/>.
+        /// </summary>
+        public bool TryTransfuseBloodBag(string recipientId, string bagType)
+        {
+            if (BloodTypes == null || string.IsNullOrEmpty(recipientId) || string.IsNullOrEmpty(bagType))
+                return false;
+
+            bool compatible = BloodTypes.TryTransfuseBag(recipientId, bagType, out bool died);
+            if (!compatible && died && Survivors != null)
+            {
+                for (int i = 0; i < Survivors.Count; i++)
+                {
+                    var sv = Survivors[i];
+                    if (sv == null || sv.Id != recipientId || !sv.IsAlive) continue;
+                    NeedsSystem?.ForceDeath(sv);
+                    break;
+                }
+            }
+            return compatible;
         }
 
         /// <summary>

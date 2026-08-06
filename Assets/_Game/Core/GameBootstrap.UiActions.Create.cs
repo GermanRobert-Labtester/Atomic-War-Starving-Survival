@@ -150,6 +150,26 @@ namespace AtomicWar._Game.Core
             Survivors.Add(sv);
             NeedsSystem.Register(sv);
             RadiationSystem.Register(sv);
+            // Prompt #829 — assign blood type at creation; keep BloodTransfusion enum in sync.
+            if (BloodTypes != null)
+            {
+                string type = BloodTypes.EnsureBloodType(sv.Id);
+                if (BloodTransfusion != null && !string.IsNullOrEmpty(type))
+                    BloodTransfusion.SetBloodType(sv.Id, ParseBloodTypeEnum(type));
+            }
+        }
+
+        private static Medical.BloodType ParseBloodTypeEnum(string type)
+        {
+            if (string.Equals(type, System_BloodTypes.TYPE_A, StringComparison.Ordinal))
+                return Medical.BloodType.A;
+            if (string.Equals(type, System_BloodTypes.TYPE_B, StringComparison.Ordinal))
+                return Medical.BloodType.B;
+            if (string.Equals(type, System_BloodTypes.TYPE_AB, StringComparison.Ordinal))
+                return Medical.BloodType.AB;
+            if (string.Equals(type, System_BloodTypes.TYPE_O, StringComparison.Ordinal))
+                return Medical.BloodType.O;
+            return Medical.BloodType.Unknown;
         }
 
         /// <summary>

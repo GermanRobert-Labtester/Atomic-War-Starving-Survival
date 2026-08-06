@@ -437,6 +437,18 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((LegacyStartState)o));
 
+        /// <summary>Prompt #829 — A/B/AB/O types + bag transfusion hemolytic shock.</summary>
+        public void SetBloodTypesSystem(System_BloodTypes s) =>
+            RegisterSystem(ref _bloodTypesSystem, s, "blood_types",
+                () => s.CaptureState(),
+                o => s.RestoreState((BloodTypesState)o));
+
+        /// <summary>Prompt #768 — empty-bunker epilogue stats (meals / bullets / death rooms).</summary>
+        public void SetEpilogueStatsSystem(System_EpilogueStats s) =>
+            RegisterSystem(ref _epilogueStatsSystem, s, "epilogue_stats",
+                () => s.CaptureState(),
+                o => s.RestoreState((EpilogueStatsState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",
