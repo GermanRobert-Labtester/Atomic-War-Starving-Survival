@@ -330,6 +330,10 @@ namespace AtomicWar._Game.Medical
                 if (!_inventory.Remove(itemDef, 1)) return false;
             }
 
+            int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+            // Addiction / blood toxicity: same host hook as full treatment recipes.
+            OnTreatmentItemConsumed?.Invoke(patient, itemId, day);
+
             for (int i = 0; i < targets.Count; i++)
             {
                 var a = targets[i];
@@ -347,7 +351,6 @@ namespace AtomicWar._Game.Medical
                 && IsRaidWindowActive != null
                 && IsRaidWindowActive())
             {
-                int day = GetCurrentDay != null ? GetCurrentDay() : 0;
                 _medicalPerks?.RecordBandageDuringRaid(medic, raidActive: true, day);
             }
 
@@ -408,20 +411,32 @@ namespace AtomicWar._Game.Medical
             }
             if (target == null || target.IsTreating) return false;
 
-            if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup))
+            var consumedItemIds = new List<string>();
+            if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup, consumedItemIds))
                 return false;
 
             int day = GetCurrentDay != null ? GetCurrentDay() : 0;
 
-            // Notify host (AddictionSystem) of consumed treatment items
-            if (OnTreatmentItemConsumed != null && recipe.ingredients != null)
+            // Notify host (Addiction + BloodToxicity) of items actually consumed.
+            // Falls back to recipe ResolvedIds when inventory is omitted (unit tests).
+            if (OnTreatmentItemConsumed != null)
             {
-                for (int i = 0; i < recipe.ingredients.Count; i++)
+                if (consumedItemIds.Count > 0)
                 {
-                    var ing = recipe.ingredients[i];
-                    if (ing != null && ing.item != null && !string.IsNullOrEmpty(ing.item.id))
+                    for (int i = 0; i < consumedItemIds.Count; i++)
+                        OnTreatmentItemConsumed(patient, consumedItemIds[i], day);
+                }
+                else if (_inventory == null && recipe.ingredients != null)
+                {
+                    for (int i = 0; i < recipe.ingredients.Count; i++)
                     {
-                        OnTreatmentItemConsumed(patient, ing.item.id, day);
+                        var ing = recipe.ingredients[i];
+                        if (ing == null) continue;
+                        string id = ing.ResolvedId;
+                        if (string.IsNullOrEmpty(id)) continue;
+                        int times = Mathf.Max(1, ing.amount);
+                        for (int n = 0; n < times; n++)
+                            OnTreatmentItemConsumed(patient, id, day);
                     }
                 }
             }
@@ -1068,7 +1083,8 @@ namespace AtomicWar._Game.Medical
         private bool ConsumeIngredients(
             TreatmentRecipeSO recipe,
             float medicalSkill,
-            Func<string, ItemDefinition> itemLookup)
+            Func<string, ItemDefinition> itemLookup,
+            List<string> consumedItemIds = null)
         {
             if (recipe.ingredients == null || recipe.ingredients.Count == 0) return true;
             if (_inventory == null) return true; // tests may omit inventory
@@ -1105,6 +1121,11 @@ namespace AtomicWar._Game.Medical
                         continue;
                 }
                 if (!_inventory.Remove(item, amount)) return false;
+                if (consumedItemIds != null && item != null && !string.IsNullOrEmpty(item.id))
+                {
+                    for (int a = 0; a < amount; a++)
+                        consumedItemIds.Add(item.id);
+                }
             }
             return true;
         }

@@ -60,6 +60,12 @@ namespace AtomicWar._Game.Medical
         public event Action<Survivors.Survivor, Survivors.Survivor> OnAmputationPerformed; // patient, surgeon
         public event Action<Survivors.Survivor> OnPhantomPainEpisode;
 
+        /// <summary>
+        /// Host hook when surgery consumes a chem (morphine). Signature matches
+        /// MedicalSystem.OnTreatmentItemConsumed: (patient, itemId, day).
+        /// </summary>
+        public Action<Survivors.Survivor, string, int> OnChemConsumed;
+
         public IReadOnlyCollection<string> Amputees => _amputees;
 
         public AmputationSystem() { }
@@ -124,6 +130,10 @@ namespace AtomicWar._Game.Medical
                 consumeItem(SurgicalToolsItemId, 1);
             consumeItem(MorphineItemId, 1);
 
+            // Prompt #551 — morphine for surgery counts toward blood toxicity / addiction.
+            int day = _getDay != null ? _getDay() : 0;
+            OnChemConsumed?.Invoke(patient, MorphineItemId, day);
+
             // Surgery costs.
             patient.Needs.Health = Mathf.Clamp(
                 patient.Needs.Health - SurgeryHealthCost, 0f, patient.MaxHealthCap);
@@ -142,7 +152,6 @@ namespace AtomicWar._Game.Medical
                 patient.DisabilityIds.Add(AmputeeDisabilityId);
 
             // Prompt #204 — Anatomist: clean amputations (0% PhantomPain).
-            int day = _getDay != null ? _getDay() : 0;
             _medicalPerks?.RecordAmputation(surgeon, patient, day);
 
             OnAmputationPerformed?.Invoke(patient, surgeon);

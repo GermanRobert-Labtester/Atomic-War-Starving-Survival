@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
@@ -209,6 +210,136 @@ namespace AtomicWar.Tests.EditMode
             Object.DestroyImmediate(tweezers);
             Object.DestroyImmediate(bedSO);
             Object.DestroyImmediate(recipe);
+        }
+
+        [Test]
+        public void TreatmentWithMorphine_RecordsBloodToxicityChemUse()
+        {
+            // Mirrors GameBootstrap.WireMedicalAddictionHooks: treatment ingredients → BloodToxicity.
+            var bandage = MakeItem("bandage");
+            var morphine = MakeItem("morphine");
+            var inv = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inv.Add(bandage, 1);
+            inv.Add(morphine, 2);
+
+            var med = MakeMedical(inv);
+            var blood = new BloodToxicitySystem();
+            med.GetCurrentDay = () => 3;
+            med.OnTreatmentItemConsumed = (sv, itemId, day) =>
+            {
+                if (sv != null)
+                    blood.RecordChemUse(sv.Id, itemId);
+            };
+
+            // Pain recipe: primary bandage + secondary morphine (itemId-only on secondary).
+            var recipe = ScriptableObject.CreateInstance<TreatmentRecipeSO>();
+            recipe.id = "treat_gunshot_pain";
+            recipe.displayName = "Morphine dressing";
+            recipe.targetAfflictionId = AfflictionSO.Ids.GunshotWound;
+            recipe.baseTreatmentHours = 1f;
+            recipe.requiresMedicalBed = false;
+            recipe.requiresPatientRest = false;
+            recipe.ingredients = new List<TreatmentIngredient>
+            {
+                new TreatmentIngredient { item = bandage, itemId = "bandage", amount = 1 },
+                new TreatmentIngredient { item = null, itemId = "morphine", amount = 1 }
+            };
+            med.RegisterTreatment(recipe);
+
+            var medic = MakeSurvivor("sv_medic");
+            medic.MedicalSkill = 0.2f; // low skill: secondary morphine not spared
+            var patient = MakeSurvivor("sv_chem_patient");
+            Assert.IsTrue(med.Inflict(patient, AfflictionSO.Ids.GunshotWound));
+            Assert.IsTrue(med.TryStartTreatment(medic, patient, recipe));
+
+            Assert.IsTrue(blood.States.ContainsKey(patient.Id),
+                "Morphine in a treatment recipe must record blood toxicity chem use.");
+            Assert.AreEqual(1, blood.States[patient.Id].chemUsageCount);
+            Assert.AreEqual(1, inv.CountById("morphine"), "One morphine unit should be consumed.");
+            Assert.AreEqual(0, inv.CountById("bandage"));
+
+            Object.DestroyImmediate(bandage);
+            Object.DestroyImmediate(morphine);
+            Object.DestroyImmediate(recipe);
+        }
+
+        [Test]
+        public void TreatmentWithItemIdOnlyAntiRad_RecordsBloodToxicity()
+        {
+            var antiRad = MakeItem("anti_rad");
+            var inv = new Inventory { Capacity = 10, MaxWeight = 50f };
+            inv.Add(antiRad, 1);
+
+            var med = MakeMedical(inv);
+            var blood = new BloodToxicitySystem();
+            med.OnTreatmentItemConsumed = (sv, itemId, day) =>
+            {
+                if (sv != null) blood.RecordChemUse(sv.Id, itemId);
+            };
+
+            // Affliction that can be "treated" with anti_rad only (itemId, no item ref).
+            var recipe = ScriptableObject.CreateInstance<TreatmentRecipeSO>();
+            recipe.id = "treat_rad_anti";
+            recipe.targetAfflictionId = AfflictionSO.Ids.GunshotWound;
+            recipe.baseTreatmentHours = 0.5f;
+            recipe.requiresMedicalBed = false;
+            recipe.requiresPatientRest = false;
+            recipe.ingredients = new List<TreatmentIngredient>
+            {
+                new TreatmentIngredient { item = null, itemId = "anti_rad", amount = 1 }
+            };
+            med.RegisterTreatment(recipe);
+
+            var medic = MakeSurvivor("sv_m");
+            var patient = MakeSurvivor("sv_p");
+            med.Inflict(patient, AfflictionSO.Ids.GunshotWound);
+            Assert.IsTrue(med.TryStartTreatment(medic, patient, recipe));
+            Assert.AreEqual(1, blood.States[patient.Id].chemUsageCount);
+            Assert.AreEqual(0, inv.CountById("anti_rad"));
+
+            Object.DestroyImmediate(antiRad);
+            Object.DestroyImmediate(recipe);
+        }
+
+        [Test]
+        public void AmputationMorphine_RecordsBloodToxicityChemUse()
+        {
+            var amp = new AmputationSystem();
+            var patient = MakeSurvivor("sv_amp_patient");
+            var surgeon = MakeSurvivor("sv_surgeon");
+            surgeon.MedicalSkill = 0.9f;
+            patient.Needs.Health = 80f;
+            surgeon.Needs.Fatigue = 10f;
+            surgeon.Needs.Morale = 70f;
+            patient.Needs.Morale = 70f;
+
+            amp.Bind(
+                id => id == patient.Id ? patient : id == surgeon.Id ? surgeon : null,
+                (sv, affId) => { });
+            amp.BindMedicalPerks(null, getDay: () => 4);
+
+            var blood = new BloodToxicitySystem();
+            amp.OnChemConsumed = (sv, itemId, day) =>
+            {
+                if (sv != null) blood.RecordChemUse(sv.Id, itemId);
+            };
+
+            int tools = 1, morph = 1;
+            Assert.IsTrue(amp.PerformAmputation(
+                patient.Id,
+                surgeon.Id,
+                id => id == AmputationSystem.SurgicalToolsItemId ? tools
+                    : id == AmputationSystem.MorphineItemId ? morph : 0,
+                (id, n) =>
+                {
+                    if (id == AmputationSystem.SurgicalToolsItemId) { tools -= n; return true; }
+                    if (id == AmputationSystem.MorphineItemId) { morph -= n; return true; }
+                    return false;
+                }));
+
+            Assert.AreEqual(0, morph);
+            Assert.AreEqual(1, blood.States[patient.Id].chemUsageCount,
+                "Amputation morphine must count as a blood-toxicity chem use on the patient.");
         }
 
         [Test]
