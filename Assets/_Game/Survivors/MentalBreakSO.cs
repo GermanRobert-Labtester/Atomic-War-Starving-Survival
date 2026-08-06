@@ -47,6 +47,11 @@ namespace AtomicWar._Game.Survivors
                  "room with the broken survivor. Default 0 (no drain).")]
         public float passiveMoraleDrainPerHour = 0f;
 
+        [Tooltip("InterpersonalAffinity drained per game-hour from every OTHER " +
+                 "survivor toward the broken survivor. Default 0 (no drain). " +
+                 "Used by ViolentParanoia to erode trust.")]
+        public float affinityDrainPerHour = 0f;
+
         [Header("Cure")]
         [Tooltip("Game-hours of natural decay before the break resolves on its own. " +
                  "0 = must be cured by Comfort item or MedicalBed intervention.")]

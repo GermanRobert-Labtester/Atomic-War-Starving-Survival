@@ -10,6 +10,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Economy;
 using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 
 namespace AtomicWar.Tests.EditMode
@@ -261,6 +262,7 @@ namespace AtomicWar.Tests.EditMode
             brk.id = "test_break";
             mb.RegisterBreak(brk);
 
+            e.lowMoraleHours = MentalBreakSystem.LowMoraleBreakWindowHours; // clear the morale gate
             bool triggered = mb.TryRollForBreak(e, new System.Random(1));
             Assert.IsFalse(triggered);
             Assert.IsTrue(string.IsNullOrEmpty(e.currentMentalBreakId));

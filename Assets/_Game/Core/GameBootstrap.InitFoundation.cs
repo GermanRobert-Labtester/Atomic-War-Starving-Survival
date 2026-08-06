@@ -372,6 +372,10 @@ namespace AtomicWar._Game.Core
             GriefKeepsakes = new GriefKeepsakeSystem();
             HallucinationSystem = new AI.HallucinationSystem();
             MentorshipSystem = new MentorshipSystem();
+
+            // Prompts #469-#478 — interpersonal &amp; leadership director.
+            InitBunkerSocial();
+
             // Wire death hook into NeedsSystem.OnDied
             _onNeedsDied = deceased =>
             {
@@ -380,6 +384,8 @@ namespace AtomicWar._Game.Core
                 EmpathSystem.OnSurvivorDied(deceased, Survivors);
                 ChildSystem?.CheckChildDeath(Survivors);
                 GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");
+                // #469 lover-grief mental break + cleanup.
+                BunkerSocial?.NotifySurvivorDied(deceased, null);
             };
             NeedsSystem.OnDied += _onNeedsDied;
 

@@ -74,8 +74,16 @@ namespace AtomicWar._Game.Survivors
         /// <summary>
         /// Optional host hook: sabotage a shelter module (ViolentParanoia).
         /// Injected by Core so Survivors stays free of Shelter assembly refs.
+        /// Returns the id of the sabotaged module (or null if none was hit).
         /// </summary>
-        public Action<Survivor, MentalBreakSO, System.Random> SabotageHandler;
+        public Func<Survivor, MentalBreakSO, System.Random, string> SabotageHandler;
+
+        /// <summary>
+        /// Fired once a ViolentParanoia sabotage lands; the first arg is the best
+        /// known module id (fallback to the break id when the host didn't supply one).
+        /// Keeps the leaf assembly away from Shelter types.
+        /// </summary>
+        public event Action<string, object> ModuleSabotaged;
 
         private PersonalQuestSystem _personalQuests;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
@@ -171,7 +179,8 @@ namespace AtomicWar._Game.Survivors
                 {
                     if (rng.NextDouble() < br.sabotageChancePerTick * gameHours)
                     {
-                        SabotageHandler(sv, br, rng);
+                        string moduleId = SabotageHandler(sv, br, rng);
+                        ModuleSabotaged?.Invoke(moduleId ?? br.id ?? "unknown", null);
                     }
                 }
             }
@@ -190,8 +199,9 @@ namespace AtomicWar._Game.Survivors
                 }
             }
 
-            // 4. Passive morale drain on other survivors (room approximation).
+            // 4. Passive morale drain + affinity drain on other survivors.
             ApplyPassiveDrain(gameHours, survivors, rng);
+            ApplyBreakAffinityDrain(gameHours, survivors);
 
             // 5. #253 Psychopath InterpersonalAffinity drain + #254 Urge tick.
             TickBondBurdenQuirks(gameHours, survivors, rng);
@@ -266,6 +276,8 @@ namespace AtomicWar._Game.Survivors
         public bool TryRollForBreak(Survivor sv, System.Random rng)
         {
             if (sv == null || _breaksById.Count == 0 || rng == null) return false;
+            // Gate: survivor must have accumulated enough low-morale hours.
+            if (sv.lowMoraleHours < LowMoraleBreakWindowHours) return false;
             // #309 Escapee Iron Will: immune to all mental breaks.
             if (_personalQuests != null && _personalQuests.IsImmuneToAllMentalBreaks(sv))
                 return false;
@@ -350,6 +362,8 @@ namespace AtomicWar._Game.Survivors
         /// added); false if no comfort item was available, the survivor
         /// wasn't broken, or the break has <c>comfortItemCureAmount == 0</c>.
         /// </summary>
+        public void ApplyComfortCure(Survivor sv) => TryCureWithComfortItem(sv);
+
         public bool TryCureWithComfortItem(Survivor sv)
         {
             if (sv == null || !sv.HasMentalBreak) return false;
@@ -373,6 +387,29 @@ namespace AtomicWar._Game.Survivors
         // -----------------------------------------------------------------
         // Passive morale drain to other survivors
         // -----------------------------------------------------------------
+
+        private void ApplyBreakAffinityDrain(
+            float gameHours,
+            IReadOnlyList<Survivor> survivors)
+        {
+            if (gameHours <= 0f || survivors == null) return;
+
+            for (int b = 0; b < survivors.Count; b++)
+            {
+                var broken = survivors[b];
+                if (broken == null || !broken.IsAlive || !broken.HasMentalBreak) continue;
+                var br = GetBreak(broken.currentMentalBreakId);
+                if (br == null || br.affinityDrainPerHour <= 0f) continue;
+
+                float delta = -br.affinityDrainPerHour * gameHours;
+                for (int o = 0; o < survivors.Count; o++)
+                {
+                    var other = survivors[o];
+                    if (other == null || other == broken || !other.IsAlive) continue;
+                    Affinity.Adjust(broken.Id, other.Id, delta);
+                }
+            }
+        }
 
         private void ApplyPassiveDrain(
             float gameHours,

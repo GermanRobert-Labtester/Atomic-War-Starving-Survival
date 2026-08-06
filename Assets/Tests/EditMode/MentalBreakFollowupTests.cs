@@ -104,7 +104,7 @@ namespace AtomicWar.Tests.EditMode
             _mentalBreakSystem.RegisterBreak(_bingeEater);
             _mentalBreakSystem.RegisterBreak(_violentParanoia);
             _mentalBreakSystem.BingeEatHandler = (sv, br) => 0;
-            _mentalBreakSystem.SabotageHandler = (sv, br, rng) => { };
+            _mentalBreakSystem.SabotageHandler = (sv, br, rng) => null;
             _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
 
             _rng = new System.Random(42);

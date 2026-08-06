@@ -11,7 +11,7 @@ def export_unity_codebase(assets_folder_path, output_filename="unity_codebase.tx
             for file in files:
                 if file.endswith(".cs"):
                     file_path = os.path.join(root, file)
-                    relative_path = os.relpath(file_path, assets_folder_path)
+                    relative_path = os.path.relpath(file_path, assets_folder_path)
                     
                     outfile.write(f"// ==================================================\n")
                     outfile.write(f"// FILE PATH: Assets/{relative_path}\n")
@@ -28,6 +28,9 @@ def export_unity_codebase(assets_folder_path, output_filename="unity_codebase.tx
 
     print(f"Done! Combined {script_count} scripts into '{output_filename}'.")
 
-# Usage:
-# Replace the path below with the full path to your Unity project's 'Assets' folder:
-# export_unity_codebase(r"C:\Projects\MyGame\Assets")
+# Usage — auto-detects the Assets folder relative to this script.
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+ASSETS_DIR = os.path.join(SCRIPT_DIR, "Assets")
+
+if __name__ == "__main__":
+    export_unity_codebase(ASSETS_DIR)

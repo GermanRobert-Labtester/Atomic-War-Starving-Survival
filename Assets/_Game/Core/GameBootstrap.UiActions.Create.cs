@@ -117,17 +117,18 @@ namespace AtomicWar._Game.Core
 
 
 
-        private void ForceMentalBreakSabotage(System.Random rng)
+        private string ForceMentalBreakSabotage(System.Random rng)
         {
-            if (Shelter == null || Shelter.Modules == null || Shelter.Modules.Count == 0) return;
+            if (Shelter == null || Shelter.Modules == null || Shelter.Modules.Count == 0) return null;
             if (rng == null) rng = new System.Random();
             int idx = rng.Next(Shelter.Modules.Count);
             var mod = Shelter.Modules[idx];
-            if (mod == null) return;
+            if (mod == null) return null;
             if (mod.IsEnabled)
                 mod.IsEnabled = false;
             else
                 mod.FilterHealth = Mathf.Max(0f, mod.FilterHealth - 25f);
+            return mod.ModuleId;
         }
 
 

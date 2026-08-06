@@ -56,6 +56,10 @@ namespace AtomicWar._Game.Core
             // can detect dead (constructed-but-unticked) systems.
             RegisterSystemsInRegistry();
 
+            // Persist the whole social family via one ISaveable slot (#469-#478).
+            if (SaveSystem != null && BunkerSocial != null)
+                SaveSystem.Register(BunkerSocial);
+
             // AUDIT-003: hard-fail if foundation systems required by TickSystems
             // were never constructed (partial init / test-host misuse).
             AssertFoundationSystems();

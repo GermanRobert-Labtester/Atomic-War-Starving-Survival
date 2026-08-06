@@ -137,6 +137,9 @@ namespace AtomicWar._Game.Core
                 if (MentalBreakSystem != null && _mentalBreakRng != null)
                     MentalBreakSystem.Tick(h, Survivors, _mentalBreakRng);
             });
+            // Prompts #469-#478 — social: auras every substep; daily transitions day-gated internally.
+            _registry.RegisterPerSubstep("bunker_social", h =>
+                BunkerSocial?.Tick(h, TimeSystem?.CurrentDay ?? 1, Survivors, _mentalBreakRng));
             _registry.RegisterPerSubstep("skill_atrophy", h => SkillAtrophy?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("skill_progression_daily",
                 _registry.DayGated("skill_progression", day => SkillProgression?.TickDaily(day, Survivors)));

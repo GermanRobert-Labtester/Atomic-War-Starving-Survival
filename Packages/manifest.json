@@ -1,13 +1,4 @@
 {
-  "scopedRegistries": [
-    {
-      "name": "Sentry",
-      "url": "https://packagecloud.io/sentry/unity",
-      "scopes": [
-        "io.sentry"
-      ]
-    }
-  ],
   "dependencies": {
     "com.unity.2d.animation": "15.1.0",
     "com.unity.2d.aseprite": "5.0.3",
@@ -31,7 +22,6 @@
     "com.unity.toolchain.linux-x86_64-linux": "1.1.0",
     "com.unity.ugui": "2.5.0",
     "com.unity.visualscripting": "1.9.12",
-    "io.sentry.unity": "2.1.9",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.adaptiveperformance": "1.0.0",
     "com.unity.modules.ai": "1.0.0",

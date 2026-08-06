@@ -10,6 +10,7 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
+using AtomicWar._Game.Economy;
 using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 
 namespace AtomicWar.Tests.EditMode

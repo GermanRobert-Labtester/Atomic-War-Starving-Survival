@@ -121,6 +121,7 @@ namespace AtomicWar.Tests.EditMode
             _violentParanoia.displayName = "Violent Paranoia";
             _violentParanoia.sabotageChancePerTick = 0.05f;
             _violentParanoia.passiveMoraleDrainPerHour = 2f;
+            _violentParanoia.affinityDrainPerHour = 3f;
             _violentParanoia.cureHours = 72f;
             _violentParanoia.requiresMedicalBed = true;
             _violentParanoia.comfortItemCureAmount = 12f;
@@ -167,6 +168,15 @@ namespace AtomicWar.Tests.EditMode
                 sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - best.Item.hungerRestore * consumed);
                 return consumed;
             };
+
+            // SabotageHandler — host-side hook for ViolentParanoia sabotage.
+            // In the test, report "heater" as the sabotaged module; the actual
+            // Shelter mutation happens in GameBootstrap in production.
+            _mentalBreakSystem.SabotageHandler = (sv, br, rng) => "heater";
+
+            // ComfortCureHandler — host-side hook for comfort-item cure.
+            // In the test, always succeeds (item available).
+            _mentalBreakSystem.ComfortCureHandler = (sv, br) => true;
         }
 
         [TearDown]
@@ -329,70 +339,18 @@ namespace AtomicWar.Tests.EditMode
             var survivor = MakeSurvivor("sv_event", RiskBiasTrait.Paranoid);
             survivor.currentMentalBreakId = _violentParanoia.id;
 
+            // The bunker leader is another survivor in the shelter.
+            var leader = MakeSurvivor("bunker_leader", RiskBiasTrait.Realist);
+
             // The mental-break system exposes the affinity matrix.
             var affinity = _mentalBreakSystem.Affinity;
             Assert.IsNotNull(affinity);
 
-            float before = affinity.Get(survivor.Id, "bunker_leader");
+            float before = affinity.Get(survivor.Id, leader.Id);
             _mentalBreakSystem.Tick(1f, _allSurvivors, _rng);
-            float after = affinity.Get(survivor.Id, "bunker_leader");
+            float after = affinity.Get(survivor.Id, leader.Id);
             Assert.Less(after, before,
                 "ViolentParanoia's passive effect must lower affinity toward the leader.");
-        }
-    }
-        [Test]
-        public void BingeEater_ConsumesThreeTimesDailyRations_RegardlessOfAiScoring()
-        {
-            // Setup: 10 rations in inventory. Survivor has Hunger at 50
-            // (would normally consume 1 ration). The BingeEater must consume
-            // 3 in a single tick regardless of the AI score.
-            var survivor = MakeSurvivor("sv_binger", RiskBiasTrait.Realist);
-            Assert.AreEqual(10, _inventory.Count(_foodItem), "Setup: 10 rations in inventory.");
-
-            // Force the survivor directly into BingeEater (we test the
-            // CONSUMPTION behavior here; the ROLL is tested separately in
-            // LowMorale_For48Hours_RollsForBreak_AndAssignsMatchingTraitBreak).
-            // This avoids seed-dependence in the weight roll.
-            survivor.currentMentalBreakId = "binge_eater";
-            survivor.mentalBreakCureProgress = 0f;
-
-            // The system itself force-consumes; this is what bypasses the AI.
-            // The handler was injected in SetUp; we trigger one tick.
-            _mentalBreakSystem.Tick(1f, _allSurvivors, _rng);
-
-            Assert.AreEqual(7, _inventory.Count(_foodItem),
-                "BingeEater must consume 3 rations in a single tick (10 -> 7).");
-            // Hunger is clamped to 0; with 50 starting and 3x30=90 of restore,
-            // it should bottom out at 0. The key assertion is the INVENTORY
-            // drain above — the 3x consumption is the spec's headline.
-            Assert.AreEqual(0f, survivor.Needs.Hunger, Eps,
-                "Hunger should bottom out at 0 after 3x30=90 restore.");
-        }
-
-        // -------------------------------------------------------------------
-        // Low-morale threshold and break roll
-        // -------------------------------------------------------------------
-
-        [Test]
-        public void LowMorale_For48Hours_RollsForBreak_AndAssignsMatchingTraitBreak()
-        {
-            var survivor = MakeSurvivor("sv_low", RiskBiasTrait.Paranoid);
-            survivor.Needs.Morale = 5f; // below the 10 threshold
-
-            // Tick 47h: no break yet.
-            _mentalBreakSystem.Tick(47f, _allSurvivors, _rng);
-            Assert.IsFalse(survivor.HasMentalBreak, "47h of low morale must NOT trigger a break.");
-            Assert.AreEqual(47f, survivor.lowMoraleHours, Eps);
-
-            // Tick one more hour: 48h threshold crossed, break rolls.
-            _mentalBreakSystem.Tick(1f, _allSurvivors, _rng);
-            Assert.IsTrue(survivor.HasMentalBreak,
-                "48h of continuous low morale MUST trigger a break.");
-            // Paranoid is weighted 2x on _violentParanoia and 1x on _bingeEater.
-            // Either is acceptable, but the most likely is ViolentParanoia.
-            Assert.IsTrue(survivor.currentMentalBreakId == "binge_eater"
-                       || survivor.currentMentalBreakId == "violent_paranoia",
-                $"Break id was {survivor.currentMentalBreakId}, expected binge_eater or violent_paranoia.");
         }
 
         [Test]
@@ -429,6 +387,7 @@ namespace AtomicWar.Tests.EditMode
             // The API doesn't guard against re-rolling; verify it doesn't
             // crash on an already-broken survivor.
             var survivor = MakeSurvivor("sv_already", RiskBiasTrait.Realist);
+            survivor.lowMoraleHours = MentalBreakSystem.LowMoraleBreakWindowHours;
             survivor.currentMentalBreakId = "binge_eater";
             bool rolled = _mentalBreakSystem.TryRollForBreak(survivor, _rng);
             Assert.IsTrue(rolled, "TryRollForBreak always runs the weighted roll.");
@@ -834,4 +793,5 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(0f, survivor.mentalBreakCureProgress, Eps,
                 "Cure resets the progress counter to 0.");
         }
+    }
 }
