@@ -105,6 +105,9 @@ namespace AtomicWar._Game.Core
             ExcavationSystem = new ExcavationSystem(new System.Random(_worldSeed + 119));
             FloodingSystem = new RoomFloodingSystem();
             FloodingSystem.SetRng(new System.Random(_worldSeed + 120));
+            // Prompt #806 — bilge pumps convert floodwater into purified cistern water.
+            BilgePumps = new System_BilgePumps();
+            WireBilgePumps();
             HiddenStorageSystem = new HiddenStorageSystem();
             CeilingCollapseSystem = new CeilingCollapseSystem();
             PerimeterTrapSystem = new PerimeterTrapSystem();
@@ -236,6 +239,58 @@ namespace AtomicWar._Game.Core
                 () => WaterStorage);
 
             // ───────────────────────────────────────────────────────────
+        }
+
+        /// <summary>
+        /// Prompt #806 — on room flood, harvest floodwater through bilge pumps into clean cistern.
+        /// </summary>
+        private void WireBilgePumps()
+        {
+            if (BilgePumps == null || FloodingSystem == null) return;
+
+            FloodingSystem.OnRoomFlooded += roomId =>
+            {
+                if (BilgePumps == null || !BilgePumps.IsActive()) return;
+                // One room just flooded — route a single room's worth of floodwater.
+                float purified = BilgePumps.ProcessFloodedRooms(1);
+                if (purified > 0f && WaterStorage != null)
+                    WaterStorage.AddClean(purified);
+            };
+
+            BilgePumps.OnWaterRouted += liters =>
+            {
+                if (liters > 0f)
+                    Debug.Log($"[GameBootstrap] BILGE: routed {liters:0.#} L purified from floodwater.");
+            };
+        }
+
+        /// <summary>
+        /// Prompt #806 — daily pass: while any room is flooded and pumps are active,
+        /// convert remaining floodwater into clean storage.
+        /// </summary>
+        private void TickBilgePumpsDaily()
+        {
+            if (BilgePumps == null || !BilgePumps.IsActive()) return;
+            if (FloodingSystem == null) return;
+
+            int flooded = FloodingSystem.FloodedRooms != null ? FloodingSystem.FloodedRooms.Count : 0;
+            if (flooded <= 0) return;
+
+            float purified = BilgePumps.ProcessFloodedRooms(flooded);
+            if (purified > 0f && WaterStorage != null)
+                WaterStorage.AddClean(purified);
+        }
+
+        /// <summary>Prompt #806 — UI/craft hook: power the bilge pumps on.</summary>
+        public void ActivateBilgePumps()
+        {
+            BilgePumps?.Activate();
+        }
+
+        /// <summary>Prompt #806 — UI hook: shut bilge pumps down.</summary>
+        public void DeactivateBilgePumps()
+        {
+            BilgePumps?.Deactivate();
         }
 
     }

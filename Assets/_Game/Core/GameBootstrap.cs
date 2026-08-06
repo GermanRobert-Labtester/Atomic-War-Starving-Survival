@@ -212,6 +212,8 @@ namespace AtomicWar._Game.Core
         public System_Gossip Gossip { get; private set; }
         // Prompt #861 — cross-wipe warlord counters from dominant player strategies.
         public System_AdaptiveWarlords AdaptiveWarlords { get; private set; }
+        // Prompt #806 — bilge pumps: flood water → purified cistern water.
+        public System_BilgePumps BilgePumps { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

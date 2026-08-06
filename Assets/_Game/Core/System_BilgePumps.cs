@@ -19,8 +19,11 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class System_BilgePumps
     {
+        /// <summary>Default flood liters harvested when a room first floods (or per daily tick).</summary>
+        public const float DefaultFloodLitersPerRoom = 50f;
+
         public event Action OnFloodingDetected;
-        public event Action<float> OnWaterRouted;         // litersRouted
+        public event Action<float> OnWaterRouted;         // liters purified produced
         public event Action OnPurifierBoosted;
 
         private BilgePumpsState _state;
@@ -28,9 +31,15 @@ namespace AtomicWar._Game.Core
         public System_BilgePumps(BilgePumpsState state = null)
         {
             _state = state ?? new BilgePumpsState();
+            if (string.IsNullOrEmpty(_state.systemId))
+                _state.systemId = "system_bilge_pumps";
+            if (_state.purificationEfficiency <= 0f)
+                _state.purificationEfficiency = 0.7f;
         }
 
         public string SystemId => _state.systemId;
+        public float PurificationEfficiency => _state.purificationEfficiency;
+        public float TotalWaterRouted => _state.totalWaterRouted;
 
         public void Activate()
         {
@@ -44,37 +53,36 @@ namespace AtomicWar._Game.Core
 
         public bool IsActive() => _state.isActive;
 
+        public void SetPurificationEfficiency(float efficiency)
+        {
+            _state.purificationEfficiency = Mathf.Clamp01(efficiency);
+        }
+
         /// <summary>
-        /// Detect whether flooding is occurring. Triggers event if flooding detected and pumps active.
+        /// Detect whether flooding is occurring. Fires <see cref="OnFloodingDetected"/>
+        /// when flooding is present (regardless of pump power — routing still needs Activate).
         /// Returns true if flooding detected.
         /// </summary>
         public bool DetectFlooding(bool isFlooding)
         {
-            if (isFlooding)
-            {
-                OnFloodingDetected?.Invoke();
-                return true;
-            }
-
-            return false;
+            if (!isFlooding) return false;
+            OnFloodingDetected?.Invoke();
+            return true;
         }
 
         /// <summary>
-        /// Route flood water to the purifier. Converts flood water to purified water.
-        /// Returns liters of purified water produced.
+        /// Route flood water through the purifier. Returns liters of purified water produced.
+        /// No-op when pumps are inactive or flood liters ≤ 0.
         /// </summary>
         public float RouteWater(float floodLiters)
         {
-            if (!_state.isActive)
-            {
-                Debug.LogWarning("[System_BilgePumps] RouteWater called but pumps are not active.");
-                return 0f;
-            }
+            if (!_state.isActive) return 0f;
+            if (floodLiters <= 0f) return 0f;
 
-            if (floodLiters <= 0f)
-                return 0f;
+            float efficiency = _state.purificationEfficiency;
+            if (efficiency <= 0f) return 0f;
 
-            float purifiedWater = floodLiters * _state.purificationEfficiency;
+            float purifiedWater = floodLiters * efficiency;
             _state.totalWaterRouted += purifiedWater;
 
             OnWaterRouted?.Invoke(purifiedWater);
@@ -83,13 +91,26 @@ namespace AtomicWar._Game.Core
             return purifiedWater;
         }
 
+        /// <summary>
+        /// Detect flooding from a room count and, if pumps are active, route
+        /// <paramref name="floodLitersPerRoom"/> × count through the purifier.
+        /// Returns purified liters produced (0 if inactive or no floods).
+        /// </summary>
+        public float ProcessFloodedRooms(int floodedRoomCount, float floodLitersPerRoom = DefaultFloodLitersPerRoom)
+        {
+            if (floodedRoomCount <= 0) return 0f;
+            DetectFlooding(true);
+            if (!_state.isActive) return 0f;
+            return RouteWater(floodedRoomCount * floodLitersPerRoom);
+        }
+
         public float GetTotalWaterRouted() => _state.totalWaterRouted;
 
         public BilgePumpsState CaptureState()
         {
             return new BilgePumpsState
             {
-                systemId = _state.systemId,
+                systemId = string.IsNullOrEmpty(_state.systemId) ? "system_bilge_pumps" : _state.systemId,
                 isActive = _state.isActive,
                 purificationEfficiency = _state.purificationEfficiency,
                 totalWaterRouted = _state.totalWaterRouted
@@ -98,7 +119,19 @@ namespace AtomicWar._Game.Core
 
         public void RestoreState(BilgePumpsState state)
         {
-            _state = state ?? new BilgePumpsState();
+            if (state == null)
+            {
+                _state = new BilgePumpsState();
+                return;
+            }
+
+            _state = new BilgePumpsState
+            {
+                systemId = string.IsNullOrEmpty(state.systemId) ? "system_bilge_pumps" : state.systemId,
+                isActive = state.isActive,
+                purificationEfficiency = state.purificationEfficiency > 0f ? state.purificationEfficiency : 0.7f,
+                totalWaterRouted = Mathf.Max(0f, state.totalWaterRouted)
+            };
         }
     }
 }

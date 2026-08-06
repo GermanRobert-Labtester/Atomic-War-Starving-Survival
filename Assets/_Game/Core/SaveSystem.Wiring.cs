@@ -461,6 +461,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((AdaptiveWarlordsState)o));
 
+        /// <summary>Prompt #806 — automated bilge pumps (flood → purified water).</summary>
+        public void SetBilgePumpsSystem(System_BilgePumps s) =>
+            RegisterSystem(ref _bilgePumpsSystem, s, "bilge_pumps",
+                () => s.CaptureState(),
+                o => s.RestoreState((BilgePumpsState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",

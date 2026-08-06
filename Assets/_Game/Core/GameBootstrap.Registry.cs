@@ -122,6 +122,9 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("flooding", h => FloodingSystem?.Tick(h,
                 WeatherSystem.Current == WeatherKind.Rain, preDay30, Shelter,
                 roomId => roomId == "cellar" || roomId == "coal_room"));
+            // Prompt #806 — daily bilge harvest while rooms stay flooded.
+            _registry.RegisterPerSubstep("bilge_pumps_daily",
+                _registry.DayGated("bilge_pumps", day => TickBilgePumpsDaily()));
             _registry.RegisterPerSubstep("perimeter_trap", h => PerimeterTrapSystem?.Tick(h));
             _registry.RegisterPerSubstep("noise", h =>
             {

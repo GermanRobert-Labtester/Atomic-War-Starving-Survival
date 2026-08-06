@@ -110,6 +110,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetEpilogueStatsSystem(EpilogueStats);
             SaveSystem.SetGossipSystem(Gossip);
             SaveSystem.SetAdaptiveWarlordsSystem(AdaptiveWarlords);
+            SaveSystem.SetBilgePumpsSystem(BilgePumps);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
