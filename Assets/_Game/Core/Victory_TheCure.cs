@@ -76,7 +76,7 @@ namespace AtomicWar._Game.Core
                 "The HamRadio crackled to life at 0300. " +
                 "Static, then voices — dozens of them, scattered across frequencies " +
                 "no one had monitored in months.\n\n" +
-                "A settlement in the Urals. A navy submarine off the coast of nowhere. " +
+                "A settlement beyond the northern ridges. A submarine off the coast of nowhere. " +
                 "A university basement in what used to be a city.\n\n" +
                 "They heard the formula. They understood. " +
                 "And for the first time since the bombs fell, " +
