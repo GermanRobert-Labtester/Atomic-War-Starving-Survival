@@ -200,10 +200,20 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("spatial_psychology", h => SpatialPsychology?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("hallucination", h => HallucinationSystem?.Tick(h, Survivors, _mentalBreakRng));
             _registry.RegisterPerSubstep("addiction", h => Addiction?.Tick(h, Survivors, TimeSystem?.CurrentDay ?? 1));
+            _registry.RegisterPerSubstep("pheromone_masking", TickPheromoneMasking);
             _registry.RegisterPerSubstep("phantom_intruders", h => PhantomIntruders?.Tick(h, Survivors, _phantomRng));
             _registry.RegisterPerSubstep("child", h => ChildSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("hatch_dilemma", h => HatchDilemmaPromptField?.Tick(h));
             _registry.RegisterPerSubstep("parley_offer", h => ParleyOfferPromptField?.Tick(h));
+        }
+
+        private void TickPheromoneMasking(float hours)
+        {
+            if (PheromoneMasking == null || hours <= 0f) return;
+            // Snapshot keys — TickHour may expire and mutate the dict.
+            var ids = new List<string>(PheromoneMasking.States.Keys);
+            for (int i = 0; i < ids.Count; i++)
+                PheromoneMasking.TickHour(ids[i], hours);
         }
 
         private void RegisterRadiationCraftSubsteps()
@@ -238,6 +248,8 @@ namespace AtomicWar._Game.Core
                 _registry.DayGated("amputation", day => AmputationSystem?.TickDaily(Survivors)));
             _registry.RegisterPerSubstep("scurvy_daily",
                 _registry.DayGated("scurvy", day => ScurvySystem?.TickDaily(Survivors)));
+            _registry.RegisterPerSubstep("graft_rejection_daily",
+                _registry.DayGated("graft_rejection", RegisterTickGraftRejectionDaily));
             _registry.RegisterPerSubstep("mutagenesis_daily",
                 _registry.DayGated("mutagenesis", day => Mutagenesis?.Evaluate(Survivors)));
             _registry.RegisterPerSubstep("hatch_visibility_daily",
@@ -262,6 +274,14 @@ namespace AtomicWar._Game.Core
             if (FuelDecaySystem == null) return;
             FuelDecaySystem.TickDaily(day);
             ApplyFuelDecayToPowerNetwork();
+        }
+
+        private void RegisterTickGraftRejectionDaily(int day)
+        {
+            if (GraftRejection == null) return;
+            var ids = new List<string>(GraftRejection.States.Keys);
+            for (int i = 0; i < ids.Count; i++)
+                GraftRejection.TickDay(ids[i]);
         }
 
         /// <summary>
@@ -359,6 +379,8 @@ namespace AtomicWar._Game.Core
                 "excavation", "hidden_storage", "tunneling", "material_shielding", "airlock",
                 "escape_hatch", "sterilization", "chelation", "wind_turbine",
                 "antibiotic_resist", "hauling", "weapon_maint", "triage", "scrap_weapon",
+                // Chem abuse bookkeeping (ticks only on treatment item consume):
+                "blood_toxicity",
                 // Infrastructure / AI / UI systems that are not hour-ticked:
                 "workbench", "utility_ai", "radio", "time", "save", "game_state",
                 "endgame", "shelter_layout", "sleep_quality", "skill_progression",

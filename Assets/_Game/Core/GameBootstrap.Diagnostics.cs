@@ -112,6 +112,9 @@ namespace AtomicWar._Game.Core
             { "Mutagenesis",             new[] { "mutagenesis_tick", "mutagenesis_daily" } },
             { "BloodTransfusion",        new[] { "blood_transfusion" } },
             { "Addiction",               new[] { "addiction" } },
+            { "BloodToxicity",           new[] { "blood_toxicity" } },
+            { "GraftRejection",          new[] { "graft_rejection_daily", "graft_rejection" } },
+            { "PheromoneMasking",        new[] { "pheromone_masking" } },
             // Tactical / world systems
             { "DeadDropSystem",          new[] { "dead_drops" } },
             { "DeserterSystem",          new[] { "deserter_daily", "deserter" } },

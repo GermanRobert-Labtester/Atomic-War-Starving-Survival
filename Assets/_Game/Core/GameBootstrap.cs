@@ -190,6 +190,12 @@ namespace AtomicWar._Game.Core
 
         // Prompt #7 — Addiction & Withdrawal pipeline.
         public AddictionSystem Addiction { get; private set; }
+        // Prompt #551 — chem-abuse blood toxicity (bite retaliation).
+        public BloodToxicitySystem BloodToxicity { get; private set; }
+        // Prompt #556 — graft/prosthetic rejection + immunosuppressants.
+        public GraftRejectionSystem GraftRejection { get; private set; }
+        // Prompt #558 — mutant pheromone camo (24h animal friendliness).
+        public PheromoneMaskingSystem PheromoneMasking { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

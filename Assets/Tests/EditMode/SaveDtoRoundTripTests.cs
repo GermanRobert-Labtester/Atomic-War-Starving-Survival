@@ -654,5 +654,116 @@ namespace AtomicWar.Tests.EditMode
                 try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
             }
         }
+
+        // -------------------------------------------------------------
+        // Test 8: Capture orphans — blood_toxicity, graft_rejection, pheromone
+        // -------------------------------------------------------------
+
+        [Test]
+        public void BloodToxicity_Graft_Pheromone_CaptureRestore_RoundTripEqual()
+        {
+            var bloodA = new BloodToxicitySystem();
+            for (int i = 0; i < 5; i++)
+                bloodA.RecordChemUse("sv_tox", "morphine");
+            Assert.IsTrue(bloodA.IsBloodToxic("sv_tox"));
+
+            var graftA = new GraftRejectionSystem();
+            graftA.RegisterGraft("sv_graft", "left_leg");
+            graftA.TickDay("sv_graft");
+            graftA.TickDay("sv_graft");
+
+            var phA = new PheromoneMaskingSystem();
+            phA.ApplyMutantGland("sv_camo", "amalgamation");
+            phA.TickHour("sv_camo", 3f);
+
+            var bloodSave = bloodA.CaptureState();
+            var graftSave = graftA.CaptureState();
+            var phSave = phA.CaptureState();
+
+            var bloodB = new BloodToxicitySystem();
+            bloodB.RestoreState(bloodSave);
+            var graftB = new GraftRejectionSystem();
+            graftB.RestoreState(graftSave);
+            var phB = new PheromoneMaskingSystem();
+            phB.RestoreState(phSave);
+
+            AssertDtoEqual(bloodSave, bloodB.CaptureState(), "BloodToxicitySystem");
+            AssertDtoEqual(graftSave, graftB.CaptureState(), "GraftRejectionSystem");
+            AssertDtoEqual(phSave, phB.CaptureState(), "PheromoneMaskingSystem");
+            Assert.IsTrue(bloodB.IsBloodToxic("sv_tox"));
+            Assert.AreEqual(2, graftB.States["sv_graft"].daysSinceLastImmunosuppressant);
+            Assert.AreEqual(21f, phB.States["sv_camo"].hoursRemaining, 0.001f);
+            Assert.IsTrue(phB.IsMaskingActive("sv_camo"));
+        }
+
+        [Test]
+        public void BloodToxicity_Graft_Pheromone_SaveSystemAdapter_RoundTrip()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "ashfall_blood_graft_ph_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            try
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var weather = new WeatherSystem(null, 3);
+                var temp = new TemperatureSystem(null, weather);
+                var rad = new RadiationSystem(needs);
+
+                var bloodA = new BloodToxicitySystem();
+                bloodA.RecordChemUse("sv1", "anti_rad");
+                bloodA.RecordChemUse("sv1", "anti_rad");
+                bloodA.RecordChemUse("sv1", "amphetamines");
+
+                var graftA = new GraftRejectionSystem();
+                graftA.RegisterGraft("sv1", "right_arm");
+                for (int i = 0; i < 7; i++)
+                    graftA.TickDay("sv1");
+                Assert.IsTrue(graftA.States["sv1"].isRejecting);
+
+                var phA = new PheromoneMaskingSystem();
+                phA.ApplyMutantGland("sv1", "mutant_bear");
+                phA.TickHour("sv1", 6f);
+
+                SaveSystem Make(BloodToxicitySystem blood, GraftRejectionSystem graft, PheromoneMaskingSystem ph)
+                {
+                    var ss = new SaveSystem(new SaveSystem.CoreDeps
+                    {
+                        GameState = new GameState(),
+                        WeatherSystem = weather,
+                        TemperatureSystem = temp,
+                        NeedsSystem = needs,
+                        RadiationSystem = rad,
+                        Shelter = new ShelterClass(),
+                        GetSurvivors = () => new List<Survivor>(),
+                        ItemLookup = id => null,
+                        ModuleLookup = id => null,
+                        SavesDir = dir
+                    });
+                    ss.SetBloodToxicitySystem(blood);
+                    ss.SetGraftRejectionSystem(graft);
+                    ss.SetPheromoneMaskingSystem(ph);
+                    return ss;
+                }
+
+                Assert.IsTrue(Make(bloodA, graftA, phA).Save("orphan_slot"));
+
+                var bloodB = new BloodToxicitySystem();
+                var graftB = new GraftRejectionSystem();
+                var phB = new PheromoneMaskingSystem();
+                Assert.IsTrue(Make(bloodB, graftB, phB).Load("orphan_slot"));
+
+                AssertDtoEqual(bloodA.CaptureState(), bloodB.CaptureState(), "blood_via_save_system");
+                AssertDtoEqual(graftA.CaptureState(), graftB.CaptureState(), "graft_via_save_system");
+                AssertDtoEqual(phA.CaptureState(), phB.CaptureState(), "pheromone_via_save_system");
+                Assert.AreEqual(3, bloodB.States["sv1"].chemUsageCount);
+                Assert.IsTrue(graftB.States["sv1"].hasSepsis);
+                Assert.AreEqual(0f, graftB.GetLimbEfficiency("sv1"), 0.001f);
+                Assert.AreEqual(18f, phB.States["sv1"].hoursRemaining, 0.001f);
+            }
+            finally
+            {
+                try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
+            }
+        }
     }
 }

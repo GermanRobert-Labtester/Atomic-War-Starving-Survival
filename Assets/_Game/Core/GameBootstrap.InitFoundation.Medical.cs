@@ -72,6 +72,11 @@ namespace AtomicWar._Game.Core
             Mutagenesis.Bind(
                 getPartyAverageRadiation: GetPartyAverageLifetimeRadiation,
                 inflictAffliction: (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+
+            // Capture orphans: constructed + save-wired so chem/graft/camo state survives load.
+            BloodToxicity = new BloodToxicitySystem();
+            GraftRejection = new GraftRejectionSystem();
+            PheromoneMasking = new PheromoneMaskingSystem();
         }
 
         private float GetPartyAverageLifetimeRadiation()
@@ -96,6 +101,8 @@ namespace AtomicWar._Game.Core
             MedicalSystem.OnTreatmentItemConsumed = (sv, itemId, day) =>
             {
                 Addiction?.OnItemConsumed(sv, itemId, day);
+                if (sv != null && !string.IsNullOrEmpty(sv.Id))
+                    BloodToxicity?.RecordChemUse(sv.Id, itemId);
             };
         }
 

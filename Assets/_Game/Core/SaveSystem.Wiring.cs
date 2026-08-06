@@ -401,6 +401,24 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((AddictionSave)o));
 
+        /// <summary>Chem-abuse blood toxicity (had CaptureState, never constructed/registered).</summary>
+        public void SetBloodToxicitySystem(BloodToxicitySystem s) =>
+            RegisterSystem(ref _bloodToxicitySystem, s, "blood_toxicity",
+                () => s.CaptureState(),
+                o => s.RestoreState((BloodToxicitySave)o));
+
+        /// <summary>Graft/prosthetic rejection timers (had CaptureState, never constructed/registered).</summary>
+        public void SetGraftRejectionSystem(GraftRejectionSystem s) =>
+            RegisterSystem(ref _graftRejectionSystem, s, "graft_rejection",
+                () => s.CaptureState(),
+                o => s.RestoreState((GraftRejectionSave)o));
+
+        /// <summary>Mutant pheromone camo hours (had CaptureState, never constructed/registered).</summary>
+        public void SetPheromoneMaskingSystem(PheromoneMaskingSystem s) =>
+            RegisterSystem(ref _pheromoneMaskingSystem, s, "pheromone_masking",
+                () => s.CaptureState(),
+                o => s.RestoreState((PheromoneMaskingSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;
