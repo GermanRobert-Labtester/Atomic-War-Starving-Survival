@@ -3,17 +3,7 @@ using System.Collections.Generic;
 
 namespace AtomicWar._Game.Core
 {
-    /// <summary>
-    /// Combat lanes for positional combat. Defined here until Combat_Flanking.cs is created.
-    /// </summary>
-    public enum CombatLane
-    {
-        far_left = 0,
-        left = 1,
-        center = 2,
-        right = 3,
-        far_right = 4
-    }
+    // CombatLane lives in Combat_Flanking.cs (shared positional combat enum).
 
     [Serializable]
     public class FlamethrowerState
@@ -63,7 +53,7 @@ namespace AtomicWar._Game.Core
             string survivorId,
             CombatLane targetLane,
             float currentFuel,
-            Random rng)
+            System.Random rng)
         {
             if (string.IsNullOrEmpty(survivorId))
                 return (false, false);

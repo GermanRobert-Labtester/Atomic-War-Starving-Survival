@@ -54,7 +54,7 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Triggers a rebellion: locks the teen in a random room, wastes food and power.
         /// </summary>
-        public void TriggerRebellion(string teenId, Random rng)
+        public void TriggerRebellion(string teenId, System.Random rng)
         {
             if (string.IsNullOrEmpty(teenId))
             {
@@ -62,7 +62,7 @@ namespace AtomicWar._Game.Core
                 return;
             }
 
-            if (rng == null) rng = new Random();
+            if (rng == null) rng = new System.Random();
 
             string room = RoomOptions[rng.Next(RoomOptions.Length)];
             int foodWasted = rng.Next(1, 4);

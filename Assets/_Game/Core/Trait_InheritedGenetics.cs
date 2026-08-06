@@ -23,7 +23,7 @@ namespace AtomicWar._Game.Core
             _state = new InheritedGeneticsState();
         }
 
-        public string CheckInheritance(string childId, float parentLifetimeRad, Random rng)
+        public string CheckInheritance(string childId, float parentLifetimeRad, System.Random rng)
         {
             if (parentLifetimeRad < _state.parentRadThreshold)
                 return null;

@@ -189,5 +189,63 @@ namespace AtomicWar._Game.Survivors
                 }
             }
         }
+
+        // -----------------------------------------------------------------
+        // Save / Load
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Snapshot all pets (deep copy). Null-safe restore is a no-op clear.
+        /// </summary>
+        public PetSystemSave CaptureState()
+        {
+            var pets = new PetState[_pets.Count];
+            for (int i = 0; i < _pets.Count; i++)
+                pets[i] = ClonePet(_pets[i]);
+            return new PetSystemSave { Pets = pets };
+        }
+
+        /// <summary>
+        /// Replace pet list from a snapshot. Null/empty clears to empty roster.
+        /// </summary>
+        public void RestoreState(PetSystemSave save)
+        {
+            _pets.Clear();
+            if (save?.Pets == null) return;
+            for (int i = 0; i < save.Pets.Length; i++)
+            {
+                var p = save.Pets[i];
+                if (p == null || string.IsNullOrEmpty(p.Id)) continue;
+                _pets.Add(ClonePet(p));
+            }
+        }
+
+        private static PetState ClonePet(PetState src)
+        {
+            if (src == null) return null;
+            // Normalize null strings to "" so JsonUtility round-trips match
+            // (Unity serializes missing string fields as empty, not null).
+            return new PetState
+            {
+                Id = src.Id ?? "",
+                DisplayName = src.DisplayName ?? "",
+                Traits = src.Traits,
+                Hunger = src.Hunger,
+                Thirst = src.Thirst,
+                Radiation = src.Radiation,
+                FurContamination = src.FurContamination,
+                CurrentRoomId = src.CurrentRoomId ?? "",
+                IsAlive = src.IsAlive,
+                OwnerSurvivorId = src.OwnerSurvivorId ?? "",
+                EatsSpoiledMeatOnly = src.EatsSpoiledMeatOnly
+            };
+        }
+    }
+
+    /// <summary>Save DTO for <see cref="PetSystem"/> (ISaveable adapter id: "pets").</summary>
+    [Serializable]
+    public class PetSystemSave
+    {
+        public PetState[] Pets;
     }
 }

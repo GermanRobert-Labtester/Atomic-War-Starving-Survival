@@ -260,6 +260,12 @@ namespace AtomicWar._Game.Core
         // Prompt #9 — The Child dependent mechanic.
         public ChildDependentSystem ChildSystem { get; private set; }
 
+        // Animal companions (morale, CO2, vermin suppression via cats).
+        public PetSystem PetSystem { get; private set; }
+
+        // Prompt #380 — pre-war gasoline varnish degradation → diesel burn cost.
+        public FuelDecaySystem FuelDecaySystem { get; private set; }
+
         // Prompt #5 — Diary fragment catalog for Previous Tenants.
         public List<DiaryFragmentSO> DiaryCatalog { get; private set; }
         public List<Survivor> Survivors { get; private set; }
@@ -270,8 +276,10 @@ namespace AtomicWar._Game.Core
         /// InitializeSystems(). TickSystems() dispatches via the registry.
         /// The registry detects the C-1 class of bug: system constructed but never
         /// registered in any tick list.
+        /// Backed by the same instance as <c>_registry</c> (was previously never
+        /// assigned, so diagnostics and tests always saw null).
         /// </summary>
-        public SystemRegistry Registry { get; private set; }
+        public SystemRegistry Registry => _registry;
 
         /// <summary>Number of per-substep tick registrations (for tests).</summary>
         public int PerSubstepTickCount => Registry?.PerSubstepCount ?? 0;

@@ -190,6 +190,9 @@ namespace AtomicWar.Tests.EditMode
                 ("PolypharmacySystem",
                     () => new PolypharmacySystem(),
                     s => ((PolypharmacySystem)s).RecordDose("sv1", "iodine", 0f)),
+                ("FuelDecaySystem",
+                    () => new FuelDecaySystem(),
+                    s => ((FuelDecaySystem)s).TickDaily(90)),
             };
 
             foreach (var (name, ctor, mutate) in cases)
@@ -255,6 +258,25 @@ namespace AtomicWar.Tests.EditMode
                 ("NoiseSystem",
                     () => new NoiseSystem(),
                     s => { /* default state */ }),
+                ("PetSystem",
+                    () => new PetSystem(new NeedsSystem(ScriptableObject.CreateInstance<NeedsProfile>())),
+                    s =>
+                    {
+                        ((PetSystem)s).AddPet(new PetState
+                        {
+                            Id = "dog_1",
+                            DisplayName = "Ash",
+                            Traits = PetTraits.RatCatcher,
+                            Hunger = 12f,
+                            Thirst = 8f,
+                            Radiation = 3f,
+                            FurContamination = 1.5f,
+                            CurrentRoomId = "quarters",
+                            IsAlive = true,
+                            OwnerSurvivorId = "sv1",
+                            EatsSpoiledMeatOnly = true
+                        });
+                    }),
             };
 
             foreach (var (name, ctor, mutate) in cases)
@@ -355,10 +377,81 @@ namespace AtomicWar.Tests.EditMode
                 new MaterialShieldingSystem(),
                 new AirlockSystem(),
                 new NoiseSystem(),
+                new FuelDecaySystem(),
+                new PetSystem(new NeedsSystem(ScriptableObject.CreateInstance<NeedsProfile>())),
             };
             foreach (var sys in systems)
             {
                 Assert.DoesNotThrow(() => RestoreState(sys, null), $"{sys.GetType().Name}.RestoreState(null) should be a no-op, not an exception.");
+            }
+        }
+
+        // -------------------------------------------------------------
+        // Test 6: PetSystem + FuelDecaySystem via SaveSystem ISaveable path
+        // -------------------------------------------------------------
+
+        [Test]
+        public void PetAndFuelDecay_SaveSystemAdapter_RoundTrip()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "ashfall_pet_fuel_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            try
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var petsA = new PetSystem(needs);
+                petsA.AddPet(new PetState
+                {
+                    Id = "cat_1",
+                    DisplayName = "Ember",
+                    Hunger = 22f,
+                    Thirst = 11f,
+                    IsAlive = true,
+                    CurrentRoomId = "airlock"
+                });
+                var fuelA = new FuelDecaySystem();
+                fuelA.TickDaily(60);
+
+                SaveSystem Make(PetSystem pets, FuelDecaySystem fuel)
+                {
+                    var weather = new WeatherSystem(null, 7);
+                    var temp = new TemperatureSystem(null, weather);
+                    var rad = new RadiationSystem(needs);
+                    var ss = new SaveSystem(new SaveSystem.CoreDeps
+                    {
+                        GameState = new GameState(),
+                        WeatherSystem = weather,
+                        TemperatureSystem = temp,
+                        NeedsSystem = needs,
+                        RadiationSystem = rad,
+                        Shelter = new ShelterClass(),
+                        GetSurvivors = () => new List<Survivor>(),
+                        ItemLookup = id => null,
+                        ModuleLookup = id => null,
+                        SavesDir = dir
+                    });
+                    ss.SetPetSystem(pets);
+                    ss.SetFuelDecaySystem(fuel);
+                    return ss;
+                }
+
+                var writer = Make(petsA, fuelA);
+                Assert.IsTrue(writer.Save("pet_fuel_slot"));
+
+                var petsB = new PetSystem(new NeedsSystem(profile, sv => true));
+                var fuelB = new FuelDecaySystem();
+                var reader = Make(petsB, fuelB);
+                Assert.IsTrue(reader.Load("pet_fuel_slot"));
+
+                AssertDtoEqual(petsA.CaptureState(), petsB.CaptureState(), "pets_via_save_system");
+                AssertDtoEqual(fuelA.CaptureState(), fuelB.CaptureState(), "fuel_via_save_system");
+                Assert.AreEqual(1, petsB.Pets.Count);
+                Assert.AreEqual("cat_1", petsB.Pets[0].Id);
+                Assert.AreEqual(0.80f, fuelB.State.fuelEfficiencyMultiplier, 0.001f);
+            }
+            finally
+            {
+                try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
             }
         }
     }

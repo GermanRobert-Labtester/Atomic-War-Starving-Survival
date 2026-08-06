@@ -28,12 +28,18 @@ namespace AtomicWar._Game.Core
 
         public void TickDaily(int currentDay)
         {
+            if (currentDay < 0) currentDay = 0;
+            if (_state == null) _state = new FuelDecayState();
+
+            float previous = _state.fuelEfficiencyMultiplier;
             _state.daysElapsed = currentDay;
             int intervals = currentDay / 30;
             float degradation = intervals * 0.10f;
             _state.fuelEfficiencyMultiplier = Mathf.Max(0.20f, 1.0f - degradation);
 
-            OnFuelEfficiencyDegraded?.Invoke(_state, _state.fuelEfficiencyMultiplier);
+            // Only raise when efficiency actually changes (avoids spam every day after day 0).
+            if (!Mathf.Approximately(previous, _state.fuelEfficiencyMultiplier))
+                OnFuelEfficiencyDegraded?.Invoke(_state, _state.fuelEfficiencyMultiplier);
         }
 
         public int RefineBioFuel(int moonshineCount, int fungiCount)
@@ -44,6 +50,38 @@ namespace AtomicWar._Game.Core
                 OnBioFuelRefined?.Invoke(_state, refinedFuel);
             }
             return refinedFuel;
+        }
+
+        // -----------------------------------------------------------------
+        // Save / Load
+        // -----------------------------------------------------------------
+
+        /// <summary>Deep-copy efficiency state for ISaveable capture (id: "fuel_decay").</summary>
+        public FuelDecayState CaptureState()
+        {
+            if (_state == null) _state = new FuelDecayState();
+            return new FuelDecayState
+            {
+                daysElapsed = _state.daysElapsed,
+                fuelEfficiencyMultiplier = _state.fuelEfficiencyMultiplier,
+                bioFuelStillsActive = _state.bioFuelStillsActive
+            };
+        }
+
+        /// <summary>Replace state from snapshot. Null resets to defaults.</summary>
+        public void RestoreState(FuelDecayState state)
+        {
+            if (state == null)
+            {
+                _state = new FuelDecayState();
+                return;
+            }
+            _state = new FuelDecayState
+            {
+                daysElapsed = state.daysElapsed,
+                fuelEfficiencyMultiplier = state.fuelEfficiencyMultiplier,
+                bioFuelStillsActive = state.bioFuelStillsActive
+            };
         }
     }
 }

@@ -48,9 +48,9 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Fight burrowers in combat. Returns true if the group survives.
         /// </summary>
-        public bool FightBurrowers(float combatPower, Random rng)
+        public bool FightBurrowers(float combatPower, System.Random rng)
         {
-            float threshold = 0.3f + (rng.NextDouble() * 0.4f);
+            float threshold = 0.3f + (float)(rng.NextDouble() * 0.4);
             bool survived = combatPower > threshold;
             OnFightOutcome?.Invoke(_state.id, survived);
             return survived;

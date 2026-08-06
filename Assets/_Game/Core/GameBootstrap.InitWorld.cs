@@ -159,13 +159,43 @@ namespace AtomicWar._Game.Core
             WasteSystem = new WasteSystem(new System.Random(_worldSeed + 50));
             WasteSystem.Bind(() => Shelter, () => Survivors);
 
-            // Prompt #51 — Vermin Infestations
+            // Prompt #51 — Vermin Infestations (+ PetSystem cats suppress growth)
             // ───────────────────────────────────────────────────────────
+            PetSystem = new PetSystem(
+                NeedsSystem,
+                depositRoomContamination: (roomId, amount) =>
+                {
+                    if (string.IsNullOrEmpty(roomId) || amount <= 0f || Shelter == null)
+                        return;
+                    var room = Shelter.GetRoom(roomId);
+                    if (room == null) return;
+                    // AmbientContamination is 0..1; pet fur deposit is small absolute dust.
+                    room.AmbientContamination = Mathf.Clamp01(
+                        room.AmbientContamination + amount * 0.01f);
+                },
+                addBunkerContamination: amount =>
+                {
+                    if (amount <= 0f || Shelter?.Rooms == null) return;
+                    float perRoom = (amount * 0.01f) / Mathf.Max(1, Shelter.Rooms.Count);
+                    for (int i = 0; i < Shelter.Rooms.Count; i++)
+                    {
+                        var room = Shelter.Rooms[i];
+                        if (room == null) continue;
+                        room.AmbientContamination = Mathf.Clamp01(
+                            room.AmbientContamination + perRoom);
+                    }
+                });
+            // PersonalQuests already exists (InitFoundation runs before InitEventsAndSurvivors).
+            PetSystem.BindPersonalQuests(PersonalQuests, () => Survivors);
+
             VerminSystem = new VerminSystem(new System.Random(_worldSeed + 51));
             VerminSystem.Bind(
                 () => Shelter,
-                () => null, // PetSystem wired after construction
+                () => PetSystem,
                 () => WasteSystem != null ? WasteSystem.Hygiene : 100f);
+
+            // Prompt #380 — fuel varnish degradation (daily → diesel burn mult).
+            FuelDecaySystem = new FuelDecaySystem();
 
             // Prompt #52 — Module Jury-Rigging
             // ───────────────────────────────────────────────────────────

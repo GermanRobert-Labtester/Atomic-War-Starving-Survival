@@ -28,11 +28,46 @@ namespace AtomicWar._Game.Core
             if (gameHours <= 0f) return;
             if (_mentalBreakRng == null) WarmDayTickCaches();
 
-            TickEnvironmentAndHatch(gameHours);
-            TickNeedsMedicalAndPsyche(gameHours);
-            TickRadiationWaterAndCraft(gameHours);
+            int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+
+            // Primary dispatch: SystemRegistry owns hour + day-gated system ticks.
+            // Previously TickSystems duplicated a subset of registrations and never
+            // called TickAll — so bunker_social, personal quests, chemistry/titles,
+            // rebuilders, and other registry-only systems never advanced (AUDIT-008).
+            if (_registry != null)
+            {
+                _registry.TickAll(gameHours, currentDay);
+                TickHostSideEffectsAfterRegistry(gameHours);
+            }
+            else
+            {
+                // Fallback for partial test hosts that skip RegisterSystemsInRegistry.
+                TickEnvironmentAndHatch(gameHours);
+                TickNeedsMedicalAndPsyche(gameHours);
+                TickRadiationWaterAndCraft(gameHours);
+            }
+
             TickAiWave(gameHours);
             TickEventsAndJournal(gameHours);
+        }
+
+        /// <summary>
+        /// Host-only side effects that are not independent systems in the registry
+        /// (perk timers, economy reactions). Runs once after registry dispatch.
+        /// </summary>
+        private void TickHostSideEffectsAfterRegistry(float gameHours)
+        {
+            // Prompt #205 — Death's Door timer; expired → true death.
+            if (MedicalPerks != null && NeedsSystem != null)
+            {
+                MedicalPerks.TickDeathsDoor(
+                    gameHours,
+                    Survivors,
+                    forceDeath: sv => NeedsSystem.ForceDeath(sv));
+            }
+
+            // Cult of the Glow: rad drop across healthy ceiling → hatch raid cascade.
+            EconomySystem?.NotifyPartyRadiationChanged();
         }
 
         private void TickEnvironmentAndHatch(float gameHours)

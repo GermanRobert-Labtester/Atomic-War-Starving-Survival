@@ -31,7 +31,7 @@ namespace AtomicWar._Game.Core
             return current_rad_stage >= _state.stage_threshold;
         }
 
-        public List<string> GenerateFakeLoot(string survivor_id, Random rng)
+        public List<string> GenerateFakeLoot(string survivor_id, System.Random rng)
         {
             if (string.IsNullOrEmpty(survivor_id))
             {

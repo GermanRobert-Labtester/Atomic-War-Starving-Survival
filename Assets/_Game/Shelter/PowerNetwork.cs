@@ -27,6 +27,11 @@ namespace AtomicWar._Game.Shelter
         public bool IsLoadShedding { get; private set; }
         /// <summary>Accumulated CO ppm from diesel generation (Prompt #20 air-quality hook).</summary>
         public float CarbonMonoxidePpm { get; private set; }
+        /// <summary>
+        /// Prompt #380 — gasoline varnish degradation: multiplies diesel fuel burn.
+        /// Set by FuelDecaySystem (1 / efficiency). Default 1 = undegraded fuel.
+        /// </summary>
+        public float FuelDegradationBurnMultiplier { get; set; } = 1f;
 
         public IReadOnlyList<PowerSourceInstance> Sources => _sources;
         public IReadOnlyList<PowerConsumer> Consumers => _consumers;
@@ -319,8 +324,11 @@ namespace AtomicWar._Game.Shelter
                         float bunkerFuelMult = _personalQuests != null
                             ? _personalQuests.GetBunkerFuelBurnMultiplier(_getSurvivors?.Invoke())
                             : 1f;
+                        float degradeMult = FuelDegradationBurnMultiplier > 0f
+                            ? FuelDegradationBurnMultiplier
+                            : 1f;
                         float burn = def.FuelPerHour * gameHours
-                                     * src.EffectiveFuelBurnMultiplier * bunkerFuelMult;
+                                     * src.EffectiveFuelBurnMultiplier * bunkerFuelMult * degradeMult;
                         src.Fuel = Mathf.Max(0f, src.Fuel - burn);
                         if (def.CoPpmPerHour > 0f)
                             coDelta += def.CoPpmPerHour * gameHours;

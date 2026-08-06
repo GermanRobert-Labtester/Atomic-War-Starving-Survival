@@ -108,7 +108,12 @@ namespace AtomicWar._Game.Core
                 BlackRainHazardSystem = new BlackRainHazardSystem(WeatherSystem);
 
             // Needs + Radiation
-            NeedsSystem = new NeedsSystem(_needsProfile, sv => true);
+            // Harden: missing inspector assignment must not NRE the whole bootstrap
+            // (tests / partial scenes). Use an ephemeral default profile instead.
+            var needsProfile = _needsProfile != null
+                ? _needsProfile
+                : ScriptableObject.CreateInstance<NeedsProfile>();
+            NeedsSystem = new NeedsSystem(needsProfile, sv => true);
 
             // Wire photoperiod into NeedsSystem (null-safe: skipped if LightProfile not assigned)
             if (_lightProfile != null)

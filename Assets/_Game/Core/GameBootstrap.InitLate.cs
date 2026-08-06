@@ -211,6 +211,8 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetStructuralIntegritySystem(StructuralIntegrity);
             SaveSystem.SetWasteSystem(WasteSystem);
             SaveSystem.SetVerminSystem(VerminSystem);
+            SaveSystem.SetPetSystem(PetSystem);
+            SaveSystem.SetFuelDecaySystem(FuelDecaySystem);
             SaveSystem.SetJuryRigSystem(JuryRigSystem);
             SaveSystem.SetFreezePipeSystem(FreezePipeSystem);
             SaveSystem.SetCartographySystem(CartographySystem);

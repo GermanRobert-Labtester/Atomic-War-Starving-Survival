@@ -32,7 +32,7 @@ namespace AtomicWar._Game.Core
         /// Scavenger discovers the orphanage. Returns the number of children found (random 3-8).
         /// Can only be discovered once.
         /// </summary>
-        public int Discover(string scavengerId, Random rng)
+        public int Discover(string scavengerId, System.Random rng)
         {
             if (string.IsNullOrEmpty(scavengerId))
             {
@@ -46,7 +46,7 @@ namespace AtomicWar._Game.Core
                 return _state.childCount;
             }
 
-            if (rng == null) rng = new Random();
+            if (rng == null) rng = new System.Random();
 
             _state.childCount = rng.Next(3, 9); // 3 to 8 inclusive
             _state.hasBeenVisited = true;

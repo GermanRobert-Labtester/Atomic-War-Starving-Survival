@@ -377,6 +377,18 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((ScavengingSystemSave)o));
 
+        /// <summary>Animal companions roster (prompt #380 follow-up / save audit).</summary>
+        public void SetPetSystem(PetSystem s) =>
+            RegisterSystem(ref _petSystem, s, "pets",
+                () => s.CaptureState(),
+                o => s.RestoreState((PetSystemSave)o));
+
+        /// <summary>Pre-war fuel varnish / biofuel stills (prompt #380).</summary>
+        public void SetFuelDecaySystem(FuelDecaySystem s) =>
+            RegisterSystem(ref _fuelDecaySystem, s, "fuel_decay",
+                () => s.CaptureState(),
+                o => s.RestoreState((FuelDecayState)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

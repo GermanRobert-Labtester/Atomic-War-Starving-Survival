@@ -47,7 +47,7 @@ namespace AtomicWar._Game.Core
         /// Sends a child into a crawlspace to retrieve loot adults can't reach.
         /// High risk: cave-ins and creature bites. Child-exclusive action.
         /// </summary>
-        public CrawlspaceResult SendChild(string childId, Random rng)
+        public CrawlspaceResult SendChild(string childId, System.Random rng)
         {
             if (string.IsNullOrEmpty(childId))
             {
@@ -57,7 +57,7 @@ namespace AtomicWar._Game.Core
 
             if (rng == null)
             {
-                rng = new Random();
+                rng = new System.Random();
             }
 
             double caveInRoll = rng.NextDouble();

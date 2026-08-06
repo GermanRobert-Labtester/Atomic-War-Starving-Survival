@@ -32,7 +32,7 @@ namespace AtomicWar._Game.Core
             _adjacent_node_pool = adjacent_node_pool ?? new List<string>();
         }
 
-        public void Tick(string current_node_id, string bunker_node_id, Random rng)
+        public void Tick(string current_node_id, string bunker_node_id, System.Random rng)
         {
             if (rng == null)
             {
@@ -65,7 +65,7 @@ namespace AtomicWar._Game.Core
             }
         }
 
-        public string MoveDevil(string current_devil_node, Random rng)
+        public string MoveDevil(string current_devil_node, System.Random rng)
         {
             if (rng == null)
             {
@@ -83,7 +83,7 @@ namespace AtomicWar._Game.Core
             return _adjacent_node_pool[idx];
         }
 
-        private static string GetRandomDirection(Random rng)
+        private static string GetRandomDirection(System.Random rng)
         {
             string[] directions = { "north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest" };
             if (rng == null)

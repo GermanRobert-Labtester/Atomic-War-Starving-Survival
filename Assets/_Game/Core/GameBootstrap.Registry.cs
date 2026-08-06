@@ -123,9 +123,20 @@ namespace AtomicWar._Game.Core
                 WeatherSystem.Current == WeatherKind.Rain, preDay30, Shelter,
                 roomId => roomId == "cellar" || roomId == "coal_room"));
             _registry.RegisterPerSubstep("perimeter_trap", h => PerimeterTrapSystem?.Tick(h));
-            _registry.RegisterPerSubstep("noise", h => NoiseSystem?.Tick(h));
+            _registry.RegisterPerSubstep("noise", h =>
+            {
+                if (NoiseSystem == null) return;
+                // #268 Restless night pacing: night gate via TimeSystem hour.
+                bool isNight = TimeSystem != null
+                    && (TimeSystem.CurrentHour < 6 || TimeSystem.CurrentHour >= 22);
+                if (isNight)
+                    NoiseSystem.TickPersonalQuestNoise(h, isNight: true);
+                else
+                    NoiseSystem.Tick(h);
+            });
             _registry.RegisterPerSubstep("clothing", h => TickClothing(h));
             _registry.RegisterPerSubstep("compost", h => TickCompost(h));
+            _registry.RegisterPerSubstep("pets", h => PetSystem?.Tick(Survivors, h));
         }
 
         private void RegisterNeedsPsycheSubsteps()
@@ -242,6 +253,27 @@ namespace AtomicWar._Game.Core
             // #284–#298 rebuilders: accountant capacity quest + storage lock pressure.
             _registry.RegisterPerSubstep("rebuilders_daily",
                 _registry.DayGated("rebuilders", RegisterTickRebuildersDaily));
+            _registry.RegisterPerSubstep("fuel_decay_daily",
+                _registry.DayGated("fuel_decay", RegisterTickFuelDecayDaily));
+        }
+
+        private void RegisterTickFuelDecayDaily(int day)
+        {
+            if (FuelDecaySystem == null) return;
+            FuelDecaySystem.TickDaily(day);
+            ApplyFuelDecayToPowerNetwork();
+        }
+
+        /// <summary>
+        /// Prompt #380 — map gasoline varnish efficiency into diesel burn cost.
+        /// Lower efficiency → higher burn multiplier (more fuel for same watts).
+        /// </summary>
+        private void ApplyFuelDecayToPowerNetwork()
+        {
+            if (PowerNetwork == null || FuelDecaySystem?.State == null) return;
+            float eff = FuelDecaySystem.State.fuelEfficiencyMultiplier;
+            if (eff < 0.01f) eff = 0.01f;
+            PowerNetwork.FuelDegradationBurnMultiplier = 1f / eff;
         }
 
         private void RegisterTickChemistryTitlesDaily(int day)
@@ -329,7 +361,10 @@ namespace AtomicWar._Game.Core
                 "antibiotic_resist", "hauling", "weapon_maint", "triage", "scrap_weapon",
                 // Infrastructure / AI / UI systems that are not hour-ticked:
                 "workbench", "utility_ai", "radio", "time", "save", "game_state",
-                "endgame", "shelter_layout", "sleep_quality", "skill_progression"
+                "endgame", "shelter_layout", "sleep_quality", "skill_progression",
+                // Player/AI action systems (no autonomous hour tick):
+                "cooking", "mentorship", "combat_perks", "survival_perks", "shelter_perks",
+                "medical_perks", "expedition_perks", "night_scavenge"
             };
             for (int i = 0; i < eventDriven.Length; i++)
                 _registry.RegisterEventDriven(eventDriven[i]);
@@ -343,7 +378,7 @@ namespace AtomicWar._Game.Core
                 "cartography", "bicycle", "flooded_node", "blood_transfusion", "cult_moral",
                 "labor_camp", "location_quest", "ceiling_collapse", "aesthetics", "ham_radio",
                 "polypharmacy", "resilience", "internal_lock", "grief_keepsakes", "mentorship",
-                "flashpoint_choreographer"
+                "flashpoint_choreographer", "diary_catalog"
             };
             for (int i = 0; i < saveOnly.Length; i++)
                 _registry.RegisterSaveOnly(saveOnly[i]);

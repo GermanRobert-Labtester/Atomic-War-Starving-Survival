@@ -131,6 +131,19 @@ namespace AtomicWar._Game.Core
             { "SkillProgression",        new[] { "skill_progression", "skill_progression_daily" } },
             { "GriefKeepsakes",          new[] { "grief_keepsakes" } },
             { "PhantomIntruders",        new[] { "phantom_intruders" } },
+            { "BunkerSocial",            new[] { "bunker_social" } },
+            { "PersonalQuests",          new[] { "personal_quests", "personal_quests_daily", "personal_quests_morale" } },
+            { "SocialPerks",             new[] { "social_perks", "social_perks_daily" } },
+            { "CombatPerks",             new[] { "combat_perks" } },
+            { "SurvivalPerks",           new[] { "survival_perks" } },
+            { "ShelterPerks",            new[] { "shelter_perks" } },
+            { "MedicalPerks",            new[] { "medical_perks" } },
+            { "ExpeditionPerks",         new[] { "expedition_perks" } },
+            { "CookingSystem",           new[] { "cooking" } },
+            { "PetSystem",               new[] { "pets" } },
+            { "FuelDecaySystem",         new[] { "fuel_decay", "fuel_decay_daily" } },
+            { "ScapegoatSystem",         new[] { "scapegoat" } },
+            { "ChildSystem",             new[] { "child" } },
             // Infrastructure
             { "StructuralIntegrity",      new[] { "structural_integrity" } },
             { "FactionRadioIntercepts",   new[] { "faction_radio_intercepts" } },
@@ -139,6 +152,7 @@ namespace AtomicWar._Game.Core
             { "KnowledgeMap",            new[] { "knowledge_map" } },
             { "GeneratedMap",            new[] { "generated_map" } },
             { "WorkbenchSystem",         new[] { "workbench" } },
+            { "DiaryCatalog",            new[] { "diary_catalog" } },
         };
 
         private static bool TryGetRegistryAliases(string propertyName, out string[] aliases)

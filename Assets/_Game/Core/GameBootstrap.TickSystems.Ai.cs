@@ -27,13 +27,15 @@ namespace AtomicWar._Game.Core
         private void TickAiWave(float gameHours)
         {
             // AI (evaluate per survivor, every EvaluationInterval)
+            if (UtilityAI == null || TimeSystem == null || Survivors == null) return;
+
             UtilityAI.Tick(gameHours * TimeSystem.SecondsPerGameHour);
             if (!UtilityAI.ShouldEvaluate()) return;
 
             SleepQualitySystem.ResetBedOccupancy(Shelter);
             HatchDefenseSystem?.ClearGuards();
 
-            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            int day = TimeSystem.CurrentDay;
             var context = FillAiContextScratch(day);
             for (int si = 0; si < Survivors.Count; si++)
             {
@@ -41,7 +43,7 @@ namespace AtomicWar._Game.Core
                 if (sv == null || !sv.IsAlive) continue;
 
                 float mapUncertainty = GetMapUncertaintyFor(sv);
-                BeliefSystem.Tick(sv, mapUncertainty, gameHours);
+                BeliefSystem?.Tick(sv, mapUncertainty, gameHours);
 
                 context.Survivor = sv;
                 context.IsListless = sv.IsListless;
@@ -183,7 +185,9 @@ namespace AtomicWar._Game.Core
 
         private void TickEventsAndJournal(float gameHours)
         {
-            float indoorTemp = TemperatureSystem != null
+            if (EventRunner == null) return;
+
+            float indoorTemp = TemperatureSystem != null && Shelter != null
                 ? TemperatureSystem.GetIndoorTemperature(Shelter)
                 : 15f;
 
