@@ -193,6 +193,17 @@ namespace AtomicWar.Tests.EditMode
                 ("FuelDecaySystem",
                     () => new FuelDecaySystem(),
                     s => ((FuelDecaySystem)s).TickDaily(90)),
+                ("AddictionSystem",
+                    () => new AddictionSystem(new System.Random(7)),
+                    s =>
+                    {
+                        // Seed recovery progress via Capture/Restore shape (system-owned dict).
+                        ((AddictionSystem)s).RestoreState(new AddictionSave
+                        {
+                            Keys = new[] { "sv_addict" },
+                            Values = new[] { 120.5f }
+                        });
+                    }),
             };
 
             foreach (var (name, ctor, mutate) in cases)
@@ -379,6 +390,8 @@ namespace AtomicWar.Tests.EditMode
                 new NoiseSystem(),
                 new FuelDecaySystem(),
                 new PetSystem(new NeedsSystem(ScriptableObject.CreateInstance<NeedsProfile>())),
+                new AddictionSystem(),
+                new RadioTunerSystem(new System.Random(1)),
             };
             foreach (var sys in systems)
             {
@@ -448,6 +461,193 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual(1, petsB.Pets.Count);
                 Assert.AreEqual("cat_1", petsB.Pets[0].Id);
                 Assert.AreEqual(0.80f, fuelB.State.fuelEfficiencyMultiplier, 0.001f);
+            }
+            finally
+            {
+                try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
+            }
+        }
+
+        // -------------------------------------------------------------
+        // Test 7: Top ISaveable gaps — radio_tuner, addiction, keepsakes
+        // -------------------------------------------------------------
+
+        [Test]
+        public void RadioTunerSystem_CaptureRestore_RoundTripEqual()
+        {
+            var sysA = new RadioTunerSystem(new System.Random(42));
+            sysA.State.AvailableFuel = 17.5f;
+            sysA.State.SignalStrength = 0.65f;
+            sysA.State.EmpDamage = 0.2f;
+            sysA.State.CurrentFrequencyId = "freq_civilian";
+            sysA.State.TuningProgress = 0.4f;
+            sysA.State.TuningHoursSpent = 1.25f;
+            // Inject extracted intel via restore of a partial save then re-capture.
+            var seed = sysA.CaptureState();
+            seed.ExtractedIntel = new List<IntelNode>
+            {
+                new IntelNode
+                {
+                    Id = "intel_1",
+                    Type = IntelType.LootLocation,
+                    SourceFrequencyId = "freq_civilian",
+                    ExtractedDay = 3,
+                    ExpirationDay = 10,
+                    TargetLocationId = "node_ruins",
+                    Confidence = 0.8f,
+                    NumericValue = 0.5f,
+                    Text = "Supplies under the overpass.",
+                    IsConsumed = false
+                }
+            };
+            sysA.RestoreState(seed);
+
+            var save = sysA.CaptureState();
+            var sysB = new RadioTunerSystem(new System.Random(99));
+            sysB.RestoreState(save);
+            AssertDtoEqual(save, sysB.CaptureState(), "RadioTunerSystem");
+            Assert.AreEqual(17.5f, sysB.State.AvailableFuel, 0.001f);
+            Assert.AreEqual("freq_civilian", sysB.State.CurrentFrequencyId);
+            Assert.AreEqual(1, sysB.ExtractedIntel.Count);
+            Assert.AreEqual("intel_1", sysB.ExtractedIntel[0].Id);
+        }
+
+        [Test]
+        public void AddictionAndRadioTuner_SaveSystemAdapter_RoundTrip()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "ashfall_addict_radio_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            try
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var weather = new WeatherSystem(null, 3);
+                var temp = new TemperatureSystem(null, weather);
+                var rad = new RadiationSystem(needs);
+
+                var addictA = new AddictionSystem(new System.Random(1));
+                addictA.RestoreState(new AddictionSave
+                {
+                    Keys = new[] { "sv1", "sv2" },
+                    Values = new[] { 48f, 200f }
+                });
+                var radioA = new RadioTunerSystem(new System.Random(2));
+                radioA.State.AvailableFuel = 9f;
+                radioA.State.CurrentFrequencyId = "freq_mil";
+                radioA.State.TuningProgress = 0.9f;
+
+                var writer = new SaveSystem(new SaveSystem.CoreDeps
+                {
+                    GameState = new GameState(),
+                    WeatherSystem = weather,
+                    TemperatureSystem = temp,
+                    NeedsSystem = needs,
+                    RadiationSystem = rad,
+                    Shelter = new ShelterClass(),
+                    GetSurvivors = () => new List<Survivor>(),
+                    ItemLookup = id => null,
+                    ModuleLookup = id => null,
+                    SavesDir = dir
+                });
+                writer.SetAddictionSystem(addictA);
+                writer.SetRadioTunerSystem(radioA);
+                Assert.IsTrue(writer.Save("gap_slot"));
+
+                var addictB = new AddictionSystem();
+                var radioB = new RadioTunerSystem();
+                var reader = new SaveSystem(new SaveSystem.CoreDeps
+                {
+                    GameState = new GameState(),
+                    WeatherSystem = new WeatherSystem(null, 3),
+                    TemperatureSystem = new TemperatureSystem(null, weather),
+                    NeedsSystem = needs,
+                    RadiationSystem = rad,
+                    Shelter = new ShelterClass(),
+                    GetSurvivors = () => new List<Survivor>(),
+                    ItemLookup = id => null,
+                    ModuleLookup = id => null,
+                    SavesDir = dir
+                });
+                reader.SetAddictionSystem(addictB);
+                reader.SetRadioTunerSystem(radioB);
+                Assert.IsTrue(reader.Load("gap_slot"));
+
+                Assert.AreEqual(48f, addictB.GetRecoveryHours("sv1"), 0.001f);
+                Assert.AreEqual(200f, addictB.GetRecoveryHours("sv2"), 0.001f);
+                Assert.AreEqual(9f, radioB.State.AvailableFuel, 0.001f);
+                Assert.AreEqual("freq_mil", radioB.State.CurrentFrequencyId);
+                Assert.AreEqual(0.9f, radioB.State.TuningProgress, 0.001f);
+            }
+            finally
+            {
+                try { if (Directory.Exists(dir)) Directory.Delete(dir, true); } catch { /* best-effort */ }
+            }
+        }
+
+        [Test]
+        public void SurvivorKeepsakeItemIds_SaveLoad_RoundTrip()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "ashfall_keepsake_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            try
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var weather = new WeatherSystem(null, 5);
+                var survivors = new List<Survivor>
+                {
+                    new Survivor
+                    {
+                        Id = "sv_keep",
+                        DisplayName = "Mara",
+                        State = SurvivorState.Idle,
+                        KeepsakeItemIds = new List<string> { "item_watch", "item_ring" }
+                    }
+                };
+
+                var writer = new SaveSystem(new SaveSystem.CoreDeps
+                {
+                    GameState = new GameState(),
+                    WeatherSystem = weather,
+                    TemperatureSystem = new TemperatureSystem(null, weather),
+                    NeedsSystem = needs,
+                    RadiationSystem = new RadiationSystem(needs),
+                    Shelter = new ShelterClass(),
+                    GetSurvivors = () => survivors,
+                    ItemLookup = id => null,
+                    ModuleLookup = id => null,
+                    SavesDir = dir
+                });
+                Assert.IsTrue(writer.Save("keepsake_slot"));
+
+                var survivorsB = new List<Survivor>
+                {
+                    new Survivor
+                    {
+                        Id = "sv_keep",
+                        DisplayName = "Mara",
+                        State = SurvivorState.Idle,
+                        KeepsakeItemIds = new List<string>()
+                    }
+                };
+                var reader = new SaveSystem(new SaveSystem.CoreDeps
+                {
+                    GameState = new GameState(),
+                    WeatherSystem = weather,
+                    TemperatureSystem = new TemperatureSystem(null, weather),
+                    NeedsSystem = needs,
+                    RadiationSystem = new RadiationSystem(needs),
+                    Shelter = new ShelterClass(),
+                    GetSurvivors = () => survivorsB,
+                    ItemLookup = id => null,
+                    ModuleLookup = id => null,
+                    SavesDir = dir
+                });
+                Assert.IsTrue(reader.Load("keepsake_slot"));
+                Assert.IsNotNull(survivorsB[0].KeepsakeItemIds);
+                Assert.AreEqual(2, survivorsB[0].KeepsakeItemIds.Count);
+                Assert.Contains("item_watch", survivorsB[0].KeepsakeItemIds);
+                Assert.Contains("item_ring", survivorsB[0].KeepsakeItemIds);
             }
             finally
             {

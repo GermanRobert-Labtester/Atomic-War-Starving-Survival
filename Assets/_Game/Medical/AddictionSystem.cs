@@ -264,6 +264,48 @@ namespace AtomicWar._Game.Medical
             }
         }
 
+        // -----------------------------------------------------------------
+        // Save / Load
+        // -----------------------------------------------------------------
+
+        /// <summary>Hours of continuous withdrawal accumulated toward recovery for a survivor.</summary>
+        public float GetRecoveryHours(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return 0f;
+            return _recoveryHours.TryGetValue(survivorId, out float h) ? h : 0f;
+        }
+
+        /// <summary>
+        /// Snapshot of per-survivor recovery progress (ISaveable id: "addiction").
+        /// Survivor-side addiction flags live on <see cref="Survivors.Survivor"/> saves.
+        /// </summary>
+        public AddictionSave CaptureState()
+        {
+            var keys = new string[_recoveryHours.Count];
+            var values = new float[_recoveryHours.Count];
+            int i = 0;
+            foreach (var kvp in _recoveryHours)
+            {
+                keys[i] = kvp.Key ?? "";
+                values[i] = kvp.Value;
+                i++;
+            }
+            return new AddictionSave { Keys = keys, Values = values };
+        }
+
+        /// <summary>Replace recovery map. Null/empty clears.</summary>
+        public void RestoreState(AddictionSave save)
+        {
+            _recoveryHours.Clear();
+            if (save?.Keys == null) return;
+            for (int i = 0; i < save.Keys.Length; i++)
+            {
+                if (string.IsNullOrEmpty(save.Keys[i])) continue;
+                float v = save.Values != null && i < save.Values.Length ? save.Values[i] : 0f;
+                _recoveryHours[save.Keys[i]] = v;
+            }
+        }
+
         private int CountRecentDoses(Survivors.Survivor sv, int currentDay)
         {
             if (sv.ConsumptionHistory == null) return 0;
@@ -276,5 +318,13 @@ namespace AtomicWar._Game.Medical
             }
             return count;
         }
+    }
+
+    /// <summary>Save DTO for <see cref="AddictionSystem"/> recovery progress (id: "addiction").</summary>
+    [Serializable]
+    public class AddictionSave
+    {
+        public string[] Keys;
+        public float[] Values;
     }
 }

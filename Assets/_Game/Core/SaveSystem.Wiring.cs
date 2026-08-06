@@ -389,6 +389,18 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((FuelDecayState)o));
 
+        /// <summary>Radio tuner power/tuning + extracted intel nodes (had CaptureState, never registered).</summary>
+        public void SetRadioTunerSystem(RadioTunerSystem s) =>
+            RegisterSystem(ref _radioTunerSystem, s, "radio_tuner",
+                () => s.CaptureState(),
+                o => s.RestoreState((RadioTunerSave)o));
+
+        /// <summary>Addiction recovery-hour progress (survivor flags already on SurvivorSave).</summary>
+        public void SetAddictionSystem(AddictionSystem s) =>
+            RegisterSystem(ref _addictionSystem, s, "addiction",
+                () => s.CaptureState(),
+                o => s.RestoreState((AddictionSave)o));
+
         public void SetLifeboatTransmissionSystem(LifeboatTransmissionSystem lifeboat)
         {
             _lifeboat = lifeboat;

@@ -320,6 +320,9 @@ namespace AtomicWar._Game.Core
         public float ClothingDurability = 100f;
         public bool IsRagged;
 
+        // Grief keepsakes (item ids held as memorials — was missing from survivor DTO)
+        public List<string> KeepsakeItemIds = new List<string>();
+
         // Mental-break system (Prompt #29)
         public string CurrentMentalBreakId = string.Empty;
         public float LowMoraleHours;

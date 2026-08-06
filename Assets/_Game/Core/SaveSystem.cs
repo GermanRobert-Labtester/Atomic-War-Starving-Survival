@@ -170,6 +170,8 @@ namespace AtomicWar._Game.Core
         private LocationScavengingSystem _scavengingSystem;
         private PetSystem _petSystem;
         private FuelDecaySystem _fuelDecaySystem;
+        private RadioTunerSystem _radioTunerSystem;
+        private AddictionSystem _addictionSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;

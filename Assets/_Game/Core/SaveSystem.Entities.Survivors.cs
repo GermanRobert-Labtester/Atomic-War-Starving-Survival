@@ -106,6 +106,11 @@ namespace AtomicWar._Game.Core
                 ClothingDurability = sv.ClothingDurability,
                 IsRagged           = sv.IsRagged,
 
+                // Grief keepsakes (item ids memorialized after a death).
+                KeepsakeItemIds = sv.KeepsakeItemIds != null
+                    ? new List<string>(sv.KeepsakeItemIds)
+                    : new List<string>(),
+
                 // Prompts #214–#219 — personal quest destiny.
                 ArchetypeId          = sv.ArchetypeId ?? string.Empty,
                 LatentExpertTraitId  = sv.LatentExpertTraitId ?? string.Empty,
@@ -218,6 +223,11 @@ namespace AtomicWar._Game.Core
             // survivor stays Ragged across sessions and the morale drain continues.
             sv.ClothingDurability = save.ClothingDurability;
             sv.IsRagged           = save.IsRagged;
+
+            // Grief keepsakes.
+            sv.KeepsakeItemIds = save.KeepsakeItemIds != null
+                ? new List<string>(save.KeepsakeItemIds)
+                : new List<string>();
 
             // Prompts #214–#219 — personal quest destiny.
             sv.ArchetypeId         = save.ArchetypeId ?? string.Empty;

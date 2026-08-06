@@ -95,6 +95,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBloodTransfusionSystem(BloodTransfusion);
             SaveSystem.SetAmputationSystem(AmputationSystem);
             SaveSystem.SetScurvySystem(ScurvySystem);
+            SaveSystem.SetAddictionSystem(Addiction);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
             SaveSystem.SetEconomySystem(EconomySystem);

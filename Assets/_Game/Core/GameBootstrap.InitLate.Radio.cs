@@ -45,6 +45,10 @@ namespace AtomicWar._Game.Core
                 RadioTunerSystem.State.AvailableFuel = radioModule.Fuel;
                 RadioTunerSystem.State.PowerConsumptionPerHour = 0.5f;
             }
+
+            // Persist tuner power/tuning + extracted intel (CaptureState already existed).
+            if (SaveSystem != null)
+                SaveSystem.SetRadioTunerSystem(RadioTunerSystem);
         }
 
         private void InitDebtGhostAndEndgameSystems()
