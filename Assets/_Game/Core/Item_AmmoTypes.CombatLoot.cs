@@ -168,7 +168,9 @@ namespace AtomicWar._Game.Core
             {
                 if (kv.Value.Modification == BulletModification.Ap
                     || kv.Value.Modification == BulletModification.Api
-                    || kv.Value.Modification == BulletModification.M855A1)
+                    || kv.Value.Modification == BulletModification.M855A1
+                    || kv.Value.Modification == BulletModification.JhpAp
+                    || kv.Value.Modification == BulletModification.ExplosiveIncendiary)
                     list.Add(kv.Key);
             }
             _apApiCache = list;

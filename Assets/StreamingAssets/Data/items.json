@@ -709,5 +709,2683 @@
     "tradeValue": 1,
     "contamination": 0,
     "isEquipable": false
+  },
+  {
+    "id": "att_mil_suppressor",
+    "displayName": "Military Grade Suppressor",
+    "description": "Threaded suppressor. Extremely rare loose loot. Usually already mounted on mil/rebel/specialist weapons.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 2
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "att_mil_laserdot",
+    "displayName": "Military Grade Laserdot Scope",
+    "description": "IR-capable laser aiming module. Usually already mounted on mil/rebel/specialist weapons.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 2
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "att_mil_tactical_grip",
+    "displayName": "Military Grade Tactical Grip",
+    "description": "Angled/vertical grip for recoil control. Usually already mounted on mil/rebel/specialist weapons.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 2
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "att_mil_long_range_scope",
+    "displayName": "Military Grade Long Range Scope",
+    "description": "High-magnification optic. Usually already mounted on mil/rebel/specialist weapons.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 2
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "att_mil_holosight",
+    "displayName": "Military Grade Holosight",
+    "description": "Holographic CQB optic. Usually already mounted on mil/rebel/specialist weapons.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 2
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "att_mil_double_scope_5x_10x",
+    "displayName": "Military Grade Double Scope 5\u00d7/10\u00d7",
+    "description": "Flip dual-magnification scope. Usually already mounted on mil/rebel/specialist weapons.",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 50,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 2
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "shell_casing",
+    "displayName": "Shell Casing",
+    "description": "Empty hull. Scrap or reload feedstock.",
+    "type": "Material",
+    "stackMax": 50,
+    "weight": 0.01,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false
+  },
+  {
+    "id": "bullet_casing",
+    "displayName": "Bullet Casing",
+    "description": "Empty brass.",
+    "type": "Material",
+    "stackMax": 80,
+    "weight": 0.005,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.4,
+    "empShielded": false
+  },
+  {
+    "id": "gunpowder",
+    "displayName": "Gunpowder",
+    "description": "Propellant grains.",
+    "type": "Material",
+    "stackMax": 40,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false
+  },
+  {
+    "id": "sulphur",
+    "displayName": "Sulphur",
+    "description": "Yellow powder for chemistry mixes.",
+    "type": "Material",
+    "stackMax": 30,
+    "weight": 0.05,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
+  },
+  {
+    "id": "explosive_powder_nitroglycerin",
+    "displayName": "Explosive Powder (Nitroglycerin)",
+    "description": "Unstable high explosive.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 0.08,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 18,
+    "empShielded": false
+  },
+  {
+    "id": "fertilizer",
+    "displayName": "Fertilizer",
+    "description": "Grow beds and compost product.",
+    "type": "Material",
+    "stackMax": 20,
+    "weight": 1.0,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
+  },
+  {
+    "id": "salvaged_tech_trash",
+    "displayName": "Salvaged Tech-Trash",
+    "description": "Broken boards; scrape for electronics.",
+    "type": "Material",
+    "stackMax": 25,
+    "weight": 0.3,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_deprecated_cal_9x19",
+    "displayName": "Deprecated Bullets (9x19)",
+    "description": "Corroded cal_9x19 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_380acp",
+    "displayName": "Deprecated Bullets (380acp)",
+    "description": "Corroded cal_380acp rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_762x25",
+    "displayName": "Deprecated Bullets (762x25)",
+    "description": "Corroded cal_762x25 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_45acp",
+    "displayName": "Deprecated Bullets (45acp)",
+    "description": "Corroded cal_45acp rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_9x21",
+    "displayName": "Deprecated Bullets (9x21)",
+    "description": "Corroded cal_9x21 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_765x21",
+    "displayName": "Deprecated Bullets (765x21)",
+    "description": "Corroded cal_765x21 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_12ga",
+    "displayName": "Deprecated Bullets (12ga)",
+    "description": "Corroded cal_12ga rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_16ga",
+    "displayName": "Deprecated Bullets (16ga)",
+    "description": "Corroded cal_16ga rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_556x45",
+    "displayName": "Deprecated Bullets (556x45)",
+    "description": "Corroded cal_556x45 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_762x39",
+    "displayName": "Deprecated Bullets (762x39)",
+    "description": "Corroded cal_762x39 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_545x39",
+    "displayName": "Deprecated Bullets (545x39)",
+    "description": "Corroded cal_545x39 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_762x51",
+    "displayName": "Deprecated Bullets (762x51)",
+    "description": "Corroded cal_762x51 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_300blk",
+    "displayName": "Deprecated Bullets (300blk)",
+    "description": "Corroded cal_300blk rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_57x28",
+    "displayName": "Deprecated Bullets (57x28)",
+    "description": "Corroded cal_57x28 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_46x30",
+    "displayName": "Deprecated Bullets (46x30)",
+    "description": "Corroded cal_46x30 rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_762x54r",
+    "displayName": "Deprecated Bullets (762x54r)",
+    "description": "Corroded cal_762x54r rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_338lapua",
+    "displayName": "Deprecated Bullets (338lapua)",
+    "description": "Corroded cal_338lapua rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_408cheytac",
+    "displayName": "Deprecated Bullets (408cheytac)",
+    "description": "Corroded cal_408cheytac rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "ammo_deprecated_cal_50bmg",
+    "displayName": "Deprecated Bullets (50bmg)",
+    "description": "Corroded cal_50bmg rounds. Scrap only \u2014 not safe to fire.",
+    "type": "Material",
+    "stackMax": 60,
+    "weight": 0.015,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "shell_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "bullet_casing",
+        "amount": 1
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "body_armour_deprecated",
+    "displayName": "Deprecated Body Armour",
+    "description": "Cracked plates.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 2.5,
+    "radProtection": 0,
+    "durability": 20,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Torso",
+    "tradeValue": 4,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "body_armour_military",
+    "displayName": "Military Grade Body Armour",
+    "description": "Plate carrier with inserts.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 4,
+    "radProtection": 2,
+    "durability": 120,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Torso",
+    "tradeValue": 45,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "helmet_military",
+    "displayName": "Military Grade Helmet",
+    "description": "Ballistic helmet.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 4,
+    "radProtection": 1,
+    "durability": 80,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Head",
+    "tradeValue": 22,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "nv_goggles_military",
+    "displayName": "Military Grade NV Goggles",
+    "description": "Night-vision goggles.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 4,
+    "radProtection": 0,
+    "durability": 60,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Head",
+    "tradeValue": 55,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "helmet_heavy_military",
+    "displayName": "Heavy Military Grade Helmet",
+    "description": "Heavy ballistic helmet.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 4,
+    "radProtection": 2,
+    "durability": 140,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Head",
+    "tradeValue": 35,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "armour_heavy_military",
+    "displayName": "Heavy Military Grade Armour",
+    "description": "Full heavy plate.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 4,
+    "radProtection": 4,
+    "durability": 180,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Torso",
+    "tradeValue": 70,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "helmet_heavy_deprecated",
+    "displayName": "Deprecated Heavy Helmet",
+    "description": "Rusted heavy helmet.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 2.5,
+    "radProtection": 0,
+    "durability": 15,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Head",
+    "tradeValue": 3,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "helmet_deprecated",
+    "displayName": "Deprecated Helmet",
+    "description": "Split shell.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 2.5,
+    "radProtection": 0,
+    "durability": 10,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Head",
+    "tradeValue": 2,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "body_armour_heavy_deprecated",
+    "displayName": "Deprecated Heavy Body Armour",
+    "description": "Warped heavy plates.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 2.5,
+    "radProtection": 0,
+    "durability": 25,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": true,
+    "equipSlot": "Torso",
+    "tradeValue": 5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "vegetable_carrot",
+    "displayName": "Vegetable \u2014 Carrot",
+    "description": "Vegetable \u2014 Carrot",
+    "type": "Food",
+    "stackMax": 20,
+    "weight": 0.15,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 8,
+    "thirstRestore": 2,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1,
+    "empShielded": false
+  },
+  {
+    "id": "vegetable_potato",
+    "displayName": "Vegetable \u2014 Potato",
+    "description": "Vegetable \u2014 Potato",
+    "type": "Food",
+    "stackMax": 20,
+    "weight": 0.25,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 10,
+    "thirstRestore": 1,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1,
+    "empShielded": false
+  },
+  {
+    "id": "vegetable_beetroot",
+    "displayName": "Vegetable \u2014 Beetroot",
+    "description": "Vegetable \u2014 Beetroot",
+    "type": "Food",
+    "stackMax": 20,
+    "weight": 0.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 9,
+    "thirstRestore": 2,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1,
+    "empShielded": false
+  },
+  {
+    "id": "canned_meat",
+    "displayName": "Canned Meat",
+    "description": "Canned Meat",
+    "type": "Food",
+    "stackMax": 10,
+    "weight": 0.45,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 22,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false
+  },
+  {
+    "id": "preserved_crackers",
+    "displayName": "Preserved Crackers",
+    "description": "Preserved Crackers",
+    "type": "Food",
+    "stackMax": 25,
+    "weight": 0.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 12,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1.5,
+    "empShielded": false
+  },
+  {
+    "id": "mre_military",
+    "displayName": "Military Grade MRE",
+    "description": "Military Grade MRE",
+    "type": "Food",
+    "stackMax": 8,
+    "weight": 0.6,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 30,
+    "thirstRestore": 8,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 8,
+    "empShielded": false
+  },
+  {
+    "id": "boiled_vegetable_soup",
+    "displayName": "Boiled Vegetable Soup",
+    "description": "Boiled Vegetable Soup",
+    "type": "Food",
+    "stackMax": 6,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 14,
+    "thirstRestore": 12,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 2,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false
+  },
+  {
+    "id": "hearty_meal_cooked",
+    "displayName": "Hearty Meal (Cooked)",
+    "description": "Hearty Meal (Cooked)",
+    "type": "Food",
+    "stackMax": 4,
+    "weight": 0.7,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 28,
+    "thirstRestore": 6,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 6,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 6,
+    "empShielded": false
+  },
+  {
+    "id": "fuel_1l",
+    "displayName": "Fuel 1L",
+    "description": "Fuel 1L",
+    "type": "Fuel",
+    "stackMax": 10,
+    "weight": 1.0,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 4,
+    "empShielded": false
+  },
+  {
+    "id": "fuel_0_5l_of_1l",
+    "displayName": "Fuel 0.5L / 1L",
+    "description": "Fuel 0.5L / 1L",
+    "type": "Fuel",
+    "stackMax": 10,
+    "weight": 0.55,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
+  },
+  {
+    "id": "accelerant_full",
+    "displayName": "Accelerant (Full)",
+    "description": "Accelerant (Full)",
+    "type": "Fuel",
+    "stackMax": 10,
+    "weight": 1.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 6,
+    "empShielded": false
+  },
+  {
+    "id": "accelerant_half",
+    "displayName": "Accelerant (Half-Full)",
+    "description": "Accelerant (Half-Full)",
+    "type": "Fuel",
+    "stackMax": 10,
+    "weight": 0.7,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false
+  },
+  {
+    "id": "knife_improvised",
+    "displayName": "Improvised Knife",
+    "description": "Improvised Knife",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 40,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "knife_swiss_battle",
+    "displayName": "Swiss Battle Knife",
+    "description": "Swiss Battle Knife",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.35,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 12,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "bayonet_swiss_machete",
+    "displayName": "Swiss Bayonet Machete",
+    "description": "Swiss Bayonet Machete",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 1.1,
+    "radProtection": 0,
+    "durability": 120,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 18,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "hammer",
+    "displayName": "Hammer",
+    "description": "Hammer",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.8,
+    "radProtection": 0,
+    "durability": 80,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 4,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "screwdriver",
+    "displayName": "Screwdriver",
+    "description": "Screwdriver",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.2,
+    "radProtection": 0,
+    "durability": 60,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "multitool",
+    "displayName": "MultiTool",
+    "description": "MultiTool",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.3,
+    "radProtection": 0,
+    "durability": 90,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 10,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "shovel",
+    "displayName": "Shovel",
+    "description": "Shovel",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 2.0,
+    "radProtection": 0,
+    "durability": 100,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 6,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "grenade_military",
+    "displayName": "Military Grade Hand Grenade",
+    "description": "Military Grade Hand Grenade",
+    "type": "Weapon",
+    "stackMax": 4,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 1,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 40,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "crowbar",
+    "displayName": "Crowbar",
+    "description": "Crowbar",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 2.5,
+    "radProtection": 0,
+    "durability": 120,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 8,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "wire_cutters",
+    "displayName": "Wire Cutters",
+    "description": "Wire Cutters",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.4,
+    "radProtection": 0,
+    "durability": 70,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "lockpick",
+    "displayName": "Lockpick",
+    "description": "Lockpick",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 0.05,
+    "radProtection": 0,
+    "durability": 30,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "metal_pipe",
+    "displayName": "Metal Pipe",
+    "description": "Metal Pipe",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 1.5,
+    "radProtection": 0,
+    "durability": 50,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "materialId": "mechanical_parts",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "crowbar_broken",
+    "displayName": "Crowbar Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "wire_cutters_broken",
+    "displayName": "Wire Cutters Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "metal_pipe_broken",
+    "displayName": "Metal Pipe Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "shovel_broken",
+    "displayName": "Shovel Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "multitool_broken",
+    "displayName": "Multitool Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "knife_broken",
+    "displayName": "Knife Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "hammer_broken",
+    "displayName": "Hammer Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "screwdriver_broken",
+    "displayName": "Screwdriver Broken",
+    "description": "Broken tool. Scrap only.",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.5,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "disassembleYieldFraction": 0.5
+  },
+  {
+    "id": "water_bottle_1l_full",
+    "displayName": "Water Bottle 1L (Full)",
+    "description": "Water Bottle 1L (Full)",
+    "type": "Water",
+    "stackMax": 4,
+    "weight": 1.1,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 20,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false
+  },
+  {
+    "id": "water_bottle_2l_full",
+    "displayName": "Water Bottle 2L (Full)",
+    "description": "Water Bottle 2L (Full)",
+    "type": "Water",
+    "stackMax": 4,
+    "weight": 2.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 40,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 5,
+    "empShielded": false
+  },
+  {
+    "id": "water_bottle_1l_of_2l",
+    "displayName": "Water Bottle 1L / 2L",
+    "description": "Water Bottle 1L / 2L",
+    "type": "Water",
+    "stackMax": 4,
+    "weight": 1.6,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 20,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 3,
+    "empShielded": false
+  },
+  {
+    "id": "water_bottle_0_5l_of_1l",
+    "displayName": "Water Bottle 0.5L / 1L",
+    "description": "Water Bottle 0.5L / 1L",
+    "type": "Water",
+    "stackMax": 4,
+    "weight": 0.7,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 10,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
+  },
+  {
+    "id": "water_bottle_0_5l_of_2l",
+    "displayName": "Water Bottle 0.5L / 2L",
+    "description": "Water Bottle 0.5L / 2L",
+    "type": "Water",
+    "stackMax": 4,
+    "weight": 1.1,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 10,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 2,
+    "empShielded": false
+  },
+  {
+    "id": "water_bottle_1_5l_of_2l",
+    "displayName": "Water Bottle 1.5L / 2L",
+    "description": "Water Bottle 1.5L / 2L",
+    "type": "Water",
+    "stackMax": 4,
+    "weight": 1.9,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 30,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 4,
+    "empShielded": false
+  },
+  {
+    "id": "water_bottle_empty",
+    "displayName": "Empty Water Bottle",
+    "description": "Empty bottle. Refill or boil.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 0.1,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_545x39_jhp_ap",
+    "displayName": "5.45\u00d739mm JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_545x39_exi",
+    "displayName": "5.45\u00d739mm EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_545x39_api",
+    "displayName": "5.45\u00d739mm API",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_300blk_jhp_ap",
+    "displayName": ".300 Blackout JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_300blk_exi",
+    "displayName": ".300 Blackout EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_300blk_api",
+    "displayName": ".300 Blackout API",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_57x28_jhp_ap",
+    "displayName": "5.7\u00d728mm JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_57x28_exi",
+    "displayName": "5.7\u00d728mm EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_57x28_api",
+    "displayName": "5.7\u00d728mm API",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_762x54r_jhp_ap",
+    "displayName": "7.62\u00d754R JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_762x54r_exi",
+    "displayName": "7.62\u00d754R EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_762x54r_api",
+    "displayName": "7.62\u00d754R API",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_338lapua_jhp_ap",
+    "displayName": ".338 Lapua Magnum JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_338lapua_exi",
+    "displayName": ".338 Lapua Magnum EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_338lapua_api",
+    "displayName": ".338 Lapua Magnum API",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_408cheytac_jhp_ap",
+    "displayName": ".408 CheyTac JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_408cheytac_exi",
+    "displayName": ".408 CheyTac EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_408cheytac_api",
+    "displayName": ".408 CheyTac API",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_762x51_jhp_ap",
+    "displayName": "7.62\u00d751mm NATO JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_762x51_exi",
+    "displayName": "7.62\u00d751mm NATO EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_50bmg_jhp_ap",
+    "displayName": "12.7\u00d799mm NATO JHP+AP",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
+  },
+  {
+    "id": "ammo_50bmg_exi",
+    "displayName": "12.7\u00d799mm NATO EXI",
+    "description": "Military dual-attribute load. Field-only.",
+    "type": "Weapon",
+    "stackMax": 20,
+    "weight": 0.02,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 15,
+    "empShielded": false
   }
 ]

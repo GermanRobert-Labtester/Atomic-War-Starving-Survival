@@ -252,10 +252,154 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreNotEqual(BulletModification.Ap, load.Modification);
                 Assert.AreNotEqual(BulletModification.Api, load.Modification);
                 Assert.AreNotEqual(BulletModification.M855A1, load.Modification);
+                Assert.AreNotEqual(BulletModification.JhpAp, load.Modification);
+                Assert.AreNotEqual(BulletModification.ExplosiveIncendiary, load.Modification);
                 Assert.AreNotEqual(WeaponAmmoClass.BattleRifle, load.WeaponClass);
                 Assert.AreNotEqual(WeaponAmmoClass.Sniper, load.WeaponClass);
                 Assert.AreNotEqual(WeaponAmmoClass.AntiMateriel, load.WeaponClass);
             }
+        }
+
+        [Test]
+        public void DualAttribute_Mods_Always_Carry_Two_Flags()
+        {
+            Assert.AreEqual(2, Item_AmmoTypes.CountAttributes(
+                Item_AmmoTypes.GetAttributes(BulletModification.JhpAp)));
+            Assert.AreEqual(2, Item_AmmoTypes.CountAttributes(
+                Item_AmmoTypes.GetAttributes(BulletModification.ExplosiveIncendiary)));
+            Assert.AreEqual(2, Item_AmmoTypes.CountAttributes(
+                Item_AmmoTypes.GetAttributes(BulletModification.Api)));
+
+            Assert.AreEqual(
+                BulletAttributeFlags.HollowPoint | BulletAttributeFlags.ArmorPiercing,
+                Item_AmmoTypes.GetAttributes(BulletModification.JhpAp));
+            Assert.AreEqual(
+                BulletAttributeFlags.Explosive | BulletAttributeFlags.Incendiary,
+                Item_AmmoTypes.GetAttributes(BulletModification.ExplosiveIncendiary));
+            Assert.AreEqual(
+                BulletAttributeFlags.ArmorPiercing | BulletAttributeFlags.Incendiary,
+                Item_AmmoTypes.GetAttributes(BulletModification.Api));
+
+            Assert.IsTrue(Item_AmmoTypes.IsDualAttributeModification(BulletModification.JhpAp));
+            Assert.IsTrue(Item_AmmoTypes.IsDualAttributeModification(BulletModification.ExplosiveIncendiary));
+            Assert.IsTrue(Item_AmmoTypes.IsDualAttributeModification(BulletModification.Api));
+            Assert.IsFalse(Item_AmmoTypes.IsDualAttributeModification(BulletModification.Fmj));
+            Assert.IsFalse(Item_AmmoTypes.IsDualAttributeModification(BulletModification.Ap));
+        }
+
+        [Test]
+        public void BattleRifle_Sniper_Av_Have_Three_Dual_Tactical_Loads()
+        {
+            // idPrefix → expected weapon class
+            var prefixes = new (string prefix, WeaponAmmoClass cls)[]
+            {
+                ("ammo_545x39", WeaponAmmoClass.BattleRifle),
+                ("ammo_762x51", WeaponAmmoClass.BattleRifle),
+                ("ammo_300blk", WeaponAmmoClass.BattleRifle),
+                ("ammo_57x28", WeaponAmmoClass.BattleRifle),
+                ("ammo_762x54r", WeaponAmmoClass.Sniper),
+                ("ammo_338lapua", WeaponAmmoClass.Sniper),
+                ("ammo_408cheytac", WeaponAmmoClass.AntiMateriel),
+                ("ammo_50bmg", WeaponAmmoClass.AntiMateriel)
+            };
+
+            string[] dualSuffixes = { "_jhp_ap", "_exi", "_api" };
+            BulletModification[] dualMods =
+            {
+                BulletModification.JhpAp,
+                BulletModification.ExplosiveIncendiary,
+                BulletModification.Api
+            };
+
+            foreach (var (prefix, cls) in prefixes)
+            {
+                for (int i = 0; i < dualSuffixes.Length; i++)
+                {
+                    string id = prefix + dualSuffixes[i];
+                    Assert.IsTrue(Item_AmmoTypes.TryGetLoad(id, out var load), id);
+                    Assert.AreEqual(cls, load.WeaponClass, id);
+                    Assert.AreEqual(dualMods[i], load.Modification, id);
+                    Assert.IsFalse(load.Craftable, id);
+                    Assert.IsTrue(Item_AmmoTypes.IsDualAttributeTacticalLoad(id), id);
+                    Assert.IsTrue(Item_AmmoTypes.IsExclusiveToFactions(id), id);
+                    Assert.IsFalse(Item_AmmoTypes.CanFactionField(id, AmmoFactionSource.CivilianCraft), id);
+                    Assert.IsTrue(Item_AmmoTypes.CanFactionField(id, AmmoFactionSource.MilitaryForces), id);
+                    Assert.IsTrue(Item_AmmoTypes.CanFactionField(id, AmmoFactionSource.RebelForces), id);
+                }
+            }
+        }
+
+        [Test]
+        public void JhpAp_ResolveHit_SoftBonus_And_PartialArmorIgnore()
+        {
+            float baseDmg = 100f;
+            var soft = _ammo.ResolveHit("ammo_762x51_jhp_ap", baseDmg, targetArmor: 0f);
+            Assert.IsTrue(soft.IsDualAttribute);
+            Assert.IsTrue(soft.SoftTargetBonusApplied);
+            Assert.AreEqual(1f + Item_AmmoTypes.JhpApSoftBonus, soft.DamageMultiplier, Eps);
+            Assert.AreEqual(
+                BulletAttributeFlags.HollowPoint | BulletAttributeFlags.ArmorPiercing,
+                soft.Attributes);
+
+            float armor = 40f;
+            var hard = _ammo.ResolveHit("ammo_762x51_jhp_ap", baseDmg, targetArmor: armor);
+            Assert.AreEqual(Item_AmmoTypes.JhpApArmorIgnore, hard.ArmorIgnored, Eps);
+            Assert.IsFalse(hard.ArmorPenaltyApplied, "JHP+AP must not take full JHP armor penalty");
+            Assert.Greater(hard.FinalDamage, _ammo.ResolveHit("ammo_9x19_jhp", baseDmg, armor).FinalDamage);
+        }
+
+        [Test]
+        public void ExplosiveIncendiary_ResolveHit_Splash_Burn_And_Light()
+        {
+            var hit = _ammo.ResolveHit("ammo_50bmg_exi", 70f, targetArmor: 20f);
+            Assert.IsTrue(hit.IsDualAttribute);
+            Assert.IsTrue(hit.HasExplosive);
+            Assert.AreEqual(Item_AmmoTypes.ExiExplosiveSplashFraction, hit.ExplosiveSplashFraction, Eps);
+            Assert.AreEqual(Item_AmmoTypes.ExiBurnDps, hit.BurnDamagePerSecond, Eps);
+            Assert.AreEqual(Item_AmmoTypes.ExiBurnDurationSeconds, hit.BurnDurationSeconds, Eps);
+            Assert.IsTrue(hit.LightsArea);
+            Assert.AreEqual(
+                BulletAttributeFlags.Explosive | BulletAttributeFlags.Incendiary,
+                hit.Attributes);
+            Assert.Greater(hit.DamageMultiplier, 1f);
+        }
+
+        [Test]
+        public void Api_Is_Dual_ArmourPiercing_Plus_Incendiary()
+        {
+            var hit = _ammo.ResolveHit("ammo_762x51_api", 100f, targetArmor: 30f);
+            Assert.IsTrue(hit.IsDualAttribute);
+            Assert.AreEqual(BulletModification.Api, hit.Modification);
+            Assert.AreEqual(
+                BulletAttributeFlags.ArmorPiercing | BulletAttributeFlags.Incendiary,
+                hit.Attributes);
+            Assert.IsTrue(hit.LightsArea);
+            Assert.Greater(hit.BurnDamagePerSecond, 0f);
+        }
+
+        [Test]
+        public void DualAttribute_Tooltip_Shows_Dual_Badge()
+        {
+            string tip = Item_AmmoTypes.FormatItemTooltip("ammo_338lapua_jhp_ap");
+            Assert.IsTrue(tip.Contains("[DUAL]"), tip);
+            Assert.IsTrue(tip.Contains("Hollow-point"), tip);
+            Assert.IsTrue(tip.Contains("Armour-piercing"), tip);
+            Assert.IsTrue(tip.Contains("[MILITARY EXCLUSIVE]"), tip);
+
+            string exi = Item_AmmoTypes.FormatItemTooltip("ammo_408cheytac_exi");
+            Assert.IsTrue(exi.Contains("[DUAL]"), exi);
+            Assert.IsTrue(exi.Contains("Explosive"), exi);
+            Assert.IsTrue(exi.Contains("Incendiary"), exi);
+        }
+
+        [Test]
+        public void DualTactical_In_ApApiLootPool()
+        {
+            var pool = Item_AmmoTypes.GetApApiLootIds();
+            CollectionAssert.Contains(pool, "ammo_545x39_jhp_ap");
+            CollectionAssert.Contains(pool, "ammo_545x39_exi");
+            CollectionAssert.Contains(pool, "ammo_50bmg_exi");
+            CollectionAssert.Contains(pool, "ammo_762x51_api");
         }
 
         [Test]

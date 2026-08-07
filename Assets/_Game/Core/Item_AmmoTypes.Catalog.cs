@@ -194,6 +194,9 @@ namespace AtomicWar._Game.Core
                 sources: MilitaryRebelExclusives));
 
             // ── Battle rifle exclusives [Very Rare] — non-craftable ───────
+            // Dual-attribute tactical loads (always two attributes):
+            //   JHP+AP · Explosive+Incendiary · AP+Incendiary (API)
+            // ~2 named guns per caliber planned later; calibers reviewed later.
             // 5.45×39mm
             Add(Load("ammo_545x39_fmj", "5.45×39mm FMJ", "cal_545x39", "5.45×39mm",
                 WeaponAmmoClass.BattleRifle, AmmoRarity.VeryRare, BulletModification.Fmj,
@@ -205,6 +208,10 @@ namespace AtomicWar._Game.Core
                 craftable: false, dmg: 19f, range: 480f, weight: 0.012f, stack: 30, trade: 14f,
                 desc: "Hardened 5.45 battle-rifle AP.",
                 sources: MilitaryRebelExclusives));
+            AddDualTactical(
+                "ammo_545x39", "5.45×39mm", "cal_545x39", "5.45×39mm",
+                WeaponAmmoClass.BattleRifle, AmmoRarity.VeryRare,
+                dmg: 19f, range: 460f, weight: 0.012f, stack: 28, trade: 16f);
 
             // 7.62×51mm NATO
             Add(Load("ammo_762x51_fmj", "7.62×51mm NATO FMJ", "cal_762x51", "7.62×51mm NATO",
@@ -220,7 +227,17 @@ namespace AtomicWar._Game.Core
             Add(Load("ammo_762x51_api", "7.62×51mm NATO API", "cal_762x51", "7.62×51mm NATO",
                 WeaponAmmoClass.BattleRifle, AmmoRarity.MythicRare, BulletModification.Api,
                 craftable: false, dmg: 28f, range: 620f, weight: 0.027f, stack: 16, trade: 22f,
-                desc: "Armor-piercing incendiary. Burn DoT and combat-zone light.",
+                desc: "Dual: armour-piercing + incendiary. Burn DoT and combat-zone light.",
+                sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg, WeaponAmmoClass.Sniper }));
+            Add(Load("ammo_762x51_jhp_ap", "7.62×51mm NATO JHP+AP", "cal_762x51", "7.62×51mm NATO",
+                WeaponAmmoClass.BattleRifle, AmmoRarity.MythicRare, BulletModification.JhpAp,
+                craftable: false, dmg: 28f, range: 580f, weight: 0.027f, stack: 16, trade: 20f,
+                desc: "Dual: hollow-point + armour-piercing. Soft dump and plate bite.",
+                sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg, WeaponAmmoClass.Sniper }));
+            Add(Load("ammo_762x51_exi", "7.62×51mm NATO EXI", "cal_762x51", "7.62×51mm NATO",
+                WeaponAmmoClass.BattleRifle, AmmoRarity.MythicRare, BulletModification.ExplosiveIncendiary,
+                craftable: false, dmg: 28f, range: 560f, weight: 0.028f, stack: 14, trade: 24f,
+                desc: "Dual: explosive + incendiary. Splash crack and burn.",
                 sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg, WeaponAmmoClass.Sniper }));
 
             // .300 Blackout
@@ -234,6 +251,10 @@ namespace AtomicWar._Game.Core
                 craftable: false, dmg: 22f, range: 320f, weight: 0.019f, stack: 25, trade: 15f,
                 desc: "Hardened .300 BLK. Spec-ops rebel / black-ops issue.",
                 sources: MilitaryRebelExclusives));
+            AddDualTactical(
+                "ammo_300blk", ".300 Blackout", "cal_300blk", ".300 Blackout",
+                WeaponAmmoClass.BattleRifle, AmmoRarity.VeryRare,
+                dmg: 22f, range: 310f, weight: 0.019f, stack: 22, trade: 17f);
 
             // 5.7×28mm
             Add(Load("ammo_57x28_fmj", "5.7×28mm FMJ", "cal_57x28", "5.7×28mm",
@@ -246,6 +267,11 @@ namespace AtomicWar._Game.Core
                 craftable: false, dmg: 14f, range: 220f, weight: 0.006f, stack: 40, trade: 14f,
                 desc: "Armor-piercing 5.7. Defeats soft armor at pistol distances.",
                 sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Pdw, WeaponAmmoClass.Pistol }));
+            AddDualTactical(
+                "ammo_57x28", "5.7×28mm", "cal_57x28", "5.7×28mm",
+                WeaponAmmoClass.BattleRifle, AmmoRarity.VeryRare,
+                dmg: 14f, range: 210f, weight: 0.0065f, stack: 36, trade: 16f,
+                alsoFits: new[] { WeaponAmmoClass.Pdw, WeaponAmmoClass.Pistol });
 
             // ── PDW late-game (4.6×30mm) ───────────────────────────────────
             Add(Load("ammo_46x30_fmj", "4.6×30mm FMJ", "cal_46x30", "4.6×30mm",
@@ -259,7 +285,7 @@ namespace AtomicWar._Game.Core
                 desc: "AP PDW load. Black-ops / spec-ops exclusive.",
                 sources: MilitaryRebelExclusives));
 
-            // ── Sniper [Mythic Rare] ───────────────────────────────────────
+            // ── Sniper [Mythic Rare] + dual-attribute tactical ─────────────
             // 7.62×54R
             Add(Load("ammo_762x54r_bt", "7.62×54R Boat Tail", "cal_762x54r", "7.62×54R",
                 WeaponAmmoClass.Sniper, AmmoRarity.MythicRare, BulletModification.BoatTail,
@@ -271,6 +297,10 @@ namespace AtomicWar._Game.Core
                 craftable: false, dmg: 32f, range: 750f, weight: 0.025f, stack: 15, trade: 20f,
                 desc: "Sniper AP. Plate and light barrier defeat.",
                 sources: MilitaryRebelExclusives));
+            AddDualTactical(
+                "ammo_762x54r", "7.62×54R", "cal_762x54r", "7.62×54R",
+                WeaponAmmoClass.Sniper, AmmoRarity.MythicRare,
+                dmg: 32f, range: 780f, weight: 0.025f, stack: 12, trade: 24f);
 
             // .338 Lapua Magnum
             Add(Load("ammo_338lapua_bt", ".338 Lapua Magnum Boat Tail", "cal_338lapua", ".338 Lapua Magnum",
@@ -283,8 +313,12 @@ namespace AtomicWar._Game.Core
                 craftable: false, dmg: 42f, range: 1100f, weight: 0.046f, stack: 10, trade: 32f,
                 desc: "Hardened .338. Spec-ops / black-ops caches only.",
                 sources: MilitaryRebelExclusives));
+            AddDualTactical(
+                "ammo_338lapua", ".338 Lapua Magnum", "cal_338lapua", ".338 Lapua Magnum",
+                WeaponAmmoClass.Sniper, AmmoRarity.MythicRare,
+                dmg: 42f, range: 1150f, weight: 0.047f, stack: 8, trade: 36f);
 
-            // ── Extreme long-range AV [Legendary Very Rare] ────────────────
+            // ── Extreme long-range AV [Legendary Very Rare] + dual tactical ─
             // .408 CheyTac
             Add(Load("ammo_408cheytac_bt", ".408 CheyTac Boat Tail", "cal_408cheytac", ".408 CheyTac",
                 WeaponAmmoClass.AntiMateriel, AmmoRarity.LegendaryVeryRare, BulletModification.BoatTail,
@@ -296,6 +330,10 @@ namespace AtomicWar._Game.Core
                 craftable: false, dmg: 55f, range: 1800f, weight: 0.068f, stack: 8, trade: 50f,
                 desc: "Hardened AV penetrator. Non-craftable.",
                 sources: MilitaryRebelExclusives));
+            AddDualTactical(
+                "ammo_408cheytac", ".408 CheyTac", "cal_408cheytac", ".408 CheyTac",
+                WeaponAmmoClass.AntiMateriel, AmmoRarity.LegendaryVeryRare,
+                dmg: 55f, range: 1850f, weight: 0.070f, stack: 6, trade: 58f);
 
             // 12.7×99mm NATO (.50 BMG)
             Add(Load("ammo_50bmg_ap", "12.7×99mm NATO AP", "cal_50bmg", "12.7×99mm NATO",
@@ -306,12 +344,22 @@ namespace AtomicWar._Game.Core
             Add(Load("ammo_50bmg_api", "12.7×99mm NATO API", "cal_50bmg", "12.7×99mm NATO",
                 WeaponAmmoClass.AntiMateriel, AmmoRarity.LegendaryVeryRare, BulletModification.Api,
                 craftable: false, dmg: 70f, range: 1700f, weight: 0.120f, stack: 6, trade: 65f,
-                desc: ".50 BMG armor-piercing incendiary. Burn, light, and breach.",
+                desc: "Dual: armour-piercing + incendiary. Burn, light, and breach.",
                 sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg }));
             Add(Load("ammo_50bmg_bt", "12.7×99mm NATO Boat Tail", "cal_50bmg", "12.7×99mm NATO",
                 WeaponAmmoClass.AntiMateriel, AmmoRarity.LegendaryVeryRare, BulletModification.BoatTail,
                 craftable: false, dmg: 65f, range: 2200f, weight: 0.110f, stack: 8, trade: 50f,
                 desc: "Long-range .50 match. Extreme trajectory hold.",
+                sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg }));
+            Add(Load("ammo_50bmg_jhp_ap", "12.7×99mm NATO JHP+AP", "cal_50bmg", "12.7×99mm NATO",
+                WeaponAmmoClass.AntiMateriel, AmmoRarity.LegendaryVeryRare, BulletModification.JhpAp,
+                craftable: false, dmg: 70f, range: 1650f, weight: 0.118f, stack: 6, trade: 62f,
+                desc: "Dual: hollow-point + armour-piercing AV load.",
+                sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg }));
+            Add(Load("ammo_50bmg_exi", "12.7×99mm NATO EXI", "cal_50bmg", "12.7×99mm NATO",
+                WeaponAmmoClass.AntiMateriel, AmmoRarity.LegendaryVeryRare, BulletModification.ExplosiveIncendiary,
+                craftable: false, dmg: 70f, range: 1600f, weight: 0.125f, stack: 5, trade: 70f,
+                desc: "Dual: explosive + incendiary AV. Splash, burn, and light.",
                 sources: MilitaryRebelExclusives, alsoFits: new[] { WeaponAmmoClass.Lmg }));
 
             // Legacy aliases used across encounters / hatch defense / bootstrap
@@ -327,6 +375,64 @@ namespace AtomicWar._Game.Core
             LegacyAliases["ap_rifle_rounds"] = "ammo_556x45_ap";
             LegacyAliases["high_tier_military_ammo_box"] = "ammo_762x51_ap";
             LegacyAliases["556_ammo_can"] = "ammo_556x45_m855a1";
+        }
+
+        /// <summary>
+        /// Adds the three dual-attribute tactical loads for BR / sniper / AV calibers:
+        /// JHP+AP, Explosive+Incendiary (EXI), AP+Incendiary (API). Each carries two attributes.
+        /// Skips ids already present (e.g. when API was authored earlier in the catalog).
+        /// </summary>
+        private static void AddDualTactical(
+            string idPrefix,
+            string namePrefix,
+            string caliberId,
+            string caliberDisplay,
+            WeaponAmmoClass weaponClass,
+            AmmoRarity rarity,
+            float dmg,
+            float range,
+            float weight,
+            int stack,
+            float trade,
+            WeaponAmmoClass[] alsoFits = null)
+        {
+            TryAddDual(idPrefix + "_jhp_ap", namePrefix + " JHP+AP", caliberId, caliberDisplay,
+                weaponClass, rarity, BulletModification.JhpAp,
+                dmg, range, weight, stack, trade,
+                "Dual: hollow-point + armour-piercing. Soft-target dump with plate bite.",
+                alsoFits);
+            TryAddDual(idPrefix + "_exi", namePrefix + " EXI", caliberId, caliberDisplay,
+                weaponClass, rarity, BulletModification.ExplosiveIncendiary,
+                dmg, range * 0.95f, weight * 1.05f, Math.Max(4, stack - 2), trade + 4f,
+                "Dual: explosive + incendiary. Splash crack, burn, and combat light.",
+                alsoFits);
+            TryAddDual(idPrefix + "_api", namePrefix + " API", caliberId, caliberDisplay,
+                weaponClass, rarity, BulletModification.Api,
+                dmg, range, weight * 1.04f, Math.Max(4, stack - 2), trade + 6f,
+                "Dual: armour-piercing + incendiary. Plate defeat with burn DoT.",
+                alsoFits);
+        }
+
+        private static void TryAddDual(
+            string id,
+            string display,
+            string caliberId,
+            string caliberDisplay,
+            WeaponAmmoClass weaponClass,
+            AmmoRarity rarity,
+            BulletModification mod,
+            float dmg,
+            float range,
+            float weight,
+            int stack,
+            float trade,
+            string desc,
+            WeaponAmmoClass[] alsoFits)
+        {
+            if (Catalog.ContainsKey(id)) return;
+            Add(Load(id, display, caliberId, caliberDisplay, weaponClass, rarity, mod,
+                craftable: false, dmg, range, weight, stack, trade, desc,
+                MilitaryRebelExclusives, alsoFits));
         }
 
         private static AmmoLoadDefinition Load(

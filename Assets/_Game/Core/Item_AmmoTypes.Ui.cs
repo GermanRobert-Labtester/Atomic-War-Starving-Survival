@@ -33,11 +33,29 @@ namespace AtomicWar._Game.Core
                 case BulletModification.Fmj: return "FMJ";
                 case BulletModification.Jhp: return "JHP";
                 case BulletModification.Ap: return "AP";
-                case BulletModification.Api: return "API";
+                case BulletModification.Api: return "API (AP+Incendiary)";
                 case BulletModification.M855A1: return "M855A1";
                 case BulletModification.BoatTail: return "Boat-tail";
+                case BulletModification.JhpAp: return "JHP+AP";
+                case BulletModification.ExplosiveIncendiary: return "EXI (Explosive+Incendiary)";
                 default: return mod.ToString();
             }
+        }
+
+        /// <summary>Human-readable dual-attribute list for tooltips.</summary>
+        public static string FormatAttributes(BulletAttributeFlags flags)
+        {
+            if (flags == BulletAttributeFlags.None) return string.Empty;
+            var parts = new List<string>(4);
+            if ((flags & BulletAttributeFlags.HollowPoint) != 0) parts.Add("Hollow-point");
+            if ((flags & BulletAttributeFlags.ArmorPiercing) != 0) parts.Add("Armour-piercing");
+            if ((flags & BulletAttributeFlags.Explosive) != 0) parts.Add("Explosive");
+            if ((flags & BulletAttributeFlags.Incendiary) != 0) parts.Add("Incendiary");
+            if ((flags & BulletAttributeFlags.SoftLead) != 0) parts.Add("Soft lead");
+            if ((flags & BulletAttributeFlags.FullMetalJacket) != 0) parts.Add("FMJ");
+            if ((flags & BulletAttributeFlags.BoatTail) != 0) parts.Add("Boat-tail");
+            if ((flags & BulletAttributeFlags.SteelTip) != 0) parts.Add("Steel-tip");
+            return string.Join(" + ", parts);
         }
 
         /// <summary>
@@ -56,6 +74,13 @@ namespace AtomicWar._Game.Core
             sb.Append(ModificationLabel(load.Modification));
             sb.Append(" · ");
             sb.Append(load.WeaponClass);
+
+            var attrs = GetAttributes(load.Modification);
+            if (IsDualAttributeModification(load.Modification))
+            {
+                sb.Append("\n[DUAL] ");
+                sb.Append(FormatAttributes(attrs));
+            }
 
             if (IsExclusiveToFactions(load.Id) || !load.Craftable)
             {

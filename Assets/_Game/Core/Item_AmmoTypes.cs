@@ -42,7 +42,8 @@ namespace AtomicWar._Game.Core
 
     /// <summary>
     /// Bullet construction / tactical load. Civilian craft uses SoftLead / Fmj / Jhp.
-    /// Military &amp; rebel exclusives use Ap / Api / M855A1 / BoatTail.
+    /// Military &amp; rebel exclusives use Ap / Api / M855A1 / BoatTail and dual-attribute
+    /// battle-rifle / sniper / AV loads (JhpAp, ExplosiveIncendiary, Api).
     /// </summary>
     public enum BulletModification
     {
@@ -54,12 +55,33 @@ namespace AtomicWar._Game.Core
         Jhp = 2,
         /// <summary>Armor-piercing hardened core — non-craftable military/rebel.</summary>
         Ap = 3,
-        /// <summary>Armor-piercing incendiary — AP + burn + area light.</summary>
+        /// <summary>Armor-piercing + incendiary (dual) — AP + burn + area light.</summary>
         Api = 4,
         /// <summary>Steel/tungsten tip + copper slug — soft and hard targets (M855A1 tier).</summary>
         M855A1 = 5,
         /// <summary>Boat-tail aerodynamic profile — long-range accuracy.</summary>
-        BoatTail = 6
+        BoatTail = 6,
+        /// <summary>Hollow-point + armor-piercing (dual) — soft dump and partial plate defeat.</summary>
+        JhpAp = 7,
+        /// <summary>Explosive + incendiary (dual) — splash/barrier crack + burn + light.</summary>
+        ExplosiveIncendiary = 8
+    }
+
+    /// <summary>
+    /// Attribute flags on a load. Dual-attribute military loads always carry two bits.
+    /// </summary>
+    [Flags]
+    public enum BulletAttributeFlags
+    {
+        None = 0,
+        HollowPoint = 1 << 0,
+        ArmorPiercing = 1 << 1,
+        Explosive = 1 << 2,
+        Incendiary = 1 << 3,
+        SoftLead = 1 << 4,
+        FullMetalJacket = 1 << 5,
+        BoatTail = 1 << 6,
+        SteelTip = 1 << 7
     }
 
     /// <summary>Faction sources that can field exclusive military/rebel loads.</summary>
@@ -122,6 +144,10 @@ namespace AtomicWar._Game.Core
         public bool SoftTargetBonusApplied;
         public bool ArmorPenaltyApplied;
         public BulletModification Modification;
+        public BulletAttributeFlags Attributes;
+        public bool IsDualAttribute;
+        public bool HasExplosive;
+        public float ExplosiveSplashFraction;
         public string AmmoItemId;
     }
 
@@ -147,6 +173,16 @@ namespace AtomicWar._Game.Core
         public const float BoatTailRangeMul = 1.35f;
         public const float ApiBurnDps = 4f;
         public const float ApiBurnDurationSeconds = 6f;
+        /// <summary>JHP+AP dual: reduced soft bonus (both attributes present).</summary>
+        public const float JhpApSoftBonus = 0.30f;
+        /// <summary>JHP+AP dual: partial armor ignore (both attributes present).</summary>
+        public const float JhpApArmorIgnore = 0.50f;
+        public const float JhpApBarrierRetain = 0.65f;
+        /// <summary>Explosive+Incendiary dual: splash fraction of final damage (barrier/soft).</summary>
+        public const float ExiExplosiveSplashFraction = 0.35f;
+        public const float ExiBarrierRetain = 0.70f;
+        public const float ExiBurnDps = 5f;
+        public const float ExiBurnDurationSeconds = 5f;
 
         public event Action<string, AmmoType, float> OnDamageModified;
         public event Action<string, AmmoHitResult> OnAmmoHitResolved;
@@ -236,6 +272,62 @@ namespace AtomicWar._Game.Core
             return false;
         }
 
+        /// <summary>Attribute flags for a modification (dual loads always return two bits).</summary>
+        public static BulletAttributeFlags GetAttributes(BulletModification mod)
+        {
+            switch (mod)
+            {
+                case BulletModification.SoftLead:
+                    return BulletAttributeFlags.SoftLead;
+                case BulletModification.Fmj:
+                    return BulletAttributeFlags.FullMetalJacket;
+                case BulletModification.Jhp:
+                    return BulletAttributeFlags.HollowPoint;
+                case BulletModification.Ap:
+                    return BulletAttributeFlags.ArmorPiercing;
+                case BulletModification.Api:
+                    return BulletAttributeFlags.ArmorPiercing | BulletAttributeFlags.Incendiary;
+                case BulletModification.M855A1:
+                    return BulletAttributeFlags.SteelTip | BulletAttributeFlags.ArmorPiercing;
+                case BulletModification.BoatTail:
+                    return BulletAttributeFlags.BoatTail;
+                case BulletModification.JhpAp:
+                    return BulletAttributeFlags.HollowPoint | BulletAttributeFlags.ArmorPiercing;
+                case BulletModification.ExplosiveIncendiary:
+                    return BulletAttributeFlags.Explosive | BulletAttributeFlags.Incendiary;
+                default:
+                    return BulletAttributeFlags.None;
+            }
+        }
+
+        public static bool IsDualAttributeModification(BulletModification mod)
+        {
+            return mod == BulletModification.JhpAp
+                || mod == BulletModification.ExplosiveIncendiary
+                || mod == BulletModification.Api;
+        }
+
+        public static int CountAttributes(BulletAttributeFlags flags)
+        {
+            int n = 0;
+            int v = (int)flags;
+            while (v != 0)
+            {
+                n += v & 1;
+                v >>= 1;
+            }
+            return n;
+        }
+
+        /// <summary>
+        /// True for battle-rifle / sniper / anti-materiel dual-attribute military loads
+        /// (JHP+AP, Explosive+Incendiary, AP+Incendiary).
+        /// </summary>
+        public static bool IsDualAttributeTacticalLoad(string itemId)
+        {
+            return TryGetLoad(itemId, out var load) && IsDualAttributeModification(load.Modification);
+        }
+
         public static IReadOnlyList<AmmoLoadDefinition> GetLoadsForClass(WeaponAmmoClass weaponClass)
         {
             EnsureCatalog();
@@ -286,6 +378,8 @@ namespace AtomicWar._Game.Core
             }
 
             result.Modification = load.Modification;
+            result.Attributes = GetAttributes(load.Modification);
+            result.IsDualAttribute = IsDualAttributeModification(load.Modification);
             result.EffectiveRangeMeters = GetEffectiveRange(load);
 
             float mul = 1f;
@@ -315,10 +409,33 @@ namespace AtomicWar._Game.Core
                     break;
 
                 case BulletModification.Api:
+                    // Dual: armour-piercing + incendiary.
                     armorIgnore = ApArmorIgnore;
                     barrierRetain = ApiBarrierRetain;
                     result.BurnDamagePerSecond = ApiBurnDps;
                     result.BurnDurationSeconds = ApiBurnDurationSeconds;
+                    result.LightsArea = true;
+                    break;
+
+                case BulletModification.JhpAp:
+                    // Dual: hollow-point + armour-piercing (both always apply).
+                    if (!armored)
+                    {
+                        mul += JhpApSoftBonus;
+                        result.SoftTargetBonusApplied = true;
+                    }
+                    armorIgnore = JhpApArmorIgnore;
+                    barrierRetain = JhpApBarrierRetain;
+                    break;
+
+                case BulletModification.ExplosiveIncendiary:
+                    // Dual: explosive splash + incendiary burn/light.
+                    result.HasExplosive = true;
+                    result.ExplosiveSplashFraction = ExiExplosiveSplashFraction;
+                    mul += ExiExplosiveSplashFraction;
+                    barrierRetain = ExiBarrierRetain;
+                    result.BurnDamagePerSecond = ExiBurnDps;
+                    result.BurnDurationSeconds = ExiBurnDurationSeconds;
                     result.LightsArea = true;
                     break;
 
