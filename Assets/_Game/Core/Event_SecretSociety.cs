@@ -48,7 +48,14 @@ namespace AtomicWar._Game.Core
 
         public SecretSocietyState CaptureState() => _state;
 
-        public void RestoreState(SecretSocietyState state) => _state = state;
+        public void RestoreState(SecretSocietyState state)
+        {
+            _state = state ?? new SecretSocietyState();
+            if (_state.cliques == null)
+                _state.cliques = new List<SecretClique>();
+            if (_state.sabotageEvents == null)
+                _state.sabotageEvents = new List<SabotageRecord>();
+        }
 
         /// <summary>
         /// Scans the affinity matrix for groups of 3+ with mutual affinity > 0.7.

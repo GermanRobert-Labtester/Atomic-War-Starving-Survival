@@ -155,12 +155,14 @@ namespace AtomicWar._Game.Core
             if (saved == null) return;
 
             _evilChoiceCount = saved.evilChoiceCount;
+            if (saved.strikerIds == null) return;
 
             for (int i = 0; i < saved.strikerIds.Count; i++)
             {
                 string id = saved.strikerIds[i];
                 _strikerIds.Add(id);
-                int days = (i < saved.strikerDaysWithoutFood.Count) ? saved.strikerDaysWithoutFood[i] : 0;
+                int days = (saved.strikerDaysWithoutFood != null && i < saved.strikerDaysWithoutFood.Count)
+                    ? saved.strikerDaysWithoutFood[i] : 0;
                 _daysWithoutFood[id] = days;
             }
         }

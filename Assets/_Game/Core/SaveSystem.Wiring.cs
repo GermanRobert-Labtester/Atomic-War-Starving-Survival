@@ -941,6 +941,78 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _shelterModuleWasteChute, s, "shelter_module_waste_chute",
                 () => s.CaptureState(), o => s.RestoreState((WasteChuteState)o));
 
+        public void SetEventBrawl(Event_Brawl s) =>
+            RegisterSystem(ref _eventBrawl, s, "event_brawl",
+                () => s.CaptureState(), o => s.RestoreState((BrawlState)o));
+
+        public void SetEventComingOfAge(Event_ComingOfAge s) =>
+            RegisterSystem(ref _eventComingOfAge, s, "event_coming_of_age",
+                () => s.CaptureState(), o => s.RestoreState((ComingOfAgeState)o));
+
+        public void SetEventCultBlessing(Event_CultBlessing s) =>
+            RegisterSystem(ref _eventCultBlessing, s, "event_cult_blessing",
+                () => s.CaptureState(), o => s.RestoreState((CultBlessingState)o));
+
+        public void SetEventCultInitiation(Event_CultInitiation s) =>
+            RegisterSystem(ref _eventCultInitiation, s, "event_cult_initiation",
+                () => s.CaptureState(), o => s.RestoreState((CultInitiationState)o));
+
+        public void SetEventCultOfAi(Event_CultOfAI s) =>
+            RegisterSystem(ref _eventCultOfAi, s, "event_cult_of_ai",
+                () => s.CaptureState(), o => s.RestoreState((CultOfAISave)o));
+
+        public void SetEventEmpCascade(Event_EMPCascade s) =>
+            RegisterSystem(ref _eventEmpCascade, s, "event_emp_cascade",
+                () => s.CaptureState(), o => s.RestoreState((EMPCascadeState)o));
+
+        public void SetEventFeralRescue(Event_FeralRescue s) =>
+            RegisterSystem(ref _eventFeralRescue, s, "event_feral_rescue",
+                () => s.CaptureState(), o => s.RestoreState((FeralRescueState)o));
+
+        public void SetEventFoundDiary(Event_FoundDiary s) =>
+            RegisterSystem(ref _eventFoundDiary, s, "event_found_diary",
+                () => s.CaptureState(), o => s.RestoreState((FoundDiaryState)o));
+
+        public void SetEventGriefCascade(Event_GriefCascade s) =>
+            RegisterSystem(ref _eventGriefCascade, s, "event_grief_cascade",
+                () => s.CaptureState(), o => s.RestoreState((GriefCascadeState)o));
+
+        public void SetEventHungerStrike(Event_HungerStrike s) =>
+            RegisterSystem(ref _eventHungerStrike, s, "event_hunger_strike",
+                () => s.CaptureState(), o => s.RestoreState((HungerStrikeState)o));
+
+        public void SetEventNodeCollapse(Event_NodeCollapse s) =>
+            RegisterSystem(ref _eventNodeCollapse, s, "event_node_collapse",
+                () => s.CaptureState(), o => s.RestoreState((NodeCollapseState)o));
+
+        public void SetEventRansomNote(Event_RansomNote s) =>
+            RegisterSystem(ref _eventRansomNote, s, "event_ransom_note",
+                () => s.CaptureState(), o => s.RestoreState((RansomNoteState)o));
+
+        public void SetEventSchism(Event_Schism s) =>
+            RegisterSystem(ref _eventSchism, s, "event_schism",
+                () => s.CaptureState(), o => s.RestoreState((SchismState)o));
+
+        public void SetEventSecretSociety(Event_SecretSociety s) =>
+            RegisterSystem(ref _eventSecretSociety, s, "event_secret_society",
+                () => s.CaptureState(), o => s.RestoreState((SecretSocietyState)o));
+
+        public void SetEventSiblingFeud(Event_SiblingFeud s) =>
+            RegisterSystem(ref _eventSiblingFeud, s, "event_sibling_feud",
+                () => s.CaptureState(), o => s.RestoreState((SiblingFeudState)o));
+
+        public void SetEventSpontaneousMurder(Event_SpontaneousMurder s) =>
+            RegisterSystem(ref _eventSpontaneousMurder, s, "event_spontaneous_murder",
+                () => s.CaptureState(), o => s.RestoreState((SpontaneousMurderState)o));
+
+        public void SetEventTeenRebellion(Event_TeenRebellion s) =>
+            RegisterSystem(ref _eventTeenRebellion, s, "event_teen_rebellion",
+                () => s.CaptureState(), o => s.RestoreState((TeenRebellionState)o));
+
+        public void SetEventWitchHunt(Event_WitchHunt s) =>
+            RegisterSystem(ref _eventWitchHunt, s, "event_witch_hunt",
+                () => s.CaptureState(), o => s.RestoreState((WitchHuntState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

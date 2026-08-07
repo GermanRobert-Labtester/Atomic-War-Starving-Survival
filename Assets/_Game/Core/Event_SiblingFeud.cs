@@ -55,6 +55,7 @@ namespace AtomicWar._Game.Core
 
         public void RestoreState(SiblingFeudState state)
         {
+            if (state == null) return;
             _state.eventId = state.eventId;
             _state.jealousyAffinityDrain = state.jealousyAffinityDrain;
         }

@@ -111,6 +111,8 @@ namespace AtomicWar._Game.Core
             BootEncounters();
             // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).
             BootShelterModules();
+            // Narrative Event_* with CaptureState (brawl / schism / witch hunt / …).
+            BootEvents();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

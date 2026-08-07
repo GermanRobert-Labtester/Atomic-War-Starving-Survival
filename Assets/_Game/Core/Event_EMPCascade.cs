@@ -114,10 +114,14 @@ namespace AtomicWar._Game.Core
             _friedDeviceIds.Clear();
             if (saved == null) return;
             _isActive = saved.isActive;
-            _crushedSurvivorIds.AddRange(saved.crushedSurvivorIds);
-            _amputatedPatientIds.AddRange(saved.amputatedPatientIds);
-            _amputatedLimbIds.AddRange(saved.amputatedLimbIds);
-            _friedDeviceIds.AddRange(saved.friedDeviceIds);
+            if (saved.crushedSurvivorIds != null)
+                _crushedSurvivorIds.AddRange(saved.crushedSurvivorIds);
+            if (saved.amputatedPatientIds != null)
+                _amputatedPatientIds.AddRange(saved.amputatedPatientIds);
+            if (saved.amputatedLimbIds != null)
+                _amputatedLimbIds.AddRange(saved.amputatedLimbIds);
+            if (saved.friedDeviceIds != null)
+                _friedDeviceIds.AddRange(saved.friedDeviceIds);
         }
     }
 }

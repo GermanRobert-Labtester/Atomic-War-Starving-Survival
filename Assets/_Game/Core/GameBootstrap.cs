@@ -334,6 +334,25 @@ namespace AtomicWar._Game.Core
         public ShelterModule_Sorter ShelterModuleSorter { get; private set; }
         public ShelterModule_Thermostat ShelterModuleThermostat { get; private set; }
         public ShelterModule_WasteChute ShelterModuleWasteChute { get; private set; }
+        // Narrative Event_* systems with CaptureState (18) — remaining events pending CR pass.
+        public Event_Brawl EventBrawl { get; private set; }
+        public Event_ComingOfAge EventComingOfAge { get; private set; }
+        public Event_CultBlessing EventCultBlessing { get; private set; }
+        public Event_CultInitiation EventCultInitiation { get; private set; }
+        public Event_CultOfAI EventCultOfAi { get; private set; }
+        public Event_EMPCascade EventEmpCascade { get; private set; }
+        public Event_FeralRescue EventFeralRescue { get; private set; }
+        public Event_FoundDiary EventFoundDiary { get; private set; }
+        public Event_GriefCascade EventGriefCascade { get; private set; }
+        public Event_HungerStrike EventHungerStrike { get; private set; }
+        public Event_NodeCollapse EventNodeCollapse { get; private set; }
+        public Event_RansomNote EventRansomNote { get; private set; }
+        public Event_Schism EventSchism { get; private set; }
+        public Event_SecretSociety EventSecretSociety { get; private set; }
+        public Event_SiblingFeud EventSiblingFeud { get; private set; }
+        public Event_SpontaneousMurder EventSpontaneousMurder { get; private set; }
+        public Event_TeenRebellion EventTeenRebellion { get; private set; }
+        public Event_WitchHunt EventWitchHunt { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

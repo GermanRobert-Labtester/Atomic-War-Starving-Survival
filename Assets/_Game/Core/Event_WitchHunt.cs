@@ -40,7 +40,14 @@ namespace AtomicWar._Game.Core
 
         public WitchHuntState CaptureState() => _state;
 
-        public void RestoreState(WitchHuntState state) => _state = state;
+        public void RestoreState(WitchHuntState state)
+        {
+            _state = state ?? new WitchHuntState();
+            if (_state.accuserIds == null)
+                _state.accuserIds = new List<string>();
+            if (_state.badLuckLog == null)
+                _state.badLuckLog = new List<string>();
+        }
 
         /// <summary>
         /// Records a bad luck event. Call after each negative event in the bunker.

@@ -71,6 +71,7 @@ namespace AtomicWar._Game.Core
 
         public void RestoreState(FeralRescueState state)
         {
+            if (state == null) return;
             _state.eventId = state.eventId;
             _state.socializationDaysRequired = state.socializationDaysRequired;
             _state.daysElapsed = state.daysElapsed;

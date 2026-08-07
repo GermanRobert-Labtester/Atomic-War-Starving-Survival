@@ -39,7 +39,12 @@ namespace AtomicWar._Game.Core
 
         public GriefCascadeState CaptureState() => _state;
 
-        public void RestoreState(GriefCascadeState state) => _state = state;
+        public void RestoreState(GriefCascadeState state)
+        {
+            _state = state ?? new GriefCascadeState();
+            if (_state.deathChain == null)
+                _state.deathChain = new List<string>();
+        }
 
         /// <summary>
         /// Called when a beloved survivor dies. Evaluates whether a grief cascade triggers.

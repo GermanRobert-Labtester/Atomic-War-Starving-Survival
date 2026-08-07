@@ -34,7 +34,7 @@ namespace AtomicWar._Game.Core
 
         public SpontaneousMurderState CaptureState() => _state;
 
-        public void RestoreState(SpontaneousMurderState state) => _state = state;
+        public void RestoreState(SpontaneousMurderState state) => _state = state ?? new SpontaneousMurderState();
 
         /// <summary>
         /// Called daily for each survivor. Tracks consecutive days at max

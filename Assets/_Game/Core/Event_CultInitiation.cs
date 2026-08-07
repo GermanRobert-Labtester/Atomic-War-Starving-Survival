@@ -39,7 +39,7 @@ namespace AtomicWar._Game.Core
 
         public CultInitiationState CaptureState() => _state;
 
-        public void RestoreState(CultInitiationState state) => _state = state;
+        public void RestoreState(CultInitiationState state) => _state = state ?? new CultInitiationState();
 
         /// <summary>
         /// Begins an initiation of the given type ("fast" or "storm").
