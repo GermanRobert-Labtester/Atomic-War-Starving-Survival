@@ -367,7 +367,9 @@ namespace AtomicWar._Game.Shelter
         public static bool IsAmmoId(string id)
         {
             if (string.IsNullOrEmpty(id)) return false;
+            // Structured caliber loads use ammo_<caliber>_<mod> (e.g. ammo_9x19_jhp).
             return id == "handgun_ammo" || id == "shotgun_shells"
+                || id.StartsWith("ammo_", StringComparison.Ordinal)
                 || id.EndsWith("_ammo", StringComparison.Ordinal)
                 || id.EndsWith("_shells", StringComparison.Ordinal);
         }

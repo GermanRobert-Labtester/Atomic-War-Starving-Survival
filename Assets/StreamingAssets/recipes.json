@@ -1,55 +1,1401 @@
 [
-  { "id": "craft_bandage", "resultItemId": "sterile_bandage", "resultAmount": 1, "requiredStation": "herbalistTable", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "cloth_rags", "amount": 2 }], "unlockedBy": "default", "description": "Combine clean rags into sterile bandages." },
-  { "id": "craft_herbal_salve", "resultItemId": "herbal_tincture", "resultAmount": 1, "requiredStation": "herbalistTable", "craftTimeSeconds": 30, "ingredients": [{ "itemId": "cloth_rags", "amount": 1 }, { "itemId": "chemical_reagents", "amount": 1 }], "unlockedBy": "herbalist_tier_1", "description": "Brew crude antiseptic salve." },
-  { "id": "craft_antibiotics_refine", "resultItemId": "antibiotics", "resultAmount": 1, "requiredStation": "herbalistTable", "craftTimeSeconds": 60, "ingredients": [{ "itemId": "chemical_reagents", "amount": 3 }, { "itemId": "charcoal_filter", "amount": 1 }], "unlockedBy": "herbalist_tier_2", "description": "Synthesize crude antibiotics from chemical precursors." },
-  { "id": "craft_painkillers", "resultItemId": "painkillers", "resultAmount": 1, "requiredStation": "herbalistTable", "craftTimeSeconds": 45, "ingredients": [{ "itemId": "chemical_reagents", "amount": 2 }, { "itemId": "herbal_tincture", "amount": 1 }], "unlockedBy": "herbalist_tier_2", "description": "Extract analgesic compounds for trauma treatment." },
-  { "id": "cook_hot_soup", "resultItemId": "cooked_soup", "resultAmount": 1, "requiredStation": "stove", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "raw_vegetables", "amount": 2 }, { "itemId": "clean_water_bottle", "amount": 1 }, { "itemId": "wood_plank", "amount": 1 }], "unlockedBy": "default", "description": "Cook a nourishing pot of vegetable soup." },
-  { "id": "distill_water", "resultItemId": "clean_water_bottle", "resultAmount": 2, "requiredStation": "stove", "craftTimeSeconds": 25, "ingredients": [{ "itemId": "charcoal_filter", "amount": 1 }, { "itemId": "combustible_fuel", "amount": 1 }], "unlockedBy": "default", "description": "Boil and filter irradiated groundwater into potable water." },
-  { "id": "brew_coffee", "resultItemId": "coffee_beans", "resultAmount": 2, "requiredStation": "stove", "craftTimeSeconds": 10, "ingredients": [{ "itemId": "clean_water_bottle", "amount": 1 }, { "itemId": "wood_plank", "amount": 1 }], "unlockedBy": "default", "description": "Brew warm coffee for a morale boost." },
-  { "id": "distill_moonshine", "resultItemId": "moonshine_liquor", "resultAmount": 1, "requiredStation": "stove", "craftTimeSeconds": 50, "ingredients": [{ "itemId": "raw_vegetables", "amount": 4 }, { "itemId": "clean_water_bottle", "amount": 2 }, { "itemId": "combustible_fuel", "amount": 1 }], "unlockedBy": "stove_tier_2", "description": "Distill high-proof moonshine alcohol for sterilization and trade." },
-  { "id": "craft_crowbar", "resultItemId": "improvised_crowbar", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 30, "ingredients": [{ "itemId": "scrap_metal", "amount": 4 }], "unlockedBy": "default", "description": "Forge a heavy steel pry bar." },
-  { "id": "craft_lockpicks", "resultItemId": "lockpick_set", "resultAmount": 2, "requiredStation": "workbench", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "scrap_metal", "amount": 1 }, { "itemId": "copper_wire", "amount": 1 }], "unlockedBy": "default", "description": "Bend fine wire into lockpicks." },
-  { "id": "craft_knife", "resultItemId": "trench_knife", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 25, "ingredients": [{ "itemId": "scrap_metal", "amount": 3 }, { "itemId": "cloth_rags", "amount": 1 }], "unlockedBy": "workbench_tier_1", "description": "Grind scrap steel into a trench knife." },
-  { "id": "craft_pipe_shotgun", "resultItemId": "pipe_shotgun", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 60, "ingredients": [{ "itemId": "scrap_metal", "amount": 6 }, { "itemId": "mechanical_components", "amount": 2 }, { "itemId": "wood_plank", "amount": 2 }], "unlockedBy": "workbench_tier_2", "description": "Assemble a single-shot pipe firearm." },
-  { "id": "craft_shotgun_ammo", "resultItemId": "shotgun_shells", "resultAmount": 4, "requiredStation": "workbench", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "gunpowder_grain", "amount": 4 }, { "itemId": "scrap_metal", "amount": 2 }], "unlockedBy": "workbench_tier_2", "description": "Pack gunpowder and lead pellets into shotgun casings." },
-  { "id": "craft_handgun_ammo", "resultItemId": "handgun_ammo", "resultAmount": 6, "requiredStation": "workbench", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "gunpowder_grain", "amount": 3 }, { "itemId": "copper_wire", "amount": 2 }], "unlockedBy": "workbench_tier_2", "description": "Press brass casings and bullets." },
-  { "id": "craft_gas_mask", "resultItemId": "gas_mask", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 40, "ingredients": [{ "itemId": "cloth_rags", "amount": 4 }, { "itemId": "charcoal_filter", "amount": 2 }, { "itemId": "copper_wire", "amount": 1 }], "unlockedBy": "workbench_tier_1", "description": "Craft a civil defense respirator mask." },
-  { "id": "craft_air_filter", "resultItemId": "replacement_filter", "resultAmount": 2, "requiredStation": "workbench", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "charcoal_filter", "amount": 2 }, { "itemId": "cloth_rags", "amount": 2 }], "unlockedBy": "default", "description": "Replace gas mask filter cartridges." },
-  { "id": "craft_charcoal", "resultItemId": "charcoal_filter", "resultAmount": 2, "requiredStation": "stove", "craftTimeSeconds": 10, "ingredients": [{ "itemId": "wood_plank", "amount": 2 }], "unlockedBy": "default", "description": "Burn wood in low oxygen to produce activated charcoal." },
-  { "id": "craft_kevlar_vest", "resultItemId": "kevlar_vest", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 50, "ingredients": [{ "itemId": "cloth_rags", "amount": 8 }, { "itemId": "scrap_metal", "amount": 4 }], "unlockedBy": "workbench_tier_2", "description": "Sew padded plate armor for scavengers." },
-  { "id": "craft_cigarettes", "resultItemId": "roll_up_cigarettes", "resultAmount": 4, "requiredStation": "workbench", "craftTimeSeconds": 10, "ingredients": [{ "itemId": "tobacco_pouch", "amount": 1 }, { "itemId": "cloth_rags", "amount": 1 }], "unlockedBy": "default", "description": "Roll tobacco into cigarettes." },
-  { "id": "craft_mattress", "resultItemId": "armchair_cushion", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 30, "ingredients": [{ "itemId": "cloth_rags", "amount": 6 }, { "itemId": "wood_plank", "amount": 2 }], "unlockedBy": "workbench_tier_1", "description": "Build a cushioned shelter bed." },
-  { "id": "craft_guitar_strings", "resultItemId": "guitar_strings", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "copper_wire", "amount": 3 }], "unlockedBy": "workbench_tier_1", "description": "Twist copper wire into musical strings." },
-  { "id": "build_small_trap", "resultItemId": "raw_vegetables", "resultAmount": 2, "requiredStation": "trapBench", "craftTimeSeconds": 40, "ingredients": [{ "itemId": "mechanical_components", "amount": 1 }, { "itemId": "dry_rations", "amount": 1 }], "unlockedBy": "default", "description": "Set a small animal snare for urban rodents." },
-  { "id": "build_bird_trap", "resultItemId": "raw_vegetables", "resultAmount": 3, "requiredStation": "trapBench", "craftTimeSeconds": 60, "ingredients": [{ "itemId": "mechanical_components", "amount": 2 }, { "itemId": "copper_wire", "amount": 2 }], "unlockedBy": "trapBench_tier_1", "description": "Set a rooftop net snare for wild birds." },
-  { "id": "craft_fuel_canister", "resultItemId": "combustible_fuel", "resultAmount": 1, "requiredStation": "stove", "craftTimeSeconds": 30, "ingredients": [{ "itemId": "moonshine_liquor", "amount": 2 }, { "itemId": "chemical_reagents", "amount": 1 }], "unlockedBy": "stove_tier_2", "description": "Refine alcohol into lamp kerosene." },
-  { "id": "craft_radio_tuning", "resultItemId": "radio_vacuum_tube", "resultAmount": 1, "requiredStation": "radioDesk", "craftTimeSeconds": 45, "ingredients": [{ "itemId": "electronic_parts", "amount": 3 }, { "itemId": "copper_wire", "amount": 2 }], "unlockedBy": "default", "description": "Calibrate and repair radio vacuum tubes." },
-  { "id": "craft_battery", "resultItemId": "battery_pack", "resultAmount": 1, "requiredStation": "radioDesk", "craftTimeSeconds": 35, "ingredients": [{ "itemId": "chemical_reagents", "amount": 2 }, { "itemId": "scrap_metal", "amount": 2 }], "unlockedBy": "radioDesk_tier_1", "description": "Refill lead-acid battery cells." },
-  { "id": "purify_iodine_tabs", "resultItemId": "rad_purification_tablets", "resultAmount": 4, "requiredStation": "herbalistTable", "craftTimeSeconds": 25, "ingredients": [{ "itemId": "chemical_reagents", "amount": 2 }], "unlockedBy": "herbalist_tier_1", "description": "Press iodine water purification tablets." },
-  { "id": "repair_revolver", "resultItemId": "revolver", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 45, "ingredients": [{ "itemId": "mechanical_components", "amount": 3 }, { "itemId": "scrap_metal", "amount": 2 }], "unlockedBy": "workbench_tier_2", "description": "Clean and restore a rusted handgun." },
-  { "id": "craft_barricade", "resultItemId": "wood_plank", "resultAmount": 3, "requiredStation": "workbench", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "scrap_metal", "amount": 2 }], "unlockedBy": "default", "description": "Reinforce wooden planks with iron braces for defense." },
-  { "id": "craft_gunpowder", "resultItemId": "gunpowder_grain", "resultAmount": 10, "requiredStation": "herbalistTable", "craftTimeSeconds": 30, "ingredients": [{ "itemId": "chemical_reagents", "amount": 2 }, { "itemId": "charcoal_filter", "amount": 1 }], "unlockedBy": "herbalist_tier_2", "description": "Mix sulfur, saltpeter, and charcoal into gunpowder." },
-  { "id": "craft_warm_coat", "resultItemId": "cloth_rags", "resultAmount": 5, "requiredStation": "workbench", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "cloth_rags", "amount": 5 }], "unlockedBy": "default", "description": "Stitch multi-layered winter insulation." },
-  { "id": "cook_dry_biscuits", "resultItemId": "dry_rations", "resultAmount": 4, "requiredStation": "stove", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "raw_vegetables", "amount": 2 }], "unlockedBy": "default", "description": "Bake dry vegetable crackers for long storage." },
-  { "id": "craft_trap_gears", "resultItemId": "mechanical_components", "resultAmount": 2, "requiredStation": "trapBench", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "scrap_metal", "amount": 3 }], "unlockedBy": "default", "description": "File scrap metal into trap gears and springs." },
-  { "id": "craft_copper_spool", "resultItemId": "copper_wire", "resultAmount": 5, "requiredStation": "workbench", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "electronic_parts", "amount": 2 }], "unlockedBy": "default", "description": "Strip discarded electronics for copper wire." },
-  { "id": "craft_emergency_light", "resultItemId": "battery_pack", "resultAmount": 1, "requiredStation": "radioDesk", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "electronic_parts", "amount": 1 }, { "itemId": "copper_wire", "amount": 2 }], "unlockedBy": "default", "description": "Wire an emergency LED shelter lamp." },
-  { "id": "craft_filter_mesh", "resultItemId": "charcoal_filter", "resultAmount": 3, "requiredStation": "workbench", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "cloth_rags", "amount": 2 }, { "itemId": "wood_plank", "amount": 1 }], "unlockedBy": "default", "description": "Weave cloth mesh for water carbon filtration." },
-  { "id": "craft_stretcher", "resultItemId": "armchair_cushion", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 25, "ingredients": [{ "itemId": "wood_plank", "amount": 4 }, { "itemId": "cloth_rags", "amount": 4 }], "unlockedBy": "default", "description": "Build a medical bed for sick survivors." },
-  { "id": "craft_herbal_tea", "resultItemId": "coffee_beans", "resultAmount": 1, "requiredStation": "stove", "craftTimeSeconds": 10, "ingredients": [{ "itemId": "clean_water_bottle", "amount": 1 }], "unlockedBy": "default", "description": "Brew soothing pine-needle tea for morale." },
-  { "id": "refine_solvent", "resultItemId": "chemical_reagents", "resultAmount": 2, "requiredStation": "herbalistTable", "craftTimeSeconds": 35, "ingredients": [{ "itemId": "moonshine_liquor", "amount": 1 }], "unlockedBy": "herbalist_tier_1", "description": "Purify moonshine into chemical solvent." },
-  { "id": "craft_trench_shield", "resultItemId": "kevlar_vest", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 45, "ingredients": [{ "itemId": "scrap_metal", "amount": 6 }, { "itemId": "wood_plank", "amount": 2 }], "unlockedBy": "workbench_tier_2", "description": "Construct a heavy metal door shield." },
-  { "id": "craft_signal_flare", "resultItemId": "gunpowder_grain", "resultAmount": 5, "requiredStation": "workbench", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "chemical_reagents", "amount": 1 }], "unlockedBy": "workbench_tier_1", "description": "Mix chemical compounds into signal flare powder." },
-  { "id": "repair_gas_mask_lens", "resultItemId": "gas_mask", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 25, "ingredients": [{ "itemId": "electronic_parts", "amount": 1 }, { "itemId": "cloth_rags", "amount": 2 }], "unlockedBy": "default", "description": "Seal cracked gas mask lenses." },
-  { "id": "craft_rat_bait", "resultItemId": "dry_rations", "resultAmount": 2, "requiredStation": "trapBench", "craftTimeSeconds": 10, "ingredients": [{ "itemId": "raw_vegetables", "amount": 1 }], "unlockedBy": "default", "description": "Prepare bait for rodent traps." },
-  { "id": "craft_radio_antenna", "resultItemId": "electronic_parts", "resultAmount": 3, "requiredStation": "radioDesk", "craftTimeSeconds": 20, "ingredients": [{ "itemId": "copper_wire", "amount": 4 }], "unlockedBy": "default", "description": "Construct an outdoor radio dipole antenna." },
-  { "id": "craft_boiler_seal", "resultItemId": "mechanical_components", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "cloth_rags", "amount": 2 }, { "itemId": "chemical_reagents", "amount": 1 }], "unlockedBy": "default", "description": "Make high-temperature rubber gaskets for stove boilers." },
-  { "id": "craft_shelter_door_lock", "resultItemId": "lockpick_set", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 25, "ingredients": [{ "itemId": "mechanical_components", "amount": 1 }, { "itemId": "scrap_metal", "amount": 2 }], "unlockedBy": "workbench_tier_1", "description": "Assemble a deadbolt lock for shelter security." },
-  { "id": "install_reinforced_locks", "resultItemId": "scrap_metal", "resultAmount": 0, "requiredStation": "workbench", "craftTimeSeconds": 40, "ingredients": [{ "itemId": "scrap_metal", "amount": 4 }, { "itemId": "mechanical_components", "amount": 2 }], "unlockedBy": "workbench_tier_1", "description": "Bolt reinforced locks onto the hatch (install via hatch defense)." },
-  { "id": "install_blast_door", "resultItemId": "scrap_metal", "resultAmount": 0, "requiredStation": "workbench", "craftTimeSeconds": 90, "ingredients": [{ "itemId": "scrap_metal", "amount": 8 }, { "itemId": "mechanical_components", "amount": 3 }, { "itemId": "wood_plank", "amount": 2 }], "unlockedBy": "workbench_tier_2", "description": "Fabricate a blast-rated hatch plate (install via hatch defense)." },
-  { "id": "install_hatch_traps", "resultItemId": "scrap_metal", "resultAmount": 0, "requiredStation": "workbench", "craftTimeSeconds": 50, "ingredients": [{ "itemId": "scrap_metal", "amount": 3 }, { "itemId": "mechanical_components", "amount": 3 }, { "itemId": "copper_wire", "amount": 2 }], "unlockedBy": "workbench_tier_1", "description": "Wire spike plates and noise alarms on the entry (install via hatch defense)." },
-  { "id": "craft_medical_splint", "resultItemId": "sterile_bandage", "resultAmount": 1, "requiredStation": "herbalistTable", "craftTimeSeconds": 15, "ingredients": [{ "itemId": "wood_plank", "amount": 1 }, { "itemId": "cloth_rags", "amount": 2 }], "unlockedBy": "default", "description": "Bind wooden splints with cloth for bone fractures." },
-  { "id": "craft_salvage_scrap", "resultItemId": "scrap_metal", "resultAmount": 5, "requiredStation": "workbench", "craftTimeSeconds": 10, "ingredients": [{ "itemId": "mechanical_components", "amount": 1 }], "unlockedBy": "default", "description": "Break broken mechanical parts into raw scrap metal." },
-  { "id": "craft_fumigation_bomb", "resultItemId": "chemical_reagents", "resultAmount": 1, "requiredStation": "herbalistTable", "craftTimeSeconds": 30, "ingredients": [{ "itemId": "charcoal_filter", "amount": 2 }, { "itemId": "gunpowder_grain", "amount": 2 }], "unlockedBy": "herbalist_tier_2", "description": "Mix sulfur smoke bombs to clear mold from cellars." },
-  { "id": "craft_comfort_chair", "resultItemId": "armchair_cushion", "resultAmount": 1, "requiredStation": "workbench", "craftTimeSeconds": 35, "ingredients": [{ "itemId": "wood_plank", "amount": 5 }, { "itemId": "cloth_rags", "amount": 3 }], "unlockedBy": "workbench_tier_1", "description": "Craft a wooden armchair to help survivors rest." }
+  {
+    "id": "craft_bandage",
+    "resultItemId": "sterile_bandage",
+    "resultAmount": 1,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Combine clean rags into sterile bandages."
+  },
+  {
+    "id": "craft_herbal_salve",
+    "resultItemId": "herbal_tincture",
+    "resultAmount": 1,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 30,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 1
+      },
+      {
+        "itemId": "chemical_reagents",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "herbalist_tier_1",
+    "description": "Brew crude antiseptic salve."
+  },
+  {
+    "id": "craft_antibiotics_refine",
+    "resultItemId": "antibiotics",
+    "resultAmount": 1,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 60,
+    "ingredients": [
+      {
+        "itemId": "chemical_reagents",
+        "amount": 3
+      },
+      {
+        "itemId": "charcoal_filter",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "herbalist_tier_2",
+    "description": "Synthesize crude antibiotics from chemical precursors."
+  },
+  {
+    "id": "craft_painkillers",
+    "resultItemId": "painkillers",
+    "resultAmount": 1,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 45,
+    "ingredients": [
+      {
+        "itemId": "chemical_reagents",
+        "amount": 2
+      },
+      {
+        "itemId": "herbal_tincture",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "herbalist_tier_2",
+    "description": "Extract analgesic compounds for trauma treatment."
+  },
+  {
+    "id": "cook_hot_soup",
+    "resultItemId": "cooked_soup",
+    "resultAmount": 1,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "raw_vegetables",
+        "amount": 2
+      },
+      {
+        "itemId": "clean_water_bottle",
+        "amount": 1
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Cook a nourishing pot of vegetable soup."
+  },
+  {
+    "id": "distill_water",
+    "resultItemId": "clean_water_bottle",
+    "resultAmount": 2,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "charcoal_filter",
+        "amount": 1
+      },
+      {
+        "itemId": "combustible_fuel",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Boil and filter irradiated groundwater into potable water."
+  },
+  {
+    "id": "brew_coffee",
+    "resultItemId": "coffee_beans",
+    "resultAmount": 2,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 10,
+    "ingredients": [
+      {
+        "itemId": "clean_water_bottle",
+        "amount": 1
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Brew warm coffee for a morale boost."
+  },
+  {
+    "id": "distill_moonshine",
+    "resultItemId": "moonshine_liquor",
+    "resultAmount": 1,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 50,
+    "ingredients": [
+      {
+        "itemId": "raw_vegetables",
+        "amount": 4
+      },
+      {
+        "itemId": "clean_water_bottle",
+        "amount": 2
+      },
+      {
+        "itemId": "combustible_fuel",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "stove_tier_2",
+    "description": "Distill high-proof moonshine alcohol for sterilization and trade."
+  },
+  {
+    "id": "craft_crowbar",
+    "resultItemId": "improvised_crowbar",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 30,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 4
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Forge a heavy steel pry bar."
+  },
+  {
+    "id": "craft_lockpicks",
+    "resultItemId": "lockpick_set",
+    "resultAmount": 2,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Bend fine wire into lockpicks."
+  },
+  {
+    "id": "craft_knife",
+    "resultItemId": "trench_knife",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Grind scrap steel into a trench knife."
+  },
+  {
+    "id": "craft_pipe_shotgun",
+    "resultItemId": "pipe_shotgun",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 60,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 6
+      },
+      {
+        "itemId": "mechanical_components",
+        "amount": 2
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Assemble a single-shot pipe firearm."
+  },
+  {
+    "id": "craft_shotgun_ammo",
+    "resultItemId": "shotgun_shells",
+    "resultAmount": 4,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 4
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Pack gunpowder and lead pellets into shotgun casings."
+  },
+  {
+    "id": "craft_handgun_ammo",
+    "resultItemId": "handgun_ammo",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Press brass casings and bullets."
+  },
+  {
+    "id": "craft_gas_mask",
+    "resultItemId": "gas_mask",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 40,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 4
+      },
+      {
+        "itemId": "charcoal_filter",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Craft a civil defense respirator mask."
+  },
+  {
+    "id": "craft_air_filter",
+    "resultItemId": "replacement_filter",
+    "resultAmount": 2,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "charcoal_filter",
+        "amount": 2
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Replace gas mask filter cartridges."
+  },
+  {
+    "id": "craft_charcoal",
+    "resultItemId": "charcoal_filter",
+    "resultAmount": 2,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 10,
+    "ingredients": [
+      {
+        "itemId": "wood_plank",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Burn wood in low oxygen to produce activated charcoal."
+  },
+  {
+    "id": "craft_kevlar_vest",
+    "resultItemId": "kevlar_vest",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 50,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 8
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 4
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Sew padded plate armor for scavengers."
+  },
+  {
+    "id": "craft_cigarettes",
+    "resultItemId": "roll_up_cigarettes",
+    "resultAmount": 4,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 10,
+    "ingredients": [
+      {
+        "itemId": "tobacco_pouch",
+        "amount": 1
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Roll tobacco into cigarettes."
+  },
+  {
+    "id": "craft_mattress",
+    "resultItemId": "armchair_cushion",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 30,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 6
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Build a cushioned shelter bed."
+  },
+  {
+    "id": "craft_guitar_strings",
+    "resultItemId": "guitar_strings",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "copper_wire",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Twist copper wire into musical strings."
+  },
+  {
+    "id": "build_small_trap",
+    "resultItemId": "raw_vegetables",
+    "resultAmount": 2,
+    "requiredStation": "trapBench",
+    "craftTimeSeconds": 40,
+    "ingredients": [
+      {
+        "itemId": "mechanical_components",
+        "amount": 1
+      },
+      {
+        "itemId": "dry_rations",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Set a small animal snare for urban rodents."
+  },
+  {
+    "id": "build_bird_trap",
+    "resultItemId": "raw_vegetables",
+    "resultAmount": 3,
+    "requiredStation": "trapBench",
+    "craftTimeSeconds": 60,
+    "ingredients": [
+      {
+        "itemId": "mechanical_components",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "trapBench_tier_1",
+    "description": "Set a rooftop net snare for wild birds."
+  },
+  {
+    "id": "craft_fuel_canister",
+    "resultItemId": "combustible_fuel",
+    "resultAmount": 1,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 30,
+    "ingredients": [
+      {
+        "itemId": "moonshine_liquor",
+        "amount": 2
+      },
+      {
+        "itemId": "chemical_reagents",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "stove_tier_2",
+    "description": "Refine alcohol into lamp kerosene."
+  },
+  {
+    "id": "craft_radio_tuning",
+    "resultItemId": "radio_vacuum_tube",
+    "resultAmount": 1,
+    "requiredStation": "radioDesk",
+    "craftTimeSeconds": 45,
+    "ingredients": [
+      {
+        "itemId": "electronic_parts",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Calibrate and repair radio vacuum tubes."
+  },
+  {
+    "id": "craft_battery",
+    "resultItemId": "battery_pack",
+    "resultAmount": 1,
+    "requiredStation": "radioDesk",
+    "craftTimeSeconds": 35,
+    "ingredients": [
+      {
+        "itemId": "chemical_reagents",
+        "amount": 2
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "radioDesk_tier_1",
+    "description": "Refill lead-acid battery cells."
+  },
+  {
+    "id": "purify_iodine_tabs",
+    "resultItemId": "rad_purification_tablets",
+    "resultAmount": 4,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "chemical_reagents",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "herbalist_tier_1",
+    "description": "Press iodine water purification tablets."
+  },
+  {
+    "id": "repair_revolver",
+    "resultItemId": "revolver",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 45,
+    "ingredients": [
+      {
+        "itemId": "mechanical_components",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Clean and restore a rusted handgun."
+  },
+  {
+    "id": "craft_barricade",
+    "resultItemId": "wood_plank",
+    "resultAmount": 3,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Reinforce wooden planks with iron braces for defense."
+  },
+  {
+    "id": "craft_gunpowder",
+    "resultItemId": "gunpowder_grain",
+    "resultAmount": 10,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 30,
+    "ingredients": [
+      {
+        "itemId": "chemical_reagents",
+        "amount": 2
+      },
+      {
+        "itemId": "charcoal_filter",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "herbalist_tier_2",
+    "description": "Mix sulfur, saltpeter, and charcoal into gunpowder."
+  },
+  {
+    "id": "craft_warm_coat",
+    "resultItemId": "cloth_rags",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 5
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Stitch multi-layered winter insulation."
+  },
+  {
+    "id": "cook_dry_biscuits",
+    "resultItemId": "dry_rations",
+    "resultAmount": 4,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "raw_vegetables",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Bake dry vegetable crackers for long storage."
+  },
+  {
+    "id": "craft_trap_gears",
+    "resultItemId": "mechanical_components",
+    "resultAmount": 2,
+    "requiredStation": "trapBench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "File scrap metal into trap gears and springs."
+  },
+  {
+    "id": "craft_copper_spool",
+    "resultItemId": "copper_wire",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "electronic_parts",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Strip discarded electronics for copper wire."
+  },
+  {
+    "id": "craft_emergency_light",
+    "resultItemId": "battery_pack",
+    "resultAmount": 1,
+    "requiredStation": "radioDesk",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "electronic_parts",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Wire an emergency LED shelter lamp."
+  },
+  {
+    "id": "craft_filter_mesh",
+    "resultItemId": "charcoal_filter",
+    "resultAmount": 3,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 2
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Weave cloth mesh for water carbon filtration."
+  },
+  {
+    "id": "craft_stretcher",
+    "resultItemId": "armchair_cushion",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "wood_plank",
+        "amount": 4
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 4
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Build a medical bed for sick survivors."
+  },
+  {
+    "id": "craft_herbal_tea",
+    "resultItemId": "coffee_beans",
+    "resultAmount": 1,
+    "requiredStation": "stove",
+    "craftTimeSeconds": 10,
+    "ingredients": [
+      {
+        "itemId": "clean_water_bottle",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Brew soothing pine-needle tea for morale."
+  },
+  {
+    "id": "refine_solvent",
+    "resultItemId": "chemical_reagents",
+    "resultAmount": 2,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 35,
+    "ingredients": [
+      {
+        "itemId": "moonshine_liquor",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "herbalist_tier_1",
+    "description": "Purify moonshine into chemical solvent."
+  },
+  {
+    "id": "craft_trench_shield",
+    "resultItemId": "kevlar_vest",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 45,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 6
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Construct a heavy metal door shield."
+  },
+  {
+    "id": "craft_signal_flare",
+    "resultItemId": "gunpowder_grain",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "chemical_reagents",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Mix chemical compounds into signal flare powder."
+  },
+  {
+    "id": "repair_gas_mask_lens",
+    "resultItemId": "gas_mask",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "electronic_parts",
+        "amount": 1
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Seal cracked gas mask lenses."
+  },
+  {
+    "id": "craft_rat_bait",
+    "resultItemId": "dry_rations",
+    "resultAmount": 2,
+    "requiredStation": "trapBench",
+    "craftTimeSeconds": 10,
+    "ingredients": [
+      {
+        "itemId": "raw_vegetables",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Prepare bait for rodent traps."
+  },
+  {
+    "id": "craft_radio_antenna",
+    "resultItemId": "electronic_parts",
+    "resultAmount": 3,
+    "requiredStation": "radioDesk",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "copper_wire",
+        "amount": 4
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Construct an outdoor radio dipole antenna."
+  },
+  {
+    "id": "craft_boiler_seal",
+    "resultItemId": "mechanical_components",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "cloth_rags",
+        "amount": 2
+      },
+      {
+        "itemId": "chemical_reagents",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Make high-temperature rubber gaskets for stove boilers."
+  },
+  {
+    "id": "craft_shelter_door_lock",
+    "resultItemId": "lockpick_set",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "mechanical_components",
+        "amount": 1
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Assemble a deadbolt lock for shelter security."
+  },
+  {
+    "id": "install_reinforced_locks",
+    "resultItemId": "scrap_metal",
+    "resultAmount": 0,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 40,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 4
+      },
+      {
+        "itemId": "mechanical_components",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Bolt reinforced locks onto the hatch (install via hatch defense)."
+  },
+  {
+    "id": "install_blast_door",
+    "resultItemId": "scrap_metal",
+    "resultAmount": 0,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 90,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 8
+      },
+      {
+        "itemId": "mechanical_components",
+        "amount": 3
+      },
+      {
+        "itemId": "wood_plank",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Fabricate a blast-rated hatch plate (install via hatch defense)."
+  },
+  {
+    "id": "install_hatch_traps",
+    "resultItemId": "scrap_metal",
+    "resultAmount": 0,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 50,
+    "ingredients": [
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      },
+      {
+        "itemId": "mechanical_components",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Wire spike plates and noise alarms on the entry (install via hatch defense)."
+  },
+  {
+    "id": "craft_medical_splint",
+    "resultItemId": "sterile_bandage",
+    "resultAmount": 1,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 15,
+    "ingredients": [
+      {
+        "itemId": "wood_plank",
+        "amount": 1
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Bind wooden splints with cloth for bone fractures."
+  },
+  {
+    "id": "craft_salvage_scrap",
+    "resultItemId": "scrap_metal",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 10,
+    "ingredients": [
+      {
+        "itemId": "mechanical_components",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "default",
+    "description": "Break broken mechanical parts into raw scrap metal."
+  },
+  {
+    "id": "craft_fumigation_bomb",
+    "resultItemId": "chemical_reagents",
+    "resultAmount": 1,
+    "requiredStation": "herbalistTable",
+    "craftTimeSeconds": 30,
+    "ingredients": [
+      {
+        "itemId": "charcoal_filter",
+        "amount": 2
+      },
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "herbalist_tier_2",
+    "description": "Mix sulfur smoke bombs to clear mold from cellars."
+  },
+  {
+    "id": "craft_comfort_chair",
+    "resultItemId": "armchair_cushion",
+    "resultAmount": 1,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 35,
+    "ingredients": [
+      {
+        "itemId": "wood_plank",
+        "amount": 5
+      },
+      {
+        "itemId": "cloth_rags",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Craft a wooden armchair to help survivors rest."
+  },
+  {
+    "id": "craft_ammo_9x19_fmj",
+    "resultItemId": "ammo_9x19_fmj",
+    "resultAmount": 8,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Press civilian 9×19mm FMJ from powder, scrap, and copper."
+  },
+  {
+    "id": "craft_ammo_9x19_jhp",
+    "resultItemId": "ammo_9x19_jhp",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 25,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Cut hollow points into soft-lead 9mm. Excellent unarmored damage."
+  },
+  {
+    "id": "craft_ammo_380acp_fmj",
+    "resultItemId": "ammo_380acp_fmj",
+    "resultAmount": 8,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 18,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 2
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Press .380 ACP ball for compact pistols."
+  },
+  {
+    "id": "craft_ammo_380acp_jhp",
+    "resultItemId": "ammo_380acp_jhp",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 22,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 2
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Expanding .380 ACP hollow points."
+  },
+  {
+    "id": "craft_ammo_762x25_fmj",
+    "resultItemId": "ammo_762x25_fmj",
+    "resultAmount": 10,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 18,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_1",
+    "description": "Common Tokarev ball from scrap and powder."
+  },
+  {
+    "id": "craft_ammo_762x25_jhp",
+    "resultItemId": "ammo_762x25_jhp",
+    "resultAmount": 8,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 22,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Hand-cut Tokarev hollow points."
+  },
+  {
+    "id": "craft_ammo_45acp_fmj",
+    "resultItemId": "ammo_45acp_fmj",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 22,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Heavy .45 ACP ball for pistols and SMGs."
+  },
+  {
+    "id": "craft_ammo_45acp_jhp",
+    "resultItemId": "ammo_45acp_jhp",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 28,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Expanding .45. Soft-target specialist."
+  },
+  {
+    "id": "craft_ammo_9x21_fmj",
+    "resultItemId": "ammo_9x21_fmj",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 24,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 4
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Press SMG-exclusive 9×21mm IMI ball."
+  },
+  {
+    "id": "craft_ammo_9x21_jhp",
+    "resultItemId": "ammo_9x21_jhp",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 28,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 4
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Hollow-point 9×21mm for SMGs."
+  },
+  {
+    "id": "craft_ammo_765x21_fmj",
+    "resultItemId": "ammo_765x21_fmj",
+    "resultAmount": 8,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Light 7.65×21mm SMG ball."
+  },
+  {
+    "id": "craft_ammo_765x21_jhp",
+    "resultItemId": "ammo_765x21_jhp",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 24,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Hollow-point 7.65×21mm SMG loads."
+  },
+  {
+    "id": "craft_ammo_12ga_buck",
+    "resultItemId": "ammo_12ga_buck",
+    "resultAmount": 4,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 4
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Pack 12/70 buckshot from powder and lead scrap."
+  },
+  {
+    "id": "craft_ammo_12ga_slug",
+    "resultItemId": "ammo_12ga_slug",
+    "resultAmount": 3,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 22,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 4
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Cast 12/70 solid slugs."
+  },
+  {
+    "id": "craft_ammo_16ga_buck",
+    "resultItemId": "ammo_16ga_buck",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 18,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Pack lighter 16/70 buckshot."
+  },
+  {
+    "id": "craft_ammo_16ga_slug",
+    "resultItemId": "ammo_16ga_slug",
+    "resultAmount": 4,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 20,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_2",
+    "description": "Cast 16/70 slugs."
+  },
+  {
+    "id": "craft_ammo_556x45_fmj",
+    "resultItemId": "ammo_556x45_fmj",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 35,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 6
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_3",
+    "description": "Advanced reloader: intermediate 5.56×45mm FMJ."
+  },
+  {
+    "id": "craft_ammo_556x45_jhp",
+    "resultItemId": "ammo_556x45_jhp",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 40,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 6
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 3
+      }
+    ],
+    "unlockedBy": "workbench_tier_3",
+    "description": "Expanding 5.56. Soft-target rifle loads."
+  },
+  {
+    "id": "craft_ammo_762x39_fmj",
+    "resultItemId": "ammo_762x39_fmj",
+    "resultAmount": 6,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 35,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 6
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 1
+      }
+    ],
+    "unlockedBy": "workbench_tier_3",
+    "description": "Advanced reloader: 7.62×39mm FMJ."
+  },
+  {
+    "id": "craft_ammo_762x39_jhp",
+    "resultItemId": "ammo_762x39_jhp",
+    "resultAmount": 5,
+    "requiredStation": "workbench",
+    "craftTimeSeconds": 40,
+    "ingredients": [
+      {
+        "itemId": "gunpowder_grain",
+        "amount": 6
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 3
+      },
+      {
+        "itemId": "copper_wire",
+        "amount": 2
+      }
+    ],
+    "unlockedBy": "workbench_tier_3",
+    "description": "Expanding 7.62×39mm. Devastating unarmored."
+  }
 ]
