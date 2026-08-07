@@ -518,11 +518,24 @@ namespace AtomicWar._Game.Inventory
         public List<WornGear> BuildWornGear()
         {
             var list = new List<WornGear>();
+            FillWornGear(list);
+            return list;
+        }
+
+        /// <summary>
+        /// Refill an existing worn-gear buffer in place. RadiationSystem's exposure hook
+        /// runs per survivor per tick, so it reuses one buffer rather than allocating a
+        /// fresh list and gear objects every frame.
+        /// </summary>
+        public void FillWornGear(List<WornGear> buffer)
+        {
+            if (buffer == null) return;
+            buffer.Clear();
             for (int i = 0; i < _equipped.Count; i++)
             {
                 var equipped = _equipped[i];
                 if (equipped == null || equipped.Item == null || equipped.Item.radProtection <= 0f) continue;
-                list.Add(new WornGear
+                buffer.Add(new WornGear
                 {
                     RadProtection = equipped.Item.radProtection,
                     MaxDurability = equipped.Item.durability,
@@ -530,7 +543,6 @@ namespace AtomicWar._Game.Inventory
                     DegradeRate = 0f
                 });
             }
-            return list;
         }
 
         // -----------------------------------------------------------------

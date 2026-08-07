@@ -2769,3 +2769,859 @@ P7-I. METHOD LIMITS
 ========================================================================================
 END OF PART 7 — TRIGGER AUDIT (Visitor / Encounter / Location / Action)
 ========================================================================================
+
+========================================================================================
+PART 8 — TRIGGER AUDIT: WorldEvent* + Biome* + Weapon* + Crisis* + Trait*
+(remainder of primary baseline taxonomy prefixes)
+Read-only | No code was modified
+Generated (UTC): 2026-08-07 23:44:53
+========================================================================================
+
+SCOPE
+----------------------------------------
+All UntickedSystemsBaseline entries for these prefixes (complete buckets, n=28):
+
+  WorldEvent   5
+  Biome        6
+  Weapon       4
+  Crisis       2
+  Trait       11
+  ──────────────
+  Total       28
+
+Method: property-scoped Prop.Method( / Prop.OnX += (same as Parts 5–7).
+Boot: BootWorldEventFamily, BootBiomes/WireBiomes, BootWeaponFamily,
+      BootCrisisFamily, BootTraitFamily (+ BootRemainingComplexFamily for 5 traits).
+
+--------------------------------------------------------------------------------
+P8-A. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+
+  HANDLERS_ONLY ..............  6 / 28   (all Biome*)
+  CONSTRUCT_SAVE_ONLY ........ 22 / 28   (all WorldEvent, Weapon, Crisis, Trait)
+  EXTERNAL / BOOTSTRAP_LIVE ..  0 / 28
+
+No production Prop.Method triggers in this slice.
+Biome* matches MapAnomaly pattern (Wire On* → Debug.Log only).
+WorldEvent / Weapon / Crisis / Trait match NPC/Action pattern (construct + save only).
+
+LIVE PARALLELS (different types — not these props):
+  • WorldPhaseSystem (CivilWar → Flashpoint → NuclearWinter) — ticked via TimeSystem
+  • PersonalQuestSystem string traits (e.g. trait_matriarch, Matriarch room bonus) — LIVE
+  • Survivor.HasTrait(string) + SpatialPsychology (claustrophobic/agoraphobic strings)
+  • StructuralIntegritySystem (live bunker integrity) vs dead Crisis_StructuralFailure
+  • Item/weapon catalog combat path (ammo, hatch defense) vs dead Weapon_* heavy toys
+
+--------------------------------------------------------------------------------
+P8-B. WorldEvent* (5/5) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootWorldEventFamily: new only; no Wire; no day-tick host calling CheckActivation.
+
+| Prop                     | File                           | Example APIs                                         | Category            |
+|--------------------------|--------------------------------|------------------------------------------------------|---------------------|
+| WorldEventDeforestation  | WorldEvent_Deforestation.cs    | CheckActivation, GetWoodLootMultiplier, CanCraft…    | CONSTRUCT_SAVE_ONLY |
+| WorldEventFinalWinter    | WorldEvent_FinalWinter.cs      | CheckActivation, TickDay, GetTemperatureOverride…    | CONSTRUCT_SAVE_ONLY |
+| WorldEventFissure        | WorldEvent_Fissure.cs          | Trigger, DestroyConnection, IsPathBlocked, CanCross  | CONSTRUCT_SAVE_ONLY |
+| WorldEventGreatFamine    | WorldEvent_GreatFamine.cs      | CheckActivation, GetFoodLootMultiplier, hydro/cannibal| CONSTRUCT_SAVE_ONLY |
+| WorldEventMegafauna      | WorldEvent_Megafauna.cs        | Trigger, TickDay, Hunt                               | CONSTRUCT_SAVE_ONLY |
+
+[DEEP8-WE-001] Severity: CRITICAL | Type: dead content / dual world timeline
+  Location: BootWorldEventFamily; WorldEvent_*.cs ×5; WorldPhaseSystem.cs
+  Description: Campaign already advances WorldPhase (CivilWar/Flashpoint/NuclearWinter)
+  on day ticks. Separate WorldEvent_* systems for Final Winter, Famine, Deforestation,
+  Fissure, Megafauna are never CheckActivation'd or TickDay'd. Temperature/loot
+  multipliers they own never apply.
+  Suggested Fix: On WorldPhase change or day N, call CheckActivation; apply multipliers
+  in loot/temp paths; or demote and fold into WorldPhase / TemperatureSystem only.
+
+--------------------------------------------------------------------------------
+P8-C. Biome* (6/6) — ALL HANDLERS_ONLY
+--------------------------------------------------------------------------------
+
+BootBiomes + WireBiomes: On* → Debug.Log. EnterBiome/TickHour/ScoutHouse never called
+from expedition/map host.
+
+| Prop                 | File                       | Example APIs                                      | Category      |
+|----------------------|----------------------------|---------------------------------------------------|---------------|
+| BiomeAshSwamp        | Biome_AshSwamp.cs          | EnterBiome, GetMovementSpeedMult, CanStealth      | HANDLERS_ONLY |
+| BiomeGlassDesert     | Biome_GlassDesert.cs       | EnterBiome, GetCover, GetTemperature, Scavenge    | HANDLERS_ONLY |
+| BiomeHighwayTunnel   | Biome_HighwayTunnel.cs     | EnterBiome, SiphonGas, CheckMutantEncounter       | HANDLERS_ONLY |
+| BiomeSaltFlats       | Biome_SaltFlats.cs         | EnterBiome, TickHour, HarvestSalt, CanCross       | HANDLERS_ONLY |
+| BiomeSkyscraperTops  | Biome_SkyscraperTops.cs    | Traverse, ScavengeTurbine, GetColdExposure        | HANDLERS_ONLY |
+| BiomeSuburbs         | Biome_Suburbs.cs           | ScoutHouse, RevealFog, GetAdjacentTileIds         | HANDLERS_ONLY |
+
+Evidence: BiomesWiringTests construct systems and call EnterBiome in isolation
+(same false-green pattern as EncountersWiringTests / MapAnomaliesWiringTests).
+
+[DEEP8-BIO-001] Severity: CRITICAL | Type: dead content
+  Location: GameBootstrap.Biomes.cs; Biome_*.cs ×6
+  Description: Distinct biome traversal rules never run when parties enter map
+  regions. Movement/thirst/cover/stealth modifiers are dead code.
+  Suggested Fix: Map node biome tag → BiomeX.EnterBiome on expedition enter;
+  TickHour for SaltFlats while present.
+
+--------------------------------------------------------------------------------
+P8-D. Weapon* (4/4) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootWeaponFamily: Chainsaw, Flamethrower, HMG, RPG. No combat/hatch host calls.
+
+| Prop               | File                      | Example APIs                                    | Category            |
+|--------------------|---------------------------|-------------------------------------------------|---------------------|
+| WeaponChainsaw     | Weapon_Chainsaw.cs        | Attack, FlushHordeSpawn, GetFuelCost, noise     | CONSTRUCT_SAVE_ONLY |
+| WeaponFlamethrower | Weapon_Flamethrower.cs    | GetFuelCost, GetFearRadius, GetTankExplodeChance| CONSTRUCT_SAVE_ONLY |
+| WeaponHMG          | Weapon_HMG.cs             | Mount, Fire, Unjam, CanFire                     | CONSTRUCT_SAVE_ONLY |
+| WeaponRPG          | Weapon_RPG.cs             | FireAtHatch, GetSecurityDamage                  | CONSTRUCT_SAVE_ONLY |
+
+[DEEP8-WPN-001] Severity: HIGH | Type: dead content
+  Location: BootWeaponFamily; Weapon_*.cs ×4
+  Description: Heavy/special weapons never mount/fire from hatch defense or
+  expedition combat. HatchDefense / ammo path is separate.
+  Suggested Fix: HatchDefense weapon slot → WeaponHMG.Fire / WeaponRPG.FireAtHatch;
+  or demote until siege UI exists.
+
+--------------------------------------------------------------------------------
+P8-E. Crisis* (2/2) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootCrisisFamily only; save-wired; zero Prop.TickDay/TriggerBreach callers.
+
+| Prop                      | File                            | Example APIs                                      | Category            |
+|---------------------------|---------------------------------|---------------------------------------------------|---------------------|
+| CrisisFeralFlora          | Crisis_FeralFlora.cs            | TickDay, ApplyVentClogDamage, TryClearWithMachete | CONSTRUCT_SAVE_ONLY |
+| CrisisStructuralFailure   | Crisis_StructuralFailure.cs     | TickDay, TriggerBreach, IsBunkerHabitable…        | CONSTRUCT_SAVE_ONLY |
+
+[DEEP8-CRS-001] Severity: HIGH | Type: dual crisis / incomplete
+  Location: Crisis_*; StructuralIntegritySystem (live, registry-ticked)
+  Description: StructuralIntegritySystem already damages modules / integrity on the
+  live tick path (Part 3–4). Crisis_StructuralFailure (3-day collapse at 0% integrity
+  fiction) never TickDay's — so its breach/habitability override never runs.
+  Feral flora vent clog similarly never starts.
+  Suggested Fix: StructuralIntegrity at 0 → CrisisStructuralFailure.TickDay; flora
+  count from harvest system → CrisisFeralFlora.TickDay; or merge into StructuralIntegrity.
+
+--------------------------------------------------------------------------------
+P8-F. Trait* (11/11) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootTraitFamily constructs 6; BootRemainingComplexFamily constructs AshTongue,
+Kleptomaniac, Mascot, StuntedEmpathy, Superstitious (5 more). No Wire; no Prop.Method.
+
+| Prop                     | File                            | Example APIs                                      | Category            |
+|--------------------------|---------------------------------|---------------------------------------------------|---------------------|
+| TraitAnthropophobia      | Trait_Anthropophobia.cs         | DevelopPhobia, NotifyHumanEnteredRoom…            | CONSTRUCT_SAVE_ONLY |
+| TraitAshTongue           | Trait_AshTongue.cs              | AssignTrait, TranslatePhrase, CoinDialectWord     | CONSTRUCT_SAVE_ONLY |
+| TraitClairvoyant         | Trait_Clairvoyant.cs (ClairvoyantSystem) | GeneratePrediction                         | CONSTRUCT_SAVE_ONLY |
+| TraitGenerationalTrauma  | Trait_GenerationalTrauma.cs     | RecordParentBreak, ApplyOnTransition              | CONSTRUCT_SAVE_ONLY |
+| TraitInheritedGenetics   | Trait_InheritedGenetics.cs      | CheckInheritance, GetAffinityPenalty              | CONSTRUCT_SAVE_ONLY |
+| TraitKleptomaniac        | Trait_Kleptomaniac.cs           | DevelopTrait, TickHour, GetStolenItems            | CONSTRUCT_SAVE_ONLY |
+| TraitMascot              | Trait_Mascot.cs                 | CheckMascotActive, ApplyBuff/RemoveBuff           | CONSTRUCT_SAVE_ONLY |
+| TraitMatriarch           | Trait_Matriarch.cs              | CheckTrait, WillDescendantSide, HasTrait          | CONSTRUCT_SAVE_ONLY |
+| TraitPTSD                | Trait_PTSD.cs                   | AssignTrigger, CheckTrigger, StartPanic, TickHour | CONSTRUCT_SAVE_ONLY |
+| TraitStuntedEmpathy      | Trait_StuntedEmpathy.cs         | WitnessDeath, OnGrowingUp                         | CONSTRUCT_SAVE_ONLY |
+| TraitSuperstitious       | Trait_Superstitious.cs          | AssignTrait, CheckInventory, HandleItemLost…      | CONSTRUCT_SAVE_ONLY |
+
+[DEEP8-TRT-001] Severity: CRITICAL | Type: dual trait stack
+  Location: Trait_*.cs ×11 vs PersonalQuestSystem / Survivor.HasTrait(string)
+  Description: LIVE matriarch behavior is PersonalQuestSystem.MatriarchId
+  ("trait_matriarch") + NeedsSystem room health bonus — **not** TraitMatriarch
+  property. Trait_Matriarch.CheckTrait is never called. Same risk for any trait that
+  exists both as string id on survivors and as a Core tracker class.
+  Suggested Fix: Single trait host. Either call Trait_* from PersonalQuest assign
+  paths, or delete Core Trait_* and keep string traits only.
+
+[DEEP8-TRT-002] Severity: HIGH | Type: dead content
+  Location: TraitPTSD, TraitKleptomaniac, TraitAnthropophobia, etc.
+  Description: Hourly/room-enter APIs never hooked to NeedsSystem tick or room
+  occupancy changes. PTSD panic, klepto steal, anthropophobia panic cannot fire.
+  Suggested Fix: NeedsSystem/Medical/room move hooks; or demote.
+
+--------------------------------------------------------------------------------
+P8-G. NOT EVENT-BUS / NOT ID-DRIVEN
+--------------------------------------------------------------------------------
+
+  • None of the 28 classified as EVENT_BUS_ONLY or EXTERNAL_CALLERS.
+  • WorldEvent CheckActivation not linked to WorldPhaseSystem.
+  • Biome EnterBiome not linked to map coordinates/biome tags.
+
+--------------------------------------------------------------------------------
+P8-H. BASELINE TAXONOMY CLOSURE (Parts 5–8)
+--------------------------------------------------------------------------------
+
+Primary prefix families on UntickedSystemsBaseline now trigger-audited:
+
+  Family              n    Dominant category           Live parallel?
+  ────────────────── ───  ──────────────────────────  ──────────────────────────
+  Event*              27   HANDLERS_ONLY               EventPool / GameEvent
+  Victory*            14   HANDLERS + 3 tick-cond      VictoryProject / EndgameEngine
+  MapAnomaly*         18   HANDLERS_ONLY               (none)
+  MapHazard* (base)    8   HANDLERS_ONLY               AcidGeyser/Ashlanche ticks
+  NPC*                34   CONSTRUCT_SAVE_ONLY         EncounterSO / visitors?
+  Visitor*            11   CONSTRUCT_SAVE_ONLY         (none / hatch?)
+  Encounter*          15   HANDLERS_ONLY               EncounterSO + factory
+  Location*            4   CONSTRUCT_SAVE_ONLY         map locations generic
+  Action*             41   CONSTRUCT_SAVE_ONLY         AI ActionSO
+  WorldEvent*          5   CONSTRUCT_SAVE_ONLY         WorldPhaseSystem
+  Biome*               6   HANDLERS_ONLY               (none proven)
+  Weapon*              4   CONSTRUCT_SAVE_ONLY         item/ammo combat
+  Crisis*              2   CONSTRUCT_SAVE_ONLY         StructuralIntegrity
+  Trait*              11   CONSTRUCT_SAVE_ONLY         PersonalQuest string traits
+  ────────────────── ───
+  Subtotal           200   ≈0 production Prop.Method among pure ghosts
+
+  Remaining baseline (~235) still includes Affliction*, Item*, MapAnomaly already
+  done, plus Other (Project*, Node*, Hazard*, Audio*, Mobile*, etc.) partially
+  sampled in Part 5 Other9.
+
+  Updated ghost estimate Parts 4–8: **200+** composition-root systems with no
+  production trigger, against ~77 registry per-substep live names.
+
+[DEEP8-META-001] Severity: CRITICAL | Type: architecture (extends DEEP7-META-001)
+  Description: Remainder taxonomy confirms the pattern is universal across prompt
+  families, not limited to events/map/NPC. Dual stacks repeatedly leave the
+  string/SO/live path working while the Boot* class tracker rots with save wiring.
+  Suggested Fix: Freeze Boot* growth; content gate CI; demote in batches by family
+  (Action 41, NPC 34, Event 27, Affliction tick wiring separate).
+
+--------------------------------------------------------------------------------
+P8-I. COUNTS & PRIORITY
+--------------------------------------------------------------------------------
+
+Part 8 categories: HANDLERS_ONLY 6 | CONSTRUCT_SAVE_ONLY 22 | Live 0
+
+New finding IDs:
+  DEEP8-WE-001
+  DEEP8-BIO-001
+  DEEP8-WPN-001
+  DEEP8-CRS-001
+  DEEP8-TRT-001, DEEP8-TRT-002
+  DEEP8-META-001
+
+Remediation order (this slice):
+  1. WorldEventFinalWinter/GreatFamine CheckActivation on WorldPhase or day N —
+     high fantasy payoff if nuclear winter is domain-core.
+  2. Resolve Trait dual stack: document PersonalQuest as sole matriarch host;
+     demote TraitMatriarch or bridge CheckTrait.
+  3. CrisisStructuralFailure.TickDay from StructuralIntegrity at 0 (or delete).
+  4. One Biome EnterBiome from expedition region tag.
+  5. WeaponRPG/HMG from hatch UI or demote.
+  6. Global: content gate (DEEP7-META-001 / DEEP8-META-001).
+
+--------------------------------------------------------------------------------
+P8-J. METHOD LIMITS
+--------------------------------------------------------------------------------
+
+  • All 28 prefix members audited; Affliction*/Item*/Other residual not re-done.
+  • Did not prove WorldPhase.NuclearWinter equates to FinalWinter design intent.
+  • PersonalQuest matriarch verified live; other string traits not fully inventoried.
+  • Static analysis only; playmode not run.
+
+  Evidence:
+    rg -n 'WorldEventFinalWinter\s*\??\.\s*\w+' Assets --glob '*.cs' → none prod
+    rg -n 'BiomeSaltFlats\s*\??\.\s*\w+' → On* += only
+    rg -n 'TraitMatriarch\s*\??\.\s*\w+' → none; PersonalQuest HasMatriarch live
+    BootWorldEventFamily / BootCrisisFamily / BootWeaponFamily → construct only
+
+========================================================================================
+END OF PART 8 — TRIGGER AUDIT (WorldEvent / Biome / Weapon / Crisis / Trait)
+========================================================================================
+
+========================================================================================
+PART 9 — TRIGGER AUDIT: Affliction* + residual Other
+         + DEMOTE / WIRE IMPLEMENTATION PLAN
+Read-only | No code was modified
+Generated (UTC): 2026-08-07 23:48:12
+========================================================================================
+
+SCOPE
+----------------------------------------
+Completes residual UntickedSystemsBaseline inventory after Parts 5–8.
+
+  Affliction* .............. 21 (full bucket)
+  Residual Other ........... ~254 scanned this pass:
+    Project 6, Node 7, Hazard 7, UIEvent 8, ShelterEvent 6, Vehicle 5, Pet 2,
+    Weather (baseline residual) 7, Combat 4, Siege 8, Skirmish 5,
+    Item 69, ShelterModule 46, OtherMisc 53
+
+Method: property-scoped Prop.Method / Prop.OnX += (same as Parts 5–8).
+
+--------------------------------------------------------------------------------
+P9-A. AFFLICTION* (21/21) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+All AfflictionAdrenalineCrash … AfflictionZoonoticFlu: construct + save (SaveMap for
+several per Part 4) + **zero production Prop.Method**. TickDay/Contract* APIs never
+called from MedicalSystem or expedition hosts.
+
+| Prop (all CONSTRUCT_SAVE_ONLY) |
+|--------------------------------|
+| AdrenalineCrash, Amnesia, Brainwashed, BrittleBones, BunkerFever, CaveMadness |
+| FeralRegression, ImaginaryFriend, NerveDamage, OldAge, PhantomLimb |
+| RadHallucinations, RadiationBlindness, ScurvyDegeneration, SporeLung, Sterile |
+| SurvivorsGuilt, TBI, ThyroidCancer, TrenchFoot, ZoonoticFlu |
+
+[DEEP9-AFF-001] Severity: CRITICAL | Type: dual medical stack
+  Location: Affliction_*.cs ×21 vs MedicalSystem + AfflictionSO.Ids
+  Description: LIVE medical path is MedicalSystem.Tick + AfflictionSO registry
+  (bacterial_infection, sepsis, blood_loss, …). Parallel prompt Affliction_* class
+  trackers (spore lung, trench foot, TBI, …) are save-wired ghosts — same dual-stack
+  class as Trait_* vs PersonalQuest strings (DEEP8-TRT-001).
+  Suggested Fix: Either (1) MedicalSystem.Inflict bridges to Affliction_* systems, or
+  (2) demote Affliction_* from Boot/Save and encode as AfflictionSO only, or
+  (3) wire TickDay into medical substep for map-owned systems only (SporeLung room
+  spread, TrenchFoot wet boots).
+
+Related (OtherMisc, not Affliction* prefix but same class):
+  TetanusAfflictionSystem, BurnWardSystem, CognitiveDecaySystem, SevereFrostbiteSystem,
+  VisionLossSystem, ToothDecaySystem — Part 4 DEEP4-ORPHAN; still CONSTRUCT_SAVE_ONLY
+  this pass.
+
+--------------------------------------------------------------------------------
+P9-B. RESIDUAL FAMILY TABLES
+--------------------------------------------------------------------------------
+
+P9-B1. Project* (6) — ALL CONSTRUCT_SAVE_ONLY
+  BioReactor, DeepWell, Elevator, Minecart, RadioArray, SurfaceDome
+  APIs TickDay/Start exist; never host-ticked. Dual with Victory/radio live paths.
+
+P9-B2. Node* (7) — ALL CONSTRUCT_SAVE_ONLY
+  AutomatedArmory, GhostShip, MutantHive, Orphanage, PlayerBank, Sector7G, SporeHive
+  Special map nodes never Discover/Enter from expedition.
+
+P9-B3. Hazard* (7) — ALL CONSTRUCT_SAVE_ONLY
+  CookOff, ExplosiveCrafting, FriendlyFire, Methane, MimicCrate, SurgicalBotch, WeaponBurst
+  Crafting/combat hazard rolls never invoked (distinct from MapHazard_*).
+
+P9-B4. UIEvent* (8) — ALL CONSTRUCT_SAVE_ONLY
+  BlurredVision, CorruptionScare, FalseInventory, GhostRadio, Hacking, LowPower,
+  MapRot, PhantomBlip
+  Diegetic UI scares never CheckActivation from radiation/power hosts.
+
+P9-B5. ShelterEvent* (6) — ALL CONSTRUCT_SAVE_ONLY
+  CaravanAmbush, FalseCure, Ransom, Refugees, TheMirror, Tribute
+  Hatch/visitor events never scheduled (dual with Event_* / Visitor_*).
+
+P9-B6. Vehicle* (5) — ALL CONSTRUCT_SAVE_ONLY
+  ArmoredTruck, Motorcycle, Rowboat, VehicleSystem, VehicleStrandingSystem
+  SaveMap-ready (Part 4) but no expedition vehicle tick.
+
+P9-B7. Pet* (2) — ALL CONSTRUCT_SAVE_ONLY
+  PetFeralCat, PetGuardDog
+  LIVE parallel: PetSystem registry-ticked ("pets") — cats/dogs in Pet_* trackers unused.
+
+P9-B8. Weather residual (7) — ALL HANDLERS_ONLY
+  AcidSnow, BioFog, BlackSnow, DeadWind, DustDevil, GlassStorm, RadHail
+  Host comment (GameBootstrap.Weather.cs): deliberately not ticked until contextual
+  args exist (filter durability, hazmat, map node). LIVE weather ticks:
+  SolarFlare, SilentSpring, StaticCharge, BloodRain, EmpStorm, FalseSpring,
+  DeepFreeze, OzoneHole (daily) — not on baseline.
+
+P9-B9. Combat* (4) — ALL CONSTRUCT_SAVE_ONLY
+  BleedOut, Flanking, StanceLastStand, Suppression
+
+P9-B10. Siege* (8)
+  BOOTSTRAP_TRIGGERED (2): SiegeBiowarfare.TickHour, SiegeBlockade.TickDay/IsExpeditionLocked
+    (BatchSystems) — still on baseline (batch name ≠ property; may need Start to matter)
+  CONSTRUCT_SAVE_ONLY (6): Artillery, HostageShield, NightRaid, Sappers, SmokeOut, VehicleRam
+
+P9-B11. Skirmish* (5) — ALL CONSTRUCT_SAVE_ONLY
+  Bandit_vs_Terror, Mil_vs_Rebel, Mil_vs_Terror, Rebel_vs_Bandit, Rebel_vs_Terror
+
+P9-B12. Item* (69)
+  BOOTSTRAP_TRIGGERED (1): ItemAmmoTypes — hatch/expedition/scavenge/crafting bindings LIVE
+  CONSTRUCT_SAVE_ONLY (68): rest of Item_* prompt gadgets (vitamins, caltrops, night vision…)
+
+P9-B13. ShelterModule* (46) — ALL HANDLERS_ONLY
+  Autodoc, BatteryBank, DeconShower, Turret, VaultDoor, WoodStove, … (full list in baseline)
+  Constructed + On* log wire; module gameplay likely also on ShelterModuleInstance SO path
+  (dual stack risk). Not registry-ticked as individual props.
+
+P9-B14. OtherMisc LIVE (BOOTSTRAP_TRIGGERED) — baseline noise / partial live
+  AdaptiveWarlords, ChemUse, DiseaseExpansion, ExpeditionEncounterLog,
+  IronMan, Sheriff, SpeedrunTimer, TrueEnding
+  (+ ModLoader/TwitchAPI host hooks — edge tooling)
+  CONSTRUCT_SAVE_ONLY remainder: AndroidNpcs, AshDrift, BurnWard, CognitiveDecay,
+  FalloutStormHazard, HiddenStatUnseen, LightningStrikes, MapAquifer, MobileCamp,
+  ModuleRationLock, MoralDilemma, NeedleSterilization, ProstheticCrafting, ScenarioGen,
+  SeismicVents, SevereFrostbite, Tetanus, ToothDecay, VisionLoss, TraderPlagueConvoy,
+  DurabilitySuppressor, EndgameUltimatum, …
+
+--------------------------------------------------------------------------------
+P9-C. PART 9 CATEGORY TOTALS (this pass scan ~254 systems)
+--------------------------------------------------------------------------------
+
+  CONSTRUCT_SAVE_ONLY .... 188
+  HANDLERS_ONLY ..........  53  (Weather residual 7 + ShelterModule 46)
+  BOOTSTRAP_TRIGGERED ....  13  (AmmoTypes, AdaptiveWarlords, ChemUse, Disease,
+                                 ExpeditionEncounterLog, IronMan, Sheriff, Speedrun,
+                                 TrueEnding, Siege×2, ModLoader/Twitch tooling)
+  EXTERNAL_CALLERS .......   0
+
+[DEEP9-RES-001] Severity: CRITICAL | Type: content volume
+  Description: Residual Other is dominated by ShelterModule* (46) HANDLERS_ONLY and
+  Item* (68) construct-only gadgets. Combined with Parts 5–8, baseline ghosts are not
+  a minority — they are the majority of GameBootstrap surface area.
+
+[DEEP9-RES-002] Severity: HIGH | Type: dual stacks (inventory)
+  Live SO/system path              Dead Boot* class path
+  ─────────────────────────────    ─────────────────────────────
+  MedicalSystem + AfflictionSO     Affliction_* ×21 + tetanus/frost/…
+  PersonalQuest string traits      Trait_* ×11
+  EncounterSO + factory            Encounter_* ×15
+  EventPool GameEvent              Event_* ×27
+  PetSystem                        PetFeralCat / PetGuardDog
+  WorldPhaseSystem                 WorldEvent_* ×5
+  StructuralIntegrity              CrisisStructuralFailure
+  Weather_* (solar/emp/…)          Weather AcidSnow/GlassStorm/… (baseline 7)
+  ItemAmmoTypes + catalog          Item_* gadgets ×68
+  Shelter modules (SO instance)    ShelterModule_* ×46 trackers
+
+[DEEP9-RES-003] Severity: MEDIUM | Type: baseline honesty
+  SiegeBiowarfare/Blockade, TrueEnding, IronMan, DiseaseExpansion, ChemUse, etc. are
+  batch-driven but remain on UntickedSystemsBaseline because IsSystemTicked checks
+  property aliases, not batch_systems_hourly. Fix aliases or shrink baseline (DEEP5-OTH-002 class).
+
+--------------------------------------------------------------------------------
+P9-D. FULL AUDIT CENSUS (Parts 4–9)
+--------------------------------------------------------------------------------
+
+  Approximate production-dead Boot* systems (zero Prop.Method): **350+** of 435 baseline
+  (remainder are HANDLERS_ONLY same effective deadness, or baseline-listed partial live).
+
+  Truly live counterexamples on/near baseline:
+    ItemAmmoTypes, AdaptiveWarlords, ChemUse, DiseaseExpansion, TrueEnding (batch),
+    IronMan (batch), SiegeBiowarfare/Blockade (batch, may need Start),
+    Weather solar/emp set (not on baseline), PetSystem, MedicalSystem, WorldPhase…
+
+--------------------------------------------------------------------------------
+P9-E. DEMOTE / WIRE IMPLEMENTATION PLAN
+--------------------------------------------------------------------------------
+
+Goal: stop growing ghosts; make player-facing domain honest; shrink baseline only by
+wiring or demoting (never by silencing tests).
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 0 — FREEZE (1 PR, no gameplay change)          Priority: IMMEDIATE
+────────────────────────────────────────────────────────────────────────────────
+0.1  Content gate CI (DEEP7/8-META):
+     New public GameBootstrap property must satisfy ONE of:
+       (a) SystemRegistry name (per-substep/daily/event/save-only) that maps in Diagnostics
+       (b) ≥1 non-test Prop.Method caller outside defining file
+       (c) [DormantContent] attribute + NOT registered with SaveSystem
+     Fail EditMode test on violation.
+
+0.2  Tag all baseline props with enum ContentLifecycle { Live, PartialHost, Dormant }
+     in a single generated or hand-maintained docs/CONTENT_LIFECYCLE.md (or code map).
+
+0.3  Fix Diagnostics aliases for partial-live batch systems so baseline can shrink
+     without lying (DiseaseExpansion, ChemUse, AdaptiveWarlords, TrueEnding, IronMan,
+     SiegeBiowarfare, SiegeBlockade, ItemAmmoTypes).
+
+Exit: no new Dormant systems can ship save-wired.
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 1 — WAVE 0 HONESTY (domain core)               Priority: CRITICAL (Part 3–4)
+────────────────────────────────────────────────────────────────────────────────
+Not baseline ghosts — production bugs that make the game lie:
+
+  1. Inventory.Consume hunger/thirst sign (DEEP4-INV-001)
+  2. NeedsSystem isNearHeatSource ≠ sv => true (DEEP-002)
+  3. RadiationSystem ExposureContext (RAD-001 / DEEP-003)
+  4. EndgameEngine → ApplyEndgame (DEEP4-WIN-001)
+  5. Generator noise clear (CMB-001)
+  6. Dual AutoSave / clock residual (SAVE-004, DEEP4-TIME-001)
+  7. Expedition flashpoint capture (SAVE-002)
+
+Exit: first-hour survival loop matches domain promise. Do this BEFORE mass demote so
+playtests are meaningful.
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 2 — DEMOTE BATCH A (largest pure ghosts)       Priority: HIGH  ~150 systems
+────────────────────────────────────────────────────────────────────────────────
+Demote = remove from Boot* + SaveSystem.Set* + Diagnostics map; keep source files
+behind #if ASHFALL_DORMANT_CONTENT or move to Assets/_Game/Dormant/ excluded from
+player asmdef if desired. Keep unit tests that `new` the type.
+
+  A1. Action_* ×41
+  A2. NPC_* ×34
+  A3. Item_* ×68 except ItemAmmoTypes (and any later proven live)
+  A4. ShelterModule_* ×46 (if SO modules already provide gameplay; verify one
+      Autodoc path before demote)
+
+Process per family:
+  1) Confirm zero Prop.Method (already done)
+  2) Remove Boot + Set* + property if unused
+  3) Shrink UntickedSystemsBaseline
+  4) One commit per family
+
+Exit: bootstrap surface −150; save file smaller; baseline << 300.
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 3 — DEMOTE OR BRIDGE DUAL STACKS               Priority: HIGH
+────────────────────────────────────────────────────────────────────────────────
+For each dual stack, pick ONE host:
+
+  Stack                    KEEP (live)              DEMOTE (ghost)
+  ───────────────────────  ───────────────────────  ────────────────────────────
+  Medical afflictions      MedicalSystem+AfflictionSO  Affliction_* ×21 +
+                                                       Tetanus/Frost/Vision/Tooth/
+                                                       BurnWard/Cognitive
+  Traits                   PersonalQuest strings    Trait_* ×11
+  Encounters               EncounterSO+factory      Encounter_* ×15
+  Narrative events         EventPool/GameEvent      Event_* ×27
+  Pets                     PetSystem                PetFeralCat, PetGuardDog
+  World timeline           WorldPhaseSystem         WorldEvent_* ×5
+  Structure crisis         StructuralIntegrity      Crisis_* ×2
+  Map hazards time         AcidGeyser/Ashlanche     other MapHazard + MapAnomaly
+                                                    unless wired in Phase 4
+
+Bridge exception: if design needs SporeLung room contagion, implement as AfflictionSO
++ one MedicalSystem hook — do not keep parallel SporeLungSystem empty forever.
+
+Exit: one host per fantasy; dual stacks documented as deleted.
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 4 — WIRE FLAGSHIPS (only if product wants content)  Priority: MEDIUM
+────────────────────────────────────────────────────────────────────────────────
+Only after Phase 0–1. Max 2–3 systems per PR, each with EditMode "dispatch test"
+(bootstrap property method called from expedition/UI host).
+
+  Wire set (suggested flagships):
+    W1. Expedition node-enter → 1 MapAnomaly + 1 MapHazard (AshDunes, GasPockets)
+    W2. Expedition → 1 NPC or keep SO-only and skip NPC forever
+    W3. WorldEventFinalWinter.CheckActivation on NuclearWinter phase
+    W4. Victory StartDefense/StartUpload UI + CheckVictory daily for 2 progress endings
+    W5. WeatherAcidSnow tick when host can pass filter durability ref
+    W6. One Action_* from UI (BarricadeDoor or Exile) OR none
+
+  Rule: if not wired within one sprint of "want", demote instead (Phase 2).
+
+Exit: ≤10 new live systems with regression tests; baseline shrinks for those names.
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 5 — PARTIAL-HOST CLEANUP                       Priority: MEDIUM
+────────────────────────────────────────────────────────────────────────────────
+  5.1 Victory* HANDLERS_ONLY → demote or wire CheckVictory (DEEP5-WIN-001)
+  5.2 Siege* six construct-only → demote; keep Biowarfare/Blockade if Start exists
+  5.3 TrueEnding/IronMan: ensure ApplyEndgame + baseline alias fix
+  5.4 Weather residual: either implement contextual tick or demote (host comment already
+      admits incomplete)
+
+────────────────────────────────────────────────────────────────────────────────
+PHASE 6 — VERIFY & RATCHET                           Priority: ONGOING
+────────────────────────────────────────────────────────────────────────────────
+  6.1 UntickedSystemsBaseline only shrinks
+  6.2 SaveStateCompletenessTests keep SaveMap quality for remaining Live systems
+  6.3 No new EncountersWiringTests-style isolation greens without dispatch test
+  6.4 PlayMode smoke: eat, cold, rad, day 2 autosave, one expedition, one endgame
+
+────────────────────────────────────────────────────────────────────────────────
+ORDER OF OPERATIONS (recommended sprints)
+────────────────────────────────────────────────────────────────────────────────
+
+  Sprint 0: Phase 0 freeze + Phase 1 Wave 0 honesty (consume, heat, rad, endgame)
+  Sprint 1: Phase 2 demote Action + NPC + Item gadgets
+  Sprint 2: Phase 2 demote ShelterModule trackers (after SO audit) + Phase 3 dual stacks
+            (Affliction/Trait/Encounter/Event)
+  Sprint 3: Phase 3 remaining dual stacks + Phase 5 Victory/Siege cleanup
+  Sprint 4+: Phase 4 flagships only if design prioritizes map/NPC fantasy
+
+Do NOT: expand SaveMap to more Dormant systems; add Boot* without content gate;
+       "wire" by adding Debug.Log On* only.
+
+--------------------------------------------------------------------------------
+P9-F. COUNTS & FINDING IDs
+--------------------------------------------------------------------------------
+
+Part 9 scan (~254 residual+affliction):
+  CONSTRUCT_SAVE_ONLY 188 | HANDLERS_ONLY 53 | BOOTSTRAP_TRIGGERED 13
+
+New IDs:
+  DEEP9-AFF-001
+  DEEP9-RES-001, DEEP9-RES-002, DEEP9-RES-003
+  PLAN phases 0–6 (implementation roadmap, not bugs)
+
+--------------------------------------------------------------------------------
+P9-G. METHOD LIMITS
+--------------------------------------------------------------------------------
+
+  • Item×69 and ShelterModule×46 classified bulk property-scoped; individual API
+    lists not re-printed (all construct/handlers except ItemAmmoTypes).
+  • ModLoader/TwitchAPI "BOOT" may be false-ish (file name hits); treat as tooling.
+  • Siege TickHour without active siege state may still be no-ops — not playtested.
+  • Static analysis only.
+
+  Evidence:
+    all Affliction* Prop.Method → none
+    TickWeatherEventsHourly comment + SolarFlare?.TickHour only for live set
+    MedicalSystem.Tick registry live vs Affliction_* boot-only
+    BatchSystems SiegeBiowarfare?.TickHour / TrueEnding.TickHour
+
+========================================================================================
+END OF PART 9 — AFFLICTION / RESIDUAL OTHER + DEMOTE-WIRE PLAN
+========================================================================================
+
+========================================================================================
+PART 10 — MASTER STATUS OVERVIEW (full re-verification)
+Read-only | No code was modified
+Generated (UTC): 2026-08-08
+========================================================================================
+
+PURPOSE
+----------------------------------------
+Single overview of audit Parts 1–9. Every Critical/High listed below was re-checked
+against CURRENT source files (not memory, not random samples). Status:
+
+  FIXED    — issue remediated in tree; evidence cited
+  PARTIAL  — core fixed, residual risk remains
+  OPEN     — still present as audited
+
+METHOD THIS PASS
+----------------------------------------
+Re-read / rg the exact production files for each finding ID:
+  InitFoundation, RadiationExposure, Shelter.Ops, MaterialShieldingSystem,
+  NeedsSystem, Inventory, Drink/TakeIodine/UseAntiRad ActionSOs, MedicalSystem,
+  AmputationSystem + InitFoundation.Medical Bind, HatchDefenseSystem,
+  TimeSystem, SaveSystem Capture/Restore/Entities/Wiring, Endgame + VictoryProject,
+  DynamicEconomySystem, TradeScreenUI, UntickedSystemsBaseline, ghost Prop.Method samples.
+
+========================================================================================
+1. WHAT THE AUDIT SERIES COVERED
+========================================================================================
+
+  Part 1   Static deep audit: Save, Rad, Warmth, Medical, Combat, Economy, Arch
+  Part 2   End-to-end proofs (DEEP-*), orphan census, death math
+  Part 3   Inventory consume chains, win/lose dual engines, flashpoint, photoperiod
+  Part 4   Re-verify after WIP; SaveMap; unticked baseline; dual clocks
+  Part 5   Trigger audit Event* + Victory* + Other top 50
+  Part 6   Trigger audit MapAnomaly* + MapHazard* + NPC*
+  Part 7   Trigger audit Visitor* + Encounter* + Location* + Action*
+  Part 8   Trigger audit WorldEvent* + Biome* + Weapon* + Crisis* + Trait*
+  Part 9   Affliction* + residual Other + demote/wire plan
+  Part 10  This master status re-verification
+
+  Report file: docs/ASHFALL_DEEP_CODE_AUDIT_2026-08-07.txt (~3.3k lines + this section)
+
+========================================================================================
+2. CRITICAL / HIGH — RE-VERIFIED STATUS TABLE
+========================================================================================
+
+----------------------------- FIXED (domain core repaired) -----------------------------
+
+[SURV-001 / DEEP-002] Warmth always near heat     STATUS: FIXED
+  Was: NeedsSystem(..., sv => true)
+  Now: NeedsSystem(needsProfile, IsSurvivorNearHeat)
+       IsSurvivorNearHeat → TemperatureSystem.IsWarmEnoughForRecovery(sv, shelter)
+  File: GameBootstrap.InitFoundation.cs ~36–195
+
+[RAD-001 / DEEP-003] No ExposureContext            STATUS: FIXED
+  Was: new RadiationSystem(NeedsSystem) only
+  Now: new RadiationSystem(NeedsSystem, BuildExposureContext)
+       BuildExposureContext fills zone outdoor/expedition + Shelter.GetInteriorRadsPerHour
+  File: InitFoundation.cs ~206; GameBootstrap.RadiationExposure.cs
+
+[RAD-002] BunkerContamination cosmetic             STATUS: FIXED
+  Now: GetInteriorRadsPerHour does rads += BunkerContamination
+  File: Shelter.Ops.cs ~80–83
+
+[RAD-003] Room contamination unused                STATUS: FIXED
+  Now: rads += GetRoomContaminationRadsPerHour() which sums room.GetIndoorRadContribution()
+  File: Shelter.Ops.cs ~84–104
+
+[RAD-004] MaterialShielding bleed always full      STATUS: FIXED
+  Was: weakestAttenuation = 0f; Min always 0
+  Now: GetWeakestCeilingAttenuation seeds weakest=1f; CeilingAttenuationProvider wired
+  File: MaterialShieldingSystem.cs; InitWorld CeilingAttenuationProvider
+
+[MED-001] staminaCap inverted                      STATUS: FIXED
+  Now: fatigueFloor = 100 - staminaCap; clamp Fatigue UP to floor
+  File: MedicalSystem.cs ApplyStaminaCap ~651–661
+
+[MED-002] Amputation no sepsis cure                STATUS: FIXED
+  Now: _cureAffliction?.Invoke(patient, Sepsis, surgeon)
+       Bound to MedicalSystem.CureOutright in InitFoundation.Medical.cs Bind
+  File: AmputationSystem.cs ~166; InitFoundation.Medical.cs ~62–66
+
+[CMB-001 / DEEP-005] Generator noise latch         STATUS: FIXED
+  Now: when outdoor diesel stops, _noiseFlagRaisedByDiesel clears GeneratorRunningOutside
+  File: HatchDefenseSystem.cs SyncGeneratorNoise ~1175–1192
+
+[SAVE-001 core] TimeSystem empty DTO               STATUS: FIXED (payload)
+  TimeSystem.CaptureState/RestoreState persist day/hour/totalElapsedSeconds
+  SaveSystem.SetTimeSystem(TimeSystem) wired
+  Residual dual clock: see PARTIAL below
+
+----------------------------- PARTIAL -----------------------------------------------
+
+[SAVE-001 residual / DEEP4-TIME-001] Dual clocks   STATUS: PARTIAL
+  TimeSystem ISaveable works, BUT SaveData.ElapsedHours still only from
+  TemperatureSystem on capture and only restores TemperatureSystem
+  Files: SaveSystem.Capture.cs:58; SaveSystem.Restore.cs:51
+  Risk: Temperature vs TimeSystem vs Photoperiod can diverge on load of old/partial saves
+
+[SAVE-001 GameState.Day]                           STATUS: PARTIAL (improved)
+  InitFoundation mirrors GameState.Day from TimeSystem.OnDayTick
+  Restore still sets GameState.Day from SaveData before ISaveable TimeSystem restore
+
+----------------------------- STILL OPEN — player honesty ---------------------------
+
+[DEEP3-INV-001 / DEEP4-INV-001] Player eat increases hunger   STATUS: OPEN CRITICAL
+  Inventory.Consume: Modify(Hunger, +item.hungerRestore)
+  items.json: all hungerRestore ≥ 0 (canned_food=40); 27 foods with positive restore
+  ConsumeItem passes NeedsSystem → player path inverted
+  AI EatActionSO still needs=null then Hunger -= restore (correct path)
+  Files: Inventory.cs ~574–575; GameBootstrap.UiActions.Radio.cs ConsumeItem ~79;
+         EatActionSO.cs ~127–154
+
+[DEEP3-INV-003] AI free infinite water             STATUS: OPEN HIGH
+  DrinkActionSO.Execute only Thirst -= 50; no inventory Remove
+  File: DrinkActionSO.cs ~42–48
+
+[DEEP3-INV-004] AI iodine burns stock, no resist   STATUS: OPEN HIGH
+  Remove pill only; no RadiationSystem.AdministerIodine
+  File: TakeIodineActionSO.cs Execute
+
+[DEEP3-INV-005] AI anti-rad bypasses RadiationSystem STATUS: OPEN HIGH
+  Direct RadiationDose mutation; no AdministerAntiRad
+  File: UseAntiRadActionSO.cs ~92–108
+
+[DEEP-001] Hunger/thirst/cold never kill via Needs STATUS: OPEN HIGH (design+)
+  Critical only morale drain; comment says medical owns Health
+  No starvation affliction auto-inflict found in NeedsSystem
+  File: NeedsSystem.cs ~164–171
+
+[DEEP4-WIN-001] EndgameEngine does not freeze run  STATUS: OPEN CRITICAL
+  CheckWinLose calls EndgameEngine.Evaluate but never ApplyEndgame
+  Only VictoryProject.OnEndgameTriggered → ApplyEndgame
+  File: GameBootstrap.UiActions.Endgame.cs CheckWinLose ~27–54; InitFoundation Victory wire
+
+[DEEP3-WIN-002] Extraction day 60 vs 100           STATUS: OPEN HIGH
+  EndgameEngine: day >= 60 extraction; VictoryProject.ChopperArrivalDay = 100
+  Files: EndgameEngine.cs ~75; VictoryProjectManager.cs ~19
+
+----------------------------- STILL OPEN — save integrity ---------------------------
+
+[SAVE-002] Expedition flashpoint fields            STATUS: OPEN CRITICAL
+  Restore assigns IsCommsSevered, FlashpointBehavior, OriginalEtaTicks, shelter delay,
+  return speed mult/div — CaptureExpeditionState still OMITs all of them
+  File: SaveSystem.Capture.Entities.cs ~69–100 vs Restore.Expeditions.cs ~86–91
+
+[SAVE-003] Non-transactional load hybrid world     STATUS: OPEN CRITICAL
+  Survivors/shelter mutated before fail-fast ISaveable; no stage-commit
+  (Architecture unchanged; not re-proved with throw test this pass)
+
+[SAVE-004] Dual AutoSave                           STATUS: OPEN HIGH
+  SaveSystem ctor OnPhaseChanged → AutoSave (ignores _suppressAutoSave)
+  Bootstrap also AutoSaves on Running with _suppressAutoSave
+  Files: SaveSystem.cs ~705, 840–844; InitLate.cs ~589
+
+[SAVE-005] Soft restore in release builds          STATUS: OPEN HIGH
+  FailFastRestore false outside EDITOR/DEVELOPMENT_BUILD
+  File: SaveSystem.cs DefaultFailFastRestoreForEnvironment
+
+[SAVE-007] Survivors restored by roster index      STATUS: OPEN HIGH
+  for i in data.Survivors → existing[i]; not by Id
+  File: SaveSystem.Restore.cs ~79–84
+
+[SAVE-008] Expeditions not cleared before restore  STATUS: OPEN HIGH
+  GetOrCreate merges; no ActiveExpeditions.Clear()
+  File: SaveSystem.Restore.Expeditions.cs ~23–37
+
+[SAVE-012] ModuleLookup = id => null               STATUS: OPEN HIGH
+  File: GameBootstrap.InitLate.cs ~89
+
+----------------------------- STILL OPEN — inventory / economy / data ---------------
+
+[INV-001] Add partial + return false               STATUS: OPEN HIGH
+  Capacity mid-loop return false after OnItemAdded
+  File: Inventory.cs ~317–322
+
+[INV-002] Unequip discards if bag full             STATUS: OPEN HIGH
+  Remove from equipped then Add ignoring failure
+  File: Inventory.cs ~475
+
+[ECON-001] Trade always InferTier(type)            STATUS: OPEN HIGH
+  File: DynamicEconomySystem.cs GetTradeValue ~745
+
+[ECON-002] Numeric trade quote UI                  STATUS: OPEN HIGH
+  TradeScreenUI "You offer/They ask :0.0"
+  File: TradeScreenUI.cs ~194–195
+
+[ITEM-003] Dual StreamingAssets item trees         STATUS: OPEN MEDIUM
+  Data/items.json ~166KB + root items.json ~26KB both present
+
+----------------------------- STILL OPEN — mass latent content ----------------------
+
+[DEEP4–9 ghost census] UntickedSystemsBaseline     STATUS: OPEN CRITICAL (process)
+  Baseline still lists ~436 entries (header)
+  Spot re-check Prop.Method (non-test, non-On+):
+    EventBrawl, NPCBandits, ActionExile, AfflictionSporeLung,
+    WorldEventFinalWinter, BiomeAshSwamp → STILL_NO_METHOD_CALLS
+  Dual stacks (MedicalSO vs Affliction_*, EncounterSO vs Encounter_*, etc.) unchanged
+  in structure; Parts 5–9 tables still apply unless a family was demoted (none demoted)
+
+[DEEP5-WIN Victory Start missing]                  STATUS: OPEN (not re-scanned all 14)
+  Prior: only Airlift/Broadcast/LoneSurvivor host methods; Start* unused
+  Not re-diffed every Victory_* this pass — treat OPEN until Phase 5 plan
+
+========================================================================================
+3. SEVERITY SNAPSHOT (after re-check)
+========================================================================================
+
+  FIXED since original audit (do not re-fix):
+    Warmth hook, ambient ExposureContext, bunker+room rad into interior formula,
+    material shielding min, stamina cap floor, amp sepsis cure+bind, generator noise clear,
+    TimeSystem save payload
+
+  REMAINING CRITICAL (player-facing or save integrity):
+    1. DEEP3-INV-001  Player Consume hunger/thirst sign inverted
+    2. DEEP4-WIN-001  EndgameEngine terminal does not ApplyEndgame
+    3. SAVE-002       Flashpoint expedition fields not captured
+    4. SAVE-003       Hybrid load world
+    5. Ghost content  ~400+ systems still dormant (baseline ratchet)
+
+  REMAINING HIGH (fix next after criticals):
+    AI free drink / iodine no-op / anti-rad bypass
+    Dual AutoSave, soft restore release, survivors by index, expedition clear,
+    ModuleLookup null, dual clocks residual, extraction 60 vs 100,
+    Inventory Add/Unequip, InferTier, trade UI numbers,
+    DEEP-001 starvation not lethal via needs (or missing affliction bridge)
+
+========================================================================================
+4. RECOMMENDED WORK ORDER (post-overview)
+========================================================================================
+
+  A. Honesty (1–2 days of focused PRs)
+     - Invert Consume hunger/thirst (or document domain if inverted intentionally — AI
+       proves intent is subtract)
+     - DrinkActionSO Remove water; Iodine/AntiRad via RadiationSystem
+     - EndgameEngine.OnCampaignEnded → ApplyEndgame; unify extraction day
+
+  B. Save integrity
+     - Capture expedition flashpoint fields + EditMode round-trip
+     - Single AutoSave owner; FailFast or degrade UI in release
+     - Restore survivors by Id; clear expeditions; real ModuleLookup
+     - Single ElapsedHours source from TimeSystem
+
+  C. Content pipeline (Phase 0 of Part 9 plan)
+     - Content gate CI; demote Action/NPC/Item gadgets in batches
+     - Do not expand SaveMap on dormant systems
+
+  D. Optional flagships only after A–B
+
+========================================================================================
+5. CONFIDENCE / LIMITS
+========================================================================================
+
+  High confidence FIXED/OPEN above: direct current-file evidence this pass.
+  Medium: SAVE-003 transactional load (structure read; no throw-injection retest).
+  Medium: full Victory* Start matrix (Part 5 evidence; not every file re-opened).
+  Ghost census: full Parts 5–9 remain valid; only 6 representative props re-probed for
+  method calls this pass (all still dead).
+
+  Unity batchmode / EditMode suite not re-run this overview.
+
+========================================================================================
+END OF PART 10 — MASTER STATUS OVERVIEW
+========================================================================================

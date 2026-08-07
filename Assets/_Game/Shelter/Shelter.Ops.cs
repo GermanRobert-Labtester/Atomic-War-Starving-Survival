@@ -43,27 +43,35 @@ namespace AtomicWar._Game.Shelter
                 rads = exteriorRads * overworldFactor * (1f - attenuation);
             }
 
-            var airModule = GetModule("air_filtration");
-            if (airModule != null && airModule.IsOperational)
+            // Air leaks only matter when there is something outside to draw in. On a
+            // clean day an unfiltered bunker is merely stuffy, not radioactive — this
+            // used to add its leak unconditionally, which was harmless while nothing
+            // read the interior dose but would irradiate every campaign from day one
+            // once ambient exposure was wired up.
+            if (exteriorRads > 0f)
             {
-                float lowThreshold = 25f;
-                float leakRate = 5f;
-                if (airModule.Definition is AirFiltrationModuleSO airSO)
+                var airModule = GetModule("air_filtration");
+                if (airModule != null && airModule.IsOperational)
                 {
-                    lowThreshold = airSO.LowHealthThreshold;
-                    leakRate = airSO.RadLeakPerTickWhenDepleted;
-                }
+                    float lowThreshold = 25f;
+                    float leakRate = 5f;
+                    if (airModule.Definition is AirFiltrationModuleSO airSO)
+                    {
+                        lowThreshold = airSO.LowHealthThreshold;
+                        leakRate = airSO.RadLeakPerTickWhenDepleted;
+                    }
 
-                if (airModule.FilterHealth <= lowThreshold)
-                {
-                    float depletionFactor = lowThreshold > 0f ? (lowThreshold - airModule.FilterHealth) / lowThreshold : 1f;
-                    rads += leakRate * Mathf.Clamp01(depletionFactor);
+                    if (airModule.FilterHealth <= lowThreshold)
+                    {
+                        float depletionFactor = lowThreshold > 0f ? (lowThreshold - airModule.FilterHealth) / lowThreshold : 1f;
+                        rads += leakRate * Mathf.Clamp01(depletionFactor);
+                    }
                 }
-            }
-            else
-            {
-                // Unfiltered air leak
-                rads += 5f;
+                else
+                {
+                    // Unfiltered air leak
+                    rads += 5f;
+                }
             }
 
             // Contamination the bunker is carrying itself. This is dose already inside

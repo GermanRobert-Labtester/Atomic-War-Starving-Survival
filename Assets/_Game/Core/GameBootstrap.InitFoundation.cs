@@ -203,7 +203,7 @@ namespace AtomicWar._Game.Core
                     () => Shelter.IsGrowLightActive);
             }
 
-            RadiationSystem = new RadiationSystem(NeedsSystem);
+            RadiationSystem = new RadiationSystem(NeedsSystem, BuildExposureContext);
 
             BeliefSystem = new BeliefSystem(rng: CreateSaltedRng(_worldSeed, "belief"));
             RadiationSystem.OnStatusGained += (sv, status) =>
