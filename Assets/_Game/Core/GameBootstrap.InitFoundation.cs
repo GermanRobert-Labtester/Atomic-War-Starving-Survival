@@ -109,6 +109,8 @@ namespace AtomicWar._Game.Core
             BootWeather();
             // Expedition encounters — amalgamation / burrowers / maze / tank / … .
             BootEncounters();
+            // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).
+            BootShelterModules();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

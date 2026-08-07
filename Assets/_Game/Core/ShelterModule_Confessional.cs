@@ -38,7 +38,12 @@ namespace AtomicWar._Game.Core
 
         public ConfessionalModuleState CaptureState() => _state;
 
-        public void RestoreState(ConfessionalModuleState state) => _state = state;
+        public void RestoreState(ConfessionalModuleState state)
+        {
+            _state = state ?? new ConfessionalModuleState();
+            if (_state.guiltCured == null)
+                _state.guiltCured = new List<string>();
+        }
 
         /// <summary>
         /// The guilt/trauma-bearing survivor enters as the speaker.

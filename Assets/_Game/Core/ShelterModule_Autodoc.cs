@@ -90,8 +90,10 @@ namespace AtomicWar._Game.Core
             _treatedPatientIds.Clear();
             _treatedAfflictionIds.Clear();
             if (saved == null) return;
-            _treatedPatientIds.AddRange(saved.treatedPatientIds);
-            _treatedAfflictionIds.AddRange(saved.treatedAfflictionIds);
+            if (saved.treatedPatientIds != null)
+                _treatedPatientIds.AddRange(saved.treatedPatientIds);
+            if (saved.treatedAfflictionIds != null)
+                _treatedAfflictionIds.AddRange(saved.treatedAfflictionIds);
         }
     }
 }

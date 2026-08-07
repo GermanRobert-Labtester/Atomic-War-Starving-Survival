@@ -120,8 +120,10 @@ namespace AtomicWar._Game.Core
             _repairedModuleIds.Clear();
             if (saved == null) return;
             _isActive = saved.isActive;
-            _cleanedRoomIds.AddRange(saved.cleanedRoomIds);
-            _repairedModuleIds.AddRange(saved.repairedModuleIds);
+            if (saved.cleanedRoomIds != null)
+                _cleanedRoomIds.AddRange(saved.cleanedRoomIds);
+            if (saved.repairedModuleIds != null)
+                _repairedModuleIds.AddRange(saved.repairedModuleIds);
         }
     }
 }

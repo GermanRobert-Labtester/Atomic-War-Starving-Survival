@@ -315,6 +315,25 @@ namespace AtomicWar._Game.Core
         public Encounter_SleepingCamp EncounterSleepingCamp { get; private set; }
         public Encounter_TripwireMaze EncounterTripwireMaze { get; private set; }
         public Encounter_WarlordTank EncounterWarlordTank { get; private set; }
+        // Shelter modules with CaptureState (18) — remaining modules pending CR pass.
+        public ShelterModule_AcidTrap ShelterModuleAcidTrap { get; private set; }
+        public ShelterModule_Autodoc ShelterModuleAutodoc { get; private set; }
+        public ShelterModule_CCTV ShelterModuleCctv { get; private set; }
+        public ShelterModule_Classroom ShelterModuleClassroom { get; private set; }
+        public ShelterModule_Confessional ShelterModuleConfessional { get; private set; }
+        public ShelterModule_Conveyor ShelterModuleConveyor { get; private set; }
+        public ShelterModule_DaylightSensor ShelterModuleDaylightSensor { get; private set; }
+        public ShelterModule_DroneStation ShelterModuleDroneStation { get; private set; }
+        public ShelterModule_HoloEmitter ShelterModuleHoloEmitter { get; private set; }
+        public ShelterModule_InsectFarm ShelterModuleInsectFarm { get; private set; }
+        public ShelterModule_Lathe ShelterModuleLathe { get; private set; }
+        public ShelterModule_Mortar ShelterModuleMortar { get; private set; }
+        public ShelterModule_PanicButton ShelterModulePanicButton { get; private set; }
+        public ShelterModule_Pitfall ShelterModulePitfall { get; private set; }
+        public ShelterModule_Reloader ShelterModuleReloader { get; private set; }
+        public ShelterModule_Sorter ShelterModuleSorter { get; private set; }
+        public ShelterModule_Thermostat ShelterModuleThermostat { get; private set; }
+        public ShelterModule_WasteChute ShelterModuleWasteChute { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

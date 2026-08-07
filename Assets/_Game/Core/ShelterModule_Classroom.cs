@@ -73,11 +73,14 @@ namespace AtomicWar._Game.Core
 
         public void RestoreState(ClassroomState state)
         {
+            if (state == null) return;
             _state.moduleId = state.moduleId;
             _state.maxChildren = state.maxChildren;
             _state.requiresTeacher = state.requiresTeacher;
             _state.teacherId = state.teacherId;
-            _state.enrolledChildIds = new List<string>(state.enrolledChildIds);
+            _state.enrolledChildIds = state.enrolledChildIds != null
+                ? new List<string>(state.enrolledChildIds)
+                : new List<string>();
         }
     }
 }

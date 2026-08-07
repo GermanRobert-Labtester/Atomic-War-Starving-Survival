@@ -869,6 +869,78 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _encounterWarlordTank, s, "encounter_warlord_tank",
                 () => s.CaptureState(), o => s.RestoreState((WarlordTankState)o));
 
+        public void SetShelterModuleAcidTrap(ShelterModule_AcidTrap s) =>
+            RegisterSystem(ref _shelterModuleAcidTrap, s, "shelter_module_acid_trap",
+                () => s.CaptureState(), o => s.RestoreState((AcidTrapState)o));
+
+        public void SetShelterModuleAutodoc(ShelterModule_Autodoc s) =>
+            RegisterSystem(ref _shelterModuleAutodoc, s, "shelter_module_autodoc",
+                () => s.CaptureState(), o => s.RestoreState((AutodocState)o));
+
+        public void SetShelterModuleCctv(ShelterModule_CCTV s) =>
+            RegisterSystem(ref _shelterModuleCctv, s, "shelter_module_cctv",
+                () => s.CaptureState(), o => s.RestoreState((CCTVState)o));
+
+        public void SetShelterModuleClassroom(ShelterModule_Classroom s) =>
+            RegisterSystem(ref _shelterModuleClassroom, s, "shelter_module_classroom",
+                () => s.CaptureState(), o => s.RestoreState((ClassroomState)o));
+
+        public void SetShelterModuleConfessional(ShelterModule_Confessional s) =>
+            RegisterSystem(ref _shelterModuleConfessional, s, "shelter_module_confessional",
+                () => s.CaptureState(), o => s.RestoreState((ConfessionalModuleState)o));
+
+        public void SetShelterModuleConveyor(ShelterModule_Conveyor s) =>
+            RegisterSystem(ref _shelterModuleConveyor, s, "shelter_module_conveyor",
+                () => s.CaptureState(), o => s.RestoreState((ConveyorState)o));
+
+        public void SetShelterModuleDaylightSensor(ShelterModule_DaylightSensor s) =>
+            RegisterSystem(ref _shelterModuleDaylightSensor, s, "shelter_module_daylight_sensor",
+                () => s.CaptureState(), o => s.RestoreState((DaylightSensorState)o));
+
+        public void SetShelterModuleDroneStation(ShelterModule_DroneStation s) =>
+            RegisterSystem(ref _shelterModuleDroneStation, s, "shelter_module_drone_station",
+                () => s.CaptureState(), o => s.RestoreState((DroneStationState)o));
+
+        public void SetShelterModuleHoloEmitter(ShelterModule_HoloEmitter s) =>
+            RegisterSystem(ref _shelterModuleHoloEmitter, s, "shelter_module_holo_emitter",
+                () => s.CaptureState(), o => s.RestoreState((HoloEmitterState)o));
+
+        public void SetShelterModuleInsectFarm(ShelterModule_InsectFarm s) =>
+            RegisterSystem(ref _shelterModuleInsectFarm, s, "shelter_module_insect_farm",
+                () => s.CaptureState(), o => s.RestoreState((InsectFarmState)o));
+
+        public void SetShelterModuleLathe(ShelterModule_Lathe s) =>
+            RegisterSystem(ref _shelterModuleLathe, s, "shelter_module_lathe",
+                () => s.CaptureState(), o => s.RestoreState((LatheState)o));
+
+        public void SetShelterModuleMortar(ShelterModule_Mortar s) =>
+            RegisterSystem(ref _shelterModuleMortar, s, "shelter_module_mortar",
+                () => s.CaptureState(), o => s.RestoreState((MortarState)o));
+
+        public void SetShelterModulePanicButton(ShelterModule_PanicButton s) =>
+            RegisterSystem(ref _shelterModulePanicButton, s, "shelter_module_panic_button",
+                () => s.CaptureState(), o => s.RestoreState((PanicButtonState)o));
+
+        public void SetShelterModulePitfall(ShelterModule_Pitfall s) =>
+            RegisterSystem(ref _shelterModulePitfall, s, "shelter_module_pitfall",
+                () => s.CaptureState(), o => s.RestoreState((PitfallSave)o));
+
+        public void SetShelterModuleReloader(ShelterModule_Reloader s) =>
+            RegisterSystem(ref _shelterModuleReloader, s, "shelter_module_reloader",
+                () => s.CaptureState(), o => s.RestoreState((ReloaderState)o));
+
+        public void SetShelterModuleSorter(ShelterModule_Sorter s) =>
+            RegisterSystem(ref _shelterModuleSorter, s, "shelter_module_sorter",
+                () => s.CaptureState(), o => s.RestoreState((SorterState)o));
+
+        public void SetShelterModuleThermostat(ShelterModule_Thermostat s) =>
+            RegisterSystem(ref _shelterModuleThermostat, s, "shelter_module_thermostat",
+                () => s.CaptureState(), o => s.RestoreState((ThermostatState)o));
+
+        public void SetShelterModuleWasteChute(ShelterModule_WasteChute s) =>
+            RegisterSystem(ref _shelterModuleWasteChute, s, "shelter_module_waste_chute",
+                () => s.CaptureState(), o => s.RestoreState((WasteChuteState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),
