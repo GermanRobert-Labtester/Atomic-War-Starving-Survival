@@ -27,32 +27,17 @@ namespace AtomicWar._Game.Core
 
         private void CaptureWorldAndFactionSystems(SaveData data)
         {
-            // Core world + faction social dual-path CapIf removed (batches 1–4) —
-            // RegisterSystem owns capture. RestIf keeps positional DTOs for
-            // pre-migration saves. EventRunner stays special-path (CaptureScheduledState).
+            // RegisterSystem dual-path CapIf fully removed (batches 1–4 + audit).
+            // RestIf keeps positional DTOs for pre-migration saves.
+            //
+            // Remaining special-path CapIf only (field injects, not RegisterSystem):
+            //   • EventRunner — CaptureScheduledState / RestoreScheduledState
+            //   • ShiftingHotspot — Bind(_generatedMap, _knowledgeMap) before restore
+            //   • FactionRaidPlan — SetMap before restore
+            // (Expedition + GeneratedMap captured in Capture.Entities.)
             CapIf(_eventRunner, s => data.ScheduledEvents = s.CaptureScheduledState());
-
-            // Complex special-path (Bind/SetMap before restore) — keep CapIf.
             CapIf(_shiftingHotspots, s => data.ShiftingHotspots = s.CaptureState());
             CapIf(_factionRaidPlans, s => data.FactionRaidPlans = s.CaptureState());
-            // faction_radio_intercepts / debt_collector / ghost_stations / lifeboat —
-            // dual-path CapIf removed (batch 4); RegisterSystem owns capture.
-            // tracker / dead_drops / hostage…cult_moral — already migrated.
-            // Narrative side systems (batch 1–2) already migrated off CapIf.
-        }
-
-        private void CaptureShelterTacticalSystems(SaveData data)
-        {
-            // Shelter tactical family (structural_integrity … noise) — dual-path CapIf
-            // removed; RegisterSystem + SubsystemSaveIds own capture. RestIf still
-            // reads positional DTOs for pre-migration saves.
-        }
-
-        private void CaptureSimulationExtras(SaveData data)
-        {
-            // Simulation extras + perks + personal_quests — dual-path CapIf removed
-            // (batch 4); RegisterSystem + SubsystemSaveIds own capture. RestIf still
-            // reads positional DTOs for pre-migration saves.
         }
     }
 }

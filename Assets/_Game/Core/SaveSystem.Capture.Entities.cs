@@ -22,25 +22,23 @@ namespace AtomicWar._Game.Core
 
         private void CaptureMedicalAndBodySystems(SaveData data)
         {
-            // medical / blood_transfusion / amputation / scurvy / mutagenesis —
-            // dual-path CapIf removed; RegisterSystem + SubsystemSaveIds own capture.
-            // RestIf in RestoreMedicalAndBodySystems still reads positional DTOs for
-            // pre-migration saves.
-            if (_chelationSystem != null) data.Chelation = _chelationSystem.CaptureState();
-            if (_antibioticResistSystem != null) data.AntibioticResist = _antibioticResistSystem.CaptureState();
-            if (_triageSystem != null) data.Triage = _triageSystem.CaptureState();
-            if (_polypharmacySystem != null) data.Polypharmacy = _polypharmacySystem.CaptureState();
-            if (_sterilizationSystem != null) data.Sterilization = _sterilizationSystem.CaptureState();
-            if (_childSystem != null) data.ChildDependent = _childSystem.CaptureState();
-            if (_corpseSystem != null) data.Corpses = _corpseSystem.CaptureState();
+            // All medical/body systems on RegisterSystem — dual-path positional
+            // capture removed (batch 1 medical core + audit leftovers: chelation,
+            // antibiotic_resist, triage, polypharmacy, sterilization, child_dependent,
+            // corpses). RestoreMedicalAndBodySystems still reads positional DTOs
+            // for pre-migration saves.
         }
 
         private void CaptureMapWaterAffinity(SaveData data)
         {
+            // Special-path only (not RegisterSystem):
+            //   • GeneratedMap — seed rebuild on restore (RestoreGeneratedMap)
+            //   • Affinity matrix — nested on MentalBreakSystem (no ISaveable)
+            //   • FlashpointChoreographer — host delegate capture/restore
+            // water_storage dual-path removed; RegisterSystem owns capture.
+            // RestIf (RestoreGameStateCore) still reads positional Water for legacy.
             if (_generatedMap != null)
                 data.GeneratedMap = _generatedMap.CaptureState();
-            if (_waterStorage != null)
-                data.Water = _waterStorage.CaptureState();
 
             if (_mentalBreakSystem != null)
             {
@@ -55,6 +53,7 @@ namespace AtomicWar._Game.Core
 
         private void CaptureExpeditions(SaveData data)
         {
+            // Special-path: active expedition list is field-only (not RegisterSystem).
             if (_expeditionSystem == null || _expeditionSystem.ActiveExpeditions == null)
                 return;
 

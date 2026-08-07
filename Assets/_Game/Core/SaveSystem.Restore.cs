@@ -64,6 +64,11 @@ namespace AtomicWar._Game.Core
                 _knowledgeMap.RestoreState(data.RadiationKnowledge);
             if (_inventory != null && data.Inventory != null && _itemLookup != null)
                 _inventory.RestoreState(data.Inventory, _itemLookup);
+            // water_storage dual-path removed; RestIf first so SubsystemSaveIds can
+            // overwrite. Must not run after RestoreSubsystemStates (empty positional
+            // Water would wipe subsystem-restored cisterns).
+            if (_waterStorage != null && data.Water != null)
+                _waterStorage.RestoreState(data.Water);
         }
 
         private void RestoreSurvivorsAndShelter(SaveData data)

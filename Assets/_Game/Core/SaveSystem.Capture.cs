@@ -39,8 +39,8 @@ namespace AtomicWar._Game.Core
             CaptureCoreSystems(data);
             CaptureMedicalAndBodySystems(data);
             CaptureWorldAndFactionSystems(data);
-            CaptureShelterTacticalSystems(data);
-            CaptureSimulationExtras(data);
+            // Shelter tactical + simulation extras: dual-path CapIf fully removed
+            // (batches 1–4); RegisterSystem + CaptureSubsystemStates own capture.
             CaptureSubsystemStates(data);
             CaptureMapWaterAffinity(data);
             CaptureExpeditions(data);
@@ -50,6 +50,7 @@ namespace AtomicWar._Game.Core
 
         private void CaptureCoreSystems(SaveData data)
         {
+            // Host core state (not dual-path RegisterSystem adapters).
             if (_weatherSystem != null)
                 data.Weather = _weatherSystem.GetState();
 
@@ -96,12 +97,9 @@ namespace AtomicWar._Game.Core
                 }
             }
 
-            if (_photoPeriodSystem != null)
-                data.Photoperiod = _photoPeriodSystem.GetState();
-            if (_knowledgeMap != null)
-                data.RadiationKnowledge = _knowledgeMap.CaptureState();
-            if (_inventory != null)
-                data.Inventory = _inventory.CaptureState();
+            // photoperiod / radiation_knowledge / inventory — dual-path positional
+            // capture removed; RegisterSystem + SubsystemSaveIds own capture.
+            // RestoreGameStateCore still reads positional DTOs for pre-migration saves.
         }
 
     }

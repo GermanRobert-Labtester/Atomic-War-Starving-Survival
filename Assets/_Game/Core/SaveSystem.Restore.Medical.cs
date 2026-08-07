@@ -34,17 +34,20 @@ namespace AtomicWar._Game.Core
                 _scurvySystem.RestoreState(data.Scurvy);
             if (_mutagenesisSystem != null && data.Mutagenesis != null)
                 _mutagenesisSystem.RestoreState(data.Mutagenesis);
-            if (_chelationSystem != null)
+            // Positional only when present (pre-migration). New saves restore via SubsystemSaveIds.
+            if (_chelationSystem != null && data.Chelation != null)
                 _chelationSystem.RestoreState(data.Chelation);
-            if (_antibioticResistSystem != null)
+            if (_antibioticResistSystem != null && data.AntibioticResist != null)
                 _antibioticResistSystem.RestoreState(data.AntibioticResist);
-            if (_triageSystem != null)
+            if (_triageSystem != null && data.Triage != null)
                 _triageSystem.RestoreState(data.Triage);
-            if (_polypharmacySystem != null)
+            if (_polypharmacySystem != null && data.Polypharmacy != null)
                 _polypharmacySystem.RestoreState(data.Polypharmacy);
-            if (_sterilizationSystem != null)
+            if (_sterilizationSystem != null && data.Sterilization != null)
                 _sterilizationSystem.RestoreState(data.Sterilization);
-            if (_childSystem != null)
+            // ChildDependent is a struct on SaveData — only apply when legacy payload is non-empty.
+            if (_childSystem != null
+                && (data.ChildDependent.wasChildFound || !string.IsNullOrEmpty(data.ChildDependent.childId)))
             {
                 var survivors = _getSurvivors?.Invoke();
                 _childSystem.RestoreState(data.ChildDependent, survivors);
@@ -55,9 +58,9 @@ namespace AtomicWar._Game.Core
 
         private void RestoreMapWaterAffinity(SaveData data)
         {
-            if (_waterStorage != null && data.Water != null)
-                _waterStorage.RestoreState(data.Water);
-
+            // water_storage RestIf moved to RestoreGameStateCore (before
+            // RestoreSubsystemStates). This method keeps field-only specials:
+            // affinity matrix + flashpoint choreographer.
             if (_mentalBreakSystem != null && data.Affinity != null)
                 _mentalBreakSystem.Affinity.Restore(data.Affinity.Entries);
 
