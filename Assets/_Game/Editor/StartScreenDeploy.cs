@@ -5,8 +5,8 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
-using AtomicWar._Game.UI;
+using UnityEngine.UIElements;
+using AtomicWar._Game.UI.MainMenu;
 
 namespace AtomicWar._Game.Editor
 {
@@ -19,21 +19,28 @@ namespace AtomicWar._Game.Editor
     ///   1. Imports Assets/UI_StyleReference_01.jpg (from the repo root copy)
     ///      and downscales + Crunch-compresses it so the 5504x3072 source
     ///      (~63 MB RGBA) ships as a small, low-memory texture.
-    ///   2. Generates Assets/Scenes/StartScreen.unity: a camera + fullscreen
-    ///      RawImage + StartScreenController (ESC quits immediately).
-    ///   3. Registers StartScreen as scene 0 in Build Settings (the entry scene).
+    ///   2. Generates Assets/Scenes/StartScreen.unity: a camera + a UIDocument
+    ///      running MainMenu.uxml under MainMenuController.
+    ///   3. Registers StartScreen as scene 0 and the gameplay scene as scene 1
+    ///      in Build Settings, so the menu can actually load a game.
     ///   4. Builds a standalone Linux64 executable with low-memory settings.
     ///
     /// Entry points:
     ///   Editor menu:  ASHFALL > Deploy Start Screen
+    ///                 ASHFALL > Rebuild Start Screen Scene Only
     ///   Batchmode:    -executeMethod AtomicWar._Game.Editor.StartScreenDeploy.Deploy
+    ///                 -executeMethod AtomicWar._Game.Editor.StartScreenDeploy.DeploySceneOnly
     /// </summary>
     public static class StartScreenDeploy
     {
         public const string SourceImage = "UI_StyleReference_01.jpg";          // repo root
         public const string TargetImage = "Assets/UI_StyleReference_01.jpg";   // imported copy
         public const string ScenePath = "Assets/Scenes/StartScreen.unity";
+        public const string GameplayScenePath = "Assets/Scenes/SampleScene.unity";
         public const string BuildPath = "Builds/StartScreen/ASHFALL_Start.x86_64";
+
+        public const string MenuUxmlPath = "Assets/_Game/UI/MainMenu/MainMenu.uxml";
+        public const string PanelSettingsPath = "Assets/_Game/UI/MainMenu/MainMenuPanelSettings.asset";
 
         /// <summary>Max texture dimension for the start screen (RAM saving).</summary>
         private const int MaxTextureSize = 2048;
@@ -42,6 +49,31 @@ namespace AtomicWar._Game.Editor
         public static void DeployFromMenu()
         {
             Deploy();
+        }
+
+        [MenuItem("ASHFALL/Rebuild Start Screen Scene Only")]
+        public static void DeploySceneOnlyFromMenu()
+        {
+            DeploySceneOnly();
+        }
+
+        /// <summary>
+        /// Regenerate the scene and refresh Build Settings without producing a
+        /// player. The full <see cref="Deploy"/> spends minutes on the
+        /// standalone build, which is dead time while iterating on the menu.
+        /// </summary>
+        public static void DeploySceneOnly()
+        {
+            ImportOptimisedTexture();
+
+            if (!BuildStartScreenScene())
+            {
+                Debug.LogError("[StartScreenDeploy] Scene build failed.");
+                return;
+            }
+
+            RegisterAsEntryScene();
+            Debug.Log($"[StartScreenDeploy] Scene rebuilt: {ScenePath} (no player build).");
         }
 
         /// <summary>Full pipeline: import+optimise image, build scene, register, build binary.</summary>
@@ -128,38 +160,30 @@ namespace AtomicWar._Game.Editor
             camGo.tag = "MainCamera";
             camGo.AddComponent<AudioListener>();
 
-            // --- Canvas (Overlay: no camera transform maths, cheapest to render) ---
-            var canvasGo = new GameObject("Canvas");
-            var canvas = canvasGo.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.sortingOrder = 0;
-            canvasGo.AddComponent<CanvasScaler>().uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            canvasGo.AddComponent<GraphicRaycaster>();
+            // --- Main menu (UI Toolkit) ---
+            //
+            // Deliberately no EventSystem: with one active but no
+            // PanelRaycaster/PanelEventHandler present, a UI Toolkit panel
+            // receives no input at all. Without an EventSystem the panel falls
+            // back to UI Toolkit's own default event system, which reads the
+            // legacy Input Manager -- satisfied by this project's
+            // activeInputHandler: 2 (Both).
+            var menuGo = new GameObject("MainMenu");
+            var document = menuGo.AddComponent<UIDocument>();
 
-            // --- Fullscreen RawImage ---
-            var imgGo = new GameObject("StyleReference");
-            imgGo.transform.SetParent(canvasGo.transform, worldPositionStays: false);
-            var raw = imgGo.AddComponent<RawImage>();
+            var panelSettings = AssetDatabase.LoadAssetAtPath<PanelSettings>(PanelSettingsPath);
+            var uxml = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(MenuUxmlPath);
+            if (panelSettings == null || uxml == null)
+            {
+                Debug.LogError(
+                    "[StartScreenDeploy] Main menu assets missing. Run " +
+                    "ASHFALL > Generate Main Menu Assets first.");
+                return false;
+            }
 
-            // Stretch to fill the whole screen via anchors.
-            var rect = raw.rectTransform;
-            rect.anchorMin = Vector2.zero;
-            rect.anchorMax = Vector2.one;
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-
-            Texture2D tex = AssetDatabase.LoadAssetAtPath<Texture2D>(TargetImage);
-            if (tex != null) raw.texture = tex;
-
-            // --- Controller (ESC -> quit immediately) ---
-            var ctrlGo = new GameObject("StartScreenController");
-            var ctrl = ctrlGo.AddComponent<StartScreenController>();
-            ctrl.SetBackground(raw);
-
-            // --- EventSystem so the future menu can receive input ---
-            var esGo = new GameObject("EventSystem");
-            esGo.AddComponent<UnityEngine.EventSystems.EventSystem>();
-            esGo.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
+            document.panelSettings = panelSettings;
+            document.visualTreeAsset = uxml;
+            menuGo.AddComponent<MainMenuController>();
 
             // --- Save ---
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
@@ -180,15 +204,23 @@ namespace AtomicWar._Game.Editor
         private static void RegisterAsEntryScene()
         {
             var list = new System.Collections.Generic.List<EditorBuildSettingsScene>();
-            // Put StartScreen first so the standalone boots into it.
+            // Put StartScreen first so the standalone boots into it, and the
+            // gameplay scene immediately after -- SceneManager.LoadScene from
+            // the menu fails outright if the target is not in this list.
             list.Add(new EditorBuildSettingsScene(ScenePath, true));
+            if (File.Exists(GameplayScenePath))
+                list.Add(new EditorBuildSettingsScene(GameplayScenePath, true));
+            else
+                Debug.LogWarning($"[StartScreenDeploy] Gameplay scene not found at {GameplayScenePath}.");
+
             foreach (var s in EditorBuildSettings.scenes)
             {
-                if (s != null && !string.IsNullOrEmpty(s.path) && s.path != ScenePath)
-                    list.Add(new EditorBuildSettingsScene(s.path, s.enabled));
+                if (s == null || string.IsNullOrEmpty(s.path)) continue;
+                if (s.path == ScenePath || s.path == GameplayScenePath) continue;
+                list.Add(new EditorBuildSettingsScene(s.path, s.enabled));
             }
             EditorBuildSettings.scenes = list.ToArray();
-            Debug.Log("[StartScreenDeploy] StartScreen registered as scene 0.");
+            Debug.Log("[StartScreenDeploy] StartScreen registered as scene 0, gameplay scene as scene 1.");
         }
 
         // -----------------------------------------------------------------
@@ -203,7 +235,11 @@ namespace AtomicWar._Game.Editor
                 return false;
             }
 
-            string[] scenes = { ScenePath };
+            // Both scenes: a start screen that cannot start a game is not a
+            // deployable build.
+            string[] scenes = File.Exists(GameplayScenePath)
+                ? new[] { ScenePath, GameplayScenePath }
+                : new[] { ScenePath };
 
             // RAM-lean PlayerSettings captured to a snapshot so we can restore them.
             using var restore = new PlayerSettingsSnapshot();
