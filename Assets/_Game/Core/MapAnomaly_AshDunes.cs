@@ -32,5 +32,34 @@ namespace AtomicWar._Game.Core
             OnFirearmJammedByAsh?.Invoke(_state, survivorId);
             return _state.speedMultiplier;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public AshDunesState CaptureState()
+        {
+            return new AshDunesState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                speedMultiplier = _state.speedMultiplier,
+                causesWeaponJamming = _state.causesWeaponJamming,
+            };
+        }
+
+        public void RestoreState(AshDunesState saved)
+        {
+            if (saved == null)
+            {
+                _state = new AshDunesState();
+                return;
+            }
+            _state = new AshDunesState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                speedMultiplier = saved.speedMultiplier,
+                causesWeaponJamming = saved.causesWeaponJamming,
+            };
+        }
     }
 }

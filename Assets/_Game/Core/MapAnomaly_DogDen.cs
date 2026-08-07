@@ -35,5 +35,34 @@ namespace AtomicWar._Game.Core
             }
             return new List<string>();
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public DogDenState CaptureState()
+        {
+            return new DogDenState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                hostileEncounterRate = _state.hostileEncounterRate,
+                hoarderLootPool = _state.hoarderLootPool != null ? new System.Collections.Generic.List<string>(_state.hoarderLootPool) : new System.Collections.Generic.List<string>(),
+            };
+        }
+
+        public void RestoreState(DogDenState saved)
+        {
+            if (saved == null)
+            {
+                _state = new DogDenState();
+                return;
+            }
+            _state = new DogDenState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                hostileEncounterRate = saved.hostileEncounterRate,
+                hoarderLootPool = saved.hoarderLootPool != null ? new System.Collections.Generic.List<string>(saved.hoarderLootPool) : new System.Collections.Generic.List<string>(),
+            };
+        }
     }
 }

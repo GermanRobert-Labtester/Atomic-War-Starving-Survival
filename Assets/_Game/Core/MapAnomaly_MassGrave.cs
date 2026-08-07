@@ -43,5 +43,38 @@ namespace AtomicWar._Game.Core
             OnCorpsesRobbedKarmaSanityPenalized?.Invoke(_state, survivorId, _state.karmaPenaltyOnRob, _state.sanityDropOnRob);
             return new List<string>(_state.graveRobLoot);
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public MassGraveState CaptureState()
+        {
+            return new MassGraveState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                travelMoraleDrop = _state.travelMoraleDrop,
+                karmaPenaltyOnRob = _state.karmaPenaltyOnRob,
+                sanityDropOnRob = _state.sanityDropOnRob,
+                graveRobLoot = _state.graveRobLoot != null ? new System.Collections.Generic.List<string>(_state.graveRobLoot) : new System.Collections.Generic.List<string>(),
+            };
+        }
+
+        public void RestoreState(MassGraveState saved)
+        {
+            if (saved == null)
+            {
+                _state = new MassGraveState();
+                return;
+            }
+            _state = new MassGraveState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                travelMoraleDrop = saved.travelMoraleDrop,
+                karmaPenaltyOnRob = saved.karmaPenaltyOnRob,
+                sanityDropOnRob = saved.sanityDropOnRob,
+                graveRobLoot = saved.graveRobLoot != null ? new System.Collections.Generic.List<string>(saved.graveRobLoot) : new System.Collections.Generic.List<string>(),
+            };
+        }
     }
 }

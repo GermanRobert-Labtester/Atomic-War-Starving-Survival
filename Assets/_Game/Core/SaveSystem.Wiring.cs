@@ -653,6 +653,78 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((VenusTrapState)o));
 
+        public void SetMapAnomalyAshDunes(MapAnomaly_AshDunes s) =>
+            RegisterSystem(ref _mapAnomalyAshDunes, s, "map_anomaly_ash_dunes",
+                () => s.CaptureState(), o => s.RestoreState((AshDunesState)o));
+
+        public void SetMapAnomalyBoilingLake(MapAnomaly_BoilingLake s) =>
+            RegisterSystem(ref _mapAnomalyBoilingLake, s, "map_anomaly_boiling_lake",
+                () => s.CaptureState(), o => s.RestoreState((BoilingLakeState)o));
+
+        public void SetMapAnomalyCherenkov(MapAnomaly_Cherenkov s) =>
+            RegisterSystem(ref _mapAnomalyCherenkov, s, "map_anomaly_cherenkov",
+                () => s.CaptureState(), o => s.RestoreState((CherenkovState)o));
+
+        public void SetMapAnomalyDogDen(MapAnomaly_DogDen s) =>
+            RegisterSystem(ref _mapAnomalyDogDen, s, "map_anomaly_dog_den",
+                () => s.CaptureState(), o => s.RestoreState((DogDenState)o));
+
+        public void SetMapAnomalyDontLook(MapAnomaly_DontLook s) =>
+            RegisterSystem(ref _mapAnomalyDontLook, s, "map_anomaly_dont_look",
+                () => s.CaptureState(), o => s.RestoreState((DontLookState)o));
+
+        public void SetMapAnomalyDryCoral(MapAnomaly_DryCoral s) =>
+            RegisterSystem(ref _mapAnomalyDryCoral, s, "map_anomaly_dry_coral",
+                () => s.CaptureState(), o => s.RestoreState((DryCoralState)o));
+
+        public void SetMapAnomalyFloodedSubway(MapAnomaly_FloodedSubway s) =>
+            RegisterSystem(ref _mapAnomalyFloodedSubway, s, "map_anomaly_flooded_subway",
+                () => s.CaptureState(), o => s.RestoreState((FloodedSubwayState)o));
+
+        public void SetMapAnomalyGlassCrater(MapAnomaly_GlassCrater s) =>
+            RegisterSystem(ref _mapAnomalyGlassCrater, s, "map_anomaly_glass_crater",
+                () => s.CaptureState(), o => s.RestoreState((GlassCraterState)o));
+
+        public void SetMapAnomalyMassGrave(MapAnomaly_MassGrave s) =>
+            RegisterSystem(ref _mapAnomalyMassGrave, s, "map_anomaly_mass_grave",
+                () => s.CaptureState(), o => s.RestoreState((MassGraveState)o));
+
+        public void SetMapAnomalyMirage(MapAnomaly_Mirage s) =>
+            RegisterSystem(ref _mapAnomalyMirage, s, "map_anomaly_mirage",
+                () => s.CaptureState(), o => s.RestoreState((MirageState)o));
+
+        public void SetMapAnomalyPetrifiedForest(MapAnomaly_PetrifiedForest s) =>
+            RegisterSystem(ref _mapAnomalyPetrifiedForest, s, "map_anomaly_petrified_forest",
+                () => s.CaptureState(), o => s.RestoreState((PetrifiedForestState)o));
+
+        public void SetMapAnomalyQuietZone(MapAnomaly_QuietZone s) =>
+            RegisterSystem(ref _mapAnomalyQuietZone, s, "map_anomaly_quiet_zone",
+                () => s.CaptureState(), o => s.RestoreState((QuietZoneState)o));
+
+        public void SetMapAnomalyRustedTank(MapAnomaly_RustedTank s) =>
+            RegisterSystem(ref _mapAnomalyRustedTank, s, "map_anomaly_rusted_tank",
+                () => s.CaptureState(), o => s.RestoreState((RustedTankState)o));
+
+        public void SetMapAnomalyServerFarm(MapAnomaly_ServerFarm s) =>
+            RegisterSystem(ref _mapAnomalyServerFarm, s, "map_anomaly_server_farm",
+                () => s.CaptureState(), o => s.RestoreState((ServerFarmState)o));
+
+        public void SetMapAnomalySinkhole(MapAnomaly_Sinkhole s) =>
+            RegisterSystem(ref _mapAnomalySinkhole, s, "map_anomaly_sinkhole",
+                () => s.CaptureState(), o => s.RestoreState((SinkholeState)o));
+
+        public void SetMapAnomalyTangledDrop(MapAnomaly_TangledDrop s) =>
+            RegisterSystem(ref _mapAnomalyTangledDrop, s, "map_anomaly_tangled_drop",
+                () => s.CaptureState(), o => s.RestoreState((TangledDropState)o));
+
+        public void SetMapAnomalyTireFire(MapAnomaly_TireFire s) =>
+            RegisterSystem(ref _mapAnomalyTireFire, s, "map_anomaly_tire_fire",
+                () => s.CaptureState(), o => s.RestoreState((TireFireState)o));
+
+        public void SetMapAnomalyUxoNuke(MapAnomaly_UXO_Nuke s) =>
+            RegisterSystem(ref _mapAnomalyUxoNuke, s, "map_anomaly_uxo_nuke",
+                () => s.CaptureState(), o => s.RestoreState((UXONukeState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

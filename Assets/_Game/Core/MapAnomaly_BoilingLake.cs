@@ -69,5 +69,38 @@ namespace AtomicWar._Game.Core
             OnCenterIslandLooted?.Invoke(_state, lootGained);
             return lootGained;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public BoilingLakeState CaptureState()
+        {
+            return new BoilingLakeState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                heatOutputPerTick = _state.heatOutputPerTick,
+                hullDamagePerTick = _state.hullDamagePerTick,
+                centerIslandLootValue = _state.centerIslandLootValue,
+                reactorMeltdownRadLevel = _state.reactorMeltdownRadLevel,
+            };
+        }
+
+        public void RestoreState(BoilingLakeState saved)
+        {
+            if (saved == null)
+            {
+                _state = new BoilingLakeState();
+                return;
+            }
+            _state = new BoilingLakeState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                heatOutputPerTick = saved.heatOutputPerTick,
+                hullDamagePerTick = saved.hullDamagePerTick,
+                centerIslandLootValue = saved.centerIslandLootValue,
+                reactorMeltdownRadLevel = saved.reactorMeltdownRadLevel,
+            };
+        }
     }
 }

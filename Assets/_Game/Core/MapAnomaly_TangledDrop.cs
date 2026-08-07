@@ -50,5 +50,34 @@ namespace AtomicWar._Game.Core
             }
             return null;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public TangledDropState CaptureState()
+        {
+            return new TangledDropState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                isLooted = _state.isLooted,
+                pristineLootCrate = _state.pristineLootCrate != null ? new System.Collections.Generic.List<string>(_state.pristineLootCrate) : new System.Collections.Generic.List<string>(),
+            };
+        }
+
+        public void RestoreState(TangledDropState saved)
+        {
+            if (saved == null)
+            {
+                _state = new TangledDropState();
+                return;
+            }
+            _state = new TangledDropState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                isLooted = saved.isLooted,
+                pristineLootCrate = saved.pristineLootCrate != null ? new System.Collections.Generic.List<string>(saved.pristineLootCrate) : new System.Collections.Generic.List<string>(),
+            };
+        }
     }
 }

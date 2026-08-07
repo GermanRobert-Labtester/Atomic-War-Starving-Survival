@@ -43,5 +43,30 @@ namespace AtomicWar._Game.Core
         /// Always true — the anomaly demands aversion.
         /// </summary>
         public bool ShouldAvert() => true;
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public DontLookState CaptureState()
+        {
+            return new DontLookState
+            {
+                anomalyId = _state.anomalyId,
+                warningText = _state.warningText,
+            };
+        }
+
+        public void RestoreState(DontLookState saved)
+        {
+            if (saved == null)
+            {
+                _state = new DontLookState();
+                return;
+            }
+            _state = new DontLookState
+            {
+                anomalyId = saved.anomalyId,
+                warningText = saved.warningText,
+            };
+        }
     }
 }

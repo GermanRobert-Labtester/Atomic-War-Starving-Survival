@@ -39,5 +39,38 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public GlassCraterState CaptureState()
+        {
+            return new GlassCraterState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                lootCount = _state.lootCount,
+                radiationMillisieverts = _state.radiationMillisieverts,
+                slipLacerationChance = _state.slipLacerationChance,
+                lacerationAffliction = _state.lacerationAffliction,
+            };
+        }
+
+        public void RestoreState(GlassCraterState saved)
+        {
+            if (saved == null)
+            {
+                _state = new GlassCraterState();
+                return;
+            }
+            _state = new GlassCraterState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                lootCount = saved.lootCount,
+                radiationMillisieverts = saved.radiationMillisieverts,
+                slipLacerationChance = saved.slipLacerationChance,
+                lacerationAffliction = saved.lacerationAffliction,
+            };
+        }
     }
 }

@@ -35,5 +35,34 @@ namespace AtomicWar._Game.Core
             OnSubwayWadedHypothermiaInflicted?.Invoke(_state, survivorId);
             return true;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public FloodedSubwayState CaptureState()
+        {
+            return new FloodedSubwayState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                isShortcutActive = _state.isShortcutActive,
+                hypothermiaAffliction = _state.hypothermiaAffliction,
+            };
+        }
+
+        public void RestoreState(FloodedSubwayState saved)
+        {
+            if (saved == null)
+            {
+                _state = new FloodedSubwayState();
+                return;
+            }
+            _state = new FloodedSubwayState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                isShortcutActive = saved.isShortcutActive,
+                hypothermiaAffliction = saved.hypothermiaAffliction,
+            };
+        }
     }
 }

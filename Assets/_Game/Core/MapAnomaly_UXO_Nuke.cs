@@ -44,5 +44,34 @@ namespace AtomicWar._Game.Core
             OnWarheadDetonatedRunEnded?.Invoke(_state);
             return null;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public UXONukeState CaptureState()
+        {
+            return new UXONukeState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                isDetonated = _state.isDetonated,
+                fissileMaterialItem = _state.fissileMaterialItem,
+            };
+        }
+
+        public void RestoreState(UXONukeState saved)
+        {
+            if (saved == null)
+            {
+                _state = new UXONukeState();
+                return;
+            }
+            _state = new UXONukeState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                isDetonated = saved.isDetonated,
+                fissileMaterialItem = saved.fissileMaterialItem,
+            };
+        }
     }
 }

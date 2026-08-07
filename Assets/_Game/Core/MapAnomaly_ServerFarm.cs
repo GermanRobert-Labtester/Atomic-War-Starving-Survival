@@ -14,7 +14,9 @@ namespace AtomicWar._Game.Core
         public float heatstrokeThresholdHours = 6f;
         public int goldPerMotherboard = 3;
         public int motherboardsAvailable = 10;
-        public Dictionary<string, float> survivorHoursInside = new Dictionary<string, float>();
+        // Parallel arrays — JsonUtility-safe (Dictionary is not).
+        public string[] survivorIdsInside = Array.Empty<string>();
+        public float[] survivorHoursInside = Array.Empty<float>();
     }
 
     /// <summary>
@@ -26,6 +28,7 @@ namespace AtomicWar._Game.Core
     public class MapAnomaly_ServerFarm
     {
         private ServerFarmState _state = new ServerFarmState();
+        private Dictionary<string, float> _hoursInside = new Dictionary<string, float>();
 
         public event Action<ServerFarmState, string> OnServerFarmEntered;
         public event Action<ServerFarmState, string> OnHeatstrokeContracted;
@@ -34,46 +37,31 @@ namespace AtomicWar._Game.Core
 
         public ServerFarmState State => _state;
 
-        /// <summary>
-        /// A survivor enters the server farm shelter.
-        /// </summary>
-        /// <param name="survivorId">The survivor's unique identifier.</param>
         public void EnterShelter(string survivorId)
         {
             if (string.IsNullOrEmpty(survivorId))
                 return;
 
-            if (!_state.survivorHoursInside.ContainsKey(survivorId))
-            {
-                _state.survivorHoursInside[survivorId] = 0f;
-            }
+            if (!_hoursInside.ContainsKey(survivorId))
+                _hoursInside[survivorId] = 0f;
 
             OnServerFarmEntered?.Invoke(_state, survivorId);
 
             if (_state.blizzardProtection)
-            {
                 OnBlizzardSheltered?.Invoke(_state, survivorId);
-            }
         }
 
-        /// <summary>
-        /// Advances the heatstroke timer for a survivor inside the server farm.
-        /// If cumulative hours exceed the threshold, heatstroke is contracted.
-        /// </summary>
-        /// <param name="survivorId">The survivor's unique identifier.</param>
-        /// <param name="hours">Number of hours to advance.</param>
-        /// <returns>True if heatstroke was contracted.</returns>
         public bool TickHour(string survivorId, float hours)
         {
             if (string.IsNullOrEmpty(survivorId))
                 return false;
 
-            if (!_state.survivorHoursInside.ContainsKey(survivorId))
+            if (!_hoursInside.ContainsKey(survivorId))
                 return false;
 
-            _state.survivorHoursInside[survivorId] += hours;
+            _hoursInside[survivorId] += hours;
 
-            if (_state.survivorHoursInside[survivorId] >= _state.heatstrokeThresholdHours)
+            if (_hoursInside[survivorId] >= _state.heatstrokeThresholdHours)
             {
                 OnHeatstrokeContracted?.Invoke(_state, survivorId);
                 return true;
@@ -82,12 +70,6 @@ namespace AtomicWar._Game.Core
             return false;
         }
 
-        /// <summary>
-        /// Attempts to harvest gold from motherboards.
-        /// </summary>
-        /// <param name="motherboards">Number of motherboards to harvest.</param>
-        /// <param name="rng">Random number generator.</param>
-        /// <returns>Total gold harvested.</returns>
         public int TryHarvestGold(int motherboards, System.Random rng)
         {
             if (motherboards <= 0 || rng == null)
@@ -102,12 +84,71 @@ namespace AtomicWar._Game.Core
             return totalGold;
         }
 
-        /// <summary>
-        /// Returns whether the server farm provides blizzard protection.
-        /// </summary>
         public bool IsBlizzardSafe()
         {
             return _state.blizzardProtection;
+        }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public ServerFarmState CaptureState()
+        {
+            var ids = new string[_hoursInside.Count];
+            var hours = new float[_hoursInside.Count];
+            int i = 0;
+            foreach (var kvp in _hoursInside)
+            {
+                ids[i] = kvp.Key;
+                hours[i] = kvp.Value;
+                i++;
+            }
+
+            return new ServerFarmState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                ambientTemperature = _state.ambientTemperature,
+                blizzardProtection = _state.blizzardProtection,
+                heatstrokeThresholdHours = _state.heatstrokeThresholdHours,
+                goldPerMotherboard = _state.goldPerMotherboard,
+                motherboardsAvailable = _state.motherboardsAvailable,
+                survivorIdsInside = ids,
+                survivorHoursInside = hours
+            };
+        }
+
+        public void RestoreState(ServerFarmState saved)
+        {
+            if (saved == null)
+            {
+                _state = new ServerFarmState();
+                _hoursInside = new Dictionary<string, float>();
+                return;
+            }
+
+            _state = new ServerFarmState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                ambientTemperature = saved.ambientTemperature,
+                blizzardProtection = saved.blizzardProtection,
+                heatstrokeThresholdHours = saved.heatstrokeThresholdHours,
+                goldPerMotherboard = saved.goldPerMotherboard,
+                motherboardsAvailable = saved.motherboardsAvailable,
+                survivorIdsInside = saved.survivorIdsInside ?? Array.Empty<string>(),
+                survivorHoursInside = saved.survivorHoursInside ?? Array.Empty<float>()
+            };
+
+            _hoursInside = new Dictionary<string, float>();
+            if (_state.survivorIdsInside != null && _state.survivorHoursInside != null)
+            {
+                int n = Math.Min(_state.survivorIdsInside.Length, _state.survivorHoursInside.Length);
+                for (int i = 0; i < n; i++)
+                {
+                    if (!string.IsNullOrEmpty(_state.survivorIdsInside[i]))
+                        _hoursInside[_state.survivorIdsInside[i]] = _state.survivorHoursInside[i];
+                }
+            }
         }
     }
 }

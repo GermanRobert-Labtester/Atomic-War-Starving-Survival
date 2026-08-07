@@ -50,5 +50,36 @@ namespace AtomicWar._Game.Core
 
             return _state.foodLootCount;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public SinkholeState CaptureState()
+        {
+            return new SinkholeState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                ropeSnapDeathChance = _state.ropeSnapDeathChance,
+                caveInChance = _state.caveInChance,
+                foodLootCount = _state.foodLootCount,
+            };
+        }
+
+        public void RestoreState(SinkholeState saved)
+        {
+            if (saved == null)
+            {
+                _state = new SinkholeState();
+                return;
+            }
+            _state = new SinkholeState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                ropeSnapDeathChance = saved.ropeSnapDeathChance,
+                caveInChance = saved.caveInChance,
+                foodLootCount = saved.foodLootCount,
+            };
+        }
     }
 }

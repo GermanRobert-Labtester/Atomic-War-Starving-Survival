@@ -37,5 +37,36 @@ namespace AtomicWar._Game.Core
             }
             return 0f;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public TireFireState CaptureState()
+        {
+            return new TireFireState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                pollutionRadiusNodes = _state.pollutionRadiusNodes,
+                airQualityPenaltyRatio = _state.airQualityPenaltyRatio,
+                mutatedCreatureAttractionMultiplier = _state.mutatedCreatureAttractionMultiplier,
+            };
+        }
+
+        public void RestoreState(TireFireState saved)
+        {
+            if (saved == null)
+            {
+                _state = new TireFireState();
+                return;
+            }
+            _state = new TireFireState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                pollutionRadiusNodes = saved.pollutionRadiusNodes,
+                airQualityPenaltyRatio = saved.airQualityPenaltyRatio,
+                mutatedCreatureAttractionMultiplier = saved.mutatedCreatureAttractionMultiplier,
+            };
+        }
     }
 }

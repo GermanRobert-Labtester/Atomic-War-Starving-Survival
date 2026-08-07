@@ -257,6 +257,25 @@ namespace AtomicWar._Game.Core
         public MapHazard_MagneticAnomaly MapHazardMagneticAnomaly { get; private set; }
         public MapHazard_SinkholeCollapse MapHazardSinkholeCollapse { get; private set; }
         public MapHazard_VenusTrap MapHazardVenusTrap { get; private set; }
+        // Map anomalies — expedition/map node anomaly trackers.
+        public MapAnomaly_AshDunes MapAnomalyAshDunes { get; private set; }
+        public MapAnomaly_BoilingLake MapAnomalyBoilingLake { get; private set; }
+        public MapAnomaly_Cherenkov MapAnomalyCherenkov { get; private set; }
+        public MapAnomaly_DogDen MapAnomalyDogDen { get; private set; }
+        public MapAnomaly_DontLook MapAnomalyDontLook { get; private set; }
+        public MapAnomaly_DryCoral MapAnomalyDryCoral { get; private set; }
+        public MapAnomaly_FloodedSubway MapAnomalyFloodedSubway { get; private set; }
+        public MapAnomaly_GlassCrater MapAnomalyGlassCrater { get; private set; }
+        public MapAnomaly_MassGrave MapAnomalyMassGrave { get; private set; }
+        public MapAnomaly_Mirage MapAnomalyMirage { get; private set; }
+        public MapAnomaly_PetrifiedForest MapAnomalyPetrifiedForest { get; private set; }
+        public MapAnomaly_QuietZone MapAnomalyQuietZone { get; private set; }
+        public MapAnomaly_RustedTank MapAnomalyRustedTank { get; private set; }
+        public MapAnomaly_ServerFarm MapAnomalyServerFarm { get; private set; }
+        public MapAnomaly_Sinkhole MapAnomalySinkhole { get; private set; }
+        public MapAnomaly_TangledDrop MapAnomalyTangledDrop { get; private set; }
+        public MapAnomaly_TireFire MapAnomalyTireFire { get; private set; }
+        public MapAnomaly_UXO_Nuke MapAnomalyUxoNuke { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

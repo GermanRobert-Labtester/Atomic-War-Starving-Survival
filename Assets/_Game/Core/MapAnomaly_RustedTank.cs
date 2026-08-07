@@ -35,5 +35,34 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public RustedTankState CaptureState()
+        {
+            return new RustedTankState
+            {
+                anomalyId = _state.anomalyId,
+                displayName = _state.displayName,
+                isImpassableForVehicles = _state.isImpassableForVehicles,
+                stormRadiationProtectionRatio = _state.stormRadiationProtectionRatio,
+            };
+        }
+
+        public void RestoreState(RustedTankState saved)
+        {
+            if (saved == null)
+            {
+                _state = new RustedTankState();
+                return;
+            }
+            _state = new RustedTankState
+            {
+                anomalyId = saved.anomalyId,
+                displayName = saved.displayName,
+                isImpassableForVehicles = saved.isImpassableForVehicles,
+                stormRadiationProtectionRatio = saved.stormRadiationProtectionRatio,
+            };
+        }
     }
 }

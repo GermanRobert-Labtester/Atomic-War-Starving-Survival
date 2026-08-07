@@ -101,6 +101,8 @@ namespace AtomicWar._Game.Core
             BootVictoryPaths();
             // Map hazards — expedition node hazards (acid geyser / ashlanche / traps / …).
             BootMapHazards();
+            // Map anomalies — expedition node anomalies (cherenkov / mirage / quiet zone / …).
+            BootMapAnomalies();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {
