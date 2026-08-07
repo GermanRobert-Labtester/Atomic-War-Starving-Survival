@@ -111,6 +111,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetGossipSystem(Gossip);
             SaveSystem.SetAdaptiveWarlordsSystem(AdaptiveWarlords);
             SaveSystem.SetBilgePumpsSystem(BilgePumps);
+            SaveSystem.SetCarrionBirdsSystem(CarrionBirds);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);
@@ -340,6 +341,8 @@ namespace AtomicWar._Game.Core
                 SurvivalPerks,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             CorpseSystem.BindDeathHandler();
+            // Prompt #658 — outdoor burial / disposal feeds carrion birds.
+            WireCarrionBirds();
 
             PantrySystem = new PantryContaminationSystem(
                 Inventory, new System.Random(_worldSeed + 18));

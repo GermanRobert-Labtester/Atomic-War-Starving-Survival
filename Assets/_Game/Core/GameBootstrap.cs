@@ -214,6 +214,8 @@ namespace AtomicWar._Game.Core
         public System_AdaptiveWarlords AdaptiveWarlords { get; private set; }
         // Prompt #806 — bilge pumps: flood water → purified cistern water.
         public System_BilgePumps BilgePumps { get; private set; }
+        // Prompt #658 — outdoor corpses attract vultures (hatch vis + map danger + morale).
+        public System_CarrionBirds CarrionBirds { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.
@@ -382,6 +384,8 @@ namespace AtomicWar._Game.Core
         /// <summary>Last day house artillery damage was applied (Prompt #79).</summary>
         private int _lastHouseDay;
         private int _lastHatchVisDay;
+        /// <summary>Prompt #658 — true while shelter-node danger boost from vultures is applied.</summary>
+        private bool _carrionMapDangerApplied;
 
         // ── Day-tick GC caches (no per-hour new Random / context / lambda) ──
         private System.Random _mentalBreakRng;

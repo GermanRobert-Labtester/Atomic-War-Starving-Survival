@@ -467,6 +467,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((BilgePumpsState)o));
 
+        /// <summary>Prompt #658 — outdoor carrion birds (hatch visibility / map danger / morale).</summary>
+        public void SetCarrionBirdsSystem(System_CarrionBirds s) =>
+            RegisterSystem(ref _carrionBirdsSystem, s, "carrion_birds",
+                () => s.CaptureState(),
+                o => s.RestoreState((CarrionBirdsState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",

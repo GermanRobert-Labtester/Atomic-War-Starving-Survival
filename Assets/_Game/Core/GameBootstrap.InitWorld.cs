@@ -114,6 +114,8 @@ namespace AtomicWar._Game.Core
             TunnelingSystem = new TunnelingSystem();
             TunnelingSystem.SeedNeighbor(new System.Random(_worldSeed + 124));
             HatchVisibilitySystem = new HatchVisibilitySystem();
+            // Prompt #658 — outdoor carrion attracts vultures (wired to CorpseSystem in InitLate).
+            CarrionBirds = new System_CarrionBirds();
             EscapeHatchSystem = new EscapeHatchSystem();
             MaterialShieldingSystem = new MaterialShieldingSystem();
             AirlockSystem = new AirlockSystem();
@@ -291,6 +293,109 @@ namespace AtomicWar._Game.Core
         public void DeactivateBilgePumps()
         {
             BilgePumps?.Deactivate();
+        }
+
+        /// <summary>
+        /// Prompt #658 — outdoor corpse disposal attracts carrion birds; birds mark
+        /// hatch visibility, shelter map danger, and daily morale pressure.
+        /// </summary>
+        private void WireCarrionBirds()
+        {
+            if (CarrionBirds == null) return;
+
+            if (CorpseSystem != null)
+            {
+                // Burying outside leaves remains beyond the hatch — vultures notice.
+                CorpseSystem.OnCorpseBuried += _ => CarrionBirds?.AddCorpse();
+            }
+
+            if (WasteSystem != null)
+            {
+                // Outdoor waste dumps also draw scavengers when outdoor corpses exist
+                // (reinforces presence without adding corpses).
+                WasteSystem.OnOutsideDisposal += _ =>
+                {
+                    if (CarrionBirds == null || CarrionBirds.CorpseCount <= 0) return;
+                    // Nudge hatch visibility immediately if flock already circling.
+                    if (CarrionBirds.VulturesPresent)
+                        ApplyCarrionHatchVisibility();
+                };
+            }
+
+            CarrionBirds.OnVulturesArrived += _ =>
+            {
+                ApplyCarrionHatchVisibility();
+                ApplyCarrionMapDanger(true);
+                Debug.Log("[GameBootstrap] CARRION: vultures circling the hatch.");
+            };
+
+            CarrionBirds.OnVulturesDeparted += _ =>
+            {
+                ApplyCarrionMapDanger(false);
+                Debug.Log("[GameBootstrap] CARRION: flock dispersed.");
+            };
+        }
+
+        /// <summary>
+        /// Prompt #658 — daily: arrive/depart flock, re-assert hatch mark, morale pressure.
+        /// </summary>
+        private void TickCarrionBirdsDaily()
+        {
+            if (CarrionBirds == null) return;
+
+            CarrionBirds.TickDay();
+
+            if (!CarrionBirds.VulturesPresent) return;
+
+            ApplyCarrionHatchVisibility();
+            ApplyCarrionMapDanger(true);
+            ApplyCarrionMoralePressure();
+        }
+
+        private void ApplyCarrionHatchVisibility()
+        {
+            if (HatchVisibilitySystem == null || CarrionBirds == null) return;
+            float target = CarrionBirds.GetHatchVisibility();
+            if (target <= 0f) return;
+            float current = HatchVisibilitySystem.Visibility;
+            if (current < target)
+                HatchVisibilitySystem.AddVisibility(target - current);
+        }
+
+        private void ApplyCarrionMapDanger(bool present)
+        {
+            var node = GeneratedMap?.ShelterNode;
+            if (node == null) return;
+
+            if (present && !_carrionMapDangerApplied)
+            {
+                node.DangerLevel += System_CarrionBirds.MapDangerBoost;
+                _carrionMapDangerApplied = true;
+                GeneratedMap.NotifyMapChanged();
+            }
+            else if (!present && _carrionMapDangerApplied)
+            {
+                node.DangerLevel = Mathf.Max(0f, node.DangerLevel - System_CarrionBirds.MapDangerBoost);
+                _carrionMapDangerApplied = false;
+                GeneratedMap.NotifyMapChanged();
+            }
+        }
+
+        private void ApplyCarrionMoralePressure()
+        {
+            if (NeedsSystem == null || Survivors == null) return;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                NeedsSystem.Modify(sv, NeedKind.Morale, -System_CarrionBirds.MoralePressurePerDay);
+            }
+        }
+
+        /// <summary>Prompt #658 — UI/test hook: clear outdoor corpses so the flock can leave.</summary>
+        public void ClearOutdoorCarrion()
+        {
+            CarrionBirds?.RemoveCorpses();
         }
 
     }

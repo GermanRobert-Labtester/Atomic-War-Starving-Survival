@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 namespace AtomicWar._Game.Core
 {
@@ -20,7 +21,13 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class System_CarrionBirds
     {
-        private CarrionBirdsState _state = new CarrionBirdsState();
+        /// <summary>Shelter-node danger added while vultures circle (host applies).</summary>
+        public const float MapDangerBoost = 2f;
+
+        /// <summary>Morale lost per living survivor per day while vultures circle.</summary>
+        public const float MoralePressurePerDay = 3f;
+
+        private CarrionBirdsState _state;
 
         // -- Events --
         public event Action<CarrionBirdsState> OnVulturesArrived;
@@ -28,7 +35,19 @@ namespace AtomicWar._Game.Core
         public event Action<CarrionBirdsState, int> OnCorpseAdded;
         public event Action<CarrionBirdsState> OnCorpsesRemoved;
 
+        public System_CarrionBirds(CarrionBirdsState state = null)
+        {
+            _state = state != null ? CloneState(state) : new CarrionBirdsState();
+            if (string.IsNullOrEmpty(_state.systemId))
+                _state.systemId = "system_carrion_birds";
+            if (string.IsNullOrEmpty(_state.displayName))
+                _state.displayName = "Carrion Birds";
+        }
+
         public CarrionBirdsState State => _state;
+        public string SystemId => _state.systemId;
+        public int CorpseCount => _state.corpseCount;
+        public bool VulturesPresent => _state.vulturesPresent;
 
         /// <summary>
         /// Adds a corpse to the area outside the hatch.
@@ -84,11 +103,46 @@ namespace AtomicWar._Game.Core
         // Save / Load
         // -----------------------------------------------------------------
 
-        public CarrionBirdsState GetState() => _state;
+        /// <summary>Snapshot copy for save (does not share live state).</summary>
+        public CarrionBirdsState CaptureState()
+        {
+            return CloneState(_state);
+        }
+
+        /// <summary>Legacy alias used by older call sites; prefer <see cref="CaptureState"/>.</summary>
+        public CarrionBirdsState GetState() => CaptureState();
 
         public void RestoreState(CarrionBirdsState state)
         {
-            _state = state ?? new CarrionBirdsState();
+            if (state == null)
+            {
+                _state = new CarrionBirdsState();
+                return;
+            }
+
+            _state = CloneState(state);
+            if (string.IsNullOrEmpty(_state.systemId))
+                _state.systemId = "system_carrion_birds";
+            if (string.IsNullOrEmpty(_state.displayName))
+                _state.displayName = "Carrion Birds";
+            _state.corpseCount = Mathf.Max(0, _state.corpseCount);
+            _state.hatchVisibilityOverride = Mathf.Clamp01(_state.hatchVisibilityOverride);
+            if (!_state.vulturesPresent)
+                _state.hatchVisibilityOverride = 0f;
+            else if (_state.hatchVisibilityOverride <= 0f)
+                _state.hatchVisibilityOverride = 1f;
+        }
+
+        private static CarrionBirdsState CloneState(CarrionBirdsState src)
+        {
+            return new CarrionBirdsState
+            {
+                systemId = string.IsNullOrEmpty(src.systemId) ? "system_carrion_birds" : src.systemId,
+                displayName = string.IsNullOrEmpty(src.displayName) ? "Carrion Birds" : src.displayName,
+                corpseCount = Mathf.Max(0, src.corpseCount),
+                vulturesPresent = src.vulturesPresent,
+                hatchVisibilityOverride = Mathf.Clamp01(src.hatchVisibilityOverride)
+            };
         }
     }
 }

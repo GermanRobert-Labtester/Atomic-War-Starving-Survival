@@ -183,6 +183,7 @@ namespace AtomicWar._Game.Core
         private System_Gossip _gossipSystem;
         private System_AdaptiveWarlords _adaptiveWarlordsSystem;
         private System_BilgePumps _bilgePumpsSystem;
+        private System_CarrionBirds _carrionBirdsSystem;
         private RiverNodeSystem _riverNodeSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.

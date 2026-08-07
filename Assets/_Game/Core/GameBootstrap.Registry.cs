@@ -125,6 +125,9 @@ namespace AtomicWar._Game.Core
             // Prompt #806 — daily bilge harvest while rooms stay flooded.
             _registry.RegisterPerSubstep("bilge_pumps_daily",
                 _registry.DayGated("bilge_pumps", day => TickBilgePumpsDaily()));
+            // Prompt #658 — carrion birds arrive/depart + hatch/map/morale pressure.
+            _registry.RegisterPerSubstep("carrion_birds_daily",
+                _registry.DayGated("carrion_birds", day => TickCarrionBirdsDaily()));
             _registry.RegisterPerSubstep("perimeter_trap", h => PerimeterTrapSystem?.Tick(h));
             _registry.RegisterPerSubstep("noise", h =>
             {

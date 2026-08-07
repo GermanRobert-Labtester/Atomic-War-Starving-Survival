@@ -144,6 +144,7 @@ namespace AtomicWar._Game.Core
             { "Gossip",                  new[] { "gossip", "gossip_daily" } },
             { "AdaptiveWarlords",        new[] { "adaptive_warlords" } },
             { "BilgePumps",              new[] { "bilge_pumps", "bilge_pumps_daily" } },
+            { "CarrionBirds",            new[] { "carrion_birds", "carrion_birds_daily" } },
             { "PersonalQuests",          new[] { "personal_quests", "personal_quests_daily", "personal_quests_morale" } },
             { "SocialPerks",             new[] { "social_perks", "social_perks_daily" } },
             { "CombatPerks",             new[] { "combat_perks" } },
