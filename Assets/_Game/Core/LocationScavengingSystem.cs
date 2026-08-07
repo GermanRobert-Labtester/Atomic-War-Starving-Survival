@@ -37,6 +37,8 @@ namespace AtomicWar._Game.Core
         private Item_AmmoTypes _ammoTypes;
         private Func<string, ItemDefinition> _ammoItemFactory;
         private Func<string, string> _getLocationLootTableId;
+        private Func<string, ItemDefinition> _worldItemFactory;
+        private bool _worldLootEnabled = true;
 
         public event Action<ActiveMission> OnMissionStarted;
         public event Action<ActiveMission, List<ItemDefinition>> OnMissionCompleted;
@@ -44,6 +46,9 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Last exclusive ammo ids injected into a scavenging roll (tests).</summary>
         public List<string> LastInjectedAmmoIds { get; } = new List<string>();
+
+        /// <summary>Last world-item / attachment ids injected into a scavenging roll (tests).</summary>
+        public List<string> LastInjectedWorldLootIds { get; } = new List<string>();
 
         public LocationScavengingSystem(
             RadiationSystem radSystem,
@@ -95,6 +100,21 @@ namespace AtomicWar._Game.Core
             _ammoTypes = ammoTypes;
             _ammoItemFactory = ammoItemFactory;
             _getLocationLootTableId = getLocationLootTableId;
+        }
+
+        /// <summary>
+        /// Wire faction world-item / attachment loot (attachments extremely rare loose).
+        /// Uses <see cref="Item_WorldCatalog"/> pools; factory optional for SO lookup.
+        /// </summary>
+        public void BindWorldLoot(
+            Func<string, ItemDefinition> worldItemFactory = null,
+            Func<string, string> getLocationLootTableId = null,
+            bool enabled = true)
+        {
+            _worldItemFactory = worldItemFactory;
+            if (getLocationLootTableId != null)
+                _getLocationLootTableId = getLocationLootTableId;
+            _worldLootEnabled = enabled;
         }
 
         public void SetForagerFoodItems(ItemDefinition roots, ItemDefinition berries)
@@ -362,12 +382,15 @@ namespace AtomicWar._Game.Core
         {
             var loot = new List<ItemDefinition>();
             LastInjectedAmmoIds.Clear();
+            LastInjectedWorldLootIds.Clear();
 
             int itemCount = 1 + (int)(dangerLevel / 3f);
             itemCount = Mathf.Clamp(itemCount, 1, 4);
 
             // Military sites / high danger: inject exclusive ammo before generic rolls.
             TryInjectMilitaryAmmo(loot, dangerLevel, locationId);
+            // Faction world gear + extremely rare loose attachments.
+            TryInjectFactionWorldLoot(loot, dangerLevel, locationId);
 
             if (_lootTable != null)
             {
@@ -445,6 +468,47 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        /// <summary>
+        /// Inject faction world gear on military/bandit/insurgent tables and high-danger sites.
+        /// Loose attachments use extremely low chance (usually already on guns).
+        /// </summary>
+        private void TryInjectFactionWorldLoot(List<ItemDefinition> loot, float dangerLevel, string locationId)
+        {
+            if (!_worldLootEnabled || loot == null) return;
+
+            string tableId = null;
+            if (_getLocationLootTableId != null && !string.IsNullOrEmpty(locationId))
+                tableId = _getLocationLootTableId(locationId);
+
+            bool factionSite = Item_WorldCatalog.IsFactionGearLootTable(tableId)
+                || Item_AmmoTypes.IsMilitaryLootTable(tableId)
+                || dangerLevel >= 3.5f;
+            if (!factionSite) return;
+
+            float chance = Item_WorldCatalog.IsFactionGearLootTable(tableId)
+                ? 0.40f + dangerLevel * 0.05f
+                : 0.15f + dangerLevel * 0.04f;
+            if (_rng.NextDouble() >= Mathf.Clamp01(chance)) return;
+
+            var faction = Item_WorldCatalog.SourceForLootTable(tableId);
+            if (faction == WorldLootFaction.Civilian && dangerLevel >= 4f)
+                faction = WorldLootFaction.Military;
+            else if (faction == WorldLootFaction.Civilian && dangerLevel >= 3.5f)
+                faction = WorldLootFaction.Bandit;
+
+            int count = dangerLevel >= 5f ? 2 : 1;
+            var rolls = Item_WorldCatalog.RollFactionWorldLoot(
+                faction, _rng, count, allowAttachments: true, dangerLevel: dangerLevel);
+            for (int i = 0; i < rolls.Count; i++)
+            {
+                var roll = rolls[i];
+                var def = ResolveWorldItemDef(roll.ItemId);
+                if (def == null) continue;
+                loot.Add(def);
+                LastInjectedWorldLootIds.Add(roll.ItemId);
+            }
+        }
+
         private ItemDefinition ResolveAmmoDef(string ammoId)
         {
             if (string.IsNullOrEmpty(ammoId)) return null;
@@ -472,6 +536,26 @@ namespace AtomicWar._Game.Core
             item.weight = load.WeightPerRound;
             item.tradeValue = load.TradeValue;
             return item;
+        }
+
+        private ItemDefinition ResolveWorldItemDef(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return null;
+            if (_worldItemFactory != null)
+            {
+                var made = _worldItemFactory(itemId);
+                if (made != null) return made;
+            }
+            if (_itemCatalog?.items != null)
+            {
+                for (int i = 0; i < _itemCatalog.items.Count; i++)
+                {
+                    var it = _itemCatalog.items[i];
+                    if (it != null && string.Equals(it.id, itemId, StringComparison.Ordinal))
+                        return it;
+                }
+            }
+            return Item_WorldCatalog.CreateItemDefinition(itemId);
         }
 
         // -----------------------------------------------------------------

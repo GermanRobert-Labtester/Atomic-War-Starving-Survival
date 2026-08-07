@@ -12,7 +12,7 @@ namespace AtomicWar._Game.Core
     /// Definitions are data-only; StreamingAssets/Data/items.json mirrors these ids
     /// for the JSON → ScriptableObject importer.
     /// </summary>
-    public static class Item_WorldCatalog
+    public static partial class Item_WorldCatalog
     {
         /// <summary>Lightweight definition used by tests and future loot tables.</summary>
         public sealed class WorldItemDef

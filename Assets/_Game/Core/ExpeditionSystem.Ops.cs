@@ -243,6 +243,10 @@ namespace AtomicWar._Game.Core
             if (TryInjectFactionAmmoLoot(exp))
                 return;
 
+            // Faction caches: world gear + extremely rare loose attachments.
+            if (TryInjectFactionWorldLoot(exp))
+                return;
+
             var item = _itemCatalog.items[_rng.Next(_itemCatalog.items.Count)];
             if (item == null) return;
 
@@ -317,6 +321,77 @@ namespace AtomicWar._Game.Core
                 }
             }
             return any;
+        }
+
+        /// <summary>
+        /// Inject faction world gear / extremely rare loose attachments on military,
+        /// rebel, bandit, insurgent, and high-danger sites.
+        /// </summary>
+        private bool TryInjectFactionWorldLoot(ExpeditionState exp)
+        {
+            LastFactionWorldLootIds.Clear();
+            if (exp == null || !_worldLootEnabled) return false;
+
+            string lootTableId = null;
+            var node = ResolveMapNode(exp.TargetLocationId);
+            if (node != null) lootTableId = node.LootTableId;
+
+            bool factionSite = Item_WorldCatalog.IsFactionGearLootTable(lootTableId)
+                || Item_AmmoTypes.IsMilitaryLootTable(lootTableId)
+                || exp.DangerLevel >= 3.5f;
+            if (!factionSite) return false;
+
+            float chance = Item_WorldCatalog.IsFactionGearLootTable(lootTableId)
+                || Item_AmmoTypes.IsMilitaryLootTable(lootTableId)
+                ? 0.40f + exp.DangerLevel * 0.05f
+                : 0.14f + exp.DangerLevel * 0.03f;
+            if (_rng.NextDouble() >= Mathf.Clamp01(chance)) return false;
+
+            var faction = Item_WorldCatalog.SourceForLootTable(lootTableId);
+            if (faction == WorldLootFaction.Civilian)
+            {
+                if (exp.DangerLevel >= 5f) faction = WorldLootFaction.Military;
+                else if (exp.DangerLevel >= 3.5f) faction = WorldLootFaction.Bandit;
+            }
+
+            int count = exp.DangerLevel >= 5f ? 2 : 1;
+            var rolls = Item_WorldCatalog.RollFactionWorldLoot(
+                faction, _rng, count, allowAttachments: true, dangerLevel: exp.DangerLevel);
+            if (rolls == null || rolls.Count == 0) return false;
+
+            bool any = false;
+            for (int i = 0; i < rolls.Count; i++)
+            {
+                string id = rolls[i].ItemId;
+                var def = ResolveWorldItemDefinition(id);
+                if (def == null) continue;
+                if (exp.TryAddLoot(def))
+                {
+                    LastFactionWorldLootIds.Add(id);
+                    any = true;
+                }
+            }
+            return any;
+        }
+
+        private ItemDefinition ResolveWorldItemDefinition(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId)) return null;
+            if (_worldItemFactory != null)
+            {
+                var made = _worldItemFactory(itemId);
+                if (made != null) return made;
+            }
+            if (_itemCatalog?.items != null)
+            {
+                for (int i = 0; i < _itemCatalog.items.Count; i++)
+                {
+                    var it = _itemCatalog.items[i];
+                    if (it != null && string.Equals(it.id, itemId, StringComparison.Ordinal))
+                        return it;
+                }
+            }
+            return Item_WorldCatalog.CreateItemDefinition(itemId);
         }
 
         private ItemDefinition ResolveAmmoItemDefinition(string ammoId)

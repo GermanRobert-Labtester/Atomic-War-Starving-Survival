@@ -76,6 +76,8 @@ namespace AtomicWar._Game.Core
         // Structured caliber combat + faction ammo loot (Item_AmmoTypes).
         private Item_AmmoTypes _ammoTypes;
         private Func<string, ItemDefinition> _ammoItemFactory;
+        private Func<string, ItemDefinition> _worldItemFactory;
+        private bool _worldLootEnabled = true;
 
         // Prompts #206–#210 — expedition / wasteland milestone perks.
         private ExpeditionPerkSystem _expeditionPerks;
@@ -285,6 +287,9 @@ namespace AtomicWar._Game.Core
         /// <summary>Ammo loot ids injected on last military/rebel loot roll.</summary>
         public List<string> LastFactionAmmoLootIds { get; } = new List<string>();
 
+        /// <summary>World-item / attachment ids injected on last faction gear loot roll.</summary>
+        public List<string> LastFactionWorldLootIds { get; } = new List<string>();
+
         /// <summary>Item id used as river blockade toll currency.</summary>
         public const string RiverTollFuelItemId = "fuel";
 
@@ -313,6 +318,15 @@ namespace AtomicWar._Game.Core
         {
             _ammoTypes = ammoTypes;
             _ammoItemFactory = ammoItemFactory;
+        }
+
+        /// <summary>
+        /// Wire faction world-item / attachment loot (attachments extremely rare loose).
+        /// </summary>
+        public void BindWorldLoot(Func<string, ItemDefinition> worldItemFactory = null, bool enabled = true)
+        {
+            _worldItemFactory = worldItemFactory;
+            _worldLootEnabled = enabled;
         }
 
         /// <summary>

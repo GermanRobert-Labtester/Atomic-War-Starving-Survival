@@ -217,6 +217,33 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// Field-scavenge world gear / extremely rare loose attachments from skirmish winners.
+        /// Attachments are almost never loose — usually already fitted on faction weapons.
+        /// </summary>
+        public static List<WorldLootRoll> RollScavengedWorldLoot(SkirmishState state, System.Random rng)
+        {
+            if (state == null) return new List<WorldLootRoll>();
+            rng ??= new System.Random();
+            return Item_WorldCatalog.RollScavengedWorldLoot(
+                state.winningFaction,
+                rng,
+                corpseCount: state.totalCorpsesGenerated);
+        }
+
+        /// <summary>Ids only — convenience for hosts that ignore stack amounts.</summary>
+        public static List<string> RollScavengedWorldLootIds(SkirmishState state, System.Random rng)
+        {
+            var rolls = RollScavengedWorldLoot(state, rng);
+            var ids = new List<string>(rolls.Count);
+            for (int i = 0; i < rolls.Count; i++)
+            {
+                if (!string.IsNullOrEmpty(rolls[i].ItemId))
+                    ids.Add(rolls[i].ItemId);
+            }
+            return ids;
+        }
+
+        /// <summary>
         /// Background skirmish fire uses ResolveHit: armored factions (military)
         /// soak soft ammo, so kill chance drops when the shooter is treated as soft-lead
         /// and the target as armored. Returns hit probability 0..1.
