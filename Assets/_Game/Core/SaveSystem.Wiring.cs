@@ -603,6 +603,56 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((UnifierState)o));
 
+        public void SetMapHazardAcidGeyser(MapHazard_AcidGeyser s) =>
+            RegisterSystem(ref _mapHazardAcidGeyser, s, "map_hazard_acid_geyser",
+                () => s.CaptureState(),
+                o => s.RestoreState((AcidGeyserState)o));
+
+        public void SetMapHazardAshlanche(MapHazard_Ashlanche s) =>
+            RegisterSystem(ref _mapHazardAshlanche, s, "map_hazard_ashlanche",
+                () => s.CaptureState(),
+                o => s.RestoreState((AshlancheState)o));
+
+        public void SetMapHazardBiometricDoor(MapHazard_BiometricDoor s) =>
+            RegisterSystem(ref _mapHazardBiometricDoor, s, "map_hazard_biometric_door",
+                () => s.CaptureState(),
+                o => s.RestoreState((BiometricDoorState)o));
+
+        public void SetMapHazardCraterWall(MapHazard_CraterWall s) =>
+            RegisterSystem(ref _mapHazardCraterWall, s, "map_hazard_crater_wall",
+                () => s.CaptureState(),
+                o => s.RestoreState((CraterWallState)o));
+
+        public void SetMapHazardCrevice(MapHazard_Crevice s) =>
+            RegisterSystem(ref _mapHazardCrevice, s, "map_hazard_crevice",
+                () => s.CaptureState(),
+                o => s.RestoreState((CreviceState)o));
+
+        public void SetMapHazardFlammableGas(MapHazard_FlammableGas s) =>
+            RegisterSystem(ref _mapHazardFlammableGas, s, "map_hazard_flammable_gas",
+                () => s.CaptureState(),
+                o => s.RestoreState((FlammableGasState)o));
+
+        public void SetMapHazardGasPockets(MapHazard_GasPockets s) =>
+            RegisterSystem(ref _mapHazardGasPockets, s, "map_hazard_gas_pockets",
+                () => s.CaptureState(),
+                o => s.RestoreState((GasPocketState)o));
+
+        public void SetMapHazardMagneticAnomaly(MapHazard_MagneticAnomaly s) =>
+            RegisterSystem(ref _mapHazardMagneticAnomaly, s, "map_hazard_magnetic_anomaly",
+                () => s.CaptureState(),
+                o => s.RestoreState((MagneticAnomalyState)o));
+
+        public void SetMapHazardSinkholeCollapse(MapHazard_SinkholeCollapse s) =>
+            RegisterSystem(ref _mapHazardSinkholeCollapse, s, "map_hazard_sinkhole_collapse",
+                () => s.CaptureState(),
+                o => s.RestoreState((UrbanSinkholeState)o));
+
+        public void SetMapHazardVenusTrap(MapHazard_VenusTrap s) =>
+            RegisterSystem(ref _mapHazardVenusTrap, s, "map_hazard_venus_trap",
+                () => s.CaptureState(),
+                o => s.RestoreState((VenusTrapState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

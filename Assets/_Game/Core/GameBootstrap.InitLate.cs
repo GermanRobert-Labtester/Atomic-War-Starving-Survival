@@ -137,6 +137,16 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVictoryTheMartianSystem(VictoryTheMartian);
             SaveSystem.SetVictoryUndergroundCitySystem(VictoryUndergroundCity);
             SaveSystem.SetVictoryUnifierSystem(VictoryUnifier);
+            SaveSystem.SetMapHazardAcidGeyser(MapHazardAcidGeyser);
+            SaveSystem.SetMapHazardAshlanche(MapHazardAshlanche);
+            SaveSystem.SetMapHazardBiometricDoor(MapHazardBiometricDoor);
+            SaveSystem.SetMapHazardCraterWall(MapHazardCraterWall);
+            SaveSystem.SetMapHazardCrevice(MapHazardCrevice);
+            SaveSystem.SetMapHazardFlammableGas(MapHazardFlammableGas);
+            SaveSystem.SetMapHazardGasPockets(MapHazardGasPockets);
+            SaveSystem.SetMapHazardMagneticAnomaly(MapHazardMagneticAnomaly);
+            SaveSystem.SetMapHazardSinkholeCollapse(MapHazardSinkholeCollapse);
+            SaveSystem.SetMapHazardVenusTrap(MapHazardVenusTrap);
             SaveSystem.SetSiegeArtillerySystem(SiegeArtillery);
             SaveSystem.SetSiegeBiowarfareSystem(SiegeBiowarfare);
             SaveSystem.SetSiegeBlockadeSystem(SiegeBlockade);

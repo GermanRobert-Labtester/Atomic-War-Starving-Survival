@@ -209,6 +209,16 @@ namespace AtomicWar._Game.Core
         private Victory_TheMartian _victoryTheMartianSystem;
         private Victory_UndergroundCity _victoryUndergroundCitySystem;
         private Victory_Unifier _victoryUnifierSystem;
+        private MapHazard_AcidGeyser _mapHazardAcidGeyser;
+        private MapHazard_Ashlanche _mapHazardAshlanche;
+        private MapHazard_BiometricDoor _mapHazardBiometricDoor;
+        private MapHazard_CraterWall _mapHazardCraterWall;
+        private MapHazard_Crevice _mapHazardCrevice;
+        private MapHazard_FlammableGas _mapHazardFlammableGas;
+        private MapHazard_GasPockets _mapHazardGasPockets;
+        private MapHazard_MagneticAnomaly _mapHazardMagneticAnomaly;
+        private MapHazard_SinkholeCollapse _mapHazardSinkholeCollapse;
+        private MapHazard_VenusTrap _mapHazardVenusTrap;
         private Siege_Artillery _siegeArtillerySystem;
         private Siege_Biowarfare _siegeBiowarfareSystem;
         private Siege_Blockade _siegeBlockadeSystem;

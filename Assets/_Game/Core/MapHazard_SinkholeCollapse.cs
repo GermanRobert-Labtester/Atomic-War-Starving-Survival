@@ -51,5 +51,29 @@ namespace AtomicWar._Game.Core
         {
             return "subway_below_" + currentNodeId;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public UrbanSinkholeState CaptureState()
+        {
+            return new UrbanSinkholeState
+            {
+                hazardId = string.IsNullOrEmpty(_state.hazardId) ? "map_hazard_sinkhole_collapse" : _state.hazardId,
+                collapseChance = _state.collapseChance,
+                dropsToSubway = _state.dropsToSubway
+            };
+        }
+
+        public void RestoreState(UrbanSinkholeState saved)
+        {
+            _state = saved != null
+                ? new UrbanSinkholeState
+                {
+                    hazardId = string.IsNullOrEmpty(saved.hazardId) ? "map_hazard_sinkhole_collapse" : saved.hazardId,
+                    collapseChance = saved.collapseChance,
+                    dropsToSubway = saved.dropsToSubway
+                }
+                : new UrbanSinkholeState();
+        }
     }
 }

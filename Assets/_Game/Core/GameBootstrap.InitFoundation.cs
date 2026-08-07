@@ -99,6 +99,8 @@ namespace AtomicWar._Game.Core
             BootBatchSystems();
             // Victory paths (14 endings; TrueEnding already constructed in BootBatchSystems).
             BootVictoryPaths();
+            // Map hazards — expedition node hazards (acid geyser / ashlanche / traps / …).
+            BootMapHazards();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

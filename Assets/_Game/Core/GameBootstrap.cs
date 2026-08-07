@@ -246,6 +246,17 @@ namespace AtomicWar._Game.Core
         public Victory_TheMartian VictoryTheMartian { get; private set; }
         public Victory_UndergroundCity VictoryUndergroundCity { get; private set; }
         public Victory_Unifier VictoryUnifier { get; private set; }
+        // Map hazards — expedition/map node hazard trackers.
+        public MapHazard_AcidGeyser MapHazardAcidGeyser { get; private set; }
+        public MapHazard_Ashlanche MapHazardAshlanche { get; private set; }
+        public MapHazard_BiometricDoor MapHazardBiometricDoor { get; private set; }
+        public MapHazard_CraterWall MapHazardCraterWall { get; private set; }
+        public MapHazard_Crevice MapHazardCrevice { get; private set; }
+        public MapHazard_FlammableGas MapHazardFlammableGas { get; private set; }
+        public MapHazard_GasPockets MapHazardGasPockets { get; private set; }
+        public MapHazard_MagneticAnomaly MapHazardMagneticAnomaly { get; private set; }
+        public MapHazard_SinkholeCollapse MapHazardSinkholeCollapse { get; private set; }
+        public MapHazard_VenusTrap MapHazardVenusTrap { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

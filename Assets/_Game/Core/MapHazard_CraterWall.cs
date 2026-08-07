@@ -11,6 +11,9 @@ namespace AtomicWar._Game.Core
         public float fatigueDrainPerHour = 0.25f;
         public bool requiresClimbingGear = true;
         public bool blocksVehicles = true;
+        // Parallel arrays — JsonUtility-safe climb progress.
+        public string[] climbProgressIds = Array.Empty<string>();
+        public float[] climbProgressHours = Array.Empty<float>();
     }
 
     public class MapHazard_CraterWall
@@ -85,16 +88,62 @@ namespace AtomicWar._Game.Core
             return _state.climbHours;
         }
 
-        public Dictionary<string, float> CaptureState()
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public CraterWallState CaptureState()
         {
-            return new Dictionary<string, float>(_climbProgress);
+            var ids = new string[_climbProgress.Count];
+            var hours = new float[_climbProgress.Count];
+            int i = 0;
+            foreach (var kvp in _climbProgress)
+            {
+                ids[i] = kvp.Key;
+                hours[i] = kvp.Value;
+                i++;
+            }
+
+            return new CraterWallState
+            {
+                hazardId = string.IsNullOrEmpty(_state.hazardId) ? "map_hazard_crater_wall" : _state.hazardId,
+                climbHours = _state.climbHours,
+                fatigueDrainPerHour = _state.fatigueDrainPerHour,
+                requiresClimbingGear = _state.requiresClimbingGear,
+                blocksVehicles = _state.blocksVehicles,
+                climbProgressIds = ids,
+                climbProgressHours = hours
+            };
         }
 
-        public void RestoreState(Dictionary<string, float> data)
+        public void RestoreState(CraterWallState data)
         {
-            _climbProgress = data != null
-                ? new Dictionary<string, float>(data)
-                : new Dictionary<string, float>();
+            if (data == null)
+            {
+                _state = new CraterWallState();
+                _climbProgress = new Dictionary<string, float>();
+                return;
+            }
+
+            _state = new CraterWallState
+            {
+                hazardId = string.IsNullOrEmpty(data.hazardId) ? "map_hazard_crater_wall" : data.hazardId,
+                climbHours = data.climbHours,
+                fatigueDrainPerHour = data.fatigueDrainPerHour,
+                requiresClimbingGear = data.requiresClimbingGear,
+                blocksVehicles = data.blocksVehicles,
+                climbProgressIds = data.climbProgressIds ?? Array.Empty<string>(),
+                climbProgressHours = data.climbProgressHours ?? Array.Empty<float>()
+            };
+
+            _climbProgress = new Dictionary<string, float>();
+            if (_state.climbProgressIds != null && _state.climbProgressHours != null)
+            {
+                int n = Math.Min(_state.climbProgressIds.Length, _state.climbProgressHours.Length);
+                for (int i = 0; i < n; i++)
+                {
+                    if (!string.IsNullOrEmpty(_state.climbProgressIds[i]))
+                        _climbProgress[_state.climbProgressIds[i]] = _state.climbProgressHours[i];
+                }
+            }
         }
     }
 }
