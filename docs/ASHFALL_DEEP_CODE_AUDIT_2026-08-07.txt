@@ -2502,3 +2502,270 @@ P6-G. METHOD LIMITS
 ========================================================================================
 END OF PART 6 — TRIGGER AUDIT (MapAnomaly / MapHazard / NPC)
 ========================================================================================
+
+========================================================================================
+PART 7 — TRIGGER AUDIT: Visitor* + Encounter* + Location* + Action* (top 40)
+Read-only | No code was modified
+Generated (UTC): 2026-08-07 23:42:20
+========================================================================================
+
+SCOPE
+----------------------------------------
+UntickedSystemsBaseline counts:
+  Visitor    11
+  Encounter  15
+  Location    4
+  Action     41
+
+TOP 40 = all Visitor (11) + all Encounter (15) + all Location (4) + first 10 Action
+         = 40 systems.
+
+FULL Action scan (remaining 31) included for category totals; all match top-10 Action
+pattern.
+
+Method: property-scoped Prop.Method( / Prop.OnX += (same as Parts 5–6).
+Boot: BootVisitorFamily, BootEncounters/WireEncounters, BootLocationFamily,
+      BootActionFamily (+ BootRemainingComplexFamily for a few Action_*).
+
+LIVE CONTRAST (not these classes):
+  ExpeditionSystem resolves **EncounterSO** ScriptableObjects via psychology/
+  forced location encounters — a disjoint stack from Encounter_* C# trackers.
+  EventPoolBuilder also pulls EncounterEventFactory.CreateAll() GameEvents.
+  AI utility actions live under Assets/_Game/AI/Actions/*ActionSO.cs (~42 SOs),
+  not Action_* Core trackers.
+
+--------------------------------------------------------------------------------
+P7-A. EXECUTIVE SUMMARY
+--------------------------------------------------------------------------------
+
+TOP 40:
+  HANDLERS_ONLY .............. 15 / 40   (all Encounter*)
+  CONSTRUCT_SAVE_ONLY ........ 25 / 40   (all Visitor* + all Location* + 10 Action*)
+  EXTERNAL / BOOTSTRAP_LIVE ..  0 / 40
+
+FULL Action (41) + V+E+L (30) = 71 scanned:
+  HANDLERS_ONLY .............. 15
+  CONSTRUCT_SAVE_ONLY ........ 56
+  Live among baseline props ..  0
+
+Parallel live stacks (player may still see "encounters"):
+  • EncounterSO + ExpeditionSystem.ResolveEncounterWithPsychology
+  • EncounterEventFactory → EventPoolBuilder GameEvents
+  • AI ActionSO catalog (Eat, Drink, Craft, …)
+These do **not** call Encounter_*, Visitor_*, Location_*, or Action_* bootstrap props.
+
+--------------------------------------------------------------------------------
+P7-B. Visitor* (11/11) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootVisitorFamily constructs 10 site visitors (no Wire* / On* block).
+VisitorRNGSystem constructed in Misc family (CoreFamilies) + save-wired; never
+InitializeMap/GetNodeState via property from production code.
+
+| Prop                      | File                            | Example APIs                              | Prop.Method | Category            |
+|---------------------------|---------------------------------|-------------------------------------------|-------------|---------------------|
+| VisitorAbandonedState     | Visitor_AbandonedState.cs       | GenerateStructuralHazards                 | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorChurchHostile      | Visitor_ChurchHostile.cs        | AttemptGraveyardApproach                  | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorChurchSanctuary    | Visitor_ChurchSanctuary.cs      | RestMidExpedition                         | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorExplodedState      | Visitor_ExplodedState.cs        | TryInteractAndLoot                        | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorFleeingHorde       | Visitor_FleeingHorde.cs         | TriggerStormPanic                         | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorHospitalPatients   | Visitor_HospitalPatients.cs     | ApplyDespairAura                          | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorHospitalStaff      | Visitor_HospitalStaff.cs        | PayMedicalTax, RefuseMedicalTax           | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorMilTrainingYard    | Visitor_MilTrainingYard.cs      | NotifyPlayerFledAfterAttack, GenerateLoot | NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorQuestFaction       | Visitor_QuestFaction.cs         | TryInjectQuestVisitor(…, VisitorRNGSystem)| NONE        | CONSTRUCT_SAVE_ONLY |
+| VisitorRNGSystem          | VisitorRNGSystem.cs             | InitializeMap, GetNodeState, AddCard      | NONE*       | CONSTRUCT_SAVE_ONLY |
+| VisitorRebelTrainingYard  | Visitor_RebelTrainingYard.cs    | PerformFlankAttackOnMilitary, GenerateLoot| NONE        | CONSTRUCT_SAVE_ONLY |
+
+*VisitorRNGSystem: tests construct and call APIs; production only `new` + SetVisitorRNGSystem.
+  rg 'VisitorRNGSystem\.' → no production method calls.
+
+[DEEP7-VIS-001] Severity: CRITICAL | Type: dead content
+  Location: BootVisitorFamily; Visitor_*.cs; VisitorRNGSystem.cs
+  Description: Map-node visitor fiction (church, hospital, training yards, abandoned
+  states, quest faction inject) never runs. RNG deck system is save-perfect ghost.
+  Suggested Fix: Wire VisitorRNGSystem.InitializeMap into map gen; node visit →
+  GetNodeState → visitor APIs; or demote entire family.
+
+[DEEP7-VIS-002] Severity: HIGH | Type: incomplete quest bridge
+  Location: Visitor_QuestFaction.TryInjectQuestVisitor
+  Description: API accepts VisitorRNGSystem but neither side is called from
+  PersonalQuestSystem / expedition host. Quest-tied visitors cannot appear.
+
+--------------------------------------------------------------------------------
+P7-C. Encounter* (15/15) — ALL HANDLERS_ONLY
+--------------------------------------------------------------------------------
+
+BootEncounters + WireEncounters: On* → Debug.Log (same pattern as Event_*/MapAnomaly).
+Rich combat/trap APIs exist; zero Prop.Engage/Resolve/TryHunt callers outside tests.
+
+| Prop                    | File                          | Example APIs                            | Category      |
+|-------------------------|-------------------------------|-----------------------------------------|---------------|
+| EncounterAmalgamation   | Encounter_Amalgamation.cs     | ApplyDamage, TryFlee, IsDefeated        | HANDLERS_ONLY |
+| EncounterBurrowers      | Encounter_Burrowers.cs        | TriggerBreach, FightBurrowers, Patch…   | HANDLERS_ONLY |
+| EncounterFloodedMaze    | Encounter_FloodedMaze.cs      | EnterMaze, Surface                      | HANDLERS_ONLY |
+| EncounterGlowingDead    | Encounter_GlowingDead.cs      | LootCorpse                              | HANDLERS_ONLY |
+| EncounterGlowingStag    | Encounter_GlowingStag.cs      | TryHunt                                 | HANDLERS_ONLY |
+| EncounterHitAndRun      | Encounter_HitAndRun.cs        | RunThemDown                             | HANDLERS_ONLY |
+| EncounterLeeches        | Encounter_Leeches.cs          | AttachLeeches, TickHour, BurnOff…       | HANDLERS_ONLY |
+| EncounterMirelurker     | Encounter_Mirelurker.cs       | ApplyDamage, CanEngage, TryFlee         | HANDLERS_ONLY |
+| EncounterPressurePlate  | Encounter_PressurePlate.cs    | ResolveTrap                             | HANDLERS_ONLY |
+| EncounterRiverPirates   | Encounter_RiverPirates.cs     | EngageCombat, SinkPirateBoat            | HANDLERS_ONLY |
+| EncounterRoadblock      | Encounter_Roadblock.cs        | ResolveChoice                           | HANDLERS_ONLY |
+| EncounterRobotDog       | Encounter_RobotDog.cs         | EngageCombat, TryHack                   | HANDLERS_ONLY |
+| EncounterSleepingCamp   | Encounter_SleepingCamp.cs     | DiscoverCamp, TrySteal, TryFlee…        | HANDLERS_ONLY |
+| EncounterTripwireMaze   | Encounter_TripwireMaze.cs     | GenerateMaze, TryPath, TryBypass        | HANDLERS_ONLY |
+| EncounterWarlordTank    | Encounter_WarlordTank.cs      | AttackWithWeapon, AttackWithSmallArms   | HANDLERS_ONLY |
+
+Evidence: ExpeditionSystem.Encounters.cs uses EncounterSO exclusively
+(ResolveEncounterWithPsychology, FindForcedLocationEncounter). No reference to
+EncounterRoadblock / EncounterLeeches properties.
+
+[DEEP7-ENC-001] Severity: CRITICAL | Type: dual encounter stack
+  Location: Encounter_*.cs ×15 vs ExpeditionSystem + EncounterSO + EncounterEventFactory
+  Description: Class trackers duplicate encounter design already partially live via
+  SOs/factory. Players may get SO encounters while prompt-class Encounter_* never
+  fire — content desync and wasted save slots.
+  Suggested Fix: Pick one host. Either (1) expedition node tags call Encounter_*
+  methods, or (2) delete/demote Encounter_* and keep SO path only.
+
+[DEEP7-ENC-002] Severity: HIGH | Type: false live signal
+  Location: WireEncounters On* += Debug.Log; EncountersWiringTests
+  Description: Tests `new Encounter_X()` and call ResolveChoice etc. → green without
+  bootstrap dispatch (same anti-pattern as MapAnomaliesWiringTests / Weather unit ticks).
+
+--------------------------------------------------------------------------------
+P7-D. Location* (4/4) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootLocationFamily constructs four special locations; no wire block; no Prop.Method.
+
+| Prop                       | File                           | Example APIs                                  | Category            |
+|----------------------------|--------------------------------|-----------------------------------------------|---------------------|
+| LocationArcade             | Location_Arcade.cs             | SearchForTokens, TryTrade                     | CONSTRUCT_SAVE_ONLY |
+| LocationSlaveMarket        | Location_SlaveMarket.cs        | TryPurchaseSurvivor                           | CONSTRUCT_SAVE_ONLY |
+| LocationStateRuinSystem    | LocationStateRuinSystem.cs     | ApplyRuinModifier, ComputeEffects, DrawRandom | CONSTRUCT_SAVE_ONLY |
+| LocationStrandedYacht      | Location_StrandedYacht.cs      | DiscoverYacht, TryInfiltrate, LootLuxury      | CONSTRUCT_SAVE_ONLY |
+
+[DEEP7-LOC-001] Severity: HIGH | Type: dead content
+  Location: BootLocationFamily; Location_*.cs; LocationStateRuinSystem
+  Description: Special nodes (arcade, slave market, yacht) and global ruin modifier
+  system never applied on map enter. Ruin modifiers would affect loot/danger if
+  ApplyRuinModifier were called from location resolve — it is not.
+  Suggested Fix: Map location id → Location* handler on expedition arrive; ruin
+  system tick/draw when generating/looting nodes.
+
+--------------------------------------------------------------------------------
+P7-E. Action* (top 10 of 40 + full 41) — ALL CONSTRUCT_SAVE_ONLY
+--------------------------------------------------------------------------------
+
+BootActionFamily (+ some in BootRemainingComplexFamily) constructs Action_* trackers.
+Save SetAction* present. **No UI/AI path calls ActionFish / ActionExile / etc.**
+
+TOP 10 (in top-40 table):
+  ActionAdministerPlacebo, BarricadeDoor, BoilBatteries, BroadcastPropaganda,
+  BurnCharcoal, BuryTimeCapsule, CallCaravan, CoverTracks, CrackMainframe, Crawlspace
+  → all CONSTRUCT_SAVE_ONLY; APIs like Administer, Barricade, BoilBattery, RequestCaravan,
+    StartCrack, SendChild never property-called.
+
+FULL remaining 31 Action* (Decrypt … WorshipIdol): same CONSTRUCT_SAVE_ONLY /
+NO production Prop.Method. Includes Fish, Exile, PullTooth, SealRoom, Sabotage,
+ScorchedEarth, SlaughterPet, TeachChild, TellStories, WorshipIdol, etc.
+
+Dual stack with AI:
+  Assets/_Game/AI/Actions/*ActionSO.cs (~42) — utility AI actions (Eat, Drink, Craft…).
+  These are the live-ish AI surface (with known bugs DEEP3-INV-003..005), not Action_*.
+
+[DEEP7-ACT-001] Severity: CRITICAL | Type: dead content / dual action stack
+  Location: BootActionFamily; Action_*.cs ×41 vs AI/Actions/*ActionSO.cs
+  Description: Prompt-era bunker actions (barricade, exile, fish, sabotage, idol
+  worship, time capsule, …) are fully inert on Core trackers. Any similar behavior
+  must come from UI SOs, medical, or AI ActionSOs — not these types.
+  Suggested Fix: UI command palette / room actions → Action_*.Execute*; or demote
+  BootActionFamily entirely until product prioritizes those verbs.
+
+[DEEP7-ACT-002] Severity: MEDIUM | Type: save bloat
+  Location: SaveSystem.SetAction* ×41
+  Description: 41 ISaveable registrations for systems that never mutate in play
+  still serialize empty/stub state every save (some CaptureState empty stubs remain
+  per Part 4 DEEP4-SAVE-STUB).
+
+--------------------------------------------------------------------------------
+P7-F. NOT EVENT-BUS-DRIVEN (this slice)
+--------------------------------------------------------------------------------
+
+  • Encounter_* / Visitor_* / Action_* are not EventPool members by id.
+  • Live expedition encounters use EncounterSO + EventChoice, not these props.
+  • No system in top-40 classified EXTERNAL_CALLERS or BOOTSTRAP_TRIGGERED.
+
+--------------------------------------------------------------------------------
+P7-G. CROSS-PART SYNTHESIS (Parts 5–7 ghost density)
+--------------------------------------------------------------------------------
+
+Property-scoped dead systems documented across trigger audits:
+
+  Part 5 Event* .............. 27 HANDLERS_ONLY (0 external)
+  Part 5 Victory* ............ 11 HANDLERS_ONLY + 3 tick-cond without Start
+  Part 6 MapAnomaly* ......... 18 HANDLERS_ONLY
+  Part 6 MapHazard* baseline .  8 HANDLERS_ONLY
+  Part 6 NPC* ................ 34 CONSTRUCT_SAVE_ONLY
+  Part 7 Visitor* ............ 11 CONSTRUCT_SAVE_ONLY
+  Part 7 Encounter* .......... 15 HANDLERS_ONLY
+  Part 7 Location* ...........  4 CONSTRUCT_SAVE_ONLY
+  Part 7 Action* ............. 41 CONSTRUCT_SAVE_ONLY
+
+  Subtotal pure ghost families (approx): **~169 systems** with zero production
+  Prop.Method triggers (plus Victory Start gaps).
+
+  Live parallel stacks that partially fulfill fantasy:
+    EventPoolBuilder / GameEvent, EncounterSO expeditions, AI ActionSO,
+    MapHazardAcidGeyser/Ashlanche ticks, AdaptiveWarlords/ChemUse/DiseaseExpansion.
+
+[DEEP7-META-001] Severity: CRITICAL | Type: architecture / content pipeline
+  Description: Prompt→class→Boot*→Save Set*→Wire On* Debug.Log has become the
+  default shipping path without expedition/UI entry points. Baseline ratchet (435)
+  is accurate: most "content systems" are inert composition-root weight.
+  Suggested Fix: Content gate CI — new GameBootstrap public system property must
+  have (a) registry tick OR (b) ≥1 non-test Prop.Method caller OR (c) explicit
+  Dormant attribute + no Save registration.
+
+--------------------------------------------------------------------------------
+P7-H. COUNTS & PRIORITY
+--------------------------------------------------------------------------------
+
+Top-40: HANDLERS_ONLY 15 | CONSTRUCT_SAVE_ONLY 25 | Live 0
+
+New finding IDs:
+  DEEP7-VIS-001, DEEP7-VIS-002
+  DEEP7-ENC-001, DEEP7-ENC-002
+  DEEP7-LOC-001
+  DEEP7-ACT-001, DEEP7-ACT-002
+  DEEP7-META-001
+
+Remediation order (this slice):
+  1. Do **not** add more Action_/Encounter_/Visitor_ prompts without entry-point tests.
+  2. Flagship: 1 Encounter_* OR document SO path as sole encounter host and demote
+     all Encounter_* from BootEncounters.
+  3. Wire VisitorRNGSystem into map gen + one visitor site (church or hospital).
+  4. One Location special (Yacht or Arcade) on expedition arrive.
+  5. One Action_* (e.g. Exile or BarricadeDoor) from UI; demote the other 40 until used.
+  6. Adopt DEEP7-META-001 content gate for all future Boot* families.
+
+--------------------------------------------------------------------------------
+P7-I. METHOD LIMITS
+--------------------------------------------------------------------------------
+
+  • Top 40 detailed; remaining Action* bulk-confirmed CONSTRUCT_SAVE_ONLY.
+  • Did not inventory every EncounterSO id vs Encounter_* name parity.
+  • Did not run playmode expedition to list which SO encounters fire.
+  • VisitorRNG GetSaveData naming may bypass CaptureState pattern — still no callers.
+  • Static analysis only.
+
+  Evidence:
+    rg -n 'EncounterRoadblock\s*\??\.\s*\w+' Assets --glob '*.cs'  → On* / construct
+    head ExpeditionSystem.Encounters.cs → EncounterSO only
+    rg -n 'VisitorRNGSystem\.' Assets --glob '*.cs' → none (production)
+    BootVisitorFamily / BootActionFamily → new only, no Wire
+
+========================================================================================
+END OF PART 7 — TRIGGER AUDIT (Visitor / Encounter / Location / Action)
+========================================================================================

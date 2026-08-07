@@ -26,19 +26,27 @@ namespace AtomicWar._Game.Shelter
             OnCeilingUpgraded?.Invoke(roomId, material);
         }
 
+        /// <summary>
+        /// Attenuation fraction (0..1) of the weakest surface-facing ceiling — the one
+        /// the fallout actually comes through. 0 when nothing is roofed yet.
+        /// </summary>
+        public float GetWeakestCeilingAttenuation()
+        {
+            // Nothing roofed yet — the sky is the ceiling, so nothing is stopped.
+            if (_roomCeilingMaterials.Count == 0) return 0f;
+
+            // Seed at full attenuation and take the minimum. Seeding at 0f (as this
+            // did) pinned the minimum to 0 forever, so every upgrade was cosmetic.
+            float weakest = 1f;
+            foreach (var kv in _roomCeilingMaterials)
+                weakest = Mathf.Min(weakest, Attenuation.TryGetValue(kv.Value, out float a) ? a : 0f);
+            return weakest;
+        }
+
         /// <summary>Effective rad bleed: ambient rad that penetrates the weakest surface-facing ceiling.</summary>
         public float GetRadiationBleed(float exteriorRads)
         {
-            // Nothing roofed yet — the sky is the ceiling, so the full dose bleeds in.
-            if (_roomCeilingMaterials.Count == 0) return exteriorRads;
-
-            // Seed at full attenuation and take the minimum: the weakest roof in the
-            // bunker is the one the fallout comes through. Seeding at 0f (as this did)
-            // pinned the minimum to 0 forever, so every ceiling upgrade was cosmetic.
-            float weakestAttenuation = 1f;
-            foreach (var kv in _roomCeilingMaterials)
-                weakestAttenuation = Mathf.Min(weakestAttenuation, Attenuation.TryGetValue(kv.Value, out float a) ? a : 0f);
-            return exteriorRads * (1f - weakestAttenuation);
+            return exteriorRads * (1f - GetWeakestCeilingAttenuation());
         }
 
         public MaterialShieldingSave CaptureState()

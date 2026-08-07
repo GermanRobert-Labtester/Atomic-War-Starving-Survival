@@ -118,6 +118,13 @@ namespace AtomicWar._Game.Core
             CarrionBirds = new System_CarrionBirds();
             EscapeHatchSystem = new EscapeHatchSystem();
             MaterialShieldingSystem = new MaterialShieldingSystem();
+            // Ceiling material is one more shielding layer in the interior-rad formula;
+            // without this hook every ceiling upgrade the player buys does nothing.
+            if (Shelter != null)
+                Shelter.CeilingAttenuationProvider =
+                    () => MaterialShieldingSystem != null
+                        ? MaterialShieldingSystem.GetWeakestCeilingAttenuation()
+                        : 0f;
             AirlockSystem = new AirlockSystem();
 
             // Prompts #164–#178 — simulation systems

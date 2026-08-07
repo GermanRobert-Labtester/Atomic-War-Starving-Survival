@@ -7,12 +7,24 @@ namespace AtomicWar._Game.Shelter
 {
     public partial class Shelter
     {
+        /// <summary>
+        /// Attenuation fraction (0..1) of the weakest ceiling over the bunker, supplied
+        /// by MaterialShieldingSystem. Null (unwired) means no ceiling shielding, which
+        /// is the conservative reading — the dose gets through.
+        /// </summary>
+        public Func<float> CeilingAttenuationProvider { get; set; }
+
         /// <summary>Indoor radiation level for a given exterior radiation dose rate.</summary>
         public float GetInteriorRadsPerHour(float exteriorRads)
         {
-            // Overworld structure shielding (rubble, deep underground, etc.) and
-            // bunker radiation-shielding module stack multiplicatively.
+            // Overworld structure shielding (rubble, deep underground, etc.), ceiling
+            // material, and the bunker radiation-shielding module all stack
+            // multiplicatively: each is one more layer between the sky and the survivor.
             float overworldFactor = 1f - Mathf.Clamp01(OverworldShieldingBonus);
+            float ceilingFactor = CeilingAttenuationProvider != null
+                ? 1f - Mathf.Clamp01(CeilingAttenuationProvider())
+                : 1f;
+            overworldFactor *= ceilingFactor;
             float rads = exteriorRads * overworldFactor;
 
             var shieldingModule = GetModule("radiation_shielding");
@@ -54,7 +66,36 @@ namespace AtomicWar._Game.Shelter
                 rads += 5f;
             }
 
+            // Contamination the bunker is carrying itself. This is dose already inside
+            // the shielding, so it is added, never attenuated: a survivor let in hot
+            // through the hatch, or a pet tracking fallout across the floor, irradiates
+            // the room no matter how thick the walls are. Both of these were tracked,
+            // decayed and saved but never reached this formula, which made bunker
+            // pollution — and the whole Day-30 "let them in" dilemma — cosmetic.
+            rads += Mathf.Max(0f, BunkerContamination);
+            rads += GetRoomContaminationRadsPerHour();
+
             return Mathf.Max(0f, rads);
+        }
+
+        /// <summary>
+        /// Dose rate contributed by contaminated rooms (hot stores, corpses, tracked-in
+        /// fallout). Rooms below <see cref="ShelterRoom.RadPenaltyThreshold"/> contribute
+        /// nothing, so a clean bunker sums to zero.
+        /// </summary>
+        public float GetRoomContaminationRadsPerHour()
+        {
+            var rooms = Rooms;
+            if (rooms == null) return 0f;
+
+            float total = 0f;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                var room = rooms[i];
+                if (room == null) continue;
+                total += Mathf.Max(0f, room.GetIndoorRadContribution());
+            }
+            return total;
         }
 
         public void Tick(float gameHours)
