@@ -166,26 +166,7 @@ namespace AtomicWar.Tests.PlayMode
             var exitRow = list[list.childCount - 1] as Button;
             Assert.That(exitRow, Is.Not.Null);
 
-            // Button.clicked is wired through the Clickable manipulator, which
-            // tracks a PointerDown/PointerUp pair rather than a raw
-            // ClickEvent — sending ClickEvent directly does not fire it.
-            // position has no public setter on the pooled event, so the click
-            // location comes from a raw UnityEngine.Event instead — the
-            // documented way to seed a pointer event with a screen position.
-            Vector2 center = exitRow.worldBound.center;
-            var downSource = new Event { type = EventType.MouseDown, mousePosition = center, button = 0 };
-            using (var down = PointerDownEvent.GetPooled(downSource))
-            {
-                down.target = exitRow;
-                exitRow.SendEvent(down);
-            }
-            var upSource = new Event { type = EventType.MouseUp, mousePosition = center, button = 0 };
-            using (var up = PointerUpEvent.GetPooled(upSource))
-            {
-                up.target = exitRow;
-                exitRow.SendEvent(up);
-            }
-            yield return null;
+            yield return Click(exitRow);
 
             Assert.That(backdrop.ClassListContains("is-open"), Is.True,
                 "activating EXIT should open the quit dialog");
@@ -205,6 +186,133 @@ namespace AtomicWar.Tests.PlayMode
             Assert.That(dropdown, Is.Not.Null, "resolution dropdown");
             Assert.That(dropdown.choices, Is.Not.Empty,
                 "the resolution dropdown must never be empty, even headless");
+        }
+
+        [UnityTest]
+        public IEnumerator Escape_ClosesAnOpenDialog()
+        {
+            yield return BuildMenu();
+
+            var list = Root.Q<VisualElement>("menu-list");
+            var exitRow = (Button)list[list.childCount - 1];
+            yield return Click(exitRow);
+
+            var backdrop = Root.Q<VisualElement>("dialog-backdrop");
+            Assert.That(backdrop.ClassListContains("is-open"), Is.True, "dialog did not open");
+
+            using (var evt = KeyDownEvent.GetPooled('\u001b', KeyCode.Escape, EventModifiers.None))
+            {
+                evt.target = Root;
+                Root.SendEvent(evt);
+            }
+            yield return null;
+
+            Assert.That(backdrop.ClassListContains("is-open"), Is.False,
+                "Escape should close an already-open dialog rather than re-opening Quit");
+        }
+
+        [UnityTest]
+        public IEnumerator OpenDialog_MakesMenuRowsUnfocusable_ClosingRestoresThem()
+        {
+            yield return BuildMenu();
+
+            var list = Root.Q<VisualElement>("menu-list");
+            var exitRow = (Button)list[list.childCount - 1];
+
+            for (int i = 0; i < list.childCount; i++)
+            {
+                Assert.That(((Button)list[i]).focusable, Is.True, $"row {i} should start focusable");
+            }
+
+            yield return Click(exitRow);
+
+            for (int i = 0; i < list.childCount; i++)
+            {
+                Assert.That(((Button)list[i]).focusable, Is.False,
+                    $"row {i} must be unfocusable while a dialog is open, or Tab escapes the modal");
+            }
+
+            var dialogBack = Root.Q<Button>("dialog-back");
+            yield return Click(dialogBack);
+
+            for (int i = 0; i < list.childCount; i++)
+            {
+                Assert.That(((Button)list[i]).focusable, Is.True, $"row {i} should be focusable again after close");
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator NewExpeditionDialog_DifficultyDefaultsToOperative_AndClickSwitchesSelection()
+        {
+            yield return BuildMenu();
+
+            var list = Root.Q<VisualElement>("menu-list");
+            var newExpeditionRow = (Button)list[1];
+            yield return Click(newExpeditionRow);
+
+            var operative = Root.Q<Button>("difficulty-operative");
+            var veteran = Root.Q<Button>("difficulty-veteran");
+            Assert.That(operative.ClassListContains("is-selected"), Is.True, "Operative should be the default");
+            Assert.That(veteran.ClassListContains("is-selected"), Is.False);
+
+            yield return Click(veteran);
+
+            Assert.That(veteran.ClassListContains("is-selected"), Is.True, "clicking Veteran should select it");
+            Assert.That(operative.ClassListContains("is-selected"), Is.False,
+                "selecting Veteran must deselect Operative");
+        }
+
+        [UnityTest]
+        public IEnumerator VolumeSlider_ChangingValue_AppliesToAudioListenerImmediately()
+        {
+            float originalVolume = AudioListener.volume;
+            try
+            {
+                yield return BuildMenu();
+
+                var list = Root.Q<VisualElement>("menu-list");
+                var settingsRow = (Button)list[2];
+                yield return Click(settingsRow);
+
+                var slider = Root.Q<Slider>("setting-volume");
+                Assert.That(slider, Is.Not.Null);
+
+                slider.value = 0.3f;
+                yield return null;
+
+                Assert.That(AudioListener.volume, Is.EqualTo(0.3f).Within(0.001f),
+                    "moving the slider should apply master volume live, with no Apply button");
+            }
+            finally
+            {
+                AudioListener.volume = originalVolume;
+            }
+        }
+
+        /// <summary>
+        /// Button.clicked is wired through the Clickable manipulator, which
+        /// tracks a PointerDown/PointerUp pair rather than a raw ClickEvent —
+        /// sending ClickEvent directly does not fire it. position has no
+        /// public setter on the pooled event, so the click location comes
+        /// from a raw UnityEngine.Event instead — the documented way to seed
+        /// a pointer event with a screen position.
+        /// </summary>
+        private static IEnumerator Click(VisualElement element)
+        {
+            Vector2 center = element.worldBound.center;
+            var downSource = new Event { type = EventType.MouseDown, mousePosition = center, button = 0 };
+            using (var down = PointerDownEvent.GetPooled(downSource))
+            {
+                down.target = element;
+                element.SendEvent(down);
+            }
+            var upSource = new Event { type = EventType.MouseUp, mousePosition = center, button = 0 };
+            using (var up = PointerUpEvent.GetPooled(upSource))
+            {
+                up.target = element;
+                element.SendEvent(up);
+            }
+            yield return null;
         }
     }
 }
