@@ -27,40 +27,23 @@ namespace AtomicWar._Game.Core
 
         private void CaptureWorldAndFactionSystems(SaveData data)
         {
-            // Core world / economy / narrative bookkeeping
-            CapIf(_worldPhaseSystem, s => data.WorldPhase = s.CaptureState());
-            CapIf(_economySystem, s => data.Economy = s.CaptureState());
-            CapIf(_powerNetwork, s => data.Power = s.CaptureState());
-            CapIf(_hatchDefense, s => data.HatchDefense = s.CaptureState());
+            // Core world dual-path CapIf removed (world_phase…sabotaged_caches) —
+            // RegisterSystem owns capture. RestIf keeps positional DTOs for
+            // pre-migration saves. EventRunner stays special-path (CaptureScheduledState).
             CapIf(_factionRadioIntercepts, s => data.FactionRadioIntercepts = s.CaptureState());
-            CapIf(_journalSystem, s => data.Journal = s.CaptureState());
-            CapIf(_victoryProject, s => data.VictoryProject = s.CaptureState());
             CapIf(_eventRunner, s => data.ScheduledEvents = s.CaptureScheduledState());
-            CapIf(_suspicionTracker, s => data.Suspicion = s.CaptureState());
-            CapIf(_hatchEntrapment, s => data.HatchEntrapment = s.CaptureState());
-            CapIf(_atmosphereSystem, s => data.Atmosphere = s.CaptureState());
-            CapIf(_pantrySystem, s => data.Pantry = s.CaptureState());
-            CapIf(_sabotagedCaches, s => data.SabotagedCaches = s.CaptureState());
 
-            // Faction side systems (raids, debt, ghosts, camps)
+            // Complex special-path / remaining dual-path faction side
             CapIf(_shiftingHotspots, s => data.ShiftingHotspots = s.CaptureState());
             CapIf(_factionRaidPlans, s => data.FactionRaidPlans = s.CaptureState());
             CapIf(_debtCollector, s => data.DebtCollector = s.CaptureState());
             CapIf(_ghostStations, s => data.GhostStations = s.CaptureState());
             CapIf(_lifeboat, s => data.Lifeboat = s.CaptureState());
-            // tracker / dead_drops — dual-path CapIf removed; RegisterSystem owns capture.
-            // RestIf still reads data.Tracker / data.DeadDrops for pre-migration saves.
-            CapIf(_hostageSystem, s => data.Hostages = s.CaptureState());
-            CapIf(_propagandaSystem, s => data.Propaganda = s.CaptureState());
-            CapIf(_deserterSystem, s => data.Deserters = s.CaptureState());
-            CapIf(_scapegoatSystem, s => data.Scapegoat = s.CaptureState());
-            CapIf(_laborCampSystem, s => data.LaborCamps = s.CaptureState());
-            CapIf(_cultMoralSystem, s => data.CultMoral = s.CaptureState());
+            // tracker / dead_drops / hostage / propaganda / deserter / scapegoat /
+            // labor_camp / cult_moral — dual-path CapIf removed; RegisterSystem owns capture.
+            // RestIf still reads positional DTOs for pre-migration saves.
 
-            // Narrative side systems
-            // cartography / flooded_node / ecosystem / house_to_bunker / location_quest —
-            // dual-path CapIf removed; RegisterSystem owns capture. RestIf keeps
-            // positional DTOs for pre-migration saves.
+            // Narrative side systems (batch 1–2) already migrated off CapIf.
         }
 
         private void CaptureShelterTacticalSystems(SaveData data)

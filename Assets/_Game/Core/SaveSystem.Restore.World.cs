@@ -34,6 +34,7 @@ namespace AtomicWar._Game.Core
 
         private void RestoreCoreWorldSystems(SaveData data)
         {
+            // Positional only when present (pre-migration). New saves restore via SubsystemSaveIds.
             RestIf(_worldPhaseSystem, s => { if (data.WorldPhase != null) s.RestoreState(data.WorldPhase); });
             RestIf(_economySystem, s => { if (data.Economy != null) s.RestoreState(data.Economy); });
             RestIf(_powerNetwork, s =>
@@ -44,20 +45,22 @@ namespace AtomicWar._Game.Core
             });
             RestIf(_hatchDefense, s => { if (data.HatchDefense != null) s.RestoreState(data.HatchDefense); });
             RestIf(_factionRadioIntercepts, s => s.RestoreState(data.FactionRadioIntercepts));
-            RestIf(_journalSystem, s => s.RestoreState(data.Journal));
-            RestIf(_victoryProject, s => s.RestoreState(data.VictoryProject));
+            RestIf(_journalSystem, s => { if (data.Journal != null) s.RestoreState(data.Journal); });
+            RestIf(_victoryProject, s => { if (data.VictoryProject != null) s.RestoreState(data.VictoryProject); });
+            // EventRunner remains special-path positional restore.
             RestIf(_eventRunner, s => s.RestoreScheduledState(data.ScheduledEvents));
-            RestIf(_suspicionTracker, s => s.RestoreState(data.Suspicion));
-            RestIf(_hatchEntrapment, s => s.RestoreState(data.HatchEntrapment));
+            RestIf(_suspicionTracker, s => { if (data.Suspicion != null) s.RestoreState(data.Suspicion); });
+            RestIf(_hatchEntrapment, s => { if (data.HatchEntrapment != null) s.RestoreState(data.HatchEntrapment); });
             RestIf(_atmosphereSystem, s => { if (data.Atmosphere != null) s.RestoreState(data.Atmosphere); });
             RestIf(_pantrySystem, s => { if (data.Pantry != null) s.RestoreState(data.Pantry); });
-            RestIf(_sabotagedCaches, s => s.RestoreState(data.SabotagedCaches));
+            RestIf(_sabotagedCaches, s => { if (data.SabotagedCaches != null) s.RestoreState(data.SabotagedCaches); });
             if (_generatedMap != null && data.GeneratedMap != null)
                 RestoreGeneratedMap(data.GeneratedMap);
         }
 
         private void RestoreFactionSideSystems(SaveData data)
         {
+            // Complex specials: Bind/SetMap before restore.
             RestIf(_shiftingHotspots, s =>
             {
                 s.Bind(_generatedMap, _knowledgeMap);
@@ -71,15 +74,15 @@ namespace AtomicWar._Game.Core
             RestIf(_debtCollector, s => s.RestoreState(data.DebtCollector));
             RestIf(_ghostStations, s => s.RestoreState(data.GhostStations));
             RestIf(_lifeboat, s => s.RestoreState(data.Lifeboat));
-            // tracker / dead_drops — positional only when present (pre-migration saves).
+            // Migrated dual-path systems — positional only when present.
             RestIf(_trackerSystem, s => { if (data.Tracker != null) s.RestoreState(data.Tracker); });
             RestIf(_deadDropSystem, s => { if (data.DeadDrops != null) s.RestoreState(data.DeadDrops); });
-            RestIf(_hostageSystem, s => s.RestoreState(data.Hostages));
-            RestIf(_propagandaSystem, s => s.RestoreState(data.Propaganda));
-            RestIf(_deserterSystem, s => s.RestoreState(data.Deserters));
-            RestIf(_scapegoatSystem, s => s.RestoreState(data.Scapegoat));
-            RestIf(_laborCampSystem, s => s.RestoreState(data.LaborCamps));
-            RestIf(_cultMoralSystem, s => s.RestoreState(data.CultMoral));
+            RestIf(_hostageSystem, s => { if (data.Hostages != null) s.RestoreState(data.Hostages); });
+            RestIf(_propagandaSystem, s => { if (data.Propaganda != null) s.RestoreState(data.Propaganda); });
+            RestIf(_deserterSystem, s => { if (data.Deserters != null) s.RestoreState(data.Deserters); });
+            RestIf(_scapegoatSystem, s => { if (data.Scapegoat != null) s.RestoreState(data.Scapegoat); });
+            RestIf(_laborCampSystem, s => { if (data.LaborCamps != null) s.RestoreState(data.LaborCamps); });
+            RestIf(_cultMoralSystem, s => { if (data.CultMoral != null) s.RestoreState(data.CultMoral); });
         }
 
         private void RestoreNarrativeSideSystems(SaveData data)
