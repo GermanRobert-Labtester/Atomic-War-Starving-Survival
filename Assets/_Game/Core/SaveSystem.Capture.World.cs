@@ -30,11 +30,13 @@ namespace AtomicWar._Game.Core
             // RegisterSystem dual-path CapIf fully removed (batches 1–4 + audit).
             // RestIf keeps positional DTOs for pre-migration saves.
             //
-            // Remaining special-path CapIf only (field injects, not RegisterSystem):
-            //   • EventRunner — CaptureScheduledState / RestoreScheduledState
-            //   • ShiftingHotspot — Bind(_generatedMap, _knowledgeMap) before restore
-            //   • FactionRaidPlan — SetMap before restore
-            // (Expedition + GeneratedMap captured in Capture.Entities.)
+            // Special-path CapIf only — NOT safe as plain RegisterSystem adapters:
+            //   • EventRunner — CaptureScheduledState / RestoreScheduledState (queue
+            //     slice of a larger runner; not CaptureState/RestoreState)
+            //   • ShiftingHotspot — restore must Bind(_generatedMap, _knowledgeMap)
+            //     after GeneratedMap rebuild; adapter cannot express bind order
+            //   • FactionRaidPlan — restore must SetMap(_generatedMap) first
+            // Expedition + GeneratedMap: Capture.Entities (seed rebuild / list rebuild).
             CapIf(_eventRunner, s => data.ScheduledEvents = s.CaptureScheduledState());
             CapIf(_shiftingHotspots, s => data.ShiftingHotspots = s.CaptureState());
             CapIf(_factionRaidPlans, s => data.FactionRaidPlans = s.CaptureState());

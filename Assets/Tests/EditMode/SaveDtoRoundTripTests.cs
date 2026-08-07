@@ -335,8 +335,8 @@ namespace AtomicWar.Tests.EditMode
         }
 
         // -------------------------------------------------------------
-        // Test 4: PolypharmacySystem uses a jagged array (float[][])
-        // — explicitly verify the round-trip works for that shape.
+        // Test 4: PolypharmacySystem — in-memory + JsonUtility flat DTO.
+        // float[][] ValuesJagged is not JsonUtility-safe; ValuesFlat+Counts is.
         // -------------------------------------------------------------
 
         [Test]
@@ -350,11 +350,55 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(2, save.Keys.Length);
             Assert.AreEqual(2, save.ValuesJagged[0].Length);
             Assert.AreEqual(1, save.ValuesJagged[1].Length);
+            Assert.IsNotNull(save.ValuesFlat);
+            Assert.IsNotNull(save.Counts);
+            Assert.AreEqual(3, save.ValuesFlat.Length);
+            Assert.AreEqual(3, save.Counts[0] + save.Counts[1]);
 
             var sysB = new PolypharmacySystem();
             sysB.RestoreState(save);
             var save2 = (PolypharmSave)sysB.CaptureState();
             AssertDtoEqual(save, save2, "PolypharmacySystem", tolerance: 1e-4f);
+        }
+
+        [Test]
+        public void PolypharmacySystem_JsonUtility_FlatDto_RoundTripsDoses()
+        {
+            var sysA = new PolypharmacySystem();
+            sysA.RecordDose("sv1", "iodine", 0f);
+            sysA.RecordDose("sv1", "morphine", 5f);
+            sysA.RecordDose("sv2", "anti_rad", 10f);
+            var save = sysA.CaptureState();
+
+            // Simulate SubsystemSaveIds path: JsonUtility drops float[][].
+            string json = JsonUtility.ToJson(save);
+            var fromJson = JsonUtility.FromJson<PolypharmSave>(json);
+            Assert.IsNotNull(fromJson.ValuesFlat, "ValuesFlat must survive JsonUtility");
+            Assert.IsNotNull(fromJson.Counts, "Counts must survive JsonUtility");
+            Assert.AreEqual(3, fromJson.ValuesFlat.Length);
+
+            var sysB = new PolypharmacySystem();
+            sysB.RestoreState(fromJson);
+            Assert.AreEqual(2, sysB.RecentDoseCount("sv1", 5f));
+            Assert.AreEqual(1, sysB.RecentDoseCount("sv2", 10f));
+
+            var save2 = sysB.CaptureState();
+            Assert.AreEqual(save.ValuesFlat.Length, save2.ValuesFlat.Length);
+            // Dose hours preserved (order within a survivor's list is stable).
+            CollectionAssert.AreEquivalent(save.ValuesFlat, save2.ValuesFlat);
+        }
+
+        [Test]
+        public void PolypharmacySystem_LegacyJaggedOnly_StillRestores()
+        {
+            var save = new PolypharmSave
+            {
+                Keys = new[] { "sv_leg" },
+                ValuesJagged = new[] { new[] { 2f, 4f, 6f } }
+            };
+            var sys = new PolypharmacySystem();
+            sys.RestoreState(save);
+            Assert.AreEqual(3, sys.RecentDoseCount("sv_leg", 6f));
         }
 
         // -------------------------------------------------------------

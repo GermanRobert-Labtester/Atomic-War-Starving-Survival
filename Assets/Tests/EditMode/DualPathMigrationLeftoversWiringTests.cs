@@ -125,6 +125,8 @@ namespace AtomicWar.Tests.EditMode
             s.Polypharm.RestoreState(new PolypharmSave
             {
                 Keys = new[] { "sv_poly" },
+                Counts = new[] { 2 },
+                ValuesFlat = new[] { 1.0f, 2.0f },
                 ValuesJagged = new[] { new[] { 1.0f, 2.0f } }
             });
             s.Sterile.RestoreState(new SterilizationSave { ToolsSterile = false });
@@ -260,9 +262,13 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual(3.5f, loaded.Chelation.CaptureState().Values[0], 0.01f);
                 Assert.AreEqual(0.4f, loaded.Antibiotics.CaptureState().Values[0], 0.01f);
                 Assert.AreEqual((int)TriageBoardSystem.TriageLevel.Basic, loaded.Triage.CaptureState().Values[0]);
-                // Polypharmacy ValuesJagged is float[][] — JsonUtility cannot round-trip it
-                // (pre-existing). Subsystem id coverage in Capture_DoesNotDualWrite is enough.
-                Assert.IsNotNull(loaded.Polypharm.CaptureState());
+                // Polypharmacy flat DTO (ValuesFlat+Counts) survives JsonUtility.
+                var poly = loaded.Polypharm.CaptureState();
+                Assert.IsNotNull(poly.ValuesFlat);
+                Assert.AreEqual(2, poly.ValuesFlat.Length);
+                Assert.AreEqual(1f, poly.ValuesFlat[0], 0.01f);
+                Assert.AreEqual(2f, poly.ValuesFlat[1], 0.01f);
+                Assert.AreEqual(2, loaded.Polypharm.RecentDoseCount("sv_poly", 2f));
                 Assert.IsFalse(loaded.Sterile.CaptureState().ToolsSterile);
                 Assert.IsTrue(loaded.Child.CaptureState().wasChildFound);
                 Assert.AreEqual("sv_dead", loaded.Corpses.CaptureState().CorpseSourceIds[0]);
@@ -295,7 +301,7 @@ namespace AtomicWar.Tests.EditMode
                 Polypharmacy = new PolypharmSave
                 {
                     Keys = new[] { "leg_poly" },
-                    ValuesJagged = new[] { new[] { 9f } }
+                    ValuesJagged = new[] { new[] { 9f } } // jagged-only legacy RestIf
                 },
                 Sterilization = new SterilizationSave { ToolsSterile = false },
                 ChildDependent = new ChildDependentSystem.SaveState
@@ -329,8 +335,9 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual(1.5f, systems.Chelation.CaptureState().Values[0], 0.01f);
                 Assert.AreEqual(0.2f, systems.Antibiotics.CaptureState().Values[0], 0.01f);
                 Assert.AreEqual((int)TriageBoardSystem.TriageLevel.None, systems.Triage.CaptureState().Values[0]);
-                // In-memory RestIf still applies polypharmacy (no JsonUtility jagged loss).
-                Assert.AreEqual(9f, systems.Polypharm.CaptureState().ValuesJagged[0][0], 0.01f);
+                // In-memory RestIf still applies polypharmacy via ValuesJagged fallback.
+                Assert.AreEqual(9f, systems.Polypharm.CaptureState().ValuesFlat[0], 0.01f);
+                Assert.AreEqual(1, systems.Polypharm.RecentDoseCount("leg_poly", 9f));
                 Assert.IsFalse(systems.Sterile.CaptureState().ToolsSterile);
                 Assert.IsTrue(systems.Child.CaptureState().wasChildFound);
                 Assert.AreEqual("leg_dead", systems.Corpses.CaptureState().CorpseSourceIds[0]);

@@ -61,13 +61,95 @@ namespace AtomicWar._Game.Simulation
         private void TriggerOverdose(string sid) { OnToxicOverdose?.Invoke(sid); }
         public PolypharmSave CaptureState()
         {
-            var k = new string[_recentDoses.Count]; var v = new float[_recentDoses.Count][]; int i = 0;
-            foreach (var kv in _recentDoses) { k[i] = kv.Key; v[i] = kv.Value.ToArray(); i++; }
-            return new PolypharmSave { Keys = k, ValuesJagged = v };
+            int n = _recentDoses.Count;
+            var keys = new string[n];
+            var counts = new int[n];
+            var jagged = new float[n][];
+            int total = 0;
+            int i = 0;
+            foreach (var kv in _recentDoses)
+            {
+                keys[i] = kv.Key;
+                int c = kv.Value != null ? kv.Value.Count : 0;
+                counts[i] = c;
+                total += c;
+                jagged[i] = c > 0 ? kv.Value.ToArray() : Array.Empty<float>();
+                i++;
+            }
+
+            // JsonUtility cannot serialize float[][] — also emit flat ValuesFlat+Counts.
+            var flat = new float[total];
+            int offset = 0;
+            for (i = 0; i < n; i++)
+            {
+                var row = jagged[i];
+                if (row == null) continue;
+                for (int j = 0; j < row.Length; j++)
+                    flat[offset++] = row[j];
+            }
+
+            return new PolypharmSave
+            {
+                Keys = keys,
+                Counts = counts,
+                ValuesFlat = flat,
+                ValuesJagged = jagged // in-memory convenience; dropped by JsonUtility
+            };
         }
-        public void RestoreState(PolypharmSave s) { _recentDoses.Clear(); if (s?.Keys == null) return; for (int i = 0; i < s.Keys.Length; i++) if (!string.IsNullOrEmpty(s.Keys[i]) && s.ValuesJagged != null && i < s.ValuesJagged.Length) _recentDoses[s.Keys[i]] = new List<float>(s.ValuesJagged[i] ?? Array.Empty<float>()); }
+
+        public void RestoreState(PolypharmSave s)
+        {
+            _recentDoses.Clear();
+            if (s?.Keys == null) return;
+
+            // Prefer JsonUtility-safe flat form (SubsystemSaveIds path).
+            if (s.ValuesFlat != null && s.Counts != null)
+            {
+                int offset = 0;
+                for (int i = 0; i < s.Keys.Length; i++)
+                {
+                    int count = i < s.Counts.Length ? Mathf.Max(0, s.Counts[i]) : 0;
+                    if (string.IsNullOrEmpty(s.Keys[i]))
+                    {
+                        offset += count;
+                        continue;
+                    }
+                    var list = new List<float>(count);
+                    for (int j = 0; j < count; j++)
+                    {
+                        if (offset >= s.ValuesFlat.Length) break;
+                        list.Add(s.ValuesFlat[offset++]);
+                    }
+                    _recentDoses[s.Keys[i]] = list;
+                }
+                return;
+            }
+
+            // Legacy / in-memory jagged (pre-flat DTO or RestIf without JSON).
+            if (s.ValuesJagged == null) return;
+            for (int i = 0; i < s.Keys.Length; i++)
+            {
+                if (string.IsNullOrEmpty(s.Keys[i]) || i >= s.ValuesJagged.Length) continue;
+                _recentDoses[s.Keys[i]] = new List<float>(s.ValuesJagged[i] ?? Array.Empty<float>());
+            }
+        }
     }
 
-    [Serializable] public class PolypharmSave { public string[] Keys; public float[][] ValuesJagged; }
+    /// <summary>
+    /// Polypharmacy dose ledger. <see cref="ValuesFlat"/> + <see cref="Counts"/> are
+    /// the JsonUtility-safe path (RegisterSystem / SubsystemSaveIds).
+    /// <see cref="ValuesJagged"/> is in-memory/legacy only — JsonUtility drops float[][].
+    /// </summary>
+    [Serializable]
+    public class PolypharmSave
+    {
+        public string[] Keys;
+        /// <summary>Dose-hour count per Keys[i]; sum equals ValuesFlat.Length.</summary>
+        public int[] Counts;
+        /// <summary>Concatenated dose game-hours, grouped by Counts.</summary>
+        public float[] ValuesFlat;
+        /// <summary>Legacy jagged form; not JsonUtility-safe.</summary>
+        public float[][] ValuesJagged;
+    }
 
 }

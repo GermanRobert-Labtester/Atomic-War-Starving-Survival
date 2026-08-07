@@ -31,8 +31,9 @@ namespace AtomicWar._Game.Core
 
         private void CaptureMapWaterAffinity(SaveData data)
         {
-            // Special-path only (not RegisterSystem):
-            //   • GeneratedMap — seed rebuild on restore (RestoreGeneratedMap)
+            // Special-path only (not safe as plain RegisterSystem adapters):
+            //   • GeneratedMap — restore rebuilds via MapGenerator.Generate(seed)
+            //     then RestoreRevealState (not a single RestoreState call)
             //   • Affinity matrix — nested on MentalBreakSystem (no ISaveable)
             //   • FlashpointChoreographer — host delegate capture/restore
             // water_storage dual-path removed; RegisterSystem owns capture.
@@ -53,7 +54,8 @@ namespace AtomicWar._Game.Core
 
         private void CaptureExpeditions(SaveData data)
         {
-            // Special-path: active expedition list is field-only (not RegisterSystem).
+            // Special-path: active expedition list rebuild on restore (GetOrCreate +
+            // ApplyExpeditionSaveFields + RebuildExpeditionLoot) — not ISaveable.
             if (_expeditionSystem == null || _expeditionSystem.ActiveExpeditions == null)
                 return;
 

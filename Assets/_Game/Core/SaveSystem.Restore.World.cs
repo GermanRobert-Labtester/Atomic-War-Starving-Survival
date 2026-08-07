@@ -50,7 +50,7 @@ namespace AtomicWar._Game.Core
             });
             RestIf(_journalSystem, s => { if (data.Journal != null) s.RestoreState(data.Journal); });
             RestIf(_victoryProject, s => { if (data.VictoryProject != null) s.RestoreState(data.VictoryProject); });
-            // EventRunner remains special-path positional restore.
+            // Special-path: scheduled-event queue only (not ISaveable CaptureState).
             RestIf(_eventRunner, s => s.RestoreScheduledState(data.ScheduledEvents));
             RestIf(_suspicionTracker, s => { if (data.Suspicion != null) s.RestoreState(data.Suspicion); });
             RestIf(_hatchEntrapment, s => { if (data.HatchEntrapment != null) s.RestoreState(data.HatchEntrapment); });
@@ -63,7 +63,8 @@ namespace AtomicWar._Game.Core
 
         private void RestoreFactionSideSystems(SaveData data)
         {
-            // Complex specials: Bind/SetMap before restore.
+            // Special-path: Bind/SetMap after GeneratedMap rebuild, before state apply.
+            // Plain RegisterSystem adapters cannot express this dependency order.
             RestIf(_shiftingHotspots, s =>
             {
                 s.Bind(_generatedMap, _knowledgeMap);
