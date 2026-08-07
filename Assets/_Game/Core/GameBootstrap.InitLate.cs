@@ -113,6 +113,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBilgePumpsSystem(BilgePumps);
             SaveSystem.SetCarrionBirdsSystem(CarrionBirds);
             SaveSystem.SetLogicGatesSystem(LogicGates);
+            SaveSystem.SetModLoaderSystem(ModLoader);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);

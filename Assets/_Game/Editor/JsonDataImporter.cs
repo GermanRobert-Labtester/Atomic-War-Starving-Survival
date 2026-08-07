@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Events;
@@ -320,13 +321,16 @@ namespace AtomicWar._Game.Editor
         static List<T> LoadAndValidate<T>(string relativePath, string typeName, List<string> errors)
         {
             var fullPath = Path.Combine(Application.dataPath, "..", relativePath);
-            if (!File.Exists(fullPath))
+            // Prompt #864 — prefer Active mod-loader override (file stem, e.g. "items")
+            // when community mods are loaded; otherwise fall back to base JSON on disk.
+            string fileStem = Path.GetFileNameWithoutExtension(relativePath);
+            var json = System_ModLoader.ResolveJsonText(fileStem, fullPath);
+            if (json == null)
             {
                 errors.Add($"[{typeName}] File not found: {relativePath}");
                 return new List<T>();
             }
 
-            var json = File.ReadAllText(fullPath);
             if (string.IsNullOrWhiteSpace(json) || json.Trim() == "[]")
             {
                 errors.Add($"[{typeName}] File is empty: {relativePath}");

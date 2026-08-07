@@ -65,6 +65,9 @@ namespace AtomicWar._Game.Core
             // Companion-system cleanup.
             SaveSystem?.Dispose();
             ExpeditionSystem?.UnsubscribeAll();
+            // Prompt #864 — drop process-wide Active so importers do not
+            // keep a destroyed bootstrap's mod loader.
+            ModLoader?.ClearActiveIfSelf();
             // Note: AudioEventBus is a process-wide service, not owned by
             // the bootstrap. Its lifetime is managed by the gameplay scene
             // (or by tests). Skip Teardown here to avoid breaking other

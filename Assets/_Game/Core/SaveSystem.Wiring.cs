@@ -479,6 +479,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((LogicGatesState)o));
 
+        /// <summary>Prompt #864 — community JSON mod loader (path + loaded names).</summary>
+        public void SetModLoaderSystem(System_ModLoader s) =>
+            RegisterSystem(ref _modLoaderSystem, s, "mod_loader",
+                () => s.CaptureState(),
+                o => s.RestoreState((ModLoaderState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",

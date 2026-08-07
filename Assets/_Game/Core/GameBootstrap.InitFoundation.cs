@@ -91,6 +91,8 @@ namespace AtomicWar._Game.Core
             // Prompt #799 — IF/THEN grid automation over power consumers/sources.
             LogicGates = new System_LogicGates();
             WireLogicGates();
+            // Prompt #864 — community mods (JSON overrides) before other data consumers run.
+            BootModLoader();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

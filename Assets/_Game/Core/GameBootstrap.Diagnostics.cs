@@ -146,6 +146,7 @@ namespace AtomicWar._Game.Core
             { "BilgePumps",              new[] { "bilge_pumps", "bilge_pumps_daily" } },
             { "CarrionBirds",            new[] { "carrion_birds", "carrion_birds_daily" } },
             { "LogicGates",              new[] { "logic_gates" } },
+            { "ModLoader",               new[] { "mod_loader" } },
             { "PersonalQuests",          new[] { "personal_quests", "personal_quests_daily", "personal_quests_morale" } },
             { "SocialPerks",             new[] { "social_perks", "social_perks_daily" } },
             { "CombatPerks",             new[] { "combat_perks" } },
