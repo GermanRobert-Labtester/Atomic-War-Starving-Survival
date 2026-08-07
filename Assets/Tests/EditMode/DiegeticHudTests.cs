@@ -127,9 +127,47 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(IsPanelVisible(view.StoresPanel));
             StringAssert.Contains("MILITARY EXCLUSIVE", view.StoresTooltip.text);
             Assert.IsTrue(view.StoresTooltip.ClassListContains("exclusive"));
+            Assert.IsTrue(view.StoresPanel.ClassListContains("exclusive-panel"));
 
             view.PaintStoresFocus(false, null, null, false);
             Assert.IsFalse(IsPanelVisible(view.StoresPanel));
+            Assert.IsFalse(view.StoresPanel.ClassListContains("exclusive-panel"));
+        }
+
+        [Test]
+        public void Controller_EnsureDocumentMounted_CreatesUIDocumentWithPanelSettings()
+        {
+            var go = new GameObject("DiegeticHudMount");
+            _toDestroy.Add(go);
+            var diegetic = go.AddComponent<DiegeticHudController>();
+
+            // Do NOT call BuildDetachedForTests — we want the live document path.
+            Assert.IsTrue(diegetic.EnsureDocumentMounted());
+            diegetic.EnsureBuilt();
+
+            Assert.IsTrue(diegetic.IsDocumentMounted);
+            Assert.IsNotNull(diegetic.Document);
+            Assert.IsNotNull(diegetic.Document.panelSettings);
+            Assert.IsTrue(diegetic.IsBuilt);
+            Assert.IsNotNull(diegetic.View);
+            Assert.IsNotNull(diegetic.View.Root);
+            Assert.IsNotNull(diegetic.View.HatchPanel);
+            Assert.IsNotNull(diegetic.View.EncounterPanel);
+            Assert.IsNotNull(diegetic.View.StoresPanel);
+        }
+
+        [Test]
+        public void HUD_EnsureDiegeticHud_MountsDocument()
+        {
+            var go = new GameObject("HUDDiegeticMount");
+            _toDestroy.Add(go);
+            var hud = go.AddComponent<HUD>();
+
+            var diegetic = hud.EnsureDiegeticHud();
+            Assert.IsNotNull(diegetic);
+            Assert.IsTrue(diegetic.IsDocumentMounted, "Play-mode path should mount UIDocument on HUD.");
+            Assert.IsNotNull(diegetic.Document);
+            Assert.IsNotNull(diegetic.Document.panelSettings);
         }
 
         [Test]
@@ -251,6 +289,7 @@ namespace AtomicWar.Tests.EditMode
             var diegetic = hud.EnsureDiegeticHud();
             Assert.IsNotNull(diegetic);
             Assert.IsTrue(diegetic.IsBuilt);
+            Assert.IsTrue(diegetic.IsDocumentMounted);
             Assert.IsNotNull(diegetic.View);
             Assert.IsNotNull(diegetic.View.Root);
 

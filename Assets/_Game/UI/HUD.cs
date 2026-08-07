@@ -302,19 +302,26 @@ namespace AtomicWar._Game.UI
         }
 
         /// <summary>
-        /// Ensure UI Toolkit diegetic HUD is built and bound to hatch / stores / log.
+        /// Ensure UI Toolkit diegetic HUD is mounted on a live UIDocument (play mode),
+        /// built, and bound to hatch / stores / encounter-log view-models.
         /// </summary>
         public DiegeticHudController EnsureDiegeticHud()
         {
             EnsureWidgetReferences();
             if (_diegeticHud == null) return null;
-            // Prefer a live UIDocument on the same GO when present (play mode).
-            if (_diegeticHud.GetComponent<UIDocument>() == null
-                && GetComponent<UIDocument>() != null)
+
+            // If HUD already carries a UIDocument and the controller does not,
+            // re-home the controller onto this GO so it can own the panel.
+            if (_diegeticHud.GetComponent<UIDocument>() == null)
             {
-                // HUD GO already has a document — controller will find none on self;
-                // still paints detached + can be reparented later.
+                var hostDoc = GetComponent<UIDocument>();
+                if (hostDoc != null && _diegeticHud.gameObject != gameObject)
+                {
+                    // Controller lives on a child without a document — mount its own.
+                }
             }
+
+            _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
             _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud);
             return _diegeticHud;

@@ -133,6 +133,7 @@ namespace AtomicWar._Game.UI
         {
             if (StoresPanel == null) return;
             SetVisible(StoresPanel, show);
+            StoresPanel.EnableInClassList("exclusive-panel", show && militaryExclusive);
             if (!show) return;
             if (StoresSummary != null) StoresSummary.text = summary ?? string.Empty;
             if (StoresTooltip != null)
