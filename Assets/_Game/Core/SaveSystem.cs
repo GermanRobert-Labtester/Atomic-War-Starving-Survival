@@ -16,6 +16,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.AI; // HallucinationSystem (audit wiring fix)
 using AtomicWar._Game.Crafting; // CraftingSystem, WorkbenchSystem (audit wiring fix)
+using AtomicWar._Game.Utilities; // SaveSlotPaths (slot file naming shared with the main menu)
 
 namespace AtomicWar._Game.Core
 {
@@ -695,7 +696,9 @@ namespace AtomicWar._Game.Core
             _getSurvivors = deps.GetSurvivors;
             _itemLookup = deps.ItemLookup;
             _moduleLookup = deps.ModuleLookup;
-            _savesDir = deps.SavesDir ?? Path.Combine(Application.persistentDataPath, "saves");
+            // The CoreDeps override is what test fixtures use to redirect saves
+            // into a temp folder; only the default comes from the shared helper.
+            _savesDir = deps.SavesDir ?? SaveSlotPaths.DefaultSavesDir;
 
             if (_gameState != null)
             {

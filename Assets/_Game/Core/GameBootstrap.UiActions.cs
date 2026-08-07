@@ -124,7 +124,14 @@ namespace AtomicWar._Game.Core
             _diagnosticsOverlay?.NotifySave(slotId);
         }
 
-        public void LoadGame(string slotId = "quicksave")
+        /// <summary>
+        /// Restore a save slot into the live world.
+        /// Returns whether the slot actually loaded, so callers that must react
+        /// to a missing or corrupt save (the main menu's "Continue") can fall
+        /// back to a fresh game instead of silently continuing into an
+        /// unrestored world.
+        /// </summary>
+        public bool LoadGame(string slotId = "quicksave")
         {
             if (SaveSystem.Load(slotId))
             {
@@ -148,7 +155,9 @@ namespace AtomicWar._Game.Core
                 SyncJournalBookFromSystem();
                 // Corpse counts / fire rooms / care urgency after atmosphere+inventory restore.
                 RefreshInventoryStrip();
+                return true;
             }
+            return false;
         }
     }
 }

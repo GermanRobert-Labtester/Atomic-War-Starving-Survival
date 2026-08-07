@@ -578,10 +578,15 @@ namespace AtomicWar._Game.Core
             // after the Choreographer itself is constructed (it depends on
             // RadioTunerSystem and other systems wired after SaveSystem).
 
-            // Subscribe to phase changes for autosave
+            // Subscribe to phase changes for autosave.
+            // _suppressAutoSave is held while Awake restores a "Continue" slot:
+            // SaveSystem.Load restores the snapshot's phase, which would
+            // otherwise re-fire this hook and write the just-loaded state back
+            // over the autosave slot -- wrong when the player continued from
+            // quicksave, since it would destroy their separate autosave.
             _onGameStateChanged = phase =>
             {
-                if (phase == GamePhase.Running) SaveSystem.AutoSave();
+                if (phase == GamePhase.Running && !_suppressAutoSave) SaveSystem.AutoSave();
             };
             GameState.OnPhaseChanged += _onGameStateChanged;
 

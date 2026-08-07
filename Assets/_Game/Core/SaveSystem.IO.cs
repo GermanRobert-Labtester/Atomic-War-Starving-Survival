@@ -14,6 +14,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.Utilities; // SaveSlotPaths (slot file naming shared with the main menu)
 
 namespace AtomicWar._Game.Core
 {
@@ -194,8 +195,9 @@ namespace AtomicWar._Game.Core
         public string[] ListSlots()
         {
             if (!Directory.Exists(_savesDir)) return Array.Empty<string>();
-            return Directory.GetFiles(_savesDir, "save_*.json")
-                .Select(f => Path.GetFileNameWithoutExtension(f).Substring("save_".Length))
+            return Directory.GetFiles(_savesDir, SaveSlotPaths.SlotFileName("*"))
+                .Select(f => SaveSlotPaths.SlotIdFromFileName(Path.GetFileName(f)))
+                .Where(slotId => slotId != null)
                 .ToArray();
         }
 
@@ -274,9 +276,11 @@ namespace AtomicWar._Game.Core
             data.SaveVersion = 3;
         }
 
-        private string SlotPath(string slotId) => Path.Combine(_savesDir, $"save_{slotId}.json");
+        // Naming lives in SaveSlotPaths so the main menu's "Continue" probe
+        // resolves the same files without duplicating the convention.
+        private string SlotPath(string slotId) => SaveSlotPaths.SlotPath(_savesDir, slotId);
 
         /// <summary>A-1: Path to the backup save file (previous version).</summary>
-        private string BakPath(string slotId) => Path.Combine(_savesDir, $"save_{slotId}.json.bak");
+        private string BakPath(string slotId) => SaveSlotPaths.BakPath(_savesDir, slotId);
     }
 }

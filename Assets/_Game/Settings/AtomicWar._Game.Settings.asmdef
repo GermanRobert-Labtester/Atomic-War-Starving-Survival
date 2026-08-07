@@ -1,0 +1,14 @@
+{
+    "name": "AtomicWar._Game.Settings",
+    "rootNamespace": "AtomicWar._Game.Settings",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

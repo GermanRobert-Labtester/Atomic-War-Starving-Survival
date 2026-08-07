@@ -35,11 +35,61 @@ namespace AtomicWar._Game.Core
             return new System.Random(salted);
         }
 
+        /// <summary>
+        /// Held while Awake restores a save requested from the main menu, so the
+        /// OnPhaseChanged -> AutoSave hook wired in InitSaveAndExpeditions does
+        /// not fire during the restore. See <see cref="Awake"/>.
+        /// </summary>
+        private bool _suppressAutoSave;
+
         private void Awake()
         {
             InitializeSystems();
             WireHUD();
-            GameState.Phase = GamePhase.Running;
+            ApplyPendingGameLoad();
+
+            // Only flip to Running if the restore did not already land us
+            // somewhere meaningful. The IsGameOver guard preserves LoadGame's
+            // terminal-state branch -- without it, continuing into a finished
+            // run would resurrect it and immediately autosave over the ending.
+            if (GameState.Phase != GamePhase.Running && !IsGameOver)
+            {
+                GameState.Phase = GamePhase.Running;
+            }
+        }
+
+        /// <summary>
+        /// Consume the main menu's "Continue" request, if any, and restore that
+        /// slot.
+        ///
+        /// Ordering is load-bearing: this must run BEFORE Phase becomes Running.
+        /// Setting Phase = Running fires the autosave hook, which would
+        /// overwrite save_autosave.json with this freshly-initialised, empty
+        /// world -- destroying the very save the player asked to continue before
+        /// it could be read.
+        ///
+        /// Entering play mode directly on the gameplay scene leaves no pending
+        /// slot, so this is a no-op and the fresh-game path is unchanged.
+        /// </summary>
+        private void ApplyPendingGameLoad()
+        {
+            string slotId = PendingGameLoad.ConsumeSlotId();
+            if (string.IsNullOrEmpty(slotId)) return;
+
+            _suppressAutoSave = true;
+            try
+            {
+                if (!LoadGame(slotId))
+                {
+                    Debug.LogWarning(
+                        $"[GameBootstrap] Continue requested slot '{slotId}', but it could not be " +
+                        "loaded (missing or corrupt). Starting a fresh game instead.");
+                }
+            }
+            finally
+            {
+                _suppressAutoSave = false;
+            }
         }
 
         /// <summary>
