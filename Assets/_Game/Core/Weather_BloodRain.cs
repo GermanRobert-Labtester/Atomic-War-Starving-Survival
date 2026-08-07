@@ -86,6 +86,8 @@ namespace AtomicWar._Game.Core
 
         public BloodRainState GetState() => _state;
 
+        public BloodRainState CaptureState() => GetState();
+
         public void RestoreState(BloodRainState state)
         {
             _state = state ?? new BloodRainState();

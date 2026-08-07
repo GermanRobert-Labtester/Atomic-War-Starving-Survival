@@ -41,5 +41,12 @@ namespace AtomicWar._Game.Core
             OnSurvivorStruckOutside?.Invoke(_state, _state.bluntTraumaDamage, _state.radiationSpikeMillisieverts);
             return (_state.bluntTraumaDamage, _state.radiationSpikeMillisieverts);
         }
+
+        public RadHailState CaptureState() => _state;
+
+        public void RestoreState(RadHailState saved)
+        {
+            _state = saved ?? new RadHailState();
+        }
     }
 }

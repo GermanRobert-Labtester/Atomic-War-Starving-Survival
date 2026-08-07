@@ -52,5 +52,12 @@ namespace AtomicWar._Game.Core
                 }
             }
         }
+
+        public EMPStormState CaptureState() => _state;
+
+        public void RestoreState(EMPStormState saved)
+        {
+            _state = saved ?? new EMPStormState();
+        }
     }
 }

@@ -46,5 +46,12 @@ namespace AtomicWar._Game.Core
         {
             _state.isActive = active;
         }
+
+        public AcidSnowState CaptureState() => _state;
+
+        public void RestoreState(AcidSnowState saved)
+        {
+            _state = saved ?? new AcidSnowState();
+        }
     }
 }

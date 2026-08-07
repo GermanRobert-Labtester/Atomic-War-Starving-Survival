@@ -85,6 +85,8 @@ namespace AtomicWar._Game.Core
 
         public GlassStormState GetState() => _state;
 
+        public GlassStormState CaptureState() => GetState();
+
         public void RestoreState(GlassStormState state)
         {
             _state = state ?? new GlassStormState();

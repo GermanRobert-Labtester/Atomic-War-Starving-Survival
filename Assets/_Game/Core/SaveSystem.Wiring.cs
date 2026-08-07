@@ -749,6 +749,66 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _biomeSuburbs, s, "biome_suburbs",
                 () => s.CaptureState(), o => s.RestoreState((SuburbsState)o));
 
+        public void SetWeatherAcidSnow(Weather_AcidSnow s) =>
+            RegisterSystem(ref _weatherAcidSnow, s, "weather_acid_snow",
+                () => s.CaptureState(), o => s.RestoreState((AcidSnowState)o));
+
+        public void SetWeatherBioFog(Weather_BioFog s) =>
+            RegisterSystem(ref _weatherBioFog, s, "weather_bio_fog",
+                () => s.CaptureState(), o => s.RestoreState((BioFogState)o));
+
+        public void SetWeatherBlackSnow(Weather_BlackSnow s) =>
+            RegisterSystem(ref _weatherBlackSnow, s, "weather_black_snow",
+                () => s.CaptureState(), o => s.RestoreState((BlackSnowState)o));
+
+        public void SetWeatherBloodRain(Weather_BloodRain s) =>
+            RegisterSystem(ref _weatherBloodRain, s, "weather_blood_rain",
+                () => s.CaptureState(), o => s.RestoreState((BloodRainState)o));
+
+        public void SetWeatherDeadWind(Weather_DeadWind s) =>
+            RegisterSystem(ref _weatherDeadWind, s, "weather_dead_wind",
+                () => s.CaptureState(), o => s.RestoreState((DeadWindState)o));
+
+        public void SetWeatherDeepFreeze(Weather_DeepFreeze s) =>
+            RegisterSystem(ref _weatherDeepFreeze, s, "weather_deep_freeze",
+                () => s.CaptureState(), o => s.RestoreState((DeepFreezeState)o));
+
+        public void SetWeatherDustDevil(Weather_DustDevil s) =>
+            RegisterSystem(ref _weatherDustDevil, s, "weather_dust_devil",
+                () => s.CaptureState(), o => s.RestoreState((DustDevilState)o));
+
+        public void SetWeatherEmpStorm(Weather_EMPStorm s) =>
+            RegisterSystem(ref _weatherEmpStorm, s, "weather_emp_storm",
+                () => s.CaptureState(), o => s.RestoreState((EMPStormState)o));
+
+        public void SetWeatherFalseSpring(Weather_FalseSpring s) =>
+            RegisterSystem(ref _weatherFalseSpring, s, "weather_false_spring",
+                () => s.CaptureState(), o => s.RestoreState((FalseSpringState)o));
+
+        public void SetWeatherGlassStorm(Weather_GlassStorm s) =>
+            RegisterSystem(ref _weatherGlassStorm, s, "weather_glass_storm",
+                () => s.CaptureState(), o => s.RestoreState((GlassStormState)o));
+
+        public void SetWeatherOzoneHole(Weather_OzoneHole s) =>
+            RegisterSystem(ref _weatherOzoneHole, s, "weather_ozone_hole",
+                () => s.CaptureState(), o => s.RestoreState((OzoneHoleState)o));
+
+        public void SetWeatherRadHail(Weather_RadHail s) =>
+            RegisterSystem(ref _weatherRadHail, s, "weather_rad_hail",
+                () => s.CaptureState(), o => s.RestoreState((RadHailState)o));
+
+        public void SetWeatherSilentSpring(Weather_SilentSpring s) =>
+            RegisterSystem(ref _weatherSilentSpring, s, "weather_silent_spring",
+                () => s.CaptureState(), o => s.RestoreState((SilentSpringState)o));
+
+        public void SetWeatherSolarFlare(Weather_SolarFlare s) =>
+            RegisterSystem(ref _weatherSolarFlare, s, "weather_solar_flare",
+                () => s.CaptureState(), o => s.RestoreState((SolarFlareState)o));
+
+        public void SetWeatherStaticCharge(Weather_StaticCharge s) =>
+            RegisterSystem(ref _weatherStaticCharge, s, "weather_static_charge",
+                () => s.CaptureState(), o => s.RestoreState((StaticChargeState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

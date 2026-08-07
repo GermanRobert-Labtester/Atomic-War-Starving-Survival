@@ -1,0 +1,174 @@
+// GameBootstrap.Weather.cs — boot/wire Weather_* special weather event trackers.
+// Distinct from core WeatherSystem (daily/seasonal ambient).
+using UnityEngine;
+
+namespace AtomicWar._Game.Core
+{
+    public partial class GameBootstrap
+    {
+        /// <summary>
+        /// Construct all Weather_* special-event trackers. Host hooks are offline-safe logs;
+        /// weather hosts call Trigger/Tick when storms fire.
+        /// </summary>
+        private void BootWeather()
+        {
+            WeatherAcidSnow = new Weather_AcidSnow();
+            WeatherBioFog = new Weather_BioFog();
+            WeatherBlackSnow = new Weather_BlackSnow();
+            WeatherBloodRain = new Weather_BloodRain();
+            WeatherDeadWind = new Weather_DeadWind();
+            WeatherDeepFreeze = new Weather_DeepFreeze();
+            WeatherDustDevil = new Weather_DustDevil();
+            WeatherEmpStorm = new Weather_EMPStorm();
+            WeatherFalseSpring = new Weather_FalseSpring();
+            WeatherGlassStorm = new Weather_GlassStorm();
+            WeatherOzoneHole = new Weather_OzoneHole();
+            WeatherRadHail = new Weather_RadHail();
+            WeatherSilentSpring = new Weather_SilentSpring();
+            WeatherSolarFlare = new Weather_SolarFlare();
+            WeatherStaticCharge = new Weather_StaticCharge();
+
+            WireWeather();
+            Debug.Log("[GameBootstrap] Weather events ready (15 trackers).");
+        }
+
+        private void WireWeather()
+        {
+            if (WeatherAcidSnow != null)
+                WeatherAcidSnow.OnAcidCorrosionApplied += (_, drain) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: acid snow filter drain {drain:F1}");
+
+            if (WeatherBioFog != null)
+            {
+                WeatherBioFog.OnBioFogStarted += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: bio fog started");
+                WeatherBioFog.OnRadiationAnxietyInflicted += (_, anxiety) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: bio fog anxiety +{anxiety:F1}");
+            }
+
+            if (WeatherBlackSnow != null)
+            {
+                WeatherBlackSnow.OnSuitContaminated += id =>
+                    Debug.Log($"[GameBootstrap] WEATHER: black snow contaminated suit — '{id}'");
+                WeatherBlackSnow.OnSuitRuined += id =>
+                    Debug.Log($"[GameBootstrap] WEATHER: black snow ruined suit — '{id}'");
+                WeatherBlackSnow.OnSuitCleaned += id =>
+                    Debug.Log($"[GameBootstrap] WEATHER: black snow cleaned suit — '{id}'");
+            }
+
+            if (WeatherBloodRain != null)
+            {
+                WeatherBloodRain.OnBloodRainTriggered += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: blood rain triggered");
+                WeatherBloodRain.OnBloodRainEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: blood rain ended");
+                WeatherBloodRain.OnMoraleDebuffApplied += (_, panic, despair) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: blood rain morale panic={panic:F0} despair={despair:F0}");
+            }
+
+            if (WeatherDeadWind != null)
+            {
+                WeatherDeadWind.OnDeadWindStarted += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: dead wind started");
+                WeatherDeadWind.OnDeadWindEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: dead wind ended");
+            }
+
+            if (WeatherDeepFreeze != null)
+            {
+                WeatherDeepFreeze.OnDeepFreezeStarted += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: deep freeze started");
+                WeatherDeepFreeze.OnCropsKilledByFreeze += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: deep freeze killed crops");
+                WeatherDeepFreeze.OnFrostbiteRiskInflicted += (_, temp) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: deep freeze frostbite risk at {temp:F0}°C");
+            }
+
+            if (WeatherDustDevil != null)
+            {
+                WeatherDustDevil.OnAirFilterRuined += node =>
+                    Debug.Log($"[GameBootstrap] WEATHER: dust devil ruined air filter at '{node}'");
+                WeatherDustDevil.OnWindTurbineClogged += node =>
+                    Debug.Log($"[GameBootstrap] WEATHER: dust devil clogged turbine at '{node}'");
+                WeatherDustDevil.OnDustDevilSpotted += (from, to) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: dust devil {from} → {to}");
+            }
+
+            if (WeatherEmpStorm != null)
+            {
+                WeatherEmpStorm.OnEMPBurstTrippedPower += (_, hours) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: EMP storm blackout {hours}h");
+                WeatherEmpStorm.OnPowerRestored += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: EMP storm power restored");
+            }
+
+            if (WeatherFalseSpring != null)
+            {
+                WeatherFalseSpring.OnFalseSpringStarted += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: false spring started");
+                WeatherFalseSpring.OnFalseSpringEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: false spring ended");
+            }
+
+            if (WeatherGlassStorm != null)
+            {
+                WeatherGlassStorm.OnGlassStormTriggered += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: glass storm triggered");
+                WeatherGlassStorm.OnGlassStormEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: glass storm ended");
+                WeatherGlassStorm.OnHazmatShredded += (_, dmg) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: glass storm hazmat -{dmg:F0}");
+                WeatherGlassStorm.OnHatchSandblasted += (_, dmg) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: glass storm hatch -{dmg:F0}");
+            }
+
+            if (WeatherOzoneHole != null)
+            {
+                WeatherOzoneHole.OnOzoneHoleTriggered += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: ozone hole triggered");
+                WeatherOzoneHole.OnOzoneHoleEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: ozone hole ended");
+                WeatherOzoneHole.OnDaylightExposure += (_, rad, burn) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: ozone hole rad={rad:F0} burn={burn:F0}");
+            }
+
+            if (WeatherRadHail != null)
+            {
+                WeatherRadHail.OnCatchmentSurfacesDestroyed += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: rad hail destroyed catchments");
+                WeatherRadHail.OnSurvivorStruckOutside += (_, dmg, rads) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: rad hail strike dmg={dmg:F0} rads={rads:F0}");
+            }
+
+            if (WeatherSilentSpring != null)
+            {
+                WeatherSilentSpring.OnSilentSpringTriggered += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: silent spring triggered");
+                WeatherSilentSpring.OnSilentSpringEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: silent spring ended");
+                WeatherSilentSpring.OnHordeImminent += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: silent spring horde imminent");
+            }
+
+            if (WeatherSolarFlare != null)
+            {
+                WeatherSolarFlare.OnSolarFlareTriggered += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: solar flare triggered");
+                WeatherSolarFlare.OnSolarFlareEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: solar flare ended");
+                WeatherSolarFlare.OnTick += (_, remaining) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: solar flare {remaining:F0}h remaining");
+            }
+
+            if (WeatherStaticCharge != null)
+            {
+                WeatherStaticCharge.OnStaticChargeTriggered += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: static charge triggered");
+                WeatherStaticCharge.OnStaticChargeEnded += _ =>
+                    Debug.Log("[GameBootstrap] WEATHER: static charge ended");
+                WeatherStaticCharge.OnShockDamageDealt += (_, module, dmg) =>
+                    Debug.Log($"[GameBootstrap] WEATHER: static charge shock '{module}' -{dmg:F0}");
+            }
+        }
+    }
+}

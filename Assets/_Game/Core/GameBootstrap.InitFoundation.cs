@@ -105,6 +105,8 @@ namespace AtomicWar._Game.Core
             BootMapAnomalies();
             // Expedition biomes — ash swamp / glass desert / salt flats / … .
             BootBiomes();
+            // Special weather events — acid snow / EMP storm / solar flare / … .
+            BootWeather();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

@@ -52,5 +52,12 @@ namespace AtomicWar._Game.Core
             _state.isStealthPossible = true;
             _state.encounterRateMultiplier = 1.0f;
         }
+
+        public BioFogState CaptureState() => _state;
+
+        public void RestoreState(BioFogState saved)
+        {
+            _state = saved ?? new BioFogState();
+        }
     }
 }

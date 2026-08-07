@@ -104,9 +104,27 @@ namespace AtomicWar._Game.Core
 
         public StaticChargeState GetState() => _state;
 
+        public StaticChargeState CaptureState()
+        {
+            return new StaticChargeState
+            {
+                weatherId = _state.weatherId,
+                displayName = _state.displayName,
+                isActive = _state.isActive,
+                durationHours = _state.durationHours,
+                hoursRemaining = _state.hoursRemaining,
+                shockDamage = _state.shockDamage,
+                affectedModules = _state.affectedModules != null
+                    ? new List<string>(_state.affectedModules)
+                    : new List<string>()
+            };
+        }
+
         public void RestoreState(StaticChargeState state)
         {
             _state = state ?? new StaticChargeState();
+            if (_state.affectedModules == null)
+                _state.affectedModules = new List<string>();
         }
     }
 }

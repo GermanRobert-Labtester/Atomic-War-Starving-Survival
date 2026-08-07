@@ -55,5 +55,12 @@ namespace AtomicWar._Game.Core
                 }
             }
         }
+
+        public FalseSpringState CaptureState() => _state;
+
+        public void RestoreState(FalseSpringState saved)
+        {
+            _state = saved ?? new FalseSpringState();
+        }
     }
 }

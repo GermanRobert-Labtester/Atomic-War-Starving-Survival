@@ -62,5 +62,12 @@ namespace AtomicWar._Game.Core
         {
             return _state.hoursRemaining > 0f ? _state.moraleBoost : 0f;
         }
+
+        public SolarFlareState CaptureState() => _state;
+
+        public void RestoreState(SolarFlareState saved)
+        {
+            _state = saved ?? new SolarFlareState();
+        }
     }
 }

@@ -57,5 +57,12 @@ namespace AtomicWar._Game.Core
                 _state.isActive = false;
             }
         }
+
+        public DeepFreezeState CaptureState() => _state;
+
+        public void RestoreState(DeepFreezeState saved)
+        {
+            _state = saved ?? new DeepFreezeState();
+        }
     }
 }

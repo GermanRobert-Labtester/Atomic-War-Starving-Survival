@@ -47,5 +47,12 @@ namespace AtomicWar._Game.Core
 
             OnDeadWindEnded?.Invoke(_state);
         }
+
+        public DeadWindState CaptureState() => _state;
+
+        public void RestoreState(DeadWindState saved)
+        {
+            _state = saved ?? new DeadWindState();
+        }
     }
 }

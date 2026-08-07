@@ -97,6 +97,8 @@ namespace AtomicWar._Game.Core
 
         public OzoneHoleState GetState() => _state;
 
+        public OzoneHoleState CaptureState() => GetState();
+
         public void RestoreState(OzoneHoleState state)
         {
             _state = state ?? new OzoneHoleState();

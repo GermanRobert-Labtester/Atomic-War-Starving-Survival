@@ -283,6 +283,22 @@ namespace AtomicWar._Game.Core
         public Biome_SaltFlats BiomeSaltFlats { get; private set; }
         public Biome_SkyscraperTops BiomeSkyscraperTops { get; private set; }
         public Biome_Suburbs BiomeSuburbs { get; private set; }
+        // Special weather events — distinct from core WeatherSystem.
+        public Weather_AcidSnow WeatherAcidSnow { get; private set; }
+        public Weather_BioFog WeatherBioFog { get; private set; }
+        public Weather_BlackSnow WeatherBlackSnow { get; private set; }
+        public Weather_BloodRain WeatherBloodRain { get; private set; }
+        public Weather_DeadWind WeatherDeadWind { get; private set; }
+        public Weather_DeepFreeze WeatherDeepFreeze { get; private set; }
+        public Weather_DustDevil WeatherDustDevil { get; private set; }
+        public Weather_EMPStorm WeatherEmpStorm { get; private set; }
+        public Weather_FalseSpring WeatherFalseSpring { get; private set; }
+        public Weather_GlassStorm WeatherGlassStorm { get; private set; }
+        public Weather_OzoneHole WeatherOzoneHole { get; private set; }
+        public Weather_RadHail WeatherRadHail { get; private set; }
+        public Weather_SilentSpring WeatherSilentSpring { get; private set; }
+        public Weather_SolarFlare WeatherSolarFlare { get; private set; }
+        public Weather_StaticCharge WeatherStaticCharge { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

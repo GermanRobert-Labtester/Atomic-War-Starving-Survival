@@ -91,6 +91,8 @@ namespace AtomicWar._Game.Core
 
         public SilentSpringState GetState() => _state;
 
+        public SilentSpringState CaptureState() => GetState();
+
         public void RestoreState(SilentSpringState state)
         {
             _state = state ?? new SilentSpringState();
