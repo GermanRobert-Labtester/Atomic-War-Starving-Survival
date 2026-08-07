@@ -82,5 +82,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.sabotageProgress >= 100f;
         }
+
+        public ProjectSabotageState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(ProjectSabotageState saved)
+        {
+            _state = saved ?? new ProjectSabotageState();
+        }
     }
 }

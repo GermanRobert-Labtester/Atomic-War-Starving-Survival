@@ -71,5 +71,17 @@ namespace AtomicWar._Game.Core
         {
             return _state.isDecoded;
         }
+
+        public NumbersStationState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(NumbersStationState saved)
+        {
+            _state = saved ?? new NumbersStationState();
+            if (_state.numberSequence == null)
+                _state.numberSequence = new System.Collections.Generic.List<int>();
+        }
     }
 }

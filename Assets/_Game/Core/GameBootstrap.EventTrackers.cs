@@ -31,9 +31,18 @@ namespace AtomicWar._Game.Core
             EventSpontaneousMurder = new Event_SpontaneousMurder();
             EventTeenRebellion = new Event_TeenRebellion();
             EventWitchHunt = new Event_WitchHunt();
+            EventEuthanasiaPact = new Event_EuthanasiaPact();
+            EventFactionMerger = new Event_FactionMerger();
+            EventMudslide = new Event_Mudslide();
+            EventNumbersStation = new Event_NumbersStation();
+            EventProjectSabotage = new Event_ProjectSabotage();
+            EventSinkhole = new FoundationSinkholeSystem("event_sinkhole");
+            EventTriangulation = new Event_Triangulation();
+            EventVaultCollision = new VaultCollisionSystem("event_vault_collision");
+            EventWarlordSuccession = new Event_WarlordSuccession();
 
             WireEvents();
-            Debug.Log("[GameBootstrap] Events ready (18 CaptureState trackers).");
+            Debug.Log("[GameBootstrap] Events ready (27 CaptureState trackers).");
         }
 
         private void WireEvents()
@@ -246,6 +255,88 @@ namespace AtomicWar._Game.Core
                     Debug.Log($"[GameBootstrap] EVENT: witch hunt strike n={strikers?.Length ?? 0}");
                 EventWitchHunt.OnStrikeEnded += () =>
                     Debug.Log("[GameBootstrap] EVENT: witch hunt strike ended");
+            }
+
+            if (EventEuthanasiaPact != null)
+            {
+                EventEuthanasiaPact.OnPactFormed += (a, b, hours) =>
+                    Debug.Log($"[GameBootstrap] EVENT: euthanasia pact '{a}'+'{b}' {hours:F0}h");
+                EventEuthanasiaPact.OnPactTick += (a, b, left) =>
+                    Debug.Log($"[GameBootstrap] EVENT: euthanasia pact tick {left:F0}h '{a}'/'{b}'");
+                EventEuthanasiaPact.OnPactExecuted += (a, b) =>
+                    Debug.Log($"[GameBootstrap] EVENT: euthanasia pact executed '{a}'/'{b}'");
+                EventEuthanasiaPact.OnPactCancelled += (a, b) =>
+                    Debug.Log($"[GameBootstrap] EVENT: euthanasia pact cancelled '{a}'/'{b}'");
+            }
+            if (EventFactionMerger != null)
+            {
+                EventFactionMerger.OnMergerTriggered += (st, f1, f2) =>
+                    Debug.Log($"[GameBootstrap] EVENT: faction merger '{f1}'+'{f2}'");
+                EventFactionMerger.OnSuperFactionFormed += st =>
+                    Debug.Log($"[GameBootstrap] EVENT: super faction '{st.superFactionId}'");
+            }
+            if (EventMudslide != null)
+            {
+                EventMudslide.OnHatchBuried += st =>
+                    Debug.Log("[GameBootstrap] EVENT: mudslide hatch buried");
+                EventMudslide.OnHatchCleared += st =>
+                    Debug.Log("[GameBootstrap] EVENT: mudslide hatch cleared");
+                EventMudslide.OnDigProgress += (st, h) =>
+                    Debug.Log($"[GameBootstrap] EVENT: mudslide dig {h:F1}h");
+                EventMudslide.OnContaminationApplied += (st, c) =>
+                    Debug.Log($"[GameBootstrap] EVENT: mudslide contamination +{c:F1}");
+            }
+            if (EventNumbersStation != null)
+            {
+                EventNumbersStation.OnSequenceGenerated += (st, seq) =>
+                    Debug.Log($"[GameBootstrap] EVENT: numbers station seq n={seq?.Count ?? 0}");
+                EventNumbersStation.OnDecodeAttempt += (st, ok) =>
+                    Debug.Log($"[GameBootstrap] EVENT: numbers station decode ok={ok}");
+                EventNumbersStation.OnMapNodeUnlocked += (st, node) =>
+                    Debug.Log($"[GameBootstrap] EVENT: numbers station unlock '{node}'");
+            }
+            if (EventProjectSabotage != null)
+            {
+                EventProjectSabotage.OnSabotageAttempt += (st, site, n) =>
+                    Debug.Log($"[GameBootstrap] EVENT: project sabotage '{site}' n={n}");
+                EventProjectSabotage.OnGuardAssigned += (st, n) =>
+                    Debug.Log($"[GameBootstrap] EVENT: project sabotage guards={n}");
+                EventProjectSabotage.OnConstructionDamaged += (st, site, p) =>
+                    Debug.Log($"[GameBootstrap] EVENT: project sabotage damage '{site}' {p:F0}%");
+                EventProjectSabotage.OnSabotageRepelled += (st, site) =>
+                    Debug.Log($"[GameBootstrap] EVENT: project sabotage repelled '{site}'");
+            }
+            if (EventSinkhole != null)
+            {
+                EventSinkhole.OnCollapseTriggered += (id, room) =>
+                    Debug.Log($"[GameBootstrap] EVENT: sinkhole collapse '{room}' ({id})");
+            }
+            if (EventTriangulation != null)
+            {
+                EventTriangulation.OnSignalReceived += (st, km) =>
+                    Debug.Log($"[GameBootstrap] EVENT: triangulation signal {km:F1}km");
+                EventTriangulation.OnTriangulationAttempt += (st, ok, node) =>
+                    Debug.Log($"[GameBootstrap] EVENT: triangulation attempt ok={ok} '{node}'");
+                EventTriangulation.OnSupplyClaimed += st =>
+                    Debug.Log("[GameBootstrap] EVENT: triangulation supply claimed");
+            }
+            if (EventVaultCollision != null)
+            {
+                EventVaultCollision.OnCollision += (id, neighbor) =>
+                    Debug.Log($"[GameBootstrap] EVENT: vault collision '{neighbor}' ({id})");
+                EventVaultCollision.OnLootOrThreat += (id, outcome) =>
+                    Debug.Log($"[GameBootstrap] EVENT: vault collision outcome '{outcome}'");
+            }
+            if (EventWarlordSuccession != null)
+            {
+                EventWarlordSuccession.OnLeaderAssassinated += (st, faction) =>
+                    Debug.Log($"[GameBootstrap] EVENT: warlord succession assassinated '{faction}'");
+                EventWarlordSuccession.OnFactionFractured += st =>
+                    Debug.Log("[GameBootstrap] EVENT: warlord succession fractured");
+                EventWarlordSuccession.OnSubFactionsAtWar += st =>
+                    Debug.Log("[GameBootstrap] EVENT: warlord succession at war");
+                EventWarlordSuccession.OnFactionsPlayedOff += (st, target) =>
+                    Debug.Log($"[GameBootstrap] EVENT: warlord succession played off '{target}'");
             }
         }
     }

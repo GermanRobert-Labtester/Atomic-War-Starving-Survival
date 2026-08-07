@@ -72,5 +72,25 @@ namespace AtomicWar._Game.Core
             OnLootOrThreat?.Invoke(_state.eventId, outcome);
             return outcome;
         }
+
+        public VaultCollisionState CaptureState()
+        {
+            return new VaultCollisionState
+            {
+                eventId = _state.eventId,
+                collisionChance = _state.collisionChance,
+                hasCollided = _state.hasCollided,
+                neighborState = _state.neighborState,
+            };
+        }
+
+        public void RestoreState(VaultCollisionState saved)
+        {
+            if (saved == null) return;
+            _state.eventId = saved.eventId;
+            _state.collisionChance = saved.collisionChance;
+            _state.hasCollided = saved.hasCollided;
+            _state.neighborState = saved.neighborState;
+        }
     }
 }

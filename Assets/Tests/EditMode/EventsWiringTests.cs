@@ -12,7 +12,7 @@ using ShelterClass = AtomicWar._Game.Shelter.Shelter;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// Event_* wiring (CaptureState subset): 18 narrative events — API smoke + Capture/Restore + save slots.
+    /// Event_* wiring (CaptureState full set): 27 narrative events — API smoke + Capture/Restore + save slots.
     /// </summary>
     [TestFixture]
     public class EventsWiringTests
@@ -351,6 +351,166 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual("accused_1", e2.CaptureState().accusedId);
         }
 
+        
+        [Test]
+        public void EuthanasiaPact_Form_Capture()
+        {
+            var e = new Event_EuthanasiaPact();
+            e.FormPact("sv_a", "sv_b");
+            Assert.IsTrue(e.IsPactActive());
+            Assert.AreEqual(12f, e.GetHoursRemaining(), Eps);
+            var save = e.CaptureState();
+            Assert.AreEqual("euthanasia_pact", save.eventId);
+            Assert.IsTrue(save.isPactActive);
+            var e2 = new Event_EuthanasiaPact();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.IsPactActive());
+            Assert.AreEqual("sv_a", e2.CaptureState().survivor1Id);
+        }
+
+        [Test]
+        public void FactionMerger_Trigger_Capture()
+        {
+            var e = new Event_FactionMerger();
+            Assert.IsTrue(e.TriggerMerger("fac_a", "fac_b"));
+            Assert.AreEqual(30f, e.GetTributeDemand(10f), Eps);
+            var save = e.CaptureState();
+            Assert.AreEqual("event_faction_merger", save.eventId);
+            Assert.IsTrue(save.isMerged);
+            Assert.AreEqual("fac_a_fac_b_superfaction", save.superFactionId);
+            var e2 = new Event_FactionMerger();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.CaptureState().isMerged);
+            Assert.AreEqual(2f, e2.GetLootBonus(), Eps);
+        }
+
+        [Test]
+        public void Mudslide_BurialDig_Capture()
+        {
+            var e = new Event_Mudslide();
+            var st = e.CaptureState();
+            st.isHatchBuried = true;
+            st.digHoursCompleted = 2f;
+            e.RestoreState(st);
+            Assert.IsFalse(e.IsHatchAccessible());
+            float contam = e.DigOut(2f);
+            Assert.Greater(contam, 0f);
+            var save = e.CaptureState();
+            Assert.AreEqual("event_mudslide", save.eventId);
+            Assert.AreEqual(4f, save.digHoursCompleted, Eps);
+            var e2 = new Event_Mudslide();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.CaptureState().isHatchBuried);
+        }
+
+        [Test]
+        public void NumbersStation_Sequence_Capture()
+        {
+            var e = new Event_NumbersStation();
+            e.GenerateSequence(new System.Random(42), 4);
+            var seq = e.CaptureState().numberSequence.ToArray();
+            Assert.AreEqual(4, seq.Length);
+            Assert.IsTrue(e.TryMatch(seq));
+            Assert.IsTrue(e.IsDecoded());
+            var save = e.CaptureState();
+            Assert.AreEqual("event_numbers_station", save.eventId);
+            Assert.IsTrue(save.isDecoded);
+            var e2 = new Event_NumbersStation();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.IsDecoded());
+        }
+
+        [Test]
+        public void ProjectSabotage_Trigger_Capture()
+        {
+            var e = new Event_ProjectSabotage();
+            e.TriggerSabotage("site_reactor", 9);
+            e.AssignGuard(1);
+            var save = e.CaptureState();
+            Assert.AreEqual("event_project_sabotage", save.eventId);
+            Assert.IsTrue(save.isActive);
+            Assert.AreEqual("site_reactor", save.constructionSiteId);
+            Assert.AreEqual(9, save.saboteurStrength);
+            Assert.AreEqual(1, save.guardsAssigned);
+            var e2 = new Event_ProjectSabotage();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.CaptureState().isActive);
+            Assert.AreEqual(1, e2.CaptureState().guardsAssigned);
+        }
+
+        [Test]
+        public void Sinkhole_Collapse_Capture()
+        {
+            var e = new FoundationSinkholeSystem("event_sinkhole");
+            string crushed = null;
+            e.TriggerCollapse("room_surface", id => crushed = id);
+            Assert.AreEqual("room_surface", crushed);
+            var save = e.CaptureState();
+            Assert.AreEqual("event_sinkhole", save.eventId);
+            Assert.IsTrue(save.isTriggered);
+            Assert.AreEqual("room_surface", save.collapsedRoomId);
+            var e2 = new FoundationSinkholeSystem("tmp");
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.CaptureState().isTriggered);
+            Assert.AreEqual("room_surface", e2.CaptureState().collapsedRoomId);
+        }
+
+        [Test]
+        public void Triangulation_Signal_Capture()
+        {
+            var e = new Event_Triangulation();
+            e.ReceiveSignal(12.5f);
+            var st = e.CaptureState();
+            st.triangulationComplete = true;
+            st.claimedByNodeId = "node_a";
+            e.RestoreState(st);
+            Assert.IsTrue(e.ClaimSupply());
+            var save = e.CaptureState();
+            Assert.AreEqual("event_triangulation", save.eventId);
+            Assert.IsFalse(save.isActive);
+            Assert.IsTrue(save.triangulationComplete);
+            var e2 = new Event_Triangulation();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.CaptureState().triangulationComplete);
+            Assert.AreEqual("node_a", e2.CaptureState().claimedByNodeId);
+        }
+
+        [Test]
+        public void VaultCollision_Dig_Capture()
+        {
+            var e = new VaultCollisionSystem("event_vault_collision");
+            var st = e.CaptureState();
+            st.hasCollided = true;
+            st.neighborState = "dead";
+            e.RestoreState(st);
+            Assert.AreEqual("free_loot", e.GetLootOrThreat());
+            var save = e.CaptureState();
+            Assert.AreEqual("event_vault_collision", save.eventId);
+            Assert.IsTrue(save.hasCollided);
+            Assert.AreEqual("dead", save.neighborState);
+            var e2 = new VaultCollisionSystem("tmp");
+            e2.RestoreState(save);
+            Assert.AreEqual("dead", e2.GetNeighborState());
+        }
+
+        [Test]
+        public void WarlordSuccession_Assassinate_Capture()
+        {
+            var e = new Event_WarlordSuccession();
+            Assert.IsTrue(e.AssassinateLeader("war_east", new System.Random(1)));
+            Assert.IsTrue(e.PlayFactionsOffEachOther("war_east_splinter_a"));
+            var save = e.CaptureState();
+            Assert.AreEqual("event_warlord_succession", save.eventId);
+            Assert.IsTrue(save.isFractured);
+            Assert.IsTrue(save.areAtWar);
+            Assert.AreEqual("war_east_splinter_b", save.subFaction2Id);
+            var e2 = new Event_WarlordSuccession();
+            e2.RestoreState(save);
+            Assert.IsTrue(e2.CaptureState().isFractured);
+            Assert.AreEqual("war_east", e2.CaptureState().originalFactionId);
+        }
+
+
         [Test]
         public void MultiEvent_SaveSlot_RoundTrip()
         {
@@ -378,6 +538,24 @@ namespace AtomicWar.Tests.EditMode
                 var cult = new Event_CultOfAI();
                 cult.CheckActivation(0.99f, 4);
 
+                var merger = new Event_FactionMerger();
+                merger.TriggerMerger("north", "south");
+
+                var mud = new Event_Mudslide();
+                var mst = mud.CaptureState();
+                mst.isHatchBuried = true;
+                mst.digHoursCompleted = 3f;
+                mud.RestoreState(mst);
+
+                var sink = new FoundationSinkholeSystem("event_sinkhole");
+                sink.TriggerCollapse("room_x", null);
+
+                var pact = new Event_EuthanasiaPact();
+                pact.FormPact("p1", "p2");
+
+                var war = new Event_WarlordSuccession();
+                war.AssassinateLeader("fac_z", new System.Random(2));
+
                 Assert.IsTrue(MakeSave(dir, ss =>
                 {
                     ss.SetEventBrawl(brawl);
@@ -398,6 +576,15 @@ namespace AtomicWar.Tests.EditMode
                     ss.SetEventSiblingFeud(new Event_SiblingFeud());
                     ss.SetEventTeenRebellion(new Event_TeenRebellion());
                     ss.SetEventWitchHunt(new Event_WitchHunt());
+                    ss.SetEventEuthanasiaPact(pact);
+                    ss.SetEventFactionMerger(merger);
+                    ss.SetEventMudslide(mud);
+                    ss.SetEventNumbersStation(new Event_NumbersStation());
+                    ss.SetEventProjectSabotage(new Event_ProjectSabotage());
+                    ss.SetEventSinkhole(sink);
+                    ss.SetEventTriangulation(new Event_Triangulation());
+                    ss.SetEventVaultCollision(new VaultCollisionSystem("event_vault_collision"));
+                    ss.SetEventWarlordSuccession(war);
                 }).Save("slot"));
 
                 var brawl2 = new Event_Brawl();
@@ -406,6 +593,11 @@ namespace AtomicWar.Tests.EditMode
                 var murder2 = new Event_SpontaneousMurder();
                 var schism2 = new Event_Schism();
                 var cult2 = new Event_CultOfAI();
+                var merger2 = new Event_FactionMerger();
+                var mud2 = new Event_Mudslide();
+                var sink2 = new FoundationSinkholeSystem("tmp");
+                var pact2 = new Event_EuthanasiaPact();
+                var war2 = new Event_WarlordSuccession();
 
                 Assert.IsTrue(MakeSave(dir, ss =>
                 {
@@ -427,6 +619,15 @@ namespace AtomicWar.Tests.EditMode
                     ss.SetEventSiblingFeud(new Event_SiblingFeud());
                     ss.SetEventTeenRebellion(new Event_TeenRebellion());
                     ss.SetEventWitchHunt(new Event_WitchHunt());
+                    ss.SetEventEuthanasiaPact(pact2);
+                    ss.SetEventFactionMerger(merger2);
+                    ss.SetEventMudslide(mud2);
+                    ss.SetEventNumbersStation(new Event_NumbersStation());
+                    ss.SetEventProjectSabotage(new Event_ProjectSabotage());
+                    ss.SetEventSinkhole(sink2);
+                    ss.SetEventTriangulation(new Event_Triangulation());
+                    ss.SetEventVaultCollision(new VaultCollisionSystem("event_vault_collision"));
+                    ss.SetEventWarlordSuccession(war2);
                 }).Load("slot"));
 
                 Assert.IsTrue(brawl2.CaptureState().brawlActive);
@@ -437,6 +638,13 @@ namespace AtomicWar.Tests.EditMode
                 Assert.IsTrue(murder2.HasMurderOccurred());
                 Assert.IsTrue(schism2.CaptureState().isActive);
                 Assert.IsTrue(cult2.IsActive);
+                Assert.IsTrue(merger2.CaptureState().isMerged);
+                Assert.IsTrue(mud2.CaptureState().isHatchBuried);
+                Assert.AreEqual(3f, mud2.CaptureState().digHoursCompleted, Eps);
+                Assert.IsTrue(sink2.CaptureState().isTriggered);
+                Assert.AreEqual("room_x", sink2.CaptureState().collapsedRoomId);
+                Assert.IsTrue(pact2.IsPactActive());
+                Assert.IsTrue(war2.CaptureState().isFractured);
             }
             finally { try { Directory.Delete(dir, true); } catch { } }
         }

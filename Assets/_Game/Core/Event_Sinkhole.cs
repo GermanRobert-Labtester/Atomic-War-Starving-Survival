@@ -62,5 +62,27 @@ namespace AtomicWar._Game.Core
             crushRoom?.Invoke(roomId);
             OnCollapseTriggered?.Invoke(_state.eventId, roomId);
         }
+
+        public FoundationSinkholeState CaptureState()
+        {
+            return new FoundationSinkholeState
+            {
+                eventId = _state.eventId,
+                minLateralRooms = _state.minLateralRooms,
+                minEarthWallsRequired = _state.minEarthWallsRequired,
+                isTriggered = _state.isTriggered,
+                collapsedRoomId = _state.collapsedRoomId,
+            };
+        }
+
+        public void RestoreState(FoundationSinkholeState saved)
+        {
+            if (saved == null) return;
+            _state.eventId = saved.eventId;
+            _state.minLateralRooms = saved.minLateralRooms;
+            _state.minEarthWallsRequired = saved.minEarthWallsRequired;
+            _state.isTriggered = saved.isTriggered;
+            _state.collapsedRoomId = saved.collapsedRoomId;
+        }
     }
 }

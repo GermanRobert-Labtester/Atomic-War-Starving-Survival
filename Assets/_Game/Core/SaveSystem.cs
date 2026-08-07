@@ -337,6 +337,15 @@ namespace AtomicWar._Game.Core
         private Event_SpontaneousMurder _eventSpontaneousMurder;
         private Event_TeenRebellion _eventTeenRebellion;
         private Event_WitchHunt _eventWitchHunt;
+        private Event_EuthanasiaPact _eventEuthanasiaPact;
+        private Event_FactionMerger _eventFactionMerger;
+        private Event_Mudslide _eventMudslide;
+        private Event_NumbersStation _eventNumbersStation;
+        private Event_ProjectSabotage _eventProjectSabotage;
+        private FoundationSinkholeSystem _eventSinkhole;
+        private Event_Triangulation _eventTriangulation;
+        private VaultCollisionSystem _eventVaultCollision;
+        private Event_WarlordSuccession _eventWarlordSuccession;
         private Siege_Artillery _siegeArtillerySystem;
         private Siege_Biowarfare _siegeBiowarfareSystem;
         private Siege_Blockade _siegeBlockadeSystem;

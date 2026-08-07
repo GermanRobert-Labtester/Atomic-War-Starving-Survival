@@ -75,5 +75,15 @@ namespace AtomicWar._Game.Core
             OnSupplyClaimed?.Invoke(_state);
             return true;
         }
+
+        public TriangulationState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(TriangulationState saved)
+        {
+            _state = saved ?? new TriangulationState();
+        }
     }
 }

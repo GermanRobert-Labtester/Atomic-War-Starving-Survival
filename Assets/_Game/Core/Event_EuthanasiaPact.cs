@@ -118,5 +118,15 @@ namespace AtomicWar._Game.Core
         {
             return State.isExecuted;
         }
+
+        public Event_EuthanasiaPactState CaptureState()
+        {
+            return State;
+        }
+
+        public void RestoreState(Event_EuthanasiaPactState saved)
+        {
+            State = saved ?? new Event_EuthanasiaPactState();
+        }
     }
 }

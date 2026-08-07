@@ -1125,6 +1125,42 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _eventWitchHunt, s, "event_witch_hunt",
                 () => s.CaptureState(), o => s.RestoreState((WitchHuntState)o));
 
+        public void SetEventEuthanasiaPact(Event_EuthanasiaPact s) =>
+            RegisterSystem(ref _eventEuthanasiaPact, s, "event_euthanasia_pact",
+                () => s.CaptureState(), o => s.RestoreState((Event_EuthanasiaPactState)o));
+
+        public void SetEventFactionMerger(Event_FactionMerger s) =>
+            RegisterSystem(ref _eventFactionMerger, s, "event_faction_merger",
+                () => s.CaptureState(), o => s.RestoreState((FactionMergerState)o));
+
+        public void SetEventMudslide(Event_Mudslide s) =>
+            RegisterSystem(ref _eventMudslide, s, "event_mudslide",
+                () => s.CaptureState(), o => s.RestoreState((MudslideState)o));
+
+        public void SetEventNumbersStation(Event_NumbersStation s) =>
+            RegisterSystem(ref _eventNumbersStation, s, "event_numbers_station",
+                () => s.CaptureState(), o => s.RestoreState((NumbersStationState)o));
+
+        public void SetEventProjectSabotage(Event_ProjectSabotage s) =>
+            RegisterSystem(ref _eventProjectSabotage, s, "event_project_sabotage",
+                () => s.CaptureState(), o => s.RestoreState((ProjectSabotageState)o));
+
+        public void SetEventSinkhole(FoundationSinkholeSystem s) =>
+            RegisterSystem(ref _eventSinkhole, s, "event_sinkhole",
+                () => s.CaptureState(), o => s.RestoreState((FoundationSinkholeState)o));
+
+        public void SetEventTriangulation(Event_Triangulation s) =>
+            RegisterSystem(ref _eventTriangulation, s, "event_triangulation",
+                () => s.CaptureState(), o => s.RestoreState((TriangulationState)o));
+
+        public void SetEventVaultCollision(VaultCollisionSystem s) =>
+            RegisterSystem(ref _eventVaultCollision, s, "event_vault_collision",
+                () => s.CaptureState(), o => s.RestoreState((VaultCollisionState)o));
+
+        public void SetEventWarlordSuccession(Event_WarlordSuccession s) =>
+            RegisterSystem(ref _eventWarlordSuccession, s, "event_warlord_succession",
+                () => s.CaptureState(), o => s.RestoreState((WarlordSuccessionState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

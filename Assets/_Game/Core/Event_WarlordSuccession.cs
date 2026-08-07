@@ -58,5 +58,15 @@ namespace AtomicWar._Game.Core
             OnFactionsPlayedOff?.Invoke(_state, targetSubFaction);
             return true;
         }
+
+        public WarlordSuccessionState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(WarlordSuccessionState saved)
+        {
+            _state = saved ?? new WarlordSuccessionState();
+        }
     }
 }

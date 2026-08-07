@@ -90,7 +90,9 @@ namespace AtomicWar._Game.Core
         // Save / Load
         // -----------------------------------------------------------------
 
-        public MudslideState GetState() => _state;
+        public MudslideState CaptureState() => _state;
+
+        public MudslideState GetState() => CaptureState();
 
         public void RestoreState(MudslideState state)
         {

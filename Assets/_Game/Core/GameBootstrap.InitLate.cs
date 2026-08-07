@@ -265,6 +265,15 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetEventSpontaneousMurder(EventSpontaneousMurder);
             SaveSystem.SetEventTeenRebellion(EventTeenRebellion);
             SaveSystem.SetEventWitchHunt(EventWitchHunt);
+            SaveSystem.SetEventEuthanasiaPact(EventEuthanasiaPact);
+            SaveSystem.SetEventFactionMerger(EventFactionMerger);
+            SaveSystem.SetEventMudslide(EventMudslide);
+            SaveSystem.SetEventNumbersStation(EventNumbersStation);
+            SaveSystem.SetEventProjectSabotage(EventProjectSabotage);
+            SaveSystem.SetEventSinkhole(EventSinkhole);
+            SaveSystem.SetEventTriangulation(EventTriangulation);
+            SaveSystem.SetEventVaultCollision(EventVaultCollision);
+            SaveSystem.SetEventWarlordSuccession(EventWarlordSuccession);
             SaveSystem.SetSiegeArtillerySystem(SiegeArtillery);
             SaveSystem.SetSiegeBiowarfareSystem(SiegeBiowarfare);
             SaveSystem.SetSiegeBlockadeSystem(SiegeBlockade);

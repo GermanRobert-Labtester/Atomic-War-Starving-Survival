@@ -61,5 +61,15 @@ namespace AtomicWar._Game.Core
 
             return _state.lootMultiplier;
         }
+
+        public FactionMergerState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(FactionMergerState saved)
+        {
+            _state = saved ?? new FactionMergerState();
+        }
     }
 }
