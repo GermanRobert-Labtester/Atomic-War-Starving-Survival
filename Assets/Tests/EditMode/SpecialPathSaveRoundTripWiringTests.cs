@@ -5,8 +5,10 @@ using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.Economy;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.Flashpoint;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
@@ -21,7 +23,8 @@ namespace AtomicWar.Tests.EditMode
     /// End-to-end SaveSystem round-trips for field-only special-path systems that
     /// cannot safely use plain RegisterSystem adapters:
     /// EventRunner queue, GeneratedMap seed rebuild, ShiftingHotspot Bind-before-restore,
-    /// FactionRaidPlan SetMap-before-restore, Expedition list rebuild.
+    /// FactionRaidPlan SetMap-before-restore, Expedition list rebuild,
+    /// Affinity matrix (nested on MentalBreakSystem), FlashpointChoreographer host delegates.
     /// </summary>
     [TestFixture]
     public class SpecialPathSaveRoundTripWiringTests
@@ -429,6 +432,116 @@ namespace AtomicWar.Tests.EditMode
         }
 
         // ─────────────────────────────────────────────────────────────
+        // Affinity matrix — nested on MentalBreakSystem (field-only)
+        // ─────────────────────────────────────────────────────────────
+
+        [Test]
+        public void Affinity_Matrix_RoundTrips_ViaSaveSystem()
+        {
+            var seeded = new MentalBreakSystem();
+            seeded.Affinity.Set("sv_alpha", "sv_bravo", 42f);
+            seeded.Affinity.Set("sv_alpha", "sv_charlie", -18.5f);
+            seeded.Affinity.Set("sv_bravo", "sv_charlie", 7f);
+
+            string dir = TempDir("affinity");
+            try
+            {
+                Assert.IsTrue(MakeSave(dir, s => s.SetMentalBreakSystem(seeded)).Save("sp_aff"));
+
+                var loaded = new MentalBreakSystem();
+                Assert.AreEqual(0f, loaded.Affinity.Get("sv_alpha", "sv_bravo"), Eps);
+
+                Assert.IsTrue(MakeSave(dir, s => s.SetMentalBreakSystem(loaded)).Load("sp_aff"));
+
+                Assert.AreEqual(42f, loaded.Affinity.Get("sv_alpha", "sv_bravo"), Eps);
+                Assert.AreEqual(-18.5f, loaded.Affinity.Get("sv_alpha", "sv_charlie"), Eps);
+                Assert.AreEqual(7f, loaded.Affinity.Get("sv_bravo", "sv_charlie"), Eps);
+                // Symmetric undirected matrix.
+                Assert.AreEqual(42f, loaded.Affinity.Get("sv_bravo", "sv_alpha"), Eps);
+                // Unset pair stays neutral.
+                Assert.AreEqual(0f, loaded.Affinity.Get("sv_alpha", "sv_delta"), Eps);
+
+                var snap = loaded.Affinity.Snapshot();
+                Assert.AreEqual(3, snap.Count);
+            }
+            finally
+            {
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // FlashpointChoreographer — host capture/restore delegates
+        // ─────────────────────────────────────────────────────────────
+
+        [Test]
+        public void FlashpointChoreographer_DelegateAdapters_RoundTrips_ViaSaveSystem()
+        {
+            var sequence = ScriptableObject.CreateInstance<FlashpointSequenceSO>();
+            sequence.sequenceId = "sp_flashpoint";
+            sequence.buildupDays = new List<FlashpointBuildupDay>();
+            sequence.economyModifiers = new List<FlashpointEconomyModifier>();
+            sequence.steps = new List<FlashpointChoreographyStep>
+            {
+                new FlashpointChoreographyStep { actionId = "white_flash", delayFromPreviousSeconds = 0f },
+                new FlashpointChoreographyStep { actionId = "emp", delayFromPreviousSeconds = 1f },
+                new FlashpointChoreographyStep { actionId = "complete", delayFromPreviousSeconds = 0f }
+            };
+            sequence.accessibility = new FlashpointAccessibilityOverrides();
+
+            var systems = new FlashpointChoreographerSystems
+            {
+                Inventory = new InventoryClass { Capacity = 10, MaxWeight = 50f },
+                Shelter = new ShelterClass(),
+                RadioState = new RadioState(),
+                EconomySystem = new DynamicEconomySystem(),
+                Survivors = new List<Survivor>(),
+                ExchangeMoraleHit = 25f
+            };
+
+            var seeded = new FlashpointChoreographer(sequence, () => false, systems, () => true);
+            seeded.RestoreState(new FlashpointChoreographerSave
+            {
+                BuildupDaysProcessed = new List<int> { 25, 26, 27 },
+                ChoreographyStepIndex = 1,
+                ElapsedRealSeconds = 12.5f,
+                ChoreographyCompleted = false
+            });
+
+            string dir = TempDir("choreo");
+            try
+            {
+                Assert.IsTrue(MakeSave(dir, s => s.SetFlashpointChoreographer(
+                    seeded.CaptureState,
+                    seeded.RestoreState)).Save("sp_ch"));
+
+                var loaded = new FlashpointChoreographer(sequence, () => false, systems, () => true);
+                Assert.AreEqual(0, loaded.BuildupDaysProcessed.Count);
+                Assert.AreEqual(-1, loaded.CurrentStepIndex);
+
+                Assert.IsTrue(MakeSave(dir, s => s.SetFlashpointChoreographer(
+                    loaded.CaptureState,
+                    loaded.RestoreState)).Load("sp_ch"));
+
+                Assert.That(loaded.BuildupDaysProcessed, Is.EquivalentTo(new[] { 25, 26, 27 }));
+                Assert.AreEqual(1, loaded.CurrentStepIndex);
+                Assert.IsFalse(loaded.IsChoreographyCompleted);
+                Assert.IsTrue(loaded.IsChoreographyActive,
+                    "Exchange already triggered: restore must mark choreography started");
+
+                var recap = loaded.CaptureState();
+                Assert.AreEqual(12.5f, recap.ElapsedRealSeconds, Eps);
+                Assert.AreEqual(1, recap.ChoreographyStepIndex);
+                Assert.IsFalse(recap.ChoreographyCompleted);
+            }
+            finally
+            {
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+                if (sequence != null) UnityEngine.Object.DestroyImmediate(sequence);
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
         // Guard: specials stay field-only (not ISaveable RegisterSystem)
         // ─────────────────────────────────────────────────────────────
 
@@ -443,6 +556,7 @@ namespace AtomicWar.Tests.EditMode
                 var hotspots = new ShiftingHotspotSystem();
                 var plans = new FactionRaidPlanSystem();
                 var runner = new EventRunner();
+                var mental = new MentalBreakSystem();
                 var profile = ScriptableObject.CreateInstance<NeedsProfile>();
                 var needs = new NeedsSystem(profile, sv => true);
                 var rad = new RadiationSystem(needs);
@@ -464,6 +578,10 @@ namespace AtomicWar.Tests.EditMode
                         s.SetShiftingHotspotSystem(hotspots);
                         s.SetFactionRaidPlanSystem(plans);
                         s.SetExpeditionSystem(exp);
+                        s.SetMentalBreakSystem(mental);
+                        s.SetFlashpointChoreographer(
+                            () => new FlashpointChoreographerSave(),
+                            _ => { });
                     });
 
                     var ids = CollectSaveableIds(ss);
@@ -472,6 +590,9 @@ namespace AtomicWar.Tests.EditMode
                     Assert.IsFalse(ListContains(ids, "shifting_hotspots"));
                     Assert.IsFalse(ListContains(ids, "faction_raid_plans"));
                     Assert.IsFalse(ListContains(ids, "expedition"));
+                    Assert.IsFalse(ListContains(ids, "affinity"));
+                    Assert.IsFalse(ListContains(ids, "mental_break"));
+                    Assert.IsFalse(ListContains(ids, "flashpoint_choreographer"));
                     // Knowledge is RegisterSystem (not a special-path field inject).
                     Assert.IsTrue(ListContains(ids, "radiation_knowledge"));
                 }
