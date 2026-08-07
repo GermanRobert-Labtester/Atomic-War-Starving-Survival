@@ -44,7 +44,10 @@ namespace AtomicWar._Game.Core
                 s.ApplyToShelter(_shelter);
             });
             RestIf(_hatchDefense, s => { if (data.HatchDefense != null) s.RestoreState(data.HatchDefense); });
-            RestIf(_factionRadioIntercepts, s => s.RestoreState(data.FactionRadioIntercepts));
+            RestIf(_factionRadioIntercepts, s =>
+            {
+                if (data.FactionRadioIntercepts != null) s.RestoreState(data.FactionRadioIntercepts);
+            });
             RestIf(_journalSystem, s => { if (data.Journal != null) s.RestoreState(data.Journal); });
             RestIf(_victoryProject, s => { if (data.VictoryProject != null) s.RestoreState(data.VictoryProject); });
             // EventRunner remains special-path positional restore.
@@ -71,9 +74,9 @@ namespace AtomicWar._Game.Core
                 s.SetMap(_generatedMap);
                 s.RestoreState(data.FactionRaidPlans);
             });
-            RestIf(_debtCollector, s => s.RestoreState(data.DebtCollector));
-            RestIf(_ghostStations, s => s.RestoreState(data.GhostStations));
-            RestIf(_lifeboat, s => s.RestoreState(data.Lifeboat));
+            RestIf(_debtCollector, s => { if (data.DebtCollector != null) s.RestoreState(data.DebtCollector); });
+            RestIf(_ghostStations, s => { if (data.GhostStations != null) s.RestoreState(data.GhostStations); });
+            RestIf(_lifeboat, s => { if (data.Lifeboat != null) s.RestoreState(data.Lifeboat); });
             // Migrated dual-path systems — positional only when present.
             RestIf(_trackerSystem, s => { if (data.Tracker != null) s.RestoreState(data.Tracker); });
             RestIf(_deadDropSystem, s => { if (data.DeadDrops != null) s.RestoreState(data.DeadDrops); });
@@ -131,22 +134,23 @@ namespace AtomicWar._Game.Core
 
         private void RestoreSimulationExtras(SaveData data)
         {
-            RestIf(_resilienceSystem, s => s.RestoreState(data.Resilience));
-            RestIf(_compostSystem, s => s.RestoreState(data.Compost));
-            RestIf(_windTurbineSystem, s => s.RestoreState(data.WindTurbine));
-            RestIf(_haulingSystem, s => s.RestoreState(data.Hauling));
-            RestIf(_weaponMaintenanceSystem, s => s.RestoreState(data.WeaponMaint));
-            RestIf(_aestheticsSystem, s => s.RestoreState(data.Aesthetics));
-            RestIf(_hamRadioSystem, s => s.RestoreState(data.HamRadio));
+            // Positional only when present (pre-migration). New saves restore via SubsystemSaveIds.
+            RestIf(_resilienceSystem, s => { if (data.Resilience != null) s.RestoreState(data.Resilience); });
+            RestIf(_compostSystem, s => { if (data.Compost != null) s.RestoreState(data.Compost); });
+            RestIf(_windTurbineSystem, s => { if (data.WindTurbine != null) s.RestoreState(data.WindTurbine); });
+            RestIf(_haulingSystem, s => { if (data.Hauling != null) s.RestoreState(data.Hauling); });
+            RestIf(_weaponMaintenanceSystem, s => { if (data.WeaponMaint != null) s.RestoreState(data.WeaponMaint); });
+            RestIf(_aestheticsSystem, s => { if (data.Aesthetics != null) s.RestoreState(data.Aesthetics); });
+            RestIf(_hamRadioSystem, s => { if (data.HamRadio != null) s.RestoreState(data.HamRadio); });
             if (_skillProgression != null && data.SkillProgression != null)
                 _skillProgression.RestoreState(data.SkillProgression, _getSurvivors?.Invoke());
-            RestIf(_combatPerkSystem, s => s.RestoreState(data.CombatPerks));
-            RestIf(_survivalPerkSystem, s => s.RestoreState(data.SurvivalPerks));
-            RestIf(_shelterPerkSystem, s => s.RestoreState(data.ShelterPerks));
-            RestIf(_medicalPerkSystem, s => s.RestoreState(data.MedicalPerks));
-            RestIf(_expeditionPerkSystem, s => s.RestoreState(data.ExpeditionPerks));
-            RestIf(_socialPerkSystem, s => s.RestoreState(data.SocialPerks));
-            RestIf(_personalQuestSystem, s => s.RestoreState(data.PersonalQuests));
+            RestIf(_combatPerkSystem, s => { if (data.CombatPerks != null) s.RestoreState(data.CombatPerks); });
+            RestIf(_survivalPerkSystem, s => { if (data.SurvivalPerks != null) s.RestoreState(data.SurvivalPerks); });
+            RestIf(_shelterPerkSystem, s => { if (data.ShelterPerks != null) s.RestoreState(data.ShelterPerks); });
+            RestIf(_medicalPerkSystem, s => { if (data.MedicalPerks != null) s.RestoreState(data.MedicalPerks); });
+            RestIf(_expeditionPerkSystem, s => { if (data.ExpeditionPerks != null) s.RestoreState(data.ExpeditionPerks); });
+            RestIf(_socialPerkSystem, s => { if (data.SocialPerks != null) s.RestoreState(data.SocialPerks); });
+            RestIf(_personalQuestSystem, s => { if (data.PersonalQuests != null) s.RestoreState(data.PersonalQuests); });
         }
 
     }
