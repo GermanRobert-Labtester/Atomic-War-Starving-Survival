@@ -49,6 +49,10 @@ namespace AtomicWar._Game.Core
         {
             LastCombatShotDamage = 0f;
             LastCombatAmmoId = null;
+            LastCombatMoraleDelta = 0f;
+            LastCombatHealthDelta = 0f;
+            LastCombatLogLine = null;
+            LastCombatArmorPenalty = false;
             if (fled || _ammoTypes == null || survivor == null || selected == null) return;
 
             bool isCombat = selected.category == EncounterCategory.Combat;
@@ -77,21 +81,41 @@ namespace AtomicWar._Game.Core
             var hit = _ammoTypes.ResolveHit(ammoId, baseDmg, armor, barrier, rangeMeters: 40f);
             LastCombatShotDamage = hit.FinalDamage;
             LastCombatAmmoId = ammoId;
+            LastCombatArmorPenalty = hit.ArmorPenaltyApplied;
+
+            float moraleDelta = 0f;
+            float healthDelta = 0f;
 
             if (hit.FinalDamage >= baseDmg * 0.9f)
             {
                 // Clean terminal effect — brief morale lift.
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 2f, 0f, 100f);
+                moraleDelta += 2f;
             }
             else if (hit.ArmorPenaltyApplied || hit.FinalDamage < baseDmg * 0.35f)
             {
                 // Soft lead / JHP failed on armor — return fire nicks the scavenger.
                 float nick = Mathf.Clamp(4f + (baseDmg - hit.FinalDamage) * 0.15f, 3f, 12f);
-                survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health - nick, 0f, 100f);
+                healthDelta -= nick;
             }
 
             if (hit.BurnDamagePerSecond > 0f)
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 1f, 0f, 100f);
+                moraleDelta += 1f;
+
+            if (Mathf.Abs(moraleDelta) > 0.01f)
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+            if (Mathf.Abs(healthDelta) > 0.01f)
+                survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + healthDelta, 0f, 100f);
+
+            LastCombatMoraleDelta = moraleDelta;
+            LastCombatHealthDelta = healthDelta;
+            LastCombatLogLine = Item_AmmoTypes.FormatCombatEncounterLog(
+                survivor.DisplayName ?? survivor.Id,
+                selected.id,
+                ammoId,
+                hit.FinalDamage,
+                moraleDelta,
+                healthDelta,
+                hit.ArmorPenaltyApplied);
         }
 
         /// <summary>

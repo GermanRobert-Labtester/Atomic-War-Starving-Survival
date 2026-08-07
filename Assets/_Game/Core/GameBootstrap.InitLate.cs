@@ -947,6 +947,85 @@ namespace AtomicWar._Game.Core
                 });
 
             CraftingSystem?.BindCraftResultGate(Item_AmmoTypes.IsWorkbenchCraftAllowed);
+
+            // UI: stockpile breakdown, exclusive tooltips, hatch arms preview, encounter log.
+            WireAmmoUiBindings();
+        }
+
+        /// <summary>
+        /// Hatch ammo stockpile / arms preview, inventory exclusive tooltips,
+        /// and expedition combat lines → encounter log HUD.
+        /// </summary>
+        private void WireAmmoUiBindings()
+        {
+            if (ExpeditionEncounterLog == null)
+                ExpeditionEncounterLog = new ExpeditionEncounterLog();
+
+            if (_hud != null)
+            {
+                var hatchHud = _hud.HatchDefenseHUD;
+                if (hatchHud != null && ItemAmmoTypes != null)
+                {
+                    var proxy = new HatchDefenseSystemProxy(armor =>
+                        HatchDefenseSystem != null
+                            ? HatchDefenseSystem.GetWeaponPower(null, armor)
+                            : 0f);
+                    hatchHud.BindAmmoUi(
+                        ammoStockpileBreakdown: () =>
+                            ItemAmmoTypes.FormatStockpileBreakdown(Inventory),
+                        armsPowerPreview: () =>
+                            ItemAmmoTypes.FormatHatchPowerPreview(
+                                Inventory,
+                                HatchDefenseSystem != null
+                                    ? HatchDefenseSystem.GetShelterSecurity()
+                                    : 0f,
+                                proxy));
+                }
+
+                var strip = _hud.InventoryStripUI;
+                if (strip != null)
+                {
+                    strip.TooltipResolver = Item_AmmoTypes.FormatItemTooltip;
+                    strip.MilitaryExclusiveChecker = Item_AmmoTypes.IsMilitaryExclusiveTooltip;
+                    strip.Sync(Inventory);
+                }
+
+                var logHud = _hud.EnsureExpeditionEncounterLog();
+                if (logHud != null && ExpeditionEncounterLog != null)
+                {
+                    logHud.SetLines(ExpeditionEncounterLog.Lines);
+                    ExpeditionEncounterLog.OnLineAdded -= logHud.Push;
+                    ExpeditionEncounterLog.OnLineAdded += logHud.Push;
+                }
+            }
+
+            if (ExpeditionSystem != null && ExpeditionEncounterLog != null)
+            {
+                ExpeditionSystem.OnEncounterResolved -= OnExpeditionEncounterResolved_LogCombat;
+                ExpeditionSystem.OnEncounterResolved += OnExpeditionEncounterResolved_LogCombat;
+            }
+        }
+
+        private void OnExpeditionEncounterResolved_LogCombat(
+            ExpeditionState exp, EncounterSO selected, EventChoice chosen)
+        {
+            if (ExpeditionEncounterLog == null || ExpeditionSystem == null) return;
+
+            string combatLine = ExpeditionSystem.LastCombatLogLine;
+            if (!string.IsNullOrEmpty(combatLine))
+            {
+                ExpeditionEncounterLog.Add(combatLine);
+                return;
+            }
+
+            // Non-combat or no ammo spent — still note the beat for the field log.
+            if (selected == null) return;
+            string who = exp?.Survivor != null
+                ? (exp.Survivor.DisplayName ?? exp.Survivor.Id)
+                : "Scavenger";
+            string choice = chosen?.ChoiceId ?? "resolve";
+            string enc = selected.id ?? "contact";
+            ExpeditionEncounterLog.Add($"{who} · {enc.Replace('_', ' ')} · {choice}");
         }
 
         /// <summary>

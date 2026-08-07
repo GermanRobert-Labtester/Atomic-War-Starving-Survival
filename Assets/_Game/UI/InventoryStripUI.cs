@@ -32,6 +32,8 @@ namespace AtomicWar._Game.UI
                 icon.IsContaminatedFood = false;
                 icon.HasDisposeActions = false;
                 icon.IsSelected = false;
+                icon.IsMilitaryExclusive = false;
+                icon.Tooltip = null;
             });
 
         /// <summary>Active icons, one per stocked slot (newest-stock order = slot order).</summary>
@@ -55,6 +57,25 @@ namespace AtomicWar._Game.UI
 
         /// <summary>Raised when selection index changes.</summary>
         public event Action OnSelectionChanged;
+
+        /// <summary>
+        /// Optional tooltip builder (itemId → multi-line tip). Core binds ammo
+        /// catalog so military exclusives show [MILITARY EXCLUSIVE].
+        /// </summary>
+        public Func<string, string> TooltipResolver { get; set; }
+
+        /// <summary>Optional military-exclusive flag (itemId → true).</summary>
+        public Func<string, bool> MilitaryExclusiveChecker { get; set; }
+
+        /// <summary>Tooltip for the currently selected icon, or empty.</summary>
+        public string SelectedTooltip
+        {
+            get
+            {
+                var icon = SelectedIcon;
+                return icon != null ? (icon.Tooltip ?? string.Empty) : string.Empty;
+            }
+        }
 
         /// <summary>
         /// Resync icons from live inventory state. Reuses pooled instances for
@@ -92,6 +113,16 @@ namespace AtomicWar._Game.UI
                     icon.IsContaminatedFood = slot.Item.type == ItemType.ContaminatedFood;
                     // Corpse slots surface dispose actions (bury / fertilizer) via HUD.
                     icon.HasDisposeActions = icon.IsCorpse;
+                    icon.IsMilitaryExclusive = MilitaryExclusiveChecker != null
+                        && MilitaryExclusiveChecker(slot.Item.id);
+                    string tip = TooltipResolver != null ? TooltipResolver(slot.Item.id) : null;
+                    if (string.IsNullOrEmpty(tip))
+                    {
+                        tip = icon.IsMilitaryExclusive
+                            ? (icon.DisplayName ?? icon.ItemId) + "\n[MILITARY EXCLUSIVE]"
+                            : (icon.DisplayName ?? icon.ItemId ?? string.Empty);
+                    }
+                    icon.Tooltip = tip;
                     slotIndex++;
                 }
             }
@@ -234,6 +265,7 @@ namespace AtomicWar._Game.UI
                 string name = icon.DisplayName ?? icon.ItemId;
                 if (icon.IsCorpse) name = (name ?? "Body") + " [dispose]";
                 else if (icon.IsContaminatedFood) name = (name ?? "Can") + " [rust]";
+                else if (icon.IsMilitaryExclusive) name = (name ?? "Ammo") + " [mil]";
                 if (icon.IsSelected) name = ">" + name;
                 sb.Append(name).Append(' ').Append('x').Append(icon.Amount);
             }
@@ -306,5 +338,9 @@ namespace AtomicWar._Game.UI
         public bool HasDisposeActions;
         /// <summary>True when this icon has keyboard/mouse focus in the strip.</summary>
         public bool IsSelected;
+        /// <summary>True when this stack is military/rebel exclusive ammo (not workbench craftable).</summary>
+        public bool IsMilitaryExclusive;
+        /// <summary>Hover / focus tooltip (caliber, mod, exclusive badge).</summary>
+        public string Tooltip;
     }
 }

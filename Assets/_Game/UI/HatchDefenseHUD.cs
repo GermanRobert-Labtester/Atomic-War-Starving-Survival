@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using UnityEngine;
 using AtomicWar._Game.Shelter;
@@ -7,7 +8,8 @@ namespace AtomicWar._Game.UI
 {
     /// <summary>
     /// Hatch security panel: aggregate ShelterSecurity, weapon power, guards,
-    /// and last raid outcome. Data-driven from <see cref="HatchDefenseSystem"/>.
+    /// last raid outcome, ammo stockpile breakdown, and arms preview vs raid armor.
+    /// Ammo lines are injected by Core (UI assembly cannot reference Item_AmmoTypes).
     /// </summary>
     public class HatchDefenseHUD : MonoBehaviour
     {
@@ -22,10 +24,14 @@ namespace AtomicWar._Game.UI
         public string StatusLine { get; private set; } = "Hatch: —";
         public string UpgradesLine { get; private set; } = string.Empty;
         public string LastRaidLine { get; private set; } = "Last raid: none";
+        public string AmmoStockpileLine { get; private set; } = "AMMO: —";
+        public string ArmsPreviewLine { get; private set; } = string.Empty;
         public string DetailSummary { get; private set; } = string.Empty;
 
         private HatchDefenseSystem _hatch;
         private int _day;
+        private Func<string> _ammoStockpileProvider;
+        private Func<string> _armsPreviewProvider;
 
         public void Bind(HatchDefenseSystem hatch)
         {
@@ -42,6 +48,16 @@ namespace AtomicWar._Game.UI
                 _hatch.OnSecurityChanged += Refresh;
             }
 
+            Refresh();
+        }
+
+        /// <summary>
+        /// Core binds ammo stockpile breakdown + hatch power preview vs raid faction armor.
+        /// </summary>
+        public void BindAmmoUi(Func<string> ammoStockpileBreakdown, Func<string> armsPowerPreview)
+        {
+            _ammoStockpileProvider = ammoStockpileBreakdown;
+            _armsPreviewProvider = armsPowerPreview;
             Refresh();
         }
 
@@ -81,6 +97,8 @@ namespace AtomicWar._Game.UI
                 StatusLine = "Hatch: offline";
                 UpgradesLine = string.Empty;
                 LastRaidLine = "Last raid: none";
+                AmmoStockpileLine = "AMMO: —";
+                ArmsPreviewLine = string.Empty;
                 DetailSummary = "No hatch defense system.";
                 return;
             }
@@ -107,6 +125,13 @@ namespace AtomicWar._Game.UI
             if (_hatch.TotalRaidsResolved > 0)
                 LastRaidLine += $"  (raids {_hatch.TotalRaidsResolved}, breaches {_hatch.TotalBreaches})";
 
+            AmmoStockpileLine = _ammoStockpileProvider != null
+                ? (_ammoStockpileProvider() ?? "AMMO: —")
+                : "AMMO: (bind catalog for breakdown)";
+            ArmsPreviewLine = _armsPreviewProvider != null
+                ? (_armsPreviewProvider() ?? string.Empty)
+                : string.Empty;
+
             var up = new StringBuilder();
             up.Append("Upgrades: ");
             bool any = false;
@@ -128,6 +153,10 @@ namespace AtomicWar._Game.UI
             detail.AppendLine(StatusLine);
             detail.AppendLine(LastRaidLine);
             detail.AppendLine(UpgradesLine);
+            if (!string.IsNullOrEmpty(AmmoStockpileLine))
+                detail.AppendLine(AmmoStockpileLine);
+            if (!string.IsNullOrEmpty(ArmsPreviewLine))
+                detail.AppendLine(ArmsPreviewLine);
             detail.AppendLine("Install / upgrade at workbench [B] (scrap + mechanical parts).");
             if (GeneratorOutside)
                 detail.AppendLine("Outdoor generator is drawing attention.");

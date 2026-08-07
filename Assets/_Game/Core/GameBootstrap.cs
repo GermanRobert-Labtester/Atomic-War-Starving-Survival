@@ -869,6 +869,8 @@ namespace AtomicWar._Game.Core
         public HiddenStat_Unseen HiddenStatUnseen { get; private set; }
         public Item_AICoreData ItemAICoreData { get; private set; }
         public Item_AmmoTypes ItemAmmoTypes { get; private set; }
+        /// <summary>Session expedition combat / encounter feedback lines for the HUD.</summary>
+        public ExpeditionEncounterLog ExpeditionEncounterLog { get; private set; }
         public Item_Ammonia ItemAmmonia { get; private set; }
         public Item_Amphetamines ItemAmphetamines { get; private set; }
         public Item_AshGhillie ItemAshGhillie { get; private set; }

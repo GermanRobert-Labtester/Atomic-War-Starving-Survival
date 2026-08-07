@@ -270,6 +270,18 @@ namespace AtomicWar._Game.Core
         /// <summary>Ammo item id consumed on last engaged combat (null if none).</summary>
         public string LastCombatAmmoId { get; private set; }
 
+        /// <summary>Morale delta applied by last combat ResolveHit (may be 0).</summary>
+        public float LastCombatMoraleDelta { get; private set; }
+
+        /// <summary>Health delta applied by last combat ResolveHit (negative = damage).</summary>
+        public float LastCombatHealthDelta { get; private set; }
+
+        /// <summary>Formatted encounter-log line for last combat shot (null if none).</summary>
+        public string LastCombatLogLine { get; private set; }
+
+        /// <summary>True when last shot took JHP/soft armor penalty.</summary>
+        public bool LastCombatArmorPenalty { get; private set; }
+
         /// <summary>Ammo loot ids injected on last military/rebel loot roll.</summary>
         public List<string> LastFactionAmmoLootIds { get; } = new List<string>();
 

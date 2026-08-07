@@ -58,6 +58,8 @@ namespace AtomicWar._Game.Core
             var strip = _hud.InventoryStripUI;
             if (strip != null)
                 strip.Sync(Inventory);
+            // Ammo stockpile / arms preview track inventory changes.
+            _hud.HatchDefenseHUD?.Refresh();
             // Corpse / rusted-can counts also drive the Internal Horror strip.
             RefreshInternalHorrorHud();
         }

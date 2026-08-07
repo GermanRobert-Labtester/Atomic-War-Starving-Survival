@@ -43,6 +43,9 @@ namespace AtomicWar._Game.Core
             SyncRadioInterceptHudFromLog();
             _hud.EnsureJournalBook();
             SyncJournalBookFromSystem();
+            _hud.EnsureExpeditionEncounterLog();
+            // Ammo tooltips / hatch stockpile / combat log (safe if ItemAmmoTypes not ready yet).
+            WireAmmoUiBindings();
             RefreshInventoryStrip(); // initial pooled icon sync
             WireInternalHorrorHud();
             _hud.EnsureEndgameSummary();

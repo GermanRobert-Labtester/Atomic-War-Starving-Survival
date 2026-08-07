@@ -36,6 +36,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private InventoryStripUI _inventoryStripUi;
         [SerializeField] private EndgameSummaryUI _endgameSummaryUi;
         [SerializeField] private InternalHorrorHUD _internalHorrorHud;
+        [SerializeField] private ExpeditionEncounterLogHUD _expeditionEncounterLogHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -58,6 +59,7 @@ namespace AtomicWar._Game.UI
         public InventoryStripUI InventoryStripUI { get { EnsureWidgetReferences(); return _inventoryStripUi; } }
         public EndgameSummaryUI EndgameSummaryUI { get { EnsureWidgetReferences(); return _endgameSummaryUi; } }
         public InternalHorrorHUD InternalHorrorHUD { get { EnsureWidgetReferences(); return _internalHorrorHud; } }
+        public ExpeditionEncounterLogHUD ExpeditionEncounterLogHUD { get { EnsureWidgetReferences(); return _expeditionEncounterLogHud; } }
         public FactionRadioVoHook FactionRadioVoHook
         {
             get
@@ -105,6 +107,9 @@ namespace AtomicWar._Game.UI
             if (_inventoryStripUi == null) _inventoryStripUi = GetComponentInChildren<InventoryStripUI>() ?? gameObject.AddComponent<InventoryStripUI>();
             if (_endgameSummaryUi == null) _endgameSummaryUi = GetComponentInChildren<EndgameSummaryUI>() ?? gameObject.AddComponent<EndgameSummaryUI>();
             if (_internalHorrorHud == null) _internalHorrorHud = GetComponentInChildren<InternalHorrorHUD>() ?? gameObject.AddComponent<InternalHorrorHUD>();
+            if (_expeditionEncounterLogHud == null)
+                _expeditionEncounterLogHud = GetComponentInChildren<ExpeditionEncounterLogHUD>()
+                    ?? gameObject.AddComponent<ExpeditionEncounterLogHUD>();
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
@@ -281,6 +286,13 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_hatchDefenseHud != null) _hatchDefenseHud.Bind(hatch);
+        }
+
+        /// <summary>Ensure expedition combat/encounter log strip exists.</summary>
+        public ExpeditionEncounterLogHUD EnsureExpeditionEncounterLog()
+        {
+            EnsureWidgetReferences();
+            return _expeditionEncounterLogHud;
         }
 
         /// <summary>
