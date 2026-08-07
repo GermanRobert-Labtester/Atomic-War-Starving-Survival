@@ -69,5 +69,32 @@ namespace AtomicWar._Game.Core
         {
             return _state.bunkerAbandoned;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public MigrationState CaptureState()
+        {
+            return new MigrationState
+            {
+                victoryId = _state.victoryId,
+                requiresArmoredTruck = _state.requiresArmoredTruck,
+                bunkerAbandoned = _state.bunkerAbandoned,
+            };
+        }
+
+        public void RestoreState(MigrationState state)
+        {
+            if (state == null)
+            {
+                _state = new MigrationState();
+                return;
+            }
+            _state = new MigrationState
+            {
+                victoryId = state.victoryId,
+                requiresArmoredTruck = state.requiresArmoredTruck,
+                bunkerAbandoned = state.bunkerAbandoned,
+            };
+        }
     }
 }

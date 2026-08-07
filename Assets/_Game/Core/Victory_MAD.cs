@@ -56,5 +56,32 @@ namespace AtomicWar._Game.Core
         {
             return _state.isTriggered;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public MADState CaptureState()
+        {
+            return new MADState
+            {
+                victoryId = _state.victoryId,
+                requiresLaunchCodes = _state.requiresLaunchCodes,
+                isTriggered = _state.isTriggered,
+            };
+        }
+
+        public void RestoreState(MADState state)
+        {
+            if (state == null)
+            {
+                _state = new MADState();
+                return;
+            }
+            _state = new MADState
+            {
+                victoryId = state.victoryId,
+                requiresLaunchCodes = state.requiresLaunchCodes,
+                isTriggered = state.isTriggered,
+            };
+        }
     }
 }

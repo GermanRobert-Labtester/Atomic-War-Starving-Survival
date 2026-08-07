@@ -86,5 +86,42 @@ namespace AtomicWar._Game.Core
         {
             return _state.isExtracted;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public IcebreakerState CaptureState()
+        {
+            return new IcebreakerState
+            {
+                victoryId = _state.victoryId,
+                isActive = _state.isActive,
+                submarineContacted = _state.submarineContacted,
+                explosivesRequired = _state.explosivesRequired,
+                explosivesDelivered = _state.explosivesDelivered,
+                distanceToSubNodes = _state.distanceToSubNodes,
+                extractionDayLimit = _state.extractionDayLimit,
+                isExtracted = _state.isExtracted,
+            };
+        }
+
+        public void RestoreState(IcebreakerState state)
+        {
+            if (state == null)
+            {
+                _state = new IcebreakerState();
+                return;
+            }
+            _state = new IcebreakerState
+            {
+                victoryId = state.victoryId,
+                isActive = state.isActive,
+                submarineContacted = state.submarineContacted,
+                explosivesRequired = state.explosivesRequired,
+                explosivesDelivered = state.explosivesDelivered,
+                distanceToSubNodes = state.distanceToSubNodes,
+                extractionDayLimit = state.extractionDayLimit,
+                isExtracted = state.isExtracted,
+            };
+        }
     }
 }

@@ -105,5 +105,46 @@ namespace AtomicWar._Game.Core
         {
             return _state.isExtracted;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public AirliftState CaptureState()
+        {
+            return new AirliftState
+            {
+                victoryId = _state.victoryId,
+                isActive = _state.isActive,
+                defenseTimerSeconds = _state.defenseTimerSeconds,
+                currentWaveNumber = _state.currentWaveNumber,
+                waveIntervalSeconds = _state.waveIntervalSeconds,
+                survivorsOnRoof = _state.survivorsOnRoof,
+                isExtracted = _state.isExtracted,
+                wavesDefeated = _state.wavesDefeated,
+            };
+        }
+
+        public void RestoreState(AirliftState state)
+        {
+            if (state == null)
+            {
+                _state = new AirliftState();
+                _timeSinceLastWave = 0f;
+                _defenseFailed = false;
+                return;
+            }
+            _state = new AirliftState
+            {
+                victoryId = state.victoryId,
+                isActive = state.isActive,
+                defenseTimerSeconds = state.defenseTimerSeconds,
+                currentWaveNumber = state.currentWaveNumber,
+                waveIntervalSeconds = state.waveIntervalSeconds,
+                survivorsOnRoof = state.survivorsOnRoof,
+                isExtracted = state.isExtracted,
+                wavesDefeated = state.wavesDefeated,
+            };
+            _timeSinceLastWave = 0f;
+            _defenseFailed = false;
+        }
     }
 }

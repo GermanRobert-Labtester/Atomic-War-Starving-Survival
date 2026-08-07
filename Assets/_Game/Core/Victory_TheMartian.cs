@@ -111,5 +111,38 @@ namespace AtomicWar._Game.Core
                 "And for now, that was enough.\n\n" +
                 "— ENDING: THE MARTIAN —";
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public TheMartianState CaptureState()
+        {
+            return new TheMartianState
+            {
+                fuelRequired = State.fuelRequired,
+                electronicsRequired = State.electronicsRequired,
+                survivorsLaunched = State.survivorsLaunched,
+                victoryId = State.victoryId,
+                siloCleared = State.siloCleared,
+                triggered = State.triggered,
+            };
+        }
+
+        public void RestoreState(TheMartianState state)
+        {
+            if (state == null)
+            {
+                State = new TheMartianState();
+                return;
+            }
+            State = new TheMartianState
+            {
+                fuelRequired = state.fuelRequired,
+                electronicsRequired = state.electronicsRequired,
+                survivorsLaunched = state.survivorsLaunched,
+                victoryId = state.victoryId,
+                siloCleared = state.siloCleared,
+                triggered = state.triggered,
+            };
+        }
     }
 }

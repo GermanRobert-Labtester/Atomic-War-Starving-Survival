@@ -95,5 +95,40 @@ namespace AtomicWar._Game.Core
                 "And the king is always hungry.\n\n" +
                 "— ENDING: CANNIBAL KING —";
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public CannibalKingState CaptureState()
+        {
+            return new CannibalKingState
+            {
+                victoryId = State.victoryId,
+                humanMeatMealsThreshold = State.humanMeatMealsThreshold,
+                raiderScrapUsageThreshold = State.raiderScrapUsageThreshold,
+                humanMeatMealsUsed = State.humanMeatMealsUsed,
+                raiderScrapUsed = State.raiderScrapUsed,
+                warlordsDefeated = State.warlordsDefeated,
+                triggered = State.triggered,
+            };
+        }
+
+        public void RestoreState(CannibalKingState state)
+        {
+            if (state == null)
+            {
+                State = new CannibalKingState();
+                return;
+            }
+            State = new CannibalKingState
+            {
+                victoryId = state.victoryId,
+                humanMeatMealsThreshold = state.humanMeatMealsThreshold,
+                raiderScrapUsageThreshold = state.raiderScrapUsageThreshold,
+                humanMeatMealsUsed = state.humanMeatMealsUsed,
+                raiderScrapUsed = state.raiderScrapUsed,
+                warlordsDefeated = state.warlordsDefeated,
+                triggered = state.triggered,
+            };
+        }
     }
 }

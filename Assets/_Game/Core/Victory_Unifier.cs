@@ -88,5 +88,30 @@ namespace AtomicWar._Game.Core
         {
             return CheckVictory(factionTrustLevels);
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public UnifierState CaptureState()
+        {
+            return new UnifierState
+            {
+                victoryId = _state.victoryId,
+                trustRequired = _state.trustRequired,
+            };
+        }
+
+        public void RestoreState(UnifierState state)
+        {
+            if (state == null)
+            {
+                _state = new UnifierState();
+                return;
+            }
+            _state = new UnifierState
+            {
+                victoryId = state.victoryId,
+                trustRequired = state.trustRequired,
+            };
+        }
     }
 }

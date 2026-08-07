@@ -85,5 +85,42 @@ namespace AtomicWar._Game.Core
 
             return Math.Min(progress, 100f);
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public UndergroundCityState CaptureState()
+        {
+            return new UndergroundCityState
+            {
+                victoryId = _state.victoryId,
+                isActive = _state.isActive,
+                geothermalTapUpgraded = _state.geothermalTapUpgraded,
+                algaeVatUpgraded = _state.algaeVatUpgraded,
+                roomsExcavated = _state.roomsExcavated,
+                roomsRequired = _state.roomsRequired,
+                isSelfSustaining = _state.isSelfSustaining,
+                hatchSealed = _state.hatchSealed,
+            };
+        }
+
+        public void RestoreState(UndergroundCityState state)
+        {
+            if (state == null)
+            {
+                _state = new UndergroundCityState();
+                return;
+            }
+            _state = new UndergroundCityState
+            {
+                victoryId = state.victoryId,
+                isActive = state.isActive,
+                geothermalTapUpgraded = state.geothermalTapUpgraded,
+                algaeVatUpgraded = state.algaeVatUpgraded,
+                roomsExcavated = state.roomsExcavated,
+                roomsRequired = state.roomsRequired,
+                isSelfSustaining = state.isSelfSustaining,
+                hatchSealed = state.hatchSealed,
+            };
+        }
     }
 }

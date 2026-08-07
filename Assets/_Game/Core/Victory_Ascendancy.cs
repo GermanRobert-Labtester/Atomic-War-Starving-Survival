@@ -74,5 +74,32 @@ namespace AtomicWar._Game.Core
         {
             return CheckVictory(survivors);
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public AscendancyState CaptureState()
+        {
+            return new AscendancyState
+            {
+                victoryId = _state.victoryId,
+                radThreshold = _state.radThreshold,
+                requiresRadiotrophicMutation = _state.requiresRadiotrophicMutation,
+            };
+        }
+
+        public void RestoreState(AscendancyState state)
+        {
+            if (state == null)
+            {
+                _state = new AscendancyState();
+                return;
+            }
+            _state = new AscendancyState
+            {
+                victoryId = state.victoryId,
+                radThreshold = state.radThreshold,
+                requiresRadiotrophicMutation = state.requiresRadiotrophicMutation,
+            };
+        }
     }
 }

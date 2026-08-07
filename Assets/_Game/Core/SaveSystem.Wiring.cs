@@ -533,6 +533,76 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((TrueEndingState)o));
 
+        public void SetVictoryAirliftSystem(Victory_Airlift s) =>
+            RegisterSystem(ref _victoryAirliftSystem, s, "victory_airlift",
+                () => s.CaptureState(),
+                o => s.RestoreState((AirliftState)o));
+
+        public void SetVictoryAscendancySystem(Victory_Ascendancy s) =>
+            RegisterSystem(ref _victoryAscendancySystem, s, "victory_ascendancy",
+                () => s.CaptureState(),
+                o => s.RestoreState((AscendancyState)o));
+
+        public void SetVictoryBuriedAliveSystem(Victory_BuriedAlive s) =>
+            RegisterSystem(ref _victoryBuriedAliveSystem, s, "victory_buried_alive",
+                () => s.CaptureState(),
+                o => s.RestoreState((BuriedAliveState)o));
+
+        public void SetVictoryCannibalKingSystem(Victory_CannibalKing s) =>
+            RegisterSystem(ref _victoryCannibalKingSystem, s, "victory_cannibal_king",
+                () => s.CaptureState(),
+                o => s.RestoreState((CannibalKingState)o));
+
+        public void SetVictoryDefectionSystem(Victory_Defection s) =>
+            RegisterSystem(ref _victoryDefectionSystem, s, "victory_defection",
+                () => s.CaptureState(),
+                o => s.RestoreState((DefectionState)o));
+
+        public void SetVictoryIcebreakerSystem(Victory_Icebreaker s) =>
+            RegisterSystem(ref _victoryIcebreakerSystem, s, "victory_icebreaker",
+                () => s.CaptureState(),
+                o => s.RestoreState((IcebreakerState)o));
+
+        public void SetVictoryLoneSurvivorSystem(Victory_LoneSurvivor s) =>
+            RegisterSystem(ref _victoryLoneSurvivorSystem, s, "victory_lone_survivor",
+                () => s.CaptureState(),
+                o => s.RestoreState((LoneSurvivorState)o));
+
+        public void SetVictoryMadSystem(Victory_MAD s) =>
+            RegisterSystem(ref _victoryMadSystem, s, "victory_mad",
+                () => s.CaptureState(),
+                o => s.RestoreState((MADState)o));
+
+        public void SetVictoryMigrationSystem(Victory_Migration s) =>
+            RegisterSystem(ref _victoryMigrationSystem, s, "victory_migration",
+                () => s.CaptureState(),
+                o => s.RestoreState((MigrationState)o));
+
+        public void SetVictoryTheBroadcastSystem(Victory_TheBroadcast s) =>
+            RegisterSystem(ref _victoryTheBroadcastSystem, s, "victory_the_broadcast",
+                () => s.CaptureState(),
+                o => s.RestoreState((BroadcastState)o));
+
+        public void SetVictoryTheCureSystem(Victory_TheCure s) =>
+            RegisterSystem(ref _victoryTheCureSystem, s, "victory_the_cure",
+                () => s.CaptureState(),
+                o => s.RestoreState((TheCureState)o));
+
+        public void SetVictoryTheMartianSystem(Victory_TheMartian s) =>
+            RegisterSystem(ref _victoryTheMartianSystem, s, "victory_the_martian",
+                () => s.CaptureState(),
+                o => s.RestoreState((TheMartianState)o));
+
+        public void SetVictoryUndergroundCitySystem(Victory_UndergroundCity s) =>
+            RegisterSystem(ref _victoryUndergroundCitySystem, s, "victory_underground_city",
+                () => s.CaptureState(),
+                o => s.RestoreState((UndergroundCityState)o));
+
+        public void SetVictoryUnifierSystem(Victory_Unifier s) =>
+            RegisterSystem(ref _victoryUnifierSystem, s, "victory_unifier",
+                () => s.CaptureState(),
+                o => s.RestoreState((UnifierState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

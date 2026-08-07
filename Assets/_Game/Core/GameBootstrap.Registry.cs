@@ -134,6 +134,10 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("batch_systems_hourly", h => TickBatchSystemsHourly(h));
             _registry.RegisterPerSubstep("batch_systems_daily",
                 _registry.DayGated("batch_systems", day => TickBatchSystemsDaily(day)));
+            // Victory paths: broadcast upload minutes; daily lone-survivor check.
+            _registry.RegisterPerSubstep("victory_paths_hourly", h => TickVictoryPathsHourly(h));
+            _registry.RegisterPerSubstep("victory_paths_daily",
+                _registry.DayGated("victory_paths", day => TickVictoryPathsDaily(day)));
             _registry.RegisterPerSubstep("perimeter_trap", h => PerimeterTrapSystem?.Tick(h));
             _registry.RegisterPerSubstep("noise", h =>
             {

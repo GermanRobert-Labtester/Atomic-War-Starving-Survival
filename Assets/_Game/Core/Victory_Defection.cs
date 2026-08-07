@@ -57,5 +57,36 @@ namespace AtomicWar._Game.Core
                    "Your people survive as slaves under their rule. " +
                    "This is not the ending you hoped for.";
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public DefectionState CaptureState()
+        {
+            return new DefectionState
+            {
+                victoryId = _state.victoryId,
+                isActive = _state.isActive,
+                siegeLevelRequired = _state.siegeLevelRequired,
+                isSurrendered = _state.isSurrendered,
+                isGameOver = _state.isGameOver,
+            };
+        }
+
+        public void RestoreState(DefectionState state)
+        {
+            if (state == null)
+            {
+                _state = new DefectionState();
+                return;
+            }
+            _state = new DefectionState
+            {
+                victoryId = state.victoryId,
+                isActive = state.isActive,
+                siegeLevelRequired = state.siegeLevelRequired,
+                isSurrendered = state.isSurrendered,
+                isGameOver = state.isGameOver,
+            };
+        }
     }
 }

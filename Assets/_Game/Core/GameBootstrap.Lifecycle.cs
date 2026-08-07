@@ -97,6 +97,8 @@ namespace AtomicWar._Game.Core
             TickTwitchAPI(dt);
             // Batch — speedrun real-time seconds.
             TickBatchSystemsRealtime(dt);
+            // Victory paths — airlift defense real-time timer when active.
+            TickVictoryPathsRealtime(dt);
 
             // Fast-forward-safe clock: TimeScale (1x / 3x) scales the simulated
             // delta, and the accumulated game-time is consumed in sub-steps of

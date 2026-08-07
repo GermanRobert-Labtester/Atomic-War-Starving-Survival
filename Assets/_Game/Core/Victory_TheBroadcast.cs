@@ -107,5 +107,42 @@ namespace AtomicWar._Game.Core
         {
             return _state.isUploadComplete;
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public BroadcastState CaptureState()
+        {
+            return new BroadcastState
+            {
+                victoryId = _state.victoryId,
+                isActive = _state.isActive,
+                uploadProgress = _state.uploadProgress,
+                uploadSpeedPerMinute = _state.uploadSpeedPerMinute,
+                warlordAssaultActive = _state.warlordAssaultActive,
+                defensePower = _state.defensePower,
+                isUploadComplete = _state.isUploadComplete,
+            };
+        }
+
+        public void RestoreState(BroadcastState state)
+        {
+            if (state == null)
+            {
+                _state = new BroadcastState();
+                _uploadFailed = false;
+                return;
+            }
+            _state = new BroadcastState
+            {
+                victoryId = state.victoryId,
+                isActive = state.isActive,
+                uploadProgress = state.uploadProgress,
+                uploadSpeedPerMinute = state.uploadSpeedPerMinute,
+                warlordAssaultActive = state.warlordAssaultActive,
+                defensePower = state.defensePower,
+                isUploadComplete = state.isUploadComplete,
+            };
+            _uploadFailed = false;
+        }
     }
 }

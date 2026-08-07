@@ -97,6 +97,8 @@ namespace AtomicWar._Game.Core
             BootTwitchAPI();
             // Batch: disease / scapegoat / iron man / android / sheriff / scenario / speedrun / true ending / sieges.
             BootBatchSystems();
+            // Victory paths (14 endings; TrueEnding already constructed in BootBatchSystems).
+            BootVictoryPaths();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

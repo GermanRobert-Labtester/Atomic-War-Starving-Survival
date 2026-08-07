@@ -86,5 +86,38 @@ namespace AtomicWar._Game.Core
                 "It had only a frequency — and a promise.\n\n" +
                 "— ENDING: THE CURE —";
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public TheCureState CaptureState()
+        {
+            return new TheCureState
+            {
+                victoryId = State.victoryId,
+                requiresMicrobiologist = State.requiresMicrobiologist,
+                requiresHamRadio = State.requiresHamRadio,
+                requiresRareChemicals = State.requiresRareChemicals,
+                formulaBroadcast = State.formulaBroadcast,
+                triggered = State.triggered,
+            };
+        }
+
+        public void RestoreState(TheCureState state)
+        {
+            if (state == null)
+            {
+                State = new TheCureState();
+                return;
+            }
+            State = new TheCureState
+            {
+                victoryId = state.victoryId,
+                requiresMicrobiologist = state.requiresMicrobiologist,
+                requiresHamRadio = state.requiresHamRadio,
+                requiresRareChemicals = state.requiresRareChemicals,
+                formulaBroadcast = state.formulaBroadcast,
+                triggered = state.triggered,
+            };
+        }
     }
 }

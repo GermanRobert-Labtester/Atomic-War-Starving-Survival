@@ -76,5 +76,34 @@ namespace AtomicWar._Game.Core
                 "The wasteland does not answer questions.\n\n" +
                 "— ENDING: LONE SURVIVOR —";
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public LoneSurvivorState CaptureState()
+        {
+            return new LoneSurvivorState
+            {
+                victoryId = State.victoryId,
+                minDayRequired = State.minDayRequired,
+                survivorCountRequired = State.survivorCountRequired,
+                triggered = State.triggered,
+            };
+        }
+
+        public void RestoreState(LoneSurvivorState state)
+        {
+            if (state == null)
+            {
+                State = new LoneSurvivorState();
+                return;
+            }
+            State = new LoneSurvivorState
+            {
+                victoryId = state.victoryId,
+                minDayRequired = state.minDayRequired,
+                survivorCountRequired = state.survivorCountRequired,
+                triggered = state.triggered,
+            };
+        }
     }
 }

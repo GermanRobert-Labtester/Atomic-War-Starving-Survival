@@ -112,5 +112,44 @@ namespace AtomicWar._Game.Core
                 "But they will never see the sky again.\n\n" +
                 "— ENDING: BURIED ALIVE —";
         }
+
+        // ── Save / Load ────────────────────────────────────────────────
+
+        public BuriedAliveState CaptureState()
+        {
+            return new BuriedAliveState
+            {
+                victoryId = State.victoryId,
+                requiresHydroponics = State.requiresHydroponics,
+                requiresGeothermal = State.requiresGeothermal,
+                isSealed = State.isSealed,
+                stairwellDetonated = State.stairwellDetonated,
+                hasHydroponics = State.hasHydroponics,
+                hasGeothermal = State.hasGeothermal,
+                triggered = State.triggered,
+                slowDeath = State.slowDeath,
+            };
+        }
+
+        public void RestoreState(BuriedAliveState state)
+        {
+            if (state == null)
+            {
+                State = new BuriedAliveState();
+                return;
+            }
+            State = new BuriedAliveState
+            {
+                victoryId = state.victoryId,
+                requiresHydroponics = state.requiresHydroponics,
+                requiresGeothermal = state.requiresGeothermal,
+                isSealed = state.isSealed,
+                stairwellDetonated = state.stairwellDetonated,
+                hasHydroponics = state.hasHydroponics,
+                hasGeothermal = state.hasGeothermal,
+                triggered = state.triggered,
+                slowDeath = state.slowDeath,
+            };
+        }
     }
 }

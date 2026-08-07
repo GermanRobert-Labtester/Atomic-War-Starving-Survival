@@ -231,6 +231,21 @@ namespace AtomicWar._Game.Core
         public UI_ScenarioGen ScenarioGen { get; private set; }
         public UI_SpeedrunTimer SpeedrunTimer { get; private set; }
         public Victory_TrueEnding TrueEnding { get; private set; }
+        // Victory paths (endgame condition trackers) — all except TrueEnding which is in batch.
+        public Victory_Airlift VictoryAirlift { get; private set; }
+        public Victory_Ascendancy VictoryAscendancy { get; private set; }
+        public Victory_BuriedAlive VictoryBuriedAlive { get; private set; }
+        public Victory_CannibalKing VictoryCannibalKing { get; private set; }
+        public Victory_Defection VictoryDefection { get; private set; }
+        public Victory_Icebreaker VictoryIcebreaker { get; private set; }
+        public Victory_LoneSurvivor VictoryLoneSurvivor { get; private set; }
+        public Victory_MAD VictoryMAD { get; private set; }
+        public Victory_Migration VictoryMigration { get; private set; }
+        public Victory_TheBroadcast VictoryTheBroadcast { get; private set; }
+        public Victory_TheCure VictoryTheCure { get; private set; }
+        public Victory_TheMartian VictoryTheMartian { get; private set; }
+        public Victory_UndergroundCity VictoryUndergroundCity { get; private set; }
+        public Victory_Unifier VictoryUnifier { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }
