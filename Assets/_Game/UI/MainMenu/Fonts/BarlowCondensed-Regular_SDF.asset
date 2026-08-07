@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 19001, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: BarlowCondensed-SemiBold SDF
+  m_Name: BarlowCondensed-Regular_SDF
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.TextCore.Text.FontAsset
   m_Version: 1.1.0
-  m_Material: {fileID: 60334184336834252}
-  m_SourceFontFileGUID: 94460200b48ccac97b0bfe8505162a9f
+  m_Material: {fileID: 956273811337275166}
+  m_SourceFontFileGUID: bdde76c4abc65773584c3aadcc65a537
   m_ShowObsoleteProperties: 0
   m_fontAssetCreationEditorSettings:
     sourceFontFileGUID: 
@@ -34,7 +34,7 @@ MonoBehaviour:
     fontStyleModifier: 0
     renderMode: 0
     includeFontFeatures: 0
-  m_SourceFontFile: {fileID: 12800000, guid: 94460200b48ccac97b0bfe8505162a9f, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: bdde76c4abc65773584c3aadcc65a537, type: 3}
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
@@ -42,7 +42,7 @@ MonoBehaviour:
   m_FaceInfo:
     m_FaceIndex: 0
     m_FamilyName: Barlow Condensed
-    m_StyleName: SemiBold
+    m_StyleName: Regular
     m_PointSize: 90
     m_Scale: 1
     m_UnitsPerEM: 1000
@@ -64,7 +64,7 @@ MonoBehaviour:
   m_GlyphTable: []
   m_CharacterTable: []
   m_AtlasTextures:
-  - {fileID: 5975593445067913278}
+  - {fileID: 6955139804342280958}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 1
   m_GetFontFeatures: 1
@@ -114,14 +114,14 @@ MonoBehaviour:
   m_BoldStyleSpacing: 7
   m_ItalicStyleSlant: 35
   m_TabMultiple: 10
---- !u!21 &60334184336834252
+--- !u!21 &956273811337275166
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BarlowCondensed-SemiBold SDF Material
+  m_Name: BarlowCondensed-Regular_SDF Material
   m_Shader: {fileID: 19011, guid: 0000000000000000f000000000000000, type: 0}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -138,7 +138,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 5975593445067913278}
+        m_Texture: {fileID: 6955139804342280958}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
@@ -171,13 +171,13 @@ Material:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
---- !u!28 &5975593445067913278
+--- !u!28 &6955139804342280958
 Texture2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BarlowCondensed-SemiBold SDF Atlas
+  m_Name: BarlowCondensed-Regular_SDF Atlas
   m_ImageContentsHash:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000

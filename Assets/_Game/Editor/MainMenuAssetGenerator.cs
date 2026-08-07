@@ -31,6 +31,8 @@ namespace AtomicWar._Game.Editor
         public const string FontAssetDir = MenuDir + "/Fonts";
         public const string PanelSettingsPath = MenuDir + "/MainMenuPanelSettings.asset";
         public const string ScanlinePath = MenuDir + "/Scanline_1x4.png";
+        public const string VignettePath = MenuDir + "/Vignette_256.png";
+        public const string FadeRightPath = MenuDir + "/FadeRight_64x1.png";
         public const string ThemeDir = "Assets/UI Toolkit/UnityThemes";
         public const string ThemePath = ThemeDir + "/UnityDefaultRuntimeTheme.tss";
 
@@ -81,6 +83,8 @@ namespace AtomicWar._Game.Editor
 
             GenerateTheme(force);
             GenerateScanline(force);
+            GenerateVignette(force);
+            GenerateFadeRight(force);
             GeneratePanelSettings(force);
 
             AssetDatabase.SaveAssets();
@@ -95,7 +99,9 @@ namespace AtomicWar._Game.Editor
         private static FontAsset GenerateFontAsset(string ttfFileName, bool force)
         {
             string sourcePath = $"{FontSourceDir}/{ttfFileName}";
-            string assetName = Path.GetFileNameWithoutExtension(ttfFileName) + " SDF";
+            // Underscore, not a space: USS url() paths are far less
+            // error-prone without characters that need percent-encoding.
+            string assetName = Path.GetFileNameWithoutExtension(ttfFileName) + "_SDF";
             string assetPath = $"{FontAssetDir}/{assetName}.asset";
 
             var existing = AssetDatabase.LoadAssetAtPath<FontAsset>(assetPath);
@@ -192,15 +198,124 @@ namespace AtomicWar._Game.Editor
             for (int y = 1; y < 4; y++) tex.SetPixel(0, y, new Color(1f, 1f, 1f, 0f));
             tex.Apply();
 
-            File.WriteAllBytes(ScanlinePath, tex.EncodeToPNG());
-            Object.DestroyImmediate(tex);
-            AssetDatabase.ImportAsset(ScanlinePath, ImportAssetOptions.ForceUpdate);
+            // Point filtering keeps the 1px line crisp instead of smearing it
+            // across the 4px cell; Repeat is what makes the tile a pattern.
+            WritePng(tex, ScanlinePath, FilterMode.Point, TextureWrapMode.Repeat);
+            Debug.Log($"[MainMenuAssetGenerator] Wrote scanline tile: {ScanlinePath}");
+        }
 
-            if (AssetImporter.GetAtPath(ScanlinePath) is TextureImporter ti)
+        // -----------------------------------------------------------------
+        // Baked gradients
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// USS recognises linear-gradient as a value function but not the
+        /// "to bottom" / "to right" direction keywords the prototype's CSS
+        /// uses, and it has no repeating-linear-gradient at all. Rather than
+        /// guess at the supported syntax, every gradient the menu needs is
+        /// baked to a small texture here — exact, and cheap enough that the
+        /// three of them together are under 200 KB.
+        ///
+        /// This one is the backdrop vignette: a horizontal ramp that crushes
+        /// the left third to near-black so the menu column stays legible over
+        /// the photo, composited over a shorter bottom-up darkening.
+        /// </summary>
+        private static void GenerateVignette(bool force)
+        {
+            const int size = 256;
+            if (File.Exists(VignettePath) && !force) return;
+
+            // Stops copied from the prototype's two stacked linear-gradients.
+            var horizontal = new[]
+            {
+                (t: 0.00f, c: new Color32(1, 2, 2, 250)),
+                (t: 0.23f, c: new Color32(2, 3, 3, 237)),
+                (t: 0.48f, c: new Color32(5, 6, 6, 107)),
+                (t: 0.80f, c: new Color32(3, 3, 3, 20)),
+                (t: 1.00f, c: new Color32(3, 3, 3, 20)),
+            };
+
+            var tex = new Texture2D(size, size, TextureFormat.RGBA32, mipChain: false, linear: false);
+            var pixels = new Color[size * size];
+
+            for (int y = 0; y < size; y++)
+            {
+                // Bottom-up layer: opaque-ish at the very bottom, gone by 34%.
+                float up = 1f - (y / (float)(size - 1));
+                float bottomA = Mathf.Lerp(0.58f, 0f, Mathf.Clamp01(up / 0.34f));
+                var bottom = new Color(1f / 255f, 2f / 255f, 2f / 255f, bottomA);
+
+                for (int x = 0; x < size; x++)
+                {
+                    Color top = SampleRamp(horizontal, x / (float)(size - 1));
+                    pixels[y * size + x] = OverStraightAlpha(top, bottom);
+                }
+            }
+
+            tex.SetPixels(pixels);
+            tex.Apply();
+            WritePng(tex, VignettePath, FilterMode.Bilinear, TextureWrapMode.Clamp);
+            Debug.Log($"[MainMenuAssetGenerator] Wrote vignette: {VignettePath}");
+        }
+
+        /// <summary>
+        /// A plain white-to-transparent horizontal ramp. Tinted from USS with
+        /// -unity-background-image-tint-color it stands in for every
+        /// left-to-right fade in the design — the top rule, the menu row's
+        /// backing panel, and its warm hover glow — so one 64x1 texture
+        /// replaces three separate gradients.
+        /// </summary>
+        private static void GenerateFadeRight(bool force)
+        {
+            const int width = 64;
+            if (File.Exists(FadeRightPath) && !force) return;
+
+            var tex = new Texture2D(width, 1, TextureFormat.RGBA32, mipChain: false, linear: false);
+            for (int x = 0; x < width; x++)
+            {
+                float a = 1f - (x / (float)(width - 1));
+                tex.SetPixel(x, 0, new Color(1f, 1f, 1f, a));
+            }
+            tex.Apply();
+            WritePng(tex, FadeRightPath, FilterMode.Bilinear, TextureWrapMode.Clamp);
+            Debug.Log($"[MainMenuAssetGenerator] Wrote fade ramp: {FadeRightPath}");
+        }
+
+        /// <summary>Piecewise-linear colour ramp lookup, stops assumed sorted.</summary>
+        private static Color SampleRamp((float t, Color32 c)[] stops, float t)
+        {
+            if (t <= stops[0].t) return stops[0].c;
+            for (int i = 1; i < stops.Length; i++)
+            {
+                if (t > stops[i].t) continue;
+                float span = stops[i].t - stops[i - 1].t;
+                float k = span <= 0f ? 0f : (t - stops[i - 1].t) / span;
+                return Color.Lerp(stops[i - 1].c, stops[i].c, k);
+            }
+            return stops[stops.Length - 1].c;
+        }
+
+        /// <summary>Source-over composite of two straight-alpha colours.</summary>
+        private static Color OverStraightAlpha(Color src, Color dst)
+        {
+            float a = src.a + dst.a * (1f - src.a);
+            if (a <= 0f) return new Color(0f, 0f, 0f, 0f);
+            Vector3 rgb = (new Vector3(src.r, src.g, src.b) * src.a
+                           + new Vector3(dst.r, dst.g, dst.b) * dst.a * (1f - src.a)) / a;
+            return new Color(rgb.x, rgb.y, rgb.z, a);
+        }
+
+        private static void WritePng(Texture2D tex, string path, FilterMode filter, TextureWrapMode wrap)
+        {
+            File.WriteAllBytes(path, tex.EncodeToPNG());
+            Object.DestroyImmediate(tex);
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);
+
+            if (AssetImporter.GetAtPath(path) is TextureImporter ti)
             {
                 ti.textureType = TextureImporterType.Default;
-                ti.wrapMode = TextureWrapMode.Repeat;
-                ti.filterMode = FilterMode.Point;   // crisp 1px lines, no blur
+                ti.wrapMode = wrap;
+                ti.filterMode = filter;
                 ti.mipmapEnabled = false;
                 ti.alphaIsTransparency = true;
                 ti.sRGBTexture = true;
@@ -208,8 +323,6 @@ namespace AtomicWar._Game.Editor
                 ti.textureCompression = TextureImporterCompression.Uncompressed;
                 ti.SaveAndReimport();
             }
-
-            Debug.Log($"[MainMenuAssetGenerator] Wrote scanline tile: {ScanlinePath}");
         }
 
         // -----------------------------------------------------------------

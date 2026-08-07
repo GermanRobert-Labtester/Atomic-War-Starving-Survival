@@ -1,0 +1,662 @@
+/*
+ * LAST STATIC — main menu stylesheet.
+ *
+ * Ported from the Figma Make prototype's CSS. USS is not CSS, so a handful of
+ * things are done differently on purpose:
+ *
+ *   - No CSS Grid, no `gap`      -> flexbox with margins on the children.
+ *   - No `::before`              -> decorative layers are real VisualElements.
+ *   - No `clamp()` / `vw` units  -> the prototype's clamps are evaluated once
+ *                                   at the 1920x1080 reference resolution and
+ *                                   hardcoded; PanelSettings scales from there.
+ *   - No repeating-linear-gradient, and linear-gradient's direction keywords
+ *     are unverified in this Unity version -> every gradient is a baked
+ *     texture from MainMenuAssetGenerator, tinted per use.
+ *   - No `line-height`           -> explicit heights / negative margins.
+ *   - No `mix-blend-mode`        -> low alpha instead.
+ */
+
+:root {
+    --ink: #090b0c;
+    --line: rgba(217, 196, 152, 0.27);
+    --warm: #d3aa62;
+    --hot: #f4c875;
+    --pale: #e6e0d2;
+    --muted: #938f84;
+    --dim: #66675f;
+
+    --font-body: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Regular_SDF.asset");
+    --font-semibold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    --font-bold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Bold_SDF.asset");
+    --font-mono: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+
+/* ------------------------------------------------------------------ shell */
+
+.game-shell {
+    flex-grow: 1;
+    background-color: var(--ink);
+    color: var(--pale);
+    -unity-font-definition: var(--font-body);
+    font-size: 16px;
+    letter-spacing: 1.3px; /* .08em at 16px */
+    overflow: hidden;
+}
+
+/* Backdrop layers all fill the shell and never take input. */
+.scene-image,
+.scene-vignette,
+.scanlines {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.scene-image {
+    background-image: url("project://database/Assets/UI_StyleReference_01.jpg");
+    background-size: cover;
+    background-position-x: right;
+    background-position-y: center;
+    background-repeat: no-repeat;
+    /* Stands in for the prototype's filter: brightness(.76). USS has no
+       brightness() or saturate() filter, but a flat grey tint is the same
+       multiply. contrast(1.04) is dropped as imperceptible. */
+    -unity-background-image-tint-color: rgb(194, 194, 194);
+}
+
+.scene-vignette {
+    background-image: url("project://database/Assets/_Game/UI/MainMenu/Vignette_256.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+.scanlines {
+    background-image: url("project://database/Assets/_Game/UI/MainMenu/Scanline_1x4.png");
+    background-repeat: repeat;
+    /* The tile is written at full opacity so its strength is tunable here.
+       The prototype's .038 line alpha under a .16 element opacity read as
+       nothing once mix-blend-mode: overlay was off the table, so this is a
+       little stronger. */
+    opacity: 0.05;
+}
+
+.top-rule {
+    position: absolute;
+    top: 6.4%;
+    left: 4.7%;
+    width: 420px;
+    height: 1px;
+    background-image: url("project://database/Assets/_Game/UI/MainMenu/FadeRight_64x1.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -unity-background-image-tint-color: var(--warm);
+}
+
+/* ------------------------------------------------------------------ brand */
+
+.brand-block {
+    position: absolute;
+    top: 9.8%;
+    left: 5.2%;
+    flex-direction: row;
+    align-items: center;
+}
+
+.brand-mark {
+    flex-direction: row;
+    align-items: flex-end;
+    height: 35px;
+    margin-right: 15px;
+}
+
+.brand-bar {
+    width: 4px;
+    margin-right: 3px;
+    background-color: var(--warm);
+}
+
+.brand-bar--short { height: 13px; }
+.brand-bar--mid   { height: 26px; }
+.brand-bar--tall  { height: 35px; margin-right: 0; }
+
+.eyebrow {
+    -unity-font-definition: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2.16px; /* .18em */
+    color: var(--warm);
+    margin: 0;
+}
+
+.brand-title-row {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top: -2px;
+}
+
+.brand-title {
+    -unity-font-definition: var(--font-bold);
+    font-size: 79px;
+    letter-spacing: -2.8px; /* -.035em */
+    color: var(--pale);
+    margin: 0;
+    padding: 0;
+    text-shadow: 0 3px 12px rgba(0, 0, 0, 1);
+}
+
+.brand-title--accent {
+    color: var(--warm);
+    margin-left: 16px;
+}
+
+/* ------------------------------------------------------------------- menu */
+
+.menu-stage {
+    position: absolute;
+    top: 32%;
+    left: 9.4%;
+    width: 495px;
+    min-width: 335px;
+}
+
+.menu-rule {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 11px;
+    margin-bottom: 12px;
+}
+
+.menu-rule__label {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    margin: 0 12px 0 0;
+}
+
+.menu-rule__line {
+    flex-grow: 1;
+    height: 1px;
+    background-color: var(--line);
+}
+
+.menu-list {
+    flex-direction: column;
+}
+
+/*
+ * A menu row is a Button (so it handles submit and focus for free) wrapping a
+ * single .menu-button__inner. The entry-stagger animation translates the outer
+ * Button and the hover nudge translates the inner one, so the two never fight
+ * over the same `translate` property.
+ */
+.menu-button {
+    /* Reset everything the default theme's Button brings with it. */
+    margin: 0 0 4px 0;
+    padding: 0;
+    border-width: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    min-height: auto;
+}
+
+.menu-button:hover,
+.menu-button:active,
+.menu-button:focus {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.menu-button__inner {
+    flex-direction: row;
+    align-items: center;
+    min-height: 58px;
+    padding: 8px 16px 8px 0;
+    border-width: 1px;
+    border-left-width: 2px;
+    border-color: rgba(0, 0, 0, 0);
+    background-image: url("project://database/Assets/_Game/UI/MainMenu/FadeRight_64x1.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -unity-background-image-tint-color: rgba(18, 20, 19, 0.76);
+    transition-property: translate, border-color;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+}
+
+/* Stands in for .menu-button::before — the warm wash on hover. */
+.menu-button__glow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/_Game/UI/MainMenu/FadeRight_64x1.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    -unity-background-image-tint-color: rgba(207, 161, 76, 0.18);
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+}
+
+.menu-button:hover > .menu-button__inner,
+.menu-button:focus > .menu-button__inner,
+.menu-button.is-selected > .menu-button__inner {
+    border-color: rgba(214, 177, 104, 0.48);
+    border-left-color: var(--hot);
+    translate: 5px 0;
+}
+
+.menu-button:hover .menu-button__glow,
+.menu-button:focus .menu-button__glow,
+.menu-button.is-selected .menu-button__glow {
+    opacity: 1;
+}
+
+.menu-index,
+.menu-arrow {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--warm);
+    margin: 0;
+}
+
+.menu-index {
+    width: 43px;
+    -unity-text-align: middle-center;
+}
+
+.menu-arrow {
+    width: 16px;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.12s;
+}
+
+.menu-button:hover .menu-arrow,
+.menu-button:focus .menu-arrow,
+.menu-button.is-selected .menu-arrow {
+    opacity: 1;
+}
+
+.menu-label {
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+.menu-label__main {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 28px;
+    letter-spacing: 2.1px; /* .075em */
+    color: var(--pale);
+    margin: 0;
+    padding: 0;
+}
+
+.menu-label__detail {
+    -unity-font-definition: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.8px; /* .1em */
+    color: var(--muted);
+    margin: 6px 0 0 0;
+    padding: 0;
+}
+
+/* Disabled CONTINUE: greyed out, no hover response, no glow. */
+.menu-button:disabled {
+    opacity: 1; /* the default theme dims disabled controls; we do it ourselves */
+}
+
+.menu-button:disabled .menu-label__main,
+.menu-button:disabled .menu-index,
+.menu-button:disabled .menu-label__detail {
+    color: var(--dim);
+}
+
+.menu-button:disabled > .menu-button__inner {
+    border-color: rgba(0, 0, 0, 0);
+    translate: 0 0;
+}
+
+.menu-button:disabled .menu-button__glow,
+.menu-button:disabled .menu-arrow {
+    opacity: 0;
+}
+
+.menu-instruction {
+    flex-direction: row;
+    align-items: center;
+    margin: 24px 0 0 43px;
+}
+
+.menu-instruction__word {
+    -unity-font-definition: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 1.08px; /* .12em */
+    color: var(--muted);
+    margin: 0 10px 0 0;
+}
+
+.key-hint {
+    -unity-font-definition: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0;
+    color: var(--pale);
+    padding: 2px 4px;
+    margin: 0 5px 0 0;
+    border-width: 1px;
+    border-color: rgba(224, 212, 180, 0.38);
+}
+
+/* ------------------------------------------------------- status / footer */
+
+.status-readout {
+    position: absolute;
+    right: 4.8%;
+    bottom: 10%;
+    align-items: flex-end;
+}
+
+.status-line {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px; /* .1em */
+    color: rgba(222, 216, 200, 0.75);
+    margin: 0 0 5px 0;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+}
+
+.status-line--signal {
+    flex-direction: row;
+    align-items: center;
+    color: var(--hot);
+}
+
+.status-line--signal > Label {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--hot);
+    margin: 0;
+}
+
+.signal-dot {
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-radius: 3px;
+    background-color: var(--hot);
+}
+
+.footer-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 92px; /* 4.8% of 1920 */
+    border-top-width: 1px;
+    border-top-color: rgba(220, 201, 164, 0.14);
+    background-color: rgba(0, 0, 0, 0.36);
+}
+
+.footer-hint {
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer-text {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(213, 204, 187, 0.6);
+    margin: 0;
+}
+
+/* ---------------------------------------------------------------- dialogs */
+
+/*
+ * Hidden with `visibility` rather than `display: none`, because `display`
+ * changes skip transitions entirely and the fade/scale would snap.
+ */
+.dialog-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background-color: rgba(0, 0, 0, 0.62);
+    visibility: hidden;
+    opacity: 0;
+    transition-property: opacity;
+    transition-duration: 0.14s;
+}
+
+.dialog-backdrop.is-open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.dialog-panel {
+    width: 560px;
+    max-width: 100%;
+    padding: 34px;
+    overflow: hidden;
+    border-width: 1px;
+    border-left-width: 3px;
+    border-color: rgba(229, 195, 124, 0.52);
+    border-left-color: var(--hot);
+    background-color: rgba(12, 14, 13, 0.94);
+    scale: 0.97 0.97;
+    transition-property: scale;
+    transition-duration: 0.14s;
+    transition-timing-function: ease-out;
+}
+
+.dialog-backdrop.is-open > .dialog-panel {
+    scale: 1 1;
+}
+
+.dialog-scan {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("project://database/Assets/_Game/UI/MainMenu/Scanline_1x4.png");
+    background-repeat: repeat;
+    opacity: 0.06;
+}
+
+.dialog-title {
+    -unity-font-definition: var(--font-bold);
+    font-size: 45px;
+    letter-spacing: 1.1px; /* .025em */
+    color: var(--pale);
+    margin: 8px 0 15px 0;
+    padding: 0;
+}
+
+.dialog-body {
+    max-width: 440px;
+    font-size: 18px;
+    letter-spacing: 0.54px; /* .03em */
+    color: #b7b4aa;
+    white-space: normal;
+    margin: 0;
+}
+
+/* ---- difficulty picker (new expedition only) ---- */
+
+.difficulty-row {
+    flex-direction: row;
+    margin: 24px 0;
+}
+
+.difficulty {
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px;
+    margin: 0 8px 0 0;
+    border-width: 1px;
+    border-color: var(--line);
+    background-color: rgba(255, 255, 255, 0.025);
+    background-image: none;
+    transition-property: border-color;
+    transition-duration: 0.12s;
+}
+
+.difficulty--last {
+    margin-right: 0;
+}
+
+.difficulty:hover,
+.difficulty:focus,
+.difficulty.is-selected {
+    border-color: var(--warm);
+    background-color: rgba(255, 255, 255, 0.025);
+}
+
+.difficulty__label {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 16px;
+    color: var(--pale);
+    margin: 0;
+}
+
+.difficulty__detail {
+    -unity-font-definition: var(--font-mono);
+    font-size: 8px;
+    color: var(--muted);
+    margin: 4px 0 0 0;
+}
+
+/* ---- settings rows ---- */
+
+.settings-body {
+    flex-direction: column;
+    margin: 24px 0 0 0;
+}
+
+.setting-row {
+    flex-direction: row;
+    align-items: center;
+    min-height: 34px;
+    margin-bottom: 10px;
+}
+
+.setting-label {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    width: 150px;
+    margin: 0;
+}
+
+.setting-slider {
+    flex-grow: 1;
+    margin: 0 12px 0 0;
+}
+
+.setting-value {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--pale);
+    width: 48px;
+    -unity-text-align: middle-right;
+    margin: 0;
+}
+
+.setting-toggle {
+    margin: 0;
+}
+
+.setting-dropdown {
+    flex-grow: 1;
+    margin: 0;
+}
+
+/* ---- dialog actions ---- */
+
+.dialog-actions {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 27px;
+}
+
+.menu-button--compact {
+    flex-direction: row;
+    align-items: center;
+    min-height: 37px;
+    padding: 7px 13px;
+    margin: 0;
+    border-width: 1px;
+    border-color: var(--line);
+    background-color: rgba(0, 0, 0, 0);
+    background-image: none;
+    transition-property: border-color, background-color;
+    transition-duration: 0.12s;
+}
+
+.menu-button--compact:hover,
+.menu-button--compact:focus {
+    border-color: var(--warm);
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.menu-button--confirm {
+    border-color: var(--warm);
+    background-color: rgba(184, 136, 59, 0.13);
+}
+
+.menu-button--confirm:hover,
+.menu-button--confirm:focus {
+    background-color: rgba(184, 136, 59, 0.22);
+}
+
+.compact-label {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 15px;
+    letter-spacing: 1.2px;
+    color: var(--pale);
+    margin: 0 10px;
+}
+
+.compact-glyph {
+    font-size: 11px;
+    color: var(--warm);
+    margin: 0;
+}
+
+/* ------------------------------------------------------- narrow / wide */
+
+/*
+ * USS has no @media, so MainMenuController toggles these from a
+ * GeometryChangedEvent on the shell.
+ */
+.game-shell.narrow .menu-stage {
+    left: 5%;
+    width: 380px;
+}
+
+.game-shell.narrow .brand-title {
+    font-size: 52px;
+}
+
+.game-shell.narrow .menu-label__main {
+    font-size: 22px;
+}
+
+.game-shell.ultrawide .menu-stage {
+    left: 14%;
+}
+
