@@ -34,5 +34,16 @@ namespace AtomicWar._Game.Core
             OnAngerVentedSafely?.Invoke(_state, survivorId, _state.anxietyReductionAmount);
             return true;
         }
+    
+        public PunchingBagState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(PunchingBagState saved)
+        {
+            _state = saved ?? new PunchingBagState();
+        }
     }
 }
+

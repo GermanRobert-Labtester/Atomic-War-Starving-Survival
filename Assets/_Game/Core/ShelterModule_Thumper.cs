@@ -63,5 +63,30 @@ namespace AtomicWar._Game.Core
         {
             return _state.isActive && _state.preventsBurrowers;
         }
+    
+        public ThumperState CaptureState()
+        {
+            return new ThumperState
+            {
+                moduleId = _state.moduleId,
+                powerRequired = _state.powerRequired,
+                noiseGenerated = _state.noiseGenerated,
+                preventsBurrowers = _state.preventsBurrowers,
+                stabilizesFaults = _state.stabilizesFaults,
+                isActive = _state.isActive
+            };
+        }
+
+        public void RestoreState(ThumperState saved)
+        {
+            if (saved == null) return;
+            _state.moduleId = saved.moduleId;
+            _state.powerRequired = saved.powerRequired;
+            _state.noiseGenerated = saved.noiseGenerated;
+            _state.preventsBurrowers = saved.preventsBurrowers;
+            _state.stabilizesFaults = saved.stabilizesFaults;
+            _state.isActive = saved.isActive;
+        }
     }
 }
+

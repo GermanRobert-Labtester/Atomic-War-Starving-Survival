@@ -49,5 +49,18 @@ namespace AtomicWar._Game.Core
         {
             return _state.isBuilt && _state.isLocked && _state.lockedWeapons.Contains(weaponId);
         }
+    
+        public GunRackState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(GunRackState saved)
+        {
+            _state = saved ?? new GunRackState();
+            if (_state.lockedWeapons == null)
+                _state.lockedWeapons = new System.Collections.Generic.List<string>();
+        }
     }
 }
+

@@ -43,5 +43,16 @@ namespace AtomicWar._Game.Core
 
             return reducedStrength;
         }
+    
+        public TurretModuleState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(TurretModuleState saved)
+        {
+            _state = saved ?? new TurretModuleState();
+        }
     }
 }
+

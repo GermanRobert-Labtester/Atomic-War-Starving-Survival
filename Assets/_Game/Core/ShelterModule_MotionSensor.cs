@@ -41,5 +41,16 @@ namespace AtomicWar._Game.Core
                 OnThreatPingedOnMap?.Invoke(_state, threatId, distanceInNodes);
             }
         }
+    
+        public MotionSensorState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(MotionSensorState saved)
+        {
+            _state = saved ?? new MotionSensorState();
+        }
     }
 }
+

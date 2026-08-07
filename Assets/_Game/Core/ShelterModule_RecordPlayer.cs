@@ -49,5 +49,16 @@ namespace AtomicWar._Game.Core
                 OnRecordScratchedAuraBroken?.Invoke(_state);
             }
         }
+    
+        public RecordPlayerState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(RecordPlayerState saved)
+        {
+            _state = saved ?? new RecordPlayerState();
+        }
     }
 }
+

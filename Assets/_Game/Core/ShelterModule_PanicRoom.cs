@@ -85,5 +85,34 @@ namespace AtomicWar._Game.Core
             OnReleased?.Invoke(_state.moduleId);
             return released;
         }
+    
+        public PanicRoomState CaptureState()
+        {
+            return new PanicRoomState
+            {
+                moduleId = _state.moduleId,
+                isBuilt = _state.isBuilt,
+                constructionDays = _state.constructionDays,
+                maxOccupants = _state.maxOccupants,
+                isLocked = _state.isLocked,
+                siegeLevelRequired = _state.siegeLevelRequired,
+                lockedOccupantIds = _state.lockedOccupantIds != null ? new System.Collections.Generic.List<string>(_state.lockedOccupantIds) : new System.Collections.Generic.List<string>()
+            };
+        }
+
+        public void RestoreState(PanicRoomState saved)
+        {
+            if (saved == null) return;
+            _state.moduleId = saved.moduleId;
+            _state.isBuilt = saved.isBuilt;
+            _state.constructionDays = saved.constructionDays;
+            _state.maxOccupants = saved.maxOccupants;
+            _state.isLocked = saved.isLocked;
+            _state.siegeLevelRequired = saved.siegeLevelRequired;
+            _state.lockedOccupantIds.Clear();
+            if (saved.lockedOccupantIds != null)
+                _state.lockedOccupantIds.AddRange(saved.lockedOccupantIds);
+        }
     }
 }
+

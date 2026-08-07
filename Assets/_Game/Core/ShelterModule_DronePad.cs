@@ -48,5 +48,16 @@ namespace AtomicWar._Game.Core
             OnAutomatedMappingCompleted?.Invoke(_state, mapped);
             return mapped;
         }
+    
+        public DronePadState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(DronePadState saved)
+        {
+            _state = saved ?? new DronePadState();
+        }
     }
 }
+

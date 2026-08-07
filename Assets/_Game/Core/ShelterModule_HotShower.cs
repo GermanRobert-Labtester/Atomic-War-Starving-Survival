@@ -39,5 +39,16 @@ namespace AtomicWar._Game.Core
             OnHotShowerTakenMoraleBoosted?.Invoke(_state, survivorId, _state.moraleBoostAmount);
             return true;
         }
+    
+        public HotShowerState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(HotShowerState saved)
+        {
+            _state = saved ?? new HotShowerState();
+        }
     }
 }
+

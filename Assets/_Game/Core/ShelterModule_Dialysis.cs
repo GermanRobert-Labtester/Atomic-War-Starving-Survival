@@ -111,5 +111,16 @@ namespace AtomicWar._Game.Core
         {
             return State.patientSurvivorId;
         }
+    
+        public ShelterModule_DialysisState CaptureState()
+        {
+            return State;
+        }
+
+        public void RestoreState(ShelterModule_DialysisState saved)
+        {
+            State = saved ?? new ShelterModule_DialysisState();
+        }
     }
 }
+

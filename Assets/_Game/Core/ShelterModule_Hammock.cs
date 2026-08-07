@@ -34,5 +34,16 @@ namespace AtomicWar._Game.Core
             OnHammockSleptIn?.Invoke(_state, survivorId);
             return qualityRest;
         }
+    
+        public HammockModuleState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(HammockModuleState saved)
+        {
+            _state = saved ?? new HammockModuleState();
+        }
     }
 }
+

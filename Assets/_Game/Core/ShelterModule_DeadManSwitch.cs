@@ -63,5 +63,16 @@ namespace AtomicWar._Game.Core
             _state.broadcastsIntelCache = true;
             OnRevengeBroadcast?.Invoke(_state);
         }
+    
+        public DeadManSwitchState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(DeadManSwitchState saved)
+        {
+            _state = saved ?? new DeadManSwitchState();
+        }
     }
 }
+

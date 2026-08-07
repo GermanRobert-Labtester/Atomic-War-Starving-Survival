@@ -40,5 +40,16 @@ namespace AtomicWar._Game.Core
             OnPowerCrankedFatigued?.Invoke(_state, survivorId, wattsGenerated);
             return wattsGenerated;
         }
+    
+        public HandCrankState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(HandCrankState saved)
+        {
+            _state = saved ?? new HandCrankState();
+        }
     }
 }
+

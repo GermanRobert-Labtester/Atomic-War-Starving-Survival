@@ -48,5 +48,16 @@ namespace AtomicWar._Game.Core
             _state.currentWater = Mathf.Min(_state.waterCapacity, _state.currentWater + amount);
             OnWaterCollected?.Invoke(_state, _state.currentWater);
         }
+    
+        public RainBarrelState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(RainBarrelState saved)
+        {
+            _state = saved ?? new RainBarrelState();
+        }
     }
 }
+

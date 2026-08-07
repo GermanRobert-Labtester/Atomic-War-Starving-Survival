@@ -46,5 +46,16 @@ namespace AtomicWar._Game.Core
             OnSilentRunningToggled?.Invoke(_state, enable);
             return true;
         }
+    
+        public BatteryBankState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(BatteryBankState saved)
+        {
+            _state = saved ?? new BatteryBankState();
+        }
     }
 }
+

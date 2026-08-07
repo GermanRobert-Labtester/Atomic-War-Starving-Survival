@@ -64,5 +64,30 @@ namespace AtomicWar._Game.Core
                 return 0f;
             return _state.isVented ? _state.heatOutput * 0.3f : _state.heatOutput;
         }
+    
+        public MagmaTapState CaptureState()
+        {
+            return new MagmaTapState
+            {
+                moduleId = _state.moduleId,
+                powerOutput = _state.powerOutput,
+                heatOutput = _state.heatOutput,
+                requiredDepth = _state.requiredDepth,
+                isInstalled = _state.isInstalled,
+                isVented = _state.isVented
+            };
+        }
+
+        public void RestoreState(MagmaTapState saved)
+        {
+            if (saved == null) return;
+            _state.moduleId = saved.moduleId;
+            _state.powerOutput = saved.powerOutput;
+            _state.heatOutput = saved.heatOutput;
+            _state.requiredDepth = saved.requiredDepth;
+            _state.isInstalled = saved.isInstalled;
+            _state.isVented = saved.isVented;
+        }
     }
 }
+

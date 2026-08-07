@@ -41,5 +41,16 @@ namespace AtomicWar._Game.Core
             OnTreadmillMannedPowerGenerated?.Invoke(_state, survivorId, powerGenerated);
             return powerGenerated;
         }
+    
+        public TreadmillGenState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(TreadmillGenState saved)
+        {
+            _state = saved ?? new TreadmillGenState();
+        }
     }
 }
+

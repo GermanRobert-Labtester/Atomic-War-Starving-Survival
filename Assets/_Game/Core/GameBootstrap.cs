@@ -315,7 +315,7 @@ namespace AtomicWar._Game.Core
         public Encounter_SleepingCamp EncounterSleepingCamp { get; private set; }
         public Encounter_TripwireMaze EncounterTripwireMaze { get; private set; }
         public Encounter_WarlordTank EncounterWarlordTank { get; private set; }
-        // Shelter modules with CaptureState (18) — remaining modules pending CR pass.
+        // Shelter modules with CaptureState (46) — full CaptureState set wired.
         public ShelterModule_AcidTrap ShelterModuleAcidTrap { get; private set; }
         public ShelterModule_Autodoc ShelterModuleAutodoc { get; private set; }
         public ShelterModule_CCTV ShelterModuleCctv { get; private set; }
@@ -334,6 +334,34 @@ namespace AtomicWar._Game.Core
         public ShelterModule_Sorter ShelterModuleSorter { get; private set; }
         public ShelterModule_Thermostat ShelterModuleThermostat { get; private set; }
         public ShelterModule_WasteChute ShelterModuleWasteChute { get; private set; }
+        public ShelterModule_Autopsy ShelterModuleAutopsy { get; private set; }
+        public ShelterModule_BatteryBank ShelterModuleBatteryBank { get; private set; }
+        public ShelterModule_BioLatrine ShelterModuleBioLatrine { get; private set; }
+        public ShelterModule_ChoreBoard ShelterModuleChoreBoard { get; private set; }
+        public ShelterModule_DeadManSwitch ShelterModuleDeadManSwitch { get; private set; }
+        public ShelterModule_DeconShower ShelterModuleDeconShower { get; private set; }
+        public ShelterModule_Dialysis ShelterModuleDialysis { get; private set; }
+        public ShelterModule_DistressBeacon ShelterModuleDistressBeacon { get; private set; }
+        public ShelterModule_DronePad ShelterModuleDronePad { get; private set; }
+        public ShelterModule_Garage ShelterModuleGarage { get; private set; }
+        public ShelterModule_GunRack ShelterModuleGunRack { get; private set; }
+        public ShelterModule_Hammock ShelterModuleHammock { get; private set; }
+        public ShelterModule_HandCrank ShelterModuleHandCrank { get; private set; }
+        public ShelterModule_HotShower ShelterModuleHotShower { get; private set; }
+        public ShelterModule_Incinerator ShelterModuleIncinerator { get; private set; }
+        public MagmaTapSystem ShelterModuleMagmaTap { get; private set; }
+        public ShelterModule_MotionSensor ShelterModuleMotionSensor { get; private set; }
+        public PanicRoomSystem ShelterModulePanicRoom { get; private set; }
+        public ShelterModule_PrintingPress ShelterModulePrintingPress { get; private set; }
+        public ShelterModule_PunchingBag ShelterModulePunchingBag { get; private set; }
+        public ShelterModule_RainBarrel ShelterModuleRainBarrel { get; private set; }
+        public ShelterModule_RecordPlayer ShelterModuleRecordPlayer { get; private set; }
+        public ShelterModule_Sprinklers ShelterModuleSprinklers { get; private set; }
+        public ThumperSystem ShelterModuleThumper { get; private set; }
+        public ShelterModule_TreadmillGen ShelterModuleTreadmillGen { get; private set; }
+        public ShelterModule_Turret ShelterModuleTurret { get; private set; }
+        public ShelterModule_VaultDoor ShelterModuleVaultDoor { get; private set; }
+        public ShelterModule_WoodStove ShelterModuleWoodStove { get; private set; }
         // Narrative Event_* systems with CaptureState (18) — remaining events pending CR pass.
         public Event_Brawl EventBrawl { get; private set; }
         public Event_ComingOfAge EventComingOfAge { get; private set; }

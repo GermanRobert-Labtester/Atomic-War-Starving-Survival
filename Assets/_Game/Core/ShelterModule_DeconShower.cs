@@ -37,5 +37,16 @@ namespace AtomicWar._Game.Core
             OnInstantDecontaminationExecuted?.Invoke(_state, survivorId);
             return true;
         }
+    
+        public DeconShowerState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(DeconShowerState saved)
+        {
+            _state = saved ?? new DeconShowerState();
+        }
     }
 }
+

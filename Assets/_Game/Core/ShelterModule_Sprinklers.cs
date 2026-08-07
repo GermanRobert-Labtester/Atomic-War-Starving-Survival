@@ -37,5 +37,16 @@ namespace AtomicWar._Game.Core
             OnFireExtinguishedWaterDumped?.Invoke(_state, waterDrained);
             return true;
         }
+    
+        public SprinklersState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(SprinklersState saved)
+        {
+            _state = saved ?? new SprinklersState();
+        }
     }
 }
+

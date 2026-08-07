@@ -58,5 +58,16 @@ namespace AtomicWar._Game.Core
             OnMoneyForged?.Invoke(_state, amount);
             return (amount, false);
         }
+    
+        public PrintingPressState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(PrintingPressState saved)
+        {
+            _state = saved ?? new PrintingPressState();
+        }
     }
 }
+

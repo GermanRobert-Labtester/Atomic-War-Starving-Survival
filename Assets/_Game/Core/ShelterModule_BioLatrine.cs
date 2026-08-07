@@ -42,5 +42,16 @@ namespace AtomicWar._Game.Core
             }
             return 0;
         }
+    
+        public BioLatrineState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(BioLatrineState saved)
+        {
+            _state = saved ?? new BioLatrineState();
+        }
     }
 }
+

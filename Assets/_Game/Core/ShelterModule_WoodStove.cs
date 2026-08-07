@@ -46,5 +46,16 @@ namespace AtomicWar._Game.Core
 
             return true;
         }
+    
+        public WoodStoveState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(WoodStoveState saved)
+        {
+            _state = saved ?? new WoodStoveState();
+        }
     }
 }
+

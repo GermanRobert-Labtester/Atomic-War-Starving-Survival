@@ -47,5 +47,16 @@ namespace AtomicWar._Game.Core
             if (!_state.isBuilt) return;
             OnRoomEnteredDisgustMoraleDropped?.Invoke(_state, entrantSurvivorId, _state.roomEntryMoralePenalty);
         }
+    
+        public AutopsyTableState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(AutopsyTableState saved)
+        {
+            _state = saved ?? new AutopsyTableState();
+        }
     }
 }
+

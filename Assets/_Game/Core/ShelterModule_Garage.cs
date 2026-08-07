@@ -53,5 +53,18 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
+    
+        public GarageModuleState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(GarageModuleState saved)
+        {
+            _state = saved ?? new GarageModuleState();
+            if (_state.storedVehicleIds == null)
+                _state.storedVehicleIds = new System.Collections.Generic.List<string>();
+        }
     }
 }
+

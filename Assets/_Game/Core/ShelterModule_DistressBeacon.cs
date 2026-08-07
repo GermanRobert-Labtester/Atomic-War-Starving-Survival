@@ -71,5 +71,16 @@ namespace AtomicWar._Game.Core
                 default: return DistressArrivalType.None;
             }
         }
+    
+        public DistressBeaconState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(DistressBeaconState saved)
+        {
+            _state = saved ?? new DistressBeaconState();
+        }
     }
 }
+

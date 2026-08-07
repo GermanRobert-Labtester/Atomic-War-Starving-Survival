@@ -34,5 +34,16 @@ namespace AtomicWar._Game.Core
             OnGlobalChoreEfficiencyBuffApplied?.Invoke(_state, mult);
             return mult;
         }
+    
+        public ChoreBoardState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(ChoreBoardState saved)
+        {
+            _state = saved ?? new ChoreBoardState();
+        }
     }
 }
+

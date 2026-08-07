@@ -6,8 +6,7 @@ namespace AtomicWar._Game.Core
     public partial class GameBootstrap
     {
         /// <summary>
-        /// Construct ShelterModule_* systems that already implement Capture/Restore.
-        /// Remaining modules without CR land in a follow-up batch.
+        /// Construct ShelterModule_* systems that implement Capture/Restore (46 total).
         /// Host hooks are offline-safe logs; shelter UI/combat hosts fire real APIs.
         /// </summary>
         private void BootShelterModules()
@@ -30,9 +29,37 @@ namespace AtomicWar._Game.Core
             ShelterModuleSorter = new ShelterModule_Sorter();
             ShelterModuleThermostat = new ShelterModule_Thermostat();
             ShelterModuleWasteChute = new ShelterModule_WasteChute();
+            ShelterModuleAutopsy = new ShelterModule_Autopsy();
+            ShelterModuleBatteryBank = new ShelterModule_BatteryBank();
+            ShelterModuleBioLatrine = new ShelterModule_BioLatrine();
+            ShelterModuleChoreBoard = new ShelterModule_ChoreBoard();
+            ShelterModuleDeadManSwitch = new ShelterModule_DeadManSwitch();
+            ShelterModuleDeconShower = new ShelterModule_DeconShower();
+            ShelterModuleDialysis = new ShelterModule_Dialysis();
+            ShelterModuleDistressBeacon = new ShelterModule_DistressBeacon();
+            ShelterModuleDronePad = new ShelterModule_DronePad();
+            ShelterModuleGarage = new ShelterModule_Garage();
+            ShelterModuleGunRack = new ShelterModule_GunRack();
+            ShelterModuleHammock = new ShelterModule_Hammock();
+            ShelterModuleHandCrank = new ShelterModule_HandCrank();
+            ShelterModuleHotShower = new ShelterModule_HotShower();
+            ShelterModuleIncinerator = new ShelterModule_Incinerator();
+            ShelterModuleMagmaTap = new MagmaTapSystem("shelter_module_magma_tap");
+            ShelterModuleMotionSensor = new ShelterModule_MotionSensor();
+            ShelterModulePanicRoom = new PanicRoomSystem("shelter_module_panic_room");
+            ShelterModulePrintingPress = new ShelterModule_PrintingPress();
+            ShelterModulePunchingBag = new ShelterModule_PunchingBag();
+            ShelterModuleRainBarrel = new ShelterModule_RainBarrel();
+            ShelterModuleRecordPlayer = new ShelterModule_RecordPlayer();
+            ShelterModuleSprinklers = new ShelterModule_Sprinklers();
+            ShelterModuleThumper = new ThumperSystem("shelter_module_thumper");
+            ShelterModuleTreadmillGen = new ShelterModule_TreadmillGen();
+            ShelterModuleTurret = new ShelterModule_Turret();
+            ShelterModuleVaultDoor = new ShelterModule_VaultDoor();
+            ShelterModuleWoodStove = new ShelterModule_WoodStove();
 
             WireShelterModules();
-            Debug.Log("[GameBootstrap] Shelter modules ready (18 CaptureState modules).");
+            Debug.Log("[GameBootstrap] Shelter modules ready (46 CaptureState modules).");
         }
 
         private void WireShelterModules()
@@ -207,6 +234,222 @@ namespace AtomicWar._Game.Core
             {
                 ShelterModuleWasteChute.OnWasteDeposited += (id, dest) =>
                     Debug.Log($"[GameBootstrap] SHELTER_MODULE: waste chute '{id}' → {dest}");
+            }
+
+            if (ShelterModuleAutopsy != null)
+            {
+                ShelterModuleAutopsy.OnAutopsyPerformed += (st, doc, skill, node) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: autopsy by '{doc}' skill={skill:F2} intel='{node}'");
+                ShelterModuleAutopsy.OnRoomEnteredDisgustMoraleDropped += (st, id, drop) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: autopsy disgust '{id}' morale-{drop:F2}");
+            }
+
+            if (ShelterModuleBatteryBank != null)
+            {
+                ShelterModuleBatteryBank.OnSilentRunningToggled += (st, on) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: battery silent running {(on ? "on" : "off")}");
+                ShelterModuleBatteryBank.OnPowerStored += (st, watts) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: battery stored {watts:F0}W");
+            }
+
+            if (ShelterModuleBioLatrine != null)
+            {
+                ShelterModuleBioLatrine.OnHighYieldFertilizerProduced += (st, n) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: bio latrine fertilizer +{n}");
+            }
+
+            if (ShelterModuleChoreBoard != null)
+            {
+                ShelterModuleChoreBoard.OnGlobalChoreEfficiencyBuffApplied += (st, mult) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: chore board mult={mult:F2}");
+            }
+
+            if (ShelterModuleDeadManSwitch != null)
+            {
+                ShelterModuleDeadManSwitch.OnArmed += (st, op) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: dead man switch armed by '{op}'");
+                ShelterModuleDeadManSwitch.OnTriggered += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: dead man switch triggered");
+                ShelterModuleDeadManSwitch.OnRevengeBroadcast += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: dead man switch revenge broadcast");
+            }
+
+            if (ShelterModuleDeconShower != null)
+            {
+                ShelterModuleDeconShower.OnInstantDecontaminationExecuted += (st, id) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: decon shower '{id}'");
+            }
+
+            if (ShelterModuleDialysis != null)
+            {
+                ShelterModuleDialysis.OnTreatmentStarted += (id, hours) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: dialysis start '{id}' {hours:F0}h");
+                ShelterModuleDialysis.OnTreatmentTick += (id, ok) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: dialysis tick '{id}' ok={ok}");
+                ShelterModuleDialysis.OnTreatmentCompleted += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: dialysis done '{id}'");
+                ShelterModuleDialysis.OnTreatmentFailed += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: dialysis failed '{id}'");
+            }
+
+            if (ShelterModuleDistressBeacon != null)
+            {
+                ShelterModuleDistressBeacon.OnBeaconActivated += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: distress beacon on");
+                ShelterModuleDistressBeacon.OnArrival += (st, kind) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: distress arrival {kind}");
+            }
+
+            if (ShelterModuleDronePad != null)
+            {
+                ShelterModuleDronePad.OnAutomatedMappingCompleted += (st, n) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: drone pad mapped {n}");
+                ShelterModuleDronePad.OnDroneDestroyedInStorm += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: drone pad storm loss");
+            }
+
+            if (ShelterModuleGarage != null)
+            {
+                ShelterModuleGarage.OnVehicleParkedInGarage += (st, id) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: garage parked '{id}'");
+                ShelterModuleGarage.OnVehicleRetrievedFromGarage += (st, id) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: garage retrieved '{id}'");
+            }
+
+            if (ShelterModuleGunRack != null)
+            {
+                ShelterModuleGunRack.OnWeaponLockedAway += (st, w) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: gun rack locked '{w}'");
+                ShelterModuleGunRack.OnWeaponIssuedToSurvivor += (st, w, id) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: gun rack issued '{w}' to '{id}'");
+            }
+
+            if (ShelterModuleHammock != null)
+            {
+                ShelterModuleHammock.OnHammockSleptIn += (st, id) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: hammock rest '{id}'");
+            }
+
+            if (ShelterModuleHandCrank != null)
+            {
+                ShelterModuleHandCrank.OnPowerCrankedFatigued += (st, id, watts) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: hand crank '{id}' +{watts:F0}W");
+            }
+
+            if (ShelterModuleHotShower != null)
+            {
+                ShelterModuleHotShower.OnHotShowerTakenMoraleBoosted += (st, id, boost) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: hot shower '{id}' morale+{boost:F2}");
+            }
+
+            if (ShelterModuleIncinerator != null)
+            {
+                ShelterModuleIncinerator.OnMaterialIncinerated += (st, item, ash) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: incinerator '{item}' ash={ash:F1}");
+                ShelterModuleIncinerator.OnCorpseSmokeHatchVisibilityMaxed += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: incinerator corpse smoke max");
+            }
+
+            if (ShelterModuleMagmaTap != null)
+            {
+                ShelterModuleMagmaTap.OnInstalled += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: magma tap installed '{id}'");
+                ShelterModuleMagmaTap.OnHeatChanged += (id, heat) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: magma tap heat '{id}' +{heat:F1}");
+            }
+
+            if (ShelterModuleMotionSensor != null)
+            {
+                ShelterModuleMotionSensor.OnThreatPingedOnMap += (st, id, n) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: motion sensor '{id}' threats={n}");
+            }
+
+            if (ShelterModulePanicRoom != null)
+            {
+                ShelterModulePanicRoom.OnBuilt += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: panic room built '{id}'");
+                ShelterModulePanicRoom.OnLocked += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: panic room locked '{id}'");
+                ShelterModulePanicRoom.OnReleased += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: panic room released '{id}'");
+                ShelterModulePanicRoom.OnSiegeSurvival += (id, active) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: panic room siege survival '{id}' active={active}");
+            }
+
+            if (ShelterModulePrintingPress != null)
+            {
+                ShelterModulePrintingPress.OnPressBuilt += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: printing press built");
+                ShelterModulePrintingPress.OnMoneyForged += (st, n) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: printing press forged {n}");
+                ShelterModulePrintingPress.OnForgeryDetected += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: printing press forgery detected");
+                ShelterModulePrintingPress.OnBloodFeudTriggered += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: printing press blood feud");
+            }
+
+            if (ShelterModulePunchingBag != null)
+            {
+                ShelterModulePunchingBag.OnAngerVentedSafely += (st, id, amount) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: punching bag '{id}' vent={amount:F2}");
+            }
+
+            if (ShelterModuleRainBarrel != null)
+            {
+                ShelterModuleRainBarrel.OnBarrelBurstFromFreeze += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: rain barrel burst freeze");
+                ShelterModuleRainBarrel.OnWaterCollected += (st, n) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: rain barrel +{n} water");
+            }
+
+            if (ShelterModuleRecordPlayer != null)
+            {
+                ShelterModuleRecordPlayer.OnMoraleAuraActive += (st, aura) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: record player aura={aura:F2}");
+                ShelterModuleRecordPlayer.OnRecordScratchedAuraBroken += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: record player scratched");
+            }
+
+            if (ShelterModuleSprinklers != null)
+            {
+                ShelterModuleSprinklers.OnFireExtinguishedWaterDumped += (st, n) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: sprinklers dumped {n}");
+            }
+
+            if (ShelterModuleThumper != null)
+            {
+                ShelterModuleThumper.OnThumperToggled += (id, on) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: thumper '{id}' {(on ? "on" : "off")}");
+                ShelterModuleThumper.OnThumperTick += id =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: thumper tick '{id}'");
+            }
+
+            if (ShelterModuleTreadmillGen != null)
+            {
+                ShelterModuleTreadmillGen.OnTreadmillMannedPowerGenerated += (st, id, watts) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: treadmill '{id}' +{watts:F0}W");
+            }
+
+            if (ShelterModuleTurret != null)
+            {
+                ShelterModuleTurret.OnTurretFiredInRaid += (st, shots, dmg) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: turret fired shots={shots} dmg={dmg:F1}");
+            }
+
+            if (ShelterModuleVaultDoor != null)
+            {
+                ShelterModuleVaultDoor.OnDoorStateChanged += (st, open) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: vault door {(open ? "open" : "closed")}");
+                ShelterModuleVaultDoor.OnDoorStuckDueToPowerFailure += st =>
+                    Debug.Log("[GameBootstrap] SHELTER_MODULE: vault door stuck (no power)");
+            }
+
+            if (ShelterModuleWoodStove != null)
+            {
+                ShelterModuleWoodStove.OnStoveLitHeatGenerated += (st, heat) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: wood stove heat +{heat:F1}");
+                ShelterModuleWoodStove.OnCarbonMonoxidePoisoningTriggered += (st, id) =>
+                    Debug.Log($"[GameBootstrap] SHELTER_MODULE: wood stove CO '{id}'");
             }
         }
     }

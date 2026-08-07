@@ -42,5 +42,16 @@ namespace AtomicWar._Game.Core
             OnMaterialIncinerated?.Invoke(_state, itemType, _state.heatOutputGenerated);
             return true;
         }
+    
+        public IncineratorState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(IncineratorState saved)
+        {
+            _state = saved ?? new IncineratorState();
+        }
     }
 }
+

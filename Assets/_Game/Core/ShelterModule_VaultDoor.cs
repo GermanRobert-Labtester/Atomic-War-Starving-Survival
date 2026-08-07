@@ -45,5 +45,16 @@ namespace AtomicWar._Game.Core
             OnDoorStateChanged?.Invoke(_state, _state.isOpen);
             return true;
         }
+    
+        public VaultDoorState CaptureState()
+        {
+            return _state;
+        }
+
+        public void RestoreState(VaultDoorState saved)
+        {
+            _state = saved ?? new VaultDoorState();
+        }
     }
 }
+
