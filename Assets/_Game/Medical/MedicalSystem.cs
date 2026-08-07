@@ -207,6 +207,54 @@ namespace AtomicWar._Game.Medical
             return true;
         }
 
+        /// <summary>
+        /// Resolve an affliction outside the treatment-recipe pipeline, for procedures
+        /// that end it by other means — amputation takes the septic limb off, so there
+        /// is nothing left to treat. No health is restored: the procedure charges its
+        /// own cost. Returns false when the survivor is not carrying the affliction.
+        /// </summary>
+        public bool CureOutright(Survivor survivor, string afflictionId, Survivor medic = null)
+        {
+            if (survivor == null || string.IsNullOrEmpty(afflictionId)) return false;
+            if (!_bySurvivor.TryGetValue(survivor.Id, out var list)) return false;
+
+            ActiveAffliction active = null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (string.Equals(list[i].AfflictionId, afflictionId, StringComparison.OrdinalIgnoreCase))
+                {
+                    active = list[i];
+                    break;
+                }
+            }
+            if (active == null) return false;
+
+            list.Remove(active);
+            if (list.Count == 0 && survivor.State == SurvivorState.Sick)
+                survivor.State = SurvivorState.Idle;
+
+            int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+
+            // #269 Hypochondriac: surviving real Sepsis unlocks Hyper-Aware — surviving
+            // it on the operating table counts the same as surviving the antibiotics.
+            if (string.Equals(afflictionId, AfflictionSO.Ids.Sepsis, StringComparison.OrdinalIgnoreCase))
+                _personalQuests?.RecordSepsisSurvived(
+                    survivor, contractedSepsis: true, survived: true, currentDay: day);
+
+            if (medic != null)
+            {
+                AfflictionPhase phase = _afflictions.TryGetValue(afflictionId, out var def)
+                    ? def.phase
+                    : AfflictionPhase.Phase1;
+                _medicalPerks?.RecordPhase2Cure(
+                    medic, afflictionId, phase == AfflictionPhase.Phase2, day);
+            }
+
+            OnAfflictionCured?.Invoke(survivor, active);
+            OnMedicalStateChanged?.Invoke();
+            return true;
+        }
+
         /// <summary>True when the survivor has an active coma affliction.</summary>
         public bool IsComatose(Survivor survivor)
         {
@@ -589,25 +637,28 @@ namespace AtomicWar._Game.Medical
         }
 
         /// <summary>
-        /// Apply the hard stamina cap defined on the affliction. If
-        /// <c>staminaCap &gt; 0</c>, the survivor's Fatigue is clamped to
-        /// the cap value (Fatigue rises with exhaustion, so a low cap
-        /// means the donor cannot recover above that floor). No-op for
-        /// afflictions without a cap. This is how blood_loss keeps the
-        /// donor "functional but never fully rested" for ~7 days.
+        /// Apply the affliction's stamina cap. <c>staminaCap</c> is a ceiling on
+        /// available stamina (0..100, matching ExpeditionState.Stamina where 100 is
+        /// fresh), so it lands on Needs.Fatigue — which runs the other way — as a
+        /// floor of <c>100 - staminaCap</c>. blood_loss caps stamina at 30, so the
+        /// donor sits at 70 fatigue or worse: "functional but never fully rested"
+        /// for ~7 days. No-op for afflictions without a cap.
+        ///
+        /// This used to clamp Fatigue DOWN to the raw cap value, which inverted the
+        /// effect: blood_loss made survivors better rested than healthy ones and
+        /// silently undid the affliction's own fatigueDrainPerHour every tick.
         /// </summary>
         private void ApplyStaminaCap(Survivor survivor, AfflictionSO def)
         {
             if (survivor == null || def == null || !survivor.IsAlive) return;
             if (def.staminaCap < 0f) return;
-            float cap = Mathf.Clamp(def.staminaCap, 0f, 100f);
-            if (survivor.Needs.Fatigue > cap)
+            float fatigueFloor = 100f - Mathf.Clamp(def.staminaCap, 0f, 100f);
+            if (survivor.Needs.Fatigue < fatigueFloor)
             {
-                // Direct set rather than Modify: Needs.Modify clamps to [0,100]
-                // but we want the cap to act as a hard floor the survivor cannot
-                // rest below. We bypass the normal decay by writing Fatigue
-                // back down to the cap, after which further rest is suppressed.
-                survivor.Needs.Fatigue = cap;
+                // Direct set rather than Modify: the floor is a hard clamp the
+                // survivor cannot rest below, not a need delta to be re-scaled by
+                // trait/quest modifiers on the way through.
+                survivor.Needs.Fatigue = fatigueFloor;
             }
         }
 

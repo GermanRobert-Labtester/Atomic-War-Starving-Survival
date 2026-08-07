@@ -391,8 +391,15 @@ namespace AtomicWar._Game.Editor
                         errors.Add($"[{typeName}:{id}] stackMax must be >= 1");
                     if (item.contamination < 0f || item.contamination > 1f)
                         errors.Add($"[{typeName}:{id}] contamination must be within 0..1");
-                    if (!string.IsNullOrEmpty(item.equipSlot) && !Enum.TryParse<EquipSlot>(item.equipSlot, true, out _))
-                        errors.Add($"[{typeName}:{id}] invalid equipSlot '{item.equipSlot}' (valid: {string.Join(", ", Enum.GetNames(typeof(EquipSlot)))})");
+                    if (!EquipSlots.IsCanonicalName(item.equipSlot))
+                    {
+                        // Distinguish "known legacy spelling" from "typo": the first is
+                        // mechanically fixable, the second means the slot was silently lost.
+                        string canonical = EquipSlots.CanonicalNameForAlias(item.equipSlot);
+                        errors.Add(canonical != null
+                            ? $"[{typeName}:{id}] equipSlot '{item.equipSlot}' is a legacy alias; use '{canonical}'"
+                            : $"[{typeName}:{id}] invalid equipSlot '{item.equipSlot}' (valid: {string.Join(", ", EquipSlots.CanonicalNames)})");
+                    }
                     break;
 
                 case RecipeJson recipe:
@@ -489,7 +496,7 @@ namespace AtomicWar._Game.Editor
                 so.radCleanse      = json.radCleanse;
                 so.moraleEffect    = json.moraleEffect;
                 so.isEquipable     = json.isEquipable;
-                so.equipSlot       = string.IsNullOrEmpty(json.equipSlot) ? EquipSlot.None : Enum.Parse<EquipSlot>(json.equipSlot, true);
+                so.equipSlot       = EquipSlots.Parse(json.equipSlot);
                 so.tradeValue      = json.tradeValue;
                 so.empShielded     = json.empShielded;
                 so.disassembleYieldFraction = json.disassembleYieldFraction > 0f

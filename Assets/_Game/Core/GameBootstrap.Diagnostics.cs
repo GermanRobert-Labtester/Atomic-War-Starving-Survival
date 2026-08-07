@@ -23,30 +23,43 @@ namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
     {
+        private IReadOnlyList<string> _untickedCache;
+
+        /// <summary>
+        /// Drop the memoised C-1 result. Only needed if systems are constructed or
+        /// registered after InitializeSystems has finished, which production code does
+        /// not do — tests that rebuild a bootstrap get a fresh instance anyway.
+        /// </summary>
+        public void InvalidateUntickedSystemsCache() => _untickedCache = null;
+
+        /// <summary>
+        /// Names of systems that are constructed but appear in no tick category.
+        ///
+        /// The result is memoised. Registration happens exclusively during
+        /// InitializeSystems, so this answer cannot change afterwards — and the
+        /// diagnostics overlay calls it from OnGUI, which Unity invokes several times
+        /// per frame (Layout, Repaint, and once per input event). Recomputing meant
+        /// reflecting over ~590 properties and allocating a regex-built string for each,
+        /// several times a frame, purely to render a debug label.
+        /// </summary>
         public IReadOnlyList<string> GetUntickedSystemNames()
         {
             if (Registry == null) return Array.Empty<string>();
-            // Collect all known public system property names that are not null.
-            var constructed = new List<string>();
+            if (_untickedCache != null) return _untickedCache;
+
+            var unticked = new List<string>();
             var type = typeof(GameBootstrap);
             foreach (var prop in type.GetProperties(
                 System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
             {
-                if (IsAtomicWarSystemProperty(prop))
-                {
-                    var value = prop.GetValue(this);
-                    if (value != null)
-                        constructed.Add(prop.Name);
-                }
+                if (!IsAtomicWarSystemProperty(prop)) continue;
+                if (prop.GetValue(this) == null) continue;
+                if (!IsPropertyRegisteredInRegistry(prop.Name))
+                    unticked.Add(prop.Name);
             }
-            // Filter out those that are registered in any tick category.
-            var unticked = new List<string>();
-            foreach (var name in constructed)
-            {
-                if (!IsPropertyRegisteredInRegistry(name))
-                    unticked.Add(name);
-            }
-            return unticked;
+
+            _untickedCache = unticked;
+            return _untickedCache;
         }
 
         /// <summary>
@@ -59,8 +72,7 @@ namespace AtomicWar._Game.Core
             if (string.IsNullOrEmpty(propertyName) || Registry == null) return false;
             if (Registry.IsSystemTicked(propertyName)) return true;
 
-            string snake = System.Text.RegularExpressions.Regex.Replace(
-                propertyName, "([a-z])([A-Z])", "$1_$2").ToLowerInvariant();
+            string snake = ToSnakeCase(propertyName);
             if (Registry.IsSystemTicked(snake)) return true;
 
             if (snake.EndsWith("_system", StringComparison.Ordinal))
@@ -78,6 +90,26 @@ namespace AtomicWar._Game.Core
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// PascalCase → snake_case without a regex. Equivalent to the previous
+        /// <c>Regex.Replace("([a-z])([A-Z])", "$1_$2").ToLowerInvariant()</c>, but the
+        /// regex version allocated a match object plus two strings per property and ran
+        /// once per property per call.
+        /// </summary>
+        private static string ToSnakeCase(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return name;
+            var sb = new System.Text.StringBuilder(name.Length + 8);
+            for (int i = 0; i < name.Length; i++)
+            {
+                char c = name[i];
+                if (i > 0 && char.IsUpper(c) && (char.IsLower(name[i - 1]) || char.IsDigit(name[i - 1])))
+                    sb.Append('_');
+                sb.Append(char.ToLowerInvariant(c));
+            }
+            return sb.ToString();
         }
 
         /// <summary>
@@ -100,7 +132,7 @@ namespace AtomicWar._Game.Core
             { "EventRunner",             new[] { "event_runner" } },
             { "SuspicionTracker",        new[] { "suspicion_tracker" } },
             { "VictoryProject",          new[] { "victory_project" } },
-            { "TimeSystem",              new[] { "time" } },
+            { "TimeSystem",              new[] { "time", "time_system" } },
             { "SaveSystem",              new[] { "save" } },
             { "GameState",               new[] { "game_state" } },
             { "EndgameEngine",           new[] { "endgame" } },
@@ -172,8 +204,8 @@ namespace AtomicWar._Game.Core
             { "VictoryTheMartian",       new[] { "victory_the_martian" } },
             { "VictoryUndergroundCity",  new[] { "victory_underground_city" } },
             { "VictoryUnifier",          new[] { "victory_unifier" } },
-            { "MapHazardAcidGeyser",     new[] { "map_hazard_acid_geyser" } },
-            { "MapHazardAshlanche",      new[] { "map_hazard_ashlanche" } },
+            { "MapHazardAcidGeyser",     new[] { "map_hazards_hourly" } },
+            { "MapHazardAshlanche",      new[] { "map_hazards_hourly" } },
             { "MapHazardBiometricDoor",  new[] { "map_hazard_biometric_door" } },
             { "MapHazardCraterWall",     new[] { "map_hazard_crater_wall" } },
             { "MapHazardCrevice",        new[] { "map_hazard_crevice" } },
@@ -209,18 +241,18 @@ namespace AtomicWar._Game.Core
             { "WeatherAcidSnow",         new[] { "weather_acid_snow" } },
             { "WeatherBioFog",           new[] { "weather_bio_fog" } },
             { "WeatherBlackSnow",        new[] { "weather_black_snow" } },
-            { "WeatherBloodRain",        new[] { "weather_blood_rain" } },
+            { "WeatherBloodRain",        new[] { "weather_events_hourly" } },
             { "WeatherDeadWind",         new[] { "weather_dead_wind" } },
-            { "WeatherDeepFreeze",       new[] { "weather_deep_freeze" } },
+            { "WeatherDeepFreeze",       new[] { "weather_events_hourly" } },
             { "WeatherDustDevil",        new[] { "weather_dust_devil" } },
-            { "WeatherEmpStorm",         new[] { "weather_emp_storm" } },
-            { "WeatherFalseSpring",      new[] { "weather_false_spring" } },
+            { "WeatherEmpStorm",         new[] { "weather_events_hourly" } },
+            { "WeatherFalseSpring",      new[] { "weather_events_hourly" } },
             { "WeatherGlassStorm",       new[] { "weather_glass_storm" } },
-            { "WeatherOzoneHole",        new[] { "weather_ozone_hole" } },
+            { "WeatherOzoneHole",        new[] { "weather_events_daily" } },
             { "WeatherRadHail",          new[] { "weather_rad_hail" } },
-            { "WeatherSilentSpring",     new[] { "weather_silent_spring" } },
-            { "WeatherSolarFlare",       new[] { "weather_solar_flare" } },
-            { "WeatherStaticCharge",     new[] { "weather_static_charge" } },
+            { "WeatherSilentSpring",     new[] { "weather_events_hourly" } },
+            { "WeatherSolarFlare",       new[] { "weather_events_hourly" } },
+            { "WeatherStaticCharge",     new[] { "weather_events_hourly" } },
             { "EncounterAmalgamation",   new[] { "encounter_amalgamation" } },
             { "EncounterBurrowers",      new[] { "encounter_burrowers" } },
             { "EncounterFloodedMaze",    new[] { "encounter_flooded_maze" } },
@@ -485,7 +517,6 @@ namespace AtomicWar._Game.Core
             { "SeismicVentsSystem", new[] { "seismic_vents_system" } },
             { "SevereFrostbiteSystem", new[] { "severe_frostbite_system" } },
             { "TetanusAfflictionSystem", new[] { "tetanus_affliction_system" } },
-            { "TimeSystemSys", new[] { "time_system" } },
             { "ToothDecaySystem", new[] { "tooth_decay_system" } },
             { "VehicleStrandingSystem", new[] { "vehicle_stranding_system" } },
             { "VehicleSystem", new[] { "vehicle_system" } },

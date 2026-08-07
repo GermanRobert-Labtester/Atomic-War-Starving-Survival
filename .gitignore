@@ -136,3 +136,19 @@ InitTestScene*.unity*
 
 # qlty tooling cache
 /.qlty/
+
+# Batch-mode test runner output. `-testResults <name>-results.xml -logFile
+# <name>-log.txt` is the convention used throughout this project's audit runs,
+# and it had accumulated ~75 untracked files at the repo root, burying real
+# source changes in `git status`.
+/*-results.xml
+/*-log.txt
+
+# mimocode tool artifacts
+/.mimocode/
+
+# Figma/UI design scratch space — not part of the project
+/Figma-UI/
+
+# One-shot codebase export dump used by audit tooling, not part of the source tree.
+/unity_codebase.txt

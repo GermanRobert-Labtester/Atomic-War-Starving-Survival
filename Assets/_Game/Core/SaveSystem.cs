@@ -527,7 +527,7 @@ namespace AtomicWar._Game.Core
         private SeismicVentsSystem _seismicVentsSystem;
         private SevereFrostbiteSystem _severeFrostbiteSystem;
         private TetanusAfflictionSystem _tetanusAfflictionSystem;
-        private TimeSystem _timeSystemSys;
+        private TimeSystem _timeSystem;
         private ToothDecaySystem _toothDecaySystem;
         private VehicleStrandingSystem _vehicleStrandingSystem;
         private VehicleSystem _vehicleSystem;

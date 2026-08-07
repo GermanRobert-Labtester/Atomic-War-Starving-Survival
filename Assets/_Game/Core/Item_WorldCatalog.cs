@@ -410,7 +410,7 @@ namespace AtomicWar._Game.Core
 
         private static WorldItemDef Armour(
             string id, string name, string desc, float rad, float dur, float trade,
-            bool mil, bool rare = false, string slot = "Torso") => new WorldItemDef
+            bool mil, bool rare = false, string slot = "Body") => new WorldItemDef
         {
             Id = id,
             DisplayName = name,

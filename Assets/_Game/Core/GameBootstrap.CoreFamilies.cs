@@ -226,7 +226,6 @@ namespace AtomicWar._Game.Core
             SeismicVentsSystem = new SeismicVentsSystem();
             SevereFrostbiteSystem = new SevereFrostbiteSystem();
             TetanusAfflictionSystem = new TetanusAfflictionSystem();
-            TimeSystemSys = new TimeSystem();
             ToothDecaySystem = new ToothDecaySystem();
             VehicleStrandingSystem = new VehicleStrandingSystem();
             VehicleSystem = new VehicleSystem();

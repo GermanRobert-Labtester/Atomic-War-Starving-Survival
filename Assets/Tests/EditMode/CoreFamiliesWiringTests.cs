@@ -1936,7 +1936,7 @@ namespace AtomicWar.Tests.EditMode
                     s.SetSkirmishRebel_vs_Bandit(skirmishRebel_vs_Bandit);
                     s.SetSkirmishRebel_vs_Terror(skirmishRebel_vs_Terror);
                     s.SetTetanusAfflictionSystem(tetanusAfflictionSystem);
-                    s.SetTimeSystemSys(timeSystemSys);
+                    s.SetTimeSystem(timeSystemSys);
                     s.SetToothDecaySystem(toothDecaySystem);
                     s.SetTraderPlagueConvoy(traderPlagueConvoy);
                     s.SetTraitAnthropophobia(traitAnthropophobia);
@@ -2451,7 +2451,7 @@ namespace AtomicWar.Tests.EditMode
                     s.SetSkirmishRebel_vs_Bandit(skirmishRebel_vs_Bandit2);
                     s.SetSkirmishRebel_vs_Terror(skirmishRebel_vs_Terror2);
                     s.SetTetanusAfflictionSystem(tetanusAfflictionSystem2);
-                    s.SetTimeSystemSys(timeSystemSys2);
+                    s.SetTimeSystem(timeSystemSys2);
                     s.SetToothDecaySystem(toothDecaySystem2);
                     s.SetTraderPlagueConvoy(traderPlagueConvoy2);
                     s.SetTraitAnthropophobia(traitAnthropophobia2);

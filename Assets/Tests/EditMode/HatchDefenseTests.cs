@@ -394,6 +394,59 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void SyncGeneratorNoise_ClearsFlag_WhenOutdoorDieselStops()
+        {
+            var diesel = PowerSourceSO.CreateDieselGenerator(50f);
+            _toDestroy.Add(diesel);
+            var net = new PowerNetwork();
+            net.RegisterSourceDefinition(diesel);
+            var src = new PowerSourceInstance(diesel, initialFuel: 40f)
+            {
+                RoomId = HatchDefenseSystem.OutdoorRoomId,
+                IsEnabled = true
+            };
+            net.AddSource(src);
+
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 10);
+            hatch.SyncGeneratorNoise(net);
+            Assert.IsTrue(hatch.GeneratorRunningOutside, "Running outdoor diesel raises the flag");
+
+            // Shut the generator down. The flag the sync raised must come back down,
+            // otherwise noise never decays and the hatch draws raids forever.
+            src.IsEnabled = false;
+            hatch.Tick(4f, net);
+
+            Assert.IsFalse(hatch.GeneratorRunningOutside,
+                "Stopping the outdoor diesel must clear the noise flag");
+            Assert.That(hatch.ExternalNoise, Is.LessThan(0.85f),
+                "External noise must decay once the generator is off");
+        }
+
+        [Test]
+        public void SyncGeneratorNoise_KeepsManuallySetFlag()
+        {
+            var diesel = PowerSourceSO.CreateDieselGenerator(50f);
+            _toDestroy.Add(diesel);
+            var net = new PowerNetwork();
+            net.RegisterSourceDefinition(diesel);
+            net.AddSource(new PowerSourceInstance(diesel, initialFuel: 40f)
+            {
+                RoomId = "workshop", // indoors — not an outdoor diesel
+                IsEnabled = true
+            });
+
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 10);
+            hatch.GeneratorRunningOutside = true; // set by content, not by the power grid
+
+            hatch.SyncGeneratorNoise(net);
+
+            Assert.IsTrue(hatch.GeneratorRunningOutside,
+                "Sync only clears the flag it raised itself; a manual flag survives");
+            Assert.That(hatch.ExternalNoise, Is.GreaterThanOrEqualTo(
+                HatchDefenseSystem.ExternalGeneratorNoiseThreshold));
+        }
+
+        [Test]
         public void Tick_DecaysNoiseWhenQuiet_NoRaidPreDay30()
         {
             var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 10);

@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class VisionLossSystemSave
     {
         public string systemId = "vision_loss_system";
+
+        public List<VisionLossState> visionMap = new List<VisionLossState>();
     }
 public class VisionLossSystem
     {
@@ -50,9 +52,13 @@ public class VisionLossSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public VisionLossSystemSave CaptureState() => new VisionLossSystemSave();
+        public VisionLossSystemSave CaptureState() => new VisionLossSystemSave
+        {
+            visionMap = SaveMap.Capture(_visionMap),
+        };
 
-        public void RestoreState(VisionLossSystemSave saved) { _ = saved; }
+        public void RestoreState(VisionLossSystemSave saved) =>
+            SaveMap.Restore(_visionMap, saved?.visionMap, e => e.survivorId);
 
 }
 }

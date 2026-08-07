@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class TetanusAfflictionSystemSave
     {
         public string systemId = "tetanus_affliction_system";
+
+        public List<TetanusState> tetanusMap = new List<TetanusState>();
     }
 public class TetanusAfflictionSystem
     {
@@ -63,9 +65,13 @@ public class TetanusAfflictionSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public TetanusAfflictionSystemSave CaptureState() => new TetanusAfflictionSystemSave();
+        public TetanusAfflictionSystemSave CaptureState() => new TetanusAfflictionSystemSave
+        {
+            tetanusMap = SaveMap.Capture(_tetanusMap),
+        };
 
-        public void RestoreState(TetanusAfflictionSystemSave saved) { _ = saved; }
+        public void RestoreState(TetanusAfflictionSystemSave saved) =>
+            SaveMap.Restore(_tetanusMap, saved?.tetanusMap, e => e.survivorId);
 
 }
 }

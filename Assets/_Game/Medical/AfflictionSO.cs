@@ -40,11 +40,12 @@ namespace AtomicWar._Game.Medical
                  "biological-trade consequences (Prompt #47).")]
         public float fatigueDrainPerHour = 0f;
 
-        [Tooltip("Hard cap on Needs.Fatigue (0..100) while this affliction is " +
-                 "active. -1 = no cap. The donor cannot recover above this " +
-                 "value until the affliction is cured. blood_loss sets this " +
-                 "to 30 — the survivor is functional but never fully rested " +
-                 "for the duration of the cure window.")]
+        [Tooltip("Ceiling on available stamina (0..100, 100 = fresh) while this " +
+                 "affliction is active. -1 = no cap. Applied to Needs.Fatigue — " +
+                 "which runs the opposite way — as a floor of 100 - staminaCap, so " +
+                 "a LOWER value is a HARSHER affliction. blood_loss sets this to 30 " +
+                 "(fatigue never below 70): functional, but never fully rested for " +
+                 "the duration of the cure window.")]
         public float staminaCap = -1f;
 
         [Header("Progression")]

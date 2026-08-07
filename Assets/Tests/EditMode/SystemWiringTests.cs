@@ -450,6 +450,25 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void MaterialShielding_Bleed_FollowsWeakestCeiling()
+        {
+            var m = new MaterialShieldingSystem();
+
+            // Nothing built yet: nothing between the survivors and the sky.
+            Assert.That(m.GetRadiationBleed(10f), Is.EqualTo(10f).Within(1e-3f),
+                "With no ceilings the full exterior dose must bleed through");
+
+            m.UpgradeCeiling("quarters", MaterialShieldingSystem.WallMaterial.Concrete);
+            Assert.That(m.GetRadiationBleed(10f), Is.EqualTo(2f).Within(1e-3f),
+                "Concrete attenuates 80%, so only 20% of the exterior dose bleeds");
+
+            // Bleed is gated by the WEAKEST roof — one wooden ceiling undoes the concrete.
+            m.UpgradeCeiling("workshop", MaterialShieldingSystem.WallMaterial.Wood);
+            Assert.That(m.GetRadiationBleed(10f), Is.EqualTo(9f).Within(1e-3f),
+                "Wood attenuates only 10%, and the weakest ceiling sets the bleed");
+        }
+
+        [Test]
         public void Airlock_BuildAndEnter_ContaminationRoundTrip()
         {
             var a = new AirlockSystem();

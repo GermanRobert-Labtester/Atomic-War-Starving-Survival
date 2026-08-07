@@ -23,6 +23,23 @@ namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
     {
+        /// <summary>
+        /// NeedsSystem's isNearHeatSource predicate: true when it is warm enough where
+        /// this survivor is standing for Needs.Warmth to recover. Indoors that means a
+        /// fuelled, operational heater has lifted the bunker above comfort; out on an
+        /// expedition there is no shelter bonus, so the weather-adjusted ambient decides.
+        ///
+        /// This was hardcoded to `sv => true`, which counted every survivor as standing
+        /// next to a fire at all times: warmth only ever climbed, and nuclear-winter cold
+        /// — one of the game's core hazards — never fired at all.
+        /// </summary>
+        private bool IsSurvivorNearHeat(Survivor survivor)
+        {
+            if (survivor == null || TemperatureSystem == null) return false;
+            var shelter = IsSurvivorOnExpedition(survivor) ? null : Shelter;
+            return TemperatureSystem.IsWarmEnoughForRecovery(survivor, shelter);
+        }
+
         private void InitFoundation()
         {
             // H-5: System registry for centralized tick dispatch and diagnostics.
@@ -31,6 +48,13 @@ namespace AtomicWar._Game.Core
             // Core
             GameState = new GameState();
             TimeSystem = new TimeSystem { SecondsPerGameHour = _secondsPerGameHour };
+
+            // GameState.Day is a mirror of the clock, not a second source of truth.
+            // Nothing advanced it, so it sat at 1 for the whole campaign: the save
+            // file recorded day 1 and VictoryProjectManager.DaysSurvived — which reads
+            // GameState.Day off the save — always reported a one-day run.
+            GameState.Day = TimeSystem.CurrentDay;
+            TimeSystem.OnDayTick += day => GameState.Day = day;
 
             // Environment
             WeatherSystem = new WeatherSystem(_seasonProfile, _worldSeed);
@@ -168,7 +192,7 @@ namespace AtomicWar._Game.Core
             var needsProfile = _needsProfile != null
                 ? _needsProfile
                 : ScriptableObject.CreateInstance<NeedsProfile>();
-            NeedsSystem = new NeedsSystem(needsProfile, sv => true);
+            NeedsSystem = new NeedsSystem(needsProfile, IsSurvivorNearHeat);
 
             // Wire photoperiod into NeedsSystem (null-safe: skipped if LightProfile not assigned)
             if (_lightProfile != null)

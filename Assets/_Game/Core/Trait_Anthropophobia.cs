@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace AtomicWar._Game.Core
 {
@@ -24,6 +25,8 @@ namespace AtomicWar._Game.Core
     public class Trait_AnthropophobiaSave
     {
         public string systemId = "trait_anthropophobia";
+
+        public List<AnthropophobiaState> states = new List<AnthropophobiaState>();
     }
 public class Trait_Anthropophobia
     {
@@ -92,9 +95,13 @@ public class Trait_Anthropophobia
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public Trait_AnthropophobiaSave CaptureState() => new Trait_AnthropophobiaSave();
+        public Trait_AnthropophobiaSave CaptureState() => new Trait_AnthropophobiaSave
+        {
+            states = SaveMap.Capture(_states),
+        };
 
-        public void RestoreState(Trait_AnthropophobiaSave saved) { _ = saved; }
+        public void RestoreState(Trait_AnthropophobiaSave saved) =>
+            SaveMap.Restore(_states, saved?.states, e => e.survivorId);
 
 }
 }

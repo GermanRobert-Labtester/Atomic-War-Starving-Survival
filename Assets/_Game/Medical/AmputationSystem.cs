@@ -52,6 +52,13 @@ namespace AtomicWar._Game.Medical
 
         private Func<string, Survivors.Survivor> _findSurvivor;
         private Action<Survivors.Survivor, string> _inflictAffliction;
+
+        /// <summary>
+        /// Host hook that resolves an affliction on a patient — (patient, afflictionId,
+        /// surgeon) => cured. Matches MedicalSystem.CureOutright. Unbound leaves the
+        /// surgery cosmetic, so GameBootstrap wires it.
+        /// </summary>
+        private Func<Survivors.Survivor, string, Survivors.Survivor, bool> _cureAffliction;
         private MedicalPerkSystem _medicalPerks;
         private Func<int> _getDay;
         private System.Random _rng;
@@ -72,10 +79,12 @@ namespace AtomicWar._Game.Medical
 
         public void Bind(
             Func<string, Survivors.Survivor> findSurvivor,
-            Action<Survivors.Survivor, string> inflictAffliction)
+            Action<Survivors.Survivor, string> inflictAffliction,
+            Func<Survivors.Survivor, string, Survivors.Survivor, bool> cureAffliction = null)
         {
             _findSurvivor = findSurvivor;
             _inflictAffliction = inflictAffliction;
+            _cureAffliction = cureAffliction;
         }
 
         /// <summary>Inject a seeded RNG for deterministic save/load replay (audit bugfix #4).</summary>
@@ -150,6 +159,11 @@ namespace AtomicWar._Game.Medical
                 patient.DisabilityIds = new List<string>();
             if (!patient.HasDisability(AmputeeDisabilityId))
                 patient.DisabilityIds.Add(AmputeeDisabilityId);
+
+            // The point of the procedure: the septic limb comes off, so the sepsis
+            // goes with it. Without this the patient paid a limb, 30 health and 35
+            // morale and still died of the infection the surgery was meant to stop.
+            _cureAffliction?.Invoke(patient, AfflictionSO.Ids.Sepsis, surgeon);
 
             // Prompt #204 — Anatomist: clean amputations (0% PhantomPain).
             _medicalPerks?.RecordAmputation(surgeon, patient, day);

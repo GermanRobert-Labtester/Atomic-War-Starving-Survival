@@ -2261,7 +2261,7 @@ namespace AtomicWar._Game.Core
                 TradeValue = 18.0f,
                 TradeTier = ItemTradeTier.Protective,
                 IsEquipable = true,
-                EquipSlot = "Torso",
+                EquipSlot = "Body",
                 Durability = 80f,
             });
             Add(new WorldItemDef

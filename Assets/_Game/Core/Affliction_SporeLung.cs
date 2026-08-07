@@ -17,6 +17,8 @@ namespace AtomicWar._Game.Core
     public class SporeLungSystemSave
     {
         public string systemId = "affliction_spore_lung";
+
+        public List<SporeLungState> infected = new List<SporeLungState>();
     }
 public class SporeLungSystem
     {
@@ -87,9 +89,13 @@ public class SporeLungSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public SporeLungSystemSave CaptureState() => new SporeLungSystemSave();
+        public SporeLungSystemSave CaptureState() => new SporeLungSystemSave
+        {
+            infected = SaveMap.Capture(_infected),
+        };
 
-        public void RestoreState(SporeLungSystemSave saved) { _ = saved; }
+        public void RestoreState(SporeLungSystemSave saved) =>
+            SaveMap.Restore(_infected, saved?.infected, e => e.survivorId);
 
 }
 }

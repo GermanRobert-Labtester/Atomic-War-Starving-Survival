@@ -29,7 +29,13 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Effective rad bleed: ambient rad that penetrates the weakest surface-facing ceiling.</summary>
         public float GetRadiationBleed(float exteriorRads)
         {
-            float weakestAttenuation = 0f;
+            // Nothing roofed yet — the sky is the ceiling, so the full dose bleeds in.
+            if (_roomCeilingMaterials.Count == 0) return exteriorRads;
+
+            // Seed at full attenuation and take the minimum: the weakest roof in the
+            // bunker is the one the fallout comes through. Seeding at 0f (as this did)
+            // pinned the minimum to 0 forever, so every ceiling upgrade was cosmetic.
+            float weakestAttenuation = 1f;
             foreach (var kv in _roomCeilingMaterials)
                 weakestAttenuation = Mathf.Min(weakestAttenuation, Attenuation.TryGetValue(kv.Value, out float a) ? a : 0f);
             return exteriorRads * (1f - weakestAttenuation);

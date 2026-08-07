@@ -90,6 +90,24 @@ namespace AtomicWar._Game.Environment
             return AmbientCelsius + weatherPenalty;
         }
 
+        /// <summary>
+        /// Perceived temperature (°C) at or above which a survivor counts as "near heat"
+        /// and Needs.Warmth recovers instead of draining. Below it the nuclear-winter
+        /// cold path runs. Roughly shirtsleeve comfort in a bunker.
+        /// </summary>
+        public const float WarmthComfortCelsius = 12f;
+
+        /// <summary>
+        /// True when it is warm enough where this survivor is standing for warmth to
+        /// recover. Pass the shelter when they are indoors and null when they are out
+        /// in the open, so weather penalties apply. NeedsSystem's isNearHeatSource
+        /// predicate is wired to this.
+        /// </summary>
+        public bool IsWarmEnoughForRecovery(Survivor survivor, Shelter.Shelter shelter)
+        {
+            return GetPerceivedTemperature(survivor, shelter) >= WarmthComfortCelsius;
+        }
+
         /// <summary>Restore elapsed campaign time directly (save/load) without re-walking Tick and without firing OnSeasonChanged.</summary>
         public void SetElapsedHours(float hours)
         {

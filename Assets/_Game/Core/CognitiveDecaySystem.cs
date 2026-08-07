@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class CognitiveDecaySystemSave
     {
         public string systemId = "cognitive_decay_system";
+
+        public List<CognitiveDecayState> decayMap = new List<CognitiveDecayState>();
     }
 public class CognitiveDecaySystem
     {
@@ -58,9 +60,13 @@ public class CognitiveDecaySystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public CognitiveDecaySystemSave CaptureState() => new CognitiveDecaySystemSave();
+        public CognitiveDecaySystemSave CaptureState() => new CognitiveDecaySystemSave
+        {
+            decayMap = SaveMap.Capture(_decayMap),
+        };
 
-        public void RestoreState(CognitiveDecaySystemSave saved) { _ = saved; }
+        public void RestoreState(CognitiveDecaySystemSave saved) =>
+            SaveMap.Restore(_decayMap, saved?.decayMap, e => e.survivorId);
 
 }
 }

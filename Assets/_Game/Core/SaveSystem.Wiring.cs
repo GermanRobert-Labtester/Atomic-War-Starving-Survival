@@ -1981,8 +1981,13 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _tetanusAfflictionSystem, s, "tetanus_affliction_system",
                 () => s.CaptureState(), o => s.RestoreState((TetanusAfflictionSystemSave)o));
 
-        public void SetTimeSystemSys(TimeSystem s) =>
-            RegisterSystem(ref _timeSystemSys, s, "time_system",
+        /// <summary>
+        /// Register the live game clock. This must be the same instance Update()
+        /// advances — it was previously pointed at a second, never-ticked TimeSystem,
+        /// so the save file recorded a clock that had never left day 1.
+        /// </summary>
+        public void SetTimeSystem(TimeSystem s) =>
+            RegisterSystem(ref _timeSystem, s, "time_system",
                 () => s.CaptureState(), o => s.RestoreState((TimeSystemSave)o));
 
         public void SetToothDecaySystem(ToothDecaySystem s) =>

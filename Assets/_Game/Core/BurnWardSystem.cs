@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class BurnWardSystemSave
     {
         public string systemId = "burn_ward_system";
+
+        public List<SevereBurnState> burnMap = new List<SevereBurnState>();
     }
 public class BurnWardSystem
     {
@@ -64,9 +66,13 @@ public class BurnWardSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public BurnWardSystemSave CaptureState() => new BurnWardSystemSave();
+        public BurnWardSystemSave CaptureState() => new BurnWardSystemSave
+        {
+            burnMap = SaveMap.Capture(_burnMap),
+        };
 
-        public void RestoreState(BurnWardSystemSave saved) { _ = saved; }
+        public void RestoreState(BurnWardSystemSave saved) =>
+            SaveMap.Restore(_burnMap, saved?.burnMap, e => e.survivorId);
 
 }
 }

@@ -61,7 +61,9 @@ namespace AtomicWar._Game.Core
             AmputationSystem.SetRng(new System.Random(_worldSeed + 56));
             AmputationSystem.Bind(
                 id => Survivors?.Find(s => s.Id == id),
-                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
+                (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId),
+                (sv, afflictionId, surgeon) =>
+                    MedicalSystem != null && MedicalSystem.CureOutright(sv, afflictionId, surgeon));
 
             ScurvySystem = new ScurvySystem();
             ScurvySystem.Bind(

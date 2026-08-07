@@ -450,7 +450,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetSeismicVentsSystem(SeismicVentsSystem);
             SaveSystem.SetSevereFrostbiteSystem(SevereFrostbiteSystem);
             SaveSystem.SetTetanusAfflictionSystem(TetanusAfflictionSystem);
-            SaveSystem.SetTimeSystemSys(TimeSystemSys);
+            SaveSystem.SetTimeSystem(TimeSystem);
             SaveSystem.SetToothDecaySystem(ToothDecaySystem);
             SaveSystem.SetVehicleStrandingSystem(VehicleStrandingSystem);
             SaveSystem.SetVehicleSystem(VehicleSystem);

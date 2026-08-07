@@ -16,6 +16,8 @@ namespace AtomicWar._Game.Core
     public class RadiationBlindnessSystemSave
     {
         public string systemId = "affliction_radiation_blindness";
+
+        public List<RadiationBlindnessState> blind = new List<RadiationBlindnessState>();
     }
 public class RadiationBlindnessSystem
     {
@@ -68,9 +70,13 @@ public class RadiationBlindnessSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public RadiationBlindnessSystemSave CaptureState() => new RadiationBlindnessSystemSave();
+        public RadiationBlindnessSystemSave CaptureState() => new RadiationBlindnessSystemSave
+        {
+            blind = SaveMap.Capture(_blind),
+        };
 
-        public void RestoreState(RadiationBlindnessSystemSave saved) { _ = saved; }
+        public void RestoreState(RadiationBlindnessSystemSave saved) =>
+            SaveMap.Restore(_blind, saved?.blind, e => e.survivorId);
 
 }
 }

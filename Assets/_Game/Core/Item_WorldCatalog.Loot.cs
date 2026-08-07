@@ -349,19 +349,15 @@ namespace AtomicWar._Game.Core
 
         private static EquipSlot ParseEquipSlot(string slot)
         {
-            if (string.IsNullOrEmpty(slot)) return EquipSlot.None;
-            switch (slot.Trim().ToLowerInvariant())
-            {
-                case "head": return EquipSlot.Head;
-                case "face": return EquipSlot.Face;
-                case "hands": return EquipSlot.Hands;
-                case "tool": return EquipSlot.Tool;
-                case "torso":
-                case "body":
-                case "chest":
-                    return EquipSlot.Body;
-                default: return EquipSlot.None;
-            }
+            // Shared with the JSON import gate so the two paths cannot drift apart
+            // again; an unrecognised spelling is logged rather than silently
+            // downgrading the item to an unequippable EquipSlot.None.
+            if (EquipSlots.TryParse(slot, out var parsed)) return parsed;
+
+            Debug.LogWarning(
+                $"[Item_WorldCatalog] Unknown equipSlot '{slot}' — item will not be equippable. " +
+                $"Valid: {string.Join(", ", EquipSlots.CanonicalNames)}");
+            return EquipSlot.None;
         }
 
         public static IReadOnlyList<string> GetPoolItemIds(WorldLootFaction faction)

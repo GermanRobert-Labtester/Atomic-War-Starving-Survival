@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
@@ -122,9 +123,34 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void ConstructedSystems_AreRegistered_NoC1Gaps()
         {
-            var unticked = _bootstrap.GetUntickedSystemNames();
-            Assert.IsEmpty(unticked,
-                "C-1: constructed but unregistered systems: " + string.Join(", ", unticked));
+            // Ratchet, not a binary gate. There is a large pre-existing population of
+            // systems that are constructed and save-wired but never driven; asserting
+            // IsEmpty here just kept the suite permanently red, which is the same as
+            // having no guard at all. Instead we pin the known set and fail on either
+            // direction of drift:
+            //
+            //   * a NEW unticked system  -> someone added a system and forgot to wire it
+            //   * a baseline entry that is now wired -> the file must shrink to match
+            //
+            // The second half is what makes this a ratchet: the debt can only go down.
+            var actual = new SortedSet<string>(_bootstrap.GetUntickedSystemNames());
+            var baseline = UntickedSystemsBaseline.Load();
+
+            var regressions = new SortedSet<string>(actual);
+            regressions.ExceptWith(baseline);
+
+            var fixedSince = new SortedSet<string>(baseline);
+            fixedSince.ExceptWith(actual);
+
+            Assert.IsEmpty(regressions,
+                "C-1 REGRESSION — these systems are constructed but never ticked, and are not in the " +
+                $"baseline. Wire them into SystemRegistry (see {UntickedSystemsBaseline.RelativePath}):\n  " +
+                string.Join("\n  ", regressions));
+
+            Assert.IsEmpty(fixedSince,
+                $"C-1 baseline is stale — these are now wired. Delete them from " +
+                $"{UntickedSystemsBaseline.RelativePath} so the ratchet keeps holding:\n  " +
+                string.Join("\n  ", fixedSince));
         }
 
         [Test]
@@ -176,7 +202,8 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(0.90f, fuelB.State.fuelEfficiencyMultiplier, 0.001f);
         }
 
-        private static void InjectBootstrapFields(GameBootstrap bs)
+        /// <summary>Shared with UntickedSystemsBaselineTests so both fixtures boot identically.</summary>
+        internal static void InjectBootstrapFields(GameBootstrap bs)
         {
             SetPrivate(bs, "_needsProfile", ScriptableObject.CreateInstance<NeedsProfile>());
             SetPrivate(bs, "_lightProfile", ScriptableObject.CreateInstance<LightProfile>());

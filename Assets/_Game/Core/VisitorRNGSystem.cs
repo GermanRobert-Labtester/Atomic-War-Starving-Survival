@@ -34,6 +34,8 @@ namespace AtomicWar._Game.Core
     public class VisitorRNGSystemSave
     {
         public string systemId = "visitor_rngsystem";
+
+        public List<FixedNodeState> nodes = new List<FixedNodeState>();
     }
 public class VisitorRNGSystem
     {
@@ -229,9 +231,13 @@ public class VisitorRNGSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public VisitorRNGSystemSave CaptureState() => new VisitorRNGSystemSave();
+        public VisitorRNGSystemSave CaptureState() => new VisitorRNGSystemSave
+        {
+            nodes = SaveMap.Capture(_nodes),
+        };
 
-        public void RestoreState(VisitorRNGSystemSave saved) { _ = saved; }
+        public void RestoreState(VisitorRNGSystemSave saved) =>
+            SaveMap.Restore(_nodes, saved?.nodes, e => e.locationId);
 
 }
 }

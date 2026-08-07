@@ -413,30 +413,35 @@ namespace AtomicWar.Tests.EditMode
         public void BloodForWater_BloodLoss_TickDrainsFatigueAndCapsStamina()
         {
             // End-to-end: a survivor has BloodLoss inflicted; the medical
-            // Tick applies the fatigue drain + stamina cap, so a survivor
-            // who tries to rest never recovers above the cap.
+            // Tick applies the fatigue drain + stamina cap. staminaCap 30 means
+            // stamina tops out at 30%, i.e. Fatigue is floored at 70 — the donor
+            // never recovers past that while the affliction is active.
             var donor = MakeSurvivor("donor", RiskBiasTrait.Fatalist);
             donor.Needs.Fatigue = 10f;   // start well-rested
             Assert.That(_medical.Inflict(donor, AfflictionSO.Ids.BloodLoss), Is.True);
 
-            // Tick 10 hours: fatigue drains 2/hr * 10 = 20, so it should
-            // climb to 30 (the stamina cap). The cap is then enforced.
             _medical.Tick(new List<Survivor> { donor }, 10f);
-            Assert.That(donor.Needs.Fatigue, Is.EqualTo(30f).Within(1e-3f),
-                "After 10 hours the fatigue must equal the stamina cap (30).");
+            Assert.That(donor.Needs.Fatigue, Is.EqualTo(70f).Within(1e-3f),
+                "A stamina cap of 30% floors fatigue at 70.");
 
-            // Further ticking should keep the donor at 30 even though
+            // Further ticking keeps the donor at the floor even though
             // NeedsSystem isn't draining any other need (profile is zero).
             _medical.Tick(new List<Survivor> { donor }, 5f);
-            Assert.That(donor.Needs.Fatigue, Is.LessThanOrEqualTo(30f + 1e-3f),
-                "Stamina cap must keep fatigue pinned at 30 even after rest.");
+            Assert.That(donor.Needs.Fatigue, Is.GreaterThanOrEqualTo(70f - 1e-3f),
+                "Stamina cap must hold fatigue at 70 or worse even after rest.");
 
-            // And a manual write above the cap must be snapped back down
-            // on the next tick (the cap is enforced every tick).
-            donor.Needs.Fatigue = 80f;
+            // A manual write below the floor is snapped back up on the next tick;
+            // one above it is left alone — the cap is a floor, not a ceiling, so it
+            // must never hand an exhausted donor free rest.
+            donor.Needs.Fatigue = 5f;
             _medical.Tick(new List<Survivor> { donor }, 0.1f);
-            Assert.That(donor.Needs.Fatigue, Is.LessThanOrEqualTo(30f + 1e-3f),
-                "Manual write above the cap must be snapped back on the next tick.");
+            Assert.That(donor.Needs.Fatigue, Is.GreaterThanOrEqualTo(70f - 1e-3f),
+                "Manual write below the floor must be snapped back on the next tick.");
+
+            donor.Needs.Fatigue = 90f;
+            _medical.Tick(new List<Survivor> { donor }, 0.1f);
+            Assert.That(donor.Needs.Fatigue, Is.GreaterThanOrEqualTo(90f),
+                "An exhausted donor must not be rested down to the floor.");
         }
 
         [Test]

@@ -24,6 +24,8 @@ namespace AtomicWar._Game.Core
     public class VehicleStrandingSystemSave
     {
         public string systemId = "vehicle_stranding_system";
+
+        public List<StrandingState> strandedMap = new List<StrandingState>();
     }
 public class VehicleStrandingSystem
     {
@@ -72,9 +74,13 @@ public class VehicleStrandingSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public VehicleStrandingSystemSave CaptureState() => new VehicleStrandingSystemSave();
+        public VehicleStrandingSystemSave CaptureState() => new VehicleStrandingSystemSave
+        {
+            strandedMap = SaveMap.Capture(_strandedMap),
+        };
 
-        public void RestoreState(VehicleStrandingSystemSave saved) { _ = saved; }
+        public void RestoreState(VehicleStrandingSystemSave saved) =>
+            SaveMap.Restore(_strandedMap, saved?.strandedMap, e => e.vehicleId);
 
 }
 }

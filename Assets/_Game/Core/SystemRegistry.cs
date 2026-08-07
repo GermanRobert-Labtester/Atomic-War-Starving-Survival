@@ -58,6 +58,14 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private readonly HashSet<string> _saveOnly = new HashSet<string>();
 
+        /// <summary>
+        /// Every registered name across all four categories. Kept alongside the lists
+        /// purely so <see cref="IsSystemTicked"/> is O(1): the C-1 diagnostic asks that
+        /// question once per GameBootstrap system property, so a linear scan made the
+        /// check quadratic in the number of systems.
+        /// </summary>
+        private readonly HashSet<string> _registeredNames = new HashSet<string>();
+
         // -----------------------------------------------------------------
         // Day-gating state (consolidated from GameBootstrap._lastXxxDay)
         // -----------------------------------------------------------------
@@ -83,6 +91,7 @@ namespace AtomicWar._Game.Core
         {
             if (tick == null) return;
             _perSubstep.Add((name, tick));
+            _registeredNames.Add(name);
         }
 
         /// <summary>
@@ -95,6 +104,7 @@ namespace AtomicWar._Game.Core
         {
             if (tick == null) return;
             _daily.Add((name, tick));
+            _registeredNames.Add(name);
         }
 
         /// <summary>
@@ -104,6 +114,7 @@ namespace AtomicWar._Game.Core
         public void RegisterEventDriven(string name)
         {
             _eventDriven.Add(name);
+            _registeredNames.Add(name);
         }
 
         /// <summary>
@@ -114,6 +125,7 @@ namespace AtomicWar._Game.Core
         public void RegisterSaveOnly(string name)
         {
             _saveOnly.Add(name);
+            _registeredNames.Add(name);
         }
 
         /// <summary>
@@ -259,14 +271,8 @@ namespace AtomicWar._Game.Core
         /// tick list or category. Useful in tests after InitializeSystems
         /// to catch the C-1 class of bug (system constructed but never ticked).
         /// </summary>
-        public bool IsSystemTicked(string name)
-        {
-            for (int i = 0; i < _perSubstep.Count; i++)
-                if (_perSubstep[i].name == name) return true;
-            for (int i = 0; i < _daily.Count; i++)
-                if (_daily[i].name == name) return true;
-            return _eventDriven.Contains(name) || _saveOnly.Contains(name);
-        }
+        public bool IsSystemTicked(string name) =>
+            name != null && _registeredNames.Contains(name);
 
         /// <summary>
         /// Clear all registrations (for test teardown).
@@ -277,6 +283,7 @@ namespace AtomicWar._Game.Core
             _daily.Clear();
             _eventDriven.Clear();
             _saveOnly.Clear();
+            _registeredNames.Clear();
             _lastDayFlags.Clear();
             _lastDailyRunDay = -1;
             DailyRunCount = 0;

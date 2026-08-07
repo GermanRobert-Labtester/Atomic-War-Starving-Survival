@@ -1717,7 +1717,7 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": true,
-    "equipSlot": "Torso",
+    "equipSlot": "Body",
     "tradeValue": 4,
     "empShielded": false,
     "scrapValue": [
@@ -1748,7 +1748,7 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": true,
-    "equipSlot": "Torso",
+    "equipSlot": "Body",
     "tradeValue": 48,
     "empShielded": false,
     "scrapValue": [
@@ -1872,7 +1872,7 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": true,
-    "equipSlot": "Torso",
+    "equipSlot": "Body",
     "tradeValue": 70,
     "empShielded": false,
     "scrapValue": [
@@ -1965,7 +1965,7 @@
     "radCleanse": 0,
     "moraleEffect": 0,
     "isEquipable": true,
-    "equipSlot": "Torso",
+    "equipSlot": "Body",
     "tradeValue": 5,
     "empShielded": false,
     "scrapValue": [
@@ -6684,7 +6684,7 @@
     "radCleanse": 0,
     "moraleEffect": 0.0,
     "isEquipable": true,
-    "equipSlot": "Torso",
+    "equipSlot": "Body",
     "tradeValue": 18.0,
     "empShielded": false
   },

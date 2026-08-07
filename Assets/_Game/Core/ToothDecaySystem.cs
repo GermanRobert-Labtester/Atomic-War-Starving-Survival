@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class ToothDecaySystemSave
     {
         public string systemId = "tooth_decay_system";
+
+        public List<ToothDecayState> teethMap = new List<ToothDecayState>();
     }
 public class ToothDecaySystem
     {
@@ -56,9 +58,13 @@ public class ToothDecaySystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public ToothDecaySystemSave CaptureState() => new ToothDecaySystemSave();
+        public ToothDecaySystemSave CaptureState() => new ToothDecaySystemSave
+        {
+            teethMap = SaveMap.Capture(_teethMap),
+        };
 
-        public void RestoreState(ToothDecaySystemSave saved) { _ = saved; }
+        public void RestoreState(ToothDecaySystemSave saved) =>
+            SaveMap.Restore(_teethMap, saved?.teethMap, e => e.survivorId);
 
 }
 }

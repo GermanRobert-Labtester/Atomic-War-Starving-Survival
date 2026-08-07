@@ -170,5 +170,66 @@ namespace AtomicWar._Game.Core
                     Debug.Log($"[GameBootstrap] WEATHER: static charge shock '{module}' -{dmg:F0}");
             }
         }
+
+        private float _weatherEventHourAccum;
+
+        /// <summary>
+        /// Advance the self-contained Weather_* event trackers on a whole-game-hour
+        /// cadence.
+        ///
+        /// These were constructed, save-wired and event-wired but never ticked, which
+        /// meant any weather event that got triggered would stay active forever — its
+        /// hoursRemaining never counted down, so the "ended" event never fired and the
+        /// debuff never lifted. Each Tick* below is self-gating (it returns immediately
+        /// when its state is inactive), so driving them unconditionally is safe.
+        ///
+        /// Only trackers whose tick is time-based and whose inputs are available here
+        /// are driven. AcidSnow, GlassStorm and DustDevil take ref/contextual arguments
+        /// (filter durability, hazmat wear, current map node) that this host cannot yet
+        /// supply, and remain in the C-1 baseline until those owners exist.
+        /// </summary>
+        private void TickWeatherEventsHourly(float gameHours)
+        {
+            if (gameHours <= 0f) return;
+
+            _weatherEventHourAccum += gameHours;
+
+            // Guard against a pathological delta (e.g. a long editor pause) turning this
+            // into a multi-thousand iteration stall on one frame.
+            const int MaxHoursPerCall = 48;
+            int hours = 0;
+            while (_weatherEventHourAccum >= 1f && hours < MaxHoursPerCall)
+            {
+                _weatherEventHourAccum -= 1f;
+                hours++;
+
+                WeatherSolarFlare?.TickHour();
+                WeatherSilentSpring?.TickHour();
+                WeatherStaticCharge?.TickHour();
+                WeatherBloodRain?.TickHour();
+                WeatherEmpStorm?.TickHourly(1);
+                WeatherFalseSpring?.TickHourly(1f);
+
+                if (WeatherDeepFreeze != null)
+                {
+                    float indoorTemp = TemperatureSystem != null && Shelter != null
+                        ? TemperatureSystem.GetIndoorTemperature(Shelter)
+                        : 15f;
+                    WeatherDeepFreeze.TickHourly(1f, indoorTemp);
+                }
+            }
+
+            if (hours >= MaxHoursPerCall)
+                _weatherEventHourAccum = 0f;
+        }
+
+        /// <summary>
+        /// Per game-day weather trackers. Ozone hole measures its duration in days
+        /// rather than hours, so it is driven from the daily pass.
+        /// </summary>
+        private void TickWeatherEventsDaily(int currentDay)
+        {
+            WeatherOzoneHole?.TickDay();
+        }
     }
 }

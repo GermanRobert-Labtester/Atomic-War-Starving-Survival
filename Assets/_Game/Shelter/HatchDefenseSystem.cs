@@ -161,6 +161,13 @@ namespace AtomicWar._Game.Shelter
         /// <summary>True when a diesel/generator is running outside the sealed hatch.</summary>
         public bool GeneratorRunningOutside { get; set; }
 
+        /// <summary>
+        /// True when <see cref="SyncGeneratorNoise"/> — rather than a caller — raised
+        /// <see cref="GeneratorRunningOutside"/>. Only the sync's own flag is lowered
+        /// when the diesel stops, so a manually set flag stays up.
+        /// </summary>
+        private bool _noiseFlagRaisedByDiesel;
+
         /// <summary>Optional test override for aggregate security (−1 = compute normally).</summary>
         public float SecurityOverride = -1f;
 
@@ -1164,8 +1171,17 @@ namespace AtomicWar._Game.Shelter
             bool outdoor = IsOutdoorDieselRunning(power);
             if (outdoor)
             {
+                _noiseFlagRaisedByDiesel = true;
                 GeneratorRunningOutside = true;
                 ExternalNoise = Mathf.Max(ExternalNoise, 0.85f);
+            }
+            else if (_noiseFlagRaisedByDiesel)
+            {
+                // The diesel we were tracking has stopped. Lower the flag we raised —
+                // leaving it up pinned ExternalNoise at 0.85 forever, so the hatch kept
+                // drawing noise raids for the rest of the campaign after one outdoor run.
+                _noiseFlagRaisedByDiesel = false;
+                GeneratorRunningOutside = false;
             }
             else if (GeneratorRunningOutside && power != null)
             {
@@ -1368,6 +1384,10 @@ namespace AtomicWar._Game.Shelter
             if (save == null) return;
             ExternalNoise = Mathf.Clamp01(save.ExternalNoise);
             GeneratorRunningOutside = save.GeneratorRunningOutside;
+            // A saved flag is almost always one the sync raised, so treat it as such:
+            // the next quiet tick can then lower it. Restoring it as a "manual" flag
+            // would strand it up for the rest of the campaign.
+            _noiseFlagRaisedByDiesel = save.GeneratorRunningOutside;
             _hoursSinceLastRaid = Mathf.Max(0f, save.HoursSinceLastRaid);
             _noiseCheckAccumulator = Mathf.Max(0f, save.NoiseCheckAccumulator);
             TotalRaidsResolved = Mathf.Max(0, save.TotalRaidsResolved);

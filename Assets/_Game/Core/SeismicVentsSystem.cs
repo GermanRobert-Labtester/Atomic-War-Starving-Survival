@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class SeismicVentsSystemSave
     {
         public string systemId = "seismic_vents_system";
+
+        public List<SeismicVentState> vents = new List<SeismicVentState>();
     }
 public class SeismicVentsSystem
     {
@@ -58,9 +60,13 @@ public class SeismicVentsSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public SeismicVentsSystemSave CaptureState() => new SeismicVentsSystemSave();
+        public SeismicVentsSystemSave CaptureState() => new SeismicVentsSystemSave
+        {
+            vents = SaveMap.Capture(_vents),
+        };
 
-        public void RestoreState(SeismicVentsSystemSave saved) { _ = saved; }
+        public void RestoreState(SeismicVentsSystemSave saved) =>
+            SaveMap.Restore(_vents, saved?.vents, e => e.locationId);
 
 }
 }

@@ -13,13 +13,27 @@ namespace AtomicWar._Game.Core
     /// so hour/day ticks and the systems driven from them never get skipped —
     /// no matter how big the frame delta grows (hitches, backgrounding, 3x).
     /// </summary>
-    
+    /// <summary>
+    /// Serialized clock. Plain public fields, because JsonUtility (which writes the
+    /// save file) ignores properties — an auto-property here would round-trip as
+    /// zero and silently reset the campaign to day 1.
+    /// </summary>
     [Serializable]
     public class TimeSystemSave
     {
         public string systemId = "time_system";
+
+        /// <summary>Current in-game day (1-based). Day 0 marks a pre-clock save.</summary>
+        public int day = 1;
+
+        /// <summary>Fractional hour within <see cref="day"/> (0..24).</summary>
+        public float hourAccumulator;
+
+        /// <summary>Real-time seconds simulated, for playtime accounting.</summary>
+        public float totalElapsedSeconds;
     }
-public class TimeSystem
+
+    public class TimeSystem
     {
         /// <summary>Upper clamp for <see cref="TimeScale"/> (tuning guard, not gameplay).</summary>
         public const float MaxTimeScale = 8f;
@@ -137,9 +151,35 @@ public class TimeSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public TimeSystemSave CaptureState() => new TimeSystemSave();
+        public TimeSystemSave CaptureState() => new TimeSystemSave
+        {
+            day = _day,
+            hourAccumulator = _hourAccumulator,
+            totalElapsedSeconds = _totalElapsedSeconds,
+        };
 
-        public void RestoreState(TimeSystemSave saved) { _ = saved; }
+        /// <summary>
+        /// Restore a saved clock. Null (or a pre-clock save, which has no day) leaves
+        /// the current time alone rather than snapping to day 1 — resetting the clock
+        /// on load would re-arm every day-gated system in the game.
+        ///
+        /// Does not fire <see cref="OnDayTick"/> / <see cref="OnHourTick"/>: restoring
+        /// is not the passage of time, and replaying a campaign's worth of day ticks
+        /// on load would re-run every daily system from day 1.
+        ///
+        /// <see cref="TimeScale"/> is deliberately not serialized — fast-forward is a
+        /// session setting, so a save made at 3x loads back at normal speed.
+        /// </summary>
+        public void RestoreState(TimeSystemSave saved)
+        {
+            if (saved == null || saved.day <= 0) return;
+
+            _day = saved.day;
+            _hourAccumulator = float.IsNaN(saved.hourAccumulator)
+                ? 0f
+                : Math.Clamp(saved.hourAccumulator, 0f, 24f);
+            _totalElapsedSeconds = Math.Max(0f, saved.totalElapsedSeconds);
+        }
 
 }
 }

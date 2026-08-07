@@ -23,6 +23,8 @@ namespace AtomicWar._Game.Core
     public class AshDriftSystemSave
     {
         public string systemId = "ash_drift_system";
+
+        public List<RouteBlockageState> routes = new List<RouteBlockageState>();
     }
 public class AshDriftSystem
     {
@@ -72,9 +74,13 @@ public class AshDriftSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public AshDriftSystemSave CaptureState() => new AshDriftSystemSave();
+        public AshDriftSystemSave CaptureState() => new AshDriftSystemSave
+        {
+            routes = SaveMap.Capture(_routes),
+        };
 
-        public void RestoreState(AshDriftSystemSave saved) { _ = saved; }
+        public void RestoreState(AshDriftSystemSave saved) =>
+            SaveMap.Restore(_routes, saved?.routes, e => e.routeId);
 
 }
 }

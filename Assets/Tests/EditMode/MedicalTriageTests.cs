@@ -408,6 +408,101 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void StaminaCap_HoldsFatigueUp_AndNeverRestsBelowTheFloor()
+        {
+            var med = MakeMedical();
+            var patient = MakeSurvivor();
+
+            // Fully rested when the needle goes in.
+            patient.Needs.Fatigue = 0f;
+            med.Inflict(patient, AfflictionSO.Ids.BloodLoss);
+
+            med.Tick(new List<Survivor> { patient }, 1f);
+
+            // blood_loss carries staminaCap 30 — stamina is capped at 30%, i.e. the
+            // survivor sits at 70 fatigue or worse. They are functional, never rested.
+            Assert.That(patient.Needs.Fatigue, Is.EqualTo(70f).Within(Eps),
+                "A stamina cap of 30% must hold Fatigue at or above 70");
+
+            // Sleeping it off does not beat the cap.
+            patient.Needs.Fatigue = 5f;
+            med.Tick(new List<Survivor> { patient }, 1f);
+            Assert.That(patient.Needs.Fatigue, Is.EqualTo(70f).Within(Eps),
+                "Rest cannot push Fatigue below the floor while the affliction is active");
+        }
+
+        [Test]
+        public void StaminaCap_IsHarsherForTheWorseAffliction()
+        {
+            var med = MakeMedical();
+            var donor = MakeSurvivor("sv_donor");
+            var poisoned = MakeSurvivor("sv_poisoned");
+
+            med.Inflict(donor, AfflictionSO.Ids.BloodLoss);   // staminaCap 30
+            med.Inflict(poisoned, AfflictionSO.Ids.Botulism); // staminaCap 20
+
+            med.Tick(new List<Survivor> { donor, poisoned }, 1f);
+
+            Assert.That(poisoned.Needs.Fatigue, Is.GreaterThan(donor.Needs.Fatigue),
+                "Botulism caps stamina lower than blood loss, so it must exhaust harder");
+        }
+
+        [Test]
+        public void Amputation_TakesTheSepsisOffWithTheLimb()
+        {
+            var med = MakeMedical();
+            var patient = MakeSurvivor("sv_patient");
+            var surgeon = MakeSurvivor("sv_surgeon");
+            surgeon.MedicalSkill = 1f;
+
+            Assert.IsTrue(med.Inflict(patient, AfflictionSO.Ids.Sepsis));
+
+            var amp = new AmputationSystem();
+            amp.Bind(
+                findSurvivor: id => id == patient.Id ? patient : id == surgeon.Id ? surgeon : null,
+                inflictAffliction: (sv, affId) => med.Inflict(sv, affId),
+                cureAffliction: (sv, affId, medic) => med.CureOutright(sv, affId, medic));
+
+            int tools = 1, morphine = 1;
+            Assert.IsTrue(amp.PerformAmputation(
+                patient.Id, surgeon.Id,
+                countItem: id =>
+                {
+                    if (id == AmputationSystem.SurgicalToolsItemId) return tools;
+                    if (id == AmputationSystem.MorphineItemId) return morphine;
+                    return 0;
+                },
+                consumeItem: (id, n) =>
+                {
+                    if (id == AmputationSystem.SurgicalToolsItemId) { tools -= n; return true; }
+                    if (id == AmputationSystem.MorphineItemId) { morphine -= n; return true; }
+                    return false;
+                }));
+
+            Assert.IsTrue(amp.IsAmputee(patient.Id), "Patient must carry the amputee disability");
+            Assert.IsFalse(med.HasAffliction(patient, AfflictionSO.Ids.Sepsis),
+                "Amputation removes the septic limb — the sepsis must go with it, or the "
+                + "patient paid a limb and 30 health for nothing.");
+        }
+
+        [Test]
+        public void CureOutright_LeavesOtherAfflictionsAndUnknownIdsAlone()
+        {
+            var med = MakeMedical();
+            var patient = MakeSurvivor();
+            med.Inflict(patient, AfflictionSO.Ids.Sepsis);
+            med.Inflict(patient, AfflictionSO.Ids.BrokenBone);
+
+            Assert.IsFalse(med.CureOutright(patient, AfflictionSO.Ids.Coma),
+                "Curing an affliction the survivor does not have reports failure");
+
+            Assert.IsTrue(med.CureOutright(patient, AfflictionSO.Ids.Sepsis));
+            Assert.IsFalse(med.HasAffliction(patient, AfflictionSO.Ids.Sepsis));
+            Assert.IsTrue(med.HasAffliction(patient, AfflictionSO.Ids.BrokenBone),
+                "Unrelated afflictions survive the procedure");
+        }
+
+        [Test]
         public void MedicalState_RoundTripsThroughSave()
         {
             var med = MakeMedical();

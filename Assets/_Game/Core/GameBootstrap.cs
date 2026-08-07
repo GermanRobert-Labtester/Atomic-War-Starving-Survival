@@ -950,7 +950,6 @@ namespace AtomicWar._Game.Core
         public SeismicVentsSystem SeismicVentsSystem { get; private set; }
         public SevereFrostbiteSystem SevereFrostbiteSystem { get; private set; }
         public TetanusAfflictionSystem TetanusAfflictionSystem { get; private set; }
-        public TimeSystem TimeSystemSys { get; private set; }
         public ToothDecaySystem ToothDecaySystem { get; private set; }
         public VehicleStrandingSystem VehicleStrandingSystem { get; private set; }
         public VehicleSystem VehicleSystem { get; private set; }

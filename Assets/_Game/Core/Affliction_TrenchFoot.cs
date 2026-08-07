@@ -18,6 +18,8 @@ namespace AtomicWar._Game.Core
     public class TrenchFootSystemSave
     {
         public string systemId = "affliction_trench_foot";
+
+        public List<TrenchFootState> afflicted = new List<TrenchFootState>();
     }
 public class TrenchFootSystem
     {
@@ -78,9 +80,13 @@ public class TrenchFootSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public TrenchFootSystemSave CaptureState() => new TrenchFootSystemSave();
+        public TrenchFootSystemSave CaptureState() => new TrenchFootSystemSave
+        {
+            afflicted = SaveMap.Capture(_afflicted),
+        };
 
-        public void RestoreState(TrenchFootSystemSave saved) { _ = saved; }
+        public void RestoreState(TrenchFootSystemSave saved) =>
+            SaveMap.Restore(_afflicted, saved?.afflicted, e => e.survivorId);
 
 }
 }

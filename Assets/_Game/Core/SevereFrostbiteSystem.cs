@@ -24,6 +24,8 @@ namespace AtomicWar._Game.Core
     public class SevereFrostbiteSystemSave
     {
         public string systemId = "severe_frostbite_system";
+
+        public List<SevereFrostbiteState> frostbiteMap = new List<SevereFrostbiteState>();
     }
 public class SevereFrostbiteSystem
     {
@@ -59,9 +61,13 @@ public class SevereFrostbiteSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public SevereFrostbiteSystemSave CaptureState() => new SevereFrostbiteSystemSave();
+        public SevereFrostbiteSystemSave CaptureState() => new SevereFrostbiteSystemSave
+        {
+            frostbiteMap = SaveMap.Capture(_frostbiteMap),
+        };
 
-        public void RestoreState(SevereFrostbiteSystemSave saved) { _ = saved; }
+        public void RestoreState(SevereFrostbiteSystemSave saved) =>
+            SaveMap.Restore(_frostbiteMap, saved?.frostbiteMap, e => e.survivorId);
 
 }
 }

@@ -33,6 +33,8 @@ namespace AtomicWar._Game.Core
     public class VehicleSystemSave
     {
         public string systemId = "vehicle_system";
+
+        public List<VehicleData> vehicles = new List<VehicleData>();
     }
 public class VehicleSystem
     {
@@ -88,9 +90,13 @@ public class VehicleSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public VehicleSystemSave CaptureState() => new VehicleSystemSave();
+        public VehicleSystemSave CaptureState() => new VehicleSystemSave
+        {
+            vehicles = SaveMap.Capture(_vehicles),
+        };
 
-        public void RestoreState(VehicleSystemSave saved) { _ = saved; }
+        public void RestoreState(VehicleSystemSave saved) =>
+            SaveMap.Restore(_vehicles, saved?.vehicles, e => e.vehicleId);
 
 }
 }
