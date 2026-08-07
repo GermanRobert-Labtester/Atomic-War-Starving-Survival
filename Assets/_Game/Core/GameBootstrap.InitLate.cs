@@ -632,6 +632,10 @@ namespace AtomicWar._Game.Core
                 getAllSurvivors: () => Survivors);
             SaveSystem.SetExpeditionSystem(ExpeditionSystem);
             SaveSystem.SetFloodedNodeSystem(FloodedNodeSystem);
+            SaveSystem.SetBicycleSystem(BicycleSystem);
+            SaveSystem.SetWaterEconomySystem(WaterEconomySystem);
+            SaveSystem.SetBlackRainHazardSystem(BlackRainHazardSystem);
+            SaveSystem.SetClothingSystem(ClothingSystem);
 
             // Prompt #13 — hostile factions learn scavenging habits and plant
             // poisoned medical crates. High Medical skill / Paranoid spots them.
@@ -907,6 +911,7 @@ namespace AtomicWar._Game.Core
             CookingSystem.SetMealDefinition(CookingSystem.CreateCookedMealDefinition());
             // Prompt #768 — epilogue meal tally.
             CookingSystem.OnMealCooked += (_, __) => EpilogueStats?.RecordMealCooked(1);
+            SaveSystem?.SetCookingSystem(CookingSystem);
 
             CraftingSystem?.BindSurvivalPerks(
                 SurvivalPerks,

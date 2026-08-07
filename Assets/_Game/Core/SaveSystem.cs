@@ -115,6 +115,9 @@ namespace AtomicWar._Game.Core
         private FreezePipeSystem _freezePipeSystem;
         private CartographySystem _cartographySystem;
         private BicycleSystem _bicycleSystem;
+        private CookingSystem _cookingSystem;
+        private WaterEconomySystem _waterEconomySystem;
+        private BlackRainHazardSystem _blackRainHazardSystem;
         private FloodedNodeSystem _floodedNodeSystem;
         private TrackerSystem _trackerSystem;
         private DeadDropSystem _deadDropSystem;

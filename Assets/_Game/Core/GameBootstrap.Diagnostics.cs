@@ -92,6 +92,8 @@ namespace AtomicWar._Game.Core
             { "ExpeditionSystem",        new[] { "expeditions" } },
             { "CorpseSystem",            new[] { "corpses" } },
             { "BlackRainHazardSystem",   new[] { "black_rain" } },
+            { "BicycleSystem",           new[] { "bicycle" } },
+            { "WaterEconomySystem",      new[] { "water_economy" } },
             { "HatchDilemmaPromptField",  new[] { "hatch_dilemma" } },
             { "ParleyOfferPromptField",   new[] { "parley_offer" } },
             { "LifeboatTransmissionSystem", new[] { "lifeboat" } },

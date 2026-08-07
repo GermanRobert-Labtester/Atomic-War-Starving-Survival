@@ -234,6 +234,26 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _floodedNodeSystem, sys, "flooded_node",
                 () => sys.CaptureState(), o => sys.RestoreState((FloodedNodeSave)o));
 
+        /// <summary>Bicycle logistics (Prompt #68) — currently stateless; CR reserved.</summary>
+        public void SetBicycleSystem(BicycleSystem s) =>
+            RegisterSystem(ref _bicycleSystem, s, "bicycle",
+                () => s.CaptureState(), o => s.RestoreState((BicycleSystemSave)o));
+
+        /// <summary>Stove cooking (Prompt #189) — currently stateless; CR reserved.</summary>
+        public void SetCookingSystem(CookingSystem s) =>
+            RegisterSystem(ref _cookingSystem, s, "cooking",
+                () => s.CaptureState(), o => s.RestoreState((CookingSystemSave)o));
+
+        /// <summary>Catchment + purifier water economy — currently stateless; CR reserved.</summary>
+        public void SetWaterEconomySystem(WaterEconomySystem s) =>
+            RegisterSystem(ref _waterEconomySystem, s, "water_economy",
+                () => s.CaptureState(), o => s.RestoreState((WaterEconomySystemSave)o));
+
+        /// <summary>Black Rain hazard (Prompt #11) — currently stateless; CR reserved.</summary>
+        public void SetBlackRainHazardSystem(BlackRainHazardSystem s) =>
+            RegisterSystem(ref _blackRainHazardSystem, s, "black_rain",
+                () => s.CaptureState(), o => s.RestoreState((BlackRainHazardSystemSave)o));
+
         /// <summary>Inject Prompt #71 tracker for save/load.</summary>
         public void SetTrackerSystem(TrackerSystem sys)
         {
