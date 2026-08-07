@@ -276,6 +276,13 @@ namespace AtomicWar._Game.Core
         public MapAnomaly_TangledDrop MapAnomalyTangledDrop { get; private set; }
         public MapAnomaly_TireFire MapAnomalyTireFire { get; private set; }
         public MapAnomaly_UXO_Nuke MapAnomalyUxoNuke { get; private set; }
+        // Expedition biomes — terrain modifiers for map travel.
+        public Biome_AshSwamp BiomeAshSwamp { get; private set; }
+        public Biome_GlassDesert BiomeGlassDesert { get; private set; }
+        public Biome_HighwayTunnel BiomeHighwayTunnel { get; private set; }
+        public Biome_SaltFlats BiomeSaltFlats { get; private set; }
+        public Biome_SkyscraperTops BiomeSkyscraperTops { get; private set; }
+        public Biome_Suburbs BiomeSuburbs { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

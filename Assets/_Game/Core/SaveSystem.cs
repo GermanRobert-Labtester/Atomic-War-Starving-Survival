@@ -237,6 +237,12 @@ namespace AtomicWar._Game.Core
         private MapAnomaly_TangledDrop _mapAnomalyTangledDrop;
         private MapAnomaly_TireFire _mapAnomalyTireFire;
         private MapAnomaly_UXO_Nuke _mapAnomalyUxoNuke;
+        private Biome_AshSwamp _biomeAshSwamp;
+        private Biome_GlassDesert _biomeGlassDesert;
+        private Biome_HighwayTunnel _biomeHighwayTunnel;
+        private Biome_SaltFlats _biomeSaltFlats;
+        private Biome_SkyscraperTops _biomeSkyscraperTops;
+        private Biome_Suburbs _biomeSuburbs;
         private Siege_Artillery _siegeArtillerySystem;
         private Siege_Biowarfare _siegeBiowarfareSystem;
         private Siege_Blockade _siegeBlockadeSystem;

@@ -103,6 +103,8 @@ namespace AtomicWar._Game.Core
             BootMapHazards();
             // Map anomalies — expedition node anomalies (cherenkov / mirage / quiet zone / …).
             BootMapAnomalies();
+            // Expedition biomes — ash swamp / glass desert / salt flats / … .
+            BootBiomes();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

@@ -165,6 +165,12 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetMapAnomalyTangledDrop(MapAnomalyTangledDrop);
             SaveSystem.SetMapAnomalyTireFire(MapAnomalyTireFire);
             SaveSystem.SetMapAnomalyUxoNuke(MapAnomalyUxoNuke);
+            SaveSystem.SetBiomeAshSwamp(BiomeAshSwamp);
+            SaveSystem.SetBiomeGlassDesert(BiomeGlassDesert);
+            SaveSystem.SetBiomeHighwayTunnel(BiomeHighwayTunnel);
+            SaveSystem.SetBiomeSaltFlats(BiomeSaltFlats);
+            SaveSystem.SetBiomeSkyscraperTops(BiomeSkyscraperTops);
+            SaveSystem.SetBiomeSuburbs(BiomeSuburbs);
             SaveSystem.SetSiegeArtillerySystem(SiegeArtillery);
             SaveSystem.SetSiegeBiowarfareSystem(SiegeBiowarfare);
             SaveSystem.SetSiegeBlockadeSystem(SiegeBlockade);

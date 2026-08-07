@@ -725,6 +725,30 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _mapAnomalyUxoNuke, s, "map_anomaly_uxo_nuke",
                 () => s.CaptureState(), o => s.RestoreState((UXONukeState)o));
 
+        public void SetBiomeAshSwamp(Biome_AshSwamp s) =>
+            RegisterSystem(ref _biomeAshSwamp, s, "biome_ash_swamp",
+                () => s.CaptureState(), o => s.RestoreState((AshSwampState)o));
+
+        public void SetBiomeGlassDesert(Biome_GlassDesert s) =>
+            RegisterSystem(ref _biomeGlassDesert, s, "biome_glass_desert",
+                () => s.CaptureState(), o => s.RestoreState((GlassDesertState)o));
+
+        public void SetBiomeHighwayTunnel(Biome_HighwayTunnel s) =>
+            RegisterSystem(ref _biomeHighwayTunnel, s, "biome_highway_tunnel",
+                () => s.CaptureState(), o => s.RestoreState((HighwayTunnelState)o));
+
+        public void SetBiomeSaltFlats(Biome_SaltFlats s) =>
+            RegisterSystem(ref _biomeSaltFlats, s, "biome_salt_flats",
+                () => s.CaptureState(), o => s.RestoreState((SaltFlatsState)o));
+
+        public void SetBiomeSkyscraperTops(Biome_SkyscraperTops s) =>
+            RegisterSystem(ref _biomeSkyscraperTops, s, "biome_skyscraper_tops",
+                () => s.CaptureState(), o => s.RestoreState((SkyscraperTopsState)o));
+
+        public void SetBiomeSuburbs(Biome_Suburbs s) =>
+            RegisterSystem(ref _biomeSuburbs, s, "biome_suburbs",
+                () => s.CaptureState(), o => s.RestoreState((SuburbsState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),
