@@ -186,6 +186,7 @@ namespace AtomicWar._Game.Core
         private System_CarrionBirds _carrionBirdsSystem;
         private System_LogicGates _logicGatesSystem;
         private System_ModLoader _modLoaderSystem;
+        private System_TwitchAPI _twitchApiSystem;
         private RiverNodeSystem _riverNodeSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.

@@ -485,6 +485,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((ModLoaderState)o));
 
+        /// <summary>Prompt #865 — Twitch chat polls (connection, polls, cooldown).</summary>
+        public void SetTwitchApiSystem(System_TwitchAPI s) =>
+            RegisterSystem(ref _twitchApiSystem, s, "twitch_api",
+                () => s.CaptureState(),
+                o => s.RestoreState((TwitchApiState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",

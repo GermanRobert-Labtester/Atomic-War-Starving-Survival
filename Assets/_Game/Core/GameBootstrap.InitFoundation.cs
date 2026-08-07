@@ -93,6 +93,8 @@ namespace AtomicWar._Game.Core
             WireLogicGates();
             // Prompt #864 — community mods (JSON overrides) before other data consumers run.
             BootModLoader();
+            // Prompt #865 — Twitch chat polls (offline stub; host hooks re-bound after HatchDefense exists).
+            BootTwitchAPI();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

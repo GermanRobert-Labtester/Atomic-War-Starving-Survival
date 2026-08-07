@@ -220,6 +220,8 @@ namespace AtomicWar._Game.Core
         public System_LogicGates LogicGates { get; private set; }
         // Prompt #864 — community JSON mods under StreamingAssets/Mods or persistentDataPath/Mods.
         public System_ModLoader ModLoader { get; private set; }
+        // Prompt #865 — Twitch chat polls (offline-safe stubs; weather / raid / supply).
+        public System_TwitchAPI TwitchAPI { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

@@ -114,6 +114,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetCarrionBirdsSystem(CarrionBirds);
             SaveSystem.SetLogicGatesSystem(LogicGates);
             SaveSystem.SetModLoaderSystem(ModLoader);
+            SaveSystem.SetTwitchApiSystem(TwitchAPI);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);

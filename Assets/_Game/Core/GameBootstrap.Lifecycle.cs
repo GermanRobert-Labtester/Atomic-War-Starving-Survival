@@ -93,6 +93,9 @@ namespace AtomicWar._Game.Core
             // weather force) are visible to the same frame's HUD push.
             FlashpointChoreographer?.Tick(dt);
 
+            // Prompt #865 — Twitch poll timers / cooldowns are real-time while connected.
+            TickTwitchAPI(dt);
+
             // Fast-forward-safe clock: TimeScale (1x / 3x) scales the simulated
             // delta, and the accumulated game-time is consumed in sub-steps of
             // at most TimeSystem.MaxGameHoursPerStep so systems + AI see every
