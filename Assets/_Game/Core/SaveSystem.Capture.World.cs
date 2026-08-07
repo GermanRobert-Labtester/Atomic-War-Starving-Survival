@@ -58,31 +58,16 @@ namespace AtomicWar._Game.Core
             CapIf(_cultMoralSystem, s => data.CultMoral = s.CaptureState());
 
             // Narrative side systems
-            // cartography — dual-path CapIf removed; RegisterSystem owns capture.
-            CapIf(_floodedNodeSystem, s => data.FloodedNodes = s.CaptureState());
-            CapIf(_ecosystemSystem, s => data.Ecosystem = s.CaptureState());
-            CapIf(_houseToBunkerSystem, s => data.HouseToBunker = s.CaptureState());
-            CapIf(_locationQuestSystem, s => data.LocationQuests = s.CaptureState());
+            // cartography / flooded_node / ecosystem / house_to_bunker / location_quest —
+            // dual-path CapIf removed; RegisterSystem owns capture. RestIf keeps
+            // positional DTOs for pre-migration saves.
         }
 
         private void CaptureShelterTacticalSystems(SaveData data)
         {
-            CapIf(_structuralIntegrity, s => data.StructuralIntegrity = s.CaptureState());
-            CapIf(_wasteSystem, s => data.Waste = s.CaptureState());
-            CapIf(_verminSystem, s => data.Vermin = s.CaptureState());
-            CapIf(_juryRigSystem, s => data.JuryRig = s.CaptureState());
-            CapIf(_freezePipeSystem, s => data.FreezePipe = s.CaptureState());
-            CapIf(_excavationSystem, s => data.Excavation = s.CaptureState());
-            CapIf(_floodingSystem, s => data.Flooding = s.CaptureState());
-            CapIf(_hiddenStorageSystem, s => data.HiddenStorage = s.CaptureState());
-            CapIf(_ceilingCollapseSystem, s => data.CeilingCollapse = s.CaptureState());
-            CapIf(_perimeterTrapSystem, s => data.PerimeterTraps = s.CaptureState());
-            CapIf(_tunnelingSystem, s => data.Tunneling = s.CaptureState());
-            CapIf(_hatchVisibilitySystem, s => data.HatchVisibility = s.CaptureState());
-            CapIf(_escapeHatchSystem, s => data.EscapeHatch = s.CaptureState());
-            CapIf(_materialShieldingSystem, s => data.MaterialShielding = s.CaptureState());
-            CapIf(_airlockSystem, s => data.Airlock = s.CaptureState());
-            CapIf(_noiseSystem, s => data.Noise = s.CaptureState());
+            // Shelter tactical family (structural_integrity … noise) — dual-path CapIf
+            // removed; RegisterSystem + SubsystemSaveIds own capture. RestIf still
+            // reads positional DTOs for pre-migration saves.
         }
 
         private void CaptureSimulationExtras(SaveData data)

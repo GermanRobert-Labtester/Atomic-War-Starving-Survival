@@ -370,7 +370,12 @@ namespace AtomicWar._Game.Core
 
         public void RestoreState(LocationQuestSave save)
         {
+            // Reset lazy-seed flag so definitions repopulate after Clear.
+            // Subsystem restore probes CaptureState() as a type template first,
+            // which sets _seeded=true; without this reset, SeedQuestDefinitions
+            // early-returns and leaves _quests empty for the rest of the load.
             _quests.Clear();
+            _seeded = false;
             SeedQuestDefinitions();
             if (save?.Quests == null) return;
             for (int i = 0; i < save.Quests.Length; i++)

@@ -84,12 +84,13 @@ namespace AtomicWar._Game.Core
 
         private void RestoreNarrativeSideSystems(SaveData data)
         {
-            // cartography — positional only when present (pre-migration saves).
+            // Positional only when present (pre-migration saves). New saves restore
+            // via SubsystemSaveIds (RegisterSystem adapters).
             RestIf(_cartographySystem, s => { if (data.Cartography != null) s.RestoreState(data.Cartography); });
-            RestIf(_floodedNodeSystem, s => s.RestoreState(data.FloodedNodes));
-            RestIf(_ecosystemSystem, s => s.RestoreState(data.Ecosystem));
-            RestIf(_houseToBunkerSystem, s => s.RestoreState(data.HouseToBunker));
-            RestIf(_locationQuestSystem, s => s.RestoreState(data.LocationQuests));
+            RestIf(_floodedNodeSystem, s => { if (data.FloodedNodes != null) s.RestoreState(data.FloodedNodes); });
+            RestIf(_ecosystemSystem, s => { if (data.Ecosystem != null) s.RestoreState(data.Ecosystem); });
+            RestIf(_houseToBunkerSystem, s => { if (data.HouseToBunker != null) s.RestoreState(data.HouseToBunker); });
+            RestIf(_locationQuestSystem, s => { if (data.LocationQuests != null) s.RestoreState(data.LocationQuests); });
         }
 
         private void RestoreGeneratedMap(GeneratedMapSave mapSave)
@@ -106,22 +107,23 @@ namespace AtomicWar._Game.Core
 
         private void RestoreShelterTacticalSystems(SaveData data)
         {
-            RestIf(_structuralIntegrity, s => s.RestoreState(data.StructuralIntegrity));
-            RestIf(_wasteSystem, s => s.RestoreState(data.Waste));
-            RestIf(_verminSystem, s => s.RestoreState(data.Vermin));
-            RestIf(_juryRigSystem, s => s.RestoreState(data.JuryRig));
-            RestIf(_freezePipeSystem, s => s.RestoreState(data.FreezePipe));
-            RestIf(_excavationSystem, s => s.RestoreState(data.Excavation));
-            RestIf(_floodingSystem, s => s.RestoreState(data.Flooding));
-            RestIf(_hiddenStorageSystem, s => s.RestoreState(data.HiddenStorage));
-            RestIf(_ceilingCollapseSystem, s => s.RestoreState(data.CeilingCollapse));
-            RestIf(_perimeterTrapSystem, s => s.RestoreState(data.PerimeterTraps));
-            RestIf(_tunnelingSystem, s => s.RestoreState(data.Tunneling));
-            RestIf(_hatchVisibilitySystem, s => s.RestoreState(data.HatchVisibility));
-            RestIf(_escapeHatchSystem, s => s.RestoreState(data.EscapeHatch));
-            RestIf(_materialShieldingSystem, s => s.RestoreState(data.MaterialShielding));
-            RestIf(_airlockSystem, s => s.RestoreState(data.Airlock));
-            RestIf(_noiseSystem, s => s.RestoreState(data.Noise));
+            // Positional only when present (pre-migration saves).
+            RestIf(_structuralIntegrity, s => { if (data.StructuralIntegrity != null) s.RestoreState(data.StructuralIntegrity); });
+            RestIf(_wasteSystem, s => { if (data.Waste != null) s.RestoreState(data.Waste); });
+            RestIf(_verminSystem, s => { if (data.Vermin != null) s.RestoreState(data.Vermin); });
+            RestIf(_juryRigSystem, s => { if (data.JuryRig != null) s.RestoreState(data.JuryRig); });
+            RestIf(_freezePipeSystem, s => { if (data.FreezePipe != null) s.RestoreState(data.FreezePipe); });
+            RestIf(_excavationSystem, s => { if (data.Excavation != null) s.RestoreState(data.Excavation); });
+            RestIf(_floodingSystem, s => { if (data.Flooding != null) s.RestoreState(data.Flooding); });
+            RestIf(_hiddenStorageSystem, s => { if (data.HiddenStorage != null) s.RestoreState(data.HiddenStorage); });
+            RestIf(_ceilingCollapseSystem, s => { if (data.CeilingCollapse != null) s.RestoreState(data.CeilingCollapse); });
+            RestIf(_perimeterTrapSystem, s => { if (data.PerimeterTraps != null) s.RestoreState(data.PerimeterTraps); });
+            RestIf(_tunnelingSystem, s => { if (data.Tunneling != null) s.RestoreState(data.Tunneling); });
+            RestIf(_hatchVisibilitySystem, s => { if (data.HatchVisibility != null) s.RestoreState(data.HatchVisibility); });
+            RestIf(_escapeHatchSystem, s => { if (data.EscapeHatch != null) s.RestoreState(data.EscapeHatch); });
+            RestIf(_materialShieldingSystem, s => { if (data.MaterialShielding != null) s.RestoreState(data.MaterialShielding); });
+            RestIf(_airlockSystem, s => { if (data.Airlock != null) s.RestoreState(data.Airlock); });
+            RestIf(_noiseSystem, s => { if (data.Noise != null) s.RestoreState(data.Noise); });
         }
 
         private void RestoreSimulationExtras(SaveData data)
