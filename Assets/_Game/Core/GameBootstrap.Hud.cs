@@ -47,6 +47,8 @@ namespace AtomicWar._Game.Core
             // Ammo tooltips / hatch stockpile / combat log (safe if ItemAmmoTypes not ready yet).
             WireAmmoUiBindings();
             RefreshInventoryStrip(); // initial pooled icon sync
+            // UI Toolkit diegetic panels (hatch ammo/arms, encounter log, stores tooltip).
+            _hud.EnsureDiegeticHud();
             WireInternalHorrorHud();
             _hud.EnsureEndgameSummary();
             if (VictoryProject != null && VictoryProject.IsTerminal && VictoryProject.LastSummary != null)

@@ -104,11 +104,28 @@ namespace AtomicWar._Game.Core
             if (Input.GetKeyDown(_fastForwardKey))
                 _bootstrap.ToggleFastForward();
 
-            // Inventory strip: cycle focus [I], activate/click [E] (corpse → dispose).
+            // Inventory strip focus path:
+            //   [I] next · [Shift+I] prev · [E]/Enter activate · [Esc] clear tooltip
+            // Selected ammo shows military-exclusive tooltip in the diegetic HUD.
             if (Input.GetKeyDown(_inventoryCycleKey))
+            {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                    _bootstrap.SelectPrevInventoryIcon();
+                else
+                    _bootstrap.SelectNextInventoryIcon();
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+                _bootstrap.SelectPrevInventoryIcon();
+            if (Input.GetKeyDown(KeyCode.RightArrow))
                 _bootstrap.SelectNextInventoryIcon();
             if (Input.GetKeyDown(_inventoryActivateKey) || Input.GetKeyDown(KeyCode.Return))
                 _bootstrap.ActivateSelectedInventoryIcon();
+            if (Input.GetKeyDown(_closePanelKey)
+                && !_bootstrap.IsCorpseDisposePanelOpen()
+                && !_bootstrap.IsFirePanelOpen())
+            {
+                _bootstrap.ClearInventorySelection();
+            }
 
             // Quick open corpse dispose when a body is in stores [C].
             if (Input.GetKeyDown(_corpseDisposeKey))

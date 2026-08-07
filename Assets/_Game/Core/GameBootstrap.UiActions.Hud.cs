@@ -60,6 +60,8 @@ namespace AtomicWar._Game.Core
                 strip.Sync(Inventory);
             // Ammo stockpile / arms preview track inventory changes.
             _hud.HatchDefenseHUD?.Refresh();
+            // UI Toolkit diegetic hatch / stores / encounter panels.
+            _hud.RefreshDiegeticHud();
             // Corpse / rusted-can counts also drive the Internal Horror strip.
             RefreshInternalHorrorHud();
         }

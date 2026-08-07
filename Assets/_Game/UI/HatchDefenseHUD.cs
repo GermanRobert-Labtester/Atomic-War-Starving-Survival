@@ -71,15 +71,28 @@ namespace AtomicWar._Game.UI
         {
             IsOpen = true;
             Refresh();
+            OnOpenStateChanged?.Invoke(true);
         }
 
-        public void Close() => IsOpen = false;
+        public void Close()
+        {
+            if (!IsOpen) return;
+            IsOpen = false;
+            Refresh();
+            OnOpenStateChanged?.Invoke(false);
+        }
 
         public void Toggle()
         {
             if (IsOpen) Close();
             else Open();
         }
+
+        /// <summary>Raised when the hatch panel opens/closes (UI Toolkit paint hook).</summary>
+        public event Action<bool> OnOpenStateChanged;
+
+        /// <summary>Raised after status strings refresh (ammo / arms lines update).</summary>
+        public event Action OnRefreshed;
 
         private void OnRaid(RaidResolution _)
         {
@@ -97,9 +110,16 @@ namespace AtomicWar._Game.UI
                 StatusLine = "Hatch: offline";
                 UpgradesLine = string.Empty;
                 LastRaidLine = "Last raid: none";
-                AmmoStockpileLine = "AMMO: —";
-                ArmsPreviewLine = string.Empty;
+                // Still honor Core-injected ammo lines when the system is unbound
+                // (EditMode paint tests / pre-bootstrap frames).
+                AmmoStockpileLine = _ammoStockpileProvider != null
+                    ? (_ammoStockpileProvider() ?? "AMMO: —")
+                    : "AMMO: —";
+                ArmsPreviewLine = _armsPreviewProvider != null
+                    ? (_armsPreviewProvider() ?? string.Empty)
+                    : string.Empty;
                 DetailSummary = "No hatch defense system.";
+                OnRefreshed?.Invoke();
                 return;
             }
 
@@ -163,6 +183,7 @@ namespace AtomicWar._Game.UI
             if (ActiveGuards > 0)
                 detail.AppendLine($"Guard post active (+{HatchDefenseSystem.GuardSecurityBonusPerGuard * ActiveGuards:0} security).");
             DetailSummary = detail.ToString().TrimEnd();
+            OnRefreshed?.Invoke();
         }
 
         private void OnDestroy()

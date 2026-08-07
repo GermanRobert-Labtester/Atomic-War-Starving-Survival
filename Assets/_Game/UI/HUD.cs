@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Events;
@@ -37,6 +38,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private EndgameSummaryUI _endgameSummaryUi;
         [SerializeField] private InternalHorrorHUD _internalHorrorHud;
         [SerializeField] private ExpeditionEncounterLogHUD _expeditionEncounterLogHud;
+        [SerializeField] private DiegeticHudController _diegeticHud;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -60,6 +62,7 @@ namespace AtomicWar._Game.UI
         public EndgameSummaryUI EndgameSummaryUI { get { EnsureWidgetReferences(); return _endgameSummaryUi; } }
         public InternalHorrorHUD InternalHorrorHUD { get { EnsureWidgetReferences(); return _internalHorrorHud; } }
         public ExpeditionEncounterLogHUD ExpeditionEncounterLogHUD { get { EnsureWidgetReferences(); return _expeditionEncounterLogHud; } }
+        public DiegeticHudController DiegeticHud { get { EnsureWidgetReferences(); return _diegeticHud; } }
         public FactionRadioVoHook FactionRadioVoHook
         {
             get
@@ -110,6 +113,9 @@ namespace AtomicWar._Game.UI
             if (_expeditionEncounterLogHud == null)
                 _expeditionEncounterLogHud = GetComponentInChildren<ExpeditionEncounterLogHUD>()
                     ?? gameObject.AddComponent<ExpeditionEncounterLogHUD>();
+            if (_diegeticHud == null)
+                _diegeticHud = GetComponentInChildren<DiegeticHudController>()
+                    ?? gameObject.AddComponent<DiegeticHudController>();
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
@@ -293,6 +299,32 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             return _expeditionEncounterLogHud;
+        }
+
+        /// <summary>
+        /// Ensure UI Toolkit diegetic HUD is built and bound to hatch / stores / log.
+        /// </summary>
+        public DiegeticHudController EnsureDiegeticHud()
+        {
+            EnsureWidgetReferences();
+            if (_diegeticHud == null) return null;
+            // Prefer a live UIDocument on the same GO when present (play mode).
+            if (_diegeticHud.GetComponent<UIDocument>() == null
+                && GetComponent<UIDocument>() != null)
+            {
+                // HUD GO already has a document — controller will find none on self;
+                // still paints detached + can be reparented later.
+            }
+            _diegeticHud.EnsureBuilt();
+            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud);
+            return _diegeticHud;
+        }
+
+        /// <summary>Repaint diegetic UI Toolkit panels from current view-models.</summary>
+        public void RefreshDiegeticHud()
+        {
+            EnsureWidgetReferences();
+            _diegeticHud?.Paint();
         }
 
         /// <summary>

@@ -184,6 +184,19 @@ namespace AtomicWar._Game.UI
         }
 
         /// <summary>
+        /// Clear keyboard focus (hides stores tooltip unless diegetic HUD pins it).
+        /// </summary>
+        public bool ClearSelection()
+        {
+            if (SelectedIndex < 0) return false;
+            SelectedIndex = -1;
+            ApplySelectionFlags();
+            RebuildSummary();
+            OnSelectionChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
         /// Player click / confirm on focused icon. Corpses raise
         /// <see cref="OnIconActivated"/> so Core can open dispose UI.
         /// </summary>

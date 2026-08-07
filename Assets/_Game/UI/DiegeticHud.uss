@@ -1,0 +1,112 @@
+/*
+ * Diegetic in-game HUD — hatch ammo / arms, encounter log, stores tooltip.
+ * Cold, exhausted tone; mono-friendly labels. Layout is absolute corners so
+ * it never fights full-screen menus.
+ */
+
+.diegetic-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    flex-grow: 1;
+    /* Pass clicks through empty space to the world / other UI. */
+    picking-mode: ignore;
+    color: rgb(230, 224, 210);
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.diegetic-panel {
+    position: absolute;
+    background-color: rgba(9, 11, 12, 0.82);
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(217, 196, 152, 0.22);
+    border-right-color: rgba(217, 196, 152, 0.22);
+    border-top-color: rgba(217, 196, 152, 0.22);
+    border-bottom-color: rgba(217, 196, 152, 0.22);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    max-width: 420px;
+    picking-mode: position;
+}
+
+.diegetic-panel.hidden {
+    display: none;
+}
+
+/* Hatch block — top-right when [H] open */
+.hatch-panel {
+    top: 16px;
+    right: 16px;
+    min-width: 280px;
+    max-height: 420px;
+}
+
+/* Encounter log strip — bottom-left */
+.encounter-panel {
+    bottom: 16px;
+    left: 16px;
+    min-width: 320px;
+    max-width: 480px;
+    max-height: 200px;
+}
+
+/* Stores focus tooltip — bottom-right when inventory strip has focus */
+.stores-panel {
+    bottom: 16px;
+    right: 16px;
+    min-width: 260px;
+    max-width: 360px;
+}
+
+.diegetic-title {
+    color: rgb(211, 170, 98);
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 4px;
+    -unity-font-style: bold;
+}
+
+.diegetic-status {
+    color: rgb(230, 224, 210);
+    white-space: normal;
+    margin-bottom: 6px;
+}
+
+.diegetic-body {
+    color: rgb(147, 143, 132);
+    white-space: normal;
+    margin-bottom: 4px;
+}
+
+.diegetic-body.emphasis {
+    color: rgb(244, 200, 117);
+}
+
+.diegetic-body.exclusive {
+    color: rgb(196, 120, 90);
+}
+
+.diegetic-line {
+    color: rgb(147, 143, 132);
+    white-space: normal;
+    margin-bottom: 2px;
+}
+
+.diegetic-hint {
+    color: rgb(102, 103, 95);
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.encounter-list {
+    flex-direction: column;
+    max-height: 140px;
+}

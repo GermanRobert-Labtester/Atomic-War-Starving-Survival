@@ -997,6 +997,9 @@ namespace AtomicWar._Game.Core
                     ExpeditionEncounterLog.OnLineAdded -= logHud.Push;
                     ExpeditionEncounterLog.OnLineAdded += logHud.Push;
                 }
+
+                _hud.EnsureDiegeticHud();
+                _hud.RefreshDiegeticHud();
             }
 
             if (ExpeditionSystem != null && ExpeditionEncounterLog != null)

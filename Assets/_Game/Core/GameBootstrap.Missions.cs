@@ -98,12 +98,35 @@ namespace AtomicWar._Game.Core
             return strip != null && strip.ActivateIndex(index);
         }
 
-        /// <summary>Cycle inventory strip focus (keyboard path).</summary>
+        /// <summary>Cycle inventory strip focus forward (keyboard path [I]).</summary>
         public bool SelectNextInventoryIcon()
         {
             if (_hud == null) return false;
             var strip = _hud.InventoryStripUI;
-            return strip != null && strip.SelectNext();
+            bool ok = strip != null && strip.SelectNext();
+            if (ok) _hud.RefreshDiegeticHud();
+            return ok;
+        }
+
+        /// <summary>Cycle inventory strip focus backward (keyboard path [Shift+I]).</summary>
+        public bool SelectPrevInventoryIcon()
+        {
+            if (_hud == null) return false;
+            var strip = _hud.InventoryStripUI;
+            bool ok = strip != null && strip.SelectPrev();
+            if (ok) _hud.RefreshDiegeticHud();
+            return ok;
+        }
+
+        /// <summary>Clear strip focus and hide stores tooltip ([Esc] when no other panel).</summary>
+        public bool ClearInventorySelection()
+        {
+            if (_hud == null) return false;
+            var strip = _hud.InventoryStripUI;
+            bool cleared = strip != null && strip.ClearSelection();
+            _hud.DiegeticHud?.ClearStoresFocus();
+            _hud.RefreshDiegeticHud();
+            return cleared;
         }
 
         /// <summary>Confirm focused inventory icon (Enter/E). Corpses open dispose.</summary>

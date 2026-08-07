@@ -1,0 +1,26 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <ui:VisualElement name="diegetic-root" class="diegetic-root" picking-mode="Ignore">
+        <ui:VisualElement name="hatch-panel" class="diegetic-panel hatch-panel hidden">
+            <ui:Label name="hatch-title" class="diegetic-title" text="HATCH DEFENSE" />
+            <ui:Label name="hatch-status" class="diegetic-status" text="" />
+            <ui:Label name="hatch-ammo" class="diegetic-body" text="" />
+            <ui:Label name="hatch-arms" class="diegetic-body emphasis" text="" />
+            <ui:Label name="hatch-hint" class="diegetic-hint" text="[H] close  ·  [B] workbench upgrades" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="encounter-panel" class="diegetic-panel encounter-panel">
+            <ui:Label name="encounter-title" class="diegetic-title" text="FIELD CONTACT" />
+            <ui:Label name="encounter-status" class="diegetic-status" text="ENCOUNTER LOG: quiet." />
+            <ui:VisualElement name="encounter-list" class="encounter-list" />
+            <ui:Label name="encounter-hint" class="diegetic-hint" text="Expedition combat feeds this strip." />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="stores-panel" class="diegetic-panel stores-panel hidden">
+            <ui:Label name="stores-title" class="diegetic-title" text="STORES FOCUS" />
+            <ui:Label name="stores-summary" class="diegetic-status" text="" />
+            <ui:Label name="stores-tooltip" class="diegetic-body" text="" />
+            <ui:Label name="stores-hint" class="diegetic-hint" text="[I] next  ·  [Shift+I] prev  ·  [E] use" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
