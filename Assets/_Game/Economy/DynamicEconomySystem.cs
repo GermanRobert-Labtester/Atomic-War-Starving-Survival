@@ -711,7 +711,28 @@ namespace AtomicWar._Game.Economy
         }
 
         /// <summary>
-        /// Effective trade value for an item under current WorldPhase + supply/demand.
+        /// True when average demand pressure is elevated — food/meds/guns spike via
+        /// <see cref="Item_TradeValues.ShortageMultiplier"/>; gems soften.
+        /// </summary>
+        public bool IsSuppliesShort()
+        {
+            if (_demand == null || _demand.Count == 0) return false;
+            float sum = 0f;
+            int n = 0;
+            foreach (var kv in _demand)
+            {
+                sum += kv.Value;
+                n++;
+            }
+            if (n == 0) return false;
+            // Neutral demand is 1.0; sustained pressure above ~1.35 means shortage.
+            return (sum / n) >= 1.35f;
+        }
+
+        /// <summary>
+        /// Effective trade value for an item under current WorldPhase + supply/demand
+        /// + category shortage spikes. Code-only numeric — UI uses
+        /// <see cref="Item_TradeValues.FormatWorthLabel"/>.
         /// Does not apply faction trust (use <see cref="GetBarterUnitValue"/> for that).
         /// </summary>
         public float GetTradeValue(ItemDefinition item)
@@ -719,7 +740,12 @@ namespace AtomicWar._Game.Economy
             if (item == null) return 0f;
             float phaseVal = TradeEconomy.GetEffectiveValue(item, CurrentPhase);
             if (phaseVal <= 0f) return 0f;
-            float v = phaseVal * GetDemandMultiplier(item.id);
+
+            // Category shortage spikes (meds/food/guns up, gems soft) when supplies short.
+            var tier = Item_TradeValues.InferTier(item.type);
+            float demand = GetDemandMultiplier(item.id);
+            float v = Item_TradeValues.Resolve(phaseVal, tier, demand, IsSuppliesShort());
+
             // #281 Beacon of Truth: global trade prices −30%.
             if (_personalQuests != null && _getSurvivors != null)
                 v *= _personalQuests.GetBeaconTradePriceMultiplier(_getSurvivors());
@@ -757,6 +783,14 @@ namespace AtomicWar._Game.Economy
                 }
             }
             return v;
+        }
+
+        /// <summary>
+        /// Player-facing worth label for an item under current economy (never digits).
+        /// </summary>
+        public string GetWorthLabel(ItemDefinition item)
+        {
+            return Item_TradeValues.FormatWorthLabel(GetTradeValue(item));
         }
 
         /// <summary>#315 Inmate Untrusted: this survivor's personal standing with a faction is zero.</summary>

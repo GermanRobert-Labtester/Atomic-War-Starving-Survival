@@ -8,6 +8,7 @@ namespace AtomicWar._Game.Data
     /// anti-rad/iodine are cheap. From Flashpoint day 30 onward: conventional Trade
     /// currency/jewelry collapses to 0, anti-rad and iodine spike 10×, clean water
     /// is the gold standard. Supply/demand and faction trust live on DynamicEconomySystem.
+    /// Base ladder lives on <see cref="Item_TradeValues"/> / world catalog (code-only numerics).
     /// </summary>
     public static class TradeEconomy
     {
@@ -32,34 +33,16 @@ namespace AtomicWar._Game.Data
         }
 
         /// <summary>
-        /// Base trade value when ItemDefinition.tradeValue is unset (0). Keeps tests and
-        /// unimported JSON items usable without requiring a full re-import.
+        /// Base trade value: ItemDefinition.tradeValue, else logical tier defaults.
+        /// Numbers stay in code — UI must use <see cref="Item_TradeValues.FormatWorthLabel"/>.
         /// </summary>
         public static float GetBaseTradeValue(ItemDefinition item)
         {
             if (item == null) return 0f;
             if (item.tradeValue > 0f) return item.tradeValue;
 
-            switch (item.type)
-            {
-                case ItemType.Food: return 12f;
-                case ItemType.ContaminatedFood: return 1f;
-                case ItemType.Water: return 15f;
-                case ItemType.IrradiatedWater: return 2f;
-                case ItemType.AntiRad: return 8f;
-                case ItemType.Iodine: return 6f;
-                case ItemType.Medical: return 10f;
-                case ItemType.Trade: return 25f;
-                case ItemType.Fuel: return 14f;
-                case ItemType.Material: return 5f;
-                case ItemType.Tool: return 18f;
-                case ItemType.Protective: return 40f;
-                case ItemType.Filter: return 20f;
-                case ItemType.Device: return 30f;
-                case ItemType.Comfort: return 8f;
-                case ItemType.Corpse: return 0f;
-                default: return 5f;
-            }
+            // Fall back to the code-only barter ladder by type.
+            return Item_TradeValues.BaseForTier(Item_TradeValues.InferTier(item.type));
         }
 
         /// <summary>Phase-only effective value (no supply/demand, no trust).</summary>
