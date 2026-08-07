@@ -71,8 +71,9 @@ namespace AtomicWar._Game.Core
             RestIf(_debtCollector, s => s.RestoreState(data.DebtCollector));
             RestIf(_ghostStations, s => s.RestoreState(data.GhostStations));
             RestIf(_lifeboat, s => s.RestoreState(data.Lifeboat));
-            RestIf(_trackerSystem, s => s.RestoreState(data.Tracker));
-            RestIf(_deadDropSystem, s => s.RestoreState(data.DeadDrops));
+            // tracker / dead_drops — positional only when present (pre-migration saves).
+            RestIf(_trackerSystem, s => { if (data.Tracker != null) s.RestoreState(data.Tracker); });
+            RestIf(_deadDropSystem, s => { if (data.DeadDrops != null) s.RestoreState(data.DeadDrops); });
             RestIf(_hostageSystem, s => s.RestoreState(data.Hostages));
             RestIf(_propagandaSystem, s => s.RestoreState(data.Propaganda));
             RestIf(_deserterSystem, s => s.RestoreState(data.Deserters));
@@ -83,7 +84,8 @@ namespace AtomicWar._Game.Core
 
         private void RestoreNarrativeSideSystems(SaveData data)
         {
-            RestIf(_cartographySystem, s => s.RestoreState(data.Cartography));
+            // cartography — positional only when present (pre-migration saves).
+            RestIf(_cartographySystem, s => { if (data.Cartography != null) s.RestoreState(data.Cartography); });
             RestIf(_floodedNodeSystem, s => s.RestoreState(data.FloodedNodes));
             RestIf(_ecosystemSystem, s => s.RestoreState(data.Ecosystem));
             RestIf(_houseToBunkerSystem, s => s.RestoreState(data.HouseToBunker));

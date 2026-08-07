@@ -22,15 +22,17 @@ namespace AtomicWar._Game.Core
 
         private void RestoreMedicalAndBodySystems(SaveData data)
         {
+            // Positional RestIf kept for pre-migration saves. New saves leave these
+            // null and restore via SubsystemSaveIds (RegisterSystem adapters).
             if (_medicalSystem != null && data.Medical != null)
                 _medicalSystem.RestoreState(data.Medical);
-            if (_bloodTransfusion != null)
+            if (_bloodTransfusion != null && data.BloodTransfusion != null)
                 _bloodTransfusion.RestoreState(data.BloodTransfusion);
-            if (_amputationSystem != null)
+            if (_amputationSystem != null && data.Amputation != null)
                 _amputationSystem.RestoreState(data.Amputation);
-            if (_scurvySystem != null)
+            if (_scurvySystem != null && data.Scurvy != null)
                 _scurvySystem.RestoreState(data.Scurvy);
-            if (_mutagenesisSystem != null)
+            if (_mutagenesisSystem != null && data.Mutagenesis != null)
                 _mutagenesisSystem.RestoreState(data.Mutagenesis);
             if (_chelationSystem != null)
                 _chelationSystem.RestoreState(data.Chelation);

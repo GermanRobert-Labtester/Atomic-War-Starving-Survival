@@ -48,8 +48,8 @@ namespace AtomicWar._Game.Core
             CapIf(_debtCollector, s => data.DebtCollector = s.CaptureState());
             CapIf(_ghostStations, s => data.GhostStations = s.CaptureState());
             CapIf(_lifeboat, s => data.Lifeboat = s.CaptureState());
-            CapIf(_trackerSystem, s => data.Tracker = s.CaptureState());
-            CapIf(_deadDropSystem, s => data.DeadDrops = s.CaptureState());
+            // tracker / dead_drops — dual-path CapIf removed; RegisterSystem owns capture.
+            // RestIf still reads data.Tracker / data.DeadDrops for pre-migration saves.
             CapIf(_hostageSystem, s => data.Hostages = s.CaptureState());
             CapIf(_propagandaSystem, s => data.Propaganda = s.CaptureState());
             CapIf(_deserterSystem, s => data.Deserters = s.CaptureState());
@@ -58,7 +58,7 @@ namespace AtomicWar._Game.Core
             CapIf(_cultMoralSystem, s => data.CultMoral = s.CaptureState());
 
             // Narrative side systems
-            CapIf(_cartographySystem, s => data.Cartography = s.CaptureState());
+            // cartography — dual-path CapIf removed; RegisterSystem owns capture.
             CapIf(_floodedNodeSystem, s => data.FloodedNodes = s.CaptureState());
             CapIf(_ecosystemSystem, s => data.Ecosystem = s.CaptureState());
             CapIf(_houseToBunkerSystem, s => data.HouseToBunker = s.CaptureState());

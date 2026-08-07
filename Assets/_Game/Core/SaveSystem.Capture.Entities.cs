@@ -22,11 +22,10 @@ namespace AtomicWar._Game.Core
 
         private void CaptureMedicalAndBodySystems(SaveData data)
         {
-            if (_medicalSystem != null) data.Medical = _medicalSystem.CaptureState();
-            if (_bloodTransfusion != null) data.BloodTransfusion = _bloodTransfusion.CaptureState();
-            if (_amputationSystem != null) data.Amputation = _amputationSystem.CaptureState();
-            if (_scurvySystem != null) data.Scurvy = _scurvySystem.CaptureState();
-            if (_mutagenesisSystem != null) data.Mutagenesis = _mutagenesisSystem.CaptureState();
+            // medical / blood_transfusion / amputation / scurvy / mutagenesis —
+            // dual-path CapIf removed; RegisterSystem + SubsystemSaveIds own capture.
+            // RestIf in RestoreMedicalAndBodySystems still reads positional DTOs for
+            // pre-migration saves.
             if (_chelationSystem != null) data.Chelation = _chelationSystem.CaptureState();
             if (_antibioticResistSystem != null) data.AntibioticResist = _antibioticResistSystem.CaptureState();
             if (_triageSystem != null) data.Triage = _triageSystem.CaptureState();
