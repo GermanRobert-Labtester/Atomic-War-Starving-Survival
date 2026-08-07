@@ -239,6 +239,10 @@ namespace AtomicWar._Game.Core
 
         private void TryAddLootItem(ExpeditionState exp)
         {
+            // Military / ground-zero nodes: chance to inject exclusive AP/API/battle-rifle ammo.
+            if (TryInjectFactionAmmoLoot(exp))
+                return;
+
             var item = _itemCatalog.items[_rng.Next(_itemCatalog.items.Count)];
             if (item == null) return;
 
@@ -263,6 +267,86 @@ namespace AtomicWar._Game.Core
             }
 
             exp.TryAddLoot(item);
+        }
+
+        /// <summary>
+        /// On military loot tables / high-danger ground-zero style nodes, roll
+        /// non-craftable exclusive ammo (AP/API/battle rifle) into expedition loot.
+        /// </summary>
+        private bool TryInjectFactionAmmoLoot(ExpeditionState exp)
+        {
+            LastFactionAmmoLootIds.Clear();
+            if (exp == null || _ammoTypes == null) return false;
+
+            string lootTableId = null;
+            var node = ResolveMapNode(exp.TargetLocationId);
+            if (node != null) lootTableId = node.LootTableId;
+
+            bool militarySite = Item_AmmoTypes.IsMilitaryLootTable(lootTableId)
+                || exp.DangerLevel >= 4f
+                || (lootTableId != null && lootTableId.IndexOf("military", StringComparison.OrdinalIgnoreCase) >= 0);
+
+            // Also inject on human hostile kills at high danger (rebel/mil caches).
+            if (!militarySite && exp.DangerLevel < 3.5f) return false;
+
+            // Base chance scales with danger; military tables are more reliable.
+            float chance = militarySite ? 0.45f + exp.DangerLevel * 0.05f : 0.12f + exp.DangerLevel * 0.03f;
+            if (_rng.NextDouble() >= Mathf.Clamp01(chance)) return false;
+
+            var source = Item_AmmoTypes.SourceForLootTable(lootTableId);
+            if (!Item_AmmoTypes.IsMilitaryOrRebelSource(source))
+            {
+                // High-danger non-tagged sites still yield military stock sometimes.
+                source = AmmoFactionSource.MilitaryForces;
+            }
+
+            int count = exp.DangerLevel >= 5f ? 2 : 1;
+            var ids = Item_AmmoTypes.RollFactionAmmoLoot(source, _rng, count, preferApApi: true);
+            if (ids == null || ids.Count == 0) return false;
+
+            bool any = false;
+            for (int i = 0; i < ids.Count; i++)
+            {
+                string id = ids[i];
+                var def = ResolveAmmoItemDefinition(id);
+                if (def == null) continue;
+                if (exp.TryAddLoot(def))
+                {
+                    LastFactionAmmoLootIds.Add(id);
+                    any = true;
+                }
+            }
+            return any;
+        }
+
+        private ItemDefinition ResolveAmmoItemDefinition(string ammoId)
+        {
+            if (string.IsNullOrEmpty(ammoId)) return null;
+            if (_ammoItemFactory != null)
+            {
+                var made = _ammoItemFactory(ammoId);
+                if (made != null) return made;
+            }
+            if (_itemCatalog?.items != null)
+            {
+                for (int i = 0; i < _itemCatalog.items.Count; i++)
+                {
+                    var it = _itemCatalog.items[i];
+                    if (it != null && string.Equals(it.id, ammoId, StringComparison.Ordinal))
+                        return it;
+                }
+            }
+            // Synthesize a stackable Weapon-typed ammo stack for tests / missing catalog.
+            if (!Item_AmmoTypes.TryGetLoad(ammoId, out var load)) return null;
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = load.Id;
+            item.displayName = load.DisplayName;
+            item.description = load.Description;
+            item.type = ItemType.Weapon;
+            item.stackMax = load.StackMax;
+            item.weight = load.WeightPerRound;
+            item.tradeValue = load.TradeValue;
+            return item;
         }
 
         private void TryFireForcedLocationEncounter(ExpeditionState exp)

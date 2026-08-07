@@ -38,6 +38,8 @@ namespace AtomicWar._Game.Core
         public int totalAmmoWasted;
         public float hoursPassed;
         public string summaryText;
+        /// <summary>Exclusive ammo scavenged from the field after resolution (item ids).</summary>
+        public List<string> ScavengedAmmoIds = new List<string>();
     }
 
     /// <summary>
@@ -123,11 +125,12 @@ namespace AtomicWar._Game.Core
             {
                 if (state.factionACount <= 0 || state.factionBCount <= 0) break;
 
-                // Faction A shoots B
+                // Faction A shoots B (ResolveHit-shaped hit chance vs B armor)
                 int shotsA = Math.Min(state.factionAAmmo, state.factionACount * 2);
                 state.factionAAmmo -= shotsA;
                 ammoUsedA += shotsA;
-                if (rng.NextDouble() < 0.35 && state.factionBCount > 0)
+                float hitA = ComputeSkirmishHitChance(state.factionA, state.factionB);
+                if (rng.NextDouble() < hitA && state.factionBCount > 0)
                 {
                     state.factionBCount--;
                     casualtiesB++;
@@ -137,7 +140,8 @@ namespace AtomicWar._Game.Core
                 int shotsB = Math.Min(state.factionBAmmo, state.factionBCount * 2);
                 state.factionBAmmo -= shotsB;
                 ammoUsedB += shotsB;
-                if (rng.NextDouble() < 0.35 && state.factionACount > 0)
+                float hitB = ComputeSkirmishHitChance(state.factionB, state.factionA);
+                if (rng.NextDouble() < hitB && state.factionACount > 0)
                 {
                     state.factionACount--;
                     casualtiesA++;
@@ -166,6 +170,7 @@ namespace AtomicWar._Game.Core
                 state.winnerAmmoRemaining = 0;
             }
 
+            var scavenged = RollScavengedAmmo(state, rng);
             var outcome = new SkirmishOutcome
             {
                 winningFaction = state.winningFaction,
@@ -173,11 +178,67 @@ namespace AtomicWar._Game.Core
                 totalCorpses = state.totalCorpsesGenerated,
                 totalAmmoWasted = ammoUsedA + ammoUsedB,
                 hoursPassed = hoursToWait,
+                ScavengedAmmoIds = scavenged,
                 summaryText = $"After {hoursToWait:F0} hours, {state.winningFaction} prevailed. {state.totalCorpsesGenerated} corpses lie scattered among depleted casing."
             };
 
             OnSkirmishResolved?.Invoke(state, outcome);
             return outcome;
+        }
+
+        /// <summary>
+        /// Field-scavenge exclusive ammo from military/rebel skirmish winners.
+        /// Civilian/bandit winners drop craftable common loads only.
+        /// </summary>
+        public static List<string> RollScavengedAmmo(SkirmishState state, System.Random rng)
+        {
+            var list = new List<string>();
+            if (state == null) return list;
+            rng ??= new System.Random();
+
+            string winner = state.winningFaction ?? string.Empty;
+            if (string.Equals(winner, "Mutual Destruction", StringComparison.Ordinal)
+                || string.Equals(winner, "none", StringComparison.Ordinal)
+                || string.Equals(winner, "player_involved", StringComparison.Ordinal))
+            {
+                // Both sides bled — mix of exclusive casings left behind.
+                list.AddRange(Item_AmmoTypes.RollFactionAmmoLoot(
+                    AmmoFactionSource.MilitaryForces, rng, count: 1, preferApApi: true));
+                list.AddRange(Item_AmmoTypes.RollFactionAmmoLoot(
+                    AmmoFactionSource.RebelForces, rng, count: 1, preferApApi: true));
+                return list;
+            }
+
+            var source = Item_AmmoTypes.MapFactionId(winner);
+            int count = state.totalCorpsesGenerated >= 4 ? 2 : 1;
+            bool preferAp = Item_AmmoTypes.IsMilitaryOrRebelSource(source);
+            list.AddRange(Item_AmmoTypes.RollFactionAmmoLoot(source, rng, count, preferApApi: preferAp));
+            return list;
+        }
+
+        /// <summary>
+        /// Background skirmish fire uses ResolveHit: armored factions (military)
+        /// soak soft ammo, so kill chance drops when the shooter is treated as soft-lead
+        /// and the target as armored. Returns hit probability 0..1.
+        /// </summary>
+        public static float ComputeSkirmishHitChance(
+            string shooterFactionId,
+            string targetFactionId,
+            Item_AmmoTypes ammo = null)
+        {
+            ammo ??= new Item_AmmoTypes();
+            float targetArmor = Item_AmmoTypes.GetFactionArmor(targetFactionId);
+            // Shooter load: military/rebel use AP baseline; raiders use soft FMJ.
+            string loadId = Item_AmmoTypes.IsMilitaryOrRebelSource(Item_AmmoTypes.MapFactionId(shooterFactionId))
+                ? "ammo_556x45_ap"
+                : "ammo_9x19_fmj";
+            float baseDmg = 14f;
+            if (Item_AmmoTypes.TryGetLoad(loadId, out var load))
+                baseDmg = load.BaseDamage;
+            var hit = ammo.ResolveHit(loadId, baseDmg, targetArmor);
+            // Map terminal damage into a 0.15–0.55 hit chance band (was flat 0.35).
+            float ratio = hit.FinalDamage / Mathf.Max(1f, baseDmg);
+            return Mathf.Clamp(0.15f + ratio * 0.30f, 0.12f, 0.55f);
         }
 
         public SkirmishState GetSkirmish(string locationId)

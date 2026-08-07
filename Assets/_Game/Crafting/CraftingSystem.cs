@@ -25,6 +25,12 @@ namespace AtomicWar._Game.Crafting
         private PersonalQuestSystem _personalQuests;
         private Func<int> _getDay;
         private System.Random _rng = new System.Random(42);
+        /// <summary>
+        /// Optional craft gate: result item id → allowed. Host binds
+        /// Item_AmmoTypes.IsWorkbenchCraftAllowed so military AP/API/battle-rifle
+        /// exclusives cannot be pressed at the civilian workbench.
+        /// </summary>
+        private Func<string, bool> _isCraftResultAllowed;
 
         /// <summary>When true, Tick advances no crafts (game paused).</summary>
         public bool IsPaused { get; set; }
@@ -46,6 +52,15 @@ namespace AtomicWar._Game.Crafting
         {
             _survivalPerks = perks;
             _getDay = getDay ?? (() => 0);
+        }
+
+        /// <summary>
+        /// Gate recipe results (e.g. only civilian ammo loads are workbench-craftable).
+        /// Null keeps all results allowed (legacy / tests without ammo catalog).
+        /// </summary>
+        public void BindCraftResultGate(Func<string, bool> isResultAllowed)
+        {
+            _isCraftResultAllowed = isResultAllowed;
         }
 
         /// <summary>Prompt #216 — Alchemist double yield + mold antibiotics.</summary>
@@ -158,6 +173,15 @@ namespace AtomicWar._Game.Crafting
                 {
                     return false;
                 }
+            }
+
+            // Civilian workbench only: reject military/rebel exclusive ammo results.
+            if (_isCraftResultAllowed != null
+                && recipe.result != null
+                && !string.IsNullOrEmpty(recipe.result.id)
+                && !_isCraftResultAllowed(recipe.result.id))
+            {
+                return false;
             }
 
             float costMult = GetCraftCostMultiplier(crafter);

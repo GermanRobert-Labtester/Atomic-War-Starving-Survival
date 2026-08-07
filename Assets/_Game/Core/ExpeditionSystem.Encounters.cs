@@ -31,12 +31,97 @@ namespace AtomicWar._Game.Core
             ApplyDesertersStandIfNeeded(exp, selected, survivor, chosen);
             ApplyCombatPerkMilestones(exp, selected, survivor, chosen, fled);
             ApplyExpeditionPerkEncounterMilestones(exp, selected, survivor, chosen, fled);
+            ApplyAmmoResolveHitOnEngage(exp, selected, survivor, chosen, fled);
             ApplyBloodToxicityBiteRetaliation(exp, selected, survivor, chosen, fled);
 
             if (fled)
                 TryProcessUxoFlee(exp);
 
             OnEncounterResolved?.Invoke(exp, selected, chosen);
+        }
+
+        /// <summary>
+        /// Consume one bunker/carried ammo stack and ResolveHit against encounter armor.
+        /// Strong hits grant a small morale bump; weak JHP-on-armor shots leave a health nick.
+        /// </summary>
+        private void ApplyAmmoResolveHitOnEngage(
+            ExpeditionState exp, EncounterSO selected, Survivor survivor, EventChoice chosen, bool fled)
+        {
+            LastCombatShotDamage = 0f;
+            LastCombatAmmoId = null;
+            if (fled || _ammoTypes == null || survivor == null || selected == null) return;
+
+            bool isCombat = selected.category == EncounterCategory.Combat;
+            if (!isCombat) return;
+
+            string choiceId = chosen?.ChoiceId ?? string.Empty;
+            bool engaged = string.Equals(choiceId, "engage", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(choiceId, "fight", StringComparison.OrdinalIgnoreCase)
+                || (!string.Equals(choiceId, "flee", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "sneak", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "pay", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "detour", StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(choiceId, "light_step_bypass", StringComparison.OrdinalIgnoreCase));
+            if (!engaged) return;
+
+            string ammoId = TryConsumeBestCombatAmmo();
+            if (string.IsNullOrEmpty(ammoId)) return;
+
+            float armor = Item_AmmoTypes.InferEncounterArmor(selected.id);
+            bool barrier = selected.id != null
+                && selected.id.IndexOf("barricade", StringComparison.OrdinalIgnoreCase) >= 0;
+            float baseDmg = 12f;
+            if (Item_AmmoTypes.TryGetLoad(ammoId, out var load))
+                baseDmg = load.BaseDamage;
+
+            var hit = _ammoTypes.ResolveHit(ammoId, baseDmg, armor, barrier, rangeMeters: 40f);
+            LastCombatShotDamage = hit.FinalDamage;
+            LastCombatAmmoId = ammoId;
+
+            if (hit.FinalDamage >= baseDmg * 0.9f)
+            {
+                // Clean terminal effect — brief morale lift.
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 2f, 0f, 100f);
+            }
+            else if (hit.ArmorPenaltyApplied || hit.FinalDamage < baseDmg * 0.35f)
+            {
+                // Soft lead / JHP failed on armor — return fire nicks the scavenger.
+                float nick = Mathf.Clamp(4f + (baseDmg - hit.FinalDamage) * 0.15f, 3f, 12f);
+                survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health - nick, 0f, 100f);
+            }
+
+            if (hit.BurnDamagePerSecond > 0f)
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 1f, 0f, 100f);
+        }
+
+        /// <summary>
+        /// Prefer spending craftable ammo; falls back to any ammo_* / handgun / shells.
+        /// </summary>
+        private string TryConsumeBestCombatAmmo()
+        {
+            if (_inventory?.Slots == null) return null;
+
+            int bestIdx = -1;
+            int bestPri = int.MaxValue;
+            for (int i = 0; i < _inventory.Slots.Count; i++)
+            {
+                var slot = _inventory.Slots[i];
+                if (slot?.Item == null || slot.Amount <= 0) continue;
+                string id = slot.Item.id;
+                if (!Item_AmmoTypes.IsAmmoItemId(id)) continue;
+                int pri = Item_AmmoTypes.AmmoSpendPriority(id);
+                if (pri < bestPri)
+                {
+                    bestPri = pri;
+                    bestIdx = i;
+                }
+            }
+            if (bestIdx < 0) return null;
+
+            var pick = _inventory.Slots[bestIdx];
+            string ammoId = pick.Item.id;
+            _inventory.Remove(pick.Item, 1);
+            return ammoId;
         }
 
         /// <summary>

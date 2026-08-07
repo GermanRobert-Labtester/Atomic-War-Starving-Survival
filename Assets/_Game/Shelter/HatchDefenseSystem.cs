@@ -126,6 +126,24 @@ namespace AtomicWar._Game.Shelter
         /// </summary>
         public Func<string, int, bool> TryJamWeapon;
 
+        /// <summary>
+        /// Optional ammo defense power: (ammoItemId, amount, targetArmor) → stockpile power.
+        /// Host binds Item_AmmoTypes.GetAmmoStockpileDefensePower so ResolveHit
+        /// shapes hatch defense without a Core assembly reference.
+        /// </summary>
+        public Func<string, int, float, float> AmmoDefensePowerResolver;
+
+        /// <summary>
+        /// Optional raid armor from faction id. Host binds Item_AmmoTypes.GetFactionArmor.
+        /// </summary>
+        public Func<string, float> FactionArmorResolver;
+
+        /// <summary>
+        /// Optional spend priority for ammo (lower = consume first). Host binds
+        /// Item_AmmoTypes.AmmoSpendPriority so civilian craftable is burned before AP/API.
+        /// </summary>
+        public Func<string, int> AmmoSpendPriorityResolver;
+
         /// <summary>0..1 external noise (generator outside, loud work).</summary>
         public float ExternalNoise { get; private set; }
 
@@ -309,8 +327,10 @@ namespace AtomicWar._Game.Shelter
 
         /// <summary>
         /// Defense contribution from weapons and ammo in storage (stockpile pressure).
+        /// When <paramref name="targetArmor"/> &gt; 0 and <see cref="AmmoDefensePowerResolver"/>
+        /// is bound, ammo contribution uses ResolveHit-style armor interaction.
         /// </summary>
-        public float GetWeaponPower(Inventory.Inventory inventory = null)
+        public float GetWeaponPower(Inventory.Inventory inventory = null, float targetArmor = 0f)
         {
             var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
             if (inv?.Slots == null) return 0f;
@@ -320,7 +340,7 @@ namespace AtomicWar._Game.Shelter
             {
                 var slot = inv.Slots[i];
                 if (slot?.Item == null || slot.Amount <= 0) continue;
-                power += GetItemDefenseContribution(slot);
+                power += GetItemDefenseContribution(slot, targetArmor);
             }
 
             // Equipped gear also counts
@@ -415,12 +435,14 @@ namespace AtomicWar._Game.Shelter
             return basePower;
         }
 
-        private float GetItemDefenseContribution(InventorySlot slot)
+        private float GetItemDefenseContribution(InventorySlot slot, float targetArmor = 0f)
         {
             var item = slot.Item;
             if (IsAmmoItem(item) || IsAmmoId(item.id))
             {
-                // Ammo stockpile: soft cap so 200 rounds is not infinite defense
+                if (AmmoDefensePowerResolver != null)
+                    return Mathf.Max(0f, AmmoDefensePowerResolver(item.id, slot.Amount, targetArmor));
+                // Fallback: soft cap so 200 rounds is not infinite defense
                 float raw = slot.Amount * 0.4f;
                 return Mathf.Min(20f, raw);
             }
@@ -623,7 +645,11 @@ namespace AtomicWar._Game.Shelter
             result.RaidStrength = Mathf.Max(0f, raid.Strength);
             result.ShelterSecurity = GetShelterSecurity();
             result.GuardBonusApplied = GetGuardBonus();
-            result.WeaponPower = GetWeaponPower();
+            // Armor from raiding faction shapes ammo contribution (AP/JHP via host ResolveHit).
+            float raidArmor = FactionArmorResolver != null
+                ? FactionArmorResolver(raid.FactionId)
+                : 0f;
+            result.WeaponPower = GetWeaponPower(null, raidArmor);
 
             // Prompt #186 — trap damage softens raid strength before the clash.
             if (_perimeterTraps != null)
@@ -766,12 +792,30 @@ namespace AtomicWar._Game.Shelter
             int ammoNeeded = Mathf.Clamp(Mathf.CeilToInt(result.RaidStrength / 10f), 1, 12);
             int remaining = ammoNeeded;
 
-            for (int i = 0; i < inv.Slots.Count && remaining > 0; i++)
+            // Spend civilian/craftable first (lower priority value) so AP/API stockpiles last.
+            var ammoSlots = new List<int>();
+            for (int i = 0; i < inv.Slots.Count; i++)
             {
                 var slot = inv.Slots[i];
                 if (slot?.Item == null) continue;
                 if (!IsAmmoItem(slot.Item) && !IsAmmoId(slot.Item.id)) continue;
+                if (slot.Amount <= 0) continue;
+                ammoSlots.Add(i);
+            }
+            ammoSlots.Sort((a, b) =>
+            {
+                string idA = inv.Slots[a].Item.id;
+                string idB = inv.Slots[b].Item.id;
+                int pA = AmmoSpendPriorityResolver != null ? AmmoSpendPriorityResolver(idA) : 50;
+                int pB = AmmoSpendPriorityResolver != null ? AmmoSpendPriorityResolver(idB) : 50;
+                int cmp = pA.CompareTo(pB);
+                return cmp != 0 ? cmp : a.CompareTo(b);
+            });
 
+            for (int s = 0; s < ammoSlots.Count && remaining > 0; s++)
+            {
+                var slot = inv.Slots[ammoSlots[s]];
+                if (slot?.Item == null) continue;
                 int take = Mathf.Min(remaining, slot.Amount);
                 if (take <= 0) continue;
                 inv.Remove(slot.Item, take);

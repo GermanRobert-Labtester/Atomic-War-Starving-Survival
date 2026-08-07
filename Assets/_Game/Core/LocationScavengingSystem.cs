@@ -34,10 +34,16 @@ namespace AtomicWar._Game.Core
         private ItemDefinition _foragerRoots;
         private ItemDefinition _foragerBerries;
         private System.Random _foragerRng = new System.Random(210);
+        private Item_AmmoTypes _ammoTypes;
+        private Func<string, ItemDefinition> _ammoItemFactory;
+        private Func<string, string> _getLocationLootTableId;
 
         public event Action<ActiveMission> OnMissionStarted;
         public event Action<ActiveMission, List<ItemDefinition>> OnMissionCompleted;
         public event Action<ActiveMission, bool> OnSurveyCompleted;
+
+        /// <summary>Last exclusive ammo ids injected into a scavenging roll (tests).</summary>
+        public List<string> LastInjectedAmmoIds { get; } = new List<string>();
 
         public LocationScavengingSystem(
             RadiationSystem radSystem,
@@ -75,6 +81,20 @@ namespace AtomicWar._Game.Core
             _getNodeTags = getNodeTags;
             _getNodeRingName = getNodeRingName;
             EnsureForagerFood();
+        }
+
+        /// <summary>
+        /// Wire military/rebel exclusive ammo drops into high-danger / military loot tables.
+        /// Workbench craft remains civilian-only via Item_AmmoTypes.IsWorkbenchCraftAllowed.
+        /// </summary>
+        public void BindAmmoTypes(
+            Item_AmmoTypes ammoTypes,
+            Func<string, ItemDefinition> ammoItemFactory = null,
+            Func<string, string> getLocationLootTableId = null)
+        {
+            _ammoTypes = ammoTypes;
+            _ammoItemFactory = ammoItemFactory;
+            _getLocationLootTableId = getLocationLootTableId;
         }
 
         public void SetForagerFoodItems(ItemDefinition roots, ItemDefinition berries)
@@ -199,7 +219,7 @@ namespace AtomicWar._Game.Core
 
         private void CompleteMission(ActiveMission mission)
         {
-            var loot = RollLoot(mission.DangerLevel);
+            var loot = RollLoot(mission.DangerLevel, mission.LocationId);
 
             // Prompt #210 — forest/swamp scavenge milestone + empty-loot forager food.
             ApplyForagerOnScavenge(mission, loot);
@@ -335,10 +355,19 @@ namespace AtomicWar._Game.Core
 
         private List<ItemDefinition> RollLoot(float dangerLevel)
         {
+            return RollLoot(dangerLevel, locationId: null);
+        }
+
+        private List<ItemDefinition> RollLoot(float dangerLevel, string locationId)
+        {
             var loot = new List<ItemDefinition>();
+            LastInjectedAmmoIds.Clear();
 
             int itemCount = 1 + (int)(dangerLevel / 3f);
             itemCount = Mathf.Clamp(itemCount, 1, 4);
+
+            // Military sites / high danger: inject exclusive ammo before generic rolls.
+            TryInjectMilitaryAmmo(loot, dangerLevel, locationId);
 
             if (_lootTable != null)
             {
@@ -385,6 +414,64 @@ namespace AtomicWar._Game.Core
             }
 
             return loot;
+        }
+
+        private void TryInjectMilitaryAmmo(List<ItemDefinition> loot, float dangerLevel, string locationId)
+        {
+            if (_ammoTypes == null || loot == null) return;
+
+            string tableId = null;
+            if (_getLocationLootTableId != null && !string.IsNullOrEmpty(locationId))
+                tableId = _getLocationLootTableId(locationId);
+
+            bool military = Item_AmmoTypes.IsMilitaryLootTable(tableId) || dangerLevel >= 4f;
+            if (!military) return;
+
+            float chance = 0.35f + dangerLevel * 0.06f;
+            if (_rng.NextDouble() >= Mathf.Clamp01(chance)) return;
+
+            var source = Item_AmmoTypes.SourceForLootTable(tableId);
+            if (!Item_AmmoTypes.IsMilitaryOrRebelSource(source))
+                source = AmmoFactionSource.MilitaryForces;
+
+            int count = dangerLevel >= 5f ? 2 : 1;
+            var ids = Item_AmmoTypes.RollFactionAmmoLoot(source, _rng, count, preferApApi: true);
+            for (int i = 0; i < ids.Count; i++)
+            {
+                var def = ResolveAmmoDef(ids[i]);
+                if (def == null) continue;
+                loot.Add(def);
+                LastInjectedAmmoIds.Add(ids[i]);
+            }
+        }
+
+        private ItemDefinition ResolveAmmoDef(string ammoId)
+        {
+            if (string.IsNullOrEmpty(ammoId)) return null;
+            if (_ammoItemFactory != null)
+            {
+                var made = _ammoItemFactory(ammoId);
+                if (made != null) return made;
+            }
+            if (_itemCatalog?.items != null)
+            {
+                for (int i = 0; i < _itemCatalog.items.Count; i++)
+                {
+                    var it = _itemCatalog.items[i];
+                    if (it != null && string.Equals(it.id, ammoId, StringComparison.Ordinal))
+                        return it;
+                }
+            }
+            if (!Item_AmmoTypes.TryGetLoad(ammoId, out var load)) return null;
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = load.Id;
+            item.displayName = load.DisplayName;
+            item.description = load.Description;
+            item.type = ItemType.Weapon;
+            item.stackMax = load.StackMax;
+            item.weight = load.WeightPerRound;
+            item.tradeValue = load.TradeValue;
+            return item;
         }
 
         // -----------------------------------------------------------------

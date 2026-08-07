@@ -837,6 +837,11 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private void WireCombatPerkBindings()
         {
+            // Structured caliber combat: ResolveHit power, raid armor, spend order,
+            // expedition combat shots, and military/rebel exclusive loot injection.
+            // Independent of CombatPerks so ammo wiring still applies if perks are null.
+            WireAmmoTypesBindings();
+
             if (CombatPerks == null) return;
 
             HatchDefenseSystem?.BindCombatPerks(CombatPerks);
@@ -899,6 +904,49 @@ namespace AtomicWar._Game.Core
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
                 affinity: MentalBreakSystem != null ? MentalBreakSystem.Affinity : null,
                 getAllSurvivors: () => Survivors);
+        }
+
+        /// <summary>
+        /// Wire Item_AmmoTypes into hatch defense (ResolveHit stockpile power +
+        /// faction armor + civilian-first spend), expedition combat/loot, location
+        /// scavenging military tables, and craft gate (civilian loads only).
+        /// </summary>
+        private void WireAmmoTypesBindings()
+        {
+            if (ItemAmmoTypes == null) return;
+
+            Func<string, ItemDefinition> ammoFactory = id =>
+            {
+                if (string.IsNullOrEmpty(id) || _itemCatalog?.items == null) return null;
+                for (int i = 0; i < _itemCatalog.items.Count; i++)
+                {
+                    var it = _itemCatalog.items[i];
+                    if (it != null && string.Equals(it.id, id, StringComparison.Ordinal))
+                        return it;
+                }
+                return null;
+            };
+
+            if (HatchDefenseSystem != null)
+            {
+                HatchDefenseSystem.AmmoDefensePowerResolver =
+                    (ammoId, amount, armor) => ItemAmmoTypes.GetAmmoStockpileDefensePower(ammoId, amount, armor);
+                HatchDefenseSystem.FactionArmorResolver = Item_AmmoTypes.GetFactionArmor;
+                HatchDefenseSystem.AmmoSpendPriorityResolver = Item_AmmoTypes.AmmoSpendPriority;
+            }
+
+            ExpeditionSystem?.BindAmmoTypes(ItemAmmoTypes, ammoFactory);
+            ScavengingSystem?.BindAmmoTypes(
+                ItemAmmoTypes,
+                ammoFactory,
+                getLocationLootTableId: locId =>
+                {
+                    if (GeneratedMap == null || string.IsNullOrEmpty(locId)) return null;
+                    var node = GeneratedMap.GetNode(locId);
+                    return node != null ? node.LootTableId : null;
+                });
+
+            CraftingSystem?.BindCraftResultGate(Item_AmmoTypes.IsWorkbenchCraftAllowed);
         }
 
         /// <summary>

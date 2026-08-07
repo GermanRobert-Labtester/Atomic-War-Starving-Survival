@@ -73,6 +73,10 @@ namespace AtomicWar._Game.Core
         private InterpersonalAffinity _affinity;
         private Func<IReadOnlyList<Survivor>> _getAllSurvivors;
 
+        // Structured caliber combat + faction ammo loot (Item_AmmoTypes).
+        private Item_AmmoTypes _ammoTypes;
+        private Func<string, ItemDefinition> _ammoItemFactory;
+
         // Prompts #206–#210 — expedition / wasteland milestone perks.
         private ExpeditionPerkSystem _expeditionPerks;
         private NoiseSystem _noiseSystem;
@@ -260,6 +264,15 @@ namespace AtomicWar._Game.Core
         /// <summary>Poison damage dealt to last biting attacker via blood toxicity.</summary>
         public float LastBiteRetaliationDamage { get; private set; }
 
+        /// <summary>Last engaged combat shot via Item_AmmoTypes.ResolveHit (0 if none).</summary>
+        public float LastCombatShotDamage { get; private set; }
+
+        /// <summary>Ammo item id consumed on last engaged combat (null if none).</summary>
+        public string LastCombatAmmoId { get; private set; }
+
+        /// <summary>Ammo loot ids injected on last military/rebel loot roll.</summary>
+        public List<string> LastFactionAmmoLootIds { get; } = new List<string>();
+
         /// <summary>Item id used as river blockade toll currency.</summary>
         public const string RiverTollFuelItemId = "fuel";
 
@@ -277,6 +290,17 @@ namespace AtomicWar._Game.Core
             _getDay = getDay;
             _affinity = affinity;
             _getAllSurvivors = getAllSurvivors;
+        }
+
+        /// <summary>
+        /// Wire structured caliber combat (ResolveHit) + faction ammo loot injection.
+        /// <paramref name="ammoItemFactory"/> builds ItemDefinitions for rolled ammo ids
+        /// (host typically looks up the item catalog or synthesizes a stackable Weapon).
+        /// </summary>
+        public void BindAmmoTypes(Item_AmmoTypes ammoTypes, Func<string, ItemDefinition> ammoItemFactory = null)
+        {
+            _ammoTypes = ammoTypes;
+            _ammoItemFactory = ammoItemFactory;
         }
 
         /// <summary>
