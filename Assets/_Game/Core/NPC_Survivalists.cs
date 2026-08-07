@@ -52,5 +52,15 @@ namespace AtomicWar._Game.Core
             }
             return retaliatoryDamage;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SurvivalistsState CaptureState() => _state;
+
+        public void RestoreState(SurvivalistsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

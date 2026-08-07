@@ -35,5 +35,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FaradayPackState CaptureState() => _state;
+
+        public void RestoreState(FaradayPackState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

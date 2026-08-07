@@ -36,5 +36,15 @@ namespace AtomicWar._Game.Core
             OnCollaboratorCheckEvaluated?.Invoke(_state, isCollaborator);
             return isCollaborator;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelZealotsState CaptureState() => _state;
+
+        public void RestoreState(RebelZealotsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

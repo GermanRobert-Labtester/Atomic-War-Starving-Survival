@@ -11,7 +11,13 @@ namespace AtomicWar._Game.Core
         public float visionRadius = 1.0f;
     }
 
-    public class RadiationBlindnessSystem
+    
+    [Serializable]
+    public class RadiationBlindnessSystemSave
+    {
+        public string systemId = "affliction_radiation_blindness";
+    }
+public class RadiationBlindnessSystem
     {
         private const float Stage4RadiationThreshold = 80f;
         private const float BlindVisionRadius = 0.05f;
@@ -60,5 +66,11 @@ namespace AtomicWar._Game.Core
 
             OnVisionRestored?.Invoke(survivorId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RadiationBlindnessSystemSave CaptureState() => new RadiationBlindnessSystemSave();
+
+        public void RestoreState(RadiationBlindnessSystemSave saved) { _ = saved; }
+
+}
 }

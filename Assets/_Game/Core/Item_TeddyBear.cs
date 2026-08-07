@@ -52,5 +52,15 @@ namespace AtomicWar._Game.Core
                 OnTeddyBearLostCatastrophicBreak?.Invoke(_state, _state.equippedChildId, _state.mentalBreakSeverityOnLoss);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TeddyBearState CaptureState() => _state;
+
+        public void RestoreState(TeddyBearState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

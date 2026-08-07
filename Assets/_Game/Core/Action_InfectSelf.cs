@@ -60,5 +60,15 @@ namespace AtomicWar._Game.Core
         {
             return State.isInfected;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Action_InfectSelfState CaptureState() => State;
+
+        public void RestoreState(Action_InfectSelfState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

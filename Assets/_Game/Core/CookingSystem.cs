@@ -11,7 +11,13 @@ namespace AtomicWar._Game.Core
     /// to produce a cooked meal. Survivors with Ration Stretcher have a 25% chance
     /// the recipe skips CleanWater entirely.
     /// </summary>
-    public class CookingSystem
+    
+    [Serializable]
+    public class CookingSystemSave
+    {
+        public string systemId = "cooking_system";
+    }
+public class CookingSystem
     {
         public const string StoveStationId = "stove";
         public const string CookedMealId = "cooked_meal";
@@ -144,5 +150,11 @@ namespace AtomicWar._Game.Core
             }
             _mealDef = CreateCookedMealDefinition();
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CookingSystemSave CaptureState() => new CookingSystemSave();
+
+        public void RestoreState(CookingSystemSave saved) { _ = saved; }
+
+}
 }

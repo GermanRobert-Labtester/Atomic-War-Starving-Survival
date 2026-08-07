@@ -65,5 +65,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.isTranslated ? _state.intelNodesYielded : 0;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ForeignBookState CaptureState() => _state;
+
+        public void RestoreState(ForeignBookState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

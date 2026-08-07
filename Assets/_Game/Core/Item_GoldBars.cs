@@ -31,5 +31,15 @@ namespace AtomicWar._Game.Core
             OnGoldBarsUsedForTribute?.Invoke(_state, factionId);
             return _state.satisfiesEndgameFactionTribute;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public GoldBarsState CaptureState() => _state;
+
+        public void RestoreState(GoldBarsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

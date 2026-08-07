@@ -65,5 +65,15 @@ namespace AtomicWar._Game.Core
                 _activeEncounterId = null;
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DecoyState CaptureState() => _state;
+
+        public void RestoreState(DecoyState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -12,7 +12,14 @@ namespace AtomicWar._Game.Core
         public bool isWornOut = false;
     }
 
-    public class Item_Boots
+    
+    [Serializable]
+    public class ItemBootsSave
+    {
+        public List<string> keys = new List<string>();
+        public List<BootsState> values = new List<BootsState>();
+    }
+public class Item_Boots
     {
         public event Action<string, float> OnDurabilityChanged; // survivorId, durability
         public event Action<string> OnBootsWornOut; // survivorId
@@ -87,16 +94,26 @@ namespace AtomicWar._Game.Core
             OnDurabilityChanged?.Invoke(survivorId, boots.durability);
         }
 
-        public Dictionary<string, BootsState> CaptureState()
+        public ItemBootsSave CaptureState()
         {
-            return new Dictionary<string, BootsState>(_survivorBoots);
+            var save = new ItemBootsSave();
+            foreach (var kvp in _survivorBoots)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
         }
 
-        public void RestoreState(Dictionary<string, BootsState> data)
+        public void RestoreState(ItemBootsSave saved)
         {
-            _survivorBoots = data != null
-                ? new Dictionary<string, BootsState>(data)
-                : new Dictionary<string, BootsState>();
+            _survivorBoots.Clear();
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _survivorBoots[saved.keys[i]] = val;
+            }
         }
 
         private BootsState GetOrCreateBoots(string survivorId)

@@ -78,5 +78,15 @@ namespace AtomicWar._Game.Core
 
             return raided;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PlayerBankState CaptureState() => _state;
+
+        public void RestoreState(PlayerBankState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

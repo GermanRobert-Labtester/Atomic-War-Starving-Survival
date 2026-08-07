@@ -45,5 +45,15 @@ namespace AtomicWar._Game.Core
             OnLootDepleted?.Invoke(_state, _state.totalLootDepleted);
             return _state.totalLootDepleted;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PassiveScavengersState CaptureState() => _state;
+
+        public void RestoreState(PassiveScavengersState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

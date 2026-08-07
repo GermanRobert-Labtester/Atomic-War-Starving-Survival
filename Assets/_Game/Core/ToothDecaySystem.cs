@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// JunkFood and low Hygiene cause Toothache (inflicts massive Pain and blocks Sleep).
     /// Cured by PullTooth action at the Medical Bed (requires Pliers and Whiskey, traumatizes the patient).
     /// </summary>
-    public class ToothDecaySystem
+    
+    [Serializable]
+    public class ToothDecaySystemSave
+    {
+        public string systemId = "tooth_decay_system";
+    }
+public class ToothDecaySystem
     {
         private readonly Dictionary<string, ToothDecayState> _teethMap = new Dictionary<string, ToothDecayState>();
 
@@ -48,5 +54,11 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ToothDecaySystemSave CaptureState() => new ToothDecaySystemSave();
+
+        public void RestoreState(ToothDecaySystemSave saved) { _ = saved; }
+
+}
 }

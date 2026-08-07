@@ -59,5 +59,15 @@ namespace AtomicWar._Game.Core
                 OnCaravanArrivedSafely?.Invoke(_state);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CallCaravanState CaptureState() => _state;
+
+        public void RestoreState(CallCaravanState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

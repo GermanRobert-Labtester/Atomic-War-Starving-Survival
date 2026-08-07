@@ -40,5 +40,15 @@ namespace AtomicWar._Game.Core
 
             return _state.negatesBlizzardAshDriftPenalty;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SnowshoesState CaptureState() => _state;
+
+        public void RestoreState(SnowshoesState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

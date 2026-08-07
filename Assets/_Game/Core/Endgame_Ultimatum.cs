@@ -78,5 +78,15 @@ namespace AtomicWar._Game.Core
                 }
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public EndgameUltimatumState CaptureState() => _state;
+
+        public void RestoreState(EndgameUltimatumState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -61,5 +61,15 @@ namespace AtomicWar._Game.Core
             OnKilledForBabyFood?.Invoke(_state, _state.babyFoodItem);
             return _state.babyFoodItem;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TheParentsState CaptureState() => _state;
+
+        public void RestoreState(TheParentsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

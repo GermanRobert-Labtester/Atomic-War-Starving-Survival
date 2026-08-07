@@ -57,5 +57,15 @@ namespace AtomicWar._Game.Core
         {
             return State.organTradeValue;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Action_HarvestOrgansState CaptureState() => State;
+
+        public void RestoreState(Action_HarvestOrgansState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

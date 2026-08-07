@@ -39,5 +39,15 @@ namespace AtomicWar._Game.Core
             OnPermanentTraderUnlocked?.Invoke(_state, _state.traderId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelVsTerrorState CaptureState() => _state;
+
+        public void RestoreState(RebelVsTerrorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

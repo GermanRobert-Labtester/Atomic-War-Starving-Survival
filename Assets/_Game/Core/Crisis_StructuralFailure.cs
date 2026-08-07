@@ -91,9 +91,17 @@ namespace AtomicWar._Game.Core
 
         public StructuralFailureState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public StructuralFailureState CaptureState() => _state;
+
+
+
         public void RestoreState(StructuralFailureState state)
         {
             _state = state ?? new StructuralFailureState();
         }
-    }
+
+}
 }

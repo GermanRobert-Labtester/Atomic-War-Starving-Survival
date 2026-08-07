@@ -98,9 +98,17 @@ namespace AtomicWar._Game.Core
 
         public GreatFamineState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public GreatFamineState CaptureState() => _state;
+
+
+
         public void RestoreState(GreatFamineState state)
         {
             _state = state ?? new GreatFamineState();
         }
-    }
+
+}
 }

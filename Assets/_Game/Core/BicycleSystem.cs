@@ -13,7 +13,13 @@ namespace AtomicWar._Game.Core
     /// abandon the bike. Requires TirePatchKit for repairs.
     /// Save/load safe through ExpeditionState. Plain C#.
     /// </summary>
-    public class BicycleSystem
+    
+    [Serializable]
+    public class BicycleSystemSave
+    {
+        public string systemId = "bicycle_system";
+    }
+public class BicycleSystem
     {
         public const string BicycleItemId = "bicycle";
         public const string TirePatchKitItemId = "tire_patch_kit";
@@ -155,5 +161,11 @@ namespace AtomicWar._Game.Core
             OnBicycleRepaired?.Invoke(exp);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BicycleSystemSave CaptureState() => new BicycleSystemSave();
+
+        public void RestoreState(BicycleSystemSave saved) { _ = saved; }
+
+}
 }

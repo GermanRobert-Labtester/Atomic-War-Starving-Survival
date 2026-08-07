@@ -39,5 +39,15 @@ namespace AtomicWar._Game.Core
             _state.currentTrack = genre;
             OnTrackPlayedMoodBuffed?.Invoke(_state, genre);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public VinylCollectionState CaptureState() => _state;
+
+        public void RestoreState(VinylCollectionState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

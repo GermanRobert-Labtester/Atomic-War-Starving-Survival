@@ -51,5 +51,15 @@ namespace AtomicWar._Game.Core
             OnIBeamPickedUp?.Invoke(_state);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public IBeamState CaptureState() => _state;
+
+        public void RestoreState(IBeamState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

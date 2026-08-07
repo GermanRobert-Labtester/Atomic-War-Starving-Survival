@@ -13,7 +13,14 @@ namespace AtomicWar._Game.Core
         public bool requiresTherapist = true;
     }
 
-    public class SurvivorsGuiltSystem
+    
+    [Serializable]
+    public class SurvivorsGuiltSystemSave
+    {
+        public List<string> keys = new List<string>();
+        public List<SurvivorsGuiltState> values = new List<SurvivorsGuiltState>();
+    }
+public class SurvivorsGuiltSystem
     {
         private readonly Dictionary<string, SurvivorsGuiltState> _states = new Dictionary<string, SurvivorsGuiltState>();
 
@@ -82,5 +89,29 @@ namespace AtomicWar._Game.Core
             OnGuiltCured?.Invoke(survivorId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SurvivorsGuiltSystemSave CaptureState()
+        {
+            var save = new SurvivorsGuiltSystemSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
+
+        public void RestoreState(SurvivorsGuiltSystemSave saved)
+        {
+            _states.Clear();
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
+        }
+
+}
 }

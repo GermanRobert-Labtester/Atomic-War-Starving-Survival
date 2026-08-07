@@ -65,5 +65,15 @@ namespace AtomicWar._Game.Core
         {
             return State.hasBeenAttempted;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Action_SelfSurgeryState CaptureState() => State;
+
+        public void RestoreState(Action_SelfSurgeryState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

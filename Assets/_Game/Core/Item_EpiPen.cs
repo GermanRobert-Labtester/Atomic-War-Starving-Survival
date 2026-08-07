@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
 
             OnAdrenalineCrashTriggered?.Invoke(_state, survivorId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public EpiPenState CaptureState() => _state;
+
+        public void RestoreState(EpiPenState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

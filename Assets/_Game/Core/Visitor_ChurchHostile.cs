@@ -43,5 +43,15 @@ namespace AtomicWar._Game.Core
 
             return success;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ChurchHostileState CaptureState() => _state;
+
+        public void RestoreState(ChurchHostileState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

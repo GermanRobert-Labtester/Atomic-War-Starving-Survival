@@ -80,5 +80,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.isComplete;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DeepWellState CaptureState() => _state;
+
+        public void RestoreState(DeepWellState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// Extreme unchelated radiation sickness causes brain degradation.
     /// Overrides UtilityAI control, causing survivors to randomly drop items, forget cooking, or wander into walls.
     /// </summary>
-    public class CognitiveDecaySystem
+    
+    [Serializable]
+    public class CognitiveDecaySystemSave
+    {
+        public string systemId = "cognitive_decay_system";
+    }
+public class CognitiveDecaySystem
     {
         private readonly Dictionary<string, CognitiveDecayState> _decayMap = new Dictionary<string, CognitiveDecayState>();
 
@@ -50,5 +56,11 @@ namespace AtomicWar._Game.Core
             }
             return null;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CognitiveDecaySystemSave CaptureState() => new CognitiveDecaySystemSave();
+
+        public void RestoreState(CognitiveDecaySystemSave saved) { _ = saved; }
+
+}
 }

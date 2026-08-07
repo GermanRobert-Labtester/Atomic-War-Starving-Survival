@@ -85,9 +85,17 @@ namespace AtomicWar._Game.Core
 
         public DeforestationState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public DeforestationState CaptureState() => _state;
+
+
+
         public void RestoreState(DeforestationState state)
         {
             _state = state ?? new DeforestationState();
         }
-    }
+
+}
 }

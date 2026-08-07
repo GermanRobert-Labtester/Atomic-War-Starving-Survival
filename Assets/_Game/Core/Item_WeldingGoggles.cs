@@ -35,5 +35,15 @@ namespace AtomicWar._Game.Core
             OnWeldingGogglesEquipped?.Invoke(_state, multiplier);
             return multiplier;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public WeldingGogglesState CaptureState() => _state;
+
+        public void RestoreState(WeldingGogglesState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

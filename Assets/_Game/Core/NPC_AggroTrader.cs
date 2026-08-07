@@ -50,5 +50,15 @@ namespace AtomicWar._Game.Core
             _state.isHostile = true;
             OnRefusedPurchaseHostile?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AggroTraderState CaptureState() => _state;
+
+        public void RestoreState(AggroTraderState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

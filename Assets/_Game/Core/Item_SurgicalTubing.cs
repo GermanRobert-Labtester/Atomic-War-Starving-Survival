@@ -30,5 +30,15 @@ namespace AtomicWar._Game.Core
             OnTubingConsumedInCrafting?.Invoke(_state, recipeId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SurgicalTubingState CaptureState() => _state;
+
+        public void RestoreState(SurgicalTubingState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

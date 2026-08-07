@@ -34,5 +34,15 @@ namespace AtomicWar._Game.Core
 
             return new List<string> { "prewar_trauma_kit", "military_grade_batteries", "canned_beef" };
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PlagueConvoyState CaptureState() => _state;
+
+        public void RestoreState(PlagueConvoyState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

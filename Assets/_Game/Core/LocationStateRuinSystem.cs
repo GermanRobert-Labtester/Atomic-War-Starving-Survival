@@ -23,7 +23,13 @@ namespace AtomicWar._Game.Core
     /// Applies environmental modifiers (Pristine, Looted, HalfBurned, Exploded, Abandoned)
     /// to procedural node layouts before NPC visitor assignment.
     /// </summary>
-    public class LocationStateRuinSystem
+    
+    [Serializable]
+    public class LocationStateRuinSystemSave
+    {
+        public string systemId = "location_state_ruin_system";
+    }
+public class LocationStateRuinSystem
     {
         public event Action<string, LocationStateModifier, RuinEffects> OnRuinModifierApplied;
 
@@ -92,5 +98,11 @@ namespace AtomicWar._Game.Core
             var values = (LocationStateModifier[])Enum.GetValues(typeof(LocationStateModifier));
             return values[rng.Next(0, values.Length)];
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public LocationStateRuinSystemSave CaptureState() => new LocationStateRuinSystemSave();
+
+        public void RestoreState(LocationStateRuinSystemSave saved) { _ = saved; }
+
+}
 }

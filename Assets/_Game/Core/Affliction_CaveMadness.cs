@@ -73,5 +73,29 @@ namespace AtomicWar._Game.Core
         {
             return _state.isMad;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CaveMadnessState CaptureState()
+        {
+            return new CaveMadnessState
+            {
+                survivorId = _state.survivorId,
+                daysBelowLevel4 = _state.daysBelowLevel4,
+                depthThresholdDays = _state.depthThresholdDays,
+                moraleDrainPerDay = _state.moraleDrainPerDay,
+                isMad = _state.isMad,
+            };
+        }
+
+        public void RestoreState(CaveMadnessState saved)
+        {
+            if (saved == null) return;
+            _state.survivorId = saved.survivorId;
+            _state.daysBelowLevel4 = saved.daysBelowLevel4;
+            _state.depthThresholdDays = saved.depthThresholdDays;
+            _state.moraleDrainPerDay = saved.moraleDrainPerDay;
+            _state.isMad = saved.isMad;
+        }
+
+}
 }

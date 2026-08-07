@@ -13,7 +13,14 @@ namespace AtomicWar._Game.Core
         public string triggerCause;
     }
 
-    public class AmnesiaSystem
+    
+    [Serializable]
+    public class AmnesiaSystemSave
+    {
+        public List<string> keys = new List<string>();
+        public List<AmnesiaState> values = new List<AmnesiaState>();
+    }
+public class AmnesiaSystem
     {
         private readonly Dictionary<string, AmnesiaState> _states = new Dictionary<string, AmnesiaState>();
 
@@ -79,5 +86,29 @@ namespace AtomicWar._Game.Core
         {
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AmnesiaSystemSave CaptureState()
+        {
+            var save = new AmnesiaSystemSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
+
+        public void RestoreState(AmnesiaSystemSave saved)
+        {
+            _states.Clear();
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
+        }
+
+}
 }

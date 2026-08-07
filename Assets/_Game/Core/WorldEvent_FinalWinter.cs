@@ -95,9 +95,17 @@ namespace AtomicWar._Game.Core
 
         public FinalWinterState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public FinalWinterState CaptureState() => _state;
+
+
+
         public void RestoreState(FinalWinterState state)
         {
             _state = state ?? new FinalWinterState();
         }
-    }
+
+}
 }

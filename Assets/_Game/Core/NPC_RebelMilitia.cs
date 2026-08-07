@@ -50,5 +50,15 @@ namespace AtomicWar._Game.Core
             _state.isHostile = true;
             OnCaughtStealingHostile?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelMilitiaState CaptureState() => _state;
+
+        public void RestoreState(RebelMilitiaState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -14,7 +14,14 @@ namespace AtomicWar._Game.Core
         public int isolationDaysRequired = 20;
     }
 
-    public class ImaginaryFriendSystem
+    
+    [Serializable]
+    public class ImaginaryFriendSystemSave
+    {
+        public List<string> keys = new List<string>();
+        public List<ImaginaryFriendState> values = new List<ImaginaryFriendState>();
+    }
+public class ImaginaryFriendSystem
     {
         private readonly Dictionary<string, ImaginaryFriendState> _states = new Dictionary<string, ImaginaryFriendState>();
 
@@ -108,5 +115,29 @@ namespace AtomicWar._Game.Core
             state.daysSinceOnset = 0;
             OnHallucinationCured?.Invoke(survivorId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ImaginaryFriendSystemSave CaptureState()
+        {
+            var save = new ImaginaryFriendSystemSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
+
+        public void RestoreState(ImaginaryFriendSystemSave saved)
+        {
+            _states.Clear();
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
+        }
+
+}
 }

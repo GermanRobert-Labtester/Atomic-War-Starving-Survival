@@ -45,5 +45,15 @@ namespace AtomicWar._Game.Core
             _state.isCampingActive = false;
             return fatigueRestored;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MobileCampState CaptureState() => _state;
+
+        public void RestoreState(MobileCampState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

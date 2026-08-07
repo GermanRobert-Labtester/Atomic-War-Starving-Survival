@@ -76,5 +76,15 @@ namespace AtomicWar._Game.Core
         {
             return State.currentStack;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Item_MaggotsState CaptureState() => State;
+
+        public void RestoreState(Item_MaggotsState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

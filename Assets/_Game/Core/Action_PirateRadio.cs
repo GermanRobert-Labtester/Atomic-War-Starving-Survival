@@ -66,5 +66,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.isBroadcasting ? _state.raiderCombatReduction : 0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PirateRadioState CaptureState() => _state;
+
+        public void RestoreState(PirateRadioState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -20,7 +20,14 @@ namespace AtomicWar._Game.Core
     /// is leaving the bunker on an expedition.
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
-    public class Affliction_BunkerFever
+    
+    [Serializable]
+    public class AfflictionBunkerFeverSave
+    {
+        public List<string> keys = new List<string>();
+        public List<BunkerFeverState> values = new List<BunkerFeverState>();
+    }
+public class Affliction_BunkerFever
     {
         // ── Events ──────────────────────────────────────────────────────
         public event Action<string> OnItchStarted;          // survivorId
@@ -120,37 +127,25 @@ namespace AtomicWar._Game.Core
 
         // ── Save / Load ─────────────────────────────────────────────────
 
-        public Dictionary<string, BunkerFeverState> CaptureState()
+        public AfflictionBunkerFeverSave CaptureState()
         {
-            var snapshot = new Dictionary<string, BunkerFeverState>();
+            var save = new AfflictionBunkerFeverSave();
             foreach (var kvp in _states)
             {
-                snapshot[kvp.Key] = new BunkerFeverState
-                {
-                    afflictionId = kvp.Value.afflictionId,
-                    daysIndoorsThreshold = kvp.Value.daysIndoorsThreshold,
-                    selfHarmDamage = kvp.Value.selfHarmDamage,
-                    daysIndoors = kvp.Value.daysIndoors,
-                    hasFever = kvp.Value.hasFever
-                };
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
             }
-            return snapshot;
+            return save;
         }
 
-        public void RestoreState(Dictionary<string, BunkerFeverState> saved)
+        public void RestoreState(AfflictionBunkerFeverSave saved)
         {
             _states.Clear();
-            if (saved == null) return;
-            foreach (var kvp in saved)
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
             {
-                _states[kvp.Key] = new BunkerFeverState
-                {
-                    afflictionId = kvp.Value.afflictionId,
-                    daysIndoorsThreshold = kvp.Value.daysIndoorsThreshold,
-                    selfHarmDamage = kvp.Value.selfHarmDamage,
-                    daysIndoors = kvp.Value.daysIndoors,
-                    hasFever = kvp.Value.hasFever
-                };
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
             }
         }
     }

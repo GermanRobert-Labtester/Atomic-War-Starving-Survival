@@ -10,7 +10,13 @@ namespace AtomicWar._Game.Core
     /// Save/load safe. Plain C# (stateless action — no persistent state beyond
     /// the single execution, but save class provided for mid-action interrupt).
     /// </summary>
-    public class Action_Stargazing
+    
+    [Serializable]
+    public class Action_StargazingSave
+    {
+        public string systemId = "action_stargazing";
+    }
+public class Action_Stargazing
     {
         public const string ActionId = "action_stargazing";
         public const string AfflictionHypothermia = "hypothermia";
@@ -66,5 +72,11 @@ namespace AtomicWar._Game.Core
             OnStargazingCompleted?.Invoke(moraleChange, afflictionId);
             return (moraleChange, afflictionId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Action_StargazingSave CaptureState() => new Action_StargazingSave();
+
+        public void RestoreState(Action_StargazingSave saved) { _ = saved; }
+
+}
 }

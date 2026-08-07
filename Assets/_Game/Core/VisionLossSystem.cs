@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// Flashpoint or BioFog exposure causes Cataracts.
     /// Permanently blurs the UI screen whenever that specific survivor is selected.
     /// </summary>
-    public class VisionLossSystem
+    
+    [Serializable]
+    public class VisionLossSystemSave
+    {
+        public string systemId = "vision_loss_system";
+    }
+public class VisionLossSystem
     {
         private readonly Dictionary<string, VisionLossState> _visionMap = new Dictionary<string, VisionLossState>();
 
@@ -42,5 +48,11 @@ namespace AtomicWar._Game.Core
             }
             return 0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public VisionLossSystemSave CaptureState() => new VisionLossSystemSave();
+
+        public void RestoreState(VisionLossSystemSave saved) { _ = saved; }
+
+}
 }

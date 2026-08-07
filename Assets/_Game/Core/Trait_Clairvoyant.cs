@@ -18,7 +18,14 @@ namespace AtomicWar._Game.Core
         public string warningText;
     }
 
-    public class ClairvoyantSystem
+    
+    [Serializable]
+    public class ClairvoyantSystemSave
+    {
+        public List<string> keys = new List<string>();
+        public List<ClairvoyantState> values = new List<ClairvoyantState>();
+    }
+public class ClairvoyantSystem
     {
         private readonly Dictionary<string, ClairvoyantState> _states = new Dictionary<string, ClairvoyantState>();
 
@@ -84,5 +91,29 @@ namespace AtomicWar._Game.Core
             OnFalseAlarm?.Invoke(survivorId, fakeResult.warningText);
             return fakeResult;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ClairvoyantSystemSave CaptureState()
+        {
+            var save = new ClairvoyantSystemSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
+
+        public void RestoreState(ClairvoyantSystemSave saved)
+        {
+            _states.Clear();
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
+        }
+
+}
 }

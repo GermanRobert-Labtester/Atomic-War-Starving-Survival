@@ -32,5 +32,15 @@ namespace AtomicWar._Game.Core
             OnLeadershipAuraActivated?.Invoke(_state, _state.negotiationSuccessBonusRatio);
             return _state.negotiationSuccessBonusRatio;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PresidentialSealState CaptureState() => _state;
+
+        public void RestoreState(PresidentialSealState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

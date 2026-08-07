@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// Prolonged FalloutStorms block map routes with ash drifts.
     /// Player must execute a ClearPath action with a Shovel or find a longer detour.
     /// </summary>
-    public class AshDriftSystem
+    
+    [Serializable]
+    public class AshDriftSystemSave
+    {
+        public string systemId = "ash_drift_system";
+    }
+public class AshDriftSystem
     {
         private readonly Dictionary<string, RouteBlockageState> _routes = new Dictionary<string, RouteBlockageState>();
 
@@ -64,5 +70,11 @@ namespace AtomicWar._Game.Core
         {
             return _routes.TryGetValue(routeId, out var state) && state.isBlocked;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AshDriftSystemSave CaptureState() => new AshDriftSystemSave();
+
+        public void RestoreState(AshDriftSystemSave saved) { _ = saved; }
+
+}
 }

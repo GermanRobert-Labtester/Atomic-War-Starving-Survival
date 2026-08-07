@@ -12,7 +12,13 @@ namespace AtomicWar._Game.Core
         public bool coughingUpFungi;
     }
 
-    public class SporeLungSystem
+    
+    [Serializable]
+    public class SporeLungSystemSave
+    {
+        public string systemId = "affliction_spore_lung";
+    }
+public class SporeLungSystem
     {
         private readonly Dictionary<string, SporeLungState> _infected = new Dictionary<string, SporeLungState>();
 
@@ -79,5 +85,11 @@ namespace AtomicWar._Game.Core
             OnSporeLungCured?.Invoke(survivorId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SporeLungSystemSave CaptureState() => new SporeLungSystemSave();
+
+        public void RestoreState(SporeLungSystemSave saved) { _ = saved; }
+
+}
 }

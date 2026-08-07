@@ -43,5 +43,15 @@ namespace AtomicWar._Game.Core
             _state.isHostile = true;
             OnPlayerAdvancedHostile?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AggroScavengersState CaptureState() => _state;
+
+        public void RestoreState(AggroScavengersState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

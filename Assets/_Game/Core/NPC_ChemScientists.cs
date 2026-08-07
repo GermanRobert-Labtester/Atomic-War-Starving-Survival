@@ -54,5 +54,15 @@ namespace AtomicWar._Game.Core
             OnResearchStolenForChemistryXp?.Invoke(_state, _state.chemistryXpGainOnSteal);
             return _state.chemistryXpGainOnSteal;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ChemScientistsState CaptureState() => _state;
+
+        public void RestoreState(ChemScientistsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

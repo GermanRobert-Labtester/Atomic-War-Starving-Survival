@@ -44,5 +44,15 @@ namespace AtomicWar._Game.Core
                 _state.hoursWithoutPower = 0f;
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BloodBagState CaptureState() => _state;
+
+        public void RestoreState(BloodBagState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

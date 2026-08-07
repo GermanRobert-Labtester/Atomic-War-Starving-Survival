@@ -61,5 +61,15 @@ namespace AtomicWar._Game.Core
                 OnCaltropsExhausted?.Invoke(_state);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CaltropsState CaptureState() => _state;
+
+        public void RestoreState(CaltropsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

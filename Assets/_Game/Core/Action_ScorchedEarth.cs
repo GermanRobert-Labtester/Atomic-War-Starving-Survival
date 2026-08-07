@@ -53,5 +53,15 @@ namespace AtomicWar._Game.Core
             OnScorchedEarthTriggered?.Invoke(_state, survivorCount);
             OnGeneratorOverloaded?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ScorchedEarthState CaptureState() => _state;
+
+        public void RestoreState(ScorchedEarthState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

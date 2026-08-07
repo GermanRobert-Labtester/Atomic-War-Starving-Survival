@@ -44,5 +44,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public LiquidStitchesState CaptureState() => _state;
+
+        public void RestoreState(LiquidStitchesState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

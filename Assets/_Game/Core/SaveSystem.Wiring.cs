@@ -1260,5 +1260,1111 @@ namespace AtomicWar._Game.Core
         {
             _preCaptureHook = preCapture;
         }
+
+        // ── CoreFamilies bulk Set methods (auto) ────────────────────────
+        public void SetFalloutStormHazard(FalloutStormHazardSystem s) =>
+            RegisterSystem(ref _falloutStormHazard, s, "fallout_storm_hazard_system",
+                () => s.CaptureState(), o => s.RestoreState((FalloutStormHazardSystemSave)o));
+
+        public void SetActionCrawlspace(Action_Crawlspace s) =>
+            RegisterSystem(ref _actionCrawlspace, s, "action_crawlspace",
+                () => s.CaptureState(), o => s.RestoreState((CrawlspaceState)o));
+
+        public void SetActionPlay(Action_Play s) =>
+            RegisterSystem(ref _actionPlay, s, "action_play",
+                () => s.CaptureState(), o => s.RestoreState((PlayState)o));
+
+        public void SetActionSlaughterPet(Action_SlaughterPet s) =>
+            RegisterSystem(ref _actionSlaughterPet, s, "action_slaughter_pet",
+                () => s.CaptureState(), o => s.RestoreState((SlaughterPetState)o));
+
+        public void SetActionTeachChild(Action_TeachChild s) =>
+            RegisterSystem(ref _actionTeachChild, s, "action_teach_child",
+                () => s.CaptureState(), o => s.RestoreState((TeachChildState)o));
+
+        public void SetActionTellStories(Action_TellStories s) =>
+            RegisterSystem(ref _actionTellStories, s, "action_tell_stories",
+                () => s.CaptureState(), o => s.RestoreState((TellStoriesState)o));
+
+        public void SetItemAshGoat(Item_AshGoat s) =>
+            RegisterSystem(ref _itemAshGoat, s, "item_ash_goat",
+                () => s.CaptureState(), o => s.RestoreState((AshGoatState)o));
+
+        public void SetItemBoots(Item_Boots s) =>
+            RegisterSystem(ref _itemBoots, s, "item_boots",
+                () => s.CaptureState(), o => s.RestoreState((ItemBootsSave)o));
+
+        public void SetItemLiveTrap(Item_LiveTrap s) =>
+            RegisterSystem(ref _itemLiveTrap, s, "item_live_trap",
+                () => s.CaptureState(), o => s.RestoreState((LiveTrapState)o));
+
+        public void SetItemMutantChicken(Item_MutantChicken s) =>
+            RegisterSystem(ref _itemMutantChicken, s, "item_mutant_chicken",
+                () => s.CaptureState(), o => s.RestoreState((MutantChickenState)o));
+
+        public void SetItemToys(Item_Toys s) =>
+            RegisterSystem(ref _itemToys, s, "item_toys",
+                () => s.CaptureState(), o => s.RestoreState((ToyState)o));
+
+        public void SetTraitAshTongue(Trait_AshTongue s) =>
+            RegisterSystem(ref _traitAshTongue, s, "trait_ash_tongue",
+                () => s.CaptureState(), o => s.RestoreState((TraitAshTongueSave)o));
+
+        public void SetTraitKleptomaniac(Trait_Kleptomaniac s) =>
+            RegisterSystem(ref _traitKleptomaniac, s, "trait_kleptomaniac",
+                () => s.CaptureState(), o => s.RestoreState((TraitKleptomaniacSave)o));
+
+        public void SetTraitMascot(Trait_Mascot s) =>
+            RegisterSystem(ref _traitMascot, s, "trait_mascot",
+                () => s.CaptureState(), o => s.RestoreState((MascotState)o));
+
+        public void SetTraitStuntedEmpathy(Trait_StuntedEmpathy s) =>
+            RegisterSystem(ref _traitStuntedEmpathy, s, "trait_stunted_empathy",
+                () => s.CaptureState(), o => s.RestoreState((StuntedEmpathyState)o));
+
+        public void SetTraitSuperstitious(Trait_Superstitious s) =>
+            RegisterSystem(ref _traitSuperstitious, s, "trait_superstitious",
+                () => s.CaptureState(), o => s.RestoreState((TraitSuperstitiousSave)o));
+
+        public void SetAfflictionBunkerFever(Affliction_BunkerFever s) =>
+            RegisterSystem(ref _afflictionBunkerFever, s, "affliction_bunker_fever",
+                () => s.CaptureState(), o => s.RestoreState((AfflictionBunkerFeverSave)o));
+
+        public void SetAfflictionZoonoticFlu(Affliction_ZoonoticFlu s) =>
+            RegisterSystem(ref _afflictionZoonoticFlu, s, "affliction_zoonotic_flu",
+                () => s.CaptureState(), o => s.RestoreState((ZoonoticFluState)o));
+
+        public void SetModuleRationLock(Module_RationLock s) =>
+            RegisterSystem(ref _moduleRationLock, s, "module_ration_lock",
+                () => s.CaptureState(), o => s.RestoreState((RationLockState)o));
+
+        public void SetNodeOrphanage(Node_Orphanage s) =>
+            RegisterSystem(ref _nodeOrphanage, s, "node_orphanage",
+                () => s.CaptureState(), o => s.RestoreState((OrphanageState)o));
+
+        public void SetPetGuardDog(Pet_GuardDog s) =>
+            RegisterSystem(ref _petGuardDog, s, "pet_guard_dog",
+                () => s.CaptureState(), o => s.RestoreState((GuardDogState)o));
+
+        public void SetActionAdministerPlacebo(Action_AdministerPlacebo s) =>
+            RegisterSystem(ref _actionAdministerPlacebo, s, "action_administer_placebo",
+                () => s.CaptureState(), o => s.RestoreState((AdministerPlaceboState)o));
+
+        public void SetActionBarricadeDoor(Action_BarricadeDoor s) =>
+            RegisterSystem(ref _actionBarricadeDoor, s, "action_barricade_door",
+                () => s.CaptureState(), o => s.RestoreState((BarricadeState)o));
+
+        public void SetActionBoilBatteries(Action_BoilBatteries s) =>
+            RegisterSystem(ref _actionBoilBatteries, s, "action_boil_batteries",
+                () => s.CaptureState(), o => s.RestoreState((BoilBatteriesState)o));
+
+        public void SetActionBroadcastPropaganda(Action_BroadcastPropaganda s) =>
+            RegisterSystem(ref _actionBroadcastPropaganda, s, "action_broadcast_propaganda",
+                () => s.CaptureState(), o => s.RestoreState((PropagandaState)o));
+
+        public void SetActionBurnCharcoal(Action_BurnCharcoal s) =>
+            RegisterSystem(ref _actionBurnCharcoal, s, "action_burn_charcoal",
+                () => s.CaptureState(), o => s.RestoreState((BurnCharcoalState)o));
+
+        public void SetActionBuryTimeCapsule(Action_BuryTimeCapsule s) =>
+            RegisterSystem(ref _actionBuryTimeCapsule, s, "action_bury_time_capsule",
+                () => s.CaptureState(), o => s.RestoreState((TimeCapsuleState)o));
+
+        public void SetActionCallCaravan(Action_CallCaravan s) =>
+            RegisterSystem(ref _actionCallCaravan, s, "action_call_caravan",
+                () => s.CaptureState(), o => s.RestoreState((CallCaravanState)o));
+
+        public void SetActionCoverTracks(Action_CoverTracks s) =>
+            RegisterSystem(ref _actionCoverTracks, s, "action_cover_tracks",
+                () => s.CaptureState(), o => s.RestoreState((CoverTracksSave)o));
+
+        public void SetActionCrackMainframe(Action_CrackMainframe s) =>
+            RegisterSystem(ref _actionCrackMainframe, s, "action_crack_mainframe",
+                () => s.CaptureState(), o => s.RestoreState((CrackMainframeState)o));
+
+        public void SetActionDecrypt(Action_Decrypt s) =>
+            RegisterSystem(ref _actionDecrypt, s, "action_decrypt",
+                () => s.CaptureState(), o => s.RestoreState((DecryptState)o));
+
+        public void SetActionDemandTribute(Action_DemandTribute s) =>
+            RegisterSystem(ref _actionDemandTribute, s, "action_demand_tribute",
+                () => s.CaptureState(), o => s.RestoreState((DemandTributeState)o));
+
+        public void SetActionEstablishRoute(Action_EstablishRoute s) =>
+            RegisterSystem(ref _actionEstablishRoute, s, "action_establish_route",
+                () => s.CaptureState(), o => s.RestoreState((EstablishRouteState)o));
+
+        public void SetActionExile(Action_Exile s) =>
+            RegisterSystem(ref _actionExile, s, "action_exile",
+                () => s.CaptureState(), o => s.RestoreState((ExileActionState)o));
+
+        public void SetActionFish(Action_Fish s) =>
+            RegisterSystem(ref _actionFish, s, "action_fish",
+                () => s.CaptureState(), o => s.RestoreState((FishActionState)o));
+
+        public void SetActionHarvestOrgans(Action_HarvestOrgans s) =>
+            RegisterSystem(ref _actionHarvestOrgans, s, "harvest_organs",
+                () => s.CaptureState(), o => s.RestoreState((Action_HarvestOrgansState)o));
+
+        public void SetActionInfectSelf(Action_InfectSelf s) =>
+            RegisterSystem(ref _actionInfectSelf, s, "infect_self",
+                () => s.CaptureState(), o => s.RestoreState((Action_InfectSelfState)o));
+
+        public void SetActionIsotopeTrace(Action_IsotopeTrace s) =>
+            RegisterSystem(ref _actionIsotopeTrace, s, "action_isotope_trace",
+                () => s.CaptureState(), o => s.RestoreState((IsotopeTraceState)o));
+
+        public void SetActionMercy(Action_Mercy s) =>
+            RegisterSystem(ref _actionMercy, s, "action_mercy",
+                () => s.CaptureState(), o => s.RestoreState((MercyActionState)o));
+
+        public void SetActionMixCement(Action_MixCement s) =>
+            RegisterSystem(ref _actionMixCement, s, "action_mix_cement",
+                () => s.CaptureState(), o => s.RestoreState((MixCementSave)o));
+
+        public void SetActionMixChems(Action_MixChems s) =>
+            RegisterSystem(ref _actionMixChems, s, "mix_chems",
+                () => s.CaptureState(), o => s.RestoreState((Action_MixChemsState)o));
+
+        public void SetActionOverwatch(Action_Overwatch s) =>
+            RegisterSystem(ref _actionOverwatch, s, "action_overwatch",
+                () => s.CaptureState(), o => s.RestoreState((OverwatchState)o));
+
+        public void SetActionPhysicalTherapy(Action_PhysicalTherapy s) =>
+            RegisterSystem(ref _actionPhysicalTherapy, s, "action_physical_therapy",
+                () => s.CaptureState(), o => s.RestoreState((PhysicalTherapyState)o));
+
+        public void SetActionPirateRadio(Action_PirateRadio s) =>
+            RegisterSystem(ref _actionPirateRadio, s, "action_pirate_radio",
+                () => s.CaptureState(), o => s.RestoreState((PirateRadioState)o));
+
+        public void SetActionPlaceBait(Action_PlaceBait s) =>
+            RegisterSystem(ref _actionPlaceBait, s, "action_place_bait",
+                () => s.CaptureState(), o => s.RestoreState((BaitStationState)o));
+
+        public void SetActionPullTooth(Action_PullTooth s) =>
+            RegisterSystem(ref _actionPullTooth, s, "action_pull_tooth",
+                () => s.CaptureState(), o => s.RestoreState((PullToothState)o));
+
+        public void SetActionRigCorpse(Action_RigCorpse s) =>
+            RegisterSystem(ref _actionRigCorpse, s, "action_rig_corpse",
+                () => s.CaptureState(), o => s.RestoreState((RigCorpseState)o));
+
+        public void SetActionRoutePower(Action_RoutePower s) =>
+            RegisterSystem(ref _actionRoutePower, s, "action_route_power",
+                () => s.CaptureState(), o => s.RestoreState((RoutePowerState)o));
+
+        public void SetActionSabotage(Action_Sabotage s) =>
+            RegisterSystem(ref _actionSabotage, s, "action_sabotage",
+                () => s.CaptureState(), o => s.RestoreState((SabotageMissionState)o));
+
+        public void SetActionScorchedEarth(Action_ScorchedEarth s) =>
+            RegisterSystem(ref _actionScorchedEarth, s, "action_scorched_earth",
+                () => s.CaptureState(), o => s.RestoreState((ScorchedEarthState)o));
+
+        public void SetActionSealRoom(Action_SealRoom s) =>
+            RegisterSystem(ref _actionSealRoom, s, "action_seal_room",
+                () => s.CaptureState(), o => s.RestoreState((SealRoomState)o));
+
+        public void SetActionSelfSurgery(Action_SelfSurgery s) =>
+            RegisterSystem(ref _actionSelfSurgery, s, "self_surgery",
+                () => s.CaptureState(), o => s.RestoreState((Action_SelfSurgeryState)o));
+
+        public void SetActionSilentTakedown(Action_SilentTakedown s) =>
+            RegisterSystem(ref _actionSilentTakedown, s, "action_silent_takedown",
+                () => s.CaptureState(), o => s.RestoreState((Action_SilentTakedownSave)o));
+
+        public void SetActionSiphonGas(Action_SiphonGas s) =>
+            RegisterSystem(ref _actionSiphonGas, s, "action_siphon_gas",
+                () => s.CaptureState(), o => s.RestoreState((SiphonGasState)o));
+
+        public void SetActionStabilizeDNA(Action_StabilizeDNA s) =>
+            RegisterSystem(ref _actionStabilizeDNA, s, "action_stabilize_dna",
+                () => s.CaptureState(), o => s.RestoreState((StabilizeDNAState)o));
+
+        public void SetActionStargazing(Action_Stargazing s) =>
+            RegisterSystem(ref _actionStargazing, s, "action_stargazing",
+                () => s.CaptureState(), o => s.RestoreState((Action_StargazingSave)o));
+
+        public void SetActionWorshipIdol(Action_WorshipIdol s) =>
+            RegisterSystem(ref _actionWorshipIdol, s, "action_worship_idol",
+                () => s.CaptureState(), o => s.RestoreState((WorshipIdolState)o));
+
+        public void SetAfflictionAdrenalineCrash(Affliction_AdrenalineCrash s) =>
+            RegisterSystem(ref _afflictionAdrenalineCrash, s, "affliction_adrenaline_crash",
+                () => s.CaptureState(), o => s.RestoreState((AdrenalineCrashState)o));
+
+        public void SetAfflictionAmnesia(AmnesiaSystem s) =>
+            RegisterSystem(ref _afflictionAmnesia, s, "affliction_amnesia",
+                () => s.CaptureState(), o => s.RestoreState((AmnesiaSystemSave)o));
+
+        public void SetAfflictionBrainwashed(Affliction_Brainwashed s) =>
+            RegisterSystem(ref _afflictionBrainwashed, s, "affliction_brainwashed",
+                () => s.CaptureState(), o => s.RestoreState((BrainwashedState)o));
+
+        public void SetAfflictionBrittleBones(BrittleBonesSystem s) =>
+            RegisterSystem(ref _afflictionBrittleBones, s, "affliction_brittle_bones",
+                () => s.CaptureState(), o => s.RestoreState((BrittleBonesSystemSave)o));
+
+        public void SetAfflictionCaveMadness(CaveMadnessSystem s) =>
+            RegisterSystem(ref _afflictionCaveMadness, s, "affliction_cave_madness",
+                () => s.CaptureState(), o => s.RestoreState((CaveMadnessState)o));
+
+        public void SetAfflictionFeralRegression(FeralRegressionSystem s) =>
+            RegisterSystem(ref _afflictionFeralRegression, s, "affliction_feral_regression",
+                () => s.CaptureState(), o => s.RestoreState((FeralRegressionSystemSave)o));
+
+        public void SetAfflictionImaginaryFriend(ImaginaryFriendSystem s) =>
+            RegisterSystem(ref _afflictionImaginaryFriend, s, "affliction_imaginary_friend",
+                () => s.CaptureState(), o => s.RestoreState((ImaginaryFriendSystemSave)o));
+
+        public void SetAfflictionNerveDamage(Affliction_NerveDamage s) =>
+            RegisterSystem(ref _afflictionNerveDamage, s, "affliction_nerve_damage",
+                () => s.CaptureState(), o => s.RestoreState((Affliction_NerveDamageState)o));
+
+        public void SetAfflictionOldAge(Affliction_OldAge s) =>
+            RegisterSystem(ref _afflictionOldAge, s, "affliction_old_age",
+                () => s.CaptureState(), o => s.RestoreState((OldAgeState)o));
+
+        public void SetAfflictionPhantomLimb(Affliction_PhantomLimb s) =>
+            RegisterSystem(ref _afflictionPhantomLimb, s, "affliction_phantom_limb",
+                () => s.CaptureState(), o => s.RestoreState((PhantomLimbState)o));
+
+        public void SetAfflictionRadHallucinations(Affliction_RadHallucinations s) =>
+            RegisterSystem(ref _afflictionRadHallucinations, s, "affliction_rad_hallucinations",
+                () => s.CaptureState(), o => s.RestoreState((RadHallucinationState)o));
+
+        public void SetAfflictionRadiationBlindness(RadiationBlindnessSystem s) =>
+            RegisterSystem(ref _afflictionRadiationBlindness, s, "affliction_radiation_blindness",
+                () => s.CaptureState(), o => s.RestoreState((RadiationBlindnessSystemSave)o));
+
+        public void SetAfflictionScurvyDegeneration(Affliction_ScurvyDegeneration s) =>
+            RegisterSystem(ref _afflictionScurvyDegeneration, s, "affliction_scurvy_degeneration",
+                () => s.CaptureState(), o => s.RestoreState((Affliction_ScurvyDegenerationState)o));
+
+        public void SetAfflictionSporeLung(SporeLungSystem s) =>
+            RegisterSystem(ref _afflictionSporeLung, s, "affliction_spore_lung",
+                () => s.CaptureState(), o => s.RestoreState((SporeLungSystemSave)o));
+
+        public void SetAfflictionSterile(Affliction_Sterile s) =>
+            RegisterSystem(ref _afflictionSterile, s, "affliction_sterile",
+                () => s.CaptureState(), o => s.RestoreState((SterileState)o));
+
+        public void SetAfflictionSurvivorsGuilt(SurvivorsGuiltSystem s) =>
+            RegisterSystem(ref _afflictionSurvivorsGuilt, s, "affliction_survivors_guilt",
+                () => s.CaptureState(), o => s.RestoreState((SurvivorsGuiltSystemSave)o));
+
+        public void SetAfflictionTBI(Affliction_TBI s) =>
+            RegisterSystem(ref _afflictionTBI, s, "affliction_tbi",
+                () => s.CaptureState(), o => s.RestoreState((TBIState)o));
+
+        public void SetAfflictionThyroidCancer(Affliction_ThyroidCancer s) =>
+            RegisterSystem(ref _afflictionThyroidCancer, s, "affliction_thyroid_cancer",
+                () => s.CaptureState(), o => s.RestoreState((ThyroidCancerState)o));
+
+        public void SetAfflictionTrenchFoot(TrenchFootSystem s) =>
+            RegisterSystem(ref _afflictionTrenchFoot, s, "affliction_trench_foot",
+                () => s.CaptureState(), o => s.RestoreState((TrenchFootSystemSave)o));
+
+        public void SetAudioEventDeafening(AudioEvent_Deafening s) =>
+            RegisterSystem(ref _audioEventDeafening, s, "audio_event_deafening",
+                () => s.CaptureState(), o => s.RestoreState((DeafeningState)o));
+
+        public void SetAudioEventHeartbeat(AudioEvent_Heartbeat s) =>
+            RegisterSystem(ref _audioEventHeartbeat, s, "audio_event_heartbeat",
+                () => s.CaptureState(), o => s.RestoreState((HeartbeatState)o));
+
+        public void SetCombatBleedOut(Combat_BleedOut s) =>
+            RegisterSystem(ref _combatBleedOut, s, "combat_bleed_out",
+                () => s.CaptureState(), o => s.RestoreState((BleedOutState)o));
+
+        public void SetCombatFlanking(Combat_Flanking s) =>
+            RegisterSystem(ref _combatFlanking, s, "combat_flanking",
+                () => s.CaptureState(), o => s.RestoreState((FlankingState)o));
+
+        public void SetCombatSuppression(Combat_Suppression s) =>
+            RegisterSystem(ref _combatSuppression, s, "combat_suppression",
+                () => s.CaptureState(), o => s.RestoreState((SuppressionState)o));
+
+        public void SetCombatStanceLastStand(CombatStance_LastStand s) =>
+            RegisterSystem(ref _combatStanceLastStand, s, "combat_stance_last_stand",
+                () => s.CaptureState(), o => s.RestoreState((LastStandState)o));
+
+        public void SetCrisisFeralFlora(Crisis_FeralFlora s) =>
+            RegisterSystem(ref _crisisFeralFlora, s, "crisis_feral_flora",
+                () => s.CaptureState(), o => s.RestoreState((FeralFloraState)o));
+
+        public void SetCrisisStructuralFailure(Crisis_StructuralFailure s) =>
+            RegisterSystem(ref _crisisStructuralFailure, s, "crisis_structural_failure",
+                () => s.CaptureState(), o => s.RestoreState((StructuralFailureState)o));
+
+        public void SetDurabilitySuppressor(Durability_Suppressor s) =>
+            RegisterSystem(ref _durabilitySuppressor, s, "durability_suppressor",
+                () => s.CaptureState(), o => s.RestoreState((SuppressorSave)o));
+
+        public void SetEndgameUltimatum(Endgame_Ultimatum s) =>
+            RegisterSystem(ref _endgameUltimatum, s, "endgame_ultimatum",
+                () => s.CaptureState(), o => s.RestoreState((EndgameUltimatumState)o));
+
+        public void SetHazardCookOff(Hazard_CookOff s) =>
+            RegisterSystem(ref _hazardCookOff, s, "hazard_cook_off",
+                () => s.CaptureState(), o => s.RestoreState((CookOffState)o));
+
+        public void SetHazardExplosiveCrafting(Hazard_ExplosiveCrafting s) =>
+            RegisterSystem(ref _hazardExplosiveCrafting, s, "hazard_explosive_crafting",
+                () => s.CaptureState(), o => s.RestoreState((ExplosiveCraftingState)o));
+
+        public void SetHazardFriendlyFire(Hazard_FriendlyFire s) =>
+            RegisterSystem(ref _hazardFriendlyFire, s, "hazard_friendly_fire",
+                () => s.CaptureState(), o => s.RestoreState((FriendlyFireState)o));
+
+        public void SetHazardMethane(MethaneSystem s) =>
+            RegisterSystem(ref _hazardMethane, s, "hazard_methane",
+                () => s.CaptureState(), o => s.RestoreState((MethaneState)o));
+
+        public void SetHazardMimicCrate(Hazard_MimicCrate s) =>
+            RegisterSystem(ref _hazardMimicCrate, s, "hazard_mimic_crate",
+                () => s.CaptureState(), o => s.RestoreState((MimicCrateState)o));
+
+        public void SetHazardSurgicalBotch(Hazard_SurgicalBotch s) =>
+            RegisterSystem(ref _hazardSurgicalBotch, s, "hazard_surgical_botch",
+                () => s.CaptureState(), o => s.RestoreState((SurgicalBotchState)o));
+
+        public void SetHazardWeaponBurst(Hazard_WeaponBurst s) =>
+            RegisterSystem(ref _hazardWeaponBurst, s, "hazard_weapon_burst",
+                () => s.CaptureState(), o => s.RestoreState((WeaponBurstState)o));
+
+        public void SetHiddenStatUnseen(HiddenStat_Unseen s) =>
+            RegisterSystem(ref _hiddenStatUnseen, s, "hidden_stat_unseen",
+                () => s.CaptureState(), o => s.RestoreState((UnseenState)o));
+
+        public void SetItemAICoreData(Item_AICoreData s) =>
+            RegisterSystem(ref _itemAICoreData, s, "item_ai_core_data",
+                () => s.CaptureState(), o => s.RestoreState((AICoreDataState)o));
+
+        public void SetItemAmmoTypes(Item_AmmoTypes s) =>
+            RegisterSystem(ref _itemAmmoTypes, s, "item_ammo_types",
+                () => s.CaptureState(), o => s.RestoreState((AmmoTypeState)o));
+
+        public void SetItemAmmonia(Item_Ammonia s) =>
+            RegisterSystem(ref _itemAmmonia, s, "item_ammonia",
+                () => s.CaptureState(), o => s.RestoreState((AmmoniaState)o));
+
+        public void SetItemAmphetamines(Item_Amphetamines s) =>
+            RegisterSystem(ref _itemAmphetamines, s, "item_amphetamines",
+                () => s.CaptureState(), o => s.RestoreState((AmphetaminesState)o));
+
+        public void SetItemAshGhillie(Item_AshGhillie s) =>
+            RegisterSystem(ref _itemAshGhillie, s, "item_ash_ghillie",
+                () => s.CaptureState(), o => s.RestoreState((AshGhillieState)o));
+
+        public void SetItemAutoDoc(Item_AutoDoc s) =>
+            RegisterSystem(ref _itemAutoDoc, s, "item_auto_doc",
+                () => s.CaptureState(), o => s.RestoreState((AutoDocState)o));
+
+        public void SetItemBioPlastic(Item_BioPlastic s) =>
+            RegisterSystem(ref _itemBioPlastic, s, "item_bio_plastic",
+                () => s.CaptureState(), o => s.RestoreState((BioPlasticState)o));
+
+        public void SetItemBloodBag(Item_BloodBag s) =>
+            RegisterSystem(ref _itemBloodBag, s, "item_blood_bag",
+                () => s.CaptureState(), o => s.RestoreState((BloodBagState)o));
+
+        public void SetItemBoneSaw(Item_BoneSaw s) =>
+            RegisterSystem(ref _itemBoneSaw, s, "bone_saw",
+                () => s.CaptureState(), o => s.RestoreState((Item_BoneSawState)o));
+
+        public void SetItemC4(Item_C4 s) =>
+            RegisterSystem(ref _itemC4, s, "item_c4",
+                () => s.CaptureState(), o => s.RestoreState((C4State)o));
+
+        public void SetItemCaltrops(Item_Caltrops s) =>
+            RegisterSystem(ref _itemCaltrops, s, "item_caltrops",
+                () => s.CaptureState(), o => s.RestoreState((CaltropsState)o));
+
+        public void SetItemCarrierBird(Item_CarrierBird s) =>
+            RegisterSystem(ref _itemCarrierBird, s, "item_carrier_bird",
+                () => s.CaptureState(), o => s.RestoreState((CarrierBirdState)o));
+
+        public void SetItemChildsDrawing(Item_ChildsDrawing s) =>
+            RegisterSystem(ref _itemChildsDrawing, s, "item_childs_drawing",
+                () => s.CaptureState(), o => s.RestoreState((ChildsDrawingState)o));
+
+        public void SetItemCigarettes(Item_Cigarettes s) =>
+            RegisterSystem(ref _itemCigarettes, s, "item_cigarettes",
+                () => s.CaptureState(), o => s.RestoreState((CigarettesState)o));
+
+        public void SetItemClimbingGear(Item_ClimbingGear s) =>
+            RegisterSystem(ref _itemClimbingGear, s, "item_climbing_gear",
+                () => s.CaptureState(), o => s.RestoreState((ClimbingGearState)o));
+
+        public void SetItemDecoy(Item_Decoy s) =>
+            RegisterSystem(ref _itemDecoy, s, "item_decoy",
+                () => s.CaptureState(), o => s.RestoreState((DecoyState)o));
+
+        public void SetItemDogTags(Item_DogTags s) =>
+            RegisterSystem(ref _itemDogTags, s, "item_dog_tags",
+                () => s.CaptureState(), o => s.RestoreState((DogTagsState)o));
+
+        public void SetItemEMPGrenade(Item_EMPGrenade s) =>
+            RegisterSystem(ref _itemEMPGrenade, s, "item_emp_grenade",
+                () => s.CaptureState(), o => s.RestoreState((EMPGrenadeState)o));
+
+        public void SetItemEncryptedDrive(Item_EncryptedDrive s) =>
+            RegisterSystem(ref _itemEncryptedDrive, s, "item_encrypted_drive",
+                () => s.CaptureState(), o => s.RestoreState((EncryptedDriveState)o));
+
+        public void SetItemEpiPen(Item_EpiPen s) =>
+            RegisterSystem(ref _itemEpiPen, s, "item_epipen",
+                () => s.CaptureState(), o => s.RestoreState((EpiPenState)o));
+
+        public void SetItemExosuit(Item_Exosuit s) =>
+            RegisterSystem(ref _itemExosuit, s, "item_exosuit",
+                () => s.CaptureState(), o => s.RestoreState((ExosuitState)o));
+
+        public void SetItemFaradayPack(Item_FaradayPack s) =>
+            RegisterSystem(ref _itemFaradayPack, s, "item_faraday_pack",
+                () => s.CaptureState(), o => s.RestoreState((FaradayPackState)o));
+
+        public void SetItemForeignBook(Item_ForeignBook s) =>
+            RegisterSystem(ref _itemForeignBook, s, "item_foreign_book",
+                () => s.CaptureState(), o => s.RestoreState((ForeignBookState)o));
+
+        public void SetItemGeigerCalibrator(Item_GeigerCalibrator s) =>
+            RegisterSystem(ref _itemGeigerCalibrator, s, "item_geiger_calibrator",
+                () => s.CaptureState(), o => s.RestoreState((GeigerCalibratorState)o));
+
+        public void SetItemGlowingMushroom(GlowingMushroomSystem s) =>
+            RegisterSystem(ref _itemGlowingMushroom, s, "item_glowing_mushroom",
+                () => s.CaptureState(), o => s.RestoreState((GlowingMushroomState)o));
+
+        public void SetItemGoldBars(Item_GoldBars s) =>
+            RegisterSystem(ref _itemGoldBars, s, "item_gold_bars",
+                () => s.CaptureState(), o => s.RestoreState((GoldBarsState)o));
+
+        public void SetItemGuitar(Item_Guitar s) =>
+            RegisterSystem(ref _itemGuitar, s, "item_guitar",
+                () => s.CaptureState(), o => s.RestoreState((GuitarState)o));
+
+        public void SetItemHeirloom(Item_Heirloom s) =>
+            RegisterSystem(ref _itemHeirloom, s, "item_heirloom",
+                () => s.CaptureState(), o => s.RestoreState((HeirloomState)o));
+
+        public void SetItemIBeam(Item_IBeam s) =>
+            RegisterSystem(ref _itemIBeam, s, "item_i_beam",
+                () => s.CaptureState(), o => s.RestoreState((IBeamState)o));
+
+        public void SetItemImpureIodine(Item_ImpureIodine s) =>
+            RegisterSystem(ref _itemImpureIodine, s, "item_impure_iodine",
+                () => s.CaptureState(), o => s.RestoreState((ImpureIodineState)o));
+
+        public void SetItemJuggernautArmor(Item_JuggernautArmor s) =>
+            RegisterSystem(ref _itemJuggernautArmor, s, "item_juggernaut_armor",
+                () => s.CaptureState(), o => s.RestoreState((JuggernautArmorState)o));
+
+        public void SetItemKevlarVest(Item_KevlarVest s) =>
+            RegisterSystem(ref _itemKevlarVest, s, "item_kevlar_vest",
+                () => s.CaptureState(), o => s.RestoreState((KevlarVestState)o));
+
+        public void SetItemKeycards(Item_Keycards s) =>
+            RegisterSystem(ref _itemKeycards, s, "item_keycards",
+                () => s.CaptureState(), o => s.RestoreState((KeycardState)o));
+
+        public void SetItemLandmine(Item_Landmine s) =>
+            RegisterSystem(ref _itemLandmine, s, "item_landmine",
+                () => s.CaptureState(), o => s.RestoreState((LandmineState)o));
+
+        public void SetItemLeadApron(Item_LeadApron s) =>
+            RegisterSystem(ref _itemLeadApron, s, "item_lead_apron",
+                () => s.CaptureState(), o => s.RestoreState((LeadApronState)o));
+
+        public void SetItemLiquidStitches(Item_LiquidStitches s) =>
+            RegisterSystem(ref _itemLiquidStitches, s, "item_liquid_stitches",
+                () => s.CaptureState(), o => s.RestoreState((LiquidStitchesState)o));
+
+        public void SetItemMaggots(Item_Maggots s) =>
+            RegisterSystem(ref _itemMaggots, s, "maggots",
+                () => s.CaptureState(), o => s.RestoreState((Item_MaggotsState)o));
+
+        public void SetItemMilGasMask(Item_MilGasMask s) =>
+            RegisterSystem(ref _itemMilGasMask, s, "item_mil_gas_mask",
+                () => s.CaptureState(), o => s.RestoreState((MilGasMaskState)o));
+
+        public void SetItemMutantGland(Item_MutantGland s) =>
+            RegisterSystem(ref _itemMutantGland, s, "item_mutant_gland",
+                () => s.CaptureState(), o => s.RestoreState((MutantGlandState)o));
+
+        public void SetItemNanites(Item_Nanites s) =>
+            RegisterSystem(ref _itemNanites, s, "item_nanites",
+                () => s.CaptureState(), o => s.RestoreState((NanitesState)o));
+
+        public void SetItemNightVision(Item_NightVision s) =>
+            RegisterSystem(ref _itemNightVision, s, "item_night_vision",
+                () => s.CaptureState(), o => s.RestoreState((NightVisionState)o));
+
+        public void SetItemPackMule(Item_PackMule s) =>
+            RegisterSystem(ref _itemPackMule, s, "item_pack_mule",
+                () => s.CaptureState(), o => s.RestoreState((PackMuleState)o));
+
+        public void SetItemPasswordNote(Item_PasswordNote s) =>
+            RegisterSystem(ref _itemPasswordNote, s, "item_password_note",
+                () => s.CaptureState(), o => s.RestoreState((PasswordNoteState)o));
+
+        public void SetItemPhotoAlbum(Item_PhotoAlbum s) =>
+            RegisterSystem(ref _itemPhotoAlbum, s, "item_photo_album",
+                () => s.CaptureState(), o => s.RestoreState((PhotoAlbumState)o));
+
+        public void SetItemPotassiumIodide(Item_PotassiumIodide s) =>
+            RegisterSystem(ref _itemPotassiumIodide, s, "item_potassium_iodide",
+                () => s.CaptureState(), o => s.RestoreState((PotassiumIodideState)o));
+
+        public void SetItemPresidentialSeal(Item_PresidentialSeal s) =>
+            RegisterSystem(ref _itemPresidentialSeal, s, "item_presidential_seal",
+                () => s.CaptureState(), o => s.RestoreState((PresidentialSealState)o));
+
+        public void SetItemPrussianBlue(Item_PrussianBlue s) =>
+            RegisterSystem(ref _itemPrussianBlue, s, "item_prussian_blue",
+                () => s.CaptureState(), o => s.RestoreState((PrussianBlueState)o));
+
+        public void SetItemRTGBattery(Item_RTGBattery s) =>
+            RegisterSystem(ref _itemRTGBattery, s, "item_rtg_battery",
+                () => s.CaptureState(), o => s.RestoreState((RTGBatteryState)o));
+
+        public void SetItemSeedLedger(Item_SeedLedger s) =>
+            RegisterSystem(ref _itemSeedLedger, s, "item_seed_ledger",
+                () => s.CaptureState(), o => s.RestoreState((SeedLedgerState)o));
+
+        public void SetItemShockCollar(Item_ShockCollar s) =>
+            RegisterSystem(ref _itemShockCollar, s, "item_shock_collar",
+                () => s.CaptureState(), o => s.RestoreState((ShockCollarState)o));
+
+        public void SetItemSnowshoes(Item_Snowshoes s) =>
+            RegisterSystem(ref _itemSnowshoes, s, "item_snowshoes",
+                () => s.CaptureState(), o => s.RestoreState((SnowshoesState)o));
+
+        public void SetItemSurgicalTubing(Item_SurgicalTubing s) =>
+            RegisterSystem(ref _itemSurgicalTubing, s, "item_surgical_tubing",
+                () => s.CaptureState(), o => s.RestoreState((SurgicalTubingState)o));
+
+        public void SetItemTearGas(Item_TearGas s) =>
+            RegisterSystem(ref _itemTearGas, s, "item_tear_gas",
+                () => s.CaptureState(), o => s.RestoreState((TearGasState)o));
+
+        public void SetItemTeddyBear(Item_TeddyBear s) =>
+            RegisterSystem(ref _itemTeddyBear, s, "item_teddy_bear",
+                () => s.CaptureState(), o => s.RestoreState((TeddyBearState)o));
+
+        public void SetItemTrashHazmat(Item_TrashHazmat s) =>
+            RegisterSystem(ref _itemTrashHazmat, s, "item_trash_hazmat",
+                () => s.CaptureState(), o => s.RestoreState((TrashHazmatState)o));
+
+        public void SetItemUndeliveredMail(Item_UndeliveredMail s) =>
+            RegisterSystem(ref _itemUndeliveredMail, s, "item_undelivered_mail",
+                () => s.CaptureState(), o => s.RestoreState((UndeliveredMailState)o));
+
+        public void SetItemVacuumTubes(Item_VacuumTubes s) =>
+            RegisterSystem(ref _itemVacuumTubes, s, "item_vacuum_tubes",
+                () => s.CaptureState(), o => s.RestoreState((VacuumTubesState)o));
+
+        public void SetItemVinylCollection(Item_VinylCollection s) =>
+            RegisterSystem(ref _itemVinylCollection, s, "item_vinyl_collection",
+                () => s.CaptureState(), o => s.RestoreState((VinylCollectionState)o));
+
+        public void SetItemVitamins(Item_Vitamins s) =>
+            RegisterSystem(ref _itemVitamins, s, "item_vitamins",
+                () => s.CaptureState(), o => s.RestoreState((VitaminsState)o));
+
+        public void SetItemWalkieTalkie(Item_WalkieTalkie s) =>
+            RegisterSystem(ref _itemWalkieTalkie, s, "item_walkie_talkie",
+                () => s.CaptureState(), o => s.RestoreState((WalkieTalkieState)o));
+
+        public void SetItemWastelandSoap(Item_WastelandSoap s) =>
+            RegisterSystem(ref _itemWastelandSoap, s, "item_wasteland_soap",
+                () => s.CaptureState(), o => s.RestoreState((WastelandSoapState)o));
+
+        public void SetItemWaterTabs(Item_WaterTabs s) =>
+            RegisterSystem(ref _itemWaterTabs, s, "item_water_tabs",
+                () => s.CaptureState(), o => s.RestoreState((WaterTabsState)o));
+
+        public void SetItemWeldingGoggles(Item_WeldingGoggles s) =>
+            RegisterSystem(ref _itemWeldingGoggles, s, "item_welding_goggles",
+                () => s.CaptureState(), o => s.RestoreState((WeldingGogglesState)o));
+
+        public void SetItemWristDosimeter(Item_WristDosimeter s) =>
+            RegisterSystem(ref _itemWristDosimeter, s, "item_wrist_dosimeter",
+                () => s.CaptureState(), o => s.RestoreState((WristDosimeterState)o));
+
+        public void SetLocationArcade(Location_Arcade s) =>
+            RegisterSystem(ref _locationArcade, s, "location_arcade",
+                () => s.CaptureState(), o => s.RestoreState((ArcadeState)o));
+
+        public void SetLocationSlaveMarket(Location_SlaveMarket s) =>
+            RegisterSystem(ref _locationSlaveMarket, s, "location_slave_market",
+                () => s.CaptureState(), o => s.RestoreState((SlaveMarketState)o));
+
+        public void SetLocationStrandedYacht(Location_StrandedYacht s) =>
+            RegisterSystem(ref _locationStrandedYacht, s, "location_stranded_yacht",
+                () => s.CaptureState(), o => s.RestoreState((StrandedYachtState)o));
+
+        public void SetMapAquifer(AquiferSystem s) =>
+            RegisterSystem(ref _mapAquifer, s, "map_aquifer",
+                () => s.CaptureState(), o => s.RestoreState((AquiferState)o));
+
+        public void SetAshDriftSystem(AshDriftSystem s) =>
+            RegisterSystem(ref _ashDriftSystem, s, "ash_drift_system",
+                () => s.CaptureState(), o => s.RestoreState((AshDriftSystemSave)o));
+
+        public void SetBurnWardSystem(BurnWardSystem s) =>
+            RegisterSystem(ref _burnWardSystem, s, "burn_ward_system",
+                () => s.CaptureState(), o => s.RestoreState((BurnWardSystemSave)o));
+
+        public void SetCognitiveDecaySystem(CognitiveDecaySystem s) =>
+            RegisterSystem(ref _cognitiveDecaySystem, s, "cognitive_decay_system",
+                () => s.CaptureState(), o => s.RestoreState((CognitiveDecaySystemSave)o));
+
+        public void SetLightningStrikesSystem(LightningStrikesSystem s) =>
+            RegisterSystem(ref _lightningStrikesSystem, s, "lightning_strikes_system",
+                () => s.CaptureState(), o => s.RestoreState((LightningStrikeState)o));
+
+        public void SetLocationStateRuinSystem(LocationStateRuinSystem s) =>
+            RegisterSystem(ref _locationStateRuinSystem, s, "location_state_ruin_system",
+                () => s.CaptureState(), o => s.RestoreState((LocationStateRuinSystemSave)o));
+
+        public void SetMobileCampSystem(MobileCampSystem s) =>
+            RegisterSystem(ref _mobileCampSystem, s, "mobile_camp_system",
+                () => s.CaptureState(), o => s.RestoreState((MobileCampState)o));
+
+        public void SetMoralDilemmaSystem(MoralDilemmaSystem s) =>
+            RegisterSystem(ref _moralDilemmaSystem, s, "moral_dilemma_system",
+                () => s.CaptureState(), o => s.RestoreState((MoralDilemmaSystemSave)o));
+
+        public void SetNeedleSterilizationSystem(NeedleSterilizationSystem s) =>
+            RegisterSystem(ref _needleSterilizationSystem, s, "needle_sterilization_system",
+                () => s.CaptureState(), o => s.RestoreState((NeedleSterilizationSystemSave)o));
+
+        public void SetNightScavengeSystem(NightScavengeSystem s) =>
+            RegisterSystem(ref _nightScavengeSystem, s, "night_scavenge_system",
+                () => s.CaptureState(), o => s.RestoreState((NightScavengeSystemSave)o));
+
+        public void SetProstheticCraftingSystem(ProstheticCraftingSystem s) =>
+            RegisterSystem(ref _prostheticCraftingSystem, s, "prosthetic_crafting_system",
+                () => s.CaptureState(), o => s.RestoreState((ProstheticCraftingSystemSave)o));
+
+        public void SetSeismicVentsSystem(SeismicVentsSystem s) =>
+            RegisterSystem(ref _seismicVentsSystem, s, "seismic_vents_system",
+                () => s.CaptureState(), o => s.RestoreState((SeismicVentsSystemSave)o));
+
+        public void SetSevereFrostbiteSystem(SevereFrostbiteSystem s) =>
+            RegisterSystem(ref _severeFrostbiteSystem, s, "severe_frostbite_system",
+                () => s.CaptureState(), o => s.RestoreState((SevereFrostbiteSystemSave)o));
+
+        public void SetTetanusAfflictionSystem(TetanusAfflictionSystem s) =>
+            RegisterSystem(ref _tetanusAfflictionSystem, s, "tetanus_affliction_system",
+                () => s.CaptureState(), o => s.RestoreState((TetanusAfflictionSystemSave)o));
+
+        public void SetTimeSystemSys(TimeSystem s) =>
+            RegisterSystem(ref _timeSystemSys, s, "time_system",
+                () => s.CaptureState(), o => s.RestoreState((TimeSystemSave)o));
+
+        public void SetToothDecaySystem(ToothDecaySystem s) =>
+            RegisterSystem(ref _toothDecaySystem, s, "tooth_decay_system",
+                () => s.CaptureState(), o => s.RestoreState((ToothDecaySystemSave)o));
+
+        public void SetVehicleStrandingSystem(VehicleStrandingSystem s) =>
+            RegisterSystem(ref _vehicleStrandingSystem, s, "vehicle_stranding_system",
+                () => s.CaptureState(), o => s.RestoreState((VehicleStrandingSystemSave)o));
+
+        public void SetVehicleSystem(VehicleSystem s) =>
+            RegisterSystem(ref _vehicleSystem, s, "vehicle_system",
+                () => s.CaptureState(), o => s.RestoreState((VehicleSystemSave)o));
+
+        public void SetVisionLossSystem(VisionLossSystem s) =>
+            RegisterSystem(ref _visionLossSystem, s, "vision_loss_system",
+                () => s.CaptureState(), o => s.RestoreState((VisionLossSystemSave)o));
+
+        public void SetVisitorRNGSystem(VisitorRNGSystem s) =>
+            RegisterSystem(ref _visitorRNGSystem, s, "visitor_rngsystem",
+                () => s.CaptureState(), o => s.RestoreState((VisitorRNGSystemSave)o));
+
+        public void SetNPCAddictsPassive(NPC_AddictsPassive s) =>
+            RegisterSystem(ref _nPCAddictsPassive, s, "npc_addicts_passive",
+                () => s.CaptureState(), o => s.RestoreState((AddictsPassiveState)o));
+
+        public void SetNPCAggroScavengers(NPC_AggroScavengers s) =>
+            RegisterSystem(ref _nPCAggroScavengers, s, "npc_aggro_scavengers",
+                () => s.CaptureState(), o => s.RestoreState((AggroScavengersState)o));
+
+        public void SetNPCAggroTrader(NPC_AggroTrader s) =>
+            RegisterSystem(ref _nPCAggroTrader, s, "npc_aggro_trader",
+                () => s.CaptureState(), o => s.RestoreState((AggroTraderState)o));
+
+        public void SetNPCBandits(NPC_Bandits s) =>
+            RegisterSystem(ref _nPCBandits, s, "npc_bandits",
+                () => s.CaptureState(), o => s.RestoreState((BanditsState)o));
+
+        public void SetNPCBlackOps(NPC_BlackOps s) =>
+            RegisterSystem(ref _nPCBlackOps, s, "npc_black_ops",
+                () => s.CaptureState(), o => s.RestoreState((BlackOpsState)o));
+
+        public void SetNPCBroker(NPC_Broker s) =>
+            RegisterSystem(ref _nPCBroker, s, "npc_broker",
+                () => s.CaptureState(), o => s.RestoreState((BrokerState)o));
+
+        public void SetNPCCannibals(NPC_Cannibals s) =>
+            RegisterSystem(ref _nPCCannibals, s, "npc_cannibals",
+                () => s.CaptureState(), o => s.RestoreState((CannibalsState)o));
+
+        public void SetNPCChemScientists(NPC_ChemScientists s) =>
+            RegisterSystem(ref _nPCChemScientists, s, "npc_chem_scientists",
+                () => s.CaptureState(), o => s.RestoreState((ChemScientistsState)o));
+
+        public void SetNPCCityResidents(NPC_CityResidents s) =>
+            RegisterSystem(ref _nPCCityResidents, s, "npc_city_residents",
+                () => s.CaptureState(), o => s.RestoreState((CityResidentsState)o));
+
+        public void SetNPCCollaborators(NPC_Collaborators s) =>
+            RegisterSystem(ref _nPCCollaborators, s, "npc_collaborators",
+                () => s.CaptureState(), o => s.RestoreState((CollaboratorsState)o));
+
+        public void SetNPCConscripts(NPC_Conscripts s) =>
+            RegisterSystem(ref _nPCConscripts, s, "npc_conscripts",
+                () => s.CaptureState(), o => s.RestoreState((ConscriptsState)o));
+
+        public void SetNPCDesperateFamily(NPC_DesperateFamily s) =>
+            RegisterSystem(ref _nPCDesperateFamily, s, "npc_desperate_family",
+                () => s.CaptureState(), o => s.RestoreState((DesperateFamilyState)o));
+
+        public void SetNPCDrunksAggro(NPC_DrunksAggro s) =>
+            RegisterSystem(ref _nPCDrunksAggro, s, "npc_drunks_aggro",
+                () => s.CaptureState(), o => s.RestoreState((DrunksAggroState)o));
+
+        public void SetNPCHomeless(NPC_Homeless s) =>
+            RegisterSystem(ref _nPCHomeless, s, "npc_homeless",
+                () => s.CaptureState(), o => s.RestoreState((HomelessEncampmentState)o));
+
+        public void SetNPCLonePsychopath(NPC_LonePsychopath s) =>
+            RegisterSystem(ref _nPCLonePsychopath, s, "npc_lone_psychopath",
+                () => s.CaptureState(), o => s.RestoreState((LonePsychopathState)o));
+
+        public void SetNPCLooters(NPC_Looters s) =>
+            RegisterSystem(ref _nPCLooters, s, "npc_looters",
+                () => s.CaptureState(), o => s.RestoreState((LootersState)o));
+
+        public void SetNPCMercenaries(NPC_Mercenaries s) =>
+            RegisterSystem(ref _nPCMercenaries, s, "npc_mercenaries",
+                () => s.CaptureState(), o => s.RestoreState((MercenariesState)o));
+
+        public void SetNPCMilitaryPatrol(NPC_MilitaryPatrol s) =>
+            RegisterSystem(ref _nPCMilitaryPatrol, s, "npc_military_patrol",
+                () => s.CaptureState(), o => s.RestoreState((MilitaryPatrolState)o));
+
+        public void SetNPCPassiveScavengers(NPC_PassiveScavengers s) =>
+            RegisterSystem(ref _nPCPassiveScavengers, s, "npc_passive_scavengers",
+                () => s.CaptureState(), o => s.RestoreState((PassiveScavengersState)o));
+
+        public void SetNPCPassiveTrader(NPC_PassiveTrader s) =>
+            RegisterSystem(ref _nPCPassiveTrader, s, "npc_passive_trader",
+                () => s.CaptureState(), o => s.RestoreState((PassiveTraderState)o));
+
+        public void SetNPCPsychopathPair(NPC_PsychopathPair s) =>
+            RegisterSystem(ref _nPCPsychopathPair, s, "npc_psychopath_pair",
+                () => s.CaptureState(), o => s.RestoreState((PsychopathPairState)o));
+
+        public void SetNPCRebelMilitia(NPC_RebelMilitia s) =>
+            RegisterSystem(ref _nPCRebelMilitia, s, "npc_rebel_militia",
+                () => s.CaptureState(), o => s.RestoreState((RebelMilitiaState)o));
+
+        public void SetNPCRebelModerates(NPC_RebelModerates s) =>
+            RegisterSystem(ref _nPCRebelModerates, s, "npc_rebel_moderates",
+                () => s.CaptureState(), o => s.RestoreState((RebelModeratesState)o));
+
+        public void SetNPCRebelSnipers(NPC_RebelSnipers s) =>
+            RegisterSystem(ref _nPCRebelSnipers, s, "npc_rebel_snipers",
+                () => s.CaptureState(), o => s.RestoreState((RebelSnipersState)o));
+
+        public void SetNPCRebelZealots(NPC_RebelZealots s) =>
+            RegisterSystem(ref _nPCRebelZealots, s, "npc_rebel_zealots",
+                () => s.CaptureState(), o => s.RestoreState((RebelZealotsState)o));
+
+        public void SetNPCSlavers(NPC_Slavers s) =>
+            RegisterSystem(ref _nPCSlavers, s, "npc_slavers",
+                () => s.CaptureState(), o => s.RestoreState((SlaversState)o));
+
+        public void SetNPCSpecOps(NPC_SpecOps s) =>
+            RegisterSystem(ref _nPCSpecOps, s, "npc_spec_ops",
+                () => s.CaptureState(), o => s.RestoreState((SpecOpsState)o));
+
+        public void SetNPCSurvivalists(NPC_Survivalists s) =>
+            RegisterSystem(ref _nPCSurvivalists, s, "npc_survivalists",
+                () => s.CaptureState(), o => s.RestoreState((SurvivalistsState)o));
+
+        public void SetNPCTaxCollector(NPC_TaxCollector s) =>
+            RegisterSystem(ref _nPCTaxCollector, s, "npc_tax_collector",
+                () => s.CaptureState(), o => s.RestoreState((TaxCollectorState)o));
+
+        public void SetNPCTerrorists(NPC_Terrorists s) =>
+            RegisterSystem(ref _nPCTerrorists, s, "npc_terrorists",
+                () => s.CaptureState(), o => s.RestoreState((TerroristState)o));
+
+        public void SetNPCTheNegotiator(NPC_TheNegotiator s) =>
+            RegisterSystem(ref _nPCTheNegotiator, s, "npc_the_negotiator",
+                () => s.CaptureState(), o => s.RestoreState((NegotiatorState)o));
+
+        public void SetNPCTheOld(NPC_TheOld s) =>
+            RegisterSystem(ref _nPCTheOld, s, "npc_the_old",
+                () => s.CaptureState(), o => s.RestoreState((TheOldState)o));
+
+        public void SetNPCTheParents(NPC_TheParents s) =>
+            RegisterSystem(ref _nPCTheParents, s, "npc_the_parents",
+                () => s.CaptureState(), o => s.RestoreState((TheParentsState)o));
+
+        public void SetNPCTravelingCouple(NPC_TravelingCouple s) =>
+            RegisterSystem(ref _nPCTravelingCouple, s, "npc_traveling_couple",
+                () => s.CaptureState(), o => s.RestoreState((TravelingCoupleState)o));
+
+        public void SetNodeAutomatedArmory(Node_AutomatedArmory s) =>
+            RegisterSystem(ref _nodeAutomatedArmory, s, "node_automated_armory",
+                () => s.CaptureState(), o => s.RestoreState((AutomatedArmoryState)o));
+
+        public void SetNodeGhostShip(Node_GhostShip s) =>
+            RegisterSystem(ref _nodeGhostShip, s, "node_ghost_ship",
+                () => s.CaptureState(), o => s.RestoreState((GhostShipState)o));
+
+        public void SetNodeMutantHive(Node_MutantHive s) =>
+            RegisterSystem(ref _nodeMutantHive, s, "node_mutant_hive",
+                () => s.CaptureState(), o => s.RestoreState((MutantHiveState)o));
+
+        public void SetNodePlayerBank(Node_PlayerBank s) =>
+            RegisterSystem(ref _nodePlayerBank, s, "node_player_bank",
+                () => s.CaptureState(), o => s.RestoreState((PlayerBankState)o));
+
+        public void SetNodeSector7G(Node_Sector7G s) =>
+            RegisterSystem(ref _nodeSector7G, s, "node_sector_7g",
+                () => s.CaptureState(), o => s.RestoreState((Sector7GState)o));
+
+        public void SetNodeSporeHive(Node_SporeHive s) =>
+            RegisterSystem(ref _nodeSporeHive, s, "node_spore_hive",
+                () => s.CaptureState(), o => s.RestoreState((SporeHiveState)o));
+
+        public void SetPetFeralCat(Pet_FeralCat s) =>
+            RegisterSystem(ref _petFeralCat, s, "pet_feral_cat",
+                () => s.CaptureState(), o => s.RestoreState((FeralCatState)o));
+
+        public void SetProjectBioReactor(Project_BioReactor s) =>
+            RegisterSystem(ref _projectBioReactor, s, "project_bio_reactor",
+                () => s.CaptureState(), o => s.RestoreState((BioReactorState)o));
+
+        public void SetProjectDeepWell(Project_DeepWell s) =>
+            RegisterSystem(ref _projectDeepWell, s, "project_deep_well",
+                () => s.CaptureState(), o => s.RestoreState((DeepWellState)o));
+
+        public void SetProjectElevator(Project_Elevator s) =>
+            RegisterSystem(ref _projectElevator, s, "project_elevator",
+                () => s.CaptureState(), o => s.RestoreState((ElevatorState)o));
+
+        public void SetProjectMinecart(Project_Minecart s) =>
+            RegisterSystem(ref _projectMinecart, s, "project_minecart",
+                () => s.CaptureState(), o => s.RestoreState((MinecartState)o));
+
+        public void SetProjectRadioArray(Project_RadioArray s) =>
+            RegisterSystem(ref _projectRadioArray, s, "project_radio_array",
+                () => s.CaptureState(), o => s.RestoreState((RadioArrayState)o));
+
+        public void SetProjectSurfaceDome(Project_SurfaceDome s) =>
+            RegisterSystem(ref _projectSurfaceDome, s, "project_surface_dome",
+                () => s.CaptureState(), o => s.RestoreState((SurfaceDomeState)o));
+
+        public void SetShelterEventCaravanAmbush(ShelterEvent_CaravanAmbush s) =>
+            RegisterSystem(ref _shelterEventCaravanAmbush, s, "shelter_event_caravan_ambush",
+                () => s.CaptureState(), o => s.RestoreState((CaravanAmbushState)o));
+
+        public void SetShelterEventFalseCure(ShelterEvent_FalseCure s) =>
+            RegisterSystem(ref _shelterEventFalseCure, s, "event_false_cure",
+                () => s.CaptureState(), o => s.RestoreState((FalseCureState)o));
+
+        public void SetShelterEventRansom(ShelterEvent_Ransom s) =>
+            RegisterSystem(ref _shelterEventRansom, s, "shelter_event_ransom",
+                () => s.CaptureState(), o => s.RestoreState((RansomEventState)o));
+
+        public void SetShelterEventRefugees(ShelterEvent_Refugees s) =>
+            RegisterSystem(ref _shelterEventRefugees, s, "shelter_event_refugees",
+                () => s.CaptureState(), o => s.RestoreState((RefugeeWaveState)o));
+
+        public void SetShelterEventTheMirror(ShelterEvent_TheMirror s) =>
+            RegisterSystem(ref _shelterEventTheMirror, s, "shelter_event_the_mirror",
+                () => s.CaptureState(), o => s.RestoreState((MirrorEventSave)o));
+
+        public void SetShelterEventTribute(ShelterEvent_Tribute s) =>
+            RegisterSystem(ref _shelterEventTribute, s, "shelter_event_tribute",
+                () => s.CaptureState(), o => s.RestoreState((TributeSystemState)o));
+
+        public void SetSkirmishBandit_vs_Terror(Skirmish_Bandit_vs_Terror s) =>
+            RegisterSystem(ref _skirmishBandit_vs_Terror, s, "skirmish_bandit_vs_terror",
+                () => s.CaptureState(), o => s.RestoreState((BanditVsTerrorState)o));
+
+        public void SetSkirmishMil_vs_Rebel(Skirmish_Mil_vs_Rebel s) =>
+            RegisterSystem(ref _skirmishMil_vs_Rebel, s, "skirmish_mil_vs_rebel",
+                () => s.CaptureState(), o => s.RestoreState((MilVsRebelState)o));
+
+        public void SetSkirmishMil_vs_Terror(Skirmish_Mil_vs_Terror s) =>
+            RegisterSystem(ref _skirmishMil_vs_Terror, s, "skirmish_mil_vs_terror",
+                () => s.CaptureState(), o => s.RestoreState((MilVsTerrorState)o));
+
+        public void SetSkirmishRebel_vs_Bandit(Skirmish_Rebel_vs_Bandit s) =>
+            RegisterSystem(ref _skirmishRebel_vs_Bandit, s, "skirmish_rebel_vs_bandit",
+                () => s.CaptureState(), o => s.RestoreState((RebelVsBanditState)o));
+
+        public void SetSkirmishRebel_vs_Terror(Skirmish_Rebel_vs_Terror s) =>
+            RegisterSystem(ref _skirmishRebel_vs_Terror, s, "skirmish_rebel_vs_terror",
+                () => s.CaptureState(), o => s.RestoreState((RebelVsTerrorState)o));
+
+        public void SetTraderPlagueConvoy(Trader_PlagueConvoy s) =>
+            RegisterSystem(ref _traderPlagueConvoy, s, "trader_plague_convoy",
+                () => s.CaptureState(), o => s.RestoreState((PlagueConvoyState)o));
+
+        public void SetTraitAnthropophobia(Trait_Anthropophobia s) =>
+            RegisterSystem(ref _traitAnthropophobia, s, "trait_anthropophobia",
+                () => s.CaptureState(), o => s.RestoreState((Trait_AnthropophobiaSave)o));
+
+        public void SetTraitClairvoyant(ClairvoyantSystem s) =>
+            RegisterSystem(ref _traitClairvoyant, s, "trait_clairvoyant",
+                () => s.CaptureState(), o => s.RestoreState((ClairvoyantSystemSave)o));
+
+        public void SetTraitGenerationalTrauma(Trait_GenerationalTrauma s) =>
+            RegisterSystem(ref _traitGenerationalTrauma, s, "trait_generational_trauma",
+                () => s.CaptureState(), o => s.RestoreState((GenerationalTraumaState)o));
+
+        public void SetTraitInheritedGenetics(Trait_InheritedGenetics s) =>
+            RegisterSystem(ref _traitInheritedGenetics, s, "trait_inherited_genetics",
+                () => s.CaptureState(), o => s.RestoreState((InheritedGeneticsState)o));
+
+        public void SetTraitMatriarch(Trait_Matriarch s) =>
+            RegisterSystem(ref _traitMatriarch, s, "trait_matriarch",
+                () => s.CaptureState(), o => s.RestoreState((MatriarchState)o));
+
+        public void SetTraitPTSD(Trait_PTSD s) =>
+            RegisterSystem(ref _traitPTSD, s, "trait_ptsd",
+                () => s.CaptureState(), o => s.RestoreState((PTSDState)o));
+
+        public void SetUIEventBlurredVision(UIEvent_BlurredVision s) =>
+            RegisterSystem(ref _uIEventBlurredVision, s, "ui_event_blurred_vision",
+                () => s.CaptureState(), o => s.RestoreState((BlurredVisionState)o));
+
+        public void SetUIEventCorruptionScare(UIEvent_CorruptionScare s) =>
+            RegisterSystem(ref _uIEventCorruptionScare, s, "ui_event_corruption_scare",
+                () => s.CaptureState(), o => s.RestoreState((CorruptionScareState)o));
+
+        public void SetUIEventFalseInventory(UIEvent_FalseInventory s) =>
+            RegisterSystem(ref _uIEventFalseInventory, s, "ui_event_false_inventory",
+                () => s.CaptureState(), o => s.RestoreState((FalseInventoryState)o));
+
+        public void SetUIEventGhostRadio(UIEvent_GhostRadio s) =>
+            RegisterSystem(ref _uIEventGhostRadio, s, "ui_event_ghost_radio",
+                () => s.CaptureState(), o => s.RestoreState((GhostRadioState)o));
+
+        public void SetUIEventHacking(UIEvent_Hacking s) =>
+            RegisterSystem(ref _uIEventHacking, s, "ui_event_hacking",
+                () => s.CaptureState(), o => s.RestoreState((HackingState)o));
+
+        public void SetUIEventLowPower(UIEvent_LowPower s) =>
+            RegisterSystem(ref _uIEventLowPower, s, "ui_event_low_power",
+                () => s.CaptureState(), o => s.RestoreState((LowPowerUIState)o));
+
+        public void SetUIEventMapRot(UIEvent_MapRot s) =>
+            RegisterSystem(ref _uIEventMapRot, s, "ui_event_map_rot",
+                () => s.CaptureState(), o => s.RestoreState((MapRotSaveData)o));
+
+        public void SetUIEventPhantomBlip(PhantomBlipSystem s) =>
+            RegisterSystem(ref _uIEventPhantomBlip, s, "ui_event_phantom_blip",
+                () => s.CaptureState(), o => s.RestoreState((PhantomBlipState)o));
+
+        public void SetVehicleArmoredTruck(Vehicle_ArmoredTruck s) =>
+            RegisterSystem(ref _vehicleArmoredTruck, s, "vehicle_armored_truck",
+                () => s.CaptureState(), o => s.RestoreState((ArmoredTruckState)o));
+
+        public void SetVehicleMotorcycle(Vehicle_Motorcycle s) =>
+            RegisterSystem(ref _vehicleMotorcycle, s, "vehicle_motorcycle",
+                () => s.CaptureState(), o => s.RestoreState((MotorcycleState)o));
+
+        public void SetVehicleRowboat(Vehicle_Rowboat s) =>
+            RegisterSystem(ref _vehicleRowboat, s, "vehicle_rowboat",
+                () => s.CaptureState(), o => s.RestoreState((RowboatState)o));
+
+        public void SetVisitorAbandonedState(Visitor_AbandonedState s) =>
+            RegisterSystem(ref _visitorAbandonedState, s, "visitor_abandoned",
+                () => s.CaptureState(), o => s.RestoreState((Visitor_AbandonedStateSave)o));
+
+        public void SetVisitorChurchHostile(Visitor_ChurchHostile s) =>
+            RegisterSystem(ref _visitorChurchHostile, s, "visitor_church_hostile",
+                () => s.CaptureState(), o => s.RestoreState((ChurchHostileState)o));
+
+        public void SetVisitorChurchSanctuary(Visitor_ChurchSanctuary s) =>
+            RegisterSystem(ref _visitorChurchSanctuary, s, "visitor_church_sanctuary",
+                () => s.CaptureState(), o => s.RestoreState((ChurchSanctuaryState)o));
+
+        public void SetVisitorExplodedState(Visitor_ExplodedState s) =>
+            RegisterSystem(ref _visitorExplodedState, s, "visitor_exploded_state",
+                () => s.CaptureState(), o => s.RestoreState((Visitor_ExplodedStateSave)o));
+
+        public void SetVisitorFleeingHorde(Visitor_FleeingHorde s) =>
+            RegisterSystem(ref _visitorFleeingHorde, s, "visitor_fleeing_horde",
+                () => s.CaptureState(), o => s.RestoreState((FleeingHordeState)o));
+
+        public void SetVisitorHospitalPatients(Visitor_HospitalPatients s) =>
+            RegisterSystem(ref _visitorHospitalPatients, s, "visitor_hospital_patients",
+                () => s.CaptureState(), o => s.RestoreState((HospitalPatientsState)o));
+
+        public void SetVisitorHospitalStaff(Visitor_HospitalStaff s) =>
+            RegisterSystem(ref _visitorHospitalStaff, s, "visitor_hospital_staff",
+                () => s.CaptureState(), o => s.RestoreState((HospitalStaffState)o));
+
+        public void SetVisitorMilTrainingYard(Visitor_MilTrainingYard s) =>
+            RegisterSystem(ref _visitorMilTrainingYard, s, "visitor_mil_training_yard",
+                () => s.CaptureState(), o => s.RestoreState((MilTrainingYardState)o));
+
+        public void SetVisitorQuestFaction(Visitor_QuestFaction s) =>
+            RegisterSystem(ref _visitorQuestFaction, s, "visitor_quest_faction",
+                () => s.CaptureState(), o => s.RestoreState((QuestFactionState)o));
+
+        public void SetVisitorRebelTrainingYard(Visitor_RebelTrainingYard s) =>
+            RegisterSystem(ref _visitorRebelTrainingYard, s, "visitor_rebel_training_yard",
+                () => s.CaptureState(), o => s.RestoreState((RebelTrainingYardState)o));
+
+        public void SetWeaponChainsaw(Weapon_Chainsaw s) =>
+            RegisterSystem(ref _weaponChainsaw, s, "weapon_chainsaw",
+                () => s.CaptureState(), o => s.RestoreState((ChainsawState)o));
+
+        public void SetWeaponFlamethrower(Weapon_Flamethrower s) =>
+            RegisterSystem(ref _weaponFlamethrower, s, "weapon_flamethrower",
+                () => s.CaptureState(), o => s.RestoreState((FlamethrowerState)o));
+
+        public void SetWeaponHMG(Weapon_HMG s) =>
+            RegisterSystem(ref _weaponHMG, s, "weapon_hmg",
+                () => s.CaptureState(), o => s.RestoreState((HMGState)o));
+
+        public void SetWeaponRPG(Weapon_RPG s) =>
+            RegisterSystem(ref _weaponRPG, s, "weapon_rpg",
+                () => s.CaptureState(), o => s.RestoreState((RPGState)o));
+
+        public void SetWorldEventDeforestation(WorldEvent_Deforestation s) =>
+            RegisterSystem(ref _worldEventDeforestation, s, "world_event_deforestation",
+                () => s.CaptureState(), o => s.RestoreState((DeforestationState)o));
+
+        public void SetWorldEventFinalWinter(WorldEvent_FinalWinter s) =>
+            RegisterSystem(ref _worldEventFinalWinter, s, "world_event_final_winter",
+                () => s.CaptureState(), o => s.RestoreState((FinalWinterState)o));
+
+        public void SetWorldEventFissure(WorldEvent_Fissure s) =>
+            RegisterSystem(ref _worldEventFissure, s, "world_event_fissure",
+                () => s.CaptureState(), o => s.RestoreState((FissureState)o));
+
+        public void SetWorldEventGreatFamine(WorldEvent_GreatFamine s) =>
+            RegisterSystem(ref _worldEventGreatFamine, s, "world_event_great_famine",
+                () => s.CaptureState(), o => s.RestoreState((GreatFamineState)o));
+
+        public void SetWorldEventMegafauna(WorldEvent_Megafauna s) =>
+            RegisterSystem(ref _worldEventMegafauna, s, "world_event_megafauna",
+                () => s.CaptureState(), o => s.RestoreState((MegafaunaState)o));
+
     }
 }

@@ -49,5 +49,15 @@ namespace AtomicWar._Game.Core
             }
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MilGasMaskState CaptureState() => _state;
+
+        public void RestoreState(MilGasMaskState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

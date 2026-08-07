@@ -66,5 +66,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.cropUnlocked ? "wheat" : null;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SeedLedgerState CaptureState() => _state;
+
+        public void RestoreState(SeedLedgerState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

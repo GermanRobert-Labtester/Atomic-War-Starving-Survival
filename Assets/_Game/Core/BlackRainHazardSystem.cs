@@ -11,7 +11,13 @@ namespace AtomicWar._Game.Core
     /// ruins open catchment (handled by WaterEconomySystem), and applies Dread
     /// to outdoor scavengers and hatch listeners.
     /// </summary>
-    public class BlackRainHazardSystem
+    
+    [Serializable]
+    public class BlackRainHazardSystemSave
+    {
+        public string systemId = "black_rain_hazard_system";
+    }
+public class BlackRainHazardSystem
     {
         /// <summary>Morale lost per game-hour while Dread is active.</summary>
         public const float DreadMoraleDrainPerHour = 4f;
@@ -110,5 +116,11 @@ namespace AtomicWar._Game.Core
                 s => hatchListening,
                 gameHours);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BlackRainHazardSystemSave CaptureState() => new BlackRainHazardSystemSave();
+
+        public void RestoreState(BlackRainHazardSystemSave saved) { _ = saved; }
+
+}
 }

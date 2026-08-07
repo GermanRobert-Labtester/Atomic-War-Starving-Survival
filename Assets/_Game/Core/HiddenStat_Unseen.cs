@@ -60,5 +60,15 @@ namespace AtomicWar._Game.Core
             _state.currentLevel = 0f;
             _peakAudioCuedThisCycle = false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public UnseenState CaptureState() => _state;
+
+        public void RestoreState(UnseenState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

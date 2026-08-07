@@ -85,5 +85,15 @@ namespace AtomicWar._Game.Core
         {
             return State.daysSinceScurvy;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Affliction_ScurvyDegenerationState CaptureState() => State;
+
+        public void RestoreState(Affliction_ScurvyDegenerationState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

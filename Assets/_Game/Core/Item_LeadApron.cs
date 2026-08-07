@@ -34,5 +34,15 @@ namespace AtomicWar._Game.Core
             OnLeadApronEquipped?.Invoke(_state, speedMultiplier);
             return _state.torsoRadiationProtection;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public LeadApronState CaptureState() => _state;
+
+        public void RestoreState(LeadApronState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

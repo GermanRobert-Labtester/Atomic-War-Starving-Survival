@@ -72,5 +72,31 @@ namespace AtomicWar._Game.Core
             OnHarvested?.Invoke(_state.itemId, yield);
             return yield;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public GlowingMushroomState CaptureState()
+        {
+            return new GlowingMushroomState
+            {
+                itemId = _state.itemId,
+                lightOutput = _state.lightOutput,
+                radiationPerHour = _state.radiationPerHour,
+                chemicalScrapYield = _state.chemicalScrapYield,
+                isHarvestable = _state.isHarvestable,
+                roomId = _state.roomId,
+            };
+        }
+
+        public void RestoreState(GlowingMushroomState saved)
+        {
+            if (saved == null) return;
+            _state.itemId = saved.itemId;
+            _state.lightOutput = saved.lightOutput;
+            _state.radiationPerHour = saved.radiationPerHour;
+            _state.chemicalScrapYield = saved.chemicalScrapYield;
+            _state.isHarvestable = saved.isHarvestable;
+            _state.roomId = saved.roomId;
+        }
+
+}
 }

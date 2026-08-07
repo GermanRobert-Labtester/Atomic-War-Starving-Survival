@@ -15,7 +15,14 @@ namespace AtomicWar._Game.Core
         public bool journalScrambled;
     }
 
-    public class FeralRegressionSystem
+    
+    [Serializable]
+    public class FeralRegressionSystemSave
+    {
+        public List<string> keys = new List<string>();
+        public List<FeralRegressionState> values = new List<FeralRegressionState>();
+    }
+public class FeralRegressionSystem
     {
         private const int MinChronicIllnessStage = 3;
 
@@ -110,5 +117,29 @@ namespace AtomicWar._Game.Core
 
             return !state.isRegressed || !state.cooperativeDisabled;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FeralRegressionSystemSave CaptureState()
+        {
+            var save = new FeralRegressionSystemSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
+
+        public void RestoreState(FeralRegressionSystemSave saved)
+        {
+            _states.Clear();
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
+        }
+
+}
 }

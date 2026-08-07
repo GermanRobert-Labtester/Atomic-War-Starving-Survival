@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// Fault line instability causes random map nodes to gain ToxicGas modifiers.
     /// Scavenging without a GasMask guarantees LungDamage, capping max stamina.
     /// </summary>
-    public class SeismicVentsSystem
+    
+    [Serializable]
+    public class SeismicVentsSystemSave
+    {
+        public string systemId = "seismic_vents_system";
+    }
+public class SeismicVentsSystem
     {
         private readonly Dictionary<string, SeismicVentState> _vents = new Dictionary<string, SeismicVentState>();
 
@@ -50,5 +56,11 @@ namespace AtomicWar._Game.Core
             }
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SeismicVentsSystemSave CaptureState() => new SeismicVentsSystemSave();
+
+        public void RestoreState(SeismicVentsSystemSave saved) { _ = saved; }
+
+}
 }

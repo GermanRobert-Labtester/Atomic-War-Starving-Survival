@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
             OnGlandApplied?.Invoke(_state);
             return _state; // Caller uses this to activate PheromoneMaskingSystem
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MutantGlandState CaptureState() => _state;
+
+        public void RestoreState(MutantGlandState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

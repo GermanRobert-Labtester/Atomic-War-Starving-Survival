@@ -95,5 +95,15 @@ namespace AtomicWar._Game.Core
                 Expire();
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PhantomBlipState CaptureState() => _state;
+
+        public void RestoreState(PhantomBlipState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

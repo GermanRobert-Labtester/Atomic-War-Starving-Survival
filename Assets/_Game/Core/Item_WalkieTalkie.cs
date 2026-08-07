@@ -76,5 +76,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.isEquipped && _state.batteriesRemaining > 0;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public WalkieTalkieState CaptureState() => _state;
+
+        public void RestoreState(WalkieTalkieState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

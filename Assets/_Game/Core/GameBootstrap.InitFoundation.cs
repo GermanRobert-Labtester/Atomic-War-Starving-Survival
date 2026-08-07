@@ -113,6 +113,36 @@ namespace AtomicWar._Game.Core
             BootShelterModules();
             // Narrative Event_* with CaptureState (brawl / schism / witch hunt / …).
             BootEvents();
+            // CoreFamilies bulk boots (auto)
+            BootActionFamily();
+            BootAfflictionFamily();
+            BootAudioEventFamily();
+            BootCombatFamily();
+            BootCombatStanceFamily();
+            BootCrisisFamily();
+            BootDurabilityFamily();
+            BootEndgameFamily();
+            BootHazardFamily();
+            BootHiddenStatFamily();
+            BootItemFamily();
+            BootLocationFamily();
+            BootMapFamily();
+            BootMiscFamily();
+            BootNPCFamily();
+            BootNodeFamily();
+            BootPetFamily();
+            BootProjectFamily();
+            BootShelterEventFamily();
+            BootSkirmishFamily();
+            BootTraderFamily();
+            BootTraitFamily();
+            BootUIEventFamily();
+            BootVehicleFamily();
+            BootVisitorFamily();
+            BootWeaponFamily();
+            BootWorldEventFamily();
+            BootRemainingComplexFamily();
+
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

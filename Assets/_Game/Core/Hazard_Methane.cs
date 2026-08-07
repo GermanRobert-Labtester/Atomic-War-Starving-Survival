@@ -67,5 +67,27 @@ namespace AtomicWar._Game.Core
         {
             return _state.isDetonated;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MethaneState CaptureState()
+        {
+            return new MethaneState
+            {
+                hazardId = _state.hazardId,
+                breachChance = _state.breachChance,
+                isGasPresent = _state.isGasPresent,
+                isDetonated = _state.isDetonated,
+            };
+        }
+
+        public void RestoreState(MethaneState saved)
+        {
+            if (saved == null) return;
+            _state.hazardId = saved.hazardId;
+            _state.breachChance = saved.breachChance;
+            _state.isGasPresent = saved.isGasPresent;
+            _state.isDetonated = saved.isDetonated;
+        }
+
+}
 }

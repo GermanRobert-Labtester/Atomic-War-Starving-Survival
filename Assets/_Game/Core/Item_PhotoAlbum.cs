@@ -33,5 +33,15 @@ namespace AtomicWar._Game.Core
             OnPhotoAlbumPlacedOnDesk?.Invoke(_state, survivorId);
             return _state.stressDecayReductionRatio;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PhotoAlbumState CaptureState() => _state;
+
+        public void RestoreState(PhotoAlbumState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

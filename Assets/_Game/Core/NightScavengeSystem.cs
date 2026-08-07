@@ -10,7 +10,13 @@ namespace AtomicWar._Game.Core
     /// triples and loot find chance halves. Save/load safe through ExpeditionState.
     /// Plain C#.
     /// </summary>
-    public class NightScavengeSystem
+    
+    [Serializable]
+    public class NightScavengeSystemSave
+    {
+        public string systemId = "night_scavenge_system";
+    }
+public class NightScavengeSystem
     {
         public const string FlashlightItemId = "flashlight";
         public const string BatteryItemId = "battery";
@@ -112,5 +118,11 @@ namespace AtomicWar._Game.Core
             if (exp == null || !exp.IsNightScavenge) return 1f;
             return NightRadiationMultiplier;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public NightScavengeSystemSave CaptureState() => new NightScavengeSystemSave();
+
+        public void RestoreState(NightScavengeSystemSave saved) { _ = saved; }
+
+}
 }

@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
             OnFiringSquadWatched?.Invoke(_state, _state.moraleDropOnWatch);
             return _state.moraleDropOnWatch;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CollaboratorsState CaptureState() => _state;
+
+        public void RestoreState(CollaboratorsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -66,5 +66,15 @@ namespace AtomicWar._Game.Core
             OnBlueprintPurchased?.Invoke(_state, blueprintId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BrokerState CaptureState() => _state;
+
+        public void RestoreState(BrokerState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

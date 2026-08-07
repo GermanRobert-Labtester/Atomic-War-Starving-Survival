@@ -32,5 +32,15 @@ namespace AtomicWar._Game.Core
             OnKIPillConsumed?.Invoke(_state, isTakenBeforeZoneEntry, blockRatio);
             return blockRatio;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PotassiumIodideState CaptureState() => _state;
+
+        public void RestoreState(PotassiumIodideState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

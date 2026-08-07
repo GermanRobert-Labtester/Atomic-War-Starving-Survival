@@ -40,5 +40,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public WaterTabsState CaptureState() => _state;
+
+        public void RestoreState(WaterTabsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

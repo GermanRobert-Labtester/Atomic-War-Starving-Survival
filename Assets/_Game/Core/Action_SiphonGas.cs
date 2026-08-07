@@ -44,5 +44,15 @@ namespace AtomicWar._Game.Core
 
             return yield;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SiphonGasState CaptureState() => _state;
+
+        public void RestoreState(SiphonGasState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

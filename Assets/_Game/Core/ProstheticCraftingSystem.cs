@@ -24,7 +24,13 @@ namespace AtomicWar._Game.Core
     /// Expands Amputee system (#314) with 3 tiers of prosthetics:
     /// PegLeg (+30% speed), ScrapLimb (+60% speed), PreWarBionics (+100% speed, +10 Carry Weight).
     /// </summary>
-    public class ProstheticCraftingSystem
+    
+    [Serializable]
+    public class ProstheticCraftingSystemSave
+    {
+        public string systemId = "prosthetic_crafting_system";
+    }
+public class ProstheticCraftingSystem
     {
         public event Action<string, ProstheticTier> OnProstheticEquipped;
 
@@ -46,5 +52,11 @@ namespace AtomicWar._Game.Core
         {
             OnProstheticEquipped?.Invoke(survivorId, tier);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ProstheticCraftingSystemSave CaptureState() => new ProstheticCraftingSystemSave();
+
+        public void RestoreState(ProstheticCraftingSystemSave saved) { _ = saved; }
+
+}
 }

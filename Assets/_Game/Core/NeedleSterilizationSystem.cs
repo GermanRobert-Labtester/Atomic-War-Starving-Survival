@@ -17,7 +17,13 @@ namespace AtomicWar._Game.Core
     /// ImprovisedSyringes must be boiled before use. Re-using unboiled syringes
     /// guarantees Hepatitis (slow, permanent stamina drain) or Sepsis.
     /// </summary>
-    public class NeedleSterilizationSystem
+    
+    [Serializable]
+    public class NeedleSterilizationSystemSave
+    {
+        public string systemId = "needle_sterilization_system";
+    }
+public class NeedleSterilizationSystem
     {
         public event Action<string, string> OnInfectionContractedFromSyringe;
 
@@ -43,5 +49,11 @@ namespace AtomicWar._Game.Core
             syringe.isBoiledSterile = false;
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public NeedleSterilizationSystemSave CaptureState() => new NeedleSterilizationSystemSave();
+
+        public void RestoreState(NeedleSterilizationSystemSave saved) { _ = saved; }
+
+}
 }

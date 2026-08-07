@@ -56,5 +56,15 @@ namespace AtomicWar._Game.Core
                 return false;
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelSnipersState CaptureState() => _state;
+
+        public void RestoreState(RebelSnipersState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

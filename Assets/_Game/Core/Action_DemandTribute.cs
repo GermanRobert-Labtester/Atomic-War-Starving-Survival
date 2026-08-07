@@ -58,5 +58,15 @@ namespace AtomicWar._Game.Core
             OnTributeCollected?.Invoke(_state, food, water);
             return (food, water);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DemandTributeState CaptureState() => _state;
+
+        public void RestoreState(DemandTributeState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

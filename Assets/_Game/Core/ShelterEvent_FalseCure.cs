@@ -60,5 +60,15 @@ namespace AtomicWar._Game.Core
                    "There was never a cure. Just poisoned Kool-Aid and a radio broadcast " +
                    "designed to lure the desperate. The dead smiled when they drank it.";
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FalseCureState CaptureState() => _state;
+
+        public void RestoreState(FalseCureState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

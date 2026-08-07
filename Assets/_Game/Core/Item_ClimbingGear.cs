@@ -40,5 +40,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.isEquipped ? _state.rubbleStaminaMultiplier : 1.0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ClimbingGearState CaptureState() => _state;
+
+        public void RestoreState(ClimbingGearState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

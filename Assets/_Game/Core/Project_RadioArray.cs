@@ -78,5 +78,15 @@ namespace AtomicWar._Game.Core
             if (_state.tracksWeather) types.Add("weather");
             return types;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RadioArrayState CaptureState() => _state;
+
+        public void RestoreState(RadioArrayState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -20,6 +20,12 @@ namespace AtomicWar._Game.Core
     /// System linking fallout storms, bunker air filtration wear, entry room radiation surge,
     /// and emergency siren soundscapes (Prompt #40).
     /// </summary>
+    
+    [Serializable]
+    public class FalloutStormHazardSystemSave
+    {
+        public string systemId = "fallout_storm_hazard_system";
+    }
     public class FalloutStormHazardSystem
     {
         public const float RadiationFloodPerBreachRadsPerHour = 50f;
@@ -79,5 +85,11 @@ namespace AtomicWar._Game.Core
 
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FalloutStormHazardSystemSave CaptureState() => new FalloutStormHazardSystemSave();
+
+        public void RestoreState(FalloutStormHazardSystemSave saved) { _ = saved; }
+
+}
 }

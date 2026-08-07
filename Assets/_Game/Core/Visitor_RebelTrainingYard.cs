@@ -43,5 +43,15 @@ namespace AtomicWar._Game.Core
                 "gunpowder_sack"
             };
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelTrainingYardState CaptureState() => _state;
+
+        public void RestoreState(RebelTrainingYardState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

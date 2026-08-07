@@ -49,5 +49,15 @@ namespace AtomicWar._Game.Core
             stopRadLeak?.Invoke();
             OnRoomSealed?.Invoke(_state, roomId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SealRoomState CaptureState() => _state;
+
+        public void RestoreState(SealRoomState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

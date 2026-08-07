@@ -52,5 +52,15 @@ namespace AtomicWar._Game.Core
             OnRobbed?.Invoke(_state);
             return new List<string> { "meager_scraps", "tattered_blanket" };
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DesperateFamilyState CaptureState() => _state;
+
+        public void RestoreState(DesperateFamilyState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

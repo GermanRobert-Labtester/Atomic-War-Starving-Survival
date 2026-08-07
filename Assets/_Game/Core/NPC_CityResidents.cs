@@ -34,5 +34,15 @@ namespace AtomicWar._Game.Core
             OnBeggingGuiltTriggered?.Invoke(_state, moraleDrop);
             return moraleDrop;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CityResidentsState CaptureState() => _state;
+
+        public void RestoreState(CityResidentsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

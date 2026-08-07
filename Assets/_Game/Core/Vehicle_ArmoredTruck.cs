@@ -37,5 +37,15 @@ namespace AtomicWar._Game.Core
         {
             OnMilitaryTerroristAttracted?.Invoke(_state, currentRouteId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ArmoredTruckState CaptureState() => _state;
+
+        public void RestoreState(ArmoredTruckState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

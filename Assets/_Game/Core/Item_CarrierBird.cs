@@ -53,5 +53,15 @@ namespace AtomicWar._Game.Core
             OnMessageDelivered?.Invoke(_state, messageOrItemId);
             return (true, messageOrItemId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CarrierBirdState CaptureState() => _state;
+
+        public void RestoreState(CarrierBirdState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -38,5 +38,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public GeigerCalibratorState CaptureState() => _state;
+
+        public void RestoreState(GeigerCalibratorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

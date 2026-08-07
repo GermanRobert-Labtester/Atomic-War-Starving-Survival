@@ -74,5 +74,15 @@ namespace AtomicWar._Game.Core
             if (!_state.isBuilt) return;
             OnRoomConnected?.Invoke(_state, roomA, roomB);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MinecartState CaptureState() => _state;
+
+        public void RestoreState(MinecartState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

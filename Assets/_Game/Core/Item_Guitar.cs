@@ -65,5 +65,15 @@ namespace AtomicWar._Game.Core
             OnGuitarPlayed?.Invoke(_state, moraleChange, noiseGenerated);
             return (moraleChange, noiseGenerated, curesDepression);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public GuitarState CaptureState() => _state;
+
+        public void RestoreState(GuitarState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

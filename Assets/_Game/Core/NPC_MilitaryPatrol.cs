@@ -71,5 +71,15 @@ namespace AtomicWar._Game.Core
             float damageReduction = effectiveArmor / (effectiveArmor + 50f);
             return Mathf.Max(1f, incomingDamage * (1f - damageReduction));
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MilitaryPatrolState CaptureState() => _state;
+
+        public void RestoreState(MilitaryPatrolState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

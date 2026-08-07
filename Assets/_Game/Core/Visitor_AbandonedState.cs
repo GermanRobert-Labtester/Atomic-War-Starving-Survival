@@ -19,7 +19,13 @@ namespace AtomicWar._Game.Core
     /// RNG visitor card spawning zero NPCs. Generates 3x normal structural hazards
     /// (Cave-ins, Exposed wires, Flooded basements). Testing gear, not guns.
     /// </summary>
-    public class Visitor_AbandonedState
+    
+    [Serializable]
+    public class Visitor_AbandonedStateSave
+    {
+        public string systemId = "visitor_abandoned_state";
+    }
+public class Visitor_AbandonedState
     {
         private AbandonedStateEffect _effect = new AbandonedStateEffect();
 
@@ -32,5 +38,11 @@ namespace AtomicWar._Game.Core
             OnMaxHazardsGenerated?.Invoke(_effect, _effect.activeHazards);
             return new List<string>(_effect.activeHazards);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Visitor_AbandonedStateSave CaptureState() => new Visitor_AbandonedStateSave();
+
+        public void RestoreState(Visitor_AbandonedStateSave saved) { _ = saved; }
+
+}
 }

@@ -94,5 +94,15 @@ namespace AtomicWar._Game.Core
         {
             return State.hoursRemaining;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Action_MixChemsState CaptureState() => State;
+
+        public void RestoreState(Action_MixChemsState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

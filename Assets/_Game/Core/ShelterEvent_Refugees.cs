@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
             OnRefugeeTriageResolved?.Invoke(_state, _state.admittedRefugeeIds, _state.turnedAwayRefugeeIds);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RefugeeWaveState CaptureState() => _state;
+
+        public void RestoreState(RefugeeWaveState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

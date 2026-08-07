@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// Contracted from ScrapWeapons or CityRuin damage. Progresses to Lockjaw,
     /// blocking solid food consumption (requires liquid Soup feeding to prevent starvation).
     /// </summary>
-    public class TetanusAfflictionSystem
+    
+    [Serializable]
+    public class TetanusAfflictionSystemSave
+    {
+        public string systemId = "tetanus_affliction_system";
+    }
+public class TetanusAfflictionSystem
     {
         private readonly Dictionary<string, TetanusState> _tetanusMap = new Dictionary<string, TetanusState>();
 
@@ -55,5 +61,11 @@ namespace AtomicWar._Game.Core
             }
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TetanusAfflictionSystemSave CaptureState() => new TetanusAfflictionSystemSave();
+
+        public void RestoreState(TetanusAfflictionSystemSave saved) { _ = saved; }
+
+}
 }

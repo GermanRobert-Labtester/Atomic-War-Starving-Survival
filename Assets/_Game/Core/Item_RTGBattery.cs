@@ -62,5 +62,15 @@ namespace AtomicWar._Game.Core
 
             return 0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RTGBatteryState CaptureState() => _state;
+
+        public void RestoreState(RTGBatteryState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

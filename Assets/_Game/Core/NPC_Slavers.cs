@@ -33,5 +33,15 @@ namespace AtomicWar._Game.Core
             _state.isPlayerEnslaved = true;
             OnPlayerEnslaved?.Invoke(_state, _state.destinationNodeId);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SlaversState CaptureState() => _state;
+
+        public void RestoreState(SlaversState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

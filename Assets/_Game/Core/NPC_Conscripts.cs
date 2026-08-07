@@ -65,5 +65,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ConscriptsState CaptureState() => _state;
+
+        public void RestoreState(ConscriptsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

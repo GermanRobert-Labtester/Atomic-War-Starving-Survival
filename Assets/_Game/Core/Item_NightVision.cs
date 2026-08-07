@@ -42,5 +42,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public NightVisionState CaptureState() => _state;
+
+        public void RestoreState(NightVisionState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

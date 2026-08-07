@@ -35,5 +35,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AmmoniaState CaptureState() => _state;
+
+        public void RestoreState(AmmoniaState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

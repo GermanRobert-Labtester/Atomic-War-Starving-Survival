@@ -50,5 +50,15 @@ namespace AtomicWar._Game.Core
                 OnVengeanceActivated?.Invoke(_state, survivorName);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TravelingCoupleState CaptureState() => _state;
+
+        public void RestoreState(TravelingCoupleState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

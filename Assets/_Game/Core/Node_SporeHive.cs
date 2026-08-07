@@ -85,9 +85,17 @@ namespace AtomicWar._Game.Core
 
         public SporeHiveState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public SporeHiveState CaptureState() => _state;
+
+
+
         public void RestoreState(SporeHiveState state)
         {
             _state = state ?? new SporeHiveState();
         }
-    }
+
+}
 }

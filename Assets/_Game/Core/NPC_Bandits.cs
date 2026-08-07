@@ -52,5 +52,15 @@ namespace AtomicWar._Game.Core
             _state.isHostile = true;
             OnExtortionRefusedHostile?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BanditsState CaptureState() => _state;
+
+        public void RestoreState(BanditsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

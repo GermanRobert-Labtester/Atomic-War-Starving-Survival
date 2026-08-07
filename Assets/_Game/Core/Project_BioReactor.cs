@@ -97,5 +97,15 @@ namespace AtomicWar._Game.Core
                 default: return 0;
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BioReactorState CaptureState() => _state;
+
+        public void RestoreState(BioReactorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

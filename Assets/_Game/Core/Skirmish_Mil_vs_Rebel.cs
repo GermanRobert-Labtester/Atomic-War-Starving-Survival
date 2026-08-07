@@ -40,5 +40,15 @@ namespace AtomicWar._Game.Core
             OnMilitaryAssisted?.Invoke(_state, _state.milAmmoReward, rebelTrustDelta);
             return _state.milAmmoReward;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MilVsRebelState CaptureState() => _state;
+
+        public void RestoreState(MilVsRebelState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

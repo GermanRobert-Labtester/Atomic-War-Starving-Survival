@@ -122,9 +122,17 @@ namespace AtomicWar._Game.Core
 
         public FeralFloraState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public FeralFloraState CaptureState() => _state;
+
+
+
         public void RestoreState(FeralFloraState state)
         {
             _state = state ?? new FeralFloraState();
         }
-    }
+
+}
 }

@@ -52,5 +52,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public LonePsychopathState CaptureState() => _state;
+
+        public void RestoreState(LonePsychopathState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

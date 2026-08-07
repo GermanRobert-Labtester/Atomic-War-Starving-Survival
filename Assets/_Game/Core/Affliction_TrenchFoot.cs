@@ -13,7 +13,13 @@ namespace AtomicWar._Game.Core
         public int gangreneThresholdDays = 5;
     }
 
-    public class TrenchFootSystem
+    
+    [Serializable]
+    public class TrenchFootSystemSave
+    {
+        public string systemId = "affliction_trench_foot";
+    }
+public class TrenchFootSystem
     {
         private readonly Dictionary<string, TrenchFootState> _afflicted = new Dictionary<string, TrenchFootState>();
 
@@ -70,5 +76,11 @@ namespace AtomicWar._Game.Core
             OnTrenchFootCured?.Invoke(survivorId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TrenchFootSystemSave CaptureState() => new TrenchFootSystemSave();
+
+        public void RestoreState(TrenchFootSystemSave saved) { _ = saved; }
+
+}
 }

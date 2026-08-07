@@ -36,5 +36,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public EncryptedDriveState CaptureState() => _state;
+
+        public void RestoreState(EncryptedDriveState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
             OnSaboteurCaughtAndKilled?.Invoke(_state, agentSurvivorId);
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SabotageMissionState CaptureState() => _state;
+
+        public void RestoreState(SabotageMissionState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

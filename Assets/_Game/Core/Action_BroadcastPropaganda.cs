@@ -56,5 +56,15 @@ namespace AtomicWar._Game.Core
                 }
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PropagandaState CaptureState() => _state;
+
+        public void RestoreState(PropagandaState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

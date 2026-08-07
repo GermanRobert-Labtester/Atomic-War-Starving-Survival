@@ -49,5 +49,15 @@ namespace AtomicWar._Game.Core
             }
             return 0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public UndeliveredMailState CaptureState() => _state;
+
+        public void RestoreState(UndeliveredMailState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

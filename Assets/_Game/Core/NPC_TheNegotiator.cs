@@ -45,5 +45,15 @@ namespace AtomicWar._Game.Core
             }
             return new List<string>();
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public NegotiatorState CaptureState() => _state;
+
+        public void RestoreState(NegotiatorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

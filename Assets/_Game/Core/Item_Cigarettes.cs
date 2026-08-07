@@ -35,5 +35,15 @@ namespace AtomicWar._Game.Core
             OnCigaretteSmoked?.Invoke(_state, survivorId, _state.stressReliefAmount, _state.maxStaminaPenaltyPerSmoke);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CigarettesState CaptureState() => _state;
+
+        public void RestoreState(CigarettesState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

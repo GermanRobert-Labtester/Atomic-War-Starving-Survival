@@ -39,5 +39,15 @@ namespace AtomicWar._Game.Core
             OnIntelNodeTraded?.Invoke(_state, _state.intelNodeSold);
             return _state.intelNodeSold;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public HomelessEncampmentState CaptureState() => _state;
+
+        public void RestoreState(HomelessEncampmentState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -81,5 +81,15 @@ namespace AtomicWar._Game.Core
             float speedFactor = staminaPercent >= 50f ? 1f : staminaPercent / 50f;
             return _state.speedMultiplier * speedFactor;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RowboatState CaptureState() => _state;
+
+        public void RestoreState(RowboatState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

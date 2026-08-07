@@ -81,5 +81,15 @@ namespace AtomicWar._Game.Core
 
             OnNerveDamageCleared?.Invoke(id);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Affliction_NerveDamageState CaptureState() => State;
+
+        public void RestoreState(Affliction_NerveDamageState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

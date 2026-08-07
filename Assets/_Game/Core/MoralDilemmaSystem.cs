@@ -22,7 +22,13 @@ namespace AtomicWar._Game.Core
     /// Pure C# system handling Cannibalism & Moral Dilemmas under extreme starvation (Prompt #38).
     /// Raised when Hunger >= 90 and shelter storage has zero food.
     /// </summary>
-    public class MoralDilemmaSystem
+    
+    [Serializable]
+    public class MoralDilemmaSystemSave
+    {
+        public string systemId = "moral_dilemma_system";
+    }
+public class MoralDilemmaSystem
     {
         public const float CriticalHungerThreshold = 90f;
         public const float BaseMoralePenaltyForButchering = -40f;
@@ -200,5 +206,11 @@ namespace AtomicWar._Game.Core
 
             return inventory.Add(food, amount) ? amount : 0;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MoralDilemmaSystemSave CaptureState() => new MoralDilemmaSystemSave();
+
+        public void RestoreState(MoralDilemmaSystemSave saved) { _ = saved; }
+
+}
 }

@@ -19,7 +19,13 @@ namespace AtomicWar._Game.Core
     /// Staying at 0 Warmth for 4 hours causes severe frostbite, leading to loss of fingers/toes.
     /// Permanently reduces Crafting Speed and Agility by 10% (irreversible).
     /// </summary>
-    public class SevereFrostbiteSystem
+    
+    [Serializable]
+    public class SevereFrostbiteSystemSave
+    {
+        public string systemId = "severe_frostbite_system";
+    }
+public class SevereFrostbiteSystem
     {
         private readonly Dictionary<string, SevereFrostbiteState> _frostbiteMap = new Dictionary<string, SevereFrostbiteState>();
 
@@ -51,5 +57,11 @@ namespace AtomicWar._Game.Core
                 state.hoursAtZeroWarmth = 0f;
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SevereFrostbiteSystemSave CaptureState() => new SevereFrostbiteSystemSave();
+
+        public void RestoreState(SevereFrostbiteSystemSave saved) { _ = saved; }
+
+}
 }

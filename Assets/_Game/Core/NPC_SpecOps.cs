@@ -50,5 +50,15 @@ namespace AtomicWar._Game.Core
                 return 1.0f;
             return isDarknessActive ? 0.6f : 1.0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SpecOpsState CaptureState() => _state;
+
+        public void RestoreState(SpecOpsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

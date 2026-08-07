@@ -18,7 +18,14 @@ namespace AtomicWar._Game.Core
     /// develop their own slang. OldWorld survivors suffer an Affinity penalty
     /// when communicating with native Ash Tongue speakers.
     /// </summary>
-    public class Trait_AshTongue
+    
+    [Serializable]
+    public class TraitAshTongueSave
+    {
+        public List<string> keys = new List<string>();
+        public List<AshTongueTraitState> values = new List<AshTongueTraitState>();
+    }
+public class Trait_AshTongue
     {
         private readonly Dictionary<string, AshTongueTraitState> _states =
             new Dictionary<string, AshTongueTraitState>();
@@ -119,17 +126,26 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Captures all trait states for save.
         /// </summary>
-        public Dictionary<string, AshTongueTraitState> CaptureState() =>
-            new Dictionary<string, AshTongueTraitState>(_states);
+        public TraitAshTongueSave CaptureState()
+        {
+            var save = new TraitAshTongueSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
 
-        /// <summary>
-        /// Restores trait states from save.
-        /// </summary>
-        public void RestoreState(Dictionary<string, AshTongueTraitState> states)
+        public void RestoreState(TraitAshTongueSave saved)
         {
             _states.Clear();
-            foreach (var kvp in states)
-                _states[kvp.Key] = kvp.Value;
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
         }
     }
 }

@@ -68,5 +68,15 @@ namespace AtomicWar._Game.Core
             OnTaxPaid?.Invoke(_state, amount);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TaxCollectorState CaptureState() => _state;
+
+        public void RestoreState(TaxCollectorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

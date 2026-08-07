@@ -61,5 +61,15 @@ namespace AtomicWar._Game.Core
             OnDecryptComplete?.Invoke(_state, isAccurate, coordinates);
             return (isAccurate, coordinates);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DecryptState CaptureState() => _state;
+
+        public void RestoreState(DecryptState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

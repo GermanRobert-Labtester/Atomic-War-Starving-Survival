@@ -47,5 +47,15 @@ namespace AtomicWar._Game.Core
             _state.isAttacking = false;
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public LootersState CaptureState() => _state;
+
+        public void RestoreState(LootersState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

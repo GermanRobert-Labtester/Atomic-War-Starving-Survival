@@ -29,7 +29,13 @@ namespace AtomicWar._Game.Core
     /// Prompt #319: System: Fixed Map Nodes & Visitor Decks
     /// Manages 20 permanent map locations and injects random visitor decks at game start.
     /// </summary>
-    public class VisitorRNGSystem
+    
+    [Serializable]
+    public class VisitorRNGSystemSave
+    {
+        public string systemId = "visitor_rngsystem";
+    }
+public class VisitorRNGSystem
     {
         public static readonly string[] PermanentLocationIds = new string[20]
         {
@@ -221,5 +227,11 @@ namespace AtomicWar._Game.Core
             }
             OnFixedNodesInitialized?.Invoke();
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public VisitorRNGSystemSave CaptureState() => new VisitorRNGSystemSave();
+
+        public void RestoreState(VisitorRNGSystemSave saved) { _ = saved; }
+
+}
 }

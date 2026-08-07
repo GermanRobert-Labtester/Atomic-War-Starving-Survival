@@ -43,5 +43,15 @@ namespace AtomicWar._Game.Core
                 "human_bones_pile"
             };
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CannibalsState CaptureState() => _state;
+
+        public void RestoreState(CannibalsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

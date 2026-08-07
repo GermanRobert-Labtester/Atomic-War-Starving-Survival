@@ -55,5 +55,15 @@ namespace AtomicWar._Game.Core
             _state.isLevel5SiegeTriggered = true;
             OnTributeRefusedSiegeTriggered?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TributeSystemState CaptureState() => _state;
+
+        public void RestoreState(TributeSystemState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

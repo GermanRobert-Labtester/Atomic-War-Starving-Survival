@@ -115,5 +115,15 @@ namespace AtomicWar._Game.Core
             OnLuxuryLooted?.Invoke(_state, looted);
             return looted;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public StrandedYachtState CaptureState() => _state;
+
+        public void RestoreState(StrandedYachtState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

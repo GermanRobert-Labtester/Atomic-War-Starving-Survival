@@ -9,7 +9,13 @@ namespace AtomicWar._Game.Core
     /// full combat.
     /// Save/load safe. Plain C# (stateless action).
     /// </summary>
-    public class Action_SilentTakedown
+    
+    [Serializable]
+    public class Action_SilentTakedownSave
+    {
+        public string systemId = "action_silent_takedown";
+    }
+public class Action_SilentTakedown
     {
         public const string ActionId = "action_silent_takedown";
         public const bool RequiresKnife = true;
@@ -59,5 +65,11 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Noise level produced on a failed takedown attempt.</summary>
         public float GetNoiseOnFailure() => NoiseOnFailure;
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Action_SilentTakedownSave CaptureState() => new Action_SilentTakedownSave();
+
+        public void RestoreState(Action_SilentTakedownSave saved) { _ = saved; }
+
+}
 }

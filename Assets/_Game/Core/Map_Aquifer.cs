@@ -59,5 +59,29 @@ namespace AtomicWar._Game.Core
         {
             return (_state.caveInRiskIncrease, _state.floodingRiskIncrease);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AquiferState CaptureState()
+        {
+            return new AquiferState
+            {
+                locationId = _state.locationId,
+                hasPumpInstalled = _state.hasPumpInstalled,
+                caveInRiskIncrease = _state.caveInRiskIncrease,
+                floodingRiskIncrease = _state.floodingRiskIncrease,
+                providesInfiniteWater = _state.providesInfiniteWater,
+            };
+        }
+
+        public void RestoreState(AquiferState saved)
+        {
+            if (saved == null) return;
+            _state.locationId = saved.locationId;
+            _state.hasPumpInstalled = saved.hasPumpInstalled;
+            _state.caveInRiskIncrease = saved.caveInRiskIncrease;
+            _state.floodingRiskIncrease = saved.floodingRiskIncrease;
+            _state.providesInfiniteWater = saved.providesInfiniteWater;
+        }
+
+}
 }

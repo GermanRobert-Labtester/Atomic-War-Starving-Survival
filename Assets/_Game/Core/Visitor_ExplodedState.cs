@@ -20,7 +20,13 @@ namespace AtomicWar._Game.Core
     /// Massive crater. Zero NPCs, extreme 5000mSv radiation. Only loot is military BlackBoxes or NuclearMaterial.
     /// Requires endgame Hazmat gear to click on/interact with the node.
     /// </summary>
-    public class Visitor_ExplodedState
+    
+    [Serializable]
+    public class Visitor_ExplodedStateSave
+    {
+        public string systemId = "visitor_exploded_state";
+    }
+public class Visitor_ExplodedState
     {
         private ExplodedStateEffect _effect = new ExplodedStateEffect();
 
@@ -37,5 +43,11 @@ namespace AtomicWar._Game.Core
             }
             return new List<string>();
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Visitor_ExplodedStateSave CaptureState() => new Visitor_ExplodedStateSave();
+
+        public void RestoreState(Visitor_ExplodedStateSave saved) { _ = saved; }
+
+}
 }

@@ -53,5 +53,15 @@ namespace AtomicWar._Game.Core
             OnSurgeryPerformed?.Invoke(_state, patientId, surgeryType, powerConsumed);
             return (true, powerConsumed);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AutoDocState CaptureState() => _state;
+
+        public void RestoreState(AutoDocState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

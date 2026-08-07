@@ -71,5 +71,15 @@ namespace AtomicWar._Game.Core
                 return _state.hatchVisibilityBonus;
             return 0f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SurfaceDomeState CaptureState() => _state;
+
+        public void RestoreState(SurfaceDomeState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

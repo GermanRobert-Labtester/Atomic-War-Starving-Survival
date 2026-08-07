@@ -32,5 +32,15 @@ namespace AtomicWar._Game.Core
             OnDespairAuraApplied?.Invoke(_state, effectiveMax);
             return effectiveMax;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public HospitalPatientsState CaptureState() => _state;
+
+        public void RestoreState(HospitalPatientsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

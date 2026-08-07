@@ -35,5 +35,15 @@ namespace AtomicWar._Game.Core
             OnStrayBulletCrashTrauma?.Invoke(_state, totalDamage);
             return totalDamage;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MotorcycleState CaptureState() => _state;
+
+        public void RestoreState(MotorcycleState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

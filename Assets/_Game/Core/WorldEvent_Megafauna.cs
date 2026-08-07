@@ -102,9 +102,17 @@ namespace AtomicWar._Game.Core
 
         public MegafaunaState GetState() => _state;
 
+        // ── Save / Load ────────────────────────────────────────────────
+
+
+        public MegafaunaState CaptureState() => _state;
+
+
+
         public void RestoreState(MegafaunaState state)
         {
             _state = state ?? new MegafaunaState();
         }
-    }
+
+}
 }

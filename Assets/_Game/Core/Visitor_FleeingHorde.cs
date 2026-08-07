@@ -35,5 +35,15 @@ namespace AtomicWar._Game.Core
 
             OnStormPanicTriggered?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FleeingHordeState CaptureState() => _state;
+
+        public void RestoreState(FleeingHordeState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

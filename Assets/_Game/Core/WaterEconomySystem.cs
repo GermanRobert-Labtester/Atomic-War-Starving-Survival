@@ -17,7 +17,13 @@ namespace AtomicWar._Game.Core
     /// needs current weather/day/WaterStorage that generic module ticking
     /// doesn't have access to.
     /// </summary>
-    public class WaterEconomySystem
+    
+    [Serializable]
+    public class WaterEconomySystemSave
+    {
+        public string systemId = "water_economy_system";
+    }
+public class WaterEconomySystem
     {
         /// <summary>Day on which Rain collection turns bacterial (dirty) instead of clean.</summary>
         public const int ContaminationOnsetDay = 30;
@@ -178,5 +184,11 @@ namespace AtomicWar._Game.Core
                 if (burn > 0f) storage.ConsumeClean(burn);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public WaterEconomySystemSave CaptureState() => new WaterEconomySystemSave();
+
+        public void RestoreState(WaterEconomySystemSave saved) { _ = saved; }
+
+}
 }

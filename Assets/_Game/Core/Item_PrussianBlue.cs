@@ -36,5 +36,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PrussianBlueState CaptureState() => _state;
+
+        public void RestoreState(PrussianBlueState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

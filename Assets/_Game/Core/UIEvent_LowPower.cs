@@ -64,5 +64,15 @@ namespace AtomicWar._Game.Core
         }
 
         public bool IsGlitching() => _state.isGlitching;
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public LowPowerUIState CaptureState() => _state;
+
+        public void RestoreState(LowPowerUIState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

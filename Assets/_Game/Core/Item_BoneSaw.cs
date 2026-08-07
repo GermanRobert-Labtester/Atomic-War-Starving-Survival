@@ -74,5 +74,15 @@ namespace AtomicWar._Game.Core
         {
             return State.hasBeenUsed;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Item_BoneSawState CaptureState() => State;
+
+        public void RestoreState(Item_BoneSawState saved)
+        {
+            if (saved == null) return;
+            State = saved;
+        }
+
+}
 }

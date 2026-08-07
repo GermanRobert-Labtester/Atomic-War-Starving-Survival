@@ -43,5 +43,15 @@ namespace AtomicWar._Game.Core
                 OnChildDeathTraumaTriggered?.Invoke(_state, parentId, _state.parentTraumaPenaltyOnChildDeath);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ChildsDrawingState CaptureState() => _state;
+
+        public void RestoreState(ChildsDrawingState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

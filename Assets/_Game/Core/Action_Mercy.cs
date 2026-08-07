@@ -39,5 +39,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MercyActionState CaptureState() => _state;
+
+        public void RestoreState(MercyActionState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

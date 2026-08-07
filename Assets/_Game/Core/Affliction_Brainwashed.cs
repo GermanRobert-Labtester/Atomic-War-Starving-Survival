@@ -66,5 +66,15 @@ namespace AtomicWar._Game.Core
             _state.lastFrequencyId = string.Empty;
             OnCured?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BrainwashedState CaptureState() => _state;
+
+        public void RestoreState(BrainwashedState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -34,5 +34,15 @@ namespace AtomicWar._Game.Core
                 OnDosimeterBrokenInMelee?.Invoke(_state);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public WristDosimeterState CaptureState() => _state;
+
+        public void RestoreState(WristDosimeterState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

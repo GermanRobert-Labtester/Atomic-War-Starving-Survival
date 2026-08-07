@@ -36,5 +36,15 @@ namespace AtomicWar._Game.Core
             OnMidExpeditionRestTicked?.Invoke(_state, fatigueRecovered);
             return fatigueRecovered;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ChurchSanctuaryState CaptureState() => _state;
+
+        public void RestoreState(ChurchSanctuaryState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

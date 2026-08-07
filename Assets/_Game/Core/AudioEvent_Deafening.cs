@@ -63,5 +63,15 @@ namespace AtomicWar._Game.Core
                 OnWarningMissed?.Invoke(warningType);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DeafeningState CaptureState() => _state;
+
+        public void RestoreState(DeafeningState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

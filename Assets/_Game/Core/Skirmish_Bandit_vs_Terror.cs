@@ -49,5 +49,15 @@ namespace AtomicWar._Game.Core
 
             OnBanditsSlaughtered?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BanditVsTerrorState CaptureState() => _state;
+
+        public void RestoreState(BanditVsTerrorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

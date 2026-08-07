@@ -48,5 +48,15 @@ namespace AtomicWar._Game.Core
             _state.radioBackupCalled = true;
             OnRadioBackupCalled?.Invoke(_state, _state.backupWaveCount);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelModeratesState CaptureState() => _state;
+
+        public void RestoreState(RebelModeratesState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -38,5 +38,15 @@ namespace AtomicWar._Game.Core
             }
             return null;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public AddictsPassiveState CaptureState() => _state;
+
+        public void RestoreState(AddictsPassiveState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

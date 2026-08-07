@@ -18,7 +18,13 @@ namespace AtomicWar._Game.Core
     /// FireEntities inflict SevereBurns. Medical Bed must be upgraded to a SterileEnvironment
     /// to perform SkinGraft surgery, or the patient dies of burn shock.
     /// </summary>
-    public class BurnWardSystem
+    
+    [Serializable]
+    public class BurnWardSystemSave
+    {
+        public string systemId = "burn_ward_system";
+    }
+public class BurnWardSystem
     {
         private readonly Dictionary<string, SevereBurnState> _burnMap = new Dictionary<string, SevereBurnState>();
 
@@ -56,5 +62,11 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BurnWardSystemSave CaptureState() => new BurnWardSystemSave();
+
+        public void RestoreState(BurnWardSystemSave saved) { _ = saved; }
+
+}
 }

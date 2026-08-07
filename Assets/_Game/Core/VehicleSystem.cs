@@ -28,7 +28,13 @@ namespace AtomicWar._Game.Core
     /// Vehicles consist of Engine, Tires, Chassis, and Battery. Repaired individually.
     /// If Tire Durability drops to 0, travel speed drops to walking pace.
     /// </summary>
-    public class VehicleSystem
+    
+    [Serializable]
+    public class VehicleSystemSave
+    {
+        public string systemId = "vehicle_system";
+    }
+public class VehicleSystem
     {
         private readonly Dictionary<string, VehicleData> _vehicles = new Dictionary<string, VehicleData>();
 
@@ -80,5 +86,11 @@ namespace AtomicWar._Game.Core
                 }
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public VehicleSystemSave CaptureState() => new VehicleSystemSave();
+
+        public void RestoreState(VehicleSystemSave saved) { _ = saved; }
+
+}
 }

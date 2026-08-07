@@ -45,5 +45,15 @@ namespace AtomicWar._Game.Core
             OnWeatherExchangeRateApplied?.Invoke(_state, itemId, mult);
             return mult;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PassiveTraderState CaptureState() => _state;
+
+        public void RestoreState(PassiveTraderState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

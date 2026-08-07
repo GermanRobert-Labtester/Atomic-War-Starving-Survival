@@ -155,5 +155,15 @@ namespace AtomicWar._Game.Core
         {
             return 20f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FishActionState CaptureState() => _config;
+
+        public void RestoreState(FishActionState saved)
+        {
+            // Config is readonly runtime constants; no-op restore preserves identity.
+            _ = saved;
+        }
+
+}
 }

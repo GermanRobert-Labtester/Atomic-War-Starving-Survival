@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
             OnFalseCountDisplayed?.Invoke(itemId, 0);
             return 0;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public FalseInventoryState CaptureState() => _state;
+
+        public void RestoreState(FalseInventoryState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

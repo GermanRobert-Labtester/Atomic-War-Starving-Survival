@@ -19,7 +19,13 @@ namespace AtomicWar._Game.Core
     /// massive ActionSpeed and Stealth buffs, BUT only if entirely alone.
     /// If another human (even an ally) enters their room, they suffer a PanicAttack.
     /// </summary>
-    public class Trait_Anthropophobia
+    
+    [Serializable]
+    public class Trait_AnthropophobiaSave
+    {
+        public string systemId = "trait_anthropophobia";
+    }
+public class Trait_Anthropophobia
     {
         private readonly System.Collections.Generic.Dictionary<string, AnthropophobiaState> _states =
             new System.Collections.Generic.Dictionary<string, AnthropophobiaState>();
@@ -84,5 +90,11 @@ namespace AtomicWar._Game.Core
             OnIsolationBuffApplied?.Invoke(survivorId, state.actionSpeedBuffAlone, state.stealthBuffAlone);
             return (state.actionSpeedBuffAlone, state.stealthBuffAlone);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public Trait_AnthropophobiaSave CaptureState() => new Trait_AnthropophobiaSave();
+
+        public void RestoreState(Trait_AnthropophobiaSave saved) { _ = saved; }
+
+}
 }

@@ -38,5 +38,15 @@ namespace AtomicWar._Game.Core
             }
             return incomingDamage;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public KevlarVestState CaptureState() => _state;
+
+        public void RestoreState(KevlarVestState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

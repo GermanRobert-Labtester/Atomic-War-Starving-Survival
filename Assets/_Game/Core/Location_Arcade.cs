@@ -94,5 +94,15 @@ namespace AtomicWar._Game.Core
         {
             return _childScavengerInventory.AsReadOnly();
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ArcadeState CaptureState() => _state;
+
+        public void RestoreState(ArcadeState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

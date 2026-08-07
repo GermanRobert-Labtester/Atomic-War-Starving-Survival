@@ -40,5 +40,15 @@ namespace AtomicWar._Game.Core
 
             return passed;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public BlackOpsState CaptureState() => _state;
+
+        public void RestoreState(BlackOpsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

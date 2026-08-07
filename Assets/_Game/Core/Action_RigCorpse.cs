@@ -75,5 +75,15 @@ namespace AtomicWar._Game.Core
             _state.isTrapPlaced = false; // Trap is consumed
             return (killed, lootDropped);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RigCorpseState CaptureState() => _state;
+
+        public void RestoreState(RigCorpseState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -47,5 +47,15 @@ namespace AtomicWar._Game.Core
             OnQuestFactionInjected?.Invoke(_state, questId, targetLocationId);
             return true;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public QuestFactionState CaptureState() => _state;
+
+        public void RestoreState(QuestFactionState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -55,5 +55,15 @@ namespace AtomicWar._Game.Core
                 OnHostageExecutedRadioMoraleDropped?.Invoke(_state, _state.moraleDropOnRadioExecution);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RansomEventState CaptureState() => _state;
+
+        public void RestoreState(RansomEventState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

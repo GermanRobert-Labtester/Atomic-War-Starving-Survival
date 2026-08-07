@@ -49,5 +49,15 @@ namespace AtomicWar._Game.Core
             OnCaravanAbandonedBlacklisted?.Invoke(_state);
             return new List<string> { "trader_corpse_scrap", "rare_prewar_goods" };
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public CaravanAmbushState CaptureState() => _state;
+
+        public void RestoreState(CaravanAmbushState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

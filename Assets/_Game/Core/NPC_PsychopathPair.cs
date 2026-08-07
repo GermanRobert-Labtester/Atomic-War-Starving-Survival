@@ -53,5 +53,15 @@ namespace AtomicWar._Game.Core
                 OnOneKilledFrenzyEntered?.Invoke(_state, remainingRole);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public PsychopathPairState CaptureState() => _state;
+
+        public void RestoreState(PsychopathPairState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

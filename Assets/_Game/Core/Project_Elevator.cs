@@ -97,5 +97,15 @@ namespace AtomicWar._Game.Core
                 return 0f;
             return 1f;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ElevatorState CaptureState() => _state;
+
+        public void RestoreState(ElevatorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -19,7 +19,13 @@ namespace AtomicWar._Game.Core
     /// Halts expedition if vehicle engine breaks down mid-travel.
     /// Survivor can abandon the vehicle permanently to walk home, or wait for a rescue survivor with MechanicalParts.
     /// </summary>
-    public class VehicleStrandingSystem
+    
+    [Serializable]
+    public class VehicleStrandingSystemSave
+    {
+        public string systemId = "vehicle_stranding_system";
+    }
+public class VehicleStrandingSystem
     {
         private readonly Dictionary<string, StrandingState> _strandedMap = new Dictionary<string, StrandingState>();
 
@@ -64,5 +70,11 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public VehicleStrandingSystemSave CaptureState() => new VehicleStrandingSystemSave();
+
+        public void RestoreState(VehicleStrandingSystemSave saved) { _ = saved; }
+
+}
 }

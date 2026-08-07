@@ -56,5 +56,15 @@ namespace AtomicWar._Game.Core
             OnIncomeCollected?.Invoke(_state, ammo, money);
             return (ammo, money);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public EstablishRouteState CaptureState() => _state;
+
+        public void RestoreState(EstablishRouteState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

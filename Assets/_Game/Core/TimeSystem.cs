@@ -13,7 +13,13 @@ namespace AtomicWar._Game.Core
     /// so hour/day ticks and the systems driven from them never get skipped —
     /// no matter how big the frame delta grows (hitches, backgrounding, 3x).
     /// </summary>
-    public class TimeSystem
+    
+    [Serializable]
+    public class TimeSystemSave
+    {
+        public string systemId = "time_system";
+    }
+public class TimeSystem
     {
         /// <summary>Upper clamp for <see cref="TimeScale"/> (tuning guard, not gameplay).</summary>
         public const float MaxTimeScale = 8f;
@@ -129,5 +135,11 @@ namespace AtomicWar._Game.Core
 
             OnHourTick?.Invoke(_day, CurrentHour);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TimeSystemSave CaptureState() => new TimeSystemSave();
+
+        public void RestoreState(TimeSystemSave saved) { _ = saved; }
+
+}
 }

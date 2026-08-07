@@ -60,5 +60,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MilVsTerrorState CaptureState() => _state;
+
+        public void RestoreState(MilVsTerrorState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

@@ -57,5 +57,15 @@ namespace AtomicWar._Game.Core
             _isTunedIn = true;
             OnSourceVanished?.Invoke();
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public GhostRadioState CaptureState() => _state;
+
+        public void RestoreState(GhostRadioState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

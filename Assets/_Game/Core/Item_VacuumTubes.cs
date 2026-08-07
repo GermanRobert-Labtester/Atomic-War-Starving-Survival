@@ -53,5 +53,15 @@ namespace AtomicWar._Game.Core
         {
             return _state.isIntact && _state.requiredForHamRadio;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public VacuumTubesState CaptureState() => _state;
+
+        public void RestoreState(VacuumTubesState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

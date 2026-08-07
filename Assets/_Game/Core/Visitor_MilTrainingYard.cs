@@ -47,5 +47,15 @@ namespace AtomicWar._Game.Core
                 "tactical_grenade_pack"
             };
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public MilTrainingYardState CaptureState() => _state;
+
+        public void RestoreState(MilTrainingYardState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

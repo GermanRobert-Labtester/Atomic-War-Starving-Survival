@@ -36,5 +36,15 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public SlaveMarketState CaptureState() => _state;
+
+        public void RestoreState(SlaveMarketState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

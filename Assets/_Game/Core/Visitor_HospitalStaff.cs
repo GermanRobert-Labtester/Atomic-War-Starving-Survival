@@ -51,5 +51,15 @@ namespace AtomicWar._Game.Core
 
             OnMedicalTaxRefused?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public HospitalStaffState CaptureState() => _state;
+
+        public void RestoreState(HospitalStaffState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

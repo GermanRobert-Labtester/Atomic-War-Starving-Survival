@@ -40,5 +40,15 @@ namespace AtomicWar._Game.Core
             _state.isProtectedFromRaid = true;
             OnDefendedFromRaid?.Invoke(_state);
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public TheOldState CaptureState() => _state;
+
+        public void RestoreState(TheOldState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

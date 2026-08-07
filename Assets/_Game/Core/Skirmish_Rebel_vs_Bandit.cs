@@ -46,5 +46,15 @@ namespace AtomicWar._Game.Core
                 OnLootedDeadBanditAsStealing?.Invoke(_state);
             }
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public RebelVsBanditState CaptureState() => _state;
+
+        public void RestoreState(RebelVsBanditState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

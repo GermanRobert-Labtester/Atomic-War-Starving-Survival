@@ -19,7 +19,14 @@ namespace AtomicWar._Game.Core
     /// worthless junk to critical survival supplies.
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
-    public class Trait_Kleptomaniac
+    
+    [Serializable]
+    public class TraitKleptomaniacSave
+    {
+        public List<string> keys = new List<string>();
+        public List<KleptomaniacState> values = new List<KleptomaniacState>();
+    }
+public class Trait_Kleptomaniac
     {
         // ── Events ──────────────────────────────────────────────────────
         public event Action<string, string> OnItemStolen;        // survivorId, itemId
@@ -113,35 +120,25 @@ namespace AtomicWar._Game.Core
 
         // ── Save / Load ─────────────────────────────────────────────────
 
-        public Dictionary<string, KleptomaniacState> CaptureState()
+        public TraitKleptomaniacSave CaptureState()
         {
-            var snapshot = new Dictionary<string, KleptomaniacState>();
+            var save = new TraitKleptomaniacSave();
             foreach (var kvp in _states)
             {
-                snapshot[kvp.Key] = new KleptomaniacState
-                {
-                    traitId = kvp.Value.traitId,
-                    isStealing = kvp.Value.isStealing,
-                    escalationLevel = kvp.Value.escalationLevel,
-                    stolenItems = new List<string>(kvp.Value.stolenItems)
-                };
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
             }
-            return snapshot;
+            return save;
         }
 
-        public void RestoreState(Dictionary<string, KleptomaniacState> saved)
+        public void RestoreState(TraitKleptomaniacSave saved)
         {
             _states.Clear();
-            if (saved == null) return;
-            foreach (var kvp in saved)
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
             {
-                _states[kvp.Key] = new KleptomaniacState
-                {
-                    traitId = kvp.Value.traitId,
-                    isStealing = kvp.Value.isStealing,
-                    escalationLevel = kvp.Value.escalationLevel,
-                    stolenItems = new List<string>(kvp.Value.stolenItems)
-                };
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
             }
         }
     }

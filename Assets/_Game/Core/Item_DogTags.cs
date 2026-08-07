@@ -41,5 +41,15 @@ namespace AtomicWar._Game.Core
             OnDogTagsSoldForScrap?.Invoke(_state, _state.scrapValueOnSell);
             return _state.scrapValueOnSell;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DogTagsState CaptureState() => _state;
+
+        public void RestoreState(DogTagsState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

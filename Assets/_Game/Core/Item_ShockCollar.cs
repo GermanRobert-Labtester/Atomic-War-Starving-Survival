@@ -65,5 +65,15 @@ namespace AtomicWar._Game.Core
 
             return false;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public ShockCollarState CaptureState() => _state;
+
+        public void RestoreState(ShockCollarState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

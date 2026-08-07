@@ -41,5 +41,15 @@ namespace AtomicWar._Game.Core
             }
             return actualDamage;
         }
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public DrunksAggroState CaptureState() => _state;
+
+        public void RestoreState(DrunksAggroState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }

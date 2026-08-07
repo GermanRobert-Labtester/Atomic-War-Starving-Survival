@@ -21,7 +21,14 @@ namespace AtomicWar._Game.Core
     /// (LuckyCoin). Has item = +10% all stats. Loses item = -50% stats until
     /// found. Survivor panic-searches for lost item.
     /// </summary>
-    public class Trait_Superstitious
+    
+    [Serializable]
+    public class TraitSuperstitiousSave
+    {
+        public List<string> keys = new List<string>();
+        public List<SuperstitiousTraitState> values = new List<SuperstitiousTraitState>();
+    }
+public class Trait_Superstitious
     {
         private readonly Dictionary<string, SuperstitiousTraitState> _states =
             new Dictionary<string, SuperstitiousTraitState>();
@@ -185,17 +192,26 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Captures all trait states for save.
         /// </summary>
-        public Dictionary<string, SuperstitiousTraitState> CaptureState() =>
-            new Dictionary<string, SuperstitiousTraitState>(_states);
+        public TraitSuperstitiousSave CaptureState()
+        {
+            var save = new TraitSuperstitiousSave();
+            foreach (var kvp in _states)
+            {
+                save.keys.Add(kvp.Key);
+                save.values.Add(kvp.Value);
+            }
+            return save;
+        }
 
-        /// <summary>
-        /// Restores trait states from save.
-        /// </summary>
-        public void RestoreState(Dictionary<string, SuperstitiousTraitState> states)
+        public void RestoreState(TraitSuperstitiousSave saved)
         {
             _states.Clear();
-            foreach (var kvp in states)
-                _states[kvp.Key] = kvp.Value;
+            if (saved == null || saved.keys == null) return;
+            for (int i = 0; i < saved.keys.Count; i++)
+            {
+                var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
+                if (val != null) _states[saved.keys[i]] = val;
+            }
         }
     }
 }

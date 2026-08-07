@@ -59,5 +59,15 @@ namespace AtomicWar._Game.Core
         }
 
         public bool IsActive() => _state.isActive;
-    }
+    
+        // ── Save / Load ────────────────────────────────────────────────
+        public HeartbeatState CaptureState() => _state;
+
+        public void RestoreState(HeartbeatState saved)
+        {
+            if (saved == null) return;
+            _state = saved;
+        }
+
+}
 }
