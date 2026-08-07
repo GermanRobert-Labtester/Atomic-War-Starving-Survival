@@ -96,6 +96,8 @@ namespace AtomicWar._Game.UI.MainMenu
 
             UnbindSettings();
             _rows.Clear();
+            _animationsArmed = false;
+            _sceneImage = null;
             _root = null;
             _shell = null;
             _menuList = null;
@@ -125,6 +127,7 @@ namespace AtomicWar._Game.UI.MainMenu
             BuildRows();
             BuildDialogs();
             BindSettings();
+            ArmAnimations();
 
             _root.RegisterCallback<NavigationMoveEvent>(OnNavigationMove, TrickleDown.TrickleDown);
             _root.RegisterCallback<KeyDownEvent>(OnKeyDown, TrickleDown.TrickleDown);

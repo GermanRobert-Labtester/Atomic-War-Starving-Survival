@@ -64,6 +64,22 @@
        brightness() or saturate() filter, but a flat grey tint is the same
        multiply. contrast(1.04) is dropped as imperceptible. */
     -unity-background-image-tint-color: rgb(194, 194, 194);
+
+    /* Ken-Burns drift. background-size: cover already overflows the element,
+       so a small scale-up plus translate has margin to move in before any
+       edge could show. MainMenuController.Animation toggles .ken-burns-drift
+       on a slow interval once the panel has done its first layout pass — USS
+       transitions do not animate from an unresolved initial style. */
+    scale: 1 1;
+    translate: 0px 0px;
+    transition-property: scale, translate;
+    transition-duration: 60s;
+    transition-timing-function: linear;
+}
+
+.scene-image.ken-burns-drift {
+    scale: 1.06 1.06;
+    translate: -22px -12px;
 }
 
 .scene-vignette {
@@ -198,6 +214,22 @@
     background-color: rgba(0, 0, 0, 0);
     background-image: none;
     min-height: auto;
+
+    /* Entry stagger. Starts invisible and offset; MainMenuController.Animation
+       schedules .is-entered per row with an increasing delay so the list
+       reads top-to-bottom instead of popping in as one block. The hover nudge
+       lives on .menu-button__inner (below) so the two transitions never fight
+       over the same `translate` property. */
+    opacity: 0;
+    translate: 0px 16px;
+    transition-property: opacity, translate;
+    transition-duration: 0.35s;
+    transition-timing-function: ease-out;
+}
+
+.menu-button.is-entered {
+    opacity: 1;
+    translate: 0px 0px;
 }
 
 .menu-button:hover,
@@ -659,4 +691,5 @@
 .game-shell.ultrawide .menu-stage {
     left: 14%;
 }
+
 
