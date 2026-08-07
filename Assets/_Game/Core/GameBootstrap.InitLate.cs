@@ -112,6 +112,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetAdaptiveWarlordsSystem(AdaptiveWarlords);
             SaveSystem.SetBilgePumpsSystem(BilgePumps);
             SaveSystem.SetCarrionBirdsSystem(CarrionBirds);
+            SaveSystem.SetLogicGatesSystem(LogicGates);
             SaveSystem.SetRiverNodeSystem(RiverNodeSystem);
             SaveSystem.SetMutagenesisSystem(Mutagenesis);
             SaveSystem.SetWorldPhaseSystem(WorldPhaseSystem);

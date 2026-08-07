@@ -473,6 +473,12 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((CarrionBirdsState)o));
 
+        /// <summary>Prompt #799 — IF/THEN power-grid logic gates.</summary>
+        public void SetLogicGatesSystem(System_LogicGates s) =>
+            RegisterSystem(ref _logicGatesSystem, s, "logic_gates",
+                () => s.CaptureState(),
+                o => s.RestoreState((LogicGatesState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",

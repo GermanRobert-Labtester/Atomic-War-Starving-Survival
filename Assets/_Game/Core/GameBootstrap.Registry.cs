@@ -79,6 +79,8 @@ namespace AtomicWar._Game.Core
                 PowerNetwork.Tick(h, WeatherSystem != null ? WeatherNameOf(WeatherSystem.Current) : null, _tryApplyPedalCostCached);
                 PowerNetwork.ApplyToShelter(Shelter);
             });
+            // Prompt #799 — evaluate IF/THEN rules after power rebalance.
+            _registry.RegisterPerSubstep("logic_gates", h => TickLogicGates());
             _registry.RegisterPerSubstep("hatch_defense", h => HatchDefenseSystem?.Tick(h, PowerNetwork));
             _registry.RegisterPerSubstep("atmosphere", h =>
             {

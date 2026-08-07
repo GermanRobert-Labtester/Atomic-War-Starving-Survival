@@ -88,6 +88,9 @@ namespace AtomicWar._Game.Core
             // Shelter power grid: finite watts, load-shedding, diesel + bicycle generators.
             // Fully-qualified type: property name PowerNetwork shadows the class.
             PowerNetwork = AtomicWar._Game.Shelter.PowerNetwork.CreateDefault(dieselFuel: 40f);
+            // Prompt #799 — IF/THEN grid automation over power consumers/sources.
+            LogicGates = new System_LogicGates();
+            WireLogicGates();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {
@@ -396,6 +399,138 @@ namespace AtomicWar._Game.Core
             NeedsSystem.OnDied += _onNeedsDied;
 
             // ───────────────────────────────────────────────────────────
+        }
+
+        /// <summary>
+        /// Prompt #799 — re-evaluate logic gates when the power grid rebalances.
+        /// </summary>
+        private void WireLogicGates()
+        {
+            if (LogicGates == null || PowerNetwork == null) return;
+
+            PowerNetwork.OnPowerStateChanged += () => TickLogicGates();
+            LogicGates.OnRuleTriggered += ruleId =>
+                Debug.Log($"[GameBootstrap] LOGIC: rule '{ruleId}' triggered.");
+        }
+
+        /// <summary>
+        /// Prompt #799 — sample power module states, evaluate IF/THEN rules, apply actions.
+        /// </summary>
+        private void TickLogicGates()
+        {
+            if (_logicGatesTicking) return;
+            if (LogicGates == null || PowerNetwork == null) return;
+            if (LogicGates.GetRuleCount() <= 0) return;
+
+            _logicGatesTicking = true;
+            try
+            {
+                var states = CollectLogicModuleStates();
+                var triggered = LogicGates.EvaluateRules(states);
+                if (triggered == null || triggered.Count == 0) return;
+
+                for (int i = 0; i < triggered.Count; i++)
+                {
+                    var rule = LogicGates.FindRule(triggered[i]);
+                    if (rule != null)
+                        ApplyLogicRuleAction(rule);
+                }
+            }
+            finally
+            {
+                _logicGatesTicking = false;
+            }
+        }
+
+        /// <summary>Build float samples for consumers, sources, and grid aggregates.</summary>
+        private Dictionary<string, float> CollectLogicModuleStates()
+        {
+            var states = new Dictionary<string, float>(32);
+            if (PowerNetwork == null) return states;
+
+            states["generation"] = PowerNetwork.TotalGeneration;
+            states["total_generation"] = PowerNetwork.TotalGeneration;
+            states["draw"] = PowerNetwork.TotalDraw;
+            states["total_draw"] = PowerNetwork.TotalDraw;
+            states["requested_draw"] = PowerNetwork.RequestedDraw;
+            states["blackout"] = PowerNetwork.IsBlackout ? 1f : 0f;
+            states["load_shedding"] = PowerNetwork.IsLoadShedding ? 1f : 0f;
+            states["co_ppm"] = PowerNetwork.CarbonMonoxidePpm;
+            states["diesel_fuel"] = PowerNetwork.GetDieselFuelTotal();
+
+            var consumers = PowerNetwork.Consumers;
+            if (consumers != null)
+            {
+                for (int i = 0; i < consumers.Count; i++)
+                {
+                    var c = consumers[i];
+                    if (c == null || string.IsNullOrEmpty(c.ModuleId)) continue;
+                    // 1 = powered and drawing, 0 = unpowered / shed / unrequested.
+                    states[c.ModuleId] = c.IsPowered ? 1f : 0f;
+                    states[c.ModuleId + "_watts"] = c.EffectiveDraw;
+                    states[c.ModuleId + "_requested"] = c.IsRequested ? 1f : 0f;
+                }
+            }
+
+            var sources = PowerNetwork.Sources;
+            if (sources != null)
+            {
+                for (int i = 0; i < sources.Count; i++)
+                {
+                    var s = sources[i];
+                    if (s == null || string.IsNullOrEmpty(s.SourceId)) continue;
+                    states[s.SourceId] = s.IsEnabled ? 1f : 0f;
+                    states[s.SourceId + "_fuel"] = s.Fuel;
+                }
+            }
+
+            return states;
+        }
+
+        /// <summary>Execute a rule's actionCommand against the power grid / sources.</summary>
+        private void ApplyLogicRuleAction(LogicRule rule)
+        {
+            if (rule == null || PowerNetwork == null) return;
+            if (string.IsNullOrEmpty(rule.actionModule) || string.IsNullOrEmpty(rule.actionCommand))
+                return;
+
+            string cmd = rule.actionCommand.Trim().ToLowerInvariant();
+            string target = rule.actionModule;
+
+            switch (cmd)
+            {
+                case System_LogicGates.CmdEnable:
+                case System_LogicGates.CmdOn:
+                case System_LogicGates.CmdRequest:
+                    PowerNetwork.SetRequested(target, true);
+                    break;
+                case System_LogicGates.CmdDisable:
+                case System_LogicGates.CmdOff:
+                case System_LogicGates.CmdUnrequest:
+                    PowerNetwork.SetRequested(target, false);
+                    break;
+                case System_LogicGates.CmdSourceOn:
+                    PowerNetwork.SetSourceEnabled(target, true);
+                    break;
+                case System_LogicGates.CmdSourceOff:
+                    PowerNetwork.SetSourceEnabled(target, false);
+                    break;
+                default:
+                    Debug.LogWarning($"[GameBootstrap] LOGIC: unknown actionCommand '{rule.actionCommand}' on rule '{rule.ruleId}'.");
+                    break;
+            }
+        }
+
+        /// <summary>Prompt #799 — UI/test hook: add or replace an automation rule.</summary>
+        public void AddLogicRule(string ruleId, LogicRule rule)
+        {
+            LogicGates?.AddRule(ruleId, rule);
+        }
+
+        /// <summary>Prompt #799 — UI/test hook: remove an automation rule.</summary>
+        public void RemoveLogicRule(string ruleId)
+        {
+            LogicGates?.RemoveRule(ruleId);
         }
 
     }

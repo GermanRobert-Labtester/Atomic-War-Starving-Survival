@@ -216,6 +216,8 @@ namespace AtomicWar._Game.Core
         public System_BilgePumps BilgePumps { get; private set; }
         // Prompt #658 — outdoor corpses attract vultures (hatch vis + map danger + morale).
         public System_CarrionBirds CarrionBirds { get; private set; }
+        // Prompt #799 — IF/THEN module automation on the power grid.
+        public System_LogicGates LogicGates { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.
@@ -386,6 +388,8 @@ namespace AtomicWar._Game.Core
         private int _lastHatchVisDay;
         /// <summary>Prompt #658 — true while shelter-node danger boost from vultures is applied.</summary>
         private bool _carrionMapDangerApplied;
+        /// <summary>Prompt #799 — re-entrancy guard while logic gates apply power actions.</summary>
+        private bool _logicGatesTicking;
 
         // ── Day-tick GC caches (no per-hour new Random / context / lambda) ──
         private System.Random _mentalBreakRng;
