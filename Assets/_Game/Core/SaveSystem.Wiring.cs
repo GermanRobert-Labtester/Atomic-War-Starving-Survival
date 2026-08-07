@@ -22,22 +22,22 @@ namespace AtomicWar._Game.Core
     public partial class SaveSystem
     {
         /// <summary>Inject a PhotoperiodSystem after construction (optional; safe to skip in tests).</summary>
-        public void SetPhotoPeriodSystem(PhotoperiodSystem photoPeriodSystem)
-        {
-            _photoPeriodSystem = photoPeriodSystem;
-        }
+        public void SetPhotoPeriodSystem(PhotoperiodSystem photoPeriodSystem) =>
+            RegisterSystem(ref _photoPeriodSystem, photoPeriodSystem, "photoperiod",
+                () => photoPeriodSystem.GetState(),
+                o => photoPeriodSystem.RestoreState((PhotoperiodState)o));
 
         /// <summary>Inject radiation fog-of-war map (optional; safe to skip in tests).</summary>
-        public void SetKnowledgeMap(RadiationKnowledgeMap knowledgeMap)
-        {
-            _knowledgeMap = knowledgeMap;
-        }
+        public void SetKnowledgeMap(RadiationKnowledgeMap knowledgeMap) =>
+            RegisterSystem(ref _knowledgeMap, knowledgeMap, "radiation_knowledge",
+                () => knowledgeMap.CaptureState(),
+                o => knowledgeMap.RestoreState((RadiationKnowledgeSave)o));
 
         /// <summary>Inject inventory so device battery/calibration/broken persist across save/load.</summary>
-        public void SetInventory(Inventory.Inventory inventory)
-        {
-            _inventory = inventory;
-        }
+        public void SetInventory(Inventory.Inventory inventory) =>
+            RegisterSystem(ref _inventory, inventory, "inventory",
+                () => inventory.CaptureState(),
+                o => inventory.RestoreState((InventorySaveState)o, _itemLookup));
 
         /// <summary>Inject expedition system (optional; safe to skip in tests).</summary>
         public void SetExpeditionSystem(ExpeditionSystem expeditionSystem)
@@ -46,76 +46,76 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>Inject medical triage pipeline so afflictions persist across save/load.</summary>
-        public void SetMedicalSystem(MedicalSystem medicalSystem)
-        {
-            _medicalSystem = medicalSystem;
-        }
+        public void SetMedicalSystem(MedicalSystem medicalSystem) =>
+            RegisterSystem(ref _medicalSystem, medicalSystem, "medical",
+                () => medicalSystem.CaptureState(),
+                o => medicalSystem.RestoreState((MedicalSystemSave)o));
 
         /// <summary>Inject Prompt #55 blood transfusion for save/load.</summary>
-        public void SetBloodTransfusionSystem(BloodTransfusionSystem sys)
-        {
-            _bloodTransfusion = sys;
-        }
+        public void SetBloodTransfusionSystem(BloodTransfusionSystem sys) =>
+            RegisterSystem(ref _bloodTransfusion, sys, "blood_transfusion",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((BloodTransfusionSave)o));
 
         /// <summary>Inject Prompt #56 amputation for save/load.</summary>
-        public void SetAmputationSystem(AmputationSystem sys)
-        {
-            _amputationSystem = sys;
-        }
+        public void SetAmputationSystem(AmputationSystem sys) =>
+            RegisterSystem(ref _amputationSystem, sys, "amputation",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((AmputationSave)o));
 
         /// <summary>Inject Prompt #57 scurvy for save/load.</summary>
-        public void SetScurvySystem(ScurvySystem sys)
-        {
-            _scurvySystem = sys;
-        }
+        public void SetScurvySystem(ScurvySystem sys) =>
+            RegisterSystem(ref _scurvySystem, sys, "scurvy",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((ScurvySave)o));
 
         /// <summary>Inject Prompt #60 mutagenesis for save/load.</summary>
-        public void SetMutagenesisSystem(RadiationMutagenesisSystem sys)
-        {
-            _mutagenesisSystem = sys;
-        }
+        public void SetMutagenesisSystem(RadiationMutagenesisSystem sys) =>
+            RegisterSystem(ref _mutagenesisSystem, sys, "mutagenesis",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((MutagenesisSave)o));
 
         /// <summary>Inject world phase system so CurrentPhase/HasTriggeredExchange persist across save/load.</summary>
-        public void SetWorldPhaseSystem(WorldPhaseSystem worldPhaseSystem)
-        {
-            _worldPhaseSystem = worldPhaseSystem;
-        }
+        public void SetWorldPhaseSystem(WorldPhaseSystem worldPhaseSystem) =>
+            RegisterSystem(ref _worldPhaseSystem, worldPhaseSystem, "world_phase",
+                () => worldPhaseSystem.CaptureState(),
+                o => worldPhaseSystem.RestoreState((WorldPhaseSave)o));
 
         /// <summary>Inject dynamic economy / faction trust matrix for save/load.</summary>
-        public void SetEconomySystem(DynamicEconomySystem economySystem)
-        {
-            _economySystem = economySystem;
-        }
+        public void SetEconomySystem(DynamicEconomySystem economySystem) =>
+            RegisterSystem(ref _economySystem, economySystem, "economy",
+                () => economySystem.CaptureState(),
+                o => economySystem.RestoreState((DynamicEconomySave)o));
 
         /// <summary>Inject shelter power grid for save/load.</summary>
-        public void SetPowerNetwork(PowerNetwork powerNetwork)
-        {
-            _powerNetwork = powerNetwork;
-        }
+        public void SetPowerNetwork(PowerNetwork powerNetwork) =>
+            RegisterSystem(ref _powerNetwork, powerNetwork, "power_network",
+                () => powerNetwork.CaptureState(),
+                o => powerNetwork.RestoreState((PowerNetworkSave)o));
 
         /// <summary>Inject hatch defense / raid state for save/load.</summary>
-        public void SetHatchDefense(HatchDefenseSystem hatchDefense)
-        {
-            _hatchDefense = hatchDefense;
-        }
+        public void SetHatchDefense(HatchDefenseSystem hatchDefense) =>
+            RegisterSystem(ref _hatchDefense, hatchDefense, "hatch_defense",
+                () => hatchDefense.CaptureState(),
+                o => hatchDefense.RestoreState((HatchDefenseSave)o));
 
         /// <summary>Inject faction radio intercept log for save/load.</summary>
-        public void SetFactionRadioIntercepts(FactionRadioInterceptSystem radioIntercepts)
-        {
-            _factionRadioIntercepts = radioIntercepts;
-        }
+        public void SetFactionRadioIntercepts(FactionRadioInterceptSystem radioIntercepts) =>
+            RegisterSystem(ref _factionRadioIntercepts, radioIntercepts, "faction_radio_intercepts",
+                () => radioIntercepts.CaptureState(),
+                o => radioIntercepts.RestoreState((FactionRadioInterceptSave)o));
 
         /// <summary>Inject diegetic journal / knowledge base for save/load.</summary>
-        public void SetJournalSystem(JournalSystem journalSystem)
-        {
-            _journalSystem = journalSystem;
-        }
+        public void SetJournalSystem(JournalSystem journalSystem) =>
+            RegisterSystem(ref _journalSystem, journalSystem, "journal",
+                () => journalSystem.CaptureState(),
+                o => journalSystem.RestoreState((JournalSave)o));
 
         /// <summary>Inject campaign win/loss victory project for save/load.</summary>
-        public void SetVictoryProjectManager(VictoryProjectManager victoryProject)
-        {
-            _victoryProject = victoryProject;
-        }
+        public void SetVictoryProjectManager(VictoryProjectManager victoryProject) =>
+            RegisterSystem(ref _victoryProject, victoryProject, "victory_project",
+                () => victoryProject.CaptureState(),
+                o => victoryProject.RestoreState((VictoryProjectSave)o));
 
         /// <summary>
         /// Inject EventRunner so the scheduled narrative-chain queue
@@ -127,40 +127,40 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>Inject internal-mystery SuspicionTracker for save/load.</summary>
-        public void SetSuspicionTracker(SuspicionTracker suspicionTracker)
-        {
-            _suspicionTracker = suspicionTracker;
-        }
+        public void SetSuspicionTracker(SuspicionTracker suspicionTracker) =>
+            RegisterSystem(ref _suspicionTracker, suspicionTracker, "suspicion",
+                () => suspicionTracker.CaptureState(),
+                o => suspicionTracker.RestoreState((SuspicionTrackerSave)o));
 
         /// <summary>Inject weather-driven hatch entrapment for save/load (Prompt #48).</summary>
-        public void SetHatchEntrapment(HatchEntrapmentSystem hatchEntrapment)
-        {
-            _hatchEntrapment = hatchEntrapment;
-        }
+        public void SetHatchEntrapment(HatchEntrapmentSystem hatchEntrapment) =>
+            RegisterSystem(ref _hatchEntrapment, hatchEntrapment, "hatch_entrapment",
+                () => hatchEntrapment.CaptureState(),
+                o => hatchEntrapment.RestoreState((HatchEntrapmentSave)o));
 
         /// <summary>Inject Internal Horror room atmosphere (O2/CO/fire/humidity).</summary>
-        public void SetAtmosphereSystem(ShelterAtmosphereSystem atmosphereSystem)
-        {
-            _atmosphereSystem = atmosphereSystem;
-        }
+        public void SetAtmosphereSystem(ShelterAtmosphereSystem atmosphereSystem) =>
+            RegisterSystem(ref _atmosphereSystem, atmosphereSystem, "atmosphere",
+                () => atmosphereSystem.CaptureState(),
+                o => atmosphereSystem.RestoreState((ShelterAtmosphereSave)o));
 
         /// <summary>Inject Internal Horror corpse management for save/load.</summary>
-        public void SetCorpseSystem(CorpseManagementSystem corpseSystem)
-        {
-            _corpseSystem = corpseSystem;
-        }
+        public void SetCorpseSystem(CorpseManagementSystem corpseSystem) =>
+            RegisterSystem(ref _corpseSystem, corpseSystem, "corpses",
+                () => corpseSystem.CaptureState(),
+                o => corpseSystem.RestoreState((CorpseManagementSave)o));
 
         /// <summary>Inject Internal Horror pantry rust system for save/load.</summary>
-        public void SetPantrySystem(PantryContaminationSystem pantrySystem)
-        {
-            _pantrySystem = pantrySystem;
-        }
+        public void SetPantrySystem(PantryContaminationSystem pantrySystem) =>
+            RegisterSystem(ref _pantrySystem, pantrySystem, "pantry",
+                () => pantrySystem.CaptureState(),
+                o => pantrySystem.RestoreState((PantryContaminationSave)o));
 
         /// <summary>Inject Prompt #13 sabotaged-cache habit / plant counters for save/load.</summary>
-        public void SetSabotagedCacheSystem(SabotagedCacheSystem sabotagedCaches)
-        {
-            _sabotagedCaches = sabotagedCaches;
-        }
+        public void SetSabotagedCacheSystem(SabotagedCacheSystem sabotagedCaches) =>
+            RegisterSystem(ref _sabotagedCaches, sabotagedCaches, "sabotaged_caches",
+                () => sabotagedCaches.CaptureState(),
+                o => sabotagedCaches.RestoreState((SabotagedCacheSave)o));
 
         /// <summary>Inject Prompt #14 shifting death-zone windstorms for save/load.</summary>
         public void SetShiftingHotspotSystem(ShiftingHotspotSystem shiftingHotspots)
@@ -175,59 +175,58 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>Inject Prompt #18 delayed faction dig-out debt collector for save/load.</summary>
-        public void SetDebtCollectorSystem(DebtCollectorSystem debtCollector)
-        {
-            _debtCollector = debtCollector;
-        }
+        public void SetDebtCollectorSystem(DebtCollectorSystem debtCollector) =>
+            RegisterSystem(ref _debtCollector, debtCollector, "debt_collector",
+                () => debtCollector.CaptureState(),
+                o => debtCollector.RestoreState((DebtCollectorSave)o));
 
         /// <summary>Inject Prompt #19 post-EMP ghost station dial unlock for save/load.</summary>
-        public void SetGhostStationSystem(GhostStationSystem ghostStations)
-        {
-            _ghostStations = ghostStations;
-        }
+        public void SetGhostStationSystem(GhostStationSystem ghostStations) =>
+            RegisterSystem(ref _ghostStations, ghostStations, "ghost_stations",
+                () => ghostStations.CaptureState(),
+                o => ghostStations.RestoreState((GhostStationSave)o));
 
-        /// <summary>Inject Prompt #20 Lifeboat Transmission endgame dilemma for save/load.</summary>
         /// <summary>Inject Child Dependent system so child state persists across save/load.</summary>
-        public void SetChildDependentSystem(ChildDependentSystem childSystem)
-        {
-            _childSystem = childSystem;
-        }
+        public void SetChildDependentSystem(ChildDependentSystem childSystem) =>
+            RegisterSystem(ref _childSystem, childSystem, "child_dependent",
+                () => childSystem.CaptureState(),
+                o => childSystem.RestoreState((ChildDependentSystem.SaveState)o, _getSurvivors?.Invoke()));
 
         /// <summary>Inject Prompt #49 structural integrity for save/load.</summary>
-        public void SetStructuralIntegritySystem(StructuralIntegritySystem sys)
-        {
-            _structuralIntegrity = sys;
-        }
+        public void SetStructuralIntegritySystem(StructuralIntegritySystem sys) =>
+            RegisterSystem(ref _structuralIntegrity, sys, "structural_integrity",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((StructuralIntegritySave)o));
 
         /// <summary>Inject Prompt #50 waste/hygiene for save/load.</summary>
-        public void SetWasteSystem(WasteSystem sys)
-        {
-            _wasteSystem = sys;
-        }
+        public void SetWasteSystem(WasteSystem sys) =>
+            RegisterSystem(ref _wasteSystem, sys, "waste",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((WasteSystemSave)o));
 
         /// <summary>Inject Prompt #51 vermin for save/load.</summary>
-        public void SetVerminSystem(VerminSystem sys)
-        {
-            _verminSystem = sys;
-        }
+        public void SetVerminSystem(VerminSystem sys) =>
+            RegisterSystem(ref _verminSystem, sys, "vermin",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((VerminSave)o));
 
         /// <summary>Inject Prompt #52 jury-rig for save/load.</summary>
-        public void SetJuryRigSystem(JuryRigSystem sys)
-        {
-            _juryRigSystem = sys;
-        }
+        public void SetJuryRigSystem(JuryRigSystem sys) =>
+            RegisterSystem(ref _juryRigSystem, sys, "jury_rig",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((JuryRigSave)o));
 
         /// <summary>Inject Prompt #53 freeze-pipe for save/load.</summary>
-        public void SetFreezePipeSystem(FreezePipeSystem sys)
-        {
-            _freezePipeSystem = sys;
-        }
+        public void SetFreezePipeSystem(FreezePipeSystem sys) =>
+            RegisterSystem(ref _freezePipeSystem, sys, "freeze_pipe",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((FreezePipeSave)o));
 
         /// <summary>Inject Prompt #67 cartography for save/load.</summary>
-        public void SetCartographySystem(CartographySystem sys)
-        {
-            _cartographySystem = sys;
-        }
+        public void SetCartographySystem(CartographySystem sys) =>
+            RegisterSystem(ref _cartographySystem, sys, "cartography",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((CartographySave)o));
 
         /// <summary>Inject Prompt #69 flooded map nodes for save/load.</summary>
         public void SetFloodedNodeSystem(FloodedNodeSystem sys) =>
@@ -255,16 +254,16 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(), o => s.RestoreState((BlackRainHazardSystemSave)o));
 
         /// <summary>Inject Prompt #71 tracker for save/load.</summary>
-        public void SetTrackerSystem(TrackerSystem sys)
-        {
-            _trackerSystem = sys;
-        }
+        public void SetTrackerSystem(TrackerSystem sys) =>
+            RegisterSystem(ref _trackerSystem, sys, "tracker",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((TrackerSave)o));
 
         /// <summary>Inject Prompt #72 dead-drop for save/load.</summary>
-        public void SetDeadDropSystem(DeadDropSystem sys)
-        {
-            _deadDropSystem = sys;
-        }
+        public void SetDeadDropSystem(DeadDropSystem sys) =>
+            RegisterSystem(ref _deadDropSystem, sys, "dead_drops",
+                () => sys.CaptureState(),
+                o => sys.RestoreState((DeadDropSave)o));
 
         /// <summary>Inject Prompt #73 hostage for save/load.</summary>
         public void SetHostageSystem(HostageSystem sys) => RegisterSystem(ref _hostageSystem, sys, "hostage", () => sys.CaptureState(), o => sys.RestoreState((HostageSave)o));
@@ -1241,10 +1240,10 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>Inject bunker water cisterns (clean/dirty/irradiated) for save/load.</summary>
-        public void SetWaterStorage(WaterStorage waterStorage)
-        {
-            _waterStorage = waterStorage;
-        }
+        public void SetWaterStorage(WaterStorage waterStorage) =>
+            RegisterSystem(ref _waterStorage, waterStorage, "water_storage",
+                () => waterStorage.CaptureState(),
+                o => waterStorage.RestoreState((WaterStorageSave)o));
 
         /// <summary>Inject mental-break system so affinity matrix persists across save/load.</summary>
         public void SetMentalBreakSystem(MentalBreakSystem mentalBreakSystem)
