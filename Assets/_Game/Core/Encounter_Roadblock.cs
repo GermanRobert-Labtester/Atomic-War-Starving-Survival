@@ -60,5 +60,12 @@ namespace AtomicWar._Game.Core
             }
             return false;
         }
+
+        public RoadblockState CaptureState() => _state;
+
+        public void RestoreState(RoadblockState saved)
+        {
+            _state = saved ?? new RoadblockState();
+        }
     }
 }

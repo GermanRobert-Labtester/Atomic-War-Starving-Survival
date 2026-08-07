@@ -107,6 +107,8 @@ namespace AtomicWar._Game.Core
             BootBiomes();
             // Special weather events — acid snow / EMP storm / solar flare / … .
             BootWeather();
+            // Expedition encounters — amalgamation / burrowers / maze / tank / … .
+            BootEncounters();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {

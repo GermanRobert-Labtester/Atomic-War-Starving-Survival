@@ -115,5 +115,12 @@ namespace AtomicWar._Game.Core
                 return false;
             }
         }
+
+        public RiverPiratesState CaptureState() => _state;
+
+        public void RestoreState(RiverPiratesState saved)
+        {
+            _state = saved ?? new RiverPiratesState();
+        }
     }
 }

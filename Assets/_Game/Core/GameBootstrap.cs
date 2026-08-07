@@ -299,6 +299,22 @@ namespace AtomicWar._Game.Core
         public Weather_SilentSpring WeatherSilentSpring { get; private set; }
         public Weather_SolarFlare WeatherSolarFlare { get; private set; }
         public Weather_StaticCharge WeatherStaticCharge { get; private set; }
+        // Expedition encounters — combat/exploration set pieces.
+        public Encounter_Amalgamation EncounterAmalgamation { get; private set; }
+        public BurrowersSystem EncounterBurrowers { get; private set; }
+        public Encounter_FloodedMaze EncounterFloodedMaze { get; private set; }
+        public Encounter_GlowingDead EncounterGlowingDead { get; private set; }
+        public Encounter_GlowingStag EncounterGlowingStag { get; private set; }
+        public Encounter_HitAndRun EncounterHitAndRun { get; private set; }
+        public Encounter_Leeches EncounterLeeches { get; private set; }
+        public Encounter_Mirelurker EncounterMirelurker { get; private set; }
+        public Encounter_PressurePlate EncounterPressurePlate { get; private set; }
+        public Encounter_RiverPirates EncounterRiverPirates { get; private set; }
+        public Encounter_Roadblock EncounterRoadblock { get; private set; }
+        public Encounter_RobotDog EncounterRobotDog { get; private set; }
+        public Encounter_SleepingCamp EncounterSleepingCamp { get; private set; }
+        public Encounter_TripwireMaze EncounterTripwireMaze { get; private set; }
+        public Encounter_WarlordTank EncounterWarlordTank { get; private set; }
         public Siege_Artillery SiegeArtillery { get; private set; }
         public Siege_Biowarfare SiegeBiowarfare { get; private set; }
         public Siege_Blockade SiegeBlockade { get; private set; }

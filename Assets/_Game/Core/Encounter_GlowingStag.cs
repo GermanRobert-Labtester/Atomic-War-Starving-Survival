@@ -68,5 +68,12 @@ namespace AtomicWar._Game.Core
 
             return (newMaxHealth, newRadResistance, newMorale);
         }
+
+        public GlowingStagState CaptureState() => _state;
+
+        public void RestoreState(GlowingStagState saved)
+        {
+            _state = saved ?? new GlowingStagState();
+        }
     }
 }

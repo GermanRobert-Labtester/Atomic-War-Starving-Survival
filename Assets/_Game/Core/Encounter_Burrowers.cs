@@ -5,16 +5,20 @@ namespace AtomicWar._Game.Core
     [Serializable]
     public class BurrowersState
     {
-        public string id;
+        public string id = "encounter_burrowers";
         public int breachLevel;
         public bool isBreachPatched;
         public bool returnsNightly;
         public int concreteRequired = 10;
     }
 
+    /// <summary>
+    /// Encounter_Burrowers file — class name is BurrowersSystem (historical).
+    /// Default id: encounter_burrowers.
+    /// </summary>
     public class BurrowersSystem
     {
-        private readonly BurrowersState _state;
+        private BurrowersState _state;
 
         public BurrowersState State => _state;
 
@@ -22,11 +26,11 @@ namespace AtomicWar._Game.Core
         public event Action<string, bool> OnFightOutcome;    // id, survived
         public event Action<string> OnBreachPatched;         // id
 
-        public BurrowersSystem(string id)
+        public BurrowersSystem(string id = "encounter_burrowers")
         {
             _state = new BurrowersState
             {
-                id = id,
+                id = string.IsNullOrEmpty(id) ? "encounter_burrowers" : id,
                 breachLevel = 0,
                 isBreachPatched = false,
                 returnsNightly = false,
@@ -68,6 +72,25 @@ namespace AtomicWar._Game.Core
             _state.returnsNightly = false;
             OnBreachPatched?.Invoke(_state.id);
             return true;
+        }
+
+        public BurrowersState CaptureState()
+        {
+            return new BurrowersState
+            {
+                id = _state.id,
+                breachLevel = _state.breachLevel,
+                isBreachPatched = _state.isBreachPatched,
+                returnsNightly = _state.returnsNightly,
+                concreteRequired = _state.concreteRequired
+            };
+        }
+
+        public void RestoreState(BurrowersState saved)
+        {
+            _state = saved ?? new BurrowersState();
+            if (string.IsNullOrEmpty(_state.id))
+                _state.id = "encounter_burrowers";
         }
     }
 }

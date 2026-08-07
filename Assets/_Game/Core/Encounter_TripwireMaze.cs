@@ -92,5 +92,12 @@ namespace AtomicWar._Game.Core
 
             return false;
         }
+
+        public TripwireMazeState CaptureState() => _state;
+
+        public void RestoreState(TripwireMazeState saved)
+        {
+            _state = saved ?? new TripwireMazeState();
+        }
     }
 }

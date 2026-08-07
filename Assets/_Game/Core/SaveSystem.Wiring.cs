@@ -809,6 +809,66 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _weatherStaticCharge, s, "weather_static_charge",
                 () => s.CaptureState(), o => s.RestoreState((StaticChargeState)o));
 
+        public void SetEncounterAmalgamation(Encounter_Amalgamation s) =>
+            RegisterSystem(ref _encounterAmalgamation, s, "encounter_amalgamation",
+                () => s.CaptureState(), o => s.RestoreState((AmalgamationState)o));
+
+        public void SetEncounterBurrowers(BurrowersSystem s) =>
+            RegisterSystem(ref _encounterBurrowers, s, "encounter_burrowers",
+                () => s.CaptureState(), o => s.RestoreState((BurrowersState)o));
+
+        public void SetEncounterFloodedMaze(Encounter_FloodedMaze s) =>
+            RegisterSystem(ref _encounterFloodedMaze, s, "encounter_flooded_maze",
+                () => s.CaptureState(), o => s.RestoreState((FloodedMazeState)o));
+
+        public void SetEncounterGlowingDead(Encounter_GlowingDead s) =>
+            RegisterSystem(ref _encounterGlowingDead, s, "encounter_glowing_dead",
+                () => s.CaptureState(), o => s.RestoreState((GlowingDeadState)o));
+
+        public void SetEncounterGlowingStag(Encounter_GlowingStag s) =>
+            RegisterSystem(ref _encounterGlowingStag, s, "encounter_glowing_stag",
+                () => s.CaptureState(), o => s.RestoreState((GlowingStagState)o));
+
+        public void SetEncounterHitAndRun(Encounter_HitAndRun s) =>
+            RegisterSystem(ref _encounterHitAndRun, s, "encounter_hit_and_run",
+                () => s.CaptureState(), o => s.RestoreState((HitAndRunState)o));
+
+        public void SetEncounterLeeches(Encounter_Leeches s) =>
+            RegisterSystem(ref _encounterLeeches, s, "encounter_leeches",
+                () => s.CaptureState(), o => s.RestoreState((LeechesSaveState)o));
+
+        public void SetEncounterMirelurker(Encounter_Mirelurker s) =>
+            RegisterSystem(ref _encounterMirelurker, s, "encounter_mirelurker",
+                () => s.CaptureState(), o => s.RestoreState((MirelurkerState)o));
+
+        public void SetEncounterPressurePlate(Encounter_PressurePlate s) =>
+            RegisterSystem(ref _encounterPressurePlate, s, "encounter_pressure_plate",
+                () => s.CaptureState(), o => s.RestoreState((PressurePlateState)o));
+
+        public void SetEncounterRiverPirates(Encounter_RiverPirates s) =>
+            RegisterSystem(ref _encounterRiverPirates, s, "encounter_river_pirates",
+                () => s.CaptureState(), o => s.RestoreState((RiverPiratesState)o));
+
+        public void SetEncounterRoadblock(Encounter_Roadblock s) =>
+            RegisterSystem(ref _encounterRoadblock, s, "encounter_roadblock",
+                () => s.CaptureState(), o => s.RestoreState((RoadblockState)o));
+
+        public void SetEncounterRobotDog(Encounter_RobotDog s) =>
+            RegisterSystem(ref _encounterRobotDog, s, "encounter_robot_dog",
+                () => s.CaptureState(), o => s.RestoreState((RobotDogState)o));
+
+        public void SetEncounterSleepingCamp(Encounter_SleepingCamp s) =>
+            RegisterSystem(ref _encounterSleepingCamp, s, "encounter_sleeping_camp",
+                () => s.CaptureState(), o => s.RestoreState((SleepingCampState)o));
+
+        public void SetEncounterTripwireMaze(Encounter_TripwireMaze s) =>
+            RegisterSystem(ref _encounterTripwireMaze, s, "encounter_tripwire_maze",
+                () => s.CaptureState(), o => s.RestoreState((TripwireMazeState)o));
+
+        public void SetEncounterWarlordTank(Encounter_WarlordTank s) =>
+            RegisterSystem(ref _encounterWarlordTank, s, "encounter_warlord_tank",
+                () => s.CaptureState(), o => s.RestoreState((WarlordTankState)o));
+
         public void SetSiegeArtillerySystem(Siege_Artillery s) =>
             RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
                 () => s.CaptureState(),

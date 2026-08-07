@@ -67,5 +67,27 @@ namespace AtomicWar._Game.Core
             OnFleeAttempt?.Invoke(_state, success);
             return success;
         }
+
+        public AmalgamationState CaptureState()
+        {
+            return new AmalgamationState
+            {
+                id = _state.id,
+                displayName = _state.displayName,
+                healthPool = _state.healthPool,
+                fireVulnerabilityMultiplier = _state.fireVulnerabilityMultiplier,
+                firearmDamageReduction = _state.firearmDamageReduction,
+                lootDropIds = _state.lootDropIds != null
+                    ? new List<string>(_state.lootDropIds)
+                    : new List<string>()
+            };
+        }
+
+        public void RestoreState(AmalgamationState saved)
+        {
+            _state = saved ?? new AmalgamationState();
+            if (_state.lootDropIds == null)
+                _state.lootDropIds = new List<string>();
+        }
     }
 }

@@ -79,5 +79,12 @@ namespace AtomicWar._Game.Core
             OnFleeSuccessful?.Invoke(_state);
             return true;
         }
+
+        public SleepingCampState CaptureState() => _state;
+
+        public void RestoreState(SleepingCampState saved)
+        {
+            _state = saved ?? new SleepingCampState();
+        }
     }
 }

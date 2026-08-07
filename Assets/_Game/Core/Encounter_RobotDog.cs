@@ -116,5 +116,12 @@ namespace AtomicWar._Game.Core
 
             return (_state.electronicScrapDrop, _state.motorDrop);
         }
+
+        public RobotDogState CaptureState() => _state;
+
+        public void RestoreState(RobotDogState saved)
+        {
+            _state = saved ?? new RobotDogState();
+        }
     }
 }

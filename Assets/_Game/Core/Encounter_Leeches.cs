@@ -17,6 +17,21 @@ namespace AtomicWar._Game.Core
     }
 
     /// <summary>
+    /// JsonUtility-safe snapshot for per-survivor leech attachments (parallel arrays; no Dictionary).
+    /// </summary>
+    [Serializable]
+    public class LeechesSaveState
+    {
+        public string encounterId = "encounter_leeches";
+        public string[] survivorIds = Array.Empty<string>();
+        public int[] attachedLeechCounts = Array.Empty<int>();
+        public float[] totalRadDrained = Array.Empty<float>();
+        public float radDrainPerTick = 5f;
+        public float bloodLossPerTick = 8f;
+        public int maxLeeches = 10;
+    }
+
+    /// <summary>
     /// Prompt #557: Encounter: Radioactive Leeches.
     /// Triggers when wading through Flooded nodes.
     /// Leeches attach silently, drain Radiation (natural Rad-Away).
@@ -34,6 +49,9 @@ namespace AtomicWar._Game.Core
 
         public void AttachLeeches(string survivorId, int count)
         {
+            if (string.IsNullOrEmpty(survivorId))
+                return;
+
             if (!_attachedBySurvivorId.ContainsKey(survivorId))
             {
                 _attachedBySurvivorId[survivorId] = new LeechesState();
@@ -90,6 +108,70 @@ namespace AtomicWar._Game.Core
             }
 
             return _attachedBySurvivorId[survivorId].totalRadDrained;
+        }
+
+        public LeechesSaveState CaptureState()
+        {
+            int n = _attachedBySurvivorId.Count;
+            var ids = new string[n];
+            var counts = new int[n];
+            var rads = new float[n];
+            float radDrain = 5f;
+            float bloodLoss = 8f;
+            int maxLeeches = 10;
+            int i = 0;
+            foreach (var kvp in _attachedBySurvivorId)
+            {
+                ids[i] = kvp.Key;
+                counts[i] = kvp.Value.attachedLeechCount;
+                rads[i] = kvp.Value.totalRadDrained;
+                radDrain = kvp.Value.radDrainPerTick;
+                bloodLoss = kvp.Value.bloodLossPerTick;
+                maxLeeches = kvp.Value.maxLeeches;
+                i++;
+            }
+
+            return new LeechesSaveState
+            {
+                encounterId = "encounter_leeches",
+                survivorIds = ids,
+                attachedLeechCounts = counts,
+                totalRadDrained = rads,
+                radDrainPerTick = radDrain,
+                bloodLossPerTick = bloodLoss,
+                maxLeeches = maxLeeches
+            };
+        }
+
+        public void RestoreState(LeechesSaveState saved)
+        {
+            _attachedBySurvivorId = new Dictionary<string, LeechesState>();
+            if (saved == null || saved.survivorIds == null)
+                return;
+
+            int n = saved.survivorIds.Length;
+            for (int i = 0; i < n; i++)
+            {
+                string id = saved.survivorIds[i];
+                if (string.IsNullOrEmpty(id))
+                    continue;
+
+                int count = saved.attachedLeechCounts != null && i < saved.attachedLeechCounts.Length
+                    ? saved.attachedLeechCounts[i]
+                    : 0;
+                float rad = saved.totalRadDrained != null && i < saved.totalRadDrained.Length
+                    ? saved.totalRadDrained[i]
+                    : 0f;
+
+                _attachedBySurvivorId[id] = new LeechesState
+                {
+                    attachedLeechCount = count,
+                    totalRadDrained = rad,
+                    radDrainPerTick = saved.radDrainPerTick,
+                    bloodLossPerTick = saved.bloodLossPerTick,
+                    maxLeeches = saved.maxLeeches
+                };
+            }
         }
     }
 }

@@ -36,5 +36,12 @@ namespace AtomicWar._Game.Core
             OnRunThemDownExecuted?.Invoke(_state, success);
             return success;
         }
+
+        public HitAndRunState CaptureState() => _state;
+
+        public void RestoreState(HitAndRunState saved)
+        {
+            _state = saved ?? new HitAndRunState();
+        }
     }
 }

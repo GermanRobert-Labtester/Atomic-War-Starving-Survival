@@ -82,5 +82,12 @@ namespace AtomicWar._Game.Core
         {
             return _state.healthPool <= 0f;
         }
+
+        public MirelurkerState CaptureState() => _state;
+
+        public void RestoreState(MirelurkerState saved)
+        {
+            _state = saved ?? new MirelurkerState();
+        }
     }
 }
