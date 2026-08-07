@@ -95,6 +95,8 @@ namespace AtomicWar._Game.Core
             BootModLoader();
             // Prompt #865 — Twitch chat polls (offline stub; host hooks re-bound after HatchDefense exists).
             BootTwitchAPI();
+            // Batch: disease / scapegoat / iron man / android / sheriff / scenario / speedrun / true ending / sieges.
+            BootBatchSystems();
             var diesel = PowerNetwork.GetSource("diesel_generator");
             if (diesel != null)
             {
@@ -399,6 +401,8 @@ namespace AtomicWar._Game.Core
                 GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");
                 // #469 lover-grief mental break + cleanup.
                 BunkerSocial?.NotifySurvivorDied(deceased, null);
+                // Prompt #862 — Iron Man save deletion when last survivor dies.
+                NotifyIronManSurvivorDeath(deceased);
             };
             NeedsSystem.OnDied += _onNeedsDied;
 

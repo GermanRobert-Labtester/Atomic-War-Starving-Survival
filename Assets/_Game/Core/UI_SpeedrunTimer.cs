@@ -198,12 +198,52 @@ namespace AtomicWar._Game.Core
 
         public SpeedrunTimerState CaptureState()
         {
-            return _state;
+            var cap = new SpeedrunTimerState
+            {
+                ui_id = string.IsNullOrEmpty(_state.ui_id) ? "ui_speedrun_timer" : _state.ui_id,
+                is_active = _state.is_active,
+                real_time_elapsed = _state.real_time_elapsed,
+                in_game_days = _state.in_game_days,
+                is_paused = _state.is_paused,
+                splits = new List<SpeedrunSplit>()
+            };
+            if (_state.splits != null)
+            {
+                for (int i = 0; i < _state.splits.Count; i++)
+                {
+                    var s = _state.splits[i];
+                    if (s == null) continue;
+                    cap.splits.Add(new SpeedrunSplit(s.name, s.real_time, s.in_game_day));
+                }
+            }
+            return cap;
         }
 
         public void RestoreState(SpeedrunTimerState state)
         {
-            _state = state ?? new SpeedrunTimerState();
+            if (state == null)
+            {
+                _state = new SpeedrunTimerState();
+                return;
+            }
+            _state = new SpeedrunTimerState
+            {
+                ui_id = string.IsNullOrEmpty(state.ui_id) ? "ui_speedrun_timer" : state.ui_id,
+                is_active = state.is_active,
+                real_time_elapsed = state.real_time_elapsed,
+                in_game_days = state.in_game_days,
+                is_paused = state.is_paused,
+                splits = new List<SpeedrunSplit>()
+            };
+            if (state.splits != null)
+            {
+                for (int i = 0; i < state.splits.Count; i++)
+                {
+                    var s = state.splits[i];
+                    if (s == null) continue;
+                    _state.splits.Add(new SpeedrunSplit(s.name, s.real_time, s.in_game_day));
+                }
+            }
         }
     }
 }

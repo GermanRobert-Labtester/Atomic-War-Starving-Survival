@@ -222,6 +222,23 @@ namespace AtomicWar._Game.Core
         public System_ModLoader ModLoader { get; private set; }
         // Prompt #865 — Twitch chat polls (offline-safe stubs; weather / raid / supply).
         public System_TwitchAPI TwitchAPI { get; private set; }
+        // Batch wiring — CaptureState systems previously unconstructed (disease/siege/mode/ui/victory).
+        public DiseaseSystem_Expansion DiseaseExpansion { get; private set; }
+        public Dynamic_Scapegoat Scapegoat { get; private set; }
+        public Mode_IronMan IronMan { get; private set; }
+        public NPC_Android AndroidNpcs { get; private set; }
+        public Role_Sheriff Sheriff { get; private set; }
+        public UI_ScenarioGen ScenarioGen { get; private set; }
+        public UI_SpeedrunTimer SpeedrunTimer { get; private set; }
+        public Victory_TrueEnding TrueEnding { get; private set; }
+        public Siege_Artillery SiegeArtillery { get; private set; }
+        public Siege_Biowarfare SiegeBiowarfare { get; private set; }
+        public Siege_Blockade SiegeBlockade { get; private set; }
+        public Siege_HostageShield SiegeHostageShield { get; private set; }
+        public Siege_NightRaid SiegeNightRaid { get; private set; }
+        public Siege_Sappers SiegeSappers { get; private set; }
+        public Siege_SmokeOut SiegeSmokeOut { get; private set; }
+        public Siege_VehicleRam SiegeVehicleRam { get; private set; }
         // Prompt #55 — blood typing + transfusions.
         public BloodTransfusionSystem BloodTransfusion { get; private set; }
         // Prompt #56 — surgical amputation + phantom pain.

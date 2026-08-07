@@ -179,12 +179,37 @@ namespace AtomicWar._Game.Core
 
         public TrueEndingState CaptureState()
         {
-            return _state;
+            return new TrueEndingState
+            {
+                victory_id = string.IsNullOrEmpty(_state.victory_id) ? "victory_true_ending" : _state.victory_id,
+                is_unlocked = _state.is_unlocked,
+                difficulty_required = string.IsNullOrEmpty(_state.difficulty_required) ? "highest" : _state.difficulty_required,
+                terraformer_hacked = _state.terraformer_hacked,
+                ash_cleared = _state.ash_cleared,
+                blue_sky_day = _state.blue_sky_day,
+                prerequisites_met = _state.prerequisites_met
+            };
         }
 
         public void RestoreState(TrueEndingState state)
         {
-            _state = state ?? new TrueEndingState();
+            if (state == null)
+            {
+                _state = new TrueEndingState();
+                return;
+            }
+            _state = new TrueEndingState
+            {
+                victory_id = string.IsNullOrEmpty(state.victory_id) ? "victory_true_ending" : state.victory_id,
+                is_unlocked = state.is_unlocked,
+                difficulty_required = string.IsNullOrEmpty(state.difficulty_required) ? "highest" : state.difficulty_required,
+                terraformer_hacked = state.terraformer_hacked,
+                ash_cleared = state.ash_cleared,
+                blue_sky_day = state.blue_sky_day,
+                prerequisites_met = state.prerequisites_met
+            };
+            _hackInProgress = false;
+            _hackProgressPercent = 0f;
         }
     }
 }

@@ -187,6 +187,22 @@ namespace AtomicWar._Game.Core
         private System_LogicGates _logicGatesSystem;
         private System_ModLoader _modLoaderSystem;
         private System_TwitchAPI _twitchApiSystem;
+        private DiseaseSystem_Expansion _diseaseExpansionSystem;
+        private Dynamic_Scapegoat _dynamicScapegoatSystem;
+        private Mode_IronMan _ironManMode;
+        private NPC_Android _androidNpcSystem;
+        private Role_Sheriff _sheriffRoleSystem;
+        private UI_ScenarioGen _scenarioGenSystem;
+        private UI_SpeedrunTimer _speedrunTimerSystem;
+        private Victory_TrueEnding _trueEndingSystem;
+        private Siege_Artillery _siegeArtillerySystem;
+        private Siege_Biowarfare _siegeBiowarfareSystem;
+        private Siege_Blockade _siegeBlockadeSystem;
+        private Siege_HostageShield _siegeHostageShieldSystem;
+        private Siege_NightRaid _siegeNightRaidSystem;
+        private Siege_Sappers _siegeSappersSystem;
+        private Siege_SmokeOut _siegeSmokeOutSystem;
+        private Siege_VehicleRam _siegeVehicleRamSystem;
         private RiverNodeSystem _riverNodeSystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.

@@ -96,13 +96,27 @@ namespace AtomicWar._Game.Core
         public ScapegoatState CaptureState()
         {
             _state.currentScapegoatId = _currentScapegoatId;
-            return _state;
+            return new ScapegoatState
+            {
+                dynamicId = string.IsNullOrEmpty(_state.dynamicId) ? "dynamic_scapegoat" : _state.dynamicId,
+                moraleThreshold = _state.moraleThreshold,
+                moraleDrainPerBlame = _state.moraleDrainPerBlame,
+                currentScapegoatId = _state.currentScapegoatId
+            };
         }
 
         public void RestoreState(ScapegoatState state)
         {
-            if (state == null) return;
-            _state.dynamicId = state.dynamicId;
+            if (state == null)
+            {
+                _currentScapegoatId = null;
+                _state.dynamicId = "dynamic_scapegoat";
+                _state.moraleThreshold = 0.3f;
+                _state.moraleDrainPerBlame = 0.5f;
+                _state.currentScapegoatId = null;
+                return;
+            }
+            _state.dynamicId = string.IsNullOrEmpty(state.dynamicId) ? "dynamic_scapegoat" : state.dynamicId;
             _state.moraleThreshold = state.moraleThreshold;
             _state.moraleDrainPerBlame = state.moraleDrainPerBlame;
             _currentScapegoatId = state.currentScapegoatId;

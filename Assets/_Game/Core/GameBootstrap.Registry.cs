@@ -130,6 +130,10 @@ namespace AtomicWar._Game.Core
             // Prompt #658 — carrion birds arrive/depart + hatch/map/morale pressure.
             _registry.RegisterPerSubstep("carrion_birds_daily",
                 _registry.DayGated("carrion_birds", day => TickCarrionBirdsDaily()));
+            // Batch systems: hourly disease/sheriff/true-ending; daily scapegoat/blockade/speedrun day.
+            _registry.RegisterPerSubstep("batch_systems_hourly", h => TickBatchSystemsHourly(h));
+            _registry.RegisterPerSubstep("batch_systems_daily",
+                _registry.DayGated("batch_systems", day => TickBatchSystemsDaily(day)));
             _registry.RegisterPerSubstep("perimeter_trap", h => PerimeterTrapSystem?.Tick(h));
             _registry.RegisterPerSubstep("noise", h =>
             {

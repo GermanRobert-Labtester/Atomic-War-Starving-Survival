@@ -198,12 +198,46 @@ namespace AtomicWar._Game.Core
 
         public ScenarioGenState CaptureState()
         {
-            return _state;
+            var cap = new ScenarioGenState
+            {
+                ui_id = string.IsNullOrEmpty(_state.ui_id) ? "ui_scenario_gen" : _state.ui_id,
+                selected_modifiers = new List<string>(),
+                start_day = _state.start_day,
+                radiation_multiplier = _state.radiation_multiplier,
+                mutant_chance = _state.mutant_chance,
+                weather_override = _state.weather_override ?? "normal",
+                difficulty_multiplier = _state.difficulty_multiplier
+            };
+            if (_state.selected_modifiers != null)
+            {
+                for (int i = 0; i < _state.selected_modifiers.Count; i++)
+                    cap.selected_modifiers.Add(_state.selected_modifiers[i]);
+            }
+            return cap;
         }
 
         public void RestoreState(ScenarioGenState state)
         {
-            _state = state ?? new ScenarioGenState();
+            if (state == null)
+            {
+                _state = new ScenarioGenState();
+                return;
+            }
+            _state = new ScenarioGenState
+            {
+                ui_id = string.IsNullOrEmpty(state.ui_id) ? "ui_scenario_gen" : state.ui_id,
+                selected_modifiers = new List<string>(),
+                start_day = state.start_day,
+                radiation_multiplier = state.radiation_multiplier,
+                mutant_chance = state.mutant_chance,
+                weather_override = state.weather_override ?? "normal",
+                difficulty_multiplier = state.difficulty_multiplier
+            };
+            if (state.selected_modifiers != null)
+            {
+                for (int i = 0; i < state.selected_modifiers.Count; i++)
+                    _state.selected_modifiers.Add(state.selected_modifiers[i]);
+            }
         }
     }
 }

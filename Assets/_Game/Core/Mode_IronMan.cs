@@ -137,12 +137,33 @@ namespace AtomicWar._Game.Core
 
         public IronManState CaptureState()
         {
-            return _state;
+            return new IronManState
+            {
+                mode_id = string.IsNullOrEmpty(_state.mode_id) ? "mode_iron_man" : _state.mode_id,
+                is_active = _state.is_active,
+                save_path = _state.save_path ?? string.Empty,
+                last_survivor_died = _state.last_survivor_died,
+                save_deleted = _state.save_deleted,
+                death_log = _state.death_log ?? string.Empty
+            };
         }
 
         public void RestoreState(IronManState state)
         {
-            _state = state ?? new IronManState();
+            if (state == null)
+            {
+                _state = new IronManState();
+                return;
+            }
+            _state = new IronManState
+            {
+                mode_id = string.IsNullOrEmpty(state.mode_id) ? "mode_iron_man" : state.mode_id,
+                is_active = state.is_active,
+                save_path = state.save_path ?? string.Empty,
+                last_survivor_died = state.last_survivor_died,
+                save_deleted = state.save_deleted,
+                death_log = state.death_log ?? string.Empty
+            };
         }
     }
 }

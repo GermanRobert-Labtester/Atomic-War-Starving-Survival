@@ -491,6 +491,88 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((TwitchApiState)o));
 
+        // ── Batch CaptureState systems (previously unconstructed) ──────────
+
+        public void SetDiseaseExpansionSystem(DiseaseSystem_Expansion s) =>
+            RegisterSystem(ref _diseaseExpansionSystem, s, "disease_expansion",
+                () => s.CaptureState(),
+                o => s.RestoreState((DiseaseSystemExpansionState)o));
+
+        public void SetDynamicScapegoatSystem(Dynamic_Scapegoat s) =>
+            RegisterSystem(ref _dynamicScapegoatSystem, s, "dynamic_scapegoat",
+                () => s.CaptureState(),
+                o => s.RestoreState((ScapegoatState)o));
+
+        public void SetIronManMode(Mode_IronMan s) =>
+            RegisterSystem(ref _ironManMode, s, "mode_iron_man",
+                () => s.CaptureState(),
+                o => s.RestoreState((IronManState)o));
+
+        public void SetAndroidNpcSystem(NPC_Android s) =>
+            RegisterSystem(ref _androidNpcSystem, s, "npc_android",
+                () => s.CaptureState(),
+                o => s.RestoreState((AndroidState)o));
+
+        public void SetSheriffRoleSystem(Role_Sheriff s) =>
+            RegisterSystem(ref _sheriffRoleSystem, s, "role_sheriff",
+                () => s.CaptureState(),
+                o => s.RestoreState((SheriffState)o));
+
+        public void SetScenarioGenSystem(UI_ScenarioGen s) =>
+            RegisterSystem(ref _scenarioGenSystem, s, "ui_scenario_gen",
+                () => s.CaptureState(),
+                o => s.RestoreState((ScenarioGenState)o));
+
+        public void SetSpeedrunTimerSystem(UI_SpeedrunTimer s) =>
+            RegisterSystem(ref _speedrunTimerSystem, s, "ui_speedrun_timer",
+                () => s.CaptureState(),
+                o => s.RestoreState((SpeedrunTimerState)o));
+
+        public void SetTrueEndingSystem(Victory_TrueEnding s) =>
+            RegisterSystem(ref _trueEndingSystem, s, "victory_true_ending",
+                () => s.CaptureState(),
+                o => s.RestoreState((TrueEndingState)o));
+
+        public void SetSiegeArtillerySystem(Siege_Artillery s) =>
+            RegisterSystem(ref _siegeArtillerySystem, s, "siege_artillery",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeArtilleryState)o));
+
+        public void SetSiegeBiowarfareSystem(Siege_Biowarfare s) =>
+            RegisterSystem(ref _siegeBiowarfareSystem, s, "siege_biowarfare",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeBiowarfareState)o));
+
+        public void SetSiegeBlockadeSystem(Siege_Blockade s) =>
+            RegisterSystem(ref _siegeBlockadeSystem, s, "siege_blockade",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeBlockadeState)o));
+
+        public void SetSiegeHostageShieldSystem(Siege_HostageShield s) =>
+            RegisterSystem(ref _siegeHostageShieldSystem, s, "siege_hostage_shield",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeHostageShieldState)o));
+
+        public void SetSiegeNightRaidSystem(Siege_NightRaid s) =>
+            RegisterSystem(ref _siegeNightRaidSystem, s, "siege_night_raid",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeNightRaidState)o));
+
+        public void SetSiegeSappersSystem(Siege_Sappers s) =>
+            RegisterSystem(ref _siegeSappersSystem, s, "siege_sappers",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeSappersState)o));
+
+        public void SetSiegeSmokeOutSystem(Siege_SmokeOut s) =>
+            RegisterSystem(ref _siegeSmokeOutSystem, s, "siege_smoke_out",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeSmokeOutState)o));
+
+        public void SetSiegeVehicleRamSystem(Siege_VehicleRam s) =>
+            RegisterSystem(ref _siegeVehicleRamSystem, s, "siege_vehicle_ram",
+                () => s.CaptureState(),
+                o => s.RestoreState((SiegeVehicleRamState)o));
+
         /// <summary>River crossings / bridges / blockades (had CaptureState, never constructed/registered).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem s) =>
             RegisterSystem(ref _riverNodeSystem, s, "river_nodes",
