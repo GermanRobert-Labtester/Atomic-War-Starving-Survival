@@ -39,6 +39,9 @@ namespace AtomicWar._Game.Survivors
         /// Args: (empath, delta).</summary>
         public event Action<Survivor, float> OnEmpathCoupled;
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         // -----------------------------------------------------------------
         // Tick
         // -----------------------------------------------------------------
@@ -77,7 +80,10 @@ namespace AtomicWar._Game.Survivors
 
             if (Mathf.Abs(delta) > 0.001f)
             {
-                empath.Needs.Morale = Mathf.Clamp(currentMorale + delta, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(empath, NeedKind.Morale, delta);
+                else
+                    empath.Needs.Morale = Mathf.Clamp(currentMorale + delta, 0f, 100f);
                 OnEmpathCoupled?.Invoke(empath, delta);
             }
         }
@@ -120,12 +126,18 @@ namespace AtomicWar._Game.Survivors
                 if (sv.RiskBias == RiskBiasTrait.Sociopath) continue;
                 if (sv.Needs == null) continue;
 
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - DeathMoralePenalty, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -DeathMoralePenalty);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - DeathMoralePenalty, 0f, 100f);
 
                 // If a Sociopath is present and unmoved, others are terrified
                 if (sociopath != null)
                 {
-                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - SociopathTerrifyPenalty, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -SociopathTerrifyPenalty);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - SociopathTerrifyPenalty, 0f, 100f);
                     sociopathTerrified = true;
                     OnSociopathTerrified?.Invoke(sociopath, sv);
                 }

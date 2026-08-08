@@ -176,6 +176,7 @@ namespace AtomicWar._Game.Core
                     WeatherSystem = WeatherSystem,
                     RadiationSystem = RadiationSystem,
                     EconomySystem = EconomySystem,
+                    NeedsSystem = NeedsSystem,
                     Survivors = Survivors,
                     ExchangeMoraleHit = WorldPhaseSystem.ExchangeMoraleHit,
                     ExpeditionSystem = ExpeditionSystem

@@ -486,6 +486,7 @@ namespace AtomicWar._Game.Core
             // Prompt #8 — Empath & Sociopath System
             // ───────────────────────────────────────────────────────────
             EmpathSystem = new EmpathSystem();
+            EmpathSystem.SetNeedsSystem(NeedsSystem);
             SurvivorDiaries = new SurvivorDiariesSystem();
             InternalLockSystem = new InternalLockSystem();
             SpatialPsychology = new SpatialPsychologySystem();

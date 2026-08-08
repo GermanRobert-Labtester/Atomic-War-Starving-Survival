@@ -523,7 +523,7 @@ namespace AtomicWar._Game.Core
             if (!DesertersStandSystem.IsDesertersStandEncounter(selected) || survivor == null) return;
             EnsureDeserterStandRifle();
             string choiceId = chosen != null ? chosen.ChoiceId : "gather_the_weapons";
-            DesertersStandSystem.Apply(exp, survivor, _deserterStandRifle, choiceId);
+            DesertersStandSystem.Apply(exp, survivor, _deserterStandRifle, choiceId, _needsSystem);
             OnDesertersStandResolved?.Invoke(exp, DesertersStandSystem.LogMessage);
             Debug.Log($"[Deserter's Stand] {DesertersStandSystem.LogMessage}");
         }
