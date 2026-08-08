@@ -40,12 +40,21 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
-        public void Bootstrap_LeavesCookOffDormant_WhileMethaneRemainsLive()
+        public void Bootstrap_LeavesDormantHazardsUnconstructed_WhileMethaneRemainsLive()
         {
             Assert.That(_bootstrap.HazardCookOff, Is.Null);
             Assert.That(_bootstrap.Registry.IsSystemTicked("hazard_cook_off"), Is.False);
             CollectionAssert.DoesNotContain(_bootstrap.GetUntickedSystemNames(), "HazardCookOff");
             CollectionAssert.DoesNotContain(UntickedSystemsBaseline.Load(), "HazardCookOff");
+
+            Assert.That(_bootstrap.HazardExplosiveCrafting, Is.Null);
+            Assert.That(_bootstrap.Registry.IsSystemTicked("hazard_explosive_crafting"), Is.False);
+            CollectionAssert.DoesNotContain(
+                _bootstrap.GetUntickedSystemNames(),
+                "HazardExplosiveCrafting");
+            CollectionAssert.DoesNotContain(
+                UntickedSystemsBaseline.Load(),
+                "HazardExplosiveCrafting");
 
             Assert.That(_bootstrap.HazardMethane, Is.Not.Null);
             Assert.That(_bootstrap.Registry.IsSystemTicked("hazard_methane"), Is.True);
@@ -53,7 +62,7 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
-        public void BootstrapSnapshot_OmitsCookOff_ButIncludesMethane()
+        public void BootstrapSnapshot_OmitsDormantHazards_ButIncludesMethane()
         {
             MethodInfo capture = typeof(SaveSystem).GetMethod(
                 "CaptureSnapshot",
@@ -65,6 +74,9 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(snapshot, Is.Not.Null);
             Assert.That(snapshot.SubsystemSaveIds, Is.Not.Null);
             CollectionAssert.DoesNotContain(snapshot.SubsystemSaveIds, "hazard_cook_off");
+            CollectionAssert.DoesNotContain(
+                snapshot.SubsystemSaveIds,
+                "hazard_explosive_crafting");
             CollectionAssert.Contains(snapshot.SubsystemSaveIds, "hazard_methane");
         }
 
@@ -77,6 +89,17 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(state, Is.Not.Null);
             Assert.That(state.hazardId, Is.EqualTo("hazard_cook_off"));
             Assert.DoesNotThrow(() => cookOff.RestoreState(state));
+        }
+
+        [Test]
+        public void ExplosiveCraftingClass_RemainsConstructibleAndSaveSafe()
+        {
+            var explosiveCrafting = new Hazard_ExplosiveCrafting();
+            ExplosiveCraftingState state = explosiveCrafting.CaptureState();
+
+            Assert.That(state, Is.Not.Null);
+            Assert.That(state.craftingId, Is.EqualTo("hazard_explosive_crafting"));
+            Assert.DoesNotThrow(() => explosiveCrafting.RestoreState(state));
         }
     }
 }

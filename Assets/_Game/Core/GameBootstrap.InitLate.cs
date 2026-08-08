@@ -370,7 +370,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetDurabilitySuppressor(DurabilitySuppressor);
             SaveSystem.SetEndgameUltimatum(EndgameUltimatum);
             // demoted ghost — SetHazardCookOff skipped
-            SaveSystem.SetHazardExplosiveCrafting(HazardExplosiveCrafting);
+            // demoted ghost — SetHazardExplosiveCrafting skipped
             SaveSystem.SetHazardFriendlyFire(HazardFriendlyFire);
             SaveSystem.SetHazardMethane(HazardMethane);
             SaveSystem.SetHazardMimicCrate(HazardMimicCrate);
