@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -28,6 +29,9 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Morale penalty for abandoning a hostage.</summary>
         public const float AbandonMoralePenalty = 30f;
+
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Morale recovery when a hostage is rescued.</summary>
         public const float RescueMoraleBoost = 15f;
@@ -165,8 +169,11 @@ namespace AtomicWar._Game.Core
                     var sv = survivors[i];
                     if (sv == null || !sv.IsAlive) continue;
                     if (sv.Id == sit.SurvivorId) continue;
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - AbandonMoralePenalty, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -AbandonMoralePenalty);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(
+                            sv.Needs.Morale - AbandonMoralePenalty, 0f, 100f);
                 }
             }
 

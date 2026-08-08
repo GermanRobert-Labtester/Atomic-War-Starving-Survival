@@ -67,6 +67,7 @@ namespace AtomicWar._Game.Core
         private readonly IReadOnlyList<Survivor> _survivors;
         private GeneratedMap _generatedMap;
         private SabotagedCacheSystem _sabotagedCaches;
+        private NeedsSystem _needsSystem;
         private BicycleSystem _bicycleSystem;
         private FloodedNodeSystem _floodedNodeSystem;
         private RiverNodeSystem _riverNodeSystem;
@@ -246,6 +247,11 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>Inject Prompt #13 sabotaged-cache system (optional; safe to skip in tests).</summary>
+        public void SetNeedsSystem(NeedsSystem system)
+        {
+            _needsSystem = system;
+        }
+
         public void SetSabotagedCacheSystem(SabotagedCacheSystem system)
         {
             _sabotagedCaches = system;

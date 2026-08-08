@@ -84,6 +84,7 @@ namespace AtomicWar._Game.Core
         {
             // Prompt #19 — Ghost Stations (unlock after EMP; never live/extraction intel).
             GhostStationSystem = new GhostStationSystem();
+            GhostStationSystem.SetNeedsSystem(NeedsSystem);
             GhostStationSystem.Bind(
                 RadioTunerSystem,
                 JournalSystem,

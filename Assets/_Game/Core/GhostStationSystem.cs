@@ -32,6 +32,8 @@ namespace AtomicWar._Game.Core
         private JournalSystem _journal;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
         private Func<int> _getDay;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private bool _unlocked;
 #pragma warning disable CS0414 // State flag retained for future save/load and diagnostics.
         private bool _frequenciesInjected;
@@ -191,7 +193,10 @@ namespace AtomicWar._Game.Core
             {
                 var s = list[i];
                 if (s == null || !s.IsAlive) continue;
-                s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - amount, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(s, NeedKind.Morale, -amount);
+                else
+                    s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - amount, 0f, 100f);
             }
         }
 

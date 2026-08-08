@@ -58,12 +58,14 @@ namespace AtomicWar._Game.Core
             DeadDropSystem = new DeadDropSystem(new System.Random(_worldSeed + 72));
             SeedMapNodes(0.15f, (nodeId) => DeadDropSystem.SetDeadDropNode(nodeId, true), seedOffset: 72);
             HostageSystem = new HostageSystem();
+            HostageSystem.SetNeedsSystem(NeedsSystem);
             PropagandaSystem = new PropagandaSystem();
             DeserterSystem = new DeserterSystem(new System.Random(_worldSeed + 75));
             ScapegoatSystem = new WeatherScapegoatSystem(new System.Random(_worldSeed + 76));
             LaborCampSystem = new LaborCampSystem();
             SeedMapNodes(0.1f, (nodeId) => LaborCampSystem.SetLaborCamp(nodeId, true), seedOffset: 77);
             CultMoralSystem = new CultMoralDisgustSystem();
+            CultMoralSystem.SetNeedsSystem(NeedsSystem);
         }
 
         private void InitMapTaggedNodes()

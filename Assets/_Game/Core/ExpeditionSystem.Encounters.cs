@@ -198,7 +198,12 @@ namespace AtomicWar._Game.Core
                 moraleDelta += 1f;
 
             if (Mathf.Abs(moraleDelta) > 0.01f)
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+            {
+                if (_needsSystem != null)
+                    _needsSystem.Modify(survivor, NeedKind.Morale, moraleDelta);
+                else
+                    survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+            }
             if (Mathf.Abs(healthDelta) > 0.01f)
                 SurvivorNeedWrite.AdjustHealth(survivor, healthDelta);
 
@@ -275,7 +280,10 @@ namespace AtomicWar._Game.Core
 
             LastBiteRetaliationDamage = dmg;
             // Grim win: poisoned attacker breaks off — small morale relief.
-            survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 3f, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(survivor, NeedKind.Morale, 3f);
+            else
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 3f, 0f, 100f);
         }
 
         private static string ResolveBiteAttackerType(EncounterSO selected)
@@ -459,7 +467,10 @@ namespace AtomicWar._Game.Core
                     float combat = _expeditionPerks.GetNightCombatMultiplier(survivor, isNight: true);
                     moraleDelta *= combat;
                 }
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(survivor, NeedKind.Morale, moraleDelta);
+                else
+                    survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
             }
 
             // Explicit flee choice (ChoiceId "flee") on a UXO node can still detonate.

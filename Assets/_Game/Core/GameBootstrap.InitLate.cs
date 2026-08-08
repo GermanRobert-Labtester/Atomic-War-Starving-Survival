@@ -554,6 +554,7 @@ namespace AtomicWar._Game.Core
                     Seed = _worldSeed
                 });
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
+            ExpeditionSystem.SetNeedsSystem(NeedsSystem);
             ExpeditionSystem.SetBicycleSystem(BicycleSystem);
             ExpeditionSystem.SetFloodedNodeSystem(FloodedNodeSystem);
             ExpeditionSystem.SetRiverNodeSystem(RiverNodeSystem);

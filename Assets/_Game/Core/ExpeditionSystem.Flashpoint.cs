@@ -160,7 +160,10 @@ namespace AtomicWar._Game.Core
                     if (exp.Survivor != null && _radSystem != null)
                     {
                         _radSystem.Expose(exp.Survivor, 10f, 2f);
-                        exp.Survivor.Needs.Morale = Mathf.Clamp(exp.Survivor.Needs.Morale - 15f, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(exp.Survivor, NeedKind.Morale, -15f);
+                        else
+                            exp.Survivor.Needs.Morale = Mathf.Clamp(exp.Survivor.Needs.Morale - 15f, 0f, 100f);
                     }
                     if (_shelter != null)
                     {
@@ -206,9 +209,12 @@ namespace AtomicWar._Game.Core
                 var sv = _survivors[i];
                 if (sv == null || !sv.IsAlive) continue;
                 if (!string.IsNullOrEmpty(dyingSurvivorId) && sv.Id == dyingSurvivorId) continue;
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale - DenyEntryMoralePenaltyForOtherSurvivors,
-                    0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -DenyEntryMoralePenaltyForOtherSurvivors);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale - DenyEntryMoralePenaltyForOtherSurvivors,
+                        0f, 100f);
                 affected++;
             }
             return affected;

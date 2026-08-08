@@ -205,7 +205,12 @@ namespace AtomicWar._Game.Core
 
             RadiationSystem = new RadiationSystem(NeedsSystem, BuildExposureContext);
 
+            // Wire NeedsSystem into all systems that modify survivor needs so they
+            // route through Modify (trait caps, perk effects, OnNeedChanged events).
+            BlackRainHazardSystem?.SetNeedsSystem(NeedsSystem);
+
             BeliefSystem = new BeliefSystem(rng: CreateSaltedRng(_worldSeed, "belief"));
+            BeliefSystem.SetNeedsSystem(NeedsSystem);
             RadiationSystem.OnStatusGained += (sv, status) =>
             {
                 if (status == SurvivorStatus.AcuteRadiationSyndrome)

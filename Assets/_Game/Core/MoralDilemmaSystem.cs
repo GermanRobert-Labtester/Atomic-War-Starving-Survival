@@ -37,6 +37,9 @@ public class MoralDilemmaSystem
 
         public MoralDilemmaEvent ActiveDilemma { get; private set; }
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public event Action<MoralDilemmaEvent> OnDilemmaRaised;
         public event Action<MoralDilemmaEvent> OnDilemmaResolved;
 
@@ -138,7 +141,10 @@ public class MoralDilemmaSystem
                             ? ReducedMoralePenaltyForButchering
                             : BaseMoralePenaltyForButchering;
 
-                        s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + moraleDelta, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(s, NeedKind.Morale, moraleDelta);
+                        else
+                            s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + moraleDelta, 0f, 100f);
                         result.MoralePenaltiesApplied++;
 
                         if (!isPsychopath)
@@ -157,7 +163,10 @@ public class MoralDilemmaSystem
                     {
                         var s = survivors[i];
                         if (s?.Needs == null || !s.IsAlive) continue;
-                        s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - 10f, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(s, NeedKind.Morale, -10f);
+                        else
+                            s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - 10f, 0f, 100f);
                         result.MoralePenaltiesApplied++;
                     }
                     break;
@@ -167,7 +176,10 @@ public class MoralDilemmaSystem
                     {
                         var s = survivors[i];
                         if (s?.Needs == null || !s.IsAlive) continue;
-                        s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - 20f, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(s, NeedKind.Morale, -20f);
+                        else
+                            s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - 20f, 0f, 100f);
                         result.MoralePenaltiesApplied++;
                     }
                     break;

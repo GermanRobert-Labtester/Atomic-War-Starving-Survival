@@ -50,7 +50,10 @@ namespace AtomicWar._Game.Core
         {
             float staminaDrain = CalculateStaminaDrain(exp, tickHours);
             exp.Stamina = Mathf.Clamp(exp.Stamina - staminaDrain, 0f, 100f);
-            exp.Survivor.Needs.Fatigue = Mathf.Clamp(exp.Survivor.Needs.Fatigue + staminaDrain * 0.5f, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(exp.Survivor, NeedKind.Fatigue, staminaDrain * 0.5f);
+            else
+                exp.Survivor.Needs.Fatigue = Mathf.Clamp(exp.Survivor.Needs.Fatigue + staminaDrain * 0.5f, 0f, 100f);
 
             if (exp.Stamina > 0f) return;
             // Exhaustion penalty: drop half loot, take health hit

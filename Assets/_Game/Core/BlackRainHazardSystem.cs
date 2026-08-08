@@ -23,6 +23,8 @@ public class BlackRainHazardSystem
         public const float DreadMoraleDrainPerHour = 4f;
 
         private readonly WeatherSystem _weather;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         public event Action<Survivor> OnDreadApplied;
         public event Action<Survivor> OnDreadCleared;
@@ -89,7 +91,10 @@ public class BlackRainHazardSystem
                     }
                     if (gameHours > 0f && s.Needs != null)
                     {
-                        s.Needs.Morale = Math.Max(0f, s.Needs.Morale - DreadMoraleDrainPerHour * gameHours);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(s, NeedKind.Morale, -DreadMoraleDrainPerHour * gameHours);
+                        else
+                            s.Needs.Morale = Math.Max(0f, s.Needs.Morale - DreadMoraleDrainPerHour * gameHours);
                     }
                 }
                 else if (s.HasDread)

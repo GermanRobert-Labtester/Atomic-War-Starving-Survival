@@ -224,6 +224,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-Location-batch — LocationStateRuinSystem demoted (ghost). Class kept dormant.
             MobileCampSystem = new MobileCampSystem();
             MoralDilemmaSystem = new MoralDilemmaSystem();
+            MoralDilemmaSystem.SetNeedsSystem(NeedsSystem);
             NeedleSterilizationSystem = new NeedleSterilizationSystem();
             NightScavengeSystem = new NightScavengeSystem();
             ProstheticCraftingSystem = new ProstheticCraftingSystem();
