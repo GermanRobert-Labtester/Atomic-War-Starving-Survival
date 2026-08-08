@@ -274,17 +274,8 @@ namespace AtomicWar._Game.UI
             PanelSummary = sb.ToString().TrimEnd();
         }
 
-        private void RebuildDetail()
+        private string BuildDetailSummary(MapNodePlayerView view, MapNode node)
         {
-            if (_map == null || string.IsNullOrEmpty(SelectedNodeId))
-            {
-                DetailSummary = "Select a node for expedition pathing.";
-                PathSummary = string.Empty;
-                return;
-            }
-
-            var view = _map.GetPlayerView(SelectedNodeId);
-            var node = _map.GetNode(SelectedNodeId);
             var sb = new StringBuilder();
             sb.AppendLine("SELECTED: " + view.Label);
             sb.Append("Ring: ").Append(view.Ring);
@@ -317,8 +308,11 @@ namespace AtomicWar._Game.UI
                     sb.AppendLine();
                 }
             }
-            DetailSummary = sb.ToString().TrimEnd();
+            return sb.ToString().TrimEnd();
+        }
 
+        private string BuildPathSummary()
+        {
             var pathSb = new StringBuilder();
             pathSb.Append("PATH: ");
             if (_selectedPath.Count == 0)
@@ -340,7 +334,22 @@ namespace AtomicWar._Game.UI
                     pathSb.Append(n != null ? n.GetDisplayLabel() : _selectedPath[i]);
                 }
             }
-            PathSummary = pathSb.ToString();
+            return pathSb.ToString();
+        }
+
+        private void RebuildDetail()
+        {
+            if (_map == null || string.IsNullOrEmpty(SelectedNodeId))
+            {
+                DetailSummary = "Select a node for expedition pathing.";
+                PathSummary = string.Empty;
+                return;
+            }
+
+            var view = _map.GetPlayerView(SelectedNodeId);
+            var node = _map.GetNode(SelectedNodeId);
+            DetailSummary = BuildDetailSummary(view, node);
+            PathSummary = BuildPathSummary();
         }
     }
 

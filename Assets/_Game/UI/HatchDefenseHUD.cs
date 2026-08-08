@@ -99,30 +99,66 @@ namespace AtomicWar._Game.UI
             Refresh();
         }
 
-        public void Refresh()
+        private void ResetToOffline()
         {
-            if (_hatch == null)
-            {
-                ShelterSecurity = WeaponPower = DefenseScore = 0f;
-                ActiveGuards = 0;
-                RaidUnlocked = false;
-                GeneratorOutside = false;
-                StatusLine = "Hatch: offline";
-                UpgradesLine = string.Empty;
-                LastRaidLine = "Last raid: none";
-                // Still honor Core-injected ammo lines when the system is unbound
-                // (EditMode paint tests / pre-bootstrap frames).
-                AmmoStockpileLine = _ammoStockpileProvider != null
-                    ? (_ammoStockpileProvider() ?? "AMMO: —")
-                    : "AMMO: —";
-                ArmsPreviewLine = _armsPreviewProvider != null
-                    ? (_armsPreviewProvider() ?? string.Empty)
-                    : string.Empty;
-                DetailSummary = "No hatch defense system.";
-                OnRefreshed?.Invoke();
-                return;
-            }
+            ShelterSecurity = WeaponPower = DefenseScore = 0f;
+            ActiveGuards = 0;
+            RaidUnlocked = false;
+            GeneratorOutside = false;
+            StatusLine = "Hatch: offline";
+            UpgradesLine = string.Empty;
+            LastRaidLine = "Last raid: none";
+            // Still honor Core-injected ammo lines when the system is unbound
+            // (EditMode paint tests / pre-bootstrap frames).
+            AmmoStockpileLine = _ammoStockpileProvider != null
+                ? (_ammoStockpileProvider() ?? "AMMO: —")
+                : "AMMO: —";
+            ArmsPreviewLine = _armsPreviewProvider != null
+                ? (_armsPreviewProvider() ?? string.Empty)
+                : string.Empty;
+            DetailSummary = "No hatch defense system.";
+        }
 
+        private string BuildUpgradesLine()
+        {
+            var up = new StringBuilder();
+            up.Append("Upgrades: ");
+            bool any = false;
+            for (int i = 0; i < HatchDefenseSystem.HatchModuleIds.Length; i++)
+            {
+                string id = HatchDefenseSystem.HatchModuleIds[i];
+                float contrib = HatchDefenseSystem.DefaultSecurityForModuleId(id);
+                string label = id == HatchDefenseModuleSO.BlastDoorId ? "blast door"
+                    : id == HatchDefenseModuleSO.HatchTrapsId ? "traps"
+                    : id == HatchDefenseModuleSO.ReinforcedLocksId ? "locks"
+                    : id;
+                if (any) up.Append(" · ");
+                up.Append($"{label}(+{contrib:0}/lvl)");
+                any = true;
+            }
+            return up.ToString();
+        }
+
+        private string BuildDetailSummary()
+        {
+            var detail = new StringBuilder();
+            detail.AppendLine(StatusLine);
+            detail.AppendLine(LastRaidLine);
+            detail.AppendLine(UpgradesLine);
+            if (!string.IsNullOrEmpty(AmmoStockpileLine))
+                detail.AppendLine(AmmoStockpileLine);
+            if (!string.IsNullOrEmpty(ArmsPreviewLine))
+                detail.AppendLine(ArmsPreviewLine);
+            detail.AppendLine("Install / upgrade at workbench [B] (scrap + mechanical parts).");
+            if (GeneratorOutside)
+                detail.AppendLine("Outdoor generator is drawing attention.");
+            if (ActiveGuards > 0)
+                detail.AppendLine($"Guard post active (+{HatchDefenseSystem.GuardSecurityBonusPerGuard * ActiveGuards:0} security).");
+            return detail.ToString().TrimEnd();
+        }
+
+        private void RefreshFromHatch()
+        {
             ShelterSecurity = _hatch.GetShelterSecurity();
             WeaponPower = _hatch.GetWeaponPower();
             DefenseScore = ShelterSecurity + WeaponPower;
@@ -152,37 +188,20 @@ namespace AtomicWar._Game.UI
                 ? (_armsPreviewProvider() ?? string.Empty)
                 : string.Empty;
 
-            var up = new StringBuilder();
-            up.Append("Upgrades: ");
-            bool any = false;
-            for (int i = 0; i < HatchDefenseSystem.HatchModuleIds.Length; i++)
-            {
-                string id = HatchDefenseSystem.HatchModuleIds[i];
-                float contrib = HatchDefenseSystem.DefaultSecurityForModuleId(id);
-                string label = id == HatchDefenseModuleSO.BlastDoorId ? "blast door"
-                    : id == HatchDefenseModuleSO.HatchTrapsId ? "traps"
-                    : id == HatchDefenseModuleSO.ReinforcedLocksId ? "locks"
-                    : id;
-                if (any) up.Append(" · ");
-                up.Append($"{label}(+{contrib:0}/lvl)");
-                any = true;
-            }
-            UpgradesLine = up.ToString();
+            UpgradesLine = BuildUpgradesLine();
+            DetailSummary = BuildDetailSummary();
+        }
 
-            var detail = new StringBuilder();
-            detail.AppendLine(StatusLine);
-            detail.AppendLine(LastRaidLine);
-            detail.AppendLine(UpgradesLine);
-            if (!string.IsNullOrEmpty(AmmoStockpileLine))
-                detail.AppendLine(AmmoStockpileLine);
-            if (!string.IsNullOrEmpty(ArmsPreviewLine))
-                detail.AppendLine(ArmsPreviewLine);
-            detail.AppendLine("Install / upgrade at workbench [B] (scrap + mechanical parts).");
-            if (GeneratorOutside)
-                detail.AppendLine("Outdoor generator is drawing attention.");
-            if (ActiveGuards > 0)
-                detail.AppendLine($"Guard post active (+{HatchDefenseSystem.GuardSecurityBonusPerGuard * ActiveGuards:0} security).");
-            DetailSummary = detail.ToString().TrimEnd();
+        public void Refresh()
+        {
+            if (_hatch == null)
+            {
+                ResetToOffline();
+                OnRefreshed?.Invoke();
+                return;
+            }
+
+            RefreshFromHatch();
             OnRefreshed?.Invoke();
         }
 
