@@ -142,15 +142,8 @@ namespace AtomicWar._Game.Survivors
         /// Inventory/Shelter side-effects run via <see cref="BingeEatHandler"/>
         /// and <see cref="SabotageHandler"/> so this assembly stays leaf-level.
         /// </summary>
-        public void Tick(
-            float gameHours,
-            IReadOnlyList<Survivor> survivors,
-            System.Random rng)
+        private void RollForBreaks(IReadOnlyList<Survivor> survivors, float gameHours, System.Random rng)
         {
-            if (gameHours <= 0f || survivors == null) return;
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mental_break");
-
-            // 1. Update low-morale hours and roll for breaks at the threshold.
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
@@ -161,8 +154,10 @@ namespace AtomicWar._Game.Survivors
                     TryRollForBreak(sv, rng);
                 }
             }
+        }
 
-            // 2. Drive BingeEater / sabotage via host-injected handlers.
+        private void DriveBingeAndSabotage(IReadOnlyList<Survivor> survivors, float gameHours, System.Random rng)
+        {
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
@@ -184,8 +179,10 @@ namespace AtomicWar._Game.Survivors
                     }
                 }
             }
+        }
 
-            // 3. Advance cure progress on every active break; auto-cure on time.
+        private void AdvanceCureProgress(IReadOnlyList<Survivor> survivors, float gameHours)
+        {
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
@@ -198,6 +195,24 @@ namespace AtomicWar._Game.Survivors
                     Cure(sv);
                 }
             }
+        }
+
+        public void Tick(
+            float gameHours,
+            IReadOnlyList<Survivor> survivors,
+            System.Random rng)
+        {
+            if (gameHours <= 0f || survivors == null) return;
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mental_break");
+
+            // 1. Update low-morale hours and roll for breaks at the threshold.
+            RollForBreaks(survivors, gameHours, rng);
+
+            // 2. Drive BingeEater / sabotage via host-injected handlers.
+            DriveBingeAndSabotage(survivors, gameHours, rng);
+
+            // 3. Advance cure progress on every active break; auto-cure on time.
+            AdvanceCureProgress(survivors, gameHours);
 
             // 4. Passive morale drain + affinity drain on other survivors.
             ApplyPassiveDrain(gameHours, survivors, rng);
