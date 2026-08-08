@@ -156,6 +156,13 @@ namespace AtomicWar._Game.Inventory
         /// Best working Device slot matching the given item id (prefers highest battery,
         /// then highest calibration). Null if none can measure.
         /// </summary>
+        /// <remarks>
+        /// INV-5D: strictly read-only. Both entry points that create slots — Add() and
+        /// the save-restore path — already assign a DeviceState to every ItemType.Device
+        /// slot, so a null Device here means the slot is not a device and must simply be
+        /// skipped. Lazily creating one inside this query mutated inventory state on a
+        /// read, which made HasWorkingGeiger() a state-changing call.
+        /// </remarks>
         public InventorySlot FindBestWorkingDevice(string itemId)
         {
             if (string.IsNullOrEmpty(itemId) || _slots == null) return null;
@@ -164,7 +171,7 @@ namespace AtomicWar._Game.Inventory
             {
                 var slot = _slots[i];
                 if (slot == null || slot.Item == null || slot.Item.id != itemId) continue;
-                if (slot.Device == null) slot.Device = DeviceState.CreateDefault();
+                if (slot.Device == null) continue;
                 if (!InstrumentDevice.CanMeasure(slot.Device)) continue;
                 if (best == null
                     || slot.Device.Battery > best.Device.Battery
@@ -192,10 +199,12 @@ namespace AtomicWar._Game.Inventory
             var working = FindBestWorkingDevice("geiger_counter");
             if (working != null) return working.Device;
 
+            // INV-5D: read-only, as above — a geiger slot always carries a DeviceState
+            // from Add()/restore, so a null here is "not a device" rather than
+            // "needs initialising", and returning a freshly created throwaway state
+            // would silently discard any caller writes to it.
             var any = FindSlot("geiger_counter");
-            if (any == null) return null;
-            if (any.Device == null) any.Device = DeviceState.CreateDefault();
-            return any.Device;
+            return any?.Device;
         }
 
         /// <summary>Drift calibration on every Device slot by the given day count.</summary>
