@@ -111,8 +111,131 @@ namespace AtomicWar._Game.Core
             exp.Phase = ExpeditionPhase.Looting;
             // Prompt #69 — flooded subway / ruins wading or pump drain.
             _floodedNodeSystem?.ProcessFloodedArrival(exp, _hasItem);
+            // REPROMOTE-MapHazard-001 — swamp berry bushes may be carnivorous plants.
+            TryVenusTrapOnLootingArrival(exp);
+            // REPROMOTE-Item-001 — secure doors / keycard nodes on arrival.
+            TryKeycardDoorOnLootingArrival(exp);
             // Prompt #47 — location-bound forceOnArrival encounters
             TryFireForcedLocationEncounter(exp);
+        }
+
+        /// <summary>
+        /// On keycard_door / secure military nodes: report a found card (if inventory
+        /// carries one) and attempt TryOpenDoor for the door color implied by the node.
+        /// </summary>
+        private void TryKeycardDoorOnLootingArrival(ExpeditionState exp)
+        {
+            if (_keycards == null || exp?.Survivor == null || !exp.Survivor.IsAlive) return;
+
+            string nodeId = exp.TargetLocationId;
+            if (!IsKeycardDoorNode(nodeId)) return;
+
+            KeycardColor required = InferRequiredKeycard(nodeId);
+            var owned = CollectOwnedKeycards(exp.Survivor.Id);
+
+            // Field loot: if no matching card yet, finding one on a secure node is the fiction.
+            if (!owned.Contains(required))
+            {
+                _keycards.ReportKeycardFound(exp.Survivor.Id, required);
+                owned.Add(required);
+            }
+
+            _keycards.TryOpenDoor(exp.Survivor.Id, required, owned);
+        }
+
+        private bool IsKeycardDoorNode(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return false;
+            if (nodeId.IndexOf("keycard", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+            if (_generatedMap == null) return false;
+            var node = _generatedMap.GetNode(nodeId);
+            if (node == null) return false;
+            if (node.HasTag("keycard_door") || node.HasTag("secure") || node.HasTag("military"))
+                return true;
+            string name = node.DisplayName ?? string.Empty;
+            return name.IndexOf("hangar", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("command", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("silo", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || name.IndexOf("bunker rim", System.StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static KeycardColor InferRequiredKeycard(string nodeId)
+        {
+            if (string.IsNullOrEmpty(nodeId)) return KeycardColor.Green;
+            if (nodeId.IndexOf("ground_zero", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || nodeId.IndexOf("silo", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return KeycardColor.Red;
+            if (nodeId.IndexOf("command", System.StringComparison.OrdinalIgnoreCase) >= 0
+                || nodeId.IndexOf("hangar", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                return KeycardColor.Blue;
+            return KeycardColor.Green;
+        }
+
+        private List<KeycardColor> CollectOwnedKeycards(string survivorId)
+        {
+            var owned = new List<KeycardColor>();
+            if (_keycards == null) return owned;
+            // Cards already reported found on this tracker (save-backed).
+            var found = _keycards.FoundCardIds;
+            if (found != null)
+            {
+                for (int i = 0; i < found.Count; i++)
+                {
+                    string id = found[i];
+                    if (id != null && id.IndexOf("red", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                        owned.Add(KeycardColor.Red);
+                    else if (id != null && id.IndexOf("blue", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                        owned.Add(KeycardColor.Blue);
+                    else if (id != null && id.IndexOf("green", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                        owned.Add(KeycardColor.Green);
+                }
+            }
+            // Inventory physical keycard items if host wired count.
+            if (_countItem != null)
+            {
+                if (_countItem("item_keycard_red") > 0 && !owned.Contains(KeycardColor.Red))
+                    owned.Add(KeycardColor.Red);
+                if (_countItem("item_keycard_blue") > 0 && !owned.Contains(KeycardColor.Blue))
+                    owned.Add(KeycardColor.Blue);
+                if (_countItem("item_keycard_green") > 0 && !owned.Contains(KeycardColor.Green))
+                    owned.Add(KeycardColor.Green);
+            }
+            return owned;
+        }
+
+        /// <summary>
+        /// When the target node is tagged swamp, arm VenusTrap and run a harvest
+        /// strength check (Navigate/loot "berry bush" fiction).
+        /// </summary>
+        private void TryVenusTrapOnLootingArrival(ExpeditionState exp)
+        {
+            if (_venusTrap == null || exp?.Survivor == null || !exp.Survivor.IsAlive) return;
+
+            string nodeId = exp.TargetLocationId;
+            bool swamp = false;
+            if (_generatedMap != null && !string.IsNullOrEmpty(nodeId))
+            {
+                var node = _generatedMap.GetNode(nodeId);
+                if (node != null && node.HasTag("swamp"))
+                    swamp = true;
+            }
+            if (!swamp && !string.IsNullOrEmpty(nodeId)
+                && nodeId.IndexOf("swamp", System.StringComparison.OrdinalIgnoreCase) >= 0)
+                swamp = true;
+            if (!swamp) return;
+
+            _venusTrap.EnterNode(nodeId);
+
+            var sv = exp.Survivor;
+            // Perception: morale proxy for fieldcraft (no separate skill on every build).
+            float perception = UnityEngine.Mathf.Clamp01(sv.Needs.Morale / 100f);
+            if (_venusTrap.CheckDisguise(sv.Id, perception))
+                return; // spotted — no snap
+
+            // Strength: inverse of fatigue (exhausted scavengers lose arms).
+            float strength = UnityEngine.Mathf.Clamp01(1f - (sv.Needs.Fatigue / 100f));
+            _venusTrap.AttemptHarvest(sv.Id, strength);
         }
 
         private void ApplyBicycleAndFloodedTick(ExpeditionState exp, float tickHours)

@@ -957,6 +957,40 @@
     "empShielded": false
   },
   {
+    "id": "weapon_hmg",
+    "displayName": "Heavy Machine Gun",
+    "description": "Tripod-mounted .50 cal HMG. Provides massive hatch defense bonus when stock is on hand and the gun is mounted + oiled. Requires 2 operators to fire at full efficiency; jams without oil. Two crew + a stock pile of this weapon is the difference between a held hatch and a breached one.",
+    "type": "Weapon",
+    "stackMax": 1,
+    "weight": 45.0,
+    "radProtection": 0,
+    "durability": 50,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 280.0,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 6
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 4
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 2
+      }
+    ]
+  },
+  {
     "id": "sulphur",
     "displayName": "Sulphur",
     "description": "Yellow powder for chemistry mixes.",

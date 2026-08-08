@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -19,8 +20,9 @@ namespace AtomicWar._Game.Core
     /// Prompt #852: Carnivorous Plants — Massive mutated flora in Swamp nodes.
     /// Look like normal Berry bushes. Harvest = plant snaps shut. Strength check
     /// or lose arm (instant amputation). Perception >= 0.7 spots the disguise.
+    /// REPROMOTE-MapHazard-001 — Boot/Save live; ExpeditionSystem calls EnterNode /
+    /// AttemptHarvest when the target map node is tagged <c>swamp</c>.
     /// </summary>
-    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class MapHazard_VenusTrap
     {
         private VenusTrapState _state;
@@ -35,6 +37,7 @@ namespace AtomicWar._Game.Core
         public event Action<string> OnDisguiseSpotted;                   // survivor_id
 
         public string HazardId => _state.hazard_id;
+        public string NodeId => _state.node_id;
 
         public MapHazard_VenusTrap()
         {
@@ -46,8 +49,33 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void EnterNode()
         {
-            _state.traps_active = UnityEngine.Random.Range(2, 5); // 2-4 inclusive
+            EnterNode(_state.node_id);
+        }
+
+        /// <summary>Bind the swamp node and arm disguised traps (seeded trap count).</summary>
+        /// <remarks>
+        /// Idempotent: arms only on the FIRST bind for a given node_id. If the
+        /// hazard is already armed for this node (traps_active > 0), EnterNode
+        /// is a no-op so repeated visit dispatches from the expedition host do
+        /// not re-arm cleared traps. If a different node_id arrives, the state
+        /// resets cleanly (no carryover traps between distinct swamp nodes).
+        /// </remarks>
+        public void EnterNode(string nodeId)
+        {
+            bool isNewNode = !string.Equals(_state.node_id, nodeId, StringComparison.Ordinal)
+                              || string.IsNullOrEmpty(nodeId);
+            if (!string.IsNullOrEmpty(nodeId) && !isNewNode && _state.traps_active > 0)
+            {
+                // Already armed for this node. Skip re-arm; the host will tick
+                // attempts against the live state.
+                return;
+            }
+
+            _state.node_id = nodeId ?? string.Empty;
+            var rng = SeededRandom.CreateFixed("venus_trap:" + (_state.node_id ?? "node"));
+            _state.traps_active = 2 + rng.Next(3); // 2..4 inclusive
             _state.is_disguised = true;
+            _state.triggered_survivors.Clear();
 
             OnNodeEntered?.Invoke(_state.node_id);
             Debug.Log($"[MapHazard_VenusTrap] Entered node '{_state.node_id}' — " +
@@ -59,6 +87,13 @@ namespace AtomicWar._Game.Core
         /// disguised, the plant snaps shut. Strength >= 0.6 = escape.
         /// Strength &lt; 0.6 = instant arm amputation.
         /// </summary>
+        /// <remarks>
+        /// One trap is consumed per call (decremented on both escape and
+        /// amputation outcomes). When the last trap fires, is_disguised is
+        /// cleared so subsequent harvesters see the hazard as exposed. The
+        /// Expedition host dispatches this per-looting-arrival; the per-call
+        /// decrement is what stops the trap from re-arming on every visit.
+        /// </remarks>
         public bool AttemptHarvest(string survivor_id, float strength)
         {
             if (string.IsNullOrEmpty(survivor_id))
@@ -75,26 +110,39 @@ namespace AtomicWar._Game.Core
 
             OnTrapTriggered?.Invoke(survivor_id);
 
+            bool survived;
             if (strength >= StrengthEscapeThreshold)
             {
                 OnStrengthCheckPassed?.Invoke(survivor_id);
                 Debug.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' escaped " +
                           $"(strength {strength:F2} >= {StrengthEscapeThreshold}).");
-                return true;
+                survived = true;
             }
-
-            // Arm amputation
-            _state.amputations++;
-            string arm_id = "arm_left"; // default; external systems may override
-            if (!_state.triggered_survivors.Contains(survivor_id))
+            else
             {
-                _state.triggered_survivors.Add(survivor_id);
+                // Arm amputation
+                _state.amputations++;
+                string arm_id = "arm_left"; // default; external systems may override
+                if (!_state.triggered_survivors.Contains(survivor_id))
+                {
+                    _state.triggered_survivors.Add(survivor_id);
+                }
+
+                OnArmLost?.Invoke(survivor_id, arm_id);
+                Debug.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' lost {arm_id}! " +
+                          $"(strength {strength:F2} < {StrengthEscapeThreshold}).");
+                survived = false;
             }
 
-            OnArmLost?.Invoke(survivor_id, arm_id);
-            Debug.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' lost {arm_id}! " +
-                      $"(strength {strength:F2} < {StrengthEscapeThreshold}).");
-            return false;
+            // Consume one trap regardless of outcome. A surviving harvester still
+            // pulled a trap and saw through the disguise on that one bush; the
+            // remaining traps keep snapping at subsequent harvesters.
+            _state.traps_active = Mathf.Max(0, _state.traps_active - 1);
+            if (_state.traps_active == 0)
+            {
+                _state.is_disguised = false;
+            }
+            return survived;
         }
 
         /// <summary>

@@ -4056,6 +4056,19 @@ namespace AtomicWar._Game.Survivors
                 sv.Needs.Morale = cap;
         }
 
+        /// <summary>
+        /// QUEST-002 hardened: write Morale on a survivor and immediately clamp to
+        /// the trait-derived cap (Traumatized = 50%, etc.). Replaces the
+        /// pattern <c>sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - x);</c>
+        /// which bypasses the cap and lets a Traumatized survivor drop below 50%.
+        /// </summary>
+        public void ApplyMoraleDelta(Survivor sv, float delta)
+        {
+            if (sv == null) return;
+            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
+            ClampMoraleToCap(sv);
+        }
+
         /// <summary>#252 AI: refuses Play / Comfort actions.</summary>
         public bool RefusesPlayOrComfort(Survivor sv) => HasTraumatized(sv);
 

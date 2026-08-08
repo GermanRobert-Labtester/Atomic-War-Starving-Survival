@@ -420,7 +420,15 @@ namespace AtomicWar._Game.Survivors
                 return false;
 
             _deathsDoor.Remove(patient.Id);
-            patient.Needs.Health = AdrenalineReviveHealth;
+            // DEATH-004: the survivor is at Death's Door (Health=0, State=Incapacitated).
+            // The pre-fix code wrote `patient.Needs.Health = 1f` directly, which
+            // was a zombie-state write. The new SurvivorNeedWrite.SetHealth refuses
+            // writes to non-alive survivors unless forceRevive is true. The
+            // IsAlive check below fails for a Death's-Door patient (they are
+            // Incapacitated, not Alive), so we need forceRevive: true. We then
+            // set State=Idle so the patient is officially alive again before
+            // any subsequent Modify/EvaluateDeath runs.
+            SurvivorNeedWrite.SetHealth(patient, AdrenalineReviveHealth, -1f, null, forceRevive: true);
             if (patient.State == SurvivorState.Incapacitated || patient.State == SurvivorState.Dead)
                 patient.State = SurvivorState.Idle;
 

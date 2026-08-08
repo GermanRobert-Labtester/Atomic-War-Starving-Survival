@@ -144,6 +144,31 @@ namespace AtomicWar._Game.Shelter
         /// </summary>
         public Func<string, int> AmmoSpendPriorityResolver;
 
+        /// <summary>
+        /// REPROMOTE-Pet-001 — host wires Pet_GuardDog.Alert. Returns true when the dog
+        /// can fight this raid (fed, not malnourished). Adds <see cref="GuardDogFightBonus"/>
+        /// to weapon power when true.
+        /// </summary>
+        public Func<bool> TryAlertGuardDog;
+
+        /// <summary>Defense power added when a fighting guard dog is alerted on raid start.</summary>
+        public const float GuardDogFightBonus = 8f;
+
+        /// <summary>
+        /// REPROMOTE-Weapon-001 — host wires mounted HMG power from inventory stock + crew.
+        /// Called from <see cref="GetWeaponPower"/>; return 0 when no HMG stock / not crewed.
+        /// </summary>
+        public Func<Inventory.Inventory, float> GetMountedHmgDefensePower;
+
+        /// <summary>
+        /// HMG-002 — action that fires the mounted HMG. Called once per raid resolution
+        /// after CompleteRaidScoring. Wire this from GameBootstrap to a closure that
+        /// calls <c>WeaponHMG.Fire("hatch", operatorCount, isOiled, raidLevel)</c>. Fire()
+        /// handles the jam risk and OnRaidShredded; without this call, the HMG
+        /// bypasses its own risk-reward mechanic and the entire Fire() path is dead code.
+        /// </summary>
+        public System.Action<int, bool, int> FireMountedHmg;
+
         /// <summary>0..1 external noise (generator outside, loud work).</summary>
         public float ExternalNoise { get; private set; }
 
@@ -365,6 +390,10 @@ namespace AtomicWar._Game.Shelter
                 }
             }
 
+            // REPROMOTE-Weapon-001 — mounted HMG stock (host: Weapon_HMG + inventory).
+            if (GetMountedHmgDefensePower != null)
+                power += Mathf.Max(0f, GetMountedHmgDefensePower(inv));
+
             return Mathf.Max(0f, power);
         }
 
@@ -390,7 +419,8 @@ namespace AtomicWar._Game.Shelter
         {
             if (string.IsNullOrEmpty(id)) return false;
             return id == "trench_knife" || id == "pipe_shotgun" || id == "revolver"
-                || id == "kevlar_vest";
+                || id == "kevlar_vest"
+                || id == "weapon_hmg" || id == "hmg";
         }
 
         public static bool IsAmmoId(string id)
@@ -416,6 +446,11 @@ namespace AtomicWar._Game.Shelter
                 case "assault_rifle": return PersonalQuestSystem.AssaultRifleWeaponPower;
                 case "trench_knife": return 6f;
                 case "kevlar_vest": return 4f;
+                case "weapon_hmg":
+                case "hmg":
+                    // Stock presence alone is a modest bonus; full mounted power comes from
+                    // GetMountedHmgDefensePower (crew + oil). Avoid double-counting full value.
+                    return 6f;
                 default:
                     if (IsWeaponItem(item))
                         return Mathf.Max(5f, item.tradeValue * 0.5f);
@@ -455,6 +490,13 @@ namespace AtomicWar._Game.Shelter
                 float raw = slot.Amount * 0.4f;
                 return Mathf.Min(20f, raw);
             }
+
+            // HMG-003: the HMG is handled by the mounted-power path
+            // (GetMountedHmgDefensePower) and must not be counted here too.
+            // Including it in the slot sum would double-count: base 6 (slot
+            // iteration) + 28 (mounted) = 34 instead of the documented 28.
+            if (IsWeaponId(item.id) && (item.id == "weapon_hmg" || item.id == "hmg"))
+                return 0f;
 
             if (!IsWeaponItem(item) && !IsWeaponId(item.id)) return 0f;
 
@@ -628,6 +670,25 @@ namespace AtomicWar._Game.Shelter
 
             InitializeRaidScores(result, raid);
 
+            // REPROMOTE-Pet-001 — guard dog alert on raid start (host: Pet_GuardDog.Alert).
+            if (TryAlertGuardDog != null && TryAlertGuardDog())
+            {
+                result.WeaponPower += GuardDogFightBonus;
+                result.GuardBonusApplied += GuardDogFightBonus;
+            }
+
+            // HMG-002 — fire the mounted HMG. Fire() handles jamming, shredding,
+            // and OnRaidShredded. Mounted-power path already added GetMountedHmgDefensePower
+            // to result.WeaponPower; Fire() is the action that consumes operators and
+            // risks the jam (no shot without oil). Without this call, the HMG is a
+            // flat passive bonus and the entire jam/shred risk-reward is bypassed.
+            if (FireMountedHmg != null)
+            {
+                int operators = ActiveGuardCount;
+                int raidLevel = (int)raid.Strength;
+                bool isOiled = true; // host knows the actual state; default optimistic
+                FireMountedHmg(operators, isOiled, raidLevel);
+            }
 
             IReadOnlyList<Survivor> survivors = CompleteRaidScoring(result);
             TryRecordSoloGuardRepel(result, raid, day, survivors);

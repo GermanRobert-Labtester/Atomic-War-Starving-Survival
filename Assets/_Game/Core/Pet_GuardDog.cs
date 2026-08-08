@@ -14,11 +14,17 @@ namespace AtomicWar._Game.Core
         public int veggiesFedToday = 0;
     }
 
+    /// <summary>
+    /// REPROMOTE-Pet-001 — Boot/Save live. HatchDefense calls <see cref="Alert"/> when a
+    /// raid launches; well-fed dogs add defense via <see cref="CanFightInRaid"/>.
+    /// </summary>
     public class Pet_GuardDog
     {
         public event Action<string> OnDogFed;          // shelterId
         public event Action<string> OnDogMalnourished; // shelterId
         public event Action<string> OnDogRecovered;    // shelterId
+        /// <summary>Fired when the dog is alerted for a hatch raid (shelterId, canFight).</summary>
+        public event Action<string, bool> OnDogAlerted;
 
         private GuardDogState _state;
         private string _dogId;
@@ -31,6 +37,19 @@ namespace AtomicWar._Game.Core
 
         public string PetId => _state.petId;
         public string DogId => _dogId;
+
+        /// <summary>
+        /// Raid-start alert: returns true when the dog can fight (fed, not malnourished).
+        /// Host (HatchDefense) uses this to apply a defense bonus.
+        /// </summary>
+        public bool Alert(string shelterId)
+        {
+            if (string.IsNullOrEmpty(shelterId))
+                shelterId = "bunker";
+            bool ready = CanFightInRaid();
+            OnDogAlerted?.Invoke(shelterId, ready);
+            return ready;
+        }
 
         public void Feed(string shelterId, string foodType, int quantity)
         {

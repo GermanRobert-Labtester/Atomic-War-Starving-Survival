@@ -227,7 +227,10 @@ namespace AtomicWar._Game.Survivors
         {
             if (!GoesIntoShockOnWitnessedMurder(sv) || sv == null || !sv.IsAlive) return;
             sv.currentMentalBreakId = "shock";
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - InnocentMurderShockMoraleHit);
+            // QUEST-002: route through ApplyMoraleDelta so Traumatized 50% cap
+            // is honored. Pre-fix the direct write let a Traumatized survivor
+            // drop below 50% Morale.
+            ApplyMoraleDelta(sv, -InnocentMurderShockMoraleHit);
         }
 
         /// <summary>AI quirk: pray over dead reduces corpse ambient morale penalty.</summary>
@@ -676,7 +679,10 @@ namespace AtomicWar._Game.Survivors
         public void ApplyEntitledLaborDay(Survivor sv, bool didPhysicalLabor)
         {
             if (!HasEntitled(sv) || sv == null || !sv.IsAlive || !didPhysicalLabor) return;
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - EntitledLaborMoraleHitPerDay);
+            // QUEST-002: route through ApplyMoraleDelta so Traumatized 50% cap
+            // is honored. Pre-fix the direct write let a Traumatized survivor
+            // drop below 50% Morale.
+            ApplyMoraleDelta(sv, -EntitledLaborMoraleHitPerDay);
         }
 
         public float GetStartingPreWarMoney(Survivor sv) =>

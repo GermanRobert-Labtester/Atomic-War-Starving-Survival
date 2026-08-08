@@ -47,6 +47,33 @@ namespace AtomicWar._Game.Crafting
             _inventory = inventory != null ? inventory : throw new ArgumentNullException(nameof(inventory));
         }
 
+        /// <summary>
+        /// CRAFT-003 hardened: optional overflow stash for completed crafts that
+        /// cannot fit in the main inventory. The host wires this from
+        /// GameBootstrap so a successful craft always places its result SOMEWHERE
+        /// (a "hot bar", a crate in the bunker, a post office box at the entrance).
+        /// Without this, a full inventory silently eats the result. Null is allowed
+        /// for tests / partial hosts; in that case the craft rolls back instead
+        /// of losing the result.
+        /// </summary>
+        public Inventory.Inventory OverflowStash { get; set; }
+
+        /// <summary>
+        /// CRAFT-003 rollback: return the consumed ingredients to the inventory
+        /// when a craft cannot place its result. Used only when OverflowStash is
+        /// not wired (the no-stash fallback path).
+        /// </summary>
+        private void RefundIngredients(Recipe recipe)
+        {
+            if (recipe?.ingredients == null || _inventory == null) return;
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                var ing = recipe.ingredients[i];
+                if (ing?.item == null || ing.amount <= 0) continue;
+                _inventory.Add(ing.item, ing.amount);
+            }
+        }
+
         /// <summary>Prompt #191–#193 — moonshine unlock + high-yield medical crafts.</summary>
         public void BindSurvivalPerks(SurvivalPerkSystem perks, Func<int> getDay = null)
         {
@@ -313,8 +340,39 @@ namespace AtomicWar._Game.Crafting
                 amount = _personalQuests.ApplyAlchemistYield(crafter, amount, _rng);
             }
 
+            // CRAFT-003 hardened: Add() can fail on a full inventory (capacity, weight,
+            // or stack overflow). Pre-fix, the crafted item was silently lost: ingredients
+            // had been consumed at craft start, station wear was applied, and the
+            // completion events fired — all while the result was dropped on the floor.
+            // Now the result is preserved: if the bag can't take it, it sits in the
+            // overflow stash for later retrieval. If the stash is unavailable (test
+            // host), the craft is rolled back and no events fire — the player keeps
+            // their ingredients and station wear.
             if (result != null && amount > 0)
-                _inventory.Add(result, amount);
+            {
+                bool placed = _inventory.Add(result, amount);
+                if (!placed)
+                {
+                    if (OverflowStash != null)
+                    {
+                        OverflowStash.Add(result, amount);
+                        Debug.LogWarning($"[CraftingSystem] '{recipe.id}' craft produced {amount}× '{result.id}' " +
+                                         $"but inventory is full. Stashed in overflow for later retrieval.");
+                    }
+                    else
+                    {
+                        // Test/host without overflow: refund the ingredients and the
+                        // station wear so the craft cleanly failed. This avoids the
+                        // silent-loss class of bug.
+                        Debug.LogWarning($"[CraftingSystem] '{recipe.id}' craft produced {amount}× '{result.id}' " +
+                                         $"but inventory is full and no overflow stash is wired; ingredients refunded.");
+                        RefundIngredients(recipe);
+                        if (station != null)
+                            station.Repair(StationWearPerCraft);
+                        return; // skip station wear, skill counter, and event
+                    }
+                }
+            }
 
             var station = GetStation(recipe.requiredStationId);
             if (station != null)

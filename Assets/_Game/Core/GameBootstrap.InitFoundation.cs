@@ -499,6 +499,18 @@ namespace AtomicWar._Game.Core
             };
             NeedsSystem.OnDied += _onNeedsDied;
 
+            // DEATH-001 wire: Tribunal.Execution and ResolveExecute go through
+            // SurvivorNeedWrite.SetHealth which bypasses NeedsSystem.OnDied. The
+            // OnKilled / OnLeaderKilled delegates below run the same death chain
+            // so a Tribunal execution or a successful mutiny kills the survivor
+            // the same way a natural death does.
+            if (BunkerSocial != null)
+            {
+                BunkerSocial.OnKilled = _onNeedsDied;
+                if (BunkerSocial.Mutiny != null)
+                    BunkerSocial.Mutiny.OnLeaderKilled = _onNeedsDied;
+            }
+
             // ───────────────────────────────────────────────────────────
         }
 

@@ -24,9 +24,10 @@ namespace AtomicWar._Game.Core
             // DEMOTE-MapHazard-batch — MapHazardGasPockets demoted. Class kept dormant.
             // DEMOTE-MapHazard-batch — MapHazardMagneticAnomaly demoted. Class kept dormant.
             // DEMOTE-MapHazard-batch — MapHazardSinkholeCollapse demoted. Class kept dormant.
-            // DEMOTE-MapHazard-batch — MapHazardVenusTrap demoted. Class kept dormant.
+            // REPROMOTE-MapHazard-001 — VenusTrap live for swamp-tagged expedition looting.
+            MapHazardVenusTrap = new MapHazard_VenusTrap();
             WireMapHazards();
-            Debug.Log("[GameBootstrap] Map hazards: AcidGeyser+Ashlanche live; 8 HANDLERS_ONLY demoted.");
+            Debug.Log("[GameBootstrap] Map hazards: AcidGeyser+Ashlanche+VenusTrap live; 7 HANDLERS_ONLY demoted.");
         }
 
         private void WireMapHazards()

@@ -546,6 +546,15 @@ namespace AtomicWar._Game.Survivors
         public event Action<Survivor> OnMutinyStarted;
         public event Action<MutinyResolution> OnMutinyResolved;
 
+        /// <summary>
+        /// DEATH-001 hardened: fired when ResolveExecute kills the leader.
+        /// Bootstrap wires this to the NeedsSystem death chain so the same
+        /// NotifySurvivorDied / EmpathSystem / ChildSystem / GriefKeepsakes /
+        /// IronMan hooks run that a natural death would. Without this, a
+        /// successful mutiny execution is a silent death.
+        /// </summary>
+        public System.Action<Survivor> OnLeaderKilled;
+
         /// <summary>How many days the bunker average has been below the threshold.</summary>
         public int LowMoraleStreakDays;
 
@@ -664,7 +673,10 @@ namespace AtomicWar._Game.Survivors
             var leader = SurvivorById(survivors, LeaderId);
             if (leader != null && leader.IsAlive)
             {
-                SurvivorNeedWrite.SetHealth(leader, 0f);
+                // DEATH-001: pass OnLeaderKilled so the death chain runs that
+                // NotifySurvivorDied / EmpathSystem / ChildSystem / GriefKeepsakes
+                // / IronMan would have run for a natural death.
+                SurvivorNeedWrite.SetHealth(leader, 0f, -1f, OnLeaderKilled);
                 for (int i = 0; i < survivors.Count; i++)
                 {
                     var sv = survivors[i];

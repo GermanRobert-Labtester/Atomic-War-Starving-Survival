@@ -135,7 +135,125 @@ namespace AtomicWar._Game.Environment
             // so ExpeditionSystem class roadblock dispatch fires without SO id match.
             AssignRoadblockFlags(map, seed);
 
+            // REPROMOTE-MapHazard-001 — tag low-lying / canal nodes as swamp for VenusTrap.
+            AssignSwampFlags(map, seed);
+
+            // REPROMOTE-Item-001 — secure / military nodes get keycard_door tags.
+            AssignKeycardDoorFlags(map, seed);
+
             return map;
+        }
+
+        /// <summary>
+        /// Tag secure military / command nodes for keycard door fiction.
+        /// Deterministic from seed + names.
+        /// </summary>
+        public static void AssignKeycardDoorFlags(GeneratedMap map, int seed)
+        {
+            if (map?.Nodes == null) return;
+
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (IsSecureStyleName(n.DisplayName) || IsSecureStyleName(n.NodeId)
+                    || n.Ring == DangerRing.GroundZero)
+                {
+                    EnsureTag(n, "military");
+                    EnsureTag(n, "keycard_door");
+                    EnsureTag(n, "secure");
+                }
+            }
+
+            bool any = false;
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                if (map.Nodes[i] != null && map.Nodes[i].HasTag("keycard_door"))
+                {
+                    any = true;
+                    break;
+                }
+            }
+            if (any) return;
+
+            var candidates = new List<MapNode>();
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (n.Ring == DangerRing.GroundZero || n.Ring == DangerRing.CityOutskirts)
+                    candidates.Add(n);
+            }
+            if (candidates.Count == 0) return;
+            candidates.Sort((a, b) => string.CompareOrdinal(a.NodeId, b.NodeId));
+            var rng = new Random(unchecked(seed * 1103515245 + 99991));
+            var pick = candidates[rng.Next(candidates.Count)];
+            EnsureTag(pick, "military");
+            EnsureTag(pick, "keycard_door");
+            EnsureTag(pick, "secure");
+        }
+
+        private static bool IsSecureStyleName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            return ContainsIgnoreCase(name, "hangar")
+                || ContainsIgnoreCase(name, "command")
+                || ContainsIgnoreCase(name, "silo")
+                || ContainsIgnoreCase(name, "bunker")
+                || ContainsIgnoreCase(name, "military")
+                || ContainsIgnoreCase(name, "hardened");
+        }
+
+        /// <summary>
+        /// Tag swamp-style nodes for carnivorous plant hazards. Deterministic from seed.
+        /// </summary>
+        public static void AssignSwampFlags(GeneratedMap map, int seed)
+        {
+            if (map?.Nodes == null) return;
+
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (IsSwampStyleName(n.DisplayName) || IsSwampStyleName(n.NodeId))
+                    EnsureTag(n, "swamp");
+            }
+
+            bool any = false;
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                if (map.Nodes[i] != null && map.Nodes[i].HasTag("swamp"))
+                {
+                    any = true;
+                    break;
+                }
+            }
+            if (any) return;
+
+            // Fallback: one outskirts/suburb canal-ish node.
+            var candidates = new List<MapNode>();
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (n.Ring == DangerRing.CityOutskirts || n.Ring == DangerRing.Suburbs)
+                    candidates.Add(n);
+            }
+            if (candidates.Count == 0) return;
+            candidates.Sort((a, b) => string.CompareOrdinal(a.NodeId, b.NodeId));
+            var rng = new Random(unchecked(seed * 214013 + 2531011));
+            EnsureTag(candidates[rng.Next(candidates.Count)], "swamp");
+        }
+
+        private static bool IsSwampStyleName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            return ContainsIgnoreCase(name, "swamp")
+                || ContainsIgnoreCase(name, "canal")
+                || ContainsIgnoreCase(name, "marsh")
+                || ContainsIgnoreCase(name, "wetland")
+                || ContainsIgnoreCase(name, "spillway")
+                || ContainsIgnoreCase(name, "orchard"); // low ground / overgrown
         }
 
         /// <summary>

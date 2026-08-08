@@ -153,7 +153,7 @@ namespace AtomicWar._Game.Core
             // demoted ghost — SetMapHazardGasPockets skipped
             // demoted ghost — SetMapHazardMagneticAnomaly skipped
             // demoted ghost — SetMapHazardSinkholeCollapse skipped
-            // demoted ghost — SetMapHazardVenusTrap skipped
+            SaveSystem.SetMapHazardVenusTrap(MapHazardVenusTrap);
             // demoted ghost — SetMapAnomalyAshDunes skipped
             // demoted ghost — SetMapAnomalyBoilingLake skipped
             // demoted ghost — SetMapAnomalyCherenkov skipped
@@ -289,20 +289,20 @@ namespace AtomicWar._Game.Core
             // demoted ghost — SetActionSlaughterPet skipped
             // demoted ghost — SetActionTeachChild skipped
             // demoted ghost — SetActionTellStories skipped
-            SaveSystem.SetItemAshGoat(ItemAshGoat);
-            SaveSystem.SetItemBoots(ItemBoots);
-            SaveSystem.SetItemLiveTrap(ItemLiveTrap);
-            SaveSystem.SetItemMutantChicken(ItemMutantChicken);
-            SaveSystem.SetItemToys(ItemToys);
+            // demoted ghost — SetItemAshGoat skipped
+            // demoted ghost — SetItemBoots skipped
+            // demoted ghost — SetItemLiveTrap skipped
+            // demoted ghost — SetItemMutantChicken skipped
+            // demoted ghost — SetItemToys skipped
             SaveSystem.SetTraitAshTongue(TraitAshTongue);
             SaveSystem.SetTraitKleptomaniac(TraitKleptomaniac);
             SaveSystem.SetTraitMascot(TraitMascot);
             SaveSystem.SetTraitStuntedEmpathy(TraitStuntedEmpathy);
             SaveSystem.SetTraitSuperstitious(TraitSuperstitious);
-            SaveSystem.SetAfflictionBunkerFever(AfflictionBunkerFever);
-            SaveSystem.SetAfflictionZoonoticFlu(AfflictionZoonoticFlu);
+            // demoted ghost — SetAfflictionBunkerFever skipped
+            // demoted ghost — SetAfflictionZoonoticFlu skipped
             SaveSystem.SetModuleRationLock(ModuleRationLock);
-            SaveSystem.SetNodeOrphanage(NodeOrphanage);
+            // demoted ghost — SetNodeOrphanage skipped
             SaveSystem.SetPetGuardDog(PetGuardDog);
             // demoted ghost — SetActionAdministerPlacebo skipped
             // demoted ghost — SetActionBarricadeDoor skipped
@@ -340,107 +340,107 @@ namespace AtomicWar._Game.Core
             // DEMOTE-001 — ActionStabilizeDNA not save-wired (ghost demoted).
             // demoted ghost — SetActionStargazing skipped
             // demoted ghost — SetActionWorshipIdol skipped
-            SaveSystem.SetAfflictionAdrenalineCrash(AfflictionAdrenalineCrash);
-            SaveSystem.SetAfflictionAmnesia(AfflictionAmnesia);
-            SaveSystem.SetAfflictionBrainwashed(AfflictionBrainwashed);
-            SaveSystem.SetAfflictionBrittleBones(AfflictionBrittleBones);
-            SaveSystem.SetAfflictionCaveMadness(AfflictionCaveMadness);
-            SaveSystem.SetAfflictionFeralRegression(AfflictionFeralRegression);
-            SaveSystem.SetAfflictionImaginaryFriend(AfflictionImaginaryFriend);
-            SaveSystem.SetAfflictionNerveDamage(AfflictionNerveDamage);
-            SaveSystem.SetAfflictionOldAge(AfflictionOldAge);
-            SaveSystem.SetAfflictionPhantomLimb(AfflictionPhantomLimb);
-            SaveSystem.SetAfflictionRadHallucinations(AfflictionRadHallucinations);
-            SaveSystem.SetAfflictionRadiationBlindness(AfflictionRadiationBlindness);
-            SaveSystem.SetAfflictionScurvyDegeneration(AfflictionScurvyDegeneration);
-            SaveSystem.SetAfflictionSporeLung(AfflictionSporeLung);
-            SaveSystem.SetAfflictionSterile(AfflictionSterile);
-            SaveSystem.SetAfflictionSurvivorsGuilt(AfflictionSurvivorsGuilt);
-            SaveSystem.SetAfflictionTBI(AfflictionTBI);
-            SaveSystem.SetAfflictionThyroidCancer(AfflictionThyroidCancer);
-            SaveSystem.SetAfflictionTrenchFoot(AfflictionTrenchFoot);
-            SaveSystem.SetAudioEventDeafening(AudioEventDeafening);
-            SaveSystem.SetAudioEventHeartbeat(AudioEventHeartbeat);
-            SaveSystem.SetCombatBleedOut(CombatBleedOut);
-            SaveSystem.SetCombatFlanking(CombatFlanking);
-            SaveSystem.SetCombatSuppression(CombatSuppression);
-            SaveSystem.SetCombatStanceLastStand(CombatStanceLastStand);
-            SaveSystem.SetCrisisFeralFlora(CrisisFeralFlora);
-            SaveSystem.SetCrisisStructuralFailure(CrisisStructuralFailure);
-            SaveSystem.SetDurabilitySuppressor(DurabilitySuppressor);
-            SaveSystem.SetEndgameUltimatum(EndgameUltimatum);
+            // demoted ghost — SetAfflictionAdrenalineCrash skipped
+            // demoted ghost — SetAfflictionAmnesia skipped
+            // demoted ghost — SetAfflictionBrainwashed skipped
+            // demoted ghost — SetAfflictionBrittleBones skipped
+            // demoted ghost — SetAfflictionCaveMadness skipped
+            // demoted ghost — SetAfflictionFeralRegression skipped
+            // demoted ghost — SetAfflictionImaginaryFriend skipped
+            // demoted ghost — SetAfflictionNerveDamage skipped
+            // demoted ghost — SetAfflictionOldAge skipped
+            // demoted ghost — SetAfflictionPhantomLimb skipped
+            // demoted ghost — SetAfflictionRadHallucinations skipped
+            // demoted ghost — SetAfflictionRadiationBlindness skipped
+            // demoted ghost — SetAfflictionScurvyDegeneration skipped
+            // demoted ghost — SetAfflictionSporeLung skipped
+            // demoted ghost — SetAfflictionSterile skipped
+            // demoted ghost — SetAfflictionSurvivorsGuilt skipped
+            // demoted ghost — SetAfflictionTBI skipped
+            // demoted ghost — SetAfflictionThyroidCancer skipped
+            // demoted ghost — SetAfflictionTrenchFoot skipped
+            // demoted ghost — SetAudioEventDeafening skipped
+            // demoted ghost — SetAudioEventHeartbeat skipped
+            // demoted ghost — SetCombatBleedOut skipped
+            // demoted ghost — SetCombatFlanking skipped
+            // demoted ghost — SetCombatSuppression skipped
+            // demoted ghost — SetCombatStanceLastStand skipped
+            // demoted ghost — SetCrisisFeralFlora skipped
+            // demoted ghost — SetCrisisStructuralFailure skipped
+            // demoted ghost — SetDurabilitySuppressor skipped
+            // demoted ghost — SetEndgameUltimatum skipped
             // demoted ghost — SetHazardCookOff skipped
             // demoted ghost — SetHazardExplosiveCrafting skipped
-            SaveSystem.SetHazardFriendlyFire(HazardFriendlyFire);
+            // demoted ghost — SetHazardFriendlyFire skipped
             SaveSystem.SetHazardMethane(HazardMethane);
             SaveSystem.SetHazardMimicCrate(HazardMimicCrate);
             SaveSystem.SetHazardSurgicalBotch(HazardSurgicalBotch);
             SaveSystem.SetHazardWeaponBurst(HazardWeaponBurst);
-            SaveSystem.SetHiddenStatUnseen(HiddenStatUnseen);
-            SaveSystem.SetItemAICoreData(ItemAICoreData);
+            // demoted ghost — SetHiddenStatUnseen skipped
+            // demoted ghost — SetItemAICoreData skipped
             SaveSystem.SetItemAmmoTypes(ItemAmmoTypes);
-            SaveSystem.SetItemAmmonia(ItemAmmonia);
-            SaveSystem.SetItemAmphetamines(ItemAmphetamines);
-            SaveSystem.SetItemAshGhillie(ItemAshGhillie);
-            SaveSystem.SetItemAutoDoc(ItemAutoDoc);
-            SaveSystem.SetItemBioPlastic(ItemBioPlastic);
-            SaveSystem.SetItemBloodBag(ItemBloodBag);
-            SaveSystem.SetItemBoneSaw(ItemBoneSaw);
-            SaveSystem.SetItemC4(ItemC4);
-            SaveSystem.SetItemCaltrops(ItemCaltrops);
-            SaveSystem.SetItemCarrierBird(ItemCarrierBird);
-            SaveSystem.SetItemChildsDrawing(ItemChildsDrawing);
-            SaveSystem.SetItemCigarettes(ItemCigarettes);
-            SaveSystem.SetItemClimbingGear(ItemClimbingGear);
-            SaveSystem.SetItemDecoy(ItemDecoy);
-            SaveSystem.SetItemDogTags(ItemDogTags);
-            SaveSystem.SetItemEMPGrenade(ItemEMPGrenade);
-            SaveSystem.SetItemEncryptedDrive(ItemEncryptedDrive);
-            SaveSystem.SetItemEpiPen(ItemEpiPen);
-            SaveSystem.SetItemExosuit(ItemExosuit);
-            SaveSystem.SetItemFaradayPack(ItemFaradayPack);
-            SaveSystem.SetItemForeignBook(ItemForeignBook);
-            SaveSystem.SetItemGeigerCalibrator(ItemGeigerCalibrator);
-            SaveSystem.SetItemGlowingMushroom(ItemGlowingMushroom);
-            SaveSystem.SetItemGoldBars(ItemGoldBars);
-            SaveSystem.SetItemGuitar(ItemGuitar);
-            SaveSystem.SetItemHeirloom(ItemHeirloom);
-            SaveSystem.SetItemIBeam(ItemIBeam);
-            SaveSystem.SetItemImpureIodine(ItemImpureIodine);
-            SaveSystem.SetItemJuggernautArmor(ItemJuggernautArmor);
-            SaveSystem.SetItemKevlarVest(ItemKevlarVest);
+            // demoted ghost — SetItemAmmonia skipped
+            // demoted ghost — SetItemAmphetamines skipped
+            // demoted ghost — SetItemAshGhillie skipped
+            // demoted ghost — SetItemAutoDoc skipped
+            // demoted ghost — SetItemBioPlastic skipped
+            // demoted ghost — SetItemBloodBag skipped
+            // demoted ghost — SetItemBoneSaw skipped
+            // demoted ghost — SetItemC4 skipped
+            // demoted ghost — SetItemCaltrops skipped
+            // demoted ghost — SetItemCarrierBird skipped
+            // demoted ghost — SetItemChildsDrawing skipped
+            // demoted ghost — SetItemCigarettes skipped
+            // demoted ghost — SetItemClimbingGear skipped
+            // demoted ghost — SetItemDecoy skipped
+            // demoted ghost — SetItemDogTags skipped
+            // demoted ghost — SetItemEMPGrenade skipped
+            // demoted ghost — SetItemEncryptedDrive skipped
+            // demoted ghost — SetItemEpiPen skipped
+            // demoted ghost — SetItemExosuit skipped
+            // demoted ghost — SetItemFaradayPack skipped
+            // demoted ghost — SetItemForeignBook skipped
+            // demoted ghost — SetItemGeigerCalibrator skipped
+            // demoted ghost — SetItemGlowingMushroom skipped
+            // demoted ghost — SetItemGoldBars skipped
+            // demoted ghost — SetItemGuitar skipped
+            // demoted ghost — SetItemHeirloom skipped
+            // demoted ghost — SetItemIBeam skipped
+            // demoted ghost — SetItemImpureIodine skipped
+            // demoted ghost — SetItemJuggernautArmor skipped
+            // demoted ghost — SetItemKevlarVest skipped
             SaveSystem.SetItemKeycards(ItemKeycards);
-            SaveSystem.SetItemLandmine(ItemLandmine);
-            SaveSystem.SetItemLeadApron(ItemLeadApron);
-            SaveSystem.SetItemLiquidStitches(ItemLiquidStitches);
-            SaveSystem.SetItemMaggots(ItemMaggots);
-            SaveSystem.SetItemMilGasMask(ItemMilGasMask);
-            SaveSystem.SetItemMutantGland(ItemMutantGland);
-            SaveSystem.SetItemNanites(ItemNanites);
-            SaveSystem.SetItemNightVision(ItemNightVision);
-            SaveSystem.SetItemPackMule(ItemPackMule);
-            SaveSystem.SetItemPasswordNote(ItemPasswordNote);
-            SaveSystem.SetItemPhotoAlbum(ItemPhotoAlbum);
-            SaveSystem.SetItemPotassiumIodide(ItemPotassiumIodide);
-            SaveSystem.SetItemPresidentialSeal(ItemPresidentialSeal);
-            SaveSystem.SetItemPrussianBlue(ItemPrussianBlue);
-            SaveSystem.SetItemRTGBattery(ItemRTGBattery);
-            SaveSystem.SetItemSeedLedger(ItemSeedLedger);
-            SaveSystem.SetItemShockCollar(ItemShockCollar);
-            SaveSystem.SetItemSnowshoes(ItemSnowshoes);
-            SaveSystem.SetItemSurgicalTubing(ItemSurgicalTubing);
-            SaveSystem.SetItemTearGas(ItemTearGas);
-            SaveSystem.SetItemTeddyBear(ItemTeddyBear);
-            SaveSystem.SetItemTrashHazmat(ItemTrashHazmat);
-            SaveSystem.SetItemUndeliveredMail(ItemUndeliveredMail);
-            SaveSystem.SetItemVacuumTubes(ItemVacuumTubes);
-            SaveSystem.SetItemVinylCollection(ItemVinylCollection);
-            SaveSystem.SetItemVitamins(ItemVitamins);
-            SaveSystem.SetItemWalkieTalkie(ItemWalkieTalkie);
-            SaveSystem.SetItemWastelandSoap(ItemWastelandSoap);
-            SaveSystem.SetItemWaterTabs(ItemWaterTabs);
-            SaveSystem.SetItemWeldingGoggles(ItemWeldingGoggles);
-            SaveSystem.SetItemWristDosimeter(ItemWristDosimeter);
+            // demoted ghost — SetItemLandmine skipped
+            // demoted ghost — SetItemLeadApron skipped
+            // demoted ghost — SetItemLiquidStitches skipped
+            // demoted ghost — SetItemMaggots skipped
+            // demoted ghost — SetItemMilGasMask skipped
+            // demoted ghost — SetItemMutantGland skipped
+            // demoted ghost — SetItemNanites skipped
+            // demoted ghost — SetItemNightVision skipped
+            // demoted ghost — SetItemPackMule skipped
+            // demoted ghost — SetItemPasswordNote skipped
+            // demoted ghost — SetItemPhotoAlbum skipped
+            // demoted ghost — SetItemPotassiumIodide skipped
+            // demoted ghost — SetItemPresidentialSeal skipped
+            // demoted ghost — SetItemPrussianBlue skipped
+            // demoted ghost — SetItemRTGBattery skipped
+            // demoted ghost — SetItemSeedLedger skipped
+            // demoted ghost — SetItemShockCollar skipped
+            // demoted ghost — SetItemSnowshoes skipped
+            // demoted ghost — SetItemSurgicalTubing skipped
+            // demoted ghost — SetItemTearGas skipped
+            // demoted ghost — SetItemTeddyBear skipped
+            // demoted ghost — SetItemTrashHazmat skipped
+            // demoted ghost — SetItemUndeliveredMail skipped
+            // demoted ghost — SetItemVacuumTubes skipped
+            // demoted ghost — SetItemVinylCollection skipped
+            // demoted ghost — SetItemVitamins skipped
+            // demoted ghost — SetItemWalkieTalkie skipped
+            // demoted ghost — SetItemWastelandSoap skipped
+            // demoted ghost — SetItemWaterTabs skipped
+            // demoted ghost — SetItemWeldingGoggles skipped
+            // demoted ghost — SetItemWristDosimeter skipped
             // demoted ghost — SetLocationArcade skipped
             // demoted ghost — SetLocationSlaveMarket skipped
             // demoted ghost — SetLocationStrandedYacht skipped
@@ -460,8 +460,8 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetTetanusAfflictionSystem(TetanusAfflictionSystem);
             SaveSystem.SetTimeSystem(TimeSystem);
             SaveSystem.SetToothDecaySystem(ToothDecaySystem);
-            SaveSystem.SetVehicleStrandingSystem(VehicleStrandingSystem);
-            SaveSystem.SetVehicleSystem(VehicleSystem);
+            // demoted ghost — SetVehicleStrandingSystem skipped
+            // demoted ghost — SetVehicleSystem skipped
             SaveSystem.SetVisionLossSystem(VisionLossSystem);
             // demoted ghost — SetVisitorRNGSystem skipped
             // demoted ghost — SetNPCAddictsPassive skipped
@@ -499,12 +499,12 @@ namespace AtomicWar._Game.Core
             // demoted ghost — SetNPCTheOld skipped
             // demoted ghost — SetNPCTheParents skipped
             // demoted ghost — SetNPCTravelingCouple skipped
-            SaveSystem.SetNodeAutomatedArmory(NodeAutomatedArmory);
-            SaveSystem.SetNodeGhostShip(NodeGhostShip);
-            SaveSystem.SetNodeMutantHive(NodeMutantHive);
-            SaveSystem.SetNodePlayerBank(NodePlayerBank);
-            SaveSystem.SetNodeSector7G(NodeSector7G);
-            SaveSystem.SetNodeSporeHive(NodeSporeHive);
+            // demoted ghost — SetNodeAutomatedArmory skipped
+            // demoted ghost — SetNodeGhostShip skipped
+            // demoted ghost — SetNodeMutantHive skipped
+            // demoted ghost — SetNodePlayerBank skipped
+            // demoted ghost — SetNodeSector7G skipped
+            // demoted ghost — SetNodeSporeHive skipped
             SaveSystem.SetPetFeralCat(PetFeralCat);
             SaveSystem.SetProjectBioReactor(ProjectBioReactor);
             SaveSystem.SetProjectDeepWell(ProjectDeepWell);
@@ -538,9 +538,9 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetUIEventLowPower(UIEventLowPower);
             SaveSystem.SetUIEventMapRot(UIEventMapRot);
             SaveSystem.SetUIEventPhantomBlip(UIEventPhantomBlip);
-            SaveSystem.SetVehicleArmoredTruck(VehicleArmoredTruck);
-            SaveSystem.SetVehicleMotorcycle(VehicleMotorcycle);
-            SaveSystem.SetVehicleRowboat(VehicleRowboat);
+            // demoted ghost — SetVehicleArmoredTruck skipped
+            // demoted ghost — SetVehicleMotorcycle skipped
+            // demoted ghost — SetVehicleRowboat skipped
             // demoted ghost — SetVisitorAbandonedState skipped
             // demoted ghost — SetVisitorChurchHostile skipped
             // demoted ghost — SetVisitorChurchSanctuary skipped
@@ -551,10 +551,10 @@ namespace AtomicWar._Game.Core
             // demoted ghost — SetVisitorMilTrainingYard skipped
             // demoted ghost — SetVisitorQuestFaction skipped
             // demoted ghost — SetVisitorRebelTrainingYard skipped
-            SaveSystem.SetWeaponChainsaw(WeaponChainsaw);
-            SaveSystem.SetWeaponFlamethrower(WeaponFlamethrower);
+            // demoted ghost — SetWeaponChainsaw skipped
+            // demoted ghost — SetWeaponFlamethrower skipped
             SaveSystem.SetWeaponHMG(WeaponHMG);
-            SaveSystem.SetWeaponRPG(WeaponRPG);
+            // demoted ghost — SetWeaponRPG skipped
             SaveSystem.SetWorldEventDeforestation(WorldEventDeforestation);
             SaveSystem.SetWorldEventFinalWinter(WorldEventFinalWinter);
             SaveSystem.SetWorldEventFissure(WorldEventFissure);
@@ -858,6 +858,45 @@ namespace AtomicWar._Game.Core
 
             HatchDefenseSystem?.BindCombatPerks(CombatPerks);
             HatchDefenseSystem?.BindPerimeterTraps(PerimeterTrapSystem);
+            // REPROMOTE-Pet-001 — guard dog Alert on raid start → defense bonus when fed.
+            if (HatchDefenseSystem != null && PetGuardDog != null)
+            {
+                HatchDefenseSystem.TryAlertGuardDog = () => PetGuardDog.Alert("bunker");
+                PetGuardDog.OnDogAlerted += (shelterId, canFight) =>
+                    Debug.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
+            }
+
+            // REPROMOTE-Weapon-001 — mounted HMG stock contributes via GetWeaponPower.
+            if (HatchDefenseSystem != null && WeaponHMG != null)
+            {
+                // Ensure a default mount so stockpile HMG is usable as hatch defense.
+                if (!WeaponHMG.IsMounted)
+                    WeaponHMG.Mount("hatch");
+
+                HatchDefenseSystem.GetMountedHmgDefensePower = inv =>
+                {
+                    if (inv == null || WeaponHMG == null) return 0f;
+                    bool hasStock = inv.CountById(Weapon_HMG.InventoryItemId) > 0
+                        || inv.CountById("hmg") > 0;
+                    if (!hasStock) return 0f;
+                    if (!WeaponHMG.IsMounted)
+                        WeaponHMG.Mount("hatch");
+                    // HMG needs 2 operators — count assigned hatch guards.
+                    int operators = HatchDefenseSystem.ActiveGuardCount;
+                    // Oil: not jammed = treated as oiled for defense-power path.
+                    bool isOiled = !WeaponHMG.IsJammed;
+                    return WeaponHMG.GetHatchDefensePower(operators, isOiled);
+                };
+
+                // HMG-002 — fire the mounted HMG each raid. Fire() handles the
+                // jam risk and OnRaidShredded so the HMG risk-reward is not
+                // bypassed. Operators and raid level are read at fire time.
+                HatchDefenseSystem.FireMountedHmg = (operators, isOiled, raidLevel) =>
+                {
+                    if (WeaponHMG == null) return;
+                    WeaponHMG.Fire("hatch", operators, isOiled, raidLevel);
+                };
+            }
             // Prompt #768 — epilogue bullet tally from hatch raids.
             // Prompt #861 — heavy ammo spend counts as sniper/suppression strategy.
             if (HatchDefenseSystem != null)
@@ -1023,6 +1062,14 @@ namespace AtomicWar._Game.Core
             // REPROMOTE-Encounter-001 — map/SO roadblock tags → class ResolveChoice.
             if (ExpeditionSystem != null && EncounterRoadblock != null)
                 ExpeditionSystem.BindClassRoadblock(EncounterRoadblock);
+
+            // REPROMOTE-MapHazard-001 — swamp looting → VenusTrap harvest check.
+            if (ExpeditionSystem != null && MapHazardVenusTrap != null)
+                ExpeditionSystem.BindVenusTrap(MapHazardVenusTrap);
+
+            // REPROMOTE-Item-001 — keycard doors on secure/military expedition nodes.
+            if (ExpeditionSystem != null && ItemKeycards != null)
+                ExpeditionSystem.BindKeycards(ItemKeycards);
         }
 
         private void OnExpeditionEncounterResolved_LogCombat(

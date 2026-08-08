@@ -19,6 +19,10 @@ namespace AtomicWar._Game.Core
         public List<string> unlocked_door_ids = new List<string>();
     }
 
+    /// <summary>
+    /// REPROMOTE-Item-001 — Boot/Save live. Expedition looting on keycard_door-tagged
+    /// nodes finds cards and attempts TryOpenDoor (secure hangar / command doors).
+    /// </summary>
     public sealed class Item_Keycards
     {
         private KeycardState _state;
@@ -27,10 +31,19 @@ namespace AtomicWar._Game.Core
         public event Action<string, KeycardColor> OnDoorUnlocked;    // (survivor_id, color)
 
         public string EventId => _state.item_id_prefix;
+        public IReadOnlyList<string> FoundCardIds => _state.found_card_ids;
+        public IReadOnlyList<string> UnlockedDoorIds => _state.unlocked_door_ids;
 
         public Item_Keycards()
         {
             _state = new KeycardState();
+        }
+
+        /// <summary>True if this door id was already unlocked via <see cref="TryOpenDoor"/>.</summary>
+        public bool IsDoorUnlocked(string doorId)
+        {
+            if (string.IsNullOrEmpty(doorId) || _state.unlocked_door_ids == null) return false;
+            return _state.unlocked_door_ids.Contains(doorId);
         }
 
         /// <summary>

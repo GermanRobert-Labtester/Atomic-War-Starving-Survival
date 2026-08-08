@@ -413,5 +413,67 @@ namespace AtomicWar.Tests.EditMode
 
             Object.DestroyImmediate(profile);
         }
+
+        // -----------------------------------------------------------------
+        // DEATH-001/004 — SurvivorNeedWrite hardening
+        // -----------------------------------------------------------------
+
+        [Test]
+        public void SurvivorNeedWrite_SetHealth_OnDeadSurvivor_DoesNotCreateZombie()
+        {
+            // DEATH-004 regression: pre-fix, SetHealth(deadSv, 50f) set Health=50
+            // while leaving State=Dead, creating a zombie. Post-fix, the call
+            // returns early when !IsAlive and forceRevive is false.
+            var sv = MakeSurvivor();
+            sv.Needs.Health = 100f;
+            sv.State = SurvivorState.Dead;
+            SurvivorNeedWrite.SetHealth(sv, 50f);
+            Assert.AreEqual(100f, sv.Needs.Health,
+                "SetHealth on a dead survivor must not write positive HP (no zombie).");
+            Assert.AreEqual(SurvivorState.Dead, sv.State);
+        }
+
+        [Test]
+        public void SurvivorNeedWrite_SetHealth_WithForceRevive_OnDeadSurvivor_WritesHP()
+        {
+            // The legitimate resurrect path (adrenaline revive) must opt in.
+            var sv = MakeSurvivor();
+            sv.Needs.Health = 100f;
+            sv.State = SurvivorState.Dead;
+            SurvivorNeedWrite.SetHealth(sv, 1f, -1f, null, forceRevive: true);
+            Assert.AreEqual(1f, sv.Needs.Health,
+                "forceRevive: true must allow SetHealth on a dead survivor.");
+        }
+
+        [Test]
+        public void SurvivorNeedWrite_SetHealth_DropsToZero_FiresOnKilled()
+        {
+            // DEATH-001 regression: pre-fix, SetHealth(sv, 0f) set State=Dead
+            // silently — no OnDied, no personal quest hooks. Post-fix, the
+            // optional onKilled callback fires when Health crosses to 0.
+            var sv = MakeSurvivor();
+            sv.Needs.Health = 100f;
+            sv.State = SurvivorState.Idle;
+            int killCount = 0;
+            SurvivorNeedWrite.SetHealth(sv, 0f, -1f, _ => killCount++);
+            Assert.AreEqual(0f, sv.Needs.Health);
+            Assert.AreEqual(SurvivorState.Dead, sv.State);
+            Assert.AreEqual(1, killCount, "onKilled must fire exactly once when Health drops to 0.");
+        }
+
+        [Test]
+        public void SurvivorNeedWrite_SetHealth_AlreadyDead_DoesNotDoubleFire()
+        {
+            // Health was already 0 (previous kill). SetHealth(sv, 0f) must
+            // not fire onKilled a second time — death is a transition, not a state.
+            var sv = MakeSurvivor();
+            sv.Needs.Health = 0f;
+            sv.State = SurvivorState.Dead;
+            int killCount = 0;
+            SurvivorNeedWrite.SetHealth(sv, 0f, -1f, _ => killCount++);
+            Assert.AreEqual(0, killCount,
+                "SetHealth on an already-dead survivor must not fire onKilled.");
+        }
+
     }
 }

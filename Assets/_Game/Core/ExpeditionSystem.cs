@@ -92,6 +92,12 @@ namespace AtomicWar._Game.Core
         // REPROMOTE-Encounter-001 — class tracker for roadblocks (map tag / SO id).
         private Encounter_Roadblock _classRoadblock;
 
+        // REPROMOTE-MapHazard-001 — carnivorous swamp flora on looting arrival.
+        private MapHazard_VenusTrap _venusTrap;
+
+        // REPROMOTE-Item-001 — keycard doors on secure / keycard_door-tagged nodes.
+        private Item_Keycards _keycards;
+
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
         public GeneratedMap GeneratedMap => _generatedMap;
@@ -103,6 +109,18 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void BindClassRoadblock(Encounter_Roadblock roadblock) =>
             _classRoadblock = roadblock;
+
+        /// <summary>
+        /// REPROMOTE-MapHazard-001 — wire VenusTrap for swamp-tagged looting nodes.
+        /// </summary>
+        public void BindVenusTrap(MapHazard_VenusTrap venusTrap) =>
+            _venusTrap = venusTrap;
+
+        /// <summary>
+        /// REPROMOTE-Item-001 — wire keycard tracker for secure-door looting nodes.
+        /// </summary>
+        public void BindKeycards(Item_Keycards keycards) =>
+            _keycards = keycards;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;

@@ -434,7 +434,14 @@ namespace AtomicWar._Game.Core
                 // REPROMOTE-001 — caravan weather pricing fires on trade quote, not hour tick:
                 "npc_passive_trader",
                 // REPROMOTE-Encounter-001 — class roadblock resolves from expedition psychology:
-                "encounter_roadblock"
+                "encounter_roadblock",
+                "map_hazard_venus_trap",
+                // REPROMOTE-Item-001 — keycard find/unlock on expedition looting:
+                "item_keycards",
+                // REPROMOTE-Pet-001 — guard dog alert fires on hatch raid resolve start:
+                "pet_guard_dog",
+                // REPROMOTE-Weapon-001 — HMG defense power read on GetWeaponPower:
+                "weapon_hmg"
             };
             for (int i = 0; i < eventDriven.Length; i++)
                 _registry.RegisterEventDriven(eventDriven[i]);
