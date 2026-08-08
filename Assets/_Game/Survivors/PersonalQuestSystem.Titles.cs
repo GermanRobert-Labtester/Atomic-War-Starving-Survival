@@ -301,7 +301,8 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetPhotogenicHygieneMoraleHit(sv, hygiene01);
             if (d <= 0f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - d);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -d);
         }
 
         /// <summary>AI quirk: constantly writes in JournalSystem (lore spam).</summary>

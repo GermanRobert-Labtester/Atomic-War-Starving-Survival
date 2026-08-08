@@ -27,7 +27,8 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetClaustrophilicMoralePerHour(sv, inSmallUndergroundRoom) * gameHours;
             if (Mathf.Abs(d) < 0.001f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + d, 0f, 100f);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, d);
         }
 
         /// <summary>AI quirk: prefer deepest/lowest room for sleep over comfort.</summary>
@@ -198,7 +199,8 @@ namespace AtomicWar._Game.Survivors
         {
             float hit = GetNeatFreakHygieneMoraleHit(sv, hygiene01);
             if (hit <= 0f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - hit);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -hit);
         }
 
         /// <summary>AI quirk: clean waste/mold before thirst or hunger.</summary>
@@ -968,7 +970,8 @@ namespace AtomicWar._Game.Survivors
             if (sv == null || !sv.IsAlive || baseMoraleLoss <= 0f) return;
             float mult = GetFragileEgoFailureMoraleMultiplier(sv);
             float hit = baseMoraleLoss * mult;
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - hit);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -hit);
         }
 
         /// <summary>

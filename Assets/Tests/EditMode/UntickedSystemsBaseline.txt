@@ -7,10 +7,11 @@
 # Do not add entries by hand to silence a failure — wire the system instead.
 # Regenerate with the Explicit test UntickedSystemsBaselineTests.RegenerateBaselineFile.
 #
-# entries: 152
+# entries: 153
 
 AdaptiveWarlords
 AndroidNpcs
+CraftingOverflowStash
 AshDriftSystem
 BiomeAshSwamp
 BiomeGlassDesert

@@ -39,7 +39,14 @@ namespace AtomicWar._Game.Shelter
             var inventory = _getInventory?.Invoke();
             if (inventory?.Slots == null) return;
 
-            int ammoNeeded = Mathf.Clamp(Mathf.CeilToInt(result.RaidStrength / 10f), 1, 12);
+            // HATCH-001 hardened: capture the raid-strength snapshot up front so
+            // ammo-need is computed against the same value the rest of the
+            // resolution used. Pre-fix a long call chain could theoretically
+            // observe a stale raid strength (mutated by another partial or a
+            // subscriber). Snapshotting makes the repel-cost pass atomic.
+            float raidStrengthSnapshot = result.RaidStrength;
+
+            int ammoNeeded = Mathf.Clamp(Mathf.CeilToInt(raidStrengthSnapshot / 10f), 1, 12);
             int ammoConsumed = ConsumeRaidAmmo(inventory, ammoNeeded);
             result.AmmoConsumed += ammoConsumed;
 

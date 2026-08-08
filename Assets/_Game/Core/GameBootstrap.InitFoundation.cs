@@ -224,7 +224,14 @@ namespace AtomicWar._Game.Core
 
             // Inventory + Crafting + Workbench scrap economy
             Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
+            // CRAFT-003 overflow stash: a separate unlimited-capacity inventory for
+            // craft results that don't fit in the main bag. Modeled as a "post
+            // office box" — the player can retrieve from it on a future tick.
+            // Capacity=0 + MaxWeight=0 means infinite (per Inventory.CanAdd
+            // short-circuits). Items here are persistent until retrieved.
+            CraftingOverflowStash = new Inventory.Inventory { Capacity = 0, MaxWeight = 0f };
             CraftingSystem = new CraftingSystem(Inventory);
+            CraftingSystem.OverflowStash = CraftingOverflowStash;
             CraftingSystem.AddStation(new CraftingStation
             {
                 id = WorkbenchSystem.StationId,

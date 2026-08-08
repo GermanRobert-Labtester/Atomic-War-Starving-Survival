@@ -74,6 +74,8 @@ namespace AtomicWar._Game.Core
         public RadiationSystem RadiationSystem { get; private set; }
         public Shelter.Shelter Shelter { get; private set; }
         public Inventory.Inventory Inventory { get; private set; }
+        /// <summary>CRAFT-003 — unlimited-capacity stash for craft results that don't fit in the main bag.</summary>
+        public Inventory.Inventory CraftingOverflowStash { get; private set; }
         public CraftingSystem CraftingSystem { get; private set; }
         public WorkbenchSystem WorkbenchSystem { get; private set; }
         public UtilityAI UtilityAI { get; private set; }

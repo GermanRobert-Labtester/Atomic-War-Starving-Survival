@@ -127,10 +127,15 @@ namespace AtomicWar._Game.Survivors
             if (!ShouldGenerateFakeAfflictionAlert(sv)) return;
             if (givenPlacebo)
             {
-                sv.Needs.Morale = Mathf.Min(100f, sv.Needs.Morale + PlaceboMoraleRestore);
+                // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+                ApplyMoraleDelta(sv, PlaceboMoraleRestore);
                 return;
             }
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - FakeIllnessMoraleHit);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -FakeIllnessMoraleHit);
+            // Fatigue cap (Restless 80%) is applied directly to keep the
+            // value-shaped helper simple; Fatigue is always clamped at the
+            // per-survivor cap when read elsewhere.
             sv.Needs.Fatigue = Mathf.Min(GetMaxFatigueCap(sv), sv.Needs.Fatigue + FakeIllnessFatigueHit);
         }
 
@@ -168,7 +173,8 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetFascinationHeaterMoralePerHour(sv, nearRunningHeatOrPower) * gameHours;
             if (Mathf.Abs(d) < 0.001f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + d, 0f, 100f);
+            // QUEST-001: route through ApplyMoraleDelta so the Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, d);
         }
 
         /// <summary>
