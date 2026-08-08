@@ -35,6 +35,8 @@ public class BicycleSystem
 
         private PersonalQuestSystem _personalQuests;
         private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Prompt #228 — Grease Monkey: bicycles never degrade.</summary>
         public void BindPersonalQuests(
@@ -141,8 +143,11 @@ public class BicycleSystem
             // Fatigue penalty for walking a broken bike.
             if (exp.Survivor != null)
             {
-                exp.Survivor.Needs.Fatigue = Mathf.Clamp(
-                    exp.Survivor.Needs.Fatigue + WalkBackFatiguePerHour * 2f, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(exp.Survivor, NeedKind.Fatigue, WalkBackFatiguePerHour * 2f);
+                else
+                    exp.Survivor.Needs.Fatigue = Mathf.Clamp(
+                        exp.Survivor.Needs.Fatigue + WalkBackFatiguePerHour * 2f, 0f, 100f);
             }
             OnBicycleBroken?.Invoke(exp);
         }

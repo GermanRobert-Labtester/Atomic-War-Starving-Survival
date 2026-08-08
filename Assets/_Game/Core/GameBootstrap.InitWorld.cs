@@ -46,7 +46,9 @@ namespace AtomicWar._Game.Core
                         Inventory.RemoveByType(AtomicWar._Game.Inventory.ItemType.Material, amount);
                 });
             BicycleSystem = new BicycleSystem();
+            BicycleSystem.SetNeedsSystem(NeedsSystem);
             FloodedNodeSystem = new FloodedNodeSystem();
+            FloodedNodeSystem.SetNeedsSystem(NeedsSystem);
             SeedMapNodes(0.2f, (nodeId) => FloodedNodeSystem.SetFlooded(nodeId, true), seedOffset: 69);
             // River nodes generated after GeneratedMap exists (InitLate).
             RiverNodeSystem = new RiverNodeSystem();
@@ -77,6 +79,7 @@ namespace AtomicWar._Game.Core
         private void InitEcosystemAndHouseLayout()
         {
             EcosystemSystem = new MutatedEcosystemSystem(CreateSaltedRng(_worldSeed, "ecosystem"));
+            EcosystemSystem.SetNeedsSystem(NeedsSystem);
             EcosystemSystem.BindRadiation(RadiationSystem);
 
             var layouts = Data.ShelterLayoutFactory.CreateAll();

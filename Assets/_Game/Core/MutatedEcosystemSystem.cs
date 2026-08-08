@@ -86,6 +86,8 @@ namespace AtomicWar._Game.Core
 
         private readonly System.Random _rng;
         private RadiationSystem _radiation;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<int> OnMutationStageAdvanced;   // newStage
@@ -185,8 +187,11 @@ namespace AtomicWar._Game.Core
 
             float damage = isApex ? ApexAttackHealthDamage : FaunaAttackHealthDamage;
             SurvivorNeedWrite.AdjustHealth(exp.Survivor, -damage);
-            exp.Survivor.Needs.Fatigue = Mathf.Clamp(
-                exp.Survivor.Needs.Fatigue + FaunaFleeFatigueCost, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(exp.Survivor, NeedKind.Fatigue, FaunaFleeFatigueCost);
+            else
+                exp.Survivor.Needs.Fatigue = Mathf.Clamp(
+                    exp.Survivor.Needs.Fatigue + FaunaFleeFatigueCost, 0f, 100f);
 
             // Small rad exposure from the creature's irradiated bite/claws.
             // MISC-007 — fauna bite only through injected RadiationSystem (no direct dose write).
