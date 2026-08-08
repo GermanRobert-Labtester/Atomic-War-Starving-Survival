@@ -704,39 +704,43 @@ namespace AtomicWar._Game.Survivors
             return save;
         }
 
-        public void RestoreState(SkillProgressionSave save, IReadOnlyList<Survivor> survivors = null)
+        private static ProgressionState BuildStateFromEntry(SurvivorProgressionSave e)
         {
-            _bySurvivor.Clear();
-            if (save?.Entries == null) return;
+            var st = new ProgressionState
+            {
+                ExpertPerkEarned = e.ExpertPerkEarned
+            };
+            if (e.ActivePerkIds != null)
+                st.ActivePerkIds.AddRange(e.ActivePerkIds);
+            if (e.DormantPerkIds != null)
+                st.DormantPerkIds.AddRange(e.DormantPerkIds);
+            if (e.DisciplineIds != null)
+            {
+                for (int d = 0; d < e.DisciplineIds.Count; d++)
+                {
+                    string disc = e.DisciplineIds[d];
+                    if (string.IsNullOrEmpty(disc)) continue;
+                    float xp = e.XpValues != null && d < e.XpValues.Count ? e.XpValues[d] : 0f;
+                    int day = e.LastUsedDays != null && d < e.LastUsedDays.Count ? e.LastUsedDays[d] : 0;
+                    st.Xp[disc] = xp;
+                    st.LastUsedDay[disc] = day;
+                }
+            }
+            return st;
+        }
 
+        private void RestoreEntries(SkillProgressionSave save)
+        {
             for (int i = 0; i < save.Entries.Count; i++)
             {
                 var e = save.Entries[i];
                 if (e == null || string.IsNullOrEmpty(e.SurvivorId)) continue;
-                var st = new ProgressionState
-                {
-                    ExpertPerkEarned = e.ExpertPerkEarned
-                };
-                if (e.ActivePerkIds != null)
-                    st.ActivePerkIds.AddRange(e.ActivePerkIds);
-                if (e.DormantPerkIds != null)
-                    st.DormantPerkIds.AddRange(e.DormantPerkIds);
-                if (e.DisciplineIds != null)
-                {
-                    for (int d = 0; d < e.DisciplineIds.Count; d++)
-                    {
-                        string disc = e.DisciplineIds[d];
-                        if (string.IsNullOrEmpty(disc)) continue;
-                        float xp = e.XpValues != null && d < e.XpValues.Count ? e.XpValues[d] : 0f;
-                        int day = e.LastUsedDays != null && d < e.LastUsedDays.Count ? e.LastUsedDays[d] : 0;
-                        st.Xp[disc] = xp;
-                        st.LastUsedDay[disc] = day;
-                    }
-                }
-                _bySurvivor[e.SurvivorId] = st;
+                _bySurvivor[e.SurvivorId] = BuildStateFromEntry(e);
             }
+        }
 
-            if (survivors == null) return;
+        private void ApplyPostRestoreSync(IReadOnlyList<Survivor> survivors)
+        {
             for (int i = 0; i < survivors.Count; i++)
             {
                 var sv = survivors[i];
@@ -747,6 +751,17 @@ namespace AtomicWar._Game.Survivors
                     SyncSkillBonuses(sv, st);
                 }
             }
+        }
+
+        public void RestoreState(SkillProgressionSave save, IReadOnlyList<Survivor> survivors = null)
+        {
+            _bySurvivor.Clear();
+            if (save?.Entries == null) return;
+
+            RestoreEntries(save);
+
+            if (survivors == null) return;
+            ApplyPostRestoreSync(survivors);
         }
 
         /// <summary>
