@@ -31,27 +31,8 @@ namespace AtomicWar._Game.AI.Actions
                 return 0f;
 
             // No water → cannot care
-            if (context.Inventory != null)
-            {
-                bool hasWater = false;
-                var slots = context.Inventory.Slots;
-                if (slots != null)
-                {
-                    for (int i = 0; i < slots.Count; i++)
-                    {
-                        var s = slots[i];
-                        if (s?.Item == null) continue;
-                        if (s.Item.type == ItemType.Water
-                            || s.Item.id == "clean_water"
-                            || s.Item.id == "water")
-                        {
-                            hasWater = true;
-                            break;
-                        }
-                    }
-                }
-                if (!hasWater) return 0f;
-            }
+            if (context.Inventory != null && !HasWater(context.Inventory))
+                return 0f;
 
             var patients = context.GetSurvivors();
             if (patients == null || patients.Count == 0) return 0f;
@@ -63,26 +44,47 @@ namespace AtomicWar._Game.AI.Actions
                 if (p == null || !p.IsAlive || p.Id == caregiver.Id) continue;
                 if (!context.MedicalSystem.IsComatose(p)) continue;
 
-                var active = context.MedicalSystem.GetActive(p);
-                float sinceCare = 0f;
-                for (int a = 0; a < active.Count; a++)
-                {
-                    if (active[a].AfflictionId == AfflictionSO.Ids.Coma)
-                    {
-                        sinceCare = active[a].HoursSinceLastCare;
-                        break;
-                    }
-                }
-
-                // Urgency ramps as care interval approaches / is exceeded
-                float urgency = Mathf.Clamp01(
-                    sinceCare / Mathf.Max(0.5f, MedicalSystem.ComaCareIntervalHours));
-                // Empathic / medical survivors step up sooner
-                urgency *= 0.6f + 0.4f * Mathf.Clamp01(caregiver.MedicalSkill);
+                float urgency = ComputeCareUrgency(context.MedicalSystem, caregiver, p);
                 if (urgency > best) best = urgency;
             }
 
             return best;
+        }
+
+        private static bool HasWater(Inventory.Inventory inventory)
+        {
+            var slots = inventory.Slots;
+            if (slots == null) return false;
+            for (int i = 0; i < slots.Count; i++)
+            {
+                var s = slots[i];
+                if (s?.Item == null) continue;
+                if (s.Item.type == ItemType.Water
+                    || s.Item.id == "clean_water"
+                    || s.Item.id == "water")
+                    return true;
+            }
+            return false;
+        }
+
+        private static float GetHoursSinceCare(MedicalSystem medicalSystem, Survivor patient)
+        {
+            var active = medicalSystem.GetActive(patient);
+            for (int a = 0; a < active.Count; a++)
+            {
+                if (active[a].AfflictionId == AfflictionSO.Ids.Coma)
+                    return active[a].HoursSinceLastCare;
+            }
+            return 0f;
+        }
+
+        private static float ComputeCareUrgency(MedicalSystem medicalSystem, Survivor caregiver, Survivor patient)
+        {
+            // Urgency ramps as care interval approaches / is exceeded
+            float urgency = Mathf.Clamp01(
+                GetHoursSinceCare(medicalSystem, patient) / Mathf.Max(0.5f, MedicalSystem.ComaCareIntervalHours));
+            // Empathic / medical survivors step up sooner
+            return urgency * (0.6f + 0.4f * Mathf.Clamp01(caregiver.MedicalSkill));
         }
 
         public override void Execute(AIContext context)
@@ -102,16 +104,7 @@ namespace AtomicWar._Game.AI.Actions
                 if (p == null || !p.IsAlive || p.Id == caregiver.Id) continue;
                 if (!context.MedicalSystem.IsComatose(p)) continue;
 
-                var active = context.MedicalSystem.GetActive(p);
-                float sinceCare = 0f;
-                for (int a = 0; a < active.Count; a++)
-                {
-                    if (active[a].AfflictionId == AfflictionSO.Ids.Coma)
-                    {
-                        sinceCare = active[a].HoursSinceLastCare;
-                        break;
-                    }
-                }
+                float sinceCare = GetHoursSinceCare(context.MedicalSystem, p);
                 if (sinceCare > worst)
                 {
                     worst = sinceCare;

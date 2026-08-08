@@ -168,15 +168,14 @@ namespace AtomicWar._Game.Events
             return true;
         }
 
-        /// <summary>Trait + trust + eventFlag gates (BeliefCheck separate).</summary>
-        public bool PassesTraitAndTrustGates(EventContext context)
+        private bool PassesTraitGate(EventContext context)
         {
-            if (!string.IsNullOrEmpty(RequiredTrait))
-            {
-                if (context == null || !context.HasTraitInBunker(RequiredTrait))
-                    return false;
-            }
+            if (string.IsNullOrEmpty(RequiredTrait)) return true;
+            return context != null && context.HasTraitInBunker(RequiredTrait);
+        }
 
+        private bool PassesTrustGate(EventContext context)
+        {
             if (!string.IsNullOrEmpty(RequiredTrustFactionId) && context != null)
             {
                 float trust = context.ResolveFactionTrust(RequiredTrustFactionId);
@@ -184,33 +183,46 @@ namespace AtomicWar._Game.Events
                     return false;
                 if (!float.IsNaN(RequiredTrustMaxExclusive) && trust >= RequiredTrustMaxExclusive)
                     return false;
+                return true;
             }
-            else if ((!float.IsNaN(RequiredTrustMin) || !float.IsNaN(RequiredTrustMaxExclusive))
-                     && context == null)
+            if ((!float.IsNaN(RequiredTrustMin) || !float.IsNaN(RequiredTrustMaxExclusive))
+                && context == null)
             {
                 return false;
             }
+            return true;
+        }
 
-            if (RequiredEventFlags != null && RequiredEventFlags.Count > 0)
+        private bool PassesEventFlagsGate(EventContext context)
+        {
+            if (RequiredEventFlags == null || RequiredEventFlags.Count == 0) return true;
+            if (context == null) return false;
+            for (int i = 0; i < RequiredEventFlags.Count; i++)
             {
-                if (context == null) return false;
-                for (int i = 0; i < RequiredEventFlags.Count; i++)
-                {
-                    string f = RequiredEventFlags[i];
-                    if (string.IsNullOrEmpty(f)) continue;
-                    if (!context.HasEventFlag(f)) return false;
-                }
+                string f = RequiredEventFlags[i];
+                if (string.IsNullOrEmpty(f)) continue;
+                if (!context.HasEventFlag(f)) return false;
             }
+            return true;
+        }
 
-            // Inventory item gate (Prompt #46). When RequiredItemId is set
-            // the bunker must hold at least one of the item; an empty
-            // context is treated as "not in inventory" and fails the gate.
-            if (!string.IsNullOrEmpty(RequiredItemId))
-            {
-                if (context == null || context.Inventory == null) return false;
-                if (context.Inventory.CountById(RequiredItemId) <= 0) return false;
-            }
+        // Inventory item gate (Prompt #46). When RequiredItemId is set
+        // the bunker must hold at least one of the item; an empty
+        // context is treated as "not in inventory" and fails the gate.
+        private bool PassesItemGate(EventContext context)
+        {
+            if (string.IsNullOrEmpty(RequiredItemId)) return true;
+            if (context == null || context.Inventory == null) return false;
+            return context.Inventory.CountById(RequiredItemId) > 0;
+        }
 
+        /// <summary>Trait + trust + eventFlag gates (BeliefCheck separate).</summary>
+        public bool PassesTraitAndTrustGates(EventContext context)
+        {
+            if (!PassesTraitGate(context)) return false;
+            if (!PassesTrustGate(context)) return false;
+            if (!PassesEventFlagsGate(context)) return false;
+            if (!PassesItemGate(context)) return false;
             return true;
         }
 
@@ -295,27 +307,41 @@ namespace AtomicWar._Game.Events
             }
         }
 
-        public virtual bool CanTrigger(EventContext context)
+        private bool PassesTimeConditions(EventContext context)
         {
-            if (context == null) return false;
-            if (conditions == null) return true;
-
             if (context.CurrentDay < conditions.MinDay) return false;
             if (context.CurrentHour < conditions.MinHour || context.CurrentHour > conditions.MaxHour) return false;
+            return true;
+        }
+
+        private bool PassesWeatherConditions(EventContext context)
+        {
             if (conditions.RequireFalloutStorm && !context.IsFalloutStorm) return false;
             if (conditions.RequireBlizzard && !context.IsBlizzard) return false;
             if (conditions.RequireExtremeWeather && !context.IsExtremeWeather) return false;
+            return true;
+        }
 
+        private bool PassesShelterConditions(EventContext context)
+        {
             if (conditions.MinShelterAirQuality >= 0f && (context.Shelter == null || context.Shelter.AirQuality < conditions.MinShelterAirQuality))
                 return false;
             if (conditions.MaxShelterAirQuality >= 0f && (context.Shelter != null && context.Shelter.AirQuality > conditions.MaxShelterAirQuality))
                 return false;
+            return true;
+        }
 
+        private bool PassesSurvivorConditions(EventContext context)
+        {
             if (conditions.MinSurvivorRad >= 0f && (context.PrimarySurvivor == null || context.PrimarySurvivor.RadiationDose < conditions.MinSurvivorRad))
                 return false;
             if (conditions.MinSurvivorHunger >= 0f && (context.PrimarySurvivor == null || context.PrimarySurvivor.Needs.Hunger < conditions.MinSurvivorHunger))
                 return false;
+            return true;
+        }
 
+        private bool PassesFlagConditions(EventContext context)
+        {
             if (!string.IsNullOrEmpty(conditions.RequiredFlagId) && !context.GetFlag(conditions.RequiredFlagId))
                 return false;
 
@@ -328,12 +354,31 @@ namespace AtomicWar._Game.Events
                     if (!context.GetFlag(f)) return false;
                 }
             }
+            return true;
+        }
 
+        private bool PassesItemAndResourceConditions(EventContext context)
+        {
             if (!string.IsNullOrEmpty(conditions.RequiredItemId) && (context.Inventory == null || context.Inventory.Count(new Inventory.ItemDefinition { id = conditions.RequiredItemId }) <= 0))
                 return false;
 
             if (conditions.RequireResourceStarved && !context.IsResourceStarved)
                 return false;
+
+            return true;
+        }
+
+        public virtual bool CanTrigger(EventContext context)
+        {
+            if (context == null) return false;
+            if (conditions == null) return true;
+
+            if (!PassesTimeConditions(context)) return false;
+            if (!PassesWeatherConditions(context)) return false;
+            if (!PassesShelterConditions(context)) return false;
+            if (!PassesSurvivorConditions(context)) return false;
+            if (!PassesFlagConditions(context)) return false;
+            if (!PassesItemAndResourceConditions(context)) return false;
 
             return true;
         }
