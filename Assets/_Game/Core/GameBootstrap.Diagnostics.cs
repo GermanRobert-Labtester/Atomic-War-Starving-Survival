@@ -539,6 +539,23 @@ namespace AtomicWar._Game.Core
             { "GeneratedMap",            new[] { "generated_map" } },
             { "WorkbenchSystem",         new[] { "workbench" } },
             { "DiaryCatalog",            new[] { "diary_catalog" } },
+
+            // Weather-event trackers. These are genuinely driven — TickWeatherEventsHourly
+            // steps them on whole-hour boundaries off a shared accumulator, and
+            // TickWeatherEventsDaily drives the day-scale one — but that single driver is
+            // what the registry knows about, so without these aliases the C-1 diagnostic
+            // reported all eight as dead. They are ticked; the mapping was missing.
+            { "WeatherSolarFlare",       new[] { "weather_events_hourly" } },
+            { "WeatherSilentSpring",     new[] { "weather_events_hourly" } },
+            { "WeatherStaticCharge",     new[] { "weather_events_hourly" } },
+            { "WeatherBloodRain",        new[] { "weather_events_hourly" } },
+            { "WeatherEmpStorm",         new[] { "weather_events_hourly" } },
+            { "WeatherFalseSpring",      new[] { "weather_events_hourly" } },
+            { "WeatherDeepFreeze",       new[] { "weather_events_hourly" } },
+            // Ozone hole is the one day-scale tracker. Note the registry name is the
+            // RegisterPerSubstep key ("weather_events_daily"), not the inner DayGated
+            // label ("weather_events") — the registry only knows the outer one.
+            { "WeatherOzoneHole",        new[] { "weather_events_daily" } },
         };
 
         private static bool TryGetRegistryAliases(string propertyName, out string[] aliases)
