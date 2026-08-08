@@ -622,151 +622,17 @@ namespace AtomicWar._Game.Shelter
         /// </summary>
         public RaidResolution ResolveRaid(RaidEvent raid, bool ignoreDayGate = false)
         {
-            var result = new RaidResolution
-            {
-                Event = raid,
-                Launched = false,
-                StolenItems = new List<StolenLootLine>(),
-                TraumatizedSurvivorIds = new List<string>()
-            };
-
-            if (raid == null)
-            {
-                result.Message = "No raid event.";
+            var result = CreateRaidResolution(raid);
+            if (!TryLaunchRaid(raid, ignoreDayGate, result, out int day))
                 return result;
-            }
 
-            int day = raid.Day > 0 ? raid.Day : (_getDay != null ? _getDay() : 0);
-            if (!ignoreDayGate && raid.Trigger != RaidTrigger.Forced && !IsRaidUnlocked(day))
-            {
-                result.Message = "Pre-Day 30: hatch raids not yet active.";
-                return result;
-            }
+            InitializeRaidScores(result, raid);
 
-            // Prompt #184 — suppressing fire pins raiders; no launch while halted.
-            if (IsRaidHalted && raid.Trigger != RaidTrigger.Forced)
-            {
-                result.Message = "Suppressing fire still pins them at the stairwell.";
-                return result;
-            }
 
-            result.Launched = true;
-            result.RaidStrength = Mathf.Max(0f, raid.Strength);
-            result.ShelterSecurity = GetShelterSecurity();
-            result.GuardBonusApplied = GetGuardBonus();
-            // Armor from raiding faction shapes ammo contribution (AP/JHP via host ResolveHit).
-            float raidArmor = FactionArmorResolver != null
-                ? FactionArmorResolver(raid.FactionId)
-                : 0f;
-            result.WeaponPower = GetWeaponPower(null, raidArmor);
-
-            // Prompt #186 — trap damage softens raid strength before the clash.
-            if (_perimeterTraps != null)
-            {
-                float trapDmg = _perimeterTraps.GetTrapDamageAgainstRaiders();
-                if (trapDmg > 0f)
-                    result.RaidStrength = Mathf.Max(0f, result.RaidStrength - trapDmg);
-            }
-
-            // Prompt #185 — Close Quarters: breach fighting inside bunker boosts shotgun/melee power.
-            float cqMult = 1f;
-            var survivorsForCq = _getSurvivors?.Invoke();
-            if (survivorsForCq != null && _combatPerks != null)
-            {
-                for (int i = 0; i < survivorsForCq.Count; i++)
-                {
-                    var g = survivorsForCq[i];
-                    if (g == null || !_activeGuards.ContainsKey(g.Id)) continue;
-                    float m = _combatPerks.GetCloseQuartersDamageMultiplier(g, confinedOrBreach: true);
-                    if (m > cqMult) cqMult = m;
-                }
-            }
-            result.WeaponPower *= cqMult;
-
-            // Prompt #220 — Warlord unarmed Level-3 hatch hold.
-            if (_personalQuests != null && result.WeaponPower <= 0.01f)
-            {
-                var warlordGuards = new List<Survivor>();
-                foreach (var kv in _activeGuards)
-                {
-                    var list = survivorsForCq;
-                    if (list == null) break;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i] != null && list[i].Id == kv.Key)
-                            warlordGuards.Add(list[i]);
-                    }
-                }
-                float warlordBonus = _personalQuests.GetWarlordUnarmedDefenseBonus(
-                    warlordGuards, weaponsPresent: false);
-                if (warlordBonus > 0f)
-                    result.WeaponPower = Mathf.Max(result.WeaponPower, warlordBonus);
-            }
-
-            result.DefenseScore = result.ShelterSecurity + result.WeaponPower;
-
-            // Strict: Defense must exceed raid to repel (equal still breaches under pressure)
-            result.Repelled = result.DefenseScore > result.RaidStrength;
-
-            // Prompt #222 — Bouncer Holdout quest: sole guard survives a repel.
-            if (result.Repelled && _personalQuests != null && survivorsForCq != null
-                && _activeGuards.Count == 1)
-            {
-                string soleId = null;
-                foreach (var kv in _activeGuards) { soleId = kv.Key; break; }
-                for (int i = 0; i < survivorsForCq.Count; i++)
-                {
-                    var g = survivorsForCq[i];
-                    if (g != null && g.Id == soleId && g.IsAlive)
-                    {
-                        int dayQ = raid.Day > 0 ? raid.Day : day;
-                        _personalQuests.RecordSoloHatchDefense(g, 1, survived: true, dayQ);
-                        break;
-                    }
-                }
-            }
-
-            if (result.Repelled)
-            {
-                ApplyRepelCosts(result);
-                result.HatchDamage = 3f + (result.RaidStrength / Mathf.Max(1f, result.DefenseScore)) * 8f;
-                result.MoraleDelta = RepelMoraleBoost;
-                result.Message = string.IsNullOrEmpty(raid.Message)
-                    ? "Hatch held. Brass on the floor, smoke in the stairwell — but they left."
-                    : raid.Message + " Held.";
-                ApplyMoraleToSurvivors(result.MoraleDelta);
-                ApplyHatchWear(result.HatchDamage);
-                // #259 Holding the Line: defended hatch without Coward flee.
-                RecordDeserterRaidHold(result, day);
-            }
-            else
-            {
-                result.HatchDamage = 15f + (result.RaidStrength - result.DefenseScore) * 0.6f;
-                result.MoraleDelta = BreachMoralePenalty;
-                result.Message = string.IsNullOrEmpty(raid.Message)
-                    ? "Hatch breached. Hands in the stores. Someone is screaming."
-                    : raid.Message + " Breached.";
-                StealLoot(result);
-                RollTrauma(result);
-                ApplyMoraleToSurvivors(result.MoraleDelta);
-                ApplyHatchWear(result.HatchDamage);
-                // #272 Prepper: hatch destroyed (severe breach wear) + survived.
-                RecordPrepperHatchDestroyedIfAny(result, day);
-            }
-
-            if (result.Launched)
-            {
-                LastResolution = result;
-                TotalRaidsResolved++;
-                if (result.Breached) TotalBreaches++;
-                _hoursSinceLastRaid = 0f;
-                LastRaidSummary = BuildSummary(result);
-                // Prompt #202 — bandaging window while hatch-breach raid is "active".
-                _raidWindowHoursRemaining = Mathf.Max(_raidWindowHoursRemaining, RaidWindowHours);
-            }
-
-            OnRaidResolved?.Invoke(result);
-            OnSecurityChanged?.Invoke();
+            IReadOnlyList<Survivor> survivors = CompleteRaidScoring(result);
+            TryRecordSoloGuardRepel(result, raid, day, survivors);
+            ApplyRaidOutcome(result, raid, day);
+            CommitRaidResolution(result);
             return result;
         }
 
@@ -946,19 +812,6 @@ namespace AtomicWar._Game.Shelter
                 _personalQuests.RecordHatchDestroyedRaidSurvived(
                     sv, hatchDestroyed: true, survived: true, currentDay: day);
             }
-        }
-
-        private static string BuildSummary(RaidResolution result)
-        {
-            if (result == null || !result.Launched) return "Hatch quiet.";
-            if (result.Repelled)
-            {
-                return $"Repelled (D {result.DefenseScore:0} > R {result.RaidStrength:0})"
-                    + (result.AmmoConsumed > 0 ? $", −{result.AmmoConsumed} ammo" : "");
-            }
-
-            int stolen = result.StolenItems != null ? result.StolenItems.Count : 0;
-            return $"BREACHED (D {result.DefenseScore:0} < R {result.RaidStrength:0}), stole {stolen} stacks";
         }
 
         // -----------------------------------------------------------------

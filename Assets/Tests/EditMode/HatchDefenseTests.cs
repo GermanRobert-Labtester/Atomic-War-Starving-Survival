@@ -414,6 +414,113 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void EqualDefenseScore_BreachesBecauseDefenseMustExceedRaid()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 20f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 20f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Launched, Is.True);
+            Assert.That(result.DefenseScore, Is.EqualTo(result.RaidStrength).Within(Eps));
+            Assert.That(result.Repelled, Is.False, "Equal defense is not enough to repel");
+            Assert.That(result.Breached, Is.True);
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(hatch.TotalBreaches, Is.EqualTo(1));
+            Assert.That(hatch.LastRaidSummary, Does.StartWith("BREACHED"));
+        }
+
+        [Test]
+        public void RaidHalt_BlocksNormalRaidButForcedRaidStillLaunches()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 20f;
+            hatch.ApplySuppressingFireHalt(2f);
+
+            int raidEvents = 0;
+            int securityEvents = 0;
+            hatch.OnRaidResolved += _ => raidEvents++;
+            hatch.OnSecurityChanged += () => securityEvents++;
+
+            var blocked = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 10f,
+                Trigger = RaidTrigger.Noise,
+                Day = 40
+            });
+
+            Assert.That(blocked.Launched, Is.False);
+            Assert.That(blocked.Message, Does.Contain("Suppressing fire"));
+            Assert.That(hatch.TotalRaidsResolved, Is.Zero);
+            Assert.That(raidEvents, Is.Zero);
+            Assert.That(securityEvents, Is.Zero);
+
+            var forced = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 10f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            });
+
+            Assert.That(forced.Launched, Is.True);
+            Assert.That(forced.Repelled, Is.True);
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(raidEvents, Is.EqualTo(1));
+            Assert.That(securityEvents, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LaunchedRaid_CommitsCountersAndSummaryBeforePublishingEvents()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 20f;
+
+            var eventOrder = new List<string>();
+            RaidResolution observedResolution = null;
+            int observedRaidCount = -1;
+            string observedSummary = null;
+            hatch.OnRaidResolved += resolution =>
+            {
+                eventOrder.Add("raid_resolved");
+                observedResolution = resolution;
+                observedRaidCount = hatch.TotalRaidsResolved;
+                observedSummary = hatch.LastRaidSummary;
+            };
+            hatch.OnSecurityChanged += () => eventOrder.Add("security_changed");
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 10f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            });
+
+            Assert.That(result.Repelled, Is.True);
+            Assert.That(eventOrder, Is.EqualTo(new[] { "raid_resolved", "security_changed" }));
+            Assert.That(observedResolution, Is.SameAs(result));
+            Assert.That(observedRaidCount, Is.EqualTo(1));
+            Assert.That(observedSummary, Is.EqualTo(hatch.LastRaidSummary));
+            Assert.That(hatch.LastResolution, Is.SameAs(result));
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(hatch.TotalBreaches, Is.Zero);
+            Assert.That(hatch.IsRaidWindowActive, Is.True);
+
+            var save = hatch.CaptureState();
+            Assert.That(save.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(save.TotalBreaches, Is.Zero);
+            Assert.That(save.LastRaidSummary, Is.EqualTo(hatch.LastRaidSummary));
+            Assert.That(save.LastRaidStrength, Is.EqualTo(result.RaidStrength).Within(Eps));
+            Assert.That(save.LastDefenseScore, Is.EqualTo(result.DefenseScore).Within(Eps));
+            Assert.That(save.LastRepelled, Is.True);
+            Assert.That(save.LastBreached, Is.False);
+        }
+
+        [Test]
         public void NoiseRaid_GeneratorOutside_CanBuildEvent()
         {
             var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40,
