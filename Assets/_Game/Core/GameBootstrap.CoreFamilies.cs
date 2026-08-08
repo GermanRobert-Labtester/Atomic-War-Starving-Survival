@@ -113,14 +113,15 @@ namespace AtomicWar._Game.Core
 
         private void BootHazardFamily()
         {
-            HazardCookOff = new Hazard_CookOff();
+            // DEMOTE-HazardCookOff-001 — no production host calls TryFire.
+            // Keep Hazard_CookOff available as a dormant standalone class.
             HazardExplosiveCrafting = new Hazard_ExplosiveCrafting();
             HazardFriendlyFire = new Hazard_FriendlyFire();
             HazardMethane = new MethaneSystem("hazard_methane");
             HazardMimicCrate = new Hazard_MimicCrate();
             HazardSurgicalBotch = new Hazard_SurgicalBotch();
             HazardWeaponBurst = new Hazard_WeaponBurst();
-            Debug.Log("[GameBootstrap] Hazard family ready (7 systems).");
+            Debug.Log("[GameBootstrap] Hazard family ready (6 systems; CookOff dormant).");
         }
 
         private void BootHiddenStatFamily()

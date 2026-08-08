@@ -7,7 +7,7 @@
 # Do not add entries by hand to silence a failure — wire the system instead.
 # Regenerate with the Explicit test UntickedSystemsBaselineTests.RegenerateBaselineFile.
 #
-# entries: 297
+# entries: 296
 
 AdaptiveWarlords
 AfflictionAdrenalineCrash
@@ -82,7 +82,6 @@ EventWarlordSuccession
 EventWitchHunt
 ExpeditionEncounterLog
 FalloutStormHazard
-HazardCookOff
 HazardExplosiveCrafting
 HazardFriendlyFire
 HazardMimicCrate
