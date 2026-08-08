@@ -92,12 +92,13 @@ namespace AtomicWar._Game.AI.Actions
                 return;
             }
 
-            if (!ConsumeRations(context, survivor, food)) return;
-
-            // #274 Animalistic: only raw meat. Deliberately checked *after* the
-            // rations leave the inventory — the food is taken and then spat out,
-            // so the stock is spent either way.
+            // #274 Animalistic: only raw meat, checked before consumption. The old
+            // order drew the ration first and spat it out after — the survivor's
+            // stock was spent on a meal they refused to eat. Checking first means a
+            // refusal costs nothing and the shared food stays in the inventory.
             if (SpitsOutNonMeat(context, survivor, food)) return;
+
+            if (!ConsumeRations(context, survivor, food)) return;
 
             ApplyFoodEffects(context, survivor, food);
             ApplyOutcastRoomMealMorale(context, survivor);
