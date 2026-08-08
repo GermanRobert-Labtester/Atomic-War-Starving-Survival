@@ -267,7 +267,7 @@ namespace AtomicWar._Game.Crafting
             }
 
             float duration = recipe.craftingTimeHours;
-            if (crafter != null && crafter.HasDisability("tremors"))
+            if (crafter != null && crafter.HasDisability(DisabilityId.Tremors))
             {
                 duration *= 2.0f; // 50% action speed penalty
             }

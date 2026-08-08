@@ -785,7 +785,7 @@ namespace AtomicWar._Game.Survivors
         public const string BlackBoxItemId = "military_black_box";
         public const string CityBlueprintsItemId = "city_blueprints";
         public const string MedicinalHerbItemId = "medicinal_herb";
-        public const string ScarredLungsId = "scarred_lungs";
+        public const string ScarredLungsId = DisabilityId.ScarredLungs;
         public const string PipeBurstEventId = "evt_pipe_burst_city_mains";
         public const string ChlorineLeakEventId = "evt_chlorine_tank_leak";
         public const string AbandonedSchoolNodeId = "the_abandoned_school";

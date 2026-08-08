@@ -74,7 +74,7 @@ namespace AtomicWar._Game.Core
             }
 
             // Limp disability: permanently doubles stamina drain during expeditions
-            if (exp.Survivor != null && exp.Survivor.HasDisability("limp"))
+            if (exp.Survivor != null && exp.Survivor.HasDisability(DisabilityId.Limp))
             {
                 drain *= 2f;
             }
@@ -86,7 +86,7 @@ namespace AtomicWar._Game.Core
                 drain = BaseStaminaDrainPerHour * hours;
                 if (exp.Survivor.HasFullSuitEquipped)
                     drain += 3f * hours;
-                if (exp.Survivor.HasDisability("limp"))
+                if (exp.Survivor.HasDisability(DisabilityId.Limp))
                     drain *= 2f;
             }
 

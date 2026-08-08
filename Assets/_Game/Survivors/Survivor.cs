@@ -352,13 +352,17 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public float BaseMaxStamina = 100f;
 
+        /// <summary>Health ceiling imposed by the ScarredLungs disability.</summary>
+        public const float ScarredLungsHealthCap = 75f;
+
         /// <summary>Maximum dynamic health cap for this survivor (caps at 75 if ScarredLungs present).</summary>
         public float MaxHealthCap
         {
             get
             {
                 float cap = BaseMaxHealth > 0f ? BaseMaxHealth : 100f;
-                if (HasDisability("scarred_lungs")) return Mathf.Min(75f, cap);
+                if (HasDisability(DisabilityId.ScarredLungs))
+                    return Mathf.Min(ScarredLungsHealthCap, cap);
                 return cap;
             }
         }
