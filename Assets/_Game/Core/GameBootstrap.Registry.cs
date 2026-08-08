@@ -198,40 +198,9 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("personal_quests_daily",
                 _registry.DayGated("personal_quests", day => PersonalQuests?.TickDaily(Survivors, day)));
             // Morale 0→100 quest trigger + Anchor room floor each needs substep.
-            _registry.RegisterPerSubstep("personal_quests_morale", h =>
-            {
-                if (PersonalQuests == null || Survivors == null) return;
-                int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
-                PersonalQuests.WatchMoraleAll(Survivors, day);
-                for (int i = 0; i < Survivors.Count; i++)
-                    PersonalQuests.ApplyRoomMoraleFloor(Survivors[i], Survivors);
-            });
+            _registry.RegisterPerSubstep("personal_quests_morale", TickPersonalQuestsMorale);
             // #249–#256: hoarder internal theft from main storage into personal stash.
-            _registry.RegisterPerSubstep("personal_quests_hoarder_theft", h =>
-            {
-                if (PersonalQuests == null || Survivors == null || Inventory == null || h <= 0f) return;
-                // ~5% chance per game-hour per Selfish hoarder to steal one unit.
-                var rng = _mentalBreakRng ?? new System.Random(256);
-                for (int i = 0; i < Survivors.Count; i++)
-                {
-                    var sv = Survivors[i];
-                    if (sv == null || !sv.IsAlive) continue;
-                    if (!PersonalQuests.HasSelfish(sv)) continue;
-                    if (rng.NextDouble() > 0.05 * h) continue;
-                    if (Inventory.Slots == null || Inventory.Slots.Count == 0) continue;
-                    int start = rng.Next(0, Inventory.Slots.Count);
-                    for (int k = 0; k < Inventory.Slots.Count; k++)
-                    {
-                        var slot = Inventory.Slots[(start + k) % Inventory.Slots.Count];
-                        if (slot?.Item == null || slot.Amount <= 0) continue;
-                        string itemId = slot.Item.id;
-                        if (string.IsNullOrEmpty(itemId)) continue;
-                        if (!Inventory.Remove(slot.Item, 1)) continue;
-                        PersonalQuests.TryStealToPersonalInventory(sv, itemId);
-                        break;
-                    }
-                }
-            });
+            _registry.RegisterPerSubstep("personal_quests_hoarder_theft", TickHoarderTheft);
             _registry.RegisterPerSubstep("empath", h => EmpathSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("survivor_diaries", h => SurvivorDiaries?.Tick(h, Survivors, TimeSystem?.CurrentDay ?? 1, _mentalBreakRng));
             _registry.RegisterPerSubstep("spatial_psychology", h => SpatialPsychology?.Tick(h, Survivors));
@@ -242,6 +211,48 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("child", h => ChildSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("hatch_dilemma", h => HatchDilemmaPromptField?.Tick(h));
             _registry.RegisterPerSubstep("parley_offer", h => ParleyOfferPromptField?.Tick(h));
+        }
+
+        private void TickPersonalQuestsMorale(float h)
+        {
+            if (PersonalQuests == null || Survivors == null) return;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            PersonalQuests.WatchMoraleAll(Survivors, day);
+            for (int i = 0; i < Survivors.Count; i++)
+                PersonalQuests.ApplyRoomMoraleFloor(Survivors[i], Survivors);
+        }
+
+        /// <summary>#249–#256: ~5% chance per game-hour per Selfish hoarder to steal one unit into their personal stash.</summary>
+        private void TickHoarderTheft(float h)
+        {
+            if (PersonalQuests == null || Survivors == null || Inventory == null || h <= 0f) return;
+
+            var rng = _mentalBreakRng ?? new System.Random(256);
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!PersonalQuests.HasSelfish(sv)) continue;
+                if (rng.NextDouble() > 0.05 * h) continue;
+                TryStealOneUnit(sv, rng);
+            }
+        }
+
+        private void TryStealOneUnit(Survivor sv, System.Random rng)
+        {
+            if (Inventory.Slots == null || Inventory.Slots.Count == 0) return;
+
+            int start = rng.Next(0, Inventory.Slots.Count);
+            for (int k = 0; k < Inventory.Slots.Count; k++)
+            {
+                var slot = Inventory.Slots[(start + k) % Inventory.Slots.Count];
+                if (slot?.Item == null || slot.Amount <= 0) continue;
+                string itemId = slot.Item.id;
+                if (string.IsNullOrEmpty(itemId)) continue;
+                if (!Inventory.Remove(slot.Item, 1)) continue;
+                PersonalQuests.TryStealToPersonalInventory(sv, itemId);
+                return;
+            }
         }
 
         private void TickPheromoneMasking(float hours)

@@ -144,6 +144,22 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVictoryTheMartianSystem(VictoryTheMartian);
             SaveSystem.SetVictoryUndergroundCitySystem(VictoryUndergroundCity);
             SaveSystem.SetVictoryUnifierSystem(VictoryUnifier);
+
+            RegisterSaveOnlySystemsBulk();
+            InitAutosaveScavengingExpedition();
+            InitWorldEventAndUtilitySystems();
+            WireCraftingAndPerkBindings();
+            InitAtmosphereCorpsePantrySystems();
+        }
+
+        /// <summary>
+        /// Bulk ISaveable registration for systems that need no further wiring —
+        /// mechanically extracted from InitSaveAndExpeditions, which qlty flagged
+        /// as the most complex function in the project purely from its length.
+        /// No logic here, just SaveSystem.SetXxx calls in their original order.
+        /// </summary>
+        private void RegisterSaveOnlySystemsBulk()
+        {
             SaveSystem.SetMapHazardAcidGeyser(MapHazardAcidGeyser);
             SaveSystem.SetMapHazardAshlanche(MapHazardAshlanche);
             // demoted ghost — SetMapHazardBiometricDoor skipped
@@ -480,6 +496,11 @@ namespace AtomicWar._Game.Core
             // after the Choreographer itself is constructed (it depends on
             // RadioTunerSystem and other systems wired after SaveSystem).
 
+        }
+
+        /// <summary>Autosave hook, plus the scavenging and expedition engines.</summary>
+        private void InitAutosaveScavengingExpedition()
+        {
             // Subscribe to phase changes for autosave.
             // _suppressAutoSave is held while Awake restores a "Continue" slot:
             // SaveSystem.Load restores the snapshot's phase, which would
@@ -544,6 +565,11 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBlackRainHazardSystem(BlackRainHazardSystem);
             SaveSystem.SetClothingSystem(ClothingSystem);
 
+        }
+
+        /// <summary>Sabotaged caches, shifting hotspots, hatch entrapment, and the second bulk ISaveable block.</summary>
+        private void InitWorldEventAndUtilitySystems()
+        {
             // Prompt #13 — hostile factions learn scavenging habits and plant
             // poisoned medical crates. High Medical skill / Paranoid spots them.
             SabotagedCacheSystem = new SabotagedCacheSystem(new System.Random(_worldSeed + 19));
@@ -650,6 +676,11 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetSurvivorDiariesSystem(SurvivorDiaries);
             SaveSystem.SetRadioBroadcastSystem(RadioSystem);
 
+        }
+
+        /// <summary>Crafting/scavenging save-restore lookups, then perk and personal-quest wiring.</summary>
+        private void WireCraftingAndPerkBindings()
+        {
             // CraftingSystem needs a recipe lookup for restoring active crafts.
             CraftingSystem.SetRecipeLookup(id =>
             {
@@ -679,6 +710,11 @@ namespace AtomicWar._Game.Core
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
+        }
+
+        /// <summary>Internal Horror — atmosphere, corpses, pantry rust, and the hatch-dilemma event bridge.</summary>
+        private void InitAtmosphereCorpsePantrySystems()
+        {
             // Internal Horror — atmosphere / corpses / pantry rust
             // ───────────────────────────────────────────────────────────
             _storesRoom = new ShelterRoom("stores", null);
