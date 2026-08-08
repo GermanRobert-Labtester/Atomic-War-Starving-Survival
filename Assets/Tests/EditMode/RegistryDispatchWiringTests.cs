@@ -75,6 +75,37 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_bootstrap.Registry.IsSystemTicked("rebuilders")
                 || _bootstrap.Registry.IsSystemTicked("rebuilders_daily"),
                 "Rebuilders daily host helpers must be registered.");
+            Assert.IsTrue(_bootstrap.Registry.IsSystemTicked("hazard_methane"),
+                "Methane must be driven from the shelter air-quality tick.");
+        }
+
+        [Test]
+        public void HazardMethane_RegistryTick_VentsPocketWithoutChangingShelterAir()
+        {
+            Assume.That(_bootstrap.HazardMethane, Is.Not.Null);
+            Assume.That(_bootstrap.Shelter, Is.Not.Null);
+            Assume.That(_bootstrap.Registry, Is.Not.Null);
+
+            _bootstrap.HazardMethane.RestoreState(new MethaneState
+            {
+                hazardId = "hazard_methane",
+                breachChance = 0.15f,
+                isGasPresent = true,
+                isDetonated = false
+            });
+            int clearedEvents = 0;
+            _bootstrap.HazardMethane.OnMethaneCleared += _ => clearedEvents++;
+            float airQualityBefore = _bootstrap.Shelter.AirQuality;
+            Assert.That(airQualityBefore, Is.GreaterThan(MethaneSystem.VentilationClearAirQuality));
+
+            int day = _bootstrap.TimeSystem != null ? _bootstrap.TimeSystem.CurrentDay : 1;
+            _bootstrap.Registry.TickAll(1f, day);
+
+            Assert.That(_bootstrap.HazardMethane.State.isGasPresent, Is.False);
+            Assert.That(clearedEvents, Is.EqualTo(1));
+            Assert.That(_bootstrap.Shelter.AirQuality,
+                Is.EqualTo(airQualityBefore - 2f).Within(0.001f),
+                "Only the existing generic filter degradation should change shelter air");
         }
 
         [Test]

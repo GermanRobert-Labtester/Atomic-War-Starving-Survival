@@ -82,14 +82,7 @@ namespace AtomicWar._Game.Core
             // Prompt #799 — evaluate IF/THEN rules after power rebalance.
             _registry.RegisterPerSubstep("logic_gates", h => TickLogicGates());
             _registry.RegisterPerSubstep("hatch_defense", h => HatchDefenseSystem?.Tick(h, PowerNetwork));
-            _registry.RegisterPerSubstep("atmosphere", h =>
-            {
-                if (AtmosphereSystem == null) return;
-                if (ShelterPerks != null)
-                    AtmosphereSystem.VentilationClearMultiplier =
-                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
-                AtmosphereSystem.Tick(h, PowerNetwork, Shelter);
-            });
+            RegisterShelterAirSubsteps();
             _registry.RegisterPerSubstep("corpses", h => CorpseSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("pantry", h => PantrySystem?.Tick(h, _storesRoom));
             _registry.RegisterPerSubstep("structural_integrity", h =>
@@ -160,6 +153,20 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("clothing", h => TickClothing(h));
             _registry.RegisterPerSubstep("compost", h => TickCompost(h));
             _registry.RegisterPerSubstep("pets", h => PetSystem?.Tick(Survivors, h));
+        }
+
+        private void RegisterShelterAirSubsteps()
+        {
+            _registry.RegisterPerSubstep("atmosphere", h =>
+            {
+                if (AtmosphereSystem == null) return;
+                if (ShelterPerks != null)
+                    AtmosphereSystem.VentilationClearMultiplier =
+                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
+                AtmosphereSystem.Tick(h, PowerNetwork, Shelter);
+            });
+            // REPROMOTE-Hazard-001 — read current shelter air only after atmosphere advances.
+            _registry.RegisterPerSubstep("hazard_methane", TickHazardMethaneFromShelterAir);
         }
 
         private void RegisterNeedsPsycheSubsteps()

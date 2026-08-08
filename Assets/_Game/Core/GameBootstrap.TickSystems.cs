@@ -130,9 +130,16 @@ namespace AtomicWar._Game.Core
                         ShelterPerks.GetVentilationClearMultiplier(Survivors);
                 AtmosphereSystem.Tick(gameHours, PowerNetwork, Shelter);
             }
+            TickHazardMethaneFromShelterAir(gameHours);
 
             CorpseSystem?.Tick(gameHours, Survivors);
             PantrySystem?.Tick(gameHours, _storesRoom);
+        }
+
+        private void TickHazardMethaneFromShelterAir(float gameHours)
+        {
+            if (HazardMethane == null || Shelter == null) return;
+            HazardMethane.Tick(gameHours, Shelter.AirQuality);
         }
 
         private void TickStructuralWasteAndVermin(float gameHours, int currentDay)
