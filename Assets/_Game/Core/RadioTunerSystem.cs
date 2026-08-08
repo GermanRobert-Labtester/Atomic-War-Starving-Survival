@@ -57,11 +57,55 @@ namespace AtomicWar._Game.Core
         /// <summary>Injected delegate returning the current campaign day (from TimeSystem).</summary>
         private Func<int> _getDay;
 
+        /// <summary>
+        /// Optional real rad level for a location id, used by plume reports. When
+        /// unset, plume reports fall back to a seeded rumour in
+        /// [<see cref="MinRumouredPlumeRads"/>, <see cref="MaxRumouredPlumeRads"/>].
+        /// </summary>
+        private Func<string, float> _getRumouredRadsForLocation;
+
+        /// <summary>Lower bound of the rumoured plume rad band.</summary>
+        public const float MinRumouredPlumeRads = 20f;
+
+        /// <summary>Upper bound of the rumoured plume rad band.</summary>
+        public const float MaxRumouredPlumeRads = 85f;
+
         public RadioTunerSystem(System.Random rng = null, Func<int> getDay = null)
         {
             State = new RadioState();
             _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("radiotunersystem");
             _getDay = getDay ?? (() => 0);
+        }
+
+        /// <summary>
+        /// Supply real rad levels for plume reports. Optional — without it, reports
+        /// use the seeded rumour band, which is still deterministic per campaign seed.
+        /// </summary>
+        public void SetRumouredRadProvider(Func<string, float> getRadsForLocation)
+        {
+            _getRumouredRadsForLocation = getRadsForLocation;
+        }
+
+        /// <summary>
+        /// RADIO-58B: rad level carried by a post-war plume report. This was a
+        /// hardcoded 50f placeholder, which made every plume report identical and
+        /// therefore worthless as intel — players could ignore the number entirely.
+        /// Prefers a real reading when a provider is wired; otherwise draws a
+        /// seeded rumour so reports vary while staying replay-deterministic.
+        /// Either way the caller tags the node with low confidence, because
+        /// post-war broadcast intel is not trustworthy.
+        /// </summary>
+        private float ResolveRumouredPlumeRads(string locationId)
+        {
+            if (_getRumouredRadsForLocation != null)
+            {
+                float real = _getRumouredRadsForLocation(locationId);
+                if (real > 0f) return Mathf.Clamp(real, 0f, 100f);
+            }
+            return Mathf.Lerp(
+                MinRumouredPlumeRads,
+                MaxRumouredPlumeRads,
+                (float)_rng.NextDouble());
         }
 
         /// <summary>Load frequency definitions from a catalog.</summary>
@@ -425,7 +469,7 @@ namespace AtomicWar._Game.Core
                     // Plume reports: radiation data for map update
                     intel = IntelNode.CreatePlumeReport(
                         broadcast.id, // Use broadcast ID as location ID (simplified)
-                        50f, // Rumored rad level (placeholder)
+                        ResolveRumouredPlumeRads(broadcast.id),
                         0.5f, // Low confidence (post-war intel is unreliable)
                         currentDay,
                         expirationDay,
