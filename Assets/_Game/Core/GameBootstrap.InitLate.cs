@@ -496,6 +496,22 @@ namespace AtomicWar._Game.Core
             // after the Choreographer itself is constructed (it depends on
             // RadioTunerSystem and other systems wired after SaveSystem).
 
+            // BUG HUNT: BootWeather() constructs, event-wires, and ticks these 8
+            // trackers, but none had a SaveSystem.SetWeatherX call anywhere — an
+            // active weather event (e.g. a Solar Flare mid-blackout) silently
+            // reset to inactive on every save/load. SetWeatherX runs after
+            // BootWeather() (InitFoundation) but BootWeather() runs before
+            // SaveSystem exists, so the wiring has to live here instead.
+            SaveSystem.SetWeatherBloodRain(WeatherBloodRain);
+            SaveSystem.SetWeatherDeepFreeze(WeatherDeepFreeze);
+            SaveSystem.SetWeatherEmpStorm(WeatherEmpStorm);
+            SaveSystem.SetWeatherFalseSpring(WeatherFalseSpring);
+            SaveSystem.SetWeatherOzoneHole(WeatherOzoneHole);
+            SaveSystem.SetWeatherSilentSpring(WeatherSilentSpring);
+            SaveSystem.SetWeatherSolarFlare(WeatherSolarFlare);
+            SaveSystem.SetWeatherStaticCharge(WeatherStaticCharge);
+            // Same gap for the reprometed Roadblock encounter (REPROMOTE-Encounter-001).
+            SaveSystem.SetEncounterRoadblock(EncounterRoadblock);
         }
 
         /// <summary>Autosave hook, plus the scavenging and expedition engines.</summary>
