@@ -203,6 +203,11 @@ namespace AtomicWar._Game.Core
         public bool LocationEncounterFired;
         /// <summary>Prevents double-trigger of UXO landmine across save/load.</summary>
         public bool UxoDetonated;
+        /// <summary>Prompt #210 — Forager's once-per-expedition empty-loot food grant.
+        /// Same double-trigger guard as the two flags above: unpersisted, it reset to
+        /// false on load, so dropping the granted food and scavenging empty again
+        /// re-granted it.</summary>
+        public bool ForagerLootApplied;
 
         // Prompt #68 — bicycle logistics
         public bool HasBicycle;
@@ -361,6 +366,10 @@ namespace AtomicWar._Game.Core
         public float RubbleClearHoursTotal;
         public List<string> DiaryFragmentIds = new List<string>();
         public List<int> RevealedDiaryIndices = new List<int>();
+        // Room atmosphere (fire, mold, CO2, O2, bulkhead, contamination) is NOT
+        // duplicated here on purpose: ShelterAtmosphereSystem.CaptureState owns it
+        // and shares the same ShelterRoom instances. A second writer here would
+        // race with it on restore order.
     }
 
     /// <summary>Shelter module runtime state snapshot.</summary>

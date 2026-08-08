@@ -103,6 +103,7 @@ namespace AtomicWar._Game.Core
             state.returnSpeedDivisor = saveExp.ReturnSpeedDivisor;
             state.LocationEncounterFired = saveExp.LocationEncounterFired;
             state.UxoDetonated = saveExp.UxoDetonated;
+            state.ForagerLootApplied = saveExp.ForagerLootApplied;
             state.HasBicycle = saveExp.HasBicycle;
             state.BicycleDurability = saveExp.BicycleDurability;
             state.IsWading = saveExp.IsWading;

@@ -488,6 +488,49 @@ namespace AtomicWar.Tests.EditMode
         }
 
         /// <summary>
+        /// SAVE-014: Forager (Prompt #210) grants 1-2 free food once per expedition
+        /// when a scavenge comes up empty, guarded by ForagerLootApplied. The flag
+        /// was not persisted, so it came back false on load and the grant could fire
+        /// a second time once the granted food was dropped. Same double-trigger guard
+        /// as LocationEncounterFired and UxoDetonated beside it.
+        /// </summary>
+        [Test]
+        public void Expedition_ForagerLootApplied_RoundTrips_ViaSaveSystem()
+        {
+            var host = new ExpeditionHostFixture("sv_sp_forager");
+            ExpeditionSystem seeded = null;
+            ExpeditionSystem loaded = null;
+            string dir = TempDir("expforager");
+            try
+            {
+                seeded = host.StartExpedition(out var state);
+                state.ForagerLootApplied = true;
+
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(seeded),
+                    getSurvivors: () => host.Survivors).Save("sp_expforager"));
+
+                loaded = host.NewSystem();
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(loaded),
+                    getSurvivors: () => host.Survivors).Load("sp_expforager"));
+
+                var exp = loaded.GetExpeditionBySurvivor("sv_sp_forager");
+                Assert.IsNotNull(exp);
+                Assert.IsTrue(exp.ForagerLootApplied,
+                    "the once-per-expedition Forager grant must stay spent across save/load");
+            }
+            finally
+            {
+                seeded?.UnsubscribeAll();
+                loaded?.UnsubscribeAll();
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        /// <summary>
         /// Ratchet for SAVE-002: every serialized ExpeditionSaveState field must
         /// be written by CaptureExpeditionState. Seed the live state with
         /// non-default values, save, and assert no DTO field came out at its
@@ -630,6 +673,7 @@ namespace AtomicWar.Tests.EditMode
             exp.returnSpeedDivisor = 0.5f;
             exp.LocationEncounterFired = true;
             exp.UxoDetonated = true;
+            exp.ForagerLootApplied = true;
             exp.HasBicycle = true;
             exp.BicycleDurability = 44f;
             exp.IsWading = true;

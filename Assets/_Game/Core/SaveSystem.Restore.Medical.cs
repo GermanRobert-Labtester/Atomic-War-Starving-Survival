@@ -92,6 +92,10 @@ namespace AtomicWar._Game.Core
                     room.DiaryFragmentIds = new List<string>(roomSave.DiaryFragmentIds);
                 if (roomSave.RevealedDiaryIndices != null)
                     room.RevealedDiaryIndices = new List<int>(roomSave.RevealedDiaryIndices);
+                // Atmosphere deliberately untouched here — ShelterAtmosphereSystem
+                // .RestoreState owns it and operates on these same ShelterRoom
+                // instances. Writing it here too would make the outcome depend on
+                // restore order.
             }
         }
 

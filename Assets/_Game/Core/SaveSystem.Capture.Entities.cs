@@ -100,6 +100,7 @@ namespace AtomicWar._Game.Core
 
                 LocationEncounterFired = exp.LocationEncounterFired,
                 UxoDetonated = exp.UxoDetonated,
+                ForagerLootApplied = exp.ForagerLootApplied,
                 HasBicycle = exp.HasBicycle,
                 BicycleDurability = exp.BicycleDurability,
                 IsWading = exp.IsWading,
