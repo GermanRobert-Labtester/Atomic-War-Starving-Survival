@@ -340,6 +340,10 @@ namespace AtomicWar._Game.Crafting
                 amount = _personalQuests.ApplyAlchemistYield(crafter, amount, _rng);
             }
 
+            // Resolve the station once up front so the overflow-rollback path can
+            // repair its wear (if the craft is rolled back below).
+            var station = GetStation(recipe.requiredStationId);
+
             // CRAFT-003 hardened: Add() can fail on a full inventory (capacity, weight,
             // or stack overflow). Pre-fix, the crafted item was silently lost: ingredients
             // had been consumed at craft start, station wear was applied, and the
@@ -374,7 +378,6 @@ namespace AtomicWar._Game.Crafting
                 }
             }
 
-            var station = GetStation(recipe.requiredStationId);
             if (station != null)
                 station.Degrade(StationWearPerCraft);
 

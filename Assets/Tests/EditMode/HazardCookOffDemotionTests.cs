@@ -6,8 +6,8 @@ using AtomicWar._Game.Core;
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>
-    /// DEMOTE-HazardCookOff-001 — keep the unused hazard class available without
-    /// constructing or serializing it from the production bootstrap.
+    /// Keeps dormant hazard classes available without constructing or serializing
+    /// them from the production bootstrap.
     /// </summary>
     [TestFixture]
     public class HazardCookOffDemotionTests
@@ -56,6 +56,15 @@ namespace AtomicWar.Tests.EditMode
                 UntickedSystemsBaseline.Load(),
                 "HazardExplosiveCrafting");
 
+            Assert.That(_bootstrap.HazardFriendlyFire, Is.Null);
+            Assert.That(_bootstrap.Registry.IsSystemTicked("hazard_friendly_fire"), Is.False);
+            CollectionAssert.DoesNotContain(
+                _bootstrap.GetUntickedSystemNames(),
+                "HazardFriendlyFire");
+            CollectionAssert.DoesNotContain(
+                UntickedSystemsBaseline.Load(),
+                "HazardFriendlyFire");
+
             Assert.That(_bootstrap.HazardMethane, Is.Not.Null);
             Assert.That(_bootstrap.Registry.IsSystemTicked("hazard_methane"), Is.True);
             CollectionAssert.DoesNotContain(_bootstrap.GetUntickedSystemNames(), "HazardMethane");
@@ -77,6 +86,7 @@ namespace AtomicWar.Tests.EditMode
             CollectionAssert.DoesNotContain(
                 snapshot.SubsystemSaveIds,
                 "hazard_explosive_crafting");
+            CollectionAssert.DoesNotContain(snapshot.SubsystemSaveIds, "hazard_friendly_fire");
             CollectionAssert.Contains(snapshot.SubsystemSaveIds, "hazard_methane");
         }
 
@@ -100,6 +110,17 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(state, Is.Not.Null);
             Assert.That(state.craftingId, Is.EqualTo("hazard_explosive_crafting"));
             Assert.DoesNotThrow(() => explosiveCrafting.RestoreState(state));
+        }
+
+        [Test]
+        public void FriendlyFireClass_RemainsConstructibleAndSaveSafe()
+        {
+            var friendlyFire = new Hazard_FriendlyFire();
+            FriendlyFireState state = friendlyFire.CaptureState();
+
+            Assert.That(state, Is.Not.Null);
+            Assert.That(state.hazardId, Is.EqualTo("hazard_friendly_fire"));
+            Assert.DoesNotThrow(() => friendlyFire.RestoreState(state));
         }
     }
 }

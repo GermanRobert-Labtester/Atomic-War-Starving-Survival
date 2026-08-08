@@ -1,3 +1,4 @@
+using AtomicWar._Game.Shelter;
 using UnityEngine;
 using AtomicWar._Game.Inventory;
 

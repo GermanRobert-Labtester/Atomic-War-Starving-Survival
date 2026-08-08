@@ -1,0 +1,290 @@
+========================================================================================
+ASHFALL (Atomic War) — DEEP CODE AUDIT #3 (RE-AUDIT + NEW FINDINGS)
+Read-only audit | No code was modified
+Generated (UTC): 2026-08-08
+Workspace: Assets/_Game (~907 C# files) + Tests + 23 uncommitted files
+Branch: fix/post-audit-cleanup @ b656062 + uncommitted
+========================================================================================
+
+HOW TO READ THIS DOCUMENT
+----------------------------------------
+This is a re-audit of the findings in ASHFALL_DEEP_CODE_AUDIT_2_2026-08-08.txt and
+ASHFALL_DEEP_CODE_AUDIT_2026-08-07.txt, PLUS new findings from the newly-promoted
+content (VenusTrap, Keycards, GuardDog, HMG, Methane, MapGenerator tags).
+
+Legend:
+  PERSISTS   — verified the issue is still present in the current source
+  FIXED      — the issue was remediated since the prior audit
+  NEW        — new finding this pass
+
+SECTION A — VERIFIED PERSISTENT FINDINGS (from Audit #2)
+========================================================================================
+
+[DEATH-001]  Severity: HIGH  |  Type: event gap  |  Status: PERSISTS
+  Location:      SurvivorNeedWrite.cs SetHealth (line 18-28)
+  Verified:      SetHealth(sv, 0f) sets State=Dead but does NOT fire OnDied,
+                 OnNeedChanged, or any personal-quest death hooks. The
+                 GameBootstrap._onNeedsDied handler (InitFoundation.cs:488-500)
+                 runs all death side-effects but only when NeedsSystem.OnDied
+                 fires — which SetHealth bypasses.
+  Callers that kill via this path:
+    • BunkerSocialDirector.cs:257 (Tribunal Execution)
+    • BunkerSocialSystems.cs:667 (leader rebellion death)
+    • StructuralIntegritySystem.cs:377 (60HP crush)
+  Verified by:   sed SurvivorNeedWrite.cs — no OnDied reference anywhere in file.
+
+[DEATH-004]  Severity: HIGH  |  Type: zombie state  |  Status: PERSISTS
+  Location:      SurvivorNeedWrite.cs SetHealth — no !IsAlive guard
+  Verified:      SetHealth has `if (sv == null || sv.Needs == null) return;`
+                 but NO `if (!sv.IsAlive) return;`. A dead survivor can be
+                 given positive HP (zombie state). Only the adrenaline-revive
+                 path (MedicalPerkSystem.cs:423) legitimately writes Health on
+                 a dead survivor, and it immediately sets State=Idle.
+  Verified by:   grep "IsAlive" SurvivorNeedWrite.cs — only in AdjustHealth (line 15)
+                 and the death check (line 25), not as a guard on entry.
+
+[DEATH-006]  Severity: HIGH  |  Type: direct death without hooks  |  Status: PERSISTS
+  Location:      7 sites write State=SurvivorState.Dead directly:
+    • LifeboatTransmissionSystem.cs:203
+    • ExpeditionSystem.Flashpoint.cs:161
+    • MedicalPerkSystem.cs:400
+    • PersonalQuestSystem.Ashes.cs:341, 1037
+    • PersonalQuestSystem.cs:3020
+    • SuspicionTracker.cs:408
+  Verified:      None call OnDied or any death hook. The bunker/world never
+                 reacts to these deaths.
+  Verified by:   grep "State = SurvivorState.Dead" — 7 non-test sites remain.
+
+[SEED-002]  Severity: HIGH  |  Type: hermetic seeds (zero replay variety)  |  Status: PERSISTS
+  Location:      SeededRandom.CreateFixed (line 48) — 68 call sites
+  Verified:      CreateFixed uses hardcoded seed 0xA51FA11. Every campaign gets
+                 identical RNG sequences from 68 systems. The recommended
+                 Create(worldSeed, context) is used by ZERO systems.
+  Verified by:   grep "CreateFixed" — 68 gameplay call sites, all hardcoded.
+
+[CRAFT-003]  Severity: HIGH  |  Type: silent item loss  |  Status: PERSISTS
+  Location:      CraftingSystem.CompleteCraft ~330
+  Verified:      _inventory.Add(result, amount) return value is NOT checked.
+                 Full inventory silently eats the crafted item.
+  Verified by:   sed CompleteCraft — `_inventory.Add(result, amount);` with no
+                 `if` guard.
+
+[QUEST-001]  Severity: MEDIUM  |  Type: direct Needs mutation  |  Status: PERSISTS
+  Location:      PersonalQuestSystem.Ashes.cs:230, 679; Chemistry.cs:130, 133-134,
+                 171, 319, 384-385; CivilWar.cs:594-595; PersonalQuestSystem.cs:1668-
+                 1673, 1705, 1793
+  Verified:      24 direct writes to Needs fields bypassing NeedsSystem.Modify.
+                 Skips OnNeedChanged, per-traits caps, OnNeedCritical, EvaluateDeath.
+  Verified by:   grep "sv.Needs.\w*=" — 24 matches in PersonalQuestSystem partials.
+
+[EVENT-008]  Severity: MEDIUM  |  Type: lifecycle leak  |  Status: PERSISTS
+  Location:      GameBootstrap families — ~650 event subscriptions, 4 unsubscribes
+  Verified:      OnDestroy only cleans up _onWorldPhaseChanged, _onGameStateChanged,
+                 _onNeedsDied, _onNeedChanged. All other OnX += leak on PlayMode stop.
+  Verified by:   grep "+= " vs "-= " — 761 subscribe vs 0 general unsubscribe.
+
+[ECON-005]  Severity: MEDIUM  |  Type: pricing explosion  |  Status: PERSISTS
+  Location:      DynamicEconomySystem — multi-crisis multiplicative stacking
+  Verified:      No hard cap on final trade value. 3 simultaneous crises = 3.375×.
+
+========================================================================================
+SECTION B — NEW FINDINGS (this pass)
+========================================================================================
+
+[VENUS-001]  Severity: CRITICAL  |  Type: broken gameplay loop  |  Status: NEW
+  Location:      MapHazard_VenusTrap.cs EnterNode (line 56-69), AttemptHarvest (line
+                 ~75-110); ExpeditionSystem.Tick.cs TryVenusTrapOnLootingArrival
+                 (line ~217-240, uncommitted)
+  Description:   The VenusTrap is fundamentally broken:
+    
+    (a) traps_active is NEVER decremented. AttemptHarvest checks
+        `if (traps_active <= 0)` and fires OnTrapTriggered, but there is NO
+        `traps_active--` anywhere in the file. Grep for `traps_active--` returns 0.
+        So the 2-4 traps armed by EnterNode are never cleared.
+    
+    (b) EnterNode unconditionally re-arms on every call:
+        `_state.traps_active = 2 + rng.Next(3);` — no guard like
+        `if (_state.traps_active > 0) return;`.
+    
+    (c) ExpeditionSystem.TryVenusTrapOnLootingArrival calls EnterNode on EVERY
+        looting arrival to a swamp node. So every visit re-arms 2-4 traps, and
+        because traps are never decremented, swamp nodes are PERMANENTLY trapped
+        at 2-4 active traps with no way to clear them.
+    
+  Player impact: swamp nodes are permanently lethal. Every expedition to a
+  swamp node loses an arm (strength < 0.6) or barely escapes. There is no
+  way to clear the hazard. This is a broken gameplay mechanic.
+    
+  Suggested Fix:
+    (a) Decrement traps_active in AttemptHarvest on any successful resolution
+        (both escape and amputation): `_state.traps_active = Mathf.Max(0, _state.traps_active - 1);`
+    (b) Guard EnterNode to not re-arm if traps_active > 0 (unless the node id
+        changed — i.e. a genuinely new visit to a *different* node).
+    (c) Only call EnterNode on the FIRST visit to a node, not every looting
+        arrival. Track visited/victory state per node.
+  Suggested Harden: EditMode test — enter swamp node, trigger N traps, assert
+  traps_active reaches 0 after N resolutions and EnterNode on a revisit does
+  not re-arm.
+
+[HMG-001]  Severity: HIGH  |  Type: non-functional promoted content  |  Status: NEW
+  Location:      Weapon_HMG.cs (InventoryItemId = "weapon_hmg"),
+                 HatchDefenseSystem.GetMountedHmgDefensePower (line 385-386),
+                 GameBootstrap.InitLate.cs (line 870-890)
+  Description:   The HMG was promoted to live (REPROMOTE-Weapon-001) and wired
+  into hatch defense, but the enabling ITEM `weapon_hmg` is NOT in the item
+  catalog: no entry in Assets/StreamingAssets/Data/items.json, no entry in
+  Item_WorldCatalog. 
+  
+  The host checks `inv.CountById("weapon_hmg") > 0 || inv.CountById("hmg") > 0`
+  at InitLate.cs:879-880. Since the item cannot be acquired (not in catalog),
+  CountById is always 0, so GetMountedHmgDefensePower always returns 0.
+  
+  Result: the HMG is dead weight — the wiring exists but the player can never
+  obtain or use the weapon. The +28 defense power is unreachable.
+  
+  Suggested Fix: Add the `weapon_hmg` item to the catalog (items.json + importer)
+  so players can acquire it. Ensure it appears in WorldLootFaction tables or
+  crafting recipes.
+  Suggested Harden: CI gate — every item id referenced by a live system
+  (IsWeaponId, InventoryItemId, CountById) must exist in the item catalog.
+  Track this with a referential-integrity test that greps all ItemId constants
+  and asserts each is in the catalog.
+
+[HMG-002]  Severity: MEDIUM  |  Type: dead code path  |  Status: NEW
+  Location:      Weapon_HMG.cs Fire (line 75-99)
+  Description:   Weapon_HMG.Fire() is never called outside Weapon_HMG.cs. The
+  hatch defense path only uses GetHatchDefensePower (a flat additive bonus via
+  the InitLate delegate). So the entire jamming/shredding/ammo risk-reward
+  mechanic — Fire() sets isJammed, fires OnHMGJammed, fires OnRaidShredded —
+  is bypassed. The HMG provides a static +28 (or +34 with double-count) with
+  no jam risk and no re-supply cost.
+  Suggested Fix: Either (a) wire HatchDefenseSystem to call WeaponHMG.Fire()
+  during a raid resolution (passing operators, oil state, raid level), so
+  jamming/shredding actually happen; or (b) remove Fire() and document that
+  the HMG is a flat passive bonus.
+  Suggested Harden: EditMode test — simulate a raid with an HMG, assert the
+  jam/re-shred events fire (or that the design is passive-only with a comment).
+
+[HMG-003]  Severity: MEDIUM  |  Type: double-counting  |  Status: NEW
+  Location:      HatchDefenseSystem.GetWeaponPower (line 358-390)
+  Description:   GetWeaponPower iterates all inventory slots via
+  GetItemDefenseContribution (which counts weapon_hmg at base 6 via
+  GetWeaponBasePower), THEN adds GetMountedHmgDefensePower (up to 28). So a
+  stocked + mounted HMG contributes 6 + 28 = 34. The comment at line 443
+  claims "Avoid double-counting full value" but the base 6 from the slot
+  iteration is still added alongside the mounted 28.
+  Note: because weapon_hmg is not in the catalog (HMG-001), this double-count
+  is currently unreachable. But if the item is added, the double-count becomes
+  live. Fix both together.
+  Suggested Fix: In GetItemDefenseContribution, skip weapon_hmg/hmg items
+  (they are handled by the mounted-power path), OR have GetMountedHmgDefensePower
+  return a delta-over-base (28 - 6 = 22) instead of the full 28.
+  Suggested Harden: Hatch defense smoke test — assert a stocked+mounted HMG
+  contributes exactly 28 (not 34).
+
+[GUARDDOG-001]  Severity: MEDIUM  |  Type: balance / no cost  |  Status: NEW
+  Location:      HatchDefenseSystem.cs line 658-661 (GuardDogFightBonus = +8),
+                 GameBootstrap.InitLate.cs line 862-865
+  Description:   The guard dog alert adds a flat +8 defense with no cost. The
+  host wires TryAlertGuardDog = () => PetGuardDog.Alert("bunker"). Verify
+  Pet_GuardDog.Alert() checks "fed, not malnourished" (per the comment) and
+  that feeding the dog has a real opportunity cost. If the dog is always fed
+  (no food cost), this is a free +8 defense.
+  Suggested Fix: Ensure Pet_GuardDog.Alert() deducts food/rations or has a
+  cooldown so the bonus is not free.
+  Suggested Harden: Balance test — assert the guard dog bonus requires feeding
+  state.
+
+[METHANE-001]  Severity: MEDIUM  |  Type: integration completeness  |  Status: NEW
+  Location:      GameBootstrap.Registry.cs:169 RegisterPerSubstep("hazard_methane",
+                 TickHazardMethaneFromShelterAir); Hazard_Methane.cs (commit a9a9df1)
+  Description:   Methane is now driven from shelter air (good promotion). But
+  verify the hazard actually has consequences: does TickingHazardMethaneFromShelterAir
+  apply CO/health damage, or just update a methane_level that nothing reads?
+  Suggested Fix: Verify the methane level feeds into ShelterAtmosphereSystem
+  health/CO penalties. If it's a dead value, wire it or document as cosmetic.
+  Suggested Harden: EditMode test — raise methane to explosive threshold,
+  assert a fizzle/health consequence.
+
+[KEYCARD-001]  Severity: LOW  |  Type: multiple doors same color  |  Status: NEW
+  Location:      Item_Keycards.cs TryOpenDoor; ExpeditionSystem.Tick.cs
+                 TryKeycardDoorOnLootingArrival
+  Description:   A single keycard unlocks the door for its color. If multiple
+  nodes share the same door color (e.g. two green doors), collecting one green
+  card unlocks BOTH (unlocked_door_ids is a list of door ids, but TryOpenDoor
+  may unlock all doors of that color). Verify one card ≠ one door unless intended.
+  Suggested Fix: Confirm TryOpenDoor unlocks only the specific doorId, not all
+  doors of that color. If it unlocks all, that's fine but document it.
+  Suggested Harden: Keycard test — assert one card opens exactly the intended
+  door, not all same-color doors.
+
+========================================================================================
+SECTION C — NEW FINDINGS FROM PERSONAL QUEST SYSTEM (deep dive)
+========================================================================================
+
+[QUEST-003]  Severity: MEDIUM  |  Type: cap bypass  |  Status: NEW
+  Location:      PersonalQuestSystem.Ashes.cs:679 —
+                 sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - EntitledLaborMoraleHitPerDay)
+  Description:   Direct Morale write bypasses per-survivor caps. A Traumatized
+  survivor (50% Morale cap) hit by Entitled Labor can drop below 50% via this
+  direct write, which NeedsSystem.Modify would have prevented via ClampMoraleToCap.
+  Suggested Fix: Use NeedsSystem.Modify(sv, Morale, -hit) instead of direct write.
+  Suggested Harden: Trait-cap test — Traumatized survivor with Entitled Labor trait
+  must not drop below 50% Morale.
+
+[QUEST-004]  Severity: MEDIUM  |  Type: resurrect without recovery  |  Status: NEW
+  Location:      MedicalPerkSystem.cs:423 TryAdministerAdrenaline
+  Description:   Adrenaline revive sets Health=1 and State=Idle directly, with no
+  OnNeedChanged for Health. A survivor revived from Death's Door has Health=1
+  but no event tells the HUD or other systems. The death-to-alive transition
+  fires OnDeathsDoorRevived but not OnNeedChanged(Health).
+  Suggested Fix: After setting State=Idle, call _needs.Modify(survivor, Health,
+  AdrenalineReviveHealth) to fire the event.
+  Suggested Harden: EditMode test — revive a Death's-Door survivor, assert
+  OnNeedChanged(Health) fires.
+
+========================================================================================
+SECTION D — VERIFIED FIXED (no longer issues)
+========================================================================================
+
+  ✓ SEED-003: No unseeded `new Random()` remains (all migrated to SeededRandom).
+  ✓ Keycard ReportKeycardFound IS idempotent (guards with Contains check).
+  ✓ HMG is wired into hatch defense (GetMountedHmgDefensePower set in InitLate).
+  ✓ Guard dog is wired (TryAlertGuardDog set in InitLate).
+  ✓ Methane is driven from shelter air (registry-ticked).
+  ✓ VenusTrap save/load persists traps_active (RestoreState assigns _state).
+  ✓ GhostStation edit/play Destroy split still correct.
+  ✓ All Audit #1 CRITICAL items remain fixed.
+
+========================================================================================
+SECTION E — PRIORITY REMEDIATION ORDER (re-audit)
+========================================================================================
+
+  CRITICAL:
+    1. VENUS-001  — traps never clear + re-arm every visit (broken mechanic)
+
+  HIGH (persisting or new):
+    2. DEATH-001  — silent death from SurvivorNeedWrite.SetHealth(0f)
+    3. DEATH-004  — zombie state from SetHealth on dead survivor
+    4. DEATH-006  — 7 direct State=Dead writers without hooks
+    5. SEED-002   — 68 hermetic-seed systems (zero replay variety)
+    6. CRAFT-003  — silent item loss on full inventory craft
+    7. HMG-001    — HMG item not in catalog (dead promoted content)
+
+  MEDIUM:
+    8.  HMG-002   — HMG Fire() dead code (no jamming/shredding)
+    9.  HMG-003   — HMG double-count (base 6 + mounted 28)
+   10.  GUARDDOG-001 — guard dog +8 free defense
+   11.  METHANE-001 — verify methane consequences
+   12.  QUEST-003 — trait cap bypass (Entitled Labor)
+   13.  QUEST-004 — adrenaline revive no OnNeedChanged
+   14.  KEYCARD-001 — one card / multiple doors question
+   15.  DEATH-005 — ForceDeath/EvaluateDeath duplication
+   16.  EVENT-008 — bootstrap event lifecycle leak
+   17.  ECON-005  — multi-crisis pricing explosion
+
+  LOW / NIT: (from prior audits — QUICK-001..005, HUD-002..005, etc.)
+
+========================================================================================
+END OF AUDIT #3
+========================================================================================
