@@ -252,6 +252,11 @@ namespace AtomicWar._Game.Core
         public float Warmth = 100f;
         public float Morale = 75f;
         public float Health = 100f;
+        // Hygiene was a live need (ToothDecaySystem, HotShower, WastelandSoap all
+        // read/write it) that was never persisted, so it silently reset to full on
+        // every load. The 100f default matches Needs.Hygiene so pre-fix saves — which
+        // carry no Hygiene key — deserialise to "clean" rather than to 0.
+        public float Hygiene = 100f;
         public bool WasHungerCritical;
         public bool WasThirstCritical;
         public bool WasWarmthCritical;

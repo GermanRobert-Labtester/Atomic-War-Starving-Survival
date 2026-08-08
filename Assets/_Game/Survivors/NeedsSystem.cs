@@ -336,6 +336,27 @@ namespace AtomicWar._Game.Survivors
             SetHealth(survivor, survivor.Needs.Health + delta);
         }
 
+        /// <summary>
+        /// SAVE-1D: replay <see cref="OnNeedChanged"/> for every need after a load.
+        /// <c>SaveSystem.RestoreSurvivor</c> writes the need fields directly (it must —
+        /// the restored values are authoritative and must not be re-clamped or trigger
+        /// death evaluation), so observers such as the HUD bars would otherwise keep
+        /// rendering pre-load values until the next natural need tick. This does not
+        /// mutate any state; it only re-broadcasts what was restored.
+        /// </summary>
+        public void NotifyNeedsRestored(Survivor survivor)
+        {
+            if (survivor?.Needs == null || OnNeedChanged == null) return;
+            var needs = survivor.Needs;
+            OnNeedChanged.Invoke(survivor, NeedKind.Hunger, needs.Hunger);
+            OnNeedChanged.Invoke(survivor, NeedKind.Thirst, needs.Thirst);
+            OnNeedChanged.Invoke(survivor, NeedKind.Fatigue, needs.Fatigue);
+            OnNeedChanged.Invoke(survivor, NeedKind.Warmth, needs.Warmth);
+            OnNeedChanged.Invoke(survivor, NeedKind.Morale, needs.Morale);
+            OnNeedChanged.Invoke(survivor, NeedKind.Health, needs.Health);
+            OnNeedChanged.Invoke(survivor, NeedKind.Hygiene, needs.Hygiene);
+        }
+
         private static float GetValue(Needs needs, NeedKind kind) => kind switch
         {
             NeedKind.Hunger => needs.Hunger,

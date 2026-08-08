@@ -34,6 +34,7 @@ namespace AtomicWar._Game.Core
                 Warmth = sv.Needs.Warmth,
                 Morale = sv.Needs.Morale,
                 Health = sv.Needs.Health,
+                Hygiene = sv.Needs.Hygiene,
                 WasHungerCritical = sv.Needs.WasHungerCritical,
                 WasThirstCritical = sv.Needs.WasThirstCritical,
                 WasWarmthCritical = sv.Needs.WasWarmthCritical,
@@ -148,6 +149,7 @@ namespace AtomicWar._Game.Core
             sv.Needs.Warmth = save.Warmth;
             sv.Needs.Morale = save.Morale;
             sv.Needs.Health = save.Health;
+            sv.Needs.Hygiene = save.Hygiene;
             sv.Needs.WasHungerCritical = save.WasHungerCritical;
             sv.Needs.WasThirstCritical = save.WasThirstCritical;
             sv.Needs.WasWarmthCritical = save.WasWarmthCritical;
@@ -239,6 +241,12 @@ namespace AtomicWar._Game.Core
             sv.QuestProgress       = save.QuestProgress;
             sv.DaysAlive           = save.DaysAlive;
             sv.MoraleHitZero       = save.MoraleHitZero;
+
+            // SAVE-1D: the need fields above are written directly (restored values are
+            // authoritative), so no OnNeedChanged fired and every need observer — HUD
+            // bars, mood widgets — would still be showing pre-load values. Re-broadcast
+            // the restored needs now that the survivor is fully populated.
+            _needsSystem?.NotifyNeedsRestored(sv);
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)
