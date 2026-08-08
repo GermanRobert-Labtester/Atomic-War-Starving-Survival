@@ -121,6 +121,92 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void BreachLoot_MultipleStacks_DoNotUseShiftedSlotIndices()
+        {
+            var food = MakeItem("canned_food", ItemType.Food, stackMax: 2);
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(food, 6), Is.True, "Three stacks are required for the regression");
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 0f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Breached, Is.True);
+            Assert.That(result.StolenItems, Has.Count.EqualTo(3));
+            for (int i = 0; i < result.StolenItems.Count; i++)
+            {
+                Assert.That(result.StolenItems[i].ItemId, Is.EqualTo(food.id));
+                Assert.That(result.StolenItems[i].Amount, Is.EqualTo(2));
+            }
+            Assert.That(inv.Count(food), Is.Zero);
+        }
+
+        [Test]
+        public void BreachLoot_SkipsQuestItemsAndPreservesPriority()
+        {
+            var food = MakeItem("canned_food", ItemType.Food, stackMax: 5);
+            var quest = MakeItem("sealed_government_document", ItemType.Quest, stackMax: 1);
+            var water = MakeItem("clean_water", ItemType.Water, stackMax: 5);
+            quest.tradeValue = 1000f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(food, 5), Is.True);
+            Assert.That(inv.Add(quest, 1), Is.True);
+            Assert.That(inv.Add(water, 5), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 0f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 15f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.StolenItems, Has.Count.EqualTo(1));
+            Assert.That(result.StolenItems[0].ItemId, Is.EqualTo(water.id),
+                "Water retains its higher loot priority than food");
+            Assert.That(result.StolenItems[0].Amount, Is.EqualTo(3));
+            Assert.That(inv.Count(quest), Is.EqualTo(1), "Quest items are never stolen");
+            Assert.That(inv.Count(food), Is.EqualTo(5));
+            Assert.That(inv.Count(water), Is.EqualTo(2));
+        }
+
+        [TestCase(15f, 3, 2)]
+        [TestCase(40f, 5, 0)]
+        public void BreachLoot_PreservesDeficitBasedTakeAmounts(
+            float raidStrength,
+            int expectedStolen,
+            int expectedRemaining)
+        {
+            var water = MakeItem("clean_water", ItemType.Water, stackMax: 5);
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(water, 5), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 0f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = raidStrength,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Breached, Is.True);
+            Assert.That(result.StolenItems, Has.Count.EqualTo(1));
+            Assert.That(result.StolenItems[0].Amount, Is.EqualTo(expectedStolen));
+            Assert.That(inv.Count(water), Is.EqualTo(expectedRemaining));
+        }
+
+        [Test]
         public void HighSecurity_PlusWeapons_RepelsRaid_ConsumesAmmo()
         {
             var shelter = new Shelter();
