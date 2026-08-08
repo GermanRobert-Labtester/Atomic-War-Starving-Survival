@@ -102,85 +102,105 @@ namespace AtomicWar._Game.Core
         {
             if (gameHours <= 0f) return;
 
-            int converted = 0;
-
             // #256: personal hidden stashes may spoil unless Dragon's Hoard
             // (independent of bunker humidity — stash sits on the person).
-            converted += TickPersonalStashes(_getSurvivors?.Invoke(), gameHours);
+            int converted = TickPersonalStashes(_getSurvivors?.Invoke(), gameHours);
 
-            if (_inventory != null)
-            {
-                var room = humiditySource ?? _storesRoom;
-                float humidity = room != null ? room.Humidity : 0f;
-                if (humidity >= HumidityRustThreshold)
-                {
-                    EnsureContaminatedDef();
-                    if (_contaminatedFoodDef != null)
-                    {
-                        string roomId = room != null ? room.RoomId : null;
-                        float degMult = 1f;
-                        if (_getDegradationMult != null && !string.IsNullOrEmpty(roomId))
-                            degMult = Mathf.Clamp(_getDegradationMult(roomId), 0f, 1f);
-                        float effectiveHours = gameHours * degMult;
-
-                        var slots = _inventory.Slots;
-                        if (slots != null)
-                        {
-                            for (int i = slots.Count - 1; i >= 0; i--)
-                            {
-                                var slot = slots[i];
-                                if (slot?.Item == null || slot.Amount <= 0) continue;
-                                if (slot.Item.type != ItemType.Food) continue;
-
-                                int amount = slot.Amount;
-                                int toConvert = 0;
-                                for (int u = 0; u < amount; u++)
-                                {
-                                    if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
-                                        toConvert++;
-                                }
-                                if (toConvert <= 0) continue;
-
-                                var foodDef = slot.Item;
-                                int removed = Mathf.Min(toConvert, slot.Amount);
-                                if (!_inventory.Remove(foodDef, removed)) continue;
-                                _inventory.Add(_contaminatedFoodDef, removed);
-                                converted += removed;
-                            }
-                        }
-
-                        // Also rust food sitting in room storage slots
-                        if (room?.Slots != null)
-                        {
-                            for (int i = 0; i < room.Slots.Count; i++)
-                            {
-                                var slot = room.Slots[i];
-                                if (slot == null || slot.IsEmpty || slot.Item == null) continue;
-                                if (slot.Item.type != ItemType.Food) continue;
-
-                                int toConvert = 0;
-                                for (int u = 0; u < slot.Amount; u++)
-                                {
-                                    if (_rng.NextDouble() < RustChancePerUnitPerHour * effectiveHours)
-                                        toConvert++;
-                                }
-                                if (toConvert <= 0) continue;
-
-                                int take = Mathf.Min(toConvert, slot.Amount);
-                                slot.RemoveItem(take);
-                                _inventory.Add(_contaminatedFoodDef, take);
-                                converted += take;
-                            }
-                        }
-                    }
-                }
-            }
+            converted += TickHumidityRust(gameHours, humiditySource);
 
             if (converted > 0)
             {
                 OnFoodRusted?.Invoke(converted);
                 OnPantryChanged?.Invoke();
             }
+        }
+
+        /// <summary>
+        /// Humidity-driven Food → ContaminatedFood conversion across both bunker
+        /// inventory and room storage slots. Returns units converted.
+        /// </summary>
+        /// <remarks>
+        /// Extracted from <see cref="Tick"/>, which qlty measured as the most complex
+        /// function in the project. The RNG draw order is load-bearing — this system
+        /// runs off a seeded <see cref="System.Random"/> and campaigns must replay
+        /// identically — so the sequence is unchanged: personal stashes first (in
+        /// Tick), then inventory slots back-to-front, then room slots front-to-back,
+        /// one draw per unit in each.
+        /// </remarks>
+        private int TickHumidityRust(float gameHours, ShelterRoom humiditySource)
+        {
+            if (_inventory == null) return 0;
+
+            var room = humiditySource ?? _storesRoom;
+            float humidity = room != null ? room.Humidity : 0f;
+            if (humidity < HumidityRustThreshold) return 0;
+
+            EnsureContaminatedDef();
+            if (_contaminatedFoodDef == null) return 0;
+
+            string roomId = room != null ? room.RoomId : null;
+            float degMult = 1f;
+            if (_getDegradationMult != null && !string.IsNullOrEmpty(roomId))
+                degMult = Mathf.Clamp(_getDegradationMult(roomId), 0f, 1f);
+            float effectiveHours = gameHours * degMult;
+
+            int converted = 0;
+
+            var slots = _inventory.Slots;
+            if (slots != null)
+            {
+                for (int i = slots.Count - 1; i >= 0; i--)
+                {
+                    var slot = slots[i];
+                    if (slot?.Item == null || slot.Amount <= 0) continue;
+                    if (slot.Item.type != ItemType.Food) continue;
+
+                    int toConvert = RollUnitsToRust(slot.Amount, effectiveHours);
+                    if (toConvert <= 0) continue;
+
+                    var foodDef = slot.Item;
+                    int removed = Mathf.Min(toConvert, slot.Amount);
+                    if (!_inventory.Remove(foodDef, removed)) continue;
+                    _inventory.Add(_contaminatedFoodDef, removed);
+                    converted += removed;
+                }
+            }
+
+            // Also rust food sitting in room storage slots
+            if (room?.Slots != null)
+            {
+                for (int i = 0; i < room.Slots.Count; i++)
+                {
+                    var slot = room.Slots[i];
+                    if (slot == null || slot.IsEmpty || slot.Item == null) continue;
+                    if (slot.Item.type != ItemType.Food) continue;
+
+                    int toConvert = RollUnitsToRust(slot.Amount, effectiveHours);
+                    if (toConvert <= 0) continue;
+
+                    int take = Mathf.Min(toConvert, slot.Amount);
+                    slot.RemoveItem(take);
+                    _inventory.Add(_contaminatedFoodDef, take);
+                    converted += take;
+                }
+            }
+
+            return converted;
+        }
+
+        /// <summary>
+        /// One independent rust roll per unit in a stack. Always draws exactly
+        /// <paramref name="unitCount"/> times so the seeded stream stays aligned.
+        /// </summary>
+        private int RollUnitsToRust(int unitCount, float effectiveHours)
+        {
+            float chancePerUnit = RustChancePerUnitPerHour * effectiveHours;
+            int toConvert = 0;
+            for (int u = 0; u < unitCount; u++)
+            {
+                if (_rng.NextDouble() < chancePerUnit) toConvert++;
+            }
+            return toConvert;
         }
 
         /// <summary>
