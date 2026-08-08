@@ -757,6 +757,9 @@ namespace AtomicWar._Game.Core
                         return _recipeCatalog.recipes[r];
                 return null;
             });
+            // ...and a survivor lookup so a restored craft keeps its crafter
+            // (CrafterId is saved; Crafter itself is [NonSerialized]).
+            CraftingSystem.SetSurvivorLookup(id => Survivors?.Find(s => s.Id == id));
             SaveSystem.SetCraftingSystem(CraftingSystem);
             SaveSystem.SetWorkbenchSystem(WorkbenchSystem);
 

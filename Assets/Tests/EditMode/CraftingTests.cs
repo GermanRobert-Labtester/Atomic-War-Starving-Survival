@@ -3,6 +3,7 @@ using UnityEngine;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -167,6 +168,70 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(catalog.GetById("craft_bandage"), Is.SameAs(recipe));
             Assert.That(catalog.GetById("does_not_exist"), Is.Null);
             Assert.That(catalog.GetById(null), Is.Null);
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // Save / load — CrafterId is persisted, Crafter is [NonSerialized]
+        // ─────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// CaptureState writes CrafterId, so RestoreState must rebind Crafter from it.
+        /// Otherwise a craft saved mid-run completes with a null crafter and silently
+        /// drops that survivor's completion-time yield perks (Pharmacologist high-yield,
+        /// Alchemist double-yield), which both require crafter != null.
+        /// </summary>
+        [Test]
+        public void RestoreState_RebindsCrafter_FromPersistedCrafterId()
+        {
+            var cloth = NewItem("cloth");
+            var bandage = NewItem("bandage", ItemType.Medical);
+            var recipe = NewRecipe("craft_bandage", bandage, 1, 4f, "");
+            recipe.ingredients.Add(new Ingredient { item = cloth, amount = 1 });
+
+            var crafter = new Survivor { Id = "sv_crafter", DisplayName = "Tinker" };
+
+            var seededInv = new Inventory { Capacity = 20, MaxWeight = 1000f };
+            seededInv.Add(cloth, 1);
+            var seeded = new CraftingSystem(seededInv);
+            Assert.That(seeded.StartCraft(recipe, crafter), Is.True);
+
+            var save = seeded.CaptureState();
+            Assert.That(save.ActiveCrafts[0].CrafterId, Is.EqualTo("sv_crafter"),
+                "CrafterId must be captured for the rebind to be possible");
+
+            var loaded = new CraftingSystem(new Inventory { Capacity = 20, MaxWeight = 1000f });
+            loaded.SetRecipeLookup(id => id == "craft_bandage" ? recipe : null);
+            loaded.SetSurvivorLookup(id => id == "sv_crafter" ? crafter : null);
+            loaded.RestoreState(save);
+
+            Assert.That(loaded.ActiveCraftCount, Is.EqualTo(1));
+            Assert.That(loaded.ActiveCrafts[0].Crafter, Is.SameAs(crafter),
+                "Crafter must be rebound from CrafterId on restore");
+        }
+
+        /// <summary>An unknown or absent crafter id must restore the craft, not drop it.</summary>
+        [Test]
+        public void RestoreState_KeepsCraft_WhenCrafterCannotBeResolved()
+        {
+            var cloth = NewItem("cloth");
+            var bandage = NewItem("bandage", ItemType.Medical);
+            var recipe = NewRecipe("craft_bandage", bandage, 1, 4f, "");
+            recipe.ingredients.Add(new Ingredient { item = cloth, amount = 1 });
+
+            var seededInv = new Inventory { Capacity = 20, MaxWeight = 1000f };
+            seededInv.Add(cloth, 1);
+            var seeded = new CraftingSystem(seededInv);
+            // No crafter: an anonymous player-initiated craft.
+            Assert.That(seeded.StartCraft(recipe), Is.True);
+
+            var loaded = new CraftingSystem(new Inventory { Capacity = 20, MaxWeight = 1000f });
+            loaded.SetRecipeLookup(id => id == "craft_bandage" ? recipe : null);
+            // Deliberately no survivor lookup wired.
+            loaded.RestoreState(seeded.CaptureState());
+
+            Assert.That(loaded.ActiveCraftCount, Is.EqualTo(1),
+                "A craft with no resolvable crafter must still be restored");
+            Assert.That(loaded.ActiveCrafts[0].Crafter, Is.Null);
         }
     }
 }

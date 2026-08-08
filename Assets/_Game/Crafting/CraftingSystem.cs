@@ -117,6 +117,9 @@ namespace AtomicWar._Game.Crafting
         /// <summary>Number of crafts currently in progress.</summary>
         public int ActiveCraftCount => _active.Count;
 
+        /// <summary>In-progress crafts (mirrors ExpeditionSystem.ActiveExpeditions).</summary>
+        public IReadOnlyList<ActiveCraft> ActiveCrafts => _active;
+
         /// <summary>Register a station as available for crafting.</summary>
         public void AddStation(CraftingStation station)
         {
@@ -381,21 +384,52 @@ namespace AtomicWar._Game.Crafting
 
         public void SetRecipeLookup(Func<string, Recipe> lookup) => _recipeLookup = lookup;
 
+        /// <summary>
+        /// Survivor lookup used to rebind <see cref="ActiveCraft.Crafter"/> on restore.
+        /// CrafterId is persisted, but Crafter itself is [NonSerialized]; without this
+        /// a craft saved mid-run completes with a null crafter and silently loses the
+        /// crafter's Pharmacologist / Alchemist yield perks.
+        /// </summary>
+        private Func<string, Survivor> _survivorLookup;
+
+        public void SetSurvivorLookup(Func<string, Survivor> lookup) => _survivorLookup = lookup;
+
         public void RestoreState(CraftingSystemSave save)
         {
             _active.Clear();
             if (save?.ActiveCrafts == null) return;
+
+            // Without a recipe lookup every craft below is dropped. That is a wiring
+            // bug (SetRecipeLookup must run before restore), not a content change, and
+            // it silently empties the player's craft queue — say so once.
+            if (_recipeLookup == null && save.ActiveCrafts.Length > 0)
+                Debug.LogWarning(
+                    $"[CraftingSystem] Restoring {save.ActiveCrafts.Length} craft(s) with no recipe lookup wired; " +
+                    "all of them will be dropped. Call SetRecipeLookup before RestoreState.");
+
             for (int i = 0; i < save.ActiveCrafts.Length; i++)
             {
                 var sc = save.ActiveCrafts[i];
                 if (sc == null || string.IsNullOrEmpty(sc.RecipeId)) continue;
                 Recipe recipe = _recipeLookup?.Invoke(sc.RecipeId);
-                if (recipe == null) continue; // recipe removed from catalog — drop the craft
+                if (recipe == null)
+                {
+                    // Recipe genuinely gone from the catalog: dropping is correct, but
+                    // the player loses queued work, so leave a trace.
+                    if (_recipeLookup != null)
+                        Debug.LogWarning(
+                            $"[CraftingSystem] Dropping active craft '{sc.RecipeId}': recipe not in catalog.");
+                    continue;
+                }
                 _active.Add(new ActiveCraft
                 {
                     Recipe = recipe,
-                    HoursRemaining = Mathf.Max(0f, sc.HoursRemaining)
-                    // Crafter is [NonSerialized] — restored by caller if needed
+                    HoursRemaining = Mathf.Max(0f, sc.HoursRemaining),
+                    // Crafter is [NonSerialized]; rebind it from the persisted
+                    // CrafterId so completion-time perks survive a save/load.
+                    Crafter = string.IsNullOrEmpty(sc.CrafterId)
+                        ? null
+                        : _survivorLookup?.Invoke(sc.CrafterId)
                 });
             }
         }
