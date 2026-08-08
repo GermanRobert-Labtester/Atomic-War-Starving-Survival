@@ -14,6 +14,14 @@ namespace AtomicWar._Game.AI.Actions
     [CreateAssetMenu(fileName = "Action_DrinkContaminatedWater", menuName = "ASHFALL/AI/Drink Contaminated Water Action")]
     public class DrinkContaminatedWaterActionSO : SurvivorAction
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("drink_contaminated_action");
+
         [Tooltip("Thirst restored per drink from the dirty/irradiated pool.")]
         public float ThirstRestore = 35f;
         [Tooltip("Only considered once thirst is at or above this (0..100) — a last resort, not a habit.")]
@@ -74,9 +82,7 @@ namespace AtomicWar._Game.AI.Actions
                 if (context.SurvivalPerks != null)
                     chance = context.SurvivalPerks.ScaleIllnessChance(context.Survivor, chance);
 
-                double roll = context.Random != null
-                    ? context.Random.NextDouble()
-                    : UnityEngine.Random.value;
+                double roll = (context.Random ?? FallbackRng).NextDouble();
                 if (roll < chance)
                 {
                     SurvivorNeedWrite.AdjustHealth(context.Survivor, -DirtyWaterIllnessHealthLoss);

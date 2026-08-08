@@ -117,7 +117,8 @@ namespace AtomicWar._Game.Events
 
             if (totalWeight <= 0f) return choices[0];
 
-            double roll = rng != null ? rng.NextDouble() * totalWeight : UnityEngine.Random.Range(0f, totalWeight);
+            // MISC-005: seeded fallback rather than wall-clock UnityEngine.Random.
+            double roll = (rng ?? FallbackRng).NextDouble() * totalWeight;
             float accum = 0f;
             for (int i = 0; i < choices.Count; i++)
             {

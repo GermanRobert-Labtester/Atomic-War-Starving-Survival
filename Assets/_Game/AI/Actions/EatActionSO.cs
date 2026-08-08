@@ -8,6 +8,14 @@ namespace AtomicWar._Game.AI.Actions
     [CreateAssetMenu(fileName = "Action_Eat", menuName = "ASHFALL/AI/Eat Action")]
     public class EatActionSO : SurvivorAction
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("eat_action");
+
         public string FoodItemId = "canned_food";
 
         /// <summary>Probability of botulism when eating ContaminatedFood (Internal Horror).</summary>
@@ -188,9 +196,7 @@ namespace AtomicWar._Game.AI.Actions
                     float chance = ContaminatedBotulismChance;
                     if (context.SurvivalPerks != null)
                         chance = context.SurvivalPerks.ScaleIllnessChance(survivor, chance);
-                    double roll = context.Random != null
-                        ? context.Random.NextDouble()
-                        : UnityEngine.Random.value;
+                    double roll = (context.Random ?? FallbackRng).NextDouble();
                     if (roll < chance)
                         context.MedicalSystem.Inflict(survivor, AfflictionSO.Ids.Botulism);
                 }

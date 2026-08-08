@@ -23,6 +23,15 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class ShelterModule_Confessional
     {
+        /// <summary>
+        /// MISC-005: seeded stream backing the default <c>randomFloat</c>. The
+        /// parameter exists so hosts can pass a campaign rng for deterministic
+        /// replay; the old default reached for wall-clock UnityEngine.Random, so
+        /// every caller that omitted it silently opted out of determinism.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("sheltermodule_confessional");
+
         private ConfessionalModuleState _state = new ConfessionalModuleState();
 
         private const float SessionDurationHours = 2f;
@@ -113,7 +122,7 @@ namespace AtomicWar._Game.Core
         {
             if (!_state.sessionActive) return;
 
-            Func<float> rng = randomFloat ?? (() => UnityEngine.Random.value);
+            Func<float> rng = randomFloat ?? (() => (float)FallbackRng.NextDouble());
 
             float curechance = BaseCurechance + (listenerEmpathy * EmpathyBonus);
             bool success = rng() < curechance;

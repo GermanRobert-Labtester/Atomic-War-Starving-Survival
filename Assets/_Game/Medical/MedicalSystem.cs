@@ -17,6 +17,14 @@ namespace AtomicWar._Game.Medical
     /// </summary>
     public class MedicalSystem
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("medical_system_ingredients");
+
         /// <summary>LatentDamage at/above this multiplies infection lethality.</summary>
         public const float ImmuneCollapseLatentThreshold = 30f;
 
@@ -1163,11 +1171,11 @@ namespace AtomicWar._Game.Medical
             {
                 var (item, amount, secondary) = resolved[i];
                 // High skill may spare secondary ingredients (not the primary dressing).
-                // Use surgery RNG for deterministic save/load; fall back to UnityEngine.Random
-                // when no RNG has been injected (e.g. tests that don't wire MedicalSystem).
+                // Use surgery RNG for deterministic save/load; falls back to a seeded
+                // stream when no RNG has been injected (e.g. tests that do not wire MedicalSystem).
                 if (secondary && skill > 0.6f)
                 {
-                    double roll = _surgeryRng != null ? _surgeryRng.NextDouble() : UnityEngine.Random.value;
+                    double roll = (_surgeryRng ?? FallbackRng).NextDouble();
                     if (roll < skill * 0.4f)
                         continue;
                 }

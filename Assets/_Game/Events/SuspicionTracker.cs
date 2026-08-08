@@ -13,6 +13,14 @@ namespace AtomicWar._Game.Events
     /// </summary>
     public class SuspicionTracker
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("suspicion_tracker");
+
         public const float ResourceStarvedThreshold = 0.10f;
         public const float HoursUntilMystery = 24f;
         public const float IgnoreVanishHours = 48f;
@@ -175,7 +183,7 @@ namespace AtomicWar._Game.Events
             if (candidates.Count == 0) return null;
             if (total <= 0f) return candidates[0];
 
-            double roll = rng != null ? rng.NextDouble() * total : UnityEngine.Random.Range(0f, total);
+            double roll = (rng ?? FallbackRng).NextDouble() * total;
             float accum = 0f;
             for (int i = 0; i < candidates.Count; i++)
             {

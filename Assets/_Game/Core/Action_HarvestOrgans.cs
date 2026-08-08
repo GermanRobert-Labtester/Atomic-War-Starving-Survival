@@ -15,6 +15,14 @@ namespace AtomicWar._Game.Core
     /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_HarvestOrgans
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call site below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("action_harvestorgans");
+
         public Action_HarvestOrgansState State { get; private set; }
 
         public event Action<string, int, float> OnOrgansHarvested;
@@ -44,7 +52,7 @@ namespace AtomicWar._Game.Core
                 return (0, 0f);
             }
 
-            int organsYielded = UnityEngine.Random.Range(1, 4);
+            int organsYielded = FallbackRng.Next(1, 4);
             float moraleDelta = State.moralePenalty;
 
             State.hasBeenUsed = true;

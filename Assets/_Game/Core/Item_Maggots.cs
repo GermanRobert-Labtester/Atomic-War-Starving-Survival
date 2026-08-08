@@ -15,6 +15,14 @@ namespace AtomicWar._Game.Core
 
     public class Item_Maggots
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call site below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_maggots");
+
         public Item_MaggotsState State { get; private set; }
 
         public event Action<string, bool, float> OnMaggotsApplied;
@@ -52,7 +60,7 @@ namespace AtomicWar._Game.Core
             }
 
             float moraleDelta = State.horrorDebuff + State.painDebuff;
-            bool cured = UnityEngine.Random.value <= State.cureRate;
+            bool cured = FallbackRng.NextDouble() <= State.cureRate;
 
             State.currentStack--;
 

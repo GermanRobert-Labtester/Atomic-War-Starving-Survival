@@ -35,6 +35,15 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class Event_SecretSociety
     {
+        /// <summary>
+        /// MISC-005: seeded stream backing the default <c>randomFloat</c>. The
+        /// parameter exists so hosts can pass a campaign rng for deterministic
+        /// replay; the old default reached for wall-clock UnityEngine.Random, so
+        /// every caller that omitted it silently opted out of determinism.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("event_secretsociety");
+
         private SecretSocietyState _state = new SecretSocietyState();
         private int _nextCliqueIndex;
         private const float AffinityThreshold = 0.7f;
@@ -133,7 +142,7 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void TickDay(Func<float> randomFloat = null)
         {
-            Func<float> rng = randomFloat ?? (() => UnityEngine.Random.value);
+            Func<float> rng = randomFloat ?? (() => (float)FallbackRng.NextDouble());
 
             foreach (var clique in _state.cliques)
             {

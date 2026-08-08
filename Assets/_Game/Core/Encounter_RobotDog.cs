@@ -28,6 +28,14 @@ namespace AtomicWar._Game.Core
     /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_RobotDog
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call sites below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+        private static readonly System.Random FallbackRng =
+            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("encounter_robotdog");
+
         private RobotDogState _state = new RobotDogState();
 
         /// <summary>
@@ -86,7 +94,7 @@ namespace AtomicWar._Game.Core
                 return false;
 
             // 60% base hack chance if qualified
-            if (UnityEngine.Random.value < HackBaseChance)
+            if (FallbackRng.NextDouble() < HackBaseChance)
             {
                 _state.isHacked = true;
                 _state.isDefeated = true;
