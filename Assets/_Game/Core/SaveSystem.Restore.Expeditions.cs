@@ -27,6 +27,17 @@ namespace AtomicWar._Game.Core
             var existingExpeditions = _expeditionSystem.ActiveExpeditions as List<ExpeditionState>;
             var survivors = _getSurvivors?.Invoke();
 
+            // SAVE-008: the save list is authoritative. Loading over a live
+            // session (Continue without a scene reload) otherwise leaves any
+            // expedition the save does not mention running as a phantom —
+            // it keeps ticking, keeps its survivor away, and returns loot the
+            // saved campaign never sent out.
+            if (existingExpeditions != null)
+                existingExpeditions.Clear();
+            else
+                Debug.LogWarning(
+                    "[SaveSystem] ActiveExpeditions is not a mutable list; stale expeditions may survive load.");
+
             foreach (var saveExp in expeditions)
             {
                 if (saveExp == null || string.IsNullOrEmpty(saveExp.SurvivorId)) continue;
@@ -39,10 +50,11 @@ namespace AtomicWar._Game.Core
 
         private static Survivor FindSurvivorById(IReadOnlyList<Survivor> survivors, string id)
         {
-            if (survivors == null) return null;
+            if (survivors == null || string.IsNullOrEmpty(id)) return null;
             for (int i = 0; i < survivors.Count; i++)
             {
-                if (survivors[i]?.Id == id)
+                if (survivors[i] != null
+                    && string.Equals(survivors[i].Id, id, StringComparison.Ordinal))
                     return survivors[i];
             }
             return null;

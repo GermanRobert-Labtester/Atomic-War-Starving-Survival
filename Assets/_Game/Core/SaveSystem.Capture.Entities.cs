@@ -88,6 +88,16 @@ namespace AtomicWar._Game.Core
                 DangerLevel = exp.DangerLevel,
                 IsPushingLuck = exp.IsPushingLuck,
                 IsRetreating = exp.IsRetreating,
+
+                // Day-30 Flashpoint intercept state — restore reads these back
+                // (SaveSystem.Restore.Expeditions.ApplyExpeditionSaveFields).
+                IsCommsSevered = exp.isCommsSevered,
+                FlashpointBehavior = exp.flashpointBehavior,
+                OriginalEtaTicks = exp.originalEtaTicks,
+                ShelterDelayTicksRemaining = exp.shelterDelayTicksRemaining,
+                ReturnSpeedMultiplier = exp.returnSpeedMultiplier,
+                ReturnSpeedDivisor = exp.returnSpeedDivisor,
+
                 LocationEncounterFired = exp.LocationEncounterFired,
                 UxoDetonated = exp.UxoDetonated,
                 HasBicycle = exp.HasBicycle,
