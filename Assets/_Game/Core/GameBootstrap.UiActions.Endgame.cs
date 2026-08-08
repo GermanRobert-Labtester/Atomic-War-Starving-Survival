@@ -103,6 +103,58 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// DEEP3-WIN-001 — wire <see cref="EndgameEngine.OnCampaignEnded"/> to a freeze.
+        /// EndgameEngine raises a struct event with a <see cref="CampaignResult"/> and an
+        /// <see cref="EndgameConditionKind"/>, but the only existing ApplyEndgame takes an
+        /// <see cref="EndgameSummaryData"/>. This adapter fills the summary from the
+        /// engine's result + a small enum→state map and forwards to the same freeze path
+        /// VictoryProject already uses. After this, a natural all-dead / bunker-collapse /
+        /// extraction / 100-day-self-sufficient / lifeboat ending actually ends the run.
+        /// </summary>
+        private void ApplyEndgameFromEndgameEngine()
+        {
+            if (EndgameEngine == null || EndgameEngine.Result == null) return;
+            if (IsGameOver) return;
+
+            var r = EndgameEngine.Result;
+            var summary = new EndgameSummaryData
+            {
+                State = MapConditionToEndgameState(r.ConditionKind),
+                DaysSurvived = Mathf.Max(1, r.DaysSurvived),
+                Reason = r.OutcomeSummary ?? string.Empty,
+                OutcomeTitle = r.IsVictory ? "Rescue" : "Loss",
+                OutcomeBody = r.OutcomeSummary ?? string.Empty,
+                DeathScreen = r.ConditionKind == EndgameConditionKind.AllSurvivorsDeceased
+                    ? DeathScreenKind.Mixed
+                    : DeathScreenKind.None,
+                LivingCount = Survivors != null ? CountLiving() : 0,
+                DeadCount = Survivors != null ? Survivors.Count - CountLiving() : 0,
+            };
+            ApplyEndgame(summary);
+        }
+
+        private static EndgameState MapConditionToEndgameState(EndgameConditionKind kind) => kind switch
+        {
+            EndgameConditionKind.RescueExtractionSuccess => EndgameState.Rescued,
+            EndgameConditionKind.LongTermSelfSufficiency => EndgameState.Rescued,
+            EndgameConditionKind.LifeboatPartialExtraction => EndgameState.Lifeboat,
+            EndgameConditionKind.AllSurvivorsDeceased => EndgameState.Starved,
+            EndgameConditionKind.BunkerStructuralCollapse => EndgameState.Irradiated,
+            _ => EndgameState.Ongoing,
+        };
+
+        private int CountLiving()
+        {
+            if (Survivors == null) return 0;
+            int n = 0;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                if (Survivors[i] != null && Survivors[i].IsAlive) n++;
+            }
+            return n;
+        }
+
+        /// <summary>
         /// Prompt #861 — rank strategies used this run and bake warlord gear counters.
         /// </summary>
         private void FinalizeAdaptiveWarlordsForNextRun()

@@ -152,16 +152,32 @@ namespace AtomicWar._Game.Core
 
         public void DestroyRuntimeAssets()
         {
+            // MISC-003: DestroyImmediate is for editor/import time; play mode should
+            // use Destroy so assets are cleaned up at end-of-frame safely.
             for (int i = 0; i < _runtimeFreqs.Count; i++)
             {
                 if (_runtimeFreqs[i] != null)
-                    UnityEngine.Object.DestroyImmediate(_runtimeFreqs[i]);
+                {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying) UnityEngine.Object.DestroyImmediate(_runtimeFreqs[i]);
+                    else UnityEngine.Object.Destroy(_runtimeFreqs[i]);
+#else
+                    UnityEngine.Object.Destroy(_runtimeFreqs[i]);
+#endif
+                }
             }
             _runtimeFreqs.Clear();
             for (int i = 0; i < _runtimeBroadcasts.Count; i++)
             {
                 if (_runtimeBroadcasts[i] != null)
-                    UnityEngine.Object.DestroyImmediate(_runtimeBroadcasts[i]);
+                {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying) UnityEngine.Object.DestroyImmediate(_runtimeBroadcasts[i]);
+                    else UnityEngine.Object.Destroy(_runtimeBroadcasts[i]);
+#else
+                    UnityEngine.Object.Destroy(_runtimeBroadcasts[i]);
+#endif
+                }
             }
             _runtimeBroadcasts.Clear();
         }

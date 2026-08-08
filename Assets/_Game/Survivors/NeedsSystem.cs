@@ -18,7 +18,7 @@ namespace AtomicWar._Game.Survivors
     /// Bad/good event morale hook: event-handling code can call
     /// Modify(survivor, NeedKind.Morale, delta) directly.
     /// </summary>
-    public class NeedsSystem
+    public partial class NeedsSystem
     {
         private readonly NeedsProfile _profile;
         private readonly Func<Survivor, bool> _isNearHeatSource;
@@ -126,193 +126,78 @@ namespace AtomicWar._Game.Survivors
                 return;
             }
 
+            ApplyBaseNeedDrift(survivor, gameHours);
+            TickLightExposure(survivor, gameHours);
+            ApplyCriticalNeedConsequences(survivor, gameHours);
+
+            if (survivor.IsAlive)
+            {
+                ApplyPersonalQuestEffects(survivor, gameHours);
+            }
+        }
+
+        private void ApplyBaseNeedDrift(Survivor survivor, float gameHours)
+        {
             // #275 Zen State: 80% reduced hunger/thirst/fatigue decay.
-            float needsMult = 1f;
-            if (_personalQuests != null)
-                needsMult = _personalQuests.GetZenNeedsDecayMultiplier(survivor);
+            float needsMultiplier = _personalQuests != null
+                ? _personalQuests.GetZenNeedsDecayMultiplier(survivor)
+                : 1f;
+
             // #316 Synth: androids don't need food/water; Overclocked doesn't need sleep.
-            bool needsFoodWater = _personalQuests == null || _personalQuests.NeedsFoodOrWater(survivor);
-            bool needsSleep = _personalQuests == null || _personalQuests.NeedsSleep(survivor);
-            if (needsFoodWater)
+            if (_personalQuests == null || _personalQuests.NeedsFoodOrWater(survivor))
             {
-                Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours * needsMult);
-                Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours * needsMult);
+                Modify(survivor, NeedKind.Hunger, _profile.hungerPerHour * gameHours * needsMultiplier);
+                Modify(survivor, NeedKind.Thirst, _profile.thirstPerHour * gameHours * needsMultiplier);
             }
-            if (needsSleep)
-                Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours * needsMult);
+
+            if (_personalQuests == null || _personalQuests.NeedsSleep(survivor))
+            {
+                Modify(survivor, NeedKind.Fatigue, _profile.fatiguePerHour * gameHours * needsMultiplier);
+            }
+
             ApplyWarmth(survivor, gameHours);
+        }
 
-            // Light / photoperiod tick — null-safe; skipped when not wired
-            if (_getEffectiveDaylightHours != null && _lightProfile != null)
-            {
-                bool growLight = _isGrowLightActive != null && _isGrowLightActive();
-                bool ignoreDark = IgnoresDarknessMorale != null && IgnoresDarknessMorale(survivor);
-                LightSystemHelper.TickSurvivorLight(
-                    survivor,
-                    gameHours,
-                    _getEffectiveDaylightHours(),
-                    growLight,
-                    _lightProfile,
-                    ignoreDarknessMorale: ignoreDark);
-            }
+        private void TickLightExposure(Survivor survivor, float gameHours)
+        {
+            if (_getEffectiveDaylightHours == null || _lightProfile == null) return;
 
-            var needs = survivor.Needs;
+            bool growLight = _isGrowLightActive != null && _isGrowLightActive();
+            bool ignoreDarkness = IgnoresDarknessMorale != null && IgnoresDarknessMorale(survivor);
+            LightSystemHelper.TickSurvivorLight(
+                survivor,
+                gameHours,
+                _getEffectiveDaylightHours(),
+                growLight,
+                _lightProfile,
+                ignoreDarknessMorale: ignoreDarkness);
+        }
+
+        private void ApplyCriticalNeedConsequences(Survivor survivor, float gameHours)
+        {
+            Needs needs = survivor.Needs;
             bool hungerCritical = needs.Hunger >= _profile.hungerCritical;
             bool thirstCritical = needs.Thirst >= _profile.thirstCritical;
             bool warmthCritical = needs.Warmth <= _profile.warmthCritical;
+            if (!hungerCritical && !thirstCritical && !warmthCritical) return;
 
-            // Health is medical-domain: active Afflictions (MedicalSystem) own health
-            // drain/recovery. Critical hunger/thirst/cold still punish morale and can
-            // be mirrored as afflictions by content systems, but no longer write Health
-            // here — so the Health bar is not a free-floating second meter.
-            if (hungerCritical || thirstCritical || warmthCritical)
-            {
-                Modify(survivor, NeedKind.Morale, -_profile.moraleLossPerHourWhileCritical * gameHours);
-            }
+            Modify(
+                survivor,
+                NeedKind.Morale,
+                -Mathf.Max(0f, _profile.moraleLossPerHourWhileCritical) * gameHours);
 
-            // #262 Hyper-Empathetic: morale drifts toward bunker average.
-            if (_personalQuests != null && _personalQuests.HasHyperEmpathetic(survivor))
-            {
-                float avg = ComputeBunkerAverageMorale(survivor);
-                _personalQuests.ApplyHyperEmpatheticMorale(survivor, avg, gameHours);
-            }
+            // Profile fields are loss-per-hour while critical. Apply each active
+            // condition once; in particular, cold must hurt at the exact threshold
+            // instead of waiting until Warmth falls below it.
+            float healthLossPerHour = 0f;
+            if (hungerCritical)
+                healthLossPerHour += Mathf.Max(0f, _profile.healthLossFromHunger);
+            if (thirstCritical)
+                healthLossPerHour += Mathf.Max(0f, _profile.healthLossFromThirst);
+            if (warmthCritical)
+                healthLossPerHour += Mathf.Max(0f, _profile.healthLossFromCold);
 
-            // #265 Living Saint: permanent Inspired morale floor for the bunker.
-            _personalQuests?.ApplyLivingSaintMoraleFloor(survivor);
-
-            if (_personalQuests == null) return;
-
-            // #268 Restless: clamp fatigue to permanent cap.
-            float fatCap = _personalQuests.GetMaxFatigueCap(survivor);
-            if (survivor.Needs.Fatigue > fatCap)
-                survivor.Needs.Fatigue = fatCap;
-
-            // #275 Hunger strike tick (Pacifist Monk).
-            _personalQuests.TickHungerStrike(survivor);
-
-            // #269 Hypochondriac: fake illness without placebo → real morale/fatigue hit.
-            if (_personalQuests.ShouldGenerateFakeAfflictionAlert(survivor))
-                _personalQuests.ApplyHypochondriacPlaceboTick(survivor, givenPlacebo: false);
-
-            // #278 Moral Compass aura (bunker-wide small morale).
-            float compass = _personalQuests.GetMoralCompassBunkerMorale(
-                _getSurvivors != null ? _getSurvivors() : _survivors);
-            if (compass > 0f)
-                survivor.Needs.Morale = UnityEngine.Mathf.Min(100f, survivor.Needs.Morale + compass * gameHours * 0.1f);
-
-            // #282 Agoraphile: fractional bunker morale hit (day counter advances in TickDaily).
-            if (_personalQuests.HasAgoraphile(survivor) && !survivor.IsOnExpedition)
-            {
-                float hit = _personalQuests.GetAgoraphileBunkerMoraleHitPerDay(survivor) * (gameHours / 24f);
-                if (hit > 0f)
-                    survivor.Needs.Morale = UnityEngine.Mathf.Max(0f, survivor.Needs.Morale - hit);
-            }
-
-            // #267 Forced chem: only reset dose clock when host actually drains stock.
-            // No free withdrawal immunity — missing stock leaves HoursSinceLastDose running.
-            if (_personalQuests.ShouldForceConsumeMedicalChems(survivor))
-            {
-                bool consumed = ForcedChemConsumeHandler != null
-                    && ForcedChemConsumeHandler(survivor);
-                if (consumed)
-                {
-                    survivor.HoursSinceLastDose = 0f;
-                    _personalQuests.NotifyChemUsed(survivor);
-                }
-            }
-
-            // #278 Failing Heart: decay max stamina proxy + extra fatigue pressure.
-            if (_personalQuests.HasFailingHeart(survivor))
-            {
-                _personalQuests.TickFailingHeart(survivor, currentDay: survivor.DaysAlive);
-                float stam = _personalQuests.GetFailingHeartStaminaMax(
-                    survivor, survivor.DaysAlive);
-                if (stam < 100f && gameHours > 0f)
-                {
-                    float pressure = (1f - stam / 100f) * 2f * gameHours;
-                    survivor.Needs.Fatigue = UnityEngine.Mathf.Min(
-                        100f, survivor.Needs.Fatigue + pressure);
-                }
-            }
-
-            // #284 Black Lung: reduced max stamina → proportional fatigue pressure.
-            if (_personalQuests.HasBlackLung(survivor) && gameHours > 0f)
-            {
-                float stamMult = _personalQuests.GetBlackLungStaminaMaxMultiplier(survivor);
-                if (stamMult < 1f)
-                {
-                    float pressure = (1f - stamMult) * 3f * gameHours;
-                    survivor.Needs.Fatigue = UnityEngine.Mathf.Min(
-                        100f, survivor.Needs.Fatigue + pressure);
-                }
-            }
-
-            // #284 Claustrophilic: morale gain when already deep/underground (room id hint).
-            if (_personalQuests.HasClaustrophilic(survivor)
-                && IsSmallUndergroundRoomId(survivor.CurrentRoomId))
-            {
-                _personalQuests.ApplyClaustrophilicMorale(
-                    survivor, inSmallUndergroundRoom: true, gameHours: gameHours);
-            }
-
-            // #287 Neat Freak + #281 Photogenic: hygiene-driven morale pressure.
-            float hygiene01 = survivor.Needs.Hygiene / 100f;
-            _personalQuests.ApplyNeatFreakHygienePressure(survivor, hygiene01);
-            _personalQuests.ApplyPhotogenicHygieneMorale(survivor, hygiene01);
-
-            // #291 Frail: clamp health to cap.
-            float healthCap = _personalQuests.GetMaxHealthCapForQuests(survivor);
-            if (survivor.Needs.Health > healthCap)
-                survivor.Needs.Health = healthCap;
-
-            // #305 Twin Beta: mirror Twin Alpha's needs until Hive Healing unlocks independence.
-            string twinPartnerId = _personalQuests.GetTwinPartnerId(survivor);
-            if (!string.IsNullOrEmpty(twinPartnerId))
-            {
-                var crew = _getSurvivors != null ? _getSurvivors() : _survivors;
-                if (crew != null)
-                {
-                    for (int i = 0; i < crew.Count; i++)
-                    {
-                        var partner = crew[i];
-                        if (partner != null && string.Equals(partner.Id, twinPartnerId, StringComparison.Ordinal))
-                        {
-                            _personalQuests.MirrorTwinAlphaNeeds(survivor, partner);
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private static bool IsSmallUndergroundRoomId(string roomId)
-        {
-            if (string.IsNullOrEmpty(roomId)) return false;
-            return roomId.IndexOf("bunker", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("cellar", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("tunnel", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("shaft", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("deep", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("mine", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("sublevel", System.StringComparison.OrdinalIgnoreCase) >= 0
-                   || roomId.IndexOf("basement", System.StringComparison.OrdinalIgnoreCase) >= 0;
-        }
-
-        private float ComputeBunkerAverageMorale(Survivor exclude = null)
-        {
-            var all = _getSurvivors != null ? _getSurvivors() : _survivors;
-            if (all == null || all.Count == 0) return 50f;
-            float sum = 0f;
-            int n = 0;
-            for (int i = 0; i < all.Count; i++)
-            {
-                var s = all[i];
-                if (s == null || !s.IsAlive || s.Needs == null) continue;
-                if (exclude != null && ReferenceEquals(s, exclude)) continue;
-                sum += s.Needs.Morale;
-                n++;
-            }
-            return n > 0 ? sum / n : 50f;
+            Modify(survivor, NeedKind.Health, -healthLossPerHour * gameHours);
         }
 
         /// <summary>Apply a clamped delta to a single need of a survivor.</summary>
@@ -424,6 +309,28 @@ namespace AtomicWar._Game.Survivors
             survivor.Needs.Health = 0f;
             survivor.State = SurvivorState.Dead;
             OnDied?.Invoke(survivor);
+        }
+
+        /// <summary>
+        /// Absolute health write that still runs death evaluation (MISC-006).
+        /// Prefer this over <c>survivor.Needs.Health = …</c> from combat/events.
+        /// </summary>
+        public void SetHealth(Survivor survivor, float health)
+        {
+            if (survivor == null || !survivor.IsAlive || survivor.Needs == null) return;
+            float maxCap = survivor.MaxHealthCap;
+            if (_personalQuests != null)
+                maxCap = Mathf.Min(maxCap, _personalQuests.GetMaxHealthCapForQuests(survivor));
+            survivor.Needs.Health = Mathf.Clamp(health, 0f, maxCap);
+            OnNeedChanged?.Invoke(survivor, NeedKind.Health, survivor.Needs.Health);
+            EvaluateDeath(survivor);
+        }
+
+        /// <summary>Delta health write that still runs death evaluation.</summary>
+        public void AdjustHealth(Survivor survivor, float delta)
+        {
+            if (survivor == null || !survivor.IsAlive || survivor.Needs == null || delta == 0f) return;
+            SetHealth(survivor, survivor.Needs.Health + delta);
         }
 
         private static float GetValue(Needs needs, NeedKind kind)

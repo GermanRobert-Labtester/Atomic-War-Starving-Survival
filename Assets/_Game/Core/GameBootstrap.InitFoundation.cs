@@ -388,6 +388,13 @@ namespace AtomicWar._Game.Core
                 ApplyEndgame(summary);
             };
 
+            // DEEP3-WIN-001 — EndgameEngine.Evaluate raises OnCampaignEnded and routes
+            // a CampaignEndedEvent through the bus, but nothing freezes the run on that
+            // path: only VictoryProject.OnEndgameTriggered was wired to ApplyEndgame. A
+            // natural all-dead / bunker-collapse / extraction / 100-day ending now sets
+            // IsGameOver and pauses the clock instead of silently continuing.
+            EndgameEngine.OnCampaignEnded += _ => ApplyEndgameFromEndgameEngine();
+
         }
 
         private void InitMentalBreakAndTraits()
@@ -445,6 +452,13 @@ namespace AtomicWar._Game.Core
             // Prompts #214–#219 — personal quest engine + latent expert traits
             PersonalQuests = new PersonalQuestSystem();
             PersonalQuests.Bind(SkillProgression);
+            // MISC-007 — quest rad spikes go through RadiationSystem when present.
+            PersonalQuests.BindRadiationDose((sv, delta) =>
+            {
+                if (RadiationSystem != null) RadiationSystem.AdjustDose(sv, delta);
+                else if (sv != null)
+                    sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + delta, 0f, 100f);
+            });
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────

@@ -50,8 +50,15 @@ namespace AtomicWar._Game.AI.Actions
                     var slot = context.Inventory.Slots[i];
                     if (slot != null && slot.Item != null && slot.Item.id == IodineItemId && slot.Amount > 0)
                     {
-                        context.Inventory.Remove(slot.Item, 1);
-                        break;
+                        if (!context.Inventory.Remove(slot.Item, 1)) return;
+
+                        // DEEP3-INV-004 — removing the pill was cosmetic without this.
+                        // The radiation math lives in RadiationSystem, so the only way
+                        // for 'took iodine' to mean anything is to start the resistance
+                        // window there. Mirrors the inventory path in Inventory.Consume.
+                        if (context.RadiationSystem != null)
+                            context.RadiationSystem.AdministerIodine(context.Survivor);
+                        return;
                     }
                 }
             }

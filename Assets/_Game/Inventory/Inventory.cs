@@ -287,10 +287,19 @@ namespace AtomicWar._Game.Inventory
         }
 
         /// <summary>Add a quantity of an item; false if stack, weight, or capacity limits are exceeded.</summary>
+        /// <remarks>
+        /// All-or-nothing: if the whole <paramref name="amount"/> cannot fit (stack, weight,
+        /// or capacity), the inventory is left untouched and OnItemAdded is not fired.
+        /// Previously this method filled existing stacks and started new ones, returning
+        /// false mid-loop after firing OnItemAdded for a partial amount — callers treating
+        /// 'false' as 'nothing happened' would silently drop the remainder. Now identical
+        /// to <see cref="CanAdd"/> on rejection, and only fires events when the full
+        /// amount was placed.
+        /// </remarks>
         public bool Add(ItemDefinition item, int amount)
         {
             if (item == null || amount <= 0) return false;
-            if (MaxWeight > 0f && GetCurrentWeight() + item.weight * amount > MaxWeight) return false;
+            if (!CanAdd(item, amount)) return false;
 
             int stackMax = item.stackMax > 0 ? item.stackMax : 99;
 
@@ -316,10 +325,6 @@ namespace AtomicWar._Game.Inventory
 
             while (amount > 0)
             {
-                if (Capacity > 0 && _slots.Count >= Capacity)
-                {
-                    return false;
-                }
                 int toAdd = Mathf.Min(stackMax, amount);
                 _slots.Add(new InventorySlot
                 {
@@ -463,6 +468,13 @@ namespace AtomicWar._Game.Inventory
         }
 
         /// <summary>Unequip the item in a slot, returning it to storage. Returns the item or null.</summary>
+        /// <remarks>
+        /// Rolls back on full bag. Previously the equipped entry was removed and then
+        /// <see cref="Add"/> was called ignoring its return — a full bag destroyed the
+        /// gear. Now: preflight with <see cref="CanAdd"/>; only remove from equipped
+        /// when storage is guaranteed to accept the item. Returns the item on success,
+        /// null on no-op (nothing equipped in the slot, or no space to store).
+        /// </remarks>
         public ItemDefinition Unequip(EquipSlot slot)
         {
             for (int i = 0; i < _equipped.Count; i++)
@@ -471,6 +483,7 @@ namespace AtomicWar._Game.Inventory
                 if (equipped != null && equipped.Item != null && equipped.Item.equipSlot == slot)
                 {
                     var item = equipped.Item;
+                    if (!CanAdd(item, 1)) return null;
                     _equipped.RemoveAt(i);
                     Add(item, 1);
                     OnInventoryChanged?.Invoke();
@@ -556,6 +569,13 @@ namespace AtomicWar._Game.Inventory
         /// <paramref name="therapeuticScale"/> scales health and rad-cleanse only
         /// (Prompt #833 chem tolerance); hunger/thirst/morale/contamination unchanged.
         /// </summary>
+        /// <remarks>
+        /// Hunger/Thirst run on a 0..100 scale where HIGHER = WORSE (hungerCritical=100
+        /// means 'starving'). A positive item.hungerRestore therefore SUBTRACTS from
+        /// the need. This was inverted (a +40 hungerRestore made starving survivors
+        /// hungrier) and was the audit's DEEP3-INV-001. AI EatActionSO already does
+        /// <c>Hunger = Max(0, Hunger - restore)</c>; this matches the AI's intent.
+        /// </remarks>
         public bool Consume(
             ItemDefinition item,
             Survivor survivor,
@@ -571,8 +591,8 @@ namespace AtomicWar._Game.Inventory
 
             if (needs != null)
             {
-                needs.Modify(survivor, NeedKind.Hunger, item.hungerRestore);
-                needs.Modify(survivor, NeedKind.Thirst, item.thirstRestore);
+                needs.Modify(survivor, NeedKind.Hunger, -item.hungerRestore);
+                needs.Modify(survivor, NeedKind.Thirst, -item.thirstRestore);
                 needs.Modify(survivor, NeedKind.Health, item.healthEffect * scale);
                 needs.Modify(survivor, NeedKind.Morale, item.moraleEffect);
             }
