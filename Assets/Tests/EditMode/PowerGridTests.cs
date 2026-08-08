@@ -256,5 +256,50 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(restored.GetConsumer("grow_light").IsRequested, Is.True);
             Assert.That(restored.GetSource("bicycle_generator").PedalingSurvivorId, Is.EqualTo("sv_elena"));
         }
+
+        /// <summary>
+        /// SAVE-011: a Thermodynamics survivor (ShelterPerkSystem) refuels at a 0.8
+        /// burn multiplier. That multiplier lives only on the source instance, so if
+        /// the save drops it the generator silently reverts to the stock burn rate on
+        /// load and the player loses the fuel efficiency they paid a perk for.
+        /// </summary>
+        [Test]
+        public void SaveRestore_PreservesFuelBurnMultiplier()
+        {
+            var net = PowerNetwork.CreateDefault(0f);
+            net.GetSource("diesel_generator").AddFuel(
+                20f, ShelterPerkSystem.ThermodynamicsFuelBurnMultiplier);
+            Assert.That(net.GetSource("diesel_generator").FuelBurnMultiplier,
+                Is.EqualTo(0.8f).Within(Eps), "precondition: refuel set the multiplier");
+
+            var restored = new PowerNetwork();
+            restored.RegisterSourceDefinition(_diesel);
+            restored.RegisterSourceDefinition(_bike);
+            restored.RestoreState(net.CaptureState());
+
+            Assert.That(restored.GetSource("diesel_generator").FuelBurnMultiplier,
+                Is.EqualTo(0.8f).Within(Eps),
+                "Thermodynamics burn multiplier must survive save/load");
+        }
+
+        /// <summary>A save written before SAVE-011 has no FuelBurnMultiplier key, which
+        /// deserialises to 0. That must restore as the stock rate, not as free fuel.</summary>
+        [Test]
+        public void SaveRestore_LegacySaveWithoutBurnMultiplier_FallsBackToStockRate()
+        {
+            var net = PowerNetwork.CreateDefault(20f);
+            var save = net.CaptureState();
+            for (int i = 0; i < save.Sources.Length; i++)
+                save.Sources[i].FuelBurnMultiplier = 0f; // as a pre-SAVE-011 file loads
+
+            var restored = new PowerNetwork();
+            restored.RegisterSourceDefinition(_diesel);
+            restored.RegisterSourceDefinition(_bike);
+            restored.RestoreState(save);
+
+            var src = restored.GetSource("diesel_generator");
+            Assert.That(src.FuelBurnMultiplier, Is.EqualTo(1f).Within(Eps));
+            Assert.That(src.EffectiveFuelBurnMultiplier, Is.EqualTo(1f).Within(Eps));
+        }
     }
 }

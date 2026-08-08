@@ -598,6 +598,7 @@ namespace AtomicWar._Game.Shelter
                     SourceId = s.SourceId,
                     IsEnabled = s.IsEnabled,
                     Fuel = s.Fuel,
+                    FuelBurnMultiplier = s.FuelBurnMultiplier,
                     Durability = s.Durability,
                     PedalingSurvivorId = s.PedalingSurvivorId,
                     RoomId = s.RoomId
@@ -642,6 +643,10 @@ namespace AtomicWar._Game.Shelter
                         SourceId = row.SourceId,
                         IsEnabled = row.IsEnabled,
                         Fuel = row.Fuel,
+                        // Same guard as Durability: old saves have no key, so a
+                        // non-positive value means "stock burn rate", not "free fuel".
+                        FuelBurnMultiplier =
+                            row.FuelBurnMultiplier > 0f ? row.FuelBurnMultiplier : 1f,
                         Durability = row.Durability > 0f ? row.Durability : 100f,
                         PedalingSurvivorId = row.PedalingSurvivorId,
                         RoomId = row.RoomId
@@ -689,6 +694,10 @@ namespace AtomicWar._Game.Shelter
         public string SourceId;
         public bool IsEnabled;
         public float Fuel;
+        /// <summary>Prompt #200 Thermodynamics burn multiplier from the last fuel
+        /// loader (0.8 = 20% longer). Was not persisted, so a Thermodynamics refuel
+        /// reverted to the stock rate on load.</summary>
+        public float FuelBurnMultiplier = 1f;
         public float Durability = 100f;
         public string PedalingSurvivorId;
         public string RoomId;

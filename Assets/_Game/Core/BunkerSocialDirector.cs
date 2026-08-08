@@ -81,9 +81,19 @@ namespace AtomicWar._Game.Core
         // Construction
         // -----------------------------------------------------------------
 
-        public BunkerSocialDirector()
+        /// <param name="affinity">
+        /// The matrix every relationship sub-system reads. Callers must pass the
+        /// same instance the rest of the game mutates — in GameBootstrap that is
+        /// <c>MentalBreakSystem.Affinity</c>, which is also the only matrix
+        /// SaveSystem persists. Allocating a private one here (the old behaviour)
+        /// left Romance / Feuds / BlackMarket reading a matrix that EventRunner
+        /// choices, mental-break drain and gossip rot never touched, and dropped
+        /// every bond the director did build on load. Null allocates a fresh
+        /// matrix, which keeps standalone tests working.
+        /// </param>
+        public BunkerSocialDirector(InterpersonalAffinity affinity = null)
         {
-            Affinity = new InterpersonalAffinity();
+            Affinity = affinity ?? new InterpersonalAffinity();
             Romance = new RomanceSystem(Affinity);
             Feuds = new FeudSystem(Affinity);
             Mutiny = new MutinySystem();

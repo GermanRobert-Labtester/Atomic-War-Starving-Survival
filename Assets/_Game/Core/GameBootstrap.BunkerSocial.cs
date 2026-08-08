@@ -34,7 +34,12 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private void InitBunkerSocial()
         {
-            BunkerSocial = new BunkerSocialDirector();
+            // Share MentalBreakSystem's matrix (created earlier in InitFoundation):
+            // it is the one EventRunner choices, mental-break drain and GriefKeepsakes
+            // write to, and the only one SaveSystem captures. Without this the
+            // director's relationship systems run on an orphan matrix that resets
+            // to neutral on every load.
+            BunkerSocial = new BunkerSocialDirector(MentalBreakSystem?.Affinity);
             // Prompt #839 — crime gossip chain (affinity rot as rumors spread).
             Gossip = new System_Gossip();
             WireGossipSystem();

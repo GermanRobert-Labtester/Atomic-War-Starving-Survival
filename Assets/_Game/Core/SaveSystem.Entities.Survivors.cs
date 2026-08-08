@@ -256,11 +256,20 @@ namespace AtomicWar._Game.Core
                 instance.IsEnabled = modSave.IsEnabled;
                 instance.FilterHealth = modSave.FilterHealth;
                 instance.Fuel = modSave.Fuel;
+                // SAVE-011: a pre-SAVE-011 save has no FuelBurnMultiplier key, which
+                // deserialises to 0 and would make fuel burn free. Treat any
+                // non-positive value as "stock rate", matching EffectiveFuelBurnMultiplier.
+                instance.FuelBurnMultiplier =
+                    modSave.FuelBurnMultiplier > 0f ? modSave.FuelBurnMultiplier : 1f;
                 instance.WaterConversionProgress = modSave.WaterConversionProgress;
                 instance.RoomId = modSave.RoomId;
                 instance.Occupancy = modSave.Occupancy;
                 instance.ComfortLevel = modSave.ComfortLevel;
                 instance.Capacity = modSave.Capacity;
+                // SAVE-011: 0 is the legitimate "not a hatch defense module" value and
+                // is also what old saves yield; HatchDefenseSystem re-derives the stock
+                // number from the module id in that case, so restoring it is safe.
+                instance.SecurityContribution = modSave.SecurityContribution;
 
                 if (_moduleLookup != null)
                 {

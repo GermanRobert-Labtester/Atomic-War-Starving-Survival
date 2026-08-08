@@ -372,6 +372,10 @@ namespace AtomicWar._Game.Core
         public bool IsEnabled = true;
         public float FilterHealth = 100f;
         public float Fuel;
+        /// <summary>Prompt #200 Thermodynamics: burn multiplier from the last fuel
+        /// loader (0.8 = 20% longer). Defaults to 1 so pre-SAVE-011 saves load
+        /// as they always did.</summary>
+        public float FuelBurnMultiplier = 1f;
         public float WaterConversionProgress;
         /// <summary>Shelter room the module is installed in (e.g. "quarters", "plant").</summary>
         public string RoomId;
@@ -381,5 +385,9 @@ namespace AtomicWar._Game.Core
         public float ComfortLevel;
         /// <summary>Bed module capacity fallback.</summary>
         public int Capacity;
+        /// <summary>Hatch defense fallback security points per level. HatchDefenseSystem
+        /// re-defaults this from the module id when it is &lt;= 0, so an unpersisted
+        /// custom value silently reverted to the stock number instead of vanishing.</summary>
+        public float SecurityContribution;
     }
 }

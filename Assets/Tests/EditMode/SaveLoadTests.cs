@@ -382,5 +382,60 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(json.Contains("\"SaveVersion\": 3"), "Save file should contain SaveVersion field");
             Assert.IsTrue(json.Contains("\"Checksum\":"), "Save file should contain Checksum field");
         }
+
+        // -----------------------------------------------------------------
+        // SAVE-011: module runtime state that had no DTO field at all
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// FuelBurnMultiplier (Prompt #200 Thermodynamics, 0.8 = 20% longer burn) and
+        /// SecurityContribution (hatch defense points per level) live on
+        /// ShelterModuleInstance but had no ShelterModuleSave field, so both reverted
+        /// on load. The security loss was masked: HatchDefenseSystem re-derives a stock
+        /// value from the module id whenever the field is &lt;= 0, so a customised
+        /// module quietly dropped back to the default number instead of to zero.
+        /// </summary>
+        [Test]
+        public void SaveLoad_PreservesModuleFuelBurnMultiplierAndSecurityContribution()
+        {
+            var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
+            var heater = shelter.GetModule("heater");
+            heater.FuelBurnMultiplier = 0.8f;   // refuelled by a Thermodynamics survivor
+            heater.SecurityContribution = 25f;  // customised hatch defense contribution
+
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
+            Assert.IsTrue(saveSys.Save("module_runtime"));
+
+            var (gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2) = BuildNastyState();
+            var loadSys = MakeSaveSystem((gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2));
+            Assert.IsTrue(loadSys.Load("module_runtime"));
+
+            var heater2 = shelter2.GetModule("heater");
+            Assert.IsNotNull(heater2);
+            Assert.AreEqual(0.8f, heater2.FuelBurnMultiplier, Eps,
+                "Thermodynamics burn multiplier must survive save/load");
+            Assert.AreEqual(0.8f, heater2.EffectiveFuelBurnMultiplier, Eps);
+            Assert.AreEqual(25f, heater2.SecurityContribution, Eps,
+                "Custom SecurityContribution must survive save/load");
+        }
+
+        /// <summary>A module never touched by a Thermodynamics loader must still restore
+        /// at the stock burn rate — including from a pre-SAVE-011 file, where the missing
+        /// key deserialises to 0 and would otherwise mean free fuel.</summary>
+        [Test]
+        public void SaveLoad_ModuleWithoutBurnMultiplier_RestoresStockRate()
+        {
+            var (gs, ws, ts, ns, rs, shelter, survivor, items) = BuildNastyState();
+            shelter.GetModule("heater").FuelBurnMultiplier = 0f; // as a legacy file loads
+
+            var saveSys = MakeSaveSystem((gs, ws, ts, ns, rs, shelter, survivor, items));
+            Assert.IsTrue(saveSys.Save("module_legacy"));
+
+            var (gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2) = BuildNastyState();
+            var loadSys = MakeSaveSystem((gs2, ws2, ts2, ns2, rs2, shelter2, survivor2, items2));
+            Assert.IsTrue(loadSys.Load("module_legacy"));
+
+            Assert.AreEqual(1f, shelter2.GetModule("heater").FuelBurnMultiplier, Eps);
+        }
     }
 }

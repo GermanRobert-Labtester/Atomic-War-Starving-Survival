@@ -78,11 +78,13 @@ namespace AtomicWar._Game.Core
                         IsEnabled = mod.IsEnabled,
                         FilterHealth = mod.FilterHealth,
                         Fuel = mod.Fuel,
+                        FuelBurnMultiplier = mod.FuelBurnMultiplier,
                         WaterConversionProgress = mod.WaterConversionProgress,
                         RoomId = mod.RoomId,
                         Occupancy = mod.Occupancy,
                         ComfortLevel = mod.ComfortLevel,
-                        Capacity = mod.Capacity
+                        Capacity = mod.Capacity,
+                        SecurityContribution = mod.SecurityContribution
                     });
                 }
                 data.BunkerContamination = _shelter.BunkerContamination;
