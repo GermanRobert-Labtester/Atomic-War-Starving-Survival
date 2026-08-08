@@ -1068,6 +1068,7 @@ namespace AtomicWar._Game.Core
             if (SurvivalPerks == null) return;
 
             CookingSystem = new CookingSystem(Inventory, WaterStorage, new System.Random(_worldSeed + 189));
+            CookingSystem.SetNeedsSystem(NeedsSystem);
             CookingSystem.BindSurvivalPerks(
                 SurvivalPerks,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);

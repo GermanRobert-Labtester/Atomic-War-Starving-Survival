@@ -52,7 +52,10 @@ namespace AtomicWar._Game.Core
             if (consumed <= 0) return 0;
             Inventory.Remove(best.Item, consumed);
             float restore = best.Item.hungerRestore * consumed;
-            sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - restore);
+            if (NeedsSystem != null)
+                NeedsSystem.Modify(sv, NeedKind.Hunger, -restore);
+            else
+                sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - restore);
             return consumed;
         }
 
@@ -109,10 +112,18 @@ namespace AtomicWar._Game.Core
                 return false;
             if (pedaler.Needs.Fatigue >= 95f)
                 return false;
-            pedaler.Needs.Fatigue = Mathf.Clamp(
-                pedaler.Needs.Fatigue + fatigueDelta, 0f, 100f);
-            pedaler.Needs.Hunger = Mathf.Clamp(
-                pedaler.Needs.Hunger + hungerDelta, 0f, 100f);
+            if (NeedsSystem != null)
+            {
+                NeedsSystem.Modify(pedaler, NeedKind.Fatigue, fatigueDelta);
+                NeedsSystem.Modify(pedaler, NeedKind.Hunger, hungerDelta);
+            }
+            else
+            {
+                pedaler.Needs.Fatigue = Mathf.Clamp(
+                    pedaler.Needs.Fatigue + fatigueDelta, 0f, 100f);
+                pedaler.Needs.Hunger = Mathf.Clamp(
+                    pedaler.Needs.Hunger + hungerDelta, 0f, 100f);
+            }
             return true;
         }
 
