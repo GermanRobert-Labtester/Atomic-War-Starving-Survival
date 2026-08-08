@@ -52,6 +52,7 @@ namespace AtomicWar._Game.Core
             RestIf(_victoryProject, s => { if (data.VictoryProject != null) s.RestoreState(data.VictoryProject); });
             // Special-path: scheduled-event queue only (not ISaveable CaptureState).
             RestIf(_eventRunner, s => s.RestoreScheduledState(data.ScheduledEvents));
+            RestIf(_eventRunner, s => s.RestoreCooldownState(data.EventRunnerState));
             RestIf(_suspicionTracker, s => { if (data.Suspicion != null) s.RestoreState(data.Suspicion); });
             RestIf(_hatchEntrapment, s => { if (data.HatchEntrapment != null) s.RestoreState(data.HatchEntrapment); });
             RestIf(_atmosphereSystem, s => { if (data.Atmosphere != null) s.RestoreState(data.Atmosphere); });

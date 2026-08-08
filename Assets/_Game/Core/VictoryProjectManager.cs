@@ -473,7 +473,7 @@ namespace AtomicWar._Game.Core
                 if (s.Needs != null)
                 {
                     if (s.Needs.WasHungerCritical || s.Needs.Hunger >= 90f) hunger += 2f;
-                    if (s.Needs.WasThirstCritical || s.Needs.Thirst >= 90f) hunger += 1f;
+                    if (s.Needs.WasThirstCritical || s.Needs.Thirst >= 90f) breakdown += 1f;
                     if (s.Needs.Morale <= 10f) breakdown += 1.5f;
                 }
 

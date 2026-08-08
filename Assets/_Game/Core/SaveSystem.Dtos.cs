@@ -44,6 +44,8 @@ namespace AtomicWar._Game.Core
         public VictoryProjectSave VictoryProject;
         /// <summary>Deferred narrative chain queue (Prompt #43).</summary>
         public ScheduledEventSave ScheduledEvents;
+        /// <summary>EventRunner cooldowns + active delayed consequences.</summary>
+        public EventRunnerStateSave EventRunnerState;
         /// <summary>Internal mystery / Missing Rations state.</summary>
         public SuspicionTrackerSave Suspicion;
         /// <summary>Weather-driven hatch seal / DigOut / suffocation (Prompt #48).</summary>
