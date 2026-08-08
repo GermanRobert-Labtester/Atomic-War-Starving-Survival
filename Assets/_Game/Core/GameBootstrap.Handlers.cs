@@ -55,7 +55,12 @@ namespace AtomicWar._Game.Core
                     foreach (var sv in Survivors)
                     {
                         if (sv == null || !sv.IsAlive) continue;
-                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
+                        // Route through NeedsSystem.Modify so Selfless,
+                        // Traumatized cap, and LivingSaint floor are honoured.
+                        if (NeedsSystem != null)
+                            NeedsSystem.Modify(sv, NeedKind.Morale, -hit);
+                        else
+                            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
                     }
                 }
                 // Prompt #19 — ghost bands appear in the static after EMP.
