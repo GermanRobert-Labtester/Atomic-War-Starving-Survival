@@ -1179,6 +1179,12 @@ namespace AtomicWar._Game.Survivors
         public static void ApplyArchetypeFlags(Survivor sv, string archetypeId)
         {
             if (sv == null) return;
+            if (ApplyArchetypeFlagsGroupA(sv, archetypeId)) return;
+            ApplyArchetypeFlagsGroupB(sv, archetypeId);
+        }
+
+        private static bool ApplyArchetypeFlagsGroupA(Survivor sv, string archetypeId)
+        {
             if (archetypeId == NaiveSonId)
             {
                 sv.IsChild = true;
@@ -1223,7 +1229,16 @@ namespace AtomicWar._Game.Survivors
                 // Medical skill starts maxed — hosts read GetStartingMedicalSkill.
                 sv.ExpertDisciplineId = "medical";
             }
-            else if (archetypeId == RelapsingAddictId)
+            else
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private static void ApplyArchetypeFlagsGroupB(Survivor sv, string archetypeId)
+        {
+            if (archetypeId == RelapsingAddictId)
             {
                 // AddictionSystem.AddictedTraitId — string to avoid Medical assembly ref.
                 if (sv.Traits == null) sv.Traits = new List<string>();

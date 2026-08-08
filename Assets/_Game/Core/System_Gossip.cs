@@ -328,6 +328,51 @@ namespace AtomicWar._Game.Core
             return copy;
         }
 
+        private void RestoreRumors(GossipSystemState saved)
+        {
+            if (saved.rumors == null) return;
+            for (int i = 0; i < saved.rumors.Count; i++)
+            {
+                var r = saved.rumors[i];
+                if (r == null) continue;
+                var rc = new GossipRumor
+                {
+                    witnessId = r.witnessId,
+                    criminalId = r.criminalId,
+                    crimeType = r.crimeType,
+                    dayStarted = r.dayStarted,
+                    spreadCount = r.spreadCount,
+                    informedIds = new List<string>()
+                };
+                if (r.informedIds != null)
+                {
+                    for (int j = 0; j < r.informedIds.Count; j++)
+                        if (!string.IsNullOrEmpty(r.informedIds[j]))
+                            rc.informedIds.Add(r.informedIds[j]);
+                }
+                _state.rumors.Add(rc);
+            }
+        }
+
+        private void RestoreAffinityDecay(GossipSystemState saved)
+        {
+            if (saved.affinity_decay_ids == null || saved.affinity_decay_values == null) return;
+            int n = Mathf.Min(saved.affinity_decay_ids.Count, saved.affinity_decay_values.Count);
+            for (int i = 0; i < n; i++)
+            {
+                if (string.IsNullOrEmpty(saved.affinity_decay_ids[i])) continue;
+                _affinityDecayMap[saved.affinity_decay_ids[i]] = saved.affinity_decay_values[i];
+            }
+        }
+
+        private void RestoreAllSurvivorIds(GossipSystemState saved)
+        {
+            if (saved.allSurvivorIds == null) return;
+            for (int i = 0; i < saved.allSurvivorIds.Count; i++)
+                if (!string.IsNullOrEmpty(saved.allSurvivorIds[i]))
+                    _state.allSurvivorIds.Add(saved.allSurvivorIds[i]);
+        }
+
         public void RestoreState(GossipSystemState saved)
         {
             _affinityDecayMap.Clear();
@@ -346,47 +391,9 @@ namespace AtomicWar._Game.Core
                 allSurvivorIds = new List<string>()
             };
 
-            if (saved.rumors != null)
-            {
-                for (int i = 0; i < saved.rumors.Count; i++)
-                {
-                    var r = saved.rumors[i];
-                    if (r == null) continue;
-                    var rc = new GossipRumor
-                    {
-                        witnessId = r.witnessId,
-                        criminalId = r.criminalId,
-                        crimeType = r.crimeType,
-                        dayStarted = r.dayStarted,
-                        spreadCount = r.spreadCount,
-                        informedIds = new List<string>()
-                    };
-                    if (r.informedIds != null)
-                    {
-                        for (int j = 0; j < r.informedIds.Count; j++)
-                            if (!string.IsNullOrEmpty(r.informedIds[j]))
-                                rc.informedIds.Add(r.informedIds[j]);
-                    }
-                    _state.rumors.Add(rc);
-                }
-            }
-
-            if (saved.affinity_decay_ids != null && saved.affinity_decay_values != null)
-            {
-                int n = Mathf.Min(saved.affinity_decay_ids.Count, saved.affinity_decay_values.Count);
-                for (int i = 0; i < n; i++)
-                {
-                    if (string.IsNullOrEmpty(saved.affinity_decay_ids[i])) continue;
-                    _affinityDecayMap[saved.affinity_decay_ids[i]] = saved.affinity_decay_values[i];
-                }
-            }
-
-            if (saved.allSurvivorIds != null)
-            {
-                for (int i = 0; i < saved.allSurvivorIds.Count; i++)
-                    if (!string.IsNullOrEmpty(saved.allSurvivorIds[i]))
-                        _state.allSurvivorIds.Add(saved.allSurvivorIds[i]);
-            }
+            RestoreRumors(saved);
+            RestoreAffinityDecay(saved);
+            RestoreAllSurvivorIds(saved);
         }
 
         private void EnsureRosterContains(string id)
