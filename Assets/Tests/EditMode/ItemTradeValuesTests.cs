@@ -222,6 +222,25 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void GetTradeValue_Uses_Explicit_TradeTier_From_ItemDefinition()
+        {
+            var eco = new AtomicWar._Game.Economy.DynamicEconomySystem();
+            var item = UnityEngine.ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = "custom_attachment";
+            item.type = ItemType.UtilityTool;
+            item.tradeValue = 50f;
+            item.tradeTier = ItemTradeTier.Attachment;
+
+            float valWithExplicitTier = eco.GetTradeValue(item);
+
+            // Change tradeTier back to Scrap (unspecified) so it falls back to InferTier(ItemType.UtilityTool)
+            item.tradeTier = ItemTradeTier.Scrap;
+            float valWithInferredTier = eco.GetTradeValue(item);
+
+            Assert.AreNotEqual(valWithExplicitTier, valWithInferredTier);
+        }
+
+        [Test]
         public void Catalog_Count_Includes_Expanded_Set()
         {
             // Original ~70 + expanded ~184

@@ -247,6 +247,7 @@ namespace AtomicWar._Game.Editor
             public bool   isEquipable;
             public string equipSlot;
             public float  tradeValue;
+            public string tradeTier;
             public bool   empShielded;
             public ScrapYieldJson[] scrapValue;
             public ScrapYieldJson[] repairCosts;
@@ -498,6 +499,10 @@ namespace AtomicWar._Game.Editor
                 so.isEquipable     = json.isEquipable;
                 so.equipSlot       = EquipSlots.Parse(json.equipSlot);
                 so.tradeValue      = json.tradeValue;
+                if (!string.IsNullOrEmpty(json.tradeTier) && Enum.TryParse<AtomicWar._Game.Inventory.ItemTradeTier>(json.tradeTier, true, out var parsedTier))
+                    so.tradeTier = parsedTier;
+                else
+                    so.tradeTier = AtomicWar._Game.Inventory.Item_TradeValues.InferTier(so.type);
                 so.empShielded     = json.empShielded;
                 so.disassembleYieldFraction = json.disassembleYieldFraction > 0f
                     ? Mathf.Clamp01(json.disassembleYieldFraction)

@@ -756,11 +756,10 @@ namespace AtomicWar._Game.Economy
             if (phaseVal <= 0f) return 0f;
 
             // Category shortage spikes (meds/food/guns up, gems soft) when supplies short.
-            // Tier comes from item.type (InferTier). Catalog-explicit TradeTier lives in
-            // Core (Item_WorldCatalog) and cannot be referenced here without a circular
-            // asmdef edge (Core → Economy). Callers that already know a catalog tier can
-            // use Item_TradeValues.ResolveFromItem(..., explicitTier: ...).
-            var tier = Item_TradeValues.InferTier(item.type);
+            // Explicit TradeTier from ItemDefinition is used if assigned; falls back to InferTier(item.type).
+            var tier = (item.tradeTier != ItemTradeTier.Scrap || item.type == ItemType.Scrap)
+                ? item.tradeTier
+                : Item_TradeValues.InferTier(item.type);
             float demand = GetDemandMultiplier(item.id);
             float v = Item_TradeValues.Resolve(phaseVal, tier, demand, IsSuppliesShort());
 

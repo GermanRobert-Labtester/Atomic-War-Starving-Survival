@@ -336,6 +336,7 @@ namespace AtomicWar._Game.Core
             item.stackMax = Mathf.Max(1, def.StackMax);
             item.weight = def.Weight;
             item.tradeValue = def.TradeValue;
+            item.tradeTier = def.TradeTier;
             item.isEquipable = def.IsEquipable;
             item.equipSlot = ParseEquipSlot(def.EquipSlot);
             item.durability = def.Durability;
