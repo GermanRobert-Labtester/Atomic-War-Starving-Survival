@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Medical
 {
@@ -85,7 +86,7 @@ namespace AtomicWar._Game.Medical
 
         public AddictionSystem(System.Random rng = null)
         {
-            _rng = rng ?? new System.Random();
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("addiction_system");
         }
 
         /// <summary>
@@ -209,8 +210,7 @@ namespace AtomicWar._Game.Medical
                 {
                     sv.Needs.Morale = Mathf.Clamp(
                         sv.Needs.Morale - WithdrawalMoraleDrainPerHour * gameHours, 0f, 100f);
-                    sv.Needs.Health = Mathf.Clamp(
-                        sv.Needs.Health - WithdrawalHealthDrainPerHour * gameHours, 0f, sv.MaxHealthCap);
+                    SurvivorNeedWrite.AdjustHealth(sv, -WithdrawalHealthDrainPerHour * gameHours);
                     sv.Needs.Fatigue = Mathf.Clamp(
                         sv.Needs.Fatigue + WithdrawalFatigueDrainPerHour * gameHours, 0f, 100f);
                 }

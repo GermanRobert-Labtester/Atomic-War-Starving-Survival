@@ -50,7 +50,7 @@ namespace AtomicWar._Game.AI
         public void Tick(float gameHours, IReadOnlyList<Survivor> survivors, System.Random rng)
         {
             if (gameHours <= 0f || survivors == null) return;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("hallucinationsystem");
 
             // Decay phantom lifetimes
             for (int i = _activePhantoms.Count - 1; i >= 0; i--)
@@ -79,7 +79,7 @@ namespace AtomicWar._Game.AI
         public PhantomItem SpawnPhantomForSurvivor(Survivor sv, System.Random rng)
         {
             if (sv == null) return null;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("hallucinationsystem");
 
             string[] phantomNames = { "Clean Water", "Canned Beef", "Fresh Pill Bottle", "Gas Mask Filter" };
             string name = phantomNames[rng.Next(phantomNames.Length)];

@@ -667,6 +667,15 @@ namespace AtomicWar._Game.Core
         public bool FailFastRestore { get; set; }
 
         /// <summary>
+        /// SAVE-004: When true, the ctor-owned <see cref="GameState.OnPhaseChanged"/>
+        /// handler will not AutoSave. Bootstrap holds this during Continue-load so
+        /// restoring Phase=Running does not clobber the slot that was just loaded.
+        /// The bootstrap's own phase handler already gates on its private flag; this
+        /// covers the second AutoSave owner (this class).
+        /// </summary>
+        public bool SuppressAutoSave { get; set; }
+
+        /// <summary>
         /// P1: Policy for new SaveSystem instances.
         /// True under UNITY_EDITOR or DEVELOPMENT_BUILD (includes game-ci batchmode
         /// EditMode tests). False in release player builds so a single bad subsystem
@@ -839,7 +848,7 @@ namespace AtomicWar._Game.Core
 
         private void OnPhaseChanged(GamePhase phase)
         {
-            if (phase == GamePhase.Running)
+            if (phase == GamePhase.Running && !SuppressAutoSave)
             {
                 AutoSave();
             }

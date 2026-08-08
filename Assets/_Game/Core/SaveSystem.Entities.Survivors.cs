@@ -271,9 +271,13 @@ namespace AtomicWar._Game.Core
                 // number from the module id in that case, so restoring it is safe.
                 instance.SecurityContribution = modSave.SecurityContribution;
 
+                // SAVE-012: never wipe a live Definition with a null lookup. Prefer
+                // catalog resolve; otherwise keep whatever SO was already on the instance.
                 if (_moduleLookup != null)
                 {
-                    instance.Definition = _moduleLookup(modSave.ModuleId);
+                    var def = _moduleLookup(modSave.ModuleId);
+                    if (def != null)
+                        instance.Definition = def;
                 }
             }
         }

@@ -166,7 +166,7 @@ namespace AtomicWar._Game.AI.Actions
             survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + result.MoraleDelta, 0f, 100f);
             if (Mathf.Abs(result.HealthDelta) > 0.001f)
             {
-                survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + result.HealthDelta, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(survivor, result.HealthDelta);
             }
 
             survivor.State = SurvivorState.Resting;

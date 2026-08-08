@@ -374,7 +374,7 @@ namespace AtomicWar._Game.Shelter
                         }
                         else
                         {
-                            sv.Needs.Health = Mathf.Clamp(sv.Needs.Health - 60f, 0f, 100f);
+                            SurvivorNeedWrite.AdjustHealth(sv, -60f);
                             _inflictTrauma?.Invoke(sv, "crushed_limb");
                         }
                     }

@@ -54,7 +54,11 @@ namespace AtomicWar._Game.Core
             if (_weatherSystem != null)
                 data.Weather = _weatherSystem.GetState();
 
-            if (_temperatureSystem != null)
+            // Prefer the live TimeSystem clock (single source of truth). Fall back to
+            // TemperatureSystem for hosts that only wired temp (legacy dual clock).
+            if (_timeSystem != null)
+                data.ElapsedHours = _timeSystem.TotalElapsedHours;
+            else if (_temperatureSystem != null)
                 data.ElapsedHours = _temperatureSystem.TotalElapsedHours;
 
             if (_getSurvivors != null)

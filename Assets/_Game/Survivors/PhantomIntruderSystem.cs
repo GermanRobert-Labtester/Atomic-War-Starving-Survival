@@ -76,7 +76,7 @@ namespace AtomicWar._Game.Survivors
             System.Random rng)
         {
             if (gameHours <= 0f || survivors == null) return;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("phantomintrudersystem");
 
             // Decay cooldowns without LINQ / per-tick Keys enumerator allocation.
             if (Cooldowns.Count > 0)

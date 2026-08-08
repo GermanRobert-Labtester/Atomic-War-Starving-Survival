@@ -837,6 +837,50 @@ namespace AtomicWar._Game.Survivors
             EnsureDefaultQuestlines();
         }
 
+        /// <summary>
+        /// Optional dose applicator (host wires to RadiationSystem.Expose / AdjustDose).
+        /// Avoids Survivors→Radiation assembly cycle while keeping quest rad spikes
+        /// on the same event path as ambient exposure (MISC-007). Positive deltas
+        /// should use Expose so lifetime accumulates; negative cleanse uses AdjustDose.
+        /// </summary>
+        private Action<Survivor, float> _applyRadiationDelta;
+
+        /// <summary>
+        /// Optional lifetime seed (host wires to RadiationSystem.SeedLifetimeExposure).
+        /// Used by archetypes such as the Mutated Outcast that begin already cooked.
+        /// </summary>
+        private Action<Survivor, float> _seedLifetimeRadiation;
+
+        public void BindRadiationDose(Action<Survivor, float> applyDelta) =>
+            _applyRadiationDelta = applyDelta;
+
+        public void BindLifetimeRadiation(Action<Survivor, float> seedLifetime) =>
+            _seedLifetimeRadiation = seedLifetime;
+
+        private void ApplyQuestRadiation(Survivor sv, float delta)
+        {
+            if (sv == null || !sv.IsAlive || delta == 0f) return;
+            if (_applyRadiationDelta != null)
+            {
+                _applyRadiationDelta(sv, delta);
+                return;
+            }
+            // Unbound unit-test fallback only — production host always injects.
+            sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + delta, 0f, 100f);
+        }
+
+        private void ApplyLifetimeRadiationSeed(Survivor sv, float lifetime)
+        {
+            if (sv == null || lifetime <= 0f) return;
+            if (_seedLifetimeRadiation != null)
+            {
+                _seedLifetimeRadiation(sv, lifetime);
+                return;
+            }
+            // Unbound unit-test fallback only.
+            sv.LifetimeRadiationExposure = Mathf.Max(sv.LifetimeRadiationExposure, lifetime);
+        }
+
         public void RegisterQuestline(QuestlineSO quest)
         {
             if (quest == null || string.IsNullOrEmpty(quest.id)) return;
@@ -882,6 +926,12 @@ namespace AtomicWar._Game.Survivors
 
             ApplyBaseTraits(sv, profile.ArchetypeId);
             ApplyArchetypeFlags(sv, profile.ArchetypeId);
+            // MISC-007 — Outcast lifetime seed via injected RadiationSystem when bound.
+            // ApplyArchetypeFlags is static (no host bind); re-apply through the instance
+            // seed path so production hosts never leave a raw lifetime write as the
+            // only path when BindLifetimeRadiation is wired.
+            if (string.Equals(profile.ArchetypeId, OutcastId, System.StringComparison.Ordinal))
+                ApplyLifetimeRadiationSeed(sv, OutcastStartLifetimeRads);
         }
 
         /// <summary>Grant day-0 personality traits for bond/burden archetypes.</summary>
@@ -1198,7 +1248,11 @@ namespace AtomicWar._Game.Survivors
             }
             else if (archetypeId == OutcastId)
             {
-                sv.LifetimeRadiationExposure = OutcastStartLifetimeRads;
+                // Static path (unit tests / MakeArchetypeSurvivor): seed lifetime
+                // directly. AssignProfile re-applies via ApplyLifetimeRadiationSeed
+                // so a host BindLifetimeRadiation overrides through RadiationSystem.
+                sv.LifetimeRadiationExposure = Mathf.Max(
+                    sv.LifetimeRadiationExposure, OutcastStartLifetimeRads);
                 sv.HasChronicIllness = true;
             }
             else if (archetypeId == FeralOrphanId)
@@ -1946,8 +2000,7 @@ namespace AtomicWar._Game.Survivors
             {
                 undertaker.Needs.Fatigue = Mathf.Clamp(
                     undertaker.Needs.Fatigue + MassGraveFatigueHit, 0f, 100f);
-                undertaker.RadiationDose = Mathf.Clamp(
-                    undertaker.RadiationDose + MassGraveRadHit, 0f, 100f);
+                ApplyQuestRadiation(undertaker, MassGraveRadHit);
                 CompleteQuestline(undertaker, currentDay);
             }
         }
@@ -2110,8 +2163,7 @@ namespace AtomicWar._Game.Survivors
             if (!string.Equals(state.QuestlineId, QuestlineSO.Ids.TheCityMains, StringComparison.Ordinal))
                 return;
 
-            plumber.RadiationDose = Mathf.Clamp(
-                plumber.RadiationDose + PipeBurstIrradiatedRadSpike, 0f, 100f);
+            ApplyQuestRadiation(plumber, PipeBurstIrradiatedRadSpike);
             state.Progress = 1f;
             plumber.QuestProgress = 1f;
             OnQuestProgress?.Invoke(plumber, "pipe_burst_fixed", 1);
@@ -2592,7 +2644,7 @@ namespace AtomicWar._Game.Survivors
                 && !string.Equals(roomId, GeneratorRoomId, StringComparison.OrdinalIgnoreCase)
                 && !string.Equals(roomId, "generator_room", StringComparison.OrdinalIgnoreCase))
                 return;
-            firefighter.Needs.Health = Mathf.Max(1f, firefighter.Needs.Health - InfernoBurnDamage);
+            SurvivorNeedWrite.SetHealth(firefighter, Mathf.Max(1f, firefighter.Needs.Health - InfernoBurnDamage));
             state.Progress = 1f;
             firefighter.QuestProgress = 1f;
             OnQuestProgress?.Invoke(firefighter, "inferno_extinguished", 1);
@@ -2976,7 +3028,7 @@ namespace AtomicWar._Game.Survivors
         public string GenerateFalseIntelNode(Survivor liar, System.Random rng = null)
         {
             if (liar == null || !HasDeceptive(liar)) return null;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem");
             string fakeId = "fake_stash_" + rng.Next(1000, 9999);
             var state = GetOrCreate(liar.Id);
             state.FalseIntelCount++;
@@ -3384,7 +3436,7 @@ namespace AtomicWar._Game.Survivors
         public int ApplyAlchemistYield(Survivor crafter, int baseAmount, System.Random rng = null)
         {
             if (baseAmount <= 0 || !HasAlchemist(crafter)) return baseAmount;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem");
             if (rng.NextDouble() < AlchemistDoubleYieldChance)
                 return baseAmount * 2;
             return baseAmount;

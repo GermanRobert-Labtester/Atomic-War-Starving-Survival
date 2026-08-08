@@ -80,6 +80,13 @@ namespace AtomicWar._Game.Core
             }
         }
 
+        /// <summary>
+        /// True after a successful <see cref="Load"/>; cleared on failed load.
+        /// Hosts should refuse AutoSave while this is false after a failed Continue
+        /// so a hybrid world cannot overwrite a good slot (SAVE-003 partial guard).
+        /// </summary>
+        public bool LastLoadSucceeded { get; private set; } = true;
+
         /// <summary>Replace the current world state from the given slot.</summary>
         public bool Load(string slotId)
         {
@@ -87,6 +94,8 @@ namespace AtomicWar._Game.Core
             if (!File.Exists(path))
             {
                 Debug.LogWarning($"[SaveSystem] Slot '{slotId}' not found.");
+                LastLoadSucceeded = false;
+                SuppressAutoSave = true;
                 return false;
             }
 
@@ -108,12 +117,16 @@ namespace AtomicWar._Game.Core
                         else
                         {
                             Debug.LogError($"[SaveSystem] Backup also corrupt. Load aborted.");
+                            LastLoadSucceeded = false;
+                            SuppressAutoSave = true;
                             return false;
                         }
                     }
                     else
                     {
                         Debug.LogError($"[SaveSystem] Slot '{slotId}' corrupt and no backup available. Load aborted.");
+                        LastLoadSucceeded = false;
+                        SuppressAutoSave = true;
                         return false;
                     }
                 }
@@ -131,6 +144,8 @@ namespace AtomicWar._Game.Core
                         $"(save version {data.SaveVersion}, this build supports up to " +
                         $"{CurrentSaveVersion}). Refusing to load rather than restoring " +
                         "partial state. Update the game to open this save.");
+                    LastLoadSucceeded = false;
+                    SuppressAutoSave = true;
                     return false;
                 }
 
@@ -141,11 +156,16 @@ namespace AtomicWar._Game.Core
 
                 RestoreFromSnapshot(data);
                 Debug.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
+                LastLoadSucceeded = true;
+                // Successful load clears suppress only if host is not holding Continue gate.
+                // Host re-enables after Continue finally block.
                 return true;
             }
             catch (Exception ex)
             {
                 Debug.LogError($"[SaveSystem] Load from '{slotId}' failed: {ex.Message}");
+                LastLoadSucceeded = false;
+                SuppressAutoSave = true;
                 return false;
             }
         }

@@ -71,7 +71,8 @@ namespace AtomicWar._Game.Radiation
         {
             _needsSystem = needsSystem != null ? needsSystem : throw new ArgumentNullException(nameof(needsSystem));
             _exposureContext = exposureContext;
-            _rng = rng ?? new Random();
+            // MISC-005 — never fall back to wall-clock Random; fixed salt when host omits rng.
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("radiation_system");
         }
 
         /// <summary>Register a survivor so bulk Tick(gameHours) advances their dose.</summary>
@@ -316,6 +317,44 @@ namespace AtomicWar._Game.Radiation
             if (_personalQuests != null)
                 mult = _personalQuests.GetRadAwayEfficiencyMultiplier(_getSurvivors?.Invoke());
             survivor.RadiationDose = Mathf.Clamp(survivor.RadiationDose - radsRemoved * mult, 0f, 100f);
+            OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
+        }
+
+        /// <summary>
+        /// Absolute dose write that still fires <see cref="OnDoseChanged"/> (MISC-007).
+        /// Prefer this over <c>survivor.RadiationDose = …</c> from AI/events.
+        /// Does not change lifetime exposure (only Expose does).
+        /// </summary>
+        public void SetDose(Survivor survivor, float dose)
+        {
+            if (survivor == null || !survivor.IsAlive) return;
+            survivor.RadiationDose = Mathf.Clamp(dose, 0f, 100f);
+            OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
+        }
+
+        /// <summary>Delta dose write that still fires <see cref="OnDoseChanged"/>.</summary>
+        public void AdjustDose(Survivor survivor, float delta)
+        {
+            if (survivor == null || !survivor.IsAlive || delta == 0f) return;
+            SetDose(survivor, survivor.RadiationDose + delta);
+        }
+
+        /// <summary>
+        /// Character-creation / archetype seed for cumulative lifetime exposure.
+        /// Raises lifetime only (never lowers it), grants chronic status when the
+        /// threshold is crossed, and does not change the current 0..100 dose reading.
+        /// Prefer this over writing <c>LifetimeRadiationExposure</c> from quests.
+        /// </summary>
+        public void SeedLifetimeExposure(Survivor survivor, float lifetime)
+        {
+            if (survivor == null || lifetime <= 0f) return;
+            survivor.LifetimeRadiationExposure = Mathf.Max(
+                survivor.LifetimeRadiationExposure, lifetime);
+            if (survivor.IsAlive
+                && survivor.LifetimeRadiationExposure >= ChronicLifetimeThreshold)
+            {
+                GrantStatus(survivor, SurvivorStatus.ChronicIllness);
+            }
             OnDoseChanged?.Invoke(survivor, survivor.RadiationDose);
         }
 

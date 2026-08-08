@@ -408,16 +408,13 @@ namespace AtomicWar._Game.Shelter
 
             // Consume water if available; fall back to sand (less effective).
             float reduction = ExtinguishFireIntensityReduction;
-            bool usedWater = false;
             if (water != null && water.CleanWater >= ExtinguishFireWaterCost)
             {
                 water.ConsumeClean(ExtinguishFireWaterCost);
-                usedWater = true;
             }
             else if (water != null && water.DirtyWater >= ExtinguishFireWaterCost)
             {
                 water.ConsumeDirty(ExtinguishFireWaterCost);
-                usedWater = true;
             }
             else
             {
@@ -490,7 +487,7 @@ namespace AtomicWar._Game.Shelter
                 return false;
             var list = _getSurvivors();
             if (list == null) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("shelteratmospheresystem");
             for (int i = 0; i < list.Count; i++)
             {
                 var sv = list[i];

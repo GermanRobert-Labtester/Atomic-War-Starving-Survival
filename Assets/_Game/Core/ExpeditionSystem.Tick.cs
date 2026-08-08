@@ -55,7 +55,10 @@ namespace AtomicWar._Game.Core
             if (exp.Stamina > 0f) return;
             // Exhaustion penalty: drop half loot, take health hit
             exp.DropLoot(0.5f);
-            exp.Survivor.Needs.Health = Mathf.Clamp(exp.Survivor.Needs.Health - 5f, 0f, 100f);
+            var s = exp.Survivor;
+            if (s?.Needs == null) return;
+            // MISC-006 — do not leave Health at 0 while State stays Alive.
+            SurvivorNeedWrite.AdjustHealth(s, -5f);
         }
 
         private void ApplyRadiationExposure(ExpeditionState exp, float tickHours)

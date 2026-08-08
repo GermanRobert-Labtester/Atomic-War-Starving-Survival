@@ -288,7 +288,7 @@ namespace AtomicWar._Game.Survivors
             System.Random rng = null)
         {
             if (!HasForager(sv) || existingLootCount > 0) return 0;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("expeditionperksystem");
             return rng.Next(ForagerMinFood, ForagerMaxFood + 1);
         }
 
@@ -309,7 +309,7 @@ namespace AtomicWar._Game.Survivors
         /// <summary>Pick roots or berries id for a forager food roll.</summary>
         public static string PickForagerFoodId(System.Random rng)
         {
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("expeditionperksystem");
             return rng.NextDouble() < 0.5 ? RootsItemId : BerriesItemId;
         }
 

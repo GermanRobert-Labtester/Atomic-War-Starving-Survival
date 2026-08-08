@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -93,9 +94,7 @@ namespace AtomicWar._Game.Core
             if (tickHours <= 0f) return;
 
             // Hypothermia health crash.
-            exp.Survivor.Needs.Health = Mathf.Clamp(
-                exp.Survivor.Needs.Health - HypothermiaHealthDrainPerHour * tickHours,
-                0f, exp.Survivor.MaxHealthCap);
+            SurvivorNeedWrite.AdjustHealth(exp.Survivor, -HypothermiaHealthDrainPerHour * tickHours);
 
             // Warmth stays at 0 while wading.
             exp.Survivor.Needs.Warmth = Mathf.Clamp(

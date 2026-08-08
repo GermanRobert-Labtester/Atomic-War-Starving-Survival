@@ -222,7 +222,7 @@ namespace AtomicWar._Game.Events
             if (context == null) return;
 
             var crew = context.AllSurvivors;
-            var rng = context.Random ?? new System.Random();
+            var rng = context.Random ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("suspiciontracker");
 
             var thief = PickSuspect(crew, context.PlayerSurvivorId, rng);
             if (thief == null)

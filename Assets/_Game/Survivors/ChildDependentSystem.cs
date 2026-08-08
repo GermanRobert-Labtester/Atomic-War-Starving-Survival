@@ -131,7 +131,7 @@ namespace AtomicWar._Game.Survivors
             Child.Needs.Fatigue = 30f;
             Child.Needs.Warmth = 80f;
             Child.Needs.Morale = 40f;
-            Child.Needs.Health = 80f;
+            SurvivorNeedWrite.SetHealth(Child, 80f);
             Child.Traits.Add(ChildTraitId);
 
             WasChildFound = true;

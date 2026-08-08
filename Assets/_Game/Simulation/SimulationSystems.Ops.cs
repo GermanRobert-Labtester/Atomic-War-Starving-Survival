@@ -25,7 +25,7 @@ namespace AtomicWar._Game.Simulation
                 return true;
 
             float r = GetResistance(id);
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("simulationsystems_ops");
             if (rng.NextDouble() < r * ExpiredFailureChancePerResistance) return false;
             _resistance[id] = Mathf.Min(MaxResistance, r + 1f); return true;
         }
@@ -127,7 +127,7 @@ namespace AtomicWar._Game.Simulation
         {
             if (string.IsNullOrEmpty(weaponId) || IsJammed(weaponId)) return false;
             if (!CanJam(weaponId)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("simulationsystems_ops");
             if (rng.NextDouble() >= chanceWhenEligible) return false;
             StartJam(weaponId, clearTicks);
             return true;

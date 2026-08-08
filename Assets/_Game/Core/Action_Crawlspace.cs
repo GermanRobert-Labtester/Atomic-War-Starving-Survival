@@ -57,7 +57,7 @@ namespace AtomicWar._Game.Core
 
             if (rng == null)
             {
-                rng = new System.Random();
+                rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("action_crawlspace");
             }
 
             double caveInRoll = rng.NextDouble();

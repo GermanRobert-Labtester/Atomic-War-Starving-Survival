@@ -111,8 +111,22 @@ namespace AtomicWar._Game.Events
                     case "fatigue": context.PrimarySurvivor.Needs.Fatigue = Mathf.Clamp(context.PrimarySurvivor.Needs.Fatigue + effect.NeedDelta, 0f, 100f); break;
                     case "warmth": context.PrimarySurvivor.Needs.Warmth = Mathf.Clamp(context.PrimarySurvivor.Needs.Warmth + effect.NeedDelta, 0f, 100f); break;
                     case "morale": context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + effect.NeedDelta, 0f, 100f); break;
-                    case "health": context.PrimarySurvivor.Needs.Health = Mathf.Clamp(context.PrimarySurvivor.Needs.Health + effect.NeedDelta, 0f, 100f); break;
-                    case "radiation": context.PrimarySurvivor.RadiationDose = Mathf.Clamp(context.PrimarySurvivor.RadiationDose + effect.NeedDelta, 0f, 100f); break;
+                    case "health":
+                        // MISC-006 — prefer NeedsSystem so EvaluateDeath still runs.
+                        if (context.NeedsSystem != null)
+                            context.NeedsSystem.AdjustHealth(context.PrimarySurvivor, effect.NeedDelta);
+                        else
+                            AtomicWar._Game.Survivors.SurvivorNeedWrite.AdjustHealth(
+                                context.PrimarySurvivor, effect.NeedDelta);
+                        break;
+                    case "radiation":
+                        // MISC-007 — prefer RadiationSystem so OnDoseChanged fires.
+                        if (context.RadiationSystem != null)
+                            context.RadiationSystem.AdjustDose(context.PrimarySurvivor, effect.NeedDelta);
+                        else
+                            context.PrimarySurvivor.RadiationDose = Mathf.Clamp(
+                                context.PrimarySurvivor.RadiationDose + effect.NeedDelta, 0f, 100f);
+                        break;
                     // Mental-status cures: a talk/comfort event effect. 0..1 range,
                     // unlike the 0..100 Needs fields above, so clamp separately.
                     case "radiationanxiety": context.PrimarySurvivor.RadiationAnxiety = Mathf.Clamp01(context.PrimarySurvivor.RadiationAnxiety + effect.NeedDelta); break;

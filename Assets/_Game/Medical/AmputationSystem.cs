@@ -144,8 +144,7 @@ namespace AtomicWar._Game.Medical
             OnChemConsumed?.Invoke(patient, MorphineItemId, day);
 
             // Surgery costs.
-            patient.Needs.Health = Mathf.Clamp(
-                patient.Needs.Health - SurgeryHealthCost, 0f, patient.MaxHealthCap);
+            SurvivorNeedWrite.SetHealth(patient, patient.Needs.Health - SurgeryHealthCost);
             patient.Needs.Morale = Mathf.Clamp(
                 patient.Needs.Morale - AmputationMoralePenalty, 0f, 100f);
             surgeon.Needs.Fatigue = Mathf.Clamp(
@@ -180,6 +179,7 @@ namespace AtomicWar._Game.Medical
         {
             if (survivors == null) return;
 
+            var rng = _rng ?? new System.Random(56);
             foreach (var id in _amputees)
             {
                 var sv = _findSurvivor?.Invoke(id);
@@ -190,8 +190,6 @@ namespace AtomicWar._Game.Medical
                     : PhantomPainDailyChance;
                 if (chance <= 0f) continue;
 
-                // Daily roll using seeded RNG for deterministic save/load (audit bugfix #4).
-                var rng = _rng ?? new System.Random(56);
                 if (rng.NextDouble() < chance)
                 {
                     sv.Needs.Fatigue = Mathf.Clamp(

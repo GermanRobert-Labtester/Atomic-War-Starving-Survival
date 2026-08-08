@@ -253,7 +253,7 @@ namespace AtomicWar._Game.Survivors
         public void NotifyLoverDied(Survivor dead, System.Random rng)
         {
             if (dead == null) return;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("bunkersocialsystems");
             string bereavedId = null;
             SocialPairKey? deadKey = null;
             foreach (var kv in _lovers)
@@ -664,7 +664,7 @@ namespace AtomicWar._Game.Survivors
             var leader = SurvivorById(survivors, LeaderId);
             if (leader != null && leader.IsAlive)
             {
-                leader.Needs.Health = 0f;
+                SurvivorNeedWrite.SetHealth(leader, 0f);
                 for (int i = 0; i < survivors.Count; i++)
                 {
                     var sv = survivors[i];

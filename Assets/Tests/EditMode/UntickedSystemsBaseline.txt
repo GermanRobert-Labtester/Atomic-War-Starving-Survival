@@ -7,7 +7,7 @@
 # Do not add entries by hand to silence a failure — wire the system instead.
 # Regenerate with the Explicit test UntickedSystemsBaselineTests.RegenerateBaselineFile.
 #
-# entries: 436
+# entries: 434
 
 ActionAdministerPlacebo
 ActionBarricadeDoor
@@ -45,7 +45,6 @@ ActionSelfSurgery
 ActionSilentTakedown
 ActionSiphonGas
 ActionSlaughterPet
-ActionStabilizeDNA
 ActionStargazing
 ActionTeachChild
 ActionTellStories

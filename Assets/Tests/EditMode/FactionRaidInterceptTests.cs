@@ -6,6 +6,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using Random = System.Random;
 
@@ -84,7 +85,8 @@ namespace AtomicWar.Tests.EditMode
             DynamicEconomySystem eco,
             FactionRadioInterceptSystem radio,
             GeneratedMap map = null,
-            Random rng = null)
+            Random rng = null,
+            RadiationSystem radiation = null)
         {
             var sys = new FactionRaidPlanSystem(rng ?? new Random(7));
             sys.Bind(
@@ -92,7 +94,8 @@ namespace AtomicWar.Tests.EditMode
                 radio,
                 getDay: () => _day,
                 isAntennaOperational: () => _antennaUp,
-                map: map);
+                map: map,
+                radiation: radiation);
             return sys;
         }
 
@@ -248,7 +251,15 @@ namespace AtomicWar.Tests.EditMode
             var eco = MakeEconomy();
             var radio = MakeRadio(eco);
             var map = MakeTinyMap();
-            var sys = MakePlans(eco, radio, map);
+            var needsProfile = ScriptableObject.CreateInstance<NeedsProfile>();
+            _toDestroy.Add(needsProfile);
+            var needs = new NeedsSystem(needsProfile);
+            var radiation = new RadiationSystem(needs);
+            var scav = MakeSurvivor();
+            needs.Register(scav);
+            radiation.Register(scav);
+
+            var sys = MakePlans(eco, radio, map, radiation: radiation);
 
             var plan = sys.SchedulePlan(
                 FactionSO.Ids.ScavengerCamp,
@@ -270,18 +281,20 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(node.IsRevealed);
 
             var inv = new Inventory { Capacity = 50, MaxWeight = 200f };
-            var scav = MakeSurvivor();
             var weapon = FactionRaidPlanSystem.CreateDefaultWeaponDef();
             var scrap = FactionRaidPlanSystem.CreateDefaultScrapDef();
             _toDestroy.Add(weapon);
             _toDestroy.Add(scrap);
 
             float radBefore = scav.RadiationDose;
+            float lifeBefore = scav.LifetimeRadiationExposure;
             Assert.IsTrue(sys.TryClaimBattlefieldLoot(
                 plan.BattlefieldNodeId, scav, inv, weapon, scrap, radDoseOnClaim: 12f));
             Assert.That(inv.Count(weapon), Is.EqualTo(FactionRaidPlanSystem.BattlefieldWeaponLoot));
             Assert.That(inv.Count(scrap), Is.EqualTo(FactionRaidPlanSystem.BattlefieldScrapLoot));
+            // MISC-007 — claim spike goes through RadiationSystem.Expose.
             Assert.That(scav.RadiationDose, Is.EqualTo(radBefore + 12f).Within(Eps));
+            Assert.That(scav.LifetimeRadiationExposure, Is.EqualTo(lifeBefore + 12f).Within(Eps));
             Assert.IsTrue(plan.BattlefieldLootClaimed);
             Assert.IsFalse(sys.HasBattlefieldLootAt(plan.BattlefieldNodeId));
             // Second claim fails.

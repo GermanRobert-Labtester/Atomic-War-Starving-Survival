@@ -45,11 +45,13 @@ namespace AtomicWar._Game.Core
                 return;
             }
 
-            if (foodType.ToLower().Contains("meat"))
+            // MISC-008: culture-invariant compare (Turkish-I etc. must not break "meat").
+            if (foodType.IndexOf("meat", System.StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 _state.meatFedToday += quantity;
             }
-            else if (foodType.ToLower().Contains("vegetable") || foodType.ToLower().Contains("fungi"))
+            else if (foodType.IndexOf("vegetable", System.StringComparison.OrdinalIgnoreCase) >= 0
+                     || foodType.IndexOf("fungi", System.StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 _state.veggiesFedToday += quantity;
             }

@@ -141,7 +141,7 @@ namespace AtomicWar._Game.Survivors
             float baseCritChance = 0f)
         {
             if (sv == null || string.IsNullOrEmpty(encounterKey)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("combatperksystem");
 
             string key = sv.Id + "|" + encounterKey;
             bool isFirst = !_firstShotFired.Contains(key);
@@ -262,7 +262,7 @@ namespace AtomicWar._Game.Survivors
             if (sv == null || !sv.IsAlive) return false;
             float rate = GetDisarmSuccessRate(sv);
             if (rate >= 1f) return true;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("combatperksystem");
             return rng.NextDouble() < rate;
         }
 

@@ -46,7 +46,7 @@ namespace AtomicWar._Game.Core
         private string _complicationAffliction = "";
         private float _secondSurgeryDifficulty;
 
-        private readonly System.Random _rng = new System.Random();
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("hazard_surgicalbotch");
 
         // ── Public API ─────────────────────────────────────────────────
 

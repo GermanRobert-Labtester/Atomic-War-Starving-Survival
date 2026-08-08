@@ -104,7 +104,7 @@ namespace AtomicWar._Game.Core
             if (Mathf.Abs(moraleDelta) > 0.01f)
                 survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
             if (Mathf.Abs(healthDelta) > 0.01f)
-                survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + healthDelta, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(survivor, healthDelta);
 
             LastCombatMoraleDelta = moraleDelta;
             LastCombatHealthDelta = healthDelta;

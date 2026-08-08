@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Radiation;
 
 namespace AtomicWar._Game.AI.Actions
 {
@@ -29,8 +30,13 @@ namespace AtomicWar._Game.AI.Actions
         public override void Execute(AIContext context)
         {
             if (context?.Survivor == null) return;
-            var rng = context.Random ?? new System.Random();
-            ExecuteSleepwalk(context.Survivor, context.InternalLockSystem, rng, out _);
+            var rng = context.Random ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("sleepwalkactionso");
+            ExecuteSleepwalk(
+                context.Survivor,
+                context.InternalLockSystem,
+                rng,
+                out _,
+                context.RadiationSystem);
         }
 
         public float ScoreAction(Survivor sv, InternalLockSystem lockSystem)
@@ -45,11 +51,12 @@ namespace AtomicWar._Game.AI.Actions
             Survivor sv,
             InternalLockSystem lockSystem,
             System.Random rng,
-            out SleepwalkHazard hazard)
+            out SleepwalkHazard hazard,
+            RadiationSystem radiation = null)
         {
             hazard = SleepwalkHazard.WanderOutsideWithoutSuit;
             if (sv == null || !sv.IsAlive) return false;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("sleepwalkactionso");
 
             string currentRoom = sv.CurrentRoomId ?? "quarters";
             if (lockSystem != null && !lockSystem.CanSleepwalkerEscape(currentRoom))
@@ -64,14 +71,21 @@ namespace AtomicWar._Game.AI.Actions
             switch (hazard)
             {
                 case SleepwalkHazard.WanderOutsideWithoutSuit:
-                    sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + 20f, 0f, 100f);
+                    if (radiation != null)
+                        radiation.Expose(sv, 20f, 1f);
+                    else
+                        sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + 20f, 0f, 100f);
                     break;
                 case SleepwalkHazard.OpenHatch:
                     sv.Needs.Warmth = Mathf.Clamp(sv.Needs.Warmth - 30f, 0f, 100f);
                     break;
                 case SleepwalkHazard.EatRawRations:
+                    // Hunger: higher = worse; eating reduces hunger.
                     sv.Needs.Hunger = Mathf.Clamp(sv.Needs.Hunger - 15f, 0f, 100f);
-                    sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + 10f, 0f, 100f);
+                    if (radiation != null)
+                        radiation.Expose(sv, 10f, 1f);
+                    else
+                        sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + 10f, 0f, 100f);
                     break;
             }
 

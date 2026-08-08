@@ -440,7 +440,7 @@ namespace AtomicWar._Game.Medical
             if (_personalQuests != null
                 && _personalQuests.BitesWhenHealedByStranger(patient, medic))
             {
-                medic.Needs.Health = UnityEngine.Mathf.Max(1f, medic.Needs.Health - 8f);
+                SurvivorNeedWrite.SetHealth(medic, Mathf.Max(1f, medic.Needs.Health - 8f));
                 // Still allow treatment after the bite.
             }
 

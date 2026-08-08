@@ -136,6 +136,8 @@ namespace AtomicWar._Game.Core
             ctx.CurrentWeather = WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear;
             ctx.AllSurvivors = Survivors;
             ctx.MentalBreak = MentalBreakSystem;
+            ctx.NeedsSystem = NeedsSystem;
+            ctx.RadiationSystem = RadiationSystem;
             ctx.CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f;
             ctx.IndoorTemperatureC = indoor;
             ctx.GetFactionTrust = _getFactionTrustStored;

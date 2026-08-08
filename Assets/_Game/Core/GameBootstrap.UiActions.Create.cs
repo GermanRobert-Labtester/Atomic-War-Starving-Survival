@@ -120,7 +120,7 @@ namespace AtomicWar._Game.Core
         private string ForceMentalBreakSabotage(System.Random rng)
         {
             if (Shelter == null || Shelter.Modules == null || Shelter.Modules.Count == 0) return null;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("gamebootstrap_uiactions_create");
             int idx = rng.Next(Shelter.Modules.Count);
             var mod = Shelter.Modules[idx];
             if (mod == null) return null;

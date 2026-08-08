@@ -378,7 +378,7 @@ namespace AtomicWar._Game.Survivors
 
             state.MentalBreaksCured++;
             // Absorb trauma — drop to 1 HP.
-            empath.Needs.Health = SpongeAbsorbHealthFloor;
+            SurvivorNeedWrite.SetHealth(empath, SpongeAbsorbHealthFloor);
             state.Progress = state.MentalBreaksCured;
             empath.QuestProgress = state.MentalBreaksCured;
             OnQuestProgress?.Invoke(empath, "mental_breaks_cured", state.MentalBreaksCured);
@@ -401,11 +401,13 @@ namespace AtomicWar._Game.Survivors
             float giveHp = Mathf.Min(healthAmount, Mathf.Max(0f, empath.Needs.Health - 1f));
             float giveMorale = Mathf.Min(moraleAmount, empath.Needs.Morale);
 
-            empath.Needs.Health = Mathf.Max(1f, empath.Needs.Health - giveHp);
+            SurvivorNeedWrite.SetHealth(empath, Mathf.Max(1f, empath.Needs.Health - giveHp));
             empath.Needs.Morale = Mathf.Max(0f, empath.Needs.Morale - giveMorale);
-            target.Needs.Health = Mathf.Min(
-                target.MaxHealthCap > 0f ? target.MaxHealthCap : 100f,
-                target.Needs.Health + giveHp);
+            SurvivorNeedWrite.SetHealth(
+                target,
+                Mathf.Min(
+                    target.MaxHealthCap > 0f ? target.MaxHealthCap : 100f,
+                    target.Needs.Health + giveHp));
             target.Needs.Morale = Mathf.Min(100f, target.Needs.Morale + giveMorale);
             return giveHp > 0f || giveMorale > 0f;
         }
@@ -540,7 +542,7 @@ namespace AtomicWar._Game.Survivors
         public float InterceptHatchBreachDamage(Survivor martyr, Survivor intendedTarget, float damage)
         {
             if (!ShouldInterceptHatchBreachDamage(martyr, intendedTarget) || damage <= 0f) return damage;
-            martyr.Needs.Health = Mathf.Max(0f, martyr.Needs.Health - damage);
+            SurvivorNeedWrite.AdjustHealth(martyr, -damage);
             return 0f; // target takes none
         }
 

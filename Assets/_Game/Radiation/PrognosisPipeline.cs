@@ -249,7 +249,7 @@ namespace AtomicWar._Game.Radiation
         private static void ResolveOutcome(Survivor survivor, float severity, bool resting, NeedsSystem needsSystem, Random rng)
         {
             float deathChance = Mathf.Clamp01(severity - (resting ? BedRestMitigation : 0f));
-            var random = rng ?? new Random();
+            var random = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("prognosispipeline");
             bool dies = random.NextDouble() < deathChance;
 
             survivor.PrognosisStage = PrognosisStage.RecoveryOrDeath;

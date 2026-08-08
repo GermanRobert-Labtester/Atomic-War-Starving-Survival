@@ -201,7 +201,7 @@ namespace AtomicWar._Game.Core
             float dangerLevel = 3f)
         {
             EnsureLoot();
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_worldcatalog_loot");
             // Soft cap keeps host rolls bounded; tests may request larger samples.
             count = Mathf.Clamp(count, 0, 64);
             var results = new List<WorldLootRoll>(count);
@@ -251,7 +251,7 @@ namespace AtomicWar._Game.Core
         {
             EnsureLoot();
             roll = default;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_worldcatalog_loot");
             float chance = AttachmentLooseChance(faction);
             if (chance <= 0f) return false;
             // High danger slightly raises the floor (still tiny).
@@ -300,7 +300,7 @@ namespace AtomicWar._Game.Core
             System.Random rng,
             int corpseCount = 1)
         {
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_worldcatalog_loot");
             var faction = MapWorldLootFaction(winningFactionId);
             if (string.Equals(winningFactionId, "Mutual Destruction", StringComparison.Ordinal)
                 || string.Equals(winningFactionId, "none", StringComparison.Ordinal)

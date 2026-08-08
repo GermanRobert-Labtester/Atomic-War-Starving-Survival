@@ -87,9 +87,10 @@ namespace AtomicWar._Game.Survivors
                 float depletionRatio = lightProfile.vitaminDLowThreshold > 0f
                     ? (lightProfile.vitaminDLowThreshold - sv.VitaminDProxy) / lightProfile.vitaminDLowThreshold
                     : 1f;
-                sv.Needs.Health = Mathf.Clamp(
-                    sv.Needs.Health - lightProfile.vitaminDHealthPenaltyPerHour * depletionRatio * gameHours,
-                    0f, 100f);
+                // Vitamin-D drain is chronic; do not kill via this path alone (keeps
+                // light/listless sim independent of death). Floor at 1 HP.
+                float dmg = lightProfile.vitaminDHealthPenaltyPerHour * depletionRatio * gameHours;
+                SurvivorNeedWrite.SetHealth(sv, Mathf.Max(1f, sv.Needs.Health - dmg));
                 if (!ignoreDarknessMorale)
                 {
                     sv.Needs.Morale = Mathf.Clamp(

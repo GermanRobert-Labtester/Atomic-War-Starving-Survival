@@ -60,7 +60,7 @@ namespace AtomicWar._Game.Core
         public RadioTunerSystem(System.Random rng = null, Func<int> getDay = null)
         {
             State = new RadioState();
-            _rng = rng ?? new System.Random();
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("radiotunersystem");
             _getDay = getDay ?? (() => 0);
         }
 

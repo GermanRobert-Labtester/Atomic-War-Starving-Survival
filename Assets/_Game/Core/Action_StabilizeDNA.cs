@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace AtomicWar._Game.Core
 {
+    /// <summary>
+    /// DEMOTE-001 — content ghost. Not constructed by BootActionFamily and not
+    /// save-wired until a medical/mutagenesis host calls <see cref="Stabilize"/>.
+    /// Kept as dormant design for re-promotion (do not delete the class).
+    /// </summary>
     [Serializable]
     public class StabilizeDNAState
     {
@@ -11,6 +16,7 @@ namespace AtomicWar._Game.Core
         public bool requiresImmunosuppressants = true;
     }
 
+    /// <summary>DEMOTE-001 — dormant Action tracker (see type remarks on state).</summary>
     public class Action_StabilizeDNA
     {
         public event Action<string, string> OnMutationStabilized;

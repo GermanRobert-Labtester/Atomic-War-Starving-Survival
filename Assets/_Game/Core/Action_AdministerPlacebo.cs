@@ -43,7 +43,7 @@ namespace AtomicWar._Game.Core
         private float _discoveryChance;
         private bool _discovered;
 
-        private readonly System.Random _rng = new System.Random();
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("action_administerplacebo");
 
         // ── Public API ─────────────────────────────────────────────────
 

@@ -35,7 +35,8 @@ namespace AtomicWar._Game.Core
                 FactionRadioIntercepts,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
                 isAntennaOperational: IsWiretapAntennaOperational,
-                map: null);
+                map: null,
+                radiation: RadiationSystem);
             FactionRaidPlanSystem.OnInterceptOffered += HandleRaidPlanInterceptOffered;
 
             _onWorldPhaseChanged = phase =>
@@ -86,7 +87,13 @@ namespace AtomicWar._Game.Core
                         return SabotagedCacheSystem.PoisonedIodineDefinition;
                     return null;
                 },
-                ModuleLookup = id => null
+                // Prefer SO already on the installed module (fresh boot has definitions).
+                // Do not return null for known modules — that used to clear Definition on load.
+                ModuleLookup = id =>
+                {
+                    if (string.IsNullOrEmpty(id) || Shelter == null) return null;
+                    return Shelter.GetModule(id)?.Definition;
+                }
             });
             // P1 / AUDIT-004: fail-fast ISaveable restore in Editor + Development
             // (game-ci batchmode) only. Release players keep best-effort restore.
@@ -329,7 +336,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetActionSelfSurgery(ActionSelfSurgery);
             SaveSystem.SetActionSilentTakedown(ActionSilentTakedown);
             SaveSystem.SetActionSiphonGas(ActionSiphonGas);
-            SaveSystem.SetActionStabilizeDNA(ActionStabilizeDNA);
+            // DEMOTE-001 — ActionStabilizeDNA not save-wired (ghost demoted).
             SaveSystem.SetActionStargazing(ActionStargazing);
             SaveSystem.SetActionWorshipIdol(ActionWorshipIdol);
             SaveSystem.SetAfflictionAdrenalineCrash(AfflictionAdrenalineCrash);

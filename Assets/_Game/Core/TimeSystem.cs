@@ -138,6 +138,7 @@ namespace AtomicWar._Game.Core
 
         private void Advance(float stepHours)
         {
+            int prevHour = CurrentHour;
             _hourAccumulator += stepHours;
 
             while (_hourAccumulator >= 24f)
@@ -147,7 +148,10 @@ namespace AtomicWar._Game.Core
                 OnDayTick?.Invoke(_day);
             }
 
-            OnHourTick?.Invoke(_day, CurrentHour);
+            if (CurrentHour != prevHour)
+            {
+                OnHourTick?.Invoke(_day, CurrentHour);
+            }
         }
     
         // ── Save / Load ────────────────────────────────────────────────

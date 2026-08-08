@@ -140,7 +140,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetDeafStealthFailChance(sv);
             if (p <= 0f) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_rebuilders");
             return rng.NextDouble() < p;
         }
 
@@ -308,7 +308,7 @@ namespace AtomicWar._Game.Survivors
             if (!string.Equals(sv.ArchetypeId, MicrobiologistId, StringComparison.Ordinal)
                 && !HasGermaphobe(sv))
                 return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_rebuilders");
             return rng.NextDouble() < MicrobiologistRefuseRationChance;
         }
 
@@ -671,7 +671,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetAccidentalDischargeChance(hitman);
             if (p <= 0f) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_rebuilders");
             return rng.NextDouble() < p;
         }
 
@@ -916,7 +916,7 @@ namespace AtomicWar._Game.Survivors
             float mult = GetAtmosphereGasPenaltyMultiplier(sv);
             float dmg = rawHealthDamage * mult;
             if (dmg <= 0f) return 0f;
-            sv.Needs.Health = Mathf.Max(0f, sv.Needs.Health - dmg);
+            SurvivorNeedWrite.AdjustHealth(sv, -dmg);
             return dmg;
         }
 

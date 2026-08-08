@@ -107,7 +107,7 @@ namespace AtomicWar._Game.Core
                 return false;
             }
 
-            string door_id = $"{_state.item_id_prefix}{required.ToString().ToLower()}_door";
+            string door_id = $"{_state.item_id_prefix}{required.ToString().ToLowerInvariant()}_door";
             if (!_state.unlocked_door_ids.Contains(door_id))
             {
                 _state.unlocked_door_ids.Add(door_id);

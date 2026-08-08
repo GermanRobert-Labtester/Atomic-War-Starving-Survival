@@ -183,7 +183,7 @@ namespace AtomicWar._Game.Survivors
                 && !HasFascination(sv))
                 return false;
             if (sv.Needs.Morale >= PyromaniacFireMoraleThreshold) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_chemistry");
             return rng.NextDouble() < PyromaniacDailyFireChance;
         }
 
@@ -379,8 +379,9 @@ namespace AtomicWar._Game.Survivors
             if (!HasRadiotrophic(sv) || sv == null || !sv.IsAlive) return;
             if (zoneRadPerHour < 50f) return;
             float heal = RadiotrophicHealPerHour * gameHours;
-            sv.Needs.Health = Mathf.Min(sv.MaxHealthCap > 0f ? sv.MaxHealthCap : 100f,
-                sv.Needs.Health + heal);
+            SurvivorNeedWrite.SetHealth(
+                sv,
+                Mathf.Min(sv.MaxHealthCap > 0f ? sv.MaxHealthCap : 100f, sv.Needs.Health + heal));
             sv.Needs.Fatigue = Mathf.Max(0f, sv.Needs.Fatigue - heal);
         }
 

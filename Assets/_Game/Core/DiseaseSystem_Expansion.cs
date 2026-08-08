@@ -57,7 +57,7 @@ namespace AtomicWar._Game.Core
         private bool _waterPurified;
         private bool _ventsSealed;
 
-        private readonly System.Random _rng = new System.Random();
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("diseasesystem_expansion");
 
         // ── Public API ─────────────────────────────────────────────────
 

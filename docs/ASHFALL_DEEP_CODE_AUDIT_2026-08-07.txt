@@ -3625,3 +3625,211 @@ Re-read / rg the exact production files for each finding ID:
 ========================================================================================
 END OF PART 10 — MASTER STATUS OVERVIEW
 ========================================================================================
+
+========================================================================================
+PART 11 — FULL RECHECK SNAPSHOT (fixed vs open)
+Read-only re-verification of all major audit findings against current tree
+Generated (UTC): 2026-08-08
+========================================================================================
+
+Method: re-opened production sources for every Critical/High ID; systematic Prop.Method
+sample of 39 ghost representatives (all still dead/handlers-only); re-checked known
+partial-live batch systems.
+
+FIXED (9 domain fixes confirmed)
+  SURV-001/DEEP-002, RAD-001/DEEP-003, RAD-002, RAD-003, RAD-004,
+  MED-001, MED-002 (+Bind), CMB-001/DEEP-005, SAVE-001 TimeSystem payload
+
+PARTIAL
+  SAVE-001 residual dual ElapsedHours (Temperature vs TimeSystem)
+  Ghost baseline: 435 entries; a few batch-driven systems live but still listed
+
+OPEN CRITICAL
+  DEEP3-INV-001 player Consume hunger sign inverted
+  DEEP4-WIN-001 EndgameEngine.Evaluate without ApplyEndgame
+  SAVE-002 expedition flashpoint capture missing (restore has fields)
+  SAVE-003 hybrid non-transactional load
+  Mass latent content (~435 unticked; 39/39 sample still no gameplay Prop.Method)
+
+OPEN HIGH
+  DEEP3-INV-003 free AI drink; DEEP3-INV-004 iodine no-op; DEEP3-INV-005 anti-rad bypass
+  DEEP-001 needs critical = morale only
+  SAVE-004 dual AutoSave; SAVE-005 soft restore release; SAVE-007 index restore;
+  SAVE-008 no expedition clear; SAVE-012 ModuleLookup null
+  DEEP3-WIN-002 day 60 vs ChopperArrivalDay 100
+  INV-001 Add partial; INV-002 Unequip ignore Add fail
+  ECON-001 InferTier only; ECON-002 numeric trade UI; dual items.json
+  Victory StartDefense/StartUpload/SealAndDetonate/FireAtOwnCoordinates: 0 external callers
+
+Known LIVE despite baseline listing (boot method calls exist)
+  AdaptiveWarlords, ChemUse, DiseaseExpansion, ItemAmmoTypes, TrueEnding, IronMan,
+  SiegeBiowarfare, SiegeBlockade
+
+========================================================================================
+END OF PART 11 — FULL RECHECK SNAPSHOT
+========================================================================================
+
+========================================================================================
+PART 12 — FURTHER INVESTIGATION: additional problems (any size)
+Read-only | Flag regardless of fix priority
+Generated (UTC): 2026-08-08T00:07:08Z
+========================================================================================
+
+Scope: hunt beyond Parts 1–11 domain bugs — lifecycle, determinism, bypasses,
+API misuse, silent failure, style/process. Each item is flagged even if benefit
+is small.
+
+========================================================================================
+A. NEW FINDINGS (not fully tracked in Parts 1–11)
+========================================================================================
+
+[MISC-001] Severity: HIGH | Type: silent incomplete save
+  Location: SaveSystem.Entities.cs CaptureSubsystemStates catch
+  Description: CaptureState exceptions LogError and continue; Save() still returns true
+  (IO.cs success path). Slot file written without failed subsystems → load loses state
+  with no Save failure.
+  Evidence: catch logs error; no rethrow / fail-whole-save flag.
+
+[MISC-002] Severity: HIGH | Type: silent continue after tick throw
+  Location: SystemRegistry.cs PerSubstep/Daily catch
+  Description: A throwing system is logged; remaining systems still tick. One bad
+  system can leave world half-advanced for the hour without freezing the sim.
+  Evidence: catch LogError then continue loop.
+
+[MISC-003] Severity: MEDIUM | Type: API misuse
+  Location: GhostStationSystem.DestroyRuntimeAssets
+  Description: Uses Object.DestroyImmediate on ScriptableObjects at runtime. Unity
+  docs: prefer Destroy in play mode; Immediate can desync assets / editor state.
+  Evidence: GhostStationSystem.cs ~158–164 DestroyImmediate.
+
+[MISC-004] Severity: MEDIUM | Type: lifecycle leak risk
+  Location: codebase-wide event subscriptions
+  Description: On* event += count ~499 vs -= ~44 (order of magnitude). EventBus
+  Subscribe/Unsubscribe balanced (7/7). Long-lived GameBootstrap handlers + dormant
+  Wire* On* logs rarely unsubscribed → leak / double-fire if bootstrap re-inits.
+  Evidence: rg counts this pass.
+
+[MISC-005] Severity: MEDIUM | Type: non-determinism
+  Location: many systems `rng ??= new System.Random()` without seed
+  Description: Unseeded Random when host omits rng breaks seed-based reproducibility
+  (tests, ironman, multiplayer-like determinism). Sites include RadiationSystem,
+  MentalBreakSystem, BeliefSystem, PersonalQuestSystem (multiple), HallucinationSystem,
+  PlanterBox, AfflictionPipeline, SimulationSystems.Ops, etc. (30+ call sites).
+  Suggested: require seeded rng from GameBootstrap._worldSeed + salt.
+
+[MISC-006] Severity: MEDIUM | Type: death pipeline bypass
+  Location: ~46 sites `.Needs.Health =` outside NeedsSystem.Modify
+  Description: Direct Health writes skip OnNeedChanged / EvaluateDeath / ForceDeath
+  (DEEP-009 class). Health can hit 0 while State stays Alive unless another path
+  notices. Examples: HatchDefense fallback, ExpeditionSystem.Tick, UxoHazard,
+  LaborCampSystem (Health=40), MedicalPerk DeathsDoor (intentional Health=0 +
+  Incapacitated), EatActionSO healthEffect, EventRunner.Apply "health".
+  Evidence: rg Needs.Health = count ~46 non-test.
+
+[MISC-007] Severity: MEDIUM | Type: radiation pipeline bypass
+  Location: UseAntiRadActionSO, DecontaminateActionSO, SleepwalkActionSO,
+  EventRunner.Apply "radiation", PersonalQuest undertaker/plumber, FactionRaidPlan,
+  MutatedEcosystem, PrognosisPipeline zeroing
+  Description: Direct RadiationDose writes skip RadiationSystem.Expose/Administer*
+  events and lifetime exposure accounting (related DEEP3-INV-005).
+  Evidence: rg RadiationDose = outside RadiationSystem.
+
+[MISC-008] Severity: MEDIUM | Type: culture / locale
+  Location: Pet_GuardDog.cs foodType.ToLower().Contains(...);
+  Item_Keycards.cs ToLower() for door ids
+  Description: ToLower() uses current culture — Turkish-I etc. can break id matching.
+  Prefer ToLowerInvariant / OrdinalIgnoreCase.
+
+[MISC-009] Severity: LOW | Type: culture
+  Location: HatchDefenseSystem.cs item.id.Contains("ammo") / Contains("shell")
+  Description: Substring match without OrdinalIgnoreCase; culture-sensitive Contains
+  on strings; false negatives for Ammo casing / false positives for non-ammo ids
+  containing "shell".
+
+[MISC-010] Severity: LOW | Type: stub save / false safety
+  Location: still present empty Capture + Restore `{ _ = saved; }` on e.g.
+  WaterEconomySystem, CookingSystem, NightScavengeSystem, BicycleSystem,
+  BlackRain/FalloutStormHazard, MoralDilemma, ProstheticCrafting, NeedleSterilization,
+  Visitor_Abandoned/Exploded, Action_Stargazing/SilentTakedown, LocationStateRuin
+  Description: ISaveable registration implies persistence; DTO empty → load no-op.
+  (Partially flagged DEEP4-SAVE-STUB; still present.)
+
+[MISC-011] Severity: LOW | Type: NRE risk in test/fallback path
+  Location: GameBootstrap.TickSystems.cs TickWeatherShelterPower fallback
+  Description: When _registry is null (partial test host), WeatherSystem.Tick /
+  TemperatureSystem.Tick / Shelter.Tick called without ?.. Full bootstrap uses
+  registry (safe). Partial hosts can NRE if systems null.
+  Evidence: lines ~86–103 unguarded.
+
+[MISC-012] Severity: LOW | Type: process / observability
+  Location: runtime Debug.Log ~858 sites + warn/error ~243
+  Description: Heavy logging noise; many Boot* Wire* Debug.Log on content that never
+  fires; can hurt perf in builds if not stripped; hides real errors.
+
+[MISC-013] Severity: LOW | Type: morale bypass
+  Location: ~107 sites Needs.Morale = direct
+  Description: Skips Selfless redistribution, Living Saint floor, Matriarch paths in
+  NeedsSystem.Modify for morale.
+
+[MISC-014] Severity: NIT | Type: empty catch (editor only)
+  Location: EventIdValidator.Collect.cs catch { return; }
+  Description: Swallows exception with no log in one path.
+
+[MISC-015] Severity: NIT | Type: EventRunner rad clamp
+  Location: EventRunner.Apply.cs radiation NeedDelta Clamp 0..100
+  Description: Consistent with RadiationSystem clamp; if design ever allows >100 dose
+  for acute tracking, events hard-cap. Currently aligned with system (flag for awareness).
+
+[MISC-016] Severity: LOW | Type: incomplete save subsystem skip
+  Location: SaveSystem.Entities restore soft path
+  Description: Systems in save not registered "silently skipped (forward-compat)" —
+  can hide missing Set* wiring after refactors.
+
+[MISC-017] Severity: LOW | Type: HUD auto-AddComponent
+  Location: HUD.cs Ensure* GetComponentInChildren ?? AddComponent for many HUD pieces
+  Description: Runtime invents missing UI components; masks broken scenes; can add
+  unconfigured components mid-play.
+
+[MISC-018] Severity: NIT | Type: dual path TickSystems
+  Location: GameBootstrap.TickSystems registry vs else fallback
+  Description: Two tick graphs if registry missing; drift risk for tests that only
+  exercise one path (AUDIT-008 residual).
+
+[MISC-019] Severity: LOW | Type: seed comment vs practice
+  Location: GameBootstrap seeds some systems with _worldSeed + N, others fall back
+  to unseeded Random when optional rng null at call site (MISC-005).
+
+[MISC-020] Severity: NIT | Type: Journal / naming
+  Location: JournalVoice "Fallout storm" wording
+  Description: Domain allows nuclear aftermath language; ensure no real-world country
+  names (spot-check clean). Not a bug — flag if brand sensitivity required.
+
+========================================================================================
+B. PREVIOUSLY DOCUMENTED STILL OPEN (quick reaffirm this pass)
+========================================================================================
+
+  OPEN CRITICAL: DEEP3-INV-001 consume sign; DEEP4-WIN-001 EndgameEngine freeze;
+    SAVE-002 flashpoint capture; SAVE-003 hybrid load; ghost baseline ~435
+  OPEN HIGH: AI drink/iodine/antirad; DEEP-001 needs morale-only critical;
+    SAVE-004 dual AutoSave; SAVE-005 soft restore release; SAVE-007 index;
+    SAVE-008 expeditions; SAVE-012 ModuleLookup; INV-001/002; ECON-001/002;
+    dual items.json; extraction 60 vs 100; Victory Start* zero callers
+  FIXED (still hold): warmth, ExposureContext, bunker+room rad, shielding,
+    stamina floor, amp sepsis, generator noise, TimeSystem payload
+
+========================================================================================
+C. PRIORITY IF FIXING MISC BATCH
+========================================================================================
+
+  1. MISC-001 fail whole Save on CaptureState exception
+  2. MISC-006/007 route Health/RadiationDose through NeedsSystem/RadiationSystem
+     (or call EvaluateDeath after direct write)
+  3. MISC-003 Destroy → Destroy play-mode
+  4. MISC-005 seed all Random from world seed
+  5. MISC-004 unsubscribe audit on bootstrap teardown
+  6. MISC-008/009 invariant string compares
+  7. Demote stub ISaveable (MISC-010) with content gate
+
+========================================================================================
+END OF PART 12 — FURTHER INVESTIGATION
+========================================================================================

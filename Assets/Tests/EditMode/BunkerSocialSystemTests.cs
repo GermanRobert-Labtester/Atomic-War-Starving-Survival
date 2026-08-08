@@ -201,7 +201,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(d.Mutiny.MutinyActive);
 
             // Cannot afford → mutiny continues.
-            bool paid = false; d.YieldBunkerControl = u => false;
+            d.YieldBunkerControl = u => false;
             Assert.IsFalse(d.ResolveMutinyYield(10));
             Assert.IsTrue(d.Mutiny.MutinyActive);
         }

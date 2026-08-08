@@ -77,7 +77,7 @@ namespace AtomicWar._Game.Shelter
         {
             if (!_neighborHasHostiles || _hostilesCleared) return;
             _hostilesCleared = true;
-            if (fighter != null) fighter.Needs.Health = Mathf.Clamp(fighter.Needs.Health - 15f, 0f, 100f);
+            if (fighter != null) SurvivorNeedWrite.AdjustHealth(fighter, -15f);
             OnHostilesCleared?.Invoke();
         }
 

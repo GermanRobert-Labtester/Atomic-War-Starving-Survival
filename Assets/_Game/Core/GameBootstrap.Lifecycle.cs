@@ -77,6 +77,7 @@ namespace AtomicWar._Game.Core
             if (string.IsNullOrEmpty(slotId)) return;
 
             _suppressAutoSave = true;
+            if (SaveSystem != null) SaveSystem.SuppressAutoSave = true;
             try
             {
                 if (!LoadGame(slotId))
@@ -84,11 +85,17 @@ namespace AtomicWar._Game.Core
                     Debug.LogWarning(
                         $"[GameBootstrap] Continue requested slot '{slotId}', but it could not be " +
                         "loaded (missing or corrupt). Starting a fresh game instead.");
+                    // SAVE-003: keep SuppressAutoSave true so a hybrid/failed load
+                    // cannot overwrite a good slot. Host clears only on success.
+                    return;
                 }
             }
             finally
             {
                 _suppressAutoSave = false;
+                // Only re-enable SaveSystem autosave after a successful load.
+                if (SaveSystem != null && SaveSystem.LastLoadSucceeded)
+                    SaveSystem.SuppressAutoSave = false;
             }
         }
 

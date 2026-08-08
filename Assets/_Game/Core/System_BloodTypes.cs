@@ -46,12 +46,12 @@ namespace AtomicWar._Game.Core
         private readonly HashSet<string> _testedIds = new HashSet<string>();
         private readonly HashSet<string> _hemolyticShockActive = new HashSet<string>();
 
-        private System.Random _rng = new System.Random();
+        private System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("system_bloodtypes");
 
         // ── Public API ─────────────────────────────────────────────────
 
         /// <summary>Inject seeded RNG (bootstrap world seed) for deterministic assign.</summary>
-        public void SetRng(System.Random rng) => _rng = rng ?? new System.Random();
+        public void SetRng(System.Random rng) => _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("system_bloodtypes");
 
         /// <summary>
         /// Assign a blood type to a survivor. Call once per survivor at

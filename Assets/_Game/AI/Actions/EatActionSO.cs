@@ -155,7 +155,12 @@ namespace AtomicWar._Game.AI.Actions
                 if (food.moraleEffect != 0f)
                     survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + food.moraleEffect, 0f, 100f);
                 if (food.healthEffect != 0f)
-                    survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + food.healthEffect, 0f, 100f);
+                {
+                    if (context.NeedsSystem != null)
+                        context.NeedsSystem.AdjustHealth(survivor, food.healthEffect);
+                    else
+                        SurvivorNeedWrite.AdjustHealth(survivor, food.healthEffect);
+                }
 
                 // #273 Outcast room-meal morale hit on others sharing the room.
                 if (context.PersonalQuests != null && context.GetSurvivors != null)

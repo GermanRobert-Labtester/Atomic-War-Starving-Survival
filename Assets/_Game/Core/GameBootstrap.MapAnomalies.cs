@@ -1,5 +1,7 @@
 // GameBootstrap.MapAnomalies.cs — boot/wire MapAnomaly_* expedition anomalies.
+using System;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -64,8 +66,16 @@ namespace AtomicWar._Game.Core
             {
                 MapAnomalyDryCoral.OnCrystalHarvested += (node, n) =>
                     Debug.Log($"[GameBootstrap] ANOMALY: dry coral crystal #{n} at '{node}'");
+                // Scavenger harvest spike — route through RadiationSystem (MISC-007).
+                // mSv is treated as a one-hour ambient rate so Expose also grows lifetime.
                 MapAnomalyDryCoral.OnRadExposure += (id, msv) =>
-                    Debug.Log($"[GameBootstrap] ANOMALY: dry coral {msv:F0} mSv on '{id}'");
+                {
+                    if (msv <= 0f || RadiationSystem == null) return;
+                    Survivor sv = FindSurvivorById(id);
+                    if (sv == null || !sv.IsAlive) return;
+                    RadiationSystem.Expose(sv, msv, 1f);
+                    Debug.Log($"[GameBootstrap] ANOMALY: dry coral {msv:F0} mSv on '{id}' via RadiationSystem");
+                };
             }
 
             if (MapAnomalyFloodedSubway != null)
@@ -139,6 +149,18 @@ namespace AtomicWar._Game.Core
                 MapAnomalyUxoNuke.OnWarheadDetonatedRunEnded += _ =>
                     Debug.Log("[GameBootstrap] ANOMALY: UXO nuke detonated — run ended");
             }
+        }
+
+        private Survivor FindSurvivorById(string id)
+        {
+            if (string.IsNullOrEmpty(id) || Survivors == null) return null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                Survivor s = Survivors[i];
+                if (s != null && string.Equals(s.Id, id, StringComparison.Ordinal))
+                    return s;
+            }
+            return null;
         }
     }
 }

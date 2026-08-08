@@ -36,12 +36,12 @@ namespace AtomicWar._Game.Core
 
         public string NodeId => _state.node_id;
 
-        public Node_GhostShip() : this(new System.Random()) { }
+        public Node_GhostShip() : this(AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_ghostship")) { }
 
         public Node_GhostShip(System.Random rng)
         {
             _state = new GhostShipState();
-            _rng = rng ?? new System.Random();
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_ghostship");
         }
 
         /// <summary>

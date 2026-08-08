@@ -196,21 +196,21 @@ namespace AtomicWar._Game.Survivors
         public string RollRareComponent(Survivor sv, bool isHighTier, System.Random rng = null)
         {
             if (!isHighTier || !CanRecoverRareComponents(sv)) return null;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("shelterperksystem");
             if (rng.NextDouble() >= ScrapperRareComponentChance) return null;
             return rng.NextDouble() < 0.5 ? BatteryId : SpringId;
         }
 
+        private static readonly string[] HighTierKeywords = new[] { "radio", "gun", "rifle", "pistol", "geiger", "dosimeter" };
+
         public static bool IsHighTierDisassembleTarget(string itemId, int itemTypeOrdinal = -1)
         {
             if (string.IsNullOrEmpty(itemId)) return false;
-            // Radios, guns, devices — ids and type heuristics
-            if (itemId.IndexOf("radio", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (itemId.IndexOf("gun", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (itemId.IndexOf("rifle", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (itemId.IndexOf("pistol", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (itemId.IndexOf("geiger", StringComparison.OrdinalIgnoreCase) >= 0) return true;
-            if (itemId.IndexOf("dosimeter", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            for (int i = 0; i < HighTierKeywords.Length; i++)
+            {
+                if (itemId.IndexOf(HighTierKeywords[i], StringComparison.OrdinalIgnoreCase) >= 0)
+                    return true;
+            }
             return false;
         }
 
@@ -237,7 +237,7 @@ namespace AtomicWar._Game.Survivors
         public bool RollDigCaveIn(Survivor sv, System.Random rng = null, float baseChance = BaseExcavationCaveInChance)
         {
             if (SuppressesCaveInWhileDigging(sv)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("shelterperksystem");
             return rng.NextDouble() < baseChance;
         }
 

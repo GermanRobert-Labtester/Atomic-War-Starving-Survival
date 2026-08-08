@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -83,6 +85,7 @@ namespace AtomicWar._Game.Core
         public bool HasApexPredators => MutationStage >= 3;
 
         private readonly System.Random _rng;
+        private RadiationSystem _radiation;
 
         // -- Events --
         public event Action<int> OnMutationStageAdvanced;   // newStage
@@ -93,8 +96,10 @@ namespace AtomicWar._Game.Core
 
         public MutatedEcosystemSystem(System.Random rng = null)
         {
-            _rng = rng ?? new System.Random(67);
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mutated_ecosystem");
         }
+
+        public void BindRadiation(RadiationSystem radiation) => _radiation = radiation;
 
         /// <summary>
         /// Advance mutation stage based on radiation days. Call daily.
@@ -179,14 +184,15 @@ namespace AtomicWar._Game.Core
             if (exp?.Survivor == null || !exp.Survivor.IsAlive) return false;
 
             float damage = isApex ? ApexAttackHealthDamage : FaunaAttackHealthDamage;
-            exp.Survivor.Needs.Health = Mathf.Clamp(
-                exp.Survivor.Needs.Health - damage, 0f, exp.Survivor.MaxHealthCap);
+            SurvivorNeedWrite.AdjustHealth(exp.Survivor, -damage);
             exp.Survivor.Needs.Fatigue = Mathf.Clamp(
                 exp.Survivor.Needs.Fatigue + FaunaFleeFatigueCost, 0f, 100f);
 
             // Small rad exposure from the creature's irradiated bite/claws.
-            exp.Survivor.RadiationDose = Mathf.Clamp(
-                exp.Survivor.RadiationDose + (isApex ? 15f : 5f), 0f, 100f);
+            // MISC-007 — fauna bite only through injected RadiationSystem (no direct dose write).
+            float biteRads = isApex ? 15f : 5f;
+            if (_radiation != null)
+                _radiation.Expose(exp.Survivor, biteRads, 1f);
 
             // Chance of dropping loot when defeating fauna.
             bool defeated = _rng.NextDouble() < (isApex ? 0.3f : 0.6f);

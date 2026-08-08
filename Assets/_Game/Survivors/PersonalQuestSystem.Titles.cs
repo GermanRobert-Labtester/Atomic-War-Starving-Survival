@@ -100,7 +100,7 @@ namespace AtomicWar._Game.Survivors
                 && !string.Equals(sheriff.ArchetypeId, SheriffId, StringComparison.Ordinal))
                 return;
             sheriff.Needs.Morale = Mathf.Max(0f, sheriff.Needs.Morale - MoralCompassEvilHit);
-            sheriff.Needs.Health = Mathf.Max(1f, sheriff.Needs.Health - MoralCompassEvilHit * 0.5f);
+            SurvivorNeedWrite.SetHealth(sheriff, Mathf.Max(1f, sheriff.Needs.Health - MoralCompassEvilHit * 0.5f));
         }
 
         /// <summary>Failing Heart: max stamina decays over days.</summary>

@@ -143,7 +143,7 @@ namespace AtomicWar._Game.Core
         {
             if (survivors == null) return;
             Survivors = survivors;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("bunkersocialdirector");
             _cachedRng = rng;
 
             // Per-tick continuous auras.
@@ -254,7 +254,7 @@ namespace AtomicWar._Game.Core
             return Tribunal.JudgeNext(punishment, (sv, p) =>
             {
                 if (p == BunkerPunishment.Banishment && sv != null) Banish(sv, _currentDay);
-                else if (p == BunkerPunishment.Execution && sv != null) sv.Needs.Health = 0f;
+                else if (p == BunkerPunishment.Execution && sv != null) SurvivorNeedWrite.SetHealth(sv, 0f);
             });
         }
 

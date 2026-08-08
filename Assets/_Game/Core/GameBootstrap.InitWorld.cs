@@ -75,6 +75,7 @@ namespace AtomicWar._Game.Core
         private void InitEcosystemAndHouseLayout()
         {
             EcosystemSystem = new MutatedEcosystemSystem(CreateSaltedRng(_worldSeed, "ecosystem"));
+            EcosystemSystem.BindRadiation(RadiationSystem);
 
             var layouts = Data.ShelterLayoutFactory.CreateAll();
             var layoutRng = CreateSaltedRng(_worldSeed, "shelter_layout");

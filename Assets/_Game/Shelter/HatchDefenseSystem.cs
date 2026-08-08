@@ -381,7 +381,9 @@ namespace AtomicWar._Game.Shelter
             if (IsAmmoId(item.id)) return true;
             // Ammo stacks are Weapon-typed in items.json but stackMax > 1
             return item.type == ItemType.Weapon && item.stackMax > 1
-                && (item.id != null && (item.id.Contains("ammo") || item.id.Contains("shell")));
+                && item.id != null
+                && (item.id.IndexOf("ammo", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || item.id.IndexOf("shell", System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         public static bool IsWeaponId(string id)
@@ -1002,7 +1004,7 @@ namespace AtomicWar._Game.Shelter
                 else
                 {
                     // Fallback: direct health + morale hit when medical not wired
-                    sv.Needs.Health = Mathf.Max(1f, sv.Needs.Health - 15f);
+                    SurvivorNeedWrite.SetHealth(sv, Mathf.Max(1f, sv.Needs.Health - 15f));
                     sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - 10f);
                     if (sv.State == SurvivorState.Idle || sv.State == SurvivorState.Working)
                         sv.State = SurvivorState.Sick;

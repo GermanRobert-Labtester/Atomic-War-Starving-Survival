@@ -131,6 +131,7 @@ namespace AtomicWar._Game.Core
             context.NeedsElectronicScrapForCriticalRepair = scrapDeficit > 0;
             context.JunkScavengeUrgency = junkUrgency;
             context.RadiationSystem = RadiationSystem;
+            context.NeedsSystem = NeedsSystem;
             context.VerminSystem = VerminSystem;
             context.WasteSystem = WasteSystem;
             context.JuryRigSystem = JuryRigSystem;

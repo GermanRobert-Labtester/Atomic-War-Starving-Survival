@@ -42,7 +42,11 @@ namespace AtomicWar._Game.Core
                 }
                 catch (Exception ex)
                 {
+                    // MISC-001: do not write a "successful" save that silently dropped
+                    // a subsystem. Re-throw so Save() returns false and the previous
+                    // slot file is left intact.
                     Debug.LogError($"[SaveSystem] ISaveable.CaptureState failed for '{s.SaveId}': {ex.Message}");
+                    throw;
                 }
             }
         }

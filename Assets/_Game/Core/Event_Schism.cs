@@ -119,7 +119,6 @@ namespace AtomicWar._Game.Core
 
         public SchismState CaptureState()
         {
-            _state.isActive = _state.isActive;
             // Lists are already in sync since _factionA/_factionB reference _state lists
             return _state;
         }

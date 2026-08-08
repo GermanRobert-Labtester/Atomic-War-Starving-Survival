@@ -413,7 +413,7 @@ namespace AtomicWar._Game.Survivors
                 return 0f;
             if (healthDelta <= 0f) return 0f;
             float before = alpha.Needs.Health;
-            alpha.Needs.Health = Mathf.Min(alpha.MaxHealthCap, alpha.Needs.Health + healthDelta);
+            SurvivorNeedWrite.SetHealth(alpha, Mathf.Min(alpha.MaxHealthCap, alpha.Needs.Health + healthDelta));
             return alpha.Needs.Health - before;
         }
 
@@ -451,7 +451,7 @@ namespace AtomicWar._Game.Survivors
                 && !HasTinfoilHat(sv))
                 return false;
             if (HasTruthSeeker(sv)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_ashes");
             return rng.NextDouble() < TheoristRadioSabotageChance;
         }
 
@@ -576,7 +576,7 @@ namespace AtomicWar._Game.Survivors
             patient.ProgressionCombatBonus = SecondLifeStatMaxMult - 1f;
             patient.BaseMaxHealth = 100f * SecondLifeStatMaxMult;
             patient.BaseMaxStamina = 100f * SecondLifeStatMaxMult;
-            patient.Needs.Health = patient.MaxHealthCap;
+            SurvivorNeedWrite.SetHealth(patient, patient.MaxHealthCap);
         }
 
         // ── #309 Escapee — Breaking Chains / Iron Will ───────────────────
@@ -722,7 +722,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetClumsyToolBreakChance(sv);
             if (p <= 0f) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_ashes");
             return rng.NextDouble() < p;
         }
 
@@ -872,7 +872,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetLethalInstantKillChance(sv);
             if (p <= 0f) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_ashes");
             return rng.NextDouble() < p;
         }
 

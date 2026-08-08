@@ -81,6 +81,58 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void NeedsSystem_Tick_CriticalHunger_AppliesOnlyHungerHealthLoss()
+        {
+            var survivor = MakeSurvivor();
+            survivor.Needs.Hunger = _profile.hungerCritical;
+
+            _needsSystem.Tick(survivor, 1f);
+
+            Assert.AreEqual(97f, survivor.Needs.Health, 0.001f);
+            Assert.AreEqual(74f, survivor.Needs.Morale, 0.001f);
+        }
+
+        [Test]
+        public void NeedsSystem_Tick_CriticalThirst_AppliesOnlyThirstHealthLoss()
+        {
+            var survivor = MakeSurvivor();
+            survivor.Needs.Thirst = _profile.thirstCritical;
+
+            _needsSystem.Tick(survivor, 1f);
+
+            Assert.AreEqual(96f, survivor.Needs.Health, 0.001f);
+            Assert.AreEqual(74f, survivor.Needs.Morale, 0.001f);
+        }
+
+        [Test]
+        public void NeedsSystem_Tick_AtExactColdThreshold_AppliesColdHealthLoss()
+        {
+            var survivor = MakeSurvivor();
+            survivor.Needs.Warmth = _profile.warmthCritical + _profile.warmthLossPerHourInCold;
+
+            _needsSystem.Tick(survivor, 1f);
+
+            Assert.AreEqual(_profile.warmthCritical, survivor.Needs.Warmth, 0.001f);
+            Assert.AreEqual(98f, survivor.Needs.Health, 0.001f);
+            Assert.AreEqual(74f, survivor.Needs.Morale, 0.001f);
+        }
+
+        [Test]
+        public void NeedsSystem_Tick_MultipleCriticalNeeds_AddsActiveHealthLossesOnce()
+        {
+            var survivor = MakeSurvivor();
+            survivor.Needs.Hunger = _profile.hungerCritical;
+            survivor.Needs.Thirst = _profile.thirstCritical;
+            survivor.Needs.Warmth = 0f;
+
+            _needsSystem.Tick(survivor, 1f);
+
+            Assert.AreEqual(91f, survivor.Needs.Health, 0.001f);
+            Assert.AreEqual(74f, survivor.Needs.Morale, 0.001f,
+                "Critical morale loss is a single state penalty, not one hit per need.");
+        }
+
+        [Test]
         public void NeedsSystem_Modify_FiresOnNeedCriticalOnceOnTransition()
         {
             var survivor = MakeSurvivor();

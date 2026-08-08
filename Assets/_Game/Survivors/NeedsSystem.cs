@@ -308,6 +308,9 @@ namespace AtomicWar._Game.Survivors
             if (survivor == null || survivor.State == SurvivorState.Dead) return;
             survivor.Needs.Health = 0f;
             survivor.State = SurvivorState.Dead;
+            _personalQuests?.NotifySurvivorDied(survivor);
+            _personalQuests?.NotifyTwinDeath(
+                survivor, _getSurvivors != null ? _getSurvivors() : _survivors);
             OnDied?.Invoke(survivor);
         }
 
@@ -333,20 +336,17 @@ namespace AtomicWar._Game.Survivors
             SetHealth(survivor, survivor.Needs.Health + delta);
         }
 
-        private static float GetValue(Needs needs, NeedKind kind)
+        private static float GetValue(Needs needs, NeedKind kind) => kind switch
         {
-            switch (kind)
-            {
-                case NeedKind.Hunger: return needs.Hunger;
-                case NeedKind.Thirst: return needs.Thirst;
-                case NeedKind.Fatigue: return needs.Fatigue;
-                case NeedKind.Warmth: return needs.Warmth;
-                case NeedKind.Morale: return needs.Morale;
-                case NeedKind.Health: return needs.Health;
-                case NeedKind.Hygiene: return needs.Hygiene;
-                default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
-            }
-        }
+            NeedKind.Hunger => needs.Hunger,
+            NeedKind.Thirst => needs.Thirst,
+            NeedKind.Fatigue => needs.Fatigue,
+            NeedKind.Warmth => needs.Warmth,
+            NeedKind.Morale => needs.Morale,
+            NeedKind.Health => needs.Health,
+            NeedKind.Hygiene => needs.Hygiene,
+            _ => throw new ArgumentOutOfRangeException(nameof(kind), kind, null)
+        };
 
         private void SetValue(Survivor survivor, NeedKind kind, float value)
         {

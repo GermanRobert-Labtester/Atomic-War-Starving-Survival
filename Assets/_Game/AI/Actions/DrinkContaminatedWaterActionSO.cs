@@ -79,8 +79,7 @@ namespace AtomicWar._Game.AI.Actions
                     : UnityEngine.Random.value;
                 if (roll < chance)
                 {
-                    context.Survivor.Needs.Health = Mathf.Max(
-                        0f, context.Survivor.Needs.Health - DirtyWaterIllnessHealthLoss);
+                    SurvivorNeedWrite.AdjustHealth(context.Survivor, -DirtyWaterIllnessHealthLoss);
                     // Prefer dysentery affliction when medical is available
                     context.MedicalSystem?.Inflict(context.Survivor, "dysentery");
                 }
@@ -103,18 +102,15 @@ namespace AtomicWar._Game.AI.Actions
             return false;
         }
 
-        private static float RiskWillingness(RiskBiasTrait trait)
+        private static float RiskWillingness(RiskBiasTrait trait) => trait switch
         {
-            switch (trait)
-            {
-                case RiskBiasTrait.Paranoid: return 0.05f;
-                case RiskBiasTrait.Cautious: return 0.2f;
-                case RiskBiasTrait.Realist: return 0.5f;
-                case RiskBiasTrait.Fatalist: return 0.65f;
-                case RiskBiasTrait.Denialist: return 0.9f;
-                case RiskBiasTrait.Reckless: return 1f;
-                default: return 0.5f;
-            }
-        }
+            RiskBiasTrait.Paranoid => 0.05f,
+            RiskBiasTrait.Cautious => 0.2f,
+            RiskBiasTrait.Realist => 0.5f,
+            RiskBiasTrait.Fatalist => 0.65f,
+            RiskBiasTrait.Denialist => 0.9f,
+            RiskBiasTrait.Reckless => 1f,
+            _ => 0.5f
+        };
     }
 }

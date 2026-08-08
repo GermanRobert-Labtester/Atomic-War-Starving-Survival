@@ -4,6 +4,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using UnityEngine;
 using Random = System.Random;
@@ -48,6 +49,7 @@ namespace AtomicWar._Game.Core
         private Func<int> _getDay;
         private Func<bool> _isAntennaOperational;
         private GeneratedMap _map;
+        private RadiationSystem _radiation;
 
         public IReadOnlyList<FactionRaidPlan> Plans => _plans;
 
@@ -82,14 +84,18 @@ namespace AtomicWar._Game.Core
             FactionRadioInterceptSystem intercepts = null,
             Func<int> getDay = null,
             Func<bool> isAntennaOperational = null,
-            GeneratedMap map = null)
+            GeneratedMap map = null,
+            RadiationSystem radiation = null)
         {
             _economy = economy;
             _intercepts = intercepts;
             _getDay = getDay ?? (() => 0);
             _isAntennaOperational = isAntennaOperational;
             _map = map;
+            if (radiation != null) _radiation = radiation;
         }
+
+        public void BindRadiation(RadiationSystem radiation) => _radiation = radiation;
 
         public void SetMap(GeneratedMap map) => _map = map;
 
@@ -317,11 +323,13 @@ namespace AtomicWar._Game.Core
             if (scrapDef != null)
                 inventory.Add(scrapDef, BattlefieldScrapLoot);
 
-            if (scavenger != null && scavenger.IsAlive && scavenger.Needs != null && radDoseOnClaim > 0f)
+            if (scavenger != null && scavenger.IsAlive && radDoseOnClaim > 0f)
             {
-                scavenger.RadiationDose = Mathf.Clamp(
-                    scavenger.RadiationDose + radDoseOnClaim, 0f, 100f);
-                scavenger.LifetimeRadiationExposure += radDoseOnClaim;
+                // MISC-007 — scavenger battlefield spike only through RadiationSystem.
+                // Callers (bootstrap Bind + EditMode tests) must BindRadiation first;
+                // no direct RadiationDose write when unbound (dose is simply skipped).
+                if (_radiation != null)
+                    _radiation.Expose(scavenger, radDoseOnClaim, 1f);
             }
 
             plan.BattlefieldLootClaimed = true;

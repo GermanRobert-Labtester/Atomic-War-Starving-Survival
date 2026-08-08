@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Medical
 {
@@ -158,21 +159,20 @@ namespace AtomicWar._Game.Medical
                 return false;
 
             // Donor cost.
-            donor.Needs.Health = Mathf.Clamp(donor.Needs.Health - TransfusionDonorHealthCost, 0f, 100f);
+            SurvivorNeedWrite.SetHealth(donor, donor.Needs.Health - TransfusionDonorHealthCost);
             donor.Needs.Fatigue = Mathf.Clamp(donor.Needs.Fatigue + TransfusionDonorFatigue, 0f, 100f);
 
             if (compatible)
             {
                 // Heal BloodLoss on recipient.
-                recipient.Needs.Health = Mathf.Clamp(
-                    recipient.Needs.Health + TransfusionBloodLossHeal, 0f, recipient.MaxHealthCap);
+                SurvivorNeedWrite.AdjustHealth(recipient, TransfusionBloodLossHeal);
                 recipient.Needs.Morale = Mathf.Clamp(recipient.Needs.Morale + 5f, 0f, 100f);
             }
             else
             {
                 // Anaphylactic shock — lethal in 12h without adrenaline.
                 _inflictAffliction?.Invoke(recipient, AnaphylacticShockId);
-                recipient.Needs.Health = Mathf.Clamp(recipient.Needs.Health - 20f, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(recipient, -20f);
             }
 
             OnTransfusionPerformed?.Invoke(donor, recipient, compatible);

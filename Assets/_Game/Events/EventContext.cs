@@ -4,6 +4,7 @@ using AtomicWar._Game.Environment;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
 using Random = System.Random;
 
 namespace AtomicWar._Game.Events
@@ -70,6 +71,11 @@ namespace AtomicWar._Game.Events
         // null-safe if these are not wired.
         public List<Survivor> AllSurvivors;
         public MentalBreakSystem MentalBreak;
+
+        /// <summary>Optional — when set, health/dose deltas use death-safe / event-raising paths.</summary>
+        public NeedsSystem NeedsSystem;
+        /// <summary>Optional — when set, radiation deltas use <see cref="RadiationSystem"/>.</summary>
+        public RadiationSystem RadiationSystem;
 
         /// <summary>
         /// Faction trust lookup (factionId → -100..100). Wired from DynamicEconomySystem

@@ -40,10 +40,11 @@ namespace AtomicWar._Game.Core
             ActionSelfSurgery = new Action_SelfSurgery();
             ActionSilentTakedown = new Action_SilentTakedown();
             ActionSiphonGas = new Action_SiphonGas();
-            ActionStabilizeDNA = new Action_StabilizeDNA();
+            // DEMOTE-001 — ActionStabilizeDNA removed from Boot/Save (ghost).
+            // Class kept under Action_StabilizeDNA.cs until a real host calls Stabilize().
             ActionStargazing = new Action_Stargazing();
             ActionWorshipIdol = new Action_WorshipIdol();
-            Debug.Log("[GameBootstrap] Action family ready (36 systems).");
+            Debug.Log("[GameBootstrap] Action family ready (35 systems; StabilizeDNA demoted).");
         }
 
         private void BootAfflictionFamily()
