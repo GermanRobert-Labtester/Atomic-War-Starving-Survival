@@ -227,13 +227,19 @@ namespace AtomicWar.Tests.EditMode
             var eco = new AtomicWar._Game.Economy.DynamicEconomySystem();
             var item = UnityEngine.ScriptableObject.CreateInstance<ItemDefinition>();
             item.id = "custom_attachment";
-            item.type = ItemType.UtilityTool;
-            item.tradeValue = 50f;
+            // UtilityTool is a trade *tier*, not an ItemType. ItemType.Tool is the
+            // type that InferTier maps to ItemTradeTier.UtilityTool.
+            item.type = ItemType.Tool;
+            // Left at 0 deliberately: Item_TradeValues.Resolve only consults the tier's
+            // base value when the item carries no explicit tradeValue, so a non-zero
+            // tradeValue here would make both branches return the same number and the
+            // assertion below could never distinguish explicit from inferred.
+            item.tradeValue = 0f;
             item.tradeTier = ItemTradeTier.Attachment;
 
             float valWithExplicitTier = eco.GetTradeValue(item);
 
-            // Change tradeTier back to Scrap (unspecified) so it falls back to InferTier(ItemType.UtilityTool)
+            // Change tradeTier back to Scrap (unspecified) so it falls back to InferTier(ItemType.Tool)
             item.tradeTier = ItemTradeTier.Scrap;
             float valWithInferredTier = eco.GetTradeValue(item);
 
