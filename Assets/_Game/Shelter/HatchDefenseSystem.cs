@@ -947,72 +947,13 @@ namespace AtomicWar._Game.Shelter
             Func<string, ItemDefinition> itemLookup,
             Inventory.Inventory inventory = null)
         {
-            if (string.IsNullOrEmpty(moduleId) || !IsHatchModuleId(moduleId)) return false;
-            var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
-            var shelter = _getShelter != null ? _getShelter() : null;
-            if (inv == null || shelter == null || itemLookup == null) return false;
-
-            var existing = shelter.GetModule(moduleId);
-            int targetLevel = existing != null ? existing.Level + 1 : 1;
-            if (existing != null && existing.Definition != null && targetLevel > existing.Definition.MaxLevel)
+            if (!TryCreateHatchUpgradePlan(moduleId, itemLookup, inventory, out var plan))
                 return false;
-            if (targetLevel > 5) return false;
+            if (!TryConsumeHatchUpgradeMaterials(plan)) return false;
 
-            GetUpgradeMaterialCost(moduleId, targetLevel, out int scrapNeed, out int mechNeed);
-            var scrap = itemLookup("scrap_metal");
-            var mech = itemLookup("mechanical_parts") ?? itemLookup("mechanical_components");
-            if (scrap == null || mech == null) return false;
-            if (inv.Count(scrap) < scrapNeed || inv.Count(mech) < mechNeed) return false;
-
-            inv.Remove(scrap, scrapNeed);
-            inv.Remove(mech, mechNeed);
-
-            if (existing != null)
-            {
-                existing.Level = targetLevel;
-                if (existing.SecurityContribution <= 0f)
-                    existing.SecurityContribution = DefaultSecurityForModuleId(moduleId);
-                existing.FilterHealth = 100f;
-                existing.IsEnabled = true;
-            }
-            else
-            {
-                shelter.AddModule(new ShelterModuleInstance(moduleId, targetLevel)
-                {
-                    SecurityContribution = DefaultSecurityForModuleId(moduleId),
-                    FilterHealth = 100f,
-                    IsEnabled = true,
-                    RoomId = "entry"
-                });
-            }
-
+            ApplyHatchUpgrade(plan);
             OnSecurityChanged?.Invoke();
-
-            // #286 Iron Gate: welder who maxes hatch unlocks Forge Master.
-            if (_personalQuests != null && IsHatchModuleId(moduleId))
-            {
-                int maxLevel = existing?.Definition != null
-                    ? existing.Definition.MaxLevel
-                    : 5;
-                maxLevel = Mathf.Min(maxLevel, 5);
-                var crew = _getSurvivors != null ? _getSurvivors() : null;
-                if (crew != null)
-                {
-                    int day = _getDay != null ? _getDay() : 0;
-                    for (int i = 0; i < crew.Count; i++)
-                    {
-                        var sv = crew[i];
-                        if (sv == null || !sv.IsAlive) continue;
-                        if (!string.Equals(sv.ArchetypeId, PersonalQuestSystem.WelderId,
-                                StringComparison.Ordinal)
-                            && !_personalQuests.HasCalloused(sv)
-                            && !_personalQuests.HasForgeMaster(sv))
-                            continue;
-                        _personalQuests.NotifyHatchUpgradeInstalled(sv, targetLevel, maxLevel, day);
-                    }
-                }
-            }
-
+            NotifyIronGateHatchUpgrade(plan.TargetLevel, plan.MaxLevel);
             return true;
         }
 
@@ -1021,20 +962,7 @@ namespace AtomicWar._Game.Shelter
             Func<string, ItemDefinition> itemLookup,
             Inventory.Inventory inventory = null)
         {
-            if (string.IsNullOrEmpty(moduleId) || !IsHatchModuleId(moduleId)) return false;
-            var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
-            var shelter = _getShelter != null ? _getShelter() : null;
-            if (inv == null || shelter == null || itemLookup == null) return false;
-
-            var existing = shelter.GetModule(moduleId);
-            int targetLevel = existing != null ? existing.Level + 1 : 1;
-            if (targetLevel > 5) return false;
-
-            GetUpgradeMaterialCost(moduleId, targetLevel, out int scrapNeed, out int mechNeed);
-            var scrap = itemLookup("scrap_metal");
-            var mech = itemLookup("mechanical_parts") ?? itemLookup("mechanical_components");
-            if (scrap == null || mech == null) return false;
-            return inv.Count(scrap) >= scrapNeed && inv.Count(mech) >= mechNeed;
+            return TryCreateHatchUpgradePlan(moduleId, itemLookup, inventory, out _);
         }
 
         // -----------------------------------------------------------------

@@ -651,6 +651,171 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void TryInstallHatchUpgrade_AtDefinitionMax_RejectsInCanAndTry()
+        {
+            var shelter = new Shelter();
+            var definition = HatchDefenseModuleSO.Create(
+                HatchDefenseModuleSO.ReinforcedLocksId,
+                "Reinforced Locks",
+                10f);
+            definition.MaxLevel = 2;
+            _toDestroy.Add(definition);
+
+            var installed = new ShelterModuleInstance(definition, level: 2)
+            {
+                SecurityContribution = 10f
+            };
+            shelter.AddModule(installed);
+
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mechanical = MakeItem("mechanical_parts", ItemType.Material);
+            var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inventory.Add(scrap, 20);
+            inventory.Add(mechanical, 20);
+
+            var hatch = MakeSystem(shelter, inventory, new List<Survivor>());
+            int securityEvents = 0;
+            hatch.OnSecurityChanged += () => securityEvents++;
+            ItemDefinition Lookup(string id) => id == scrap.id
+                ? scrap
+                : id == mechanical.id ? mechanical : null;
+
+            Assert.That(hatch.CanInstallHatchUpgrade(installed.ModuleId, Lookup), Is.False,
+                "UI validation must honor the installed definition's level cap");
+            Assert.That(hatch.TryInstallHatchUpgrade(installed.ModuleId, Lookup), Is.False);
+            Assert.That(installed.Level, Is.EqualTo(2));
+            Assert.That(inventory.Count(scrap), Is.EqualTo(20));
+            Assert.That(inventory.Count(mechanical), Is.EqualTo(20));
+            Assert.That(securityEvents, Is.Zero);
+        }
+
+        [Test]
+        public void TryInstallHatchUpgrade_InterruptedSecondDebit_RollsBackFirstDebit()
+        {
+            var shelter = new Shelter();
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mechanical = MakeItem("mechanical_parts", ItemType.Material);
+            HatchDefenseSystem.GetUpgradeMaterialCost(
+                HatchDefenseModuleSO.ReinforcedLocksId,
+                1,
+                out int scrapNeeded,
+                out int mechanicalNeeded);
+
+            var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inventory.Add(scrap, scrapNeeded);
+            inventory.Add(mechanical, mechanicalNeeded);
+
+            bool secondDebitInvalidated = false;
+            inventory.OnItemRemoved += (item, _) =>
+            {
+                if (secondDebitInvalidated || item == null || item.id != scrap.id) return;
+                secondDebitInvalidated = inventory.Remove(mechanical, mechanicalNeeded);
+            };
+
+            var hatch = MakeSystem(shelter, inventory, new List<Survivor>());
+            int securityEvents = 0;
+            hatch.OnSecurityChanged += () => securityEvents++;
+            ItemDefinition Lookup(string id) => id == scrap.id
+                ? scrap
+                : id == mechanical.id ? mechanical : null;
+
+            Assert.That(
+                hatch.TryInstallHatchUpgrade(
+                    HatchDefenseModuleSO.ReinforcedLocksId,
+                    Lookup),
+                Is.False);
+            Assert.That(secondDebitInvalidated, Is.True, "The test must interrupt debit two");
+            Assert.That(inventory.Count(scrap), Is.EqualTo(scrapNeeded),
+                "The installer must roll back its first debit");
+            Assert.That(shelter.GetModule(HatchDefenseModuleSO.ReinforcedLocksId), Is.Null);
+            Assert.That(securityEvents, Is.Zero);
+        }
+
+        [Test]
+        public void TryInstallHatchUpgrade_PublishesSecurityBeforeIronGateNotification()
+        {
+            var shelter = new Shelter();
+            var definition = HatchDefenseModuleSO.Create(
+                HatchDefenseModuleSO.BlastDoorId,
+                "Blast Door",
+                25f);
+            definition.MaxLevel = 1;
+            _toDestroy.Add(definition);
+
+            var installed = new ShelterModuleInstance(definition, level: 0)
+            {
+                SecurityContribution = 0f,
+                FilterHealth = 12f,
+                IsEnabled = false,
+                RoomId = "entry"
+            };
+            shelter.AddModule(installed);
+
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mechanical = MakeItem("mechanical_parts", ItemType.Material);
+            HatchDefenseSystem.GetUpgradeMaterialCost(
+                installed.ModuleId,
+                1,
+                out int scrapNeeded,
+                out int mechanicalNeeded);
+            var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inventory.Add(scrap, scrapNeeded);
+            inventory.Add(mechanical, mechanicalNeeded);
+
+            var welder = PersonalQuestSystem.MakeArchetypeSurvivor(PersonalQuestSystem.WelderId);
+            var quests = new PersonalQuestSystem();
+            quests.AssignProfile(
+                welder,
+                PersonalQuestSystem.ProfileForArchetype(PersonalQuestSystem.WelderId));
+            Assert.That(quests.TryStartQuestline(welder, "test", currentDay: 39), Is.True);
+
+            int questProgressEvents = 0;
+            int questCompletionEvents = 0;
+            quests.OnQuestProgress += (_, key, value) =>
+            {
+                if (key == "iron_gate" && value == 1) questProgressEvents++;
+            };
+            quests.OnQuestlineCompleted += (_, questlineId) =>
+            {
+                if (questlineId == QuestlineSO.Ids.TheIronGate) questCompletionEvents++;
+            };
+
+            var hatch = MakeSystem(
+                shelter,
+                inventory,
+                new List<Survivor> { welder },
+                day: 40);
+            hatch.BindPersonalQuests(quests);
+
+            int securityEvents = 0;
+            bool initializedAtSecurityEvent = false;
+            bool questNotifiedAtSecurityEvent = true;
+            hatch.OnSecurityChanged += () =>
+            {
+                securityEvents++;
+                initializedAtSecurityEvent = installed.Level == 1
+                    && installed.SecurityContribution > 0f
+                    && Mathf.Approximately(installed.FilterHealth, 100f)
+                    && installed.IsEnabled;
+                questNotifiedAtSecurityEvent = questProgressEvents > 0
+                    || questCompletionEvents > 0
+                    || quests.HasForgeMaster(welder);
+            };
+            ItemDefinition Lookup(string id) => id == scrap.id
+                ? scrap
+                : id == mechanical.id ? mechanical : null;
+
+            Assert.That(hatch.TryInstallHatchUpgrade(installed.ModuleId, Lookup), Is.True);
+            Assert.That(securityEvents, Is.EqualTo(1));
+            Assert.That(initializedAtSecurityEvent, Is.True);
+            Assert.That(questNotifiedAtSecurityEvent, Is.False,
+                "OnSecurityChanged must remain before the Iron Gate notification");
+            Assert.That(questProgressEvents, Is.EqualTo(1));
+            Assert.That(questCompletionEvents, Is.EqualTo(1));
+            Assert.That(quests.HasForgeMaster(welder), Is.True);
+        }
+
+        [Test]
         public void OutdoorDiesel_SyncsNoise_AndIsOutdoorRoom()
         {
             Assert.IsTrue(HatchDefenseSystem.IsOutdoorRoomId("outside"));
