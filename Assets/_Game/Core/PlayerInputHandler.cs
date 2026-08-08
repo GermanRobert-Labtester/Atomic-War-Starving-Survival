@@ -61,11 +61,36 @@ namespace AtomicWar._Game.Core
             _bootstrap = GetComponent<GameBootstrap>();
         }
 
+        /// <summary>
+        /// Key dispatch, in strict precedence order. Each helper handles one family
+        /// of bindings; the ones returning bool consume the frame when they fire, so
+        /// a number key cannot reach both a workbench line and an event choice.
+        /// </summary>
         private void Update()
         {
             if (_bootstrap == null) return;
 
-            // Pause toggle
+            HandleSessionKeys();
+
+            // Internal Horror panels take number/Esc priority over workbench & events.
+            if (HandleInternalHorrorPanelInput()) return;
+
+            HandleScreenKeys();
+            HandleInventoryKeys();
+
+            if (HandleModalNumberKeys()) return;
+
+            HandleConsumableKeys();
+
+            // Event choices (when modal open; workbench numbers take priority above)
+            if (Input.GetKeyDown(_eventChoice1Key)) TrySelectChoice(0);
+            if (Input.GetKeyDown(_eventChoice2Key)) TrySelectChoice(1);
+            if (Input.GetKeyDown(_eventChoice3Key)) TrySelectChoice(2);
+        }
+
+        /// <summary>Pause toggle and quicksave/quickload.</summary>
+        private void HandleSessionKeys()
+        {
             if (Input.GetKeyDown(_pauseKey))
             {
                 if (_bootstrap.GameState.Phase == GamePhase.Running)
@@ -74,17 +99,15 @@ namespace AtomicWar._Game.Core
                     _bootstrap.ResumeGame();
             }
 
-            // Save/Load
             if (Input.GetKeyDown(_quickSaveKey))
                 _bootstrap.SaveGame("quicksave");
             if (Input.GetKeyDown(_quickLoadKey))
                 _bootstrap.LoadGame("quicksave");
+        }
 
-            // Internal Horror panels take number/Esc priority over workbench & events.
-            if (HandleInternalHorrorPanelInput())
-                return;
-
-            // Screens
+        /// <summary>Screen toggles and the simulation-speed toggle.</summary>
+        private void HandleScreenKeys()
+        {
             if (Input.GetKeyDown(_workbenchKey))
                 _bootstrap.ToggleWorkbench();
             if (Input.GetKeyDown(_hatchDefenseKey))
@@ -103,7 +126,11 @@ namespace AtomicWar._Game.Core
             // Fast-forward toggle: 1x <-> 3x simulation speed
             if (Input.GetKeyDown(_fastForwardKey))
                 _bootstrap.ToggleFastForward();
+        }
 
+        /// <summary>Inventory strip focus/activation, plus the corpse-dispose shortcut.</summary>
+        private void HandleInventoryKeys()
+        {
             // Inventory strip focus path:
             //   [I] next · [Shift+I] prev · [E]/Enter activate · [Esc] clear tooltip
             // Selected ammo shows military-exclusive tooltip in the diegetic HUD.
@@ -130,48 +157,49 @@ namespace AtomicWar._Game.Core
             // Quick open corpse dispose when a body is in stores [C].
             if (Input.GetKeyDown(_corpseDisposeKey))
                 _bootstrap.OpenCorpseDisposePanel();
+        }
 
+        /// <summary>
+        /// Bindings that belong to an open modal and consume the frame when they
+        /// fire: parley during trade, and workbench/hatch-install lines 1-9.
+        /// Returns true when the frame was consumed.
+        /// </summary>
+        private bool HandleModalNumberKeys()
+        {
             // Trade: demand parley / surrender after a hatch repel
             if (Input.GetKeyDown(_parleyKey) && IsTradeOpen())
             {
                 _bootstrap.DemandTradeParley();
-                return;
+                return true;
             }
 
-            // Workbench lines: 1-9 execute when workbench is open (also hatch installs)
-            if (IsWorkbenchOpen())
+            if (!IsWorkbenchOpen()) return false;
+
+            for (int i = 0; i < 9; i++)
             {
-                for (int i = 0; i < 9; i++)
-                {
-                    if (Input.GetKeyDown(KeyCode.Alpha1 + i) || Input.GetKeyDown(KeyCode.Keypad1 + i))
-                    {
-                        _bootstrap.ExecuteWorkbenchLine(i);
-                        return;
-                    }
-                }
+                if (!Input.GetKeyDown(KeyCode.Alpha1 + i) && !Input.GetKeyDown(KeyCode.Keypad1 + i))
+                    continue;
+                _bootstrap.ExecuteWorkbenchLine(i);
+                return true;
             }
+            return false;
+        }
 
-            // Consumables (primary survivor)
-            if (_bootstrap.Survivors != null && _bootstrap.Survivors.Count > 0)
-            {
-                var primary = _bootstrap.Survivors[0];
-                if (primary.IsAlive)
-                {
-                    if (Input.GetKeyDown(_consumeFoodKey))
-                        TryConsumeByType(primary, ItemType.Food);
-                    if (Input.GetKeyDown(_consumeWaterKey))
-                        TryConsumeByType(primary, ItemType.Water);
-                    if (Input.GetKeyDown(_consumeIodineKey))
-                        TryConsumeByType(primary, ItemType.Iodine);
-                    if (Input.GetKeyDown(_consumeAntiRadKey))
-                        TryConsumeByType(primary, ItemType.AntiRad);
-                }
-            }
+        /// <summary>Direct-consume shortcuts, applied to the primary survivor.</summary>
+        private void HandleConsumableKeys()
+        {
+            if (_bootstrap.Survivors == null || _bootstrap.Survivors.Count == 0) return;
+            var primary = _bootstrap.Survivors[0];
+            if (!primary.IsAlive) return;
 
-            // Event choices (when modal open; workbench numbers take priority above)
-            if (Input.GetKeyDown(_eventChoice1Key)) TrySelectChoice(0);
-            if (Input.GetKeyDown(_eventChoice2Key)) TrySelectChoice(1);
-            if (Input.GetKeyDown(_eventChoice3Key)) TrySelectChoice(2);
+            if (Input.GetKeyDown(_consumeFoodKey))
+                TryConsumeByType(primary, ItemType.Food);
+            if (Input.GetKeyDown(_consumeWaterKey))
+                TryConsumeByType(primary, ItemType.Water);
+            if (Input.GetKeyDown(_consumeIodineKey))
+                TryConsumeByType(primary, ItemType.Iodine);
+            if (Input.GetKeyDown(_consumeAntiRadKey))
+                TryConsumeByType(primary, ItemType.AntiRad);
         }
 
         /// <summary>

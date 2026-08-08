@@ -542,73 +542,107 @@ namespace AtomicWar._Game.Medical
                     var active = list[i];
                     if (!_afflictions.TryGetValue(active.AfflictionId, out var def)) continue;
 
-                    active.HoursActive += gameHours;
-
-                    // Coma care clock + neglect (Internal Horror — The Bedridden)
-                    if (active.AfflictionId == AfflictionSO.Ids.Coma)
-                    {
-                        active.HoursSinceLastCare += gameHours;
-                        ApplyComaNeeds(survivor, gameHours);
-                        if (active.HoursSinceLastCare >= ComaCareIntervalHours)
-                        {
-                            // Past care window: accelerated collapse
-                            _needs.Modify(survivor, NeedKind.Health,
-                                -ComaNeglectHealthDrainPerHour * gameHours);
-                            _needs.Modify(survivor, NeedKind.Hunger,
-                                ComaNeedRisePerHour * 1.5f * gameHours);
-                            _needs.Modify(survivor, NeedKind.Thirst,
-                                ComaNeedRisePerHour * 1.5f * gameHours);
-                        }
-                        survivor.State = SurvivorState.Incapacitated;
-                    }
-
-                    // Active treatment countdown (frozen progression, still drains)
-                    if (active.IsTreating)
-                    {
-                        ApplyHealthDrain(survivor, def, gameHours);
-                        active.TreatmentHoursRemaining -= gameHours;
-                        if (active.TreatmentHoursRemaining <= 0f)
-                            CompleteTreatment(survivor, list, active);
-                        continue;
-                    }
-
-                    // Progression before full-period drain so large ticks still honor
-                    // RadBurns → Sepsis → Death instead of dying mid-stage from drain alone.
-                    if (!active.ProgressionHalted
-                        && def.progressionHours > 0f
-                        && !string.IsNullOrEmpty(def.progressesToId)
-                        && active.HoursUntilProgression <= gameHours)
-                    {
-                        float pre = Mathf.Max(0f, active.HoursUntilProgression);
-                        float post = gameHours - pre;
-                        if (pre > 0f)
-                            ApplyHealthDrain(survivor, def, pre);
-                        if (!survivor.IsAlive) break;
-
-                        ProgressAffliction(survivor, list, active, def);
-                        if (!survivor.IsAlive) break;
-
-                        // Remainder of the tick under the progressed affliction (if present)
-                        if (post > 0f && HasAffliction(survivor, def.progressesToId)
-                            && _afflictions.TryGetValue(def.progressesToId, out var nextDef))
-                        {
-                            ApplyHealthDrain(survivor, nextDef, post);
-                        }
-                        continue;
-                    }
-
-                    if (!active.ProgressionHalted
-                        && def.progressionHours > 0f
-                        && !string.IsNullOrEmpty(def.progressesToId))
-                    {
-                        active.HoursUntilProgression -= gameHours;
-                    }
-
-                    ApplyHealthDrain(survivor, def, gameHours);
-                    ApplyFatigueDrain(survivor, def, gameHours);
-                    ApplyStaminaCap(survivor, def);
+                    TickAffliction(survivor, list, active, def, gameHours);
                 }
             }
+        }
+
+        /// <summary>
+        /// Advance one active affliction by <paramref name="gameHours"/>. A death
+        /// mid-way simply returns; the caller's loop guard breaks out on the next
+        /// iteration, which is where the old inlined `break` landed too.
+        /// </summary>
+        private void TickAffliction(
+            Survivor survivor,
+            List<ActiveAffliction> list,
+            ActiveAffliction active,
+            AfflictionSO def,
+            float gameHours)
+        {
+            active.HoursActive += gameHours;
+
+            if (active.AfflictionId == AfflictionSO.Ids.Coma)
+                TickComaCare(survivor, active, gameHours);
+
+            // Active treatment countdown (frozen progression, still drains)
+            if (active.IsTreating)
+            {
+                ApplyHealthDrain(survivor, def, gameHours);
+                active.TreatmentHoursRemaining -= gameHours;
+                if (active.TreatmentHoursRemaining <= 0f)
+                    CompleteTreatment(survivor, list, active);
+                return;
+            }
+
+            if (TryProgressThisTick(survivor, list, active, def, gameHours)) return;
+
+            if (CanProgress(active, def))
+                active.HoursUntilProgression -= gameHours;
+
+            ApplyHealthDrain(survivor, def, gameHours);
+            ApplyFatigueDrain(survivor, def, gameHours);
+            ApplyStaminaCap(survivor, def);
+        }
+
+        /// <summary>Coma care clock + neglect (Internal Horror — The Bedridden).</summary>
+        private void TickComaCare(Survivor survivor, ActiveAffliction active, float gameHours)
+        {
+            active.HoursSinceLastCare += gameHours;
+            ApplyComaNeeds(survivor, gameHours);
+            if (active.HoursSinceLastCare >= ComaCareIntervalHours)
+            {
+                // Past care window: accelerated collapse
+                _needs.Modify(survivor, NeedKind.Health,
+                    -ComaNeglectHealthDrainPerHour * gameHours);
+                _needs.Modify(survivor, NeedKind.Hunger,
+                    ComaNeedRisePerHour * 1.5f * gameHours);
+                _needs.Modify(survivor, NeedKind.Thirst,
+                    ComaNeedRisePerHour * 1.5f * gameHours);
+            }
+            survivor.State = SurvivorState.Incapacitated;
+        }
+
+        /// <summary>True when the affliction has a live progression target to count down to.</summary>
+        private static bool CanProgress(ActiveAffliction active, AfflictionSO def)
+        {
+            return !active.ProgressionHalted
+                && def.progressionHours > 0f
+                && !string.IsNullOrEmpty(def.progressesToId);
+        }
+
+        /// <summary>
+        /// Progression is resolved before the full-period drain so that a large tick
+        /// still honours RadBurns → Sepsis → Death rather than killing the survivor
+        /// mid-stage from drain alone. The interval is split at the progression
+        /// boundary and each half drains under its own affliction.
+        /// Returns true when this tick was consumed by a progression.
+        /// </summary>
+        private bool TryProgressThisTick(
+            Survivor survivor,
+            List<ActiveAffliction> list,
+            ActiveAffliction active,
+            AfflictionSO def,
+            float gameHours)
+        {
+            if (!CanProgress(active, def) || active.HoursUntilProgression > gameHours)
+                return false;
+
+            float pre = Mathf.Max(0f, active.HoursUntilProgression);
+            float post = gameHours - pre;
+            if (pre > 0f)
+                ApplyHealthDrain(survivor, def, pre);
+            if (!survivor.IsAlive) return true;
+
+            ProgressAffliction(survivor, list, active, def);
+            if (!survivor.IsAlive) return true;
+
+            // Remainder of the tick under the progressed affliction (if present)
+            if (post > 0f && HasAffliction(survivor, def.progressesToId)
+                && _afflictions.TryGetValue(def.progressesToId, out var nextDef))
+            {
+                ApplyHealthDrain(survivor, nextDef, post);
+            }
+            return true;
         }
 
         private void ApplyHealthDrain(Survivor survivor, AfflictionSO def, float hours)

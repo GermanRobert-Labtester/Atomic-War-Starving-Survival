@@ -13,61 +13,7 @@ namespace AtomicWar._Game.AI
         public float Score(SurvivorAction action, AIContext context)
         {
             if (action == null || context == null) return 0f;
-
-            // #259 Coward: refuses loud labor (build / generator / maintain).
-            // #266 God Complex: refuses menial labor (clean / dig / excavate).
-            // #275 Pacifist: cannot equip weapons / combat actions.
-            // #271 Blind: cannot fire guns / expedition combat.
-            // #277 Ex-Con: refuses orders from Cop/General (order-tagged actions).
-            if (context.PersonalQuests != null && context.Survivor != null)
-            {
-                string actionId = action.id ?? string.Empty;
-                if (context.PersonalQuests.RefusesLoudLabor(context.Survivor)
-                    && context.PersonalQuests.IsLoudLaborAction(actionId))
-                    return 0f;
-                if (context.PersonalQuests.RefusesMenialLabor(context.Survivor)
-                    && context.PersonalQuests.IsMenialLaborAction(actionId))
-                    return 0f;
-                if (context.PersonalQuests.CannotEquipWeapons(context.Survivor)
-                    && IsWeaponOrCombatAction(actionId))
-                    return 0f;
-                if (!context.PersonalQuests.CanFireGuns(context.Survivor)
-                    && IsGunAction(actionId))
-                    return 0f;
-                // #277 Ex-Con: refuse order-tagged actions when order-giver is Cop/General.
-                // Order-giver is approximated as any living Cop/General in the bunker.
-                if (IsOrderAction(actionId) && context.GetSurvivors != null)
-                {
-                    var all = context.GetSurvivors();
-                    if (all != null)
-                    {
-                        for (int oi = 0; oi < all.Count; oi++)
-                        {
-                            var giver = all[oi];
-                            if (giver == null || !giver.IsAlive) continue;
-                            if (context.PersonalQuests.RefusesOrdersFrom(context.Survivor, giver))
-                                return 0f;
-                        }
-                    }
-                }
-                // #279 Politician still *can* do dirty labor (quest needs it) but
-                // scores it lower so they prefer delegating when alternatives exist.
-
-                // #295 Hitman Professional: refuses medical triage and farming.
-                if (context.PersonalQuests.RefusesMedicalAndFarming(context.Survivor)
-                    && (context.PersonalQuests.IsMedicalTriageAction(actionId)
-                        || context.PersonalQuests.IsFarmingAction(actionId)))
-                    return 0f;
-
-                // #289 Germaphobe: no bunker triage without hazmat (host sets HazmatEquipped).
-                if (context.PersonalQuests.RequiresHazmatForTriage(context.Survivor)
-                    && context.PersonalQuests.IsMedicalTriageAction(actionId)
-                    && !context.PersonalQuests.CanPerformTriage(
-                        context.Survivor,
-                        hazmatEquipped: context.HazmatEquipped,
-                        inBunker: !context.Survivor.IsOnExpedition))
-                    return 0f;
-            }
+            if (IsForbiddenByQuest(action, context)) return 0f;
 
             float rawScore = action.EvaluateRaw(context);
             if (rawScore <= 0f) return 0f;
@@ -76,8 +22,97 @@ namespace AtomicWar._Game.AI
                 ? action.responseCurve.Evaluate(rawScore)
                 : rawScore;
 
-            float score = (curvedScore + action.basePriority) * action.weight;
+            float score = ApplyQuestBiases(
+                (curvedScore + action.basePriority) * action.weight, action, context);
 
+            // Listless penalty: light-deprived survivors are sluggish about everything.
+            // Applied after curve so it can't inflate low-urgency scores, only drag them down.
+            if (context.IsListless)
+            {
+                const float ListlessScorePenalty = 0.08f;
+                score -= ListlessScorePenalty;
+            }
+
+            // Override actions (e.g. withdrawal SearchForChems) are not clamped;
+            // they must reliably win against any 0..1 action.
+            if (action.isOverrideAction)
+                return Mathf.Max(0f, score);
+
+            return Mathf.Clamp01(score);
+        }
+
+        /// <summary>
+        /// Hard vetoes: quest traits that make an action flatly unavailable, scoring
+        /// it 0 before the response curve is ever consulted. Distinct from the soft
+        /// biases in <see cref="ApplyQuestBiases"/>, which only reweight.
+        /// </summary>
+        private static bool IsForbiddenByQuest(SurvivorAction action, AIContext context)
+        {
+            var quests = context.PersonalQuests;
+            if (quests == null || context.Survivor == null) return false;
+
+            var survivor = context.Survivor;
+            string actionId = action.id ?? string.Empty;
+
+            // #259 Coward: refuses loud labor (build / generator / maintain).
+            if (quests.RefusesLoudLabor(survivor) && quests.IsLoudLaborAction(actionId))
+                return true;
+            // #266 God Complex: refuses menial labor (clean / dig / excavate).
+            if (quests.RefusesMenialLabor(survivor) && quests.IsMenialLaborAction(actionId))
+                return true;
+            // #275 Pacifist: cannot equip weapons / combat actions.
+            if (quests.CannotEquipWeapons(survivor) && IsWeaponOrCombatAction(actionId))
+                return true;
+            // #271 Blind: cannot fire guns / expedition combat.
+            if (!quests.CanFireGuns(survivor) && IsGunAction(actionId))
+                return true;
+            // #277 Ex-Con: refuses orders from Cop/General (order-tagged actions).
+            if (RefusesOrderFromAnyGiver(actionId, context))
+                return true;
+            // #279 Politician still *can* do dirty labor (quest needs it) but
+            // scores it lower so they prefer delegating when alternatives exist.
+
+            // #295 Hitman Professional: refuses medical triage and farming.
+            if (quests.RefusesMedicalAndFarming(survivor)
+                && (quests.IsMedicalTriageAction(actionId) || quests.IsFarmingAction(actionId)))
+                return true;
+
+            // #289 Germaphobe: no bunker triage without hazmat (host sets HazmatEquipped).
+            return quests.RequiresHazmatForTriage(survivor)
+                && quests.IsMedicalTriageAction(actionId)
+                && !quests.CanPerformTriage(
+                    survivor,
+                    hazmatEquipped: context.HazmatEquipped,
+                    inBunker: !survivor.IsOnExpedition);
+        }
+
+        /// <summary>
+        /// #277 Ex-Con: refuse order-tagged actions when the order-giver is a
+        /// Cop/General. The giver is approximated as any living Cop/General in the
+        /// bunker, since the action carries no explicit issuer.
+        /// </summary>
+        private static bool RefusesOrderFromAnyGiver(string actionId, AIContext context)
+        {
+            if (!IsOrderAction(actionId) || context.GetSurvivors == null) return false;
+            var all = context.GetSurvivors();
+            if (all == null) return false;
+
+            for (int oi = 0; oi < all.Count; oi++)
+            {
+                var giver = all[oi];
+                if (giver == null || !giver.IsAlive) continue;
+                if (context.PersonalQuests.RefusesOrdersFrom(context.Survivor, giver))
+                    return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Soft quest reweighting: multipliers and utility floors that shift what a
+        /// survivor prefers without making anything unavailable.
+        /// </summary>
+        private static float ApplyQuestBiases(float score, SurvivorAction action, AIContext context)
+        {
             // #262 Hyper-Empathetic: prioritizes Comfort/Talk over own survival.
             if (context.PersonalQuests != null && context.Survivor != null)
             {
@@ -136,20 +171,7 @@ namespace AtomicWar._Game.AI
                     score *= gamerCoop;
             }
 
-            // Listless penalty: light-deprived survivors are sluggish about everything.
-            // Applied after curve so it can't inflate low-urgency scores, only drag them down.
-            if (context.IsListless)
-            {
-                const float ListlessScorePenalty = 0.08f;
-                score -= ListlessScorePenalty;
-            }
-
-            // Override actions (e.g. withdrawal SearchForChems) are not clamped;
-            // they must reliably win against any 0..1 action.
-            if (action.isOverrideAction)
-                return Mathf.Max(0f, score);
-
-            return Mathf.Clamp01(score);
+            return score;
         }
 
         /// <summary>#262 Comfort/Talk action ids that Hyper-Empathetic survivors prefer.</summary>

@@ -13,6 +13,12 @@ namespace AtomicWar._Game.Shelter
     [Serializable]
     public class PowerNetwork
     {
+        /// <summary>
+        /// Durability lost per running hour by a diesel generator, before the
+        /// Ruthless Exec wear multiplier. Was an unnamed 0.15f inside Tick.
+        /// </summary>
+        public const float GeneratorWearPerHour = 0.15f;
+
         private readonly List<PowerSourceInstance> _sources = new List<PowerSourceInstance>();
         private readonly List<PowerConsumer> _consumers = new List<PowerConsumer>();
         private readonly Dictionary<string, PowerSourceSO> _defs = new Dictionary<string, PowerSourceSO>();
@@ -319,58 +325,11 @@ namespace AtomicWar._Game.Shelter
                 switch (def.Kind)
                 {
                     case PowerSourceKind.Diesel:
-                        if (src.Fuel <= 0f) break;
-                        // #260 Supply Chain Master: bunker-wide diesel burn mult (0.7).
-                        float bunkerFuelMult = _personalQuests != null
-                            ? _personalQuests.GetBunkerFuelBurnMultiplier(_getSurvivors?.Invoke())
-                            : 1f;
-                        float degradeMult = FuelDegradationBurnMultiplier > 0f
-                            ? FuelDegradationBurnMultiplier
-                            : 1f;
-                        float burn = def.FuelPerHour * gameHours
-                                     * src.EffectiveFuelBurnMultiplier * bunkerFuelMult * degradeMult;
-                        src.Fuel = Mathf.Max(0f, src.Fuel - burn);
-                        if (def.CoPpmPerHour > 0f)
-                            coDelta += def.CoPpmPerHour * gameHours;
-                        // Mechanical wear: overworked gens become fire risks (Internal Horror).
-                        // Prompt #226 — Grid Walker: generators never break down.
-                        bool immune = _personalQuests != null
-                            && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke());
-                        if (!immune)
-                        {
-                            float wear = 0.15f * gameHours;
-                            // #283 Ruthless Exec: modules work harder and die faster.
-                            if (_personalQuests != null && _getSurvivors != null)
-                            {
-                                var list = _getSurvivors();
-                                if (list != null)
-                                {
-                                    for (int wi = 0; wi < list.Count; wi++)
-                                    {
-                                        var ex = list[wi];
-                                        if (ex == null || !ex.IsAlive) continue;
-                                        float m = _personalQuests.GetRuthlessModuleWearMultiplier(ex);
-                                        if (m > 1f) { wear *= m; break; }
-                                    }
-                                }
-                            }
-                            src.Durability = Mathf.Max(0f, src.Durability - wear);
-                        }
+                        coDelta += TickDieselSource(src, def, gameHours);
                         break;
 
                     case PowerSourceKind.Bicycle:
-                        if (!src.HasPedaler) break;
-                        if (tryApplyPedalCost == null)
-                        {
-                            // No host callback: keep generation but skip need drain.
-                            break;
-                        }
-                        float fat = def.FatiguePerHour * gameHours;
-                        float hun = def.HungerPerHour * gameHours;
-                        if (!tryApplyPedalCost(src.PedalingSurvivorId, fat, hun))
-                        {
-                            src.ClearPedaler();
-                        }
+                        TickBicycleSource(src, def, gameHours, tryApplyPedalCost);
                         break;
                 }
             }
@@ -388,6 +347,75 @@ namespace AtomicWar._Game.Shelter
             }
 
             Rebalance(weatherName);
+        }
+
+        /// <summary>
+        /// Burn fuel and accrue mechanical wear for one diesel generator.
+        /// Returns the carbon-monoxide ppm this source added over the interval.
+        /// </summary>
+        private float TickDieselSource(PowerSourceInstance src, PowerSourceSO def, float gameHours)
+        {
+            if (src.Fuel <= 0f) return 0f;
+
+            // #260 Supply Chain Master: bunker-wide diesel burn mult (0.7).
+            float bunkerFuelMult = _personalQuests != null
+                ? _personalQuests.GetBunkerFuelBurnMultiplier(_getSurvivors?.Invoke())
+                : 1f;
+            float degradeMult = FuelDegradationBurnMultiplier > 0f
+                ? FuelDegradationBurnMultiplier
+                : 1f;
+            float burn = def.FuelPerHour * gameHours
+                         * src.EffectiveFuelBurnMultiplier * bunkerFuelMult * degradeMult;
+            src.Fuel = Mathf.Max(0f, src.Fuel - burn);
+
+            // Mechanical wear: overworked gens become fire risks (Internal Horror).
+            // Prompt #226 — Grid Walker: generators never break down.
+            bool immune = _personalQuests != null
+                && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke());
+            if (!immune)
+                src.Durability = Mathf.Max(0f, src.Durability - GeneratorWearPerHour * gameHours
+                    * GetRuthlessWearMultiplier());
+
+            return def.CoPpmPerHour > 0f ? def.CoPpmPerHour * gameHours : 0f;
+        }
+
+        /// <summary>
+        /// #283 Ruthless Exec: modules work harder and die faster. First living
+        /// exec in the bunker sets the multiplier for the whole grid.
+        /// </summary>
+        private float GetRuthlessWearMultiplier()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return 1f;
+            var list = _getSurvivors();
+            if (list == null) return 1f;
+
+            for (int wi = 0; wi < list.Count; wi++)
+            {
+                var ex = list[wi];
+                if (ex == null || !ex.IsAlive) continue;
+                float m = _personalQuests.GetRuthlessModuleWearMultiplier(ex);
+                if (m > 1f) return m;
+            }
+            return 1f;
+        }
+
+        /// <summary>
+        /// Charge the rider for one interval of pedalling. A host that declines the
+        /// cost (unavailable or exhausted rider) clears the pedaler; no host callback
+        /// at all keeps generation but skips the need drain.
+        /// </summary>
+        private static void TickBicycleSource(
+            PowerSourceInstance src,
+            PowerSourceSO def,
+            float gameHours,
+            Func<string, float, float, bool> tryApplyPedalCost)
+        {
+            if (!src.HasPedaler || tryApplyPedalCost == null) return;
+
+            float fat = def.FatiguePerHour * gameHours;
+            float hun = def.HungerPerHour * gameHours;
+            if (!tryApplyPedalCost(src.PedalingSurvivorId, fat, hun))
+                src.ClearPedaler();
         }
 
         /// <summary>
