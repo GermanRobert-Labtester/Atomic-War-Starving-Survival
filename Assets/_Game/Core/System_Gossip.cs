@@ -108,6 +108,19 @@ namespace AtomicWar._Game.Core
             if (_state.rumors == null || _state.rumors.Count == 0) return;
             if (_state.allSurvivorIds == null || _state.allSurvivorIds.Count == 0) return;
 
+            var newInformed = PickTellTargets();
+            InformTargets(newInformed);
+            ApplyAffinityDecay();
+        }
+
+        /// <summary>
+        /// For each rumor, pick up to <see cref="MaxTellsPerDay"/> survivors who
+        /// don't already know and aren't the criminal. Selection is snapshotted
+        /// before any rumor.informedIds is mutated, so a survivor told about rumor
+        /// A this tick can still be picked as a target for rumor B.
+        /// </summary>
+        private List<(GossipRumor rumor, List<string> targets)> PickTellTargets()
+        {
             var newInformed = new List<(GossipRumor rumor, List<string> targets)>();
 
             for (int ri = 0; ri < _state.rumors.Count; ri++)
@@ -136,7 +149,11 @@ namespace AtomicWar._Game.Core
                 if (targets.Count > 0)
                     newInformed.Add((rumor, targets));
             }
+            return newInformed;
+        }
 
+        private void InformTargets(List<(GossipRumor rumor, List<string> targets)> newInformed)
+        {
             for (int i = 0; i < newInformed.Count; i++)
             {
                 var rumor = newInformed[i].rumor;
@@ -154,8 +171,11 @@ namespace AtomicWar._Game.Core
                     OnRumorSpread?.Invoke(spreader, target, rumor.criminalId);
                 }
             }
+        }
 
-            // Apply affinity decay: 0.02 per person who knows (once per rumor per day).
+        /// <summary>Affinity decay: <see cref="AffinityDecayPerInformed"/> per person who knows, once per rumor per day.</summary>
+        private void ApplyAffinityDecay()
+        {
             for (int ri = 0; ri < _state.rumors.Count; ri++)
             {
                 var rumor = _state.rumors[ri];

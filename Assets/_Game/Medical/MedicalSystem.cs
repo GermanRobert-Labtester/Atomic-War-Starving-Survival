@@ -424,79 +424,107 @@ namespace AtomicWar._Game.Medical
             TreatmentRecipeSO recipe,
             Func<string, ItemDefinition> itemLookup = null)
         {
-            if (medic == null || !medic.IsAlive || patient == null || !patient.IsAlive) return false;
-            if (recipe == null || string.IsNullOrEmpty(recipe.targetAfflictionId)) return false;
-            if (!HasAffliction(patient, recipe.targetAfflictionId)) return false;
+            if (!PassesTreatmentGates(medic, patient, recipe)) return false;
 
-            // #253 Arrogant: refuses healing from anyone but self.
-            if (_personalQuests != null && !_personalQuests.CanBeHealedBy(patient, medic))
-                return false;
-
-            // #295 Hitman Professional: refuses medical triage.
-            if (_personalQuests != null && _personalQuests.RefusesMedicalAndFarming(medic))
-                return false;
-
-            // #289 Germaphobe: refuses bunker triage without hazmat.
-            if (_personalQuests != null && _personalQuests.RequiresHazmatForTriage(medic))
-            {
-                bool hazmat = IsHazmatEquipped != null && IsHazmatEquipped(medic);
-                if (!_personalQuests.CanPerformTriage(medic, hazmatEquipped: hazmat, inBunker: true))
-                    return false;
-            }
-
-            // #274 Feral Orphan: bites strangers who try to heal them.
-            if (_personalQuests != null
-                && _personalQuests.BitesWhenHealedByStranger(patient, medic))
-            {
-                SurvivorNeedWrite.SetHealth(medic, Mathf.Max(1f, medic.Needs.Health - 8f));
-                // Still allow treatment after the bite.
-            }
+            // #274 Feral Orphan: bites strangers who try to heal them. Not a gate —
+            // the bite lands and treatment still proceeds.
+            ApplyFeralOrphanBite(medic, patient);
 
             if (recipe.requiresMedicalBed && !HasOperationalMedicalBed())
                 return false;
 
-            if (!_bySurvivor.TryGetValue(patient.Id, out var list)) return false;
-            ActiveAffliction target = null;
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].AfflictionId == recipe.targetAfflictionId)
-                {
-                    target = list[i];
-                    break;
-                }
-            }
-            if (target == null || target.IsTreating) return false;
+            var target = FindTreatableAffliction(patient, recipe.targetAfflictionId);
+            if (target == null) return false;
 
             var consumedItemIds = new List<string>();
             if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup, consumedItemIds))
                 return false;
 
             int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+            NotifyTreatmentItemsConsumed(patient, recipe, consumedItemIds, day);
+            BeginTreatment(medic, patient, target, recipe, day);
 
-            // Notify host (Addiction + BloodToxicity) of items actually consumed.
-            // Falls back to recipe ResolvedIds when inventory is omitted (unit tests).
-            if (OnTreatmentItemConsumed != null)
+            OnMedicalStateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Availability and quest-trait gates that block treatment outright, before
+        /// any ingredient is spent or state is mutated.
+        /// </summary>
+        private bool PassesTreatmentGates(Survivor medic, Survivor patient, TreatmentRecipeSO recipe)
+        {
+            if (medic == null || !medic.IsAlive || patient == null || !patient.IsAlive) return false;
+            if (recipe == null || string.IsNullOrEmpty(recipe.targetAfflictionId)) return false;
+            if (!HasAffliction(patient, recipe.targetAfflictionId)) return false;
+            if (_personalQuests == null) return true;
+
+            // #253 Arrogant: refuses healing from anyone but self.
+            if (!_personalQuests.CanBeHealedBy(patient, medic)) return false;
+
+            // #295 Hitman Professional: refuses medical triage.
+            if (_personalQuests.RefusesMedicalAndFarming(medic)) return false;
+
+            // #289 Germaphobe: refuses bunker triage without hazmat.
+            if (_personalQuests.RequiresHazmatForTriage(medic))
             {
-                if (consumedItemIds.Count > 0)
-                {
-                    for (int i = 0; i < consumedItemIds.Count; i++)
-                        OnTreatmentItemConsumed(patient, consumedItemIds[i], day);
-                }
-                else if (_inventory == null && recipe.ingredients != null)
-                {
-                    for (int i = 0; i < recipe.ingredients.Count; i++)
-                    {
-                        var ing = recipe.ingredients[i];
-                        if (ing == null) continue;
-                        string id = ing.ResolvedId;
-                        if (string.IsNullOrEmpty(id)) continue;
-                        int times = Mathf.Max(1, ing.amount);
-                        for (int n = 0; n < times; n++)
-                            OnTreatmentItemConsumed(patient, id, day);
-                    }
-                }
+                bool hazmat = IsHazmatEquipped != null && IsHazmatEquipped(medic);
+                if (!_personalQuests.CanPerformTriage(medic, hazmatEquipped: hazmat, inBunker: true))
+                    return false;
+            }
+            return true;
+        }
+
+        private void ApplyFeralOrphanBite(Survivor medic, Survivor patient)
+        {
+            if (_personalQuests != null && _personalQuests.BitesWhenHealedByStranger(patient, medic))
+                SurvivorNeedWrite.SetHealth(medic, Mathf.Max(1f, medic.Needs.Health - 8f));
+        }
+
+        private ActiveAffliction FindTreatableAffliction(Survivor patient, string afflictionId)
+        {
+            if (!_bySurvivor.TryGetValue(patient.Id, out var list)) return null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].AfflictionId != afflictionId) continue;
+                return list[i].IsTreating ? null : list[i];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Notify host (Addiction + BloodToxicity) of items actually consumed. Falls
+        /// back to recipe ResolvedIds when inventory is omitted (unit tests).
+        /// </summary>
+        private void NotifyTreatmentItemsConsumed(
+            Survivor patient, TreatmentRecipeSO recipe, List<string> consumedItemIds, int day)
+        {
+            if (OnTreatmentItemConsumed == null) return;
+
+            if (consumedItemIds.Count > 0)
+            {
+                for (int i = 0; i < consumedItemIds.Count; i++)
+                    OnTreatmentItemConsumed(patient, consumedItemIds[i], day);
+                return;
             }
 
+            if (_inventory != null || recipe.ingredients == null) return;
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                var ing = recipe.ingredients[i];
+                if (ing == null) continue;
+                string id = ing.ResolvedId;
+                if (string.IsNullOrEmpty(id)) continue;
+                int times = Mathf.Max(1, ing.amount);
+                for (int n = 0; n < times; n++)
+                    OnTreatmentItemConsumed(patient, id, day);
+            }
+        }
+
+        /// <summary>Commit the treatment: set the affliction's treating state and record telemetry.</summary>
+        private void BeginTreatment(
+            Survivor medic, Survivor patient, ActiveAffliction target, TreatmentRecipeSO recipe, int day)
+        {
             float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill, medic, _medicalPerks);
             target.IsTreating = true;
             target.ProgressionHalted = true; // treatment freezes progression
@@ -505,9 +533,7 @@ namespace AtomicWar._Game.Medical
             target.TreatingMedicId = medic.Id;
 
             if (recipe.requiresPatientRest)
-            {
                 patient.State = SurvivorState.Resting;
-            }
 
             // Prompt #203 — treating Manifest radiation sickness earns Radiologist.
             _medicalPerks?.RecordManifestRadiationTreatment(medic, patient, day);
@@ -518,9 +544,6 @@ namespace AtomicWar._Game.Medical
 
             // #301 Med Student: first trauma treatment triggers a puke.
             _personalQuests?.TryMedStudentFirstTraumaPuke(medic, recipe.targetAfflictionId);
-
-            OnMedicalStateChanged?.Invoke();
-            return true;
         }
 
         /// <summary>Advance affliction clocks, health drain, treatments, and progressions.</summary>

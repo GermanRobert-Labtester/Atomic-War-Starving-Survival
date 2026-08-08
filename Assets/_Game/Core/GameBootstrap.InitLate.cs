@@ -751,103 +751,122 @@ namespace AtomicWar._Game.Core
 
             HatchDefenseSystem?.BindCombatPerks(CombatPerks);
             HatchDefenseSystem?.BindPerimeterTraps(PerimeterTrapSystem);
-            // REPROMOTE-Pet-001 — guard dog Alert on raid start → defense bonus when fed.
-            if (HatchDefenseSystem != null && PetGuardDog != null)
-            {
-                HatchDefenseSystem.TryAlertGuardDog = () => PetGuardDog.Alert("bunker");
-                PetGuardDog.OnDogAlerted += (shelterId, canFight) =>
-                    Debug.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
-            }
 
-            // REPROMOTE-Weapon-001 — mounted HMG stock contributes via GetWeaponPower.
-            if (HatchDefenseSystem != null && WeaponHMG != null)
-            {
-                // Ensure a default mount so stockpile HMG is usable as hatch defense.
-                if (!WeaponHMG.IsMounted)
-                    WeaponHMG.Mount("hatch");
+            WireGuardDogAlert();
+            WireMountedHmg();
+            WireHatchRaidEpilogueStats();
+            WireAdaptiveWarlordsStrategyHooks();
+            WireWeaponJamClearing();
 
-                HatchDefenseSystem.GetMountedHmgDefensePower = inv =>
-                {
-                    if (inv == null || WeaponHMG == null) return 0f;
-                    bool hasStock = inv.CountById(Weapon_HMG.InventoryItemId) > 0
-                        || inv.CountById("hmg") > 0;
-                    if (!hasStock) return 0f;
-                    if (!WeaponHMG.IsMounted)
-                        WeaponHMG.Mount("hatch");
-                    // HMG needs 2 operators — count assigned hatch guards.
-                    int operators = HatchDefenseSystem.ActiveGuardCount;
-                    // Oil: not jammed = treated as oiled for defense-power path.
-                    bool isOiled = !WeaponHMG.IsJammed;
-                    return WeaponHMG.GetHatchDefensePower(operators, isOiled);
-                };
-
-                // HMG-002 — fire the mounted HMG each raid. Fire() handles the
-                // jam risk and OnRaidShredded so the HMG risk-reward is not
-                // bypassed. Operators and raid level are read at fire time.
-                HatchDefenseSystem.FireMountedHmg = (operators, isOiled, raidLevel) =>
-                {
-                    if (WeaponHMG == null) return;
-                    WeaponHMG.Fire("hatch", operators, isOiled, raidLevel);
-                };
-            }
-            // Prompt #768 — epilogue bullet tally from hatch raids.
-            // Prompt #861 — heavy ammo spend counts as sniper/suppression strategy.
-            if (HatchDefenseSystem != null)
-            {
-                HatchDefenseSystem.OnRaidResolved += result =>
-                {
-                    if (result.AmmoConsumed > 0)
-                        EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
-                    if (result.AmmoConsumed >= 10)
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
-                };
-            }
-
-            // Prompt #861 — trap deployments → traps strategy; combat milestones → stealth/snipers.
-            if (PerimeterTrapSystem != null)
-            {
-                PerimeterTrapSystem.OnTrapDeployed += () =>
-                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
-            }
-            if (CombatPerks != null)
-            {
-                CombatPerks.OnMilestoneProgress += (sv, key, value) =>
-                {
-                    if (string.IsNullOrEmpty(key)) return;
-                    if (string.Equals(key, "stealth_kills", StringComparison.Ordinal))
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
-                    else if (string.Equals(key, "ammo_expended", StringComparison.Ordinal) && value >= 20)
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
-                    else if (string.Equals(key, "traps_deployed", StringComparison.Ordinal))
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
-                };
-            }
-
-            // Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.
-            if (HatchDefenseSystem != null && WeaponMaintenanceSystem != null)
-            {
-                HatchDefenseSystem.TryJamWeapon = (weaponId, clearTicks) =>
-                    WeaponMaintenanceSystem.TryJam(weaponId, clearTicks: clearTicks);
-            }
-
-            PerimeterTrapSystem?.BindCombatPerks(
-                CombatPerks,
-                getSurvivor: id =>
-                {
-                    if (Survivors == null || string.IsNullOrEmpty(id)) return null;
-                    for (int i = 0; i < Survivors.Count; i++)
-                    {
-                        if (Survivors[i] != null && Survivors[i].Id == id)
-                            return Survivors[i];
-                    }
-                    return null;
-                });
-
+            PerimeterTrapSystem?.BindCombatPerks(CombatPerks, getSurvivor: GetSurvivorById);
             ExpeditionSystem?.BindCombatPerks(
                 CombatPerks,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
                 affinity: MentalBreakSystem != null ? MentalBreakSystem.Affinity : null,
                 getAllSurvivors: () => Survivors);
+        }
+
+        /// <summary>REPROMOTE-Pet-001 — guard dog Alert on raid start → defense bonus when fed.</summary>
+        private void WireGuardDogAlert()
+        {
+            if (HatchDefenseSystem == null || PetGuardDog == null) return;
+
+            HatchDefenseSystem.TryAlertGuardDog = () => PetGuardDog.Alert("bunker");
+            PetGuardDog.OnDogAlerted += (shelterId, canFight) =>
+                Debug.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
+        }
+
+        /// <summary>REPROMOTE-Weapon-001 — mounted HMG stock contributes via GetWeaponPower.</summary>
+        private void WireMountedHmg()
+        {
+            if (HatchDefenseSystem == null || WeaponHMG == null) return;
+
+            // Ensure a default mount so stockpile HMG is usable as hatch defense.
+            if (!WeaponHMG.IsMounted)
+                WeaponHMG.Mount("hatch");
+
+            HatchDefenseSystem.GetMountedHmgDefensePower = inv =>
+            {
+                if (inv == null || WeaponHMG == null) return 0f;
+                bool hasStock = inv.CountById(Weapon_HMG.InventoryItemId) > 0
+                    || inv.CountById("hmg") > 0;
+                if (!hasStock) return 0f;
+                if (!WeaponHMG.IsMounted)
+                    WeaponHMG.Mount("hatch");
+                // HMG needs 2 operators — count assigned hatch guards.
+                int operators = HatchDefenseSystem.ActiveGuardCount;
+                // Oil: not jammed = treated as oiled for defense-power path.
+                bool isOiled = !WeaponHMG.IsJammed;
+                return WeaponHMG.GetHatchDefensePower(operators, isOiled);
+            };
+
+            // HMG-002 — fire the mounted HMG each raid. Fire() handles the jam risk
+            // and OnRaidShredded so the HMG risk-reward is not bypassed. Operators
+            // and raid level are read at fire time.
+            HatchDefenseSystem.FireMountedHmg = (operators, isOiled, raidLevel) =>
+            {
+                if (WeaponHMG == null) return;
+                WeaponHMG.Fire("hatch", operators, isOiled, raidLevel);
+            };
+        }
+
+        /// <summary>Prompt #768 — epilogue bullet tally from hatch raids.</summary>
+        private void WireHatchRaidEpilogueStats()
+        {
+            if (HatchDefenseSystem == null) return;
+
+            HatchDefenseSystem.OnRaidResolved += result =>
+            {
+                if (result.AmmoConsumed > 0)
+                    EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
+                // Prompt #861 — heavy ammo spend counts as sniper/suppression strategy.
+                if (result.AmmoConsumed >= 10)
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
+            };
+        }
+
+        /// <summary>
+        /// Prompt #861 — trap deployments → traps strategy; combat milestones →
+        /// stealth/snipers/traps, read from CombatPerks' milestone key.
+        /// </summary>
+        private void WireAdaptiveWarlordsStrategyHooks()
+        {
+            if (PerimeterTrapSystem != null)
+            {
+                PerimeterTrapSystem.OnTrapDeployed += () =>
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
+            }
+
+            CombatPerks.OnMilestoneProgress += (sv, key, value) =>
+            {
+                if (string.IsNullOrEmpty(key)) return;
+                if (string.Equals(key, "stealth_kills", StringComparison.Ordinal))
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
+                else if (string.Equals(key, "ammo_expended", StringComparison.Ordinal) && value >= 20)
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
+                else if (string.Equals(key, "traps_deployed", StringComparison.Ordinal))
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
+            };
+        }
+
+        /// <summary>Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.</summary>
+        private void WireWeaponJamClearing()
+        {
+            if (HatchDefenseSystem == null || WeaponMaintenanceSystem == null) return;
+
+            HatchDefenseSystem.TryJamWeapon = (weaponId, clearTicks) =>
+                WeaponMaintenanceSystem.TryJam(weaponId, clearTicks: clearTicks);
+        }
+
+        private Survivor GetSurvivorById(string id)
+        {
+            if (Survivors == null || string.IsNullOrEmpty(id)) return null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                if (Survivors[i] != null && Survivors[i].Id == id)
+                    return Survivors[i];
+            }
+            return null;
         }
 
         /// <summary>

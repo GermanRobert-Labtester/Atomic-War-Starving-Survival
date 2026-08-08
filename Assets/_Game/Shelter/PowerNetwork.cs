@@ -19,6 +19,9 @@ namespace AtomicWar._Game.Shelter
         /// </summary>
         public const float GeneratorWearPerHour = 0.15f;
 
+        /// <summary>Float-compare slack for generation/draw balance checks. Was an unnamed 0.0001f.</summary>
+        public const float PowerBalanceEpsilon = 0.0001f;
+
         private readonly List<PowerSourceInstance> _sources = new List<PowerSourceInstance>();
         private readonly List<PowerConsumer> _consumers = new List<PowerConsumer>();
         private readonly Dictionary<string, PowerSourceSO> _defs = new Dictionary<string, PowerSourceSO>();
@@ -427,6 +430,31 @@ namespace AtomicWar._Game.Shelter
         {
             TotalGeneration = ComputeGeneration(weatherName);
 
+            float requested = ComputeRequestedDraw();
+            RequestedDraw = requested;
+
+            if (requested > TotalGeneration + PowerBalanceEpsilon)
+                ShedLowPriorityLoads(requested);
+
+            bool anyShed = RecomputeActualDraw(out bool anyRequested);
+            IsLoadShedding = anyShed;
+
+            bool wasBlackout = IsBlackout;
+            // Full blackout: no generation while something still wants power.
+            IsBlackout = TotalGeneration <= PowerBalanceEpsilon && anyRequested;
+
+            OnPowerStateChanged?.Invoke();
+            if (anyShed) OnLoadShed?.Invoke();
+            if (IsBlackout && !wasBlackout)
+            {
+                OnBlackout?.Invoke();
+                NotifyCoreOfPowerFailure();
+            }
+        }
+
+        /// <summary>Sum of watts every requested (not yet shed) consumer draws, resetting IsShed for the new balance pass.</summary>
+        private float ComputeRequestedDraw()
+        {
             float requested = 0f;
             for (int i = 0; i < _consumers.Count; i++)
             {
@@ -438,37 +466,41 @@ namespace AtomicWar._Game.Shelter
             }
             // #280 Tech Bro: unsupervised tablet wastes power.
             requested += GetTechBroPowerWasteWatts();
-            RequestedDraw = requested;
+            return requested;
+        }
 
-            // Shed highest priority number first until under budget.
-            if (requested > TotalGeneration + 0.0001f)
+        /// <summary>Shed highest priority number first (then largest watts) until under generation budget.</summary>
+        private void ShedLowPriorityLoads(float requested)
+        {
+            // Build shed order: priority desc, then watts desc (shed largest luxury first).
+            var order = new List<PowerConsumer>();
+            for (int i = 0; i < _consumers.Count; i++)
             {
-                // Build shed order: priority desc, then watts desc (shed largest luxury first).
-                var order = new List<PowerConsumer>();
-                for (int i = 0; i < _consumers.Count; i++)
-                {
-                    var c = _consumers[i];
-                    if (c != null && c.IsRequested && GetConsumerWatts(c) > 0f)
-                        order.Add(c);
-                }
-                order.Sort((a, b) =>
-                {
-                    int p = b.Priority.CompareTo(a.Priority);
-                    if (p != 0) return p;
-                    return b.Watts.CompareTo(a.Watts);
-                });
-
-                float remaining = requested;
-                for (int i = 0; i < order.Count && remaining > TotalGeneration + 0.0001f; i++)
-                {
-                    order[i].IsShed = true;
-                    remaining -= order[i].Watts;
-                }
+                var c = _consumers[i];
+                if (c != null && c.IsRequested && GetConsumerWatts(c) > 0f)
+                    order.Add(c);
             }
+            order.Sort((a, b) =>
+            {
+                int p = b.Priority.CompareTo(a.Priority);
+                if (p != 0) return p;
+                return b.Watts.CompareTo(a.Watts);
+            });
 
+            float remaining = requested;
+            for (int i = 0; i < order.Count && remaining > TotalGeneration + PowerBalanceEpsilon; i++)
+            {
+                order[i].IsShed = true;
+                remaining -= order[i].Watts;
+            }
+        }
+
+        /// <summary>Recompute TotalDraw from the post-shed consumer state. Returns whether anything was shed.</summary>
+        private bool RecomputeActualDraw(out bool anyRequested)
+        {
             float draw = 0f;
             bool anyShed = false;
-            bool anyRequested = false;
+            anyRequested = false;
             for (int i = 0; i < _consumers.Count; i++)
             {
                 var c = _consumers[i];
@@ -480,32 +512,21 @@ namespace AtomicWar._Game.Shelter
                     draw += GetConsumerWatts(c);
             }
             TotalDraw = draw;
-            IsLoadShedding = anyShed;
+            return anyShed;
+        }
 
-            bool wasBlackout = IsBlackout;
-            // Full blackout: no generation while something still wants power.
-            IsBlackout = TotalGeneration <= 0.0001f && anyRequested;
+        /// <summary>#318 Core: dies the instant the power network fails (unless Omniscience).</summary>
+        private void NotifyCoreOfPowerFailure()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return;
+            var survivors = _getSurvivors();
+            if (survivors == null) return;
 
-            OnPowerStateChanged?.Invoke();
-            if (anyShed) OnLoadShed?.Invoke();
-            if (IsBlackout && !wasBlackout)
+            for (int i = 0; i < survivors.Count; i++)
             {
-                OnBlackout?.Invoke();
-
-                // #318 Core: dies the instant the power network fails (unless Omniscience).
-                if (_personalQuests != null && _getSurvivors != null)
-                {
-                    var survivors = _getSurvivors();
-                    if (survivors != null)
-                    {
-                        for (int i = 0; i < survivors.Count; i++)
-                        {
-                            var sv = survivors[i];
-                            if (sv != null && sv.IsAlive)
-                                _personalQuests.NotifyPowerNetworkFailure(sv);
-                        }
-                    }
-                }
+                var sv = survivors[i];
+                if (sv != null && sv.IsAlive)
+                    _personalQuests.NotifyPowerNetworkFailure(sv);
             }
         }
 
