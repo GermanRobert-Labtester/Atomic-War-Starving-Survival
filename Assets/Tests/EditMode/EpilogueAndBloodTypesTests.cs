@@ -189,16 +189,9 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_BothSystems_RoundTrip()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_epi_blood_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("epi_blood");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var epiA = new System_EpilogueStats();
                 epiA.RecordMealCooked(4);
                 epiA.RecordBulletsFired(7);
@@ -211,25 +204,8 @@ namespace AtomicWar.Tests.EditMode
                 bloodA.AssignBloodType("sv_ash", System_BloodTypes.TYPE_B);
                 bloodA.TestBlood("sv_ash");
 
-                SaveSystem Make(System_EpilogueStats epi, System_BloodTypes blood)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetEpilogueStatsSystem(epi);
-                    ss.SetBloodTypesSystem(blood);
-                    return ss;
-                }
+                SaveSystem Make(System_EpilogueStats epi, System_BloodTypes blood) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetEpilogueStatsSystem(epi); ss.SetBloodTypesSystem(blood); });
 
                 Assert.IsTrue(Make(epiA, bloodA).Save("epi_blood_slot"));
 
@@ -242,8 +218,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual(7, epiB.BulletsFired);
                 Assert.AreEqual(System_BloodTypes.TYPE_B, bloodB.GetBloodType("sv_ash"));
                 Assert.IsTrue(bloodB.IsTested("sv_ash"));
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

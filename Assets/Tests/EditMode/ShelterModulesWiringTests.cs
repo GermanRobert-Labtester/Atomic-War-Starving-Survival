@@ -19,37 +19,6 @@ namespace AtomicWar.Tests.EditMode
     {
         private const float Eps = 1e-3f;
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_shelter_mod_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         [Test]
         public void AcidTrap_ArmTrigger_Capture()
         {
@@ -757,7 +726,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MultiShelterModule_SaveSlot_RoundTrip()
         {
-            string dir = TempDir("multi");
+            string dir = SaveSystemTestFactory.TempDir("shelter_mod_multi");
             try
             {
                 var acid = new ShelterModule_AcidTrap();
@@ -799,7 +768,7 @@ namespace AtomicWar.Tests.EditMode
                 var dialysis = new ShelterModule_Dialysis();
                 dialysis.StartTreatment("sv_d", 500);
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetShelterModuleAcidTrap(acid);
                     ss.SetShelterModuleAutodoc(auto);
@@ -861,7 +830,7 @@ namespace AtomicWar.Tests.EditMode
                 var thumper2 = new ThumperSystem("tmp");
                 var dialysis2 = new ShelterModule_Dialysis();
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetShelterModuleAcidTrap(acid2);
                     ss.SetShelterModuleAutodoc(auto2);

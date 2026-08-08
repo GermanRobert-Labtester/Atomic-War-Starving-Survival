@@ -161,16 +161,9 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_LogicGatesSlot_RoundTrip()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_logic_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("logic");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var gatesA = new System_LogicGates();
                 gatesA.AddRule("shed_radio", new LogicRule
                 {
@@ -181,24 +174,8 @@ namespace AtomicWar.Tests.EditMode
                     actionCommand = System_LogicGates.CmdDisable
                 });
 
-                SaveSystem Make(System_LogicGates gates)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetLogicGatesSystem(gates);
-                    return ss;
-                }
+                SaveSystem Make(System_LogicGates gates) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetLogicGatesSystem(gates); });
 
                 Assert.IsTrue(Make(gatesA).Save("logic_slot"));
 
@@ -212,8 +189,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual("radio", rule.actionModule);
                 Assert.AreEqual(System_LogicGates.CmdDisable, rule.actionCommand);
                 Assert.AreEqual("system_logic_gates", gatesB.SystemId);
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

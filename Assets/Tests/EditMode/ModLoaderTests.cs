@@ -164,38 +164,15 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_ModLoaderSlot_RoundTrip()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_modloader_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("modloader");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var loaderA = new System_ModLoader();
                 loaderA.Initialize(_modsRoot);
                 loaderA.LoadMod("test_pack");
 
-                SaveSystem Make(System_ModLoader loader)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetModLoaderSystem(loader);
-                    return ss;
-                }
+                SaveSystem Make(System_ModLoader loader) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetModLoaderSystem(loader); });
 
                 Assert.IsTrue(Make(loaderA).Save("mod_slot"));
 
@@ -207,8 +184,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual("test_pack", loaderB.GetLoadedMods()[0]);
                 Assert.IsTrue(loaderB.HasOverride("test_pack/items"));
                 Assert.AreEqual("system_mod_loader", loaderB.SystemId);
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

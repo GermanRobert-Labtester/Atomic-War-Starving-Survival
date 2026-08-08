@@ -19,37 +19,6 @@ namespace AtomicWar.Tests.EditMode
     {
         private const float Eps = 1e-3f;
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_mapanom_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         [Test]
         public void AshDunes_Jam_Capture()
         {
@@ -225,7 +194,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void ServerFarm_Heatstroke_SaveSlot()
         {
-            string dir = TempDir("server");
+            string dir = SaveSystemTestFactory.TempDir("mapanom_server");
             try
             {
                 var a = new MapAnomaly_ServerFarm();
@@ -235,9 +204,9 @@ namespace AtomicWar.Tests.EditMode
                 int gold = a.TryHarvestGold(2, new System.Random(1));
                 Assert.AreEqual(6, gold); // 2 * 3
 
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetMapAnomalyServerFarm(a)).Save("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetMapAnomalyServerFarm(a)).Save("slot"));
                 var b = new MapAnomaly_ServerFarm();
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetMapAnomalyServerFarm(b)).Load("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetMapAnomalyServerFarm(b)).Load("slot"));
                 var cap = b.CaptureState();
                 Assert.AreEqual(8, cap.motherboardsAvailable); // 10-2
                 Assert.AreEqual(1, cap.survivorIdsInside.Length);
@@ -306,7 +275,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MultiAnomaly_SaveSlot_RoundTrip()
         {
-            string dir = TempDir("multi");
+            string dir = SaveSystemTestFactory.TempDir("mapanom_multi");
             try
             {
                 var coral = new MapAnomaly_DryCoral();
@@ -320,7 +289,7 @@ namespace AtomicWar.Tests.EditMode
                 farm.EnterShelter("sv_b");
                 farm.TickHour("sv_b", 3f);
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetMapAnomalyDryCoral(coral);
                     ss.SetMapAnomalyTangledDrop(drop);
@@ -330,7 +299,7 @@ namespace AtomicWar.Tests.EditMode
                 var coral2 = new MapAnomaly_DryCoral();
                 var drop2 = new MapAnomaly_TangledDrop();
                 var farm2 = new MapAnomaly_ServerFarm();
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetMapAnomalyDryCoral(coral2);
                     ss.SetMapAnomalyTangledDrop(drop2);

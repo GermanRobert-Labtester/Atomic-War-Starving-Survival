@@ -136,39 +136,16 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_BilgePumpsSlot_RoundTrip()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_bilge_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("bilge");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var bilgeA = new System_BilgePumps();
                 bilgeA.Activate();
                 bilgeA.RouteWater(100f);
                 Assert.AreEqual(70f, bilgeA.GetTotalWaterRouted(), Eps);
 
-                SaveSystem Make(System_BilgePumps bilge)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetBilgePumpsSystem(bilge);
-                    return ss;
-                }
+                SaveSystem Make(System_BilgePumps bilge) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetBilgePumpsSystem(bilge); });
 
                 Assert.IsTrue(Make(bilgeA).Save("bilge_slot"));
 
@@ -178,8 +155,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.IsTrue(bilgeB.IsActive());
                 Assert.AreEqual(70f, bilgeB.GetTotalWaterRouted(), Eps);
                 Assert.AreEqual(0.7f, bilgeB.PurificationEfficiency, Eps);
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

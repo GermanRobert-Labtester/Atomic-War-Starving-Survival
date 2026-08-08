@@ -19,37 +19,6 @@ namespace AtomicWar.Tests.EditMode
     {
         private const float Eps = 1e-3f;
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_biome_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         [Test]
         public void AshSwamp_Enter_Capture()
         {
@@ -172,7 +141,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MultiBiome_SaveSlot_RoundTrip()
         {
-            string dir = TempDir("multi");
+            string dir = SaveSystemTestFactory.TempDir("biome_multi");
             try
             {
                 var swamp = new Biome_AshSwamp();
@@ -186,7 +155,7 @@ namespace AtomicWar.Tests.EditMode
                 saltState.thirst_drain_multiplier = 7f;
                 salt.RestoreState(saltState);
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetBiomeAshSwamp(swamp);
                     ss.SetBiomeSaltFlats(salt);
@@ -202,7 +171,7 @@ namespace AtomicWar.Tests.EditMode
                 var glass2 = new Biome_GlassDesert();
                 var tunnel2 = new Biome_HighwayTunnel();
                 var sky2 = new Biome_SkyscraperTops();
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetBiomeAshSwamp(swamp2);
                     ss.SetBiomeSaltFlats(salt2);

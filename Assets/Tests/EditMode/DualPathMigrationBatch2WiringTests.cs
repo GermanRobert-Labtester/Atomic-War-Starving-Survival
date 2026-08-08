@@ -32,37 +32,6 @@ namespace AtomicWar.Tests.EditMode
             "material_shielding", "airlock", "noise"
         };
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_dualpath_b2_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         private static void InvokeRestoreFromSnapshot(SaveSystem ss, SaveData data)
         {
             var m = typeof(SaveSystem).GetMethod(
@@ -300,10 +269,10 @@ namespace AtomicWar.Tests.EditMode
         public void Capture_DoesNotDualWrite_PositionalDtos_Batch2()
         {
             var seeded = CreateSeeded();
-            string dir = TempDir("no_dual");
+            string dir = SaveSystemTestFactory.TempDir("dualpath_b2_no_dual");
             try
             {
-                var ss = MakeSave(dir, s => Wire(s, seeded));
+                var ss = SaveSystemTestFactory.MakeSave(dir, s => Wire(s, seeded));
                 Assert.IsTrue(ss.Save("b2_slot"));
 
                 string path = Path.Combine(dir, "save_b2_slot.json");
@@ -405,14 +374,14 @@ namespace AtomicWar.Tests.EditMode
         public void RoundTrip_ViaSubsystemIds_RestoresBatch2()
         {
             var seeded = CreateSeeded();
-            string dir = TempDir("rt");
+            string dir = SaveSystemTestFactory.TempDir("dualpath_b2_rt");
             try
             {
-                var saveSs = MakeSave(dir, s => Wire(s, seeded));
+                var saveSs = SaveSystemTestFactory.MakeSave(dir, s => Wire(s, seeded));
                 Assert.IsTrue(saveSs.Save("b2_rt"));
 
                 var loaded = CreateEmpty();
-                var loadSs = MakeSave(dir, s => Wire(s, loaded));
+                var loadSs = SaveSystemTestFactory.MakeSave(dir, s => Wire(s, loaded));
                 Assert.IsTrue(loadSs.Load("b2_rt"));
 
                 var floodState = loaded.Flooded.CaptureState();
@@ -514,11 +483,11 @@ namespace AtomicWar.Tests.EditMode
                 SubsystemSaveJsons = new List<string>()
             };
 
-            string dir = TempDir("legacy");
+            string dir = SaveSystemTestFactory.TempDir("dualpath_b2_legacy");
             try
             {
                 var systems = CreateEmpty();
-                var ss = MakeSave(dir, s => Wire(s, systems));
+                var ss = SaveSystemTestFactory.MakeSave(dir, s => Wire(s, systems));
                 InvokeRestoreFromSnapshot(ss, data);
 
                 Assert.AreEqual("legacy_flood", systems.Flooded.CaptureState().FloodedNodeIds[0]);

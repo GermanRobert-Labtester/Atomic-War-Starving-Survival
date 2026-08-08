@@ -19,37 +19,6 @@ namespace AtomicWar.Tests.EditMode
     {
         private const float Eps = 1e-3f;
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_maphaz_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         // ── Acid Geyser ────────────────────────────────────────────────
 
         [Test]
@@ -113,7 +82,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void CraterWall_PartialClimb_SaveSlot()
         {
-            string dir = TempDir("crater");
+            string dir = SaveSystemTestFactory.TempDir("maphaz_crater");
             try
             {
                 var a = new MapHazard_CraterWall();
@@ -124,9 +93,9 @@ namespace AtomicWar.Tests.EditMode
                 Assert.AreEqual("sv_a", mid.climbProgressIds[0]);
                 Assert.AreEqual(2f, mid.climbProgressHours[0], Eps);
 
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetMapHazardCraterWall(a)).Save("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetMapHazardCraterWall(a)).Save("slot"));
                 var b = new MapHazard_CraterWall();
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetMapHazardCraterWall(b)).Load("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetMapHazardCraterWall(b)).Load("slot"));
                 // Finish climb after restore
                 Assert.IsTrue(b.AttemptClimb("sv_a", true, 0f, 2f));
             }
@@ -263,7 +232,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MultiHazard_SaveSlot_RoundTrip()
         {
-            string dir = TempDir("multi");
+            string dir = SaveSystemTestFactory.TempDir("maphaz_multi");
             try
             {
                 var geyser = new MapHazard_AcidGeyser();
@@ -276,7 +245,7 @@ namespace AtomicWar.Tests.EditMode
                 var gas = new MapHazard_GasPockets();
                 gas.RegisterGasNode("gas_a");
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetMapHazardAcidGeyser(geyser);
                     ss.SetMapHazardCrevice(crevice);
@@ -286,7 +255,7 @@ namespace AtomicWar.Tests.EditMode
                 var geyser2 = new MapHazard_AcidGeyser();
                 var crevice2 = new MapHazard_Crevice();
                 var gas2 = new MapHazard_GasPockets();
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetMapHazardAcidGeyser(geyser2);
                     ss.SetMapHazardCrevice(crevice2);
