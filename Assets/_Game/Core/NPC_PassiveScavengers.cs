@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Competitors scavenging the same node. Runs away if player points a gun at them.
     /// If left alone, depletes the node's LootTable by 20% per hour.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_PassiveScavengers
     {
         private PassiveScavengersState _state = new PassiveScavengersState();

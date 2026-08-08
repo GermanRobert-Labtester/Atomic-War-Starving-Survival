@@ -24,6 +24,7 @@ namespace AtomicWar._Game.Core
     /// cannot perform heavy labour during therapy days.
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_PhysicalTherapy
     {
         // ── Constants ──────────────────────────────────────────────────

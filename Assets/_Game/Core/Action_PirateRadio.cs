@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// Broadcast music over the airwaves (requires VinylRecords). Boosts Allied
     /// Faction Morale globally and lowers nearby Raider combat effectiveness.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_PirateRadio
     {
         private PirateRadioState _state = new PirateRadioState();

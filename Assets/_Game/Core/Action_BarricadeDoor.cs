@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// without one the door module is destroyed in the attempt.
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_BarricadeDoor
     {
         // ── Events ──────────────────────────────────────────────────────

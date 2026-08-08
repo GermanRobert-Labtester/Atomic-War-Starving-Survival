@@ -131,7 +131,86 @@ namespace AtomicWar._Game.Environment
             // Prompt #15 — one narrative Deserter's Stand site (derived RNG, layout-stable).
             AssignDeserterStandFlags(map, seed);
 
+            // REPROMOTE-Encounter-001 — tag highway / toll corridor nodes "roadblock"
+            // so ExpeditionSystem class roadblock dispatch fires without SO id match.
+            AssignRoadblockFlags(map, seed);
+
             return map;
+        }
+
+        /// <summary>
+        /// Tag highway-style corridor nodes with <c>roadblock</c> (and <c>highway</c>)
+        /// so expedition class-roadblock dispatch can resolve from map tags alone.
+        /// Pure function of seed + layout; does not change path graph.
+        /// </summary>
+        public static void AssignRoadblockFlags(GeneratedMap map, int seed)
+        {
+            if (map?.Nodes == null) return;
+
+            // 1) Name-based: tolls, overpasses, depots, bridges, roads, highways.
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (!IsHighwayStyleName(n.DisplayName) && !IsHighwayStyleName(n.NodeId))
+                    continue;
+                EnsureTag(n, "highway");
+                EnsureTag(n, "roadblock");
+            }
+
+            // 2) Guarantee at least one roadblock on an outskirts lateral corridor
+            //    (main travel arteries between rings) via derived RNG.
+            bool any = false;
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                if (map.Nodes[i] != null && map.Nodes[i].HasTag("roadblock"))
+                {
+                    any = true;
+                    break;
+                }
+            }
+            if (any) return;
+
+            var candidates = new List<MapNode>();
+            for (int i = 0; i < map.Nodes.Count; i++)
+            {
+                var n = map.Nodes[i];
+                if (n == null || n.IsShelter) continue;
+                if (n.Ring == DangerRing.CityOutskirts || n.Ring == DangerRing.Suburbs)
+                    candidates.Add(n);
+            }
+            if (candidates.Count == 0) return;
+            candidates.Sort((a, b) => string.CompareOrdinal(a.NodeId, b.NodeId));
+            var rng = new Random(unchecked(seed * 1664525 + 1013904223));
+            int pick = rng.Next(candidates.Count);
+            EnsureTag(candidates[pick], "highway");
+            EnsureTag(candidates[pick], "roadblock");
+        }
+
+        private static bool IsHighwayStyleName(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return false;
+            // Case-insensitive keyword scan for corridor / roadblock fiction.
+            string n = name;
+            return ContainsIgnoreCase(n, "toll")
+                || ContainsIgnoreCase(n, "overpass")
+                || ContainsIgnoreCase(n, "highway")
+                || ContainsIgnoreCase(n, "road")
+                || ContainsIgnoreCase(n, "bridge")
+                || ContainsIgnoreCase(n, "depot")
+                || ContainsIgnoreCase(n, "rail");
+        }
+
+        private static bool ContainsIgnoreCase(string hay, string needle)
+        {
+            return hay.IndexOf(needle, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static void EnsureTag(MapNode n, string tag)
+        {
+            if (n == null || string.IsNullOrEmpty(tag)) return;
+            if (n.Tags == null) n.Tags = new List<string>();
+            if (!n.HasTag(tag)) n.Tags.Add(tag);
         }
 
         /// <summary>

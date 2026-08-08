@@ -37,6 +37,7 @@ namespace AtomicWar._Game.Core
     /// Leeches attach silently, drain Radiation (natural Rad-Away).
     /// Also cause severe BloodLoss. Player must choose when to burn them off.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_Leeches
     {
         private Dictionary<string, LeechesState> _attachedBySurvivorId = new Dictionary<string, LeechesState>();

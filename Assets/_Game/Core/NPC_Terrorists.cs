@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Hostile to all factions. Equipped with Suicide Vests. Reaching 0 HP triggers a detonation
     /// that deals massive AoE damage and destroys all loot in the encounter.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Terrorists
     {
         private TerroristState _state = new TerroristState();

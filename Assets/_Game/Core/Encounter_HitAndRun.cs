@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// When engaged by hostile infantry while driving, player can choose "Run Them Down".
     /// 90% chance to kill enemy instantly, but causes massive Morale drop and severe engine block damage.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_HitAndRun
     {
         private HitAndRunState _state = new HitAndRunState();

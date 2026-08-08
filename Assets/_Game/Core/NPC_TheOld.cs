@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Defenseless elders who refused to leave home. Offer tea (+15 Morale) and tell stories (+100 Skill XP).
     /// If a Faction Raid hits this node, the player must defend them.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_TheOld
     {
         private TheOldState _state = new TheOldState();

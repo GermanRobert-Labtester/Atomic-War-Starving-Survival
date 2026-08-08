@@ -11,6 +11,7 @@ namespace AtomicWar._Game.Core
         public float rad_transfer_amount = 50f;
     }
 
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public sealed class Encounter_GlowingDead
     {
         private GlowingDeadState _state;

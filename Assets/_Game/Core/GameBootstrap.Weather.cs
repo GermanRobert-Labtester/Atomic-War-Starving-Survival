@@ -12,24 +12,24 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private void BootWeather()
         {
-            WeatherAcidSnow = new Weather_AcidSnow();
-            WeatherBioFog = new Weather_BioFog();
-            WeatherBlackSnow = new Weather_BlackSnow();
+            // DEMOTE-Weather-batch — WeatherAcidSnow demoted. Class kept dormant.
+            // DEMOTE-Weather-batch — WeatherBioFog demoted. Class kept dormant.
+            // DEMOTE-Weather-batch — WeatherBlackSnow demoted. Class kept dormant.
             WeatherBloodRain = new Weather_BloodRain();
-            WeatherDeadWind = new Weather_DeadWind();
+            // DEMOTE-Weather-batch — WeatherDeadWind demoted. Class kept dormant.
             WeatherDeepFreeze = new Weather_DeepFreeze();
-            WeatherDustDevil = new Weather_DustDevil();
+            // DEMOTE-Weather-batch — WeatherDustDevil demoted. Class kept dormant.
             WeatherEmpStorm = new Weather_EMPStorm();
             WeatherFalseSpring = new Weather_FalseSpring();
-            WeatherGlassStorm = new Weather_GlassStorm();
+            // DEMOTE-Weather-batch — WeatherGlassStorm demoted. Class kept dormant.
             WeatherOzoneHole = new Weather_OzoneHole();
-            WeatherRadHail = new Weather_RadHail();
+            // DEMOTE-Weather-batch — WeatherRadHail demoted. Class kept dormant.
             WeatherSilentSpring = new Weather_SilentSpring();
             WeatherSolarFlare = new Weather_SolarFlare();
             WeatherStaticCharge = new Weather_StaticCharge();
 
             WireWeather();
-            Debug.Log("[GameBootstrap] Weather events ready (15 trackers).");
+            Debug.Log("[GameBootstrap] Weather events: hourly trackers live; 7 HANDLERS_ONLY demoted.");
         }
 
         private void WireWeather()

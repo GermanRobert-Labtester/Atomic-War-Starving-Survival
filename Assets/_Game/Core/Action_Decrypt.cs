@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Success yields accurate RaidWarnings. Failure produces false coordinates,
     /// leading expeditions into ambushes.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_Decrypt
     {
         private DecryptState _state = new DecryptState();

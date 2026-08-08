@@ -23,6 +23,7 @@ namespace AtomicWar._Game.Core
     /// Costs 1 CleanWater per use.
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_AdministerPlacebo
     {
         // ── Constants ──────────────────────────────────────────────────

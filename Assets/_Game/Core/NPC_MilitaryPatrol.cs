@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// Prompt #322: NPC Encounter: Standard Military Patrol.
     /// Military unit that demands food/meds toll for scavenging access; turns hostile if refused.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_MilitaryPatrol
     {
         private MilitaryPatrolState _state = new MilitaryPatrolState();

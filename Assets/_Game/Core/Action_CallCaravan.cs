@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Calls a Trader using the RadioSystem (costs 10 Power, takes 24 hours to arrive).
     /// Performs route safety checks: if blocked by AshDrifts or hostile Bandits, the caravan is killed en route.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_CallCaravan
     {
         private CallCaravanState _state = new CallCaravanState();

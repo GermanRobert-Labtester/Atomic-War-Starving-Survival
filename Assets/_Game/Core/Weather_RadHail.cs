@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Radioactive ice hail. Instantly destroys CatchmentSurfaces.
     /// Unprotected survivors outside suffer BluntTrauma and massive radiation spikes.
     /// </summary>
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Weather_RadHail
     {
         private RadHailState _state = new RadHailState();

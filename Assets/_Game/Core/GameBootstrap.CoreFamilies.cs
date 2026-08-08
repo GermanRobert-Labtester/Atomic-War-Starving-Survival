@@ -7,44 +7,44 @@ namespace AtomicWar._Game.Core
     {
         private void BootActionFamily()
         {
-            ActionAdministerPlacebo = new Action_AdministerPlacebo();
-            ActionBarricadeDoor = new Action_BarricadeDoor();
-            ActionBoilBatteries = new Action_BoilBatteries();
-            ActionBroadcastPropaganda = new Action_BroadcastPropaganda();
-            ActionBurnCharcoal = new Action_BurnCharcoal();
-            ActionBuryTimeCapsule = new Action_BuryTimeCapsule();
-            ActionCallCaravan = new Action_CallCaravan();
-            ActionCoverTracks = new Action_CoverTracks();
-            ActionCrackMainframe = new Action_CrackMainframe();
-            ActionDecrypt = new Action_Decrypt();
-            ActionDemandTribute = new Action_DemandTribute();
-            ActionEstablishRoute = new Action_EstablishRoute();
-            ActionExile = new Action_Exile();
-            ActionFish = new Action_Fish();
-            ActionHarvestOrgans = new Action_HarvestOrgans();
-            ActionInfectSelf = new Action_InfectSelf();
-            ActionIsotopeTrace = new Action_IsotopeTrace();
-            ActionMercy = new Action_Mercy();
-            ActionMixCement = new Action_MixCement();
-            ActionMixChems = new Action_MixChems();
-            ActionOverwatch = new Action_Overwatch();
-            ActionPhysicalTherapy = new Action_PhysicalTherapy();
-            ActionPirateRadio = new Action_PirateRadio();
-            ActionPlaceBait = new Action_PlaceBait();
-            ActionPullTooth = new Action_PullTooth();
-            ActionRigCorpse = new Action_RigCorpse();
-            ActionRoutePower = new Action_RoutePower();
-            ActionSabotage = new Action_Sabotage();
-            ActionScorchedEarth = new Action_ScorchedEarth();
-            ActionSealRoom = new Action_SealRoom();
-            ActionSelfSurgery = new Action_SelfSurgery();
-            ActionSilentTakedown = new Action_SilentTakedown();
-            ActionSiphonGas = new Action_SiphonGas();
+            // DEMOTE-Action-remaining — ActionAdministerPlacebo demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionBarricadeDoor demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionBoilBatteries demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionBroadcastPropaganda demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionBurnCharcoal demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionBuryTimeCapsule demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionCallCaravan demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionCoverTracks demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionCrackMainframe demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionDecrypt demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionDemandTribute demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionEstablishRoute demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionExile demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionFish demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionHarvestOrgans demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionInfectSelf demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionIsotopeTrace demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionMercy demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionMixCement demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionMixChems demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionOverwatch demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionPhysicalTherapy demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionPirateRadio demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionPlaceBait demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionPullTooth demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionRigCorpse demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionRoutePower demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSabotage demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionScorchedEarth demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSealRoom demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionSelfSurgery demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionSilentTakedown demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSiphonGas demoted (ghost). Class kept dormant.
             // DEMOTE-001 — ActionStabilizeDNA removed from Boot/Save (ghost).
             // Class kept under Action_StabilizeDNA.cs until a real host calls Stabilize().
-            ActionStargazing = new Action_Stargazing();
-            ActionWorshipIdol = new Action_WorshipIdol();
-            Debug.Log("[GameBootstrap] Action family ready (35 systems; StabilizeDNA demoted).");
+            // DEMOTE-Action-remaining — ActionStargazing demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionWorshipIdol demoted (ghost). Class kept dormant.
+            Debug.Log("[GameBootstrap] Action family demoted (all zero-ref Action_* ghosts; classes dormant).");
         }
 
         private void BootAfflictionFamily()
@@ -200,10 +200,10 @@ namespace AtomicWar._Game.Core
 
         private void BootLocationFamily()
         {
-            LocationArcade = new Location_Arcade();
-            LocationSlaveMarket = new Location_SlaveMarket();
-            LocationStrandedYacht = new Location_StrandedYacht();
-            Debug.Log("[GameBootstrap] Location family ready (3 systems).");
+            // DEMOTE-Location-batch — LocationArcade demoted (ghost). Class kept dormant.
+            // DEMOTE-Location-batch — LocationSlaveMarket demoted (ghost). Class kept dormant.
+            // DEMOTE-Location-batch — LocationStrandedYacht demoted (ghost). Class kept dormant.
+            Debug.Log("[GameBootstrap] Location family demoted (3 ghosts dormant).");
         }
 
         private void BootMapFamily()
@@ -218,7 +218,7 @@ namespace AtomicWar._Game.Core
             BurnWardSystem = new BurnWardSystem();
             CognitiveDecaySystem = new CognitiveDecaySystem();
             LightningStrikesSystem = new LightningStrikesSystem();
-            LocationStateRuinSystem = new LocationStateRuinSystem();
+            // DEMOTE-Location-batch — LocationStateRuinSystem demoted (ghost). Class kept dormant.
             MobileCampSystem = new MobileCampSystem();
             MoralDilemmaSystem = new MoralDilemmaSystem();
             NeedleSterilizationSystem = new NeedleSterilizationSystem();
@@ -231,47 +231,48 @@ namespace AtomicWar._Game.Core
             VehicleStrandingSystem = new VehicleStrandingSystem();
             VehicleSystem = new VehicleSystem();
             VisionLossSystem = new VisionLossSystem();
-            VisitorRNGSystem = new VisitorRNGSystem();
-            Debug.Log("[GameBootstrap] Misc family ready (19 systems).");
+            // DEMOTE-VisitorRNG — VisitorRNGSystem demoted (ghost). Class kept dormant.
+            Debug.Log("[GameBootstrap] Misc family ready (VisitorRNG demoted).");
         }
 
         private void BootNPCFamily()
         {
-            NPCAddictsPassive = new NPC_AddictsPassive();
-            NPCAggroScavengers = new NPC_AggroScavengers();
-            NPCAggroTrader = new NPC_AggroTrader();
-            NPCBandits = new NPC_Bandits();
-            NPCBlackOps = new NPC_BlackOps();
-            NPCBroker = new NPC_Broker();
-            NPCCannibals = new NPC_Cannibals();
-            NPCChemScientists = new NPC_ChemScientists();
-            NPCCityResidents = new NPC_CityResidents();
-            NPCCollaborators = new NPC_Collaborators();
-            NPCConscripts = new NPC_Conscripts();
-            NPCDesperateFamily = new NPC_DesperateFamily();
-            NPCDrunksAggro = new NPC_DrunksAggro();
-            NPCHomeless = new NPC_Homeless();
-            NPCLonePsychopath = new NPC_LonePsychopath();
-            NPCLooters = new NPC_Looters();
-            NPCMercenaries = new NPC_Mercenaries();
-            NPCMilitaryPatrol = new NPC_MilitaryPatrol();
-            NPCPassiveScavengers = new NPC_PassiveScavengers();
+            // DEMOTE-NPC-batch — NPCAddictsPassive demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCAggroScavengers demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCAggroTrader demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCBandits demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCBlackOps demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCBroker demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCCannibals demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCChemScientists demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCCityResidents demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCCollaborators demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCConscripts demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCDesperateFamily demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCDrunksAggro demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCHomeless demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCLonePsychopath demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCLooters demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCMercenaries demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCMilitaryPatrol demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCPassiveScavengers demoted (ghost). Class kept dormant.
+            // REPROMOTE-001 — PassiveTrader live: weather price mult → DynamicEconomySystem.
             NPCPassiveTrader = new NPC_PassiveTrader();
-            NPCPsychopathPair = new NPC_PsychopathPair();
-            NPCRebelMilitia = new NPC_RebelMilitia();
-            NPCRebelModerates = new NPC_RebelModerates();
-            NPCRebelSnipers = new NPC_RebelSnipers();
-            NPCRebelZealots = new NPC_RebelZealots();
-            NPCSlavers = new NPC_Slavers();
-            NPCSpecOps = new NPC_SpecOps();
-            NPCSurvivalists = new NPC_Survivalists();
-            NPCTaxCollector = new NPC_TaxCollector();
-            NPCTerrorists = new NPC_Terrorists();
-            NPCTheNegotiator = new NPC_TheNegotiator();
-            NPCTheOld = new NPC_TheOld();
-            NPCTheParents = new NPC_TheParents();
-            NPCTravelingCouple = new NPC_TravelingCouple();
-            Debug.Log("[GameBootstrap] NPC family ready (34 systems).");
+            // DEMOTE-NPC-batch — NPCPsychopathPair demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelMilitia demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelModerates demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelSnipers demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelZealots demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-001 — NPCSlavers demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCSpecOps demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCSurvivalists demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTaxCollector demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTerrorists demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTheNegotiator demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTheOld demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTheParents demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTravelingCouple demoted (ghost). Class kept dormant.
+            Debug.Log("[GameBootstrap] NPC family: PassiveTrader live (REPROMOTE-001); remaining ghosts dormant.");
         }
 
         private void BootNodeFamily()
@@ -363,17 +364,17 @@ namespace AtomicWar._Game.Core
 
         private void BootVisitorFamily()
         {
-            VisitorAbandonedState = new Visitor_AbandonedState();
-            VisitorChurchHostile = new Visitor_ChurchHostile();
-            VisitorChurchSanctuary = new Visitor_ChurchSanctuary();
-            VisitorExplodedState = new Visitor_ExplodedState();
-            VisitorFleeingHorde = new Visitor_FleeingHorde();
-            VisitorHospitalPatients = new Visitor_HospitalPatients();
-            VisitorHospitalStaff = new Visitor_HospitalStaff();
-            VisitorMilTrainingYard = new Visitor_MilTrainingYard();
-            VisitorQuestFaction = new Visitor_QuestFaction();
-            VisitorRebelTrainingYard = new Visitor_RebelTrainingYard();
-            Debug.Log("[GameBootstrap] Visitor family ready (10 systems).");
+            // DEMOTE-Visitor-batch — VisitorAbandonedState demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorChurchHostile demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorChurchSanctuary demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorExplodedState demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorFleeingHorde demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorHospitalPatients demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorHospitalStaff demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorMilTrainingYard demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorQuestFaction demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorRebelTrainingYard demoted (ghost). Class kept dormant.
+            Debug.Log("[GameBootstrap] Visitor family demoted (10 ghosts dormant).");
         }
 
         private void BootWeaponFamily()
@@ -397,11 +398,11 @@ namespace AtomicWar._Game.Core
 
         private void BootRemainingComplexFamily()
         {
-            ActionCrawlspace = new Action_Crawlspace();
-            ActionPlay = new Action_Play();
-            ActionSlaughterPet = new Action_SlaughterPet();
-            ActionTeachChild = new Action_TeachChild();
-            ActionTellStories = new Action_TellStories();
+            // DEMOTE-Action batch — ActionCrawlspace demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionPlay demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSlaughterPet demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionTeachChild demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionTellStories demoted (ghost). Class kept dormant.
             ItemAshGoat = new Item_AshGoat("item_ash_goat");
             ItemBoots = new Item_Boots();
             ItemLiveTrap = new Item_LiveTrap("item_live_trap");

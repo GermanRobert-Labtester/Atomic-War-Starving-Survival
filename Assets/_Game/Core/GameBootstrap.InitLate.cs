@@ -146,68 +146,69 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVictoryUnifierSystem(VictoryUnifier);
             SaveSystem.SetMapHazardAcidGeyser(MapHazardAcidGeyser);
             SaveSystem.SetMapHazardAshlanche(MapHazardAshlanche);
-            SaveSystem.SetMapHazardBiometricDoor(MapHazardBiometricDoor);
-            SaveSystem.SetMapHazardCraterWall(MapHazardCraterWall);
-            SaveSystem.SetMapHazardCrevice(MapHazardCrevice);
-            SaveSystem.SetMapHazardFlammableGas(MapHazardFlammableGas);
-            SaveSystem.SetMapHazardGasPockets(MapHazardGasPockets);
-            SaveSystem.SetMapHazardMagneticAnomaly(MapHazardMagneticAnomaly);
-            SaveSystem.SetMapHazardSinkholeCollapse(MapHazardSinkholeCollapse);
-            SaveSystem.SetMapHazardVenusTrap(MapHazardVenusTrap);
-            SaveSystem.SetMapAnomalyAshDunes(MapAnomalyAshDunes);
-            SaveSystem.SetMapAnomalyBoilingLake(MapAnomalyBoilingLake);
-            SaveSystem.SetMapAnomalyCherenkov(MapAnomalyCherenkov);
-            SaveSystem.SetMapAnomalyDogDen(MapAnomalyDogDen);
-            SaveSystem.SetMapAnomalyDontLook(MapAnomalyDontLook);
+            // demoted ghost — SetMapHazardBiometricDoor skipped
+            // demoted ghost — SetMapHazardCraterWall skipped
+            // demoted ghost — SetMapHazardCrevice skipped
+            // demoted ghost — SetMapHazardFlammableGas skipped
+            // demoted ghost — SetMapHazardGasPockets skipped
+            // demoted ghost — SetMapHazardMagneticAnomaly skipped
+            // demoted ghost — SetMapHazardSinkholeCollapse skipped
+            // demoted ghost — SetMapHazardVenusTrap skipped
+            // demoted ghost — SetMapAnomalyAshDunes skipped
+            // demoted ghost — SetMapAnomalyBoilingLake skipped
+            // demoted ghost — SetMapAnomalyCherenkov skipped
+            // demoted ghost — SetMapAnomalyDogDen skipped
+            // demoted ghost — SetMapAnomalyDontLook skipped
             SaveSystem.SetMapAnomalyDryCoral(MapAnomalyDryCoral);
-            SaveSystem.SetMapAnomalyFloodedSubway(MapAnomalyFloodedSubway);
-            SaveSystem.SetMapAnomalyGlassCrater(MapAnomalyGlassCrater);
-            SaveSystem.SetMapAnomalyMassGrave(MapAnomalyMassGrave);
-            SaveSystem.SetMapAnomalyMirage(MapAnomalyMirage);
-            SaveSystem.SetMapAnomalyPetrifiedForest(MapAnomalyPetrifiedForest);
-            SaveSystem.SetMapAnomalyQuietZone(MapAnomalyQuietZone);
-            SaveSystem.SetMapAnomalyRustedTank(MapAnomalyRustedTank);
-            SaveSystem.SetMapAnomalyServerFarm(MapAnomalyServerFarm);
-            SaveSystem.SetMapAnomalySinkhole(MapAnomalySinkhole);
-            SaveSystem.SetMapAnomalyTangledDrop(MapAnomalyTangledDrop);
-            SaveSystem.SetMapAnomalyTireFire(MapAnomalyTireFire);
-            SaveSystem.SetMapAnomalyUxoNuke(MapAnomalyUxoNuke);
+            // demoted ghost — SetMapAnomalyFloodedSubway skipped
+            // demoted ghost — SetMapAnomalyGlassCrater skipped
+            // demoted ghost — SetMapAnomalyMassGrave skipped
+            // demoted ghost — SetMapAnomalyMirage skipped
+            // demoted ghost — SetMapAnomalyPetrifiedForest skipped
+            // demoted ghost — SetMapAnomalyQuietZone skipped
+            // demoted ghost — SetMapAnomalyRustedTank skipped
+            // demoted ghost — SetMapAnomalyServerFarm skipped
+            // demoted ghost — SetMapAnomalySinkhole skipped
+            // demoted ghost — SetMapAnomalyTangledDrop skipped
+            // demoted ghost — SetMapAnomalyTireFire skipped
+            // demoted ghost — SetMapAnomalyUxoNuke skipped
             SaveSystem.SetBiomeAshSwamp(BiomeAshSwamp);
             SaveSystem.SetBiomeGlassDesert(BiomeGlassDesert);
             SaveSystem.SetBiomeHighwayTunnel(BiomeHighwayTunnel);
             SaveSystem.SetBiomeSaltFlats(BiomeSaltFlats);
             SaveSystem.SetBiomeSkyscraperTops(BiomeSkyscraperTops);
             SaveSystem.SetBiomeSuburbs(BiomeSuburbs);
-            SaveSystem.SetWeatherAcidSnow(WeatherAcidSnow);
-            SaveSystem.SetWeatherBioFog(WeatherBioFog);
-            SaveSystem.SetWeatherBlackSnow(WeatherBlackSnow);
+            // demoted ghost — SetWeatherAcidSnow skipped
+            // demoted ghost — SetWeatherBioFog skipped
+            // demoted ghost — SetWeatherBlackSnow skipped
             SaveSystem.SetWeatherBloodRain(WeatherBloodRain);
-            SaveSystem.SetWeatherDeadWind(WeatherDeadWind);
+            // demoted ghost — SetWeatherDeadWind skipped
             SaveSystem.SetWeatherDeepFreeze(WeatherDeepFreeze);
-            SaveSystem.SetWeatherDustDevil(WeatherDustDevil);
+            // demoted ghost — SetWeatherDustDevil skipped
             SaveSystem.SetWeatherEmpStorm(WeatherEmpStorm);
             SaveSystem.SetWeatherFalseSpring(WeatherFalseSpring);
-            SaveSystem.SetWeatherGlassStorm(WeatherGlassStorm);
+            // demoted ghost — SetWeatherGlassStorm skipped
             SaveSystem.SetWeatherOzoneHole(WeatherOzoneHole);
-            SaveSystem.SetWeatherRadHail(WeatherRadHail);
+            // demoted ghost — SetWeatherRadHail skipped
             SaveSystem.SetWeatherSilentSpring(WeatherSilentSpring);
             SaveSystem.SetWeatherSolarFlare(WeatherSolarFlare);
             SaveSystem.SetWeatherStaticCharge(WeatherStaticCharge);
-            SaveSystem.SetEncounterAmalgamation(EncounterAmalgamation);
-            SaveSystem.SetEncounterBurrowers(EncounterBurrowers);
-            SaveSystem.SetEncounterFloodedMaze(EncounterFloodedMaze);
-            SaveSystem.SetEncounterGlowingDead(EncounterGlowingDead);
-            SaveSystem.SetEncounterGlowingStag(EncounterGlowingStag);
-            SaveSystem.SetEncounterHitAndRun(EncounterHitAndRun);
-            SaveSystem.SetEncounterLeeches(EncounterLeeches);
-            SaveSystem.SetEncounterMirelurker(EncounterMirelurker);
-            SaveSystem.SetEncounterPressurePlate(EncounterPressurePlate);
-            SaveSystem.SetEncounterRiverPirates(EncounterRiverPirates);
+            // demoted ghost — SetEncounterAmalgamation skipped
+            // demoted ghost — SetEncounterBurrowers skipped
+            // demoted ghost — SetEncounterFloodedMaze skipped
+            // demoted ghost — SetEncounterGlowingDead skipped
+            // demoted ghost — SetEncounterGlowingStag skipped
+            // demoted ghost — SetEncounterHitAndRun skipped
+            // demoted ghost — SetEncounterLeeches skipped
+            // demoted ghost — SetEncounterMirelurker skipped
+            // demoted ghost — SetEncounterPressurePlate skipped
+            // demoted ghost — SetEncounterRiverPirates skipped
+            // REPROMOTE-Encounter-001 — Roadblock class tracker save-wired.
             SaveSystem.SetEncounterRoadblock(EncounterRoadblock);
-            SaveSystem.SetEncounterRobotDog(EncounterRobotDog);
-            SaveSystem.SetEncounterSleepingCamp(EncounterSleepingCamp);
-            SaveSystem.SetEncounterTripwireMaze(EncounterTripwireMaze);
-            SaveSystem.SetEncounterWarlordTank(EncounterWarlordTank);
+            // demoted ghost — SetEncounterRobotDog skipped
+            // demoted ghost — SetEncounterSleepingCamp skipped
+            // demoted ghost — SetEncounterTripwireMaze skipped
+            // demoted ghost — SetEncounterWarlordTank skipped
             SaveSystem.SetShelterModuleAcidTrap(ShelterModuleAcidTrap);
             SaveSystem.SetShelterModuleAutodoc(ShelterModuleAutodoc);
             SaveSystem.SetShelterModuleCctv(ShelterModuleCctv);
@@ -283,11 +284,11 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetEventWarlordSuccession(EventWarlordSuccession);
             // ── CoreFamilies bulk Set (auto) ────────────────────────────
             SaveSystem.SetFalloutStormHazard(FalloutStormHazard);
-            SaveSystem.SetActionCrawlspace(ActionCrawlspace);
-            SaveSystem.SetActionPlay(ActionPlay);
-            SaveSystem.SetActionSlaughterPet(ActionSlaughterPet);
-            SaveSystem.SetActionTeachChild(ActionTeachChild);
-            SaveSystem.SetActionTellStories(ActionTellStories);
+            // demoted ghost — SetActionCrawlspace skipped
+            // demoted ghost — SetActionPlay skipped
+            // demoted ghost — SetActionSlaughterPet skipped
+            // demoted ghost — SetActionTeachChild skipped
+            // demoted ghost — SetActionTellStories skipped
             SaveSystem.SetItemAshGoat(ItemAshGoat);
             SaveSystem.SetItemBoots(ItemBoots);
             SaveSystem.SetItemLiveTrap(ItemLiveTrap);
@@ -303,42 +304,42 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetModuleRationLock(ModuleRationLock);
             SaveSystem.SetNodeOrphanage(NodeOrphanage);
             SaveSystem.SetPetGuardDog(PetGuardDog);
-            SaveSystem.SetActionAdministerPlacebo(ActionAdministerPlacebo);
-            SaveSystem.SetActionBarricadeDoor(ActionBarricadeDoor);
-            SaveSystem.SetActionBoilBatteries(ActionBoilBatteries);
-            SaveSystem.SetActionBroadcastPropaganda(ActionBroadcastPropaganda);
-            SaveSystem.SetActionBurnCharcoal(ActionBurnCharcoal);
-            SaveSystem.SetActionBuryTimeCapsule(ActionBuryTimeCapsule);
-            SaveSystem.SetActionCallCaravan(ActionCallCaravan);
-            SaveSystem.SetActionCoverTracks(ActionCoverTracks);
-            SaveSystem.SetActionCrackMainframe(ActionCrackMainframe);
-            SaveSystem.SetActionDecrypt(ActionDecrypt);
-            SaveSystem.SetActionDemandTribute(ActionDemandTribute);
-            SaveSystem.SetActionEstablishRoute(ActionEstablishRoute);
-            SaveSystem.SetActionExile(ActionExile);
-            SaveSystem.SetActionFish(ActionFish);
-            SaveSystem.SetActionHarvestOrgans(ActionHarvestOrgans);
-            SaveSystem.SetActionInfectSelf(ActionInfectSelf);
-            SaveSystem.SetActionIsotopeTrace(ActionIsotopeTrace);
-            SaveSystem.SetActionMercy(ActionMercy);
-            SaveSystem.SetActionMixCement(ActionMixCement);
-            SaveSystem.SetActionMixChems(ActionMixChems);
-            SaveSystem.SetActionOverwatch(ActionOverwatch);
-            SaveSystem.SetActionPhysicalTherapy(ActionPhysicalTherapy);
-            SaveSystem.SetActionPirateRadio(ActionPirateRadio);
-            SaveSystem.SetActionPlaceBait(ActionPlaceBait);
-            SaveSystem.SetActionPullTooth(ActionPullTooth);
-            SaveSystem.SetActionRigCorpse(ActionRigCorpse);
-            SaveSystem.SetActionRoutePower(ActionRoutePower);
-            SaveSystem.SetActionSabotage(ActionSabotage);
-            SaveSystem.SetActionScorchedEarth(ActionScorchedEarth);
-            SaveSystem.SetActionSealRoom(ActionSealRoom);
-            SaveSystem.SetActionSelfSurgery(ActionSelfSurgery);
-            SaveSystem.SetActionSilentTakedown(ActionSilentTakedown);
-            SaveSystem.SetActionSiphonGas(ActionSiphonGas);
+            // demoted ghost — SetActionAdministerPlacebo skipped
+            // demoted ghost — SetActionBarricadeDoor skipped
+            // demoted ghost — SetActionBoilBatteries skipped
+            // demoted ghost — SetActionBroadcastPropaganda skipped
+            // demoted ghost — SetActionBurnCharcoal skipped
+            // demoted ghost — SetActionBuryTimeCapsule skipped
+            // demoted ghost — SetActionCallCaravan skipped
+            // demoted ghost — SetActionCoverTracks skipped
+            // demoted ghost — SetActionCrackMainframe skipped
+            // demoted ghost — SetActionDecrypt skipped
+            // demoted ghost — SetActionDemandTribute skipped
+            // demoted ghost — SetActionEstablishRoute skipped
+            // demoted ghost — SetActionExile skipped
+            // demoted ghost — SetActionFish skipped
+            // demoted ghost — SetActionHarvestOrgans skipped
+            // demoted ghost — SetActionInfectSelf skipped
+            // demoted ghost — SetActionIsotopeTrace skipped
+            // demoted ghost — SetActionMercy skipped
+            // demoted ghost — SetActionMixCement skipped
+            // demoted ghost — SetActionMixChems skipped
+            // demoted ghost — SetActionOverwatch skipped
+            // demoted ghost — SetActionPhysicalTherapy skipped
+            // demoted ghost — SetActionPirateRadio skipped
+            // demoted ghost — SetActionPlaceBait skipped
+            // demoted ghost — SetActionPullTooth skipped
+            // demoted ghost — SetActionRigCorpse skipped
+            // demoted ghost — SetActionRoutePower skipped
+            // demoted ghost — SetActionSabotage skipped
+            // demoted ghost — SetActionScorchedEarth skipped
+            // demoted ghost — SetActionSealRoom skipped
+            // demoted ghost — SetActionSelfSurgery skipped
+            // demoted ghost — SetActionSilentTakedown skipped
+            // demoted ghost — SetActionSiphonGas skipped
             // DEMOTE-001 — ActionStabilizeDNA not save-wired (ghost demoted).
-            SaveSystem.SetActionStargazing(ActionStargazing);
-            SaveSystem.SetActionWorshipIdol(ActionWorshipIdol);
+            // demoted ghost — SetActionStargazing skipped
+            // demoted ghost — SetActionWorshipIdol skipped
             SaveSystem.SetAfflictionAdrenalineCrash(AfflictionAdrenalineCrash);
             SaveSystem.SetAfflictionAmnesia(AfflictionAmnesia);
             SaveSystem.SetAfflictionBrainwashed(AfflictionBrainwashed);
@@ -440,15 +441,15 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetItemWaterTabs(ItemWaterTabs);
             SaveSystem.SetItemWeldingGoggles(ItemWeldingGoggles);
             SaveSystem.SetItemWristDosimeter(ItemWristDosimeter);
-            SaveSystem.SetLocationArcade(LocationArcade);
-            SaveSystem.SetLocationSlaveMarket(LocationSlaveMarket);
-            SaveSystem.SetLocationStrandedYacht(LocationStrandedYacht);
+            // demoted ghost — SetLocationArcade skipped
+            // demoted ghost — SetLocationSlaveMarket skipped
+            // demoted ghost — SetLocationStrandedYacht skipped
             SaveSystem.SetMapAquifer(MapAquifer);
             SaveSystem.SetAshDriftSystem(AshDriftSystem);
             SaveSystem.SetBurnWardSystem(BurnWardSystem);
             SaveSystem.SetCognitiveDecaySystem(CognitiveDecaySystem);
             SaveSystem.SetLightningStrikesSystem(LightningStrikesSystem);
-            SaveSystem.SetLocationStateRuinSystem(LocationStateRuinSystem);
+            // demoted ghost — SetLocationStateRuinSystem skipped
             SaveSystem.SetMobileCampSystem(MobileCampSystem);
             SaveSystem.SetMoralDilemmaSystem(MoralDilemmaSystem);
             SaveSystem.SetNeedleSterilizationSystem(NeedleSterilizationSystem);
@@ -462,41 +463,42 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVehicleStrandingSystem(VehicleStrandingSystem);
             SaveSystem.SetVehicleSystem(VehicleSystem);
             SaveSystem.SetVisionLossSystem(VisionLossSystem);
-            SaveSystem.SetVisitorRNGSystem(VisitorRNGSystem);
-            SaveSystem.SetNPCAddictsPassive(NPCAddictsPassive);
-            SaveSystem.SetNPCAggroScavengers(NPCAggroScavengers);
-            SaveSystem.SetNPCAggroTrader(NPCAggroTrader);
-            SaveSystem.SetNPCBandits(NPCBandits);
-            SaveSystem.SetNPCBlackOps(NPCBlackOps);
-            SaveSystem.SetNPCBroker(NPCBroker);
-            SaveSystem.SetNPCCannibals(NPCCannibals);
-            SaveSystem.SetNPCChemScientists(NPCChemScientists);
-            SaveSystem.SetNPCCityResidents(NPCCityResidents);
-            SaveSystem.SetNPCCollaborators(NPCCollaborators);
-            SaveSystem.SetNPCConscripts(NPCConscripts);
-            SaveSystem.SetNPCDesperateFamily(NPCDesperateFamily);
-            SaveSystem.SetNPCDrunksAggro(NPCDrunksAggro);
-            SaveSystem.SetNPCHomeless(NPCHomeless);
-            SaveSystem.SetNPCLonePsychopath(NPCLonePsychopath);
-            SaveSystem.SetNPCLooters(NPCLooters);
-            SaveSystem.SetNPCMercenaries(NPCMercenaries);
-            SaveSystem.SetNPCMilitaryPatrol(NPCMilitaryPatrol);
-            SaveSystem.SetNPCPassiveScavengers(NPCPassiveScavengers);
+            // demoted ghost — SetVisitorRNGSystem skipped
+            // demoted ghost — SetNPCAddictsPassive skipped
+            // demoted ghost — SetNPCAggroScavengers skipped
+            // demoted ghost — SetNPCAggroTrader skipped
+            // demoted ghost — SetNPCBandits skipped
+            // demoted ghost — SetNPCBlackOps skipped
+            // demoted ghost — SetNPCBroker skipped
+            // demoted ghost — SetNPCCannibals skipped
+            // demoted ghost — SetNPCChemScientists skipped
+            // demoted ghost — SetNPCCityResidents skipped
+            // demoted ghost — SetNPCCollaborators skipped
+            // demoted ghost — SetNPCConscripts skipped
+            // demoted ghost — SetNPCDesperateFamily skipped
+            // demoted ghost — SetNPCDrunksAggro skipped
+            // demoted ghost — SetNPCHomeless skipped
+            // demoted ghost — SetNPCLonePsychopath skipped
+            // demoted ghost — SetNPCLooters skipped
+            // demoted ghost — SetNPCMercenaries skipped
+            // demoted ghost — SetNPCMilitaryPatrol skipped
+            // demoted ghost — SetNPCPassiveScavengers skipped
+            // REPROMOTE-001 — PassiveTrader save-wired + economy weather mult.
             SaveSystem.SetNPCPassiveTrader(NPCPassiveTrader);
-            SaveSystem.SetNPCPsychopathPair(NPCPsychopathPair);
-            SaveSystem.SetNPCRebelMilitia(NPCRebelMilitia);
-            SaveSystem.SetNPCRebelModerates(NPCRebelModerates);
-            SaveSystem.SetNPCRebelSnipers(NPCRebelSnipers);
-            SaveSystem.SetNPCRebelZealots(NPCRebelZealots);
-            SaveSystem.SetNPCSlavers(NPCSlavers);
-            SaveSystem.SetNPCSpecOps(NPCSpecOps);
-            SaveSystem.SetNPCSurvivalists(NPCSurvivalists);
-            SaveSystem.SetNPCTaxCollector(NPCTaxCollector);
-            SaveSystem.SetNPCTerrorists(NPCTerrorists);
-            SaveSystem.SetNPCTheNegotiator(NPCTheNegotiator);
-            SaveSystem.SetNPCTheOld(NPCTheOld);
-            SaveSystem.SetNPCTheParents(NPCTheParents);
-            SaveSystem.SetNPCTravelingCouple(NPCTravelingCouple);
+            // demoted ghost — SetNPCPsychopathPair skipped
+            // demoted ghost — SetNPCRebelMilitia skipped
+            // demoted ghost — SetNPCRebelModerates skipped
+            // demoted ghost — SetNPCRebelSnipers skipped
+            // demoted ghost — SetNPCRebelZealots skipped
+            // demoted ghost — SetNPCSlavers skipped
+            // demoted ghost — SetNPCSpecOps skipped
+            // demoted ghost — SetNPCSurvivalists skipped
+            // demoted ghost — SetNPCTaxCollector skipped
+            // demoted ghost — SetNPCTerrorists skipped
+            // demoted ghost — SetNPCTheNegotiator skipped
+            // demoted ghost — SetNPCTheOld skipped
+            // demoted ghost — SetNPCTheParents skipped
+            // demoted ghost — SetNPCTravelingCouple skipped
             SaveSystem.SetNodeAutomatedArmory(NodeAutomatedArmory);
             SaveSystem.SetNodeGhostShip(NodeGhostShip);
             SaveSystem.SetNodeMutantHive(NodeMutantHive);
@@ -539,16 +541,16 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVehicleArmoredTruck(VehicleArmoredTruck);
             SaveSystem.SetVehicleMotorcycle(VehicleMotorcycle);
             SaveSystem.SetVehicleRowboat(VehicleRowboat);
-            SaveSystem.SetVisitorAbandonedState(VisitorAbandonedState);
-            SaveSystem.SetVisitorChurchHostile(VisitorChurchHostile);
-            SaveSystem.SetVisitorChurchSanctuary(VisitorChurchSanctuary);
-            SaveSystem.SetVisitorExplodedState(VisitorExplodedState);
-            SaveSystem.SetVisitorFleeingHorde(VisitorFleeingHorde);
-            SaveSystem.SetVisitorHospitalPatients(VisitorHospitalPatients);
-            SaveSystem.SetVisitorHospitalStaff(VisitorHospitalStaff);
-            SaveSystem.SetVisitorMilTrainingYard(VisitorMilTrainingYard);
-            SaveSystem.SetVisitorQuestFaction(VisitorQuestFaction);
-            SaveSystem.SetVisitorRebelTrainingYard(VisitorRebelTrainingYard);
+            // demoted ghost — SetVisitorAbandonedState skipped
+            // demoted ghost — SetVisitorChurchHostile skipped
+            // demoted ghost — SetVisitorChurchSanctuary skipped
+            // demoted ghost — SetVisitorExplodedState skipped
+            // demoted ghost — SetVisitorFleeingHorde skipped
+            // demoted ghost — SetVisitorHospitalPatients skipped
+            // demoted ghost — SetVisitorHospitalStaff skipped
+            // demoted ghost — SetVisitorMilTrainingYard skipped
+            // demoted ghost — SetVisitorQuestFaction skipped
+            // demoted ghost — SetVisitorRebelTrainingYard skipped
             SaveSystem.SetWeaponChainsaw(WeaponChainsaw);
             SaveSystem.SetWeaponFlamethrower(WeaponFlamethrower);
             SaveSystem.SetWeaponHMG(WeaponHMG);
@@ -1017,6 +1019,10 @@ namespace AtomicWar._Game.Core
                 ExpeditionSystem.OnEncounterResolved -= OnExpeditionEncounterResolved_LogCombat;
                 ExpeditionSystem.OnEncounterResolved += OnExpeditionEncounterResolved_LogCombat;
             }
+
+            // REPROMOTE-Encounter-001 — map/SO roadblock tags → class ResolveChoice.
+            if (ExpeditionSystem != null && EncounterRoadblock != null)
+                ExpeditionSystem.BindClassRoadblock(EncounterRoadblock);
         }
 
         private void OnExpeditionEncounterResolved_LogCombat(

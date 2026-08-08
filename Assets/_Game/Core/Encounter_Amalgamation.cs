@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Found deep in Sewers. A mass of fused feral dogs and humans.
     /// Cannot be killed with firearms (bullets absorb). Must use Fire (Molotovs, Flares) or avoid.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_Amalgamation
     {
         private AmalgamationState _state = new AmalgamationState();

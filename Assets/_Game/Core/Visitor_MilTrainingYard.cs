@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Spawns massive Military NPCs with high-tier loot (Ammunition, BodyArmor).
     /// Flees after attacking -> Military Raids on player's bunker increase by +300% for 7 days.
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_MilTrainingYard
     {
         private MilTrainingYardState _state = new MilTrainingYardState();

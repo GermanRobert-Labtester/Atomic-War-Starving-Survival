@@ -167,6 +167,96 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RepelCosts_MultipleAmmoStacks_DoNotUseShiftedSlotIndices()
+        {
+            var ammo = MakeItem("handgun_ammo", ItemType.Weapon, stackMax: 2);
+            var revolver = MakeItem("revolver", ItemType.Weapon, stackMax: 1);
+            revolver.durability = 100f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(ammo, 4), Is.True, "Two ammo stacks are required for the regression");
+            Assert.That(inv.Add(revolver, 1), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 100f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 30f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Repelled, Is.True);
+            Assert.That(result.AmmoConsumed, Is.EqualTo(3));
+            Assert.That(inv.Count(ammo), Is.EqualTo(1));
+            Assert.That(inv.Count(revolver), Is.EqualTo(1),
+                "Removing an ammo stack must not shift a weapon into a cached ammo index");
+            Assert.That(result.WeaponDurabilityLost, Is.EqualTo(10f).Within(Eps));
+        }
+
+        [Test]
+        public void RepelCosts_SpendsLowerPriorityAmmoBeforeReservedAmmo()
+        {
+            var civilianAmmo = MakeItem("ammo_9x19_fmj", ItemType.Weapon, stackMax: 2);
+            var reservedAmmo = MakeItem("ammo_556x45_ap", ItemType.Weapon, stackMax: 4);
+            var revolver = MakeItem("revolver", ItemType.Weapon, stackMax: 1);
+            revolver.durability = 100f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(civilianAmmo, 2), Is.True);
+            Assert.That(inv.Add(reservedAmmo, 4), Is.True);
+            Assert.That(inv.Add(revolver, 1), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 100f;
+            hatch.AmmoSpendPriorityResolver = id => id == civilianAmmo.id ? 0 : 100;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.AmmoConsumed, Is.EqualTo(5));
+            Assert.That(inv.Count(civilianAmmo), Is.Zero);
+            Assert.That(inv.Count(reservedAmmo), Is.EqualTo(1));
+            Assert.That(inv.Count(revolver), Is.EqualTo(1));
+            Assert.That(result.WeaponDurabilityLost, Is.EqualTo(10f).Within(Eps),
+                "Full ammo payment retains the existing light weapon wear");
+        }
+
+        [Test]
+        public void RepelCosts_AmmoShortfallIncreasesWeaponWear()
+        {
+            var ammo = MakeItem("handgun_ammo", ItemType.Weapon, stackMax: 2);
+            var revolver = MakeItem("revolver", ItemType.Weapon, stackMax: 1);
+            revolver.durability = 100f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(ammo, 2), Is.True);
+            Assert.That(inv.Add(revolver, 1), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 100f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.AmmoConsumed, Is.EqualTo(2));
+            Assert.That(inv.Count(ammo), Is.Zero);
+            Assert.That(result.WeaponDurabilityLost, Is.EqualTo(14f).Within(Eps),
+                "Base wear 8 plus two points for each of three missing rounds");
+            Assert.That(inv.Slots[0].Item, Is.SameAs(revolver));
+            Assert.That(inv.Slots[0].CurrentDurability, Is.EqualTo(86f).Within(Eps));
+        }
+
+        [Test]
         public void GuardDuty_BoostsSecurity_AndDrainsFatigue()
         {
             var shelter = new Shelter();

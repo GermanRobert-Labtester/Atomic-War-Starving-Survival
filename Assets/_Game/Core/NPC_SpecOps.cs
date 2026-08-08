@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Highly lethal military combatants using Flashbangs (stuns player, drains Stamina)
     /// and NightVision (immune to darkness penalties). Never surrender. Drop pristine military gear.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_SpecOps
     {
         private SpecOpsState _state = new SpecOpsState();

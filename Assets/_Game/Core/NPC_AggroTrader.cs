@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Corners player in a dead-end room ("Buy something or die"). Forced to purchase a useless junk item
     /// at a massive premium to avoid a lethal firefight.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_AggroTrader
     {
         private AggroTraderState _state = new AggroTraderState();

@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Found in Subway nodes. Passive, high disease vector. Interacting without a HazmatSuit
     /// contracts Phase 1 Afflictions, but enables trading for rare IntelNodes.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Homeless
     {
         private HomelessEncampmentState _state = new HomelessEncampmentState();

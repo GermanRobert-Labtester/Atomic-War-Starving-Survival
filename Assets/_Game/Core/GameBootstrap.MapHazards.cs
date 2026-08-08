@@ -17,17 +17,16 @@ namespace AtomicWar._Game.Core
         {
             MapHazardAcidGeyser = new MapHazard_AcidGeyser();
             MapHazardAshlanche = new MapHazard_Ashlanche();
-            MapHazardBiometricDoor = new MapHazard_BiometricDoor();
-            MapHazardCraterWall = new MapHazard_CraterWall();
-            MapHazardCrevice = new MapHazard_Crevice();
-            MapHazardFlammableGas = new MapHazard_FlammableGas();
-            MapHazardGasPockets = new MapHazard_GasPockets();
-            MapHazardMagneticAnomaly = new MapHazard_MagneticAnomaly();
-            MapHazardSinkholeCollapse = new MapHazard_SinkholeCollapse();
-            MapHazardVenusTrap = new MapHazard_VenusTrap();
-
+            // DEMOTE-MapHazard-batch — MapHazardBiometricDoor demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardCraterWall demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardCrevice demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardFlammableGas demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardGasPockets demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardMagneticAnomaly demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardSinkholeCollapse demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardVenusTrap demoted. Class kept dormant.
             WireMapHazards();
-            Debug.Log("[GameBootstrap] Map hazards ready (10 trackers).");
+            Debug.Log("[GameBootstrap] Map hazards: AcidGeyser+Ashlanche live; 8 HANDLERS_ONLY demoted.");
         }
 
         private void WireMapHazards()

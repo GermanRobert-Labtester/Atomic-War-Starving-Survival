@@ -14,6 +14,7 @@ namespace AtomicWar._Game.Core
         public bool elevator_activated = false;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public sealed class Action_RoutePower
     {
         private RoutePowerState _state;

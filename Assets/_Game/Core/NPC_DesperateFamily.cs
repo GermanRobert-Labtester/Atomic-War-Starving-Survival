@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Starving family (mother, father, child). Player can trade, rob them (they fight weakly),
     /// or give them food for a massive Hope morale buff (+35).
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_DesperateFamily
     {
         private DesperateFamilyState _state = new DesperateFamilyState();

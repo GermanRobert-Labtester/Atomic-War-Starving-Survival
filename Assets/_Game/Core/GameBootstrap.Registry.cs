@@ -423,7 +423,11 @@ namespace AtomicWar._Game.Core
                 "endgame", "shelter_layout", "sleep_quality", "skill_progression",
                 // Player/AI action systems (no autonomous hour tick):
                 "cooking", "mentorship", "combat_perks", "survival_perks", "shelter_perks",
-                "medical_perks", "expedition_perks", "night_scavenge"
+                "medical_perks", "expedition_perks", "night_scavenge",
+                // REPROMOTE-001 — caravan weather pricing fires on trade quote, not hour tick:
+                "npc_passive_trader",
+                // REPROMOTE-Encounter-001 — class roadblock resolves from expedition psychology:
+                "encounter_roadblock"
             };
             for (int i = 0; i < eventDriven.Length; i++)
                 _registry.RegisterEventDriven(eventDriven[i]);

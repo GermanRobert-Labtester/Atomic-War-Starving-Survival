@@ -12,6 +12,7 @@ namespace AtomicWar._Game.Core
         public string infectedSurvivorId = string.Empty;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_InfectSelf
     {
         public Action_InfectSelfState State { get; private set; }

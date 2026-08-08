@@ -116,6 +116,11 @@ namespace AtomicWar._Game.Economy
         /// </summary>
         private Func<bool> _getPartyIntactHazmat;
         /// <summary>
+        /// Optional weather/caravan item price multiplier (itemId → mult, 1 = no change).
+        /// Host wires PassiveTrader / hatch-caravan weather spikes without Core↔Economy cycles.
+        /// </summary>
+        private Func<string, float> _itemWeatherPriceMultiplier;
+        /// <summary>
         /// Last sampled party avg radiation for trust-inversion raid cascade.
         /// NaN = never sampled (first <see cref="NotifyPartyRadiationChanged"/> only seeds).
         /// </summary>
@@ -186,6 +191,15 @@ namespace AtomicWar._Game.Economy
         public void SetPartyIntactHazmatProvider(Func<bool> getPartyIntactHazmat)
         {
             _getPartyIntactHazmat = getPartyIntactHazmat;
+        }
+
+        /// <summary>
+        /// Wire weather-sensitive caravan pricing (e.g. PassiveTrader water spikes in fallout).
+        /// Provider returns a multiplier ≥ 0; null / 0 / negative values are ignored.
+        /// </summary>
+        public void SetWeatherItemPriceMultiplier(Func<string, float> itemWeatherPriceMultiplier)
+        {
+            _itemWeatherPriceMultiplier = itemWeatherPriceMultiplier;
         }
 
         public void NotifyPhaseChanged(WorldPhase phase)
@@ -844,6 +858,14 @@ namespace AtomicWar._Game.Economy
         {
             float baseVal = GetTradeValue(item);
             if (baseVal <= 0f) return 0f;
+
+            // Passive caravan / weather exchange rates (Prompt #362) — host-injected.
+            if (item != null && _itemWeatherPriceMultiplier != null)
+            {
+                float weatherMult = _itemWeatherPriceMultiplier(item.id);
+                if (weatherMult > 0f && !Mathf.Approximately(weatherMult, 1f))
+                    baseVal *= weatherMult;
+            }
 
             var fac = GetFaction(factionId);
             // Cult of the Glow / trust-inversion: irradiated water is prized currency.

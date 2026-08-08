@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
         public List<bool> room_explored = new List<bool>();
     }
 
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public sealed class Encounter_FloodedMaze
     {
         private FloodedMazeState _state;

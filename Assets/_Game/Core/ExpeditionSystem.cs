@@ -89,10 +89,20 @@ namespace AtomicWar._Game.Core
         private PersonalQuestSystem _personalQuests;
         private ItemDefinition _apexMeat;
 
+        // REPROMOTE-Encounter-001 — class tracker for roadblocks (map tag / SO id).
+        private Encounter_Roadblock _classRoadblock;
+
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
         public GeneratedMap GeneratedMap => _generatedMap;
         public SabotagedCacheSystem SabotagedCaches => _sabotagedCaches;
+
+        /// <summary>
+        /// REPROMOTE-Encounter-001 — wire live <see cref="Encounter_Roadblock"/> class tracker.
+        /// Dispatched from psychology resolve when the SO id or map node is tagged roadblock.
+        /// </summary>
+        public void BindClassRoadblock(Encounter_Roadblock roadblock) =>
+            _classRoadblock = roadblock;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;

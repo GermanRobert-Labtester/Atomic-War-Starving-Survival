@@ -23,6 +23,7 @@ namespace AtomicWar._Game.Core
     /// Combat is ship-to-ship.
     /// Sinking pirate boat yields massive loot but it sinks, requiring DivingGear to retrieve.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_RiverPirates
     {
         private RiverPiratesState _state = new RiverPiratesState();

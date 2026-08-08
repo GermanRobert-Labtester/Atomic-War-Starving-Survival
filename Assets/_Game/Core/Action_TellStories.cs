@@ -15,6 +15,7 @@ namespace AtomicWar._Game.Core
         public List<float> frozenExpiryTimestamps = new List<float>();
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_TellStories
     {
         public event Action<string, string, float> OnAnxietyFrozen;

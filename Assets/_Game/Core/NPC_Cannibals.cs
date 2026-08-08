@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// High speed, high HP combatants with cleavers and shotguns.
     /// Triggers an immediate Horror Morale debuff for the scavenger. Node loot consists of HumanMeat and Bones.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Cannibals
     {
         private CannibalsState _state = new CannibalsState();

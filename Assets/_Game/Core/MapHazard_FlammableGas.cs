@@ -13,6 +13,7 @@ namespace AtomicWar._Game.Core
         public List<string> survivors_ignited = new List<string>();
     }
 
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class MapHazard_FlammableGas
     {
         private FlammableGasState _state;

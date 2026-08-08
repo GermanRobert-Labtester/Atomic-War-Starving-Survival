@@ -16,6 +16,7 @@ namespace AtomicWar._Game.Core
     /// Permanently entombs an irradiated room. Costs massive Cement.
     /// Room removed from grid forever, stops rad leaks.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_SealRoom
     {
         private SealRoomState _state = new SealRoomState();

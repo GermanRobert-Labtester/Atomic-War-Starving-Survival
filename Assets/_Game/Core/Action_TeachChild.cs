@@ -11,6 +11,7 @@ namespace AtomicWar._Game.Core
         public float adultFatiguePerHour = 0.15f;
     }
 
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_TeachChild
     {
         public event Action<string, string, float> OnChildGainedXP;

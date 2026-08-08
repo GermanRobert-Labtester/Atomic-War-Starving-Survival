@@ -13,6 +13,7 @@ namespace AtomicWar._Game.Core
         public float hoursElapsed = 0f;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_SelfSurgery
     {
         public Action_SelfSurgeryState State { get; private set; }

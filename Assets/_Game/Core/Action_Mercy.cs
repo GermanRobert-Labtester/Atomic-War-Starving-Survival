@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// For survivors in incurable agony (Stage 4 Rads, Lockjaw, Rabies).
     /// Uses 1 Morphine; grants the shelter a SomberClosure morale buff instead of Despair.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_Mercy
     {
         private MercyActionState _state = new MercyActionState();

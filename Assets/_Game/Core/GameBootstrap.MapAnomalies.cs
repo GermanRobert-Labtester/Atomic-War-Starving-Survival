@@ -13,27 +13,26 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private void BootMapAnomalies()
         {
-            MapAnomalyAshDunes = new MapAnomaly_AshDunes();
-            MapAnomalyBoilingLake = new MapAnomaly_BoilingLake();
-            MapAnomalyCherenkov = new MapAnomaly_Cherenkov();
-            MapAnomalyDogDen = new MapAnomaly_DogDen();
-            MapAnomalyDontLook = new MapAnomaly_DontLook();
+            // DEMOTE-MapAnomaly-batch — MapAnomalyAshDunes demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyBoilingLake demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyCherenkov demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyDogDen demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyDontLook demoted. Class kept dormant.
             MapAnomalyDryCoral = new MapAnomaly_DryCoral();
-            MapAnomalyFloodedSubway = new MapAnomaly_FloodedSubway();
-            MapAnomalyGlassCrater = new MapAnomaly_GlassCrater();
-            MapAnomalyMassGrave = new MapAnomaly_MassGrave();
-            MapAnomalyMirage = new MapAnomaly_Mirage();
-            MapAnomalyPetrifiedForest = new MapAnomaly_PetrifiedForest();
-            MapAnomalyQuietZone = new MapAnomaly_QuietZone();
-            MapAnomalyRustedTank = new MapAnomaly_RustedTank();
-            MapAnomalyServerFarm = new MapAnomaly_ServerFarm();
-            MapAnomalySinkhole = new MapAnomaly_Sinkhole();
-            MapAnomalyTangledDrop = new MapAnomaly_TangledDrop();
-            MapAnomalyTireFire = new MapAnomaly_TireFire();
-            MapAnomalyUxoNuke = new MapAnomaly_UXO_Nuke();
-
+            // DEMOTE-MapAnomaly-batch — MapAnomalyFloodedSubway demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyGlassCrater demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyMassGrave demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyMirage demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyPetrifiedForest demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyQuietZone demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyRustedTank demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyServerFarm demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalySinkhole demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyTangledDrop demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyTireFire demoted. Class kept dormant.
+            // DEMOTE-MapAnomaly-batch — MapAnomalyUxoNuke demoted. Class kept dormant.
             WireMapAnomalies();
-            Debug.Log("[GameBootstrap] Map anomalies ready (18 trackers).");
+            Debug.Log("[GameBootstrap] Map anomalies: DryCoral live (rad); 17 HANDLERS_ONLY demoted.");
         }
 
         private void WireMapAnomalies()

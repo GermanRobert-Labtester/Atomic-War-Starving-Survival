@@ -25,7 +25,8 @@ namespace AtomicWar._Game.Core
     {
         public string systemId = "visitor_abandoned_state";
     }
-public class Visitor_AbandonedState
+/// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
+    public class Visitor_AbandonedState
     {
         private AbandonedStateEffect _effect = new AbandonedStateEffect();
 

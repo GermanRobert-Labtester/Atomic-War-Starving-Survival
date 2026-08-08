@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Glowing green irradiated fog. Zero visibility, high ambient light. Nullifies stealth, doubles encounter rates,
     /// and creeps into the airlock, causing RadiationAnxiety in survivors.
     /// </summary>
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Weather_BioFog
     {
         private BioFogState _state = new BioFogState();

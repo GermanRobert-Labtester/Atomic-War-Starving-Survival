@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// Assign armed survivors to Patrol between Allied Factions. Passive Ammo+Money income.
     /// Removes survivors from bunker indefinitely.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_EstablishRoute
     {
         private EstablishRouteState _state = new EstablishRouteState();

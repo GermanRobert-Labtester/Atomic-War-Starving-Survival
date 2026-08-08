@@ -15,6 +15,7 @@ namespace AtomicWar._Game.Core
         public string stationedNodeId = "";
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public sealed class Action_Overwatch
     {
         public event Action<string, string> OnOverwatchStationed;      // (sniperId, nodeId)

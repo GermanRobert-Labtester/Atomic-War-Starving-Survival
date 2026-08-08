@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Desperate triage center. Friendly staff demands 50% of player's MedicalSupplies as a "Tax".
     /// Refusal makes them passive-aggressive and refuse healing services.
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_HospitalStaff
     {
         private HospitalStaffState _state = new HospitalStaffState();

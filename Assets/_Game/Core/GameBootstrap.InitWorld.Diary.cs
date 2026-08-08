@@ -159,6 +159,14 @@ namespace AtomicWar._Game.Core
             // #16 polish: ARS reverence + intact-hazmat contempt providers.
             EconomySystem.SetPartyHasArsProvider(PartyHasAcuteRadiationSyndrome);
             EconomySystem.SetPartyIntactHazmatProvider(PartyWearsIntactHazmat);
+            // REPROMOTE-001 — PassiveTrader weather exchange rates on barter quotes.
+            // Lambda resolves NPCPassiveTrader/Weather at call time (BootNPC already ran).
+            EconomySystem.SetWeatherItemPriceMultiplier(itemId =>
+            {
+                if (NPCPassiveTrader == null || WeatherSystem == null) return 1f;
+                return NPCPassiveTrader.GetPriceMultiplierForItem(
+                    itemId, WeatherSystem.Current.ToString());
+            });
             EconomySystem.BindEventRunner(EventRunner);
 
             // Post-repel parley modal + faction radio intercept log

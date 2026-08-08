@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
         public List<string> killed_ids = new List<string>();
     }
 
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public sealed class Encounter_PressurePlate
     {
         private PressurePlateState _state;

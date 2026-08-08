@@ -16,6 +16,7 @@ namespace AtomicWar._Game.Core
         public float[] climbProgressHours = Array.Empty<float>();
     }
 
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class MapHazard_CraterWall
     {
         public event Action<string> OnClimbStarted; // survivorId

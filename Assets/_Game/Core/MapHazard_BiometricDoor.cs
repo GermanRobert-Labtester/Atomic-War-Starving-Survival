@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// the commander and harvest their severed hand as a key item.
     /// Prompt #796: MapHazard_BiometricDoor
     /// </summary>
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class MapHazard_BiometricDoor
     {
         // -- Events --

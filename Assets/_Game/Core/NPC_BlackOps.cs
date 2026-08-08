@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Rogue spec-ops who use booby traps. Player must pass a Perception check upon entering
     /// or start the encounter Bleeding from a trap. Hostile to all factions.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_BlackOps
     {
         private BlackOpsState _state = new BlackOpsState();

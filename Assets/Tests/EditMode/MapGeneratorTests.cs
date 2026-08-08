@@ -384,5 +384,29 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(map.GetNode(id).IsRevealed, Is.True, "High-confidence radio intel reveals node");
             Assert.That(knowledge.GetTile(id).RumoredRad, Is.EqualTo(88f).Within(Eps));
         }
+
+        [Test]
+        public void AssignRoadblockFlags_TagsHighwayStyleNodes_Deterministically()
+        {
+            var a = MapGenerator.Generate(AcceptanceSeed);
+            var b = MapGenerator.Generate(AcceptanceSeed);
+
+            int roadblocks = 0;
+            for (int i = 0; i < a.Nodes.Count; i++)
+            {
+                var n = a.Nodes[i];
+                if (n == null || !n.HasTag("roadblock")) continue;
+                roadblocks++;
+                Assert.That(n.HasTag("highway"), Is.True,
+                    "roadblock nodes should also carry the highway corridor tag");
+                var nb = b.GetNode(n.NodeId);
+                Assert.That(nb, Is.Not.Null);
+                Assert.That(nb.HasTag("roadblock"), Is.True,
+                    "Same seed must tag the same roadblock nodes");
+            }
+
+            Assert.That(roadblocks, Is.GreaterThan(0),
+                "Generate must tag at least one highway/toll/overpass corridor as roadblock");
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Massive armor plating, immune to small arms fire.
     /// If player does not have Explosives or ArmorPiercing ammo, must flee or be dragged underwater (instant death).
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_Mirelurker
     {
         private MirelurkerState _state = new MirelurkerState();

@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// Neutral trading node allowing players to purchase "Indentured Survivors" using Medicine.
     /// Purchased survivors join the bunker but carry permanent Trauma and Distrust traits.
     /// </summary>
+    /// <summary>DEMOTE-Location-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Location_SlaveMarket
     {
         private SlaveMarketState _state = new SlaveMarketState();

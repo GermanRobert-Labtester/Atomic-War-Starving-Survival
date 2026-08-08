@@ -14,6 +14,7 @@ namespace AtomicWar._Game.Core
         public List<string> contaminated_suit_survivor_ids = new List<string>();
     }
 
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class Weather_BlackSnow
     {
         private BlackSnowState _state;

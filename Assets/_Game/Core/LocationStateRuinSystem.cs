@@ -29,7 +29,8 @@ namespace AtomicWar._Game.Core
     {
         public string systemId = "location_state_ruin_system";
     }
-public class LocationStateRuinSystem
+/// <summary>DEMOTE-Location-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
+    public class LocationStateRuinSystem
     {
         public event Action<string, LocationStateModifier, RuinEffects> OnRuinModifierApplied;
 

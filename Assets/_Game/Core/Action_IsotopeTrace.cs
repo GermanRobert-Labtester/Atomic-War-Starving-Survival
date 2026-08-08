@@ -12,6 +12,7 @@ namespace AtomicWar._Game.Core
         public bool reveals_safe_paths = true;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public sealed class Action_IsotopeTrace
     {
         private IsotopeTraceState _state;

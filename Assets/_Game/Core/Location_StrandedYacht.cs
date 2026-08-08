@@ -23,6 +23,7 @@ namespace AtomicWar._Game.Core
     /// (Caviar, Champagne) that boost morale but provide zero nutrition.
     /// Guarded by mercenaries.
     /// </summary>
+    /// <summary>DEMOTE-Location-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Location_StrandedYacht
     {
         private StrandedYachtState _state = new StrandedYachtState();

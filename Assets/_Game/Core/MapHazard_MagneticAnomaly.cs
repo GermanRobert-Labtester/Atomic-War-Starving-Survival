@@ -13,6 +13,7 @@ namespace AtomicWar._Game.Core
         public List<string> affected_nodes = new List<string>();
     }
 
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class MapHazard_MagneticAnomaly
     {
         private MagneticAnomalyState _state;

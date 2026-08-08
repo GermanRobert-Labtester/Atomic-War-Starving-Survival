@@ -12,6 +12,7 @@ namespace AtomicWar._Game.Core
         public bool hasBeenUsed = false;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_HarvestOrgans
     {
         public Action_HarvestOrgansState State { get; private set; }

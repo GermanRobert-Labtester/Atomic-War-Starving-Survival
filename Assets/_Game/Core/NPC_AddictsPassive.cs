@@ -17,6 +17,7 @@ namespace AtomicWar._Game.Core
     /// Prompt #350: NPC Encounter: Passive Addicts.
     /// Found in Ruined Pharmacies. In severe withdrawal. Will trade top-tier goods (Guns, Maps) for Morphine.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_AddictsPassive
     {
         private AddictsPassiveState _state = new AddictsPassiveState();

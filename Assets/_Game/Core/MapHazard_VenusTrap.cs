@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Look like normal Berry bushes. Harvest = plant snaps shut. Strength check
     /// or lose arm (instant amputation). Perception >= 0.7 spots the disguise.
     /// </summary>
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class MapHazard_VenusTrap
     {
         private VenusTrapState _state;

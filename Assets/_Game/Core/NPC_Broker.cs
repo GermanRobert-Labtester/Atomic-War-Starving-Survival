@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Appears on Radio Day 75+. Deals in Mega-Project blueprints.
     /// Demands Captured Raiders or GoldBullion.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Broker
     {
         private BrokerState _state = new BrokerState();

@@ -40,6 +40,7 @@ namespace AtomicWar._Game.Core
     /// fish has a 10% chance to be highly irradiated and a 5% chance to carry parasites.
     /// Players must use a Microbiologist or Geiger counter to vet the food.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_Fish
     {
         private readonly FishActionState _config = new FishActionState();

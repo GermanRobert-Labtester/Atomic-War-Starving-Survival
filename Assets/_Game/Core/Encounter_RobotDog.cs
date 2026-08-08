@@ -25,6 +25,7 @@ namespace AtomicWar._Game.Core
     /// A fast, heavily armored military pacification unit. Drops ElectronicScrap and Motors
     /// on defeat. Can be hacked by a TechBro or Mechanic character.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_RobotDog
     {
         private RobotDogState _state = new RobotDogState();

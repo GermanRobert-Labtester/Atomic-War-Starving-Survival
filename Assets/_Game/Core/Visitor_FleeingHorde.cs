@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Triggered when a FalloutStorm hits while scavenging. All NPCs stop fighting and rush for the exit.
     /// Combat disables, converting the expedition into a pure stamina race to the shelter airlock.
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_FleeingHorde
     {
         private FleeingHordeState _state = new FleeingHordeState();

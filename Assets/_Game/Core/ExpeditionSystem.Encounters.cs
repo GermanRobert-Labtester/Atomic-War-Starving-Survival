@@ -33,11 +33,107 @@ namespace AtomicWar._Game.Core
             ApplyExpeditionPerkEncounterMilestones(exp, selected, survivor, chosen, fled);
             ApplyAmmoResolveHitOnEngage(exp, selected, survivor, chosen, fled);
             ApplyBloodToxicityBiteRetaliation(exp, selected, survivor, chosen, fled);
+            // REPROMOTE-Encounter-001 — class roadblock Engage/Resolve when map/SO tags match.
+            TryDispatchClassRoadblock(exp, selected, chosen, fled);
 
             if (fled)
                 TryProcessUxoFlee(exp);
 
             OnEncounterResolved?.Invoke(exp, selected, chosen);
+        }
+
+        /// <summary>
+        /// When the encounter SO id, choice, or map node carries a roadblock tag,
+        /// run <see cref="Encounter_Roadblock.ResolveChoice"/> so the class tracker
+        /// is not a save-only ghost (REPROMOTE-Encounter-001).
+        /// </summary>
+        private void TryDispatchClassRoadblock(
+            ExpeditionState exp,
+            EncounterSO selected,
+            EventChoice chosen,
+            bool fled)
+        {
+            if (_classRoadblock == null || exp == null || fled) return;
+            if (!IsClassRoadblockBeat(exp, selected)) return;
+
+            RoadblockChoice rb = MapEventChoiceToRoadblock(chosen);
+            int fuel = 0;
+            if (_countItem != null)
+            {
+                fuel = Mathf.Max(_countItem("fuel"), _countItem("fuel_can"));
+                if (fuel <= 0) fuel = _countItem("jerry_can");
+            }
+
+            float chassis = exp.HasBicycle ? exp.BicycleDurability : 100f;
+            float hours;
+            bool ok = _classRoadblock.ResolveChoice(rb, ref fuel, ref chassis, out hours);
+            if (!ok && rb == RoadblockChoice.PayToll)
+            {
+                // Not enough fuel — fall back to reverse detour.
+                _classRoadblock.ResolveChoice(
+                    RoadblockChoice.ReverseDetour, ref fuel, ref chassis, out hours);
+                rb = RoadblockChoice.ReverseDetour;
+            }
+
+            if (rb == RoadblockChoice.PayToll && _consumeItem != null)
+            {
+                int toll = _classRoadblock.State != null ? _classRoadblock.State.tollFuelCost : 5;
+                if (!_consumeItem("fuel", toll))
+                {
+                    if (!_consumeItem("fuel_can", toll))
+                        _consumeItem("jerry_can", toll);
+                }
+            }
+
+            if (hours > 0f)
+            {
+                // Detour burns travel ticks (1 tick ≈ 1 hour in the expedition engine).
+                int extra = Mathf.Max(1, Mathf.CeilToInt(hours));
+                exp.TotalDistanceTicks += extra;
+            }
+
+            if (exp.HasBicycle)
+                exp.BicycleDurability = Mathf.Clamp(chassis, 0f, 100f);
+        }
+
+        private bool IsClassRoadblockBeat(ExpeditionState exp, EncounterSO selected)
+        {
+            if (selected != null && !string.IsNullOrEmpty(selected.id))
+            {
+                string id = selected.id;
+                if (id.IndexOf("roadblock", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                if (id.IndexOf("barricade", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                if (id.IndexOf("toll", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            }
+
+            string loc = exp?.TargetLocationId;
+            if (!string.IsNullOrEmpty(loc)
+                && loc.IndexOf("roadblock", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+
+            if (_generatedMap != null && !string.IsNullOrEmpty(loc))
+            {
+                var node = _generatedMap.GetNode(loc);
+                if (node != null && node.HasTag("roadblock"))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static RoadblockChoice MapEventChoiceToRoadblock(EventChoice chosen)
+        {
+            string id = chosen?.ChoiceId ?? string.Empty;
+            if (id.IndexOf("pay", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("toll", StringComparison.OrdinalIgnoreCase) >= 0)
+                return RoadblockChoice.PayToll;
+            if (id.IndexOf("ram", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("force", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("engage", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("fight", StringComparison.OrdinalIgnoreCase) >= 0)
+                return RoadblockChoice.RamBarricade;
+            // detour / reverse / flee / sneak / default
+            return RoadblockChoice.ReverseDetour;
         }
 
         /// <summary>

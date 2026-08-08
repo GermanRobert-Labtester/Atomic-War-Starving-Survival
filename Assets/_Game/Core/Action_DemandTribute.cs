@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// If ShelterSecurity+Armory out-scale local Factions → demand Food/Water from them.
     /// They become vassals. You are the Warlord.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_DemandTribute
     {
         private DemandTributeState _state = new DemandTributeState();

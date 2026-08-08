@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// High winds pick up vitrified sand, shredding HazmatSuits instantly and inflicting
     /// Bleeding. Sandblasts the shelter hatch, causing permanent ShelterSecurity reduction.
     /// </summary>
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Weather_GlassStorm
     {
         private GlassStormState _state = new GlassStormState();

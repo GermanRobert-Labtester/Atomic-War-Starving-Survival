@@ -443,6 +443,16 @@ namespace AtomicWar._Game.Core
             return exp.LocationEncounterFired;
         }
 
+        /// <summary>
+        /// Test helper: run psychology resolve (and class roadblock dispatch) for a
+        /// specific SO without waiting for the encounter pool roll.
+        /// </summary>
+        public void ForceResolveEncounterForTests(ExpeditionState exp, EncounterSO selected)
+        {
+            if (exp == null || selected == null) return;
+            ResolveEncounterWithPsychology(exp, selected);
+        }
+
         private void RollAndResolveEncounter(ExpeditionState exp)
         {
             if (_encounterPool.Count == 0) return;

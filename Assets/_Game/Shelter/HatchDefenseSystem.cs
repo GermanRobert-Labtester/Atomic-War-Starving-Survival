@@ -74,7 +74,7 @@ namespace AtomicWar._Game.Shelter
     /// RaidStrength vs ShelterSecurity + EquippedWeapons. Guard duty boosts security
     /// while draining Fatigue. No combat minigame — ammo, durability, loot, trauma.
     /// </summary>
-    public class HatchDefenseSystem
+    public partial class HatchDefenseSystem
     {
         public const int RaidUnlockDay = 30;
         public const float DefaultBaseSecurity = 5f;
@@ -790,109 +790,6 @@ namespace AtomicWar._Game.Shelter
                 Message = "Hostile faction at the hatch."
             };
             return ResolveRaid(evt, ignoreDayGate);
-        }
-
-        private void ApplyRepelCosts(RaidResolution result)
-        {
-            var inv = _getInventory != null ? _getInventory() : null;
-            if (inv?.Slots == null) return;
-
-            // Prefer consuming ammo; fall back to weapon durability
-            int ammoNeeded = Mathf.Clamp(Mathf.CeilToInt(result.RaidStrength / 10f), 1, 12);
-            int remaining = ammoNeeded;
-
-            // Spend civilian/craftable first (lower priority value) so AP/API stockpiles last.
-            var ammoSlots = new List<int>();
-            for (int i = 0; i < inv.Slots.Count; i++)
-            {
-                var slot = inv.Slots[i];
-                if (slot?.Item == null) continue;
-                if (!IsAmmoItem(slot.Item) && !IsAmmoId(slot.Item.id)) continue;
-                if (slot.Amount <= 0) continue;
-                ammoSlots.Add(i);
-            }
-            ammoSlots.Sort((a, b) =>
-            {
-                string idA = inv.Slots[a].Item.id;
-                string idB = inv.Slots[b].Item.id;
-                int pA = AmmoSpendPriorityResolver != null ? AmmoSpendPriorityResolver(idA) : 50;
-                int pB = AmmoSpendPriorityResolver != null ? AmmoSpendPriorityResolver(idB) : 50;
-                int cmp = pA.CompareTo(pB);
-                return cmp != 0 ? cmp : a.CompareTo(b);
-            });
-
-            for (int s = 0; s < ammoSlots.Count && remaining > 0; s++)
-            {
-                var slot = inv.Slots[ammoSlots[s]];
-                if (slot?.Item == null) continue;
-                int take = Mathf.Min(remaining, slot.Amount);
-                if (take <= 0) continue;
-                inv.Remove(slot.Item, take);
-                remaining -= take;
-                result.AmmoConsumed += take;
-            }
-
-            // Prompt #184 — track ammo expended toward Suppressing Fire for active guards.
-            if (result.AmmoConsumed > 0 && _combatPerks != null)
-            {
-                int day = _getDay != null ? _getDay() : 0;
-                var survivors = _getSurvivors?.Invoke();
-                if (survivors != null)
-                {
-                    for (int i = 0; i < survivors.Count; i++)
-                    {
-                        var sv = survivors[i];
-                        if (sv == null || !_activeGuards.ContainsKey(sv.Id)) continue;
-                        _combatPerks.RecordAmmoExpended(sv, result.AmmoConsumed, day);
-                    }
-                }
-            }
-
-            // Durability wear on first firearm if ammo short or always light wear
-            float wear = 8f + (remaining > 0 ? remaining * 2f : 2f);
-            for (int i = 0; i < inv.Slots.Count; i++)
-            {
-                var slot = inv.Slots[i];
-                if (slot?.Item == null) continue;
-                if (IsAmmoItem(slot.Item) || IsAmmoId(slot.Item.id)) continue;
-                if (!IsWeaponItem(slot.Item) && !IsWeaponId(slot.Item.id)) continue;
-                if (slot.Item.id == "kevlar_vest") continue;
-
-                float maxDur = slot.Item.durability > 0f ? slot.Item.durability : 100f;
-                if (slot.CurrentDurability < 0f) slot.CurrentDurability = maxDur;
-                float before = slot.CurrentDurability;
-                slot.CurrentDurability = Mathf.Max(0f, slot.CurrentDurability - wear);
-                result.WeaponDurabilityLost += before - slot.CurrentDurability;
-
-                // Prompt #174 / #182 — jam window during hatch defense via host hook.
-                if (TryJamWeapon != null && slot.CurrentDurability < maxDur * 0.5f)
-                {
-                    int clearTicks = CombatPerkSystem.DefaultJamClearTicks;
-                    Survivor jamSurvivor = null;
-                    var survivors = _getSurvivors?.Invoke();
-                    if (survivors != null)
-                    {
-                        for (int s = 0; s < survivors.Count; s++)
-                        {
-                            if (survivors[s] != null && _activeGuards.ContainsKey(survivors[s].Id))
-                            {
-                                jamSurvivor = survivors[s];
-                                if (_combatPerks != null)
-                                    clearTicks = _combatPerks.GetJamClearTicks(jamSurvivor);
-                                break;
-                            }
-                        }
-                    }
-
-                    if (TryJamWeapon(slot.Item.id, clearTicks)
-                        && jamSurvivor != null && _combatPerks != null)
-                    {
-                        int day = _getDay != null ? _getDay() : 0;
-                        _combatPerks.RecordWeaponJamSurvived(jamSurvivor, day);
-                    }
-                }
-                break;
-            }
         }
 
         private void StealLoot(RaidResolution result)

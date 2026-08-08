@@ -14,6 +14,7 @@ namespace AtomicWar._Game.Core
         public string current_node_id = "";
     }
 
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class Weather_DustDevil
     {
         private DustDevilState _state;

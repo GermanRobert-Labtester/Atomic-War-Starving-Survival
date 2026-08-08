@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Neighborhood watch gone extreme. Friendly if player has high Karma/Reputation (>= 20);
     /// turns hostile if player is caught stealing. Fights with PipeWeapons and Molotovs.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_RebelMilitia
     {
         private RebelMilitiaState _state = new RebelMilitiaState();

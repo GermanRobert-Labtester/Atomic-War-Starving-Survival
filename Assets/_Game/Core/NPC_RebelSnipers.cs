@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Spawns strictly as a group of 4. Player cannot engage in melee directly; must solve a cover puzzle
     /// using Smoke Grenades or Agility checks. Failure deals massive headshot damage.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_RebelSnipers
     {
         private RebelSnipersState _state = new RebelSnipersState();

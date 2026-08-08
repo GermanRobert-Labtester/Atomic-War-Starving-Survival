@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Standard highwaymen demanding exactly 50% of scavenger's inventory value.
     /// If paid, they depart peacefully without combat.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Bandits
     {
         private BanditsState _state = new BanditsState();

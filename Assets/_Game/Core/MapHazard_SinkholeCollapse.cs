@@ -11,6 +11,7 @@ namespace AtomicWar._Game.Core
         public bool dropsToSubway = true;
     }
 
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class MapHazard_SinkholeCollapse
     {
         public event Action<string, string> OnCollapseTriggered; // survivorId, subwayNodeId
