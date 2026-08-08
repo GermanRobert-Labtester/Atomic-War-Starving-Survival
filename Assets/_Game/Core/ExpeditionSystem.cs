@@ -22,8 +22,20 @@ namespace AtomicWar._Game.Core
         public const float BaseStaminaDrainPerHour = 5f;
         public const float MaxCarryingCapacityDefault = 30f;
 
-        /// <summary>AcuteDoseWindow added to the survivor when caught in the flashpoint.</summary>
+        /// <summary>
+        /// Base AcuteDoseWindow added to the survivor when caught in the flashpoint,
+        /// before duration scaling (see <see cref="GetFlashpointDoseScale"/>).
+        /// </summary>
         public const float FlashpointAcuteDoseSpike = 30f;
+
+        /// <summary>Expedition hours at which the flashpoint dose spike is unscaled (×1).</summary>
+        public const float FlashpointDoseReferenceHours = 24f;
+
+        /// <summary>Lower bound on the flashpoint dose duration scale (a survivor caught minutes out).</summary>
+        public const float MinFlashpointDoseScale = 0.5f;
+
+        /// <summary>Upper bound on the flashpoint dose duration scale (a long deep-field run).</summary>
+        public const float MaxFlashpointDoseScale = 2.0f;
 
         /// <summary>Default shelter delay (ticks) for the Cautious flashpoint behavior.</summary>
         public const int DefaultCautiousShelterDelayTicks = 18; // 12-24 hour range; midpoint

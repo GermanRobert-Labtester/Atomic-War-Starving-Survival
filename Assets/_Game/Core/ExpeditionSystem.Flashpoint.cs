@@ -34,8 +34,11 @@ namespace AtomicWar._Game.Core
             // 1. Sever comms
             exp.isCommsSevered = true;
 
-            // 2. Acute-dose spike
-            exp.Survivor.AcuteDoseWindow += FlashpointAcuteDoseSpike;
+            // 2. Acute-dose spike, scaled by how long the survivor has been in the
+            // field. RAD-3C: a flat spike gave a survivor caught an hour from the
+            // hatch the same acute window as one three days deep, which made the
+            // stance/timing decisions around a flashpoint meaningless.
+            exp.Survivor.AcuteDoseWindow += FlashpointAcuteDoseSpike * GetFlashpointDoseScale(exp);
 
             // 3. Trauma affliction (broken bones / shockwave)
             if (_medicalSystem != null)
@@ -56,6 +59,22 @@ namespace AtomicWar._Game.Core
             if (exp.IsPushingLuck) exp.IsPushingLuck = false;
 
             OnFlashpointIntercepted?.Invoke(exp);
+        }
+
+        /// <summary>
+        /// RAD-3C: duration multiplier for the flashpoint acute-dose spike. One
+        /// expedition tick is one game hour (see <c>Tick</c>), so
+        /// <see cref="ExpeditionState.CurrentTick"/> is elapsed field hours.
+        /// Clamped so a very short run still hurts and a very long one cannot
+        /// deliver an unbounded window.
+        /// </summary>
+        internal static float GetFlashpointDoseScale(ExpeditionState exp)
+        {
+            if (exp == null) return MinFlashpointDoseScale;
+            return Mathf.Clamp(
+                exp.CurrentTick / FlashpointDoseReferenceHours,
+                MinFlashpointDoseScale,
+                MaxFlashpointDoseScale);
         }
 
         private void ResolveFlashpointBehavior(ExpeditionState exp)
