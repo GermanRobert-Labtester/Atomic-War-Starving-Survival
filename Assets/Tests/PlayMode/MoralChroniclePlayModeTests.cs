@@ -265,9 +265,12 @@ namespace AtomicWar.Tests.PlayMode
 #pragma warning restore CS0219
             engine.OnCampaignEnded += _ => engineFired = true;
 
-            // Build minimal passing state (rescue victory at Day 60)
+            // Build minimal passing state (rescue victory, two days past the
+            // chopper calendar so the day the UI reports is distinguishable
+            // from the threshold itself).
+            int endDay = VictoryProjectManager.ChopperArrivalDay + 2;
             engine.Evaluate(
-                currentDay: 62,
+                currentDay: endDay,
                 survivors: new List<Survivor> { new Survivor { Id = "sv_alive" } }, // alive survivor list (engine check)
                 shelter: null,
                 isExtractionUnlocked: true,
@@ -281,7 +284,7 @@ namespace AtomicWar.Tests.PlayMode
             // After 1 frame, UI should be visible with data.
             Assert.IsTrue(ui.IsVisible, "MoralChronicleUI should be visible after CampaignEndedEvent.");
             Assert.IsTrue(ui.IsVictory, "Chronicle should reflect victory.");
-            Assert.AreEqual(62, ui.DaysSurvived);
+            Assert.AreEqual(endDay, ui.DaysSurvived);
             Assert.AreEqual(2, ui.SurvivorFates.Count, "Both bridge-provided survivors should appear.");
             Assert.AreEqual(1, ui.Timeline.Count, "The moral entry should be in the timeline.");
             Assert.AreEqual(12, ui.Timeline[0].Day);

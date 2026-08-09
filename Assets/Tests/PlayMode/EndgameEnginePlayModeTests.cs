@@ -53,7 +53,7 @@ namespace AtomicWar.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator RescueExtractionSuccess_Day60_TriggersVictoryCondition()
+        public IEnumerator RescueExtractionSuccess_OnChopperArrivalDay_TriggersVictoryCondition()
         {
             var engine = new EndgameEngine(GameModeKind.Story, 120);
             var survivors = new List<Survivor>
@@ -69,16 +69,18 @@ namespace AtomicWar.Tests.PlayMode
                 recordedEvt = evt;
             };
 
+            // DEEP3-WIN-002 aligned the engine's extraction day with the chopper
+            // calendar; hardcoding 60 here silently pinned the pre-alignment value.
             bool halted = engine.Evaluate(
-                currentDay: 60,
+                currentDay: VictoryProjectManager.ChopperArrivalDay,
                 survivors: survivors,
                 shelter: null,
                 isExtractionUnlocked: true,
                 isHydroponicsOperational: false,
                 totalDeathsRecorded: 0);
 
-            Assert.That(halted, Is.True, "Evaluate should return true on Day 60 extraction victory.");
-            Assert.That(eventFired, Is.True, "OnCampaignEnded event must fire on Day 60 rescue extraction.");
+            Assert.That(halted, Is.True, "Evaluate should return true on the chopper arrival day.");
+            Assert.That(eventFired, Is.True, "OnCampaignEnded event must fire on rescue extraction.");
             Assert.That(recordedEvt.ConditionKind, Is.EqualTo(EndgameConditionKind.RescueExtractionSuccess));
             Assert.That(recordedEvt.IsVictory, Is.True);
             Assert.That(engine.Result.IsVictory, Is.True);

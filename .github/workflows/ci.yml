@@ -80,9 +80,41 @@ jobs:
           name: test-results-editmode
           path: test-results
 
+  test-playmode:
+    name: PlayMode Tests
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-play-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-play-${{ env.UNITY_VERSION }}-
+
+      - uses: game-ci/unity-test-runner@v4
+        id: tests
+        with:
+          projectPath: .
+          unityVersion: 6000.5.5f1
+          testMode: PlayMode
+          artifactsPath: test-results-playmode
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: PlayMode Test Results
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results-playmode
+          path: test-results-playmode
+
   build-linux:
     name: Build Linux64
-    needs: test
+    needs: [test, test-playmode]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

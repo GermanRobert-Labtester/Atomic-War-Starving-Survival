@@ -73,7 +73,12 @@ namespace AtomicWar._Game.Core
         /// <summary>Total in-game hours elapsed since start.</summary>
         public float TotalElapsedHours => (_day - 1) * 24f + _hourAccumulator;
 
-        /// <summary>Fired every in-game hour tick with (day, hour). Fires once per sub-step, so large deltas produce one fire per step, never zero.</summary>
+        /// <summary>
+        /// Fired with (day, hour) each time <see cref="CurrentHour"/> changes — once
+        /// per integer hour crossed, not once per sub-step. A sub-step smaller than
+        /// the remaining fraction of the current hour fires nothing; treating this as
+        /// a per-step heartbeat over-counts by the sub-step ratio.
+        /// </summary>
         public event Action<int, int> OnHourTick;
 
         /// <summary>Fired every in-game day tick with (day). Large deltas fire this once per day crossed — never skipped.</summary>
@@ -104,8 +109,8 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Advance the clock by a number of game hours directly. Large spans
         /// are split into sub-steps of at most <see cref="MaxGameHoursPerStep"/>
-        /// hours; each sub-step fires <see cref="OnHourTick"/> once and
-        /// <see cref="OnDayTick"/> once per day boundary it crosses.
+        /// hours; a sub-step fires <see cref="OnHourTick"/> only when it changes the
+        /// integer hour, and <see cref="OnDayTick"/> once per day boundary it crosses.
         /// </summary>
         public void TickHours(float gameHours)
         {
