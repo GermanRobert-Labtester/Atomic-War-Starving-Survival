@@ -108,6 +108,9 @@ namespace AtomicWar._Game.Core
         // REPROMOTE-MapHazard-001 — carnivorous swamp flora on looting arrival.
         private MapHazard_VenusTrap _venusTrap;
 
+        // Prompt #902 — frozen survivor on snowfield/frozen-lake nodes.
+        private MapHazard_FrozenSurvivor _frozenSurvivor;
+
         // REPROMOTE-Item-001 — keycard doors on secure / keycard_door-tagged nodes.
         private Item_Keycards _keycards;
 
@@ -128,6 +131,10 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void BindVenusTrap(MapHazard_VenusTrap venusTrap) =>
             _venusTrap = venusTrap;
+
+        /// <summary>Prompt #902 — wire frozen survivor for snowfield/frozen-lake nodes.</summary>
+        public void BindFrozenSurvivor(MapHazard_FrozenSurvivor frozenSurvivor) =>
+            _frozenSurvivor = frozenSurvivor;
 
         /// <summary>
         /// REPROMOTE-Item-001 — wire keycard tracker for secure-door looting nodes.

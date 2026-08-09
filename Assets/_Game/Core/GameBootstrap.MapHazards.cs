@@ -27,8 +27,10 @@ namespace AtomicWar._Game.Core
             // DEMOTE-MapHazard-batch — MapHazardSinkholeCollapse demoted. Class kept dormant.
             // REPROMOTE-MapHazard-001 — VenusTrap live for swamp-tagged expedition looting.
             MapHazardVenusTrap = new MapHazard_VenusTrap();
+            // Prompt #902 — FrozenSurvivor live for snowfield/frozen-lake nodes.
+            MapHazardFrozenSurvivor = new MapHazard_FrozenSurvivor();
             WireMapHazards();
-            GameLog.Log("[GameBootstrap] Map hazards: AcidGeyser+Ashlanche+VenusTrap live; 7 HANDLERS_ONLY demoted.");
+            GameLog.Log("[GameBootstrap] Map hazards: AcidGeyser+Ashlanche+VenusTrap+FrozenSurvivor live; 7 HANDLERS_ONLY demoted.");
         }
 
         private void WireMapHazards()
@@ -115,6 +117,18 @@ namespace AtomicWar._Game.Core
                     GameLog.Log($"[GameBootstrap] HAZARD: venus trap amputated {arm} from '{id}'");
                 MapHazardVenusTrap.OnDisguiseSpotted += id =>
                     GameLog.Log($"[GameBootstrap] HAZARD: venus trap spotted by '{id}'");
+            }
+
+            if (MapHazardFrozenSurvivor != null)
+            {
+                MapHazardFrozenSurvivor.OnSurvivorFound += name =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: frozen survivor found — {name} is still alive");
+                MapHazardFrozenSurvivor.OnRescueSucceeded += name =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: {name} rescued — they vanished into the ash");
+                MapHazardFrozenSurvivor.OnRescueFailed += (name, words) =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: {name} died during rescue — last words: {words}");
+                MapHazardFrozenSurvivor.OnWalkedAway += name =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: walked away from {name}");
             }
         }
 

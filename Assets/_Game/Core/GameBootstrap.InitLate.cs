@@ -595,6 +595,10 @@ namespace AtomicWar._Game.Core
                 SabotagedCacheSystem.CreatePoisonedIodineDefinition());
             ExpeditionSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
             SaveSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
+
+            // Register narrative/utility encounters (Prompts #901-#904).
+            NarrativeEncounters.RegisterAll(ExpeditionSystem);
+
             ExpeditionSystem.OnSabotagedCacheDetected += (exp, msg) =>
             {
                 GameLog.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
@@ -1031,6 +1035,10 @@ namespace AtomicWar._Game.Core
             // REPROMOTE-MapHazard-001 — swamp looting → VenusTrap harvest check.
             if (ExpeditionSystem != null && MapHazardVenusTrap != null)
                 ExpeditionSystem.BindVenusTrap(MapHazardVenusTrap);
+
+            // Prompt #902 — snowfield/frozen-lake nodes → FrozenSurvivor check.
+            if (ExpeditionSystem != null && MapHazardFrozenSurvivor != null)
+                ExpeditionSystem.BindFrozenSurvivor(MapHazardFrozenSurvivor);
 
             // REPROMOTE-Item-001 — keycard doors on secure/military expedition nodes.
             if (ExpeditionSystem != null && ItemKeycards != null)
