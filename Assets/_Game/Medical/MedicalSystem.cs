@@ -22,8 +22,9 @@ namespace AtomicWar._Game.Medical
         /// without this, an un-injected host silently fell back to wall-clock
         /// UnityEngine.Random and made this roll unreplayable across loads.
         /// </summary>
-        private static readonly System.Random FallbackRng =
-            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("medical_system_ingredients");
+        private static System.Random _fallbackRng;
+    private static System.Random FallbackRng =>
+        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("medical_system_ingredients");
 
         /// <summary>LatentDamage at/above this multiplies infection lethality.</summary>
         public const float ImmuneCollapseLatentThreshold = 30f;

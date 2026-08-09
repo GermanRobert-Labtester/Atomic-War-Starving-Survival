@@ -18,8 +18,9 @@ namespace AtomicWar._Game.Events
         /// save loaded twice could roll a different event. A fixed salted stream keeps
         /// the behaviour random but deterministic.
         /// </summary>
-        private static readonly System.Random FallbackRng =
-            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("eventrunner_selection");
+        private static System.Random _fallbackRng;
+    private static System.Random FallbackRng =>
+        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("eventrunner_selection");
 
         /// <summary>Prompt #221 — Peacekeeper blocks Internal Saboteur / Ration Thief.</summary>
         public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>

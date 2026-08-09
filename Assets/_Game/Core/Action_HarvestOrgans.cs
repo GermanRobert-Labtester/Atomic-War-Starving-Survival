@@ -20,8 +20,9 @@ namespace AtomicWar._Game.Core
         /// call site below previously used wall-clock UnityEngine.Random, which made
         /// the same save produce different outcomes on each load.
         /// </summary>
-        private static readonly System.Random FallbackRng =
-            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("action_harvestorgans");
+        private static System.Random _fallbackRng;
+    private static System.Random FallbackRng =>
+        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("action_harvestorgans");
 
         public Action_HarvestOrgansState State { get; private set; }
 

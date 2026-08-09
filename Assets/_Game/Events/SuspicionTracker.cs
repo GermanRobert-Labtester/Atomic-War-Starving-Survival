@@ -18,8 +18,9 @@ namespace AtomicWar._Game.Events
         /// without this, an un-injected host silently fell back to wall-clock
         /// UnityEngine.Random and made this roll unreplayable across loads.
         /// </summary>
-        private static readonly System.Random FallbackRng =
-            AtomicWar._Game.Utilities.SeededRandom.CreateFixed("suspicion_tracker");
+        private static System.Random _fallbackRng;
+    private static System.Random FallbackRng =>
+        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("suspicion_tracker");
 
         public const float ResourceStarvedThreshold = 0.10f;
         public const float HoursUntilMystery = 24f;
