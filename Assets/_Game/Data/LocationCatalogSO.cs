@@ -24,16 +24,4 @@ namespace AtomicWar._Game.Data
             return null;
         }
     }
-
-    /// <summary>Static definition of a scavenge location: danger, travel time, base radiation.</summary>
-    [CreateAssetMenu(fileName = "NewLocation", menuName = "ASHFALL/Data/Location")]
-    public class LocationDefinitionSO : ScriptableObject
-    {
-        public string id;
-        public string displayName;
-        [TextArea(2, 4)] public string description;
-        public float dangerLevel;
-        public float travelHours;
-        public float baseRadsPerHour;
-    }
 }

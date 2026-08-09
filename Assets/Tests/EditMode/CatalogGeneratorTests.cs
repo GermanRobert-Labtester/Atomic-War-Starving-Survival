@@ -92,6 +92,39 @@ namespace AtomicWar.Tests.EditMode
                 "seeded loot must be reachable in the earliest phase");
         }
 
+        /// <summary>
+        /// Regression: LocationDefinitionSO, RadioBroadcastSO and SurvivorArchetypeSO
+        /// were declared inside another class's file. Unity only links a MonoScript
+        /// when the file name matches the class name, so those assets serialized with
+        /// m_Script: {fileID: 0} and were invisible to both `t:` search and
+        /// LoadAssetAtPath<T> -- the catalogs aggregated zero of them while the assets
+        /// sat on disk looking fine.
+        /// </summary>
+        [Test]
+        public void GenerateAll_AggregatesEveryAssetOnDisk_NotSilentlyDroppingUnlinkedTypes()
+        {
+            AssertCatalogMatchesFolder<LocationCatalogSO>(
+                $"{Root}/LocationCatalog.asset", "Locations", c => c.locations.Count);
+            AssertCatalogMatchesFolder<RadioCatalogSO>(
+                $"{Root}/RadioCatalog.asset", "Radio", c => c.broadcasts.Count);
+            AssertCatalogMatchesFolder<ItemCatalogSO>(
+                $"{Root}/ItemCatalog.asset", "Items", c => c.items.Count);
+        }
+
+        static void AssertCatalogMatchesFolder<T>(string catalogPath, string folderName,
+            System.Func<T, int> count) where T : UnityEngine.ScriptableObject
+        {
+            var dir = $"Assets/_Game/Data/Generated/{folderName}";
+            int onDisk = System.IO.Directory.Exists(dir)
+                ? System.IO.Directory.GetFiles(dir, "*.asset").Length
+                : 0;
+
+            var catalog = AssetDatabase.LoadAssetAtPath<T>(catalogPath);
+            Assert.IsNotNull(catalog, $"{catalogPath} should exist");
+            Assert.AreEqual(onDisk, count(catalog),
+                $"{folderName}: catalog must aggregate every asset on disk");
+        }
+
         [Test]
         public void GenerateAll_IsIdempotent_NotDuplicatingCatalogEntries()
         {
