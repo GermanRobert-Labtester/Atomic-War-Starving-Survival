@@ -28,7 +28,6 @@ namespace AtomicWar._Game.Core
         public event Action<bool> OnBiomeEntered;                        // with_vehicle
         public event Action<float, float> OnThirstDrained;               // amount, multiplier
         public event Action<float> OnHeatExposure;                       // temperature
-        public event Action OnVehicleBroken;
         public event Action<float> OnSaltHarvested;                      // amount
 
         public string BiomeId => _state.biome_id;

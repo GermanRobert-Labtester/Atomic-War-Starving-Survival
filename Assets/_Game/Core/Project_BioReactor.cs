@@ -29,7 +29,6 @@ namespace AtomicWar._Game.Core
         public event Action<BioReactorState> OnBioReactorBuilt;
         public event Action<BioReactorState, string, int> OnBiomassConsumed;
         public event Action<BioReactorState, string> OnCorpseFueled;
-        public event Action<BioReactorState, float> OnPowerGenerated;
 
         public BioReactorState State => _state;
 

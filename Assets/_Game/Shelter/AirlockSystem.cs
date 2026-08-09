@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
-using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {

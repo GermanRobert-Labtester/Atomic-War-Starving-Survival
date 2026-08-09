@@ -44,7 +44,6 @@ namespace AtomicWar._Game.Core
 
         // ── Events ─────────────────────────────────────────────────────
         public event Action<string, string> OnInfection;             // survivorId, diseaseId
-        public event Action<string, string, string> OnSpread;        // fromId, toId, vector
         public event Action<string> OnQuarantineStarted;             // survivorId
         public event Action<string> OnQuarantineEnded;               // survivorId
         public event Action<string> OnOutbreakDeclared;              // diseaseId

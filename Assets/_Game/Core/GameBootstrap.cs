@@ -53,9 +53,6 @@ namespace AtomicWar._Game.Core
         [Header("Diagnostics (M-1)")]
         [SerializeField] private DiagnosticsOverlay _diagnosticsOverlay;
 
-        [Header("Log Rotation (A-11)")]
-        [SerializeField] private LogRotationManager _logRotationManager;
-
         [Header("Tuning")]
         [SerializeField] private int _worldSeed = 42;
         [SerializeField] private float _secondsPerGameHour = 10f;

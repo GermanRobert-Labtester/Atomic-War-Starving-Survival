@@ -22,7 +22,6 @@ namespace AtomicWar._Game.Core
         public event Action<string> OnClimbStarted; // survivorId
         public event Action<string> OnClimbCompleted; // survivorId
         public event Action<string> OnClimbFailed; // survivorId
-        public event Action<string> OnVehicleBlocked; // vehicleId
 
         private CraterWallState _state;
         private Dictionary<string, float> _climbProgress = new Dictionary<string, float>();

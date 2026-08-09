@@ -45,7 +45,6 @@ namespace AtomicWar._Game.Core
 
         private readonly Dictionary<string, float> _lastHealth = new Dictionary<string, float>();
         private int _lastTickDay = -1;
-        private System.Random _cachedRng;
 
         public event Action<Survivor, string> OnGriefMentalBreakApplied; // (bereaved, breakId)
 
@@ -161,7 +160,6 @@ namespace AtomicWar._Game.Core
             if (survivors == null) return;
             Survivors = survivors;
             if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("bunkersocialdirector");
-            _cachedRng = rng;
 
             // Per-tick continuous auras.
             Romance.ApplyAuras(gameHours, survivors);

@@ -54,7 +54,6 @@ namespace AtomicWar._Game.Core
         }
 
         private readonly List<HostageSituation> _activeHostages = new List<HostageSituation>();
-        private int _seq;
 
         // -- Events --
         public event Action<HostageSituation> OnHostageTaken;

@@ -25,7 +25,6 @@ namespace AtomicWar._Game.Core
         private VacuumTubesState _state = new VacuumTubesState();
 
         public event Action<VacuumTubesState, string> OnTubesShattered;
-        public event Action<VacuumTubesState> OnHamRadioRepaired;
 
         public VacuumTubesState State => _state;
 
