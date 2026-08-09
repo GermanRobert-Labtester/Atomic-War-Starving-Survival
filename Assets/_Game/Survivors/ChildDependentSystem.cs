@@ -16,6 +16,9 @@ namespace AtomicWar._Game.Survivors
     /// </summary>
     public class ChildDependentSystem
     {
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         /// <summary>Morale per hour applied to every other survivor while the child is alive.</summary>
         public const float HopeBuffPerHour = 0.15f;
 
@@ -178,8 +181,11 @@ namespace AtomicWar._Game.Survivors
             {
                 var sv = survivors[i];
                 if (sv == null || !sv.IsAlive || sv == Child) continue;
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale + HopeBuffPerHour * gameHours, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, HopeBuffPerHour * gameHours);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale + HopeBuffPerHour * gameHours, 0f, 100f);
             }
 
             // Consume child's rations (daily drain prorated)
@@ -193,8 +199,16 @@ namespace AtomicWar._Game.Survivors
             else
             {
                 // Fallback: increase child's hunger/thirst directly
-                Child.Needs.Hunger = Mathf.Clamp(Child.Needs.Hunger + foodDrain, 0f, 100f);
-                Child.Needs.Thirst = Mathf.Clamp(Child.Needs.Thirst + waterDrain, 0f, 100f);
+                if (_needsSystem != null)
+                {
+                    _needsSystem.Modify(Child, NeedKind.Hunger, foodDrain);
+                    _needsSystem.Modify(Child, NeedKind.Thirst, waterDrain);
+                }
+                else
+                {
+                    Child.Needs.Hunger = Mathf.Clamp(Child.Needs.Hunger + foodDrain, 0f, 100f);
+                    Child.Needs.Thirst = Mathf.Clamp(Child.Needs.Thirst + waterDrain, 0f, 100f);
+                }
             }
 
             // NOTE: Child needs are also decayed by NeedsSystem.Tick (the child
@@ -227,8 +241,11 @@ namespace AtomicWar._Game.Survivors
                     // Sociopath is immune to the child's death too
                     if (sv.RiskBias == RiskBiasTrait.Sociopath) continue;
 
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - ChildDeathMoralePenalty, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -ChildDeathMoralePenalty);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(
+                            sv.Needs.Morale - ChildDeathMoralePenalty, 0f, 100f);
                 }
             }
 
