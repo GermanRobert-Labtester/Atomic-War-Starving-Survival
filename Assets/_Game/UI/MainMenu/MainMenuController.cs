@@ -26,7 +26,7 @@ namespace AtomicWar._Game.UI.MainMenu
     {
         [Header("Scene flow")]
         [Tooltip("Scene loaded by Continue and New Expedition. Must be in Build Settings.")]
-        [SerializeField] private string _gameplaySceneName = "SampleScene";
+        [SerializeField] private string _gameplaySceneName = "Gameplay";
 
         [Header("Continue")]
         [Tooltip("Slots probed for Continue. The most recently written one wins.")]
