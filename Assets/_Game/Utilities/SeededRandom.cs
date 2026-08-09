@@ -10,6 +10,15 @@ namespace AtomicWar._Game.Utilities
     public static class SeededRandom
     {
         /// <summary>
+        /// Global campaign seed. Set by GameBootstrap at startup so every
+        /// <see cref="CreateFixed"/> fallback produces a campaign-specific
+        /// stream instead of the same sequence every run.
+        /// When -1 (default), falls back to the legacy fixed seed for backward
+        /// compatibility with tests and partial hosts.
+        /// </summary>
+        public static int WorldSeed { get; set; } = -1;
+
+        /// <summary>
         /// Combine a world seed with a context label into a stable 32-bit seed.
         /// Same inputs always produce the same stream; different labels diverge.
         /// </summary>
@@ -42,9 +51,14 @@ namespace AtomicWar._Game.Utilities
             rng ?? Create(worldSeed, context);
 
         /// <summary>
-        /// Last resort when no world seed is available (tests, partial hosts).
-        /// Still better than unseeded wall-clock if a fixed salt is reused.
+        /// Last resort when no world seed is injected. Uses
+        /// <see cref="WorldSeed"/> if set (campaign-specific), otherwise
+        /// falls back to a fixed legacy seed (tests/partial hosts).
         /// </summary>
-        public static Random CreateFixed(string context) => Create(0xA51FA11, context ?? "default");
+        public static Random CreateFixed(string context)
+        {
+            int seed = WorldSeed >= 0 ? WorldSeed : 0xA51FA11;
+            return Create(seed, context ?? "default");
+        }
     }
 }
