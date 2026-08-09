@@ -137,12 +137,26 @@ namespace AtomicWar.Tests.PlayMode
 
             // Not asserted on the clock: the UXML ships "DAY 1   00:00" as
             // placeholder text, so a "DAY" check passes even when nothing ever
-            // repaints. These two can only hold after a real paint -- the dose
-            // label is empty in the UXML, and the rows are built at paint time.
+            // repaints. The dose label is empty in the UXML and the rows are
+            // built at paint time, so both can only hold after a real paint.
             Assert.IsNotEmpty(view.VitalsDose.text,
                 "dose label is empty in the UXML, so text here proves a real paint");
             Assert.AreEqual(DiegeticHudView.CoreNeedIds.Length, view.VitalsNeeds.childCount,
                 "one row per core need should be painted");
+
+            // The dose label is only useful if it holds the DosimeterHUD's
+            // current cumulative dose, not the pre-init zero. "0.00 Sv" was
+            // the symptom of a wiring bug that the IsNotEmpty check above
+            // silently passed, so we assert the value matches the live HUD.
+            // We compare against the DosimeterHUD (not the survivor) because
+            // the HUD is what the vitals panel mirrors; if those drift, this
+            // test fires.
+            var dosimeter = hud.DosimeterHUD;
+            Assert.IsNotNull(dosimeter, "HUD must hold a DosimeterHUD widget");
+            string expectedDose = dosimeter.CumulativeDose.ToString("0.00");
+            StringAssert.Contains(expectedDose, view.VitalsDose.text,
+                $"dose label should reflect DosimeterHUD.CumulativeDose ({expectedDose} Sv); " +
+                "0.00 here means the first RepaintVitals ran before the dose was pushed");
         }
 
         [UnityTest]

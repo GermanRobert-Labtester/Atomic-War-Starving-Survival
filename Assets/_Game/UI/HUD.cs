@@ -348,17 +348,6 @@ namespace AtomicWar._Game.UI
             EnsureWidgetReferences();
             if (_diegeticHud == null) return null;
 
-            // If HUD already carries a UIDocument and the controller does not,
-            // re-home the controller onto this GO so it can own the panel.
-            if (_diegeticHud.GetComponent<UIDocument>() == null)
-            {
-                var hostDoc = GetComponent<UIDocument>();
-                if (hostDoc != null && _diegeticHud.gameObject != gameObject)
-                {
-                    // Controller lives on a child without a document — mount its own.
-                }
-            }
-
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
             _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud);

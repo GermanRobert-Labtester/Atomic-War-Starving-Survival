@@ -40,6 +40,11 @@ namespace AtomicWar._Game.UI
         private bool _tooltipPinned;
         private bool _preferDetached;
         private PanelSettings _runtimePanelSettings;
+        // Set to true when EnsureDocumentMounted adds a UIDocument to the
+        // GameObject because none was assigned in the inspector. OnDestroy
+        // removes the component only in that case -- never a document the
+        // designer wired up by hand.
+        private bool _ownsDocument;
 
         /// <summary>Test / host access to the painted tree.</summary>
         public DiegeticHudView View => _view;
@@ -93,6 +98,13 @@ namespace AtomicWar._Game.UI
                 Destroy(_runtimePanelSettings);
                 _runtimePanelSettings = null;
             }
+            // Only destroy a UIDocument we added ourselves. The inspector
+            // may have wired one up and the designer is responsible for it.
+            if (_ownsDocument && _document != null)
+            {
+                Destroy(_document);
+                _document = null;
+            }
         }
 
         /// <summary>
@@ -110,7 +122,10 @@ namespace AtomicWar._Game.UI
                 _document = GetComponent<UIDocument>();
 
             if (_document == null && _createDocumentIfMissing)
+            {
                 _document = gameObject.AddComponent<UIDocument>();
+                _ownsDocument = true;
+            }
 
             if (_document == null) return false;
 
