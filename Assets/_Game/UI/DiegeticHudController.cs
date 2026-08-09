@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -228,6 +229,21 @@ namespace AtomicWar._Game.UI
             if (_strip != null && _strip.SelectedIndex >= 0)
                 _tooltipPinned = true;
             Paint();
+        }
+
+        /// <summary>
+        /// Repaint the vitals readout. Separate from <see cref="Paint"/> on
+        /// purpose: Paint() fires on discrete actions (missions, UI commands),
+        /// while needs and dose change continuously, and a vitals panel repainted
+        /// only on those events would sit frozen while the player starved.
+        /// </summary>
+        public void PaintVitals(
+            int day, float hour, float cumulativeDose, float currentRate,
+            IReadOnlyDictionary<string, NeedBarData> needs)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintVitals(day, hour, cumulativeDose, currentRate, needs);
         }
 
         /// <summary>Repaint all diegetic panels from bound view-models.</summary>

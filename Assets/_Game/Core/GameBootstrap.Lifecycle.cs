@@ -121,6 +121,7 @@ namespace AtomicWar._Game.Core
             if (_onDayTick_SetGameStateDay != null) TimeSystem.OnDayTick -= _onDayTick_SetGameStateDay;
             if (_onRadiationStatusGained != null) RadiationSystem.OnStatusGained -= _onRadiationStatusGained;
             if (_onRadiationDoseChanged != null) RadiationSystem.OnDoseChanged -= _onRadiationDoseChanged;
+            if (_onHourTickHud != null) TimeSystem.OnHourTick -= _onHourTickHud;
 
             // Static/singleton method-group subscriptions.
             if (WorldPhaseSystem != null) TimeSystem.OnDayTick -= WorldPhaseSystem.OnDayTick;

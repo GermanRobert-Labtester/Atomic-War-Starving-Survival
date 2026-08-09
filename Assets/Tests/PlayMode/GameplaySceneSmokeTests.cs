@@ -115,6 +115,36 @@ namespace AtomicWar.Tests.PlayMode
                 "thirst accumulates upward as time passes");
         }
 
+        /// <summary>
+        /// The vitals panel is the only on-screen report of the core loop. Its
+        /// repaint hangs off need/dose events rather than the discrete actions
+        /// that drive the other panels, so this asserts the labels actually hold
+        /// live values after some frames -- a panel wired but never repainted
+        /// looks identical to one that works, until you watch it.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator Vitals_ShowLiveValuesAfterFrames()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 120; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.VitalsClock, "vitals clock label should be bound");
+
+            // Not asserted on the clock: the UXML ships "DAY 1   00:00" as
+            // placeholder text, so a "DAY" check passes even when nothing ever
+            // repaints. These two can only hold after a real paint -- the dose
+            // label is empty in the UXML, and the rows are built at paint time.
+            Assert.IsNotEmpty(view.VitalsDose.text,
+                "dose label is empty in the UXML, so text here proves a real paint");
+            Assert.AreEqual(DiegeticHudView.CoreNeedIds.Length, view.VitalsNeeds.childCount,
+                "one row per core need should be painted");
+        }
+
         [UnityTest]
         public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
         {

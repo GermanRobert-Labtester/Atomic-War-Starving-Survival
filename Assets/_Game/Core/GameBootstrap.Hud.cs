@@ -102,6 +102,12 @@ namespace AtomicWar._Game.Core
             };
             NeedsSystem.OnNeedChanged += _onNeedChanged;
 
+            // Vitals shows the day and hour, and HUD deliberately holds no
+            // TimeSystem reference -- every value it displays is pushed in.
+            _onHourTickHud = (day, hour) => _hud.SetClock(day, hour);
+            TimeSystem.OnHourTick += _onHourTickHud;
+            _hud.SetClock(TimeSystem.CurrentDay, TimeSystem.CurrentHour);
+
             // Wire shelter
             _hud.OnShelterUpdated(Shelter);
 

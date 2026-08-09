@@ -193,6 +193,7 @@ namespace AtomicWar._Game.UI
                 survivor,
                 _personalQuests,
                 _needsUiRng);
+            RepaintVitals();
         }
 
         /// <summary>Bind radiation system readings to Dosimeter and Geiger Audio.</summary>
@@ -201,6 +202,43 @@ namespace AtomicWar._Game.UI
             EnsureWidgetReferences();
             if (_dosimeterHud != null) _dosimeterHud.SetReading(cumulativeDose, currentRate);
             if (_geigerAudioHook != null) _geigerAudioHook.UpdateExposureRate(currentRate);
+            RepaintVitals();
+        }
+
+        /// <summary>
+        /// Latest clock reading. Pushed in rather than pulled: HUD holds no
+        /// bootstrap or TimeSystem reference, and every other value it shows is
+        /// pushed too. The simulation's clock advances in whole hours, so the
+        /// readout sits at HH:00 between ticks.
+        /// </summary>
+        private int _day = 1;
+        private float _hour;
+
+        public void SetClock(int day, float hour)
+        {
+            _day = day;
+            _hour = hour;
+            RepaintVitals();
+        }
+
+        /// <summary>
+        /// The other diegetic panels repaint on discrete actions via
+        /// RefreshDiegeticHud. Vitals cannot: needs and dose change continuously,
+        /// and a panel painted only on mission events would sit frozen while the
+        /// player starved. Null widgets paint nothing and throw nothing -- the
+        /// HUD must never take down the simulation.
+        /// </summary>
+        private void RepaintVitals()
+        {
+            EnsureWidgetReferences();
+            if (_diegeticHud == null || _needsBar == null) return;
+
+            _diegeticHud.PaintVitals(
+                _day,
+                _hour,
+                _dosimeterHud != null ? _dosimeterHud.CumulativeDose : 0f,
+                _dosimeterHud != null ? _dosimeterHud.CurrentRate : 0f,
+                _needsBar.NeedBars);
         }
 
         /// <summary>
