@@ -91,9 +91,7 @@ namespace AtomicWar._Game.Core
 
         // -- Events --
         public event Action<int> OnMutationStageAdvanced;   // newStage
-#pragma warning disable CS0067 // Event is part of the public API; consumers may subscribe in future.
         public event Action<ExpeditionState> OnFloraEncountered;
-#pragma warning restore CS0067
         public event Action<ExpeditionState, bool> OnFaunaEncountered; // exp, wasApex
 
         public MutatedEcosystemSystem(System.Random rng = null)
@@ -156,8 +154,11 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Process a mutated flora encounter. Returns harvested items.
         /// 60% chance toxic (contamination), 40% chance rare chem extract.
+        /// <paramref name="exp"/> is what <see cref="OnFloraEncountered"/> reports;
+        /// it stayed unraised (behind a CS0067 suppression) for as long as this
+        /// method had no way to name the expedition that found the plant.
         /// </summary>
-        public Inventory.ItemDefinition HarvestFlora()
+        public Inventory.ItemDefinition HarvestFlora(ExpeditionState exp = null)
         {
             bool isToxic = _rng.NextDouble() < 0.6f;
             string itemId = isToxic ? ToxicFloraItemId : RareChemItemId;
@@ -174,6 +175,8 @@ namespace AtomicWar._Game.Core
             item.weight = isToxic ? 2f : 0.5f;
             item.contamination = isToxic ? ToxicFloraContamination : 0.05f;
             item.tradeValue = isToxic ? 2f : 25f;
+
+            OnFloraEncountered?.Invoke(exp);
             return item;
         }
 

@@ -114,6 +114,9 @@ namespace AtomicWar._Game.Core
         // REPROMOTE-Item-001 — keycard doors on secure / keycard_door-tagged nodes.
         private Item_Keycards _keycards;
 
+        // Prompt #67 — mutated flora / fauna rolled per looting tick.
+        private MutatedEcosystemSystem _ecosystem;
+
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
         public GeneratedMap GeneratedMap => _generatedMap;
@@ -141,6 +144,15 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void BindKeycards(Item_Keycards keycards) =>
             _keycards = keycards;
+
+        /// <summary>
+        /// Prompt #67 — wire the mutated ecosystem so its stage actually reaches the
+        /// map. <see cref="MutatedEcosystemSystem.RollEcosystemEncounter"/> documents
+        /// this call site, but nothing bound it: the system advanced its mutation
+        /// stage daily and saved it while flora and fauna could never be encountered.
+        /// </summary>
+        public void BindEcosystem(MutatedEcosystemSystem ecosystem) =>
+            _ecosystem = ecosystem;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;

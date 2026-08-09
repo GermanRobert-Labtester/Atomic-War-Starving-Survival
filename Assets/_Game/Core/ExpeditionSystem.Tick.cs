@@ -296,6 +296,32 @@ namespace AtomicWar._Game.Core
                 : -_frozenSurvivor.GetRescueFailMoraleHit());
         }
 
+        /// <summary>
+        /// Prompt #67 — roll the mutated ecosystem for this looting tick.
+        /// Stage 1 yields flora to harvest; stages 2 and 3 attack. Returns true when
+        /// something happened, and leaves <see cref="ExpeditionPhase.Failed"/> set if
+        /// the attack was fatal so the caller can close the expedition out.
+        /// </summary>
+        private bool TryProcessEcosystemEncounter(ExpeditionState exp)
+        {
+            if (_ecosystem == null || exp?.Survivor == null || !exp.Survivor.IsAlive) return false;
+
+            int encounter = _ecosystem.RollEcosystemEncounter();
+            if (encounter == 0) return false;
+
+            if (encounter == 1)
+            {
+                var harvested = _ecosystem.HarvestFlora(exp);
+                if (harvested != null) exp.TryAddLoot(harvested);
+                return true;
+            }
+
+            // ProcessFaunaAttack reports whether the scavenger is still standing.
+            if (!_ecosystem.ProcessFaunaAttack(exp, isApex: encounter == 3))
+                exp.Phase = ExpeditionPhase.Failed;
+            return true;
+        }
+
         private void ApplyMoraleDelta(Survivor sv, float delta)
         {
             if (sv == null || Mathf.Approximately(delta, 0f)) return;
@@ -321,6 +347,17 @@ namespace AtomicWar._Game.Core
         {
             exp.LootingTicksCompleted++;
             PerformLootRoll(exp);
+
+            // Prompt #67 — the fallout ecosystem, rolled per looting tick.
+            if (TryProcessEcosystemEncounter(exp))
+            {
+                if (exp.Phase == ExpeditionPhase.Failed)
+                {
+                    OnExpeditionFailed?.Invoke(exp, "Killed by mutated wildlife while scavenging.");
+                    _activeExpeditions.RemoveAt(index);
+                    return true;
+                }
+            }
 
             // Prompt #12 — Reckless loot on a UXO node may detonate a mine.
             if (TryProcessUxoLoot(exp))

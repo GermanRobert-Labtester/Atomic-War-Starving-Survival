@@ -1044,6 +1044,11 @@ namespace AtomicWar._Game.Core
             // REPROMOTE-Item-001 — keycard doors on secure/military expedition nodes.
             if (ExpeditionSystem != null && ItemKeycards != null)
                 ExpeditionSystem.BindKeycards(ItemKeycards);
+
+            // Prompt #67 — mutated flora/fauna per looting tick. Without this the
+            // ecosystem advanced and saved a mutation stage nothing could ever read.
+            if (ExpeditionSystem != null && EcosystemSystem != null)
+                ExpeditionSystem.BindEcosystem(EcosystemSystem);
         }
 
         private void OnExpeditionEncounterResolved_LogCombat(
