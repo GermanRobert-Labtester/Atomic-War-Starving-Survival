@@ -144,6 +144,7 @@ namespace AtomicWar._Game.Core
             });
             // Workbench lists hatch install / upgrade lines (scrap sink)
             WorkbenchSystem?.SetHatchDefense(HatchDefenseSystem);
+            HatchDefenseSystem.SetNeedsSystem(NeedsSystem);
 
             // Dynamic phase economy + faction trust matrix
             EconomySystem = new DynamicEconomySystem(

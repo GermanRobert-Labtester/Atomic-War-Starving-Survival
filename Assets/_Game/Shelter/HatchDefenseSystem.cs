@@ -117,6 +117,7 @@ namespace AtomicWar._Game.Shelter
         private CombatPerkSystem _combatPerks;
         private PerimeterTrapSystem _perimeterTraps;
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
 
         /// <summary>Default duration of the active-raid bandaging window after a launch.</summary>
         public const float RaidWindowHours = 2f;
@@ -233,6 +234,8 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Prompt #220 — Warlord pipe weapons + unarmed Level-3 hatch hold.</summary>
         public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
             _personalQuests = personalQuests;
+
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Optional perimeter traps for raid damage (#123 / #186).</summary>
         public void BindPerimeterTraps(PerimeterTrapSystem traps) => _perimeterTraps = traps;
@@ -525,8 +528,11 @@ namespace AtomicWar._Game.Shelter
             _activeGuards[survivor.Id] = Mathf.Max(0f, bonus);
             if (survivor.Needs != null)
             {
-                survivor.Needs.Fatigue = Mathf.Clamp(
-                    survivor.Needs.Fatigue + GuardFatigueDrain, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(survivor, NeedKind.Fatigue, GuardFatigueDrain);
+                else
+                    survivor.Needs.Fatigue = Mathf.Clamp(
+                        survivor.Needs.Fatigue + GuardFatigueDrain, 0f, 100f);
             }
 
             survivor.State = SurvivorState.Working;
@@ -759,7 +765,10 @@ namespace AtomicWar._Game.Shelter
                 {
                     // Fallback: direct health + morale hit when medical not wired
                     SurvivorNeedWrite.SetHealth(sv, Mathf.Max(1f, sv.Needs.Health - 15f));
-                    sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - 10f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -10f);
+                    else
+                        sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - 10f);
                     if (sv.State == SurvivorState.Idle || sv.State == SurvivorState.Working)
                         sv.State = SurvivorState.Sick;
                 }
@@ -810,7 +819,10 @@ namespace AtomicWar._Game.Shelter
             {
                 var sv = survivors[i];
                 if (sv?.Needs == null || !sv.IsAlive) continue;
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, delta);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
             }
         }
 
