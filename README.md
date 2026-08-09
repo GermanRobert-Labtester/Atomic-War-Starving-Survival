@@ -83,7 +83,11 @@ that loads the real scene and catches that class of failure.
 - Both scenes are generated or authored through `Tools/ASHFALL/` editor
   commands. `Gameplay.unity` is built by
   `Tools/ASHFALL/Build Gameplay Scene` and must be regenerated rather than
-  hand-edited; CI fails if the committed scene differs from a fresh build.
+  hand-edited — a hand edit survives only until the next rebuild. CI cannot
+  diff the scene to prove this (Unity renumbers every local fileID on each
+  save, so two builds of identical input differ by ~480 lines); instead the
+  builder refuses to save a scene with an unassigned reference, and CI fails
+  when that throws. Generated **data** assets *are* byte-compared.
 - Data assets come from `Assets/StreamingAssets/Data/*.json` via
   `Tools/ASHFALL/Import All Data`, then
   `Tools/ASHFALL/Generate Catalogs`.
