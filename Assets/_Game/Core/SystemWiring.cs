@@ -71,6 +71,7 @@ namespace AtomicWar._Game.Core
             /// <summary>Prompt #200 — Thermodynamics warm-day streak.</summary>
             public ShelterPerkSystem ShelterPerks;
             public float IndoorTemperatureC = 15f;
+            public NeedsSystem NeedsSystem;
         }
 
         /// <summary>
@@ -131,7 +132,7 @@ namespace AtomicWar._Game.Core
                 float hygiene = 1f - room.MoldLevel;
                 float score = ctx.Aesthetics.CalculateScore(lighting, temp, hygiene, room.RoomId);
                 float aura = ctx.Aesthetics.GetMoraleAura(score);
-                ApplyAuraToOccupants(ctx.Survivors, room.RoomId, aura, ctx.CurrentDay);
+                ApplyAuraToOccupants(ctx.Survivors, room.RoomId, aura, ctx.CurrentDay, ctx.NeedsSystem);
             }
         }
 
@@ -165,7 +166,7 @@ namespace AtomicWar._Game.Core
             ctx.CeilingCollapse.DailyCollapseCheck(ctx.Shelter, ctx.Rng);
         }
 
-        private static void ApplyAuraToOccupants(List<Survivor> survivors, string roomId, float aura, int currentDay)
+        private static void ApplyAuraToOccupants(List<Survivor> survivors, string roomId, float aura, int currentDay, NeedsSystem needsSystem = null)
         {
             if (survivors == null || string.IsNullOrEmpty(roomId) || aura == 0f) return;
             for (int i = 0; i < survivors.Count; i++)
@@ -173,8 +174,10 @@ namespace AtomicWar._Game.Core
                 var sv = survivors[i];
                 if (sv == null || !sv.IsAlive) continue;
                 if (!string.Equals(sv.CurrentRoomId, roomId, StringComparison.Ordinal)) continue;
-                // Aesthetics aura is small; apply directly to morale.
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + aura, 0f, 100f);
+                if (needsSystem != null)
+                    needsSystem.Modify(sv, NeedKind.Morale, aura);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + aura, 0f, 100f);
             }
         }
     }

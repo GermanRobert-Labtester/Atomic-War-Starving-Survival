@@ -64,9 +64,7 @@ namespace AtomicWar._Game.Survivors
             float compass = _personalQuests.GetMoralCompassBunkerMorale(GetSurvivors());
             if (compass > 0f)
             {
-                survivor.Needs.Morale = Mathf.Min(
-                    100f,
-                    survivor.Needs.Morale + compass * gameHours * 0.1f);
+                Modify(survivor, NeedKind.Morale, compass * gameHours * 0.1f);
             }
 
             // #282 Agoraphile: fractional bunker morale hit (day counter advances in TickDaily).
@@ -75,7 +73,7 @@ namespace AtomicWar._Game.Survivors
             float hit = _personalQuests.GetAgoraphileBunkerMoraleHitPerDay(survivor)
                 * (gameHours / 24f);
             if (hit > 0f)
-                survivor.Needs.Morale = Mathf.Max(0f, survivor.Needs.Morale - hit);
+                Modify(survivor, NeedKind.Morale, -hit);
         }
 
         private void TryConsumeForcedChem(Survivor survivor)
@@ -109,7 +107,7 @@ namespace AtomicWar._Game.Survivors
             if (stamina >= 100f) return;
 
             float pressure = (1f - stamina / 100f) * 2f * gameHours;
-            survivor.Needs.Fatigue = Mathf.Min(100f, survivor.Needs.Fatigue + pressure);
+            Modify(survivor, NeedKind.Fatigue, pressure);
         }
 
         private void ApplyBlackLungFatigue(Survivor survivor, float gameHours)
@@ -120,7 +118,7 @@ namespace AtomicWar._Game.Survivors
             if (staminaMultiplier >= 1f) return;
 
             float pressure = (1f - staminaMultiplier) * 3f * gameHours;
-            survivor.Needs.Fatigue = Mathf.Min(100f, survivor.Needs.Fatigue + pressure);
+            Modify(survivor, NeedKind.Fatigue, pressure);
         }
 
         private void ApplyRoomAndHygieneEffects(Survivor survivor, float gameHours)

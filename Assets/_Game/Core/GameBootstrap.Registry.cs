@@ -416,7 +416,8 @@ namespace AtomicWar._Game.Core
                     : null,
                 Rng = CreateSaltedRng(_worldSeed, "registry_ctx"),
                 ShelterPerks = ShelterPerks,
-                IndoorTemperatureC = indoor
+                IndoorTemperatureC = indoor,
+                NeedsSystem = NeedsSystem
             };
         }
 

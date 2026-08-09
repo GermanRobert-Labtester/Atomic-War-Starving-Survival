@@ -408,7 +408,10 @@ namespace AtomicWar._Game.Survivors
             if (IsImmuneToKillMorale(sv)) return 0f;
             float before = sv.Needs.Morale;
             float mag = Mathf.Abs(loss);
-            sv.Needs.Morale = Mathf.Clamp(before - mag, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Morale, -mag);
+            else
+                sv.Needs.Morale = Mathf.Clamp(before - mag, 0f, 100f);
             return sv.Needs.Morale - before;
         }
 
