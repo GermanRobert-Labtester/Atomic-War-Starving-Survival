@@ -74,14 +74,11 @@ namespace AtomicWar._Game.Shelter
         {
             if (!IsOperational || gameHours <= 0f) return;
 
-            if (_definition == null)
-            {
-                // Missing SO after a modded/custom save — degrade at a
-                // conservative default rate so the module can't run forever.
-                if (Fuel > 0f) Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours);
-                return;
-            }
-
+            // A null _definition is not special-cased here: every `is` test below
+            // fails for null, so it already falls through to the ModuleId fallback
+            // chain, which degrades at the documented per-module rate and honours the
+            // Thermodynamics burn multiplier. Short-circuiting null ahead of that
+            // chain silently overrides both.
             if (_definition is AirFiltrationModuleSO airSO)
             {
                 FilterHealth = Mathf.Max(0f, FilterHealth - airSO.DegradationRatePerHour * gameHours);
@@ -127,6 +124,12 @@ namespace AtomicWar._Game.Shelter
                 }
                 else if (ModuleId == "radio" && Fuel > 0f)
                 {
+                    Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours * EffectiveFuelBurnMultiplier);
+                }
+                else if (Fuel > 0f)
+                {
+                    // Unrecognised module id with no SO (modded or corrupt save):
+                    // burn at a conservative default so it cannot run forever.
                     Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours * EffectiveFuelBurnMultiplier);
                 }
             }
