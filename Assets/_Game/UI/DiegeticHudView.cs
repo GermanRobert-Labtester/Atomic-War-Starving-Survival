@@ -27,6 +27,10 @@ namespace AtomicWar._Game.UI
         public const string VitalsClockName = "vitals-clock";
         public const string VitalsDoseName = "vitals-dose";
         public const string VitalsNeedsName = "vitals-needs";
+        public const string EventPanelName = "event-panel";
+        public const string EventTitleName = "event-title";
+        public const string EventBodyName = "event-body";
+        public const string EventChoicesName = "event-choices";
 
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
@@ -47,6 +51,10 @@ namespace AtomicWar._Game.UI
         public Label VitalsClock { get; private set; }
         public Label VitalsDose { get; private set; }
         public VisualElement VitalsNeeds { get; private set; }
+        public VisualElement EventPanel { get; private set; }
+        public Label EventTitle { get; private set; }
+        public Label EventBody { get; private set; }
+        public VisualElement EventChoices { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -69,6 +77,16 @@ namespace AtomicWar._Game.UI
             VitalsPanel.Add(MakeHint("vitals-hint",
                 "[F1] eat  ·  [F2] drink  ·  [SPACE] pause  ·  [F5] save"));
             Root.Add(VitalsPanel);
+
+            EventPanel = MakePanel(EventPanelName, "event-panel");
+            EventTitle = MakeLabel(EventTitleName, "diegetic-title");
+            EventBody = MakeLabel(EventBodyName, "diegetic-body");
+            EventChoices = new VisualElement { name = EventChoicesName };
+            EventChoices.AddToClassList("event-choices");
+            EventPanel.Add(EventTitle);
+            EventPanel.Add(EventBody);
+            EventPanel.Add(EventChoices);
+            Root.Add(EventPanel);
 
             HatchPanel = MakePanel(HatchPanelName, "hatch-panel");
             HatchPanel.Add(MakeTitle("hatch-title", "HATCH DEFENSE"));
@@ -102,6 +120,7 @@ namespace AtomicWar._Game.UI
 
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
+            SetVisible(EventPanel, false);
             return Root;
         }
 
@@ -124,10 +143,14 @@ namespace AtomicWar._Game.UI
             VitalsClock = Root.Q<Label>(VitalsClockName);
             VitalsDose = Root.Q<Label>(VitalsDoseName);
             VitalsNeeds = Root.Q<VisualElement>(VitalsNeedsName);
-            // VitalsPanel is part of the contract: a UXML missing it must fall
+            EventPanel = Root.Q<VisualElement>(EventPanelName);
+            EventTitle = Root.Q<Label>(EventTitleName);
+            EventBody = Root.Q<Label>(EventBodyName);
+            EventChoices = Root.Q<VisualElement>(EventChoicesName);
+            // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
             return HatchPanel != null && EncounterPanel != null
-                && StoresPanel != null && VitalsPanel != null;
+                && StoresPanel != null && VitalsPanel != null && EventPanel != null;
         }
 
         public void PaintHatch(bool open, string status, string ammoBreakdown, string armsPreview)
@@ -206,6 +229,37 @@ namespace AtomicWar._Game.UI
                 NeedBarData data = null;
                 needs?.TryGetValue(id, out data);
                 VitalsNeeds.Add(MakeNeedRow(id, data));
+            }
+        }
+
+        /// <summary>
+        /// Draw the event prompt. The row numbers are the control scheme, not
+        /// decoration: PlayerInputHandler maps Alpha1 to visible index 0, so a
+        /// row that does not show its number cannot be chosen.
+        /// </summary>
+        public void PaintEventModal(
+            bool open, string title, string body, IReadOnlyList<EventChoiceLine> choices)
+        {
+            if (EventPanel == null) return;
+            SetVisible(EventPanel, open);
+            if (!open) return;
+
+            if (EventTitle != null) EventTitle.text = title ?? string.Empty;
+            if (EventBody != null) EventBody.text = body ?? string.Empty;
+            if (EventChoices == null) return;
+
+            EventChoices.Clear();
+            if (choices == null) return;
+
+            for (int i = 0; i < choices.Count; i++)
+            {
+                var row = new Label($"[{i + 1}] {choices[i].Text}")
+                {
+                    name = "event-choice-" + i
+                };
+                row.AddToClassList("event-choice");
+                row.EnableInClassList("event-choice--disabled", !choices[i].IsEnabled);
+                EventChoices.Add(row);
             }
         }
 

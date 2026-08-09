@@ -159,6 +159,32 @@ namespace AtomicWar.Tests.PlayMode
                 "0.00 here means the first RepaintVitals ran before the dose was pushed");
         }
 
+        /// <summary>
+        /// No event is guaranteed to fire inside a smoke test, so this asserts
+        /// the panel is bound and that its visibility tracks EventModalUI.IsOpen
+        /// -- the wiring, without depending on the event schedule.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator EventPanel_VisibilityTracksTheModalState()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 30; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.EventPanel, "event panel should be bound from the UXML");
+
+            bool modalOpen = hud.EventModalUI != null && hud.EventModalUI.IsOpen;
+            Assert.AreEqual(
+                modalOpen ? UnityEngine.UIElements.DisplayStyle.Flex
+                          : UnityEngine.UIElements.DisplayStyle.None,
+                view.EventPanel.style.display.value,
+                "panel visibility must track EventModalUI.IsOpen");
+        }
+
         [UnityTest]
         public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
         {

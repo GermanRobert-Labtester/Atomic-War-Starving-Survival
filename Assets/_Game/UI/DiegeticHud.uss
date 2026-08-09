@@ -196,3 +196,23 @@
     width: 48px;
     -unity-text-align: middle-right;
 }
+
+/* Event prompt: hidden until EventRunner fires, keys 1/2/3 pick a row. */
+.event-panel {
+    min-width: 420px;
+    max-width: 560px;
+}
+
+.event-choices {
+    flex-direction: column;
+    margin-top: 6px;
+}
+
+.event-choice {
+    margin-bottom: 3px;
+    white-space: normal;
+}
+
+.event-choice--disabled {
+    opacity: 0.45;
+}

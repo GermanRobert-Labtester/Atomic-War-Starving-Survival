@@ -261,6 +261,15 @@ namespace AtomicWar._Game.UI
             _view.PaintVitals(day, hour, cumulativeDose, currentRate, needs);
         }
 
+        /// <summary>Forward an event-prompt paint.</summary>
+        public void PaintEventModal(
+            bool open, string title, string body, IReadOnlyList<EventChoiceLine> choices)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintEventModal(open, title, body, choices);
+        }
+
         /// <summary>Repaint all diegetic panels from bound view-models.</summary>
         public void Paint()
         {

@@ -169,6 +169,47 @@ namespace AtomicWar._Game.UI
             {
                 SetDebugMode(!_debugModeEnabled);
             }
+
+            RepaintEventModalIfChanged();
+        }
+
+        private bool _lastModalOpen;
+        private string _lastModalEventId;
+
+        /// <summary>
+        /// Repaint the event prompt when it opens, closes, or swaps to a
+        /// different event. Deliberately polled rather than driven from
+        /// EventRunner.OnEventTriggered: EventModalUI subscribes to that same
+        /// event and has to update its state before this paints it, and relying
+        /// on subscriber registration order is a dependency no test would catch
+        /// when it broke. Two comparisons a frame buys independence from it.
+        /// </summary>
+        private void RepaintEventModalIfChanged()
+        {
+            if (_eventModalUi == null || _diegeticHud == null) return;
+
+            bool open = _eventModalUi.IsOpen;
+            string id = open && _eventModalUi.ActiveEvent != null
+                ? _eventModalUi.ActiveEvent.id
+                : null;
+
+            if (open == _lastModalOpen && id == _lastModalEventId) return;
+            _lastModalOpen = open;
+            _lastModalEventId = id;
+
+            List<EventChoiceLine> lines = null;
+            if (open && _eventModalUi.VisibleChoices != null)
+            {
+                lines = new List<EventChoiceLine>(_eventModalUi.VisibleChoices.Count);
+                foreach (var c in _eventModalUi.VisibleChoices)
+                    lines.Add(new EventChoiceLine(c.Text, c.IsAvailable && !c.IsGrayedOut));
+            }
+
+            _diegeticHud.PaintEventModal(
+                open,
+                open && _eventModalUi.ActiveEvent != null ? _eventModalUi.ActiveEvent.title : null,
+                open ? _eventModalUi.DisplayBodyText : null,
+                lines);
         }
 
         public void SetDebugMode(bool enabled)
