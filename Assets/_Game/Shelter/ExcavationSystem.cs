@@ -43,6 +43,8 @@ namespace AtomicWar._Game.Shelter
         private readonly Dictionary<string, RoomExcavation> _rooms = new Dictionary<string, RoomExcavation>();
         private int _pendingRubbleUnits; // Rubble waiting at hatch for surface dump
         private readonly System.Random _rng;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private ShelterPerkSystem _shelterPerks;
         private PersonalQuestSystem _personalQuests;
         private Func<int> _getDay;
@@ -158,8 +160,11 @@ namespace AtomicWar._Game.Shelter
             // Prompt #227 — Vault Builder: 50% less fatigue when excavating/building rooms.
             if (_personalQuests != null)
                 fatMult *= _personalQuests.GetRoomBuildCostMultiplier(worker);
-            worker.Needs.Fatigue = Mathf.Clamp(
-                worker.Needs.Fatigue + FatiguePerHour * workHours * fatMult, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(worker, NeedKind.Fatigue, FatiguePerHour * workHours * fatMult);
+            else
+                worker.Needs.Fatigue = Mathf.Clamp(
+                    worker.Needs.Fatigue + FatiguePerHour * workHours * fatMult, 0f, 100f);
 
             // Prompt #199 — cave-in mini-event while digging (Sandhog never triggers).
             if (_shelterPerks != null
@@ -190,7 +195,10 @@ namespace AtomicWar._Game.Shelter
             if (worker == null || !worker.IsAlive || _pendingRubbleUnits <= 0) return 0;
             int dumped = Mathf.Min(_pendingRubbleUnits, MaxRubblePileUnits);
             _pendingRubbleUnits -= dumped;
-            worker.Needs.Fatigue = Mathf.Clamp(worker.Needs.Fatigue + SurfaceDumpFatigue, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(worker, NeedKind.Fatigue, SurfaceDumpFatigue);
+            else
+                worker.Needs.Fatigue = Mathf.Clamp(worker.Needs.Fatigue + SurfaceDumpFatigue, 0f, 100f);
             OnRubbleDumped?.Invoke(dumped);
             return dumped;
         }

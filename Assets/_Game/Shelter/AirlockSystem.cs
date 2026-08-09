@@ -1,12 +1,15 @@
 using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
     /// <summary>Prompt #128 — Physical airlock room: outside temp/rad, inside storage. Contamination gating.</summary>
     public class AirlockSystem
     {
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         public const string AirlockRoomId = "airlock";
         public const float AirlockContaminationSpike = 0.35f; // contamination spread when inner door opens without decon
         public const float DeconHours = 1f;
@@ -61,7 +64,10 @@ namespace AtomicWar._Game.Shelter
             if (personalQuests != null && personalQuests.SkipsDeconOnReturn(sv))
                 return;
             if (sv?.Needs != null)
-                sv.Needs.Fatigue = Mathf.Clamp(sv.Needs.Fatigue + 5f, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Fatigue, 5f);
+                else
+                    sv.Needs.Fatigue = Mathf.Clamp(sv.Needs.Fatigue + 5f, 0f, 100f);
         }
 
         /// <summary>

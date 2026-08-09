@@ -32,6 +32,7 @@ namespace AtomicWar._Game.Crafting
         private SurvivalPerkSystem _survivalPerks;
         private ShelterPerkSystem _shelterPerks;
         private NeedsSystem _needs;
+        public void SetNeedsSystem(NeedsSystem ns) => _needs = ns;
         private ItemDefinition _moonshineDef;
         private ItemDefinition _mutatedFungiDef;
         private ItemDefinition _dirtyWaterDef;

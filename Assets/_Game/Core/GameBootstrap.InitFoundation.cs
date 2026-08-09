@@ -357,6 +357,7 @@ namespace AtomicWar._Game.Core
             EventRunner.SetPool(eventPool);
 
             SuspicionTracker = new SuspicionTracker();
+            SuspicionTracker.SetNeedsSystem(NeedsSystem);
             SuspicionTracker.Bind(EventRunner);
 
             // Diegetic journal — survivors write discoveries (no tutorial popups).

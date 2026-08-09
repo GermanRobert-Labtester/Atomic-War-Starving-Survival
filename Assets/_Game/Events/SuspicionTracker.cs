@@ -72,6 +72,8 @@ namespace AtomicWar._Game.Events
         public event Action<GameEvent, EventContext> OnMysteryEventReady;
         public event Action<string, int> OnRationVanished; // itemId hint, amount
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private EventRunner _boundRunner;
 
         // ── Evaluation ───────────────────────────────────────────────────
@@ -347,7 +349,10 @@ namespace AtomicWar._Game.Events
                 // Innocent — massive morale penalty on the accused + group unease
                 var accused = FindSurvivor(context.AllSurvivors, AccusedId);
                 if (accused != null && accused.Needs != null)
-                    accused.Needs.Morale = Mathf.Clamp(accused.Needs.Morale + InnocentMoralePenalty, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(accused, NeedKind.Morale, InnocentMoralePenalty);
+            else
+                accused.Needs.Morale = Mathf.Clamp(accused.Needs.Morale + InnocentMoralePenalty, 0f, 100f);
                 ApplyGroupMorale(context, -8f, excludeId: AccusedId);
                 MysteryOpen = false;
                 context.SetEventFlag(FlagMysteryActive, false);
@@ -638,6 +643,9 @@ namespace AtomicWar._Game.Events
                 var s = context.AllSurvivors[i];
                 if (s == null || !s.IsAlive || s.Needs == null) continue;
                 if (!string.IsNullOrEmpty(excludeId) && s.Id == excludeId) continue;
+            if (context?.NeedsSystem != null)
+                context.NeedsSystem.Modify(s, NeedKind.Morale, delta);
+            else
                 s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + delta, 0f, 100f);
             }
         }

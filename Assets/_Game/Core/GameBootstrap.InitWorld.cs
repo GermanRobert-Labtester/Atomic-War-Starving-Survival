@@ -109,6 +109,7 @@ namespace AtomicWar._Game.Core
         {
             // Prompts #119–#128 — Shelter tactical systems
             ExcavationSystem = new ExcavationSystem(new System.Random(_worldSeed + 119));
+            ExcavationSystem.SetNeedsSystem(NeedsSystem);
             FloodingSystem = new RoomFloodingSystem();
             FloodingSystem.SetRng(new System.Random(_worldSeed + 120));
             // Prompt #806 — bilge pumps convert floodwater into purified cistern water.
@@ -132,6 +133,7 @@ namespace AtomicWar._Game.Core
                         ? MaterialShieldingSystem.GetWeakestCeilingAttenuation()
                         : 0f;
             AirlockSystem = new AirlockSystem();
+            AirlockSystem.SetNeedsSystem(NeedsSystem);
 
             // Prompts #164–#178 — simulation systems
             NoiseSystem = new NoiseSystem();
@@ -185,6 +187,7 @@ namespace AtomicWar._Game.Core
             // Prompt #50 — Waste Management & Hygiene
             // ───────────────────────────────────────────────────────────
             WasteSystem = new WasteSystem(new System.Random(_worldSeed + 50));
+            WasteSystem.SetNeedsSystem(NeedsSystem);
             WasteSystem.Bind(() => Shelter, () => Survivors);
 
             // Prompt #51 — Vermin Infestations (+ PetSystem cats suppress growth)
