@@ -63,6 +63,11 @@ namespace AtomicWar._Game.Editor
             var overlay = new GameObject("Diagnostics").AddComponent<DiagnosticsOverlay>();
             var bootstrap = new GameObject("GameBootstrap").AddComponent<GameBootstrap>();
 
+            // Same GameObject, not a child: PlayerInputHandler.Awake resolves its
+            // bootstrap with GetComponent, and Update early-returns when that came
+            // back null. On a child it would sit there consuming nothing, silently.
+            bootstrap.gameObject.AddComponent<PlayerInputHandler>();
+
             WireBootstrap(bootstrap, hud, overlay);
             WireDiagnosticsOverlay(overlay, bootstrap);
 
