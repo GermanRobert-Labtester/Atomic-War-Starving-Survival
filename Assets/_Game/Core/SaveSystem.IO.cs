@@ -70,7 +70,9 @@ namespace AtomicWar._Game.Core
                     File.Move(tmpPath, finalPath);
                 }
 
-                GameLog.Log($"[SaveSystem] Saved to slot '{slotId}' (atomic write + .bak backup).");
+                // Unconditional: fires once per save, and the save/load audit trail is
+                // the record used to diagnose corrupt-slot reports from players.
+                Debug.Log($"[SaveSystem] Saved to slot '{slotId}' (atomic write + .bak backup).");
                 return true;
             }
             catch (Exception ex)
@@ -155,7 +157,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 RestoreFromSnapshot(data);
-                GameLog.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
+                Debug.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
                 LastLoadSucceeded = true;
                 // Successful load clears suppress only if host is not holding Continue gate.
                 // Host re-enables after Continue finally block.
