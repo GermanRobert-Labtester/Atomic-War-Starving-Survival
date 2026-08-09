@@ -119,6 +119,8 @@ namespace AtomicWar._Game.Core
             if (_onNeedsDied != null) NeedsSystem.OnDied -= _onNeedsDied;
             if (_onNeedChanged != null) NeedsSystem.OnNeedChanged -= _onNeedChanged;
             if (_onDayTick_SetGameStateDay != null) TimeSystem.OnDayTick -= _onDayTick_SetGameStateDay;
+            if (_onRadiationStatusGained != null) RadiationSystem.OnStatusGained -= _onRadiationStatusGained;
+            if (_onRadiationDoseChanged != null) RadiationSystem.OnDoseChanged -= _onRadiationDoseChanged;
 
             // Static/singleton method-group subscriptions.
             if (WorldPhaseSystem != null) TimeSystem.OnDayTick -= WorldPhaseSystem.OnDayTick;

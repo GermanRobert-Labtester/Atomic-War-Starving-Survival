@@ -80,7 +80,7 @@ namespace AtomicWar._Game.Core
             }
 
             // Wire radiation updates
-            RadiationSystem.OnDoseChanged += (sv, dose) =>
+            _onRadiationDoseChanged = (sv, dose) =>
             {
                 if (sv == Survivors?[0]) // primary survivor
                 {
@@ -90,6 +90,7 @@ namespace AtomicWar._Game.Core
                 // trust-inversion raid cascades (healthy-ceiling cross).
                 EconomySystem?.NotifyPartyRadiationChanged();
             };
+            RadiationSystem.OnDoseChanged += _onRadiationDoseChanged;
 
             // Wire needs updates
             _onNeedChanged = (sv, kind, value) =>

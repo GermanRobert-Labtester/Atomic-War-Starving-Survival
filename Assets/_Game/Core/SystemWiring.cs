@@ -81,7 +81,6 @@ namespace AtomicWar._Game.Core
         {
             if (ctx == null) return;
             if (ctx.CurrentDay == _lastDailyRunDay) return;
-            _lastDailyRunDay = ctx.CurrentDay;
             DailyRunCount++;
 
             TickCompost(ctx);
@@ -92,6 +91,8 @@ namespace AtomicWar._Game.Core
             TickCeilingCollapse(ctx);
             TickThermodynamicsWarmDay(ctx);
             ctx.LocationQuest?.TickDaily(ctx.CurrentDay);
+
+            _lastDailyRunDay = ctx.CurrentDay;
         }
 
         private static void TickThermodynamicsWarmDay(DailyContext ctx)
