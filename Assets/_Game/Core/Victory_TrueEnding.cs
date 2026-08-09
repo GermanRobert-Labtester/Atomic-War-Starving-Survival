@@ -64,6 +64,7 @@ namespace AtomicWar._Game.Core
         public void CheckPrerequisites(string difficulty, bool mainframeHacked,
             bool nuclearSiloFound, bool terraformerDiscovered)
         {
+            bool alreadyDiscovered = _terraformerDiscovered;
             _terraformerDiscovered = terraformerDiscovered;
 
             bool meetsDifficulty = (difficulty == "highest");
@@ -76,7 +77,9 @@ namespace AtomicWar._Game.Core
                 OnPrerequisitesMet?.Invoke();
             }
 
-            if (terraformerDiscovered)
+            // Latch the discovery like prerequisites_met above: CheckPrerequisites is
+            // polled, so an unlatched invoke re-announces the find on every call.
+            if (terraformerDiscovered && !alreadyDiscovered)
             {
                 OnTerraformerDiscovered?.Invoke();
             }

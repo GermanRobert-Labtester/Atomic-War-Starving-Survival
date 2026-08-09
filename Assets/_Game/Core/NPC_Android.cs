@@ -133,13 +133,18 @@ namespace AtomicWar._Game.Core
         {
             _revealedAndroids.Clear();
             _destroyedAndroids.Clear();
-            if (saved == null) return;
+            // A save written with an explicit null list (older build, hand-edited file)
+            // deserializes these as null; under FailFastRestore one NPE aborts the load.
+            if (saved?.androidIds == null) return;
             int count = saved.androidIds.Count;
             for (int i = 0; i < count; i++)
             {
                 string id = saved.androidIds[i];
-                _revealedAndroids[id] = (i < saved.revealedFlags.Count) ? saved.revealedFlags[i] : false;
-                _destroyedAndroids[id] = (i < saved.destroyedFlags.Count) ? saved.destroyedFlags[i] : false;
+                if (string.IsNullOrEmpty(id)) continue;
+                _revealedAndroids[id] =
+                    saved.revealedFlags != null && i < saved.revealedFlags.Count && saved.revealedFlags[i];
+                _destroyedAndroids[id] =
+                    saved.destroyedFlags != null && i < saved.destroyedFlags.Count && saved.destroyedFlags[i];
             }
         }
     }

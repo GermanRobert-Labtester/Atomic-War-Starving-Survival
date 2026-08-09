@@ -122,10 +122,14 @@ namespace AtomicWar._Game.Core
 
             _requiresCrowbarToBreak = saved.requiresCrowbarToBreak;
 
+            // Either list is null when the save omitted it explicitly; guard before Count.
+            if (saved.barricadedRoomIds == null || saved.barricaderIds == null) return;
             int count = Mathf.Min(saved.barricadedRoomIds.Count, saved.barricaderIds.Count);
             for (int i = 0; i < count; i++)
             {
-                _barricadedRooms[saved.barricadedRoomIds[i]] = saved.barricaderIds[i];
+                string roomId = saved.barricadedRoomIds[i];
+                if (string.IsNullOrEmpty(roomId)) continue;
+                _barricadedRooms[roomId] = saved.barricaderIds[i];
             }
         }
     }

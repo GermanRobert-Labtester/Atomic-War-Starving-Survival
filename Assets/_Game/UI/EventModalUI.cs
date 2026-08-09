@@ -26,12 +26,39 @@ namespace AtomicWar._Game.UI
 
         public event Action<GameEvent, EventChoice> OnChoiceSelected;
 
+        private EventRunner _boundRunner;
+
+        /// <summary>
+        /// Subscribe to a runner's event feed. Detaches any previous runner first —
+        /// EventRunner outlives this component, so re-binding without detaching would
+        /// leave a subscription pointing at a destroyed modal and fire ShowEvent once
+        /// per past bind.
+        /// </summary>
         public void Bind(EventRunner runner)
         {
+            if (ReferenceEquals(_boundRunner, runner)) return;
+
+            Unbind();
+            _boundRunner = runner;
             if (runner != null)
             {
                 runner.OnEventTriggered += ShowEvent;
             }
+        }
+
+        /// <summary>Detach from the currently bound runner, if any.</summary>
+        public void Unbind()
+        {
+            if (_boundRunner != null)
+            {
+                _boundRunner.OnEventTriggered -= ShowEvent;
+                _boundRunner = null;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            Unbind();
         }
 
         public void ShowEvent(GameEvent gameEvent, EventContext context)
