@@ -30,7 +30,7 @@ namespace AtomicWar._Game.AI.Actions
         public override void Execute(AIContext context)
         {
             if (context?.Survivor == null) return;
-            var rng = context.Random ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("sleepwalkactionso");
+            var rng = context.Random ?? AtomicWar._Game.Utilities.SeededRandom.Stream("sleepwalkactionso");
             ExecuteSleepwalk(
                 context.Survivor,
                 context.InternalLockSystem,
@@ -58,7 +58,7 @@ namespace AtomicWar._Game.AI.Actions
         {
             hazard = SleepwalkHazard.WanderOutsideWithoutSuit;
             if (sv == null || !sv.IsAlive) return false;
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("sleepwalkactionso");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("sleepwalkactionso");
 
             string currentRoom = sv.CurrentRoomId ?? "quarters";
             if (lockSystem != null && !lockSystem.CanSleepwalkerEscape(currentRoom))

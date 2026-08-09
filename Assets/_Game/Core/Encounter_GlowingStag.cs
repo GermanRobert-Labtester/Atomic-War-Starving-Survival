@@ -45,7 +45,7 @@ namespace AtomicWar._Game.Core
             }
 
             float successChance = Mathf.Clamp01(shooterSkill);
-            System.Random rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("encounter_glowingstag");
+            System.Random rng = AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_glowingstag");
             bool success = rng.NextDouble() < successChance;
 
             if (success)

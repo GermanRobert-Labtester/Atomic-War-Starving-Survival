@@ -41,9 +41,8 @@ namespace AtomicWar._Game.Core
         /// replay; the old default reached for wall-clock UnityEngine.Random, so
         /// every caller that omitted it silently opted out of determinism.
         /// </summary>
-        private static System.Random _fallbackRng;
     private static System.Random FallbackRng =>
-        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("event_secretsociety");
+        AtomicWar._Game.Utilities.SeededRandom.Stream("event_secretsociety");
 
         private SecretSocietyState _state = new SecretSocietyState();
         private int _nextCliqueIndex;

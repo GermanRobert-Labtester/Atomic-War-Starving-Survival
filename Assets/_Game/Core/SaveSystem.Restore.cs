@@ -25,6 +25,12 @@ namespace AtomicWar._Game.Core
 
         private void RestoreFromSnapshot(SaveData data)
         {
+            // Fallback rng streams are process-static, so without this the same
+            // slot loaded twice in one session resumes mid-stream and rolls
+            // differently the second time -- the exact drift the seeded-rng work
+            // (MISC-005) set out to remove.
+            AtomicWar._Game.Utilities.SeededRandom.ResetStreams();
+
             RestoreGameStateCore(data);
             RestoreSurvivorsAndShelter(data);
             RestoreMedicalAndBodySystems(data);

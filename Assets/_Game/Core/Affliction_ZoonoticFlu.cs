@@ -23,9 +23,8 @@ namespace AtomicWar._Game.Core
         /// call sites below previously used wall-clock UnityEngine.Random, which made
         /// the same save produce different outcomes on each load.
         /// </summary>
-        private static System.Random _fallbackRng;
     private static System.Random FallbackRng =>
-        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("affliction_zoonoticflu");
+        AtomicWar._Game.Utilities.SeededRandom.Stream("affliction_zoonoticflu");
 
         public event Action<string, string> OnInfectionStarted;     // survivorId, sourceAnimal
         public event Action<string, string> OnSpreadViaVents;       // infectedId, newlyInfectedId

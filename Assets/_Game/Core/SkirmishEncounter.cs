@@ -81,7 +81,7 @@ namespace AtomicWar._Game.Core
 
         public SkirmishOutcome ExecuteAction(string locationId, SkirmishPlayerAction action, System.Random rng = null)
         {
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("skirmishencounter");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("skirmishencounter");
             if (!_activeSkirmishes.TryGetValue(locationId, out var state) || state.isResolved)
             {
                 return null;
@@ -194,7 +194,7 @@ namespace AtomicWar._Game.Core
         {
             var list = new List<string>();
             if (state == null) return list;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("skirmishencounter");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("skirmishencounter");
 
             string winner = state.winningFaction ?? string.Empty;
             if (string.Equals(winner, "Mutual Destruction", StringComparison.Ordinal)
@@ -223,7 +223,7 @@ namespace AtomicWar._Game.Core
         public static List<WorldLootRoll> RollScavengedWorldLoot(SkirmishState state, System.Random rng)
         {
             if (state == null) return new List<WorldLootRoll>();
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("skirmishencounter");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("skirmishencounter");
             return Item_WorldCatalog.RollScavengedWorldLoot(
                 state.winningFaction,
                 rng,

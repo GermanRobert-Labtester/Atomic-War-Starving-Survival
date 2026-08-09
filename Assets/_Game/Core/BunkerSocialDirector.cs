@@ -159,7 +159,7 @@ namespace AtomicWar._Game.Core
         {
             if (survivors == null) return;
             Survivors = survivors;
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("bunkersocialdirector");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("bunkersocialdirector");
 
             // Per-tick continuous auras.
             Romance.ApplyAuras(gameHours, survivors);

@@ -3052,7 +3052,7 @@ namespace AtomicWar._Game.Survivors
         public string GenerateFalseIntelNode(Survivor liar, System.Random rng = null)
         {
             if (liar == null || !HasDeceptive(liar)) return null;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem");
             string fakeId = "fake_stash_" + rng.Next(1000, 9999);
             var state = GetOrCreate(liar.Id);
             state.FalseIntelCount++;
@@ -3460,7 +3460,7 @@ namespace AtomicWar._Game.Survivors
         public int ApplyAlchemistYield(Survivor crafter, int baseAmount, System.Random rng = null)
         {
             if (baseAmount <= 0 || !HasAlchemist(crafter)) return baseAmount;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem");
             if (rng.NextDouble() < AlchemistDoubleYieldChance)
                 return baseAmount * 2;
             return baseAmount;

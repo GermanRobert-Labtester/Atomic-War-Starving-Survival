@@ -205,7 +205,7 @@ namespace AtomicWar._Game.Survivors
         {
             float chance = GetSurgeryBleedChance(medic);
             if (chance <= 0f) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("medicalperksystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("medicalperksystem");
             return rng.NextDouble() < chance;
         }
 

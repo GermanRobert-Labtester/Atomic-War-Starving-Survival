@@ -141,7 +141,7 @@ namespace AtomicWar._Game.Radiation
         public bool ShouldAutoInfect(Survivors.Survivor sv, System.Random rng = null)
         {
             if (sv == null || !HasCellularBreakdown(sv.Id)) return false;
-            rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("radiationmutagenesissystem");
+            rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Stream("radiationmutagenesissystem");
             return rng.NextDouble() < CellularBreakdownInfectionChance;
         }
 

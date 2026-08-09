@@ -19,9 +19,8 @@ namespace AtomicWar._Game.AI.Actions
         /// without this, an un-injected host silently fell back to wall-clock
         /// UnityEngine.Random and made this roll unreplayable across loads.
         /// </summary>
-        private static System.Random _fallbackRng;
     private static System.Random FallbackRng =>
-        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("drink_contaminated_action");
+        AtomicWar._Game.Utilities.SeededRandom.Stream("drink_contaminated_action");
 
         [Tooltip("Thirst restored per drink from the dirty/irradiated pool.")]
         public float ThirstRestore = 35f;

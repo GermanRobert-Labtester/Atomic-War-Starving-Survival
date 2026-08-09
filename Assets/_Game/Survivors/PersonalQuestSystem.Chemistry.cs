@@ -189,7 +189,7 @@ namespace AtomicWar._Game.Survivors
                 && !HasFascination(sv))
                 return false;
             if (sv.Needs.Morale >= PyromaniacFireMoraleThreshold) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_chemistry");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_chemistry");
             return rng.NextDouble() < PyromaniacDailyFireChance;
         }
 

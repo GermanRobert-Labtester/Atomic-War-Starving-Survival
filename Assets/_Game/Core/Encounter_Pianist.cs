@@ -39,9 +39,8 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class Encounter_Pianist
     {
-        private static System.Random _fallbackRng;
         private static System.Random FallbackRng =>
-            _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("encounter_pianist");
+            AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_pianist");
 
         private PianistState _state = new PianistState();
 

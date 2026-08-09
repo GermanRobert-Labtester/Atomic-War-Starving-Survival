@@ -33,9 +33,8 @@ namespace AtomicWar._Game.Core
         /// call sites below previously used wall-clock UnityEngine.Random, which made
         /// the same save produce different outcomes on each load.
         /// </summary>
-        private static System.Random _fallbackRng;
     private static System.Random FallbackRng =>
-        _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("encounter_robotdog");
+        AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_robotdog");
 
         private RobotDogState _state = new RobotDogState();
 

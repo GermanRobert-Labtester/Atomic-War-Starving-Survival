@@ -286,7 +286,7 @@ namespace AtomicWar._Game.Survivors
         public void NotifyLoverDied(Survivor dead, System.Random rng)
         {
             if (dead == null) return;
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("bunkersocialsystems");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("bunkersocialsystems");
             string bereavedId = null;
             SocialPairKey? deadKey = null;
             foreach (var kv in _lovers)

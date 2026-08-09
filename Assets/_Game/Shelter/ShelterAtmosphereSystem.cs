@@ -494,7 +494,7 @@ namespace AtomicWar._Game.Shelter
                 return false;
             var list = _getSurvivors();
             if (list == null) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("shelteratmospheresystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("shelteratmospheresystem");
             for (int i = 0; i < list.Count; i++)
             {
                 var sv = list[i];

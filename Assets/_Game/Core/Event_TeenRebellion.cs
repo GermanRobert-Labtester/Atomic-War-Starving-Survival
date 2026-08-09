@@ -62,7 +62,7 @@ namespace AtomicWar._Game.Core
                 return;
             }
 
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("event_teenrebellion");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("event_teenrebellion");
 
             string room = RoomOptions[rng.Next(RoomOptions.Length)];
             int foodWasted = rng.Next(1, 4);

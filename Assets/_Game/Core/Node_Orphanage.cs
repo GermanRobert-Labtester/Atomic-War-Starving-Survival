@@ -94,7 +94,7 @@ namespace AtomicWar._Game.Core
                 return _state.childCount;
             }
 
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_orphanage");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("node_orphanage");
 
             _state.childCount = rng.Next(3, 9); // 3 to 8 inclusive
             _state.hasBeenVisited = true;

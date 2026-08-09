@@ -457,7 +457,7 @@ namespace AtomicWar._Game.Survivors
                 && !HasTinfoilHat(sv))
                 return false;
             if (HasTruthSeeker(sv)) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_ashes");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_ashes");
             return rng.NextDouble() < TheoristRadioSabotageChance;
         }
 
@@ -731,7 +731,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetClumsyToolBreakChance(sv);
             if (p <= 0f) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_ashes");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_ashes");
             return rng.NextDouble() < p;
         }
 
@@ -881,7 +881,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetLethalInstantKillChance(sv);
             if (p <= 0f) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("personalquestsystem_ashes");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_ashes");
             return rng.NextDouble() < p;
         }
 

@@ -205,7 +205,7 @@ namespace AtomicWar._Game.Survivors
             System.Random rng)
         {
             if (gameHours <= 0f || survivors == null) return;
-            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mental_break");
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("mental_break");
 
             // 1. Update low-morale hours and roll for breaks at the threshold.
             RollForBreaks(survivors, gameHours, rng);

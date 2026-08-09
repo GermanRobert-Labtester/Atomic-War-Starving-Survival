@@ -196,7 +196,7 @@ namespace AtomicWar._Game.Survivors
         public string RollRareComponent(Survivor sv, bool isHighTier, System.Random rng = null)
         {
             if (!isHighTier || !CanRecoverRareComponents(sv)) return null;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("shelterperksystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("shelterperksystem");
             if (rng.NextDouble() >= ScrapperRareComponentChance) return null;
             return rng.NextDouble() < 0.5 ? BatteryId : SpringId;
         }
@@ -237,7 +237,7 @@ namespace AtomicWar._Game.Survivors
         public bool RollDigCaveIn(Survivor sv, System.Random rng = null, float baseChance = BaseExcavationCaveInChance)
         {
             if (SuppressesCaveInWhileDigging(sv)) return false;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("shelterperksystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("shelterperksystem");
             return rng.NextDouble() < baseChance;
         }
 

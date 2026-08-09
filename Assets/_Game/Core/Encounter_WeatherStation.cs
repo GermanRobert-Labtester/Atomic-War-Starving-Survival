@@ -36,9 +36,8 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class Encounter_WeatherStation
     {
-        private static System.Random _fallbackRng;
         private static System.Random FallbackRng =>
-            _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("encounter_weatherstation");
+            AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_weatherstation");
 
         private WeatherStationState _state = new WeatherStationState();
 

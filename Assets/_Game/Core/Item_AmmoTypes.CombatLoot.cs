@@ -182,7 +182,7 @@ namespace AtomicWar._Game.Core
             bool preferApApi = false)
         {
             EnsureCatalog();
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_ammotypes_combatloot");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("item_ammotypes_combatloot");
             count = Mathf.Clamp(count, 0, 8);
             var results = new List<string>(count);
             if (count == 0) return results;

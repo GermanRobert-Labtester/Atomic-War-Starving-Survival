@@ -513,7 +513,7 @@ namespace AtomicWar._Game.Survivors
                              || survivor.Needs.Health < EpiphanyHealthThreshold;
             if (!desperate) return false;
 
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("skillprogressionsystem");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("skillprogressionsystem");
             if (rng.NextDouble() >= EpiphanyChance) return false;
 
             // Instant mastery: max XP for discipline + grant all eligible perks.

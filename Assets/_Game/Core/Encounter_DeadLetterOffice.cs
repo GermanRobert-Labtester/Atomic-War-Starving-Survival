@@ -35,9 +35,8 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public class Encounter_DeadLetterOffice
     {
-        private static System.Random _fallbackRng;
         private static System.Random FallbackRng =>
-            _fallbackRng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("encounter_deadletteroffice");
+            AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_deadletteroffice");
 
         private DeadLetterOfficeState _state = new DeadLetterOfficeState();
 
