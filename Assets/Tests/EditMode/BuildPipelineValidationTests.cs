@@ -18,7 +18,16 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(errors.Count, Is.EqualTo(0), $"Master JSON data should have zero validation errors, but found: {string.Join("; ", errors)}");
         }
 
+        /// <summary>
+        /// Runs a real player build inside the EditMode suite: 13.9s of the 24s the
+        /// other ~1830 tests share between them. (A run's wall time is dominated by
+        /// editor startup and domain reload, not by this — skipping it shortens the
+        /// test phase, not the run.) Categorised so a local iteration loop can drop it
+        /// with <c>-testCategory "!SlowBuild"</c>; CI runs the full set, so the
+        /// pipeline gate keeps its coverage.
+        /// </summary>
         [Test]
+        [Category("SlowBuild")]
         public void BuildPipeline_ExecutesDataValidationGate_AndOutputsBuildLog()
         {
             // PerformBuildPipeline may Refresh the AssetDatabase / invoke player builds.
