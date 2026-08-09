@@ -51,6 +51,8 @@ namespace AtomicWar._Game.Core
         private static readonly Dictionary<WorldLootFaction, WorldLootEntry[]> Pools =
             new Dictionary<WorldLootFaction, WorldLootEntry[]>();
         private static WorldLootEntry[] _attachmentPool;
+        private static WorldLootEntry[] _attachmentPoolSpecialist;
+        private static WorldLootEntry[] _attachmentPoolRaider;
         private static bool _lootBuilt;
 
         private struct WorldLootEntry
@@ -201,7 +203,7 @@ namespace AtomicWar._Game.Core
             float dangerLevel = 3f)
         {
             EnsureLoot();
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_worldcatalog_loot");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("item_worldcatalog_loot");
             // Soft cap keeps host rolls bounded; tests may request larger samples.
             count = Mathf.Clamp(count, 0, 64);
             var results = new List<WorldLootRoll>(count);
@@ -251,7 +253,7 @@ namespace AtomicWar._Game.Core
         {
             EnsureLoot();
             roll = default;
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_worldcatalog_loot");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("item_worldcatalog_loot");
             float chance = AttachmentLooseChance(faction);
             if (chance <= 0f) return false;
             // High danger slightly raises the floor (still tiny).
@@ -300,7 +302,7 @@ namespace AtomicWar._Game.Core
             System.Random rng,
             int corpseCount = 1)
         {
-            rng ??= AtomicWar._Game.Utilities.SeededRandom.CreateFixed("item_worldcatalog_loot");
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("item_worldcatalog_loot");
             var faction = MapWorldLootFaction(winningFactionId);
             if (string.Equals(winningFactionId, "Mutual Destruction", StringComparison.Ordinal)
                 || string.Equals(winningFactionId, "none", StringComparison.Ordinal)
@@ -405,6 +407,27 @@ namespace AtomicWar._Game.Core
                 new WorldLootEntry(AttMilLongRangeScope, 0.8f),
                 new WorldLootEntry(AttMilHolosight, 1.1f),
                 new WorldLootEntry(AttMilDoubleScope5x10x, 0.35f)
+            };
+
+            // Faction-skewed variants. Built once alongside the default pool:
+            // GetAttachmentPool is on the per-drop path and these are read-only.
+            _attachmentPoolSpecialist = new[]
+            {
+                new WorldLootEntry(AttMilSuppressor, 1.4f),
+                new WorldLootEntry(AttMilLaserdot, 1.3f),
+                new WorldLootEntry(AttMilTacticalGrip, 1.0f),
+                new WorldLootEntry(AttMilLongRangeScope, 1.2f),
+                new WorldLootEntry(AttMilHolosight, 1.1f),
+                new WorldLootEntry(AttMilDoubleScope5x10x, 0.55f)
+            };
+
+            // Salvaged scraps — no double scopes from raiders.
+            _attachmentPoolRaider = new[]
+            {
+                new WorldLootEntry(AttMilTacticalGrip, 1.5f),
+                new WorldLootEntry(AttMilHolosight, 1.0f),
+                new WorldLootEntry(AttMilSuppressor, 0.6f),
+                new WorldLootEntry(AttMilLaserdot, 0.5f)
             };
 
             // Shared scrap / components
@@ -642,26 +665,11 @@ namespace AtomicWar._Game.Core
             if (faction == WorldLootFaction.BlackOpsMilitary
                 || faction == WorldLootFaction.SpecOpsRebel)
             {
-                return new[]
-                {
-                    new WorldLootEntry(AttMilSuppressor, 1.4f),
-                    new WorldLootEntry(AttMilLaserdot, 1.3f),
-                    new WorldLootEntry(AttMilTacticalGrip, 1.0f),
-                    new WorldLootEntry(AttMilLongRangeScope, 1.2f),
-                    new WorldLootEntry(AttMilHolosight, 1.1f),
-                    new WorldLootEntry(AttMilDoubleScope5x10x, 0.55f)
-                };
+                return _attachmentPoolSpecialist;
             }
             if (faction == WorldLootFaction.Bandit || faction == WorldLootFaction.Insurgent)
             {
-                // Salvaged scraps — no double scopes from raiders.
-                return new[]
-                {
-                    new WorldLootEntry(AttMilTacticalGrip, 1.5f),
-                    new WorldLootEntry(AttMilHolosight, 1.0f),
-                    new WorldLootEntry(AttMilSuppressor, 0.6f),
-                    new WorldLootEntry(AttMilLaserdot, 0.5f)
-                };
+                return _attachmentPoolRaider;
             }
             return _attachmentPool;
         }
