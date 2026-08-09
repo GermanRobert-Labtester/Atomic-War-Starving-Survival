@@ -434,6 +434,11 @@ namespace AtomicWar._Game.Core
         public MutatedEcosystemSystem EcosystemSystem { get; private set; }
         // Prompt #79–#84 — house-to-bunker transition.
         public HouseToBunkerSystem HouseToBunkerSystem { get; private set; }
+        // Prompts #901/#903/#904 — narrative encounter state. Their EncounterSOs
+        // were already registered; these hold the outcomes the choices resolve to.
+        public Encounter_DeadLetterOffice DeadLetterOffice { get; private set; }
+        public Encounter_WeatherStation WeatherStation { get; private set; }
+        public Encounter_Pianist Pianist { get; private set; }
         /// <summary>The selected shelter layout for this run.</summary>
         public Shelter.ShelterMapSO ShelterLayout { get; private set; }
         /// <summary>Prompts #85–#94 — multi-stage location quests.</summary>

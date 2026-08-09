@@ -10,9 +10,31 @@ namespace AtomicWar._Game.Core
     /// Creates EncounterSO instances at runtime and registers them with
     /// the ExpeditionSystem. These are narrative/utility encounters —
     /// no combat, no skill checks unless specified.
+    ///
+    /// Each ChoiceId below names the method on the matching Encounter_* class
+    /// that <see cref="ExpeditionSystem"/> dispatches it to. The classes own the
+    /// magnitudes (morale, yields, trust), so MoraleDelta stays 0 here rather
+    /// than duplicating those constants where they could drift apart.
     /// </summary>
     public static class NarrativeEncounters
     {
+        // ── Choice ids (shared with ExpeditionSystem's dispatcher) ──────
+
+        public const string ChoiceReadLetters = "read_letters";
+        public const string ChoiceDeliverLetter = "deliver_letter";
+        public const string ChoiceTakeSupplies = "take_supplies";
+        public const string ChoiceBurnVan = "burn_van";
+
+        public const string ChoiceExtractData = "extract_data";
+        public const string ChoiceTakeSolarPanel = "take_solar_panel";
+        public const string ChoiceScavengeElectronics = "scavenge_electronics";
+        public const string ChoiceLeaveRunning = "leave_running";
+
+        public const string ChoiceListen = "listen";
+        public const string ChoiceShareFood = "share_food";
+        public const string ChoiceTellAboutBunker = "tell_about_bunker";
+        public const string ChoiceDestroyPiano = "destroy_piano";
+
         // ── Dead Letter Office ──────────────────────────────────────────
 
         public const string DeadLetterOfficeId = "enc_dead_letter_office";
@@ -32,6 +54,13 @@ namespace AtomicWar._Game.Core
             enc.requiredLocationId = string.Empty; // can appear on any road node
             enc.forceOnArrival = true;
             enc.enableAutoResolution = false;
+            enc.choices = new List<EventChoice>
+            {
+                new EventChoice { ChoiceId = ChoiceReadLetters, Text = "Read the undelivered letters" },
+                new EventChoice { ChoiceId = ChoiceDeliverLetter, Text = "Carry the Scavenger Camp envelope to its addressee" },
+                new EventChoice { ChoiceId = ChoiceTakeSupplies, Text = "Take the supply packs and go" },
+                new EventChoice { ChoiceId = ChoiceBurnVan, Text = "Burn the van behind you" }
+            };
             return enc;
         }
 
@@ -54,6 +83,13 @@ namespace AtomicWar._Game.Core
             enc.requiredLocationId = string.Empty; // appears on hill/ridge nodes
             enc.forceOnArrival = true;
             enc.enableAutoResolution = false;
+            enc.choices = new List<EventChoice>
+            {
+                new EventChoice { ChoiceId = ChoiceExtractData, Text = "Copy the logger's five days of readings" },
+                new EventChoice { ChoiceId = ChoiceTakeSolarPanel, Text = "Pry off the solar panel" },
+                new EventChoice { ChoiceId = ChoiceScavengeElectronics, Text = "Strip the station for scrap" },
+                new EventChoice { ChoiceId = ChoiceLeaveRunning, Text = "Leave it running" }
+            };
             return enc;
         }
 
@@ -76,6 +112,13 @@ namespace AtomicWar._Game.Core
             enc.requiredLocationId = string.Empty; // appears on town/city nodes
             enc.forceOnArrival = false; // you can walk past without engaging
             enc.enableAutoResolution = false;
+            enc.choices = new List<EventChoice>
+            {
+                new EventChoice { ChoiceId = ChoiceListen, Text = "Sit on the rubble and listen" },
+                new EventChoice { ChoiceId = ChoiceShareFood, Text = "Share what you are carrying" },
+                new EventChoice { ChoiceId = ChoiceTellAboutBunker, Text = "Tell him about the bunker" },
+                new EventChoice { ChoiceId = ChoiceDestroyPiano, Text = "Cut the piano wire and go" }
+            };
             return enc;
         }
 

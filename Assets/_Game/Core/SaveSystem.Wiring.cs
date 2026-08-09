@@ -281,6 +281,12 @@ namespace AtomicWar._Game.Core
         public void SetEcosystemSystem(MutatedEcosystemSystem sys) => RegisterSystem(ref _ecosystemSystem, sys, "ecosystem", () => sys.CaptureState(), o => sys.RestoreState((EcosystemSave)o));
         /// <summary>Inject Prompt #79 house-to-bunker for save/load.</summary>
         public void SetHouseToBunkerSystem(HouseToBunkerSystem sys) => RegisterSystem(ref _houseToBunkerSystem, sys, "house_to_bunker", () => sys.CaptureState(), o => sys.RestoreState((HouseToBunkerSave)o));
+        /// <summary>Inject Prompt #901 dead letter office for save/load.</summary>
+        public void SetDeadLetterOffice(Encounter_DeadLetterOffice enc) => RegisterSystem(ref _deadLetterOffice, enc, "enc_dead_letter_office", () => enc.CaptureState(), o => enc.RestoreState((DeadLetterOfficeState)o));
+        /// <summary>Inject Prompt #903 weather station for save/load.</summary>
+        public void SetWeatherStation(Encounter_WeatherStation enc) => RegisterSystem(ref _weatherStation, enc, "enc_weather_station", () => enc.CaptureState(), o => enc.RestoreState((WeatherStationState)o));
+        /// <summary>Inject Prompt #904 the pianist for save/load.</summary>
+        public void SetPianist(Encounter_Pianist enc) => RegisterSystem(ref _pianist, enc, "enc_pianist", () => enc.CaptureState(), o => enc.RestoreState((PianistState)o));
         /// <summary>Inject Prompt #85-94 location quests for save/load.</summary>
         public void SetLocationQuestSystem(LocationQuestSystem sys) => RegisterSystem(ref _locationQuestSystem, sys, "location_quest", () => sys.CaptureState(), o => sys.RestoreState((LocationQuestSave)o));
         public void SetExcavationSystem(ExcavationSystem s) => RegisterSystem(ref _excavationSystem, s, "excavation", () => s.CaptureState(), o => s.RestoreState((ExcavationSave)o));

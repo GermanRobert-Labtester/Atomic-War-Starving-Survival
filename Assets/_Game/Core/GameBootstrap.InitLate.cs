@@ -600,6 +600,27 @@ namespace AtomicWar._Game.Core
             // Register narrative/utility encounters (Prompts #901-#904).
             NarrativeEncounters.RegisterAll(ExpeditionSystem);
 
+            // ...and the objects holding what those encounters actually do. The
+            // SOs above were registered from the start, but nothing constructed
+            // these, so every choice resolved to description text and nothing else.
+            DeadLetterOffice = new Encounter_DeadLetterOffice();
+            WeatherStation = new Encounter_WeatherStation();
+            Pianist = new Encounter_Pianist();
+            ExpeditionSystem.BindDeadLetterOffice(DeadLetterOffice);
+            ExpeditionSystem.BindWeatherStation(WeatherStation);
+            ExpeditionSystem.BindPianist(Pianist);
+            // Delivering the dead letter is worth faction standing; extracting the
+            // weather log and telling Matej about the bunker set world flags.
+            ExpeditionSystem.BindFactionTrustWriter((factionId, delta) =>
+                EconomySystem?.ModifyTrust(factionId, delta));
+            ExpeditionSystem.BindWorldFlagWriter((flagId, value) =>
+                SaveSystem?.SetWorldFlag(flagId, value));
+            SaveSystem.SetDeadLetterOffice(DeadLetterOffice);
+            SaveSystem.SetWeatherStation(WeatherStation);
+            SaveSystem.SetPianist(Pianist);
+            // The copied data logger is what the forecast bonus actually reads.
+            WeatherSystem?.BindStationForecast(() => WeatherStation.GetForecastBonusDays());
+
             ExpeditionSystem.OnSabotagedCacheDetected += (exp, msg) =>
             {
                 GameLog.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");

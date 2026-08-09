@@ -13,6 +13,8 @@ namespace AtomicWar._Game.Core
         public bool hasReceivedFood = false;
         public bool hasBeenToldAboutBunker = false;
         public int timesVisited = 0;
+        public bool pianoDestroyed = false;
+        public bool refugeeArrived = false;
     }
 
     /// <summary>
@@ -80,6 +82,8 @@ namespace AtomicWar._Game.Core
         public event Action<PianistState> OnSharedFood;
         public event Action<PianistState> OnToldAboutBunker;
         public event Action<PianistState> OnPianoDestroyed;
+        /// <summary>Someone Matej mentioned the bunker to has walked up to the hatch.</summary>
+        public event Action<PianistState> OnRefugeeSent;
 
         public PianistState State => _state;
 
@@ -101,6 +105,7 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public float Listen()
         {
+            if (_state.pianoDestroyed) return 0f;
             float boost = Mathf.Max(
                 MinListenBoost,
                 BaseListenMoraleBoost - (_state.timesVisited * ListenDecayPerVisit));
@@ -115,7 +120,7 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public float ShareFood()
         {
-            if (_state.hasReceivedFood) return 0f;
+            if (_state.hasReceivedFood || _state.pianoDestroyed) return 0f;
             _state.hasReceivedFood = true;
             OnSharedFood?.Invoke(_state);
             return ShareFoodMoraleBoost;
@@ -137,19 +142,33 @@ namespace AtomicWar._Game.Core
         /// Strip the piano for wire. Destroys the encounter permanently.
         /// Heavy morale penalty. He doesn't stop you. He can't see you.
         /// But he hears the strings snap.
+        ///
+        /// Returns 0 once the piano is already gone — "permanently" was only
+        /// documented, not recorded, so repeat visits used to hand out the wire
+        /// (and the morale penalty) over and over.
         /// </summary>
         public int DestroyPiano()
         {
+            if (_state.pianoDestroyed) return 0;
+            _state.pianoDestroyed = true;
             OnPianoDestroyed?.Invoke(_state);
             return WireCutterYield;
         }
 
-        /// <summary>Check if a refugee should appear today.</summary>
+        /// <summary>
+        /// Check if a refugee should appear today. Word only spreads once — after
+        /// someone follows it to the hatch, further days roll nothing, so a long
+        /// campaign cannot quietly repopulate the bunker off one conversation.
+        /// </summary>
         public bool RollRefugeeArrival(System.Random rng = null)
         {
-            if (!_state.hasBeenToldAboutBunker) return false;
+            if (!_state.hasBeenToldAboutBunker || _state.refugeeArrived) return false;
             rng ??= FallbackRng;
-            return rng.NextDouble() < RefugeeChancePerDay;
+            if (rng.NextDouble() >= RefugeeChancePerDay) return false;
+
+            _state.refugeeArrived = true;
+            OnRefugeeSent?.Invoke(_state);
+            return true;
         }
 
         // ── Flavor text ─────────────────────────────────────────────────

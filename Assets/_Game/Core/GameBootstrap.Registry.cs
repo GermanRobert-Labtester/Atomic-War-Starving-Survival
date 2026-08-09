@@ -315,6 +315,34 @@ namespace AtomicWar._Game.Core
                 _registry.DayGated("rebuilders", RegisterTickRebuildersDaily));
             _registry.RegisterPerSubstep("fuel_decay_daily",
                 _registry.DayGated("fuel_decay", RegisterTickFuelDecayDaily));
+            // Prompt #904 — word of the bunker spreading is the only part of the
+            // pianist encounter that happens on the clock rather than on a choice.
+            _registry.RegisterPerSubstep("pianist_daily",
+                _registry.DayGated("pianist", RegisterTickPianistDaily));
+        }
+
+        /// <summary>
+        /// Prompt #904 — once Matej has been told about the bunker, a small daily
+        /// chance that someone he passed it on to walks up to the hatch. Nothing
+        /// drove this roll before, so telling him set a flag and stopped there.
+        /// </summary>
+        private void RegisterTickPianistDaily(int day)
+        {
+            if (Pianist == null || Survivors == null) return;
+            if (!Pianist.RollRefugeeArrival(CreateSaltedRng(_worldSeed, "pianist_refugee"))) return;
+
+            var refugee = new Survivor
+            {
+                Id = "sv_pianist_refugee",
+                DisplayName = "Refugee",
+                CurrentRoomId = "entry"
+            };
+            Survivors.Add(refugee);
+            NeedsSystem?.Register(refugee);
+            RadiationSystem?.Register(refugee);
+            GameLog.Log(
+                $"[Pianist] Someone {Encounter_Pianist.PianistName} told about the bunker " +
+                $"has found the hatch on day {day}.");
         }
 
         private void RegisterTickFuelDecayDaily(int day)
@@ -452,6 +480,10 @@ namespace AtomicWar._Game.Core
                 "map_hazard_frozen_survivor",
                 // REPROMOTE-Item-001 — keycard find/unlock on expedition looting:
                 "item_keycards",
+                // Prompts #901/#903 — these resolve from expedition encounter choices.
+                // (The pianist also has a daily refugee roll, so it is tick-registered.)
+                "dead_letter_office",
+                "weather_station",
                 // REPROMOTE-Pet-001 — guard dog alert fires on hatch raid resolve start:
                 "pet_guard_dog",
                 // REPROMOTE-Weapon-001 — HMG defense power read on GetWeaponPower:

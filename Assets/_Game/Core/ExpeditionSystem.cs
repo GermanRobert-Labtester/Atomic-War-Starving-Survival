@@ -117,6 +117,18 @@ namespace AtomicWar._Game.Core
         // Prompt #67 — mutated flora / fauna rolled per looting tick.
         private MutatedEcosystemSystem _ecosystem;
 
+        // Prompts #901/#903/#904 — narrative encounter trackers. NarrativeEncounters
+        // registered the EncounterSOs, but nothing bound the classes that hold their
+        // outcomes, so the encounters printed their text and did nothing.
+        private Encounter_DeadLetterOffice _deadLetterOffice;
+        private Encounter_WeatherStation _weatherStation;
+        private Encounter_Pianist _pianist;
+
+        // Host hooks the narrative outcomes need. Both optional: an unbound host
+        // still resolves every other part of the choice.
+        private Action<string, float> _modifyFactionTrust;
+        private Action<string, bool> _setWorldFlag;
+
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
         public GeneratedMap GeneratedMap => _generatedMap;
@@ -153,6 +165,31 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public void BindEcosystem(MutatedEcosystemSystem ecosystem) =>
             _ecosystem = ecosystem;
+
+        /// <summary>Prompt #901 — wire the postal van so its choices resolve.</summary>
+        public void BindDeadLetterOffice(Encounter_DeadLetterOffice office) =>
+            _deadLetterOffice = office;
+
+        /// <summary>Prompt #903 — wire the weather station so its choices resolve.</summary>
+        public void BindWeatherStation(Encounter_WeatherStation station) =>
+            _weatherStation = station;
+
+        /// <summary>Prompt #904 — wire Matej so his choices resolve.</summary>
+        public void BindPianist(Encounter_Pianist pianist) =>
+            _pianist = pianist;
+
+        /// <summary>
+        /// Host hook for faction standing changes (delivering the bound letter).
+        /// </summary>
+        public void BindFactionTrustWriter(Action<string, float> modifyTrust) =>
+            _modifyFactionTrust = modifyTrust;
+
+        /// <summary>
+        /// Host hook for world flags the narrative outcomes set (forecast boost,
+        /// word of the bunker spreading).
+        /// </summary>
+        public void BindWorldFlagWriter(Action<string, bool> setWorldFlag) =>
+            _setWorldFlag = setWorldFlag;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;

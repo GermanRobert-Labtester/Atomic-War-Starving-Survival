@@ -161,6 +161,8 @@ namespace AtomicWar._Game.Core
             { "EcosystemSystem",         new[] { "ecosystem_daily", "ecosystem" } },
             { "HatchVisibilitySystem",    new[] { "hatch_visibility_daily", "hatch_visibility" } },
             { "CultMoralSystem",         new[] { "cult_moral" } },
+            // Prompt #904 — daily refugee roll once Matej has been told about us.
+            { "Pianist",                 new[] { "pianist_daily", "pianist" } },
             // Simulation systems
             { "WeaponMaintenanceSystem",  new[] { "weapon_maint" } },
             { "AntibioticResistSystem",   new[] { "antibiotic_resist" } },

@@ -36,6 +36,9 @@ namespace AtomicWar._Game.Core
             ApplyBloodToxicityBiteRetaliation(exp, selected, survivor, chosen, fled);
             // REPROMOTE-Encounter-001 — class roadblock Engage/Resolve when map/SO tags match.
             TryDispatchClassRoadblock(exp, selected, chosen, fled);
+            // Prompts #901/#903/#904 — the narrative encounters' outcomes live on
+            // their own classes; see ExpeditionSystem.Narrative.cs.
+            TryDispatchNarrativeEncounter(exp, selected, chosen, fled);
 
             if (fled)
                 TryProcessUxoFlee(exp);

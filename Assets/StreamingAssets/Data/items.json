@@ -585,6 +585,33 @@
     "disassembleYieldFraction": 0
   },
   {
+    "id": "solar_cell",
+    "displayName": "Solar Cell",
+    "description": "A cracked photovoltaic panel pried off a weather station. It still charges, slowly, on the four hours a day the ash thins enough to let light through.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 1.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 22.0,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "electronic_scrap",
+        "amount": 3
+      }
+    ],
+    "disassembleYieldFraction": 0
+  },
+  {
     "id": "chemicals",
     "displayName": "Chemicals",
     "description": "Solvents and reagents scavenged from labs and garages.",
