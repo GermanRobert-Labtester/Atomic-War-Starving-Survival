@@ -48,6 +48,54 @@ jobs:
           grep -q 'm_EditorVersion: 6000.5.5f1' ProjectSettings/ProjectVersion.txt
           echo "ProjectVersion pin OK: 6000.5.5f1"
 
+  # The generators are the source of truth for Assets/_Game/Data/Generated and
+  # Gameplay.unity. Without this gate they quietly become decoration: someone
+  # hand-edits a catalog or the scene, the next regeneration silently reverts it,
+  # and nothing ever says so.
+  regenerate:
+    name: Generated Assets Are Current
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-regen-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-regen-${{ env.UNITY_VERSION }}-
+
+      # targetPlatform is required by unity-builder even when buildMethod does
+      # no building; Linux is the one target installed on this image.
+      - uses: game-ci/unity-builder@v4
+        with:
+          projectPath: .
+          unityVersion: 6000.5.5f1
+          targetPlatform: StandaloneLinux64
+          buildMethod: AtomicWar._Game.Editor.CatalogGenerator.GenerateAll
+          allowDirtyBuild: true
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          projectPath: .
+          unityVersion: 6000.5.5f1
+          targetPlatform: StandaloneLinux64
+          buildMethod: AtomicWar._Game.Editor.GameplaySceneBuilder.BuildGameplayScene
+          allowDirtyBuild: true
+
+      - name: Fail if regenerated output differs from committed
+        run: |
+          if ! git diff --quiet -- Assets/_Game/Data/Generated Assets/Scenes/Gameplay.unity; then
+            echo "Regenerated assets differ from what is committed."
+            echo "Re-run Tools/ASHFALL/Generate Catalogs and Build Gameplay Scene, then commit."
+            git diff --stat -- Assets/_Game/Data/Generated Assets/Scenes/Gameplay.unity
+            exit 1
+          fi
+          echo "OK: generated assets are current."
+
   test:
     name: EditMode Tests
     needs: validate
