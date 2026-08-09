@@ -136,7 +136,7 @@ namespace AtomicWar._Game.Shelter
             ModulesSacrificed = false;
             if (layout != null)
             {
-                _slots = layout.BuildSlots();
+                _slots = layout.BuildSlots() ?? new List<StorageSlot>();
             }
         }
 

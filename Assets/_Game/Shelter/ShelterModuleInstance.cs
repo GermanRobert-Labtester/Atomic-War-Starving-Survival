@@ -74,6 +74,14 @@ namespace AtomicWar._Game.Shelter
         {
             if (!IsOperational || gameHours <= 0f) return;
 
+            if (_definition == null)
+            {
+                // Missing SO after a modded/custom save — degrade at a
+                // conservative default rate so the module can't run forever.
+                if (Fuel > 0f) Fuel = Mathf.Max(0f, Fuel - 0.5f * gameHours);
+                return;
+            }
+
             if (_definition is AirFiltrationModuleSO airSO)
             {
                 FilterHealth = Mathf.Max(0f, FilterHealth - airSO.DegradationRatePerHour * gameHours);
