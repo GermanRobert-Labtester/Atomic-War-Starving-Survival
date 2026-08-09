@@ -118,6 +118,13 @@ namespace AtomicWar._Game.Core
             if (_onGameStateChanged != null) GameState.OnPhaseChanged -= _onGameStateChanged;
             if (_onNeedsDied != null) NeedsSystem.OnDied -= _onNeedsDied;
             if (_onNeedChanged != null) NeedsSystem.OnNeedChanged -= _onNeedChanged;
+            if (_onDayTick_SetGameStateDay != null) TimeSystem.OnDayTick -= _onDayTick_SetGameStateDay;
+
+            // Static/singleton method-group subscriptions.
+            if (WorldPhaseSystem != null) TimeSystem.OnDayTick -= WorldPhaseSystem.OnDayTick;
+            TimeSystem.OnDayTick -= OnRadioAndWorldDayTick;
+            if (FlashpointChoreographer != null) TimeSystem.OnDayTick -= FlashpointChoreographer.OnDayTick;
+            if (WorldPhaseSystem != null) WorldPhaseSystem.OnNuclearExchange -= HandleNuclearExchange;
 
             // Companion-system cleanup.
             SaveSystem?.Dispose();

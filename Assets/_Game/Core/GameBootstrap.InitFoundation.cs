@@ -54,7 +54,8 @@ namespace AtomicWar._Game.Core
             // file recorded day 1 and VictoryProjectManager.DaysSurvived — which reads
             // GameState.Day off the save — always reported a one-day run.
             GameState.Day = TimeSystem.CurrentDay;
-            TimeSystem.OnDayTick += day => GameState.Day = day;
+            _onDayTick_SetGameStateDay = day => GameState.Day = day;
+            TimeSystem.OnDayTick += _onDayTick_SetGameStateDay;
 
             // Environment
             WeatherSystem = new WeatherSystem(_seasonProfile, _worldSeed);
