@@ -7041,5 +7041,25 @@
     "equipSlot": "",
     "tradeValue": 102.0,
     "empShielded": false
+  },
+  {
+    "id": "prewar_letter",
+    "displayName": "Pre-War Letter",
+    "description": "A sealed envelope, yellowed and brittle. The stamp is from a country that no longer exists. Someone wrote this to someone they loved, and it never arrived.",
+    "type": "Comfort",
+    "stackMax": 5,
+    "weight": 0.05,
+    "radProtection": 0.0,
+    "durability": 0.0,
+    "contamination": 0,
+    "hungerRestore": 0.0,
+    "thirstRestore": 0.0,
+    "healthEffect": 0.0,
+    "radCleanse": 0,
+    "moraleEffect": 1.5,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1.0,
+    "empShielded": false
   }
 ]
