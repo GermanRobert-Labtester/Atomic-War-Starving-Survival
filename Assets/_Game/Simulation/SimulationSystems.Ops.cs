@@ -47,6 +47,8 @@ namespace AtomicWar._Game.Simulation
         public const string AirlockRoomId = "airlock";
         private float _airlockDumpedWeight;
         private Survivors.PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         public float AirlockDumpedWeight => _airlockDumpedWeight;
         public event Action<float> OnLootDumped;
 
@@ -71,7 +73,10 @@ namespace AtomicWar._Game.Simulation
                 capacity *= _personalQuests.GetLogisticsMasterCarryCapacityMultiplier(hauler);
             float moved = Mathf.Min(_airlockDumpedWeight, capacity);
             _airlockDumpedWeight -= moved;
-            hauler.Needs.Fatigue = Mathf.Clamp(hauler.Needs.Fatigue + moved * HaulFatiguePerKg, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(hauler, NeedKind.Fatigue, moved * HaulFatiguePerKg);
+            else
+                hauler.Needs.Fatigue = Mathf.Clamp(hauler.Needs.Fatigue + moved * HaulFatiguePerKg, 0f, 100f);
             return moved;
         }
         public HaulingSave CaptureState() => new HaulingSave { AirlockDumpedWeight = _airlockDumpedWeight };

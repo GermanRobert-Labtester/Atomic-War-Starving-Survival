@@ -49,6 +49,8 @@ namespace AtomicWar._Game.Survivors
 
         private SkillProgressionSystem _progression;
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private readonly Dictionary<string, CombatCounters> _bySurvivor =
             new Dictionary<string, CombatCounters>();
 
@@ -290,9 +292,7 @@ namespace AtomicWar._Game.Survivors
         public static int GetDefaultFleeDropCount(int lootCount, float defaultDropFraction = 0.5f)
         {
             if (lootCount <= 0) return 0;
-            return Mathf.Clamp(
-                Mathf.CeilToInt(lootCount * Mathf.Clamp01(defaultDropFraction)),
-                1, lootCount);
+            return Mathf.Clamp( Mathf.CeilToInt(lootCount * Mathf.Clamp01(defaultDropFraction)), 1, lootCount);
         }
 
         /// <summary>

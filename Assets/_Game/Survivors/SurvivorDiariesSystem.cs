@@ -38,6 +38,9 @@ namespace AtomicWar._Game.Survivors
         private readonly Dictionary<string, List<SurvivorDiaryEntry>> _diariesBySurvivor =
             new Dictionary<string, List<SurvivorDiaryEntry>>();
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public event Action<Survivor, SurvivorDiaryEntry> OnDiaryEntryAdded;
         public event Action<Survivor, bool> OnDiaryRead; // survivor, wasCaught
 
@@ -108,6 +111,9 @@ namespace AtomicWar._Game.Survivors
             {
                 if (sv.Needs != null)
                 {
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -25f);
+                else
                     sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - 25f, 0f, 100f);
                 }
                 if (mentalBreak != null && mentalBreak.Affinity != null)

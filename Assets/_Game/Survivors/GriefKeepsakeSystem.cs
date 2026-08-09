@@ -6,6 +6,9 @@ namespace AtomicWar._Game.Survivors
 {
     public class GriefKeepsakeSystem
     {
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public event Action<Survivor, Survivor, string> OnKeepsakeCreated; // hoarder, deceased, itemId
         public event Action<Survivor, string> OnKeepsakeScrapped; // survivor, itemId
 
@@ -75,7 +78,10 @@ namespace AtomicWar._Game.Survivors
 
             if (sv.Needs != null)
             {
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - 40f, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -40f);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - 40f, 0f, 100f);
             }
 
             if (mentalBreak != null && rng != null)

@@ -34,6 +34,8 @@ namespace AtomicWar._Game.Survivors
             new Dictionary<string, PerkSO>();
 
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Prompt #235 — Polymath 3x action perk XP.</summary>
         public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>

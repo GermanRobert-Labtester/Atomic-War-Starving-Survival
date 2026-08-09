@@ -364,6 +364,7 @@ namespace AtomicWar._Game.Core
             // Entries run through a pool: evicted/cleared entries are recycled,
             // never collected, so 100-day fast-forward runs stay GC-flat.
             JournalSystem = new JournalSystem();
+            JournalSystem.SetNeedsSystem(NeedsSystem);
             _journalEntryPool = new GenericObjectPool<JournalEntry>(
                 () => new JournalEntry(),
                 e =>
@@ -418,6 +419,7 @@ namespace AtomicWar._Game.Core
             // empty — so the rest of the game continues to work; the Survivor
             // just never rolls for a break.
             MentalBreakSystem = new MentalBreakSystem();
+            MentalBreakSystem.SetNeedsSystem(NeedsSystem);
             if (_mentalBreakCatalog != null)
             {
                 foreach (var br in _mentalBreakCatalog.breaks)
@@ -492,6 +494,7 @@ namespace AtomicWar._Game.Core
             SurvivorDiaries = new SurvivorDiariesSystem();
             InternalLockSystem = new InternalLockSystem();
             SpatialPsychology = new SpatialPsychologySystem();
+            SpatialPsychology.SetNeedsSystem(NeedsSystem);
             GriefKeepsakes = new GriefKeepsakeSystem();
             HallucinationSystem = new AI.HallucinationSystem();
             MentorshipSystem = new MentorshipSystem();

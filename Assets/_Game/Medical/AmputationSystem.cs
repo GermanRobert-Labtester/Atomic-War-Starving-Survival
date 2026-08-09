@@ -62,6 +62,8 @@ namespace AtomicWar._Game.Medical
         private MedicalPerkSystem _medicalPerks;
         private Func<int> _getDay;
         private System.Random _rng;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<Survivors.Survivor, Survivors.Survivor> OnAmputationPerformed; // patient, surgeon
@@ -145,12 +147,18 @@ namespace AtomicWar._Game.Medical
 
             // Surgery costs.
             SurvivorNeedWrite.SetHealth(patient, patient.Needs.Health - SurgeryHealthCost);
-            patient.Needs.Morale = Mathf.Clamp(
-                patient.Needs.Morale - AmputationMoralePenalty, 0f, 100f);
-            surgeon.Needs.Fatigue = Mathf.Clamp(
-                surgeon.Needs.Fatigue + SurgeonFatigueCost, 0f, 100f);
-            surgeon.Needs.Morale = Mathf.Clamp(
-                surgeon.Needs.Morale - SurgeonMoralePenalty, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(patient, NeedKind.Morale, -(AmputationMoralePenalty));
+            else
+                patient.Needs.Morale = Mathf.Clamp(patient.Needs.Morale - AmputationMoralePenalty, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(surgeon, NeedKind.Fatigue, SurgeonFatigueCost);
+            else
+                surgeon.Needs.Fatigue = Mathf.Clamp(surgeon.Needs.Fatigue + SurgeonFatigueCost, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(surgeon, NeedKind.Morale, -(SurgeonMoralePenalty));
+            else
+                surgeon.Needs.Morale = Mathf.Clamp(surgeon.Needs.Morale - SurgeonMoralePenalty, 0f, 100f);
 
             // Apply Amputee disability.
             _amputees.Add(patientId);
@@ -192,10 +200,14 @@ namespace AtomicWar._Game.Medical
 
                 if (rng.NextDouble() < chance)
                 {
-                    sv.Needs.Fatigue = Mathf.Clamp(
-                        sv.Needs.Fatigue + PhantomPainFatigueSpike, 0f, 100f);
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - PhantomPainMoraleDrain, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Fatigue, PhantomPainFatigueSpike);
+                    else
+                        sv.Needs.Fatigue = Mathf.Clamp(sv.Needs.Fatigue + PhantomPainFatigueSpike, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -(PhantomPainMoraleDrain));
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - PhantomPainMoraleDrain, 0f, 100f);
                     _inflictAffliction?.Invoke(sv, AfflictionSO.Ids.PhantomPain);
                     OnPhantomPainEpisode?.Invoke(sv);
                 }

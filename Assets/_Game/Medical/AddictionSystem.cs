@@ -67,6 +67,8 @@ namespace AtomicWar._Game.Medical
         public Func<Survivors.Survivor, System.Random, bool> PanicDestroyHandler;
 
         private readonly System.Random _rng;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Set of item ids that carry the addictive tag.
         /// Populated by GameBootstrap from item catalog data.</summary>
@@ -208,11 +210,15 @@ namespace AtomicWar._Game.Medical
                 // Active withdrawal drains needs
                 if (sv.Needs != null)
                 {
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - WithdrawalMoraleDrainPerHour * gameHours, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -(WithdrawalMoraleDrainPerHour * gameHours));
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - WithdrawalMoraleDrainPerHour * gameHours, 0f, 100f);
                     SurvivorNeedWrite.AdjustHealth(sv, -WithdrawalHealthDrainPerHour * gameHours);
-                    sv.Needs.Fatigue = Mathf.Clamp(
-                        sv.Needs.Fatigue + WithdrawalFatigueDrainPerHour * gameHours, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Fatigue, WithdrawalFatigueDrainPerHour * gameHours);
+                    else
+                        sv.Needs.Fatigue = Mathf.Clamp(sv.Needs.Fatigue + WithdrawalFatigueDrainPerHour * gameHours, 0f, 100f);
                 }
 
                 // Accumulate recovery hours toward breaking the addiction.

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -47,6 +48,8 @@ namespace AtomicWar._Game.Shelter
         private Func<Shelter> _getShelter;
         private Func<Survivors.PetSystem> _getPetSystem;
         private Func<float> _getHygiene;     // from WasteSystem
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Public state --
         public float PestLevel => _pestLevel;
@@ -189,8 +192,10 @@ namespace AtomicWar._Game.Shelter
             float old = _pestLevel;
             SetPestLevel(_pestLevel - reduction);
 
-            hunter.Needs.Fatigue = Mathf.Clamp(
-                hunter.Needs.Fatigue + HuntRatsFatigueCost, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(hunter, NeedKind.Fatigue, HuntRatsFatigueCost);
+            else
+                hunter.Needs.Fatigue = Mathf.Clamp(hunter.Needs.Fatigue + HuntRatsFatigueCost, 0f, 100f);
 
             return old - _pestLevel;
         }

@@ -17,6 +17,8 @@ namespace AtomicWar._Game.Shelter
         private bool _hostilesCleared;
         private float _tunnelProgress;
         private ShelterPerkSystem _shelterPerks;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private System.Random _rng = new System.Random(124);
 
         public bool CanTunnel => true; // Gated by layout trait
@@ -54,8 +56,10 @@ namespace AtomicWar._Game.Shelter
             float fatMult = _shelterPerks != null
                 ? _shelterPerks.GetExcavationFatigueMultiplier(worker)
                 : 1f;
-            worker.Needs.Fatigue = Mathf.Clamp(
-                worker.Needs.Fatigue + TunnelFatiguePerHour * workHours * fatMult, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(worker, NeedKind.Fatigue, TunnelFatiguePerHour * workHours * fatMult);
+            else
+                worker.Needs.Fatigue = Mathf.Clamp(worker.Needs.Fatigue + TunnelFatiguePerHour * workHours * fatMult, 0f, 100f);
 
             // Cave-in risk while tunneling (Sandhog never triggers).
             if (_shelterPerks != null)

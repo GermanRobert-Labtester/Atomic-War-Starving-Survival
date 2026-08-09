@@ -42,6 +42,8 @@ namespace AtomicWar._Game.Medical
         private Func<string, Survivors.Survivor> _findSurvivor;
         private Action<Survivors.Survivor, string> _inflictAffliction;
         private Func<Survivors.Survivor, bool> _hasHealedAfflictions;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<Survivors.Survivor> OnScurvyOnset;
@@ -138,8 +140,10 @@ namespace AtomicWar._Game.Medical
                 // Scurvy morale drain.
                 if (_hasScurvy.Contains(sv.Id))
                 {
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - ScurvyMoraleDrainPerDay, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -(ScurvyMoraleDrainPerDay));
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - ScurvyMoraleDrainPerDay, 0f, 100f);
                 }
             }
         }

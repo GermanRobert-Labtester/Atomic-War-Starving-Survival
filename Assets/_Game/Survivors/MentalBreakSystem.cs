@@ -87,6 +87,8 @@ namespace AtomicWar._Game.Survivors
 
         private PersonalQuestSystem _personalQuests;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>
         /// #249 Matriarch / #251 Pollyanna — block mental breaks when trait rules say so.
@@ -458,7 +460,10 @@ namespace AtomicWar._Game.Survivors
                     {
                         continue;
                     }
-                    other.Needs.Morale = Mathf.Max(0f, other.Needs.Morale - drain);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(other, NeedKind.Morale, -(drain));
+                    else
+                        other.Needs.Morale = Mathf.Max(0f, other.Needs.Morale - drain);
                 }
             }
         }

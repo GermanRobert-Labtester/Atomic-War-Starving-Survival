@@ -97,6 +97,8 @@ namespace AtomicWar._Game.Medical
         public System.Func<Survivor, bool> IsHazmatEquipped;
 
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         public event Action OnMedicalStateChanged;
 

@@ -18,6 +18,9 @@ namespace AtomicWar._Game.Survivors
     /// </summary>
     public class PhantomIntruderSystem
     {
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         /// <summary>RadiationAnxiety must be at or above this to trigger (0..1).</summary>
         public const float AnxietyTriggerThreshold = 1.0f;
 
@@ -137,7 +140,13 @@ namespace AtomicWar._Game.Survivors
                 if (sv == null || !sv.IsAlive || sv.Needs == null) continue;
 
                 float hit = sv == paranoid ? ParanoidMoraleHit : BunkerMoraleHit;
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
+                if (_needsSystem != null)
+
+                    _needsSystem.Modify(sv, NeedKind.Morale, -(hit));
+
+                else
+
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
             }
 
             // 5. Resolve — the realization that nothing was there

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -21,6 +22,8 @@ namespace AtomicWar._Game.Shelter
         private readonly HashSet<string> _floodedRooms = new HashSet<string>();
         private float _floodAccumulator;
         private System.Random _rng;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         public IReadOnlyCollection<string> FloodedRooms => _floodedRooms;
         public bool IsFlooded(string roomId) => _floodedRooms.Contains(roomId);
@@ -79,7 +82,10 @@ namespace AtomicWar._Game.Shelter
             if (!_floodedRooms.Contains(roomId)) return false;
             if (worker == null || !worker.IsAlive) return false;
             if (hasSumpPump) { _floodedRooms.Remove(roomId); OnRoomDrained?.Invoke(roomId); return true; }
-            worker.Needs.Fatigue = Mathf.Clamp(worker.Needs.Fatigue + BucketFatiguePerHour, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(worker, NeedKind.Fatigue, BucketFatiguePerHour);
+            else
+                worker.Needs.Fatigue = Mathf.Clamp(worker.Needs.Fatigue + BucketFatiguePerHour, 0f, 100f);
             _floodedRooms.Remove(roomId);
             OnRoomDrained?.Invoke(roomId);
             return true;

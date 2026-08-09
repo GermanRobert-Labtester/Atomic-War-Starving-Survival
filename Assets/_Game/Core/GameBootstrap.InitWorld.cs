@@ -111,6 +111,7 @@ namespace AtomicWar._Game.Core
             ExcavationSystem = new ExcavationSystem(new System.Random(_worldSeed + 119));
             ExcavationSystem.SetNeedsSystem(NeedsSystem);
             FloodingSystem = new RoomFloodingSystem();
+            FloodingSystem.SetNeedsSystem(NeedsSystem);
             FloodingSystem.SetRng(new System.Random(_worldSeed + 120));
             // Prompt #806 — bilge pumps convert floodwater into purified cistern water.
             BilgePumps = new System_BilgePumps();
@@ -119,6 +120,7 @@ namespace AtomicWar._Game.Core
             CeilingCollapseSystem = new CeilingCollapseSystem();
             PerimeterTrapSystem = new PerimeterTrapSystem();
             TunnelingSystem = new TunnelingSystem();
+            TunnelingSystem.SetNeedsSystem(NeedsSystem);
             TunnelingSystem.SeedNeighbor(new System.Random(_worldSeed + 124));
             HatchVisibilitySystem = new HatchVisibilitySystem();
             // Prompt #658 — outdoor carrion attracts vultures (wired to CorpseSystem in InitLate).
@@ -138,6 +140,7 @@ namespace AtomicWar._Game.Core
             // Prompts #164–#178 — simulation systems
             NoiseSystem = new NoiseSystem();
             ClothingSystem = new ClothingDegradationSystem();
+            ClothingSystem.SetNeedsSystem(NeedsSystem);
             // Audit C-1: the wiring object is the single tick orchestrator for
             // the systems added in Prompts #119–#178. Created here so it can
             // hold a day-counter across substeps; TickSystems calls it once per
@@ -220,6 +223,7 @@ namespace AtomicWar._Game.Core
             PetSystem.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             VerminSystem = new VerminSystem(new System.Random(_worldSeed + 51));
+            VerminSystem.SetNeedsSystem(NeedsSystem);
             VerminSystem.Bind(
                 () => Shelter,
                 () => PetSystem,
