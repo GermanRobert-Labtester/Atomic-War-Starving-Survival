@@ -35,5 +35,9 @@
             <ui:Label name="stores-tooltip" class="diegetic-body" text="" />
             <ui:Label name="stores-hint" class="diegetic-hint" text="[I] next  ·  [Shift+I] prev  ·  [E] use" />
         </ui:VisualElement>
+
+        <ui:VisualElement name="workbench-panel" class="diegetic-panel workbench-panel hidden">
+            <ui:Label name="workbench-body" class="diegetic-body workbench-readout" text="" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

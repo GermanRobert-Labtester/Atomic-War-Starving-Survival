@@ -391,7 +391,7 @@ namespace AtomicWar._Game.UI
 
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
-            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud);
+            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi);
             return _diegeticHud;
         }
 

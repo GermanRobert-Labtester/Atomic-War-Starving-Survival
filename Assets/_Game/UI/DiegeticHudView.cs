@@ -31,6 +31,8 @@ namespace AtomicWar._Game.UI
         public const string EventTitleName = "event-title";
         public const string EventBodyName = "event-body";
         public const string EventChoicesName = "event-choices";
+        public const string WorkbenchPanelName = "workbench-panel";
+        public const string WorkbenchBodyName = "workbench-body";
 
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
@@ -55,6 +57,8 @@ namespace AtomicWar._Game.UI
         public Label EventTitle { get; private set; }
         public Label EventBody { get; private set; }
         public VisualElement EventChoices { get; private set; }
+        public VisualElement WorkbenchPanel { get; private set; }
+        public Label WorkbenchBody { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -118,9 +122,18 @@ namespace AtomicWar._Game.UI
             StoresPanel.Add(MakeHint("stores-hint", "[I] next  ·  [Shift+I] prev  ·  [E] use"));
             Root.Add(StoresPanel);
 
+            // WorkbenchUI already assembles a formatted, numbered readout
+            // (header, notes, [OK]/[--] lines) -- painted verbatim, like
+            // HatchAmmo/HatchArms paint provider-supplied text.
+            WorkbenchPanel = MakePanel(WorkbenchPanelName, "workbench-panel");
+            WorkbenchBody = MakeLabel(WorkbenchBodyName, "diegetic-body", "workbench-readout");
+            WorkbenchPanel.Add(WorkbenchBody);
+            Root.Add(WorkbenchPanel);
+
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
             SetVisible(EventPanel, false);
+            SetVisible(WorkbenchPanel, false);
             return Root;
         }
 
@@ -147,10 +160,13 @@ namespace AtomicWar._Game.UI
             EventTitle = Root.Q<Label>(EventTitleName);
             EventBody = Root.Q<Label>(EventBodyName);
             EventChoices = Root.Q<VisualElement>(EventChoicesName);
+            WorkbenchPanel = Root.Q<VisualElement>(WorkbenchPanelName);
+            WorkbenchBody = Root.Q<Label>(WorkbenchBodyName);
             // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
             return HatchPanel != null && EncounterPanel != null
-                && StoresPanel != null && VitalsPanel != null && EventPanel != null;
+                && StoresPanel != null && VitalsPanel != null && EventPanel != null
+                && WorkbenchPanel != null;
         }
 
         public void PaintHatch(bool open, string status, string ammoBreakdown, string armsPreview)
@@ -261,6 +277,20 @@ namespace AtomicWar._Game.UI
                 row.EnableInClassList("event-choice--disabled", !choices[i].IsEnabled);
                 EventChoices.Add(row);
             }
+        }
+
+        /// <summary>
+        /// Paint the workbench readout verbatim. WorkbenchUI.PanelSummary already
+        /// carries its own header, notes, and numbered [OK]/[--] lines (see
+        /// WorkbenchUI.RebuildPanel), so this panel does not re-parse it into rows
+        /// -- it is a formatted terminal readout, not a list of interactive rows.
+        /// </summary>
+        public void PaintWorkbench(bool open, string panelSummary)
+        {
+            if (WorkbenchPanel == null) return;
+            SetVisible(WorkbenchPanel, open);
+            if (!open) return;
+            if (WorkbenchBody != null) WorkbenchBody.text = panelSummary ?? string.Empty;
         }
 
         private static VisualElement MakeNeedRow(string id, NeedBarData data)

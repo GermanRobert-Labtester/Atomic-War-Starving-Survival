@@ -216,3 +216,18 @@
 .event-choice--disabled {
     opacity: 0.45;
 }
+
+/* Workbench readout — top-left when [B] open. WorkbenchUI already formats its
+   own header/notes/numbered lines, so this panel is a single terminal block. */
+.workbench-panel {
+    top: 16px;
+    left: 16px;
+    min-width: 340px;
+    max-width: 480px;
+    max-height: 440px;
+}
+
+.workbench-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}

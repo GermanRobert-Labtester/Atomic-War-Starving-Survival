@@ -185,6 +185,42 @@ namespace AtomicWar.Tests.PlayMode
                 "panel visibility must track EventModalUI.IsOpen");
         }
 
+        /// <summary>
+        /// Toggling WorkbenchUI must repaint the panel through the bound
+        /// OnWorkbenchUiChanged subscription alone -- no manual Paint() call --
+        /// which is what proves BindSources actually wired the two together
+        /// rather than the panel just happening to start hidden.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator WorkbenchPanel_VisibilityTracksTheWorkbenchUiState()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 30; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.WorkbenchPanel, "workbench panel should be bound from the UXML");
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.WorkbenchPanel.style.display.value,
+                "the panel starts hidden -- closed until [B] is pressed");
+
+            var workbench = hud.WorkbenchUI;
+            Assert.IsNotNull(workbench, "HUD must hold a WorkbenchUI widget");
+
+            workbench.Toggle();
+            yield return null;
+
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.Flex, view.WorkbenchPanel.style.display.value,
+                "toggling WorkbenchUI open must repaint the panel via the bound event, not just on Paint()");
+
+            workbench.Toggle();
+            yield return null;
+
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.WorkbenchPanel.style.display.value);
+        }
+
         [UnityTest]
         public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
         {
