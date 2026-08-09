@@ -77,12 +77,16 @@ namespace AtomicWar._Game.AI.Actions
             // during its own Tick. This action just resolves the AI choice — the survivor
             // spends the tick searching frantically, which is inherently unproductive.
             // We apply a fatigue cost to represent the panic exertion.
-            context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                context.Survivor.Needs.Fatigue + 2f, 0f, 100f);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Fatigue, 2f);
+            else
+                context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + 2f, 0f, 100f);
 
             // Small morale hit: the search is a desperate, humiliating act
-            context.Survivor.Needs.Morale = Mathf.Clamp(
-                context.Survivor.Needs.Morale - 1f, 0f, 100f);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Morale, -(1f));
+            else
+                context.Survivor.Needs.Morale = Mathf.Clamp(context.Survivor.Needs.Morale - 1f, 0f, 100f);
         }
     }
 }

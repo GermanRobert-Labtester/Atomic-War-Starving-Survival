@@ -1,4 +1,5 @@
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.AI.Actions
 {
@@ -51,8 +52,10 @@ namespace AtomicWar._Game.AI.Actions
                 nodeId, context.Survivor.ScienceSkill);
             if (charted)
             {
-                context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                    context.Survivor.Needs.Fatigue + 5f, 0f, 100f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(context.Survivor, NeedKind.Fatigue, 5f);
+                else
+                    context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + 5f, 0f, 100f);
             }
         }
     }

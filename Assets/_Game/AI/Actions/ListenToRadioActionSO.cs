@@ -90,10 +90,10 @@ namespace AtomicWar._Game.AI.Actions
                 radioModule.Fuel -= fuelNeeded;
 
                 // Consume survivor fatigue (listening is mentally draining)
-                context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                    context.Survivor.Needs.Fatigue + 10f * listenHours,
-                    0f, 100f
-                );
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(context.Survivor, NeedKind.Fatigue, 10f * listenHours);
+                else
+                    context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + 10f * listenHours, 0f, 100f);
 
                 Debug.Log($"[AI] {context.Survivor.DisplayName} listened to radio for {listenHours}h");
 

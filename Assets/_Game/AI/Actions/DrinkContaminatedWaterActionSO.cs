@@ -69,7 +69,10 @@ namespace AtomicWar._Game.AI.Actions
                 storage.ConsumeDirty(1f);
             }
 
-            context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - ThirstRestore);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Thirst, -(ThirstRestore));
+            else
+                context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - ThirstRestore);
 
             if (drankIrradiated)
             {

@@ -62,8 +62,10 @@ namespace AtomicWar._Game.AI.Actions
             }
 
             // Fallback without hatch system: still pay the fatigue cost
-            context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                context.Survivor.Needs.Fatigue + HatchDefenseSystem.GuardFatigueDrain, 0f, 100f);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Fatigue, HatchDefenseSystem.GuardFatigueDrain);
+            else
+                context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + HatchDefenseSystem.GuardFatigueDrain, 0f, 100f);
             context.Survivor.State = SurvivorState.Working;
         }
     }

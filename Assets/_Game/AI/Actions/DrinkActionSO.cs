@@ -59,7 +59,10 @@ namespace AtomicWar._Game.AI.Actions
 
                 float restore = slot.Item.thirstRestore > 0f ? slot.Item.thirstRestore : 50f;
                 if (!context.Inventory.Remove(slot.Item, 1)) return;
-                context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - restore);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(context.Survivor, NeedKind.Thirst, -(restore));
+                else
+                    context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - restore);
                 return;
             }
         }

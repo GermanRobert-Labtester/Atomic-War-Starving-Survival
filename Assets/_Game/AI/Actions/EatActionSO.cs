@@ -88,7 +88,10 @@ namespace AtomicWar._Game.AI.Actions
             if (food == null || context.Inventory == null)
             {
                 // Fallback when no inventory food (tests / empty stock): just reduce hunger
-                survivor.Needs.Hunger = Mathf.Max(0f, survivor.Needs.Hunger - 40f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(survivor, NeedKind.Hunger, -(40f));
+                else
+                    survivor.Needs.Hunger = Mathf.Max(0f, survivor.Needs.Hunger - 40f);
                 return;
             }
 
@@ -133,7 +136,10 @@ namespace AtomicWar._Game.AI.Actions
             if (quests.RollRefuseRationsAsTainted(survivor, context.Random))
             {
                 // Spikes own hunger by refusing — leave hunger high.
-                survivor.Needs.Hunger = Mathf.Min(100f, survivor.Needs.Hunger + 15f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(survivor, NeedKind.Hunger, 15f);
+                else
+                    survivor.Needs.Hunger = Mathf.Min(100f, survivor.Needs.Hunger + 15f);
                 return true;
             }
 
@@ -167,7 +173,10 @@ namespace AtomicWar._Game.AI.Actions
                 {
                     float hit = context.PersonalQuests.GetSelfishMissedRationMoraleHit(survivor);
                     if (hit > 0f)
-                        survivor.Needs.Morale = Mathf.Max(0f, survivor.Needs.Morale - hit);
+                        if (context.NeedsSystem != null)
+                            context.NeedsSystem.Modify(survivor, NeedKind.Morale, -(hit));
+                        else
+                            survivor.Needs.Morale = Mathf.Max(0f, survivor.Needs.Morale - hit);
                 }
                 break;
             }
@@ -191,9 +200,15 @@ namespace AtomicWar._Game.AI.Actions
         private static void ApplyFoodEffects(AIContext context, Survivor survivor, ItemDefinition food)
         {
             float restore = food.hungerRestore > 0f ? food.hungerRestore : 40f;
-            survivor.Needs.Hunger = Mathf.Max(0f, survivor.Needs.Hunger - restore);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(survivor, NeedKind.Hunger, -(restore));
+            else
+                survivor.Needs.Hunger = Mathf.Max(0f, survivor.Needs.Hunger - restore);
             if (food.moraleEffect != 0f)
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + food.moraleEffect, 0f, 100f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(survivor, NeedKind.Morale, food.moraleEffect);
+                else
+                    survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + food.moraleEffect, 0f, 100f);
             if (food.healthEffect == 0f) return;
 
             if (context.NeedsSystem != null)

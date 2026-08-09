@@ -71,8 +71,10 @@ namespace AtomicWar._Game.AI.Actions
                 CombatPerkSystem.SuppressingFireHaltHours);
 
             context.Survivor.State = SurvivorState.Working;
-            context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                context.Survivor.Needs.Fatigue + 8f, 0f, 100f);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Fatigue, 8f);
+            else
+                context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + 8f, 0f, 100f);
         }
 
         public static int CountAmmo(Inventory.Inventory inv)

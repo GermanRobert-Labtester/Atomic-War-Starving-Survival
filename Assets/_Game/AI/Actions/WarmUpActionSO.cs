@@ -55,7 +55,10 @@ namespace AtomicWar._Game.AI.Actions
         {
             if (context?.Survivor != null)
             {
-                context.Survivor.Needs.Warmth = Mathf.Min(100f, context.Survivor.Needs.Warmth + 40f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(context.Survivor, NeedKind.Warmth, 40f);
+                else
+                    context.Survivor.Needs.Warmth = Mathf.Min(100f, context.Survivor.Needs.Warmth + 40f);
             }
         }
     }
