@@ -70,7 +70,7 @@ namespace AtomicWar._Game.Core
 
         private void RestorePhantomAndRooms(SaveData data)
         {
-            if (_phantomIntruderSystem != null && data.PhantomCooldownKeys != null)
+            if (_phantomIntruderSystem != null && data.PhantomCooldownKeys != null && data.PhantomCooldownValues != null)
             {
                 _phantomIntruderSystem.Cooldowns.Clear();
                 for (int i = 0; i < data.PhantomCooldownKeys.Count && i < data.PhantomCooldownValues.Count; i++)
