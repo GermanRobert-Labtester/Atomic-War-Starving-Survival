@@ -46,6 +46,7 @@ namespace AtomicWar._Game.Core
             // director's relationship systems run on an orphan matrix that resets
             // to neutral on every load.
             BunkerSocial = new BunkerSocialDirector(MentalBreakSystem?.Affinity);
+            BunkerSocial.SetNeedsSystem(NeedsSystem);
             // Prompt #839 — crime gossip chain (affinity rot as rumors spread).
             Gossip = new System_Gossip();
             WireGossipSystem();

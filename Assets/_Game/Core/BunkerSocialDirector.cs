@@ -131,6 +131,13 @@ namespace AtomicWar._Game.Core
 
         public IReadOnlyList<Survivor> Survivors { get; set; }
 
+        public void SetNeedsSystem(NeedsSystem ns)
+        {
+            Romance?.SetNeedsSystem(ns);
+            Mutiny?.SetNeedsSystem(ns);
+            Pregnancy?.SetNeedsSystem(ns);
+        }
+
         /// <summary>Default leadership = morale + modest base so the system works sans wiring.</summary>
         private static float DefaultLeadership(Survivor sv) =>
             sv == null ? 0f : 0.4f + Mathf.Clamp01(sv.Needs.Morale / 100f);

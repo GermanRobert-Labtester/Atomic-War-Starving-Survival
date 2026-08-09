@@ -133,6 +133,9 @@ namespace AtomicWar._Game.Survivors
                 && string.IsNullOrEmpty(b.CurrentRoomId);
         }
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         // -----------------------------------------------------------------
         // State transitions (call once per day)
         // -----------------------------------------------------------------
@@ -196,8 +199,20 @@ namespace AtomicWar._Game.Survivors
                 var a = Find(survivors, pair.A);
                 var b = Find(survivors, pair.B);
                 if (a == null || b == null || !a.IsAlive || !b.IsAlive) continue;
-                a.Needs.Morale = Mathf.Clamp(a.Needs.Morale + LoversHopeAuraPerHour * gameHours, 0f, 100f);
-                b.Needs.Morale = Mathf.Clamp(b.Needs.Morale + LoversHopeAuraPerHour * gameHours, 0f, 100f);
+                if (_needsSystem != null)
+
+                    _needsSystem.Modify(a, NeedKind.Morale, LoversHopeAuraPerHour * gameHours);
+
+                else
+
+                    a.Needs.Morale = Mathf.Clamp(a.Needs.Morale + LoversHopeAuraPerHour * gameHours, 0f, 100f);
+                if (_needsSystem != null)
+
+                    _needsSystem.Modify(b, NeedKind.Morale, LoversHopeAuraPerHour * gameHours);
+
+                else
+
+                    b.Needs.Morale = Mathf.Clamp(b.Needs.Morale + LoversHopeAuraPerHour * gameHours, 0f, 100f);
             }
 
             // Broken-up pairs suffer the aura when sharing a room.
@@ -208,8 +223,20 @@ namespace AtomicWar._Game.Survivors
                 if (a == null || b == null || !a.IsAlive || !b.IsAlive) continue;
                 if (string.Equals(a.CurrentRoomId, b.CurrentRoomId, StringComparison.Ordinal))
                 {
-                    a.Needs.Morale = Mathf.Max(0f, a.Needs.Morale - BreakupAuraDrainPerHour * gameHours);
-                    b.Needs.Morale = Mathf.Max(0f, b.Needs.Morale - BreakupAuraDrainPerHour * gameHours);
+                    if (_needsSystem != null)
+
+                        _needsSystem.Modify(a, NeedKind.Morale, -(BreakupAuraDrainPerHour * gameHours));
+
+                    else
+
+                        a.Needs.Morale = Mathf.Max(0f, a.Needs.Morale - BreakupAuraDrainPerHour * gameHours);
+                    if (_needsSystem != null)
+
+                        _needsSystem.Modify(b, NeedKind.Morale, -(BreakupAuraDrainPerHour * gameHours));
+
+                    else
+
+                        b.Needs.Morale = Mathf.Max(0f, b.Needs.Morale - BreakupAuraDrainPerHour * gameHours);
                 }
             }
         }
@@ -241,7 +268,13 @@ namespace AtomicWar._Game.Survivors
         {
             var partner = GetAnxietyTarget(damaged, survivors);
             if (partner == null) return null;
-            partner.Needs.Morale = Mathf.Max(0f, partner.Needs.Morale - LoverDamageAnxietyMoraleHit);
+            if (_needsSystem != null)
+
+                _needsSystem.Modify(partner, NeedKind.Morale, -(LoverDamageAnxietyMoraleHit));
+
+            else
+
+                partner.Needs.Morale = Mathf.Max(0f, partner.Needs.Morale - LoverDamageAnxietyMoraleHit);
             OnLoverAnxietyHit?.Invoke(damaged, partner);
             return partner;
         }
@@ -564,6 +597,9 @@ namespace AtomicWar._Game.Survivors
 
         private int _lastCheckedDay = -1;
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         /// <summary>Leadership rank (Charisma/Strength proxy). Wired by Core; defaults to morale.</summary>
         public Func<Survivor, float> LeadershipScore;
 
@@ -681,7 +717,13 @@ namespace AtomicWar._Game.Survivors
                 {
                     var sv = survivors[i];
                     if (sv == null || !sv.IsAlive || sv.Id == LeaderId) continue;
-                    sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - MutinyFalloutMoraleHit);
+                    if (_needsSystem != null)
+
+                        _needsSystem.Modify(sv, NeedKind.Morale, -(MutinyFalloutMoraleHit));
+
+                    else
+
+                        sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - MutinyFalloutMoraleHit);
                 }
             }
             MutinyActive = false;
@@ -981,6 +1023,8 @@ namespace AtomicWar._Game.Survivors
         public event Action<bool> OnChildHopeBuffChanged;
 
         private readonly Dictionary<string, PregnancyRecord> _active = new Dictionary<string, PregnancyRecord>();
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private bool _childHopeActive;
         private bool _childBorn;
 
@@ -1036,8 +1080,20 @@ namespace AtomicWar._Game.Survivors
                 }
                 rec.ProgressDays++;
                 int trimester = 1 + (rec.ProgressDays / (PregnancyDurationDays / 3));
-                patient.Needs.Fatigue = Mathf.Min(100f, patient.Needs.Fatigue + PregnancyFatigueBasePerDay * trimester);
-                patient.Needs.Hunger = Mathf.Min(100f, patient.Needs.Hunger + PregnancyHungerPerDay);
+                if (_needsSystem != null)
+
+                    _needsSystem.Modify(patient, NeedKind.Fatigue, PregnancyFatigueBasePerDay * trimester);
+
+                else
+
+                    patient.Needs.Fatigue = Mathf.Min(100f, patient.Needs.Fatigue + PregnancyFatigueBasePerDay * trimester);
+                if (_needsSystem != null)
+
+                    _needsSystem.Modify(patient, NeedKind.Hunger, PregnancyHungerPerDay);
+
+                else
+
+                    patient.Needs.Hunger = Mathf.Min(100f, patient.Needs.Hunger + PregnancyHungerPerDay);
 
                 if (rec.ProgressDays >= PregnancyDurationDays)
                 {
@@ -1069,7 +1125,13 @@ namespace AtomicWar._Game.Survivors
             {
                 var sv = survivors[i];
                 if (sv == null || !sv.IsAlive) continue;
-                sv.Needs.Morale = Mathf.Min(100f, sv.Needs.Morale + ChildBornHopeBuff);
+                if (_needsSystem != null)
+
+                    _needsSystem.Modify(sv, NeedKind.Morale, ChildBornHopeBuff);
+
+                else
+
+                    sv.Needs.Morale = Mathf.Min(100f, sv.Needs.Morale + ChildBornHopeBuff);
             }
         }
 
