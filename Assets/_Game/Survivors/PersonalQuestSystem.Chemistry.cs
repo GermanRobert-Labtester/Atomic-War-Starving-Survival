@@ -322,7 +322,10 @@ namespace AtomicWar._Game.Survivors
             state.PrepperMreRemaining -= 1f;
             if (sv.HiddenItemIds != null)
                 sv.HiddenItemIds.Remove("mre_prewar");
-            sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - 30f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Hunger, -(30f));
+            else
+                sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - 30f);
             return true;
         }
 
@@ -371,7 +374,10 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetOutcastRoomMealMoraleHit(outcast, diner);
             if (d <= 0f) return;
-            diner.Needs.Morale = Mathf.Max(0f, diner.Needs.Morale - d);
+            if (_needsSystem != null)
+                _needsSystem.Modify(diner, NeedKind.Morale, -(d));
+            else
+                diner.Needs.Morale = Mathf.Max(0f, diner.Needs.Morale - d);
         }
 
         /// <summary>Radiotrophic: radiation heals instead of damages in high-rad zones.</summary>
@@ -388,7 +394,10 @@ namespace AtomicWar._Game.Survivors
             SurvivorNeedWrite.SetHealth(
                 sv,
                 Mathf.Min(sv.MaxHealthCap > 0f ? sv.MaxHealthCap : 100f, sv.Needs.Health + heal));
-            sv.Needs.Fatigue = Mathf.Max(0f, sv.Needs.Fatigue - heal);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Fatigue, -(heal));
+            else
+                sv.Needs.Fatigue = Mathf.Max(0f, sv.Needs.Fatigue - heal);
         }
 
         /// <summary>Reach 1000 mSv lifetime without dying.</summary>
@@ -510,7 +519,10 @@ namespace AtomicWar._Game.Survivors
                 return;
             }
             // Refuse food: hunger rises.
-            monk.Needs.Hunger = Mathf.Min(100f, monk.Needs.Hunger + 5f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(monk, NeedKind.Hunger, 5f);
+            else
+                monk.Needs.Hunger = Mathf.Min(100f, monk.Needs.Hunger + 5f);
         }
 
         public bool RefusesToEat(Survivor monk) => IsOnHungerStrike(monk);

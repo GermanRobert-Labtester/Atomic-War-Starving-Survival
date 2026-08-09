@@ -83,7 +83,10 @@ namespace AtomicWar._Game.Survivors
         {
             if (!NeedsConstantCleanWater(sv) || sv == null || !sv.IsAlive) return;
             if (drankCleanWaterToday) return;
-            sv.Needs.Fatigue = Mathf.Min(100f, sv.Needs.Fatigue + CaffeinatedFatigueCrash);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Fatigue, CaffeinatedFatigueCrash);
+            else
+                sv.Needs.Fatigue = Mathf.Min(100f, sv.Needs.Fatigue + CaffeinatedFatigueCrash);
         }
 
         /// <summary>Host: mark that this survivor drank clean water today (#285).</summary>
@@ -559,7 +562,10 @@ namespace AtomicWar._Game.Survivors
                 {
                     var s = inAdjacentRooms[i];
                     if (s == null || !s.IsAlive) continue;
-                    s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(s, NeedKind.Morale, aura);
+                    else
+                        s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
                     if (PlayInstrumentCuresMentalBreaks(musician)
                         && !string.IsNullOrEmpty(s.currentMentalBreakId))
                         s.currentMentalBreakId = null;

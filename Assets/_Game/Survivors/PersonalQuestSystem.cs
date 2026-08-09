@@ -798,6 +798,7 @@ namespace AtomicWar._Game.Survivors
         public const string ChildDeathIntelId = "intel_child_death";
 
         private SkillProgressionSystem _progression;
+        private NeedsSystem _needsSystem;
         private readonly Dictionary<string, QuestlineSO> _questlines =
             new Dictionary<string, QuestlineSO>();
         private readonly Dictionary<string, PersonalQuestState> _bySurvivor =
@@ -836,6 +837,8 @@ namespace AtomicWar._Game.Survivors
             _progression?.RegisterLatentExpertTraits();
             EnsureDefaultQuestlines();
         }
+
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>
         /// Optional dose applicator (host wires to RadiationSystem.Expose / AdjustDose).
@@ -2485,9 +2488,15 @@ namespace AtomicWar._Game.Survivors
             {
                 var s = survivors[i];
                 if (s == null || !s.IsAlive) continue;
-                s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + SermonMoraleBoost, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(s, NeedKind.Morale, SermonMoraleBoost);
+                else
+                    s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + SermonMoraleBoost, 0f, 100f);
             }
-            priest.Needs.Fatigue = Mathf.Clamp(priest.Needs.Fatigue + 10f, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(priest, NeedKind.Fatigue, 10f);
+            else
+                priest.Needs.Fatigue = Mathf.Clamp(priest.Needs.Fatigue + 10f, 0f, 100f);
             return true;
         }
 
@@ -3884,11 +3893,17 @@ namespace AtomicWar._Game.Survivors
                     if (s == null || !s.IsAlive || s.Id == target.Id) continue;
                     float absorb = GetSelflessMoraleAbsorb(s, remaining);
                     if (absorb <= 0f) continue;
-                    s.Needs.Morale = Mathf.Max(0f, s.Needs.Morale - absorb);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(s, NeedKind.Morale, -(absorb));
+                    else
+                        s.Needs.Morale = Mathf.Max(0f, s.Needs.Morale - absorb);
                     remaining -= absorb;
                 }
             }
-            target.Needs.Morale = Mathf.Max(0f, target.Needs.Morale - remaining);
+            if (_needsSystem != null)
+                _needsSystem.Modify(target, NeedKind.Morale, -(remaining));
+            else
+                target.Needs.Morale = Mathf.Max(0f, target.Needs.Morale - remaining);
             return remaining;
         }
 
@@ -4046,7 +4061,10 @@ namespace AtomicWar._Game.Survivors
         {
             float buff = GetChildInteractionHopeBuff(child, adult);
             if (buff > 0f)
-                adult.Needs.Morale = Mathf.Min(100f, adult.Needs.Morale + buff);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(adult, NeedKind.Morale, buff);
+                else
+                    adult.Needs.Morale = Mathf.Min(100f, adult.Needs.Morale + buff);
         }
 
         /// <summary>#251 Wasteland Scout: immune to Sniper encounters.</summary>
@@ -4080,7 +4098,10 @@ namespace AtomicWar._Game.Survivors
         public void ApplyMoraleDelta(Survivor sv, float delta)
         {
             if (sv == null) return;
-            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Morale, delta);
+            else
+                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
             ClampMoraleToCap(sv);
         }
 

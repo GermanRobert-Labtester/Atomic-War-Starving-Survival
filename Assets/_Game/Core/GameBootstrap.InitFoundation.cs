@@ -464,6 +464,7 @@ namespace AtomicWar._Game.Core
             // Prompts #214–#219 — personal quest engine + latent expert traits
             PersonalQuests = new PersonalQuestSystem();
             PersonalQuests.Bind(SkillProgression);
+            PersonalQuests.SetNeedsSystem(NeedsSystem);
             // MISC-007 — quest rad spikes / archetype lifetime seeds go through
             // RadiationSystem only (no direct survivor.RadiationDose writes on the
             // host path). Positive spikes use Expose so lifetime + events fire;

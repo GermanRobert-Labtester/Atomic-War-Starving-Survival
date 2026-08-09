@@ -133,7 +133,10 @@ namespace AtomicWar._Game.Survivors
             if (state.MedStudentHasPukedOnTrauma) return false;
             state.MedStudentHasPukedOnTrauma = true;
             student.Needs.Hygiene = Mathf.Max(0f, student.Needs.Hygiene - MedStudentPukeHygieneHit);
-            student.Needs.Fatigue = Mathf.Min(100f, student.Needs.Fatigue + MedStudentPukeFatigueHit);
+            if (_needsSystem != null)
+                _needsSystem.Modify(student, NeedKind.Fatigue, MedStudentPukeFatigueHit);
+            else
+                student.Needs.Fatigue = Mathf.Min(100f, student.Needs.Fatigue + MedStudentPukeFatigueHit);
             return true;
         }
 
@@ -945,7 +948,10 @@ namespace AtomicWar._Game.Survivors
                 if (s == null || !s.IsAlive || s.Id == synth.Id) continue;
                 if (string.IsNullOrEmpty(s.currentMentalBreakId))
                     s.currentMentalBreakId = "paranoia";
-                s.Needs.Morale = Mathf.Max(0f, s.Needs.Morale - 15f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(s, NeedKind.Morale, -(15f));
+                else
+                    s.Needs.Morale = Mathf.Max(0f, s.Needs.Morale - 15f);
             }
         }
 
@@ -994,7 +1000,10 @@ namespace AtomicWar._Game.Survivors
                 if (string.IsNullOrEmpty(dog.CurrentRoomId)
                     || !string.Equals(s.CurrentRoomId, dog.CurrentRoomId, StringComparison.Ordinal))
                     continue;
-                s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(s, NeedKind.Morale, aura);
+                else
+                    s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
             }
         }
 

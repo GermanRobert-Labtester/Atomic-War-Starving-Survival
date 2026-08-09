@@ -82,7 +82,10 @@ namespace AtomicWar._Game.Survivors
         public float ApplyAntiAuthorityOrderMorale(Survivor saboteur, Survivor orderGiver)
         {
             if (!LosesMoraleFromAuthorityOrder(saboteur, orderGiver)) return 0f;
-            saboteur.Needs.Morale = Mathf.Max(0f, saboteur.Needs.Morale - AntiAuthorityOrderMoraleHit);
+            if (_needsSystem != null)
+                _needsSystem.Modify(saboteur, NeedKind.Morale, -(AntiAuthorityOrderMoraleHit));
+            else
+                saboteur.Needs.Morale = Mathf.Max(0f, saboteur.Needs.Morale - AntiAuthorityOrderMoraleHit);
             return AntiAuthorityOrderMoraleHit;
         }
 
@@ -199,7 +202,10 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetStrictInventoryMoraleDelta(qm, inventoryNeatlySorted, inventoryFull, lowestResourceFrac);
             if (Mathf.Abs(d) < 0.001f) return;
-            qm.Needs.Morale = Mathf.Clamp(qm.Needs.Morale + d, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(qm, NeedKind.Morale, d);
+            else
+                qm.Needs.Morale = Mathf.Clamp(qm.Needs.Morale + d, 0f, 100f);
         }
 
         /// <summary>AI quirk: actively re-sort inventory, overriding player placements.</summary>
@@ -331,7 +337,10 @@ namespace AtomicWar._Game.Survivors
             OnQuestProgress?.Invoke(child, "unequipped_days", state.UnequippedWeaponDays);
 
             // Anxiety while unequipped.
-            child.Needs.Morale = Mathf.Max(0f, child.Needs.Morale - ChildSoldierAnxietyDebuff);
+            if (_needsSystem != null)
+                _needsSystem.Modify(child, NeedKind.Morale, -(ChildSoldierAnxietyDebuff));
+            else
+                child.Needs.Morale = Mathf.Max(0f, child.Needs.Morale - ChildSoldierAnxietyDebuff);
 
             if (state.UnequippedWeaponDays >= DroppingRifleDaysRequired)
                 CompleteQuestline(child, currentDay);
@@ -348,7 +357,10 @@ namespace AtomicWar._Game.Survivors
             if (!HasHyperEmpathetic(empath) || empath?.Needs == null) return;
             float diff = bunkerAverageMorale - empath.Needs.Morale;
             float delta = Mathf.Clamp(diff * 0.3f * gameHours, -1.5f * gameHours, 1.5f * gameHours);
-            empath.Needs.Morale = Mathf.Clamp(empath.Needs.Morale + delta, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(empath, NeedKind.Morale, delta);
+            else
+                empath.Needs.Morale = Mathf.Clamp(empath.Needs.Morale + delta, 0f, 100f);
         }
 
         /// <summary>AI quirk: prioritizes Comfort/Talk over own survival needs.</summary>
@@ -402,13 +414,19 @@ namespace AtomicWar._Game.Survivors
             float giveMorale = Mathf.Min(moraleAmount, empath.Needs.Morale);
 
             SurvivorNeedWrite.SetHealth(empath, Mathf.Max(1f, empath.Needs.Health - giveHp));
-            empath.Needs.Morale = Mathf.Max(0f, empath.Needs.Morale - giveMorale);
+            if (_needsSystem != null)
+                _needsSystem.Modify(empath, NeedKind.Morale, -(giveMorale));
+            else
+                empath.Needs.Morale = Mathf.Max(0f, empath.Needs.Morale - giveMorale);
             SurvivorNeedWrite.SetHealth(
                 target,
                 Mathf.Min(
                     target.MaxHealthCap > 0f ? target.MaxHealthCap : 100f,
                     target.Needs.Health + giveHp));
-            target.Needs.Morale = Mathf.Min(100f, target.Needs.Morale + giveMorale);
+            if (_needsSystem != null)
+                _needsSystem.Modify(target, NeedKind.Morale, giveMorale);
+            else
+                target.Needs.Morale = Mathf.Min(100f, target.Needs.Morale + giveMorale);
             return giveHp > 0f || giveMorale > 0f;
         }
 
@@ -555,8 +573,14 @@ namespace AtomicWar._Game.Survivors
                 return false;
             if (starving.Needs.Hunger > 30f) return false; // only when truly starving
 
-            martyr.Needs.Hunger = Mathf.Min(100f, martyr.Needs.Hunger + MartyrSecretFoodHungerSpike);
-            starving.Needs.Hunger = Mathf.Max(0f, starving.Needs.Hunger - 20f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(martyr, NeedKind.Hunger, MartyrSecretFoodHungerSpike);
+            else
+                martyr.Needs.Hunger = Mathf.Min(100f, martyr.Needs.Hunger + MartyrSecretFoodHungerSpike);
+            if (_needsSystem != null)
+                _needsSystem.Modify(starving, NeedKind.Hunger, -(20f));
+            else
+                starving.Needs.Hunger = Mathf.Max(0f, starving.Needs.Hunger - 20f);
             return true;
         }
 
@@ -625,7 +649,10 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetPatientMoraleAfterHealDelta(medic);
             if (Mathf.Abs(d) < 0.001f || patient == null || !patient.IsAlive) return;
-            patient.Needs.Morale = Mathf.Clamp(patient.Needs.Morale + d, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(patient, NeedKind.Morale, d);
+            else
+                patient.Needs.Morale = Mathf.Clamp(patient.Needs.Morale + d, 0f, 100f);
         }
 
         public bool CanCureChronicDisabilities(Survivor medic) => HasHumbledHealer(medic);

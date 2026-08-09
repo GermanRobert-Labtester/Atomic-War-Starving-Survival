@@ -99,7 +99,10 @@ namespace AtomicWar._Game.Survivors
             if (!HasMoralCompass(sheriff)
                 && !string.Equals(sheriff.ArchetypeId, SheriffId, StringComparison.Ordinal))
                 return;
-            sheriff.Needs.Morale = Mathf.Max(0f, sheriff.Needs.Morale - MoralCompassEvilHit);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sheriff, NeedKind.Morale, -(MoralCompassEvilHit));
+            else
+                sheriff.Needs.Morale = Mathf.Max(0f, sheriff.Needs.Morale - MoralCompassEvilHit);
             SurvivorNeedWrite.SetHealth(sheriff, Mathf.Max(1f, sheriff.Needs.Health - MoralCompassEvilHit * 0.5f));
         }
 
@@ -208,7 +211,10 @@ namespace AtomicWar._Game.Survivors
             if (!TriesToDelegateTasks(politician) || !IsDirtyLaborAction(actionId)) return 0f;
             // Quest days still count; morale hit remains until Statesman.
             if (HasTheStatesman(politician)) return 0f;
-            politician.Needs.Morale = Mathf.Max(0f, politician.Needs.Morale - SilverTongueLaborMoraleHit);
+            if (_needsSystem != null)
+                _needsSystem.Modify(politician, NeedKind.Morale, -(SilverTongueLaborMoraleHit));
+            else
+                politician.Needs.Morale = Mathf.Max(0f, politician.Needs.Morale - SilverTongueLaborMoraleHit);
             return SilverTongueLaborMoraleHit;
         }
 
@@ -361,7 +367,10 @@ namespace AtomicWar._Game.Survivors
         {
             if (!HasAgoraphile(nomad) || nomad == null || !nomad.IsAlive) return;
             if (!spentDayInside) return;
-            nomad.Needs.Morale = Mathf.Max(0f, nomad.Needs.Morale - AgoraphileBunkerMoraleHitPerDay);
+            if (_needsSystem != null)
+                _needsSystem.Modify(nomad, NeedKind.Morale, -(AgoraphileBunkerMoraleHitPerDay));
+            else
+                nomad.Needs.Morale = Mathf.Max(0f, nomad.Needs.Morale - AgoraphileBunkerMoraleHitPerDay);
             var state = GetOrCreate(nomad.Id);
             state.NomadInsideDays++;
         }
