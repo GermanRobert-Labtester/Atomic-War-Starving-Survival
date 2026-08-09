@@ -448,6 +448,8 @@ namespace AtomicWar._Game.Core
                 // REPROMOTE-Encounter-001 — class roadblock resolves from expedition psychology:
                 "encounter_roadblock",
                 "map_hazard_venus_trap",
+                // Prompt #902 — frozen survivor resolves on expedition looting arrival:
+                "map_hazard_frozen_survivor",
                 // REPROMOTE-Item-001 — keycard find/unlock on expedition looting:
                 "item_keycards",
                 // REPROMOTE-Pet-001 — guard dog alert fires on hatch raid resolve start:

@@ -7086,7 +7086,7 @@
     "id": "snow_goggles",
     "displayName": "Snow Goggles",
     "description": "Tinted lenses in a rubber frame. The strap is frayed but holds. Cuts the glare off the ash-fields and makes the horizon stop hurting.",
-    "type": "SurvivalGear",
+    "type": "Protective",
     "stackMax": 1,
     "weight": 0.2,
     "radProtection": 0.0,
@@ -7098,7 +7098,7 @@
     "radCleanse": 0,
     "moraleEffect": 1.0,
     "isEquipable": true,
-    "equipSlot": "head",
+    "equipSlot": "Head",
     "tradeValue": 6.0,
     "empShielded": false
   }

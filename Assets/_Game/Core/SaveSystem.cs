@@ -170,7 +170,6 @@ namespace AtomicWar._Game.Core
         private SurvivorDiariesSystem _survivorDiariesSystem;
         private RadioBroadcastSystem _radioBroadcastSystem;
         private CraftingSystem _craftingSystem;
-        private WorkbenchSystem _workbenchSystem;
         private LocationScavengingSystem _scavengingSystem;
         private PetSystem _petSystem;
         private FuelDecaySystem _fuelDecaySystem;
@@ -223,6 +222,7 @@ namespace AtomicWar._Game.Core
         private MapHazard_MagneticAnomaly _mapHazardMagneticAnomaly;
         private MapHazard_SinkholeCollapse _mapHazardSinkholeCollapse;
         private MapHazard_VenusTrap _mapHazardVenusTrap;
+        private MapHazard_FrozenSurvivor _mapHazardFrozenSurvivor;
         private MapAnomaly_AshDunes _mapAnomalyAshDunes;
         private MapAnomaly_BoilingLake _mapAnomalyBoilingLake;
         private MapAnomaly_Cherenkov _mapAnomalyCherenkov;

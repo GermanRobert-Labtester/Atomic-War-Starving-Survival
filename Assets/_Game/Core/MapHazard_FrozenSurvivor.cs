@@ -11,8 +11,10 @@ namespace AtomicWar._Game.Core
         public string hazard_id = "map_hazard_frozen_survivor";
         public string node_id = "";
         public bool is_alive = true;
+        public bool was_entered = false;
         public bool was_rescued = false;
         public bool was_looted = false;
+        public bool was_abandoned = false;
         public string survivor_name = "";
         public float body_temperature = 27f; // hypothermic but possibly alive
     }
@@ -66,18 +68,44 @@ namespace AtomicWar._Game.Core
             _state = new FrozenSurvivorState();
         }
 
-        /// <summary>Initialise the hazard for a specific node.</summary>
-        public void EnterNode(string nodeId, System.Random rng = null)
+        /// <summary>
+        /// Initialise the hazard for a specific node.
+        /// </summary>
+        /// <remarks>
+        /// Idempotent per node, matching <see cref="MapHazard_VenusTrap.EnterNode"/>.
+        /// The expedition host dispatches this on every looting arrival, and both this
+        /// hazard's rolls are seeded fixed per node — so an unconditional re-arm would
+        /// clear <c>was_rescued</c> and re-offer the identical, identically-successful
+        /// rescue on every revisit, farming the morale reward without bound.
+        /// </remarks>
+        /// <returns>
+        /// True when there is a live, unresolved encounter for the caller to present.
+        /// False once the person has been rescued or the body looted.
+        /// </returns>
+        public bool EnterNode(string nodeId, System.Random rng = null)
         {
+            string id = nodeId ?? string.Empty;
+            bool sameNode = !string.IsNullOrEmpty(id)
+                            && string.Equals(_state.node_id, id, StringComparison.Ordinal);
+
+            if (sameNode && _state.was_entered)
+            {
+                // Already armed for this node; spent once rescued or looted.
+                return !_state.was_rescued && !_state.was_looted;
+            }
+
             rng ??= SeededRandom.CreateFixed("frozen_survivor:" + (nodeId ?? "node"));
-            _state.node_id = nodeId ?? string.Empty;
+            _state.node_id = id;
+            _state.was_entered = true;
             _state.is_alive = rng.NextDouble() < 0.6f; // 60% chance they're still alive
             _state.was_rescued = false;
             _state.was_looted = false;
+            _state.was_abandoned = false;
             _state.survivor_name = RandomNames[rng.Next(RandomNames.Length)];
             _state.body_temperature = 25f + (float)rng.NextDouble() * 10f; // 25-35 C
 
             OnCorpseSpotted?.Invoke(_state.node_id);
+            return true;
         }
 
         /// <summary>
@@ -130,7 +158,10 @@ namespace AtomicWar._Game.Core
         /// </summary>
         public float WalkAway()
         {
-            if (_state.was_rescued) return 0f;
+            // Charged once per node: leaving them behind is the same choice each pass,
+            // and the host re-presents the encounter on every arrival until it resolves.
+            if (_state.was_rescued || _state.was_abandoned) return 0f;
+            _state.was_abandoned = true;
             OnWalkedAway?.Invoke(_state.survivor_name);
             return WalkAwayMoraleHit;
         }

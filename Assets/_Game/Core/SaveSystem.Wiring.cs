@@ -380,10 +380,13 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((CraftingSystemSave)o));
 
-        /// <summary>Workbench system (near-stateless; captured for RNG state & future-proofing).</summary>
+        /// <summary>
+        /// Workbench system. Genuinely stateless for save purposes — station wear
+        /// lives on CraftingSystem, which is captured separately — so this registers
+        /// an empty slot to reserve the save id for future mutable state.
+        /// </summary>
         public void SetWorkbenchSystem(WorkbenchSystem s)
         {
-            _workbenchSystem = s;
             if (s != null)
                 Register(new SaveableAdapter("workbench",
                     () => new WorkbenchSystemSave(),
@@ -671,6 +674,11 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _mapHazardVenusTrap, s, "map_hazard_venus_trap",
                 () => s.CaptureState(),
                 o => s.RestoreState((VenusTrapState)o));
+
+        public void SetMapHazardFrozenSurvivor(MapHazard_FrozenSurvivor s) =>
+            RegisterSystem(ref _mapHazardFrozenSurvivor, s, "map_hazard_frozen_survivor",
+                () => s.CaptureState(),
+                o => s.RestoreState((FrozenSurvivorState)o));
 
         public void SetMapAnomalyAshDunes(MapAnomaly_AshDunes s) =>
             RegisterSystem(ref _mapAnomalyAshDunes, s, "map_anomaly_ash_dunes",

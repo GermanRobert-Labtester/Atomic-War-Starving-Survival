@@ -116,6 +116,8 @@ namespace AtomicWar._Game.Core
             _floodedNodeSystem?.ProcessFloodedArrival(exp, _hasItem);
             // REPROMOTE-MapHazard-001 — swamp berry bushes may be carnivorous plants.
             TryVenusTrapOnLootingArrival(exp);
+            // Prompt #902 — a shape in the snow that might still be breathing.
+            TryFrozenSurvivorOnLootingArrival(exp);
             // REPROMOTE-Item-001 — secure doors / keycard nodes on arrival.
             TryKeycardDoorOnLootingArrival(exp);
             // Prompt #47 — location-bound forceOnArrival encounters
@@ -239,6 +241,66 @@ namespace AtomicWar._Game.Core
             // Strength: inverse of fatigue (exhausted scavengers lose arms).
             float strength = UnityEngine.Mathf.Clamp01(1f - (sv.Needs.Fatigue / 100f));
             _venusTrap.AttemptHarvest(sv.Id, strength);
+        }
+
+        /// <summary>
+        /// Prompt #902 — a body in the ash that might not be a body. Arms on looting
+        /// arrival during a blizzard, or on nodes explicitly tagged snowfield /
+        /// frozen_lake. The scavenger is out there alone, so the choice resolves on
+        /// their behalf: attempt the rescue only when there is body heat to spare,
+        /// otherwise walk away and carry it.
+        /// </summary>
+        private void TryFrozenSurvivorOnLootingArrival(ExpeditionState exp)
+        {
+            if (_frozenSurvivor == null || exp?.Survivor == null || !exp.Survivor.IsAlive) return;
+
+            string nodeId = exp.TargetLocationId;
+            bool frozenGround =
+                _weatherSystem != null && _weatherSystem.Current == WeatherKind.Blizzard;
+            if (!frozenGround && _generatedMap != null && !string.IsNullOrEmpty(nodeId))
+            {
+                var node = _generatedMap.GetNode(nodeId);
+                if (node != null && (node.HasTag("snowfield") || node.HasTag("frozen_lake")))
+                    frozenGround = true;
+            }
+            if (!frozenGround) return;
+
+            // Returns false once this node's encounter is spent, so revisits stay quiet.
+            if (!_frozenSurvivor.EnterNode(nodeId)) return;
+
+            var sv = exp.Survivor;
+            // Perception: morale proxy for fieldcraft, same basis as the venus trap check.
+            float perception = UnityEngine.Mathf.Clamp01(sv.Needs.Morale / 100f);
+            if (!_frozenSurvivor.CheckForSignsOfLife(perception))
+            {
+                // As far as they can tell it is just another corpse in the drift.
+                ApplyMoraleDelta(sv, -_frozenSurvivor.LootCorpse());
+                return;
+            }
+
+            // Warming someone else costs heat this scavenger may not be able to lose.
+            float warmthCost = _frozenSurvivor.GetRescueWarmthCost();
+            if (sv.Needs.Warmth <= warmthCost)
+            {
+                ApplyMoraleDelta(sv, -_frozenSurvivor.WalkAway());
+                return;
+            }
+
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Warmth, -warmthCost);
+
+            // AttemptRescue reads medical skill on a 0-100 scale; Survivor stores 0-1.
+            bool rescued = _frozenSurvivor.AttemptRescue(sv.EffectiveMedicalSkill * 100f);
+            ApplyMoraleDelta(sv, rescued
+                ? _frozenSurvivor.GetRescueSuccessMoraleBoost()
+                : -_frozenSurvivor.GetRescueFailMoraleHit());
+        }
+
+        private void ApplyMoraleDelta(Survivor sv, float delta)
+        {
+            if (sv == null || Mathf.Approximately(delta, 0f)) return;
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Morale, delta);
         }
 
         private void ApplyBicycleAndFloodedTick(ExpeditionState exp, float tickHours)

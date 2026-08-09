@@ -170,6 +170,7 @@ namespace AtomicWar._Game.Core
             // demoted ghost — SetMapHazardMagneticAnomaly skipped
             // demoted ghost — SetMapHazardSinkholeCollapse skipped
             SaveSystem.SetMapHazardVenusTrap(MapHazardVenusTrap);
+            SaveSystem.SetMapHazardFrozenSurvivor(MapHazardFrozenSurvivor);
             // demoted ghost — SetMapAnomalyAshDunes skipped
             // demoted ghost — SetMapAnomalyBoilingLake skipped
             // demoted ghost — SetMapAnomalyCherenkov skipped

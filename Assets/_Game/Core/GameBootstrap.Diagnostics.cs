@@ -214,6 +214,7 @@ namespace AtomicWar._Game.Core
             { "MapHazardMagneticAnomaly",new[] { "map_hazard_magnetic_anomaly" } },
             { "MapHazardSinkholeCollapse", new[] { "map_hazard_sinkhole_collapse" } },
             { "MapHazardVenusTrap",      new[] { "map_hazard_venus_trap" } },
+            { "MapHazardFrozenSurvivor", new[] { "map_hazard_frozen_survivor" } },
             { "MapAnomalyAshDunes",      new[] { "map_anomaly_ash_dunes" } },
             { "MapAnomalyBoilingLake",   new[] { "map_anomaly_boiling_lake" } },
             { "MapAnomalyCherenkov",     new[] { "map_anomaly_cherenkov" } },
