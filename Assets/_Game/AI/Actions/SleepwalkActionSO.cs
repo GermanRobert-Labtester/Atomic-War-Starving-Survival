@@ -36,7 +36,8 @@ namespace AtomicWar._Game.AI.Actions
                 context.InternalLockSystem,
                 rng,
                 out _,
-                context.RadiationSystem);
+                context.RadiationSystem,
+                context.NeedsSystem);
         }
 
         public float ScoreAction(Survivor sv, InternalLockSystem lockSystem)
@@ -52,7 +53,8 @@ namespace AtomicWar._Game.AI.Actions
             InternalLockSystem lockSystem,
             System.Random rng,
             out SleepwalkHazard hazard,
-            RadiationSystem radiation = null)
+            RadiationSystem radiation = null,
+            NeedsSystem needsSystem = null)
         {
             hazard = SleepwalkHazard.WanderOutsideWithoutSuit;
             if (sv == null || !sv.IsAlive) return false;
@@ -77,11 +79,17 @@ namespace AtomicWar._Game.AI.Actions
                         sv.RadiationDose = Mathf.Clamp(sv.RadiationDose + 20f, 0f, 100f);
                     break;
                 case SleepwalkHazard.OpenHatch:
-                    sv.Needs.Warmth = Mathf.Clamp(sv.Needs.Warmth - 30f, 0f, 100f);
+                    if (needsSystem != null)
+                        needsSystem.Modify(sv, NeedKind.Warmth, -30f);
+                    else
+                        sv.Needs.Warmth = Mathf.Clamp(sv.Needs.Warmth - 30f, 0f, 100f);
                     break;
                 case SleepwalkHazard.EatRawRations:
                     // Hunger: higher = worse; eating reduces hunger.
-                    sv.Needs.Hunger = Mathf.Clamp(sv.Needs.Hunger - 15f, 0f, 100f);
+                    if (needsSystem != null)
+                        needsSystem.Modify(sv, NeedKind.Hunger, -15f);
+                    else
+                        sv.Needs.Hunger = Mathf.Clamp(sv.Needs.Hunger - 15f, 0f, 100f);
                     if (radiation != null)
                         radiation.Expose(sv, 10f, 1f);
                     else

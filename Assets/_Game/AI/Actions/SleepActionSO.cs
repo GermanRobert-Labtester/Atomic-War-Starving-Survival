@@ -96,7 +96,7 @@ namespace AtomicWar._Game.AI.Actions
                 }
             }
 
-            ApplySleepResult(context.Survivor, result);
+            ApplySleepResult(context.Survivor, result, context.NeedsSystem);
             // #268 Restless: fatigue never recovers past 80% cap.
             if (context.PersonalQuests != null)
             {
@@ -158,12 +158,20 @@ namespace AtomicWar._Game.AI.Actions
                 context.AreRoomsAdjacent);
         }
 
-        public static void ApplySleepResult(Survivor survivor, SleepResult result)
+        public static void ApplySleepResult(Survivor survivor, SleepResult result, NeedsSystem needsSystem = null)
         {
             if (survivor == null || !survivor.IsAlive) return;
 
-            survivor.Needs.Fatigue = Mathf.Max(0f, survivor.Needs.Fatigue - result.FatigueRestored);
-            survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + result.MoraleDelta, 0f, 100f);
+            if (needsSystem != null)
+            {
+                needsSystem.Modify(survivor, NeedKind.Fatigue, -result.FatigueRestored);
+                needsSystem.Modify(survivor, NeedKind.Morale, result.MoraleDelta);
+            }
+            else
+            {
+                survivor.Needs.Fatigue = Mathf.Max(0f, survivor.Needs.Fatigue - result.FatigueRestored);
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + result.MoraleDelta, 0f, 100f);
+            }
             if (Mathf.Abs(result.HealthDelta) > 0.001f)
             {
                 SurvivorNeedWrite.AdjustHealth(survivor, result.HealthDelta);

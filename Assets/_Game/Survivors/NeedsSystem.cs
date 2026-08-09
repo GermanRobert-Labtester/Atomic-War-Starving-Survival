@@ -170,7 +170,8 @@ namespace AtomicWar._Game.Survivors
                 _getEffectiveDaylightHours(),
                 growLight,
                 _lightProfile,
-                ignoreDarknessMorale: ignoreDarkness);
+                ignoreDarknessMorale: ignoreDarkness,
+                needsSystem: this);
         }
 
         private void ApplyCriticalNeedConsequences(Survivor survivor, float gameHours)

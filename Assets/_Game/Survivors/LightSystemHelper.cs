@@ -29,7 +29,8 @@ namespace AtomicWar._Game.Survivors
             float        effectiveDaylightHours,
             bool         growLightActive,
             LightProfile lightProfile,
-            bool         ignoreDarknessMorale = false)
+            bool         ignoreDarknessMorale = false,
+            NeedsSystem  needsSystem = null)
         {
             if (sv == null || !sv.IsAlive || lightProfile == null || gameHours <= 0f)
                 return;
@@ -63,9 +64,12 @@ namespace AtomicWar._Game.Survivors
             // Prompt #209 — Night Terror: zero Morale penalty from total darkness.
             if (sv.IsListless && !ignoreDarknessMorale)
             {
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale - lightProfile.listlessMoraleDrainPerHour * gameHours,
-                    0f, 100f);
+                if (needsSystem != null)
+                    needsSystem.Modify(sv, NeedKind.Morale, -lightProfile.listlessMoraleDrainPerHour * gameHours);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale - lightProfile.listlessMoraleDrainPerHour * gameHours,
+                        0f, 100f);
             }
 
             // 5. VitaminD proxy — slow accumulation/decay
@@ -93,9 +97,12 @@ namespace AtomicWar._Game.Survivors
                 SurvivorNeedWrite.SetHealth(sv, Mathf.Max(1f, sv.Needs.Health - dmg));
                 if (!ignoreDarknessMorale)
                 {
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours,
-                        0f, 100f);
+                    if (needsSystem != null)
+                        needsSystem.Modify(sv, NeedKind.Morale, -lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(
+                            sv.Needs.Morale - lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours,
+                            0f, 100f);
                 }
             }
         }

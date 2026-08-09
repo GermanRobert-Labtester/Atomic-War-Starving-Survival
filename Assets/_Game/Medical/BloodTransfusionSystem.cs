@@ -102,6 +102,9 @@ namespace AtomicWar._Game.Medical
             _inflictAffliction = inflictAffliction;
         }
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         /// <summary>Get or assign a random blood type for a survivor (distribution: O=44%, A=42%, B=10%, AB=4%).</summary>
         public BloodType GetBloodType(string survivorId)
         {
@@ -160,13 +163,19 @@ namespace AtomicWar._Game.Medical
 
             // Donor cost.
             SurvivorNeedWrite.SetHealth(donor, donor.Needs.Health - TransfusionDonorHealthCost);
-            donor.Needs.Fatigue = Mathf.Clamp(donor.Needs.Fatigue + TransfusionDonorFatigue, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(donor, NeedKind.Fatigue, TransfusionDonorFatigue);
+            else
+                donor.Needs.Fatigue = Mathf.Clamp(donor.Needs.Fatigue + TransfusionDonorFatigue, 0f, 100f);
 
             if (compatible)
             {
                 // Heal BloodLoss on recipient.
                 SurvivorNeedWrite.AdjustHealth(recipient, TransfusionBloodLossHeal);
-                recipient.Needs.Morale = Mathf.Clamp(recipient.Needs.Morale + 5f, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(recipient, NeedKind.Morale, 5f);
+                else
+                    recipient.Needs.Morale = Mathf.Clamp(recipient.Needs.Morale + 5f, 0f, 100f);
             }
             else
             {

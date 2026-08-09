@@ -54,6 +54,7 @@ namespace AtomicWar._Game.Core
         private void InitMedicalBodySystems()
         {
             BloodTransfusion = new BloodTransfusionSystem(new System.Random(_worldSeed + 55));
+            BloodTransfusion.SetNeedsSystem(NeedsSystem);
             BloodTransfusion.Bind(
                 id => Survivors?.Find(s => s.Id == id),
                 (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
