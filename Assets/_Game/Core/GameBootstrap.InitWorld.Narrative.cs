@@ -35,6 +35,7 @@ namespace AtomicWar._Game.Core
             // Prompt #6 — Phantom Intruders System
             // ───────────────────────────────────────────────────────────
             PhantomIntruders = new PhantomIntruderSystem();
+            PhantomIntruders.SetNeedsSystem(NeedsSystem);
             PhantomIntruders.ConsumeAmmoHandler = amount =>
             {
                 if (Inventory == null || _itemCatalog == null) return false;

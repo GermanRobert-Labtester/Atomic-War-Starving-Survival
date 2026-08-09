@@ -445,9 +445,11 @@ namespace AtomicWar._Game.Core
             // Prompts #179–#181 — Action-driven progression
             // ───────────────────────────────────────────────────────────
             SkillProgression = new SkillProgressionSystem();
+            SkillProgression.SetNeedsSystem(NeedsSystem);
             SkillProgression.RegisterDefaultPerks();
             // Prompts #182–#188 — combat milestone perks (jam/stealth/ammo/CQ/traps/flee/kills)
             CombatPerks = new CombatPerkSystem();
+            CombatPerks.SetNeedsSystem(NeedsSystem);
             CombatPerks.Bind(SkillProgression);
             // Prompts #189–#194 — survival / wasteland-digestion milestone perks
             SurvivalPerks = new SurvivalPerkSystem();
@@ -496,6 +498,7 @@ namespace AtomicWar._Game.Core
             SpatialPsychology = new SpatialPsychologySystem();
             SpatialPsychology.SetNeedsSystem(NeedsSystem);
             GriefKeepsakes = new GriefKeepsakeSystem();
+            GriefKeepsakes.SetNeedsSystem(NeedsSystem);
             HallucinationSystem = new AI.HallucinationSystem();
             MentorshipSystem = new MentorshipSystem();
 

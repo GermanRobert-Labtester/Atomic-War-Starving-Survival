@@ -34,6 +34,7 @@ namespace AtomicWar._Game.Core
         private void InitAddictionSystem()
         {
             Addiction = new AddictionSystem(CreateSaltedRng(_worldSeed, "addiction"));
+            Addiction.SetNeedsSystem(NeedsSystem);
             if (_itemCatalog != null)
             {
                 string[] addictiveIds = { "morphine", "anti_rad", "painkiller", "stimulant" };
@@ -73,6 +74,7 @@ namespace AtomicWar._Game.Core
                 (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
 
             Mutagenesis = new RadiationMutagenesisSystem();
+            Mutagenesis.SetNeedsSystem(NeedsSystem);
             Mutagenesis.Bind(
                 getPartyAverageRadiation: GetPartyAverageLifetimeRadiation,
                 inflictAffliction: (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
