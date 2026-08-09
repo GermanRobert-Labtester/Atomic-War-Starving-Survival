@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c435409392f226314af858cb1a531fc5, type: 3}
+  m_Name: LocationCatalog
+  m_EditorClassIdentifier: AtomicWar._Game.Data::AtomicWar._Game.Data.LocationCatalogSO
+  locations:
+  - {fileID: 11400000, guid: fb20f171eb48017339d74bb7ffd8f3c4, type: 2}
+  - {fileID: 11400000, guid: 05991b7fe61f9a4f7b3f1dd7c19d5db1, type: 2}
+  - {fileID: 11400000, guid: b7914fb33addd78c2aeda411037a562b, type: 2}
+  - {fileID: 11400000, guid: 24282ccd1882f3c56a36bd0caa67c388, type: 2}
+  - {fileID: 11400000, guid: 0fa9249a1839dedcb97c5242602cefff, type: 2}

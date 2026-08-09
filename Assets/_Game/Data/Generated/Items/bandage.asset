@@ -29,3 +29,12 @@ MonoBehaviour:
   healthEffect: 30
   radCleanse: 0
   moraleEffect: 0
+  empShielded: 0
+  tradeValue: 10
+  tradeTier: 6
+  scrapValue: []
+  repairRecipe:
+    costs: []
+    hours: 0.5
+    requiresTools: 1
+  disassembleYieldFraction: 0.5

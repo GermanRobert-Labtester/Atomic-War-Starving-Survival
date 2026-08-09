@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3829547680934e9845426660c23196, type: 3}
+  m_Name: quality_tobacco_leaf
+  m_EditorClassIdentifier: AtomicWar._Game.Inventory::AtomicWar._Game.Inventory.ItemDefinition
+  id: quality_tobacco_leaf
+  displayName: Quality Tobacco Leaf
+  description: Cured leaf. Smoother.
+  iconRef: {fileID: 0}
+  type: 10
+  stackMax: 20
+  weight: 0.05
+  radProtection: 0
+  durability: 0
+  isEquipable: 0
+  equipSlot: 0
+  contamination: 0
+  hungerRestore: 0
+  thirstRestore: 0
+  healthEffect: 0
+  radCleanse: 0
+  moraleEffect: 0
+  empShielded: 0
+  tradeValue: 3
+  tradeTier: 1
+  scrapValue: []
+  repairRecipe:
+    costs: []
+    hours: 0.5
+    requiresTools: 1
+  disassembleYieldFraction: 0.5
