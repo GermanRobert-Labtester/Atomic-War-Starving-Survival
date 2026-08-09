@@ -47,6 +47,33 @@ namespace AtomicWar._Game.Crafting
             _inventory = inventory != null ? inventory : throw new ArgumentNullException(nameof(inventory));
         }
 
+        /// <summary>
+        /// CRAFT-003 hardened: optional overflow stash for completed crafts that
+        /// cannot fit in the main inventory. The host wires this from
+        /// GameBootstrap so a successful craft always places its result SOMEWHERE
+        /// (a "hot bar", a crate in the bunker, a post office box at the entrance).
+        /// Without this, a full inventory silently eats the result. Null is allowed
+        /// for tests / partial hosts; in that case the craft rolls back instead
+        /// of losing the result.
+        /// </summary>
+        public Inventory.Inventory OverflowStash { get; set; }
+
+        /// <summary>
+        /// CRAFT-003 rollback: return the consumed ingredients to the inventory
+        /// when a craft cannot place its result. Used only when OverflowStash is
+        /// not wired (the no-stash fallback path).
+        /// </summary>
+        private void RefundIngredients(Recipe recipe)
+        {
+            if (recipe?.ingredients == null || _inventory == null) return;
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                var ing = recipe.ingredients[i];
+                if (ing?.item == null || ing.amount <= 0) continue;
+                _inventory.Add(ing.item, ing.amount);
+            }
+        }
+
         /// <summary>Prompt #191–#193 — moonshine unlock + high-yield medical crafts.</summary>
         public void BindSurvivalPerks(SurvivalPerkSystem perks, Func<int> getDay = null)
         {
@@ -116,6 +143,9 @@ namespace AtomicWar._Game.Crafting
 
         /// <summary>Number of crafts currently in progress.</summary>
         public int ActiveCraftCount => _active.Count;
+
+        /// <summary>In-progress crafts (mirrors ExpeditionSystem.ActiveExpeditions).</summary>
+        public IReadOnlyList<ActiveCraft> ActiveCrafts => _active;
 
         /// <summary>Register a station as available for crafting.</summary>
         public void AddStation(CraftingStation station)
@@ -237,7 +267,7 @@ namespace AtomicWar._Game.Crafting
             }
 
             float duration = recipe.craftingTimeHours;
-            if (crafter != null && crafter.HasDisability("tremors"))
+            if (crafter != null && crafter.HasDisability(DisabilityId.Tremors))
             {
                 duration *= 2.0f; // 50% action speed penalty
             }
@@ -310,10 +340,44 @@ namespace AtomicWar._Game.Crafting
                 amount = _personalQuests.ApplyAlchemistYield(crafter, amount, _rng);
             }
 
-            if (result != null && amount > 0)
-                _inventory.Add(result, amount);
-
+            // Resolve the station once up front so the overflow-rollback path can
+            // repair its wear (if the craft is rolled back below).
             var station = GetStation(recipe.requiredStationId);
+
+            // CRAFT-003 hardened: Add() can fail on a full inventory (capacity, weight,
+            // or stack overflow). Pre-fix, the crafted item was silently lost: ingredients
+            // had been consumed at craft start, station wear was applied, and the
+            // completion events fired — all while the result was dropped on the floor.
+            // Now the result is preserved: if the bag can't take it, it sits in the
+            // overflow stash for later retrieval. If the stash is unavailable (test
+            // host), the craft is rolled back and no events fire — the player keeps
+            // their ingredients and station wear.
+            if (result != null && amount > 0)
+            {
+                bool placed = _inventory.Add(result, amount);
+                if (!placed)
+                {
+                    if (OverflowStash != null)
+                    {
+                        OverflowStash.Add(result, amount);
+                        Debug.LogWarning($"[CraftingSystem] '{recipe.id}' craft produced {amount}× '{result.id}' " +
+                                         $"but inventory is full. Stashed in overflow for later retrieval.");
+                    }
+                    else
+                    {
+                        // Test/host without overflow: refund the ingredients and the
+                        // station wear so the craft cleanly failed. This avoids the
+                        // silent-loss class of bug.
+                        Debug.LogWarning($"[CraftingSystem] '{recipe.id}' craft produced {amount}× '{result.id}' " +
+                                         $"but inventory is full and no overflow stash is wired; ingredients refunded.");
+                        RefundIngredients(recipe);
+                        if (station != null)
+                            station.Repair(StationWearPerCraft);
+                        return; // skip station wear, skill counter, and event
+                    }
+                }
+            }
+
             if (station != null)
                 station.Degrade(StationWearPerCraft);
 
@@ -381,21 +445,52 @@ namespace AtomicWar._Game.Crafting
 
         public void SetRecipeLookup(Func<string, Recipe> lookup) => _recipeLookup = lookup;
 
+        /// <summary>
+        /// Survivor lookup used to rebind <see cref="ActiveCraft.Crafter"/> on restore.
+        /// CrafterId is persisted, but Crafter itself is [NonSerialized]; without this
+        /// a craft saved mid-run completes with a null crafter and silently loses the
+        /// crafter's Pharmacologist / Alchemist yield perks.
+        /// </summary>
+        private Func<string, Survivor> _survivorLookup;
+
+        public void SetSurvivorLookup(Func<string, Survivor> lookup) => _survivorLookup = lookup;
+
         public void RestoreState(CraftingSystemSave save)
         {
             _active.Clear();
             if (save?.ActiveCrafts == null) return;
+
+            // Without a recipe lookup every craft below is dropped. That is a wiring
+            // bug (SetRecipeLookup must run before restore), not a content change, and
+            // it silently empties the player's craft queue — say so once.
+            if (_recipeLookup == null && save.ActiveCrafts.Length > 0)
+                Debug.LogWarning(
+                    $"[CraftingSystem] Restoring {save.ActiveCrafts.Length} craft(s) with no recipe lookup wired; " +
+                    "all of them will be dropped. Call SetRecipeLookup before RestoreState.");
+
             for (int i = 0; i < save.ActiveCrafts.Length; i++)
             {
                 var sc = save.ActiveCrafts[i];
                 if (sc == null || string.IsNullOrEmpty(sc.RecipeId)) continue;
                 Recipe recipe = _recipeLookup?.Invoke(sc.RecipeId);
-                if (recipe == null) continue; // recipe removed from catalog — drop the craft
+                if (recipe == null)
+                {
+                    // Recipe genuinely gone from the catalog: dropping is correct, but
+                    // the player loses queued work, so leave a trace.
+                    if (_recipeLookup != null)
+                        Debug.LogWarning(
+                            $"[CraftingSystem] Dropping active craft '{sc.RecipeId}': recipe not in catalog.");
+                    continue;
+                }
                 _active.Add(new ActiveCraft
                 {
                     Recipe = recipe,
-                    HoursRemaining = Mathf.Max(0f, sc.HoursRemaining)
-                    // Crafter is [NonSerialized] — restored by caller if needed
+                    HoursRemaining = Mathf.Max(0f, sc.HoursRemaining),
+                    // Crafter is [NonSerialized]; rebind it from the persisted
+                    // CrafterId so completion-time perks survive a save/load.
+                    Crafter = string.IsNullOrEmpty(sc.CrafterId)
+                        ? null
+                        : _survivorLookup?.Invoke(sc.CrafterId)
                 });
             }
         }

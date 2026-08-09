@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// Drafted teenagers. Killing one causes the rest to surrender and drop StandardIssueRifles;
     /// executing surrendered conscripts imposes a heavy morale penalty.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Conscripts
     {
         private ConscriptsState _state = new ConscriptsState();

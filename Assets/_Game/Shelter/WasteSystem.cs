@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -55,6 +56,9 @@ namespace AtomicWar._Game.Shelter
         private readonly System.Random _rng;
         private Func<Shelter> _getShelter;
         private Func<IReadOnlyList<Survivors.Survivor>> _getSurvivors;
+
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Public state --
         public float AccumulatedWaste => _accumulatedWaste;
@@ -174,8 +178,11 @@ namespace AtomicWar._Game.Shelter
             float removed = Mathf.Min(_accumulatedWaste, LatrineCapacity * 0.5f);
             _accumulatedWaste -= removed;
 
-            carrier.Needs.Fatigue = Mathf.Clamp(
-                carrier.Needs.Fatigue + OutsideDisposalFatigue, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(carrier, NeedKind.Fatigue, OutsideDisposalFatigue);
+            else
+                carrier.Needs.Fatigue = Mathf.Clamp(
+                    carrier.Needs.Fatigue + OutsideDisposalFatigue, 0f, 100f);
 
             // Radiation exposure is applied by the caller (GameBootstrap) via
             // OnOutsideDisposal to keep WasteSystem free of Core assembly refs.
@@ -194,7 +201,10 @@ namespace AtomicWar._Game.Shelter
             if (survivor == null || !survivor.IsAlive) return 0f;
             float old = _hygiene;
             SetHygiene(Mathf.Min(100f, _hygiene + SoapHygieneRestore));
-            survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 5f, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(survivor, NeedKind.Morale, 5f);
+            else
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 5f, 0f, 100f);
             return _hygiene - old;
         }
 

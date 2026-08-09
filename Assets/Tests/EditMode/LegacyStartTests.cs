@@ -184,16 +184,9 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_RoundTrip_LegacyStart()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_legacy_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("legacy");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var willA = new LastWillSystem();
                 willA.GenerateGraveSite(
                     "grave_player_bunker", 7, 11,
@@ -207,25 +200,8 @@ namespace AtomicWar.Tests.EditMode
                 legacyA.BeginLegacyRun();
                 legacyA.ExcavateRoom("entry");
 
-                SaveSystem Make(LastWillSystem will, System_LegacyStart legacy)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetLastWillSystem(will);
-                    ss.SetLegacyStartSystem(legacy);
-                    return ss;
-                }
+                SaveSystem Make(LastWillSystem will, System_LegacyStart legacy) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetLastWillSystem(will); ss.SetLegacyStartSystem(legacy); });
 
                 Assert.IsTrue(Make(willA, legacyA).Save("legacy_slot"));
 
@@ -238,8 +214,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.IsTrue(legacyB.IsRoomExcavated("entry"));
                 Assert.AreEqual(1, legacyB.GetCorpseLocations().Count);
                 Assert.AreEqual("Mara", legacyB.GetCorpseLocations()[0].survivor_id);
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

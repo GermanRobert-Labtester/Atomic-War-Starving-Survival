@@ -42,9 +42,26 @@ namespace AtomicWar._Game.Core
                 }
                 catch (Exception ex)
                 {
+                    // MISC-001: do not write a "successful" save that silently dropped
+                    // a subsystem. Re-throw so Save() returns false and the previous
+                    // slot file is left intact.
                     Debug.LogError($"[SaveSystem] ISaveable.CaptureState failed for '{s.SaveId}': {ex.Message}");
+                    throw;
                 }
             }
+
+            // Audit 1-E: after capture, verify every non-null registered saveable was
+            // captured. A mismatch means a system was registered but its CaptureState
+            // entry was lost (null reference in _saveables, duplicate SaveId, or a
+            // registration-after-capture race).
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            if (data.SubsystemSaveIds.Count != _saveables.Count)
+            {
+                Debug.LogWarning($"[SaveSystem] Captured {data.SubsystemSaveIds.Count} subsystems " +
+                                 $"but {_saveables.Count} are registered. Some subsystem states may be " +
+                                 "missing from this save payload.");
+            }
+#endif
         }
 
         /// <summary>
@@ -77,7 +94,11 @@ namespace AtomicWar._Game.Core
                     // Infer the type from a fresh CaptureState() call and deserialize.
                     // Small allocation during load (acceptable).
                     object template = target.CaptureState();
-                    if (template == null) continue;
+                    if (template == null)
+                    {
+                        Debug.LogWarning($"[SaveSystem] ISaveable.CaptureState returned null for '{id}' — skipping restore.");
+                        continue;
+                    }
                     object state = JsonUtility.FromJson(json, template.GetType());
                     target.RestoreState(state);
                 }
@@ -106,7 +127,11 @@ namespace AtomicWar._Game.Core
                 try
                 {
                     object template = target.CaptureState();
-                    if (template == null) continue;
+                    if (template == null)
+                    {
+                        Debug.LogWarning($"[SaveSystem] ISaveable.CaptureState returned null for '{id}' (FailFastRestore) — skipping restore.");
+                        continue;
+                    }
                     object state = JsonUtility.FromJson(json, template.GetType());
                     prepared.Add((target, state, id));
                 }

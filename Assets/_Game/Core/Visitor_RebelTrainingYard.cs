@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// High concentration of traps and barricades. Loot is mostly ScrapMetal and Explosives.
     /// If Military attacks node (Skirmish), player can flank military for massive Rebel trust (+50).
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_RebelTrainingYard
     {
         private RebelTrainingYardState _state = new RebelTrainingYardState();

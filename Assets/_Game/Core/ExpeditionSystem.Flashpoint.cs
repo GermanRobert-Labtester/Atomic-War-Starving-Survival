@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -34,8 +35,11 @@ namespace AtomicWar._Game.Core
             // 1. Sever comms
             exp.isCommsSevered = true;
 
-            // 2. Acute-dose spike
-            exp.Survivor.AcuteDoseWindow += FlashpointAcuteDoseSpike;
+            // 2. Acute-dose spike, scaled by how long the survivor has been in the
+            // field. RAD-3C: a flat spike gave a survivor caught an hour from the
+            // hatch the same acute window as one three days deep, which made the
+            // stance/timing decisions around a flashpoint meaningless.
+            exp.Survivor.AcuteDoseWindow += FlashpointAcuteDoseSpike * GetFlashpointDoseScale(exp);
 
             // 3. Trauma affliction (broken bones / shockwave)
             if (_medicalSystem != null)
@@ -56,6 +60,22 @@ namespace AtomicWar._Game.Core
             if (exp.IsPushingLuck) exp.IsPushingLuck = false;
 
             OnFlashpointIntercepted?.Invoke(exp);
+        }
+
+        /// <summary>
+        /// RAD-3C: duration multiplier for the flashpoint acute-dose spike. One
+        /// expedition tick is one game hour (see <c>Tick</c>), so
+        /// <see cref="ExpeditionState.CurrentTick"/> is elapsed field hours.
+        /// Clamped so a very short run still hurts and a very long one cannot
+        /// deliver an unbounded window.
+        /// </summary>
+        internal static float GetFlashpointDoseScale(ExpeditionState exp)
+        {
+            if (exp == null) return MinFlashpointDoseScale;
+            return Mathf.Clamp(
+                exp.CurrentTick / FlashpointDoseReferenceHours,
+                MinFlashpointDoseScale,
+                MaxFlashpointDoseScale);
         }
 
         private void ResolveFlashpointBehavior(ExpeditionState exp)
@@ -127,7 +147,7 @@ namespace AtomicWar._Game.Core
                     if (_shelter != null)
                     {
                         _shelter.AddBunkerContamination(LetThemInContaminationRadsPerHour);
-                        Debug.Log($"[Flashpoint] LetThemIn: bunker contamination +{LetThemInContaminationRadsPerHour} rph " +
+                        GameLog.Log($"[Flashpoint] LetThemIn: bunker contamination +{LetThemInContaminationRadsPerHour} rph " +
                                   $"(now {_shelter.BunkerContamination:F1}) after admitting {survivorName}.");
                     }
                     CompleteExpedition(exp);
@@ -141,12 +161,15 @@ namespace AtomicWar._Game.Core
                     if (exp.Survivor != null && _radSystem != null)
                     {
                         _radSystem.Expose(exp.Survivor, 10f, 2f);
-                        exp.Survivor.Needs.Morale = Mathf.Clamp(exp.Survivor.Needs.Morale - 15f, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(exp.Survivor, NeedKind.Morale, -15f);
+                        else
+                            exp.Survivor.Needs.Morale = Mathf.Clamp(exp.Survivor.Needs.Morale - 15f, 0f, 100f);
                     }
                     if (_shelter != null)
                     {
                         _shelter.AddBunkerContamination(ForceDeconContaminationRadsPerHour);
-                        Debug.Log($"[Flashpoint] ForceDecon: bunker contamination +{ForceDeconContaminationRadsPerHour} rph " +
+                        GameLog.Log($"[Flashpoint] ForceDecon: bunker contamination +{ForceDeconContaminationRadsPerHour} rph " +
                                   $"(now {_shelter.BunkerContamination:F1}) from {survivorName}'s strip-down.");
                     }
                     CompleteExpedition(exp);
@@ -164,7 +187,7 @@ namespace AtomicWar._Game.Core
                     exp.Phase = ExpeditionPhase.Failed;
                     OnExpeditionFailed?.Invoke(exp, "denied_entry");
                     RemoveExpedition(exp);
-                    Debug.Log($"[Flashpoint] DenyEntry: {survivorName} died outside the hatch; " +
+                    GameLog.Log($"[Flashpoint] DenyEntry: {survivorName} died outside the hatch; " +
                               $"{affected} other survivor(s) lost {DenyEntryMoralePenaltyForOtherSurvivors} morale.");
                     break;
             }
@@ -187,9 +210,12 @@ namespace AtomicWar._Game.Core
                 var sv = _survivors[i];
                 if (sv == null || !sv.IsAlive) continue;
                 if (!string.IsNullOrEmpty(dyingSurvivorId) && sv.Id == dyingSurvivorId) continue;
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale - DenyEntryMoralePenaltyForOtherSurvivors,
-                    0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -DenyEntryMoralePenaltyForOtherSurvivors);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale - DenyEntryMoralePenaltyForOtherSurvivors,
+                        0f, 100f);
                 affected++;
             }
             return affected;

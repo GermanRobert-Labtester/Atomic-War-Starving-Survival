@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -116,7 +117,7 @@ namespace AtomicWar._Game.Core
             string archivePath = Path.Combine(dir, $"{baseName}_archive_{timestamp}{ext}");
 
             File.Copy(logPath, archivePath, overwrite: true);
-            Debug.Log($"[LogRotation] Archived log ({sizeBytes / 1024 / 1024.0:F1} MB) to: {archivePath}");
+            GameLog.Log($"[LogRotation] Archived log ({sizeBytes / 1024 / 1024.0:F1} MB) to: {archivePath}");
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace AtomicWar._Game.Core
                     fs.SetLength(0);
                     fs.Flush();
                 }
-                Debug.Log("[LogRotation] Truncated active log file.");
+                GameLog.Log("[LogRotation] Truncated active log file.");
             }
             catch (IOException)
             {
@@ -200,7 +201,7 @@ namespace AtomicWar._Game.Core
             }
 
             if (deleted > 0)
-                Debug.Log($"[LogRotation] Deleted {deleted} old archive file(s).");
+                GameLog.Log($"[LogRotation] Deleted {deleted} old archive file(s).");
         }
     }
 }

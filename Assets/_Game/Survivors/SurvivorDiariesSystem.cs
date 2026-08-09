@@ -38,6 +38,9 @@ namespace AtomicWar._Game.Survivors
         private readonly Dictionary<string, List<SurvivorDiaryEntry>> _diariesBySurvivor =
             new Dictionary<string, List<SurvivorDiaryEntry>>();
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public event Action<Survivor, SurvivorDiaryEntry> OnDiaryEntryAdded;
         public event Action<Survivor, bool> OnDiaryRead; // survivor, wasCaught
 
@@ -58,7 +61,7 @@ namespace AtomicWar._Game.Survivors
             System.Random rng)
         {
             if (gameHours <= 0f || survivors == null) return;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("survivordiariessystem");
 
             for (int i = 0; i < survivors.Count; i++)
             {
@@ -98,7 +101,7 @@ namespace AtomicWar._Game.Survivors
             float customCatchRoll = -1f)
         {
             if (sv == null) return null;
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("survivordiariessystem");
 
             float catchChance = Mathf.Clamp(0.25f + (sv.PerceivedRadRisk * 0.4f), 0.1f, 0.85f);
             double roll = customCatchRoll >= 0f ? customCatchRoll : rng.NextDouble();
@@ -108,6 +111,9 @@ namespace AtomicWar._Game.Survivors
             {
                 if (sv.Needs != null)
                 {
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -25f);
+                else
                     sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - 25f, 0f, 100f);
                 }
                 if (mentalBreak != null && mentalBreak.Affinity != null)

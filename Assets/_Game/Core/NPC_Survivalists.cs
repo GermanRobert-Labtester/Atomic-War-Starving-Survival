@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Preppers in HazmatSuits carrying AssaultRifles. Extremely passive, highly lethal.
     /// Only trades for Ammunition or Fuel. Wipes out early-game players if attacked.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Survivalists
     {
         private SurvivalistsState _state = new SurvivalistsState();

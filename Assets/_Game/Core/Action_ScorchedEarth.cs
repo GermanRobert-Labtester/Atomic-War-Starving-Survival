@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// trigger GeneratorOverload. Kills everyone inside but destroys all loot
     /// so Factions get nothing. A spiteful end.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_ScorchedEarth
     {
         private ScorchedEarthState _state = new ScorchedEarthState();

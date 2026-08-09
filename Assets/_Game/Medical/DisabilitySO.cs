@@ -31,12 +31,17 @@ namespace AtomicWar._Game.Medical
         /// <summary>Multiplier applied to medical and crafting action speeds (1.0 = normal, 0.5 = 50% speed).</summary>
         public float actionSpeedMultiplier = 1f;
 
+        /// <summary>
+        /// Aliases of <see cref="AtomicWar._Game.Survivors.DisabilityId"/>, kept so
+        /// existing Medical call sites keep compiling. Do not redeclare the literals
+        /// here — that duplication is what let the ids drift apart.
+        /// </summary>
         public static class Ids
         {
-            public const string Limp = "limp";
-            public const string ScarredLungs = "scarred_lungs";
-            public const string Tremors = "tremors";
-            public const string OneEye = "one_eye";
+            public const string Limp = AtomicWar._Game.Survivors.DisabilityId.Limp;
+            public const string ScarredLungs = AtomicWar._Game.Survivors.DisabilityId.ScarredLungs;
+            public const string Tremors = AtomicWar._Game.Survivors.DisabilityId.Tremors;
+            public const string OneEye = AtomicWar._Game.Survivors.DisabilityId.OneEye;
         }
     }
 }

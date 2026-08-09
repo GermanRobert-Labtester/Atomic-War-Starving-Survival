@@ -32,6 +32,8 @@ namespace AtomicWar._Game.Core
         private JournalSystem _journal;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
         private Func<int> _getDay;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private bool _unlocked;
 #pragma warning disable CS0414 // State flag retained for future save/load and diagnostics.
         private bool _frequenciesInjected;
@@ -152,16 +154,32 @@ namespace AtomicWar._Game.Core
 
         public void DestroyRuntimeAssets()
         {
+            // MISC-003: DestroyImmediate is for editor/import time; play mode should
+            // use Destroy so assets are cleaned up at end-of-frame safely.
             for (int i = 0; i < _runtimeFreqs.Count; i++)
             {
                 if (_runtimeFreqs[i] != null)
-                    UnityEngine.Object.DestroyImmediate(_runtimeFreqs[i]);
+                {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying) UnityEngine.Object.DestroyImmediate(_runtimeFreqs[i]);
+                    else UnityEngine.Object.Destroy(_runtimeFreqs[i]);
+#else
+                    UnityEngine.Object.Destroy(_runtimeFreqs[i]);
+#endif
+                }
             }
             _runtimeFreqs.Clear();
             for (int i = 0; i < _runtimeBroadcasts.Count; i++)
             {
                 if (_runtimeBroadcasts[i] != null)
-                    UnityEngine.Object.DestroyImmediate(_runtimeBroadcasts[i]);
+                {
+#if UNITY_EDITOR
+                    if (!Application.isPlaying) UnityEngine.Object.DestroyImmediate(_runtimeBroadcasts[i]);
+                    else UnityEngine.Object.Destroy(_runtimeBroadcasts[i]);
+#else
+                    UnityEngine.Object.Destroy(_runtimeBroadcasts[i]);
+#endif
+                }
             }
             _runtimeBroadcasts.Clear();
         }
@@ -175,7 +193,10 @@ namespace AtomicWar._Game.Core
             {
                 var s = list[i];
                 if (s == null || !s.IsAlive) continue;
-                s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - amount, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(s, NeedKind.Morale, -amount);
+                else
+                    s.Needs.Morale = Mathf.Clamp(s.Needs.Morale - amount, 0f, 100f);
             }
         }
 

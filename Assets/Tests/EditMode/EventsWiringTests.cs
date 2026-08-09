@@ -19,37 +19,6 @@ namespace AtomicWar.Tests.EditMode
     {
         private const float Eps = 1e-3f;
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_events_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         [Test]
         public void Brawl_Start_Capture()
         {
@@ -514,7 +483,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MultiEvent_SaveSlot_RoundTrip()
         {
-            string dir = TempDir("multi");
+            string dir = SaveSystemTestFactory.TempDir("events_multi");
             try
             {
                 var brawl = new Event_Brawl();
@@ -556,7 +525,7 @@ namespace AtomicWar.Tests.EditMode
                 var war = new Event_WarlordSuccession();
                 war.AssassinateLeader("fac_z", new System.Random(2));
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetEventBrawl(brawl);
                     ss.SetEventFeralRescue(feral);
@@ -599,7 +568,7 @@ namespace AtomicWar.Tests.EditMode
                 var pact2 = new Event_EuthanasiaPact();
                 var war2 = new Event_WarlordSuccession();
 
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetEventBrawl(brawl2);
                     ss.SetEventFeralRescue(feral2);

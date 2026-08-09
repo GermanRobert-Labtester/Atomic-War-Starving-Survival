@@ -74,7 +74,7 @@ namespace AtomicWar._Game.Shelter
     /// RaidStrength vs ShelterSecurity + EquippedWeapons. Guard duty boosts security
     /// while draining Fatigue. No combat minigame — ammo, durability, loot, trauma.
     /// </summary>
-    public class HatchDefenseSystem
+    public partial class HatchDefenseSystem
     {
         public const int RaidUnlockDay = 30;
         public const float DefaultBaseSecurity = 5f;
@@ -117,6 +117,7 @@ namespace AtomicWar._Game.Shelter
         private CombatPerkSystem _combatPerks;
         private PerimeterTrapSystem _perimeterTraps;
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
 
         /// <summary>Default duration of the active-raid bandaging window after a launch.</summary>
         public const float RaidWindowHours = 2f;
@@ -143,6 +144,31 @@ namespace AtomicWar._Game.Shelter
         /// Item_AmmoTypes.AmmoSpendPriority so civilian craftable is burned before AP/API.
         /// </summary>
         public Func<string, int> AmmoSpendPriorityResolver;
+
+        /// <summary>
+        /// REPROMOTE-Pet-001 — host wires Pet_GuardDog.Alert. Returns true when the dog
+        /// can fight this raid (fed, not malnourished). Adds <see cref="GuardDogFightBonus"/>
+        /// to weapon power when true.
+        /// </summary>
+        public Func<bool> TryAlertGuardDog;
+
+        /// <summary>Defense power added when a fighting guard dog is alerted on raid start.</summary>
+        public const float GuardDogFightBonus = 8f;
+
+        /// <summary>
+        /// REPROMOTE-Weapon-001 — host wires mounted HMG power from inventory stock + crew.
+        /// Called from <see cref="GetWeaponPower"/>; return 0 when no HMG stock / not crewed.
+        /// </summary>
+        public Func<Inventory.Inventory, float> GetMountedHmgDefensePower;
+
+        /// <summary>
+        /// HMG-002 — action that fires the mounted HMG. Called once per raid resolution
+        /// after CompleteRaidScoring. Wire this from GameBootstrap to a closure that
+        /// calls <c>WeaponHMG.Fire("hatch", operatorCount, isOiled, raidLevel)</c>. Fire()
+        /// handles the jam risk and OnRaidShredded; without this call, the HMG
+        /// bypasses its own risk-reward mechanic and the entire Fire() path is dead code.
+        /// </summary>
+        public System.Action<int, bool, int> FireMountedHmg;
 
         /// <summary>0..1 external noise (generator outside, loud work).</summary>
         public float ExternalNoise { get; private set; }
@@ -208,6 +234,8 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Prompt #220 — Warlord pipe weapons + unarmed Level-3 hatch hold.</summary>
         public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
             _personalQuests = personalQuests;
+
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Optional perimeter traps for raid damage (#123 / #186).</summary>
         public void BindPerimeterTraps(PerimeterTrapSystem traps) => _perimeterTraps = traps;
@@ -365,6 +393,10 @@ namespace AtomicWar._Game.Shelter
                 }
             }
 
+            // REPROMOTE-Weapon-001 — mounted HMG stock (host: Weapon_HMG + inventory).
+            if (GetMountedHmgDefensePower != null)
+                power += Mathf.Max(0f, GetMountedHmgDefensePower(inv));
+
             return Mathf.Max(0f, power);
         }
 
@@ -381,14 +413,17 @@ namespace AtomicWar._Game.Shelter
             if (IsAmmoId(item.id)) return true;
             // Ammo stacks are Weapon-typed in items.json but stackMax > 1
             return item.type == ItemType.Weapon && item.stackMax > 1
-                && (item.id != null && (item.id.Contains("ammo") || item.id.Contains("shell")));
+                && item.id != null
+                && (item.id.IndexOf("ammo", System.StringComparison.OrdinalIgnoreCase) >= 0
+                    || item.id.IndexOf("shell", System.StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         public static bool IsWeaponId(string id)
         {
             if (string.IsNullOrEmpty(id)) return false;
             return id == "trench_knife" || id == "pipe_shotgun" || id == "revolver"
-                || id == "kevlar_vest";
+                || id == "kevlar_vest"
+                || id == "weapon_hmg" || id == "hmg";
         }
 
         public static bool IsAmmoId(string id)
@@ -414,6 +449,11 @@ namespace AtomicWar._Game.Shelter
                 case "assault_rifle": return PersonalQuestSystem.AssaultRifleWeaponPower;
                 case "trench_knife": return 6f;
                 case "kevlar_vest": return 4f;
+                case "weapon_hmg":
+                case "hmg":
+                    // Stock presence alone is a modest bonus; full mounted power comes from
+                    // GetMountedHmgDefensePower (crew + oil). Avoid double-counting full value.
+                    return 6f;
                 default:
                     if (IsWeaponItem(item))
                         return Mathf.Max(5f, item.tradeValue * 0.5f);
@@ -454,6 +494,13 @@ namespace AtomicWar._Game.Shelter
                 return Mathf.Min(20f, raw);
             }
 
+            // HMG-003: the HMG is handled by the mounted-power path
+            // (GetMountedHmgDefensePower) and must not be counted here too.
+            // Including it in the slot sum would double-count: base 6 (slot
+            // iteration) + 28 (mounted) = 34 instead of the documented 28.
+            if (IsWeaponId(item.id) && (item.id == "weapon_hmg" || item.id == "hmg"))
+                return 0f;
+
             if (!IsWeaponItem(item) && !IsWeaponId(item.id)) return 0f;
 
             float basePower = GetEffectiveWeaponBasePower(item);
@@ -481,8 +528,11 @@ namespace AtomicWar._Game.Shelter
             _activeGuards[survivor.Id] = Mathf.Max(0f, bonus);
             if (survivor.Needs != null)
             {
-                survivor.Needs.Fatigue = Mathf.Clamp(
-                    survivor.Needs.Fatigue + GuardFatigueDrain, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(survivor, NeedKind.Fatigue, GuardFatigueDrain);
+                else
+                    survivor.Needs.Fatigue = Mathf.Clamp(
+                        survivor.Needs.Fatigue + GuardFatigueDrain, 0f, 100f);
             }
 
             survivor.State = SurvivorState.Working;
@@ -620,151 +670,36 @@ namespace AtomicWar._Game.Shelter
         /// </summary>
         public RaidResolution ResolveRaid(RaidEvent raid, bool ignoreDayGate = false)
         {
-            var result = new RaidResolution
-            {
-                Event = raid,
-                Launched = false,
-                StolenItems = new List<StolenLootLine>(),
-                TraumatizedSurvivorIds = new List<string>()
-            };
-
-            if (raid == null)
-            {
-                result.Message = "No raid event.";
+            var result = CreateRaidResolution(raid);
+            if (!TryLaunchRaid(raid, ignoreDayGate, result, out int day))
                 return result;
-            }
 
-            int day = raid.Day > 0 ? raid.Day : (_getDay != null ? _getDay() : 0);
-            if (!ignoreDayGate && raid.Trigger != RaidTrigger.Forced && !IsRaidUnlocked(day))
+            InitializeRaidScores(result, raid);
+
+            // REPROMOTE-Pet-001 — guard dog alert on raid start (host: Pet_GuardDog.Alert).
+            if (TryAlertGuardDog != null && TryAlertGuardDog())
             {
-                result.Message = "Pre-Day 30: hatch raids not yet active.";
-                return result;
+                result.WeaponPower += GuardDogFightBonus;
+                result.GuardBonusApplied += GuardDogFightBonus;
             }
 
-            // Prompt #184 — suppressing fire pins raiders; no launch while halted.
-            if (IsRaidHalted && raid.Trigger != RaidTrigger.Forced)
+            // HMG-002 — fire the mounted HMG. Fire() handles jamming, shredding,
+            // and OnRaidShredded. Mounted-power path already added GetMountedHmgDefensePower
+            // to result.WeaponPower; Fire() is the action that consumes operators and
+            // risks the jam (no shot without oil). Without this call, the HMG is a
+            // flat passive bonus and the entire jam/shred risk-reward is bypassed.
+            if (FireMountedHmg != null)
             {
-                result.Message = "Suppressing fire still pins them at the stairwell.";
-                return result;
+                int operators = ActiveGuardCount;
+                int raidLevel = (int)raid.Strength;
+                bool isOiled = true; // host knows the actual state; default optimistic
+                FireMountedHmg(operators, isOiled, raidLevel);
             }
 
-            result.Launched = true;
-            result.RaidStrength = Mathf.Max(0f, raid.Strength);
-            result.ShelterSecurity = GetShelterSecurity();
-            result.GuardBonusApplied = GetGuardBonus();
-            // Armor from raiding faction shapes ammo contribution (AP/JHP via host ResolveHit).
-            float raidArmor = FactionArmorResolver != null
-                ? FactionArmorResolver(raid.FactionId)
-                : 0f;
-            result.WeaponPower = GetWeaponPower(null, raidArmor);
-
-            // Prompt #186 — trap damage softens raid strength before the clash.
-            if (_perimeterTraps != null)
-            {
-                float trapDmg = _perimeterTraps.GetTrapDamageAgainstRaiders();
-                if (trapDmg > 0f)
-                    result.RaidStrength = Mathf.Max(0f, result.RaidStrength - trapDmg);
-            }
-
-            // Prompt #185 — Close Quarters: breach fighting inside bunker boosts shotgun/melee power.
-            float cqMult = 1f;
-            var survivorsForCq = _getSurvivors?.Invoke();
-            if (survivorsForCq != null && _combatPerks != null)
-            {
-                for (int i = 0; i < survivorsForCq.Count; i++)
-                {
-                    var g = survivorsForCq[i];
-                    if (g == null || !_activeGuards.ContainsKey(g.Id)) continue;
-                    float m = _combatPerks.GetCloseQuartersDamageMultiplier(g, confinedOrBreach: true);
-                    if (m > cqMult) cqMult = m;
-                }
-            }
-            result.WeaponPower *= cqMult;
-
-            // Prompt #220 — Warlord unarmed Level-3 hatch hold.
-            if (_personalQuests != null && result.WeaponPower <= 0.01f)
-            {
-                var warlordGuards = new List<Survivor>();
-                foreach (var kv in _activeGuards)
-                {
-                    var list = survivorsForCq;
-                    if (list == null) break;
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i] != null && list[i].Id == kv.Key)
-                            warlordGuards.Add(list[i]);
-                    }
-                }
-                float warlordBonus = _personalQuests.GetWarlordUnarmedDefenseBonus(
-                    warlordGuards, weaponsPresent: false);
-                if (warlordBonus > 0f)
-                    result.WeaponPower = Mathf.Max(result.WeaponPower, warlordBonus);
-            }
-
-            result.DefenseScore = result.ShelterSecurity + result.WeaponPower;
-
-            // Strict: Defense must exceed raid to repel (equal still breaches under pressure)
-            result.Repelled = result.DefenseScore > result.RaidStrength;
-
-            // Prompt #222 — Bouncer Holdout quest: sole guard survives a repel.
-            if (result.Repelled && _personalQuests != null && survivorsForCq != null
-                && _activeGuards.Count == 1)
-            {
-                string soleId = null;
-                foreach (var kv in _activeGuards) { soleId = kv.Key; break; }
-                for (int i = 0; i < survivorsForCq.Count; i++)
-                {
-                    var g = survivorsForCq[i];
-                    if (g != null && g.Id == soleId && g.IsAlive)
-                    {
-                        int dayQ = raid.Day > 0 ? raid.Day : day;
-                        _personalQuests.RecordSoloHatchDefense(g, 1, survived: true, dayQ);
-                        break;
-                    }
-                }
-            }
-
-            if (result.Repelled)
-            {
-                ApplyRepelCosts(result);
-                result.HatchDamage = 3f + (result.RaidStrength / Mathf.Max(1f, result.DefenseScore)) * 8f;
-                result.MoraleDelta = RepelMoraleBoost;
-                result.Message = string.IsNullOrEmpty(raid.Message)
-                    ? "Hatch held. Brass on the floor, smoke in the stairwell — but they left."
-                    : raid.Message + " Held.";
-                ApplyMoraleToSurvivors(result.MoraleDelta);
-                ApplyHatchWear(result.HatchDamage);
-                // #259 Holding the Line: defended hatch without Coward flee.
-                RecordDeserterRaidHold(result, day);
-            }
-            else
-            {
-                result.HatchDamage = 15f + (result.RaidStrength - result.DefenseScore) * 0.6f;
-                result.MoraleDelta = BreachMoralePenalty;
-                result.Message = string.IsNullOrEmpty(raid.Message)
-                    ? "Hatch breached. Hands in the stores. Someone is screaming."
-                    : raid.Message + " Breached.";
-                StealLoot(result);
-                RollTrauma(result);
-                ApplyMoraleToSurvivors(result.MoraleDelta);
-                ApplyHatchWear(result.HatchDamage);
-                // #272 Prepper: hatch destroyed (severe breach wear) + survived.
-                RecordPrepperHatchDestroyedIfAny(result, day);
-            }
-
-            if (result.Launched)
-            {
-                LastResolution = result;
-                TotalRaidsResolved++;
-                if (result.Breached) TotalBreaches++;
-                _hoursSinceLastRaid = 0f;
-                LastRaidSummary = BuildSummary(result);
-                // Prompt #202 — bandaging window while hatch-breach raid is "active".
-                _raidWindowHoursRemaining = Mathf.Max(_raidWindowHoursRemaining, RaidWindowHours);
-            }
-
-            OnRaidResolved?.Invoke(result);
-            OnSecurityChanged?.Invoke();
+            IReadOnlyList<Survivor> survivors = CompleteRaidScoring(result);
+            TryRecordSoloGuardRepel(result, raid, day, survivors);
+            ApplyRaidOutcome(result, raid, day);
+            CommitRaidResolution(result);
             return result;
         }
 
@@ -788,179 +723,6 @@ namespace AtomicWar._Game.Shelter
                 Message = "Hostile faction at the hatch."
             };
             return ResolveRaid(evt, ignoreDayGate);
-        }
-
-        private void ApplyRepelCosts(RaidResolution result)
-        {
-            var inv = _getInventory != null ? _getInventory() : null;
-            if (inv?.Slots == null) return;
-
-            // Prefer consuming ammo; fall back to weapon durability
-            int ammoNeeded = Mathf.Clamp(Mathf.CeilToInt(result.RaidStrength / 10f), 1, 12);
-            int remaining = ammoNeeded;
-
-            // Spend civilian/craftable first (lower priority value) so AP/API stockpiles last.
-            var ammoSlots = new List<int>();
-            for (int i = 0; i < inv.Slots.Count; i++)
-            {
-                var slot = inv.Slots[i];
-                if (slot?.Item == null) continue;
-                if (!IsAmmoItem(slot.Item) && !IsAmmoId(slot.Item.id)) continue;
-                if (slot.Amount <= 0) continue;
-                ammoSlots.Add(i);
-            }
-            ammoSlots.Sort((a, b) =>
-            {
-                string idA = inv.Slots[a].Item.id;
-                string idB = inv.Slots[b].Item.id;
-                int pA = AmmoSpendPriorityResolver != null ? AmmoSpendPriorityResolver(idA) : 50;
-                int pB = AmmoSpendPriorityResolver != null ? AmmoSpendPriorityResolver(idB) : 50;
-                int cmp = pA.CompareTo(pB);
-                return cmp != 0 ? cmp : a.CompareTo(b);
-            });
-
-            for (int s = 0; s < ammoSlots.Count && remaining > 0; s++)
-            {
-                var slot = inv.Slots[ammoSlots[s]];
-                if (slot?.Item == null) continue;
-                int take = Mathf.Min(remaining, slot.Amount);
-                if (take <= 0) continue;
-                inv.Remove(slot.Item, take);
-                remaining -= take;
-                result.AmmoConsumed += take;
-            }
-
-            // Prompt #184 — track ammo expended toward Suppressing Fire for active guards.
-            if (result.AmmoConsumed > 0 && _combatPerks != null)
-            {
-                int day = _getDay != null ? _getDay() : 0;
-                var survivors = _getSurvivors?.Invoke();
-                if (survivors != null)
-                {
-                    for (int i = 0; i < survivors.Count; i++)
-                    {
-                        var sv = survivors[i];
-                        if (sv == null || !_activeGuards.ContainsKey(sv.Id)) continue;
-                        _combatPerks.RecordAmmoExpended(sv, result.AmmoConsumed, day);
-                    }
-                }
-            }
-
-            // Durability wear on first firearm if ammo short or always light wear
-            float wear = 8f + (remaining > 0 ? remaining * 2f : 2f);
-            for (int i = 0; i < inv.Slots.Count; i++)
-            {
-                var slot = inv.Slots[i];
-                if (slot?.Item == null) continue;
-                if (IsAmmoItem(slot.Item) || IsAmmoId(slot.Item.id)) continue;
-                if (!IsWeaponItem(slot.Item) && !IsWeaponId(slot.Item.id)) continue;
-                if (slot.Item.id == "kevlar_vest") continue;
-
-                float maxDur = slot.Item.durability > 0f ? slot.Item.durability : 100f;
-                if (slot.CurrentDurability < 0f) slot.CurrentDurability = maxDur;
-                float before = slot.CurrentDurability;
-                slot.CurrentDurability = Mathf.Max(0f, slot.CurrentDurability - wear);
-                result.WeaponDurabilityLost += before - slot.CurrentDurability;
-
-                // Prompt #174 / #182 — jam window during hatch defense via host hook.
-                if (TryJamWeapon != null && slot.CurrentDurability < maxDur * 0.5f)
-                {
-                    int clearTicks = CombatPerkSystem.DefaultJamClearTicks;
-                    Survivor jamSurvivor = null;
-                    var survivors = _getSurvivors?.Invoke();
-                    if (survivors != null)
-                    {
-                        for (int s = 0; s < survivors.Count; s++)
-                        {
-                            if (survivors[s] != null && _activeGuards.ContainsKey(survivors[s].Id))
-                            {
-                                jamSurvivor = survivors[s];
-                                if (_combatPerks != null)
-                                    clearTicks = _combatPerks.GetJamClearTicks(jamSurvivor);
-                                break;
-                            }
-                        }
-                    }
-
-                    if (TryJamWeapon(slot.Item.id, clearTicks)
-                        && jamSurvivor != null && _combatPerks != null)
-                    {
-                        int day = _getDay != null ? _getDay() : 0;
-                        _combatPerks.RecordWeaponJamSurvived(jamSurvivor, day);
-                    }
-                }
-                break;
-            }
-        }
-
-        private void StealLoot(RaidResolution result)
-        {
-            var inv = _getInventory != null ? _getInventory() : null;
-            if (inv?.Slots == null) return;
-
-            // Steal proportional to how badly defense failed
-            float deficit = Mathf.Max(1f, result.RaidStrength - result.DefenseScore);
-            int stacksToSteal = Mathf.Clamp(Mathf.CeilToInt(deficit / 15f), 1, 6);
-            int stolenStacks = 0;
-
-            // Snapshot non-empty slots (steal from end so remove is stable)
-            var candidates = new List<int>();
-            for (int i = 0; i < inv.Slots.Count; i++)
-            {
-                var s = inv.Slots[i];
-                if (s?.Item != null && s.Amount > 0)
-                    candidates.Add(i);
-            }
-
-            // Prefer food/water/medical/trade value; skip quest if possible
-            candidates.Sort((a, b) =>
-            {
-                float va = StealPriority(inv.Slots[a].Item);
-                float vb = StealPriority(inv.Slots[b].Item);
-                return vb.CompareTo(va);
-            });
-
-            for (int c = 0; c < candidates.Count && stolenStacks < stacksToSteal; c++)
-            {
-                var slot = inv.Slots[candidates[c]];
-                if (slot?.Item == null || slot.Amount <= 0) continue;
-                if (slot.Item.type == ItemType.Quest) continue;
-
-                int take = Mathf.Max(1, Mathf.Min(slot.Amount, Mathf.CeilToInt(slot.Amount * 0.5f)));
-                // For high deficit, take whole stack
-                if (deficit >= 40f) take = slot.Amount;
-
-                var item = slot.Item;
-                string id = item.id;
-                string name = item.displayName;
-                if (inv.Remove(item, take))
-                {
-                    result.StolenItems.Add(new StolenLootLine
-                    {
-                        ItemId = id,
-                        Amount = take,
-                        DisplayName = name
-                    });
-                    stolenStacks++;
-                }
-            }
-        }
-
-        private static float StealPriority(ItemDefinition item)
-        {
-            if (item == null) return 0f;
-            float p = item.tradeValue;
-            switch (item.type)
-            {
-                case ItemType.Food: p += 20f; break;
-                case ItemType.Water: p += 25f; break;
-                case ItemType.Medical: p += 18f; break;
-                case ItemType.Fuel: p += 15f; break;
-                case ItemType.AntiRad:
-                case ItemType.Iodine: p += 12f; break;
-            }
-            if (IsWeaponItem(item) || IsAmmoItem(item)) p += 10f;
-            return p;
         }
 
         private void RollTrauma(RaidResolution result)
@@ -1002,8 +764,11 @@ namespace AtomicWar._Game.Shelter
                 else
                 {
                     // Fallback: direct health + morale hit when medical not wired
-                    sv.Needs.Health = Mathf.Max(1f, sv.Needs.Health - 15f);
-                    sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - 10f);
+                    SurvivorNeedWrite.SetHealth(sv, Mathf.Max(1f, sv.Needs.Health - 15f));
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -10f);
+                    else
+                        sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - 10f);
                     if (sv.State == SurvivorState.Idle || sv.State == SurvivorState.Working)
                         sv.State = SurvivorState.Sick;
                 }
@@ -1054,7 +819,10 @@ namespace AtomicWar._Game.Shelter
             {
                 var sv = survivors[i];
                 if (sv?.Needs == null || !sv.IsAlive) continue;
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, delta);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + delta, 0f, 100f);
             }
         }
 
@@ -1117,19 +885,6 @@ namespace AtomicWar._Game.Shelter
                 _personalQuests.RecordHatchDestroyedRaidSurvived(
                     sv, hatchDestroyed: true, survived: true, currentDay: day);
             }
-        }
-
-        private static string BuildSummary(RaidResolution result)
-        {
-            if (result == null || !result.Launched) return "Hatch quiet.";
-            if (result.Repelled)
-            {
-                return $"Repelled (D {result.DefenseScore:0} > R {result.RaidStrength:0})"
-                    + (result.AmmoConsumed > 0 ? $", −{result.AmmoConsumed} ammo" : "");
-            }
-
-            int stolen = result.StolenItems != null ? result.StolenItems.Count : 0;
-            return $"BREACHED (D {result.DefenseScore:0} < R {result.RaidStrength:0}), stole {stolen} stacks";
         }
 
         // -----------------------------------------------------------------
@@ -1265,72 +1020,13 @@ namespace AtomicWar._Game.Shelter
             Func<string, ItemDefinition> itemLookup,
             Inventory.Inventory inventory = null)
         {
-            if (string.IsNullOrEmpty(moduleId) || !IsHatchModuleId(moduleId)) return false;
-            var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
-            var shelter = _getShelter != null ? _getShelter() : null;
-            if (inv == null || shelter == null || itemLookup == null) return false;
-
-            var existing = shelter.GetModule(moduleId);
-            int targetLevel = existing != null ? existing.Level + 1 : 1;
-            if (existing != null && existing.Definition != null && targetLevel > existing.Definition.MaxLevel)
+            if (!TryCreateHatchUpgradePlan(moduleId, itemLookup, inventory, out var plan))
                 return false;
-            if (targetLevel > 5) return false;
+            if (!TryConsumeHatchUpgradeMaterials(plan)) return false;
 
-            GetUpgradeMaterialCost(moduleId, targetLevel, out int scrapNeed, out int mechNeed);
-            var scrap = itemLookup("scrap_metal");
-            var mech = itemLookup("mechanical_parts") ?? itemLookup("mechanical_components");
-            if (scrap == null || mech == null) return false;
-            if (inv.Count(scrap) < scrapNeed || inv.Count(mech) < mechNeed) return false;
-
-            inv.Remove(scrap, scrapNeed);
-            inv.Remove(mech, mechNeed);
-
-            if (existing != null)
-            {
-                existing.Level = targetLevel;
-                if (existing.SecurityContribution <= 0f)
-                    existing.SecurityContribution = DefaultSecurityForModuleId(moduleId);
-                existing.FilterHealth = 100f;
-                existing.IsEnabled = true;
-            }
-            else
-            {
-                shelter.AddModule(new ShelterModuleInstance(moduleId, targetLevel)
-                {
-                    SecurityContribution = DefaultSecurityForModuleId(moduleId),
-                    FilterHealth = 100f,
-                    IsEnabled = true,
-                    RoomId = "entry"
-                });
-            }
-
+            ApplyHatchUpgrade(plan);
             OnSecurityChanged?.Invoke();
-
-            // #286 Iron Gate: welder who maxes hatch unlocks Forge Master.
-            if (_personalQuests != null && IsHatchModuleId(moduleId))
-            {
-                int maxLevel = existing?.Definition != null
-                    ? existing.Definition.MaxLevel
-                    : 5;
-                maxLevel = Mathf.Min(maxLevel, 5);
-                var crew = _getSurvivors != null ? _getSurvivors() : null;
-                if (crew != null)
-                {
-                    int day = _getDay != null ? _getDay() : 0;
-                    for (int i = 0; i < crew.Count; i++)
-                    {
-                        var sv = crew[i];
-                        if (sv == null || !sv.IsAlive) continue;
-                        if (!string.Equals(sv.ArchetypeId, PersonalQuestSystem.WelderId,
-                                StringComparison.Ordinal)
-                            && !_personalQuests.HasCalloused(sv)
-                            && !_personalQuests.HasForgeMaster(sv))
-                            continue;
-                        _personalQuests.NotifyHatchUpgradeInstalled(sv, targetLevel, maxLevel, day);
-                    }
-                }
-            }
-
+            NotifyIronGateHatchUpgrade(plan.TargetLevel, plan.MaxLevel);
             return true;
         }
 
@@ -1339,20 +1035,7 @@ namespace AtomicWar._Game.Shelter
             Func<string, ItemDefinition> itemLookup,
             Inventory.Inventory inventory = null)
         {
-            if (string.IsNullOrEmpty(moduleId) || !IsHatchModuleId(moduleId)) return false;
-            var inv = inventory ?? (_getInventory != null ? _getInventory() : null);
-            var shelter = _getShelter != null ? _getShelter() : null;
-            if (inv == null || shelter == null || itemLookup == null) return false;
-
-            var existing = shelter.GetModule(moduleId);
-            int targetLevel = existing != null ? existing.Level + 1 : 1;
-            if (targetLevel > 5) return false;
-
-            GetUpgradeMaterialCost(moduleId, targetLevel, out int scrapNeed, out int mechNeed);
-            var scrap = itemLookup("scrap_metal");
-            var mech = itemLookup("mechanical_parts") ?? itemLookup("mechanical_components");
-            if (scrap == null || mech == null) return false;
-            return inv.Count(scrap) >= scrapNeed && inv.Count(mech) >= mechNeed;
+            return TryCreateHatchUpgradePlan(moduleId, itemLookup, inventory, out _);
         }
 
         // -----------------------------------------------------------------

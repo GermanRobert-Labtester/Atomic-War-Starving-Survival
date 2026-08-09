@@ -33,37 +33,6 @@ namespace AtomicWar.Tests.EditMode
             "expedition_perks", "social_perks", "personal_quests"
         };
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_dualpath_b4_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         private static void InvokeRestoreFromSnapshot(SaveSystem ss, SaveData data)
         {
             var m = typeof(SaveSystem).GetMethod(
@@ -328,10 +297,10 @@ namespace AtomicWar.Tests.EditMode
         public void Capture_DoesNotDualWrite_PositionalDtos_Batch4()
         {
             var seeded = CreateSeeded();
-            string dir = TempDir("no_dual");
+            string dir = SaveSystemTestFactory.TempDir("dualpath_b4_no_dual");
             try
             {
-                var ss = MakeSave(dir, s => Wire(s, seeded));
+                var ss = SaveSystemTestFactory.MakeSave(dir, s => Wire(s, seeded));
                 Assert.IsTrue(ss.Save("b4_slot"));
                 var data = JsonUtility.FromJson<SaveData>(
                     File.ReadAllText(Path.Combine(dir, "save_b4_slot.json")));
@@ -404,12 +373,12 @@ namespace AtomicWar.Tests.EditMode
         public void RoundTrip_ViaSubsystemIds_RestoresBatch4()
         {
             var seeded = CreateSeeded();
-            string dir = TempDir("rt");
+            string dir = SaveSystemTestFactory.TempDir("dualpath_b4_rt");
             try
             {
-                Assert.IsTrue(MakeSave(dir, s => Wire(s, seeded)).Save("b4_rt"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, s => Wire(s, seeded)).Save("b4_rt"));
                 var loaded = CreateEmpty();
-                Assert.IsTrue(MakeSave(dir, s => Wire(s, loaded)).Load("b4_rt"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, s => Wire(s, loaded)).Load("b4_rt"));
 
                 Assert.AreEqual(4, loaded.Radio.CaptureState().NextSeq);
                 Assert.IsTrue(loaded.Radio.CaptureState().HudHasUnread);
@@ -579,11 +548,11 @@ namespace AtomicWar.Tests.EditMode
                 SubsystemSaveJsons = new List<string>()
             };
 
-            string dir = TempDir("legacy");
+            string dir = SaveSystemTestFactory.TempDir("dualpath_b4_legacy");
             try
             {
                 var systems = CreateEmpty();
-                InvokeRestoreFromSnapshot(MakeSave(dir, s => Wire(s, systems)), data);
+                InvokeRestoreFromSnapshot(SaveSystemTestFactory.MakeSave(dir, s => Wire(s, systems)), data);
 
                 Assert.AreEqual(2, systems.Radio.CaptureState().NextSeq);
                 Assert.AreEqual("legacy radio", systems.Radio.CaptureState().Entries[0].Message);

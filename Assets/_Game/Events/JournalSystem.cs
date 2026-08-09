@@ -36,9 +36,15 @@ namespace AtomicWar._Game.Events
             {
                 var s = list[i];
                 if (s == null || !s.IsAlive) continue;
-                s.Needs.Morale = UnityEngine.Mathf.Clamp(s.Needs.Morale + boost, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(s, NeedKind.Morale, boost);
+                else
+                    s.Needs.Morale = UnityEngine.Mathf.Clamp(s.Needs.Morale + boost, 0f, 100f);
             }
         }
+
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>#281 News Anchor: dramatically increases lore output (extra journal lines).</summary>
         public int TickNewsAnchorJournalSpam(int day)

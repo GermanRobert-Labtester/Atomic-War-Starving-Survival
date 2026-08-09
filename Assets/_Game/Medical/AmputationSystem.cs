@@ -62,6 +62,8 @@ namespace AtomicWar._Game.Medical
         private MedicalPerkSystem _medicalPerks;
         private Func<int> _getDay;
         private System.Random _rng;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<Survivors.Survivor, Survivors.Survivor> OnAmputationPerformed; // patient, surgeon
@@ -144,14 +146,19 @@ namespace AtomicWar._Game.Medical
             OnChemConsumed?.Invoke(patient, MorphineItemId, day);
 
             // Surgery costs.
-            patient.Needs.Health = Mathf.Clamp(
-                patient.Needs.Health - SurgeryHealthCost, 0f, patient.MaxHealthCap);
-            patient.Needs.Morale = Mathf.Clamp(
-                patient.Needs.Morale - AmputationMoralePenalty, 0f, 100f);
-            surgeon.Needs.Fatigue = Mathf.Clamp(
-                surgeon.Needs.Fatigue + SurgeonFatigueCost, 0f, 100f);
-            surgeon.Needs.Morale = Mathf.Clamp(
-                surgeon.Needs.Morale - SurgeonMoralePenalty, 0f, 100f);
+            SurvivorNeedWrite.SetHealth(patient, patient.Needs.Health - SurgeryHealthCost);
+            if (_needsSystem != null)
+                _needsSystem.Modify(patient, NeedKind.Morale, -(AmputationMoralePenalty));
+            else
+                patient.Needs.Morale = Mathf.Clamp(patient.Needs.Morale - AmputationMoralePenalty, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(surgeon, NeedKind.Fatigue, SurgeonFatigueCost);
+            else
+                surgeon.Needs.Fatigue = Mathf.Clamp(surgeon.Needs.Fatigue + SurgeonFatigueCost, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(surgeon, NeedKind.Morale, -(SurgeonMoralePenalty));
+            else
+                surgeon.Needs.Morale = Mathf.Clamp(surgeon.Needs.Morale - SurgeonMoralePenalty, 0f, 100f);
 
             // Apply Amputee disability.
             _amputees.Add(patientId);
@@ -180,6 +187,7 @@ namespace AtomicWar._Game.Medical
         {
             if (survivors == null) return;
 
+            var rng = _rng ?? new System.Random(56);
             foreach (var id in _amputees)
             {
                 var sv = _findSurvivor?.Invoke(id);
@@ -190,14 +198,16 @@ namespace AtomicWar._Game.Medical
                     : PhantomPainDailyChance;
                 if (chance <= 0f) continue;
 
-                // Daily roll using seeded RNG for deterministic save/load (audit bugfix #4).
-                var rng = _rng ?? new System.Random(56);
                 if (rng.NextDouble() < chance)
                 {
-                    sv.Needs.Fatigue = Mathf.Clamp(
-                        sv.Needs.Fatigue + PhantomPainFatigueSpike, 0f, 100f);
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - PhantomPainMoraleDrain, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Fatigue, PhantomPainFatigueSpike);
+                    else
+                        sv.Needs.Fatigue = Mathf.Clamp(sv.Needs.Fatigue + PhantomPainFatigueSpike, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -(PhantomPainMoraleDrain));
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - PhantomPainMoraleDrain, 0f, 100f);
                     _inflictAffliction?.Invoke(sv, AfflictionSO.Ids.PhantomPain);
                     OnPhantomPainEpisode?.Invoke(sv);
                 }

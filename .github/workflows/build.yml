@@ -1,11 +1,15 @@
 # Release-style multi-platform build. Unity version pinned to match ProjectVersion.txt.
+#
+# Deliberately does NOT run tests. ci.yml is the gate (data validation → EditMode →
+# PlayMode → Linux build) and fires on the same push/PR events, so an EditMode job
+# here was a second identical Unity run on every pull request: double the CI minutes
+# and two red checks for one failure. Post-merge platform builds only.
 name: Build ASHFALL
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 env:
   UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
@@ -14,40 +18,8 @@ env:
   UNITY_VERSION: 6000.5.5f1
 
 jobs:
-  test:
-    name: EditMode Tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          lfs: true
-
-      - uses: actions/cache@v4
-        with:
-          path: Library
-          key: Library-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json') }}
-          restore-keys: |
-            Library-${{ env.UNITY_VERSION }}-
-
-      - uses: game-ci/unity-test-runner@v4
-        id: tests
-        with:
-          projectPath: .
-          unityVersion: 6000.5.5f1
-          testMode: EditMode
-          artifactsPath: test-results
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          checkName: EditMode Test Results
-
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: test-results
-          path: test-results
-
   build-windows:
     name: Build Windows
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -75,7 +47,6 @@ jobs:
 
   build-webgl:
     name: Build WebGL
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

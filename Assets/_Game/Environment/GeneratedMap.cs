@@ -256,58 +256,74 @@ namespace AtomicWar._Game.Environment
             }
         }
 
+        private static void AppendNodeFingerprint(System.Text.StringBuilder sb, MapNode n)
+        {
+            sb.Append(n.NodeId).Append('|')
+                .Append(n.DisplayName).Append('|')
+                .Append((int)n.Ring).Append('|')
+                .Append(n.DistanceFromShelter.ToString("R")).Append('|')
+                .Append(n.TrueRad.ToString("R")).Append('|')
+                .Append(n.RumoredRad.ToString("R")).Append('|')
+                .Append(n.LootTableId).Append('|')
+                .Append(n.RadZoneProfileId).Append('|')
+                .Append(n.DangerLevel.ToString("R")).Append('|')
+                .Append(n.AngleRadians.ToString("R")).Append('|')
+                .Append(n.LayoutRadius.ToString("R")).Append('|')
+                .Append(n.HasUxo ? '1' : '0').Append('|')
+                .Append(n.IsDeathZone ? '1' : '0').Append('|')
+                .Append(n.HasDeserterStand ? '1' : '0').Append('|');
+            if (n.EncounterDeckIds != null)
+            {
+                for (int e = 0; e < n.EncounterDeckIds.Count; e++)
+                    sb.Append(n.EncounterDeckIds[e]).Append(',');
+            }
+            sb.Append(';');
+        }
+
+        private void AppendNodesFingerprint(System.Text.StringBuilder sb)
+        {
+            if (Nodes == null) return;
+            // Sort by id for stable order
+            var ordered = new List<MapNode>(Nodes);
+            ordered.Sort((a, b) => string.CompareOrdinal(a?.NodeId, b?.NodeId));
+            for (int i = 0; i < ordered.Count; i++)
+            {
+                var n = ordered[i];
+                if (n == null) continue;
+                AppendNodeFingerprint(sb, n);
+            }
+        }
+
+        private static string BuildEdgeFingerprintKey(MapPath p)
+        {
+            string a = p.FromNodeId;
+            string b = p.ToNodeId;
+            if (string.CompareOrdinal(a, b) > 0) { var t = a; a = b; b = t; }
+            return a + "-" + b + ":" + p.BaseTravelHours.ToString("R");
+        }
+
+        private void AppendEdgesFingerprint(System.Text.StringBuilder sb)
+        {
+            if (Paths == null) return;
+            var edges = new List<string>();
+            for (int i = 0; i < Paths.Count; i++)
+            {
+                var p = Paths[i];
+                if (p == null) continue;
+                edges.Add(BuildEdgeFingerprintKey(p));
+            }
+            edges.Sort(StringComparer.Ordinal);
+            for (int i = 0; i < edges.Count; i++)
+                sb.Append(edges[i]).Append(';');
+        }
+
         /// <summary>Stable fingerprint for determinism tests (ids, loot, distances, edges).</summary>
         public string ComputeLayoutFingerprint()
         {
             var sb = new System.Text.StringBuilder();
             sb.Append("seed=").Append(Seed).Append(';');
-            if (Nodes != null)
-            {
-                // Sort by id for stable order
-                var ordered = new List<MapNode>(Nodes);
-                ordered.Sort((a, b) => string.CompareOrdinal(a?.NodeId, b?.NodeId));
-                for (int i = 0; i < ordered.Count; i++)
-                {
-                    var n = ordered[i];
-                    if (n == null) continue;
-                    sb.Append(n.NodeId).Append('|')
-                        .Append(n.DisplayName).Append('|')
-                        .Append((int)n.Ring).Append('|')
-                        .Append(n.DistanceFromShelter.ToString("R")).Append('|')
-                        .Append(n.TrueRad.ToString("R")).Append('|')
-                        .Append(n.RumoredRad.ToString("R")).Append('|')
-                        .Append(n.LootTableId).Append('|')
-                        .Append(n.RadZoneProfileId).Append('|')
-                        .Append(n.DangerLevel.ToString("R")).Append('|')
-                        .Append(n.AngleRadians.ToString("R")).Append('|')
-                        .Append(n.LayoutRadius.ToString("R")).Append('|')
-                        .Append(n.HasUxo ? '1' : '0').Append('|')
-                        .Append(n.IsDeathZone ? '1' : '0').Append('|')
-                        .Append(n.HasDeserterStand ? '1' : '0').Append('|');
-                    if (n.EncounterDeckIds != null)
-                    {
-                        for (int e = 0; e < n.EncounterDeckIds.Count; e++)
-                            sb.Append(n.EncounterDeckIds[e]).Append(',');
-                    }
-                    sb.Append(';');
-                }
-            }
-            if (Paths != null)
-            {
-                var edges = new List<string>();
-                for (int i = 0; i < Paths.Count; i++)
-                {
-                    var p = Paths[i];
-                    if (p == null) continue;
-                    string a = p.FromNodeId;
-                    string b = p.ToNodeId;
-                    if (string.CompareOrdinal(a, b) > 0) { var t = a; a = b; b = t; }
-                    edges.Add(a + "-" + b + ":" + p.BaseTravelHours.ToString("R"));
-                }
-                edges.Sort(StringComparer.Ordinal);
-                for (int i = 0; i < edges.Count; i++)
-                    sb.Append(edges[i]).Append(';');
-            }
+            AppendNodesFingerprint(sb);
+            AppendEdgesFingerprint(sb);
             return sb.ToString();
         }
 

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -83,18 +85,21 @@ namespace AtomicWar._Game.Core
         public bool HasApexPredators => MutationStage >= 3;
 
         private readonly System.Random _rng;
+        private RadiationSystem _radiation;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<int> OnMutationStageAdvanced;   // newStage
-#pragma warning disable CS0067 // Event is part of the public API; consumers may subscribe in future.
         public event Action<ExpeditionState> OnFloraEncountered;
-#pragma warning restore CS0067
         public event Action<ExpeditionState, bool> OnFaunaEncountered; // exp, wasApex
 
         public MutatedEcosystemSystem(System.Random rng = null)
         {
-            _rng = rng ?? new System.Random(67);
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mutated_ecosystem");
         }
+
+        public void BindRadiation(RadiationSystem radiation) => _radiation = radiation;
 
         /// <summary>
         /// Advance mutation stage based on radiation days. Call daily.
@@ -149,8 +154,11 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Process a mutated flora encounter. Returns harvested items.
         /// 60% chance toxic (contamination), 40% chance rare chem extract.
+        /// <paramref name="exp"/> is what <see cref="OnFloraEncountered"/> reports;
+        /// it stayed unraised (behind a CS0067 suppression) for as long as this
+        /// method had no way to name the expedition that found the plant.
         /// </summary>
-        public Inventory.ItemDefinition HarvestFlora()
+        public Inventory.ItemDefinition HarvestFlora(ExpeditionState exp = null)
         {
             bool isToxic = _rng.NextDouble() < 0.6f;
             string itemId = isToxic ? ToxicFloraItemId : RareChemItemId;
@@ -167,6 +175,8 @@ namespace AtomicWar._Game.Core
             item.weight = isToxic ? 2f : 0.5f;
             item.contamination = isToxic ? ToxicFloraContamination : 0.05f;
             item.tradeValue = isToxic ? 2f : 25f;
+
+            OnFloraEncountered?.Invoke(exp);
             return item;
         }
 
@@ -179,14 +189,18 @@ namespace AtomicWar._Game.Core
             if (exp?.Survivor == null || !exp.Survivor.IsAlive) return false;
 
             float damage = isApex ? ApexAttackHealthDamage : FaunaAttackHealthDamage;
-            exp.Survivor.Needs.Health = Mathf.Clamp(
-                exp.Survivor.Needs.Health - damage, 0f, exp.Survivor.MaxHealthCap);
-            exp.Survivor.Needs.Fatigue = Mathf.Clamp(
-                exp.Survivor.Needs.Fatigue + FaunaFleeFatigueCost, 0f, 100f);
+            SurvivorNeedWrite.AdjustHealth(exp.Survivor, -damage);
+            if (_needsSystem != null)
+                _needsSystem.Modify(exp.Survivor, NeedKind.Fatigue, FaunaFleeFatigueCost);
+            else
+                exp.Survivor.Needs.Fatigue = Mathf.Clamp(
+                    exp.Survivor.Needs.Fatigue + FaunaFleeFatigueCost, 0f, 100f);
 
             // Small rad exposure from the creature's irradiated bite/claws.
-            exp.Survivor.RadiationDose = Mathf.Clamp(
-                exp.Survivor.RadiationDose + (isApex ? 15f : 5f), 0f, 100f);
+            // MISC-007 — fauna bite only through injected RadiationSystem (no direct dose write).
+            float biteRads = isApex ? 15f : 5f;
+            if (_radiation != null)
+                _radiation.Expose(exp.Survivor, biteRads, 1f);
 
             // Chance of dropping loot when defeating fauna.
             bool defeated = _rng.NextDouble() < (isApex ? 0.3f : 0.6f);

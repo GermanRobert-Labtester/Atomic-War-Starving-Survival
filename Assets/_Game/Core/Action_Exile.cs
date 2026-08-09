@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Give survivor Backpack + 10 Food + Gun. They leave peacefully.
     /// Generates a SomberClosure morale event instead of Despair.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_Exile
     {
         private ExileActionState _state = new ExileActionState();

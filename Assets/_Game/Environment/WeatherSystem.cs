@@ -90,6 +90,15 @@ namespace AtomicWar._Game.Environment
 
         private PersonalQuestSystem _personalQuests;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
+        private Func<int> _stationForecastDays;
+
+        /// <summary>
+        /// Prompt #903 — the weather station's copied data logger. Returns how many
+        /// days of readings the survivors hold (0 when the logger was never copied).
+        /// Without this, extracting the data set a world flag nothing ever read.
+        /// </summary>
+        public void BindStationForecast(Func<int> getStationForecastDays) =>
+            _stationForecastDays = getStationForecastDays;
 
         /// <summary>Prompt #233 — Stormcaller 10-day perfect forecast.</summary>
         public void BindPersonalQuests(
@@ -103,13 +112,22 @@ namespace AtomicWar._Game.Environment
         /// <summary>
         /// When a Stormcaller is present, returns a perfect forecast of future weather
         /// states (deterministic from seed + roll count). Length is forecastDays.
+        ///
+        /// The weather station's copied data logger is a second, shorter source: it
+        /// caps the forecast at the days of readings it holds rather than granting
+        /// the full Stormcaller window.
         /// </summary>
         public WeatherKind[] GetPerfectForecast(int forecastDays = PersonalQuestSystem.StormcallerForecastDays)
         {
             if (forecastDays <= 0) return Array.Empty<WeatherKind>();
-            if (_personalQuests == null
-                || !_personalQuests.HasPerfectTenDayForecast(_getSurvivors?.Invoke()))
-                return Array.Empty<WeatherKind>();
+            bool hasStormcaller = _personalQuests != null
+                && _personalQuests.HasPerfectTenDayForecast(_getSurvivors?.Invoke());
+            if (!hasStormcaller)
+            {
+                int stationDays = _stationForecastDays?.Invoke() ?? 0;
+                if (stationDays <= 0) return Array.Empty<WeatherKind>();
+                forecastDays = Math.Min(forecastDays, stationDays);
+            }
 
             var result = new WeatherKind[forecastDays];
             // Deterministic preview: reseed from Seed + RollCount + day offset without mutating state.

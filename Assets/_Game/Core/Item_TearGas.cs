@@ -52,8 +52,6 @@ namespace AtomicWar._Game.Core
                 return affected;
             }
 
-            bool anyEvacuated = false;
-
             for (int i = 0; i < enemies.Count; i++)
             {
                 var enemy = enemies[i];
@@ -79,7 +77,6 @@ namespace AtomicWar._Game.Core
             {
                 // Fire evacuation event for the lane
                 OnLaneEvacuated?.Invoke(throwerId, targetLane);
-                anyEvacuated = true;
 
                 // Fire stun event for enemies that didn't evacuate
                 OnLaneStunned?.Invoke(throwerId, targetLane);

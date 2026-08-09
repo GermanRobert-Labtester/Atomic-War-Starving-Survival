@@ -36,10 +36,14 @@ namespace AtomicWar._Game.Events
                 }
             }
 
-            // Apply Morale Delta
+            // Apply Morale Delta — route through NeedsSystem.Modify so Selfless,
+            // Traumatized, and LivingSaint perk effects are honoured.
             if (choice.MoraleDelta != 0f && context.PrimarySurvivor != null)
             {
-                context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + choice.MoraleDelta, 0f, 100f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(context.PrimarySurvivor, NeedKind.Morale, choice.MoraleDelta);
+                else
+                    context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + choice.MoraleDelta, 0f, 100f);
             }
 
             // Register Delayed Consequence if present
@@ -106,13 +110,45 @@ namespace AtomicWar._Game.Events
             {
                 switch (effect.TargetNeed.ToLowerInvariant())
                 {
-                    case "hunger": context.PrimarySurvivor.Needs.Hunger = Mathf.Clamp(context.PrimarySurvivor.Needs.Hunger + effect.NeedDelta, 0f, 100f); break;
-                    case "thirst": context.PrimarySurvivor.Needs.Thirst = Mathf.Clamp(context.PrimarySurvivor.Needs.Thirst + effect.NeedDelta, 0f, 100f); break;
-                    case "fatigue": context.PrimarySurvivor.Needs.Fatigue = Mathf.Clamp(context.PrimarySurvivor.Needs.Fatigue + effect.NeedDelta, 0f, 100f); break;
-                    case "warmth": context.PrimarySurvivor.Needs.Warmth = Mathf.Clamp(context.PrimarySurvivor.Needs.Warmth + effect.NeedDelta, 0f, 100f); break;
-                    case "morale": context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + effect.NeedDelta, 0f, 100f); break;
-                    case "health": context.PrimarySurvivor.Needs.Health = Mathf.Clamp(context.PrimarySurvivor.Needs.Health + effect.NeedDelta, 0f, 100f); break;
-                    case "radiation": context.PrimarySurvivor.RadiationDose = Mathf.Clamp(context.PrimarySurvivor.RadiationDose + effect.NeedDelta, 0f, 100f); break;
+                    // Route all need effects through NeedsSystem.Modify when available
+                    // so trait caps (Traumatized, Restless, Frail, Matriarch) and perk
+                    // effects (Selfless, LivingSaint) are honoured.
+                    case "hunger":
+                        if (context.NeedsSystem != null) context.NeedsSystem.Modify(context.PrimarySurvivor, NeedKind.Hunger, effect.NeedDelta);
+                        else context.PrimarySurvivor.Needs.Hunger = Mathf.Clamp(context.PrimarySurvivor.Needs.Hunger + effect.NeedDelta, 0f, 100f);
+                        break;
+                    case "thirst":
+                        if (context.NeedsSystem != null) context.NeedsSystem.Modify(context.PrimarySurvivor, NeedKind.Thirst, effect.NeedDelta);
+                        else context.PrimarySurvivor.Needs.Thirst = Mathf.Clamp(context.PrimarySurvivor.Needs.Thirst + effect.NeedDelta, 0f, 100f);
+                        break;
+                    case "fatigue":
+                        if (context.NeedsSystem != null) context.NeedsSystem.Modify(context.PrimarySurvivor, NeedKind.Fatigue, effect.NeedDelta);
+                        else context.PrimarySurvivor.Needs.Fatigue = Mathf.Clamp(context.PrimarySurvivor.Needs.Fatigue + effect.NeedDelta, 0f, 100f);
+                        break;
+                    case "warmth":
+                        if (context.NeedsSystem != null) context.NeedsSystem.Modify(context.PrimarySurvivor, NeedKind.Warmth, effect.NeedDelta);
+                        else context.PrimarySurvivor.Needs.Warmth = Mathf.Clamp(context.PrimarySurvivor.Needs.Warmth + effect.NeedDelta, 0f, 100f);
+                        break;
+                    case "morale":
+                        if (context.NeedsSystem != null) context.NeedsSystem.Modify(context.PrimarySurvivor, NeedKind.Morale, effect.NeedDelta);
+                        else context.PrimarySurvivor.Needs.Morale = Mathf.Clamp(context.PrimarySurvivor.Needs.Morale + effect.NeedDelta, 0f, 100f);
+                        break;
+                    case "health":
+                        // MISC-006 — prefer NeedsSystem so EvaluateDeath still runs.
+                        if (context.NeedsSystem != null)
+                            context.NeedsSystem.AdjustHealth(context.PrimarySurvivor, effect.NeedDelta);
+                        else
+                            AtomicWar._Game.Survivors.SurvivorNeedWrite.AdjustHealth(
+                                context.PrimarySurvivor, effect.NeedDelta);
+                        break;
+                    case "radiation":
+                        // MISC-007 — prefer RadiationSystem so OnDoseChanged fires.
+                        if (context.RadiationSystem != null)
+                            context.RadiationSystem.AdjustDose(context.PrimarySurvivor, effect.NeedDelta);
+                        else
+                            context.PrimarySurvivor.RadiationDose = Mathf.Clamp(
+                                context.PrimarySurvivor.RadiationDose + effect.NeedDelta, 0f, 100f);
+                        break;
                     // Mental-status cures: a talk/comfort event effect. 0..1 range,
                     // unlike the 0..100 Needs fields above, so clamp separately.
                     case "radiationanxiety": context.PrimarySurvivor.RadiationAnxiety = Mathf.Clamp01(context.PrimarySurvivor.RadiationAnxiety + effect.NeedDelta); break;

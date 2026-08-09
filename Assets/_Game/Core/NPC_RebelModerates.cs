@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Exhausted fighters who offer to trade IntelNodes for MedicalSupplies.
     /// Passive and highly defensive. If attacked, they call radio backup, starting a wave defense.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_RebelModerates
     {
         private RebelModeratesState _state = new RebelModeratesState();

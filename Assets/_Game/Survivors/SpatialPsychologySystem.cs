@@ -6,6 +6,9 @@ namespace AtomicWar._Game.Survivors
 {
     public class SpatialPsychologySystem
     {
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public const string TraitClaustrophobic = "trait_claustrophobic";
         public const string TraitAgoraphobic = "trait_agoraphobic";
 
@@ -30,7 +33,10 @@ namespace AtomicWar._Game.Survivors
                     float drain = ClaustrophobiaMoraleDrainPerDay * (gameHours / 24f);
                     if (sv.Needs != null)
                     {
-                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - drain, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(sv, NeedKind.Morale, -drain);
+                        else
+                            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - drain, 0f, 100f);
                     }
                     OnClaustrophobiaMoraleDrained?.Invoke(sv, drain);
                 }

@@ -123,7 +123,7 @@ namespace AtomicWar._Game.Core
                 if (ChildSystem != null && !ChildSystem.WasChildFound)
                 {
                     ChildSystem.CreateChild();
-                    Debug.Log("[Child] The bunker has taken in the child. A fragile hope settles over the shelter.");
+                    GameLog.Log("[Child] The bunker has taken in the child. A fragile hope settles over the shelter.");
                 }
             }
 

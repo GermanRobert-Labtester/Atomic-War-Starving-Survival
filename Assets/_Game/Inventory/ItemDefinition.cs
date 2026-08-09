@@ -47,6 +47,8 @@ namespace AtomicWar._Game.Inventory
         public bool empShielded;
         /// <summary>Base barter value; phase-modulated by TradeEconomy.GetEffectiveValue.</summary>
         public float tradeValue;
+        /// <summary>Explicit barter tier (e.g. Weapon, Medical, Attachment, Precious); defaults to Scrap if unset (which falls back to InferTier(type)).</summary>
+        public ItemTradeTier tradeTier;
 
         [Header("Workbench / Scrap")]
         /// <summary>

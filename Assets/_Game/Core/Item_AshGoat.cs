@@ -16,6 +16,14 @@ namespace AtomicWar._Game.Core
 
     public class Item_AshGoat
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call sites below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("item_ashgoat");
+
         public event Action<string, float> OnMilkProduced;      // shelterId, amount
         public event Action<string, float> OnNoiseGenerated;    // shelterId, noise
         public event Action<string> OnPredatorAttracted;        // shelterId
@@ -66,7 +74,7 @@ namespace AtomicWar._Game.Core
 
                 // High chance to attract predators due to noise/smell
                 float predatorChance = (_state.noiseLevel + _state.smellLevel) * 0.5f;
-                if (UnityEngine.Random.value < predatorChance)
+                if (FallbackRng.NextDouble() < predatorChance)
                 {
                     OnPredatorAttracted?.Invoke(shelterId);
                 }

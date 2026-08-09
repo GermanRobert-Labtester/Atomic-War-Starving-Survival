@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -45,6 +46,9 @@ namespace AtomicWar._Game.Core
         public float TotalIrradiatedWaterSold => _totalIrradiatedWaterSold;
         public bool MassAscensionTriggered => _massAscensionTriggered;
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public CultMoralDisgustSystem() { }
 
         /// <summary>
@@ -85,8 +89,11 @@ namespace AtomicWar._Game.Core
                         || sv.RiskBias == Survivors.RiskBiasTrait.Fatalist)
                         continue;
 
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - penalty, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -penalty);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(
+                            sv.Needs.Morale - penalty, 0f, 100f);
                 }
             }
 

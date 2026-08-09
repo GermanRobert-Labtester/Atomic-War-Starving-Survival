@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -55,7 +56,7 @@ namespace AtomicWar._Game.Core
             _state.last_disable_method = method_lower;
 
             OnTurretsDisabled?.Invoke();
-            Debug.Log($"[Node_AutomatedArmory] Turrets disabled via {method_lower} " +
+            GameLog.Log($"[Node_AutomatedArmory] Turrets disabled via {method_lower} " +
                       $"for {_state.turret_disabled_seconds}s.");
         }
 
@@ -75,7 +76,7 @@ namespace AtomicWar._Game.Core
                 _state.disable_timer_remaining = 0f;
                 _state.is_disabled = false;
                 OnTurretsReactivated?.Invoke();
-                Debug.Log("[Node_AutomatedArmory] Turrets reactivated.");
+                GameLog.Log("[Node_AutomatedArmory] Turrets reactivated.");
             }
         }
 
@@ -94,7 +95,7 @@ namespace AtomicWar._Game.Core
 
             if (in_window && _state.is_disabled)
             {
-                Debug.Log($"[Node_AutomatedArmory] Survivor '{survivor_id}' moved to cover safely.");
+                GameLog.Log($"[Node_AutomatedArmory] Survivor '{survivor_id}' moved to cover safely.");
                 return true;
             }
 
@@ -105,7 +106,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnSurvivorShot?.Invoke(survivor_id);
-            Debug.Log($"[Node_AutomatedArmory] Survivor '{survivor_id}' shot by turret — " +
+            GameLog.Log($"[Node_AutomatedArmory] Survivor '{survivor_id}' shot by turret — " +
                       "not in disable window.");
             return false;
         }

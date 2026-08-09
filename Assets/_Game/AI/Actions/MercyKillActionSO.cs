@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Medical;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.AI.Actions
 {
@@ -104,14 +106,20 @@ namespace AtomicWar._Game.AI.Actions
                 {
                     var w = survivors[i];
                     if (w == null || !w.IsAlive || w == killer || w == candidate) continue;
-                    w.Needs.Morale = Mathf.Clamp(w.Needs.Morale - 8f, 0f, 100f);
+                    if (context.NeedsSystem != null)
+                        context.NeedsSystem.Modify(w, NeedKind.Morale, -(8f));
+                    else
+                        w.Needs.Morale = Mathf.Clamp(w.Needs.Morale - 8f, 0f, 100f);
                     ApplyAffinityHit?.Invoke(killer, w, -15f);
                 }
             }
             else if (trait == Survivors.RiskBiasTrait.Empath)
             {
                 // Massive mourning: 10-day debuff.
-                killer.Needs.Morale = Mathf.Clamp(killer.Needs.Morale - 30f, 0f, 100f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(killer, NeedKind.Morale, -(30f));
+                else
+                    killer.Needs.Morale = Mathf.Clamp(killer.Needs.Morale - 30f, 0f, 100f);
                 // Mourning duration handled by external system via OnMercyKill event.
             }
             else if (trait == Survivors.RiskBiasTrait.Paranoid)
@@ -127,7 +135,10 @@ namespace AtomicWar._Game.AI.Actions
             else
             {
                 // Default: moderate morale hit + small affinity damage.
-                killer.Needs.Morale = Mathf.Clamp(killer.Needs.Morale - 15f, 0f, 100f);
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(killer, NeedKind.Morale, -(15f));
+                else
+                    killer.Needs.Morale = Mathf.Clamp(killer.Needs.Morale - 15f, 0f, 100f);
                 for (int i = 0; i < survivors.Count; i++)
                 {
                     var w = survivors[i];
@@ -136,7 +147,7 @@ namespace AtomicWar._Game.AI.Actions
                 }
             }
 
-            Debug.Log($"[MercyKill] {killer.DisplayName} ended {candidate.DisplayName}'s suffering.");
+            GameLog.Log($"[MercyKill] {killer.DisplayName} ended {candidate.DisplayName}'s suffering.");
         }
 
         public static bool IsMercyCandidate(Survivors.Survivor sv, MedicalSystem medical)

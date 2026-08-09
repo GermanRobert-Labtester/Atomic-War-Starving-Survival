@@ -64,7 +64,7 @@ namespace AtomicWar._Game.Core
                 int toRemove = rng.Next(1, Mathf.Min(slot.Amount, 3));
                 if (!Inventory.Remove(slot.Item, toRemove)) continue;
                 destroyed = true;
-                Debug.Log($"[Addiction] {sv.DisplayName} destroyed {toRemove}x {slot.Item.id} in a withdrawal panic.");
+                GameLog.Log($"[Addiction] {sv.DisplayName} destroyed {toRemove}x {slot.Item.id} in a withdrawal panic.");
             }
             return destroyed;
         }

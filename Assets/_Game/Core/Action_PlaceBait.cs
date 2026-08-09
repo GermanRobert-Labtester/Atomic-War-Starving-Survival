@@ -25,6 +25,7 @@ namespace AtomicWar._Game.Core
         public bool spawnReady;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_PlaceBait
     {
         public event Action<string, string> OnBaitPlaced;

@@ -15,6 +15,7 @@ namespace AtomicWar._Game.Core
         public bool hasAntiRad = false;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_MixChems
     {
         public Action_MixChemsState State { get; private set; }

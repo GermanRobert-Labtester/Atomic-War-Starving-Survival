@@ -44,7 +44,6 @@ namespace AtomicWar._Game.Core
 
         // ── Events ─────────────────────────────────────────────────────
         public event Action<string, string> OnInfection;             // survivorId, diseaseId
-        public event Action<string, string, string> OnSpread;        // fromId, toId, vector
         public event Action<string> OnQuarantineStarted;             // survivorId
         public event Action<string> OnQuarantineEnded;               // survivorId
         public event Action<string> OnOutbreakDeclared;              // diseaseId
@@ -57,7 +56,7 @@ namespace AtomicWar._Game.Core
         private bool _waterPurified;
         private bool _ventsSealed;
 
-        private readonly System.Random _rng = new System.Random();
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("diseasesystem_expansion");
 
         // ── Public API ─────────────────────────────────────────────────
 

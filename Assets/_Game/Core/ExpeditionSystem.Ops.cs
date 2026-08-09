@@ -74,7 +74,7 @@ namespace AtomicWar._Game.Core
             }
 
             // Limp disability: permanently doubles stamina drain during expeditions
-            if (exp.Survivor != null && exp.Survivor.HasDisability("limp"))
+            if (exp.Survivor != null && exp.Survivor.HasDisability(DisabilityId.Limp))
             {
                 drain *= 2f;
             }
@@ -86,7 +86,7 @@ namespace AtomicWar._Game.Core
                 drain = BaseStaminaDrainPerHour * hours;
                 if (exp.Survivor.HasFullSuitEquipped)
                     drain += 3f * hours;
-                if (exp.Survivor.HasDisability("limp"))
+                if (exp.Survivor.HasDisability(DisabilityId.Limp))
                     drain *= 2f;
             }
 
@@ -441,6 +441,16 @@ namespace AtomicWar._Game.Core
             exp.LocationEncounterFired = false;
             TryFireForcedLocationEncounter(exp);
             return exp.LocationEncounterFired;
+        }
+
+        /// <summary>
+        /// Test helper: run psychology resolve (and class roadblock dispatch) for a
+        /// specific SO without waiting for the encounter pool roll.
+        /// </summary>
+        public void ForceResolveEncounterForTests(ExpeditionState exp, EncounterSO selected)
+        {
+            if (exp == null || selected == null) return;
+            ResolveEncounterWithPsychology(exp, selected);
         }
 
         private void RollAndResolveEncounter(ExpeditionState exp)

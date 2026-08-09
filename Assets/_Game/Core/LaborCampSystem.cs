@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -113,7 +114,7 @@ namespace AtomicWar._Game.Core
             sv.Needs.Fatigue = 90f;
             sv.Needs.Warmth = 40f;
             sv.Needs.Morale = 0f;
-            sv.Needs.Health = 40f;
+            SurvivorNeedWrite.SetHealth(sv, 40f);
 
             if (sv.Traumas == null) sv.Traumas = new List<string>();
             for (int i = 0; i < SlavesTraumas.Length; i++)

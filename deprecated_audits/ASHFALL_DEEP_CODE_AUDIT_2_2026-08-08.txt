@@ -1,0 +1,883 @@
+========================================================================================
+DEPRECATED AND FOLDED — ALL AUDIT WORK VERIFIED & COMPLETED
+Status: RESOLVED & CLOSED
+Date: 2026-08-08
+========================================================================================
+
+========================================================================================
+ASHFALL (Atomic War) — DEEP CODE AUDIT #2 (POST-REMEDIATION)
+Read-only audit | No code was modified
+Generated (UTC): 2026-08-08
+Workspace: Assets/_Game (~907 C# files) + Tests (~170 C# files)
+Branch: fix/post-audit-cleanup @ 4e7cb15 + 5 uncommitted files
+========================================================================================
+
+HOW TO READ THIS DOCUMENT
+----------------------------------------
+Each finding has:
+  ID           Unique stable id
+  Severity     Critical | High | Medium | Low | Nit
+  Type         bug | event gap | design smell | duplication | save gap |
+               data desync | stale state | race | future risk
+  Location     File path + method / approx. area
+  Description  What is wrong and player/dev impact
+  Suggested Fix Concrete remediation
+  Suggested Harden How to prevent this class of bug from returning
+
+This audit focuses on issues NOT covered by the first deep audit (2026-08-07),
+which has been largely remediated. The emphasis is on new code patterns introduced
+by the remediation, systemic risks, and the uncommitted working tree.
+
+========================================================================================
+SECTION A — SYSTEMIC ISSUES (patterns that risk future bugs)
+========================================================================================
+
+[DEATH-001]  Severity: HIGH  |  Type: event gap
+  Location:      Assets/_Game/Survivors/SurvivorNeedWrite.cs SetHealth (line 22)
+  Description:   SetHealth(sv, 0f) correctly sets State = Dead but does NOT fire
+  OnDied, OnNeedChanged, or any personal-quest death hooks. Callers that kill
+  via this path (BunkerSocialDirector.Execution line 257, BunkerSocialSystems
+  leader death line 667) cause a "silent death" — the survivor is dead on disk
+  but nothing else in the game world knows it happened.
+  No EmpathSystem, no GriefKeepsakes, no ChildSystem check, no IronMan delete,
+  no Pillar-of-Atlas debuff, no Twin partner reaction.
+  
+  This is NOT a regression from the first audit; it is a latent gap that the
+  SurvivorNeedWrite helper introduced (the helper was the right fix for direct
+  Health writes, but the death-path wiring is incomplete).
+
+  Callers that kill via this path:
+    • BunkerSocialDirector.Tribunal → Execution (line 257)
+    • BunkerSocialSystems → leader death on rebellion (line 667)
+    • StructuralIntegritySystem → 60HP crush (line 377)
+    • Various expedition/combat paths that set Health ≤ 0
+
+  Suggested Fix: SurvivorNeedWrite.SetHealth should accept an optional
+  Action<Survivor> onDied callback and invoke it. All call sites that can
+  kill should pass NeedsSystem.OnDied or a bootstrap death handler.
+
+  Suggested Harden: Add a [SilentDeath] attribute analysis to CI. Any call to
+  SetHealth where health ≤ 0 must also trigger the OnDied chain. The editor
+  gate can grep for `SetHealth.*0f` and ensure the call site also has an
+  `OnDied` invocation within 3 lines.
+
+[DEATH-002]  Severity: MEDIUM  |  Type: duplication / future risk
+  Location:      Assets/_Game/Survivors/NeedsSystem.cs EvaluateDeath ~288;
+   ForceDeath ~306
+  Description:   ForceDeath duplicates NotifySurvivorDied, NotifyTwinDeath, and
+  OnDied calls that are otherwise the sole domain of EvaluateDeath. If a new
+  death-side-effect hook is added to EvaluateDeath in the future, it must be
+  manually copied to ForceDeath — this is a known source of bugs (the first
+  audit's MED-004 / SURV-003 / SURV-005 all trace to this same split).
+  Suggested Fix: Extract shared `FinalizeDeath(Survivor survivor)` private
+  method called by both EvaluateDeath and ForceDeath.
+  Suggested Harden: A reflection-based EditMode test: find all methods that
+  set `survivor.State = SurvivorState.Dead` and assert they also call
+  `OnDied?.Invoke`, `NotifySurvivorDied`, and `NotifyTwinDeath`.
+
+[SEED-001]  Severity: HIGH  |  Type: stale state / design smell
+  Location:      Assets/_Game/Utilities/SeededRandom.CreateFixed (line 42);
+   ~68 call sites across Assets/_Game (not tests)
+  Description:   CreateFixed(contextString) uses the hardcoded seed 0xA51FA11
+  regardless of campaign world seed. This means 68 systems produce identical
+  random sequences in every single campaign. The doc comment says "Prefer salting
+  the campaign world seed with a stable context string so each system has an
+  independent stream" — but the recommended overload Create(worldSeed, context)
+  is used by ZERO systems.
+  Player impact: the first outbreak, the first poisoning, the first fen trap,
+  every phantom-limb surgery outcome, etc. is the same in every new campaign.
+  This kills replay variety.
+
+  Systems affected (partial list):
+    • BunkerSocialDirector, SkirmishEncounter, RadioTunerSystem,
+    • MutatedEcosystemSystem, DiseaseSystem_Expansion, System_BloodTypes,
+    • Hazard_SurgicalBotch, Affliction_PhantomLimb, Affliction_TBI,
+    • MapHazard_VenusTrap, Encounter_GlowingStag, Node_MutantHive,
+    • Node_GhostShip, MapAnomaly_Mirage, GameBootstrap.UiActions.Create
+
+  Suggested Fix: Each system's constructor or SetRng should accept an int
+  worldSeed from GameBootstrap.CoreFamilies and use SeededRandom.Create(worldSeed,
+  context) instead of SeededRandom.CreateFixed(context). The Bootstrap already
+  has _worldSeed — propagate it to each RNG-wired system.
+  Suggested Harden: An EditMode test that reflects all SeededRandom.CreateFixed
+  calls and fails if the count exceeds a shrinking baseline (the same ratchet
+  pattern as UntickedSystemsBaseline).
+
+[EVENT-008]  Severity: MEDIUM  |  Type: lifecycle leak (every PlayMode reset)
+  Location:      GameBootstrap.BatchSystems, Biomes, Hatch, MapAnomalies,
+   MapHazards, Events, VictoryPaths, Encounter* ×15, Weather*
+  Description:   ~650+ C# event subscriptions (OnX +=) across the bootstrap
+  with zero unsubscriptions. OnDestroy only cleans up _onWorldPhaseChanged,
+  _onGameStateChanged, _onNeedsDied, _onNeedChanged (4 of ~650). Every
+  PlayMode stop/start in the Unity Editor leaks ~646 delegates. In production
+  builds this is a one-time cost at game start, but in the Editor it means
+  each Play session accumulates stale handlers — after 10 runs, every event
+  fires 10 redundant callbacks, each running stale lambda captures on objects
+  that have been garbage-collected (null refs inside the lambda silently fail
+  but still allocate).
+  This is BOOT-001 from the first audit, still OPEN. Severity was HIGH there;
+  downgraded to MEDIUM here because it only affects editor iteration speed,
+  not production builds, and test-mode cleanup would be the first fix.
+  Suggested Fix: Consolidate subscriptions into a CompositeDisposable per
+  bootstrap family, disposed in OnDestroy. One PR per family.
+  Suggested Harden: Add a test that constructs a bootstrap, disposes it,
+  constructs a second one, ticks once, and asserts the first bootstrap's
+  handlers are not invoked.
+
+========================================================================================
+SECTION B — DEATH-PATH GAPS (survivors die silently)
+========================================================================================
+
+[SILENTKILL-001]  Severity: HIGH  |  Type: event gap
+  Location:      BunkerSocialDirector.cs:257 (Execution),
+   BunkerSocialSystems.cs:667 (leader rebellion death)
+  Description:   Execution and leader death use SurvivorNeedWrite.SetHealth(sv, 0f)
+  which sets State=Dead but fires no OnDied. This means:
+    • No Pillar-of-Atlas repair debuff (permanent bunker damage missing)
+    • No Twin partner death reaction (symbiotic twin does not die/break)
+    • No ChildSystem orphan check (orphans don't get reassigned)
+    • No GriefKeepsakes pendant drop (death loot missing)
+    • No IronMan save deletion (Iron Man run not terminated)
+    • No EmpathSystem.OnSurvivorDied (empath trait not triggered)
+    • No BunkerSocial.NotifySurvivorDied (burial/cremation rituals not triggered)
+  Suggested Fix: After SetHealth(sv, 0f), invoke NeedsSystem.OnDied (or a
+  shared death finalizer) for the survivor. Alternatively, change
+  SurvivorNeedWrite.SetHealth to accept a Func<Survivor, bool> deathHandler.
+  Suggested Harden: EditMode test — kill a survivor via each death path
+  (Execution, leader rebellion, expedition health=0, combat health=0,
+  starvation health=0) and assert OnDied fires exactly once per path.
+
+[SILENTKILL-002]  Severity: HIGH  |  Type: event gap
+  Location:      LifeboatTransmissionSystem.cs:203, ExpeditionSystem.Flashpoint.cs:161,
+   PersonalQuestSystem.Ashes.cs:341/1037, SuspicionTracker.cs:408
+  Description:   Five systems set State = SurvivorState.Dead directly, bypassing
+  both EvaluateDeath and SurvivorNeedWrite. None call OnDied. These are
+  lifecycle stops for the drama they represent (lifeboat left behind, flashpoint
+  execution, twin/core symbiotic death, thief lynched), but the systemic
+  consequences never run.
+  Suggested Fix: Call NeedsSystem.ForceDeath (which invokes OnDied + quest hooks)
+  or ensure each site also calls the OnDied chain.
+  Suggested Harden: A reflection-based CI gate: any assignment to
+  `SurvivorState.Dead` outside NeedsSystem.cs and SurvivorNeedWrite.cs is a
+  compile-error (enforce with a custom Roslyn analyzer or a CI grep test).
+
+========================================================================================
+SECTION C — NEW WIRING GAPS (uncommitted working tree)
+========================================================================================
+
+[WIRE-001]  Severity: MEDIUM  |  Type: stale state / future bug
+  Location:      Uncommitted: ExpeditionSystem.cs + ExpeditionSystem.Tick.cs
+   (REPROMOTE-MapHazard-001 VenusTrap, REPROMOTE-Item-001 Keycard)
+  Description:   Excellent work wiring dead content (MapHazard_VenusTrap,
+  Item_Keycards) into the live expedition path. Two concerns:
+  
+   (a) VenusTrap.EnterNode(nodeId) is called every time the expedition loots
+   a swamp-tagged node. If the trap was already cleared on a previous visit,
+   EnterNode should be a no-op. Verify EnterNode checks IsEntrapped(nodeId)
+   before re-arming (source at MapHazard_VenusTrap.cs:50-56 looks correct).
+   
+   (b) TryKeycardDoorOnLootingArrival calls _keycards.ReportKeycardFound
+   even on repeat visits. Verify ReportKeycardFound is idempotent (adding
+   the same color twice should be a no-op, not a double-count).
+   
+   (c) IsKeycardDoorNode uses substring matching on DisplayName ("hangar",
+   "command", "silo", "bunker rim") which may match unrelated nodes. A
+   node named "Commander's Quarters" or "Silo Grain Storage" would match.
+   Prefer HasTag("keycard_door") / HasTag("secure") which are already
+   checked first; the substring fallback should only fire when tags are
+   absent, and the substring list should be tighter.
+   
+  Suggested Fix: For (b): add an `if (owned.Contains(required)) return;` guard.
+  For (c): move substring match to a separate "heuristic fallback" that logs
+  when triggered so accidental matches are visible.
+  Suggested Harden: Add a tag to all keycard-eligible nodes in the map data
+  and remove the substring heuristic entirely.
+
+========================================================================================
+SECTION D — HUD / UI GAPS
+========================================================================================
+
+[HUD-001]  Severity: MEDIUM  |  Type: event gap
+  Location:      NeedsSystem.Modify ~355 (no OnNeedChanged for some paths)
+  Description:   NeedsSystem.Modify fires OnNeedChanged for every need delta
+  EXCEPT Morale when processed through the Selfless redistribution path
+  (lines 328-340). The Selfless path clamps via ClampMoraleToCap and
+  ApplyLivingSaintMoraleFloor but only fires OnNeedChanged for the Selfless
+  absorber, not for the original morale-damaged survivor. If the HUD shows
+  the original survivor's morale, it will be out of date after a Selfless
+  redistribution.
+  Suggested Fix: Fire OnNeedChanged for both the absorber and the victim
+  in the Selfless path, or document why only the absorber gets an event.
+  Suggested Harden: EditMode test — apply morale damage to a survivor
+  with a Selfless absorber in the bunker, assert OnNeedChanged fires
+  for both survivors.
+
+[HUD-002]  Severity: LOW  |  Type: stale display
+  Location:      ShelterAtmosphereSystem.cs — CO/humidity tracking
+  Description:   AtmosphereSystem tick updates CO ppm and humidity but does
+  not raise events. HUD must poll or go stale between ticks that read the
+  shelter model. If a UI rebuilds a tooltip mid-frame, it sees the last
+  frame's values from whatever poller runs first.
+  Suggested Fix: OnCoChanged / OnHumidityChanged events.
+  Suggested Harden: All shelter subsystems should fire OnXChanged when
+  their mutable values change (consistent with the project's own rule:
+  "Every public system raises C# events on state change").
+
+========================================================================================
+SECTION E — ECONOMY / TRADE EDGE CASES
+========================================================================================
+
+[ECON-003]  Severity: MEDIUM  |  Type: pricing bug
+  Location:      DynamicEconomySystem.cs GetDemandMultiplier ~680
+  Description:   Demand multipliers can stack multiplicatively during
+  supply crises. If three crisis events fire simultaneous shortage flags
+  (e.g. war, famine, blockade), the demand multiplier becomes
+  1.5 * 1.5 * 1.5 = 3.375× — items can sell for >1000 scrap. The
+  pricing curve has no hard cap.
+  Suggested Fix: Clamp final Resolve output or use additive crisis stacking
+  (demand = 1.0 + 0.5 + 0.5 + 0.5 = 2.5).
+  Suggested Harden: EconomySmokeTest — simulate 3 simultaneous crises and
+  assert no item exceeds TradeValueCap (e.g. 500).
+
+[ECON-004]  Severity: LOW  |  Type: stale state
+  Location:      TradeScreenUI.cs — static offer caching
+  Description:   TradeScreenUI caches PlayerOfferValue / FactionAskValue as
+  fields that persist across trade sessions. If a player opens the trade
+  screen, closes it, a survivor dies (changing trust), and they reopen the
+  same faction, the cached values from the previous session are stale.
+  Verify the cache is cleared on OnDisable/OnClose.
+  Suggested Fix: Clear offer/ask cache in trade screen close path.
+  Suggested Harden: EditMode test — open trade, close, mutate trust, reopen,
+  assert values recalculated.
+
+========================================================================================
+SECTION F — INVENTORY EDGE CASES
+========================================================================================
+
+[INV-007]  Severity: MEDIUM  |  Type: item loss on weight cap
+  Location:      Inventory.Add ~290-336
+  Description:   The new CanAdd preflight (INV-001 fix) checks capacity and
+  stacking but does NOT check weight. MaxWeight is checked inside Add() at
+  line 296 via `GetCurrentWeight() + item.weight * amount > MaxWeight`
+  BEFORE the CanAdd call. So the weight check still happens. However, if
+  the weight check is the ONLY rejection after the CanAdd preflight passes,
+  the call returns false — which is correct. No partial mutation happens.
+  Good. No fix needed, documenting for closure.
+
+[INV-008]  Severity: LOW  |  Type: rare edge case
+  Location:      Inventory.Unequip ~475 — CanAdd preflight
+  Description:   Unequip calls CanAdd before removing from equipped. If
+  another system concurrently moves an item into the bag between CanAdd
+  and the Remove+Add sequence (impossible in single-threaded Unity main
+  loop), the CanAdd answer is stale. Marking as LOW because Unity is
+  single-threaded and the bag is not mutated during this window.
+  Suggested Fix: Add a stage+commit pattern if multi-threading is ever
+  introduced, or keep the current design and add a comment.
+  Suggested Harden: No change needed — document the invariant.
+
+========================================================================================
+SECTION G — CODE HEALTH & MAINTAINABILITY
+========================================================================================
+
+[HEALTH-001]  Severity: MEDIUM  |  Type: god-object risk
+  Location:      PersonalQuestSystem.cs — 4885 lines, 16 partial files
+  Description:   PersonalQuestSystem is now the single largest file in the
+  project (4885 lines, up from the original audit's 8.5k estimate for a
+  different file). With 16 partial files (PersonalQuestSystem.cs plus
+  Ashes.cs, Chemistry.cs, CivilWar.cs, Titles.cs, Rebuilders.cs), new
+  questlines require editing the main body instead of adding a new
+  partial. The file has ~250 public methods; autocomplete is noisy.
+  Suggested Fix: Convert questline-specific logic to interface-implementing
+  partials or ScriptableObject-driven questlines.
+  Suggested Harden: Per-questline file count limit. If a new questline
+  requires >50 lines in the main body, split into a new partial.
+
+[HEALTH-002]  Severity: LOW  |  Type: docs lie
+  Location:      UntickedSystemsBaseline.txt (~436 entries)
+  Description:   Self-reported count in file header says "entries: 436".
+  Actual count after recent demotion/wiring is likely lower. The header
+  text and the actual list have drifted. This is a NIT but a stale count
+  is the same class of trust erosion as the original audit's "780 passed"
+  line that was actually red.
+  Suggested Fix: Regenerate baseline from the Explicit test.
+  Suggested Harden: The Explicit regenerator should update the header
+  count automatically — it already writes lines; adding one more
+  `$"# entries: {sorted.Count}"` is a one-line change to
+  UntickedSystemsBaseline.Write().
+
+========================================================================================
+SECTION H — NEW PATTERN AUDIT (RECENT COMMITS)
+========================================================================================
+
+[HATCH-001]  Severity: MEDIUM  |  Type: race / timing
+  Location:      HatchDefenseSystem.RepelCosts.cs (new partial, commit 4e7cb15)
+  Description:   The new RepelCosts partial factors hatch repulsion math out
+  of the main file. The HatchDefenseSystem now has methods on two partials
+  that share mutable state (_state fields). The refactored RepelCosts calls
+  into the main file's equipment checks which depend on the current hatch
+  state. If a penetration happens between the RepelCosts calculation and
+  the actual repulsion, the costs are based on stale state.
+  Suggested Fix: Single-atomic method: CalculateRepelCostsAndExecute that
+  recomputes costs at the point of use and immediately applies them.
+  Suggested Harden: RepelCosts tests that mutate state between calc and
+  execute and assert costs are recomputed at the point of application.
+
+[EXPED-001]  Severity: LOW  |  Type: stale reference
+  Location:      ExpeditionSystem.cs BindVenusTrap / BindKeycards (uncommitted)
+  Description:   The new Bind* methods store references to MapHazard_VenusTrap
+  and Item_Keycards that are populated by GameBootstrap.InitLate. If the
+  bootstrap ever re-creates these systems mid-run (e.g. after a Continue),
+  the expedition system holds a stale reference to the old instance.
+  Currently this is not an issue because Bootstrap never re-creates systems
+  post-init, but it is a fragile dependency.
+  Suggested Fix: Use Func<> providers instead of direct instance binding,
+  so the expedition system always resolves the current instance.
+  Suggested Harden: All Bind* methods should accept Func<T> or be documented
+  with "must be set before InitializeSystems and never changed after."
+
+========================================================================================
+SECTION I — QUICK WINS (one-line fixes)
+========================================================================================
+
+[QUICK-001]  Severity: LOW  |  Type: missing event
+  Location:      Shelter.WaterStorage.cs
+  Description:   No OnWaterChanged event. HUD must poll. The first audit's
+  EVENT-002 flagged this and it is still OPEN.
+  Suggested Fix: `public event Action OnWaterChanged;` + invoke after Add/Consume.
+  Impact: HUD water display may show stale values.
+
+[QUICK-002]  Severity: LOW  |  Type: missing event
+  Location:      PowerNetwork.cs CO decay path
+  Description:   CO ppm decays without firing OnCoChanged (first audit's
+  SHEL-005 still OPEN).
+  Suggested Fix: Invoke OnCoChanged when ppm changes by >0.1.
+
+[QUICK-003]  Severity: NIT  |  Type: debug log spam
+  Location:      GameBootstrap.Diagnostics + all Wire*/On* += Debug.Log blocks
+  Description:   ~200 Debug.Log lines fire on every boot for handler wiring.
+  These should be `#if UNITY_EDITOR` or use ConditionalAttribute("DEBUG") so
+  they are stripped from player builds.
+  Suggested Fix: Wrap all Wire* Debug.Log lines in `#if UNITY_EDITOR`.
+
+========================================================================================
+SECTION J — WHAT PASSED VERIFICATION (confirmed solid)
+========================================================================================
+
+The following areas were audited and confirmed clean:
+
+  ✓ NeedsSystem.ApplyCriticalNeedConsequences — correct fraction-based
+    Health drain; Modify clamps correctly; Morale still drains in parallel.
+  ✓ Inventory.Add — CanAdd preflight prevents partial mutation (INV-001 fixed).
+  ✓ Inventory.Unequip — CanAdd preflight prevents gear loss (INV-002 fixed).
+  ✓ Inventory.Consume — hungerRestore/thirstRestore sign correct; Remove
+    happens before needs mutation (no half-apply).
+  ✓ DrinkActionSO — inventory check + Remove before Thirst mutation.
+  ✓ TakeIodineActionSO — now calls AdministerIodine.
+  ✓ UseAntiRadActionSO — routes through AdministerAntiRad with fallback.
+  ✓ EndgameEngine.OnCampaignEnded → ApplyEndgame with IsGameOver guard.
+  ✓ GameBootstrap.OnDied handler — correctly wired and fires all side effects.
+  ✓ Shelter.GetInteriorRadsPerHour — BunkerContamination + RoomContamination
+    + ceiling attenuation + air-leak guard all correct.
+  ✓ MaterialShieldingSystem.GetWeakestCeilingAttenuation — seed 1f, Min.
+  ✓ TimeSystem — persists day/hourAccumulator/totalElapsedSeconds.
+  ✓ SaveSystem — SAVE-002 Flashpoint fields, SAVE-004 SuppressAutoSave,
+    SAVE-007 Id-based restore, SAVE-008 ActiveExpeditions clear, SAVE-012
+    ModuleLookup, CRAFT-SAVE-001 Crafter rebound all correct.
+  ✓ TradeScreenUI — uses FormatWorthLabel (qualitative only, ECON-002 fixed).
+  ✓ No remaining direct `Needs.Health =` writes (all migrated to
+    SurvivorNeedWrite or NeedsSystem path).
+  ✓ GhostStationSystem.DestroyRuntimeAssets — correct Editor/Play split.
+  ✓ 1737 EditMode tests: 1736 passed, 0 failed, 1 skipped.
+
+========================================================================================
+SECTION K — PRIORITY REMEDIATION ORDER
+========================================================================================
+
+  CRITICAL: none (all CRITICAL from first audit are now fixed)
+
+  HIGH:
+    1. DEATH-001: SurvivorNeedWrite silent death → wire OnDied callback
+    2. SEED-001: SeededRandom.CreateFixed → propagate world seed
+    3. SILENTKILL-001: Execution/leader death → invoke OnDied
+    4. SILENTKILL-002: Direct State=Dead → call ForceDeath
+
+  MEDIUM:
+    5. DEATH-002: Extract shared death finalizer from ForceDeath/EvaluateDeath
+    6. EVENT-008: CompositeDisposable for bootstrap event cleanup
+    7. HUD-001: OnNeedChanged for Selfless morale redistribution
+    8. ECON-003: Clamp trade value during multi-crisis stacking
+    9. INV-007: (CLOSED — verified correct)
+   10. HEALTH-001: PersonalQuestSystem size / questline encapsulation
+   11. WIRE-001: VenusTrap/keycard integration hardening (uncommitted)
+
+  LOW / NIT:
+   12. HUD-002: ShelterAtmosphereSystem CO/humidity events
+   13. ECON-004: TradeScreenUI cache staleness
+   14. HATCH-001: RepelCosts stale state race
+   15. EXPED-001: Bind* pattern → Func<> providers
+   16. QUICK-001: WaterStorage OnWaterChanged
+   17. QUICK-002: PowerNetwork CO OnCoChanged
+   18. QUICK-003: Debug.Log spam in Wire* handlers
+   19. HEALTH-002: UntickedSystemsBaseline header count drift
+
+========================================================================================
+END OF AUDIT
+========================================================================================
+
+========================================================================================
+PART 10 — DEEP DIVE (post-initial-audit)
+Read-only | No code was modified
+Generated (UTC): 2026-08-08
+========================================================================================
+
+This part deepens the original 9-part audit with findings from areas the first pass
+was lighter on: death-path wiring, crafting completion, zombie-state risk, seeding
+hermeticity, PersonalQuestSystem mutations, and expedition-system integrations.
+
+========================================================================================
+SECTION L — DEATH-PATH INTEGRITY (killing should always look like killing)
+========================================================================================
+
+[DEATH-003]  Severity: HIGH  |  Type: silent death
+  Location:      SurvivorNeedWrite.cs SetHealth(sv, 0f) → BunkerSocialDirector:257
+                 (Execution), BunkerSocialSystems:667 (leader rebellion)
+  Description:   SetHealth correctly sets State=Dead but does not fire OnDied,
+  OnNeedChanged, or any personal-quest death hooks. Execution and leader rebellion
+  cause a "silent death" — the survivor is dead on disk but:
+    • No EmpathSystem.OnSurvivorDied
+    • No GriefKeepsakes pendant drop
+    • No ChildSystem orphan check
+    • No IronMan save deletion on last survivor
+    • No Pillar-of-Atlas repair debuff
+    • No Twin symbiotic-death reaction
+    • No BunkerSocial.NotifySurvivorDied (burial/cremation)
+    • No Pip / morale spread from witnessing the death
+  The GameBootstrap.InitFoundation _onNeedsDied handler (line 488-500) runs ALL
+  of these — but only when NeedsSystem.OnDied fires. SurvivorNeedWrite.SetHealth
+  does not invoke that chain.
+  Suggested Fix: SurvivorNeedWrite.SetHealth should accept optional
+  Action<Survivor> onDied. All call sites that can reduce health to 0 (Execution,
+  leader death, StructuralIntegrity crush, expedition paths) should pass
+  NeedsSystem.OnDied or a bootstrap wrapper.
+  Suggested Harden: CI grep gate — any call to SetHealth where the health arg
+  could be ≤ 0 must also show an OnDied invocation within 3 source lines.
+
+[DEATH-004]  Severity: HIGH  |  Type: zombie state
+  Location:      SurvivorNeedWrite.cs SetHealth (line 21) — no !IsAlive guard
+  Description:   SetHealth(sv, health) has no `if (!sv.IsAlive) return;` check.
+  If a system accidentally calls SetHealth on a dead survivor with health > 0,
+  the survivor gets positive HP but stays dead (State = Dead, with Health = 50f).
+  This "zombie" state is written to the save file and looks alive to polling
+  systems. Only one path legitimately writes Health on a dead survivor:
+  MedicalPerkSystem.TryAdministerAdrenaline (line 423), which immediately sets
+  State = Idle afterwards. Every other call site either uses AdjustHealth (which
+  DOES have `!sv.IsAlive`), or SetHealth on a known-alive survivor.
+
+  Call sites that use SetHealth on potentially-dead survivors:
+    • LaborCampSystem.cs:117 — SetHealth(sv, 40f) on rescued laborer
+    • ChildDependentSystem.cs:134 — SetHealth(Child, 80f) on reintegrated child
+    • LightSystemHelper.cs:93 — SetHealth(sv, Mathf.Max(1f, ...))
+    • PersonalQuestSystem.Ashes.cs:416, 579 — SetHealth on alpha/patient
+    • PersonalQuestSystem.CivilWar.cs:381, 404, 406 — SetHealth on empath/patient
+    • PersonalQuestSystem.cs:2647 — SetHealth on firefighter
+    • BunkerSocialSystems.cs:667 — SetHealth(leader, 0f) ← kills already
+
+  Of these, only leader=0f is a guaranteed kill. The others could theoretically
+  be called on a dead survivor if the caller does not check IsAlive first.
+  Suggested Fix: Add `if (!sv.IsAlive) return;` to SetHealth, AND add an
+  explicit `SetHealthOnDead` overload for the adrenaline-revive path (with a
+  clear name so the caller can't accidentally use it).
+  Suggested Harden: Reflection test — find all SetHealth calls where the
+  health arg is > 0 and the survivor arg is not guarded by IsAlive or State==Idle
+  in the preceding 5 lines.
+
+[DEATH-005]  Severity: MEDIUM  |  Type: duplication / fragility
+  Location:      NeedsSystem.cs — EvaluateDeath ~288 vs ForceDeath ~306
+  Description:   ForceDeath duplicates the body of EvaluateDeath. Both call
+  OnDied, NotifySurvivorDied, NotifyTwinDeath. If a fourth side effect is added
+  to EvaluateDeath in a future questline, it must be manually copied to ForceDeath.
+  This is exactly the kind of copy-paste bug the first audit documented across
+  15 stub-capture systems. The fix is mechanical: extract a shared private
+  FinalizeDeath method called by both.
+  Suggested Fix: Extract `private void FinalizeDeath(Survivor s)` called by
+  EvaluateDeath (after TryDeferDeath) and ForceDeath (unconditionally).
+  Suggested Harden: Reflection test — any method that writes
+  `survivor.State = SurvivorState.Dead` must also call a method containing
+  `OnDied?.Invoke` within the same method body (IL scan).
+
+[DEATH-006]  Severity: HIGH  |  Type: direct death without hooks
+  Location:      Five systems write State=Dead directly (no EvaluateDeath):
+    • LifeboatTransmissionSystem.cs:203
+    • ExpeditionSystem.Flashpoint.cs:161
+    • PersonalQuestSystem.Ashes.cs:341 (Twin bond death), 1037 (Core death)
+    • SuspicionTracker.cs:408 (thief lynching)
+  Description:   These are dramatic deaths in their own fiction, but none call
+  OnDied or any death hook. The rest of the game world never knows these survivors
+  died — the bunker doesn't react, questlines don't update, IronMan doesn't fire.
+  The original intent was likely that these deaths are "final" (no deferral possible)
+  but they should still broadcast the fact of death.
+  Suggested Fix: Replace `State = Dead` with `NeedsSystem.Instance.ForceDeath(sv)`
+  (or pass the NeedsSystem OnDied handler through the system's Bind method).
+  Suggested Harden: Roslyn analyzer or CI grep — `SurvivorState\.Dead` assignment
+  outside NeedsSystem.cs and SurvivorNeedWrite.cs is a compile error.
+
+========================================================================================
+SECTION M — CRAFTING SYSTEM INTEGRITY
+========================================================================================
+
+[CRAFT-003]  Severity: HIGH  |  Type: silent item loss
+  Location:      CraftingSystem.CompleteCraft ~330
+  Description:   _inventory.Add(result, amount) return value is NOT checked.
+  If the inventory is full (weight cap or slot cap), the crafted item silently
+  vanishes. Ingredients were consumed at craft start, station wear is applied,
+  and events (OnCraftCompleted) fire — all while the result was lost.
+  Player impact: spend rare ingredients + 4 hours of crafting time, get nothing.
+  Suggested Fix: Check return value. If Add fails, either queue the result for
+  later retrieval (a completed-crafts overflow stash) or refund ingredients.
+  At minimum, DO NOT fire OnCraftCompleted and do not apply station wear when
+  the result cannot be placed.
+  Suggested Harden: Economy smoke test — craft with a full inventory (capacity=0
+  or weight=max) and assert the result is either placed or preserved.
+
+[CRAFT-004]  Severity: LOW  |  Type: event timing
+  Location:      CraftingSystem.CompleteCraft — OnCraftCompleted fires BEFORE
+  station wear, yield resolution, and high-yield transform
+  Description:   OnCraftCompleted fires at line 330, AFTER item-add and station
+  wear. But the high-yield id resolution (Pharmacologist) happens BEFORE the
+  item-add, and the Alchemist double-yield also happens before. So the event
+  fires after all mutations. Good — the event sees the final result.
+  Verify: Is the event payload the original recipe (not the mutated result)?
+  Yes — OnCraftCompleted passes `recipe`, not `result`. If a subscriber wants
+  to read the actual produced item, it must look at the inventory after the event.
+  This is fine as long as it's documented.
+  Suggested Fix: Add a comment at OnCraftCompleted declaration: "Fires after
+  yield resolution; subscribers should read the inventory for the actual
+  produced item (recipe.result may have been transformed)."
+  Suggested Harden: No code change — documentation only.
+
+========================================================================================
+SECTION N — ECONOMY EDGE CASES
+========================================================================================
+
+[ECON-005]  Severity: MEDIUM  |  Type: pricing explosion
+  Location:      DynamicEconomySystem.GetDemandMultiplier + ResolvePrice
+  Description:   Multiple shortage flags stack multiplicatively. Three
+  simultaneous crises (war + famine + blockade) produce a 1.5³ = 3.375×
+  demand multiplier. With base phase values already inflated during
+  NuclearWinter, the final price can exceed 1000 scrap for basic items.
+  There is no hard cap on the final Resolve output.
+  Suggested Fix: Clamp final Resolve to TradeValueCap (e.g. 500 regardless
+  of phase + crisis stacking). Or use additive crisis stacking:
+  demand = 1.0 + Σ(shortageBonus - 1.0).
+  Suggested Harden: Economy smoke test — simulate 3 simultaneous crises +
+  NuclearWinter phase, assert no item exceeds 500.
+
+[ECON-006]  Severity: LOW  |  Type: cache staleness
+  Location:      TradeScreenUI.cs — PlayerOfferValue / FactionAskValue fields
+  Description:   These fields are set once when the trade screen is opened. If
+  a player opens, closes, a survivor dies (changing trust/faction rep), and
+  reopens the same faction, the cached values from the previous session are
+  used (stale). Verify the cache is cleared in OnDisable/OnClose.
+  Suggested Fix: Set PlayerOfferValue = 0f, FactionAskValue = 0f in the close
+  path, and recalculate on open if the values are 0.
+  Suggested Harden: EditMode test — open trade, close, mutate trust, reopen,
+  assert values recalculated.
+
+========================================================================================
+SECTION O — RNG AND SEEDING (replay determinism)
+========================================================================================
+
+[SEED-002]  Severity: HIGH  |  Type: hermetic seed (zero replay variety)
+  Location:      SeededRandom.CreateFixed(context) — 68 call sites
+  Description:   CreateFixed uses a hardcoded seed 0xA51FA11 regardless of
+  campaign. This means every new campaign has IDENTICAL random rolls from all
+  68 systems: the first outbreak, the first surgical botch, the first bloood
+  type, the first mirage, etc. The doc comment for SeededRandom says "Prefer
+  salting the campaign world seed" but Create(worldSeed, context) is used by
+  ZERO call sites. This is a regression from the original `new Random()`
+  pattern (which gave different rolls each campaign) — now every campaign is
+  identical for these systems.
+  Suggested Fix: Each system's constructor/Bind/SetRng must accept an int
+  worldSeed from GameBootstrap.CoreFamilies and use SeededRandom.Create(worldSeed,
+  context). The bootstrap has _worldSeed in scope — propagate it.
+  Suggested Harden: EditMode test — construct the full bootstrap with two
+  different world seeds, tick 30 days, assert the 68 systems produce different
+  outcomes on at least one RNG-dependent event.
+
+[SEED-003]  Severity: MEDIUM  |  Type: unseeded fallback
+  Location:      Multiple systems take `Random rng = null` and fall back to
+  new Random() when null. This is the UNSALTED wall-clock time, which makes
+  save/load round-trips non-deterministic.
+  Description:   Before the recent remediation, many systems fell back to
+  `new Random()` (wall-clock) when no RNG was injected. The SeededRandom
+  migration replaced ~20 of these with CreateFixed, but others may still
+  use unseeded fallbacks. Grep for `new Random()` vs `new Random(seed)` to
+  find remaining offenders.
+  Suggested Fix: A CI test that greps for `new Random()` in Assets/_Game
+  (excluding tests and SeededRandom.cs itself) and fails if any are found.
+  Suggested Harden: Add a Roslyn analyzer that flags `new Random()` in
+  gameplay assemblies.
+
+========================================================================================
+SECTION P — EXPEDITION SYSTEM INTEGRATION (uncommitted working tree)
+========================================================================================
+
+[EXPED-002]  Severity: MEDIUM  |  Type: idempotency risk
+  Location:      ExpeditionSystem.Tick.cs (uncommitted): TryVenusTrapOnLootingArrival
+                 and TryKeycardDoorOnLootingArrival — called on EVERY looting arrival
+                 for every expedition that visits a swamp/keycard node.
+  Description:   These methods are called every time the expedition enters the
+  Looting phase on a matching node. If an expedition visits the same node
+  twice (possible if they leave and return), the methods fire again.
+  
+  (a) VenusTrap.EnterNode must be idempotent — verify it checks IsEntrapped
+  and returns early if the trap was already cleared.
+  
+  (b) Keycard.ReportKeycardFound must be idempotent — verify adding the same
+  color twice is a no-op (not a double-count).
+  
+  (c) IsKeycardDoorNode uses substring matching on DisplayName ("hangar",
+  "command", "silo", "bunker rim") as a fallback when tags are absent. A node
+  named "Commander's Quarters" or "Silo Grain Storage" would match. The tag
+  check (HasTag("keycard_door") etc.) runs first, reducing false positives,
+  but the substring heuristic should log when fired so accidental matches are
+  visible in the console during development.
+  Suggested Fix: For (c): add Debug.LogWarning when the substring path (
+  not the tag path) matches, so designers see accidental hits. For (a)/(b):
+  add unit tests proving idempotency.
+  Suggested Harden: Add a "keycard_door" tag to all keycard-eligible nodes
+  in the map data and remove the substring heuristic entirely.
+
+[EXPED-003]  Severity: LOW  |  Type: stale reference risk
+  Location:      ExpeditionSystem.BindVenusTrap / BindKeycards (uncommitted)
+  Description:   The Bind pattern stores a direct reference to the MapHazard
+  or Item_Keycards instance. If the bootstrap ever re-creates these systems
+  mid-run (e.g. after a Continue load), the ExpeditionSystem holds a stale
+  reference to the old instance. Currently this doesn't happen because
+  Bootstrap never re-creates systems post-init, but it's a fragile assumption.
+  Suggested Fix: Use Func<> providers: BindVenusTrap(Func<MapHazard_VenusTrap>)
+  and resolve lazily on first use.
+  Suggested Harden: All Bind* methods should accept Func<T> or be documented
+  with "must be set before InitializeSystems and never changed after."
+  Add a CI test that constructs bootstrap twice and asserts all Bind references
+  resolve to the correct (current) instance.
+
+========================================================================================
+SECTION Q — PERSONAL QUEST SYSTEM MUTATION SAFETY
+========================================================================================
+
+[QUEST-001]  Severity: MEDIUM  |  Type: direct Needs mutation (bypass Modify)
+  Location:      PersonalQuestSystem.Ashes.cs:230, 679;
+                 PersonalQuestSystem.Chemistry.cs:130, 133-134, 171, 319, 384-385;
+                 PersonalQuestSystem.CivilWar.cs:594-595;
+                 PersonalQuestSystem.cs:1668-1673, 1705, 1793
+  Description:   ~20 direct writes to Needs fields (Morale/Fatigue/Hunger/Health)
+  across 4 partial files. None go through NeedsSystem.Modify, so:
+    • OnNeedChanged never fires (HUD desync)
+    • Clamping bypasses per-survivor caps (Traumatized 50% Morale cap,
+      Restless 80% Fatigue cap, Frail 60 max Health cap)
+    • EvaluateDeath never fires on Health <= 0 writes
+    • Critical-need notifications (OnNeedCritical) never fire
+  These are the same class of bug as the pre-fix MED-004 / SURV-003 from the
+  first audit, but in quest code that was never remediated.
+  Suggested Fix: Route all needs mutations through NeedsSystem.Modify or a
+  new NeedsSystem.SetValue (which fires OnNeedChanged + checks caps +
+  evaluates death) for a single atomic write without the delta semantics.
+  Suggested Harden: Reflection test — find all `sv.Needs.X =` or
+  `survivor.Needs.X =` in PersonalQuestSystem and assert the set is preceded
+  or followed by an OnNeedChanged invocation within the same method.
+
+[QUEST-002]  Severity: MEDIUM  |  Type: cap bypass
+  Location:      PersonalQuestSystem.Ashes.cs:679 — sv.Needs.Morale = Mathf.Max(0f,
+                 sv.Needs.Morale - EntitledLaborMoraleHitPerDay)
+  Description:   The Traumatized trait caps Morale at 50%. But this direct write
+  bypasses the ClampMoraleToCap path in NeedsSystem.Modify. A Traumatized
+  survivor hit with Entitled Labor loses morale below 50% via direct write,
+  which the cap should prevent.
+  Suggested Fix: Use NeedsSystem.Modify(sv, Morale, -EntitledLaborMoraleHitPerDay).
+
+========================================================================================
+SECTION R — MEDICAL SYSTEM EDGE CASES
+========================================================================================
+
+[MED-016]  Severity: MEDIUM  |  Type: incomplete treatment
+  Location:      MedicalSystem.CompleteTreatment ~945-1015
+  Description:   CompleteTreatment removes the affliction from the treatment list
+  and fires OnAfflictionCured. However, if a survivor has multiple afflictions
+  and one of them was being treated (active.IsTreating = true), removing it
+  leaves the survivor with other afflictions that continue to progress. This is
+  correct. BUT: if CompleteTreatment is called on a treatment that was halted
+  (recipe.haltOnly), the affliction is NOT removed — only its progression is
+  halted. This is also correct.
+
+  The edge case: a survivor with Sepsis (fatal within X days) is being treated.
+  The treatment timer expires successfully, CompleteTreatment fires, the
+  affliction is removed, and health is restored. But if a SECOND affliction
+  (e.g. bacterial_infection) was also active AND had a treatment in progress,
+  that second treatment is still running. When it completes, the method finds
+  active.AfflictionId in the list (it's still there) and removes it. This is
+  correct — the two treatments are independent.
+  
+  However: if two medics are treating the SAME affliction (same afflictionId),
+  the treatment list can have two entries for the same ID. When the first
+  completes, it removes one entry. When the second completes, it also finds
+  the second entry. This works. BUT: the `active.AfflictionId` removal at line
+  975 is a List.Remove — it removes the FIRST matching entry, not necessarily
+  the one the treatment was for. If two medics treat sepsis, medic A's treatment
+  finishes first but removes medic B's active affliction entry, medic B's
+  treatment hours remain non-zero but the affliction they were treating is
+  already gone. This would be a no-op at worst (the affliction was already cured).
+  Suggested Fix: Use reference removal (list.Remove(active)) instead of
+  list.RemoveByPredicate(afflictionId). The treatment list holds ActiveAffliction
+  objects — remove the exact object the treatment was for.
+  Suggested Harden: Medical smoke test — two medics treat the same affliction
+  on the same patient, tick both treatments to completion, assert the affliction
+  is only cured once (no double-cure event).
+
+[MED-017]  Severity: LOW  |  Type: missing event
+  Location:      MedicalSystem line 423 — adrenaline revive sets State directly
+  Description:   TryAdministerAdrenaline writes Health=1, State=Idle without
+  firing OnNeedChanged for Health. The death-to-alive transition fires
+  OnDeathsDoorRevived but does not notify systems that Health changed from 0 to 1.
+  HUDs polling Health will eventually pick up the change on the next frame, but
+  no event pushes it.
+  Suggested Fix: Call _needs.Modify(survivor, Health, 1f) instead of direct
+  Needs.Health = 1f, after setting State = Idle (so the survivor is alive
+  when Modify runs its IsAlive guard).
+
+========================================================================================
+SECTION S — HUD / UI EVENT INTEGRITY
+========================================================================================
+
+[HUD-003]  Severity: LOW  |  Type: missing event
+  Location:      Shelter.WaterStorage — no OnWaterChanged event
+  Description:   First audit's EVENT-002. Still OPEN. No event fires when water
+  is added or consumed; HUD must poll.
+  Suggested Fix: public event Action OnWaterChanged; invoke after AddWater
+  and ConsumeWater.
+
+[HUD-004]  Severity: LOW  |  Type: missing event
+  Location:      PowerNetwork — CO decay does not fire OnCoChanged
+  Description:   First audit's SHEL-005. Still OPEN. CO ppm decays in Tick
+  without firing OnCoChanged; HUD shows stale values.
+  Suggested Fix: Invoke OnCoChanged when ppm changes by >0.1.
+
+[HUD-005]  Severity: LOW  |  Type: Needs mutation channels
+  Location:      EatActionSO.cs, SleepActionSO.cs — use SurvivorNeedWrite
+                 when NeedsSystem is unavailable
+  Description:   EatActionSO line 160-162: prefers NeedsSystem.AdjustHealth,
+  falls back to SurvivorNeedWrite.AdjustHealth. The fallback path does NOT
+  fire OnNeedChanged, so if the context has no NeedsSystem (some test/host
+  scenarios), the Health change is silent.
+  Suggested Fix: The fallback is only for unbound unit tests. Wrap the
+  fallback in #if UNITY_EDITOR or mark [VisibleForTesting]. Production hosts
+  that forget to bind NeedsSystem should log a warning, not silently skip
+  the event.
+  Suggested Harden: AIContext validation test — after bootstrap init,
+  assert every required system field on AIContext is non-null.
+
+========================================================================================
+SECTION T — QUICK WINS (one-line confirmed fixes)
+========================================================================================
+
+[QUICK-004]  Severity: NIT  |  Type: dead code path
+  Location:      GameBootstrap.Diagnostics + all Wire*/On* += Debug.Log blocks
+  Description:   ~200 Debug.Log lines fire on every boot for handler wiring.
+  Wrap in #if UNITY_EDITOR so player builds don't ship with log-spam wiring.
+  Suggested Fix: #if UNITY_EDITOR around Wire* Debug.Log blocks.
+
+[QUICK-005]  Severity: NIT  |  Type: stale header count
+  Location:      UntickedSystemsBaseline.txt header says "entries: 436"
+  Description:   Actual count after recent demotion/wiring is likely lower.
+  The Explicit regenerator writes the list but doesn't update the header.
+  Stale count is the same trust-erosion bug as the first audit's "780 passed".
+  Suggested Fix: UntickedSystemsBaseline.Write() should write
+  $"# entries: {sorted.Count}" into the header.
+
+========================================================================================
+SECTION U — ENDGAME / VICTORY PATH INTEGRITY
+========================================================================================
+
+[END-001]  Severity: MEDIUM  |  Type: double-trigger risk
+  Location:      EndgameEngine.TriggerEndgame ~124-135
+  Description:   TriggerEndgame fires BOTH OnCampaignEnded (direct event) AND
+  EventBus.Raise(evt). MoralChronicleBridge subscribes to EventBus AND has
+  Subscribe<CampaignEndedEvent>. My ApplyEndgameFromEndgameEngine subscribes to
+  OnCampaignEnded. So MoralChronicleBridge gets one event, freeze gets one event
+  — no double-freeze. But if a future system subscribes via both channels, it
+  would double-process. Document that the two channels deliver the same event.
+  Suggested Fix: Add a comment on TriggerEndgame: "Fires OnCampaignEnded for
+  direct subscribers AND EventBus for decoupled listeners. Same payload.
+  Do not subscribe to both."
+  Suggested Harden: Add an EventBus.Subscribe debug assertion that detects
+  if the same delegate is also subscribed to OnCampaignEnded (optional).
+
+========================================================================================
+SECTION V — NEW FINDING TAXONOMY (this pass)
+========================================================================================
+
+New IDs introduced in Part 10:
+
+  HIGH (6):
+    DEATH-003  Silent death from SurvivorNeedWrite.SetHealth(0f)
+    DEATH-004  Zombie state from SetHealth on dead survivor
+    DEATH-006  Direct State=Dead without hooks (5 systems)
+    CRAFT-003  Silent item loss on full inventory craft
+    SEED-002  Hermetic seeds (68 systems, identical all campaigns)
+    SEED-003  Unseeded fallback RNG
+
+  MEDIUM (6):
+    DEATH-005  ForceDeath / EvaluateDeath code duplication
+    ECON-005  Multi-crisis pricing explosion (no cap)
+    EXPED-002  VenusTrap/keycard idempotency on repeat visits (uncommitted)
+    QUEST-001  Direct Needs mutation in PersonalQuestSystem (~20 sites)
+    QUEST-002  Trait cap bypass on direct write
+    MED-016   Same-affliction double-treatment List.Remove ambiguity
+    END-001   Double-trigger from OnCampaignEnded + EventBus
+
+  LOW (6):
+    CRAFT-004  Event timing (recipe vs result in OnCraftCompleted)
+    ECON-006  TradeScreenUI cache staleness on reopen
+    EXPED-003  Stale Bind reference after bootstrap re-create
+    MED-017   Missing OnNeedChanged on adrenaline revive
+    HUD-003   Shelter water event (still OPEN from first audit)
+    HUD-004   PowerNetwork CO event (still OPEN from first audit)
+    HUD-005   NeedsSystem vs SurvivorNeedWrite fallback semantics
+
+  NIT (2):
+    QUICK-004 Debug.Log spam in Wire* handlers (200+ lines)
+    QUICK-005 UntickedSystemsBaseline header count drift
+
+========================================================================================
+SECTION W — COMBINED REMEDIATION ORDER (Audit #1 + #2)
+========================================================================================
+
+CRITICAL (0 remain — all fixed in PR #2):
+  (none)
+
+HIGH — Priority 1 (first PR):
+  1. DEATH-003: Wire OnDied callback to SurvivorNeedWrite.SetHealth
+  2. DEATH-004: Add !IsAlive guard + explicit Revive path
+  3. DEATH-006: Replace 5 direct State=Dead with ForceDeath
+  4. CRAFT-003: Check _inventory.Add return in CompleteCraft
+  5. SEED-002: Propagate worldSeed to 68 CreateFixed call sites
+
+HIGH — Priority 2 (second PR):
+  6. SILENTKILL-001 (from Part 1): Execution/leader death → OnDied
+  7. SILENTKILL-002 (from Part 1): Lifeboat/Flashpoint → ForceDeath
+  8. DEATH-005: Extract shared FinalizeDeath method
+
+MEDIUM — Priority 3 (subsequent PRs):
+  9.  EVENT-008: CompositeDisposable for bootstrap events
+ 10.  QUEST-001: Route PersonalQuestSystem writes through Modify
+ 11.  SEED-003: CI gate for unseeded new Random()
+ 12.  EXPED-002: Idempotency tests for VenusTrap/keycard
+ 13.  ECON-005: Cap trade values during multi-crisis
+ 14.  MED-016: Reference-based affliction removal on double-treatment
+
+LOW / NIT — Backlog (polish sprint):
+ 15-22. Remaining LOW/NIT items (see sections HUD, EXPED, QUICK)
+
+========================================================================================
+END OF PART 10
+========================================================================================

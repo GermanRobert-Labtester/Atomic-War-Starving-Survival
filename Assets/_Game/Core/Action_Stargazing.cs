@@ -16,7 +16,8 @@ namespace AtomicWar._Game.Core
     {
         public string systemId = "action_stargazing";
     }
-public class Action_Stargazing
+/// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
+    public class Action_Stargazing
     {
         public const string ActionId = "action_stargazing";
         public const string AfflictionHypothermia = "hypothermia";

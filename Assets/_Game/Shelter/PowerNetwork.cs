@@ -13,6 +13,15 @@ namespace AtomicWar._Game.Shelter
     [Serializable]
     public class PowerNetwork
     {
+        /// <summary>
+        /// Durability lost per running hour by a diesel generator, before the
+        /// Ruthless Exec wear multiplier. Was an unnamed 0.15f inside Tick.
+        /// </summary>
+        public const float GeneratorWearPerHour = 0.15f;
+
+        /// <summary>Float-compare slack for generation/draw balance checks. Was an unnamed 0.0001f.</summary>
+        public const float PowerBalanceEpsilon = 0.0001f;
+
         private readonly List<PowerSourceInstance> _sources = new List<PowerSourceInstance>();
         private readonly List<PowerConsumer> _consumers = new List<PowerConsumer>();
         private readonly Dictionary<string, PowerSourceSO> _defs = new Dictionary<string, PowerSourceSO>();
@@ -319,58 +328,11 @@ namespace AtomicWar._Game.Shelter
                 switch (def.Kind)
                 {
                     case PowerSourceKind.Diesel:
-                        if (src.Fuel <= 0f) break;
-                        // #260 Supply Chain Master: bunker-wide diesel burn mult (0.7).
-                        float bunkerFuelMult = _personalQuests != null
-                            ? _personalQuests.GetBunkerFuelBurnMultiplier(_getSurvivors?.Invoke())
-                            : 1f;
-                        float degradeMult = FuelDegradationBurnMultiplier > 0f
-                            ? FuelDegradationBurnMultiplier
-                            : 1f;
-                        float burn = def.FuelPerHour * gameHours
-                                     * src.EffectiveFuelBurnMultiplier * bunkerFuelMult * degradeMult;
-                        src.Fuel = Mathf.Max(0f, src.Fuel - burn);
-                        if (def.CoPpmPerHour > 0f)
-                            coDelta += def.CoPpmPerHour * gameHours;
-                        // Mechanical wear: overworked gens become fire risks (Internal Horror).
-                        // Prompt #226 — Grid Walker: generators never break down.
-                        bool immune = _personalQuests != null
-                            && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke());
-                        if (!immune)
-                        {
-                            float wear = 0.15f * gameHours;
-                            // #283 Ruthless Exec: modules work harder and die faster.
-                            if (_personalQuests != null && _getSurvivors != null)
-                            {
-                                var list = _getSurvivors();
-                                if (list != null)
-                                {
-                                    for (int wi = 0; wi < list.Count; wi++)
-                                    {
-                                        var ex = list[wi];
-                                        if (ex == null || !ex.IsAlive) continue;
-                                        float m = _personalQuests.GetRuthlessModuleWearMultiplier(ex);
-                                        if (m > 1f) { wear *= m; break; }
-                                    }
-                                }
-                            }
-                            src.Durability = Mathf.Max(0f, src.Durability - wear);
-                        }
+                        coDelta += TickDieselSource(src, def, gameHours);
                         break;
 
                     case PowerSourceKind.Bicycle:
-                        if (!src.HasPedaler) break;
-                        if (tryApplyPedalCost == null)
-                        {
-                            // No host callback: keep generation but skip need drain.
-                            break;
-                        }
-                        float fat = def.FatiguePerHour * gameHours;
-                        float hun = def.HungerPerHour * gameHours;
-                        if (!tryApplyPedalCost(src.PedalingSurvivorId, fat, hun))
-                        {
-                            src.ClearPedaler();
-                        }
+                        TickBicycleSource(src, def, gameHours, tryApplyPedalCost);
                         break;
                 }
             }
@@ -391,6 +353,75 @@ namespace AtomicWar._Game.Shelter
         }
 
         /// <summary>
+        /// Burn fuel and accrue mechanical wear for one diesel generator.
+        /// Returns the carbon-monoxide ppm this source added over the interval.
+        /// </summary>
+        private float TickDieselSource(PowerSourceInstance src, PowerSourceSO def, float gameHours)
+        {
+            if (src.Fuel <= 0f) return 0f;
+
+            // #260 Supply Chain Master: bunker-wide diesel burn mult (0.7).
+            float bunkerFuelMult = _personalQuests != null
+                ? _personalQuests.GetBunkerFuelBurnMultiplier(_getSurvivors?.Invoke())
+                : 1f;
+            float degradeMult = FuelDegradationBurnMultiplier > 0f
+                ? FuelDegradationBurnMultiplier
+                : 1f;
+            float burn = def.FuelPerHour * gameHours
+                         * src.EffectiveFuelBurnMultiplier * bunkerFuelMult * degradeMult;
+            src.Fuel = Mathf.Max(0f, src.Fuel - burn);
+
+            // Mechanical wear: overworked gens become fire risks (Internal Horror).
+            // Prompt #226 — Grid Walker: generators never break down.
+            bool immune = _personalQuests != null
+                && _personalQuests.GeneratorsImmuneToBreakdown(_getSurvivors?.Invoke());
+            if (!immune)
+                src.Durability = Mathf.Max(0f, src.Durability - GeneratorWearPerHour * gameHours
+                    * GetRuthlessWearMultiplier());
+
+            return def.CoPpmPerHour > 0f ? def.CoPpmPerHour * gameHours : 0f;
+        }
+
+        /// <summary>
+        /// #283 Ruthless Exec: modules work harder and die faster. First living
+        /// exec in the bunker sets the multiplier for the whole grid.
+        /// </summary>
+        private float GetRuthlessWearMultiplier()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return 1f;
+            var list = _getSurvivors();
+            if (list == null) return 1f;
+
+            for (int wi = 0; wi < list.Count; wi++)
+            {
+                var ex = list[wi];
+                if (ex == null || !ex.IsAlive) continue;
+                float m = _personalQuests.GetRuthlessModuleWearMultiplier(ex);
+                if (m > 1f) return m;
+            }
+            return 1f;
+        }
+
+        /// <summary>
+        /// Charge the rider for one interval of pedalling. A host that declines the
+        /// cost (unavailable or exhausted rider) clears the pedaler; no host callback
+        /// at all keeps generation but skips the need drain.
+        /// </summary>
+        private static void TickBicycleSource(
+            PowerSourceInstance src,
+            PowerSourceSO def,
+            float gameHours,
+            Func<string, float, float, bool> tryApplyPedalCost)
+        {
+            if (!src.HasPedaler || tryApplyPedalCost == null) return;
+
+            float fat = def.FatiguePerHour * gameHours;
+            float hun = def.HungerPerHour * gameHours;
+            if (!tryApplyPedalCost(src.PedalingSurvivorId, fat, hun))
+                src.ClearPedaler();
+        }
+
+        /// <summary>
         /// Recompute generation/draw and auto-shed low-priority loads so that
         /// TotalDraw &lt;= TotalGeneration when possible. Higher priority numbers
         /// shed first (e.g. priority 2 heater before priority 1 filter).
@@ -399,6 +430,31 @@ namespace AtomicWar._Game.Shelter
         {
             TotalGeneration = ComputeGeneration(weatherName);
 
+            float requested = ComputeRequestedDraw();
+            RequestedDraw = requested;
+
+            if (requested > TotalGeneration + PowerBalanceEpsilon)
+                ShedLowPriorityLoads(requested);
+
+            bool anyShed = RecomputeActualDraw(out bool anyRequested);
+            IsLoadShedding = anyShed;
+
+            bool wasBlackout = IsBlackout;
+            // Full blackout: no generation while something still wants power.
+            IsBlackout = TotalGeneration <= PowerBalanceEpsilon && anyRequested;
+
+            OnPowerStateChanged?.Invoke();
+            if (anyShed) OnLoadShed?.Invoke();
+            if (IsBlackout && !wasBlackout)
+            {
+                OnBlackout?.Invoke();
+                NotifyCoreOfPowerFailure();
+            }
+        }
+
+        /// <summary>Sum of watts every requested (not yet shed) consumer draws, resetting IsShed for the new balance pass.</summary>
+        private float ComputeRequestedDraw()
+        {
             float requested = 0f;
             for (int i = 0; i < _consumers.Count; i++)
             {
@@ -410,37 +466,41 @@ namespace AtomicWar._Game.Shelter
             }
             // #280 Tech Bro: unsupervised tablet wastes power.
             requested += GetTechBroPowerWasteWatts();
-            RequestedDraw = requested;
+            return requested;
+        }
 
-            // Shed highest priority number first until under budget.
-            if (requested > TotalGeneration + 0.0001f)
+        /// <summary>Shed highest priority number first (then largest watts) until under generation budget.</summary>
+        private void ShedLowPriorityLoads(float requested)
+        {
+            // Build shed order: priority desc, then watts desc (shed largest luxury first).
+            var order = new List<PowerConsumer>();
+            for (int i = 0; i < _consumers.Count; i++)
             {
-                // Build shed order: priority desc, then watts desc (shed largest luxury first).
-                var order = new List<PowerConsumer>();
-                for (int i = 0; i < _consumers.Count; i++)
-                {
-                    var c = _consumers[i];
-                    if (c != null && c.IsRequested && GetConsumerWatts(c) > 0f)
-                        order.Add(c);
-                }
-                order.Sort((a, b) =>
-                {
-                    int p = b.Priority.CompareTo(a.Priority);
-                    if (p != 0) return p;
-                    return b.Watts.CompareTo(a.Watts);
-                });
-
-                float remaining = requested;
-                for (int i = 0; i < order.Count && remaining > TotalGeneration + 0.0001f; i++)
-                {
-                    order[i].IsShed = true;
-                    remaining -= order[i].Watts;
-                }
+                var c = _consumers[i];
+                if (c != null && c.IsRequested && GetConsumerWatts(c) > 0f)
+                    order.Add(c);
             }
+            order.Sort((a, b) =>
+            {
+                int p = b.Priority.CompareTo(a.Priority);
+                if (p != 0) return p;
+                return b.Watts.CompareTo(a.Watts);
+            });
 
+            float remaining = requested;
+            for (int i = 0; i < order.Count && remaining > TotalGeneration + PowerBalanceEpsilon; i++)
+            {
+                order[i].IsShed = true;
+                remaining -= order[i].Watts;
+            }
+        }
+
+        /// <summary>Recompute TotalDraw from the post-shed consumer state. Returns whether anything was shed.</summary>
+        private bool RecomputeActualDraw(out bool anyRequested)
+        {
             float draw = 0f;
             bool anyShed = false;
-            bool anyRequested = false;
+            anyRequested = false;
             for (int i = 0; i < _consumers.Count; i++)
             {
                 var c = _consumers[i];
@@ -452,32 +512,21 @@ namespace AtomicWar._Game.Shelter
                     draw += GetConsumerWatts(c);
             }
             TotalDraw = draw;
-            IsLoadShedding = anyShed;
+            return anyShed;
+        }
 
-            bool wasBlackout = IsBlackout;
-            // Full blackout: no generation while something still wants power.
-            IsBlackout = TotalGeneration <= 0.0001f && anyRequested;
+        /// <summary>#318 Core: dies the instant the power network fails (unless Omniscience).</summary>
+        private void NotifyCoreOfPowerFailure()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return;
+            var survivors = _getSurvivors();
+            if (survivors == null) return;
 
-            OnPowerStateChanged?.Invoke();
-            if (anyShed) OnLoadShed?.Invoke();
-            if (IsBlackout && !wasBlackout)
+            for (int i = 0; i < survivors.Count; i++)
             {
-                OnBlackout?.Invoke();
-
-                // #318 Core: dies the instant the power network fails (unless Omniscience).
-                if (_personalQuests != null && _getSurvivors != null)
-                {
-                    var survivors = _getSurvivors();
-                    if (survivors != null)
-                    {
-                        for (int i = 0; i < survivors.Count; i++)
-                        {
-                            var sv = survivors[i];
-                            if (sv != null && sv.IsAlive)
-                                _personalQuests.NotifyPowerNetworkFailure(sv);
-                        }
-                    }
-                }
+                var sv = survivors[i];
+                if (sv != null && sv.IsAlive)
+                    _personalQuests.NotifyPowerNetworkFailure(sv);
             }
         }
 
@@ -598,6 +647,7 @@ namespace AtomicWar._Game.Shelter
                     SourceId = s.SourceId,
                     IsEnabled = s.IsEnabled,
                     Fuel = s.Fuel,
+                    FuelBurnMultiplier = s.FuelBurnMultiplier,
                     Durability = s.Durability,
                     PedalingSurvivorId = s.PedalingSurvivorId,
                     RoomId = s.RoomId
@@ -642,6 +692,10 @@ namespace AtomicWar._Game.Shelter
                         SourceId = row.SourceId,
                         IsEnabled = row.IsEnabled,
                         Fuel = row.Fuel,
+                        // Same guard as Durability: old saves have no key, so a
+                        // non-positive value means "stock burn rate", not "free fuel".
+                        FuelBurnMultiplier =
+                            row.FuelBurnMultiplier > 0f ? row.FuelBurnMultiplier : 1f,
                         Durability = row.Durability > 0f ? row.Durability : 100f,
                         PedalingSurvivorId = row.PedalingSurvivorId,
                         RoomId = row.RoomId
@@ -689,6 +743,10 @@ namespace AtomicWar._Game.Shelter
         public string SourceId;
         public bool IsEnabled;
         public float Fuel;
+        /// <summary>Prompt #200 Thermodynamics burn multiplier from the last fuel
+        /// loader (0.8 = 20% longer). Was not persisted, so a Thermodynamics refuel
+        /// reverted to the stock rate on load.</summary>
+        public float FuelBurnMultiplier = 1f;
         public float Durability = 100f;
         public string PedalingSurvivorId;
         public string RoomId;

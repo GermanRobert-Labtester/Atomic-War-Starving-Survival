@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Spawns during Skirmish Events trying to broker peace in the crossfire.
     /// If player uses a Sniper to cover the Negotiator, both factions cease fire and player is rewarded by both sides.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_TheNegotiator
     {
         private NegotiatorState _state = new NegotiatorState();

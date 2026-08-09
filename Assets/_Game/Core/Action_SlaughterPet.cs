@@ -13,6 +13,7 @@ namespace AtomicWar._Game.Core
         public bool hasBeenUsed = false;
     }
 
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_SlaughterPet
     {
         public event Action<string, string, int> OnPetSlaughtered;    // survivorId, petType, foodYield

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -12,6 +13,7 @@ namespace AtomicWar._Game.Core
         public bool reveals_safe_paths = true;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public sealed class Action_IsotopeTrace
     {
         private IsotopeTraceState _state;
@@ -45,14 +47,14 @@ namespace AtomicWar._Game.Core
             if (!has_pristine_geiger)
             {
                 OnTracingFailed?.Invoke(survivor_id);
-                Debug.Log($"[Action_IsotopeTrace] Failed for '{survivor_id}' — no pristine geiger counter.");
+                GameLog.Log($"[Action_IsotopeTrace] Failed for '{survivor_id}' — no pristine geiger counter.");
                 return new List<string>();
             }
 
             if (!_state.reveals_safe_paths)
             {
                 OnTracingFailed?.Invoke(survivor_id);
-                Debug.Log($"[Action_IsotopeTrace] Safe-path revelation is disabled.");
+                GameLog.Log($"[Action_IsotopeTrace] Safe-path revelation is disabled.");
                 return new List<string>();
             }
 
@@ -61,11 +63,11 @@ namespace AtomicWar._Game.Core
             if (safe_path_node_ids.Count > 0)
             {
                 OnSafePathRevealed?.Invoke(survivor_id, biome_id);
-                Debug.Log($"[Action_IsotopeTrace] Revealed {safe_path_node_ids.Count} safe path nodes in biome '{biome_id}' for '{survivor_id}'.");
+                GameLog.Log($"[Action_IsotopeTrace] Revealed {safe_path_node_ids.Count} safe path nodes in biome '{biome_id}' for '{survivor_id}'.");
             }
             else
             {
-                Debug.Log($"[Action_IsotopeTrace] No safe paths found in biome '{biome_id}' at rad level {rad_level}.");
+                GameLog.Log($"[Action_IsotopeTrace] No safe paths found in biome '{biome_id}' at rad level {rad_level}.");
             }
 
             return safe_path_node_ids;

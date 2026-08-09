@@ -90,11 +90,24 @@ namespace AtomicWar._Game.AI.Actions
                 : 24f;
 
             // Prompt #833 — tolerance shrinks cleanse; 6+ uses → no therapeutic benefit.
-            float cleanse = BaseRadReduction * effectiveness;
-            if (cleanse > 0f)
+            // DEEP3-INV-005 — prefer the route through RadiationSystem.AdministerAntiRad
+            // so the per-run GetRadAwayEfficiencyMultiplier applies. Fall back to a
+            // direct RadiationDose write when no system is provided (e.g. host-injected
+            // AI action running in a test that does not bind a radiation host) so the
+            // pre-fix behaviour is preserved for those callers.
+            if (effectiveness > 0f)
             {
-                context.Survivor.RadiationDose =
-                    Mathf.Max(0f, context.Survivor.RadiationDose - cleanse);
+                if (context.RadiationSystem != null)
+                {
+                    context.RadiationSystem.AdministerAntiRad(
+                        context.Survivor, BaseRadReduction * effectiveness);
+                }
+                else
+                {
+                    float cleanse = BaseRadReduction * effectiveness;
+                    context.Survivor.RadiationDose =
+                        Mathf.Max(0f, context.Survivor.RadiationDose - cleanse);
+                }
             }
 
             // Duration grants temporary rad resistance (half-strength window from iodine path).

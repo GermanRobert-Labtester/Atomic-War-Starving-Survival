@@ -86,7 +86,10 @@ namespace AtomicWar._Game.Flashpoint
                 {
                     var sv = _systems.Survivors[i];
                     if (sv == null || !sv.IsAlive) continue;
-                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - _systems.ExchangeMoraleHit, 0f, 100f);
+                    if (_systems.NeedsSystem != null)
+                        _systems.NeedsSystem.Modify(sv, NeedKind.Morale, -_systems.ExchangeMoraleHit);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - _systems.ExchangeMoraleHit, 0f, 100f);
                     moraleHit = _systems.ExchangeMoraleHit;
                 }
             }

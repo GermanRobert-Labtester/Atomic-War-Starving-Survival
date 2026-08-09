@@ -8,6 +8,8 @@ namespace AtomicWar._Game.Survivors
     {
         private PersonalQuestSystem _personalQuests;
         private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         /// <summary>Prompt #243 — Armorer: clothing degrades 75% slower bunker-wide.</summary>
         public void BindPersonalQuests(
@@ -42,7 +44,10 @@ namespace AtomicWar._Game.Survivors
             if (sv.ClothingDurability <= 0f && !sv.IsRagged) { sv.IsRagged = true; OnRagged?.Invoke(sv); }
             if (sv.IsRagged)
             {
-                sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - RaggedMoraleDrainPerHour * gameHours, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(sv, NeedKind.Morale, -(RaggedMoraleDrainPerHour * gameHours));
+                else
+                    sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - RaggedMoraleDrainPerHour * gameHours, 0f, 100f);
             }
         }
 

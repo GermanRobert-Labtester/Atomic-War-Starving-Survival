@@ -201,7 +201,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(d.Mutiny.MutinyActive);
 
             // Cannot afford → mutiny continues.
-            bool paid = false; d.YieldBunkerControl = u => false;
+            d.YieldBunkerControl = u => false;
             Assert.IsFalse(d.ResolveMutinyYield(10));
             Assert.IsTrue(d.Mutiny.MutinyActive);
         }
@@ -382,6 +382,66 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(fresh.Brig.IsImprisoned("s2"));
             Assert.IsTrue(fresh.Tribunal.HasPending);
             Assert.IsTrue(fresh.Feuds.AreFeuding("s1", "s2"));
+        }
+
+        // ─────────── SAVE-009 SHARED AFFINITY MATRIX ───────────
+
+        /// <summary>
+        /// The director must be able to run on a caller-supplied matrix. In the
+        /// real game that matrix is MentalBreakSystem.Affinity — the only one
+        /// SaveSystem persists (SaveSystem.Capture.Entities.CaptureMapWaterAffinity)
+        /// and the one EventRunner choices, mental-break drain, gossip rot and
+        /// GriefKeepsakes all write to. When the director allocates its own,
+        /// Romance / Feuds / BlackMarket read a matrix nothing else in the game
+        /// touches, and every bond it does build is dropped on load.
+        /// </summary>
+        [Test]
+        public void Director_UsesSuppliedAffinityMatrix_ForAllSubSystems()
+        {
+            var shared = new InterpersonalAffinity();
+            var a = Make("a"); var b = Make("b");
+            var roster = Roster(a, b);
+            var d = new BunkerSocialDirector(shared) { Survivors = roster };
+
+            Assert.AreSame(shared, d.Affinity,
+                "Director must adopt the supplied matrix, not allocate its own");
+
+            // Written the way the rest of the game writes affinity — straight onto
+            // the shared matrix, never through the director.
+            shared.Set("a", "b", -80f); // below FeudSystem.FeudAffinityThreshold (-50)
+            d.Feuds.UpdateFeuds(roster);
+
+            Assert.IsTrue(d.Feuds.AreFeuding("a", "b"),
+                "FeudSystem must see affinity written directly to the shared matrix");
+        }
+
+        /// <summary>Affinity built through the director must be visible on the shared
+        /// matrix too, since that is what gets captured into the save file.</summary>
+        [Test]
+        public void Director_AffinityWrites_LandOnSharedMatrix_AndSurviveSnapshot()
+        {
+            var shared = new InterpersonalAffinity();
+            var a = Make("a"); var b = Make("b");
+            var d = new BunkerSocialDirector(shared) { Survivors = Roster(a, b) };
+
+            d.Affinity.Adjust("a", "b", 42f);
+
+            Assert.AreEqual(42f, shared.Get("a", "b"), 0.001f);
+
+            // Round-trip through the persisted representation.
+            var restored = new InterpersonalAffinity();
+            restored.Restore(shared.Snapshot());
+            Assert.AreEqual(42f, restored.Get("a", "b"), 0.001f);
+        }
+
+        /// <summary>The parameterless ctor must keep working for existing callers.</summary>
+        [Test]
+        public void Director_WithoutSuppliedMatrix_StillAllocatesOne()
+        {
+            var d = new BunkerSocialDirector();
+            Assert.IsNotNull(d.Affinity);
+            d.Affinity.Set("a", "b", 10f);
+            Assert.AreEqual(10f, d.Affinity.Get("a", "b"), 0.001f);
         }
     }
 }

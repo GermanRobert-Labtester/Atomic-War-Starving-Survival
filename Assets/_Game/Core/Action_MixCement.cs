@@ -9,6 +9,7 @@ namespace AtomicWar._Game.Core
     /// wet wall is trivially easy.
     /// Save/load safe. Plain C#.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_MixCement
     {
         public const string ActionId = "action_mix_cement";

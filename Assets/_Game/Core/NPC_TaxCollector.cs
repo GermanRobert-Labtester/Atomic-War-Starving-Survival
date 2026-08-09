@@ -17,6 +17,7 @@ namespace AtomicWar._Game.Core
     /// Armored Emissary from Super-Faction. Demands percentage of total wealth.
     /// Cannot fight → game-ending war. Must hide loot in FalseWalls.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_TaxCollector
     {
         private TaxCollectorState _state = new TaxCollectorState();

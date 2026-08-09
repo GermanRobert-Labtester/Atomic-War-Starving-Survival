@@ -27,7 +27,8 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetClaustrophilicMoralePerHour(sv, inSmallUndergroundRoom) * gameHours;
             if (Mathf.Abs(d) < 0.001f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + d, 0f, 100f);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, d);
         }
 
         /// <summary>AI quirk: prefer deepest/lowest room for sleep over comfort.</summary>
@@ -82,7 +83,10 @@ namespace AtomicWar._Game.Survivors
         {
             if (!NeedsConstantCleanWater(sv) || sv == null || !sv.IsAlive) return;
             if (drankCleanWaterToday) return;
-            sv.Needs.Fatigue = Mathf.Min(100f, sv.Needs.Fatigue + CaffeinatedFatigueCrash);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Fatigue, CaffeinatedFatigueCrash);
+            else
+                sv.Needs.Fatigue = Mathf.Min(100f, sv.Needs.Fatigue + CaffeinatedFatigueCrash);
         }
 
         /// <summary>Host: mark that this survivor drank clean water today (#285).</summary>
@@ -140,7 +144,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetDeafStealthFailChance(sv);
             if (p <= 0f) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_rebuilders");
             return rng.NextDouble() < p;
         }
 
@@ -198,7 +202,8 @@ namespace AtomicWar._Game.Survivors
         {
             float hit = GetNeatFreakHygieneMoraleHit(sv, hygiene01);
             if (hit <= 0f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - hit);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -hit);
         }
 
         /// <summary>AI quirk: clean waste/mold before thirst or hunger.</summary>
@@ -308,7 +313,7 @@ namespace AtomicWar._Game.Survivors
             if (!string.Equals(sv.ArchetypeId, MicrobiologistId, StringComparison.Ordinal)
                 && !HasGermaphobe(sv))
                 return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_rebuilders");
             return rng.NextDouble() < MicrobiologistRefuseRationChance;
         }
 
@@ -557,7 +562,10 @@ namespace AtomicWar._Game.Survivors
                 {
                     var s = inAdjacentRooms[i];
                     if (s == null || !s.IsAlive) continue;
-                    s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(s, NeedKind.Morale, aura);
+                    else
+                        s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + aura, 0f, 100f);
                     if (PlayInstrumentCuresMentalBreaks(musician)
                         && !string.IsNullOrEmpty(s.currentMentalBreakId))
                         s.currentMentalBreakId = null;
@@ -671,7 +679,7 @@ namespace AtomicWar._Game.Survivors
         {
             float p = GetAccidentalDischargeChance(hitman);
             if (p <= 0f) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_rebuilders");
             return rng.NextDouble() < p;
         }
 
@@ -916,7 +924,7 @@ namespace AtomicWar._Game.Survivors
             float mult = GetAtmosphereGasPenaltyMultiplier(sv);
             float dmg = rawHealthDamage * mult;
             if (dmg <= 0f) return 0f;
-            sv.Needs.Health = Mathf.Max(0f, sv.Needs.Health - dmg);
+            SurvivorNeedWrite.AdjustHealth(sv, -dmg);
             return dmg;
         }
 
@@ -968,7 +976,8 @@ namespace AtomicWar._Game.Survivors
             if (sv == null || !sv.IsAlive || baseMoraleLoss <= 0f) return;
             float mult = GetFragileEgoFailureMoraleMultiplier(sv);
             float hit = baseMoraleLoss * mult;
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - hit);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -hit);
         }
 
         /// <summary>

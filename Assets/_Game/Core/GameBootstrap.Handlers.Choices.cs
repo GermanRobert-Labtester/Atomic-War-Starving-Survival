@@ -62,7 +62,7 @@ namespace AtomicWar._Game.Core
                 }
                 else
                 {
-                    Debug.Log($"[Blood for Water] BloodLoss inflicted on {donor.DisplayName}.");
+                    GameLog.Log($"[Blood for Water] BloodLoss inflicted on {donor.DisplayName}.");
                 }
             }
 
@@ -83,7 +83,7 @@ namespace AtomicWar._Game.Core
                     MentalBreakSystem.Affinity.Set(
                         donor.Id, leader.Id,
                         EventRunner.ForcedBleedAffinityFloor);
-                    Debug.Log($"[Blood for Water] Affinity {donor.DisplayName}↔{leader.DisplayName} slammed to {EventRunner.ForcedBleedAffinityFloor}.");
+                    GameLog.Log($"[Blood for Water] Affinity {donor.DisplayName}↔{leader.DisplayName} slammed to {EventRunner.ForcedBleedAffinityFloor}.");
                 }
             }
         }
@@ -99,7 +99,7 @@ namespace AtomicWar._Game.Core
                     _entryRoom = new ShelterRoom(HatchEntrapmentSystem.EntryRoomId, null);
                 HatchEntrapmentSystem.DigOut(_entryRoom, ctx);
                 SyncHatchExpeditionLock();
-                Debug.Log($"[Hatch Entrapment] DigOut complete. Entry CO2={_entryRoom.Co2Ppm:F0} ppm.");
+                GameLog.Log($"[Hatch Entrapment] DigOut complete. Entry CO2={_entryRoom.Co2Ppm:F0} ppm.");
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace AtomicWar._Game.Core
             {
                 HatchEntrapmentSystem.ApplyFactionRescue(ctx);
                 SyncHatchExpeditionLock();
-                Debug.Log("[Hatch Entrapment] Faction dug the hatch open. Debt recorded.");
+                GameLog.Log("[Hatch Entrapment] Faction dug the hatch open. Debt recorded.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace AtomicWar._Game.Core
             int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
             var ctx = BuildEventContext(day);
             EventRunner.Run(ev, ctx);
-            Debug.Log($"[Raid Plan] Wiretap offered: {plan?.AttackerFactionId} → {plan?.TargetFactionId}");
+            GameLog.Log($"[Raid Plan] Wiretap offered: {plan?.AttackerFactionId} → {plan?.TargetFactionId}");
         }
 
         private void HandleRaidPlanChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
@@ -136,7 +136,7 @@ namespace AtomicWar._Game.Core
             if (DebtCollectorSystem.HasPendingDebtFor(factionId)) return;
             var entry = DebtCollectorSystem.ScheduleDebt(factionId);
             if (entry != null)
-                Debug.Log($"[Debt Collector] Scheduled for {factionId} on day {entry.CollectorDay}.");
+                GameLog.Log($"[Debt Collector] Scheduled for {factionId} on day {entry.CollectorDay}.");
         }
 
         private void HandleDebtCollectorArrived(DebtEntry debt, GameEvent ev)
@@ -145,7 +145,7 @@ namespace AtomicWar._Game.Core
             int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
             var ctx = BuildEventContext(day);
             EventRunner.Run(ev, ctx);
-            Debug.Log($"[Debt Collector] {debt?.FactionId} demands half fuel + half clean water.");
+            GameLog.Log($"[Debt Collector] {debt?.FactionId} demands half fuel + half clean water.");
         }
 
         private void HandleDebtCollectorChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)

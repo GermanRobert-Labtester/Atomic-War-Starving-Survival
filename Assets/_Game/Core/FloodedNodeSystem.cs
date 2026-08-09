@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Core
 {
@@ -39,6 +40,9 @@ namespace AtomicWar._Game.Core
 
         public IReadOnlyCollection<string> FloodedNodeIds => _floodedNodeIds;
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         public FloodedNodeSystem() { }
 
         /// <summary>Mark a node as flooded (from proc-gen or save).</summary>
@@ -75,9 +79,13 @@ namespace AtomicWar._Game.Core
             exp.IsWading = true;
             if (exp.Survivor != null)
             {
+                // Warmth set to absolute 0 on entering flooded water.
                 exp.Survivor.Needs.Warmth = WadingWarmthSet;
-                exp.Survivor.Needs.Fatigue = Mathf.Clamp(
-                    exp.Survivor.Needs.Fatigue + WadingFatigueDrainPerHour, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(exp.Survivor, NeedKind.Fatigue, WadingFatigueDrainPerHour);
+                else
+                    exp.Survivor.Needs.Fatigue = Mathf.Clamp(
+                        exp.Survivor.Needs.Fatigue + WadingFatigueDrainPerHour, 0f, 100f);
             }
             exp.SuitDegradation += WadingSuitDegradePerHour;
             OnWadingStarted?.Invoke(exp);
@@ -93,13 +101,14 @@ namespace AtomicWar._Game.Core
             if (tickHours <= 0f) return;
 
             // Hypothermia health crash.
-            exp.Survivor.Needs.Health = Mathf.Clamp(
-                exp.Survivor.Needs.Health - HypothermiaHealthDrainPerHour * tickHours,
-                0f, exp.Survivor.MaxHealthCap);
+            SurvivorNeedWrite.AdjustHealth(exp.Survivor, -HypothermiaHealthDrainPerHour * tickHours);
 
             // Warmth stays at 0 while wading.
-            exp.Survivor.Needs.Warmth = Mathf.Clamp(
-                exp.Survivor.Needs.Warmth - WadingWarmthSet * 0.1f * tickHours, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(exp.Survivor, NeedKind.Warmth, -WadingWarmthSet * 0.1f * tickHours);
+            else
+                exp.Survivor.Needs.Warmth = Mathf.Clamp(
+                    exp.Survivor.Needs.Warmth - WadingWarmthSet * 0.1f * tickHours, 0f, 100f);
 
             if (exp.Survivor.Needs.Warmth <= 0f && exp.Survivor.Needs.Health < 30f)
             {

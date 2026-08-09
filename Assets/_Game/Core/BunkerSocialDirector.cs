@@ -45,7 +45,6 @@ namespace AtomicWar._Game.Core
 
         private readonly Dictionary<string, float> _lastHealth = new Dictionary<string, float>();
         private int _lastTickDay = -1;
-        private System.Random _cachedRng;
 
         public event Action<Survivor, string> OnGriefMentalBreakApplied; // (bereaved, breakId)
 
@@ -77,13 +76,33 @@ namespace AtomicWar._Game.Core
         /// <summary>Trigger a Hatch Breach / Raider Boss raid led by a returned banished survivor (#474).</summary>
         public Action<string, int> TriggerBanishedRaid;
 
+        /// <summary>
+        /// DEATH-001 hardened: the death chain that runs when Tribunal.Execution
+        /// kills a survivor via <see cref="SurvivorNeedWrite.SetHealth"/>. The
+        /// bootstrap wires this to its <see cref="NeedsSystem.OnDied"/> handler
+        /// (which fires NotifySurvivorDied, EmpathSystem, ChildSystem, GriefKeepsakes,
+        /// IronMan). Without this, an execution is a silent death — the survivor
+        /// is dead on disk but no other system reacts. Default is a no-op.
+        /// </summary>
+        public System.Action<Survivor> OnKilled;
+
         // -----------------------------------------------------------------
         // Construction
         // -----------------------------------------------------------------
 
-        public BunkerSocialDirector()
+        /// <param name="affinity">
+        /// The matrix every relationship sub-system reads. Callers must pass the
+        /// same instance the rest of the game mutates — in GameBootstrap that is
+        /// <c>MentalBreakSystem.Affinity</c>, which is also the only matrix
+        /// SaveSystem persists. Allocating a private one here (the old behaviour)
+        /// left Romance / Feuds / BlackMarket reading a matrix that EventRunner
+        /// choices, mental-break drain and gossip rot never touched, and dropped
+        /// every bond the director did build on load. Null allocates a fresh
+        /// matrix, which keeps standalone tests working.
+        /// </param>
+        public BunkerSocialDirector(InterpersonalAffinity affinity = null)
         {
-            Affinity = new InterpersonalAffinity();
+            Affinity = affinity ?? new InterpersonalAffinity();
             Romance = new RomanceSystem(Affinity);
             Feuds = new FeudSystem(Affinity);
             Mutiny = new MutinySystem();
@@ -111,6 +130,13 @@ namespace AtomicWar._Game.Core
 
         public IReadOnlyList<Survivor> Survivors { get; set; }
 
+        public void SetNeedsSystem(NeedsSystem ns)
+        {
+            Romance?.SetNeedsSystem(ns);
+            Mutiny?.SetNeedsSystem(ns);
+            Pregnancy?.SetNeedsSystem(ns);
+        }
+
         /// <summary>Default leadership = morale + modest base so the system works sans wiring.</summary>
         private static float DefaultLeadership(Survivor sv) =>
             sv == null ? 0f : 0.4f + Mathf.Clamp01(sv.Needs.Morale / 100f);
@@ -133,8 +159,7 @@ namespace AtomicWar._Game.Core
         {
             if (survivors == null) return;
             Survivors = survivors;
-            if (rng == null) rng = new System.Random();
-            _cachedRng = rng;
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("bunkersocialdirector");
 
             // Per-tick continuous auras.
             Romance.ApplyAuras(gameHours, survivors);
@@ -244,7 +269,14 @@ namespace AtomicWar._Game.Core
             return Tribunal.JudgeNext(punishment, (sv, p) =>
             {
                 if (p == BunkerPunishment.Banishment && sv != null) Banish(sv, _currentDay);
-                else if (p == BunkerPunishment.Execution && sv != null) sv.Needs.Health = 0f;
+                else if (p == BunkerPunishment.Execution && sv != null)
+                {
+                    // DEATH-001: pass OnKilled so the same death chain
+                    // (NeedsSystem.OnDied + all the bootstrapped hooks) runs
+                    // that a natural death would. Pre-fix the survivor became
+                    // State=Dead but nothing else in the game world knew.
+                    SurvivorNeedWrite.SetHealth(sv, 0f, -1f, OnKilled);
+                }
             });
         }
 

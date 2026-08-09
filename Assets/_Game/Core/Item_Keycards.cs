@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -19,6 +20,10 @@ namespace AtomicWar._Game.Core
         public List<string> unlocked_door_ids = new List<string>();
     }
 
+    /// <summary>
+    /// REPROMOTE-Item-001 — Boot/Save live. Expedition looting on keycard_door-tagged
+    /// nodes finds cards and attempts TryOpenDoor (secure hangar / command doors).
+    /// </summary>
     public sealed class Item_Keycards
     {
         private KeycardState _state;
@@ -27,10 +32,19 @@ namespace AtomicWar._Game.Core
         public event Action<string, KeycardColor> OnDoorUnlocked;    // (survivor_id, color)
 
         public string EventId => _state.item_id_prefix;
+        public IReadOnlyList<string> FoundCardIds => _state.found_card_ids;
+        public IReadOnlyList<string> UnlockedDoorIds => _state.unlocked_door_ids;
 
         public Item_Keycards()
         {
             _state = new KeycardState();
+        }
+
+        /// <summary>True if this door id was already unlocked via <see cref="TryOpenDoor"/>.</summary>
+        public bool IsDoorUnlocked(string doorId)
+        {
+            if (string.IsNullOrEmpty(doorId) || _state.unlocked_door_ids == null) return false;
+            return _state.unlocked_door_ids.Contains(doorId);
         }
 
         /// <summary>
@@ -67,7 +81,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnKeycardFound?.Invoke(survivor_id, color);
-            Debug.Log($"[Item_Keycards] Survivor '{survivor_id}' found {card_id}.");
+            GameLog.Log($"[Item_Keycards] Survivor '{survivor_id}' found {card_id}.");
         }
 
         /// <summary>
@@ -102,19 +116,19 @@ namespace AtomicWar._Game.Core
 
             if (!CanOpenDoor(required, owned))
             {
-                Debug.Log($"[Item_Keycards] Survivor '{survivor_id}' cannot open door " +
+                GameLog.Log($"[Item_Keycards] Survivor '{survivor_id}' cannot open door " +
                           $"(requires {required}, not in owned cards).");
                 return false;
             }
 
-            string door_id = $"{_state.item_id_prefix}{required.ToString().ToLower()}_door";
+            string door_id = $"{_state.item_id_prefix}{required.ToString().ToLowerInvariant()}_door";
             if (!_state.unlocked_door_ids.Contains(door_id))
             {
                 _state.unlocked_door_ids.Add(door_id);
             }
 
             OnDoorUnlocked?.Invoke(survivor_id, required);
-            Debug.Log($"[Item_Keycards] Survivor '{survivor_id}' unlocked {required} door.");
+            GameLog.Log($"[Item_Keycards] Survivor '{survivor_id}' unlocked {required} door.");
             return true;
         }
 

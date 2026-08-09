@@ -148,16 +148,9 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_AdaptiveWarlordsSlot_RoundTrip()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_warlords_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("warlords");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var warA = new System_AdaptiveWarlords();
                 warA.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
                 warA.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
@@ -165,24 +158,8 @@ namespace AtomicWar.Tests.EditMode
                 warA.OnPlaythroughEnd();
                 string gearA = warA.GetWarlordGear("kit");
 
-                SaveSystem Make(System_AdaptiveWarlords war)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetAdaptiveWarlordsSystem(war);
-                    return ss;
-                }
+                SaveSystem Make(System_AdaptiveWarlords war) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetAdaptiveWarlordsSystem(war); });
 
                 Assert.IsTrue(Make(warA).Save("warlords_slot"));
 
@@ -194,8 +171,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.IsTrue(warB.HasGearModifier(System_AdaptiveWarlords.CounterDogs));
                 Assert.IsTrue(warB.HasGearModifier(System_AdaptiveWarlords.CounterSmokeKevlar));
                 Assert.AreEqual(gearA, warB.GetWarlordGear("kit"));
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

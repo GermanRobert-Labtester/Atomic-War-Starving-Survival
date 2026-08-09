@@ -432,6 +432,315 @@ namespace AtomicWar.Tests.EditMode
         }
 
         // ─────────────────────────────────────────────────────────────
+        // Expedition — Day-30 Flashpoint intercept state (SAVE-002)
+        // ─────────────────────────────────────────────────────────────
+
+        /// <summary>
+        /// SAVE-002: ApplyExpeditionSaveFields restores the six flashpoint
+        /// fields, so CaptureExpeditionState must write them. Loading
+        /// mid-flashpoint used to reset the survivor to default behavior.
+        /// </summary>
+        [Test]
+        public void Expedition_FlashpointFields_RoundTrip_ViaSaveSystem()
+        {
+            var host = new ExpeditionHostFixture("sv_sp_flash");
+            ExpeditionSystem seeded = null;
+            ExpeditionSystem loaded = null;
+            string dir = TempDir("expflash");
+            try
+            {
+                seeded = host.StartExpedition(out var state);
+                state.Phase = ExpeditionPhase.Inbound;
+                state.isCommsSevered = true;
+                state.flashpointBehavior = FlashpointBehavior.CautiousShelter;
+                state.originalEtaTicks = 18f;
+                state.shelterDelayTicksRemaining = 7;
+                state.returnSpeedMultiplier = 2f;
+                state.returnSpeedDivisor = 0.5f;
+
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(seeded),
+                    getSurvivors: () => host.Survivors).Save("sp_expflash"));
+
+                loaded = host.NewSystem();
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(loaded),
+                    getSurvivors: () => host.Survivors).Load("sp_expflash"));
+
+                Assert.AreEqual(1, loaded.ActiveExpeditions.Count);
+                var exp = loaded.GetExpeditionBySurvivor("sv_sp_flash");
+                Assert.IsNotNull(exp);
+                Assert.IsTrue(exp.isCommsSevered, "isCommsSevered must survive save/load");
+                Assert.AreEqual(FlashpointBehavior.CautiousShelter, exp.flashpointBehavior);
+                Assert.AreEqual(18f, exp.originalEtaTicks, Eps);
+                Assert.AreEqual(7, exp.shelterDelayTicksRemaining);
+                Assert.AreEqual(2f, exp.returnSpeedMultiplier, Eps);
+                Assert.AreEqual(0.5f, exp.returnSpeedDivisor, Eps);
+            }
+            finally
+            {
+                seeded?.UnsubscribeAll();
+                loaded?.UnsubscribeAll();
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        /// <summary>
+        /// SAVE-014: Forager (Prompt #210) grants 1-2 free food once per expedition
+        /// when a scavenge comes up empty, guarded by ForagerLootApplied. The flag
+        /// was not persisted, so it came back false on load and the grant could fire
+        /// a second time once the granted food was dropped. Same double-trigger guard
+        /// as LocationEncounterFired and UxoDetonated beside it.
+        /// </summary>
+        [Test]
+        public void Expedition_ForagerLootApplied_RoundTrips_ViaSaveSystem()
+        {
+            var host = new ExpeditionHostFixture("sv_sp_forager");
+            ExpeditionSystem seeded = null;
+            ExpeditionSystem loaded = null;
+            string dir = TempDir("expforager");
+            try
+            {
+                seeded = host.StartExpedition(out var state);
+                state.ForagerLootApplied = true;
+
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(seeded),
+                    getSurvivors: () => host.Survivors).Save("sp_expforager"));
+
+                loaded = host.NewSystem();
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(loaded),
+                    getSurvivors: () => host.Survivors).Load("sp_expforager"));
+
+                var exp = loaded.GetExpeditionBySurvivor("sv_sp_forager");
+                Assert.IsNotNull(exp);
+                Assert.IsTrue(exp.ForagerLootApplied,
+                    "the once-per-expedition Forager grant must stay spent across save/load");
+            }
+            finally
+            {
+                seeded?.UnsubscribeAll();
+                loaded?.UnsubscribeAll();
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        /// <summary>
+        /// Ratchet for SAVE-002: every serialized ExpeditionSaveState field must
+        /// be written by CaptureExpeditionState. Seed the live state with
+        /// non-default values, save, and assert no DTO field came out at its
+        /// constructor default. A newly added field that restore reads but
+        /// capture forgets fails here instead of silently resetting on load.
+        /// </summary>
+        [Test]
+        public void Expedition_Capture_Writes_Every_SaveState_Field()
+        {
+            var host = new ExpeditionHostFixture("sv_cover");
+            ExpeditionSystem seeded = null;
+            string dir = TempDir("expcover");
+            try
+            {
+                seeded = host.StartExpedition(out var state);
+                SetEveryMirroredFieldNonDefault(state);
+
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(seeded),
+                    getSurvivors: () => host.Survivors).Save("sp_expcover"));
+
+                var data = ReadSaveFile(dir, "sp_expcover");
+                Assert.IsNotNull(data.Expeditions);
+                Assert.AreEqual(1, data.Expeditions.Count);
+                var captured = data.Expeditions[0];
+                var defaults = new ExpeditionSaveState();
+
+                var missed = new List<string>();
+                foreach (var f in typeof(ExpeditionSaveState).GetFields(
+                             BindingFlags.Instance | BindingFlags.Public))
+                {
+                    if (f.IsNotSerialized) continue;
+                    if (f.FieldType == typeof(List<string>))
+                    {
+                        var list = f.GetValue(captured) as List<string>;
+                        if (list == null || list.Count == 0) missed.Add(f.Name);
+                        continue;
+                    }
+                    if (Equals(f.GetValue(captured), f.GetValue(defaults)))
+                        missed.Add(f.Name);
+                }
+
+                Assert.IsEmpty(
+                    missed,
+                    "CaptureExpeditionState left these ExpeditionSaveState fields at their default: "
+                    + string.Join(", ", missed));
+            }
+            finally
+            {
+                seeded?.UnsubscribeAll();
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        /// <summary>
+        /// SAVE-008: loading over a live session must not leave expeditions the
+        /// save never mentioned. Restore rebuilds by survivor id, so without a
+        /// clear an unrelated runner keeps ticking as a phantom.
+        /// </summary>
+        [Test]
+        public void Expedition_Load_Clears_Expeditions_Absent_From_Save()
+        {
+            var host = new ExpeditionHostFixture("sv_saved");
+            var phantomHost = new ExpeditionHostFixture("sv_phantom");
+            ExpeditionSystem seeded = null;
+            ExpeditionSystem live = null;
+            string dir = TempDir("expphantom");
+            try
+            {
+                seeded = host.StartExpedition(out _);
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(seeded),
+                    getSurvivors: () => host.Survivors).Save("sp_expphantom"));
+
+                // Live session running a different survivor's expedition.
+                live = phantomHost.StartExpedition(out _);
+                Assert.AreEqual(1, live.ActiveExpeditions.Count);
+
+                var allSurvivors = new List<Survivor>(host.Survivors);
+                allSurvivors.AddRange(phantomHost.Survivors);
+
+                Assert.IsTrue(MakeSave(
+                    dir,
+                    s => s.SetExpeditionSystem(live),
+                    getSurvivors: () => allSurvivors).Load("sp_expphantom"));
+
+                Assert.AreEqual(1, live.ActiveExpeditions.Count,
+                    "Load must leave only the saved expedition active");
+                Assert.IsNotNull(live.GetExpeditionBySurvivor("sv_saved"));
+                Assert.IsNull(live.GetExpeditionBySurvivor("sv_phantom"),
+                    "Expedition absent from the save must not survive load");
+            }
+            finally
+            {
+                seeded?.UnsubscribeAll();
+                live?.UnsubscribeAll();
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        private static SaveData ReadSaveFile(string dir, string slotId)
+        {
+            string path = AtomicWar._Game.Utilities.SaveSlotPaths.SlotPath(dir, slotId);
+            Assert.IsTrue(File.Exists(path), "Save file not written: " + path);
+            var data = JsonUtility.FromJson<SaveData>(File.ReadAllText(path));
+            Assert.IsNotNull(data, "Save file did not parse as SaveData");
+            return data;
+        }
+
+        /// <summary>
+        /// Every ExpeditionState field the DTO mirrors, moved off its default so
+        /// a forgotten capture assignment shows up as a default-valued DTO field.
+        /// </summary>
+        private static void SetEveryMirroredFieldNonDefault(ExpeditionState exp)
+        {
+            exp.ExpeditionId = "exp_cover_1";
+            exp.TargetLocationId = "collapsed_mall";
+            exp.TargetLocationName = "Collapsed Mall";
+            exp.Stance = ExpeditionStance.Speed;
+            exp.Phase = ExpeditionPhase.Looting;
+            exp.CurrentTick = 9;
+            exp.TotalDistanceTicks = 14;
+            exp.TravelTicksCompleted = 6;
+            exp.LootingTicksCompleted = 3;
+            exp.CarryingCapacity = 25f;
+            exp.CurrentWeight = 11f;
+            exp.Stamina = 58f;
+            exp.SuitDegradation = 12f;
+            exp.TrueRadPerHour = 21f;
+            exp.DangerLevel = 3f;
+            exp.IsPushingLuck = true;
+            exp.IsRetreating = true;
+            exp.isCommsSevered = true;
+            exp.flashpointBehavior = FlashpointBehavior.ParanoidSprint;
+            exp.originalEtaTicks = 18f;
+            exp.shelterDelayTicksRemaining = 7;
+            exp.returnSpeedMultiplier = 2f;
+            exp.returnSpeedDivisor = 0.5f;
+            exp.LocationEncounterFired = true;
+            exp.UxoDetonated = true;
+            exp.ForagerLootApplied = true;
+            exp.HasBicycle = true;
+            exp.BicycleDurability = 44f;
+            exp.IsWading = true;
+            exp.IsNightScavenge = true;
+            exp.HasFlashlight = true;
+            exp.FlashlightBattery = 66f;
+            exp.CollectedLootItemIds.Clear();
+            exp.CollectedLootItemIds.Add("canned_food");
+        }
+
+        /// <summary>
+        /// One registered survivor plus the dependencies ExpeditionSystem needs,
+        /// so a test can spin up seed/load systems that share a survivor list.
+        /// </summary>
+        private sealed class ExpeditionHostFixture
+        {
+            private readonly RadiationSystem _rad;
+            private readonly InventoryClass _inv;
+            private readonly Survivor _survivor;
+            private int _seed = 11;
+
+            public ExpeditionHostFixture(string survivorId)
+            {
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                _rad = new RadiationSystem(needs);
+                _inv = new InventoryClass { Capacity = 40, MaxWeight = 100f };
+                _survivor = new Survivor
+                {
+                    Id = survivorId,
+                    DisplayName = "Runner",
+                    State = SurvivorState.Idle
+                };
+                needs.Register(_survivor);
+                _rad.Register(_survivor);
+                Survivors = new List<Survivor> { _survivor };
+            }
+
+            public List<Survivor> Survivors { get; }
+
+            public ExpeditionSystem NewSystem() =>
+                new ExpeditionSystem(_rad, _inv, null, new ExpeditionSystem.Config
+                {
+                    Seed = _seed++,
+                    CreateDefaultEncounters = false
+                });
+
+            public ExpeditionSystem StartExpedition(out ExpeditionState state)
+            {
+                var system = NewSystem();
+                Assert.IsTrue(system.StartExpeditionFromPath(_survivor, new ExpeditionSystem.PathRequest
+                {
+                    NodeId = "ruined_subway",
+                    DisplayName = "Ruined Subway",
+                    TravelHours = 3f,
+                    TrueRad = 15f,
+                    DangerLevel = 2f,
+                    Stance = ExpeditionStance.Stealth,
+                    MaxLootCapacity = 20f
+                }));
+                state = system.GetExpeditionBySurvivor(_survivor.Id);
+                Assert.IsNotNull(state);
+                return system;
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
         // Affinity matrix — nested on MentalBreakSystem (field-only)
         // ─────────────────────────────────────────────────────────────
 

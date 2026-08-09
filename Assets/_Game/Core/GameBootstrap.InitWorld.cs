@@ -46,7 +46,9 @@ namespace AtomicWar._Game.Core
                         Inventory.RemoveByType(AtomicWar._Game.Inventory.ItemType.Material, amount);
                 });
             BicycleSystem = new BicycleSystem();
+            BicycleSystem.SetNeedsSystem(NeedsSystem);
             FloodedNodeSystem = new FloodedNodeSystem();
+            FloodedNodeSystem.SetNeedsSystem(NeedsSystem);
             SeedMapNodes(0.2f, (nodeId) => FloodedNodeSystem.SetFlooded(nodeId, true), seedOffset: 69);
             // River nodes generated after GeneratedMap exists (InitLate).
             RiverNodeSystem = new RiverNodeSystem();
@@ -58,12 +60,14 @@ namespace AtomicWar._Game.Core
             DeadDropSystem = new DeadDropSystem(new System.Random(_worldSeed + 72));
             SeedMapNodes(0.15f, (nodeId) => DeadDropSystem.SetDeadDropNode(nodeId, true), seedOffset: 72);
             HostageSystem = new HostageSystem();
+            HostageSystem.SetNeedsSystem(NeedsSystem);
             PropagandaSystem = new PropagandaSystem();
             DeserterSystem = new DeserterSystem(new System.Random(_worldSeed + 75));
             ScapegoatSystem = new WeatherScapegoatSystem(new System.Random(_worldSeed + 76));
             LaborCampSystem = new LaborCampSystem();
             SeedMapNodes(0.1f, (nodeId) => LaborCampSystem.SetLaborCamp(nodeId, true), seedOffset: 77);
             CultMoralSystem = new CultMoralDisgustSystem();
+            CultMoralSystem.SetNeedsSystem(NeedsSystem);
         }
 
         private void InitMapTaggedNodes()
@@ -75,11 +79,13 @@ namespace AtomicWar._Game.Core
         private void InitEcosystemAndHouseLayout()
         {
             EcosystemSystem = new MutatedEcosystemSystem(CreateSaltedRng(_worldSeed, "ecosystem"));
+            EcosystemSystem.SetNeedsSystem(NeedsSystem);
+            EcosystemSystem.BindRadiation(RadiationSystem);
 
             var layouts = Data.ShelterLayoutFactory.CreateAll();
             var layoutRng = CreateSaltedRng(_worldSeed, "shelter_layout");
             ShelterLayout = layouts[layoutRng.Next(layouts.Count)];
-            Debug.Log($"[GameBootstrap] Selected shelter layout: {ShelterLayout.layoutName}");
+            GameLog.Log($"[GameBootstrap] Selected shelter layout: {ShelterLayout.layoutName}");
 
             HouseToBunkerSystem = new HouseToBunkerSystem(CreateSaltedRng(_worldSeed, "house_to_bunker"));
             HouseToBunkerSystem.InitializeFromLayout(ShelterLayout);
@@ -103,7 +109,9 @@ namespace AtomicWar._Game.Core
         {
             // Prompts #119–#128 — Shelter tactical systems
             ExcavationSystem = new ExcavationSystem(new System.Random(_worldSeed + 119));
+            ExcavationSystem.SetNeedsSystem(NeedsSystem);
             FloodingSystem = new RoomFloodingSystem();
+            FloodingSystem.SetNeedsSystem(NeedsSystem);
             FloodingSystem.SetRng(new System.Random(_worldSeed + 120));
             // Prompt #806 — bilge pumps convert floodwater into purified cistern water.
             BilgePumps = new System_BilgePumps();
@@ -112,17 +120,27 @@ namespace AtomicWar._Game.Core
             CeilingCollapseSystem = new CeilingCollapseSystem();
             PerimeterTrapSystem = new PerimeterTrapSystem();
             TunnelingSystem = new TunnelingSystem();
+            TunnelingSystem.SetNeedsSystem(NeedsSystem);
             TunnelingSystem.SeedNeighbor(new System.Random(_worldSeed + 124));
             HatchVisibilitySystem = new HatchVisibilitySystem();
             // Prompt #658 — outdoor carrion attracts vultures (wired to CorpseSystem in InitLate).
             CarrionBirds = new System_CarrionBirds();
             EscapeHatchSystem = new EscapeHatchSystem();
             MaterialShieldingSystem = new MaterialShieldingSystem();
+            // Ceiling material is one more shielding layer in the interior-rad formula;
+            // without this hook every ceiling upgrade the player buys does nothing.
+            if (Shelter != null)
+                Shelter.CeilingAttenuationProvider =
+                    () => MaterialShieldingSystem != null
+                        ? MaterialShieldingSystem.GetWeakestCeilingAttenuation()
+                        : 0f;
             AirlockSystem = new AirlockSystem();
+            AirlockSystem.SetNeedsSystem(NeedsSystem);
 
             // Prompts #164–#178 — simulation systems
             NoiseSystem = new NoiseSystem();
             ClothingSystem = new ClothingDegradationSystem();
+            ClothingSystem.SetNeedsSystem(NeedsSystem);
             // Audit C-1: the wiring object is the single tick orchestrator for
             // the systems added in Prompts #119–#178. Created here so it can
             // hold a day-counter across substeps; TickSystems calls it once per
@@ -172,6 +190,7 @@ namespace AtomicWar._Game.Core
             // Prompt #50 — Waste Management & Hygiene
             // ───────────────────────────────────────────────────────────
             WasteSystem = new WasteSystem(new System.Random(_worldSeed + 50));
+            WasteSystem.SetNeedsSystem(NeedsSystem);
             WasteSystem.Bind(() => Shelter, () => Survivors);
 
             // Prompt #51 — Vermin Infestations (+ PetSystem cats suppress growth)
@@ -204,6 +223,7 @@ namespace AtomicWar._Game.Core
             PetSystem.BindPersonalQuests(PersonalQuests, () => Survivors);
 
             VerminSystem = new VerminSystem(new System.Random(_worldSeed + 51));
+            VerminSystem.SetNeedsSystem(NeedsSystem);
             VerminSystem.Bind(
                 () => Shelter,
                 () => PetSystem,
@@ -262,7 +282,7 @@ namespace AtomicWar._Game.Core
             BilgePumps.OnWaterRouted += liters =>
             {
                 if (liters > 0f)
-                    Debug.Log($"[GameBootstrap] BILGE: routed {liters:0.#} L purified from floodwater.");
+                    GameLog.Log($"[GameBootstrap] BILGE: routed {liters:0.#} L purified from floodwater.");
             };
         }
 
@@ -326,13 +346,13 @@ namespace AtomicWar._Game.Core
             {
                 ApplyCarrionHatchVisibility();
                 ApplyCarrionMapDanger(true);
-                Debug.Log("[GameBootstrap] CARRION: vultures circling the hatch.");
+                GameLog.Log("[GameBootstrap] CARRION: vultures circling the hatch.");
             };
 
             CarrionBirds.OnVulturesDeparted += _ =>
             {
                 ApplyCarrionMapDanger(false);
-                Debug.Log("[GameBootstrap] CARRION: flock dispersed.");
+                GameLog.Log("[GameBootstrap] CARRION: flock dispersed.");
             };
         }
 

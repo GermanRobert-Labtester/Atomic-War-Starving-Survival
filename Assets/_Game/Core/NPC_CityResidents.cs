@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// Huddled masses in apartment nodes. Passive. Looting their containers triggers begging and crying,
     /// causing a heavy Morale drop (-25) for Empath characters, but zero penalty for Sociopaths.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_CityResidents
     {
         private CityResidentsState _state = new CityResidentsState();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Medical
 {
@@ -41,6 +42,8 @@ namespace AtomicWar._Game.Medical
         private Func<string, Survivors.Survivor> _findSurvivor;
         private Action<Survivors.Survivor, string> _inflictAffliction;
         private Func<Survivors.Survivor, bool> _hasHealedAfflictions;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<Survivors.Survivor> OnScurvyOnset;
@@ -119,8 +122,7 @@ namespace AtomicWar._Game.Medical
                     // Reopen healed wounds.
                     if (_hasHealedAfflictions != null && _hasHealedAfflictions(sv))
                     {
-                        sv.Needs.Health = Mathf.Clamp(
-                            sv.Needs.Health - ReopenedWoundHealthCost, 0f, sv.MaxHealthCap);
+                        SurvivorNeedWrite.AdjustHealth(sv, -ReopenedWoundHealthCost);
                         // Re-inflict a bacterial infection from old wound sites.
                         _inflictAffliction?.Invoke(sv, AfflictionSO.Ids.BacterialInfection);
                         OnWoundsReopened?.Invoke(sv);
@@ -138,8 +140,10 @@ namespace AtomicWar._Game.Medical
                 // Scurvy morale drain.
                 if (_hasScurvy.Contains(sv.Id))
                 {
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - ScurvyMoraleDrainPerDay, 0f, 100f);
+                    if (_needsSystem != null)
+                        _needsSystem.Modify(sv, NeedKind.Morale, -(ScurvyMoraleDrainPerDay));
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - ScurvyMoraleDrainPerDay, 0f, 100f);
                 }
             }
         }

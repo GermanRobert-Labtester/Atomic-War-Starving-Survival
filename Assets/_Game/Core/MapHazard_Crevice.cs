@@ -12,6 +12,7 @@ namespace AtomicWar._Game.Core
         public bool bridgeBuilt = false;
     }
 
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class MapHazard_Crevice
     {
         public event Action<string> OnJumpSucceeded;

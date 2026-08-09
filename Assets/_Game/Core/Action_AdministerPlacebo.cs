@@ -23,6 +23,7 @@ namespace AtomicWar._Game.Core
     /// Costs 1 CleanWater per use.
     /// Plain C# class, not a MonoBehaviour.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_AdministerPlacebo
     {
         // ── Constants ──────────────────────────────────────────────────
@@ -43,7 +44,7 @@ namespace AtomicWar._Game.Core
         private float _discoveryChance;
         private bool _discovered;
 
-        private readonly System.Random _rng = new System.Random();
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("action_administerplacebo");
 
         // ── Public API ─────────────────────────────────────────────────
 

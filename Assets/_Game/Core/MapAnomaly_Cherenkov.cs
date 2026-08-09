@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -35,7 +36,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnRadStageApplied?.Invoke(survivor_id, _state.instant_rad_stage);
-            Debug.Log($"[MapAnomaly_Cherenkov] Survivor '{survivor_id}' entered pool — instant Stage {_state.instant_rad_stage} radiation applied.");
+            GameLog.Log($"[MapAnomaly_Cherenkov] Survivor '{survivor_id}' entered pool — instant Stage {_state.instant_rad_stage} radiation applied.");
         }
 
         public bool IsLit(string node_id)

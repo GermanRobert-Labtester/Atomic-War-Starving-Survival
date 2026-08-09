@@ -107,7 +107,7 @@ namespace AtomicWar._Game.Core
                             if (diary != null && diary.foundInRoomId == roomId && diary.pageOrder == fragmentIndex && !diary.IsFound)
                             {
                                 diary.IsFound = true;
-                                Debug.Log($"[Diary] Found in {roomId}: \"{diary.title}\" — {diary.text}");
+                                GameLog.Log($"[Diary] Found in {roomId}: \"{diary.title}\" — {diary.text}");
                                 return diary.text;
                             }
                         }
@@ -144,6 +144,7 @@ namespace AtomicWar._Game.Core
             });
             // Workbench lists hatch install / upgrade lines (scrap sink)
             WorkbenchSystem?.SetHatchDefense(HatchDefenseSystem);
+            HatchDefenseSystem.SetNeedsSystem(NeedsSystem);
 
             // Dynamic phase economy + faction trust matrix
             EconomySystem = new DynamicEconomySystem(
@@ -159,6 +160,14 @@ namespace AtomicWar._Game.Core
             // #16 polish: ARS reverence + intact-hazmat contempt providers.
             EconomySystem.SetPartyHasArsProvider(PartyHasAcuteRadiationSyndrome);
             EconomySystem.SetPartyIntactHazmatProvider(PartyWearsIntactHazmat);
+            // REPROMOTE-001 — PassiveTrader weather exchange rates on barter quotes.
+            // Lambda resolves NPCPassiveTrader/Weather at call time (BootNPC already ran).
+            EconomySystem.SetWeatherItemPriceMultiplier(itemId =>
+            {
+                if (NPCPassiveTrader == null || WeatherSystem == null) return 1f;
+                return NPCPassiveTrader.GetPriceMultiplierForItem(
+                    itemId, WeatherSystem.Current.ToString());
+            });
             EconomySystem.BindEventRunner(EventRunner);
 
             // Post-repel parley modal + faction radio intercept log
@@ -171,7 +180,7 @@ namespace AtomicWar._Game.Core
             FactionRadioIntercepts.OnIntercept += entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Message)) return;
-                Debug.Log($"[Radio intercept] {entry.Message}");
+                GameLog.Log($"[Radio intercept] {entry.Message}");
                 PushRadioInterceptToHud(entry);
             };
 

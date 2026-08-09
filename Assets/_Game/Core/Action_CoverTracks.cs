@@ -9,6 +9,7 @@ namespace AtomicWar._Game.Core
     /// the cost of speed and endurance.
     /// Save/load safe. Plain C#.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_CoverTracks
     {
         public const string ActionId = "action_cover_tracks";

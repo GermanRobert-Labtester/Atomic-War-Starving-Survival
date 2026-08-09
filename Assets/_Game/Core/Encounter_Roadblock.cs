@@ -25,6 +25,8 @@ namespace AtomicWar._Game.Core
     /// Prompt #387: Encounter: Roadblocks & Ambushes.
     /// Barricades across main map paths forcing vehicles to stop.
     /// Choices: Pay toll, Reverse detour (costs time/fuel), or Ram barricade (damages vehicle Chassis).
+    /// REPROMOTE-Encounter-001 — Boot/Save live; ExpeditionSystem dispatches ResolveChoice when
+    /// the encounter SO id or map node carries a roadblock/barricade/toll tag.
     /// </summary>
     public class Encounter_Roadblock
     {

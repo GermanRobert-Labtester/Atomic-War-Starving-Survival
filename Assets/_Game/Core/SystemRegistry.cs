@@ -193,9 +193,10 @@ namespace AtomicWar._Game.Core
             }
 
             // Daily ticks (idempotent: once per game-day).
+            // Guard advances only after ALL ticks complete so a mid-loop
+            // exception does not skip the day on retry.
             if (currentDay != _lastDailyRunDay)
             {
-                _lastDailyRunDay = currentDay;
                 DailyRunCount++;
                 for (int i = 0; i < _daily.Count; i++)
                 {
@@ -209,6 +210,7 @@ namespace AtomicWar._Game.Core
                         Debug.LogError($"[SystemRegistry] Daily tick '{name}' threw: {ex.Message}");
                     }
                 }
+                _lastDailyRunDay = currentDay;
             }
         }
 

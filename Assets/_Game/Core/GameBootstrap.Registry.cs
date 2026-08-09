@@ -82,14 +82,7 @@ namespace AtomicWar._Game.Core
             // Prompt #799 — evaluate IF/THEN rules after power rebalance.
             _registry.RegisterPerSubstep("logic_gates", h => TickLogicGates());
             _registry.RegisterPerSubstep("hatch_defense", h => HatchDefenseSystem?.Tick(h, PowerNetwork));
-            _registry.RegisterPerSubstep("atmosphere", h =>
-            {
-                if (AtmosphereSystem == null) return;
-                if (ShelterPerks != null)
-                    AtmosphereSystem.VentilationClearMultiplier =
-                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
-                AtmosphereSystem.Tick(h, PowerNetwork, Shelter);
-            });
+            RegisterShelterAirSubsteps();
             _registry.RegisterPerSubstep("corpses", h => CorpseSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("pantry", h => PantrySystem?.Tick(h, _storesRoom));
             _registry.RegisterPerSubstep("structural_integrity", h =>
@@ -162,6 +155,20 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("pets", h => PetSystem?.Tick(Survivors, h));
         }
 
+        private void RegisterShelterAirSubsteps()
+        {
+            _registry.RegisterPerSubstep("atmosphere", h =>
+            {
+                if (AtmosphereSystem == null) return;
+                if (ShelterPerks != null)
+                    AtmosphereSystem.VentilationClearMultiplier =
+                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
+                AtmosphereSystem.Tick(h, PowerNetwork, Shelter);
+            });
+            // REPROMOTE-Hazard-001 — read current shelter air only after atmosphere advances.
+            _registry.RegisterPerSubstep("hazard_methane", TickHazardMethaneFromShelterAir);
+        }
+
         private void RegisterNeedsPsycheSubsteps()
         {
             _registry.RegisterPerSubstep("needs", h => NeedsSystem?.Tick(h));
@@ -191,40 +198,9 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("personal_quests_daily",
                 _registry.DayGated("personal_quests", day => PersonalQuests?.TickDaily(Survivors, day)));
             // Morale 0→100 quest trigger + Anchor room floor each needs substep.
-            _registry.RegisterPerSubstep("personal_quests_morale", h =>
-            {
-                if (PersonalQuests == null || Survivors == null) return;
-                int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
-                PersonalQuests.WatchMoraleAll(Survivors, day);
-                for (int i = 0; i < Survivors.Count; i++)
-                    PersonalQuests.ApplyRoomMoraleFloor(Survivors[i], Survivors);
-            });
+            _registry.RegisterPerSubstep("personal_quests_morale", TickPersonalQuestsMorale);
             // #249–#256: hoarder internal theft from main storage into personal stash.
-            _registry.RegisterPerSubstep("personal_quests_hoarder_theft", h =>
-            {
-                if (PersonalQuests == null || Survivors == null || Inventory == null || h <= 0f) return;
-                // ~5% chance per game-hour per Selfish hoarder to steal one unit.
-                var rng = _mentalBreakRng ?? new System.Random(256);
-                for (int i = 0; i < Survivors.Count; i++)
-                {
-                    var sv = Survivors[i];
-                    if (sv == null || !sv.IsAlive) continue;
-                    if (!PersonalQuests.HasSelfish(sv)) continue;
-                    if (rng.NextDouble() > 0.05 * h) continue;
-                    if (Inventory.Slots == null || Inventory.Slots.Count == 0) continue;
-                    int start = rng.Next(0, Inventory.Slots.Count);
-                    for (int k = 0; k < Inventory.Slots.Count; k++)
-                    {
-                        var slot = Inventory.Slots[(start + k) % Inventory.Slots.Count];
-                        if (slot?.Item == null || slot.Amount <= 0) continue;
-                        string itemId = slot.Item.id;
-                        if (string.IsNullOrEmpty(itemId)) continue;
-                        if (!Inventory.Remove(slot.Item, 1)) continue;
-                        PersonalQuests.TryStealToPersonalInventory(sv, itemId);
-                        break;
-                    }
-                }
-            });
+            _registry.RegisterPerSubstep("personal_quests_hoarder_theft", TickHoarderTheft);
             _registry.RegisterPerSubstep("empath", h => EmpathSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("survivor_diaries", h => SurvivorDiaries?.Tick(h, Survivors, TimeSystem?.CurrentDay ?? 1, _mentalBreakRng));
             _registry.RegisterPerSubstep("spatial_psychology", h => SpatialPsychology?.Tick(h, Survivors));
@@ -235,6 +211,48 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("child", h => ChildSystem?.Tick(h, Survivors));
             _registry.RegisterPerSubstep("hatch_dilemma", h => HatchDilemmaPromptField?.Tick(h));
             _registry.RegisterPerSubstep("parley_offer", h => ParleyOfferPromptField?.Tick(h));
+        }
+
+        private void TickPersonalQuestsMorale(float h)
+        {
+            if (PersonalQuests == null || Survivors == null) return;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            PersonalQuests.WatchMoraleAll(Survivors, day);
+            for (int i = 0; i < Survivors.Count; i++)
+                PersonalQuests.ApplyRoomMoraleFloor(Survivors[i], Survivors);
+        }
+
+        /// <summary>#249–#256: ~5% chance per game-hour per Selfish hoarder to steal one unit into their personal stash.</summary>
+        private void TickHoarderTheft(float h)
+        {
+            if (PersonalQuests == null || Survivors == null || Inventory == null || h <= 0f) return;
+
+            var rng = _mentalBreakRng ?? new System.Random(256);
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!PersonalQuests.HasSelfish(sv)) continue;
+                if (rng.NextDouble() > 0.05 * h) continue;
+                TryStealOneUnit(sv, rng);
+            }
+        }
+
+        private void TryStealOneUnit(Survivor sv, System.Random rng)
+        {
+            if (Inventory.Slots == null || Inventory.Slots.Count == 0) return;
+
+            int start = rng.Next(0, Inventory.Slots.Count);
+            for (int k = 0; k < Inventory.Slots.Count; k++)
+            {
+                var slot = Inventory.Slots[(start + k) % Inventory.Slots.Count];
+                if (slot?.Item == null || slot.Amount <= 0) continue;
+                string itemId = slot.Item.id;
+                if (string.IsNullOrEmpty(itemId)) continue;
+                if (!Inventory.Remove(slot.Item, 1)) continue;
+                PersonalQuests.TryStealToPersonalInventory(sv, itemId);
+                return;
+            }
         }
 
         private void TickPheromoneMasking(float hours)
@@ -297,6 +315,34 @@ namespace AtomicWar._Game.Core
                 _registry.DayGated("rebuilders", RegisterTickRebuildersDaily));
             _registry.RegisterPerSubstep("fuel_decay_daily",
                 _registry.DayGated("fuel_decay", RegisterTickFuelDecayDaily));
+            // Prompt #904 — word of the bunker spreading is the only part of the
+            // pianist encounter that happens on the clock rather than on a choice.
+            _registry.RegisterPerSubstep("pianist_daily",
+                _registry.DayGated("pianist", RegisterTickPianistDaily));
+        }
+
+        /// <summary>
+        /// Prompt #904 — once Matej has been told about the bunker, a small daily
+        /// chance that someone he passed it on to walks up to the hatch. Nothing
+        /// drove this roll before, so telling him set a flag and stopped there.
+        /// </summary>
+        private void RegisterTickPianistDaily(int day)
+        {
+            if (Pianist == null || Survivors == null) return;
+            if (!Pianist.RollRefugeeArrival(CreateSaltedRng(_worldSeed, "pianist_refugee"))) return;
+
+            var refugee = new Survivor
+            {
+                Id = "sv_pianist_refugee",
+                DisplayName = "Refugee",
+                CurrentRoomId = "entry"
+            };
+            Survivors.Add(refugee);
+            NeedsSystem?.Register(refugee);
+            RadiationSystem?.Register(refugee);
+            GameLog.Log(
+                $"[Pianist] Someone {Encounter_Pianist.PianistName} told about the bunker " +
+                $"has found the hatch on day {day}.");
         }
 
         private void RegisterTickFuelDecayDaily(int day)
@@ -398,7 +444,8 @@ namespace AtomicWar._Game.Core
                     : null,
                 Rng = CreateSaltedRng(_worldSeed, "registry_ctx"),
                 ShelterPerks = ShelterPerks,
-                IndoorTemperatureC = indoor
+                IndoorTemperatureC = indoor,
+                NeedsSystem = NeedsSystem
             };
         }
 
@@ -423,7 +470,24 @@ namespace AtomicWar._Game.Core
                 "endgame", "shelter_layout", "sleep_quality", "skill_progression",
                 // Player/AI action systems (no autonomous hour tick):
                 "cooking", "mentorship", "combat_perks", "survival_perks", "shelter_perks",
-                "medical_perks", "expedition_perks", "night_scavenge"
+                "medical_perks", "expedition_perks", "night_scavenge",
+                // REPROMOTE-001 — caravan weather pricing fires on trade quote, not hour tick:
+                "npc_passive_trader",
+                // REPROMOTE-Encounter-001 — class roadblock resolves from expedition psychology:
+                "encounter_roadblock",
+                "map_hazard_venus_trap",
+                // Prompt #902 — frozen survivor resolves on expedition looting arrival:
+                "map_hazard_frozen_survivor",
+                // REPROMOTE-Item-001 — keycard find/unlock on expedition looting:
+                "item_keycards",
+                // Prompts #901/#903 — these resolve from expedition encounter choices.
+                // (The pianist also has a daily refugee roll, so it is tick-registered.)
+                "dead_letter_office",
+                "weather_station",
+                // REPROMOTE-Pet-001 — guard dog alert fires on hatch raid resolve start:
+                "pet_guard_dog",
+                // REPROMOTE-Weapon-001 — HMG defense power read on GetWeaponPower:
+                "weapon_hmg"
             };
             for (int i = 0; i < eventDriven.Length; i++)
                 _registry.RegisterEventDriven(eventDriven[i]);

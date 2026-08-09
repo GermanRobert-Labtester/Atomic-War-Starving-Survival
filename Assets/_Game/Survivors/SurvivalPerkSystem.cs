@@ -98,7 +98,7 @@ namespace AtomicWar._Game.Survivors
         public bool RollSkipCleanWater(Survivor cook, System.Random rng = null)
         {
             if (!Has(cook, RationStretcherId)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("survivalperksystem");
             return rng.NextDouble() < RationStretcherFreeWaterChance;
         }
 

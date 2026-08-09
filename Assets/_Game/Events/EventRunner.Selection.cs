@@ -10,6 +10,17 @@ namespace AtomicWar._Game.Events
     {
         private PersonalQuestSystem _personalQuests;
 
+        /// <summary>
+        /// MISC-005 fallback stream for the selection paths. Callers should supply a
+        /// seeded rng (EventContext.Random / the rng parameter); when one is missing
+        /// these paths previously reached for wall-clock <c>UnityEngine.Random</c>,
+        /// which silently made event and choice selection unreplayable — the same
+        /// save loaded twice could roll a different event. A fixed salted stream keeps
+        /// the behaviour random but deterministic.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("eventrunner_selection");
+
         /// <summary>Prompt #221 — Peacekeeper blocks Internal Saboteur / Ration Thief.</summary>
         public void BindPersonalQuests(PersonalQuestSystem personalQuests) =>
             _personalQuests = personalQuests;
@@ -54,7 +65,8 @@ namespace AtomicWar._Game.Events
 
             if (validEvents.Count == 0 || totalWeight <= 0f) return null;
 
-            double roll = context?.Random != null ? context.Random.NextDouble() * totalWeight : UnityEngine.Random.Range(0f, totalWeight);
+            var rng = context?.Random ?? FallbackRng;
+            double roll = rng.NextDouble() * totalWeight;
             float accum = 0f;
 
             for (int i = 0; i < validEvents.Count; i++)

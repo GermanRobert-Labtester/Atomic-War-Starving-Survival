@@ -17,6 +17,14 @@ namespace AtomicWar._Game.Medical
     /// </summary>
     public class MedicalSystem
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("medical_system_ingredients");
+
         /// <summary>LatentDamage at/above this multiplies infection lethality.</summary>
         public const float ImmuneCollapseLatentThreshold = 30f;
 
@@ -89,6 +97,8 @@ namespace AtomicWar._Game.Medical
         public System.Func<Survivor, bool> IsHazmatEquipped;
 
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         public event Action OnMedicalStateChanged;
 
@@ -416,79 +426,107 @@ namespace AtomicWar._Game.Medical
             TreatmentRecipeSO recipe,
             Func<string, ItemDefinition> itemLookup = null)
         {
-            if (medic == null || !medic.IsAlive || patient == null || !patient.IsAlive) return false;
-            if (recipe == null || string.IsNullOrEmpty(recipe.targetAfflictionId)) return false;
-            if (!HasAffliction(patient, recipe.targetAfflictionId)) return false;
+            if (!PassesTreatmentGates(medic, patient, recipe)) return false;
 
-            // #253 Arrogant: refuses healing from anyone but self.
-            if (_personalQuests != null && !_personalQuests.CanBeHealedBy(patient, medic))
-                return false;
-
-            // #295 Hitman Professional: refuses medical triage.
-            if (_personalQuests != null && _personalQuests.RefusesMedicalAndFarming(medic))
-                return false;
-
-            // #289 Germaphobe: refuses bunker triage without hazmat.
-            if (_personalQuests != null && _personalQuests.RequiresHazmatForTriage(medic))
-            {
-                bool hazmat = IsHazmatEquipped != null && IsHazmatEquipped(medic);
-                if (!_personalQuests.CanPerformTriage(medic, hazmatEquipped: hazmat, inBunker: true))
-                    return false;
-            }
-
-            // #274 Feral Orphan: bites strangers who try to heal them.
-            if (_personalQuests != null
-                && _personalQuests.BitesWhenHealedByStranger(patient, medic))
-            {
-                medic.Needs.Health = UnityEngine.Mathf.Max(1f, medic.Needs.Health - 8f);
-                // Still allow treatment after the bite.
-            }
+            // #274 Feral Orphan: bites strangers who try to heal them. Not a gate —
+            // the bite lands and treatment still proceeds.
+            ApplyFeralOrphanBite(medic, patient);
 
             if (recipe.requiresMedicalBed && !HasOperationalMedicalBed())
                 return false;
 
-            if (!_bySurvivor.TryGetValue(patient.Id, out var list)) return false;
-            ActiveAffliction target = null;
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].AfflictionId == recipe.targetAfflictionId)
-                {
-                    target = list[i];
-                    break;
-                }
-            }
-            if (target == null || target.IsTreating) return false;
+            var target = FindTreatableAffliction(patient, recipe.targetAfflictionId);
+            if (target == null) return false;
 
             var consumedItemIds = new List<string>();
             if (!ConsumeIngredients(recipe, medic.MedicalSkill, itemLookup, consumedItemIds))
                 return false;
 
             int day = GetCurrentDay != null ? GetCurrentDay() : 0;
+            NotifyTreatmentItemsConsumed(patient, recipe, consumedItemIds, day);
+            BeginTreatment(medic, patient, target, recipe, day);
 
-            // Notify host (Addiction + BloodToxicity) of items actually consumed.
-            // Falls back to recipe ResolvedIds when inventory is omitted (unit tests).
-            if (OnTreatmentItemConsumed != null)
+            OnMedicalStateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>
+        /// Availability and quest-trait gates that block treatment outright, before
+        /// any ingredient is spent or state is mutated.
+        /// </summary>
+        private bool PassesTreatmentGates(Survivor medic, Survivor patient, TreatmentRecipeSO recipe)
+        {
+            if (medic == null || !medic.IsAlive || patient == null || !patient.IsAlive) return false;
+            if (recipe == null || string.IsNullOrEmpty(recipe.targetAfflictionId)) return false;
+            if (!HasAffliction(patient, recipe.targetAfflictionId)) return false;
+            if (_personalQuests == null) return true;
+
+            // #253 Arrogant: refuses healing from anyone but self.
+            if (!_personalQuests.CanBeHealedBy(patient, medic)) return false;
+
+            // #295 Hitman Professional: refuses medical triage.
+            if (_personalQuests.RefusesMedicalAndFarming(medic)) return false;
+
+            // #289 Germaphobe: refuses bunker triage without hazmat.
+            if (_personalQuests.RequiresHazmatForTriage(medic))
             {
-                if (consumedItemIds.Count > 0)
-                {
-                    for (int i = 0; i < consumedItemIds.Count; i++)
-                        OnTreatmentItemConsumed(patient, consumedItemIds[i], day);
-                }
-                else if (_inventory == null && recipe.ingredients != null)
-                {
-                    for (int i = 0; i < recipe.ingredients.Count; i++)
-                    {
-                        var ing = recipe.ingredients[i];
-                        if (ing == null) continue;
-                        string id = ing.ResolvedId;
-                        if (string.IsNullOrEmpty(id)) continue;
-                        int times = Mathf.Max(1, ing.amount);
-                        for (int n = 0; n < times; n++)
-                            OnTreatmentItemConsumed(patient, id, day);
-                    }
-                }
+                bool hazmat = IsHazmatEquipped != null && IsHazmatEquipped(medic);
+                if (!_personalQuests.CanPerformTriage(medic, hazmatEquipped: hazmat, inBunker: true))
+                    return false;
+            }
+            return true;
+        }
+
+        private void ApplyFeralOrphanBite(Survivor medic, Survivor patient)
+        {
+            if (_personalQuests != null && _personalQuests.BitesWhenHealedByStranger(patient, medic))
+                SurvivorNeedWrite.SetHealth(medic, Mathf.Max(1f, medic.Needs.Health - 8f));
+        }
+
+        private ActiveAffliction FindTreatableAffliction(Survivor patient, string afflictionId)
+        {
+            if (!_bySurvivor.TryGetValue(patient.Id, out var list)) return null;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].AfflictionId != afflictionId) continue;
+                return list[i].IsTreating ? null : list[i];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Notify host (Addiction + BloodToxicity) of items actually consumed. Falls
+        /// back to recipe ResolvedIds when inventory is omitted (unit tests).
+        /// </summary>
+        private void NotifyTreatmentItemsConsumed(
+            Survivor patient, TreatmentRecipeSO recipe, List<string> consumedItemIds, int day)
+        {
+            if (OnTreatmentItemConsumed == null) return;
+
+            if (consumedItemIds.Count > 0)
+            {
+                for (int i = 0; i < consumedItemIds.Count; i++)
+                    OnTreatmentItemConsumed(patient, consumedItemIds[i], day);
+                return;
             }
 
+            if (_inventory != null || recipe.ingredients == null) return;
+            for (int i = 0; i < recipe.ingredients.Count; i++)
+            {
+                var ing = recipe.ingredients[i];
+                if (ing == null) continue;
+                string id = ing.ResolvedId;
+                if (string.IsNullOrEmpty(id)) continue;
+                int times = Mathf.Max(1, ing.amount);
+                for (int n = 0; n < times; n++)
+                    OnTreatmentItemConsumed(patient, id, day);
+            }
+        }
+
+        /// <summary>Commit the treatment: set the affliction's treating state and record telemetry.</summary>
+        private void BeginTreatment(
+            Survivor medic, Survivor patient, ActiveAffliction target, TreatmentRecipeSO recipe, int day)
+        {
             float hours = ComputeTreatmentHours(recipe, medic.MedicalSkill, medic, _medicalPerks);
             target.IsTreating = true;
             target.ProgressionHalted = true; // treatment freezes progression
@@ -497,9 +535,7 @@ namespace AtomicWar._Game.Medical
             target.TreatingMedicId = medic.Id;
 
             if (recipe.requiresPatientRest)
-            {
                 patient.State = SurvivorState.Resting;
-            }
 
             // Prompt #203 — treating Manifest radiation sickness earns Radiologist.
             _medicalPerks?.RecordManifestRadiationTreatment(medic, patient, day);
@@ -510,9 +546,6 @@ namespace AtomicWar._Game.Medical
 
             // #301 Med Student: first trauma treatment triggers a puke.
             _personalQuests?.TryMedStudentFirstTraumaPuke(medic, recipe.targetAfflictionId);
-
-            OnMedicalStateChanged?.Invoke();
-            return true;
         }
 
         /// <summary>Advance affliction clocks, health drain, treatments, and progressions.</summary>
@@ -534,73 +567,107 @@ namespace AtomicWar._Game.Medical
                     var active = list[i];
                     if (!_afflictions.TryGetValue(active.AfflictionId, out var def)) continue;
 
-                    active.HoursActive += gameHours;
-
-                    // Coma care clock + neglect (Internal Horror — The Bedridden)
-                    if (active.AfflictionId == AfflictionSO.Ids.Coma)
-                    {
-                        active.HoursSinceLastCare += gameHours;
-                        ApplyComaNeeds(survivor, gameHours);
-                        if (active.HoursSinceLastCare >= ComaCareIntervalHours)
-                        {
-                            // Past care window: accelerated collapse
-                            _needs.Modify(survivor, NeedKind.Health,
-                                -ComaNeglectHealthDrainPerHour * gameHours);
-                            _needs.Modify(survivor, NeedKind.Hunger,
-                                ComaNeedRisePerHour * 1.5f * gameHours);
-                            _needs.Modify(survivor, NeedKind.Thirst,
-                                ComaNeedRisePerHour * 1.5f * gameHours);
-                        }
-                        survivor.State = SurvivorState.Incapacitated;
-                    }
-
-                    // Active treatment countdown (frozen progression, still drains)
-                    if (active.IsTreating)
-                    {
-                        ApplyHealthDrain(survivor, def, gameHours);
-                        active.TreatmentHoursRemaining -= gameHours;
-                        if (active.TreatmentHoursRemaining <= 0f)
-                            CompleteTreatment(survivor, list, active);
-                        continue;
-                    }
-
-                    // Progression before full-period drain so large ticks still honor
-                    // RadBurns → Sepsis → Death instead of dying mid-stage from drain alone.
-                    if (!active.ProgressionHalted
-                        && def.progressionHours > 0f
-                        && !string.IsNullOrEmpty(def.progressesToId)
-                        && active.HoursUntilProgression <= gameHours)
-                    {
-                        float pre = Mathf.Max(0f, active.HoursUntilProgression);
-                        float post = gameHours - pre;
-                        if (pre > 0f)
-                            ApplyHealthDrain(survivor, def, pre);
-                        if (!survivor.IsAlive) break;
-
-                        ProgressAffliction(survivor, list, active, def);
-                        if (!survivor.IsAlive) break;
-
-                        // Remainder of the tick under the progressed affliction (if present)
-                        if (post > 0f && HasAffliction(survivor, def.progressesToId)
-                            && _afflictions.TryGetValue(def.progressesToId, out var nextDef))
-                        {
-                            ApplyHealthDrain(survivor, nextDef, post);
-                        }
-                        continue;
-                    }
-
-                    if (!active.ProgressionHalted
-                        && def.progressionHours > 0f
-                        && !string.IsNullOrEmpty(def.progressesToId))
-                    {
-                        active.HoursUntilProgression -= gameHours;
-                    }
-
-                    ApplyHealthDrain(survivor, def, gameHours);
-                    ApplyFatigueDrain(survivor, def, gameHours);
-                    ApplyStaminaCap(survivor, def);
+                    TickAffliction(survivor, list, active, def, gameHours);
                 }
             }
+        }
+
+        /// <summary>
+        /// Advance one active affliction by <paramref name="gameHours"/>. A death
+        /// mid-way simply returns; the caller's loop guard breaks out on the next
+        /// iteration, which is where the old inlined `break` landed too.
+        /// </summary>
+        private void TickAffliction(
+            Survivor survivor,
+            List<ActiveAffliction> list,
+            ActiveAffliction active,
+            AfflictionSO def,
+            float gameHours)
+        {
+            active.HoursActive += gameHours;
+
+            if (active.AfflictionId == AfflictionSO.Ids.Coma)
+                TickComaCare(survivor, active, gameHours);
+
+            // Active treatment countdown (frozen progression, still drains)
+            if (active.IsTreating)
+            {
+                ApplyHealthDrain(survivor, def, gameHours);
+                active.TreatmentHoursRemaining -= gameHours;
+                if (active.TreatmentHoursRemaining <= 0f)
+                    CompleteTreatment(survivor, list, active);
+                return;
+            }
+
+            if (TryProgressThisTick(survivor, list, active, def, gameHours)) return;
+
+            if (CanProgress(active, def))
+                active.HoursUntilProgression -= gameHours;
+
+            ApplyHealthDrain(survivor, def, gameHours);
+            ApplyFatigueDrain(survivor, def, gameHours);
+            ApplyStaminaCap(survivor, def);
+        }
+
+        /// <summary>Coma care clock + neglect (Internal Horror — The Bedridden).</summary>
+        private void TickComaCare(Survivor survivor, ActiveAffliction active, float gameHours)
+        {
+            active.HoursSinceLastCare += gameHours;
+            ApplyComaNeeds(survivor, gameHours);
+            if (active.HoursSinceLastCare >= ComaCareIntervalHours)
+            {
+                // Past care window: accelerated collapse
+                _needs.Modify(survivor, NeedKind.Health,
+                    -ComaNeglectHealthDrainPerHour * gameHours);
+                _needs.Modify(survivor, NeedKind.Hunger,
+                    ComaNeedRisePerHour * 1.5f * gameHours);
+                _needs.Modify(survivor, NeedKind.Thirst,
+                    ComaNeedRisePerHour * 1.5f * gameHours);
+            }
+            survivor.State = SurvivorState.Incapacitated;
+        }
+
+        /// <summary>True when the affliction has a live progression target to count down to.</summary>
+        private static bool CanProgress(ActiveAffliction active, AfflictionSO def)
+        {
+            return !active.ProgressionHalted
+                && def.progressionHours > 0f
+                && !string.IsNullOrEmpty(def.progressesToId);
+        }
+
+        /// <summary>
+        /// Progression is resolved before the full-period drain so that a large tick
+        /// still honours RadBurns → Sepsis → Death rather than killing the survivor
+        /// mid-stage from drain alone. The interval is split at the progression
+        /// boundary and each half drains under its own affliction.
+        /// Returns true when this tick was consumed by a progression.
+        /// </summary>
+        private bool TryProgressThisTick(
+            Survivor survivor,
+            List<ActiveAffliction> list,
+            ActiveAffliction active,
+            AfflictionSO def,
+            float gameHours)
+        {
+            if (!CanProgress(active, def) || active.HoursUntilProgression > gameHours)
+                return false;
+
+            float pre = Mathf.Max(0f, active.HoursUntilProgression);
+            float post = gameHours - pre;
+            if (pre > 0f)
+                ApplyHealthDrain(survivor, def, pre);
+            if (!survivor.IsAlive) return true;
+
+            ProgressAffliction(survivor, list, active, def);
+            if (!survivor.IsAlive) return true;
+
+            // Remainder of the tick under the progressed affliction (if present)
+            if (post > 0f && HasAffliction(survivor, def.progressesToId)
+                && _afflictions.TryGetValue(def.progressesToId, out var nextDef))
+            {
+                ApplyHealthDrain(survivor, nextDef, post);
+            }
+            return true;
         }
 
         private void ApplyHealthDrain(Survivor survivor, AfflictionSO def, float hours)
@@ -1163,11 +1230,11 @@ namespace AtomicWar._Game.Medical
             {
                 var (item, amount, secondary) = resolved[i];
                 // High skill may spare secondary ingredients (not the primary dressing).
-                // Use surgery RNG for deterministic save/load; fall back to UnityEngine.Random
-                // when no RNG has been injected (e.g. tests that don't wire MedicalSystem).
+                // Use surgery RNG for deterministic save/load; falls back to a seeded
+                // stream when no RNG has been injected (e.g. tests that do not wire MedicalSystem).
                 if (secondary && skill > 0.6f)
                 {
-                    double roll = _surgeryRng != null ? _surgeryRng.NextDouble() : UnityEngine.Random.value;
+                    double roll = (_surgeryRng ?? FallbackRng).NextDouble();
                     if (roll < skill * 0.4f)
                         continue;
                 }

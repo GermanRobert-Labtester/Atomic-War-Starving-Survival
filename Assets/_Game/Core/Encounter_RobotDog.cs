@@ -25,8 +25,17 @@ namespace AtomicWar._Game.Core
     /// A fast, heavily armored military pacification unit. Drops ElectronicScrap and Motors
     /// on defeat. Can be hacked by a TechBro or Mechanic character.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_RobotDog
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call sites below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_robotdog");
+
         private RobotDogState _state = new RobotDogState();
 
         /// <summary>
@@ -85,7 +94,7 @@ namespace AtomicWar._Game.Core
                 return false;
 
             // 60% base hack chance if qualified
-            if (UnityEngine.Random.value < HackBaseChance)
+            if (FallbackRng.NextDouble() < HackBaseChance)
             {
                 _state.isHacked = true;
                 _state.isDefeated = true;

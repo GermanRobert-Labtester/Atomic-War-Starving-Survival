@@ -281,6 +281,12 @@ namespace AtomicWar._Game.Core
         public void SetEcosystemSystem(MutatedEcosystemSystem sys) => RegisterSystem(ref _ecosystemSystem, sys, "ecosystem", () => sys.CaptureState(), o => sys.RestoreState((EcosystemSave)o));
         /// <summary>Inject Prompt #79 house-to-bunker for save/load.</summary>
         public void SetHouseToBunkerSystem(HouseToBunkerSystem sys) => RegisterSystem(ref _houseToBunkerSystem, sys, "house_to_bunker", () => sys.CaptureState(), o => sys.RestoreState((HouseToBunkerSave)o));
+        /// <summary>Inject Prompt #901 dead letter office for save/load.</summary>
+        public void SetDeadLetterOffice(Encounter_DeadLetterOffice enc) => RegisterSystem(ref _deadLetterOffice, enc, "enc_dead_letter_office", () => enc.CaptureState(), o => enc.RestoreState((DeadLetterOfficeState)o));
+        /// <summary>Inject Prompt #903 weather station for save/load.</summary>
+        public void SetWeatherStation(Encounter_WeatherStation enc) => RegisterSystem(ref _weatherStation, enc, "enc_weather_station", () => enc.CaptureState(), o => enc.RestoreState((WeatherStationState)o));
+        /// <summary>Inject Prompt #904 the pianist for save/load.</summary>
+        public void SetPianist(Encounter_Pianist enc) => RegisterSystem(ref _pianist, enc, "enc_pianist", () => enc.CaptureState(), o => enc.RestoreState((PianistState)o));
         /// <summary>Inject Prompt #85-94 location quests for save/load.</summary>
         public void SetLocationQuestSystem(LocationQuestSystem sys) => RegisterSystem(ref _locationQuestSystem, sys, "location_quest", () => sys.CaptureState(), o => sys.RestoreState((LocationQuestSave)o));
         public void SetExcavationSystem(ExcavationSystem s) => RegisterSystem(ref _excavationSystem, s, "excavation", () => s.CaptureState(), o => s.RestoreState((ExcavationSave)o));
@@ -380,10 +386,13 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((CraftingSystemSave)o));
 
-        /// <summary>Workbench system (near-stateless; captured for RNG state & future-proofing).</summary>
+        /// <summary>
+        /// Workbench system. Genuinely stateless for save purposes — station wear
+        /// lives on CraftingSystem, which is captured separately — so this registers
+        /// an empty slot to reserve the save id for future mutable state.
+        /// </summary>
         public void SetWorkbenchSystem(WorkbenchSystem s)
         {
-            _workbenchSystem = s;
             if (s != null)
                 Register(new SaveableAdapter("workbench",
                     () => new WorkbenchSystemSave(),
@@ -671,6 +680,11 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _mapHazardVenusTrap, s, "map_hazard_venus_trap",
                 () => s.CaptureState(),
                 o => s.RestoreState((VenusTrapState)o));
+
+        public void SetMapHazardFrozenSurvivor(MapHazard_FrozenSurvivor s) =>
+            RegisterSystem(ref _mapHazardFrozenSurvivor, s, "map_hazard_frozen_survivor",
+                () => s.CaptureState(),
+                o => s.RestoreState((FrozenSurvivorState)o));
 
         public void SetMapAnomalyAshDunes(MapAnomaly_AshDunes s) =>
             RegisterSystem(ref _mapAnomalyAshDunes, s, "map_anomaly_ash_dunes",

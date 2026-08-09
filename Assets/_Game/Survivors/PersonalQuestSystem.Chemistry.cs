@@ -127,10 +127,15 @@ namespace AtomicWar._Game.Survivors
             if (!ShouldGenerateFakeAfflictionAlert(sv)) return;
             if (givenPlacebo)
             {
-                sv.Needs.Morale = Mathf.Min(100f, sv.Needs.Morale + PlaceboMoraleRestore);
+                // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+                ApplyMoraleDelta(sv, PlaceboMoraleRestore);
                 return;
             }
-            sv.Needs.Morale = Mathf.Max(0f, sv.Needs.Morale - FakeIllnessMoraleHit);
+            // QUEST-001: route through ApplyMoraleDelta so Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, -FakeIllnessMoraleHit);
+            // Fatigue cap (Restless 80%) is applied directly to keep the
+            // value-shaped helper simple; Fatigue is always clamped at the
+            // per-survivor cap when read elsewhere.
             sv.Needs.Fatigue = Mathf.Min(GetMaxFatigueCap(sv), sv.Needs.Fatigue + FakeIllnessFatigueHit);
         }
 
@@ -168,7 +173,8 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetFascinationHeaterMoralePerHour(sv, nearRunningHeatOrPower) * gameHours;
             if (Mathf.Abs(d) < 0.001f || sv == null || !sv.IsAlive) return;
-            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale + d, 0f, 100f);
+            // QUEST-001: route through ApplyMoraleDelta so the Traumatized 50% cap holds.
+            ApplyMoraleDelta(sv, d);
         }
 
         /// <summary>
@@ -183,7 +189,7 @@ namespace AtomicWar._Game.Survivors
                 && !HasFascination(sv))
                 return false;
             if (sv.Needs.Morale >= PyromaniacFireMoraleThreshold) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("personalquestsystem_chemistry");
             return rng.NextDouble() < PyromaniacDailyFireChance;
         }
 
@@ -316,7 +322,10 @@ namespace AtomicWar._Game.Survivors
             state.PrepperMreRemaining -= 1f;
             if (sv.HiddenItemIds != null)
                 sv.HiddenItemIds.Remove("mre_prewar");
-            sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - 30f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Hunger, -(30f));
+            else
+                sv.Needs.Hunger = Mathf.Max(0f, sv.Needs.Hunger - 30f);
             return true;
         }
 
@@ -365,7 +374,10 @@ namespace AtomicWar._Game.Survivors
         {
             float d = GetOutcastRoomMealMoraleHit(outcast, diner);
             if (d <= 0f) return;
-            diner.Needs.Morale = Mathf.Max(0f, diner.Needs.Morale - d);
+            if (_needsSystem != null)
+                _needsSystem.Modify(diner, NeedKind.Morale, -(d));
+            else
+                diner.Needs.Morale = Mathf.Max(0f, diner.Needs.Morale - d);
         }
 
         /// <summary>Radiotrophic: radiation heals instead of damages in high-rad zones.</summary>
@@ -379,9 +391,13 @@ namespace AtomicWar._Game.Survivors
             if (!HasRadiotrophic(sv) || sv == null || !sv.IsAlive) return;
             if (zoneRadPerHour < 50f) return;
             float heal = RadiotrophicHealPerHour * gameHours;
-            sv.Needs.Health = Mathf.Min(sv.MaxHealthCap > 0f ? sv.MaxHealthCap : 100f,
-                sv.Needs.Health + heal);
-            sv.Needs.Fatigue = Mathf.Max(0f, sv.Needs.Fatigue - heal);
+            SurvivorNeedWrite.SetHealth(
+                sv,
+                Mathf.Min(sv.MaxHealthCap > 0f ? sv.MaxHealthCap : 100f, sv.Needs.Health + heal));
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Fatigue, -(heal));
+            else
+                sv.Needs.Fatigue = Mathf.Max(0f, sv.Needs.Fatigue - heal);
         }
 
         /// <summary>Reach 1000 mSv lifetime without dying.</summary>
@@ -503,7 +519,10 @@ namespace AtomicWar._Game.Survivors
                 return;
             }
             // Refuse food: hunger rises.
-            monk.Needs.Hunger = Mathf.Min(100f, monk.Needs.Hunger + 5f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(monk, NeedKind.Hunger, 5f);
+            else
+                monk.Needs.Hunger = Mathf.Min(100f, monk.Needs.Hunger + 5f);
         }
 
         public bool RefusesToEat(Survivor monk) => IsOnHungerStrike(monk);

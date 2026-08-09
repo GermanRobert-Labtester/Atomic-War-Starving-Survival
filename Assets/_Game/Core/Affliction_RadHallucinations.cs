@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -65,7 +66,7 @@ namespace AtomicWar._Game.Core
                 OnFakeLootDisplayed?.Invoke(survivor_id, fake_id);
             }
 
-            Debug.Log($"[Affliction_RadHallucinations] Generated {fake_item_ids.Count} fake loot items for '{survivor_id}'.");
+            GameLog.Log($"[Affliction_RadHallucinations] Generated {fake_item_ids.Count} fake loot items for '{survivor_id}'.");
             return fake_item_ids;
         }
 
@@ -78,7 +79,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnWastedGrabAttempt?.Invoke(survivor_id);
-            Debug.Log($"[Affliction_RadHallucinations] Survivor '{survivor_id}' wasted time grasping at dust (fake item '{fake_item_id}').");
+            GameLog.Log($"[Affliction_RadHallucinations] Survivor '{survivor_id}' wasted time grasping at dust (fake item '{fake_item_id}').");
         }
 
         public RadHallucinationState CaptureState()

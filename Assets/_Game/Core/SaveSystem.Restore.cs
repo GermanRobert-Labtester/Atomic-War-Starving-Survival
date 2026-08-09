@@ -25,6 +25,12 @@ namespace AtomicWar._Game.Core
 
         private void RestoreFromSnapshot(SaveData data)
         {
+            // Fallback rng streams are process-static, so without this the same
+            // slot loaded twice in one session resumes mid-stream and rolls
+            // differently the second time -- the exact drift the seeded-rng work
+            // (MISC-005) set out to remove.
+            AtomicWar._Game.Utilities.SeededRandom.ResetStreams();
+
             RestoreGameStateCore(data);
             RestoreSurvivorsAndShelter(data);
             RestoreMedicalAndBodySystems(data);
@@ -47,8 +53,11 @@ namespace AtomicWar._Game.Core
             if (_weatherSystem != null && data.Weather != null)
                 _weatherSystem.RestoreState(data.Weather);
 
+            // Keep Temperature + TimeSystem aligned from the same ElapsedHours field.
             if (_temperatureSystem != null)
                 _temperatureSystem.SetElapsedHours(data.ElapsedHours);
+            if (_timeSystem != null && data.ElapsedHours > 0f)
+                _timeSystem.SetElapsedHours(data.ElapsedHours);
 
             _worldFlags.Clear();
             if (data.WorldFlagKeys != null && data.WorldFlagValues != null)
@@ -76,11 +85,17 @@ namespace AtomicWar._Game.Core
             var existing = _getSurvivors?.Invoke();
             if (existing != null && data.Survivors != null)
             {
+                // SAVE-007: match by survivor Id, never by roster index. Index restore
+                // mis-maps after recruit/death/reorder and drops extras silently.
                 for (int i = 0; i < data.Survivors.Count; i++)
                 {
-                    Survivor sv = i < existing.Count ? existing[i] : null;
+                    var saveSv = data.Survivors[i];
+                    if (saveSv == null) continue;
+                    Survivor sv = FindSurvivorById(existing, saveSv.Id);
+                    if (sv == null && i < existing.Count && string.IsNullOrEmpty(saveSv.Id))
+                        sv = existing[i]; // legacy saves without ids: fall back to index
                     if (sv == null) continue;
-                    RestoreSurvivor(sv, data.Survivors[i]);
+                    RestoreSurvivor(sv, saveSv);
                 }
             }
 

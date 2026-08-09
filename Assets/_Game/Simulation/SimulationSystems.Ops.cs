@@ -25,7 +25,7 @@ namespace AtomicWar._Game.Simulation
                 return true;
 
             float r = GetResistance(id);
-            if (rng == null) rng = new System.Random();
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("simulationsystems_ops");
             if (rng.NextDouble() < r * ExpiredFailureChancePerResistance) return false;
             _resistance[id] = Mathf.Min(MaxResistance, r + 1f); return true;
         }
@@ -47,6 +47,8 @@ namespace AtomicWar._Game.Simulation
         public const string AirlockRoomId = "airlock";
         private float _airlockDumpedWeight;
         private Survivors.PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         public float AirlockDumpedWeight => _airlockDumpedWeight;
         public event Action<float> OnLootDumped;
 
@@ -71,7 +73,10 @@ namespace AtomicWar._Game.Simulation
                 capacity *= _personalQuests.GetLogisticsMasterCarryCapacityMultiplier(hauler);
             float moved = Mathf.Min(_airlockDumpedWeight, capacity);
             _airlockDumpedWeight -= moved;
-            hauler.Needs.Fatigue = Mathf.Clamp(hauler.Needs.Fatigue + moved * HaulFatiguePerKg, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(hauler, NeedKind.Fatigue, moved * HaulFatiguePerKg);
+            else
+                hauler.Needs.Fatigue = Mathf.Clamp(hauler.Needs.Fatigue + moved * HaulFatiguePerKg, 0f, 100f);
             return moved;
         }
         public HaulingSave CaptureState() => new HaulingSave { AirlockDumpedWeight = _airlockDumpedWeight };
@@ -127,7 +132,7 @@ namespace AtomicWar._Game.Simulation
         {
             if (string.IsNullOrEmpty(weaponId) || IsJammed(weaponId)) return false;
             if (!CanJam(weaponId)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("simulationsystems_ops");
             if (rng.NextDouble() >= chanceWhenEligible) return false;
             StartJam(weaponId, clearTicks);
             return true;

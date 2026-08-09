@@ -28,6 +28,7 @@ public class CookingSystem
         private readonly WaterStorage _water;
         private SurvivalPerkSystem _survivalPerks;
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
         private readonly System.Random _rng;
         private Func<int> _getDay;
         private ItemDefinition _mealDef;
@@ -45,6 +46,8 @@ public class CookingSystem
             _water = water;
             _rng = rng ?? new System.Random(189);
         }
+
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         public void BindSurvivalPerks(SurvivalPerkSystem perks, Func<int> getDay = null)
         {
@@ -65,7 +68,10 @@ public class CookingSystem
                 _personalQuests.ApplyIronChefMeal(eater);
                 return;
             }
-            eater.Needs.Hunger = Mathf.Max(0f, eater.Needs.Hunger - 45f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(eater, NeedKind.Hunger, -45f);
+            else
+                eater.Needs.Hunger = Mathf.Max(0f, eater.Needs.Hunger - 45f);
         }
 
         public void SetMealDefinition(ItemDefinition meal) => _mealDef = meal;

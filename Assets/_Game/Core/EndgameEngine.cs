@@ -70,9 +70,10 @@ namespace AtomicWar._Game.Core
                     summary: "Bunker air filtration and radiation shielding completely failed.");
             }
 
-            // 3. Victory: Rescue extraction success (Day >= 60 with active military channel / extraction unlocked).
+            // 3. Victory: Rescue extraction — same calendar as VictoryProject.ChopperArrivalDay
+            // (was day 60 here vs day 100 on the chopper path; DEEP3-WIN-002).
             // Skipped if LifeboatPartialExtraction already terminal (mutual exclusion, Prompt #20).
-            if (isExtractionUnlocked && currentDay >= 60)
+            if (isExtractionUnlocked && currentDay >= VictoryProjectManager.ChopperArrivalDay)
             {
                 return TriggerEndgame(
                     EndgameConditionKind.RescueExtractionSuccess,

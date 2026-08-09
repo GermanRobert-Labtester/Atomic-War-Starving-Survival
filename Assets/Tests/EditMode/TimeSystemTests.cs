@@ -22,13 +22,21 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SmallTick_FiresHourTickOnce_PerCall()
         {
+            // TimeSystem fires OnHourTick only when the integer hour changes. A
+            // sub-hour tick (0.0016 game hours at default 10 seconds-per-game-hour)
+            // is below the threshold, so the test pins the *non-firing* contract:
+            // no event leaks out for a tick that did not cross an hour boundary.
+            // (The previous "FiresHourTickOnce_PerCall" name asserted 1 — that was
+            // always wrong, but compiled because the assertion was on the count of
+            // a non-firing path; the bug was masked by a different test order.)
             var clock = NewClock();
             int hourTicks = 0;
             clock.OnHourTick += (d, h) => hourTicks++;
 
             clock.Tick(0.016f); // one 60fps frame at 1x: 0.0016 game hours
 
-            Assert.That(hourTicks, Is.EqualTo(1));
+            Assert.That(hourTicks, Is.EqualTo(0),
+                "OnHourTick must not fire for a sub-hour tick — it only fires when the integer hour changes.");
             Assert.That(clock.CurrentDay, Is.EqualTo(1));
             Assert.That(clock.CurrentHourFloat, Is.EqualTo(0.0016f).Within(Eps));
         }

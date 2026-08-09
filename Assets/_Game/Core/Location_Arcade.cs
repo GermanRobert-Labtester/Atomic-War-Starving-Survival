@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Broken machines that can be searched for Tokens. Child-scavengers use Tokens
     /// as their only accepted currency, refusing PreWarMoney or Meds for trade.
     /// </summary>
+    /// <summary>DEMOTE-Location-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Location_Arcade
     {
         private ArcadeState _state = new ArcadeState();

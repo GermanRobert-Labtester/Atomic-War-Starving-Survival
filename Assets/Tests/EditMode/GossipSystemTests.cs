@@ -184,40 +184,17 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void SaveSystemAdapter_GossipSlot_RoundTrip()
         {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_gossip_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
+            string dir = SaveSystemTestFactory.TempDir("gossip");
             try
             {
-                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-                var needs = new NeedsSystem(profile, sv => true);
-                var weather = new WeatherSystem(null, 3);
-                var temp = new TemperatureSystem(null, weather);
-                var rad = new RadiationSystem(needs);
-
                 var gossipA = MakeWithRoster("w", "c", "a", "b");
                 gossipA.WitnessCrime("w", "c", "theft", 5);
                 gossipA.TickDay();
                 float decayA = gossipA.GetAffinityDecay("c");
                 Assert.Greater(decayA, 0f);
 
-                SaveSystem Make(System_Gossip gossip)
-                {
-                    var ss = new SaveSystem(new SaveSystem.CoreDeps
-                    {
-                        GameState = new GameState(),
-                        WeatherSystem = weather,
-                        TemperatureSystem = temp,
-                        NeedsSystem = needs,
-                        RadiationSystem = rad,
-                        Shelter = new ShelterClass(),
-                        GetSurvivors = () => new List<Survivor>(),
-                        ItemLookup = id => null,
-                        ModuleLookup = id => null,
-                        SavesDir = dir
-                    });
-                    ss.SetGossipSystem(gossip);
-                    return ss;
-                }
+                SaveSystem Make(System_Gossip gossip) =>
+                    SaveSystemTestFactory.MakeSave(dir, ss => { ss.SetGossipSystem(gossip); });
 
                 Assert.IsTrue(Make(gossipA).Save("gossip_slot"));
 
@@ -228,8 +205,6 @@ namespace AtomicWar.Tests.EditMode
                 Assert.IsTrue(gossipB.HasHeardRumor("w", "c"));
                 Assert.AreEqual(decayA, gossipB.GetAffinityDecay("c"), Eps);
                 Assert.AreEqual(gossipA.GetInformedCount("c"), gossipB.GetInformedCount("c"));
-
-                UnityEngine.Object.DestroyImmediate(profile);
             }
             finally
             {

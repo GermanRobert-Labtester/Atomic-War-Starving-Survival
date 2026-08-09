@@ -17,6 +17,7 @@ namespace AtomicWar._Game.Core
         public bool canOnlyDoOnce = true;
     }
 
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_BoilBatteries
     {
         public event Action<string, float> OnBatteryReconditioned;

@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Bandits have seized the church, operating a sniper nest from the bell tower.
     /// Player must approach through the graveyard (provides high cover, but contains noise traps).
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_ChurchHostile
     {
         private ChurchHostileState _state = new ChurchHostileState();

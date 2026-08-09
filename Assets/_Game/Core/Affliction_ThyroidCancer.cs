@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -47,7 +48,7 @@ namespace AtomicWar._Game.Core
             OnStaminaCapped?.Invoke(survivor_id, _state.max_stamina_cap);
             OnHealthCapped?.Invoke(survivor_id, _state.max_health_cap);
 
-            Debug.Log($"[Affliction_ThyroidCancer] Survivor '{survivor_id}' diagnosed — stamina capped at {_state.max_stamina_cap:P0}, health capped at {_state.max_health_cap:P0}.");
+            GameLog.Log($"[Affliction_ThyroidCancer] Survivor '{survivor_id}' diagnosed — stamina capped at {_state.max_stamina_cap:P0}, health capped at {_state.max_health_cap:P0}.");
         }
 
         public void HaltSpread(string survivor_id, bool has_surgery, bool has_chemo)
@@ -65,11 +66,11 @@ namespace AtomicWar._Game.Core
                     _state.halted_survivor_ids.Add(survivor_id);
                 }
 
-                Debug.Log($"[Affliction_ThyroidCancer] Progression halted for '{survivor_id}' (surgery + chemo).");
+                GameLog.Log($"[Affliction_ThyroidCancer] Progression halted for '{survivor_id}' (surgery + chemo).");
             }
             else
             {
-                Debug.Log($"[Affliction_ThyroidCancer] Cannot halt progression for '{survivor_id}' — surgery={has_surgery}, chemo={has_chemo}.");
+                GameLog.Log($"[Affliction_ThyroidCancer] Cannot halt progression for '{survivor_id}' — surgery={has_surgery}, chemo={has_chemo}.");
             }
         }
 

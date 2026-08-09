@@ -77,6 +77,7 @@ namespace AtomicWar._Game.Core
             if (string.IsNullOrEmpty(slotId)) return;
 
             _suppressAutoSave = true;
+            if (SaveSystem != null) SaveSystem.SuppressAutoSave = true;
             try
             {
                 if (!LoadGame(slotId))
@@ -84,11 +85,17 @@ namespace AtomicWar._Game.Core
                     Debug.LogWarning(
                         $"[GameBootstrap] Continue requested slot '{slotId}', but it could not be " +
                         "loaded (missing or corrupt). Starting a fresh game instead.");
+                    // SAVE-003: keep SuppressAutoSave true so a hybrid/failed load
+                    // cannot overwrite a good slot. Host clears only on success.
+                    return;
                 }
             }
             finally
             {
                 _suppressAutoSave = false;
+                // Only re-enable SaveSystem autosave after a successful load.
+                if (SaveSystem != null && SaveSystem.LastLoadSucceeded)
+                    SaveSystem.SuppressAutoSave = false;
             }
         }
 
@@ -111,6 +118,15 @@ namespace AtomicWar._Game.Core
             if (_onGameStateChanged != null) GameState.OnPhaseChanged -= _onGameStateChanged;
             if (_onNeedsDied != null) NeedsSystem.OnDied -= _onNeedsDied;
             if (_onNeedChanged != null) NeedsSystem.OnNeedChanged -= _onNeedChanged;
+            if (_onDayTick_SetGameStateDay != null) TimeSystem.OnDayTick -= _onDayTick_SetGameStateDay;
+            if (_onRadiationStatusGained != null) RadiationSystem.OnStatusGained -= _onRadiationStatusGained;
+            if (_onRadiationDoseChanged != null) RadiationSystem.OnDoseChanged -= _onRadiationDoseChanged;
+
+            // Static/singleton method-group subscriptions.
+            if (WorldPhaseSystem != null) TimeSystem.OnDayTick -= WorldPhaseSystem.OnDayTick;
+            TimeSystem.OnDayTick -= OnRadioAndWorldDayTick;
+            if (FlashpointChoreographer != null) TimeSystem.OnDayTick -= FlashpointChoreographer.OnDayTick;
+            if (WorldPhaseSystem != null) WorldPhaseSystem.OnNuclearExchange -= HandleNuclearExchange;
 
             // Companion-system cleanup.
             SaveSystem?.Dispose();

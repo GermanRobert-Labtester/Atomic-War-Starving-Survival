@@ -130,6 +130,11 @@ namespace AtomicWar._Game.Core
         private CultMoralDisgustSystem _cultMoralSystem;
         private MutatedEcosystemSystem _ecosystemSystem;
         private HouseToBunkerSystem _houseToBunkerSystem;
+        // Prompts #901/#903/#904 — narrative encounter progress (letter delivered,
+        // weather log copied, whether Matej has been told about the bunker).
+        private Encounter_DeadLetterOffice _deadLetterOffice;
+        private Encounter_WeatherStation _weatherStation;
+        private Encounter_Pianist _pianist;
         private LocationQuestSystem _locationQuestSystem;
         private ExcavationSystem _excavationSystem;
         private RoomFloodingSystem _floodingSystem;
@@ -170,7 +175,6 @@ namespace AtomicWar._Game.Core
         private SurvivorDiariesSystem _survivorDiariesSystem;
         private RadioBroadcastSystem _radioBroadcastSystem;
         private CraftingSystem _craftingSystem;
-        private WorkbenchSystem _workbenchSystem;
         private LocationScavengingSystem _scavengingSystem;
         private PetSystem _petSystem;
         private FuelDecaySystem _fuelDecaySystem;
@@ -223,6 +227,7 @@ namespace AtomicWar._Game.Core
         private MapHazard_MagneticAnomaly _mapHazardMagneticAnomaly;
         private MapHazard_SinkholeCollapse _mapHazardSinkholeCollapse;
         private MapHazard_VenusTrap _mapHazardVenusTrap;
+        private MapHazard_FrozenSurvivor _mapHazardFrozenSurvivor;
         private MapAnomaly_AshDunes _mapAnomalyAshDunes;
         private MapAnomaly_BoilingLake _mapAnomalyBoilingLake;
         private MapAnomaly_Cherenkov _mapAnomalyCherenkov;
@@ -667,6 +672,15 @@ namespace AtomicWar._Game.Core
         public bool FailFastRestore { get; set; }
 
         /// <summary>
+        /// SAVE-004: When true, the ctor-owned <see cref="GameState.OnPhaseChanged"/>
+        /// handler will not AutoSave. Bootstrap holds this during Continue-load so
+        /// restoring Phase=Running does not clobber the slot that was just loaded.
+        /// The bootstrap's own phase handler already gates on its private flag; this
+        /// covers the second AutoSave owner (this class).
+        /// </summary>
+        public bool SuppressAutoSave { get; set; }
+
+        /// <summary>
         /// P1: Policy for new SaveSystem instances.
         /// True under UNITY_EDITOR or DEVELOPMENT_BUILD (includes game-ci batchmode
         /// EditMode tests). False in release player builds so a single bad subsystem
@@ -839,7 +853,7 @@ namespace AtomicWar._Game.Core
 
         private void OnPhaseChanged(GamePhase phase)
         {
-            if (phase == GamePhase.Running)
+            if (phase == GamePhase.Running && !SuppressAutoSave)
             {
                 AutoSave();
             }

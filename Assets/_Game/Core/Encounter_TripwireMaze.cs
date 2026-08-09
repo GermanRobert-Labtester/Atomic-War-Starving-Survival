@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// A node heavily fortified by BlackOps with no visible enemies. A grid of paths
     /// is presented; choosing the wrong path triggers an explosion. High Agility bypasses entirely.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_TripwireMaze
     {
         private TripwireMazeState _state = new TripwireMazeState();

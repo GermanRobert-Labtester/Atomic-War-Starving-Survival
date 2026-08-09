@@ -41,7 +41,7 @@ namespace AtomicWar._Game.Core
                 case "analyze_audio_science":
                     // Reliability flip is applied by EventRunner.ApplySafeHavenIntelEffects
                     // during ApplyChoice (before this handler). Log only here.
-                    Debug.Log("[Safe Haven] Audio analyzed: the scrubber hum is a recorded loop. Trap confirmed.");
+                    GameLog.Log("[Safe Haven] Audio analyzed: the scrubber hum is a recorded loop. Trap confirmed.");
                     break;
                 case "send_expedition":
                     ApplySafeHavenSendExpedition(ctx);
@@ -67,7 +67,7 @@ namespace AtomicWar._Game.Core
                     EconomySystem.ModifyTrust(fac.id, 3f);
                 }
             }
-            Debug.Log("[Safe Haven] Broadcast warning transmitted. Radio fuel -5, all factions +3 trust.");
+            GameLog.Log("[Safe Haven] Broadcast warning transmitted. Radio fuel -5, all factions +3 trust.");
         }
 
         private void ApplySafeHavenSendExpedition(EventContext ctx)
@@ -77,12 +77,12 @@ namespace AtomicWar._Game.Core
             if (EventRunner.ShouldInjectSafeHavenAmbush(ctx))
             {
                 InjectSafeHavenAmbushEncounter();
-                Debug.Log("[Safe Haven] Unverified intel accepted. Sniper ambush injected at grid 4-7-North.");
+                GameLog.Log("[Safe Haven] Unverified intel accepted. Sniper ambush injected at grid 4-7-North.");
             }
             else
             {
                 InjectSafeHavenEmptyCacheEncounter();
-                Debug.Log("[Safe Haven] Trap confirmed. Empty-cache encounter injected — no sniper.");
+                GameLog.Log("[Safe Haven] Trap confirmed. Empty-cache encounter injected — no sniper.");
             }
         }
     }

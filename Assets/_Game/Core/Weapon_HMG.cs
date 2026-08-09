@@ -14,8 +14,15 @@ namespace AtomicWar._Game.Core
         public string mountLocation;
     }
 
+    /// <summary>
+    /// REPROMOTE-Weapon-001 — Boot/Save live. HatchDefense GetWeaponPower reads HMG stock
+    /// (item id <c>weapon_hmg</c>) and mounted/oiled state via <see cref="GetHatchDefensePower"/>.
+    /// </summary>
     public class Weapon_HMG
     {
+        public const float HatchDefensePower = 28f;
+        public const string InventoryItemId = "weapon_hmg";
+
         public event Action<string, int> OnRaidShredded;
         public event Action<string> OnHMGJammed;
 
@@ -30,6 +37,10 @@ namespace AtomicWar._Game.Core
         {
             _state = state ?? new HMGState();
         }
+
+        public bool IsMounted => _state.isMounted;
+        public bool IsJammed => _state.isJammed;
+        public int RequiresOperators => _state.requiresOperators;
 
         public HMGState CaptureState() => _state;
 
@@ -100,15 +111,23 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// Hatch defense contribution when the HMG is mounted, not jammed, crewed, and oiled.
+        /// Inventory presence of <see cref="InventoryItemId"/> is checked by the host before calling.
+        /// </summary>
+        public float GetHatchDefensePower(int operatorCount, bool isOiled)
+        {
+            if (!_state.isMounted || _state.isJammed) return 0f;
+            if (operatorCount < _state.requiresOperators) return 0f;
+            if (!isOiled) return 0f;
+            return HatchDefensePower;
+        }
+
+        /// <summary>
         /// Returns true when the weapon is mounted, not jammed, and ready to fire.
         /// </summary>
         public bool CanFire()
         {
             return _state.isMounted && !_state.isJammed;
         }
-
-        public bool IsMounted => _state.isMounted;
-
-        public bool IsJammed => _state.isJammed;
     }
 }

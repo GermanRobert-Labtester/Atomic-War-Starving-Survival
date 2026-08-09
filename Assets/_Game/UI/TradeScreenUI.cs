@@ -191,8 +191,9 @@ namespace AtomicWar._Game.UI
             sb.AppendLine($"Trade — {name}  [P] parley when available");
             sb.AppendLine(FactionStatusStrip);
             sb.AppendLine($"Phase: {Phase}  Trust: {trust:0}  Stance: {Stance}");
-            sb.AppendLine($"You offer: {PlayerOfferValue:0.0}");
-            sb.AppendLine($"They ask:  {FactionAskValue:0.0}");
+            // ECON-002 — no raw trade digits for the player (policy: qualitative only).
+            sb.AppendLine($"You offer: {Item_TradeValues.FormatWorthLabel(PlayerOfferValue)}");
+            sb.AppendLine($"They ask:  {Item_TradeValues.FormatWorthLabel(FactionAskValue)}");
             sb.Append(IsFair ? "Deal is fair." : "Deal is short.");
             if (CanDemandParley)
                 sb.AppendLine().Append("[P] Demand parley / surrender — they flinched at the hatch.");

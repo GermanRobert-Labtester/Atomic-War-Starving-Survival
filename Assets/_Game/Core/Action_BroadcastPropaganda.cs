@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// Broadcast lies about a hostile faction using a charismatic survivor and a RadioTower.
     /// Causes rival factions to eliminate them, removing them from the RNG spawn pool for 30 days.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_BroadcastPropaganda
     {
         private PropagandaState _state = new PropagandaState();

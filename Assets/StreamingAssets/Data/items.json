@@ -585,6 +585,33 @@
     "disassembleYieldFraction": 0
   },
   {
+    "id": "solar_cell",
+    "displayName": "Solar Cell",
+    "description": "A cracked photovoltaic panel pried off a weather station. It still charges, slowly, on the four hours a day the ash thins enough to let light through.",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 1.2,
+    "radProtection": 0,
+    "durability": 0,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 22.0,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "electronic_scrap",
+        "amount": 3
+      }
+    ],
+    "disassembleYieldFraction": 0
+  },
+  {
     "id": "chemicals",
     "displayName": "Chemicals",
     "description": "Solvents and reagents scavenged from labs and garages.",
@@ -955,6 +982,40 @@
     "equipSlot": "",
     "tradeValue": 3.5,
     "empShielded": false
+  },
+  {
+    "id": "weapon_hmg",
+    "displayName": "Heavy Machine Gun",
+    "description": "Tripod-mounted .50 cal HMG. Provides massive hatch defense bonus when stock is on hand and the gun is mounted + oiled. Requires 2 operators to fire at full efficiency; jams without oil. Two crew + a stock pile of this weapon is the difference between a held hatch and a breached one.",
+    "type": "Weapon",
+    "stackMax": 1,
+    "weight": 45.0,
+    "radProtection": 0,
+    "durability": 50,
+    "contamination": 0,
+    "hungerRestore": 0,
+    "thirstRestore": 0,
+    "healthEffect": 0,
+    "radCleanse": 0,
+    "moraleEffect": 0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 280.0,
+    "empShielded": false,
+    "scrapValue": [
+      {
+        "materialId": "mechanical_parts",
+        "amount": 6
+      },
+      {
+        "materialId": "gunpowder",
+        "amount": 4
+      },
+      {
+        "materialId": "electronic_scrap",
+        "amount": 2
+      }
+    ]
   },
   {
     "id": "sulphur",
@@ -7006,6 +7067,66 @@
     "isEquipable": false,
     "equipSlot": "",
     "tradeValue": 102.0,
+    "empShielded": false
+  },
+  {
+    "id": "prewar_letter",
+    "displayName": "Pre-War Letter",
+    "description": "A sealed envelope, yellowed and brittle. The stamp is from a country that no longer exists. Someone wrote this to someone they loved, and it never arrived.",
+    "type": "Comfort",
+    "stackMax": 5,
+    "weight": 0.05,
+    "radProtection": 0.0,
+    "durability": 0.0,
+    "contamination": 0,
+    "hungerRestore": 0.0,
+    "thirstRestore": 0.0,
+    "healthEffect": 0.0,
+    "radCleanse": 0,
+    "moraleEffect": 1.5,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 1.0,
+    "empShielded": false
+  },
+  {
+    "id": "charcoal_sketch",
+    "displayName": "Charcoal Sketch",
+    "description": "A childs drawing on the back of a ration card. Stick figures of a family. A sun with rays like bent spokes. A house with smoke coming out of the chimney. The paper is singed at the edges.",
+    "type": "Comfort",
+    "stackMax": 3,
+    "weight": 0.02,
+    "radProtection": 0.0,
+    "durability": 0.0,
+    "contamination": 0,
+    "hungerRestore": 0.0,
+    "thirstRestore": 0.0,
+    "healthEffect": 0.0,
+    "radCleanse": 0,
+    "moraleEffect": 2.0,
+    "isEquipable": false,
+    "equipSlot": "",
+    "tradeValue": 0.5,
+    "empShielded": false
+  },
+  {
+    "id": "snow_goggles",
+    "displayName": "Snow Goggles",
+    "description": "Tinted lenses in a rubber frame. The strap is frayed but holds. Cuts the glare off the ash-fields and makes the horizon stop hurting.",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 0.2,
+    "radProtection": 0.0,
+    "durability": 30.0,
+    "contamination": 0,
+    "hungerRestore": 0.0,
+    "thirstRestore": 0.0,
+    "healthEffect": 0.0,
+    "radCleanse": 0,
+    "moraleEffect": 1.0,
+    "isEquipable": true,
+    "equipSlot": "Head",
+    "tradeValue": 6.0,
     "empShielded": false
   }
 ]

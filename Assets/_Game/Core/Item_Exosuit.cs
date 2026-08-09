@@ -130,10 +130,14 @@ namespace AtomicWar._Game.Core
             _entombedSurvivors.Clear();
             if (saved == null) return;
             _isLockedUp = saved.isLockedUp;
+            // Either list is null when the save omitted it explicitly; guard before Count.
+            if (saved.equippedSurvivorIds == null || saved.entombedFlags == null) return;
             int count = Mathf.Min(saved.equippedSurvivorIds.Count, saved.entombedFlags.Count);
             for (int i = 0; i < count; i++)
             {
-                _entombedSurvivors[saved.equippedSurvivorIds[i]] = saved.entombedFlags[i];
+                string id = saved.equippedSurvivorIds[i];
+                if (string.IsNullOrEmpty(id)) continue;
+                _entombedSurvivors[id] = saved.entombedFlags[i];
             }
         }
     }

@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Found in Bars/Gas Stations. Unpredictable melee attackers with high pain tolerance (50% damage reduction).
     /// Killing yields Moonshine but damages Karma (-15).
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_DrunksAggro
     {
         private DrunksAggroState _state = new DrunksAggroState();

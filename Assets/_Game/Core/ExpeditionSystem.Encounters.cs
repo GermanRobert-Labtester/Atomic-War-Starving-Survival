@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -33,11 +34,110 @@ namespace AtomicWar._Game.Core
             ApplyExpeditionPerkEncounterMilestones(exp, selected, survivor, chosen, fled);
             ApplyAmmoResolveHitOnEngage(exp, selected, survivor, chosen, fled);
             ApplyBloodToxicityBiteRetaliation(exp, selected, survivor, chosen, fled);
+            // REPROMOTE-Encounter-001 — class roadblock Engage/Resolve when map/SO tags match.
+            TryDispatchClassRoadblock(exp, selected, chosen, fled);
+            // Prompts #901/#903/#904 — the narrative encounters' outcomes live on
+            // their own classes; see ExpeditionSystem.Narrative.cs.
+            TryDispatchNarrativeEncounter(exp, selected, chosen, fled);
 
             if (fled)
                 TryProcessUxoFlee(exp);
 
             OnEncounterResolved?.Invoke(exp, selected, chosen);
+        }
+
+        /// <summary>
+        /// When the encounter SO id, choice, or map node carries a roadblock tag,
+        /// run <see cref="Encounter_Roadblock.ResolveChoice"/> so the class tracker
+        /// is not a save-only ghost (REPROMOTE-Encounter-001).
+        /// </summary>
+        private void TryDispatchClassRoadblock(
+            ExpeditionState exp,
+            EncounterSO selected,
+            EventChoice chosen,
+            bool fled)
+        {
+            if (_classRoadblock == null || exp == null || fled) return;
+            if (!IsClassRoadblockBeat(exp, selected)) return;
+
+            RoadblockChoice rb = MapEventChoiceToRoadblock(chosen);
+            int fuel = 0;
+            if (_countItem != null)
+            {
+                fuel = Mathf.Max(_countItem("fuel"), _countItem("fuel_can"));
+                if (fuel <= 0) fuel = _countItem("jerry_can");
+            }
+
+            float chassis = exp.HasBicycle ? exp.BicycleDurability : 100f;
+            float hours;
+            bool ok = _classRoadblock.ResolveChoice(rb, ref fuel, ref chassis, out hours);
+            if (!ok && rb == RoadblockChoice.PayToll)
+            {
+                // Not enough fuel — fall back to reverse detour.
+                _classRoadblock.ResolveChoice(
+                    RoadblockChoice.ReverseDetour, ref fuel, ref chassis, out hours);
+                rb = RoadblockChoice.ReverseDetour;
+            }
+
+            if (rb == RoadblockChoice.PayToll && _consumeItem != null)
+            {
+                int toll = _classRoadblock.State != null ? _classRoadblock.State.tollFuelCost : 5;
+                if (!_consumeItem("fuel", toll))
+                {
+                    if (!_consumeItem("fuel_can", toll))
+                        _consumeItem("jerry_can", toll);
+                }
+            }
+
+            if (hours > 0f)
+            {
+                // Detour burns travel ticks (1 tick ≈ 1 hour in the expedition engine).
+                int extra = Mathf.Max(1, Mathf.CeilToInt(hours));
+                exp.TotalDistanceTicks += extra;
+            }
+
+            if (exp.HasBicycle)
+                exp.BicycleDurability = Mathf.Clamp(chassis, 0f, 100f);
+        }
+
+        private bool IsClassRoadblockBeat(ExpeditionState exp, EncounterSO selected)
+        {
+            if (selected != null && !string.IsNullOrEmpty(selected.id))
+            {
+                string id = selected.id;
+                if (id.IndexOf("roadblock", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                if (id.IndexOf("barricade", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+                if (id.IndexOf("toll", StringComparison.OrdinalIgnoreCase) >= 0) return true;
+            }
+
+            string loc = exp?.TargetLocationId;
+            if (!string.IsNullOrEmpty(loc)
+                && loc.IndexOf("roadblock", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+
+            if (_generatedMap != null && !string.IsNullOrEmpty(loc))
+            {
+                var node = _generatedMap.GetNode(loc);
+                if (node != null && node.HasTag("roadblock"))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private static RoadblockChoice MapEventChoiceToRoadblock(EventChoice chosen)
+        {
+            string id = chosen?.ChoiceId ?? string.Empty;
+            if (id.IndexOf("pay", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("toll", StringComparison.OrdinalIgnoreCase) >= 0)
+                return RoadblockChoice.PayToll;
+            if (id.IndexOf("ram", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("force", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("engage", StringComparison.OrdinalIgnoreCase) >= 0
+                || id.IndexOf("fight", StringComparison.OrdinalIgnoreCase) >= 0)
+                return RoadblockChoice.RamBarricade;
+            // detour / reverse / flee / sneak / default
+            return RoadblockChoice.ReverseDetour;
         }
 
         /// <summary>
@@ -102,9 +202,14 @@ namespace AtomicWar._Game.Core
                 moraleDelta += 1f;
 
             if (Mathf.Abs(moraleDelta) > 0.01f)
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+            {
+                if (_needsSystem != null)
+                    _needsSystem.Modify(survivor, NeedKind.Morale, moraleDelta);
+                else
+                    survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+            }
             if (Mathf.Abs(healthDelta) > 0.01f)
-                survivor.Needs.Health = Mathf.Clamp(survivor.Needs.Health + healthDelta, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(survivor, healthDelta);
 
             LastCombatMoraleDelta = moraleDelta;
             LastCombatHealthDelta = healthDelta;
@@ -179,7 +284,10 @@ namespace AtomicWar._Game.Core
 
             LastBiteRetaliationDamage = dmg;
             // Grim win: poisoned attacker breaks off — small morale relief.
-            survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 3f, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(survivor, NeedKind.Morale, 3f);
+            else
+                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + 3f, 0f, 100f);
         }
 
         private static string ResolveBiteAttackerType(EncounterSO selected)
@@ -363,7 +471,10 @@ namespace AtomicWar._Game.Core
                     float combat = _expeditionPerks.GetNightCombatMultiplier(survivor, isNight: true);
                     moraleDelta *= combat;
                 }
-                survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(survivor, NeedKind.Morale, moraleDelta);
+                else
+                    survivor.Needs.Morale = Mathf.Clamp(survivor.Needs.Morale + moraleDelta, 0f, 100f);
             }
 
             // Explicit flee choice (ChoiceId "flee") on a UXO node can still detonate.
@@ -416,9 +527,9 @@ namespace AtomicWar._Game.Core
             if (!DesertersStandSystem.IsDesertersStandEncounter(selected) || survivor == null) return;
             EnsureDeserterStandRifle();
             string choiceId = chosen != null ? chosen.ChoiceId : "gather_the_weapons";
-            DesertersStandSystem.Apply(exp, survivor, _deserterStandRifle, choiceId);
+            DesertersStandSystem.Apply(exp, survivor, _deserterStandRifle, choiceId, _needsSystem);
             OnDesertersStandResolved?.Invoke(exp, DesertersStandSystem.LogMessage);
-            Debug.Log($"[Deserter's Stand] {DesertersStandSystem.LogMessage}");
+            GameLog.Log($"[Deserter's Stand] {DesertersStandSystem.LogMessage}");
         }
 
 

@@ -34,6 +34,7 @@ namespace AtomicWar._Game.Core
                 Warmth = sv.Needs.Warmth,
                 Morale = sv.Needs.Morale,
                 Health = sv.Needs.Health,
+                Hygiene = sv.Needs.Hygiene,
                 WasHungerCritical = sv.Needs.WasHungerCritical,
                 WasThirstCritical = sv.Needs.WasThirstCritical,
                 WasWarmthCritical = sv.Needs.WasWarmthCritical,
@@ -148,6 +149,7 @@ namespace AtomicWar._Game.Core
             sv.Needs.Warmth = save.Warmth;
             sv.Needs.Morale = save.Morale;
             sv.Needs.Health = save.Health;
+            sv.Needs.Hygiene = save.Hygiene;
             sv.Needs.WasHungerCritical = save.WasHungerCritical;
             sv.Needs.WasThirstCritical = save.WasThirstCritical;
             sv.Needs.WasWarmthCritical = save.WasWarmthCritical;
@@ -239,6 +241,12 @@ namespace AtomicWar._Game.Core
             sv.QuestProgress       = save.QuestProgress;
             sv.DaysAlive           = save.DaysAlive;
             sv.MoraleHitZero       = save.MoraleHitZero;
+
+            // SAVE-1D: the need fields above are written directly (restored values are
+            // authoritative), so no OnNeedChanged fired and every need observer — HUD
+            // bars, mood widgets — would still be showing pre-load values. Re-broadcast
+            // the restored needs now that the survivor is fully populated.
+            _needsSystem?.NotifyNeedsRestored(sv);
         }
 
         private void RestoreShelterModules(List<ShelterModuleSave> saved)
@@ -256,15 +264,28 @@ namespace AtomicWar._Game.Core
                 instance.IsEnabled = modSave.IsEnabled;
                 instance.FilterHealth = modSave.FilterHealth;
                 instance.Fuel = modSave.Fuel;
+                // SAVE-011: a pre-SAVE-011 save has no FuelBurnMultiplier key, which
+                // deserialises to 0 and would make fuel burn free. Treat any
+                // non-positive value as "stock rate", matching EffectiveFuelBurnMultiplier.
+                instance.FuelBurnMultiplier =
+                    modSave.FuelBurnMultiplier > 0f ? modSave.FuelBurnMultiplier : 1f;
                 instance.WaterConversionProgress = modSave.WaterConversionProgress;
                 instance.RoomId = modSave.RoomId;
                 instance.Occupancy = modSave.Occupancy;
                 instance.ComfortLevel = modSave.ComfortLevel;
                 instance.Capacity = modSave.Capacity;
+                // SAVE-011: 0 is the legitimate "not a hatch defense module" value and
+                // is also what old saves yield; HatchDefenseSystem re-derives the stock
+                // number from the module id in that case, so restoring it is safe.
+                instance.SecurityContribution = modSave.SecurityContribution;
 
+                // SAVE-012: never wipe a live Definition with a null lookup. Prefer
+                // catalog resolve; otherwise keep whatever SO was already on the instance.
                 if (_moduleLookup != null)
                 {
-                    instance.Definition = _moduleLookup(modSave.ModuleId);
+                    var def = _moduleLookup(modSave.ModuleId);
+                    if (def != null)
+                        instance.Definition = def;
                 }
             }
         }

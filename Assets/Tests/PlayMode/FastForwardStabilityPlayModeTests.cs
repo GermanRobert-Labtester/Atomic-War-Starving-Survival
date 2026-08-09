@@ -137,7 +137,6 @@ namespace AtomicWar.Tests.PlayMode
 
         private static void RunSimLoop(SimSlice s, GcWindows w, out int discoverySeq)
         {
-            float targetHours = TotalDays * 24f;
             int steps = 0;
             int seq = 0;
             int nextDiscoveryHour = 12;
@@ -267,8 +266,12 @@ namespace AtomicWar.Tests.PlayMode
                 "every simulated day boundary must fire exactly one day tick");
             Assert.That(s.Clock.CurrentDay, Is.EqualTo(TotalDays + 1));
             Assert.That(s.Clock.TotalElapsedHours, Is.EqualTo(TotalDays * 24f).Within(Eps));
-            Assert.That(s.HourTicks, Is.EqualTo(TotalSteps),
-                "every sub-step must fire an hour tick (no skipped AI-tick heartbeats)");
+            // OnHourTick fires per integer hour crossed, not per sub-step: four
+            // quarter-hour steps advance the clock one hour and fire once. The
+            // earlier TotalSteps expectation predated that contract change and
+            // only survived because CI runs EditMode alone.
+            Assert.That(s.HourTicks, Is.EqualTo(TotalDays * 24),
+                "every simulated hour boundary must fire exactly one hour tick");
 
             // --- Pool conservation ---
             Assert.That(s.MapUi, Is.Not.Null);

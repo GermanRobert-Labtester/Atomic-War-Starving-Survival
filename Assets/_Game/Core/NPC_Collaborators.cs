@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Civilians being lined up against a wall by Rebels. Player can Intervene (fight Rebels, save them for reward)
     /// or Watch (causes morale drop due to guilt, but safe).
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Collaborators
     {
         private CollaboratorsState _state = new CollaboratorsState();

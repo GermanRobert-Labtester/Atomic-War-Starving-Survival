@@ -14,6 +14,14 @@ namespace AtomicWar._Game.AI.Actions
     [CreateAssetMenu(fileName = "Action_DrinkContaminatedWater", menuName = "ASHFALL/AI/Drink Contaminated Water Action")]
     public class DrinkContaminatedWaterActionSO : SurvivorAction
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("drink_contaminated_action");
+
         [Tooltip("Thirst restored per drink from the dirty/irradiated pool.")]
         public float ThirstRestore = 35f;
         [Tooltip("Only considered once thirst is at or above this (0..100) — a last resort, not a habit.")]
@@ -61,7 +69,10 @@ namespace AtomicWar._Game.AI.Actions
                 storage.ConsumeDirty(1f);
             }
 
-            context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - ThirstRestore);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Thirst, -(ThirstRestore));
+            else
+                context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - ThirstRestore);
 
             if (drankIrradiated)
             {
@@ -74,13 +85,10 @@ namespace AtomicWar._Game.AI.Actions
                 if (context.SurvivalPerks != null)
                     chance = context.SurvivalPerks.ScaleIllnessChance(context.Survivor, chance);
 
-                double roll = context.Random != null
-                    ? context.Random.NextDouble()
-                    : UnityEngine.Random.value;
+                double roll = (context.Random ?? FallbackRng).NextDouble();
                 if (roll < chance)
                 {
-                    context.Survivor.Needs.Health = Mathf.Max(
-                        0f, context.Survivor.Needs.Health - DirtyWaterIllnessHealthLoss);
+                    SurvivorNeedWrite.AdjustHealth(context.Survivor, -DirtyWaterIllnessHealthLoss);
                     // Prefer dysentery affliction when medical is available
                     context.MedicalSystem?.Inflict(context.Survivor, "dysentery");
                 }
@@ -103,18 +111,15 @@ namespace AtomicWar._Game.AI.Actions
             return false;
         }
 
-        private static float RiskWillingness(RiskBiasTrait trait)
+        private static float RiskWillingness(RiskBiasTrait trait) => trait switch
         {
-            switch (trait)
-            {
-                case RiskBiasTrait.Paranoid: return 0.05f;
-                case RiskBiasTrait.Cautious: return 0.2f;
-                case RiskBiasTrait.Realist: return 0.5f;
-                case RiskBiasTrait.Fatalist: return 0.65f;
-                case RiskBiasTrait.Denialist: return 0.9f;
-                case RiskBiasTrait.Reckless: return 1f;
-                default: return 0.5f;
-            }
-        }
+            RiskBiasTrait.Paranoid => 0.05f,
+            RiskBiasTrait.Cautious => 0.2f,
+            RiskBiasTrait.Realist => 0.5f,
+            RiskBiasTrait.Fatalist => 0.65f,
+            RiskBiasTrait.Denialist => 0.9f,
+            RiskBiasTrait.Reckless => 1f,
+            _ => 0.5f
+        };
     }
 }

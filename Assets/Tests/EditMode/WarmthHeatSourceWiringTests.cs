@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
@@ -53,7 +52,7 @@ namespace AtomicWar.Tests.EditMode
             var survivor = new Survivor { Id = "sv_cold", DisplayName = "Cold" };
             survivor.Needs.Warmth = 100f;
 
-            _bootstrap.NeedsSystem.Tick(new List<Survivor> { survivor }, 4f);
+            _bootstrap.NeedsSystem.Tick(survivor, 4f);
 
             Assert.That(survivor.Needs.Warmth, Is.LessThan(100f),
                 "A survivor in an unheated bunker at -20 C must lose warmth");
@@ -69,7 +68,7 @@ namespace AtomicWar.Tests.EditMode
             var survivor = new Survivor { Id = "sv_warm", DisplayName = "Warm" };
             survivor.Needs.Warmth = 40f;
 
-            _bootstrap.NeedsSystem.Tick(new List<Survivor> { survivor }, 4f);
+            _bootstrap.NeedsSystem.Tick(survivor, 4f);
 
             Assert.That(survivor.Needs.Warmth, Is.GreaterThan(40f),
                 "Above the comfort threshold warmth must recover");

@@ -41,9 +41,29 @@ namespace AtomicWar._Game.AI.Actions
 
         public override void Execute(AIContext context)
         {
-            if (context?.Survivor != null)
+            if (context?.Survivor == null) return;
+
+            // DEEP3-INV-003 — drink only happens when water is actually consumed from
+            // inventory. Previously the action subtracted Thirst unconditionally and
+            // left the item in storage, so a survivor could slake thirst without ever
+            // drinking anything. Thirst also runs 0..100 with higher = thirstier, so
+            // 'reduce thirst' is a negative delta.
+            if (context.Inventory == null || context.Inventory.Slots == null) return;
+
+            for (int i = 0; i < context.Inventory.Slots.Count; i++)
             {
-                context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - 50f);
+                var slot = context.Inventory.Slots[i];
+                if (slot == null || slot.Item == null) continue;
+                if (slot.Item.id != WaterItemId && slot.Item.thirstRestore <= 0f) continue;
+                if (slot.Amount <= 0) continue;
+
+                float restore = slot.Item.thirstRestore > 0f ? slot.Item.thirstRestore : 50f;
+                if (!context.Inventory.Remove(slot.Item, 1)) return;
+                if (context.NeedsSystem != null)
+                    context.NeedsSystem.Modify(context.Survivor, NeedKind.Thirst, -(restore));
+                else
+                    context.Survivor.Needs.Thirst = Mathf.Max(0f, context.Survivor.Needs.Thirst - restore);
+                return;
             }
         }
     }

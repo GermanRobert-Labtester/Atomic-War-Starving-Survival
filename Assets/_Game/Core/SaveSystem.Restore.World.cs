@@ -52,6 +52,7 @@ namespace AtomicWar._Game.Core
             RestIf(_victoryProject, s => { if (data.VictoryProject != null) s.RestoreState(data.VictoryProject); });
             // Special-path: scheduled-event queue only (not ISaveable CaptureState).
             RestIf(_eventRunner, s => s.RestoreScheduledState(data.ScheduledEvents));
+            RestIf(_eventRunner, s => s.RestoreCooldownState(data.EventRunnerState));
             RestIf(_suspicionTracker, s => { if (data.Suspicion != null) s.RestoreState(data.Suspicion); });
             RestIf(_hatchEntrapment, s => { if (data.HatchEntrapment != null) s.RestoreState(data.HatchEntrapment); });
             RestIf(_atmosphereSystem, s => { if (data.Atmosphere != null) s.RestoreState(data.Atmosphere); });
@@ -115,6 +116,12 @@ namespace AtomicWar._Game.Core
         private void RestoreShelterTacticalSystems(SaveData data)
         {
             // Positional only when present (pre-migration saves).
+            RestoreShelterEnvironmentalSystems(data);
+            RestoreShelterDefenseSystems(data);
+        }
+
+        private void RestoreShelterEnvironmentalSystems(SaveData data)
+        {
             RestIf(_structuralIntegrity, s => { if (data.StructuralIntegrity != null) s.RestoreState(data.StructuralIntegrity); });
             RestIf(_wasteSystem, s => { if (data.Waste != null) s.RestoreState(data.Waste); });
             RestIf(_verminSystem, s => { if (data.Vermin != null) s.RestoreState(data.Vermin); });
@@ -123,6 +130,10 @@ namespace AtomicWar._Game.Core
             RestIf(_excavationSystem, s => { if (data.Excavation != null) s.RestoreState(data.Excavation); });
             RestIf(_floodingSystem, s => { if (data.Flooding != null) s.RestoreState(data.Flooding); });
             RestIf(_hiddenStorageSystem, s => { if (data.HiddenStorage != null) s.RestoreState(data.HiddenStorage); });
+        }
+
+        private void RestoreShelterDefenseSystems(SaveData data)
+        {
             RestIf(_ceilingCollapseSystem, s => { if (data.CeilingCollapse != null) s.RestoreState(data.CeilingCollapse); });
             RestIf(_perimeterTrapSystem, s => { if (data.PerimeterTraps != null) s.RestoreState(data.PerimeterTraps); });
             RestIf(_tunnelingSystem, s => { if (data.Tunneling != null) s.RestoreState(data.Tunneling); });
@@ -136,6 +147,12 @@ namespace AtomicWar._Game.Core
         private void RestoreSimulationExtras(SaveData data)
         {
             // Positional only when present (pre-migration). New saves restore via SubsystemSaveIds.
+            RestoreProductionAndUtilityExtras(data);
+            RestorePerkSystems(data);
+        }
+
+        private void RestoreProductionAndUtilityExtras(SaveData data)
+        {
             RestIf(_resilienceSystem, s => { if (data.Resilience != null) s.RestoreState(data.Resilience); });
             RestIf(_compostSystem, s => { if (data.Compost != null) s.RestoreState(data.Compost); });
             RestIf(_windTurbineSystem, s => { if (data.WindTurbine != null) s.RestoreState(data.WindTurbine); });
@@ -145,6 +162,10 @@ namespace AtomicWar._Game.Core
             RestIf(_hamRadioSystem, s => { if (data.HamRadio != null) s.RestoreState(data.HamRadio); });
             if (_skillProgression != null && data.SkillProgression != null)
                 _skillProgression.RestoreState(data.SkillProgression, _getSurvivors?.Invoke());
+        }
+
+        private void RestorePerkSystems(SaveData data)
+        {
             RestIf(_combatPerkSystem, s => { if (data.CombatPerks != null) s.RestoreState(data.CombatPerks); });
             RestIf(_survivalPerkSystem, s => { if (data.SurvivalPerks != null) s.RestoreState(data.SurvivalPerks); });
             RestIf(_shelterPerkSystem, s => { if (data.ShelterPerks != null) s.RestoreState(data.ShelterPerks); });

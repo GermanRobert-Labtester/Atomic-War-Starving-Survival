@@ -15,7 +15,8 @@ namespace AtomicWar._Game.Core
     {
         public string systemId = "action_silent_takedown";
     }
-public class Action_SilentTakedown
+/// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
+    public class Action_SilentTakedown
     {
         public const string ActionId = "action_silent_takedown";
         public const bool RequiresKnife = true;

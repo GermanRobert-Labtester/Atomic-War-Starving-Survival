@@ -20,5 +20,14 @@ namespace AtomicWar._Game.Crafting
         {
             Condition = Mathf.Max(0f, Condition - Mathf.Max(0f, amount));
         }
+
+        /// <summary>Restore station condition by an amount, capped at 100. Used by the
+        /// CRAFT-003 rollback path when a craft cannot place its result and there is
+        /// no overflow stash — wear applied at craft start is undone so the failed
+        /// craft costs the player nothing.</summary>
+        public void Repair(float amount)
+        {
+            Condition = Mathf.Min(100f, Condition + Mathf.Max(0f, amount));
+        }
     }
 }

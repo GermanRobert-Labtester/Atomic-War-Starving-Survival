@@ -28,7 +28,6 @@ namespace AtomicWar._Game.Core
 
         private bool _visible;
         private float _smoothedFps;
-        private float _lastSaveRealTime;
         private string _lastSaveSlot = "none";
         private int _frameCount;
         private float _frameTimer;
@@ -216,7 +215,6 @@ namespace AtomicWar._Game.Core
         public void NotifySave(string slotId)
         {
             _lastSaveSlot = slotId;
-            _lastSaveRealTime = Time.unscaledTime;
         }
 
         private void InitStyles()

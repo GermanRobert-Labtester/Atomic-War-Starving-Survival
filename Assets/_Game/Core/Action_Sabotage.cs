@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Send a high-stealth survivor to a Faction Base node to poison water or blow the armory.
     /// Weakens the faction globally (lowers Raid levels to 1). If caught, the agent is killed.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_Sabotage
     {
         private SabotageMissionState _state = new SabotageMissionState();

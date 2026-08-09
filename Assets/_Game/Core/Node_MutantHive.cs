@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -37,12 +38,12 @@ namespace AtomicWar._Game.Core
 
         public string NodeId => _state.node_id;
 
-        public Node_MutantHive() : this(new System.Random()) { }
+        public Node_MutantHive() : this(AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_mutanthive")) { }
 
         public Node_MutantHive(System.Random rng)
         {
             _state = new MutantHiveState();
-            _rng = rng ?? new System.Random();
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_mutanthive");
         }
 
         /// <summary>
@@ -60,7 +61,7 @@ namespace AtomicWar._Game.Core
             _state.is_discovered = true;
 
             OnDiscovered?.Invoke(node_id);
-            Debug.Log($"[Node_MutantHive] Discovered at node '{node_id}'.");
+            GameLog.Log($"[Node_MutantHive] Discovered at node '{node_id}'.");
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace AtomicWar._Game.Core
             _state.webbing_active = true;
             OnExpeditionEntered?.Invoke();
             OnWebbingSlowed?.Invoke(_state.speed_multiplier);
-            Debug.Log($"[Node_MutantHive] Expedition entered. Speed multiplier: {_state.speed_multiplier:F1}.");
+            GameLog.Log($"[Node_MutantHive] Expedition entered. Speed multiplier: {_state.speed_multiplier:F1}.");
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace AtomicWar._Game.Core
             if (swarm_spawned)
             {
                 OnSwarmEncounter?.Invoke();
-                Debug.Log($"[Node_MutantHive] Swarm spawned from cocoon '{cocoon_id}'!");
+                GameLog.Log($"[Node_MutantHive] Swarm spawned from cocoon '{cocoon_id}'!");
             }
 
             return !swarm_spawned || combat_skill >= 0.5f;

@@ -41,8 +41,16 @@ namespace AtomicWar._Game.Data
             if (item == null) return 0f;
             if (item.tradeValue > 0f) return item.tradeValue;
 
-            // Fall back to the code-only barter ladder by type.
-            return Item_TradeValues.BaseForTier(Item_TradeValues.InferTier(item.type));
+            // Fall back to the code-only barter ladder. An explicitly authored
+            // tradeTier wins over inference: this path previously went straight to
+            // InferTier(item.type), so an item that declared a tier but no explicit
+            // tradeValue was silently priced at the wrong rung of the ladder — an
+            // Attachment-tier item, for instance, resolved as a UtilityTool.
+            // Scrap is tier 0, i.e. "unset", so it is the one value that defers.
+            var tier = item.tradeTier != ItemTradeTier.Scrap
+                ? item.tradeTier
+                : Item_TradeValues.InferTier(item.type);
+            return Item_TradeValues.BaseForTier(tier);
         }
 
         /// <summary>Phase-only effective value (no supply/demand, no trust).</summary>

@@ -22,8 +22,20 @@ namespace AtomicWar._Game.Core
         public const float BaseStaminaDrainPerHour = 5f;
         public const float MaxCarryingCapacityDefault = 30f;
 
-        /// <summary>AcuteDoseWindow added to the survivor when caught in the flashpoint.</summary>
+        /// <summary>
+        /// Base AcuteDoseWindow added to the survivor when caught in the flashpoint,
+        /// before duration scaling (see <see cref="GetFlashpointDoseScale"/>).
+        /// </summary>
         public const float FlashpointAcuteDoseSpike = 30f;
+
+        /// <summary>Expedition hours at which the flashpoint dose spike is unscaled (×1).</summary>
+        public const float FlashpointDoseReferenceHours = 24f;
+
+        /// <summary>Lower bound on the flashpoint dose duration scale (a survivor caught minutes out).</summary>
+        public const float MinFlashpointDoseScale = 0.5f;
+
+        /// <summary>Upper bound on the flashpoint dose duration scale (a long deep-field run).</summary>
+        public const float MaxFlashpointDoseScale = 2.0f;
 
         /// <summary>Default shelter delay (ticks) for the Cautious flashpoint behavior.</summary>
         public const int DefaultCautiousShelterDelayTicks = 18; // 12-24 hour range; midpoint
@@ -55,6 +67,7 @@ namespace AtomicWar._Game.Core
         private readonly IReadOnlyList<Survivor> _survivors;
         private GeneratedMap _generatedMap;
         private SabotagedCacheSystem _sabotagedCaches;
+        private NeedsSystem _needsSystem;
         private BicycleSystem _bicycleSystem;
         private FloodedNodeSystem _floodedNodeSystem;
         private RiverNodeSystem _riverNodeSystem;
@@ -89,10 +102,94 @@ namespace AtomicWar._Game.Core
         private PersonalQuestSystem _personalQuests;
         private ItemDefinition _apexMeat;
 
+        // REPROMOTE-Encounter-001 — class tracker for roadblocks (map tag / SO id).
+        private Encounter_Roadblock _classRoadblock;
+
+        // REPROMOTE-MapHazard-001 — carnivorous swamp flora on looting arrival.
+        private MapHazard_VenusTrap _venusTrap;
+
+        // Prompt #902 — frozen survivor on snowfield/frozen-lake nodes.
+        private MapHazard_FrozenSurvivor _frozenSurvivor;
+
+        // REPROMOTE-Item-001 — keycard doors on secure / keycard_door-tagged nodes.
+        private Item_Keycards _keycards;
+
+        // Prompt #67 — mutated flora / fauna rolled per looting tick.
+        private MutatedEcosystemSystem _ecosystem;
+
+        // Prompts #901/#903/#904 — narrative encounter trackers. NarrativeEncounters
+        // registered the EncounterSOs, but nothing bound the classes that hold their
+        // outcomes, so the encounters printed their text and did nothing.
+        private Encounter_DeadLetterOffice _deadLetterOffice;
+        private Encounter_WeatherStation _weatherStation;
+        private Encounter_Pianist _pianist;
+
+        // Host hooks the narrative outcomes need. Both optional: an unbound host
+        // still resolves every other part of the choice.
+        private Action<string, float> _modifyFactionTrust;
+        private Action<string, bool> _setWorldFlag;
+
         public IReadOnlyList<ExpeditionState> ActiveExpeditions => _activeExpeditions;
         public IReadOnlyList<EncounterSO> EncounterPool => _encounterPool;
         public GeneratedMap GeneratedMap => _generatedMap;
         public SabotagedCacheSystem SabotagedCaches => _sabotagedCaches;
+
+        /// <summary>
+        /// REPROMOTE-Encounter-001 — wire live <see cref="Encounter_Roadblock"/> class tracker.
+        /// Dispatched from psychology resolve when the SO id or map node is tagged roadblock.
+        /// </summary>
+        public void BindClassRoadblock(Encounter_Roadblock roadblock) =>
+            _classRoadblock = roadblock;
+
+        /// <summary>
+        /// REPROMOTE-MapHazard-001 — wire VenusTrap for swamp-tagged looting nodes.
+        /// </summary>
+        public void BindVenusTrap(MapHazard_VenusTrap venusTrap) =>
+            _venusTrap = venusTrap;
+
+        /// <summary>Prompt #902 — wire frozen survivor for snowfield/frozen-lake nodes.</summary>
+        public void BindFrozenSurvivor(MapHazard_FrozenSurvivor frozenSurvivor) =>
+            _frozenSurvivor = frozenSurvivor;
+
+        /// <summary>
+        /// REPROMOTE-Item-001 — wire keycard tracker for secure-door looting nodes.
+        /// </summary>
+        public void BindKeycards(Item_Keycards keycards) =>
+            _keycards = keycards;
+
+        /// <summary>
+        /// Prompt #67 — wire the mutated ecosystem so its stage actually reaches the
+        /// map. <see cref="MutatedEcosystemSystem.RollEcosystemEncounter"/> documents
+        /// this call site, but nothing bound it: the system advanced its mutation
+        /// stage daily and saved it while flora and fauna could never be encountered.
+        /// </summary>
+        public void BindEcosystem(MutatedEcosystemSystem ecosystem) =>
+            _ecosystem = ecosystem;
+
+        /// <summary>Prompt #901 — wire the postal van so its choices resolve.</summary>
+        public void BindDeadLetterOffice(Encounter_DeadLetterOffice office) =>
+            _deadLetterOffice = office;
+
+        /// <summary>Prompt #903 — wire the weather station so its choices resolve.</summary>
+        public void BindWeatherStation(Encounter_WeatherStation station) =>
+            _weatherStation = station;
+
+        /// <summary>Prompt #904 — wire Matej so his choices resolve.</summary>
+        public void BindPianist(Encounter_Pianist pianist) =>
+            _pianist = pianist;
+
+        /// <summary>
+        /// Host hook for faction standing changes (delivering the bound letter).
+        /// </summary>
+        public void BindFactionTrustWriter(Action<string, float> modifyTrust) =>
+            _modifyFactionTrust = modifyTrust;
+
+        /// <summary>
+        /// Host hook for world flags the narrative outcomes set (forecast boost,
+        /// word of the bunker spreading).
+        /// </summary>
+        public void BindWorldFlagWriter(Action<string, bool> setWorldFlag) =>
+            _setWorldFlag = setWorldFlag;
 
         // Events
         public event Action<ExpeditionState> OnExpeditionStarted;
@@ -206,6 +303,11 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>Inject Prompt #13 sabotaged-cache system (optional; safe to skip in tests).</summary>
+        public void SetNeedsSystem(NeedsSystem system)
+        {
+            _needsSystem = system;
+        }
+
         public void SetSabotagedCacheSystem(SabotagedCacheSystem system)
         {
             _sabotagedCaches = system;

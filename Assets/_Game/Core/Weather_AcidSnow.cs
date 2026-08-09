@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Rare Phase 3 weather event. Low radiation, highly corrosive. Drains AirFilter durability at 10x speed
     /// and damages HazmatSuits outside, forcing player to shut off ventilation and endure CO2 buildup.
     /// </summary>
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Weather_AcidSnow
     {
         private AcidSnowState _state = new AcidSnowState();

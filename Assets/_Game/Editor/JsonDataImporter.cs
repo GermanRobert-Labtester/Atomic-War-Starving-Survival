@@ -247,6 +247,7 @@ namespace AtomicWar._Game.Editor
             public bool   isEquipable;
             public string equipSlot;
             public float  tradeValue;
+            public string tradeTier;
             public bool   empShielded;
             public ScrapYieldJson[] scrapValue;
             public ScrapYieldJson[] repairCosts;
@@ -370,6 +371,79 @@ namespace AtomicWar._Game.Editor
             return result;
         }
 
+        static void ValidateItemJson(ItemJson item, string typeName, string id, List<string> errors)
+        {
+            if (string.IsNullOrEmpty(item.displayName))
+                errors.Add($"[{typeName}:{id}] displayName is null or empty");
+            if (!Enum.TryParse<ItemType>(item.type, true, out _))
+                errors.Add($"[{typeName}:{id}] invalid type '{item.type}' (valid: {string.Join(", ", Enum.GetNames(typeof(ItemType)))})");
+            if (item.stackMax < 1)
+                errors.Add($"[{typeName}:{id}] stackMax must be >= 1");
+            if (item.contamination < 0f || item.contamination > 1f)
+                errors.Add($"[{typeName}:{id}] contamination must be within 0..1");
+            if (!EquipSlots.IsCanonicalName(item.equipSlot))
+            {
+                // Distinguish "known legacy spelling" from "typo": the first is
+                // mechanically fixable, the second means the slot was silently lost.
+                string canonical = EquipSlots.CanonicalNameForAlias(item.equipSlot);
+                errors.Add(canonical != null
+                    ? $"[{typeName}:{id}] equipSlot '{item.equipSlot}' is a legacy alias; use '{canonical}'"
+                    : $"[{typeName}:{id}] invalid equipSlot '{item.equipSlot}' (valid: {string.Join(", ", EquipSlots.CanonicalNames)})");
+            }
+        }
+
+        static void ValidateRecipeJson(RecipeJson recipe, string typeName, string id, List<string> errors)
+        {
+            if (string.IsNullOrEmpty(recipe.recipeName))
+                errors.Add($"[{typeName}:{id}] recipeName is null or empty");
+            if (recipe.ingredients == null || recipe.ingredients.Length == 0)
+                errors.Add($"[{typeName}:{id}] ingredients is null or empty");
+            else
+            {
+                for (int j = 0; j < recipe.ingredients.Length; j++)
+                {
+                    if (string.IsNullOrEmpty(recipe.ingredients[j].itemId))
+                        errors.Add($"[{typeName}:{id}] ingredients[{j}].itemId is null or empty");
+                    if (recipe.ingredients[j].amount < 1)
+                        errors.Add($"[{typeName}:{id}] ingredients[{j}].amount must be >= 1");
+                }
+            }
+            if (string.IsNullOrEmpty(recipe.resultItemId))
+                errors.Add($"[{typeName}:{id}] resultItemId is null or empty");
+        }
+
+        static void ValidateSurvivorJson(SurvivorJson survivor, string typeName, string id, List<string> errors)
+        {
+            if (string.IsNullOrEmpty(survivor.displayName))
+                errors.Add($"[{typeName}:{id}] displayName is null or empty");
+            if (string.IsNullOrEmpty(survivor.profession))
+                errors.Add($"[{typeName}:{id}] profession is null or empty");
+            if (survivor.baseHealth <= 0)
+                errors.Add($"[{typeName}:{id}] baseHealth must be > 0");
+        }
+
+        static void ValidateLocationJson(LocationJson location, string typeName, string id, List<string> errors)
+        {
+            if (string.IsNullOrEmpty(location.displayName))
+                errors.Add($"[{typeName}:{id}] displayName is null or empty");
+            if (location.travelHours <= 0)
+                errors.Add($"[{typeName}:{id}] travelHours must be > 0");
+            if (location.baseRadsPerHour < 0)
+                errors.Add($"[{typeName}:{id}] baseRadsPerHour must be >= 0");
+        }
+
+        static void ValidateEventJson(EventJson evt, string typeName, string id, List<string> errors)
+        {
+            if (string.IsNullOrEmpty(evt.title))
+                errors.Add($"[{typeName}:{id}] title is null or empty");
+            if (string.IsNullOrEmpty(evt.bodyText))
+                errors.Add($"[{typeName}:{id}] bodyText is null or empty");
+            // weight 0 is valid: scheduled-only / tracker-fired chain steps
+            // (must not enter the random pool — see EventRunner.SelectEvent).
+            if (evt.weight < 0)
+                errors.Add($"[{typeName}:{id}] weight must be >= 0");
+        }
+
         static void ValidateEntry<T>(T entry, string typeName, int index, List<string> errors)
         {
             string id = GetId(entry);
@@ -382,73 +456,11 @@ namespace AtomicWar._Game.Editor
             // Type-specific validation
             switch (entry)
             {
-                case ItemJson item:
-                    if (string.IsNullOrEmpty(item.displayName))
-                        errors.Add($"[{typeName}:{id}] displayName is null or empty");
-                    if (!Enum.TryParse<ItemType>(item.type, true, out _))
-                        errors.Add($"[{typeName}:{id}] invalid type '{item.type}' (valid: {string.Join(", ", Enum.GetNames(typeof(ItemType)))})");
-                    if (item.stackMax < 1)
-                        errors.Add($"[{typeName}:{id}] stackMax must be >= 1");
-                    if (item.contamination < 0f || item.contamination > 1f)
-                        errors.Add($"[{typeName}:{id}] contamination must be within 0..1");
-                    if (!EquipSlots.IsCanonicalName(item.equipSlot))
-                    {
-                        // Distinguish "known legacy spelling" from "typo": the first is
-                        // mechanically fixable, the second means the slot was silently lost.
-                        string canonical = EquipSlots.CanonicalNameForAlias(item.equipSlot);
-                        errors.Add(canonical != null
-                            ? $"[{typeName}:{id}] equipSlot '{item.equipSlot}' is a legacy alias; use '{canonical}'"
-                            : $"[{typeName}:{id}] invalid equipSlot '{item.equipSlot}' (valid: {string.Join(", ", EquipSlots.CanonicalNames)})");
-                    }
-                    break;
-
-                case RecipeJson recipe:
-                    if (string.IsNullOrEmpty(recipe.recipeName))
-                        errors.Add($"[{typeName}:{id}] recipeName is null or empty");
-                    if (recipe.ingredients == null || recipe.ingredients.Length == 0)
-                        errors.Add($"[{typeName}:{id}] ingredients is null or empty");
-                    else
-                    {
-                        for (int j = 0; j < recipe.ingredients.Length; j++)
-                        {
-                            if (string.IsNullOrEmpty(recipe.ingredients[j].itemId))
-                                errors.Add($"[{typeName}:{id}] ingredients[{j}].itemId is null or empty");
-                            if (recipe.ingredients[j].amount < 1)
-                                errors.Add($"[{typeName}:{id}] ingredients[{j}].amount must be >= 1");
-                        }
-                    }
-                    if (string.IsNullOrEmpty(recipe.resultItemId))
-                        errors.Add($"[{typeName}:{id}] resultItemId is null or empty");
-                    break;
-
-                case SurvivorJson survivor:
-                    if (string.IsNullOrEmpty(survivor.displayName))
-                        errors.Add($"[{typeName}:{id}] displayName is null or empty");
-                    if (string.IsNullOrEmpty(survivor.profession))
-                        errors.Add($"[{typeName}:{id}] profession is null or empty");
-                    if (survivor.baseHealth <= 0)
-                        errors.Add($"[{typeName}:{id}] baseHealth must be > 0");
-                    break;
-
-                case LocationJson location:
-                    if (string.IsNullOrEmpty(location.displayName))
-                        errors.Add($"[{typeName}:{id}] displayName is null or empty");
-                    if (location.travelHours <= 0)
-                        errors.Add($"[{typeName}:{id}] travelHours must be > 0");
-                    if (location.baseRadsPerHour < 0)
-                        errors.Add($"[{typeName}:{id}] baseRadsPerHour must be >= 0");
-                    break;
-
-                case EventJson evt:
-                    if (string.IsNullOrEmpty(evt.title))
-                        errors.Add($"[{typeName}:{id}] title is null or empty");
-                    if (string.IsNullOrEmpty(evt.bodyText))
-                        errors.Add($"[{typeName}:{id}] bodyText is null or empty");
-                    // weight 0 is valid: scheduled-only / tracker-fired chain steps
-                    // (must not enter the random pool — see EventRunner.SelectEvent).
-                    if (evt.weight < 0)
-                        errors.Add($"[{typeName}:{id}] weight must be >= 0");
-                    break;
+                case ItemJson item: ValidateItemJson(item, typeName, id, errors); break;
+                case RecipeJson recipe: ValidateRecipeJson(recipe, typeName, id, errors); break;
+                case SurvivorJson survivor: ValidateSurvivorJson(survivor, typeName, id, errors); break;
+                case LocationJson location: ValidateLocationJson(location, typeName, id, errors); break;
+                case EventJson evt: ValidateEventJson(evt, typeName, id, errors); break;
             }
         }
 
@@ -498,6 +510,10 @@ namespace AtomicWar._Game.Editor
                 so.isEquipable     = json.isEquipable;
                 so.equipSlot       = EquipSlots.Parse(json.equipSlot);
                 so.tradeValue      = json.tradeValue;
+                if (!string.IsNullOrEmpty(json.tradeTier) && Enum.TryParse<AtomicWar._Game.Inventory.ItemTradeTier>(json.tradeTier, true, out var parsedTier))
+                    so.tradeTier = parsedTier;
+                else
+                    so.tradeTier = AtomicWar._Game.Inventory.Item_TradeValues.InferTier(so.type);
                 so.empShielded     = json.empShielded;
                 so.disassembleYieldFraction = json.disassembleYieldFraction > 0f
                     ? Mathf.Clamp01(json.disassembleYieldFraction)

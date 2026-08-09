@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -40,12 +41,12 @@ namespace AtomicWar._Game.Core
 
         public string AnomalyId => _state.anomaly_id;
 
-        public MapAnomaly_Mirage() : this(new System.Random()) { }
+        public MapAnomaly_Mirage() : this(AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mapanomaly_mirage")) { }
 
         public MapAnomaly_Mirage(System.Random rng)
         {
             _state = new MirageState();
-            _rng = rng ?? new System.Random();
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mapanomaly_mirage");
         }
 
         /// <summary>
@@ -56,7 +57,7 @@ namespace AtomicWar._Game.Core
         {
             if (!is_heatwave)
             {
-                Debug.Log("[MapAnomaly_Mirage] Not a heatwave — mirage not activated.");
+                GameLog.Log("[MapAnomaly_Mirage] Not a heatwave — mirage not activated.");
                 return;
             }
 
@@ -71,7 +72,7 @@ namespace AtomicWar._Game.Core
                 CreateFakeNode(fake_id, display_name);
             }
 
-            Debug.Log($"[MapAnomaly_Mirage] Heatwave active — {count} fake node(s) spawned on map.");
+            GameLog.Log($"[MapAnomaly_Mirage] Heatwave active — {count} fake node(s) spawned on map.");
         }
 
         /// <summary>
@@ -92,7 +93,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnFakeNodeSpawned?.Invoke(node_id, display_name);
-            Debug.Log($"[MapAnomaly_Mirage] Fake node '{node_id}' spawned as '{display_name}'.");
+            GameLog.Log($"[MapAnomaly_Mirage] Fake node '{node_id}' spawned as '{display_name}'.");
         }
 
         /// <summary>
@@ -123,7 +124,7 @@ namespace AtomicWar._Game.Core
             OnMirageDissolved?.Invoke(node_id);
 
             _state.fake_nodes_spawned.Remove(node_id);
-            Debug.Log($"[MapAnomaly_Mirage] Mirage at '{node_id}' dissolved. " +
+            GameLog.Log($"[MapAnomaly_Mirage] Mirage at '{node_id}' dissolved. " +
                       $"Wasted: {FuelCostPerDeception} fuel, {WaterCostPerDeception} water, " +
                       $"{TimeCostHoursPerDeception}h time.");
         }

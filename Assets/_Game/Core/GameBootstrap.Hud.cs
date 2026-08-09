@@ -80,7 +80,7 @@ namespace AtomicWar._Game.Core
             }
 
             // Wire radiation updates
-            RadiationSystem.OnDoseChanged += (sv, dose) =>
+            _onRadiationDoseChanged = (sv, dose) =>
             {
                 if (sv == Survivors?[0]) // primary survivor
                 {
@@ -90,6 +90,7 @@ namespace AtomicWar._Game.Core
                 // trust-inversion raid cascades (healthy-ceiling cross).
                 EconomySystem?.NotifyPartyRadiationChanged();
             };
+            RadiationSystem.OnDoseChanged += _onRadiationDoseChanged;
 
             // Wire needs updates
             _onNeedChanged = (sv, kind, value) =>
@@ -136,6 +137,8 @@ namespace AtomicWar._Game.Core
             ctx.CurrentWeather = WeatherSystem != null ? WeatherSystem.Current : WeatherKind.Clear;
             ctx.AllSurvivors = Survivors;
             ctx.MentalBreak = MentalBreakSystem;
+            ctx.NeedsSystem = NeedsSystem;
+            ctx.RadiationSystem = RadiationSystem;
             ctx.CarbonMonoxidePpm = PowerNetwork != null ? PowerNetwork.CarbonMonoxidePpm : 0f;
             ctx.IndoorTemperatureC = indoor;
             ctx.GetFactionTrust = _getFactionTrustStored;

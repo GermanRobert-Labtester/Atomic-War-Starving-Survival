@@ -13,6 +13,7 @@ namespace AtomicWar._Game.Core
         public List<string> ignitedNodes = new List<string>();
     }
 
+    /// <summary>DEMOTE-MapHazard-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class MapHazard_GasPockets
     {
         public event Action<string, float> OnIgnition; // nodeId, damageToAll

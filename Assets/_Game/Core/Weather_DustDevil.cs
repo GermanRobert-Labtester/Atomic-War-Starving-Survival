@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -14,6 +15,7 @@ namespace AtomicWar._Game.Core
         public string current_node_id = "";
     }
 
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class Weather_DustDevil
     {
         private DustDevilState _state;
@@ -54,13 +56,13 @@ namespace AtomicWar._Game.Core
                 if (_state.damages_air_filter)
                 {
                     OnAirFilterRuined?.Invoke(bunker_node_id);
-                    Debug.Log($"[Weather_DustDevil] Air filter ruined at bunker '{bunker_node_id}'.");
+                    GameLog.Log($"[Weather_DustDevil] Air filter ruined at bunker '{bunker_node_id}'.");
                 }
 
                 if (_state.clogs_wind_turbine)
                 {
                     OnWindTurbineClogged?.Invoke(bunker_node_id);
-                    Debug.Log($"[Weather_DustDevil] Wind turbine clogged at bunker '{bunker_node_id}'.");
+                    GameLog.Log($"[Weather_DustDevil] Wind turbine clogged at bunker '{bunker_node_id}'.");
                 }
             }
         }

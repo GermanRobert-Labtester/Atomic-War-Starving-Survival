@@ -29,10 +29,12 @@ namespace AtomicWar._Game.AI.Actions
 
         public override void Execute(AIContext context)
         {
-            if (context?.Survivor != null)
-            {
+            if (context?.Survivor == null) return;
+            // MISC-007 — route through RadiationSystem when wired.
+            if (context.RadiationSystem != null)
+                context.RadiationSystem.AdjustDose(context.Survivor, -15f);
+            else
                 context.Survivor.RadiationDose = Mathf.Max(0f, context.Survivor.RadiationDose - 15f);
-            }
         }
     }
 }

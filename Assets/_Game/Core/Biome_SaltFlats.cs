@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -27,7 +28,6 @@ namespace AtomicWar._Game.Core
         public event Action<bool> OnBiomeEntered;                        // with_vehicle
         public event Action<float, float> OnThirstDrained;               // amount, multiplier
         public event Action<float> OnHeatExposure;                       // temperature
-        public event Action OnVehicleBroken;
         public event Action<float> OnSaltHarvested;                      // amount
 
         public string BiomeId => _state.biome_id;
@@ -49,11 +49,11 @@ namespace AtomicWar._Game.Core
 
             if (!has_vehicle && _state.vehicle_required)
             {
-                Debug.Log("[Biome_SaltFlats] Survivor entered without vehicle — instant death.");
+                GameLog.Log("[Biome_SaltFlats] Survivor entered without vehicle — instant death.");
                 return false;
             }
 
-            Debug.Log("[Biome_SaltFlats] Survivor entered with vehicle. Thirst drain 5x.");
+            GameLog.Log("[Biome_SaltFlats] Survivor entered with vehicle. Thirst drain 5x.");
             return true;
         }
 
@@ -69,7 +69,7 @@ namespace AtomicWar._Game.Core
             OnThirstDrained?.Invoke(drain, _state.thirst_drain_multiplier);
             OnHeatExposure?.Invoke(_state.temperature);
 
-            Debug.Log($"[Biome_SaltFlats] Thirst drained {drain:F1} (x{_state.thirst_drain_multiplier:F0}). " +
+            GameLog.Log($"[Biome_SaltFlats] Thirst drained {drain:F1} (x{_state.thirst_drain_multiplier:F0}). " +
                       $"Thirst: {current_thirst:F1} → {new_thirst:F1}.");
             return new_thirst;
         }
@@ -103,7 +103,7 @@ namespace AtomicWar._Game.Core
 
             float amount = _state.salt_harvest_per_hour * hours;
             OnSaltHarvested?.Invoke(amount);
-            Debug.Log($"[Biome_SaltFlats] Harvested {amount:F1} salt over {hours:F1} hours.");
+            GameLog.Log($"[Biome_SaltFlats] Harvested {amount:F1} salt over {hours:F1} hours.");
             return amount;
         }
 

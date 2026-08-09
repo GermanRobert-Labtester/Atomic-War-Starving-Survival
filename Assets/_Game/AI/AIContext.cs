@@ -108,6 +108,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Applies radiation dose exposure (e.g. from drinking irradiated water).</summary>
         public RadiationSystem RadiationSystem;
 
+        /// <summary>Need deltas that must run death evaluation (MISC-006).</summary>
+        public NeedsSystem NeedsSystem;
+
         // --- C-3: bindings for newly wired systems (audit C-1) ---
 
         /// <summary>Prompt #119 — room rubble clearing (ExcavationSystem).</summary>

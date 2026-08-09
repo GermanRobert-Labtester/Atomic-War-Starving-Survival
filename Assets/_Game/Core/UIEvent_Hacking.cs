@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -82,7 +83,7 @@ namespace AtomicWar._Game.Core
                 }
             }
 
-            Debug.Log($"[UIEvent_Hacking] Hack started on vault '{vault_id}'. " +
+            GameLog.Log($"[UIEvent_Hacking] Hack started on vault '{vault_id}'. " +
                       $"{dud_count} dud(s) revealed (intelligence={intelligence_clamped:F2}).");
 
             return (_state.word_pool.ToArray(), _state.revealed_duds.ToArray());
@@ -120,7 +121,7 @@ namespace AtomicWar._Game.Core
                 _state.is_unlocked = true;
                 OnGuessResult?.Invoke(result);
                 OnVaultUnlocked?.Invoke();
-                Debug.Log($"[UIEvent_Hacking] Vault '{_state.vault_id}' unlocked.");
+                GameLog.Log($"[UIEvent_Hacking] Vault '{_state.vault_id}' unlocked.");
             }
             else
             {
@@ -143,7 +144,7 @@ namespace AtomicWar._Game.Core
                     _state.is_permanently_locked = true;
                     OnVaultPermanentlyLocked?.Invoke();
                     OnAlarmTriggered?.Invoke();
-                    Debug.Log($"[UIEvent_Hacking] Vault '{_state.vault_id}' permanently locked — alarm triggered.");
+                    GameLog.Log($"[UIEvent_Hacking] Vault '{_state.vault_id}' permanently locked — alarm triggered.");
                 }
             }
 

@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Place a grenade under a dead body. When Factions investigate the corpse,
     /// the trap kills them. Generates passive loot drops but costs Karma/Trust.
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_RigCorpse
     {
         private RigCorpseState _state = new RigCorpseState();

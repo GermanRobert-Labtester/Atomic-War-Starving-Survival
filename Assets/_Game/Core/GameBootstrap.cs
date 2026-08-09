@@ -53,9 +53,6 @@ namespace AtomicWar._Game.Core
         [Header("Diagnostics (M-1)")]
         [SerializeField] private DiagnosticsOverlay _diagnosticsOverlay;
 
-        [Header("Log Rotation (A-11)")]
-        [SerializeField] private LogRotationManager _logRotationManager;
-
         [Header("Tuning")]
         [SerializeField] private int _worldSeed = 42;
         [SerializeField] private float _secondsPerGameHour = 10f;
@@ -74,6 +71,8 @@ namespace AtomicWar._Game.Core
         public RadiationSystem RadiationSystem { get; private set; }
         public Shelter.Shelter Shelter { get; private set; }
         public Inventory.Inventory Inventory { get; private set; }
+        /// <summary>CRAFT-003 — unlimited-capacity stash for craft results that don't fit in the main bag.</summary>
+        public Inventory.Inventory CraftingOverflowStash { get; private set; }
         public CraftingSystem CraftingSystem { get; private set; }
         public WorkbenchSystem WorkbenchSystem { get; private set; }
         public UtilityAI UtilityAI { get; private set; }
@@ -257,6 +256,7 @@ namespace AtomicWar._Game.Core
         public MapHazard_MagneticAnomaly MapHazardMagneticAnomaly { get; private set; }
         public MapHazard_SinkholeCollapse MapHazardSinkholeCollapse { get; private set; }
         public MapHazard_VenusTrap MapHazardVenusTrap { get; private set; }
+        public MapHazard_FrozenSurvivor MapHazardFrozenSurvivor { get; private set; }
         // Map anomalies — expedition/map node anomaly trackers.
         public MapAnomaly_AshDunes MapAnomalyAshDunes { get; private set; }
         public MapAnomaly_BoilingLake MapAnomalyBoilingLake { get; private set; }
@@ -434,6 +434,11 @@ namespace AtomicWar._Game.Core
         public MutatedEcosystemSystem EcosystemSystem { get; private set; }
         // Prompt #79–#84 — house-to-bunker transition.
         public HouseToBunkerSystem HouseToBunkerSystem { get; private set; }
+        // Prompts #901/#903/#904 — narrative encounter state. Their EncounterSOs
+        // were already registered; these hold the outcomes the choices resolve to.
+        public Encounter_DeadLetterOffice DeadLetterOffice { get; private set; }
+        public Encounter_WeatherStation WeatherStation { get; private set; }
+        public Encounter_Pianist Pianist { get; private set; }
         /// <summary>The selected shelter layout for this run.</summary>
         public Shelter.ShelterMapSO ShelterLayout { get; private set; }
         /// <summary>Prompts #85–#94 — multi-stage location quests.</summary>
@@ -610,6 +615,9 @@ namespace AtomicWar._Game.Core
         private System.Action<GamePhase> _onGameStateChanged;
         private System.Action<Survivor> _onNeedsDied;
         private System.Action<Survivor, AtomicWar._Game.Survivors.NeedKind, float> _onNeedChanged;
+        private System.Action<int> _onDayTick_SetGameStateDay;
+        private System.Action<Survivor, SurvivorStatus> _onRadiationStatusGained;
+        private System.Action<Survivor, float> _onRadiationDoseChanged;
 
         // -----------------------------------------------------------------
         // GameOver state

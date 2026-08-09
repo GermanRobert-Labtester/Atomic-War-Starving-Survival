@@ -54,7 +54,8 @@ namespace AtomicWar._Game.Core
             // file recorded day 1 and VictoryProjectManager.DaysSurvived — which reads
             // GameState.Day off the save — always reported a one-day run.
             GameState.Day = TimeSystem.CurrentDay;
-            TimeSystem.OnDayTick += day => GameState.Day = day;
+            _onDayTick_SetGameStateDay = day => GameState.Day = day;
+            TimeSystem.OnDayTick += _onDayTick_SetGameStateDay;
 
             // Environment
             WeatherSystem = new WeatherSystem(_seasonProfile, _worldSeed);
@@ -203,16 +204,22 @@ namespace AtomicWar._Game.Core
                     () => Shelter.IsGrowLightActive);
             }
 
-            RadiationSystem = new RadiationSystem(NeedsSystem);
+            RadiationSystem = new RadiationSystem(NeedsSystem, BuildExposureContext);
+
+            // Wire NeedsSystem into all systems that modify survivor needs so they
+            // route through Modify (trait caps, perk effects, OnNeedChanged events).
+            BlackRainHazardSystem?.SetNeedsSystem(NeedsSystem);
 
             BeliefSystem = new BeliefSystem(rng: CreateSaltedRng(_worldSeed, "belief"));
-            RadiationSystem.OnStatusGained += (sv, status) =>
+            BeliefSystem.SetNeedsSystem(NeedsSystem);
+            _onRadiationStatusGained = (sv, status) =>
             {
                 if (status == SurvivorStatus.AcuteRadiationSyndrome)
                 {
                     BeliefSystem.ShockRecoverNumbness(sv);
                 }
             };
+            RadiationSystem.OnStatusGained += _onRadiationStatusGained;
 
             // World Phase (Civil War -> Flashpoint -> Nuclear Winter). Phase 1 defaults:
             // no radiation, no post-war weather hazards, until the exchange fires.
@@ -224,7 +231,14 @@ namespace AtomicWar._Game.Core
 
             // Inventory + Crafting + Workbench scrap economy
             Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
+            // CRAFT-003 overflow stash: a separate unlimited-capacity inventory for
+            // craft results that don't fit in the main bag. Modeled as a "post
+            // office box" — the player can retrieve from it on a future tick.
+            // Capacity=0 + MaxWeight=0 means infinite (per Inventory.CanAdd
+            // short-circuits). Items here are persistent until retrieved.
+            CraftingOverflowStash = new Inventory.Inventory { Capacity = 0, MaxWeight = 0f };
             CraftingSystem = new CraftingSystem(Inventory);
+            CraftingSystem.OverflowStash = CraftingOverflowStash;
             CraftingSystem.AddStation(new CraftingStation
             {
                 id = WorkbenchSystem.StationId,
@@ -345,12 +359,14 @@ namespace AtomicWar._Game.Core
             EventRunner.SetPool(eventPool);
 
             SuspicionTracker = new SuspicionTracker();
+            SuspicionTracker.SetNeedsSystem(NeedsSystem);
             SuspicionTracker.Bind(EventRunner);
 
             // Diegetic journal — survivors write discoveries (no tutorial popups).
             // Entries run through a pool: evicted/cleared entries are recycled,
             // never collected, so 100-day fast-forward runs stay GC-flat.
             JournalSystem = new JournalSystem();
+            JournalSystem.SetNeedsSystem(NeedsSystem);
             _journalEntryPool = new GenericObjectPool<JournalEntry>(
                 () => new JournalEntry(),
                 e =>
@@ -371,7 +387,7 @@ namespace AtomicWar._Game.Core
             JournalSystem.OnEntryAdded += entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Text)) return;
-                Debug.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
+                GameLog.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
                 PushJournalEntryToHud(entry);
             };
 
@@ -380,13 +396,20 @@ namespace AtomicWar._Game.Core
             EndgameEngine = new EndgameEngine(GameModeKind.Story, _campaignLengthDays);
             VictoryProject.OnExtractionUnlocked += () =>
             {
-                Debug.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
+                GameLog.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
             };
             VictoryProject.OnEndgameTriggered += summary =>
             {
                 if (summary == null) return;
                 ApplyEndgame(summary);
             };
+
+            // DEEP3-WIN-001 — EndgameEngine.Evaluate raises OnCampaignEnded and routes
+            // a CampaignEndedEvent through the bus, but nothing freezes the run on that
+            // path: only VictoryProject.OnEndgameTriggered was wired to ApplyEndgame. A
+            // natural all-dead / bunker-collapse / extraction / 100-day ending now sets
+            // IsGameOver and pauses the clock instead of silently continuing.
+            EndgameEngine.OnCampaignEnded += _ => ApplyEndgameFromEndgameEngine();
 
         }
 
@@ -398,6 +421,7 @@ namespace AtomicWar._Game.Core
             // empty — so the rest of the game continues to work; the Survivor
             // just never rolls for a break.
             MentalBreakSystem = new MentalBreakSystem();
+            MentalBreakSystem.SetNeedsSystem(NeedsSystem);
             if (_mentalBreakCatalog != null)
             {
                 foreach (var br in _mentalBreakCatalog.breaks)
@@ -423,9 +447,11 @@ namespace AtomicWar._Game.Core
             // Prompts #179–#181 — Action-driven progression
             // ───────────────────────────────────────────────────────────
             SkillProgression = new SkillProgressionSystem();
+            SkillProgression.SetNeedsSystem(NeedsSystem);
             SkillProgression.RegisterDefaultPerks();
             // Prompts #182–#188 — combat milestone perks (jam/stealth/ammo/CQ/traps/flee/kills)
             CombatPerks = new CombatPerkSystem();
+            CombatPerks.SetNeedsSystem(NeedsSystem);
             CombatPerks.Bind(SkillProgression);
             // Prompts #189–#194 — survival / wasteland-digestion milestone perks
             SurvivalPerks = new SurvivalPerkSystem();
@@ -445,16 +471,36 @@ namespace AtomicWar._Game.Core
             // Prompts #214–#219 — personal quest engine + latent expert traits
             PersonalQuests = new PersonalQuestSystem();
             PersonalQuests.Bind(SkillProgression);
+            PersonalQuests.SetNeedsSystem(NeedsSystem);
+            // MISC-007 — quest rad spikes / archetype lifetime seeds go through
+            // RadiationSystem only (no direct survivor.RadiationDose writes on the
+            // host path). Positive spikes use Expose so lifetime + events fire;
+            // negative deltas (if any) cleanse current dose only.
+            PersonalQuests.BindRadiationDose((sv, delta) =>
+            {
+                if (RadiationSystem == null || sv == null) return;
+                if (delta > 0f)
+                    RadiationSystem.Expose(sv, delta, 1f);
+                else
+                    RadiationSystem.AdjustDose(sv, delta);
+            });
+            PersonalQuests.BindLifetimeRadiation((sv, lifetime) =>
+            {
+                RadiationSystem?.SeedLifetimeExposure(sv, lifetime);
+            });
             AssignActionProgressionDisciplines();
 
             // ───────────────────────────────────────────────────────────
             // Prompt #8 — Empath & Sociopath System
             // ───────────────────────────────────────────────────────────
             EmpathSystem = new EmpathSystem();
+            EmpathSystem.SetNeedsSystem(NeedsSystem);
             SurvivorDiaries = new SurvivorDiariesSystem();
             InternalLockSystem = new InternalLockSystem();
             SpatialPsychology = new SpatialPsychologySystem();
+            SpatialPsychology.SetNeedsSystem(NeedsSystem);
             GriefKeepsakes = new GriefKeepsakeSystem();
+            GriefKeepsakes.SetNeedsSystem(NeedsSystem);
             HallucinationSystem = new AI.HallucinationSystem();
             MentorshipSystem = new MentorshipSystem();
 
@@ -476,6 +522,18 @@ namespace AtomicWar._Game.Core
             };
             NeedsSystem.OnDied += _onNeedsDied;
 
+            // DEATH-001 wire: Tribunal.Execution and ResolveExecute go through
+            // SurvivorNeedWrite.SetHealth which bypasses NeedsSystem.OnDied. The
+            // OnKilled / OnLeaderKilled delegates below run the same death chain
+            // so a Tribunal execution or a successful mutiny kills the survivor
+            // the same way a natural death does.
+            if (BunkerSocial != null)
+            {
+                BunkerSocial.OnKilled = _onNeedsDied;
+                if (BunkerSocial.Mutiny != null)
+                    BunkerSocial.Mutiny.OnLeaderKilled = _onNeedsDied;
+            }
+
             // ───────────────────────────────────────────────────────────
         }
 
@@ -488,7 +546,7 @@ namespace AtomicWar._Game.Core
 
             PowerNetwork.OnPowerStateChanged += () => TickLogicGates();
             LogicGates.OnRuleTriggered += ruleId =>
-                Debug.Log($"[GameBootstrap] LOGIC: rule '{ruleId}' triggered.");
+                GameLog.Log($"[GameBootstrap] LOGIC: rule '{ruleId}' triggered.");
         }
 
         /// <summary>

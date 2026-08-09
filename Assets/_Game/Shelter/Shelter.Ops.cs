@@ -7,12 +7,24 @@ namespace AtomicWar._Game.Shelter
 {
     public partial class Shelter
     {
+        /// <summary>
+        /// Attenuation fraction (0..1) of the weakest ceiling over the bunker, supplied
+        /// by MaterialShieldingSystem. Null (unwired) means no ceiling shielding, which
+        /// is the conservative reading — the dose gets through.
+        /// </summary>
+        public Func<float> CeilingAttenuationProvider { get; set; }
+
         /// <summary>Indoor radiation level for a given exterior radiation dose rate.</summary>
         public float GetInteriorRadsPerHour(float exteriorRads)
         {
-            // Overworld structure shielding (rubble, deep underground, etc.) and
-            // bunker radiation-shielding module stack multiplicatively.
+            // Overworld structure shielding (rubble, deep underground, etc.), ceiling
+            // material, and the bunker radiation-shielding module all stack
+            // multiplicatively: each is one more layer between the sky and the survivor.
             float overworldFactor = 1f - Mathf.Clamp01(OverworldShieldingBonus);
+            float ceilingFactor = CeilingAttenuationProvider != null
+                ? 1f - Mathf.Clamp01(CeilingAttenuationProvider())
+                : 1f;
+            overworldFactor *= ceilingFactor;
             float rads = exteriorRads * overworldFactor;
 
             var shieldingModule = GetModule("radiation_shielding");
@@ -31,30 +43,67 @@ namespace AtomicWar._Game.Shelter
                 rads = exteriorRads * overworldFactor * (1f - attenuation);
             }
 
-            var airModule = GetModule("air_filtration");
-            if (airModule != null && airModule.IsOperational)
+            // Air leaks only matter when there is something outside to draw in. On a
+            // clean day an unfiltered bunker is merely stuffy, not radioactive — this
+            // used to add its leak unconditionally, which was harmless while nothing
+            // read the interior dose but would irradiate every campaign from day one
+            // once ambient exposure was wired up.
+            if (exteriorRads > 0f)
             {
-                float lowThreshold = 25f;
-                float leakRate = 5f;
-                if (airModule.Definition is AirFiltrationModuleSO airSO)
+                var airModule = GetModule("air_filtration");
+                if (airModule != null && airModule.IsOperational)
                 {
-                    lowThreshold = airSO.LowHealthThreshold;
-                    leakRate = airSO.RadLeakPerTickWhenDepleted;
-                }
+                    float lowThreshold = 25f;
+                    float leakRate = 5f;
+                    if (airModule.Definition is AirFiltrationModuleSO airSO)
+                    {
+                        lowThreshold = airSO.LowHealthThreshold;
+                        leakRate = airSO.RadLeakPerTickWhenDepleted;
+                    }
 
-                if (airModule.FilterHealth <= lowThreshold)
+                    if (airModule.FilterHealth <= lowThreshold)
+                    {
+                        float depletionFactor = lowThreshold > 0f ? (lowThreshold - airModule.FilterHealth) / lowThreshold : 1f;
+                        rads += leakRate * Mathf.Clamp01(depletionFactor);
+                    }
+                }
+                else
                 {
-                    float depletionFactor = lowThreshold > 0f ? (lowThreshold - airModule.FilterHealth) / lowThreshold : 1f;
-                    rads += leakRate * Mathf.Clamp01(depletionFactor);
+                    // Unfiltered air leak
+                    rads += 5f;
                 }
             }
-            else
-            {
-                // Unfiltered air leak
-                rads += 5f;
-            }
+
+            // Contamination the bunker is carrying itself. This is dose already inside
+            // the shielding, so it is added, never attenuated: a survivor let in hot
+            // through the hatch, or a pet tracking fallout across the floor, irradiates
+            // the room no matter how thick the walls are. Both of these were tracked,
+            // decayed and saved but never reached this formula, which made bunker
+            // pollution — and the whole Day-30 "let them in" dilemma — cosmetic.
+            rads += Mathf.Max(0f, BunkerContamination);
+            rads += GetRoomContaminationRadsPerHour();
 
             return Mathf.Max(0f, rads);
+        }
+
+        /// <summary>
+        /// Dose rate contributed by contaminated rooms (hot stores, corpses, tracked-in
+        /// fallout). Rooms below <see cref="ShelterRoom.RadPenaltyThreshold"/> contribute
+        /// nothing, so a clean bunker sums to zero.
+        /// </summary>
+        public float GetRoomContaminationRadsPerHour()
+        {
+            var rooms = Rooms;
+            if (rooms == null) return 0f;
+
+            float total = 0f;
+            for (int i = 0; i < rooms.Count; i++)
+            {
+                var room = rooms[i];
+                if (room == null) continue;
+                total += Mathf.Max(0f, room.GetIndoorRadContribution());
+            }
+            return total;
         }
 
         public void Tick(float gameHours)

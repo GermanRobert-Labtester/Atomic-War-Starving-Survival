@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -58,7 +59,7 @@ namespace AtomicWar._Game.Core
                     _state.eruption_timer_minutes = 0f;
                     _state.hours_since_eruption = 0f;
                     OnEruptionEnded?.Invoke(_state.node_id);
-                    Debug.Log($"[MapHazard_AcidGeyser] Eruption ended at node '{_state.node_id}'.");
+                    GameLog.Log($"[MapHazard_AcidGeyser] Eruption ended at node '{_state.node_id}'.");
                 }
                 return;
             }
@@ -70,7 +71,7 @@ namespace AtomicWar._Game.Core
             if (minutes_remaining > 0f && minutes_remaining <= (WarningLeadSeconds / 60f))
             {
                 OnEruptionWarning?.Invoke(minutes_remaining);
-                Debug.Log($"[MapHazard_AcidGeyser] Warning — eruption in {minutes_remaining:F1} minutes.");
+                GameLog.Log($"[MapHazard_AcidGeyser] Warning — eruption in {minutes_remaining:F1} minutes.");
             }
 
             if (_state.hours_since_eruption >= _state.eruption_interval_hours)
@@ -92,7 +93,7 @@ namespace AtomicWar._Game.Core
             _state.eruption_timer_minutes = _state.eruption_duration_minutes;
 
             OnEruptionStarted?.Invoke(_state.node_id);
-            Debug.Log($"[MapHazard_AcidGeyser] Eruption started at node '{_state.node_id}' " +
+            GameLog.Log($"[MapHazard_AcidGeyser] Eruption started at node '{_state.node_id}' " +
                       $"for {_state.eruption_duration_minutes:F0} minutes.");
         }
 
@@ -111,11 +112,11 @@ namespace AtomicWar._Game.Core
             if (has_hazmat)
             {
                 OnHazmatMelted?.Invoke(survivor_id);
-                Debug.Log($"[MapHazard_AcidGeyser] Survivor '{survivor_id}' hazmat suit melted to 0%.");
+                GameLog.Log($"[MapHazard_AcidGeyser] Survivor '{survivor_id}' hazmat suit melted to 0%.");
             }
 
             OnChemicalBurnsApplied?.Invoke(survivor_id, ChemicalBurnHealthLoss);
-            Debug.Log($"[MapHazard_AcidGeyser] Survivor '{survivor_id}' suffered severe chemical burns " +
+            GameLog.Log($"[MapHazard_AcidGeyser] Survivor '{survivor_id}' suffered severe chemical burns " +
                       $"(-{ChemicalBurnHealthLoss:F0} health).");
         }
 

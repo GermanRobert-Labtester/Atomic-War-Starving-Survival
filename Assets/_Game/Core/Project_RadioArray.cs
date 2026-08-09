@@ -29,8 +29,6 @@ namespace AtomicWar._Game.Core
 
         public event Action<RadioArrayState, int> OnTowerBuilt;
         public event Action<RadioArrayState> OnRadioArrayCompleted;
-        public event Action<RadioArrayState, string> OnFactionMovementDetected;
-        public event Action<RadioArrayState, string> OnWeatherPatternDetected;
 
         public RadioArrayState State => _state;
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Shelter
 {
@@ -47,6 +48,8 @@ namespace AtomicWar._Game.Shelter
         private Func<Shelter> _getShelter;
         private Func<Survivors.PetSystem> _getPetSystem;
         private Func<float> _getHygiene;     // from WasteSystem
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Public state --
         public float PestLevel => _pestLevel;
@@ -88,6 +91,71 @@ namespace AtomicWar._Game.Shelter
         // Tick
         // -----------------------------------------------------------------
 
+        private void GrowPestPopulation(float gameDays, Inventory.Inventory inventory)
+        {
+            if (inventory == null) return;
+            int foodCount = inventory.CountByType(Inventory.ItemType.Food);
+            float hygiene = _getHygiene?.Invoke() ?? 100f;
+            float growthMultiplier = hygiene < PestHygieneThreshold
+                ? LowHygieneGrowthMultiplier
+                : 1f;
+            float growth = foodCount * PestGrowthPerFoodPerDay * gameDays * growthMultiplier;
+
+            // Cat suppression.
+            var petSys = _getPetSystem?.Invoke();
+            if (petSys != null && petSys.Pets != null)
+            {
+                int catCount = 0;
+                for (int i = 0; i < petSys.Pets.Count; i++)
+                {
+                    if (petSys.Pets[i] != null && petSys.Pets[i].IsAlive)
+                        catCount++;
+                }
+                growth -= catCount * CatSuppressionPerDay * gameDays;
+            }
+
+            SetPestLevel(_pestLevel + growth);
+        }
+
+        private void ApplyNaturalDecay(float gameDays, Inventory.Inventory inventory)
+        {
+            if (inventory == null || inventory.CountByType(Inventory.ItemType.Food) == 0)
+            {
+                SetPestLevel(_pestLevel - 3f * gameDays); // starve out
+            }
+        }
+
+        private void ApplyFoodTheft(float gameDays, Inventory.Inventory inventory)
+        {
+            if (!IsInfested || inventory == null) return;
+            int totalFood = inventory.CountByType(Inventory.ItemType.Food);
+            int stolen = Mathf.Max(1, Mathf.RoundToInt(totalFood * DailyFoodTheftFraction * gameDays));
+            int actuallyStolen = inventory.RemoveByType(Inventory.ItemType.Food, stolen);
+            if (actuallyStolen > 0)
+            {
+                _pestLevel = Mathf.Min(MaxPestLevel, _pestLevel + actuallyStolen * 0.5f);
+                OnFoodStolen?.Invoke(actuallyStolen);
+            }
+        }
+
+        private void DragContamination(float gameHours)
+        {
+            if (!IsInfested) return;
+            float contamination = ContaminationPerPestLevelPerHour * _pestLevel * gameHours;
+            var shelter = _getShelter?.Invoke();
+            if (shelter != null && shelter.Rooms != null)
+            {
+                for (int i = 0; i < shelter.Rooms.Count; i++)
+                {
+                    var room = shelter.Rooms[i];
+                    if (room == null) continue;
+                    room.AmbientContamination = Mathf.Clamp01(
+                        room.AmbientContamination + contamination);
+                }
+            }
+            OnContaminationDragged?.Invoke(contamination);
+        }
+
         /// <summary>Grow pest population, steal food, drag contamination.</summary>
         public void Tick(float gameHours, Inventory.Inventory inventory)
         {
@@ -95,67 +163,16 @@ namespace AtomicWar._Game.Shelter
             float gameDays = gameHours / 24f;
 
             // 1. Pest growth from stored food + low hygiene.
-            if (inventory != null)
-            {
-                int foodCount = inventory.CountByType(Inventory.ItemType.Food);
-                float hygiene = _getHygiene?.Invoke() ?? 100f;
-                float growthMultiplier = hygiene < PestHygieneThreshold
-                    ? LowHygieneGrowthMultiplier
-                    : 1f;
-                float growth = foodCount * PestGrowthPerFoodPerDay * gameDays * growthMultiplier;
-
-                // Cat suppression.
-                var petSys = _getPetSystem?.Invoke();
-                if (petSys != null && petSys.Pets != null)
-                {
-                    int catCount = 0;
-                    for (int i = 0; i < petSys.Pets.Count; i++)
-                    {
-                        if (petSys.Pets[i] != null && petSys.Pets[i].IsAlive)
-                            catCount++;
-                    }
-                    growth -= catCount * CatSuppressionPerDay * gameDays;
-                }
-
-                SetPestLevel(_pestLevel + growth);
-            }
+            GrowPestPopulation(gameDays, inventory);
 
             // 2. Natural decay when no food.
-            if (inventory == null || inventory.CountByType(Inventory.ItemType.Food) == 0)
-            {
-                SetPestLevel(_pestLevel - 3f * gameDays); // starve out
-            }
+            ApplyNaturalDecay(gameDays, inventory);
 
             // 3. Food theft.
-            if (IsInfested && inventory != null)
-            {
-                int totalFood = inventory.CountByType(Inventory.ItemType.Food);
-                int stolen = Mathf.Max(1, Mathf.RoundToInt(totalFood * DailyFoodTheftFraction * gameDays));
-                int actuallyStolen = inventory.RemoveByType(Inventory.ItemType.Food, stolen);
-                if (actuallyStolen > 0)
-                {
-                    _pestLevel = Mathf.Min(MaxPestLevel, _pestLevel + actuallyStolen * 0.5f);
-                    OnFoodStolen?.Invoke(actuallyStolen);
-                }
-            }
+            ApplyFoodTheft(gameDays, inventory);
 
             // 4. Contamination dragging.
-            if (IsInfested)
-            {
-                float contamination = ContaminationPerPestLevelPerHour * _pestLevel * gameHours;
-                var shelter = _getShelter?.Invoke();
-                if (shelter != null && shelter.Rooms != null)
-                {
-                    for (int i = 0; i < shelter.Rooms.Count; i++)
-                    {
-                        var room = shelter.Rooms[i];
-                        if (room == null) continue;
-                        room.AmbientContamination = Mathf.Clamp01(
-                            room.AmbientContamination + contamination);
-                    }
-                }
-                OnContaminationDragged?.Invoke(contamination);
-            }
+            DragContamination(gameHours);
         }
 
         // -----------------------------------------------------------------
@@ -175,8 +192,10 @@ namespace AtomicWar._Game.Shelter
             float old = _pestLevel;
             SetPestLevel(_pestLevel - reduction);
 
-            hunter.Needs.Fatigue = Mathf.Clamp(
-                hunter.Needs.Fatigue + HuntRatsFatigueCost, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(hunter, NeedKind.Fatigue, HuntRatsFatigueCost);
+            else
+                hunter.Needs.Fatigue = Mathf.Clamp(hunter.Needs.Fatigue + HuntRatsFatigueCost, 0f, 100f);
 
             return old - _pestLevel;
         }

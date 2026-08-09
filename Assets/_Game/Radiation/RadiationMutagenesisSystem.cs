@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Radiation
@@ -51,6 +52,8 @@ namespace AtomicWar._Game.Radiation
 
         private Func<float> _getPartyAverageRadiation;
         private Action<Survivors.Survivor, string> _inflictAffliction;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
         // -- Events --
         public event Action<Survivors.Survivor, int> OnStageAdvanced; // survivor, newStage
@@ -126,9 +129,7 @@ namespace AtomicWar._Game.Radiation
                 // Stage 3: continuous health drain from cellular breakdown.
                 if (HasCellularBreakdown(sv.Id))
                 {
-                    sv.Needs.Health = Mathf.Clamp(
-                        sv.Needs.Health - CellularBreakdownHealthDrainPerHour * gameHours,
-                        0f, sv.MaxHealthCap);
+                    SurvivorNeedWrite.AdjustHealth(sv, -CellularBreakdownHealthDrainPerHour * gameHours);
                 }
             }
         }
@@ -140,7 +141,7 @@ namespace AtomicWar._Game.Radiation
         public bool ShouldAutoInfect(Survivors.Survivor sv, System.Random rng = null)
         {
             if (sv == null || !HasCellularBreakdown(sv.Id)) return false;
-            rng = rng ?? new System.Random();
+            rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Stream("radiationmutagenesissystem");
             return rng.NextDouble() < CellularBreakdownInfectionChance;
         }
 
@@ -151,8 +152,10 @@ namespace AtomicWar._Game.Radiation
                 case 1:
                     if (_hairLossApplied.Add(sv.Id))
                     {
-                        sv.Needs.Morale = Mathf.Clamp(
-                            sv.Needs.Morale - HairLossMoralePenalty, 0f, 100f);
+                        if (_needsSystem != null)
+                            _needsSystem.Modify(sv, NeedKind.Morale, -(HairLossMoralePenalty));
+                        else
+                            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - HairLossMoralePenalty, 0f, 100f);
                         _inflictAffliction?.Invoke(sv, HairLossAfflictionId);
                         OnHairLoss?.Invoke(sv);
                     }

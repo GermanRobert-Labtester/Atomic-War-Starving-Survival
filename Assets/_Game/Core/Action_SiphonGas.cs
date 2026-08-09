@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Siphons gasoline from old car wrecks. Requires a Hose, takes 2 hours,
     /// with a high risk of swallowing gas (inflicting Gasoline Poisoning).
     /// </summary>
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_SiphonGas
     {
         private SiphonGasState _state = new SiphonGasState();

@@ -35,11 +35,17 @@ namespace AtomicWar._Game.Survivors
 
         private readonly BeliefProfileCatalogSO _catalog;
         private readonly System.Random _rng;
+        private NeedsSystem _needsSystem;
+
+        public void SetNeedsSystem(NeedsSystem needsSystem)
+        {
+            _needsSystem = needsSystem;
+        }
 
         public BeliefSystem(BeliefProfileCatalogSO catalog = null, System.Random rng = null)
         {
             _catalog = catalog;
-            _rng = rng ?? new System.Random();
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("belief_system");
         }
 
         private BeliefProfileDefaults ProfileFor(RiskBiasTrait trait)
@@ -146,8 +152,15 @@ namespace AtomicWar._Game.Survivors
             // survivor feels fine, which is the failure mode.
             if (survivor.HasRadiationAnxietyStatus)
             {
-                survivor.Needs.Morale = Mathf.Clamp(
-                    survivor.Needs.Morale - AnxietyMoraleDrainPerHour * gameHours, 0f, 100f);
+                if (_needsSystem != null)
+                {
+                    _needsSystem.Modify(survivor, NeedKind.Morale, -AnxietyMoraleDrainPerHour * gameHours);
+                }
+                else
+                {
+                    survivor.Needs.Morale = Mathf.Clamp(
+                        survivor.Needs.Morale - AnxietyMoraleDrainPerHour * gameHours, 0f, 100f);
+                }
             }
         }
 

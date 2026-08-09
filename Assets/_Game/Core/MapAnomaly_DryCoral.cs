@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -56,7 +57,7 @@ namespace AtomicWar._Game.Core
             _state.is_discovered = true;
 
             OnDiscovered?.Invoke(node_id);
-            Debug.Log($"[MapAnomaly_DryCoral] Discovered at node '{node_id}'. " +
+            GameLog.Log($"[MapAnomaly_DryCoral] Discovered at node '{node_id}'. " +
                       $"Radiation level: {_state.radiation_level:F0} mSv/hr.");
         }
 
@@ -80,7 +81,7 @@ namespace AtomicWar._Game.Core
             {
                 // Hazmat degrades with each harvest
                 OnHazmatDegraded?.Invoke(HazmatDegradationPerHarvest);
-                Debug.Log($"[MapAnomaly_DryCoral] Hazmat degraded by {HazmatDegradationPerHarvest:F0}%.");
+                GameLog.Log($"[MapAnomaly_DryCoral] Hazmat degraded by {HazmatDegradationPerHarvest:F0}%.");
 
                 // Partial radiation leaks through degraded suit
                 float leak_fraction = 1f - (hazmat_level / 100f);
@@ -94,13 +95,13 @@ namespace AtomicWar._Game.Core
                 float exposure = _state.radiation_level;
                 _state.rad_exposure_accumulated += exposure;
                 OnRadExposure?.Invoke(survivor_id, exposure);
-                Debug.Log($"[MapAnomaly_DryCoral] Survivor '{survivor_id}' received " +
+                GameLog.Log($"[MapAnomaly_DryCoral] Survivor '{survivor_id}' received " +
                           $"{exposure:F0} mSv — lethal dose.");
             }
 
             _state.crystals_harvested++;
             OnCrystalHarvested?.Invoke(_state.node_id, _state.crystals_harvested);
-            Debug.Log($"[MapAnomaly_DryCoral] Crystal harvested (total: {_state.crystals_harvested}).");
+            GameLog.Log($"[MapAnomaly_DryCoral] Crystal harvested (total: {_state.crystals_harvested}).");
             return true;
         }
 

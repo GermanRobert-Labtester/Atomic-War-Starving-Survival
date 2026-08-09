@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -41,7 +42,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnMasksRemoved?.Invoke(survivor_id);
-            Debug.Log($"[MapAnomaly_QuietZone] Survivor '{survivor_id}' entered zone — rad reading is 0, masks removed.");
+            GameLog.Log($"[MapAnomaly_QuietZone] Survivor '{survivor_id}' entered zone — rad reading is 0, masks removed.");
         }
 
         public void StayInZone(string survivor_id, float hours)
@@ -57,7 +58,7 @@ namespace AtomicWar._Game.Core
 
             float total_drain = _state.sanity_drain_per_hour * hours;
             OnSanityDrained?.Invoke(survivor_id, total_drain);
-            Debug.Log($"[MapAnomaly_QuietZone] Survivor '{survivor_id}' lost {total_drain:F2} sanity over {hours:F1} hours.");
+            GameLog.Log($"[MapAnomaly_QuietZone] Survivor '{survivor_id}' lost {total_drain:F2} sanity over {hours:F1} hours.");
         }
 
         public float GetRadReading()

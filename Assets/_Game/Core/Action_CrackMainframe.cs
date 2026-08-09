@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// during the process, the server fries permanently and the action fails.
     /// Prompt #798: Action_CrackMainframe
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_CrackMainframe
     {
         // -- Constants --

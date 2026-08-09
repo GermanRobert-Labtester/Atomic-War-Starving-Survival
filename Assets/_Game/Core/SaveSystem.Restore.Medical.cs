@@ -70,7 +70,7 @@ namespace AtomicWar._Game.Core
 
         private void RestorePhantomAndRooms(SaveData data)
         {
-            if (_phantomIntruderSystem != null && data.PhantomCooldownKeys != null)
+            if (_phantomIntruderSystem != null && data.PhantomCooldownKeys != null && data.PhantomCooldownValues != null)
             {
                 _phantomIntruderSystem.Cooldowns.Clear();
                 for (int i = 0; i < data.PhantomCooldownKeys.Count && i < data.PhantomCooldownValues.Count; i++)
@@ -92,6 +92,10 @@ namespace AtomicWar._Game.Core
                     room.DiaryFragmentIds = new List<string>(roomSave.DiaryFragmentIds);
                 if (roomSave.RevealedDiaryIndices != null)
                     room.RevealedDiaryIndices = new List<int>(roomSave.RevealedDiaryIndices);
+                // Atmosphere deliberately untouched here — ShelterAtmosphereSystem
+                // .RestoreState owns it and operates on these same ShelterRoom
+                // instances. Writing it here too would make the outcome depend on
+                // restore order.
             }
         }
 

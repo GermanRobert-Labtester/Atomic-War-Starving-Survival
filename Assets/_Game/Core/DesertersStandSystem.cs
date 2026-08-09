@@ -97,7 +97,8 @@ namespace AtomicWar._Game.Core
             ExpeditionState exp,
             Survivor scavenger,
             ItemDefinition serviceRifle,
-            string choiceId = "gather_the_weapons")
+            string choiceId = "gather_the_weapons",
+            NeedsSystem needsSystem = null)
         {
             if (scavenger == null || !scavenger.IsAlive) return;
 
@@ -111,8 +112,11 @@ namespace AtomicWar._Game.Core
             // ensure a floor crash if choice was null / skipped.
             if (scavenger.Needs != null && choiceId == null)
             {
-                scavenger.Needs.Morale = Mathf.Clamp(
-                    scavenger.Needs.Morale - MoraleCrash, 0f, 100f);
+                if (needsSystem != null)
+                    needsSystem.Modify(scavenger, NeedKind.Morale, -MoraleCrash);
+                else
+                    scavenger.Needs.Morale = Mathf.Clamp(
+                        scavenger.Needs.Morale - MoraleCrash, 0f, 100f);
             }
 
             bool takeWeapons = string.IsNullOrEmpty(choiceId)

@@ -71,7 +71,8 @@ namespace AtomicWar._Game.Core
             var data = new MapRotSaveData();
             foreach (var kvp in _lastVisitedDay)
             {
-                data.lastVisitedDays[kvp.Key] = kvp.Value;
+                data.visitedNodeIds.Add(kvp.Key);
+                data.visitedDays.Add(kvp.Value);
             }
             data.rottedNodeIds.AddRange(_rottedNodes);
             return data;
@@ -88,21 +89,40 @@ namespace AtomicWar._Game.Core
             if (data == null)
                 return;
 
-            foreach (var kvp in data.lastVisitedDays)
+            if (data.visitedNodeIds != null && data.visitedDays != null)
             {
-                _lastVisitedDay[kvp.Key] = kvp.Value;
+                int count = Math.Min(data.visitedNodeIds.Count, data.visitedDays.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    string nodeId = data.visitedNodeIds[i];
+                    if (string.IsNullOrEmpty(nodeId)) continue;
+                    _lastVisitedDay[nodeId] = data.visitedDays[i];
+                }
             }
-            foreach (string id in data.rottedNodeIds)
+            if (data.rottedNodeIds != null)
             {
-                _rottedNodes.Add(id);
+                foreach (string id in data.rottedNodeIds)
+                {
+                    if (!string.IsNullOrEmpty(id)) _rottedNodes.Add(id);
+                }
             }
         }
     }
 
+    /// <summary>
+    /// Visit timestamps are stored as parallel lists rather than a Dictionary:
+    /// JsonUtility silently drops Dictionary fields, which would reset every
+    /// node's last-visited day to zero on load and desync rot timing.
+    /// </summary>
     [Serializable]
     public class MapRotSaveData
     {
-        public Dictionary<string, int> lastVisitedDays = new Dictionary<string, int>();
+        /// <summary>Node ids; parallel to <see cref="visitedDays"/>.</summary>
+        public List<string> visitedNodeIds = new List<string>();
+
+        /// <summary>Day each node in <see cref="visitedNodeIds"/> was last visited.</summary>
+        public List<int> visitedDays = new List<int>();
+
         public List<string> rottedNodeIds = new List<string>();
     }
 }

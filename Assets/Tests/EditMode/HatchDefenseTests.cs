@@ -121,6 +121,92 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void BreachLoot_MultipleStacks_DoNotUseShiftedSlotIndices()
+        {
+            var food = MakeItem("canned_food", ItemType.Food, stackMax: 2);
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(food, 6), Is.True, "Three stacks are required for the regression");
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 0f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Breached, Is.True);
+            Assert.That(result.StolenItems, Has.Count.EqualTo(3));
+            for (int i = 0; i < result.StolenItems.Count; i++)
+            {
+                Assert.That(result.StolenItems[i].ItemId, Is.EqualTo(food.id));
+                Assert.That(result.StolenItems[i].Amount, Is.EqualTo(2));
+            }
+            Assert.That(inv.Count(food), Is.Zero);
+        }
+
+        [Test]
+        public void BreachLoot_SkipsQuestItemsAndPreservesPriority()
+        {
+            var food = MakeItem("canned_food", ItemType.Food, stackMax: 5);
+            var quest = MakeItem("sealed_government_document", ItemType.Quest, stackMax: 1);
+            var water = MakeItem("clean_water", ItemType.Water, stackMax: 5);
+            quest.tradeValue = 1000f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(food, 5), Is.True);
+            Assert.That(inv.Add(quest, 1), Is.True);
+            Assert.That(inv.Add(water, 5), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 0f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 15f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.StolenItems, Has.Count.EqualTo(1));
+            Assert.That(result.StolenItems[0].ItemId, Is.EqualTo(water.id),
+                "Water retains its higher loot priority than food");
+            Assert.That(result.StolenItems[0].Amount, Is.EqualTo(3));
+            Assert.That(inv.Count(quest), Is.EqualTo(1), "Quest items are never stolen");
+            Assert.That(inv.Count(food), Is.EqualTo(5));
+            Assert.That(inv.Count(water), Is.EqualTo(2));
+        }
+
+        [TestCase(15f, 3, 2)]
+        [TestCase(40f, 5, 0)]
+        public void BreachLoot_PreservesDeficitBasedTakeAmounts(
+            float raidStrength,
+            int expectedStolen,
+            int expectedRemaining)
+        {
+            var water = MakeItem("clean_water", ItemType.Water, stackMax: 5);
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(water, 5), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 0f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = raidStrength,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Breached, Is.True);
+            Assert.That(result.StolenItems, Has.Count.EqualTo(1));
+            Assert.That(result.StolenItems[0].Amount, Is.EqualTo(expectedStolen));
+            Assert.That(inv.Count(water), Is.EqualTo(expectedRemaining));
+        }
+
+        [Test]
         public void HighSecurity_PlusWeapons_RepelsRaid_ConsumesAmmo()
         {
             var shelter = new Shelter();
@@ -164,6 +250,96 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(inv.Count(ammo), Is.LessThan(20));
             Assert.That(result.MoraleDelta, Is.GreaterThan(0f));
             Assert.That(sv.Needs.Morale, Is.GreaterThan(50f));
+        }
+
+        [Test]
+        public void RepelCosts_MultipleAmmoStacks_DoNotUseShiftedSlotIndices()
+        {
+            var ammo = MakeItem("handgun_ammo", ItemType.Weapon, stackMax: 2);
+            var revolver = MakeItem("revolver", ItemType.Weapon, stackMax: 1);
+            revolver.durability = 100f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(ammo, 4), Is.True, "Two ammo stacks are required for the regression");
+            Assert.That(inv.Add(revolver, 1), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 100f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 30f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Repelled, Is.True);
+            Assert.That(result.AmmoConsumed, Is.EqualTo(3));
+            Assert.That(inv.Count(ammo), Is.EqualTo(1));
+            Assert.That(inv.Count(revolver), Is.EqualTo(1),
+                "Removing an ammo stack must not shift a weapon into a cached ammo index");
+            Assert.That(result.WeaponDurabilityLost, Is.EqualTo(10f).Within(Eps));
+        }
+
+        [Test]
+        public void RepelCosts_SpendsLowerPriorityAmmoBeforeReservedAmmo()
+        {
+            var civilianAmmo = MakeItem("ammo_9x19_fmj", ItemType.Weapon, stackMax: 2);
+            var reservedAmmo = MakeItem("ammo_556x45_ap", ItemType.Weapon, stackMax: 4);
+            var revolver = MakeItem("revolver", ItemType.Weapon, stackMax: 1);
+            revolver.durability = 100f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(civilianAmmo, 2), Is.True);
+            Assert.That(inv.Add(reservedAmmo, 4), Is.True);
+            Assert.That(inv.Add(revolver, 1), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 100f;
+            hatch.AmmoSpendPriorityResolver = id => id == civilianAmmo.id ? 0 : 100;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.AmmoConsumed, Is.EqualTo(5));
+            Assert.That(inv.Count(civilianAmmo), Is.Zero);
+            Assert.That(inv.Count(reservedAmmo), Is.EqualTo(1));
+            Assert.That(inv.Count(revolver), Is.EqualTo(1));
+            Assert.That(result.WeaponDurabilityLost, Is.EqualTo(10f).Within(Eps),
+                "Full ammo payment retains the existing light weapon wear");
+        }
+
+        [Test]
+        public void RepelCosts_AmmoShortfallIncreasesWeaponWear()
+        {
+            var ammo = MakeItem("handgun_ammo", ItemType.Weapon, stackMax: 2);
+            var revolver = MakeItem("revolver", ItemType.Weapon, stackMax: 1);
+            revolver.durability = 100f;
+
+            var inv = new Inventory { Capacity = 10, MaxWeight = 100f };
+            Assert.That(inv.Add(ammo, 2), Is.True);
+            Assert.That(inv.Add(revolver, 1), Is.True);
+
+            var hatch = MakeSystem(new Shelter(), inv, new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 100f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 50f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.AmmoConsumed, Is.EqualTo(2));
+            Assert.That(inv.Count(ammo), Is.Zero);
+            Assert.That(result.WeaponDurabilityLost, Is.EqualTo(14f).Within(Eps),
+                "Base wear 8 plus two points for each of three missing rounds");
+            Assert.That(inv.Slots[0].Item, Is.SameAs(revolver));
+            Assert.That(inv.Slots[0].CurrentDurability, Is.EqualTo(86f).Within(Eps));
         }
 
         [Test]
@@ -235,6 +411,113 @@ namespace AtomicWar.Tests.EditMode
             }, ignoreDayGate: false);
 
             Assert.That(forced.Launched, Is.True);
+        }
+
+        [Test]
+        public void EqualDefenseScore_BreachesBecauseDefenseMustExceedRaid()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 20f;
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 20f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            }, ignoreDayGate: true);
+
+            Assert.That(result.Launched, Is.True);
+            Assert.That(result.DefenseScore, Is.EqualTo(result.RaidStrength).Within(Eps));
+            Assert.That(result.Repelled, Is.False, "Equal defense is not enough to repel");
+            Assert.That(result.Breached, Is.True);
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(hatch.TotalBreaches, Is.EqualTo(1));
+            Assert.That(hatch.LastRaidSummary, Does.StartWith("BREACHED"));
+        }
+
+        [Test]
+        public void RaidHalt_BlocksNormalRaidButForcedRaidStillLaunches()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 20f;
+            hatch.ApplySuppressingFireHalt(2f);
+
+            int raidEvents = 0;
+            int securityEvents = 0;
+            hatch.OnRaidResolved += _ => raidEvents++;
+            hatch.OnSecurityChanged += () => securityEvents++;
+
+            var blocked = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 10f,
+                Trigger = RaidTrigger.Noise,
+                Day = 40
+            });
+
+            Assert.That(blocked.Launched, Is.False);
+            Assert.That(blocked.Message, Does.Contain("Suppressing fire"));
+            Assert.That(hatch.TotalRaidsResolved, Is.Zero);
+            Assert.That(raidEvents, Is.Zero);
+            Assert.That(securityEvents, Is.Zero);
+
+            var forced = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 10f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            });
+
+            Assert.That(forced.Launched, Is.True);
+            Assert.That(forced.Repelled, Is.True);
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(raidEvents, Is.EqualTo(1));
+            Assert.That(securityEvents, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void LaunchedRaid_CommitsCountersAndSummaryBeforePublishingEvents()
+        {
+            var hatch = MakeSystem(new Shelter(), new Inventory(), new List<Survivor>(), day: 40);
+            hatch.SecurityOverride = 20f;
+
+            var eventOrder = new List<string>();
+            RaidResolution observedResolution = null;
+            int observedRaidCount = -1;
+            string observedSummary = null;
+            hatch.OnRaidResolved += resolution =>
+            {
+                eventOrder.Add("raid_resolved");
+                observedResolution = resolution;
+                observedRaidCount = hatch.TotalRaidsResolved;
+                observedSummary = hatch.LastRaidSummary;
+            };
+            hatch.OnSecurityChanged += () => eventOrder.Add("security_changed");
+
+            var result = hatch.ResolveRaid(new RaidEvent
+            {
+                Strength = 10f,
+                Trigger = RaidTrigger.Forced,
+                Day = 40
+            });
+
+            Assert.That(result.Repelled, Is.True);
+            Assert.That(eventOrder, Is.EqualTo(new[] { "raid_resolved", "security_changed" }));
+            Assert.That(observedResolution, Is.SameAs(result));
+            Assert.That(observedRaidCount, Is.EqualTo(1));
+            Assert.That(observedSummary, Is.EqualTo(hatch.LastRaidSummary));
+            Assert.That(hatch.LastResolution, Is.SameAs(result));
+            Assert.That(hatch.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(hatch.TotalBreaches, Is.Zero);
+            Assert.That(hatch.IsRaidWindowActive, Is.True);
+
+            var save = hatch.CaptureState();
+            Assert.That(save.TotalRaidsResolved, Is.EqualTo(1));
+            Assert.That(save.TotalBreaches, Is.Zero);
+            Assert.That(save.LastRaidSummary, Is.EqualTo(hatch.LastRaidSummary));
+            Assert.That(save.LastRaidStrength, Is.EqualTo(result.RaidStrength).Within(Eps));
+            Assert.That(save.LastDefenseScore, Is.EqualTo(result.DefenseScore).Within(Eps));
+            Assert.That(save.LastRepelled, Is.True);
+            Assert.That(save.LastBreached, Is.False);
         }
 
         [Test]
@@ -365,6 +648,171 @@ namespace AtomicWar.Tests.EditMode
                 id => id == "scrap_metal" ? scrap : id == "mechanical_parts" ? mech : null));
             Assert.That(shelter.GetModule(HatchDefenseModuleSO.ReinforcedLocksId), Is.Null);
             Assert.That(inv.Count(scrap), Is.EqualTo(1), "Must not consume on failure");
+        }
+
+        [Test]
+        public void TryInstallHatchUpgrade_AtDefinitionMax_RejectsInCanAndTry()
+        {
+            var shelter = new Shelter();
+            var definition = HatchDefenseModuleSO.Create(
+                HatchDefenseModuleSO.ReinforcedLocksId,
+                "Reinforced Locks",
+                10f);
+            definition.MaxLevel = 2;
+            _toDestroy.Add(definition);
+
+            var installed = new ShelterModuleInstance(definition, level: 2)
+            {
+                SecurityContribution = 10f
+            };
+            shelter.AddModule(installed);
+
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mechanical = MakeItem("mechanical_parts", ItemType.Material);
+            var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inventory.Add(scrap, 20);
+            inventory.Add(mechanical, 20);
+
+            var hatch = MakeSystem(shelter, inventory, new List<Survivor>());
+            int securityEvents = 0;
+            hatch.OnSecurityChanged += () => securityEvents++;
+            ItemDefinition Lookup(string id) => id == scrap.id
+                ? scrap
+                : id == mechanical.id ? mechanical : null;
+
+            Assert.That(hatch.CanInstallHatchUpgrade(installed.ModuleId, Lookup), Is.False,
+                "UI validation must honor the installed definition's level cap");
+            Assert.That(hatch.TryInstallHatchUpgrade(installed.ModuleId, Lookup), Is.False);
+            Assert.That(installed.Level, Is.EqualTo(2));
+            Assert.That(inventory.Count(scrap), Is.EqualTo(20));
+            Assert.That(inventory.Count(mechanical), Is.EqualTo(20));
+            Assert.That(securityEvents, Is.Zero);
+        }
+
+        [Test]
+        public void TryInstallHatchUpgrade_InterruptedSecondDebit_RollsBackFirstDebit()
+        {
+            var shelter = new Shelter();
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mechanical = MakeItem("mechanical_parts", ItemType.Material);
+            HatchDefenseSystem.GetUpgradeMaterialCost(
+                HatchDefenseModuleSO.ReinforcedLocksId,
+                1,
+                out int scrapNeeded,
+                out int mechanicalNeeded);
+
+            var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inventory.Add(scrap, scrapNeeded);
+            inventory.Add(mechanical, mechanicalNeeded);
+
+            bool secondDebitInvalidated = false;
+            inventory.OnItemRemoved += (item, _) =>
+            {
+                if (secondDebitInvalidated || item == null || item.id != scrap.id) return;
+                secondDebitInvalidated = inventory.Remove(mechanical, mechanicalNeeded);
+            };
+
+            var hatch = MakeSystem(shelter, inventory, new List<Survivor>());
+            int securityEvents = 0;
+            hatch.OnSecurityChanged += () => securityEvents++;
+            ItemDefinition Lookup(string id) => id == scrap.id
+                ? scrap
+                : id == mechanical.id ? mechanical : null;
+
+            Assert.That(
+                hatch.TryInstallHatchUpgrade(
+                    HatchDefenseModuleSO.ReinforcedLocksId,
+                    Lookup),
+                Is.False);
+            Assert.That(secondDebitInvalidated, Is.True, "The test must interrupt debit two");
+            Assert.That(inventory.Count(scrap), Is.EqualTo(scrapNeeded),
+                "The installer must roll back its first debit");
+            Assert.That(shelter.GetModule(HatchDefenseModuleSO.ReinforcedLocksId), Is.Null);
+            Assert.That(securityEvents, Is.Zero);
+        }
+
+        [Test]
+        public void TryInstallHatchUpgrade_PublishesSecurityBeforeIronGateNotification()
+        {
+            var shelter = new Shelter();
+            var definition = HatchDefenseModuleSO.Create(
+                HatchDefenseModuleSO.BlastDoorId,
+                "Blast Door",
+                25f);
+            definition.MaxLevel = 1;
+            _toDestroy.Add(definition);
+
+            var installed = new ShelterModuleInstance(definition, level: 0)
+            {
+                SecurityContribution = 0f,
+                FilterHealth = 12f,
+                IsEnabled = false,
+                RoomId = "entry"
+            };
+            shelter.AddModule(installed);
+
+            var scrap = MakeItem("scrap_metal", ItemType.Material);
+            var mechanical = MakeItem("mechanical_parts", ItemType.Material);
+            HatchDefenseSystem.GetUpgradeMaterialCost(
+                installed.ModuleId,
+                1,
+                out int scrapNeeded,
+                out int mechanicalNeeded);
+            var inventory = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inventory.Add(scrap, scrapNeeded);
+            inventory.Add(mechanical, mechanicalNeeded);
+
+            var welder = PersonalQuestSystem.MakeArchetypeSurvivor(PersonalQuestSystem.WelderId);
+            var quests = new PersonalQuestSystem();
+            quests.AssignProfile(
+                welder,
+                PersonalQuestSystem.ProfileForArchetype(PersonalQuestSystem.WelderId));
+            Assert.That(quests.TryStartQuestline(welder, "test", currentDay: 39), Is.True);
+
+            int questProgressEvents = 0;
+            int questCompletionEvents = 0;
+            quests.OnQuestProgress += (_, key, value) =>
+            {
+                if (key == "iron_gate" && value == 1) questProgressEvents++;
+            };
+            quests.OnQuestlineCompleted += (_, questlineId) =>
+            {
+                if (questlineId == QuestlineSO.Ids.TheIronGate) questCompletionEvents++;
+            };
+
+            var hatch = MakeSystem(
+                shelter,
+                inventory,
+                new List<Survivor> { welder },
+                day: 40);
+            hatch.BindPersonalQuests(quests);
+
+            int securityEvents = 0;
+            bool initializedAtSecurityEvent = false;
+            bool questNotifiedAtSecurityEvent = true;
+            hatch.OnSecurityChanged += () =>
+            {
+                securityEvents++;
+                initializedAtSecurityEvent = installed.Level == 1
+                    && installed.SecurityContribution > 0f
+                    && Mathf.Approximately(installed.FilterHealth, 100f)
+                    && installed.IsEnabled;
+                questNotifiedAtSecurityEvent = questProgressEvents > 0
+                    || questCompletionEvents > 0
+                    || quests.HasForgeMaster(welder);
+            };
+            ItemDefinition Lookup(string id) => id == scrap.id
+                ? scrap
+                : id == mechanical.id ? mechanical : null;
+
+            Assert.That(hatch.TryInstallHatchUpgrade(installed.ModuleId, Lookup), Is.True);
+            Assert.That(securityEvents, Is.EqualTo(1));
+            Assert.That(initializedAtSecurityEvent, Is.True);
+            Assert.That(questNotifiedAtSecurityEvent, Is.False,
+                "OnSecurityChanged must remain before the Iron Gate notification");
+            Assert.That(questProgressEvents, Is.EqualTo(1));
+            Assert.That(questCompletionEvents, Is.EqualTo(1));
+            Assert.That(quests.HasForgeMaster(welder), Is.True);
         }
 
         [Test]

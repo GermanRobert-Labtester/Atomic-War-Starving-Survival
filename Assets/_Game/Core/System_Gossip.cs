@@ -108,6 +108,19 @@ namespace AtomicWar._Game.Core
             if (_state.rumors == null || _state.rumors.Count == 0) return;
             if (_state.allSurvivorIds == null || _state.allSurvivorIds.Count == 0) return;
 
+            var newInformed = PickTellTargets();
+            InformTargets(newInformed);
+            ApplyAffinityDecay();
+        }
+
+        /// <summary>
+        /// For each rumor, pick up to <see cref="MaxTellsPerDay"/> survivors who
+        /// don't already know and aren't the criminal. Selection is snapshotted
+        /// before any rumor.informedIds is mutated, so a survivor told about rumor
+        /// A this tick can still be picked as a target for rumor B.
+        /// </summary>
+        private List<(GossipRumor rumor, List<string> targets)> PickTellTargets()
+        {
             var newInformed = new List<(GossipRumor rumor, List<string> targets)>();
 
             for (int ri = 0; ri < _state.rumors.Count; ri++)
@@ -136,7 +149,11 @@ namespace AtomicWar._Game.Core
                 if (targets.Count > 0)
                     newInformed.Add((rumor, targets));
             }
+            return newInformed;
+        }
 
+        private void InformTargets(List<(GossipRumor rumor, List<string> targets)> newInformed)
+        {
             for (int i = 0; i < newInformed.Count; i++)
             {
                 var rumor = newInformed[i].rumor;
@@ -154,8 +171,11 @@ namespace AtomicWar._Game.Core
                     OnRumorSpread?.Invoke(spreader, target, rumor.criminalId);
                 }
             }
+        }
 
-            // Apply affinity decay: 0.02 per person who knows (once per rumor per day).
+        /// <summary>Affinity decay: <see cref="AffinityDecayPerInformed"/> per person who knows, once per rumor per day.</summary>
+        private void ApplyAffinityDecay()
+        {
             for (int ri = 0; ri < _state.rumors.Count; ri++)
             {
                 var rumor = _state.rumors[ri];
@@ -308,6 +328,51 @@ namespace AtomicWar._Game.Core
             return copy;
         }
 
+        private void RestoreRumors(GossipSystemState saved)
+        {
+            if (saved.rumors == null) return;
+            for (int i = 0; i < saved.rumors.Count; i++)
+            {
+                var r = saved.rumors[i];
+                if (r == null) continue;
+                var rc = new GossipRumor
+                {
+                    witnessId = r.witnessId,
+                    criminalId = r.criminalId,
+                    crimeType = r.crimeType,
+                    dayStarted = r.dayStarted,
+                    spreadCount = r.spreadCount,
+                    informedIds = new List<string>()
+                };
+                if (r.informedIds != null)
+                {
+                    for (int j = 0; j < r.informedIds.Count; j++)
+                        if (!string.IsNullOrEmpty(r.informedIds[j]))
+                            rc.informedIds.Add(r.informedIds[j]);
+                }
+                _state.rumors.Add(rc);
+            }
+        }
+
+        private void RestoreAffinityDecay(GossipSystemState saved)
+        {
+            if (saved.affinity_decay_ids == null || saved.affinity_decay_values == null) return;
+            int n = Mathf.Min(saved.affinity_decay_ids.Count, saved.affinity_decay_values.Count);
+            for (int i = 0; i < n; i++)
+            {
+                if (string.IsNullOrEmpty(saved.affinity_decay_ids[i])) continue;
+                _affinityDecayMap[saved.affinity_decay_ids[i]] = saved.affinity_decay_values[i];
+            }
+        }
+
+        private void RestoreAllSurvivorIds(GossipSystemState saved)
+        {
+            if (saved.allSurvivorIds == null) return;
+            for (int i = 0; i < saved.allSurvivorIds.Count; i++)
+                if (!string.IsNullOrEmpty(saved.allSurvivorIds[i]))
+                    _state.allSurvivorIds.Add(saved.allSurvivorIds[i]);
+        }
+
         public void RestoreState(GossipSystemState saved)
         {
             _affinityDecayMap.Clear();
@@ -326,47 +391,9 @@ namespace AtomicWar._Game.Core
                 allSurvivorIds = new List<string>()
             };
 
-            if (saved.rumors != null)
-            {
-                for (int i = 0; i < saved.rumors.Count; i++)
-                {
-                    var r = saved.rumors[i];
-                    if (r == null) continue;
-                    var rc = new GossipRumor
-                    {
-                        witnessId = r.witnessId,
-                        criminalId = r.criminalId,
-                        crimeType = r.crimeType,
-                        dayStarted = r.dayStarted,
-                        spreadCount = r.spreadCount,
-                        informedIds = new List<string>()
-                    };
-                    if (r.informedIds != null)
-                    {
-                        for (int j = 0; j < r.informedIds.Count; j++)
-                            if (!string.IsNullOrEmpty(r.informedIds[j]))
-                                rc.informedIds.Add(r.informedIds[j]);
-                    }
-                    _state.rumors.Add(rc);
-                }
-            }
-
-            if (saved.affinity_decay_ids != null && saved.affinity_decay_values != null)
-            {
-                int n = Mathf.Min(saved.affinity_decay_ids.Count, saved.affinity_decay_values.Count);
-                for (int i = 0; i < n; i++)
-                {
-                    if (string.IsNullOrEmpty(saved.affinity_decay_ids[i])) continue;
-                    _affinityDecayMap[saved.affinity_decay_ids[i]] = saved.affinity_decay_values[i];
-                }
-            }
-
-            if (saved.allSurvivorIds != null)
-            {
-                for (int i = 0; i < saved.allSurvivorIds.Count; i++)
-                    if (!string.IsNullOrEmpty(saved.allSurvivorIds[i]))
-                        _state.allSurvivorIds.Add(saved.allSurvivorIds[i]);
-            }
+            RestoreRumors(saved);
+            RestoreAffinityDecay(saved);
+            RestoreAllSurvivorIds(saved);
         }
 
         private void EnsureRosterContains(string id)

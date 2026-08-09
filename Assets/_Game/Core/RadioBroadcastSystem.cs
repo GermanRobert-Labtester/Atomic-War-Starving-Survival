@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Data;
 
 namespace AtomicWar._Game.Core
@@ -51,7 +52,7 @@ namespace AtomicWar._Game.Core
             _currentBroadcast = broadcast;
             _played.Add(broadcast.id);
             OnBroadcastStarted?.Invoke(broadcast);
-            Debug.Log($"[Radio] Broadcast: {broadcast.message}");
+            GameLog.Log($"[Radio] Broadcast: {broadcast.message}");
         }
 
         public void StopBroadcast()

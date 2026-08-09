@@ -49,6 +49,8 @@ namespace AtomicWar._Game.Survivors
 
         private SkillProgressionSystem _progression;
         private PersonalQuestSystem _personalQuests;
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private readonly Dictionary<string, CombatCounters> _bySurvivor =
             new Dictionary<string, CombatCounters>();
 
@@ -141,7 +143,7 @@ namespace AtomicWar._Game.Survivors
             float baseCritChance = 0f)
         {
             if (sv == null || string.IsNullOrEmpty(encounterKey)) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("combatperksystem");
 
             string key = sv.Id + "|" + encounterKey;
             bool isFirst = !_firstShotFired.Contains(key);
@@ -262,7 +264,7 @@ namespace AtomicWar._Game.Survivors
             if (sv == null || !sv.IsAlive) return false;
             float rate = GetDisarmSuccessRate(sv);
             if (rate >= 1f) return true;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("combatperksystem");
             return rng.NextDouble() < rate;
         }
 
@@ -290,9 +292,7 @@ namespace AtomicWar._Game.Survivors
         public static int GetDefaultFleeDropCount(int lootCount, float defaultDropFraction = 0.5f)
         {
             if (lootCount <= 0) return 0;
-            return Mathf.Clamp(
-                Mathf.CeilToInt(lootCount * Mathf.Clamp01(defaultDropFraction)),
-                1, lootCount);
+            return Mathf.Clamp( Mathf.CeilToInt(lootCount * Mathf.Clamp01(defaultDropFraction)), 1, lootCount);
         }
 
         /// <summary>
@@ -408,7 +408,10 @@ namespace AtomicWar._Game.Survivors
             if (IsImmuneToKillMorale(sv)) return 0f;
             float before = sv.Needs.Morale;
             float mag = Mathf.Abs(loss);
-            sv.Needs.Morale = Mathf.Clamp(before - mag, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(sv, NeedKind.Morale, -mag);
+            else
+                sv.Needs.Morale = Mathf.Clamp(before - mag, 0f, 100f);
             return sv.Needs.Morale - before;
         }
 

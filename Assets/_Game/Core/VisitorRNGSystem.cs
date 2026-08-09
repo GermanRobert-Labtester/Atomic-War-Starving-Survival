@@ -37,7 +37,8 @@ namespace AtomicWar._Game.Core
 
         public List<FixedNodeState> nodes = new List<FixedNodeState>();
     }
-public class VisitorRNGSystem
+/// <summary>DEMOTE-VisitorRNG — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
+    public class VisitorRNGSystem
     {
         public static readonly string[] PermanentLocationIds = new string[20]
         {

@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Injected into VisitorRNGSystem when a active Personal Quest exists.
     /// Ensures narrative target characters spawn at their designated locations.
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_QuestFaction
     {
         private QuestFactionState _state = new QuestFactionState();

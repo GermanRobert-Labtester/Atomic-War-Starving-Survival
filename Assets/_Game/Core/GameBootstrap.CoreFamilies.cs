@@ -1,5 +1,6 @@
 // GameBootstrap.CoreFamilies.cs — bulk Boot for remaining Core CaptureState systems.
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -7,208 +8,212 @@ namespace AtomicWar._Game.Core
     {
         private void BootActionFamily()
         {
-            ActionAdministerPlacebo = new Action_AdministerPlacebo();
-            ActionBarricadeDoor = new Action_BarricadeDoor();
-            ActionBoilBatteries = new Action_BoilBatteries();
-            ActionBroadcastPropaganda = new Action_BroadcastPropaganda();
-            ActionBurnCharcoal = new Action_BurnCharcoal();
-            ActionBuryTimeCapsule = new Action_BuryTimeCapsule();
-            ActionCallCaravan = new Action_CallCaravan();
-            ActionCoverTracks = new Action_CoverTracks();
-            ActionCrackMainframe = new Action_CrackMainframe();
-            ActionDecrypt = new Action_Decrypt();
-            ActionDemandTribute = new Action_DemandTribute();
-            ActionEstablishRoute = new Action_EstablishRoute();
-            ActionExile = new Action_Exile();
-            ActionFish = new Action_Fish();
-            ActionHarvestOrgans = new Action_HarvestOrgans();
-            ActionInfectSelf = new Action_InfectSelf();
-            ActionIsotopeTrace = new Action_IsotopeTrace();
-            ActionMercy = new Action_Mercy();
-            ActionMixCement = new Action_MixCement();
-            ActionMixChems = new Action_MixChems();
-            ActionOverwatch = new Action_Overwatch();
-            ActionPhysicalTherapy = new Action_PhysicalTherapy();
-            ActionPirateRadio = new Action_PirateRadio();
-            ActionPlaceBait = new Action_PlaceBait();
-            ActionPullTooth = new Action_PullTooth();
-            ActionRigCorpse = new Action_RigCorpse();
-            ActionRoutePower = new Action_RoutePower();
-            ActionSabotage = new Action_Sabotage();
-            ActionScorchedEarth = new Action_ScorchedEarth();
-            ActionSealRoom = new Action_SealRoom();
-            ActionSelfSurgery = new Action_SelfSurgery();
-            ActionSilentTakedown = new Action_SilentTakedown();
-            ActionSiphonGas = new Action_SiphonGas();
-            ActionStabilizeDNA = new Action_StabilizeDNA();
-            ActionStargazing = new Action_Stargazing();
-            ActionWorshipIdol = new Action_WorshipIdol();
-            Debug.Log("[GameBootstrap] Action family ready (36 systems).");
+            // DEMOTE-Action-remaining — ActionAdministerPlacebo demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionBarricadeDoor demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionBoilBatteries demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionBroadcastPropaganda demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionBurnCharcoal demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionBuryTimeCapsule demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionCallCaravan demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionCoverTracks demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionCrackMainframe demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionDecrypt demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionDemandTribute demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionEstablishRoute demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionExile demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionFish demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionHarvestOrgans demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionInfectSelf demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionIsotopeTrace demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionMercy demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionMixCement demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionMixChems demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionOverwatch demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionPhysicalTherapy demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionPirateRadio demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionPlaceBait demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionPullTooth demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionRigCorpse demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionRoutePower demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSabotage demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionScorchedEarth demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSealRoom demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionSelfSurgery demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionSilentTakedown demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSiphonGas demoted (ghost). Class kept dormant.
+            // DEMOTE-001 — ActionStabilizeDNA removed from Boot/Save (ghost).
+            // Class kept under Action_StabilizeDNA.cs until a real host calls Stabilize().
+            // DEMOTE-Action-remaining — ActionStargazing demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionWorshipIdol demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Action family demoted (all zero-ref Action_* ghosts; classes dormant).");
         }
 
         private void BootAfflictionFamily()
         {
-            AfflictionAdrenalineCrash = new Affliction_AdrenalineCrash();
-            AfflictionAmnesia = new AmnesiaSystem();
-            AfflictionBrainwashed = new Affliction_Brainwashed("affliction_brainwashed");
-            AfflictionBrittleBones = new BrittleBonesSystem();
-            AfflictionCaveMadness = new CaveMadnessSystem("affliction_cave_madness");
-            AfflictionFeralRegression = new FeralRegressionSystem();
-            AfflictionImaginaryFriend = new ImaginaryFriendSystem();
-            AfflictionNerveDamage = new Affliction_NerveDamage();
-            AfflictionOldAge = new Affliction_OldAge();
-            AfflictionPhantomLimb = new Affliction_PhantomLimb();
-            AfflictionRadHallucinations = new Affliction_RadHallucinations();
-            AfflictionRadiationBlindness = new RadiationBlindnessSystem();
-            AfflictionScurvyDegeneration = new Affliction_ScurvyDegeneration();
-            AfflictionSporeLung = new SporeLungSystem();
-            AfflictionSterile = new Affliction_Sterile();
-            AfflictionSurvivorsGuilt = new SurvivorsGuiltSystem();
-            AfflictionTBI = new Affliction_TBI();
-            AfflictionThyroidCancer = new Affliction_ThyroidCancer();
-            AfflictionTrenchFoot = new TrenchFootSystem();
-            Debug.Log("[GameBootstrap] Affliction family ready (19 systems).");
+            // DEMOTE-AfflictionItem-batch — AfflictionAdrenalineCrash demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionAmnesia demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionBrainwashed demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionBrittleBones demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionCaveMadness demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionFeralRegression demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionImaginaryFriend demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionNerveDamage demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionOldAge demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionPhantomLimb demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionRadHallucinations demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionRadiationBlindness demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionScurvyDegeneration demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionSporeLung demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionSterile demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionSurvivorsGuilt demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionTBI demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionThyroidCancer demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionTrenchFoot demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Affliction family demoted (pure ghosts dormant).");
         }
 
         private void BootAudioEventFamily()
         {
-            AudioEventDeafening = new AudioEvent_Deafening();
-            AudioEventHeartbeat = new AudioEvent_Heartbeat();
-            Debug.Log("[GameBootstrap] AudioEvent family ready (2 systems).");
+            // DEMOTE-NodeAudio-batch — AudioEventDeafening demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — AudioEventHeartbeat demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] AudioEvent family demoted.");
         }
 
         private void BootCombatFamily()
         {
-            CombatBleedOut = new Combat_BleedOut();
-            CombatFlanking = new Combat_Flanking();
-            CombatSuppression = new Combat_Suppression();
-            Debug.Log("[GameBootstrap] Combat family ready (3 systems).");
+            // DEMOTE-CombatVehicle-batch — CombatBleedOut demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — CombatFlanking demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — CombatSuppression demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Combat family demoted.");
         }
 
         private void BootCombatStanceFamily()
         {
-            CombatStanceLastStand = new CombatStance_LastStand();
-            Debug.Log("[GameBootstrap] CombatStance family ready (1 systems).");
+            // DEMOTE-CombatVehicle-batch — CombatStanceLastStand demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] CombatStance family demoted.");
         }
 
         private void BootCrisisFamily()
         {
-            CrisisFeralFlora = new Crisis_FeralFlora();
-            CrisisStructuralFailure = new Crisis_StructuralFailure();
-            Debug.Log("[GameBootstrap] Crisis family ready (2 systems).");
+            // DEMOTE-CombatVehicle-batch — CrisisFeralFlora demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — CrisisStructuralFailure demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Crisis family demoted.");
         }
 
         private void BootDurabilityFamily()
         {
-            DurabilitySuppressor = new Durability_Suppressor();
-            Debug.Log("[GameBootstrap] Durability family ready (1 systems).");
+            // DEMOTE-NodeAudio-batch — DurabilitySuppressor demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Durability family demoted.");
         }
 
         private void BootEndgameFamily()
         {
-            EndgameUltimatum = new Endgame_Ultimatum();
-            Debug.Log("[GameBootstrap] Endgame family ready (1 systems).");
+            // DEMOTE-NodeAudio-batch — EndgameUltimatum demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Endgame family demoted.");
         }
 
         private void BootHazardFamily()
         {
-            HazardCookOff = new Hazard_CookOff();
-            HazardExplosiveCrafting = new Hazard_ExplosiveCrafting();
-            HazardFriendlyFire = new Hazard_FriendlyFire();
+            // DEMOTE-HazardCookOff-001 — no production host calls TryFire.
+            // Keep Hazard_CookOff available as a dormant standalone class.
+            // DEMOTE-HazardExplosiveCrafting-001 — no production host calls TryCraft.
+            // Keep Hazard_ExplosiveCrafting available as a dormant standalone class.
+            // DEMOTE-HazardFriendlyFire-001 — no production host calls CheckFriendlyFire.
+            // Keep Hazard_FriendlyFire available as a dormant standalone class.
             HazardMethane = new MethaneSystem("hazard_methane");
             HazardMimicCrate = new Hazard_MimicCrate();
             HazardSurgicalBotch = new Hazard_SurgicalBotch();
             HazardWeaponBurst = new Hazard_WeaponBurst();
-            Debug.Log("[GameBootstrap] Hazard family ready (7 systems).");
+            GameLog.Log("[GameBootstrap] Hazard family ready (4 live systems; 3 ghosts dormant).");
         }
 
         private void BootHiddenStatFamily()
         {
-            HiddenStatUnseen = new HiddenStat_Unseen();
-            Debug.Log("[GameBootstrap] HiddenStat family ready (1 systems).");
+            // DEMOTE-NodeAudio-batch — HiddenStatUnseen demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] HiddenStat family demoted.");
         }
 
         private void BootItemFamily()
         {
-            ItemAICoreData = new Item_AICoreData();
+            // DEMOTE-AfflictionItem-batch — ItemAICoreData demoted (ghost). Class kept dormant.
             ItemAmmoTypes = new Item_AmmoTypes();
-            ItemAmmonia = new Item_Ammonia();
-            ItemAmphetamines = new Item_Amphetamines();
-            ItemAshGhillie = new Item_AshGhillie();
-            ItemAutoDoc = new Item_AutoDoc();
-            ItemBioPlastic = new Item_BioPlastic();
-            ItemBloodBag = new Item_BloodBag();
-            ItemBoneSaw = new Item_BoneSaw();
-            ItemC4 = new Item_C4();
-            ItemCaltrops = new Item_Caltrops();
-            ItemCarrierBird = new Item_CarrierBird();
-            ItemChildsDrawing = new Item_ChildsDrawing();
-            ItemCigarettes = new Item_Cigarettes();
-            ItemClimbingGear = new Item_ClimbingGear();
-            ItemDecoy = new Item_Decoy();
-            ItemDogTags = new Item_DogTags();
-            ItemEMPGrenade = new Item_EMPGrenade();
-            ItemEncryptedDrive = new Item_EncryptedDrive();
-            ItemEpiPen = new Item_EpiPen();
-            ItemExosuit = new Item_Exosuit();
-            ItemFaradayPack = new Item_FaradayPack();
-            ItemForeignBook = new Item_ForeignBook();
-            ItemGeigerCalibrator = new Item_GeigerCalibrator();
-            ItemGlowingMushroom = new GlowingMushroomSystem("item_glowing_mushroom");
-            ItemGoldBars = new Item_GoldBars();
-            ItemGuitar = new Item_Guitar();
-            ItemHeirloom = new Item_Heirloom();
-            ItemIBeam = new Item_IBeam();
-            ItemImpureIodine = new Item_ImpureIodine();
-            ItemJuggernautArmor = new Item_JuggernautArmor();
-            ItemKevlarVest = new Item_KevlarVest();
-            ItemKeycards = new Item_Keycards();
-            ItemLandmine = new Item_Landmine();
-            ItemLeadApron = new Item_LeadApron();
-            ItemLiquidStitches = new Item_LiquidStitches();
-            ItemMaggots = new Item_Maggots();
-            ItemMilGasMask = new Item_MilGasMask();
-            ItemMutantGland = new Item_MutantGland();
-            ItemNanites = new Item_Nanites();
-            ItemNightVision = new Item_NightVision();
-            ItemPackMule = new Item_PackMule();
-            ItemPasswordNote = new Item_PasswordNote();
-            ItemPhotoAlbum = new Item_PhotoAlbum();
-            ItemPotassiumIodide = new Item_PotassiumIodide();
-            ItemPresidentialSeal = new Item_PresidentialSeal();
-            ItemPrussianBlue = new Item_PrussianBlue();
-            ItemRTGBattery = new Item_RTGBattery();
-            ItemSeedLedger = new Item_SeedLedger();
-            ItemShockCollar = new Item_ShockCollar();
-            ItemSnowshoes = new Item_Snowshoes();
-            ItemSurgicalTubing = new Item_SurgicalTubing();
-            ItemTearGas = new Item_TearGas();
-            ItemTeddyBear = new Item_TeddyBear();
-            ItemTrashHazmat = new Item_TrashHazmat();
-            ItemUndeliveredMail = new Item_UndeliveredMail();
-            ItemVacuumTubes = new Item_VacuumTubes();
-            ItemVinylCollection = new Item_VinylCollection();
-            ItemVitamins = new Item_Vitamins();
-            ItemWalkieTalkie = new Item_WalkieTalkie();
-            ItemWastelandSoap = new Item_WastelandSoap();
-            ItemWaterTabs = new Item_WaterTabs();
-            ItemWeldingGoggles = new Item_WeldingGoggles();
-            ItemWristDosimeter = new Item_WristDosimeter();
-            Debug.Log("[GameBootstrap] Item family ready (64 systems).");
+            // DEMOTE-AfflictionItem-batch — ItemAmmonia demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemAmphetamines demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemAshGhillie demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemAutoDoc demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemBioPlastic demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemBloodBag demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemBoneSaw demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemC4 demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemCaltrops demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemCarrierBird demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemChildsDrawing demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemCigarettes demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemClimbingGear demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemDecoy demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemDogTags demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemEMPGrenade demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemEncryptedDrive demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemEpiPen demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemExosuit demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemFaradayPack demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemForeignBook demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemGeigerCalibrator demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemGlowingMushroom demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemGoldBars demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemGuitar demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemHeirloom demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemIBeam demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemImpureIodine demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemJuggernautArmor demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemKevlarVest demoted (ghost). Class kept dormant.
+            ItemKeycards = new Item_Keycards(); // REPROMOTE-Item-001
+            // DEMOTE-AfflictionItem-batch — ItemLandmine demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemLeadApron demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemLiquidStitches demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemMaggots demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemMilGasMask demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemMutantGland demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemNanites demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemNightVision demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemPackMule demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemPasswordNote demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemPhotoAlbum demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemPotassiumIodide demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemPresidentialSeal demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemPrussianBlue demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemRTGBattery demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemSeedLedger demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemShockCollar demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemSnowshoes demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemSurgicalTubing demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemTearGas demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemTeddyBear demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemTrashHazmat demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemUndeliveredMail demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemVacuumTubes demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemVinylCollection demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemVitamins demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemWalkieTalkie demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemWastelandSoap demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemWaterTabs demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemWeldingGoggles demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemWristDosimeter demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Item family: AmmoTypes+Keycards live; remaining pure ghosts demoted.");
         }
 
         private void BootLocationFamily()
         {
-            LocationArcade = new Location_Arcade();
-            LocationSlaveMarket = new Location_SlaveMarket();
-            LocationStrandedYacht = new Location_StrandedYacht();
-            Debug.Log("[GameBootstrap] Location family ready (3 systems).");
+            // DEMOTE-Location-batch — LocationArcade demoted (ghost). Class kept dormant.
+            // DEMOTE-Location-batch — LocationSlaveMarket demoted (ghost). Class kept dormant.
+            // DEMOTE-Location-batch — LocationStrandedYacht demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Location family demoted (3 ghosts dormant).");
         }
 
         private void BootMapFamily()
         {
             MapAquifer = new AquiferSystem("map_aquifer");
-            Debug.Log("[GameBootstrap] Map family ready (1 systems).");
+            GameLog.Log("[GameBootstrap] Map family ready (1 systems).");
         }
 
         private void BootMiscFamily()
@@ -217,9 +222,10 @@ namespace AtomicWar._Game.Core
             BurnWardSystem = new BurnWardSystem();
             CognitiveDecaySystem = new CognitiveDecaySystem();
             LightningStrikesSystem = new LightningStrikesSystem();
-            LocationStateRuinSystem = new LocationStateRuinSystem();
+            // DEMOTE-Location-batch — LocationStateRuinSystem demoted (ghost). Class kept dormant.
             MobileCampSystem = new MobileCampSystem();
             MoralDilemmaSystem = new MoralDilemmaSystem();
+            MoralDilemmaSystem.SetNeedsSystem(NeedsSystem);
             NeedleSterilizationSystem = new NeedleSterilizationSystem();
             NightScavengeSystem = new NightScavengeSystem();
             ProstheticCraftingSystem = new ProstheticCraftingSystem();
@@ -227,89 +233,90 @@ namespace AtomicWar._Game.Core
             SevereFrostbiteSystem = new SevereFrostbiteSystem();
             TetanusAfflictionSystem = new TetanusAfflictionSystem();
             ToothDecaySystem = new ToothDecaySystem();
-            VehicleStrandingSystem = new VehicleStrandingSystem();
-            VehicleSystem = new VehicleSystem();
+            // DEMOTE-CombatVehicle-batch — VehicleStrandingSystem demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — VehicleSystem demoted (ghost). Class kept dormant.
             VisionLossSystem = new VisionLossSystem();
-            VisitorRNGSystem = new VisitorRNGSystem();
-            Debug.Log("[GameBootstrap] Misc family ready (19 systems).");
+            // DEMOTE-VisitorRNG — VisitorRNGSystem demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Misc family ready (VisitorRNG demoted).");
         }
 
         private void BootNPCFamily()
         {
-            NPCAddictsPassive = new NPC_AddictsPassive();
-            NPCAggroScavengers = new NPC_AggroScavengers();
-            NPCAggroTrader = new NPC_AggroTrader();
-            NPCBandits = new NPC_Bandits();
-            NPCBlackOps = new NPC_BlackOps();
-            NPCBroker = new NPC_Broker();
-            NPCCannibals = new NPC_Cannibals();
-            NPCChemScientists = new NPC_ChemScientists();
-            NPCCityResidents = new NPC_CityResidents();
-            NPCCollaborators = new NPC_Collaborators();
-            NPCConscripts = new NPC_Conscripts();
-            NPCDesperateFamily = new NPC_DesperateFamily();
-            NPCDrunksAggro = new NPC_DrunksAggro();
-            NPCHomeless = new NPC_Homeless();
-            NPCLonePsychopath = new NPC_LonePsychopath();
-            NPCLooters = new NPC_Looters();
-            NPCMercenaries = new NPC_Mercenaries();
-            NPCMilitaryPatrol = new NPC_MilitaryPatrol();
-            NPCPassiveScavengers = new NPC_PassiveScavengers();
+            // DEMOTE-NPC-batch — NPCAddictsPassive demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCAggroScavengers demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCAggroTrader demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCBandits demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCBlackOps demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCBroker demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCCannibals demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCChemScientists demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCCityResidents demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCCollaborators demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCConscripts demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCDesperateFamily demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCDrunksAggro demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCHomeless demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCLonePsychopath demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCLooters demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCMercenaries demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCMilitaryPatrol demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCPassiveScavengers demoted (ghost). Class kept dormant.
+            // REPROMOTE-001 — PassiveTrader live: weather price mult → DynamicEconomySystem.
             NPCPassiveTrader = new NPC_PassiveTrader();
-            NPCPsychopathPair = new NPC_PsychopathPair();
-            NPCRebelMilitia = new NPC_RebelMilitia();
-            NPCRebelModerates = new NPC_RebelModerates();
-            NPCRebelSnipers = new NPC_RebelSnipers();
-            NPCRebelZealots = new NPC_RebelZealots();
-            NPCSlavers = new NPC_Slavers();
-            NPCSpecOps = new NPC_SpecOps();
-            NPCSurvivalists = new NPC_Survivalists();
-            NPCTaxCollector = new NPC_TaxCollector();
-            NPCTerrorists = new NPC_Terrorists();
-            NPCTheNegotiator = new NPC_TheNegotiator();
-            NPCTheOld = new NPC_TheOld();
-            NPCTheParents = new NPC_TheParents();
-            NPCTravelingCouple = new NPC_TravelingCouple();
-            Debug.Log("[GameBootstrap] NPC family ready (34 systems).");
+            // DEMOTE-NPC-batch — NPCPsychopathPair demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelMilitia demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelModerates demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelSnipers demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCRebelZealots demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-001 — NPCSlavers demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCSpecOps demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCSurvivalists demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTaxCollector demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTerrorists demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTheNegotiator demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTheOld demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTheParents demoted (ghost). Class kept dormant.
+            // DEMOTE-NPC-batch — NPCTravelingCouple demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] NPC family: PassiveTrader live (REPROMOTE-001); remaining ghosts dormant.");
         }
 
         private void BootNodeFamily()
         {
-            NodeAutomatedArmory = new Node_AutomatedArmory();
-            NodeGhostShip = new Node_GhostShip();
-            NodeMutantHive = new Node_MutantHive();
-            NodePlayerBank = new Node_PlayerBank();
-            NodeSector7G = new Node_Sector7G();
-            NodeSporeHive = new Node_SporeHive();
-            Debug.Log("[GameBootstrap] Node family ready (6 systems).");
+            // DEMOTE-NodeAudio-batch — NodeAutomatedArmory demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — NodeGhostShip demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — NodeMutantHive demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — NodePlayerBank demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — NodeSector7G demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — NodeSporeHive demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Node family demoted.");
         }
 
         private void BootPetFamily()
         {
-            PetFeralCat = new Pet_FeralCat();
-            Debug.Log("[GameBootstrap] Pet family ready (1 systems).");
+            // DEMOTE-TraitPetProject-batch — PetFeralCat demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Pet family demoted.");
         }
 
         private void BootProjectFamily()
         {
-            ProjectBioReactor = new Project_BioReactor();
-            ProjectDeepWell = new Project_DeepWell();
-            ProjectElevator = new Project_Elevator();
-            ProjectMinecart = new Project_Minecart();
-            ProjectRadioArray = new Project_RadioArray();
-            ProjectSurfaceDome = new Project_SurfaceDome();
-            Debug.Log("[GameBootstrap] Project family ready (6 systems).");
+            // DEMOTE-TraitPetProject-batch — ProjectBioReactor demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ProjectDeepWell demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ProjectElevator demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ProjectMinecart demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ProjectRadioArray demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ProjectSurfaceDome demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Project family demoted.");
         }
 
         private void BootShelterEventFamily()
         {
-            ShelterEventCaravanAmbush = new ShelterEvent_CaravanAmbush();
-            ShelterEventFalseCure = new ShelterEvent_FalseCure();
-            ShelterEventRansom = new ShelterEvent_Ransom();
-            ShelterEventRefugees = new ShelterEvent_Refugees();
-            ShelterEventTheMirror = new ShelterEvent_TheMirror();
-            ShelterEventTribute = new ShelterEvent_Tribute();
-            Debug.Log("[GameBootstrap] ShelterEvent family ready (6 systems).");
+            // DEMOTE-TraitPetProject-batch — ShelterEventCaravanAmbush demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ShelterEventFalseCure demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ShelterEventRansom demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ShelterEventRefugees demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ShelterEventTheMirror demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ShelterEventTribute demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] ShelterEvent family demoted.");
         }
 
         private void BootSkirmishFamily()
@@ -319,24 +326,24 @@ namespace AtomicWar._Game.Core
             SkirmishMil_vs_Terror = new Skirmish_Mil_vs_Terror("skirmish_mil_vs_terror");
             SkirmishRebel_vs_Bandit = new Skirmish_Rebel_vs_Bandit("skirmish_rebel_vs_bandit");
             SkirmishRebel_vs_Terror = new Skirmish_Rebel_vs_Terror("skirmish_rebel_vs_terror");
-            Debug.Log("[GameBootstrap] Skirmish family ready (5 systems).");
+            GameLog.Log("[GameBootstrap] Skirmish family ready (5 systems).");
         }
 
         private void BootTraderFamily()
         {
             TraderPlagueConvoy = new Trader_PlagueConvoy();
-            Debug.Log("[GameBootstrap] Trader family ready (1 systems).");
+            GameLog.Log("[GameBootstrap] Trader family ready (1 systems).");
         }
 
         private void BootTraitFamily()
         {
-            TraitAnthropophobia = new Trait_Anthropophobia();
-            TraitClairvoyant = new ClairvoyantSystem();
-            TraitGenerationalTrauma = new Trait_GenerationalTrauma();
-            TraitInheritedGenetics = new Trait_InheritedGenetics();
-            TraitMatriarch = new Trait_Matriarch();
-            TraitPTSD = new Trait_PTSD();
-            Debug.Log("[GameBootstrap] Trait family ready (6 systems).");
+            // DEMOTE-TraitPetProject-batch — TraitAnthropophobia demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitClairvoyant demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitGenerationalTrauma demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitInheritedGenetics demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitMatriarch demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitPTSD demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Trait family ready (6 systems).");
         }
 
         private void BootUIEventFamily()
@@ -349,39 +356,39 @@ namespace AtomicWar._Game.Core
             UIEventLowPower = new UIEvent_LowPower();
             UIEventMapRot = new UIEvent_MapRot();
             UIEventPhantomBlip = new PhantomBlipSystem();
-            Debug.Log("[GameBootstrap] UIEvent family ready (8 systems).");
+            GameLog.Log("[GameBootstrap] UIEvent family ready (8 systems).");
         }
 
         private void BootVehicleFamily()
         {
-            VehicleArmoredTruck = new Vehicle_ArmoredTruck();
-            VehicleMotorcycle = new Vehicle_Motorcycle();
-            VehicleRowboat = new Vehicle_Rowboat();
-            Debug.Log("[GameBootstrap] Vehicle family ready (3 systems).");
+            // DEMOTE-CombatVehicle-batch — VehicleArmoredTruck demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — VehicleMotorcycle demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — VehicleRowboat demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Vehicle family demoted.");
         }
 
         private void BootVisitorFamily()
         {
-            VisitorAbandonedState = new Visitor_AbandonedState();
-            VisitorChurchHostile = new Visitor_ChurchHostile();
-            VisitorChurchSanctuary = new Visitor_ChurchSanctuary();
-            VisitorExplodedState = new Visitor_ExplodedState();
-            VisitorFleeingHorde = new Visitor_FleeingHorde();
-            VisitorHospitalPatients = new Visitor_HospitalPatients();
-            VisitorHospitalStaff = new Visitor_HospitalStaff();
-            VisitorMilTrainingYard = new Visitor_MilTrainingYard();
-            VisitorQuestFaction = new Visitor_QuestFaction();
-            VisitorRebelTrainingYard = new Visitor_RebelTrainingYard();
-            Debug.Log("[GameBootstrap] Visitor family ready (10 systems).");
+            // DEMOTE-Visitor-batch — VisitorAbandonedState demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorChurchHostile demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorChurchSanctuary demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorExplodedState demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorFleeingHorde demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorHospitalPatients demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorHospitalStaff demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorMilTrainingYard demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorQuestFaction demoted (ghost). Class kept dormant.
+            // DEMOTE-Visitor-batch — VisitorRebelTrainingYard demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Visitor family demoted (10 ghosts dormant).");
         }
 
         private void BootWeaponFamily()
         {
-            WeaponChainsaw = new Weapon_Chainsaw();
-            WeaponFlamethrower = new Weapon_Flamethrower();
-            WeaponHMG = new Weapon_HMG();
-            WeaponRPG = new Weapon_RPG();
-            Debug.Log("[GameBootstrap] Weapon family ready (4 systems).");
+            // DEMOTE-CombatVehicle-batch — WeaponChainsaw demoted (ghost). Class kept dormant.
+            // DEMOTE-CombatVehicle-batch — WeaponFlamethrower demoted (ghost). Class kept dormant.
+            WeaponHMG = new Weapon_HMG(); // REPROMOTE-Weapon-001
+            // DEMOTE-CombatVehicle-batch — WeaponRPG demoted (ghost). Class kept dormant.
+            GameLog.Log("[GameBootstrap] Weapon family demoted.");
         }
 
         private void BootWorldEventFamily()
@@ -391,33 +398,33 @@ namespace AtomicWar._Game.Core
             WorldEventFissure = new WorldEvent_Fissure();
             WorldEventGreatFamine = new WorldEvent_GreatFamine();
             WorldEventMegafauna = new WorldEvent_Megafauna();
-            Debug.Log("[GameBootstrap] WorldEvent family ready (5 systems).");
+            GameLog.Log("[GameBootstrap] WorldEvent family ready (5 systems).");
         }
 
         private void BootRemainingComplexFamily()
         {
-            ActionCrawlspace = new Action_Crawlspace();
-            ActionPlay = new Action_Play();
-            ActionSlaughterPet = new Action_SlaughterPet();
-            ActionTeachChild = new Action_TeachChild();
-            ActionTellStories = new Action_TellStories();
-            ItemAshGoat = new Item_AshGoat("item_ash_goat");
-            ItemBoots = new Item_Boots();
-            ItemLiveTrap = new Item_LiveTrap("item_live_trap");
-            ItemMutantChicken = new Item_MutantChicken("item_mutant_chicken");
-            ItemToys = new Item_Toys();
-            TraitAshTongue = new Trait_AshTongue();
-            TraitKleptomaniac = new Trait_Kleptomaniac();
-            TraitMascot = new Trait_Mascot();
-            TraitStuntedEmpathy = new Trait_StuntedEmpathy();
-            TraitSuperstitious = new Trait_Superstitious();
-            AfflictionBunkerFever = new Affliction_BunkerFever();
-            AfflictionZoonoticFlu = new Affliction_ZoonoticFlu();
-            ModuleRationLock = new Module_RationLock();
-            NodeOrphanage = new Node_Orphanage();
-            PetGuardDog = new Pet_GuardDog("pet_guard_dog");
+            // DEMOTE-Action batch — ActionCrawlspace demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionPlay demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionSlaughterPet demoted (ghost). Class kept dormant.
+            // DEMOTE-Action batch — ActionTeachChild demoted (ghost). Class kept dormant.
+            // DEMOTE-Action-remaining — ActionTellStories demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemAshGoat demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemBoots demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemLiveTrap demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemMutantChicken demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — ItemToys demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitAshTongue demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitKleptomaniac demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitMascot demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitStuntedEmpathy demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — TraitSuperstitious demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionBunkerFever demoted (ghost). Class kept dormant.
+            // DEMOTE-AfflictionItem-batch — AfflictionZoonoticFlu demoted (ghost). Class kept dormant.
+            // DEMOTE-TraitPetProject-batch — ModuleRationLock demoted (ghost). Class kept dormant.
+            // DEMOTE-NodeAudio-batch — NodeOrphanage demoted (ghost). Class kept dormant.
+            PetGuardDog = new Pet_GuardDog("pet_guard_dog"); // REPROMOTE-Pet-001
             FalloutStormHazard = new FalloutStormHazardSystem(WeatherSystem);
-            Debug.Log("[GameBootstrap] Remaining complex family ready (21 systems).");
+            GameLog.Log("[GameBootstrap] Remaining complex family ready (21 systems).");
         }
 
     }

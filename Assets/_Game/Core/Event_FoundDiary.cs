@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -76,7 +77,7 @@ namespace AtomicWar._Game.Core
             // (the caller is responsible for deducting rations from the supply system)
             if (!playerIntervened)
             {
-                Debug.Log($"[FoundDiary] Blackmail unresolved by player. Extra rations consumed by {_state.blackmailerId}.");
+                GameLog.Log($"[FoundDiary] Blackmail unresolved by player. Extra rations consumed by {_state.blackmailerId}.");
             }
 
             _state.blackmailActive = false;

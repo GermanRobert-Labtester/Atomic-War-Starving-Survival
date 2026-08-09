@@ -18,6 +18,14 @@ namespace AtomicWar._Game.Core
 
     public class Affliction_ZoonoticFlu
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call sites below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("affliction_zoonoticflu");
+
         public event Action<string, string> OnInfectionStarted;     // survivorId, sourceAnimal
         public event Action<string, string> OnSpreadViaVents;       // infectedId, newlyInfectedId
 
@@ -68,7 +76,7 @@ namespace AtomicWar._Game.Core
                     if (!string.IsNullOrEmpty(survivorId) && survivorId != infectedId)
                     {
                         // High contagion rate through vents
-                        if (UnityEngine.Random.value < _state.contagionRate)
+                        if (FallbackRng.NextDouble() < _state.contagionRate)
                         {
                             OnSpreadViaVents?.Invoke(infectedId, survivorId);
                         }

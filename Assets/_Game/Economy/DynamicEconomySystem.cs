@@ -73,6 +73,15 @@ namespace AtomicWar._Game.Economy
         public const float MinDemandMult = 0.25f;
         public const float MaxDemandMult = 4f;
 
+        /// <summary>#292 Auditor: trade values skewed in the player's favour.</summary>
+        public const float AuditorTradeDiscount = 0.55f;
+
+        // ECON-5A/5B: floor and ceiling on the *combined* personal-quest price
+        // modifier applied on top of the resolved market value. See
+        // GetQuestTradeMultiplier.
+        public const float MinQuestTradeMult = 0.25f;
+        public const float MaxQuestTradeMult = 2.5f;
+
         private readonly Dictionary<string, FactionSO> _factions = new Dictionary<string, FactionSO>();
         private readonly Dictionary<string, float> _trust = new Dictionary<string, float>();
         /// <summary>Per item-id demand pressure. 1 = neutral; &gt;1 scarce; &lt;1 surplus.</summary>
@@ -115,6 +124,11 @@ namespace AtomicWar._Game.Economy
         /// for healthy sealed blood (#16 polish). Null = false.
         /// </summary>
         private Func<bool> _getPartyIntactHazmat;
+        /// <summary>
+        /// Optional weather/caravan item price multiplier (itemId → mult, 1 = no change).
+        /// Host wires PassiveTrader / hatch-caravan weather spikes without Core↔Economy cycles.
+        /// </summary>
+        private Func<string, float> _itemWeatherPriceMultiplier;
         /// <summary>
         /// Last sampled party avg radiation for trust-inversion raid cascade.
         /// NaN = never sampled (first <see cref="NotifyPartyRadiationChanged"/> only seeds).
@@ -186,6 +200,15 @@ namespace AtomicWar._Game.Economy
         public void SetPartyIntactHazmatProvider(Func<bool> getPartyIntactHazmat)
         {
             _getPartyIntactHazmat = getPartyIntactHazmat;
+        }
+
+        /// <summary>
+        /// Wire weather-sensitive caravan pricing (e.g. PassiveTrader water spikes in fallout).
+        /// Provider returns a multiplier ≥ 0; null / 0 / negative values are ignored.
+        /// </summary>
+        public void SetWeatherItemPriceMultiplier(Func<string, float> itemWeatherPriceMultiplier)
+        {
+            _itemWeatherPriceMultiplier = itemWeatherPriceMultiplier;
         }
 
         public void NotifyPhaseChanged(WorldPhase phase)
@@ -742,47 +765,59 @@ namespace AtomicWar._Game.Economy
             if (phaseVal <= 0f) return 0f;
 
             // Category shortage spikes (meds/food/guns up, gems soft) when supplies short.
-            var tier = Item_TradeValues.InferTier(item.type);
+            // Explicit TradeTier from ItemDefinition is used if assigned; falls back to
+            // InferTier(item.type). Scrap is tier 0, i.e. the "unset" default, so it is
+            // the one value that means "infer instead" — and inference already returns
+            // Scrap for the item types that genuinely are scrap (ContaminatedFood,
+            // IrradiatedWater), so nothing is lost by deferring to it.
+            var tier = item.tradeTier != ItemTradeTier.Scrap
+                ? item.tradeTier
+                : Item_TradeValues.InferTier(item.type);
             float demand = GetDemandMultiplier(item.id);
-            float v = Item_TradeValues.Resolve(phaseVal, tier, demand, IsSuppliesShort());
+            float marketValue = Item_TradeValues.Resolve(phaseVal, tier, demand, IsSuppliesShort());
+
+            return marketValue * GetQuestTradeMultiplier();
+        }
+
+        /// <summary>
+        /// ECON-5A/5B: aggregate personal-quest price modifier, clamped to
+        /// [<see cref="MinQuestTradeMult"/>, <see cref="MaxQuestTradeMult"/>].
+        /// The individual quest effects are multiplicative, so an unclamped stack
+        /// (Beacon 0.70 × Auditor 0.55 × a Ruthless Capitalist markup) could push an
+        /// item's worth far below its scrap floor or far above the top of the ladder,
+        /// re-ordering the trade tiers the whole economy is balanced around.
+        /// Clamping the aggregate — rather than each term — keeps every individual
+        /// quest effect intact until the combination actually becomes extreme.
+        /// </summary>
+        private float GetQuestTradeMultiplier()
+        {
+            if (_personalQuests == null || _getSurvivors == null) return 1f;
+            var survivors = _getSurvivors();
 
             // #281 Beacon of Truth: global trade prices −30%.
-            if (_personalQuests != null && _getSurvivors != null)
-                v *= _personalQuests.GetBeaconTradePriceMultiplier(_getSurvivors());
-            // #292 Auditor: trade values heavily skewed in player's favor (buy cheaper).
-            if (_personalQuests != null && _getSurvivors != null)
+            float mult = _personalQuests.GetBeaconTradePriceMultiplier(survivors);
+            if (survivors == null) return Mathf.Clamp(mult, MinQuestTradeMult, MaxQuestTradeMult);
+
+            for (int i = 0; i < survivors.Count; i++)
             {
-                var list = _getSurvivors();
-                if (list != null)
+                // #292 Auditor: trade values heavily skewed in the player's favour.
+                if (_personalQuests.HasFavorableTradeValues(survivors[i]))
                 {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (_personalQuests.HasFavorableTradeValues(list[i]))
-                        {
-                            v *= 0.55f;
-                            break;
-                        }
-                    }
+                    mult *= AuditorTradeDiscount;
+                    break;
                 }
             }
-            // #311 Ruthless Capitalist: sells to factions at a steep markup.
-            if (_personalQuests != null && _getSurvivors != null)
+            for (int i = 0; i < survivors.Count; i++)
             {
-                var list = _getSurvivors();
-                if (list != null)
+                // #311 Ruthless Capitalist: sells to factions at a steep markup.
+                float sellMult = _personalQuests.GetRuthlessCapitalistFactionSellMult(survivors[i]);
+                if (!Mathf.Approximately(sellMult, 1f))
                 {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        float sellMult = _personalQuests.GetRuthlessCapitalistFactionSellMult(list[i]);
-                        if (!Mathf.Approximately(sellMult, 1f))
-                        {
-                            v *= sellMult;
-                            break;
-                        }
-                    }
+                    mult *= sellMult;
+                    break;
                 }
             }
-            return v;
+            return Mathf.Clamp(mult, MinQuestTradeMult, MaxQuestTradeMult);
         }
 
         /// <summary>
@@ -840,6 +875,14 @@ namespace AtomicWar._Game.Economy
         {
             float baseVal = GetTradeValue(item);
             if (baseVal <= 0f) return 0f;
+
+            // Passive caravan / weather exchange rates (Prompt #362) — host-injected.
+            if (item != null && _itemWeatherPriceMultiplier != null)
+            {
+                float weatherMult = _itemWeatherPriceMultiplier(item.id);
+                if (weatherMult > 0f && !Mathf.Approximately(weatherMult, 1f))
+                    baseVal *= weatherMult;
+            }
 
             var fac = GetFaction(factionId);
             // Cult of the Glow / trust-inversion: irradiated water is prized currency.

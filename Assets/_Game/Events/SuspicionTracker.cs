@@ -13,6 +13,14 @@ namespace AtomicWar._Game.Events
     /// </summary>
     public class SuspicionTracker
     {
+        /// <summary>
+        /// MISC-005: seeded last-resort stream. Callers should inject a campaign rng;
+        /// without this, an un-injected host silently fell back to wall-clock
+        /// UnityEngine.Random and made this roll unreplayable across loads.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("suspicion_tracker");
+
         public const float ResourceStarvedThreshold = 0.10f;
         public const float HoursUntilMystery = 24f;
         public const float IgnoreVanishHours = 48f;
@@ -64,6 +72,8 @@ namespace AtomicWar._Game.Events
         public event Action<GameEvent, EventContext> OnMysteryEventReady;
         public event Action<string, int> OnRationVanished; // itemId hint, amount
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
         private EventRunner _boundRunner;
 
         // ── Evaluation ───────────────────────────────────────────────────
@@ -175,7 +185,7 @@ namespace AtomicWar._Game.Events
             if (candidates.Count == 0) return null;
             if (total <= 0f) return candidates[0];
 
-            double roll = rng != null ? rng.NextDouble() * total : UnityEngine.Random.Range(0f, total);
+            double roll = (rng ?? FallbackRng).NextDouble() * total;
             float accum = 0f;
             for (int i = 0; i < candidates.Count; i++)
             {
@@ -222,7 +232,7 @@ namespace AtomicWar._Game.Events
             if (context == null) return;
 
             var crew = context.AllSurvivors;
-            var rng = context.Random ?? new System.Random();
+            var rng = context.Random ?? AtomicWar._Game.Utilities.SeededRandom.Stream("suspiciontracker");
 
             var thief = PickSuspect(crew, context.PlayerSurvivorId, rng);
             if (thief == null)
@@ -339,7 +349,10 @@ namespace AtomicWar._Game.Events
                 // Innocent — massive morale penalty on the accused + group unease
                 var accused = FindSurvivor(context.AllSurvivors, AccusedId);
                 if (accused != null && accused.Needs != null)
-                    accused.Needs.Morale = Mathf.Clamp(accused.Needs.Morale + InnocentMoralePenalty, 0f, 100f);
+            if (_needsSystem != null)
+                _needsSystem.Modify(accused, NeedKind.Morale, InnocentMoralePenalty);
+            else
+                accused.Needs.Morale = Mathf.Clamp(accused.Needs.Morale + InnocentMoralePenalty, 0f, 100f);
                 ApplyGroupMorale(context, -8f, excludeId: AccusedId);
                 MysteryOpen = false;
                 context.SetEventFlag(FlagMysteryActive, false);
@@ -630,6 +643,9 @@ namespace AtomicWar._Game.Events
                 var s = context.AllSurvivors[i];
                 if (s == null || !s.IsAlive || s.Needs == null) continue;
                 if (!string.IsNullOrEmpty(excludeId) && s.Id == excludeId) continue;
+            if (context?.NeedsSystem != null)
+                context.NeedsSystem.Modify(s, NeedKind.Morale, delta);
+            else
                 s.Needs.Morale = Mathf.Clamp(s.Needs.Morale + delta, 0f, 100f);
             }
         }

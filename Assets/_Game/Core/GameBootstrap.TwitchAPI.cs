@@ -1,6 +1,7 @@
 // GameBootstrap.TwitchAPI.cs — Prompt #865 offline-safe Twitch poll host hooks.
 using AtomicWar._Game.Environment;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -13,7 +14,7 @@ namespace AtomicWar._Game.Core
         {
             TwitchAPI = new System_TwitchAPI();
             WireTwitchAPI();
-            Debug.Log("[GameBootstrap] TwitchAPI ready (offline stub; connect via ConnectOffline).");
+            GameLog.Log("[GameBootstrap] TwitchAPI ready (offline stub; connect via ConnectOffline).");
         }
 
         /// <summary>
@@ -24,9 +25,9 @@ namespace AtomicWar._Game.Core
             if (TwitchAPI == null) return;
 
             TwitchAPI.OnConnected += channel =>
-                Debug.Log($"[GameBootstrap] TWITCH: connected to '{channel}'");
+                GameLog.Log($"[GameBootstrap] TWITCH: connected to '{channel}'");
             TwitchAPI.OnDisconnected += () =>
-                Debug.Log("[GameBootstrap] TWITCH: disconnected");
+                GameLog.Log("[GameBootstrap] TWITCH: disconnected");
 
             TwitchAPI.OnEventSpawned += eventId =>
             {
@@ -35,19 +36,19 @@ namespace AtomicWar._Game.Core
                 if (eventId == "weather_blizzard")
                 {
                     WeatherSystem?.ForceWeather(WeatherKind.Blizzard);
-                    Debug.Log("[GameBootstrap] TWITCH: viewers forced a blizzard.");
+                    GameLog.Log("[GameBootstrap] TWITCH: viewers forced a blizzard.");
                 }
                 else if (eventId == "weather_heatwave")
                 {
                     // No Heatwave weather kind — Ashfall is the harsh "hot ash" stand-in.
                     WeatherSystem?.ForceWeather(WeatherKind.Ashfall);
-                    Debug.Log("[GameBootstrap] TWITCH: viewers forced a heatwave (ashfall).");
+                    GameLog.Log("[GameBootstrap] TWITCH: viewers forced a heatwave (ashfall).");
                 }
                 else if (eventId == System_TwitchAPI.OptRaid)
                 {
                     // Open bandage/raid window without forcing a full ResolveRaid (offline-safe).
                     HatchDefenseSystem?.OpenRaidWindow();
-                    Debug.Log("[GameBootstrap] TWITCH: viewers opened a raid window.");
+                    GameLog.Log("[GameBootstrap] TWITCH: viewers opened a raid window.");
                 }
             };
 
@@ -55,11 +56,11 @@ namespace AtomicWar._Game.Core
             {
                 // Offline-safe: a few liters of clean water into the cistern.
                 WaterStorage?.AddClean(5f);
-                Debug.Log($"[GameBootstrap] TWITCH: supply drop '{crateId}' → +5 L clean water.");
+                GameLog.Log($"[GameBootstrap] TWITCH: supply drop '{crateId}' → +5 L clean water.");
             };
 
             TwitchAPI.OnPollClosed += (pollId, winner, total) =>
-                Debug.Log($"[GameBootstrap] TWITCH: poll '{pollId}' closed → '{winner}' ({total} votes)");
+                GameLog.Log($"[GameBootstrap] TWITCH: poll '{pollId}' closed → '{winner}' ({total} votes)");
         }
 
         /// <summary>

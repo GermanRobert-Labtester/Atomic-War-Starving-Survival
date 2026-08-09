@@ -17,6 +17,8 @@ namespace AtomicWar._Game.Core
     /// Prompt #362: NPC Encounter: Passive Traders.
     /// Heavily guarded caravans offering dynamic exchange rates based on active WeatherSystem conditions
     /// (e.g., selling water for 5x price during a Fallout Storm).
+    /// REPROMOTE-001 — Boot/Save live; GameBootstrap wires GetPriceMultiplierForItem into
+    /// DynamicEconomySystem.SetWeatherItemPriceMultiplier for hatch/caravan trade quotes.
     /// </summary>
     public class NPC_PassiveTrader
     {

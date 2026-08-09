@@ -1,3 +1,4 @@
+using AtomicWar._Game.Shelter;
 using UnityEngine;
 
 namespace AtomicWar._Game.Shelter.Modules

@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
         public int lootMax = 5;
     }
 
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_Crawlspace
     {
         public event Action<string, int> OnLootRetrieved;
@@ -57,7 +58,7 @@ namespace AtomicWar._Game.Core
 
             if (rng == null)
             {
-                rng = new System.Random();
+                rng = AtomicWar._Game.Utilities.SeededRandom.Stream("action_crawlspace");
             }
 
             double caveInRoll = rng.NextDouble();

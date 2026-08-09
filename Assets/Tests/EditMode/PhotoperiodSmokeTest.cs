@@ -77,20 +77,24 @@ namespace AtomicWar.Tests.EditMode
             _lightProfile.growLightEquivalentFraction      = 0.5f;
             _lightProfile.growLightMoraleBoostPerHour      = 0.3f;
 
-            // Needs profile
+            // Needs profile — photoperiod-only isolation. DEEP-001 re-enabled
+            // critical hunger/thirst health drain; with non-zero need rates the
+            // survivor dies mid-run, LightExposure freezes, and Listless never
+            // appears. Zero physiological drain so the light curve is the only
+            // moving signal (warmth is forced via isNearHeatSource below).
             _needsProfile = ScriptableObject.CreateInstance<NeedsProfile>();
-            _needsProfile.hungerPerHour              = 1f;
-            _needsProfile.thirstPerHour              = 1.5f;
-            _needsProfile.fatiguePerHour             = 0.5f;
-            _needsProfile.warmthLossPerHourInCold    = 2f;
+            _needsProfile.hungerPerHour              = 0f;
+            _needsProfile.thirstPerHour              = 0f;
+            _needsProfile.fatiguePerHour             = 0f;
+            _needsProfile.warmthLossPerHourInCold    = 0f;
             _needsProfile.warmthRestorePerHourNearHeat = 4f;
             _needsProfile.hungerCritical             = 100f;
             _needsProfile.thirstCritical             = 100f;
             _needsProfile.warmthCritical             = 10f;
-            _needsProfile.healthLossFromHunger       = 1f;
-            _needsProfile.healthLossFromThirst       = 1f;
-            _needsProfile.healthLossFromCold         = 1f;
-            _needsProfile.moraleLossPerHourWhileCritical = 0.5f;
+            _needsProfile.healthLossFromHunger       = 0f;
+            _needsProfile.healthLossFromThirst       = 0f;
+            _needsProfile.healthLossFromCold         = 0f;
+            _needsProfile.moraleLossPerHourWhileCritical = 0f;
 
             // Systems
             _weatherSystem     = new WeatherSystem(_seasonProfile, Seed);

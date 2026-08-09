@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Sub-faction of rebels who execute anyone suspected of collaborating.
     /// If player traded with the Military in the last 10 days, Zealots execute on sight.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_RebelZealots
     {
         private RebelZealotsState _state = new RebelZealotsState();

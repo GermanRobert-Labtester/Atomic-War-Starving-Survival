@@ -83,7 +83,7 @@ namespace AtomicWar._Game.Simulation
             if (user == null || rng == null) return true;
             if (rng.NextDouble() < MisfireChance)
             {
-                user.Needs.Health = Mathf.Clamp(user.Needs.Health - MisfireHealthDamage, 0f, user.MaxHealthCap);
+                SurvivorNeedWrite.SetHealth(user, user.Needs.Health - MisfireHealthDamage);
                 inflictAffliction?.Invoke(user, ShrapnelWoundId);
                 return false; // weapon destroyed
             }

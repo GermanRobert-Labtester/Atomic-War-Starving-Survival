@@ -16,6 +16,14 @@ namespace AtomicWar._Game.Core
 
     public class Item_MutantChicken
     {
+        /// <summary>
+        /// MISC-005: seeded stream so this system's rolls replay identically. The
+        /// call sites below previously used wall-clock UnityEngine.Random, which made
+        /// the same save produce different outcomes on each load.
+        /// </summary>
+    private static System.Random FallbackRng =>
+        AtomicWar._Game.Utilities.SeededRandom.Stream("item_mutantchicken");
+
         public event Action<string> OnEggLaid;           // shelterId
         public event Action<string> OnChickenWentFeral;   // shelterId
         public event Action<string, string> OnSurvivorAttacked; // chickenId, survivorId
@@ -73,7 +81,7 @@ namespace AtomicWar._Game.Core
                 // Attack a survivor if any are present
                 if (survivorIds != null && survivorIds.Count > 0)
                 {
-                    int targetIndex = UnityEngine.Random.Range(0, survivorIds.Count);
+                    int targetIndex = FallbackRng.Next(0, survivorIds.Count);
                     OnSurvivorAttacked?.Invoke(_chickenId, survivorIds[targetIndex]);
                 }
             }

@@ -1,6 +1,7 @@
 // GameBootstrap.MapHazards.cs — boot/wire MapHazard_* expedition hazards.
 using AtomicWar._Game.Survivors;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -17,17 +18,19 @@ namespace AtomicWar._Game.Core
         {
             MapHazardAcidGeyser = new MapHazard_AcidGeyser();
             MapHazardAshlanche = new MapHazard_Ashlanche();
-            MapHazardBiometricDoor = new MapHazard_BiometricDoor();
-            MapHazardCraterWall = new MapHazard_CraterWall();
-            MapHazardCrevice = new MapHazard_Crevice();
-            MapHazardFlammableGas = new MapHazard_FlammableGas();
-            MapHazardGasPockets = new MapHazard_GasPockets();
-            MapHazardMagneticAnomaly = new MapHazard_MagneticAnomaly();
-            MapHazardSinkholeCollapse = new MapHazard_SinkholeCollapse();
+            // DEMOTE-MapHazard-batch — MapHazardBiometricDoor demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardCraterWall demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardCrevice demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardFlammableGas demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardGasPockets demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardMagneticAnomaly demoted. Class kept dormant.
+            // DEMOTE-MapHazard-batch — MapHazardSinkholeCollapse demoted. Class kept dormant.
+            // REPROMOTE-MapHazard-001 — VenusTrap live for swamp-tagged expedition looting.
             MapHazardVenusTrap = new MapHazard_VenusTrap();
-
+            // Prompt #902 — FrozenSurvivor live for snowfield/frozen-lake nodes.
+            MapHazardFrozenSurvivor = new MapHazard_FrozenSurvivor();
             WireMapHazards();
-            Debug.Log("[GameBootstrap] Map hazards ready (10 trackers).");
+            GameLog.Log("[GameBootstrap] Map hazards: AcidGeyser+Ashlanche+VenusTrap+FrozenSurvivor live; 7 HANDLERS_ONLY demoted.");
         }
 
         private void WireMapHazards()
@@ -35,7 +38,7 @@ namespace AtomicWar._Game.Core
             if (MapHazardAcidGeyser != null)
             {
                 MapHazardAcidGeyser.OnEruptionStarted += node =>
-                    Debug.Log($"[GameBootstrap] HAZARD: acid geyser erupting at '{node}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: acid geyser erupting at '{node}'");
                 MapHazardAcidGeyser.OnChemicalBurnsApplied += (id, dmg) =>
                 {
                     // Host: apply health loss when a survivor is caught mid-eruption.
@@ -53,67 +56,79 @@ namespace AtomicWar._Game.Core
             if (MapHazardAshlanche != null)
             {
                 MapHazardAshlanche.OnAvalancheTriggered += node =>
-                    Debug.Log($"[GameBootstrap] HAZARD: ashlanche at '{node}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: ashlanche at '{node}'");
                 MapHazardAshlanche.OnSuffocation += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: ashlanche suffocation — '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: ashlanche suffocation — '{id}'");
             }
 
             if (MapHazardBiometricDoor != null)
             {
                 MapHazardBiometricDoor.OnDoorUnlocked += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: biometric door unlocked by '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: biometric door unlocked by '{id}'");
                 MapHazardBiometricDoor.OnDoorRejected += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: biometric door rejected '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: biometric door rejected '{id}'");
             }
 
             if (MapHazardCraterWall != null)
             {
                 MapHazardCraterWall.OnClimbCompleted += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: crater wall climbed by '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: crater wall climbed by '{id}'");
                 MapHazardCraterWall.OnClimbFailed += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: crater wall climb failed for '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: crater wall climb failed for '{id}'");
             }
 
             if (MapHazardCrevice != null)
             {
                 MapHazardCrevice.OnJumpFailed += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: crevice jump failed — '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: crevice jump failed — '{id}'");
                 MapHazardCrevice.OnBridgeBuilt += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: crevice bridge built by '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: crevice bridge built by '{id}'");
             }
 
             if (MapHazardFlammableGas != null)
             {
                 MapHazardFlammableGas.OnSparkIgnited += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: flammable gas ignited by '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: flammable gas ignited by '{id}'");
             }
 
             if (MapHazardGasPockets != null)
             {
                 MapHazardGasPockets.OnIgnition += (node, dmg) =>
-                    Debug.Log($"[GameBootstrap] HAZARD: gas pocket ignited at '{node}' ({dmg:F0} burn)");
+                    GameLog.Log($"[GameBootstrap] HAZARD: gas pocket ignited at '{node}' ({dmg:F0} burn)");
             }
 
             if (MapHazardMagneticAnomaly != null)
             {
                 MapHazardMagneticAnomaly.OnCompassScrambled += () =>
-                    Debug.Log("[GameBootstrap] HAZARD: magnetic anomaly scrambled compass");
+                    GameLog.Log("[GameBootstrap] HAZARD: magnetic anomaly scrambled compass");
                 MapHazardMagneticAnomaly.OnFogOfWarExpanded += () =>
-                    Debug.Log("[GameBootstrap] HAZARD: magnetic anomaly expanded fog of war");
+                    GameLog.Log("[GameBootstrap] HAZARD: magnetic anomaly expanded fog of war");
             }
 
             if (MapHazardSinkholeCollapse != null)
             {
                 MapHazardSinkholeCollapse.OnCollapseTriggered += (id, subway) =>
-                    Debug.Log($"[GameBootstrap] HAZARD: sinkhole dropped '{id}' to '{subway}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: sinkhole dropped '{id}' to '{subway}'");
             }
 
             if (MapHazardVenusTrap != null)
             {
                 MapHazardVenusTrap.OnArmLost += (id, arm) =>
-                    Debug.Log($"[GameBootstrap] HAZARD: venus trap amputated {arm} from '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: venus trap amputated {arm} from '{id}'");
                 MapHazardVenusTrap.OnDisguiseSpotted += id =>
-                    Debug.Log($"[GameBootstrap] HAZARD: venus trap spotted by '{id}'");
+                    GameLog.Log($"[GameBootstrap] HAZARD: venus trap spotted by '{id}'");
+            }
+
+            if (MapHazardFrozenSurvivor != null)
+            {
+                MapHazardFrozenSurvivor.OnSurvivorFound += name =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: frozen survivor found — {name} is still alive");
+                MapHazardFrozenSurvivor.OnRescueSucceeded += name =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: {name} rescued — they vanished into the ash");
+                MapHazardFrozenSurvivor.OnRescueFailed += (name, words) =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: {name} died during rescue — last words: {words}");
+                MapHazardFrozenSurvivor.OnWalkedAway += name =>
+                    GameLog.Log($"[GameBootstrap] HAZARD: walked away from {name}");
             }
         }
 

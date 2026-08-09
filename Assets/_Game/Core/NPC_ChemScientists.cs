@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// Spawns at Military Bases or Hospitals. Non-combatants producing Mustard Gas.
     /// Player can execute them to halt production (+Rebel Faction Trust) or steal research (+AdvancedChemistry XP).
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_ChemScientists
     {
         private ChemScientistsState _state = new ChemScientistsState();

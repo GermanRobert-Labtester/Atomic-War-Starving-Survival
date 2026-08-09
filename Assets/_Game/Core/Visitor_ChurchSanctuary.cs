@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Filled with passive civilians and a Priest. Safe Zone node that freezes Fatigue accumulation
     /// and allows mid-expedition rest without returning to bunker.
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_ChurchSanctuary
     {
         private ChurchSanctuaryState _state = new ChurchSanctuaryState();

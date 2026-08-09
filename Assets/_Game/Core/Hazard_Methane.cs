@@ -13,11 +13,18 @@ namespace AtomicWar._Game.Core
 
     public class MethaneSystem
     {
+        /// <summary>
+        /// Shelter air above this value is considered strong enough to vent a
+        /// breached pocket. The boundary matches the existing HUD's "Good" air band.
+        /// </summary>
+        public const float VentilationClearAirQuality = 60f;
+
         private readonly MethaneState _state;
 
         public MethaneState State => _state;
 
         public event Action<string> OnMethaneBreached;   // hazardId
+        public event Action<string> OnMethaneCleared;    // hazardId
         public event Action<string, string> OnIgnition;    // hazardId, ignitionSource
         public event Action<string> OnRoomDestroyed;      // hazardId
 
@@ -63,11 +70,27 @@ namespace AtomicWar._Game.Core
             return true;
         }
 
+        /// <summary>
+        /// Observe the shelter's current air quality after its atmosphere tick.
+        /// Healthy ventilation clears an intact breached pocket; inactive or
+        /// detonated hazards are no-ops. This never mutates shelter atmosphere.
+        /// </summary>
+        public void Tick(float gameHours, float shelterAirQuality)
+        {
+            if (gameHours <= 0f || !_state.isGasPresent || _state.isDetonated)
+                return;
+            if (shelterAirQuality <= VentilationClearAirQuality)
+                return;
+
+            _state.isGasPresent = false;
+            OnMethaneCleared?.Invoke(_state.hazardId);
+        }
+
         public bool IsRoomDestroyed()
         {
             return _state.isDetonated;
         }
-    
+
         // ── Save / Load ────────────────────────────────────────────────
         public MethaneState CaptureState()
         {
@@ -89,5 +112,5 @@ namespace AtomicWar._Game.Core
             _state.isDetonated = saved.isDetonated;
         }
 
-}
+    }
 }

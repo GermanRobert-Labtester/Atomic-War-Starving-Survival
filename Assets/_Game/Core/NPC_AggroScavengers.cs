@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// "Finders Keepers." Fires warning shots upon entering node; attacks if player advances.
     /// Equipped with low armor, NailGuns, and Crowbars.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_AggroScavengers
     {
         private AggroScavengersState _state = new AggroScavengersState();

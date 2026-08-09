@@ -276,6 +276,13 @@ namespace AtomicWar._Game.Shelter
 
             if (gameHours <= 0f || power == null) return;
 
+            TryIgnitePowerSources(gameHours, power);
+            TryIgniteWornHeater(gameHours, shelter);
+        }
+
+        /// <summary>Diesel/bicycle generators (and anything else assigned a room) roll to ignite as durability drops.</summary>
+        private void TryIgnitePowerSources(float gameHours, PowerNetwork power)
+        {
             var sources = power.Sources;
             if (sources == null) return;
 
@@ -291,44 +298,44 @@ namespace AtomicWar._Game.Shelter
                     || src.Definition.Kind == PowerSourceKind.Bicycle;
                 if (!isRiskKind && string.IsNullOrEmpty(src.RoomId)) continue;
 
-                float chance = IgnitionChancePerHour * gameHours
-                    * (1f - src.Durability / IgnitionDurabilityThreshold);
-                if (_rng.NextDouble() > chance) continue;
-
-                string roomId = !string.IsNullOrEmpty(src.RoomId) ? src.RoomId : "plant";
-                var room = GetRoom(roomId);
-                if (room == null)
-                {
-                    room = new ShelterRoom(roomId, null);
-                    RegisterRoom(room);
-                }
-                if (room.IsOnFire) continue;
-
-                StartFire(room, intensity: 0.55f);
+                RollIgnition(gameHours, src.Durability, src.RoomId, "plant", intensity: 0.55f);
             }
+        }
 
-            // Heater module wear mirrors generator durability risk.
-            if (shelter != null)
+        /// <summary>Heater module wear mirrors generator durability risk.</summary>
+        private void TryIgniteWornHeater(float gameHours, Shelter shelter)
+        {
+            if (shelter == null) return;
+            var heater = shelter.GetModule("heater");
+            if (heater == null || !heater.IsOperational) return;
+            if (heater.FilterHealth > IgnitionDurabilityThreshold) return;
+
+            RollIgnition(gameHours, heater.FilterHealth, heater.RoomId, "quarters", intensity: 0.4f);
+        }
+
+        /// <summary>
+        /// One ignition roll: chance scales with how far below the durability
+        /// threshold the source has fallen. On a hit, starts (or leaves alone, if
+        /// already burning) a fire in the source's room, falling back to
+        /// <paramref name="defaultRoomId"/> when the source has none assigned.
+        /// </summary>
+        private void RollIgnition(
+            float gameHours, float durability, string roomId, string defaultRoomId, float intensity)
+        {
+            float chance = IgnitionChancePerHour * gameHours
+                * (1f - durability / IgnitionDurabilityThreshold);
+            if (_rng.NextDouble() > chance) return;
+
+            string resolvedRoomId = !string.IsNullOrEmpty(roomId) ? roomId : defaultRoomId;
+            var room = GetRoom(resolvedRoomId);
+            if (room == null)
             {
-                var heater = shelter.GetModule("heater");
-                if (heater != null && heater.IsOperational && heater.FilterHealth <= IgnitionDurabilityThreshold)
-                {
-                    float chance = IgnitionChancePerHour * gameHours
-                        * (1f - heater.FilterHealth / IgnitionDurabilityThreshold);
-                    if (_rng.NextDouble() <= chance)
-                    {
-                        string roomId = !string.IsNullOrEmpty(heater.RoomId) ? heater.RoomId : "quarters";
-                        var room = GetRoom(roomId);
-                        if (room == null)
-                        {
-                            room = new ShelterRoom(roomId, null);
-                            RegisterRoom(room);
-                        }
-                        if (!room.IsOnFire)
-                            StartFire(room, intensity: 0.4f);
-                    }
-                }
+                room = new ShelterRoom(resolvedRoomId, null);
+                RegisterRoom(room);
             }
+            if (room.IsOnFire) return;
+
+            StartFire(room, intensity);
         }
 
         public void StartFire(ShelterRoom room, float intensity = 0.5f)
@@ -408,16 +415,13 @@ namespace AtomicWar._Game.Shelter
 
             // Consume water if available; fall back to sand (less effective).
             float reduction = ExtinguishFireIntensityReduction;
-            bool usedWater = false;
             if (water != null && water.CleanWater >= ExtinguishFireWaterCost)
             {
                 water.ConsumeClean(ExtinguishFireWaterCost);
-                usedWater = true;
             }
             else if (water != null && water.DirtyWater >= ExtinguishFireWaterCost)
             {
                 water.ConsumeDirty(ExtinguishFireWaterCost);
-                usedWater = true;
             }
             else
             {
@@ -490,7 +494,7 @@ namespace AtomicWar._Game.Shelter
                 return false;
             var list = _getSurvivors();
             if (list == null) return false;
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("shelteratmospheresystem");
             for (int i = 0; i < list.Count; i++)
             {
                 var sv = list[i];

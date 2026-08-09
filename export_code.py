@@ -1,4 +1,18 @@
 import os
+import subprocess
+import sys
+
+def restart_logger(command="sudo /logger-restart"):
+    """
+    Executes the restart command for the logger.
+    """
+    print(f"Executing restart command: {command}")
+    try:
+        res = subprocess.run(command, shell=True, check=False)
+        return res.returncode
+    except Exception as e:
+        print(f"Failed to run restart command: {e}")
+        return 1
 
 def export_unity_codebase(assets_folder_path, output_filename="unity_codebase.txt"):
     """
@@ -33,4 +47,6 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(SCRIPT_DIR, "Assets")
 
 if __name__ == "__main__":
+    if "--restart" in sys.argv:
+        restart_logger()
     export_unity_codebase(ASSETS_DIR)

@@ -157,7 +157,7 @@ namespace AtomicWar._Game.Core
                 : CorpseManagementSystem.BuryHours;
             if (CorpseSystem.BuryTheDead(digger, daylight))
             {
-                Debug.Log($"[Internal Horror] {digger.DisplayName} buried the dead. Four hours of light, gone.");
+                GameLog.Log($"[Internal Horror] {digger.DisplayName} buried the dead. Four hours of light, gone.");
                 RefreshInventoryStrip();
             }
         }
@@ -171,7 +171,7 @@ namespace AtomicWar._Game.Core
             if (processor == null) return;
             if (CorpseSystem.ProcessForFertilizer(processor))
             {
-                Debug.Log($"[Internal Horror] {processor.DisplayName} processed a body for fertilizer. Nobody speaks.");
+                GameLog.Log($"[Internal Horror] {processor.DisplayName} processed a body for fertilizer. Nobody speaks.");
                 RefreshInventoryStrip();
             }
         }
@@ -184,7 +184,7 @@ namespace AtomicWar._Game.Core
             var fighter = FindFirstLivingSurvivor();
             if (fighter == null) return;
             bool out_ = AtmosphereSystem.FightFire(roomId, fighter, NeedsSystem);
-            Debug.Log(out_
+            GameLog.Log(out_
                 ? $"[Internal Horror] {fighter.DisplayName} put out the fire in {roomId}."
                 : $"[Internal Horror] {fighter.DisplayName} fought the fire in {roomId}. Still burning.");
             RefreshInternalHorrorHud();
@@ -197,7 +197,7 @@ namespace AtomicWar._Game.Core
             if (AtmosphereSystem == null || string.IsNullOrEmpty(roomId)) return;
             if (AtmosphereSystem.SealBulkhead(roomId, Shelter))
             {
-                Debug.Log($"[Internal Horror] Bulkhead sealed on {roomId}. Whatever was inside stays inside.");
+                GameLog.Log($"[Internal Horror] Bulkhead sealed on {roomId}. Whatever was inside stays inside.");
                 RefreshInternalHorrorHud();
             }
         }

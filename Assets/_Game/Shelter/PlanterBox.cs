@@ -161,7 +161,7 @@ namespace AtomicWar._Game.Shelter
             if (personalQuests != null && personalQuests.CropsImmuneToMold(survivors))
                 return false;
 
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("planterbox");
             if (rng.NextDouble() >= chance) return false;
 
             KillCrop();

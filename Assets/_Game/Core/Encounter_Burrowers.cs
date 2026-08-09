@@ -16,6 +16,7 @@ namespace AtomicWar._Game.Core
     /// Encounter_Burrowers file — class name is BurrowersSystem (historical).
     /// Default id: encounter_burrowers.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live.</summary>
     public class BurrowersSystem
     {
         private BurrowersState _state;

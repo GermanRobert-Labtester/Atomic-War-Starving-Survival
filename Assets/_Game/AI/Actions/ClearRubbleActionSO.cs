@@ -110,8 +110,10 @@ namespace AtomicWar._Game.AI.Actions
             float fatMult = context.ShelterPerks != null
                 ? context.ShelterPerks.GetExcavationFatigueMultiplier(context.Survivor)
                 : 1f;
-            context.Survivor.Needs.Fatigue = Mathf.Clamp(
-                context.Survivor.Needs.Fatigue + 1.5f * fatMult, 0f, 100f);
+            if (context.NeedsSystem != null)
+                context.NeedsSystem.Modify(context.Survivor, NeedKind.Fatigue, 1.5f * fatMult);
+            else
+                context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + 1.5f * fatMult, 0f, 100f);
 
             // Check for diary fragment reveals at progress milestones
             TryRevealDiary(room);

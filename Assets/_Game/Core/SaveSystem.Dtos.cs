@@ -44,6 +44,8 @@ namespace AtomicWar._Game.Core
         public VictoryProjectSave VictoryProject;
         /// <summary>Deferred narrative chain queue (Prompt #43).</summary>
         public ScheduledEventSave ScheduledEvents;
+        /// <summary>EventRunner cooldowns + active delayed consequences.</summary>
+        public EventRunnerStateSave EventRunnerState;
         /// <summary>Internal mystery / Missing Rations state.</summary>
         public SuspicionTrackerSave Suspicion;
         /// <summary>Weather-driven hatch seal / DigOut / suffocation (Prompt #48).</summary>
@@ -203,6 +205,11 @@ namespace AtomicWar._Game.Core
         public bool LocationEncounterFired;
         /// <summary>Prevents double-trigger of UXO landmine across save/load.</summary>
         public bool UxoDetonated;
+        /// <summary>Prompt #210 — Forager's once-per-expedition empty-loot food grant.
+        /// Same double-trigger guard as the two flags above: unpersisted, it reset to
+        /// false on load, so dropping the granted food and scavenging empty again
+        /// re-granted it.</summary>
+        public bool ForagerLootApplied;
 
         // Prompt #68 — bicycle logistics
         public bool HasBicycle;
@@ -247,6 +254,11 @@ namespace AtomicWar._Game.Core
         public float Warmth = 100f;
         public float Morale = 75f;
         public float Health = 100f;
+        // Hygiene was a live need (ToothDecaySystem, HotShower, WastelandSoap all
+        // read/write it) that was never persisted, so it silently reset to full on
+        // every load. The 100f default matches Needs.Hygiene so pre-fix saves — which
+        // carry no Hygiene key — deserialise to "clean" rather than to 0.
+        public float Hygiene = 100f;
         public bool WasHungerCritical;
         public bool WasThirstCritical;
         public bool WasWarmthCritical;
@@ -361,6 +373,10 @@ namespace AtomicWar._Game.Core
         public float RubbleClearHoursTotal;
         public List<string> DiaryFragmentIds = new List<string>();
         public List<int> RevealedDiaryIndices = new List<int>();
+        // Room atmosphere (fire, mold, CO2, O2, bulkhead, contamination) is NOT
+        // duplicated here on purpose: ShelterAtmosphereSystem.CaptureState owns it
+        // and shares the same ShelterRoom instances. A second writer here would
+        // race with it on restore order.
     }
 
     /// <summary>Shelter module runtime state snapshot.</summary>
@@ -372,6 +388,10 @@ namespace AtomicWar._Game.Core
         public bool IsEnabled = true;
         public float FilterHealth = 100f;
         public float Fuel;
+        /// <summary>Prompt #200 Thermodynamics: burn multiplier from the last fuel
+        /// loader (0.8 = 20% longer). Defaults to 1 so pre-SAVE-011 saves load
+        /// as they always did.</summary>
+        public float FuelBurnMultiplier = 1f;
         public float WaterConversionProgress;
         /// <summary>Shelter room the module is installed in (e.g. "quarters", "plant").</summary>
         public string RoomId;
@@ -381,5 +401,9 @@ namespace AtomicWar._Game.Core
         public float ComfortLevel;
         /// <summary>Bed module capacity fallback.</summary>
         public int Capacity;
+        /// <summary>Hatch defense fallback security points per level. HatchDefenseSystem
+        /// re-defaults this from the module id when it is &lt;= 0, so an unpersisted
+        /// custom value silently reverted to the stock number instead of vanishing.</summary>
+        public float SecurityContribution;
     }
 }

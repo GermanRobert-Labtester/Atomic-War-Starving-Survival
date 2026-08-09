@@ -29,7 +29,8 @@ namespace AtomicWar._Game.Survivors
             float        effectiveDaylightHours,
             bool         growLightActive,
             LightProfile lightProfile,
-            bool         ignoreDarknessMorale = false)
+            bool         ignoreDarknessMorale = false,
+            NeedsSystem  needsSystem = null)
         {
             if (sv == null || !sv.IsAlive || lightProfile == null || gameHours <= 0f)
                 return;
@@ -63,9 +64,12 @@ namespace AtomicWar._Game.Survivors
             // Prompt #209 — Night Terror: zero Morale penalty from total darkness.
             if (sv.IsListless && !ignoreDarknessMorale)
             {
-                sv.Needs.Morale = Mathf.Clamp(
-                    sv.Needs.Morale - lightProfile.listlessMoraleDrainPerHour * gameHours,
-                    0f, 100f);
+                if (needsSystem != null)
+                    needsSystem.Modify(sv, NeedKind.Morale, -lightProfile.listlessMoraleDrainPerHour * gameHours);
+                else
+                    sv.Needs.Morale = Mathf.Clamp(
+                        sv.Needs.Morale - lightProfile.listlessMoraleDrainPerHour * gameHours,
+                        0f, 100f);
             }
 
             // 5. VitaminD proxy — slow accumulation/decay
@@ -87,14 +91,18 @@ namespace AtomicWar._Game.Survivors
                 float depletionRatio = lightProfile.vitaminDLowThreshold > 0f
                     ? (lightProfile.vitaminDLowThreshold - sv.VitaminDProxy) / lightProfile.vitaminDLowThreshold
                     : 1f;
-                sv.Needs.Health = Mathf.Clamp(
-                    sv.Needs.Health - lightProfile.vitaminDHealthPenaltyPerHour * depletionRatio * gameHours,
-                    0f, 100f);
+                // Vitamin-D drain is chronic; do not kill via this path alone (keeps
+                // light/listless sim independent of death). Floor at 1 HP.
+                float dmg = lightProfile.vitaminDHealthPenaltyPerHour * depletionRatio * gameHours;
+                SurvivorNeedWrite.SetHealth(sv, Mathf.Max(1f, sv.Needs.Health - dmg));
                 if (!ignoreDarknessMorale)
                 {
-                    sv.Needs.Morale = Mathf.Clamp(
-                        sv.Needs.Morale - lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours,
-                        0f, 100f);
+                    if (needsSystem != null)
+                        needsSystem.Modify(sv, NeedKind.Morale, -lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours);
+                    else
+                        sv.Needs.Morale = Mathf.Clamp(
+                            sv.Needs.Morale - lightProfile.vitaminDMoralePenaltyPerHour * depletionRatio * gameHours,
+                            0f, 100f);
                 }
             }
         }

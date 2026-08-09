@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using InventoryClass = AtomicWar._Game.Inventory.Inventory;
 
@@ -375,6 +376,58 @@ namespace AtomicWar.Tests.EditMode
                 PersonalQuestSystem.DeathBlindDebrisSleepMoralePerHour,
                 _quests.GetDebrisSleepMoraleRegen(sv, nearDebris: true),
                 0.001f);
+        }
+
+        /// <summary>
+        /// MISC-007 — when the host injects RadiationSystem, quest rad spikes
+        /// must go through Expose (dose + lifetime), never a silent direct write.
+        /// </summary>
+        [Test]
+        public void Undertaker_MassGraveBurial_BoundRadiation_UsesExposePath()
+        {
+            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+            var needs = new NeedsSystem(profile);
+            var rad = new RadiationSystem(needs);
+            var sv = MakeArchetype(PersonalQuestSystem.UndertakerId);
+            needs.Register(sv);
+            rad.Register(sv);
+            sv.RadiationDose = 5f;
+            float lifeBefore = sv.LifetimeRadiationExposure;
+
+            _quests.BindRadiationDose((s, delta) =>
+            {
+                if (delta > 0f) rad.Expose(s, delta, 1f);
+                else rad.AdjustDose(s, delta);
+            });
+            _quests.TryStartQuestline(sv, "test", 1);
+            _quests.RecordMassGraveBurial(sv, PersonalQuestSystem.MassGraveHoursRequired, 1);
+
+            Assert.AreEqual(5f + PersonalQuestSystem.MassGraveRadHit, sv.RadiationDose, 0.01f);
+            Assert.AreEqual(
+                lifeBefore + PersonalQuestSystem.MassGraveRadHit,
+                sv.LifetimeRadiationExposure,
+                0.01f,
+                "Bound quest rad spikes must grow lifetime via Expose");
+            Object.DestroyImmediate(profile);
+        }
+
+        [Test]
+        public void Outcast_BoundLifetimeSeed_UsesRadiationSystem()
+        {
+            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+            var needs = new NeedsSystem(profile);
+            var rad = new RadiationSystem(needs);
+
+            // Assign profile only after binding seed so archetype flags use the host path.
+            _quests.BindLifetimeRadiation((s, lifetime) => rad.SeedLifetimeExposure(s, lifetime));
+            var sv = PersonalQuestSystem.MakeArchetypeSurvivor(PersonalQuestSystem.OutcastId, "oc_seed");
+            _quests.AssignProfile(sv, PersonalQuestSystem.ProfileForArchetype(PersonalQuestSystem.OutcastId));
+            needs.Register(sv);
+            rad.Register(sv);
+
+            Assert.AreEqual(PersonalQuestSystem.OutcastStartLifetimeRads, sv.LifetimeRadiationExposure, 0.01f);
+            Assert.IsTrue(sv.HasChronicIllness);
+            Object.DestroyImmediate(profile);
         }
 
         [Test]

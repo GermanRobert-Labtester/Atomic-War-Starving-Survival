@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// Single enemy in a node rigged with BearTraps and Tripwires. Stalks player through UI.
     /// Player cannot flee and must hunt them down in a cat-and-mouse minigame.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_LonePsychopath
     {
         private LonePsychopathState _state = new LonePsychopathState();

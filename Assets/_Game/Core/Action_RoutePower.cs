@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -14,6 +15,7 @@ namespace AtomicWar._Game.Core
         public bool elevator_activated = false;
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public sealed class Action_RoutePower
     {
         private RoutePowerState _state;
@@ -50,14 +52,14 @@ namespace AtomicWar._Game.Core
 
             if (copper_scrap < _state.copper_per_breaker)
             {
-                Debug.Log($"[Action_RoutePower] Not enough copper. " +
+                GameLog.Log($"[Action_RoutePower] Not enough copper. " +
                           $"Need {_state.copper_per_breaker}, have {copper_scrap}.");
                 return false;
             }
 
             _state.breakers_repaired++;
             OnBreakerRepaired?.Invoke(survivor_id, _state.breakers_repaired);
-            Debug.Log($"[Action_RoutePower] Breaker {_state.breakers_repaired}/{_state.breakers_required} " +
+            GameLog.Log($"[Action_RoutePower] Breaker {_state.breakers_repaired}/{_state.breakers_required} " +
                       $"repaired by '{survivor_id}'.");
             return true;
         }
@@ -89,14 +91,14 @@ namespace AtomicWar._Game.Core
 
             if (!AllBreakersRepaired())
             {
-                Debug.Log($"[Action_RoutePower] Cannot activate elevator — " +
+                GameLog.Log($"[Action_RoutePower] Cannot activate elevator — " +
                           $"only {_state.breakers_repaired}/{_state.breakers_required} breakers repaired.");
                 return;
             }
 
             _state.elevator_activated = true;
             OnElevatorActivated?.Invoke(survivor_id);
-            Debug.Log($"[Action_RoutePower] Freight elevator activated by '{survivor_id}'.");
+            GameLog.Log($"[Action_RoutePower] Freight elevator activated by '{survivor_id}'.");
         }
 
         public RoutePowerState CaptureState()

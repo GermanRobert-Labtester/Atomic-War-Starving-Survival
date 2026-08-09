@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     /// Highly aggressive civilians protecting a locked door containing their baby.
     /// Shoots on sight if player approaches door. Player can sneak past or murder them for baby food.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_TheParents
     {
         private TheParentsState _state = new TheParentsState();

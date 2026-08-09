@@ -20,37 +20,6 @@ namespace AtomicWar.Tests.EditMode
     {
         private const float Eps = 1e-3f;
 
-        private static string TempDir(string tag)
-        {
-            string dir = Path.Combine(Path.GetTempPath(), "ashfall_victory_" + tag + "_" + Guid.NewGuid().ToString("N"));
-            Directory.CreateDirectory(dir);
-            return dir;
-        }
-
-        private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
-        {
-            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
-            var needs = new NeedsSystem(profile, sv => true);
-            var weather = new WeatherSystem(null, 3);
-            var temp = new TemperatureSystem(null, weather);
-            var rad = new RadiationSystem(needs);
-            var ss = new SaveSystem(new SaveSystem.CoreDeps
-            {
-                GameState = new GameState(),
-                WeatherSystem = weather,
-                TemperatureSystem = temp,
-                NeedsSystem = needs,
-                RadiationSystem = rad,
-                Shelter = new ShelterClass(),
-                GetSurvivors = () => new List<Survivor>(),
-                ItemLookup = id => null,
-                ModuleLookup = id => null,
-                SavesDir = dir
-            });
-            wire(ss);
-            return ss;
-        }
-
         // ── Airlift ────────────────────────────────────────────────────
 
         [Test]
@@ -129,7 +98,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void CannibalKing_Thresholds_SaveSlot()
         {
-            string dir = TempDir("cannibal");
+            string dir = SaveSystemTestFactory.TempDir("victory_cannibal");
             try
             {
                 var a = new Victory_CannibalKing();
@@ -137,9 +106,9 @@ namespace AtomicWar.Tests.EditMode
                 a.MarkWarlordsDefeated();
                 Assert.IsTrue(a.CheckVictory());
 
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetVictoryCannibalKingSystem(a)).Save("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetVictoryCannibalKingSystem(a)).Save("slot"));
                 var b = new Victory_CannibalKing();
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetVictoryCannibalKingSystem(b)).Load("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetVictoryCannibalKingSystem(b)).Load("slot"));
                 Assert.IsTrue(b.State.triggered);
                 Assert.AreEqual(50, b.State.humanMeatMealsUsed);
             }
@@ -255,16 +224,16 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void TheCure_AllPrereqs_SaveSlot()
         {
-            string dir = TempDir("cure");
+            string dir = SaveSystemTestFactory.TempDir("victory_cure");
             try
             {
                 var a = new Victory_TheCure();
                 Assert.IsTrue(a.CheckVictory(true, true, true));
                 Assert.IsTrue(a.State.formulaBroadcast);
 
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetVictoryTheCureSystem(a)).Save("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetVictoryTheCureSystem(a)).Save("slot"));
                 var b = new Victory_TheCure();
-                Assert.IsTrue(MakeSave(dir, ss => ss.SetVictoryTheCureSystem(b)).Load("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss => ss.SetVictoryTheCureSystem(b)).Load("slot"));
                 Assert.IsTrue(b.State.triggered);
             }
             finally { try { Directory.Delete(dir, true); } catch { } }
@@ -340,7 +309,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MultiVictory_SaveSlot_RoundTrip()
         {
-            string dir = TempDir("multi");
+            string dir = SaveSystemTestFactory.TempDir("victory_multi");
             try
             {
                 var airlift = new Victory_Airlift();
@@ -360,12 +329,12 @@ namespace AtomicWar.Tests.EditMode
                     ss.SetVictoryUndergroundCitySystem(city);
                 }
 
-                Assert.IsTrue(MakeSave(dir, Wire).Save("slot"));
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, Wire).Save("slot"));
 
                 var airlift2 = new Victory_Airlift();
                 var mad2 = new Victory_MAD();
                 var city2 = new Victory_UndergroundCity();
-                Assert.IsTrue(MakeSave(dir, ss =>
+                Assert.IsTrue(SaveSystemTestFactory.MakeSave(dir, ss =>
                 {
                     ss.SetVictoryAirliftSystem(airlift2);
                     ss.SetVictoryMadSystem(mad2);

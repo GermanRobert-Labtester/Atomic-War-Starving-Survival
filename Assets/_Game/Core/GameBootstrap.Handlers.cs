@@ -39,7 +39,7 @@ namespace AtomicWar._Game.Core
                 // advances to NuclearWinter. This matches the pre-Prompt-27
                 // behavior and prevents soft-locks.
                 var empResult = EMPEvent.ApplyGlobal(Inventory, Shelter, RadioTunerSystem?.State);
-                Debug.Log($"[GameBootstrap] Nuclear exchange (fallback): {empResult.DevicesBroken} devices broken, " +
+                GameLog.Log($"[GameBootstrap] Nuclear exchange (fallback): {empResult.DevicesBroken} devices broken, " +
                           $"{empResult.ModulesDisabled} modules disabled, radio destroyed={empResult.RadioDestroyed}.");
 
                 if (WeatherSystem != null)
@@ -55,7 +55,12 @@ namespace AtomicWar._Game.Core
                     foreach (var sv in Survivors)
                     {
                         if (sv == null || !sv.IsAlive) continue;
-                        sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
+                        // Route through NeedsSystem.Modify so Selfless,
+                        // Traumatized cap, and LivingSaint floor are honoured.
+                        if (NeedsSystem != null)
+                            NeedsSystem.Modify(sv, NeedKind.Morale, -hit);
+                        else
+                            sv.Needs.Morale = Mathf.Clamp(sv.Needs.Morale - hit, 0f, 100f);
                     }
                 }
                 // Prompt #19 — ghost bands appear in the static after EMP.
@@ -79,7 +84,7 @@ namespace AtomicWar._Game.Core
             var ctx = BuildEventContext(day);
             ctx.SetEventFlag(LifeboatTransmissionSystem.FlagContacted, true);
             EventRunner.Run(ev, ctx);
-            Debug.Log("[Lifeboat] Two-way contact. One seat. Choose who walks.");
+            GameLog.Log("[Lifeboat] Two-way contact. One seat. Choose who walks.");
         }
 
         private void HandleLifeboatChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
@@ -89,7 +94,7 @@ namespace AtomicWar._Game.Core
                 return;
             if (LifeboatTransmissionSystem.ApplyChoiceFromEvent(ev, choice, ctx))
             {
-                Debug.Log(
+                GameLog.Log(
                     $"[Lifeboat] Sent {LifeboatTransmissionSystem.ExtractedSurvivorName}. " +
                     $"{LifeboatTransmissionSystem.LeftBehindIds.Count} left behind.");
                 // VictoryProject.OnEndgameTriggered → ApplyEndgame already wired.

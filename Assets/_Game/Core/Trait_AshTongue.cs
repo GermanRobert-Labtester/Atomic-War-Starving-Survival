@@ -10,7 +10,46 @@ namespace AtomicWar._Game.Core
         public string survivorId;
         public bool isNativeSpeaker;
         public float comprehension; // 0-1
+
+        /// <summary>
+        /// Runtime dialect map. JsonUtility cannot serialize Dictionary, so this is
+        /// flattened into <see cref="dialectKeys"/>/<see cref="dialectValues"/> on
+        /// capture and rebuilt on restore.
+        /// </summary>
+        [NonSerialized]
         public Dictionary<string, string> dialectWords = new Dictionary<string, string>();
+
+        /// <summary>JsonUtility-safe flattening of <see cref="dialectWords"/> — old word.</summary>
+        public List<string> dialectKeys = new List<string>();
+
+        /// <summary>JsonUtility-safe flattening of <see cref="dialectWords"/> — coined word.</summary>
+        public List<string> dialectValues = new List<string>();
+
+        /// <summary>Copy <see cref="dialectWords"/> into the serializable parallel lists.</summary>
+        public void FlattenDialect()
+        {
+            dialectKeys = new List<string>();
+            dialectValues = new List<string>();
+            if (dialectWords == null) return;
+            foreach (var kvp in dialectWords)
+            {
+                dialectKeys.Add(kvp.Key);
+                dialectValues.Add(kvp.Value);
+            }
+        }
+
+        /// <summary>Rebuild <see cref="dialectWords"/> from the deserialized parallel lists.</summary>
+        public void RebuildDialect()
+        {
+            dialectWords = new Dictionary<string, string>();
+            if (dialectKeys == null || dialectValues == null) return;
+            int count = Math.Min(dialectKeys.Count, dialectValues.Count);
+            for (int i = 0; i < count; i++)
+            {
+                if (string.IsNullOrEmpty(dialectKeys[i])) continue;
+                dialectWords[dialectKeys[i]] = dialectValues[i];
+            }
+        }
     }
 
     /// <summary>
@@ -131,6 +170,8 @@ public class Trait_AshTongue
             var save = new TraitAshTongueSave();
             foreach (var kvp in _states)
             {
+                // Dictionary is invisible to JsonUtility — flatten before it is serialized.
+                kvp.Value?.FlattenDialect();
                 save.keys.Add(kvp.Key);
                 save.values.Add(kvp.Value);
             }
@@ -144,7 +185,9 @@ public class Trait_AshTongue
             for (int i = 0; i < saved.keys.Count; i++)
             {
                 var val = (saved.values != null && i < saved.values.Count) ? saved.values[i] : null;
-                if (val != null) _states[saved.keys[i]] = val;
+                if (val == null) continue;
+                val.RebuildDialect();
+                _states[saved.keys[i]] = val;
             }
         }
     }

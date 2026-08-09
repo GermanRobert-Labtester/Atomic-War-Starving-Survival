@@ -18,6 +18,7 @@ namespace AtomicWar._Game.Core
     /// Staff fled leaving hundreds of bedridden patients to die.
     /// Free looting, but ambient Despair reduces the scavenger's max Stamina by 50% for the trip.
     /// </summary>
+    /// <summary>DEMOTE-Visitor-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Visitor_HospitalPatients
     {
         private HospitalPatientsState _state = new HospitalPatientsState();

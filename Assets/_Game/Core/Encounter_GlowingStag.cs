@@ -24,6 +24,7 @@ namespace AtomicWar._Game.Core
     /// Eating it permanently increases max Health and RadiationResistance.
     /// Causes massive Morale drop from killing something so pure.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_GlowingStag
     {
         private GlowingStagState _state = new GlowingStagState();
@@ -44,7 +45,7 @@ namespace AtomicWar._Game.Core
             }
 
             float successChance = Mathf.Clamp01(shooterSkill);
-            System.Random rng = new System.Random();
+            System.Random rng = AtomicWar._Game.Utilities.SeededRandom.Stream("encounter_glowingstag");
             bool success = rng.NextDouble() < successChance;
 
             if (success)

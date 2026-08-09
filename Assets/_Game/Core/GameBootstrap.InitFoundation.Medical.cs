@@ -34,6 +34,7 @@ namespace AtomicWar._Game.Core
         private void InitAddictionSystem()
         {
             Addiction = new AddictionSystem(CreateSaltedRng(_worldSeed, "addiction"));
+            Addiction.SetNeedsSystem(NeedsSystem);
             if (_itemCatalog != null)
             {
                 string[] addictiveIds = { "morphine", "anti_rad", "painkiller", "stimulant" };
@@ -53,11 +54,13 @@ namespace AtomicWar._Game.Core
         private void InitMedicalBodySystems()
         {
             BloodTransfusion = new BloodTransfusionSystem(new System.Random(_worldSeed + 55));
+            BloodTransfusion.SetNeedsSystem(NeedsSystem);
             BloodTransfusion.Bind(
                 id => Survivors?.Find(s => s.Id == id),
                 (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
 
             AmputationSystem = new AmputationSystem();
+            AmputationSystem.SetNeedsSystem(NeedsSystem);
             AmputationSystem.SetRng(new System.Random(_worldSeed + 56));
             AmputationSystem.Bind(
                 id => Survivors?.Find(s => s.Id == id),
@@ -66,11 +69,13 @@ namespace AtomicWar._Game.Core
                     MedicalSystem != null && MedicalSystem.CureOutright(sv, afflictionId, surgeon));
 
             ScurvySystem = new ScurvySystem();
+            ScurvySystem.SetNeedsSystem(NeedsSystem);
             ScurvySystem.Bind(
                 id => Survivors?.Find(s => s.Id == id),
                 (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));
 
             Mutagenesis = new RadiationMutagenesisSystem();
+            Mutagenesis.SetNeedsSystem(NeedsSystem);
             Mutagenesis.Bind(
                 getPartyAverageRadiation: GetPartyAverageLifetimeRadiation,
                 inflictAffliction: (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId));

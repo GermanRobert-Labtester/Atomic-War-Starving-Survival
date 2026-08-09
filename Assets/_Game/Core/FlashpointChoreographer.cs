@@ -238,6 +238,7 @@ namespace AtomicWar._Game.Flashpoint
         public WeatherSystem WeatherSystem;
         public RadiationSystem RadiationSystem;
         public DynamicEconomySystem EconomySystem;
+        public NeedsSystem NeedsSystem;
         public IReadOnlyList<Survivor> Survivors;
         public float ExchangeMoraleHit;
 

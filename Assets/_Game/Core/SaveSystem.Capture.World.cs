@@ -38,6 +38,7 @@ namespace AtomicWar._Game.Core
             //   • FactionRaidPlan — restore must SetMap(_generatedMap) first
             // Expedition + GeneratedMap: Capture.Entities (seed rebuild / list rebuild).
             CapIf(_eventRunner, s => data.ScheduledEvents = s.CaptureScheduledState());
+            CapIf(_eventRunner, s => data.EventRunnerState = s.CaptureCooldownState());
             CapIf(_shiftingHotspots, s => data.ShiftingHotspots = s.CaptureState());
             CapIf(_factionRaidPlans, s => data.FactionRaidPlans = s.CaptureState());
         }

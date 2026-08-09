@@ -23,6 +23,7 @@ namespace AtomicWar._Game.Core
     /// determines whether the player can steal and leave undetected. A failed roll
     /// triggers a point-blank firefight.
     /// </summary>
+    /// <summary>DEMOTE-Encounter-batch — dormant ghost; SO expedition encounters remain live. Re-promote with Boot+Save+host.</summary>
     public class Encounter_SleepingCamp
     {
         private SleepingCampState _state = new SleepingCampState();

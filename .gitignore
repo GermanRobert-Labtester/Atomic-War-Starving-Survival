@@ -143,6 +143,13 @@ InitTestScene*.unity*
 # source changes in `git status`.
 /*-results.xml
 /*-log.txt
+# Three of these had been committed before the rule above existed, so every audit
+# run showed a multi-megabyte XML diff on a file nobody reads.
+/*_results.xml
+/em.xml
+/em.log
+/pm.xml
+/pm.log
 
 # mimocode tool artifacts
 /.mimocode/

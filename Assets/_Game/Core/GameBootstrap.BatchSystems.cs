@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using AtomicWar._Game.Survivors;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -34,7 +35,7 @@ namespace AtomicWar._Game.Core
             SiegeVehicleRam = new Siege_VehicleRam();
 
             WireBatchSystems();
-            Debug.Log("[GameBootstrap] Batch systems ready (disease/scapegoat/ironman/android/sheriff/scenario/speedrun/true_ending/8 sieges).");
+            GameLog.Log("[GameBootstrap] Batch systems ready (disease/scapegoat/ironman/android/sheriff/scenario/speedrun/true_ending/8 sieges).");
         }
 
         private void WireBatchSystems()
@@ -42,15 +43,15 @@ namespace AtomicWar._Game.Core
             if (IronMan != null)
             {
                 IronMan.OnLastSurvivorDied += id =>
-                    Debug.Log($"[GameBootstrap] IRONMAN: last survivor '{id}' died — save marked for deletion.");
+                    GameLog.Log($"[GameBootstrap] IRONMAN: last survivor '{id}' died — save marked for deletion.");
                 IronMan.OnSaveDeleted += path =>
-                    Debug.Log($"[GameBootstrap] IRONMAN: save deleted at '{path}'");
+                    GameLog.Log($"[GameBootstrap] IRONMAN: save deleted at '{path}'");
             }
 
             if (Scapegoat != null)
             {
                 Scapegoat.OnScapegoatSelected += id =>
-                    Debug.Log($"[GameBootstrap] SCAPEGOAT: bunker blames '{id}'");
+                    GameLog.Log($"[GameBootstrap] SCAPEGOAT: bunker blames '{id}'");
                 Scapegoat.OnMoraleDrained += id =>
                 {
                     // Host: drain scapegoat morale when blamed (NeedsSystem 0–100 scale).
@@ -68,29 +69,29 @@ namespace AtomicWar._Game.Core
             if (TrueEnding != null)
             {
                 TrueEnding.OnBlueSky += day =>
-                    Debug.Log($"[GameBootstrap] TRUE ENDING: blue sky on day {day}");
+                    GameLog.Log($"[GameBootstrap] TRUE ENDING: blue sky on day {day}");
                 TrueEnding.OnTerraformerHacked += () =>
-                    Debug.Log("[GameBootstrap] TRUE ENDING: terraformer hacked");
+                    GameLog.Log("[GameBootstrap] TRUE ENDING: terraformer hacked");
             }
 
             if (DiseaseExpansion != null)
             {
                 DiseaseExpansion.OnOutbreakDeclared += diseaseId =>
-                    Debug.Log($"[GameBootstrap] DISEASE: outbreak '{diseaseId}'");
+                    GameLog.Log($"[GameBootstrap] DISEASE: outbreak '{diseaseId}'");
                 DiseaseExpansion.OnInfection += (sv, disease) =>
-                    Debug.Log($"[GameBootstrap] DISEASE: '{sv}' infected with '{disease}'");
+                    GameLog.Log($"[GameBootstrap] DISEASE: '{sv}' infected with '{disease}'");
             }
 
             if (Sheriff != null)
             {
                 Sheriff.OnSheriffAssigned += id =>
-                    Debug.Log($"[GameBootstrap] SHERIFF: '{id}' wears the star");
+                    GameLog.Log($"[GameBootstrap] SHERIFF: '{id}' wears the star");
             }
 
             if (SpeedrunTimer != null)
             {
                 SpeedrunTimer.OnSplitRecorded += (name, rt, day) =>
-                    Debug.Log($"[GameBootstrap] SPEEDRUN: split '{name}' @ {rt:F1}s day {day}");
+                    GameLog.Log($"[GameBootstrap] SPEEDRUN: split '{name}' @ {rt:F1}s day {day}");
             }
         }
 

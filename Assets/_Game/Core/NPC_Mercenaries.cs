@@ -19,6 +19,7 @@ namespace AtomicWar._Game.Core
     /// Ex-PMCs. Can be hired (PreWarMoney/Gold) to clear the current map node for the player,
     /// suffering 0 damage but sacrificing 50% of the loot.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Mercenaries
     {
         private MercenariesState _state = new MercenariesState();

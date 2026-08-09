@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Wind speed drops to absolute zero. Stops WindTurbines and cuts AirFilter efficiency by 50%
     /// due to lack of draft pressure, leaving the shelter stuffy and sweltering.
     /// </summary>
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public class Weather_DeadWind
     {
         private DeadWindState _state = new DeadWindState();

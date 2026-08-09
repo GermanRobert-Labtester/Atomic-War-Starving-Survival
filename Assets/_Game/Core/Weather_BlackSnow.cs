@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -14,6 +15,7 @@ namespace AtomicWar._Game.Core
         public List<string> contaminated_suit_survivor_ids = new List<string>();
     }
 
+    /// <summary>DEMOTE-Weather-batch — dormant ghost. Re-promote with Boot+Save+host.</summary>
     public sealed class Weather_BlackSnow
     {
         private BlackSnowState _state;
@@ -47,7 +49,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnSuitCleaned?.Invoke(survivor_id);
-                Debug.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit cleaned with ammonia.");
+                GameLog.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit cleaned with ammonia.");
             }
             else
             {
@@ -62,7 +64,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnSuitRuined?.Invoke(survivor_id);
-                Debug.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit permanently ruined — no ammonia available.");
+                GameLog.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit permanently ruined — no ammonia available.");
             }
         }
 

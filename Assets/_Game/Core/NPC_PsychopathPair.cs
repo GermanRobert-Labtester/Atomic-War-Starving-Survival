@@ -21,6 +21,7 @@ namespace AtomicWar._Game.Core
     /// Hunters pair (one Sniper, one Melee). Killing one causes the remaining survivor to enter
     /// Frenzy mode (2x damage, immune to pain).
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_PsychopathPair
     {
         private PsychopathPairState _state = new PsychopathPairState();

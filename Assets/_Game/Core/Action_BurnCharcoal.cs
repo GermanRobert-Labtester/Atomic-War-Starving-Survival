@@ -10,6 +10,7 @@ namespace AtomicWar._Game.Core
         public bool requiresSealedBarrel = true;
     }
 
+    /// <summary>DEMOTE-Action-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_BurnCharcoal
     {
         public event Action<string> OnCharcoalProduced;

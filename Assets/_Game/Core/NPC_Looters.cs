@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Opportunistic scavengers. Only attacks if player's Health is below 50% or if player is at maximum encumbrance.
     /// Otherwise, stays hidden in the shadows.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Looters
     {
         private LootersState _state = new LootersState();

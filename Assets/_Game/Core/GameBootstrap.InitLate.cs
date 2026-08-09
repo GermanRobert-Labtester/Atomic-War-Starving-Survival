@@ -35,7 +35,8 @@ namespace AtomicWar._Game.Core
                 FactionRadioIntercepts,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
                 isAntennaOperational: IsWiretapAntennaOperational,
-                map: null);
+                map: null,
+                radiation: RadiationSystem);
             FactionRaidPlanSystem.OnInterceptOffered += HandleRaidPlanInterceptOffered;
 
             _onWorldPhaseChanged = phase =>
@@ -86,7 +87,13 @@ namespace AtomicWar._Game.Core
                         return SabotagedCacheSystem.PoisonedIodineDefinition;
                     return null;
                 },
-                ModuleLookup = id => null
+                // Prefer SO already on the installed module (fresh boot has definitions).
+                // Do not return null for known modules — that used to clear Definition on load.
+                ModuleLookup = id =>
+                {
+                    if (string.IsNullOrEmpty(id) || Shelter == null) return null;
+                    return Shelter.GetModule(id)?.Definition;
+                }
             });
             // P1 / AUDIT-004: fail-fast ISaveable restore in Editor + Development
             // (game-ci batchmode) only. Release players keep best-effort restore.
@@ -137,311 +144,222 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetVictoryTheMartianSystem(VictoryTheMartian);
             SaveSystem.SetVictoryUndergroundCitySystem(VictoryUndergroundCity);
             SaveSystem.SetVictoryUnifierSystem(VictoryUnifier);
+
+            RegisterSaveOnlySystemsBulk();
+            InitAutosaveScavengingExpedition();
+            InitWorldEventAndUtilitySystems();
+            WireCraftingAndPerkBindings();
+            InitAtmosphereCorpsePantrySystems();
+        }
+
+        /// <summary>
+        /// Bulk ISaveable registration for systems that need no further wiring —
+        /// mechanically extracted from InitSaveAndExpeditions, which qlty flagged
+        /// as the most complex function in the project purely from its length.
+        /// No logic here, just SaveSystem.SetXxx calls in their original order.
+        /// </summary>
+        private void RegisterSaveOnlySystemsBulk()
+        {
             SaveSystem.SetMapHazardAcidGeyser(MapHazardAcidGeyser);
             SaveSystem.SetMapHazardAshlanche(MapHazardAshlanche);
-            SaveSystem.SetMapHazardBiometricDoor(MapHazardBiometricDoor);
-            SaveSystem.SetMapHazardCraterWall(MapHazardCraterWall);
-            SaveSystem.SetMapHazardCrevice(MapHazardCrevice);
-            SaveSystem.SetMapHazardFlammableGas(MapHazardFlammableGas);
-            SaveSystem.SetMapHazardGasPockets(MapHazardGasPockets);
-            SaveSystem.SetMapHazardMagneticAnomaly(MapHazardMagneticAnomaly);
-            SaveSystem.SetMapHazardSinkholeCollapse(MapHazardSinkholeCollapse);
+            // demoted ghost — SetMapHazardBiometricDoor skipped
+            // demoted ghost — SetMapHazardCraterWall skipped
+            // demoted ghost — SetMapHazardCrevice skipped
+            // demoted ghost — SetMapHazardFlammableGas skipped
+            // demoted ghost — SetMapHazardGasPockets skipped
+            // demoted ghost — SetMapHazardMagneticAnomaly skipped
+            // demoted ghost — SetMapHazardSinkholeCollapse skipped
             SaveSystem.SetMapHazardVenusTrap(MapHazardVenusTrap);
-            SaveSystem.SetMapAnomalyAshDunes(MapAnomalyAshDunes);
-            SaveSystem.SetMapAnomalyBoilingLake(MapAnomalyBoilingLake);
-            SaveSystem.SetMapAnomalyCherenkov(MapAnomalyCherenkov);
-            SaveSystem.SetMapAnomalyDogDen(MapAnomalyDogDen);
-            SaveSystem.SetMapAnomalyDontLook(MapAnomalyDontLook);
+            SaveSystem.SetMapHazardFrozenSurvivor(MapHazardFrozenSurvivor);
+            // demoted ghost — SetMapAnomalyAshDunes skipped
+            // demoted ghost — SetMapAnomalyBoilingLake skipped
+            // demoted ghost — SetMapAnomalyCherenkov skipped
+            // demoted ghost — SetMapAnomalyDogDen skipped
+            // demoted ghost — SetMapAnomalyDontLook skipped
             SaveSystem.SetMapAnomalyDryCoral(MapAnomalyDryCoral);
-            SaveSystem.SetMapAnomalyFloodedSubway(MapAnomalyFloodedSubway);
-            SaveSystem.SetMapAnomalyGlassCrater(MapAnomalyGlassCrater);
-            SaveSystem.SetMapAnomalyMassGrave(MapAnomalyMassGrave);
-            SaveSystem.SetMapAnomalyMirage(MapAnomalyMirage);
-            SaveSystem.SetMapAnomalyPetrifiedForest(MapAnomalyPetrifiedForest);
-            SaveSystem.SetMapAnomalyQuietZone(MapAnomalyQuietZone);
-            SaveSystem.SetMapAnomalyRustedTank(MapAnomalyRustedTank);
-            SaveSystem.SetMapAnomalyServerFarm(MapAnomalyServerFarm);
-            SaveSystem.SetMapAnomalySinkhole(MapAnomalySinkhole);
-            SaveSystem.SetMapAnomalyTangledDrop(MapAnomalyTangledDrop);
-            SaveSystem.SetMapAnomalyTireFire(MapAnomalyTireFire);
-            SaveSystem.SetMapAnomalyUxoNuke(MapAnomalyUxoNuke);
-            SaveSystem.SetBiomeAshSwamp(BiomeAshSwamp);
-            SaveSystem.SetBiomeGlassDesert(BiomeGlassDesert);
-            SaveSystem.SetBiomeHighwayTunnel(BiomeHighwayTunnel);
-            SaveSystem.SetBiomeSaltFlats(BiomeSaltFlats);
-            SaveSystem.SetBiomeSkyscraperTops(BiomeSkyscraperTops);
-            SaveSystem.SetBiomeSuburbs(BiomeSuburbs);
-            SaveSystem.SetWeatherAcidSnow(WeatherAcidSnow);
-            SaveSystem.SetWeatherBioFog(WeatherBioFog);
-            SaveSystem.SetWeatherBlackSnow(WeatherBlackSnow);
-            SaveSystem.SetWeatherBloodRain(WeatherBloodRain);
-            SaveSystem.SetWeatherDeadWind(WeatherDeadWind);
-            SaveSystem.SetWeatherDeepFreeze(WeatherDeepFreeze);
-            SaveSystem.SetWeatherDustDevil(WeatherDustDevil);
-            SaveSystem.SetWeatherEmpStorm(WeatherEmpStorm);
-            SaveSystem.SetWeatherFalseSpring(WeatherFalseSpring);
-            SaveSystem.SetWeatherGlassStorm(WeatherGlassStorm);
-            SaveSystem.SetWeatherOzoneHole(WeatherOzoneHole);
-            SaveSystem.SetWeatherRadHail(WeatherRadHail);
-            SaveSystem.SetWeatherSilentSpring(WeatherSilentSpring);
-            SaveSystem.SetWeatherSolarFlare(WeatherSolarFlare);
-            SaveSystem.SetWeatherStaticCharge(WeatherStaticCharge);
-            SaveSystem.SetEncounterAmalgamation(EncounterAmalgamation);
-            SaveSystem.SetEncounterBurrowers(EncounterBurrowers);
-            SaveSystem.SetEncounterFloodedMaze(EncounterFloodedMaze);
-            SaveSystem.SetEncounterGlowingDead(EncounterGlowingDead);
-            SaveSystem.SetEncounterGlowingStag(EncounterGlowingStag);
-            SaveSystem.SetEncounterHitAndRun(EncounterHitAndRun);
-            SaveSystem.SetEncounterLeeches(EncounterLeeches);
-            SaveSystem.SetEncounterMirelurker(EncounterMirelurker);
-            SaveSystem.SetEncounterPressurePlate(EncounterPressurePlate);
-            SaveSystem.SetEncounterRiverPirates(EncounterRiverPirates);
-            SaveSystem.SetEncounterRoadblock(EncounterRoadblock);
-            SaveSystem.SetEncounterRobotDog(EncounterRobotDog);
-            SaveSystem.SetEncounterSleepingCamp(EncounterSleepingCamp);
-            SaveSystem.SetEncounterTripwireMaze(EncounterTripwireMaze);
-            SaveSystem.SetEncounterWarlordTank(EncounterWarlordTank);
-            SaveSystem.SetShelterModuleAcidTrap(ShelterModuleAcidTrap);
-            SaveSystem.SetShelterModuleAutodoc(ShelterModuleAutodoc);
-            SaveSystem.SetShelterModuleCctv(ShelterModuleCctv);
-            SaveSystem.SetShelterModuleClassroom(ShelterModuleClassroom);
-            SaveSystem.SetShelterModuleConfessional(ShelterModuleConfessional);
-            SaveSystem.SetShelterModuleConveyor(ShelterModuleConveyor);
-            SaveSystem.SetShelterModuleDaylightSensor(ShelterModuleDaylightSensor);
-            SaveSystem.SetShelterModuleDroneStation(ShelterModuleDroneStation);
-            SaveSystem.SetShelterModuleHoloEmitter(ShelterModuleHoloEmitter);
-            SaveSystem.SetShelterModuleInsectFarm(ShelterModuleInsectFarm);
-            SaveSystem.SetShelterModuleLathe(ShelterModuleLathe);
-            SaveSystem.SetShelterModuleMortar(ShelterModuleMortar);
-            SaveSystem.SetShelterModulePanicButton(ShelterModulePanicButton);
-            SaveSystem.SetShelterModulePitfall(ShelterModulePitfall);
-            SaveSystem.SetShelterModuleReloader(ShelterModuleReloader);
-            SaveSystem.SetShelterModuleSorter(ShelterModuleSorter);
-            SaveSystem.SetShelterModuleThermostat(ShelterModuleThermostat);
-            SaveSystem.SetShelterModuleWasteChute(ShelterModuleWasteChute);
-            SaveSystem.SetShelterModuleAutopsy(ShelterModuleAutopsy);
-            SaveSystem.SetShelterModuleBatteryBank(ShelterModuleBatteryBank);
-            SaveSystem.SetShelterModuleBioLatrine(ShelterModuleBioLatrine);
-            SaveSystem.SetShelterModuleChoreBoard(ShelterModuleChoreBoard);
-            SaveSystem.SetShelterModuleDeadManSwitch(ShelterModuleDeadManSwitch);
-            SaveSystem.SetShelterModuleDeconShower(ShelterModuleDeconShower);
-            SaveSystem.SetShelterModuleDialysis(ShelterModuleDialysis);
-            SaveSystem.SetShelterModuleDistressBeacon(ShelterModuleDistressBeacon);
-            SaveSystem.SetShelterModuleDronePad(ShelterModuleDronePad);
-            SaveSystem.SetShelterModuleGarage(ShelterModuleGarage);
-            SaveSystem.SetShelterModuleGunRack(ShelterModuleGunRack);
-            SaveSystem.SetShelterModuleHammock(ShelterModuleHammock);
-            SaveSystem.SetShelterModuleHandCrank(ShelterModuleHandCrank);
-            SaveSystem.SetShelterModuleHotShower(ShelterModuleHotShower);
-            SaveSystem.SetShelterModuleIncinerator(ShelterModuleIncinerator);
-            SaveSystem.SetShelterModuleMagmaTap(ShelterModuleMagmaTap);
-            SaveSystem.SetShelterModuleMotionSensor(ShelterModuleMotionSensor);
-            SaveSystem.SetShelterModulePanicRoom(ShelterModulePanicRoom);
-            SaveSystem.SetShelterModulePrintingPress(ShelterModulePrintingPress);
-            SaveSystem.SetShelterModulePunchingBag(ShelterModulePunchingBag);
-            SaveSystem.SetShelterModuleRainBarrel(ShelterModuleRainBarrel);
-            SaveSystem.SetShelterModuleRecordPlayer(ShelterModuleRecordPlayer);
-            SaveSystem.SetShelterModuleSprinklers(ShelterModuleSprinklers);
-            SaveSystem.SetShelterModuleThumper(ShelterModuleThumper);
-            SaveSystem.SetShelterModuleTreadmillGen(ShelterModuleTreadmillGen);
-            SaveSystem.SetShelterModuleTurret(ShelterModuleTurret);
-            SaveSystem.SetShelterModuleVaultDoor(ShelterModuleVaultDoor);
-            SaveSystem.SetShelterModuleWoodStove(ShelterModuleWoodStove);
-            SaveSystem.SetEventBrawl(EventBrawl);
-            SaveSystem.SetEventComingOfAge(EventComingOfAge);
-            SaveSystem.SetEventCultBlessing(EventCultBlessing);
-            SaveSystem.SetEventCultInitiation(EventCultInitiation);
-            SaveSystem.SetEventCultOfAi(EventCultOfAi);
-            SaveSystem.SetEventEmpCascade(EventEmpCascade);
-            SaveSystem.SetEventFeralRescue(EventFeralRescue);
-            SaveSystem.SetEventFoundDiary(EventFoundDiary);
-            SaveSystem.SetEventGriefCascade(EventGriefCascade);
-            SaveSystem.SetEventHungerStrike(EventHungerStrike);
-            SaveSystem.SetEventNodeCollapse(EventNodeCollapse);
-            SaveSystem.SetEventRansomNote(EventRansomNote);
-            SaveSystem.SetEventSchism(EventSchism);
-            SaveSystem.SetEventSecretSociety(EventSecretSociety);
-            SaveSystem.SetEventSiblingFeud(EventSiblingFeud);
-            SaveSystem.SetEventSpontaneousMurder(EventSpontaneousMurder);
-            SaveSystem.SetEventTeenRebellion(EventTeenRebellion);
-            SaveSystem.SetEventWitchHunt(EventWitchHunt);
-            SaveSystem.SetEventEuthanasiaPact(EventEuthanasiaPact);
-            SaveSystem.SetEventFactionMerger(EventFactionMerger);
-            SaveSystem.SetEventMudslide(EventMudslide);
-            SaveSystem.SetEventNumbersStation(EventNumbersStation);
-            SaveSystem.SetEventProjectSabotage(EventProjectSabotage);
-            SaveSystem.SetEventSinkhole(EventSinkhole);
-            SaveSystem.SetEventTriangulation(EventTriangulation);
-            SaveSystem.SetEventVaultCollision(EventVaultCollision);
-            SaveSystem.SetEventWarlordSuccession(EventWarlordSuccession);
+            // demoted ghost — SetMapAnomalyFloodedSubway skipped
+            // demoted ghost — SetMapAnomalyGlassCrater skipped
+            // demoted ghost — SetMapAnomalyMassGrave skipped
+            // demoted ghost — SetMapAnomalyMirage skipped
+            // demoted ghost — SetMapAnomalyPetrifiedForest skipped
+            // demoted ghost — SetMapAnomalyQuietZone skipped
+            // demoted ghost — SetMapAnomalyRustedTank skipped
+            // demoted ghost — SetMapAnomalyServerFarm skipped
+            // demoted ghost — SetMapAnomalySinkhole skipped
+            // demoted ghost — SetMapAnomalyTangledDrop skipped
+            // demoted ghost — SetMapAnomalyTireFire skipped
+            // demoted ghost — SetMapAnomalyUxoNuke skipped
+            // demoted ghost — SetBiome* skipped
+            // demoted ghost — SetShelterModule* skipped
+            // demoted ghost — SetEvent* skipped
             // ── CoreFamilies bulk Set (auto) ────────────────────────────
             SaveSystem.SetFalloutStormHazard(FalloutStormHazard);
-            SaveSystem.SetActionCrawlspace(ActionCrawlspace);
-            SaveSystem.SetActionPlay(ActionPlay);
-            SaveSystem.SetActionSlaughterPet(ActionSlaughterPet);
-            SaveSystem.SetActionTeachChild(ActionTeachChild);
-            SaveSystem.SetActionTellStories(ActionTellStories);
-            SaveSystem.SetItemAshGoat(ItemAshGoat);
-            SaveSystem.SetItemBoots(ItemBoots);
-            SaveSystem.SetItemLiveTrap(ItemLiveTrap);
-            SaveSystem.SetItemMutantChicken(ItemMutantChicken);
-            SaveSystem.SetItemToys(ItemToys);
+            // demoted ghost — SetActionCrawlspace skipped
+            // demoted ghost — SetActionPlay skipped
+            // demoted ghost — SetActionSlaughterPet skipped
+            // demoted ghost — SetActionTeachChild skipped
+            // demoted ghost — SetActionTellStories skipped
+            // demoted ghost — SetItemAshGoat skipped
+            // demoted ghost — SetItemBoots skipped
+            // demoted ghost — SetItemLiveTrap skipped
+            // demoted ghost — SetItemMutantChicken skipped
+            // demoted ghost — SetItemToys skipped
             SaveSystem.SetTraitAshTongue(TraitAshTongue);
             SaveSystem.SetTraitKleptomaniac(TraitKleptomaniac);
             SaveSystem.SetTraitMascot(TraitMascot);
             SaveSystem.SetTraitStuntedEmpathy(TraitStuntedEmpathy);
             SaveSystem.SetTraitSuperstitious(TraitSuperstitious);
-            SaveSystem.SetAfflictionBunkerFever(AfflictionBunkerFever);
-            SaveSystem.SetAfflictionZoonoticFlu(AfflictionZoonoticFlu);
+            // demoted ghost — SetAfflictionBunkerFever skipped
+            // demoted ghost — SetAfflictionZoonoticFlu skipped
             SaveSystem.SetModuleRationLock(ModuleRationLock);
-            SaveSystem.SetNodeOrphanage(NodeOrphanage);
+            // demoted ghost — SetNodeOrphanage skipped
             SaveSystem.SetPetGuardDog(PetGuardDog);
-            SaveSystem.SetActionAdministerPlacebo(ActionAdministerPlacebo);
-            SaveSystem.SetActionBarricadeDoor(ActionBarricadeDoor);
-            SaveSystem.SetActionBoilBatteries(ActionBoilBatteries);
-            SaveSystem.SetActionBroadcastPropaganda(ActionBroadcastPropaganda);
-            SaveSystem.SetActionBurnCharcoal(ActionBurnCharcoal);
-            SaveSystem.SetActionBuryTimeCapsule(ActionBuryTimeCapsule);
-            SaveSystem.SetActionCallCaravan(ActionCallCaravan);
-            SaveSystem.SetActionCoverTracks(ActionCoverTracks);
-            SaveSystem.SetActionCrackMainframe(ActionCrackMainframe);
-            SaveSystem.SetActionDecrypt(ActionDecrypt);
-            SaveSystem.SetActionDemandTribute(ActionDemandTribute);
-            SaveSystem.SetActionEstablishRoute(ActionEstablishRoute);
-            SaveSystem.SetActionExile(ActionExile);
-            SaveSystem.SetActionFish(ActionFish);
-            SaveSystem.SetActionHarvestOrgans(ActionHarvestOrgans);
-            SaveSystem.SetActionInfectSelf(ActionInfectSelf);
-            SaveSystem.SetActionIsotopeTrace(ActionIsotopeTrace);
-            SaveSystem.SetActionMercy(ActionMercy);
-            SaveSystem.SetActionMixCement(ActionMixCement);
-            SaveSystem.SetActionMixChems(ActionMixChems);
-            SaveSystem.SetActionOverwatch(ActionOverwatch);
-            SaveSystem.SetActionPhysicalTherapy(ActionPhysicalTherapy);
-            SaveSystem.SetActionPirateRadio(ActionPirateRadio);
-            SaveSystem.SetActionPlaceBait(ActionPlaceBait);
-            SaveSystem.SetActionPullTooth(ActionPullTooth);
-            SaveSystem.SetActionRigCorpse(ActionRigCorpse);
-            SaveSystem.SetActionRoutePower(ActionRoutePower);
-            SaveSystem.SetActionSabotage(ActionSabotage);
-            SaveSystem.SetActionScorchedEarth(ActionScorchedEarth);
-            SaveSystem.SetActionSealRoom(ActionSealRoom);
-            SaveSystem.SetActionSelfSurgery(ActionSelfSurgery);
-            SaveSystem.SetActionSilentTakedown(ActionSilentTakedown);
-            SaveSystem.SetActionSiphonGas(ActionSiphonGas);
-            SaveSystem.SetActionStabilizeDNA(ActionStabilizeDNA);
-            SaveSystem.SetActionStargazing(ActionStargazing);
-            SaveSystem.SetActionWorshipIdol(ActionWorshipIdol);
-            SaveSystem.SetAfflictionAdrenalineCrash(AfflictionAdrenalineCrash);
-            SaveSystem.SetAfflictionAmnesia(AfflictionAmnesia);
-            SaveSystem.SetAfflictionBrainwashed(AfflictionBrainwashed);
-            SaveSystem.SetAfflictionBrittleBones(AfflictionBrittleBones);
-            SaveSystem.SetAfflictionCaveMadness(AfflictionCaveMadness);
-            SaveSystem.SetAfflictionFeralRegression(AfflictionFeralRegression);
-            SaveSystem.SetAfflictionImaginaryFriend(AfflictionImaginaryFriend);
-            SaveSystem.SetAfflictionNerveDamage(AfflictionNerveDamage);
-            SaveSystem.SetAfflictionOldAge(AfflictionOldAge);
-            SaveSystem.SetAfflictionPhantomLimb(AfflictionPhantomLimb);
-            SaveSystem.SetAfflictionRadHallucinations(AfflictionRadHallucinations);
-            SaveSystem.SetAfflictionRadiationBlindness(AfflictionRadiationBlindness);
-            SaveSystem.SetAfflictionScurvyDegeneration(AfflictionScurvyDegeneration);
-            SaveSystem.SetAfflictionSporeLung(AfflictionSporeLung);
-            SaveSystem.SetAfflictionSterile(AfflictionSterile);
-            SaveSystem.SetAfflictionSurvivorsGuilt(AfflictionSurvivorsGuilt);
-            SaveSystem.SetAfflictionTBI(AfflictionTBI);
-            SaveSystem.SetAfflictionThyroidCancer(AfflictionThyroidCancer);
-            SaveSystem.SetAfflictionTrenchFoot(AfflictionTrenchFoot);
-            SaveSystem.SetAudioEventDeafening(AudioEventDeafening);
-            SaveSystem.SetAudioEventHeartbeat(AudioEventHeartbeat);
-            SaveSystem.SetCombatBleedOut(CombatBleedOut);
-            SaveSystem.SetCombatFlanking(CombatFlanking);
-            SaveSystem.SetCombatSuppression(CombatSuppression);
-            SaveSystem.SetCombatStanceLastStand(CombatStanceLastStand);
-            SaveSystem.SetCrisisFeralFlora(CrisisFeralFlora);
-            SaveSystem.SetCrisisStructuralFailure(CrisisStructuralFailure);
-            SaveSystem.SetDurabilitySuppressor(DurabilitySuppressor);
-            SaveSystem.SetEndgameUltimatum(EndgameUltimatum);
-            SaveSystem.SetHazardCookOff(HazardCookOff);
-            SaveSystem.SetHazardExplosiveCrafting(HazardExplosiveCrafting);
-            SaveSystem.SetHazardFriendlyFire(HazardFriendlyFire);
+            // demoted ghost — SetActionAdministerPlacebo skipped
+            // demoted ghost — SetActionBarricadeDoor skipped
+            // demoted ghost — SetActionBoilBatteries skipped
+            // demoted ghost — SetActionBroadcastPropaganda skipped
+            // demoted ghost — SetActionBurnCharcoal skipped
+            // demoted ghost — SetActionBuryTimeCapsule skipped
+            // demoted ghost — SetActionCallCaravan skipped
+            // demoted ghost — SetActionCoverTracks skipped
+            // demoted ghost — SetActionCrackMainframe skipped
+            // demoted ghost — SetActionDecrypt skipped
+            // demoted ghost — SetActionDemandTribute skipped
+            // demoted ghost — SetActionEstablishRoute skipped
+            // demoted ghost — SetActionExile skipped
+            // demoted ghost — SetActionFish skipped
+            // demoted ghost — SetActionHarvestOrgans skipped
+            // demoted ghost — SetActionInfectSelf skipped
+            // demoted ghost — SetActionIsotopeTrace skipped
+            // demoted ghost — SetActionMercy skipped
+            // demoted ghost — SetActionMixCement skipped
+            // demoted ghost — SetActionMixChems skipped
+            // demoted ghost — SetActionOverwatch skipped
+            // demoted ghost — SetActionPhysicalTherapy skipped
+            // demoted ghost — SetActionPirateRadio skipped
+            // demoted ghost — SetActionPlaceBait skipped
+            // demoted ghost — SetActionPullTooth skipped
+            // demoted ghost — SetActionRigCorpse skipped
+            // demoted ghost — SetActionRoutePower skipped
+            // demoted ghost — SetActionSabotage skipped
+            // demoted ghost — SetActionScorchedEarth skipped
+            // demoted ghost — SetActionSealRoom skipped
+            // demoted ghost — SetActionSelfSurgery skipped
+            // demoted ghost — SetActionSilentTakedown skipped
+            // demoted ghost — SetActionSiphonGas skipped
+            // DEMOTE-001 — ActionStabilizeDNA not save-wired (ghost demoted).
+            // demoted ghost — SetActionStargazing skipped
+            // demoted ghost — SetActionWorshipIdol skipped
+            // demoted ghost — SetAfflictionAdrenalineCrash skipped
+            // demoted ghost — SetAfflictionAmnesia skipped
+            // demoted ghost — SetAfflictionBrainwashed skipped
+            // demoted ghost — SetAfflictionBrittleBones skipped
+            // demoted ghost — SetAfflictionCaveMadness skipped
+            // demoted ghost — SetAfflictionFeralRegression skipped
+            // demoted ghost — SetAfflictionImaginaryFriend skipped
+            // demoted ghost — SetAfflictionNerveDamage skipped
+            // demoted ghost — SetAfflictionOldAge skipped
+            // demoted ghost — SetAfflictionPhantomLimb skipped
+            // demoted ghost — SetAfflictionRadHallucinations skipped
+            // demoted ghost — SetAfflictionRadiationBlindness skipped
+            // demoted ghost — SetAfflictionScurvyDegeneration skipped
+            // demoted ghost — SetAfflictionSporeLung skipped
+            // demoted ghost — SetAfflictionSterile skipped
+            // demoted ghost — SetAfflictionSurvivorsGuilt skipped
+            // demoted ghost — SetAfflictionTBI skipped
+            // demoted ghost — SetAfflictionThyroidCancer skipped
+            // demoted ghost — SetAfflictionTrenchFoot skipped
+            // demoted ghost — SetAudioEventDeafening skipped
+            // demoted ghost — SetAudioEventHeartbeat skipped
+            // demoted ghost — SetCombatBleedOut skipped
+            // demoted ghost — SetCombatFlanking skipped
+            // demoted ghost — SetCombatSuppression skipped
+            // demoted ghost — SetCombatStanceLastStand skipped
+            // demoted ghost — SetCrisisFeralFlora skipped
+            // demoted ghost — SetCrisisStructuralFailure skipped
+            // demoted ghost — SetDurabilitySuppressor skipped
+            // demoted ghost — SetEndgameUltimatum skipped
+            // demoted ghost — SetHazardCookOff skipped
+            // demoted ghost — SetHazardExplosiveCrafting skipped
+            // demoted ghost — SetHazardFriendlyFire skipped
             SaveSystem.SetHazardMethane(HazardMethane);
             SaveSystem.SetHazardMimicCrate(HazardMimicCrate);
             SaveSystem.SetHazardSurgicalBotch(HazardSurgicalBotch);
             SaveSystem.SetHazardWeaponBurst(HazardWeaponBurst);
-            SaveSystem.SetHiddenStatUnseen(HiddenStatUnseen);
-            SaveSystem.SetItemAICoreData(ItemAICoreData);
+            // demoted ghost — SetHiddenStatUnseen skipped
+            // demoted ghost — SetItemAICoreData skipped
             SaveSystem.SetItemAmmoTypes(ItemAmmoTypes);
-            SaveSystem.SetItemAmmonia(ItemAmmonia);
-            SaveSystem.SetItemAmphetamines(ItemAmphetamines);
-            SaveSystem.SetItemAshGhillie(ItemAshGhillie);
-            SaveSystem.SetItemAutoDoc(ItemAutoDoc);
-            SaveSystem.SetItemBioPlastic(ItemBioPlastic);
-            SaveSystem.SetItemBloodBag(ItemBloodBag);
-            SaveSystem.SetItemBoneSaw(ItemBoneSaw);
-            SaveSystem.SetItemC4(ItemC4);
-            SaveSystem.SetItemCaltrops(ItemCaltrops);
-            SaveSystem.SetItemCarrierBird(ItemCarrierBird);
-            SaveSystem.SetItemChildsDrawing(ItemChildsDrawing);
-            SaveSystem.SetItemCigarettes(ItemCigarettes);
-            SaveSystem.SetItemClimbingGear(ItemClimbingGear);
-            SaveSystem.SetItemDecoy(ItemDecoy);
-            SaveSystem.SetItemDogTags(ItemDogTags);
-            SaveSystem.SetItemEMPGrenade(ItemEMPGrenade);
-            SaveSystem.SetItemEncryptedDrive(ItemEncryptedDrive);
-            SaveSystem.SetItemEpiPen(ItemEpiPen);
-            SaveSystem.SetItemExosuit(ItemExosuit);
-            SaveSystem.SetItemFaradayPack(ItemFaradayPack);
-            SaveSystem.SetItemForeignBook(ItemForeignBook);
-            SaveSystem.SetItemGeigerCalibrator(ItemGeigerCalibrator);
-            SaveSystem.SetItemGlowingMushroom(ItemGlowingMushroom);
-            SaveSystem.SetItemGoldBars(ItemGoldBars);
-            SaveSystem.SetItemGuitar(ItemGuitar);
-            SaveSystem.SetItemHeirloom(ItemHeirloom);
-            SaveSystem.SetItemIBeam(ItemIBeam);
-            SaveSystem.SetItemImpureIodine(ItemImpureIodine);
-            SaveSystem.SetItemJuggernautArmor(ItemJuggernautArmor);
-            SaveSystem.SetItemKevlarVest(ItemKevlarVest);
+            // demoted ghost — SetItemAmmonia skipped
+            // demoted ghost — SetItemAmphetamines skipped
+            // demoted ghost — SetItemAshGhillie skipped
+            // demoted ghost — SetItemAutoDoc skipped
+            // demoted ghost — SetItemBioPlastic skipped
+            // demoted ghost — SetItemBloodBag skipped
+            // demoted ghost — SetItemBoneSaw skipped
+            // demoted ghost — SetItemC4 skipped
+            // demoted ghost — SetItemCaltrops skipped
+            // demoted ghost — SetItemCarrierBird skipped
+            // demoted ghost — SetItemChildsDrawing skipped
+            // demoted ghost — SetItemCigarettes skipped
+            // demoted ghost — SetItemClimbingGear skipped
+            // demoted ghost — SetItemDecoy skipped
+            // demoted ghost — SetItemDogTags skipped
+            // demoted ghost — SetItemEMPGrenade skipped
+            // demoted ghost — SetItemEncryptedDrive skipped
+            // demoted ghost — SetItemEpiPen skipped
+            // demoted ghost — SetItemExosuit skipped
+            // demoted ghost — SetItemFaradayPack skipped
+            // demoted ghost — SetItemForeignBook skipped
+            // demoted ghost — SetItemGeigerCalibrator skipped
+            // demoted ghost — SetItemGlowingMushroom skipped
+            // demoted ghost — SetItemGoldBars skipped
+            // demoted ghost — SetItemGuitar skipped
+            // demoted ghost — SetItemHeirloom skipped
+            // demoted ghost — SetItemIBeam skipped
+            // demoted ghost — SetItemImpureIodine skipped
+            // demoted ghost — SetItemJuggernautArmor skipped
+            // demoted ghost — SetItemKevlarVest skipped
             SaveSystem.SetItemKeycards(ItemKeycards);
-            SaveSystem.SetItemLandmine(ItemLandmine);
-            SaveSystem.SetItemLeadApron(ItemLeadApron);
-            SaveSystem.SetItemLiquidStitches(ItemLiquidStitches);
-            SaveSystem.SetItemMaggots(ItemMaggots);
-            SaveSystem.SetItemMilGasMask(ItemMilGasMask);
-            SaveSystem.SetItemMutantGland(ItemMutantGland);
-            SaveSystem.SetItemNanites(ItemNanites);
-            SaveSystem.SetItemNightVision(ItemNightVision);
-            SaveSystem.SetItemPackMule(ItemPackMule);
-            SaveSystem.SetItemPasswordNote(ItemPasswordNote);
-            SaveSystem.SetItemPhotoAlbum(ItemPhotoAlbum);
-            SaveSystem.SetItemPotassiumIodide(ItemPotassiumIodide);
-            SaveSystem.SetItemPresidentialSeal(ItemPresidentialSeal);
-            SaveSystem.SetItemPrussianBlue(ItemPrussianBlue);
-            SaveSystem.SetItemRTGBattery(ItemRTGBattery);
-            SaveSystem.SetItemSeedLedger(ItemSeedLedger);
-            SaveSystem.SetItemShockCollar(ItemShockCollar);
-            SaveSystem.SetItemSnowshoes(ItemSnowshoes);
-            SaveSystem.SetItemSurgicalTubing(ItemSurgicalTubing);
-            SaveSystem.SetItemTearGas(ItemTearGas);
-            SaveSystem.SetItemTeddyBear(ItemTeddyBear);
-            SaveSystem.SetItemTrashHazmat(ItemTrashHazmat);
-            SaveSystem.SetItemUndeliveredMail(ItemUndeliveredMail);
-            SaveSystem.SetItemVacuumTubes(ItemVacuumTubes);
-            SaveSystem.SetItemVinylCollection(ItemVinylCollection);
-            SaveSystem.SetItemVitamins(ItemVitamins);
-            SaveSystem.SetItemWalkieTalkie(ItemWalkieTalkie);
-            SaveSystem.SetItemWastelandSoap(ItemWastelandSoap);
-            SaveSystem.SetItemWaterTabs(ItemWaterTabs);
-            SaveSystem.SetItemWeldingGoggles(ItemWeldingGoggles);
-            SaveSystem.SetItemWristDosimeter(ItemWristDosimeter);
-            SaveSystem.SetLocationArcade(LocationArcade);
-            SaveSystem.SetLocationSlaveMarket(LocationSlaveMarket);
-            SaveSystem.SetLocationStrandedYacht(LocationStrandedYacht);
+            // demoted ghost — SetItemLandmine skipped
+            // demoted ghost — SetItemLeadApron skipped
+            // demoted ghost — SetItemLiquidStitches skipped
+            // demoted ghost — SetItemMaggots skipped
+            // demoted ghost — SetItemMilGasMask skipped
+            // demoted ghost — SetItemMutantGland skipped
+            // demoted ghost — SetItemNanites skipped
+            // demoted ghost — SetItemNightVision skipped
+            // demoted ghost — SetItemPackMule skipped
+            // demoted ghost — SetItemPasswordNote skipped
+            // demoted ghost — SetItemPhotoAlbum skipped
+            // demoted ghost — SetItemPotassiumIodide skipped
+            // demoted ghost — SetItemPresidentialSeal skipped
+            // demoted ghost — SetItemPrussianBlue skipped
+            // demoted ghost — SetItemRTGBattery skipped
+            // demoted ghost — SetItemSeedLedger skipped
+            // demoted ghost — SetItemShockCollar skipped
+            // demoted ghost — SetItemSnowshoes skipped
+            // demoted ghost — SetItemSurgicalTubing skipped
+            // demoted ghost — SetItemTearGas skipped
+            // demoted ghost — SetItemTeddyBear skipped
+            // demoted ghost — SetItemTrashHazmat skipped
+            // demoted ghost — SetItemUndeliveredMail skipped
+            // demoted ghost — SetItemVacuumTubes skipped
+            // demoted ghost — SetItemVinylCollection skipped
+            // demoted ghost — SetItemVitamins skipped
+            // demoted ghost — SetItemWalkieTalkie skipped
+            // demoted ghost — SetItemWastelandSoap skipped
+            // demoted ghost — SetItemWaterTabs skipped
+            // demoted ghost — SetItemWeldingGoggles skipped
+            // demoted ghost — SetItemWristDosimeter skipped
+            // demoted ghost — SetLocationArcade skipped
+            // demoted ghost — SetLocationSlaveMarket skipped
+            // demoted ghost — SetLocationStrandedYacht skipped
             SaveSystem.SetMapAquifer(MapAquifer);
             SaveSystem.SetAshDriftSystem(AshDriftSystem);
             SaveSystem.SetBurnWardSystem(BurnWardSystem);
             SaveSystem.SetCognitiveDecaySystem(CognitiveDecaySystem);
             SaveSystem.SetLightningStrikesSystem(LightningStrikesSystem);
-            SaveSystem.SetLocationStateRuinSystem(LocationStateRuinSystem);
+            // demoted ghost — SetLocationStateRuinSystem skipped
             SaveSystem.SetMobileCampSystem(MobileCampSystem);
             SaveSystem.SetMoralDilemmaSystem(MoralDilemmaSystem);
             SaveSystem.SetNeedleSterilizationSystem(NeedleSterilizationSystem);
@@ -452,50 +370,51 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetTetanusAfflictionSystem(TetanusAfflictionSystem);
             SaveSystem.SetTimeSystem(TimeSystem);
             SaveSystem.SetToothDecaySystem(ToothDecaySystem);
-            SaveSystem.SetVehicleStrandingSystem(VehicleStrandingSystem);
-            SaveSystem.SetVehicleSystem(VehicleSystem);
+            // demoted ghost — SetVehicleStrandingSystem skipped
+            // demoted ghost — SetVehicleSystem skipped
             SaveSystem.SetVisionLossSystem(VisionLossSystem);
-            SaveSystem.SetVisitorRNGSystem(VisitorRNGSystem);
-            SaveSystem.SetNPCAddictsPassive(NPCAddictsPassive);
-            SaveSystem.SetNPCAggroScavengers(NPCAggroScavengers);
-            SaveSystem.SetNPCAggroTrader(NPCAggroTrader);
-            SaveSystem.SetNPCBandits(NPCBandits);
-            SaveSystem.SetNPCBlackOps(NPCBlackOps);
-            SaveSystem.SetNPCBroker(NPCBroker);
-            SaveSystem.SetNPCCannibals(NPCCannibals);
-            SaveSystem.SetNPCChemScientists(NPCChemScientists);
-            SaveSystem.SetNPCCityResidents(NPCCityResidents);
-            SaveSystem.SetNPCCollaborators(NPCCollaborators);
-            SaveSystem.SetNPCConscripts(NPCConscripts);
-            SaveSystem.SetNPCDesperateFamily(NPCDesperateFamily);
-            SaveSystem.SetNPCDrunksAggro(NPCDrunksAggro);
-            SaveSystem.SetNPCHomeless(NPCHomeless);
-            SaveSystem.SetNPCLonePsychopath(NPCLonePsychopath);
-            SaveSystem.SetNPCLooters(NPCLooters);
-            SaveSystem.SetNPCMercenaries(NPCMercenaries);
-            SaveSystem.SetNPCMilitaryPatrol(NPCMilitaryPatrol);
-            SaveSystem.SetNPCPassiveScavengers(NPCPassiveScavengers);
+            // demoted ghost — SetVisitorRNGSystem skipped
+            // demoted ghost — SetNPCAddictsPassive skipped
+            // demoted ghost — SetNPCAggroScavengers skipped
+            // demoted ghost — SetNPCAggroTrader skipped
+            // demoted ghost — SetNPCBandits skipped
+            // demoted ghost — SetNPCBlackOps skipped
+            // demoted ghost — SetNPCBroker skipped
+            // demoted ghost — SetNPCCannibals skipped
+            // demoted ghost — SetNPCChemScientists skipped
+            // demoted ghost — SetNPCCityResidents skipped
+            // demoted ghost — SetNPCCollaborators skipped
+            // demoted ghost — SetNPCConscripts skipped
+            // demoted ghost — SetNPCDesperateFamily skipped
+            // demoted ghost — SetNPCDrunksAggro skipped
+            // demoted ghost — SetNPCHomeless skipped
+            // demoted ghost — SetNPCLonePsychopath skipped
+            // demoted ghost — SetNPCLooters skipped
+            // demoted ghost — SetNPCMercenaries skipped
+            // demoted ghost — SetNPCMilitaryPatrol skipped
+            // demoted ghost — SetNPCPassiveScavengers skipped
+            // REPROMOTE-001 — PassiveTrader save-wired + economy weather mult.
             SaveSystem.SetNPCPassiveTrader(NPCPassiveTrader);
-            SaveSystem.SetNPCPsychopathPair(NPCPsychopathPair);
-            SaveSystem.SetNPCRebelMilitia(NPCRebelMilitia);
-            SaveSystem.SetNPCRebelModerates(NPCRebelModerates);
-            SaveSystem.SetNPCRebelSnipers(NPCRebelSnipers);
-            SaveSystem.SetNPCRebelZealots(NPCRebelZealots);
-            SaveSystem.SetNPCSlavers(NPCSlavers);
-            SaveSystem.SetNPCSpecOps(NPCSpecOps);
-            SaveSystem.SetNPCSurvivalists(NPCSurvivalists);
-            SaveSystem.SetNPCTaxCollector(NPCTaxCollector);
-            SaveSystem.SetNPCTerrorists(NPCTerrorists);
-            SaveSystem.SetNPCTheNegotiator(NPCTheNegotiator);
-            SaveSystem.SetNPCTheOld(NPCTheOld);
-            SaveSystem.SetNPCTheParents(NPCTheParents);
-            SaveSystem.SetNPCTravelingCouple(NPCTravelingCouple);
-            SaveSystem.SetNodeAutomatedArmory(NodeAutomatedArmory);
-            SaveSystem.SetNodeGhostShip(NodeGhostShip);
-            SaveSystem.SetNodeMutantHive(NodeMutantHive);
-            SaveSystem.SetNodePlayerBank(NodePlayerBank);
-            SaveSystem.SetNodeSector7G(NodeSector7G);
-            SaveSystem.SetNodeSporeHive(NodeSporeHive);
+            // demoted ghost — SetNPCPsychopathPair skipped
+            // demoted ghost — SetNPCRebelMilitia skipped
+            // demoted ghost — SetNPCRebelModerates skipped
+            // demoted ghost — SetNPCRebelSnipers skipped
+            // demoted ghost — SetNPCRebelZealots skipped
+            // demoted ghost — SetNPCSlavers skipped
+            // demoted ghost — SetNPCSpecOps skipped
+            // demoted ghost — SetNPCSurvivalists skipped
+            // demoted ghost — SetNPCTaxCollector skipped
+            // demoted ghost — SetNPCTerrorists skipped
+            // demoted ghost — SetNPCTheNegotiator skipped
+            // demoted ghost — SetNPCTheOld skipped
+            // demoted ghost — SetNPCTheParents skipped
+            // demoted ghost — SetNPCTravelingCouple skipped
+            // demoted ghost — SetNodeAutomatedArmory skipped
+            // demoted ghost — SetNodeGhostShip skipped
+            // demoted ghost — SetNodeMutantHive skipped
+            // demoted ghost — SetNodePlayerBank skipped
+            // demoted ghost — SetNodeSector7G skipped
+            // demoted ghost — SetNodeSporeHive skipped
             SaveSystem.SetPetFeralCat(PetFeralCat);
             SaveSystem.SetProjectBioReactor(ProjectBioReactor);
             SaveSystem.SetProjectDeepWell(ProjectDeepWell);
@@ -529,23 +448,23 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetUIEventLowPower(UIEventLowPower);
             SaveSystem.SetUIEventMapRot(UIEventMapRot);
             SaveSystem.SetUIEventPhantomBlip(UIEventPhantomBlip);
-            SaveSystem.SetVehicleArmoredTruck(VehicleArmoredTruck);
-            SaveSystem.SetVehicleMotorcycle(VehicleMotorcycle);
-            SaveSystem.SetVehicleRowboat(VehicleRowboat);
-            SaveSystem.SetVisitorAbandonedState(VisitorAbandonedState);
-            SaveSystem.SetVisitorChurchHostile(VisitorChurchHostile);
-            SaveSystem.SetVisitorChurchSanctuary(VisitorChurchSanctuary);
-            SaveSystem.SetVisitorExplodedState(VisitorExplodedState);
-            SaveSystem.SetVisitorFleeingHorde(VisitorFleeingHorde);
-            SaveSystem.SetVisitorHospitalPatients(VisitorHospitalPatients);
-            SaveSystem.SetVisitorHospitalStaff(VisitorHospitalStaff);
-            SaveSystem.SetVisitorMilTrainingYard(VisitorMilTrainingYard);
-            SaveSystem.SetVisitorQuestFaction(VisitorQuestFaction);
-            SaveSystem.SetVisitorRebelTrainingYard(VisitorRebelTrainingYard);
-            SaveSystem.SetWeaponChainsaw(WeaponChainsaw);
-            SaveSystem.SetWeaponFlamethrower(WeaponFlamethrower);
+            // demoted ghost — SetVehicleArmoredTruck skipped
+            // demoted ghost — SetVehicleMotorcycle skipped
+            // demoted ghost — SetVehicleRowboat skipped
+            // demoted ghost — SetVisitorAbandonedState skipped
+            // demoted ghost — SetVisitorChurchHostile skipped
+            // demoted ghost — SetVisitorChurchSanctuary skipped
+            // demoted ghost — SetVisitorExplodedState skipped
+            // demoted ghost — SetVisitorFleeingHorde skipped
+            // demoted ghost — SetVisitorHospitalPatients skipped
+            // demoted ghost — SetVisitorHospitalStaff skipped
+            // demoted ghost — SetVisitorMilTrainingYard skipped
+            // demoted ghost — SetVisitorQuestFaction skipped
+            // demoted ghost — SetVisitorRebelTrainingYard skipped
+            // demoted ghost — SetWeaponChainsaw skipped
+            // demoted ghost — SetWeaponFlamethrower skipped
             SaveSystem.SetWeaponHMG(WeaponHMG);
-            SaveSystem.SetWeaponRPG(WeaponRPG);
+            // demoted ghost — SetWeaponRPG skipped
             SaveSystem.SetWorldEventDeforestation(WorldEventDeforestation);
             SaveSystem.SetWorldEventFinalWinter(WorldEventFinalWinter);
             SaveSystem.SetWorldEventFissure(WorldEventFissure);
@@ -578,6 +497,27 @@ namespace AtomicWar._Game.Core
             // after the Choreographer itself is constructed (it depends on
             // RadioTunerSystem and other systems wired after SaveSystem).
 
+            // BUG HUNT: BootWeather() constructs, event-wires, and ticks these 8
+            // trackers, but none had a SaveSystem.SetWeatherX call anywhere — an
+            // active weather event (e.g. a Solar Flare mid-blackout) silently
+            // reset to inactive on every save/load. SetWeatherX runs after
+            // BootWeather() (InitFoundation) but BootWeather() runs before
+            // SaveSystem exists, so the wiring has to live here instead.
+            SaveSystem.SetWeatherBloodRain(WeatherBloodRain);
+            SaveSystem.SetWeatherDeepFreeze(WeatherDeepFreeze);
+            SaveSystem.SetWeatherEmpStorm(WeatherEmpStorm);
+            SaveSystem.SetWeatherFalseSpring(WeatherFalseSpring);
+            SaveSystem.SetWeatherOzoneHole(WeatherOzoneHole);
+            SaveSystem.SetWeatherSilentSpring(WeatherSilentSpring);
+            SaveSystem.SetWeatherSolarFlare(WeatherSolarFlare);
+            SaveSystem.SetWeatherStaticCharge(WeatherStaticCharge);
+            // Same gap for the reprometed Roadblock encounter (REPROMOTE-Encounter-001).
+            SaveSystem.SetEncounterRoadblock(EncounterRoadblock);
+        }
+
+        /// <summary>Autosave hook, plus the scavenging and expedition engines.</summary>
+        private void InitAutosaveScavengingExpedition()
+        {
             // Subscribe to phase changes for autosave.
             // _suppressAutoSave is held while Awake restores a "Continue" slot:
             // SaveSystem.Load restores the snapshot's phase, which would
@@ -615,6 +555,7 @@ namespace AtomicWar._Game.Core
                     Seed = _worldSeed
                 });
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
+            ExpeditionSystem.SetNeedsSystem(NeedsSystem);
             ExpeditionSystem.SetBicycleSystem(BicycleSystem);
             ExpeditionSystem.SetFloodedNodeSystem(FloodedNodeSystem);
             ExpeditionSystem.SetRiverNodeSystem(RiverNodeSystem);
@@ -642,6 +583,11 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBlackRainHazardSystem(BlackRainHazardSystem);
             SaveSystem.SetClothingSystem(ClothingSystem);
 
+        }
+
+        /// <summary>Sabotaged caches, shifting hotspots, hatch entrapment, and the second bulk ISaveable block.</summary>
+        private void InitWorldEventAndUtilitySystems()
+        {
             // Prompt #13 — hostile factions learn scavenging habits and plant
             // poisoned medical crates. High Medical skill / Paranoid spots them.
             SabotagedCacheSystem = new SabotagedCacheSystem(new System.Random(_worldSeed + 19));
@@ -650,9 +596,34 @@ namespace AtomicWar._Game.Core
                 SabotagedCacheSystem.CreatePoisonedIodineDefinition());
             ExpeditionSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
             SaveSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
+
+            // Register narrative/utility encounters (Prompts #901-#904).
+            NarrativeEncounters.RegisterAll(ExpeditionSystem);
+
+            // ...and the objects holding what those encounters actually do. The
+            // SOs above were registered from the start, but nothing constructed
+            // these, so every choice resolved to description text and nothing else.
+            DeadLetterOffice = new Encounter_DeadLetterOffice();
+            WeatherStation = new Encounter_WeatherStation();
+            Pianist = new Encounter_Pianist();
+            ExpeditionSystem.BindDeadLetterOffice(DeadLetterOffice);
+            ExpeditionSystem.BindWeatherStation(WeatherStation);
+            ExpeditionSystem.BindPianist(Pianist);
+            // Delivering the dead letter is worth faction standing; extracting the
+            // weather log and telling Matej about the bunker set world flags.
+            ExpeditionSystem.BindFactionTrustWriter((factionId, delta) =>
+                EconomySystem?.ModifyTrust(factionId, delta));
+            ExpeditionSystem.BindWorldFlagWriter((flagId, value) =>
+                SaveSystem?.SetWorldFlag(flagId, value));
+            SaveSystem.SetDeadLetterOffice(DeadLetterOffice);
+            SaveSystem.SetWeatherStation(WeatherStation);
+            SaveSystem.SetPianist(Pianist);
+            // The copied data logger is what the forecast bonus actually reads.
+            WeatherSystem?.BindStationForecast(() => WeatherStation.GetForecastBonusDays());
+
             ExpeditionSystem.OnSabotagedCacheDetected += (exp, msg) =>
             {
-                Debug.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
+                GameLog.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
             };
 
             // Prompt #14 — post-Day-30 windstorms move death-zone rad two path-hops.
@@ -662,7 +633,7 @@ namespace AtomicWar._Game.Core
             ShiftingHotspotSystem.OnHotspotShifted += shift =>
             {
                 if (shift == null) return;
-                Debug.Log(
+                GameLog.Log(
                     $"[Shifting Hotspot] Windstorm day {shift.Day}: " +
                     $"{shift.FromNodeId} → {shift.ToNodeId} " +
                     $"(moved {shift.MovedRad:F0} rad/hr)");
@@ -677,7 +648,7 @@ namespace AtomicWar._Game.Core
             HatchEntrapmentSystem.OnHatchStateChanged += (prev, next) =>
             {
                 SyncHatchExpeditionLock();
-                Debug.Log($"[Hatch Entrapment] HatchState {prev} → {next}");
+                GameLog.Log($"[Hatch Entrapment] HatchState {prev} → {next}");
             };
             HatchEntrapmentSystem.OnBuriedAliveTriggered += () =>
             {
@@ -748,6 +719,11 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetSurvivorDiariesSystem(SurvivorDiaries);
             SaveSystem.SetRadioBroadcastSystem(RadioSystem);
 
+        }
+
+        /// <summary>Crafting/scavenging save-restore lookups, then perk and personal-quest wiring.</summary>
+        private void WireCraftingAndPerkBindings()
+        {
             // CraftingSystem needs a recipe lookup for restoring active crafts.
             CraftingSystem.SetRecipeLookup(id =>
             {
@@ -757,6 +733,9 @@ namespace AtomicWar._Game.Core
                         return _recipeCatalog.recipes[r];
                 return null;
             });
+            // ...and a survivor lookup so a restored craft keeps its crafter
+            // (CrafterId is saved; Crafter itself is [NonSerialized]).
+            CraftingSystem.SetSurvivorLookup(id => Survivors?.Find(s => s.Id == id));
             SaveSystem.SetCraftingSystem(CraftingSystem);
             SaveSystem.SetWorkbenchSystem(WorkbenchSystem);
 
@@ -774,6 +753,11 @@ namespace AtomicWar._Game.Core
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
+        }
+
+        /// <summary>Internal Horror — atmosphere, corpses, pantry rust, and the hatch-dilemma event bridge.</summary>
+        private void InitAtmosphereCorpsePantrySystems()
+        {
             // Internal Horror — atmosphere / corpses / pantry rust
             // ───────────────────────────────────────────────────────────
             _storesRoom = new ShelterRoom("stores", null);
@@ -846,64 +830,122 @@ namespace AtomicWar._Game.Core
 
             HatchDefenseSystem?.BindCombatPerks(CombatPerks);
             HatchDefenseSystem?.BindPerimeterTraps(PerimeterTrapSystem);
-            // Prompt #768 — epilogue bullet tally from hatch raids.
-            // Prompt #861 — heavy ammo spend counts as sniper/suppression strategy.
-            if (HatchDefenseSystem != null)
-            {
-                HatchDefenseSystem.OnRaidResolved += result =>
-                {
-                    if (result.AmmoConsumed > 0)
-                        EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
-                    if (result.AmmoConsumed >= 10)
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
-                };
-            }
 
-            // Prompt #861 — trap deployments → traps strategy; combat milestones → stealth/snipers.
-            if (PerimeterTrapSystem != null)
-            {
-                PerimeterTrapSystem.OnTrapDeployed += () =>
-                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
-            }
-            if (CombatPerks != null)
-            {
-                CombatPerks.OnMilestoneProgress += (sv, key, value) =>
-                {
-                    if (string.IsNullOrEmpty(key)) return;
-                    if (string.Equals(key, "stealth_kills", StringComparison.Ordinal))
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
-                    else if (string.Equals(key, "ammo_expended", StringComparison.Ordinal) && value >= 20)
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
-                    else if (string.Equals(key, "traps_deployed", StringComparison.Ordinal))
-                        AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
-                };
-            }
+            WireGuardDogAlert();
+            WireMountedHmg();
+            WireHatchRaidEpilogueStats();
+            WireAdaptiveWarlordsStrategyHooks();
+            WireWeaponJamClearing();
 
-            // Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.
-            if (HatchDefenseSystem != null && WeaponMaintenanceSystem != null)
-            {
-                HatchDefenseSystem.TryJamWeapon = (weaponId, clearTicks) =>
-                    WeaponMaintenanceSystem.TryJam(weaponId, clearTicks: clearTicks);
-            }
-
-            PerimeterTrapSystem?.BindCombatPerks(
-                CombatPerks,
-                getSurvivor: id =>
-                {
-                    if (Survivors == null || string.IsNullOrEmpty(id)) return null;
-                    for (int i = 0; i < Survivors.Count; i++)
-                    {
-                        if (Survivors[i] != null && Survivors[i].Id == id)
-                            return Survivors[i];
-                    }
-                    return null;
-                });
-
+            PerimeterTrapSystem?.BindCombatPerks(CombatPerks, getSurvivor: GetSurvivorById);
             ExpeditionSystem?.BindCombatPerks(
                 CombatPerks,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
                 affinity: MentalBreakSystem != null ? MentalBreakSystem.Affinity : null,
                 getAllSurvivors: () => Survivors);
+        }
+
+        /// <summary>REPROMOTE-Pet-001 — guard dog Alert on raid start → defense bonus when fed.</summary>
+        private void WireGuardDogAlert()
+        {
+            if (HatchDefenseSystem == null || PetGuardDog == null) return;
+
+            HatchDefenseSystem.TryAlertGuardDog = () => PetGuardDog.Alert("bunker");
+            PetGuardDog.OnDogAlerted += (shelterId, canFight) =>
+                GameLog.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
+        }
+
+        /// <summary>REPROMOTE-Weapon-001 — mounted HMG stock contributes via GetWeaponPower.</summary>
+        private void WireMountedHmg()
+        {
+            if (HatchDefenseSystem == null || WeaponHMG == null) return;
+
+            // Ensure a default mount so stockpile HMG is usable as hatch defense.
+            if (!WeaponHMG.IsMounted)
+                WeaponHMG.Mount("hatch");
+
+            HatchDefenseSystem.GetMountedHmgDefensePower = inv =>
+            {
+                if (inv == null || WeaponHMG == null) return 0f;
+                bool hasStock = inv.CountById(Weapon_HMG.InventoryItemId) > 0
+                    || inv.CountById("hmg") > 0;
+                if (!hasStock) return 0f;
+                if (!WeaponHMG.IsMounted)
+                    WeaponHMG.Mount("hatch");
+                // HMG needs 2 operators — count assigned hatch guards.
+                int operators = HatchDefenseSystem.ActiveGuardCount;
+                // Oil: not jammed = treated as oiled for defense-power path.
+                bool isOiled = !WeaponHMG.IsJammed;
+                return WeaponHMG.GetHatchDefensePower(operators, isOiled);
+            };
+
+            // HMG-002 — fire the mounted HMG each raid. Fire() handles the jam risk
+            // and OnRaidShredded so the HMG risk-reward is not bypassed. Operators
+            // and raid level are read at fire time.
+            HatchDefenseSystem.FireMountedHmg = (operators, isOiled, raidLevel) =>
+            {
+                if (WeaponHMG == null) return;
+                WeaponHMG.Fire("hatch", operators, isOiled, raidLevel);
+            };
+        }
+
+        /// <summary>Prompt #768 — epilogue bullet tally from hatch raids.</summary>
+        private void WireHatchRaidEpilogueStats()
+        {
+            if (HatchDefenseSystem == null) return;
+
+            HatchDefenseSystem.OnRaidResolved += result =>
+            {
+                if (result.AmmoConsumed > 0)
+                    EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
+                // Prompt #861 — heavy ammo spend counts as sniper/suppression strategy.
+                if (result.AmmoConsumed >= 10)
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
+            };
+        }
+
+        /// <summary>
+        /// Prompt #861 — trap deployments → traps strategy; combat milestones →
+        /// stealth/snipers/traps, read from CombatPerks' milestone key.
+        /// </summary>
+        private void WireAdaptiveWarlordsStrategyHooks()
+        {
+            if (PerimeterTrapSystem != null)
+            {
+                PerimeterTrapSystem.OnTrapDeployed += () =>
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
+            }
+
+            CombatPerks.OnMilestoneProgress += (sv, key, value) =>
+            {
+                if (string.IsNullOrEmpty(key)) return;
+                if (string.Equals(key, "stealth_kills", StringComparison.Ordinal))
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyStealth);
+                else if (string.Equals(key, "ammo_expended", StringComparison.Ordinal) && value >= 20)
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
+                else if (string.Equals(key, "traps_deployed", StringComparison.Ordinal))
+                    AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
+            };
+        }
+
+        /// <summary>Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.</summary>
+        private void WireWeaponJamClearing()
+        {
+            if (HatchDefenseSystem == null || WeaponMaintenanceSystem == null) return;
+
+            HatchDefenseSystem.TryJamWeapon = (weaponId, clearTicks) =>
+                WeaponMaintenanceSystem.TryJam(weaponId, clearTicks: clearTicks);
+        }
+
+        private Survivor GetSurvivorById(string id)
+        {
+            if (Survivors == null || string.IsNullOrEmpty(id)) return null;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                if (Survivors[i] != null && Survivors[i].Id == id)
+                    return Survivors[i];
+            }
+            return null;
         }
 
         /// <summary>
@@ -1007,6 +1049,27 @@ namespace AtomicWar._Game.Core
                 ExpeditionSystem.OnEncounterResolved -= OnExpeditionEncounterResolved_LogCombat;
                 ExpeditionSystem.OnEncounterResolved += OnExpeditionEncounterResolved_LogCombat;
             }
+
+            // REPROMOTE-Encounter-001 — map/SO roadblock tags → class ResolveChoice.
+            if (ExpeditionSystem != null && EncounterRoadblock != null)
+                ExpeditionSystem.BindClassRoadblock(EncounterRoadblock);
+
+            // REPROMOTE-MapHazard-001 — swamp looting → VenusTrap harvest check.
+            if (ExpeditionSystem != null && MapHazardVenusTrap != null)
+                ExpeditionSystem.BindVenusTrap(MapHazardVenusTrap);
+
+            // Prompt #902 — snowfield/frozen-lake nodes → FrozenSurvivor check.
+            if (ExpeditionSystem != null && MapHazardFrozenSurvivor != null)
+                ExpeditionSystem.BindFrozenSurvivor(MapHazardFrozenSurvivor);
+
+            // REPROMOTE-Item-001 — keycard doors on secure/military expedition nodes.
+            if (ExpeditionSystem != null && ItemKeycards != null)
+                ExpeditionSystem.BindKeycards(ItemKeycards);
+
+            // Prompt #67 — mutated flora/fauna per looting tick. Without this the
+            // ecosystem advanced and saved a mutation stage nothing could ever read.
+            if (ExpeditionSystem != null && EcosystemSystem != null)
+                ExpeditionSystem.BindEcosystem(EcosystemSystem);
         }
 
         private void OnExpeditionEncounterResolved_LogCombat(
@@ -1040,6 +1103,7 @@ namespace AtomicWar._Game.Core
             if (SurvivalPerks == null) return;
 
             CookingSystem = new CookingSystem(Inventory, WaterStorage, new System.Random(_worldSeed + 189));
+            CookingSystem.SetNeedsSystem(NeedsSystem);
             CookingSystem.BindSurvivalPerks(
                 SurvivalPerks,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);

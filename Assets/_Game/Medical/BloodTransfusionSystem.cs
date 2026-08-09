@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar._Game.Medical
 {
@@ -101,6 +102,9 @@ namespace AtomicWar._Game.Medical
             _inflictAffliction = inflictAffliction;
         }
 
+        private NeedsSystem _needsSystem;
+        public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
+
         /// <summary>Get or assign a random blood type for a survivor (distribution: O=44%, A=42%, B=10%, AB=4%).</summary>
         public BloodType GetBloodType(string survivorId)
         {
@@ -158,21 +162,26 @@ namespace AtomicWar._Game.Medical
                 return false;
 
             // Donor cost.
-            donor.Needs.Health = Mathf.Clamp(donor.Needs.Health - TransfusionDonorHealthCost, 0f, 100f);
-            donor.Needs.Fatigue = Mathf.Clamp(donor.Needs.Fatigue + TransfusionDonorFatigue, 0f, 100f);
+            SurvivorNeedWrite.SetHealth(donor, donor.Needs.Health - TransfusionDonorHealthCost);
+            if (_needsSystem != null)
+                _needsSystem.Modify(donor, NeedKind.Fatigue, TransfusionDonorFatigue);
+            else
+                donor.Needs.Fatigue = Mathf.Clamp(donor.Needs.Fatigue + TransfusionDonorFatigue, 0f, 100f);
 
             if (compatible)
             {
                 // Heal BloodLoss on recipient.
-                recipient.Needs.Health = Mathf.Clamp(
-                    recipient.Needs.Health + TransfusionBloodLossHeal, 0f, recipient.MaxHealthCap);
-                recipient.Needs.Morale = Mathf.Clamp(recipient.Needs.Morale + 5f, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(recipient, TransfusionBloodLossHeal);
+                if (_needsSystem != null)
+                    _needsSystem.Modify(recipient, NeedKind.Morale, 5f);
+                else
+                    recipient.Needs.Morale = Mathf.Clamp(recipient.Needs.Morale + 5f, 0f, 100f);
             }
             else
             {
                 // Anaphylactic shock — lethal in 12h without adrenaline.
                 _inflictAffliction?.Invoke(recipient, AnaphylacticShockId);
-                recipient.Needs.Health = Mathf.Clamp(recipient.Needs.Health - 20f, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(recipient, -20f);
             }
 
             OnTransfusionPerformed?.Invoke(donor, recipient, compatible);

@@ -28,6 +28,7 @@ namespace AtomicWar._Game.Core
     /// Item persists across saves in a separate file.
     /// Retrieved on Day 1 of next game.
     /// </summary>
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_BuryTimeCapsule
     {
         // ── Events ─────────────────────────────────────────────────────

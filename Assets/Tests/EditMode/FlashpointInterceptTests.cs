@@ -162,6 +162,10 @@ namespace AtomicWar.Tests.EditMode
             // Simulate mid-trip: 6 ticks outbound, 4 inbound remaining.
             exp.TravelTicksCompleted = 6;
             float preInterceptEta = exp.TravelTicksCompleted;
+            // RAD-3C: the acute-dose spike scales with time in the field. Pin elapsed
+            // hours to the reference so this test asserts the unscaled spike and stays
+            // focused on the Paranoid behaviour rather than the dose curve.
+            exp.CurrentTick = (int)ExpeditionSystem.FlashpointDoseReferenceHours;
 
             float preAcute = survivor.AcuteDoseWindow;
             float preMorale = survivor.Needs.Morale;
@@ -304,6 +308,9 @@ namespace AtomicWar.Tests.EditMode
             var exp = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
             exp.TryAddLoot(_foodItem);
             exp.TravelTicksCompleted = 5;
+            // RAD-3C: pin elapsed hours to the reference so the expected spike is the
+            // unscaled constant — this test is about double-application, not scaling.
+            exp.CurrentTick = (int)ExpeditionSystem.FlashpointDoseReferenceHours;
 
             float preAcute = survivor.AcuteDoseWindow;
 
@@ -315,6 +322,53 @@ namespace AtomicWar.Tests.EditMode
             PublishIntercept();
             Assert.AreEqual(postFirstAcute, survivor.AcuteDoseWindow, Eps,
                 "Re-publishing the intercept must not double-apply the dose spike.");
+        }
+
+        // -------------------------------------------------------------------
+        // RAD-3C — acute-dose spike scales with time in the field
+        // -------------------------------------------------------------------
+
+        [Test]
+        public void AcuteDoseSpike_ScalesWithTimeInField_AndClampsAtBothEnds()
+        {
+            // A survivor caught minutes from the hatch must not take the same acute
+            // window as one three days deep — that was the pre-fix behaviour and it
+            // made expedition timing decisions irrelevant to flashpoint risk.
+            float freshDose = InterceptAndMeasureDose("sv_fresh", elapsedHours: 0);
+            float referenceDose = InterceptAndMeasureDose(
+                "sv_reference", elapsedHours: (int)ExpeditionSystem.FlashpointDoseReferenceHours);
+            float deepDose = InterceptAndMeasureDose("sv_deep", elapsedHours: 240);
+
+            Assert.Less(freshDose, referenceDose,
+                "A survivor barely out of the hatch should take less acute dose.");
+            Assert.Greater(deepDose, referenceDose,
+                "A survivor deep in the field should take more acute dose.");
+
+            Assert.AreEqual(
+                ExpeditionSystem.FlashpointAcuteDoseSpike * ExpeditionSystem.MinFlashpointDoseScale,
+                freshDose, Eps, "Fresh departure should clamp to the minimum scale.");
+            Assert.AreEqual(
+                ExpeditionSystem.FlashpointAcuteDoseSpike,
+                referenceDose, Eps, "At the reference hours the spike is unscaled.");
+            Assert.AreEqual(
+                ExpeditionSystem.FlashpointAcuteDoseSpike * ExpeditionSystem.MaxFlashpointDoseScale,
+                deepDose, Eps, "A very long run should clamp to the maximum scale.");
+        }
+
+        /// <summary>
+        /// Run one intercept against a fresh survivor whose expedition has been in the
+        /// field for <paramref name="elapsedHours"/>, and return the acute dose applied.
+        /// </summary>
+        private float InterceptAndMeasureDose(string survivorId, int elapsedHours)
+        {
+            var survivor = MakeSurvivor(survivorId, RiskBiasTrait.Realist);
+            _expeditionSystem.StartExpedition(survivor, _location, ExpeditionStance.Stealth);
+            var exp = _expeditionSystem.GetExpeditionBySurvivor(survivor.Id);
+            exp.CurrentTick = elapsedHours;
+
+            float before = survivor.AcuteDoseWindow;
+            PublishIntercept();
+            return survivor.AcuteDoseWindow - before;
         }
 
         // -------------------------------------------------------------------

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 
@@ -13,6 +14,20 @@ namespace AtomicWar._Game.Events
         public string ChoiceId;
         public float RemainingHours;
         public DelayedConsequence Consequence;
+    }
+
+    /// <summary>
+    /// Serialisable snapshot of EventRunner's cooldowns and active delayed
+    /// consequences for SaveSystem round-trips. Fixes P0 audit gaps where
+    /// _cooldowns and _activeConsequences were lost on save/load, silently
+    /// resetting cooldown timers and discarding mid-resolution consequences.
+    /// </summary>
+    [Serializable]
+    public class EventRunnerStateSave
+    {
+        public List<string> CooldownKeys = new List<string>();
+        public List<float> CooldownValues = new List<float>();
+        public List<ActiveDelayedConsequence> ActiveConsequences = new List<ActiveDelayedConsequence>();
     }
 
     /// <summary>
@@ -145,7 +160,7 @@ namespace AtomicWar._Game.Events
                 // Flag / condition gates on multi-stage arcs (eventFlags, minDay, …).
                 if (gameEvent != null && context != null && !gameEvent.CanTrigger(context))
                 {
-                    UnityEngine.Debug.Log(
+                    GameLog.Log(
                         $"[EventRunner] Scheduled event '{scheduled.EventId}' on day {currentDay} " +
                         "skipped — CanTrigger failed (eventFlags / conditions).");
                     OnScheduledEventFired?.Invoke(scheduled, null, context);
@@ -203,6 +218,57 @@ namespace AtomicWar._Game.Events
             {
                 if (!string.IsNullOrEmpty(save.Queue[i].EventId))
                     _scheduledEvents.Add(save.Queue[i]);
+            }
+        }
+
+        // ── Save / restore for cooldowns & active delayed consequences ────
+
+        /// <summary>
+        /// Captures the cooldown dictionary and active delayed-consequence list
+        /// so they survive save/load round-trips. Without this, cooldowns reset
+        /// to zero (events re-fire immediately after load) and mid-resolution
+        /// consequences are silently dropped.
+        /// </summary>
+        public EventRunnerStateSave CaptureCooldownState()
+        {
+            var save = new EventRunnerStateSave();
+            foreach (var kv in _cooldowns)
+            {
+                save.CooldownKeys.Add(kv.Key);
+                save.CooldownValues.Add(kv.Value);
+            }
+            for (int i = 0; i < _activeConsequences.Count; i++)
+            {
+                save.ActiveConsequences.Add(_activeConsequences[i]);
+            }
+            return save;
+        }
+
+        /// <summary>
+        /// Restores cooldowns and active delayed consequences from a save snapshot.
+        /// Clears existing state before applying the saved data.
+        /// </summary>
+        public void RestoreCooldownState(EventRunnerStateSave save)
+        {
+            _cooldowns.Clear();
+            _activeConsequences.Clear();
+            if (save == null) return;
+
+            if (save.CooldownKeys != null && save.CooldownValues != null)
+            {
+                int count = Math.Min(save.CooldownKeys.Count, save.CooldownValues.Count);
+                for (int i = 0; i < count; i++)
+                {
+                    _cooldowns[save.CooldownKeys[i]] = save.CooldownValues[i];
+                }
+            }
+
+            if (save.ActiveConsequences != null)
+            {
+                for (int i = 0; i < save.ActiveConsequences.Count; i++)
+                {
+                    _activeConsequences.Add(save.ActiveConsequences[i]);
+                }
             }
         }
 

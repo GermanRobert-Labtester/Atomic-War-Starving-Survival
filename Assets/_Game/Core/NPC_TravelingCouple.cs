@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Heavily armed, passive pair. If player attacks and kills one partner,
     /// the remaining survivor fights to the death with a +200% vengeance buff to accuracy and damage.
     /// </summary>
+    /// <summary>DEMOTE-NPC-batch — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_TravelingCouple
     {
         private TravelingCoupleState _state = new TravelingCoupleState();

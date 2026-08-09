@@ -218,8 +218,7 @@ namespace AtomicWar._Game.Core
             // Extra immediate damage if NeedsSystem path skipped healthEffect
             if (consumer.Needs != null && item.healthEffect >= 0f)
             {
-                consumer.Needs.Health = Mathf.Clamp(
-                    consumer.Needs.Health - PoisonConsumeHealthDamage, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(consumer, -PoisonConsumeHealthDamage);
             }
 
             _poisonsConsumed++;

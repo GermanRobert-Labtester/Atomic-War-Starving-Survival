@@ -34,20 +34,13 @@ namespace AtomicWar._Game.Core
                 return AmmoFactionSource.BlackOpsMilitary;
             if (f.Contains("spec_ops") || f.Contains("specops"))
                 return AmmoFactionSource.SpecOpsRebel;
-            if (f.Contains("mercenary") && f.Contains("mil"))
-                return AmmoFactionSource.MercenaryMilitary;
-            if (f.Contains("mercenary") && f.Contains("rebel"))
-                return AmmoFactionSource.MercenaryRebel;
             if (f.Contains("mercenary"))
-                return AmmoFactionSource.MercenaryMilitary;
+                return f.Contains("rebel") ? AmmoFactionSource.MercenaryRebel : AmmoFactionSource.MercenaryMilitary;
             if (f.Contains("military") || f.Contains("mil_") || f == "mil" || f.Contains("army")
                 || f.Contains("national_guard") || f.Contains("deserter"))
                 return AmmoFactionSource.MilitaryForces;
             if (f.Contains("rebel") || f.Contains("insurgent") || f.Contains("partisan"))
                 return AmmoFactionSource.RebelForces;
-            if (f.Contains("bandit") || f.Contains("raider") || f.Contains("looter")
-                || f.Contains("terror") || f.Contains("scavenger"))
-                return AmmoFactionSource.CivilianCraft;
             return AmmoFactionSource.CivilianCraft;
         }
 
@@ -189,7 +182,7 @@ namespace AtomicWar._Game.Core
             bool preferApApi = false)
         {
             EnsureCatalog();
-            rng ??= new System.Random();
+            rng ??= AtomicWar._Game.Utilities.SeededRandom.Stream("item_ammotypes_combatloot");
             count = Mathf.Clamp(count, 0, 8);
             var results = new List<string>(count);
             if (count == 0) return results;

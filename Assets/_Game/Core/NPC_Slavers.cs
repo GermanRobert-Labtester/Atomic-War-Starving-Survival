@@ -20,6 +20,7 @@ namespace AtomicWar._Game.Core
     /// Uses TearGas and StunBatons. Non-lethal capture: losing this encounter transports the scavenger
     /// to the Labor Camp node, stripped of gear, where they must escape via stealth.
     /// </summary>
+    /// <summary>DEMOTE-NPC-001 — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class NPC_Slavers
     {
         private SlaversState _state = new SlaversState();

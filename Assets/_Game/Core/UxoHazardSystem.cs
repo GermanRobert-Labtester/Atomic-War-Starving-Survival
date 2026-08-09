@@ -71,10 +71,10 @@ namespace AtomicWar._Game.Core
             var s = exp.Survivor;
             if (s.Needs != null)
             {
-                s.Needs.Health = Mathf.Clamp(s.Needs.Health - DetonationHealthDamage, 0f, 100f);
+                SurvivorNeedWrite.AdjustHealth(s, -DetonationHealthDamage);
             }
 
-            if (medical != null)
+            if (medical != null && s.IsAlive)
             {
                 medical.Inflict(s, AfflictionSO.Ids.BrokenBone);
             }
@@ -85,11 +85,8 @@ namespace AtomicWar._Game.Core
             exp.Phase = ExpeditionPhase.Inbound;
             exp.UxoDetonated = true;
 
-            if (s.Needs != null && s.Needs.Health <= 0f)
-            {
-                s.State = SurvivorState.Dead;
+            if (s.State == SurvivorState.Dead)
                 exp.Phase = ExpeditionPhase.Failed;
-            }
 
             return true;
         }

@@ -1,7 +1,9 @@
 {
     "name": "AtomicWar._Game.Survivors",
     "rootNamespace": "AtomicWar._Game.Survivors",
-    "references": [],
+    "references": [
+        "AtomicWar._Game.Utilities"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

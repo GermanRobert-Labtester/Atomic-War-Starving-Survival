@@ -16,6 +16,7 @@ namespace AtomicWar._Game.Core
         public List<float> hoursSpentList = new List<float>();
     }
 
+    /// <summary>DEMOTE-Action-remaining — dormant ghost; not Boot/Save wired until a host calls APIs.</summary>
     public class Action_WorshipIdol
     {
         public event Action<string, string> OnIdolWorshipped;
