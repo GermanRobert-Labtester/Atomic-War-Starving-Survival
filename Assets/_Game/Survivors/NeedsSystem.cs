@@ -210,17 +210,41 @@ namespace AtomicWar._Game.Survivors
             }
 
             // #249 Selfless: redistribute morale damage onto Selfless absorbers.
+            // ApplyMoraleDamageWithSelfless settles both the absorbers' and the
+            // target's share through ApplyMoraleDeltaDirect, which deliberately
+            // skips this branch. Routing those writes back through Modify re-enters
+            // here with the same (Morale, negative) shape and recurses until the
+            // stack is exhausted — even with no Selfless survivor present.
             if (need == NeedKind.Morale && delta < 0f && _personalQuests != null)
             {
                 var all = _getSurvivors != null ? _getSurvivors() : _survivors;
                 _personalQuests.ApplyMoraleDamageWithSelfless(survivor, -delta, all);
-                float after = survivor.Needs.Morale;
                 _personalQuests.ClampMoraleToCap(survivor);
                 // #265 Living Saint Inspired: floor applies after any morale damage path.
                 _personalQuests.ApplyLivingSaintMoraleFloor(survivor);
                 OnNeedChanged?.Invoke(survivor, NeedKind.Morale, survivor.Needs.Morale);
-                // Still fire critical if applicable (morale has no critical threshold here).
-                _ = after;
+                return;
+            }
+
+            ApplyNeedDelta(survivor, need, delta);
+        }
+
+        /// <summary>
+        /// Clamped morale write that bypasses the #249 Selfless redistribution.
+        /// <see cref="PersonalQuestSystem.ApplyMoraleDamageWithSelfless"/> has already
+        /// decided how the damage splits, so its writes must not re-trigger the split.
+        /// </summary>
+        public void ApplyMoraleDeltaDirect(Survivor survivor, float delta) =>
+            ApplyNeedDelta(survivor, NeedKind.Morale, delta);
+
+        /// <summary>
+        /// The clamp-cap-write-notify core shared by <see cref="Modify"/> and
+        /// <see cref="ApplyMoraleDeltaDirect"/>.
+        /// </summary>
+        private void ApplyNeedDelta(Survivor survivor, NeedKind need, float delta)
+        {
+            if (survivor == null || !survivor.IsAlive || delta == 0f)
+            {
                 return;
             }
 

@@ -3893,15 +3893,17 @@ namespace AtomicWar._Game.Survivors
                     if (s == null || !s.IsAlive || s.Id == target.Id) continue;
                     float absorb = GetSelflessMoraleAbsorb(s, remaining);
                     if (absorb <= 0f) continue;
+                    // Direct write: NeedsSystem.Modify would route back into this
+                    // method and recurse (absorbers bouncing damage off each other).
                     if (_needsSystem != null)
-                        _needsSystem.Modify(s, NeedKind.Morale, -(absorb));
+                        _needsSystem.ApplyMoraleDeltaDirect(s, -(absorb));
                     else
                         s.Needs.Morale = Mathf.Max(0f, s.Needs.Morale - absorb);
                     remaining -= absorb;
                 }
             }
             if (_needsSystem != null)
-                _needsSystem.Modify(target, NeedKind.Morale, -(remaining));
+                _needsSystem.ApplyMoraleDeltaDirect(target, -(remaining));
             else
                 target.Needs.Morale = Mathf.Max(0f, target.Needs.Morale - remaining);
             return remaining;
