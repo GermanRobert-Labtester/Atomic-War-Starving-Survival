@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -41,7 +42,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnRadTransferredToInventory?.Invoke(scavenger_id, _state.rad_transfer_amount);
-            Debug.Log($"[Encounter_GlowingDead] Scavenger '{scavenger_id}' absorbed {_state.rad_transfer_amount} rad from corpse.");
+            GameLog.Log($"[Encounter_GlowingDead] Scavenger '{scavenger_id}' absorbed {_state.rad_transfer_amount} rad from corpse.");
 
             foreach (string item_id in inventory_item_ids)
             {
@@ -51,7 +52,7 @@ namespace AtomicWar._Game.Core
                 if (IsFoodOrWater(item_id))
                 {
                     OnItemIrradiated?.Invoke(scavenger_id, item_id);
-                    Debug.Log($"[Encounter_GlowingDead] Item '{item_id}' irradiated in scavenger '{scavenger_id}' inventory.");
+                    GameLog.Log($"[Encounter_GlowingDead] Item '{item_id}' irradiated in scavenger '{scavenger_id}' inventory.");
                 }
             }
         }

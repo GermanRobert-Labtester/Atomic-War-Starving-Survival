@@ -597,7 +597,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetSabotagedCacheSystem(SabotagedCacheSystem);
             ExpeditionSystem.OnSabotagedCacheDetected += (exp, msg) =>
             {
-                Debug.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
+                GameLog.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
             };
 
             // Prompt #14 — post-Day-30 windstorms move death-zone rad two path-hops.
@@ -607,7 +607,7 @@ namespace AtomicWar._Game.Core
             ShiftingHotspotSystem.OnHotspotShifted += shift =>
             {
                 if (shift == null) return;
-                Debug.Log(
+                GameLog.Log(
                     $"[Shifting Hotspot] Windstorm day {shift.Day}: " +
                     $"{shift.FromNodeId} → {shift.ToNodeId} " +
                     $"(moved {shift.MovedRad:F0} rad/hr)");
@@ -622,7 +622,7 @@ namespace AtomicWar._Game.Core
             HatchEntrapmentSystem.OnHatchStateChanged += (prev, next) =>
             {
                 SyncHatchExpeditionLock();
-                Debug.Log($"[Hatch Entrapment] HatchState {prev} → {next}");
+                GameLog.Log($"[Hatch Entrapment] HatchState {prev} → {next}");
             };
             HatchEntrapmentSystem.OnBuriedAliveTriggered += () =>
             {
@@ -826,7 +826,7 @@ namespace AtomicWar._Game.Core
 
             HatchDefenseSystem.TryAlertGuardDog = () => PetGuardDog.Alert("bunker");
             PetGuardDog.OnDogAlerted += (shelterId, canFight) =>
-                Debug.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
+                GameLog.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
         }
 
         /// <summary>REPROMOTE-Weapon-001 — mounted HMG stock contributes via GetWeaponPower.</summary>

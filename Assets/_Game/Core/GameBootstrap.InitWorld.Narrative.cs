@@ -50,15 +50,15 @@ namespace AtomicWar._Game.Core
             };
             PhantomIntruders.OnWeaponFiredHandler = () =>
             {
-                Debug.Log("[Phantom Intruder] Weapon fired at the hatch door!");
+                GameLog.Log("[Phantom Intruder] Weapon fired at the hatch door!");
             };
             PhantomIntruders.OnPhantomIntruderTriggered += paranoid =>
             {
-                Debug.Log($"[Phantom Intruder] {paranoid.DisplayName} sees a Hatch Breach that isn't there!");
+                GameLog.Log($"[Phantom Intruder] {paranoid.DisplayName} sees a Hatch Breach that isn't there!");
             };
             PhantomIntruders.OnPhantomIntruderResolved += paranoid =>
             {
-                Debug.Log($"[Phantom Intruder] {paranoid.DisplayName} realizes nothing was out there.");
+                GameLog.Log($"[Phantom Intruder] {paranoid.DisplayName} realizes nothing was out there.");
             };
 
             // ───────────────────────────────────────────────────────────
@@ -85,11 +85,11 @@ namespace AtomicWar._Game.Core
                     Survivors.Add(child);
                     NeedsSystem.Register(child);
                 }
-                Debug.Log("[Child] The child has been found and brought into the bunker. Hope rises.");
+                GameLog.Log("[Child] The child has been found and brought into the bunker. Hope rises.");
             };
             ChildSystem.OnChildDied += _ =>
             {
-                Debug.Log("[Child] The child has died. The bunker's hope shatters.");
+                GameLog.Log("[Child] The child has died. The bunker's hope shatters.");
                 if (SaveSystem != null)
                     SaveSystem.SetWorldFlag(ChildDependentSystem.ChildDiedFlag, true);
             };

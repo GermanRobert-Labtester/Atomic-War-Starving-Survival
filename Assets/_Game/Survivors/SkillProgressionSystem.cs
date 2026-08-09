@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Survivors
 {
@@ -793,7 +794,7 @@ namespace AtomicWar._Game.Survivors
 
             if (migrated)
             {
-                UnityEngine.Debug.Log(
+                GameLog.Log(
                     $"[SkillProgression] Migrated legacy '{MedicalPerkSystem.LegacySteadyHandsId}' → " +
                     $"'{MedicalPerkSystem.SteadyHandsId}' for survivor {sv.Id} (expert track: " +
                     $"{(string.IsNullOrEmpty(sv.ExpertDisciplineId) ? "none" : sv.ExpertDisciplineId)}).");

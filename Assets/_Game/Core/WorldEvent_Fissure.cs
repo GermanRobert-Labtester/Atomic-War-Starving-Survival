@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -68,7 +69,7 @@ namespace AtomicWar._Game.Core
             OnFissureFormed?.Invoke(_state.event_id);
             OnMapSplit?.Invoke();
 
-            Debug.Log($"[WorldEvent_Fissure] Tectonic fissure triggered on Day {day}. Map split.");
+            GameLog.Log($"[WorldEvent_Fissure] Tectonic fissure triggered on Day {day}. Map split.");
         }
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnConnectionDestroyed?.Invoke(from_node, to_node);
-            Debug.Log($"[WorldEvent_Fissure] Connection destroyed: {from_node} → {to_node}.");
+            GameLog.Log($"[WorldEvent_Fissure] Connection destroyed: {from_node} → {to_node}.");
         }
 
         /// <summary>

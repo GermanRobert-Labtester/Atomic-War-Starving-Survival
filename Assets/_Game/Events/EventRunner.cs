@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 
@@ -159,7 +160,7 @@ namespace AtomicWar._Game.Events
                 // Flag / condition gates on multi-stage arcs (eventFlags, minDay, …).
                 if (gameEvent != null && context != null && !gameEvent.CanTrigger(context))
                 {
-                    UnityEngine.Debug.Log(
+                    GameLog.Log(
                         $"[EventRunner] Scheduled event '{scheduled.EventId}' on day {currentDay} " +
                         "skipped — CanTrigger failed (eventFlags / conditions).");
                     OnScheduledEventFired?.Invoke(scheduled, null, context);

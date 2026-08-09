@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -53,7 +54,7 @@ namespace AtomicWar._Game.Core
 
             OnDiscovered?.Invoke(node_id);
             OnAudioSilenced?.Invoke();
-            Debug.Log($"[MapAnomaly_PetrifiedForest] Discovered at node '{node_id}'. Audio silenced.");
+            GameLog.Log($"[MapAnomaly_PetrifiedForest] Discovered at node '{node_id}'. Audio silenced.");
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace AtomicWar._Game.Core
 
             OnTreeHarvested?.Invoke(_state.node_id, count, carbon_scrap);
             OnWoodZero?.Invoke();
-            Debug.Log($"[MapAnomaly_PetrifiedForest] Harvested {count} petrified trees — " +
+            GameLog.Log($"[MapAnomaly_PetrifiedForest] Harvested {count} petrified trees — " +
                       $"{carbon_scrap:F1} CarbonScrap, 0 wood.");
         }
 

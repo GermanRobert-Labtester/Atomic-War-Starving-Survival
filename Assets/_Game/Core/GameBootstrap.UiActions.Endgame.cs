@@ -99,7 +99,7 @@ namespace AtomicWar._Game.Core
             FinalizeAdaptiveWarlordsForNextRun();
             // Halt TimeSystem by not ticking (Update already gates on Phase/IsGameOver).
             PushEndgameSummaryToHud(summary);
-            Debug.Log($"[GameBootstrap] ENDGAME ({summary.State}): {summary.OutcomeTitle} — {summary.Reason}");
+            GameLog.Log($"[GameBootstrap] ENDGAME ({summary.State}): {summary.OutcomeTitle} — {summary.Reason}");
         }
 
         /// <summary>
@@ -163,7 +163,7 @@ namespace AtomicWar._Game.Core
             AdaptiveWarlords.OnPlaythroughEnd();
             string gear = AdaptiveWarlords.GetWarlordGear("standard");
             if (!string.IsNullOrEmpty(gear) && gear != "standard")
-                Debug.Log($"[GameBootstrap] ADAPTIVE WARLORDS next-run gear: {gear}");
+                GameLog.Log($"[GameBootstrap] ADAPTIVE WARLORDS next-run gear: {gear}");
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace AtomicWar._Game.Core
 
             string narrative = EpilogueStats.GetNarrativeSummary(record);
             if (!string.IsNullOrEmpty(narrative))
-                Debug.Log($"[GameBootstrap] EPILOGUE: {narrative}");
+                GameLog.Log($"[GameBootstrap] EPILOGUE: {narrative}");
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace AtomicWar._Game.Core
                 }
             }
 
-            Debug.Log(
+            GameLog.Log(
                 $"[GameBootstrap] LEGACY START active (prior day {LegacyStart.PriorDayOfDeath}, " +
                 $"cause={LegacyStart.CauseOfDeath}, rooms={LegacyStart.GetRuinedRooms().Count}, " +
                 $"corpses={LegacyStart.GetCorpseLocations().Count}).");

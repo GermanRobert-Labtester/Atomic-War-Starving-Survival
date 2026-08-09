@@ -85,7 +85,7 @@ namespace AtomicWar._Game.Core
             var layouts = Data.ShelterLayoutFactory.CreateAll();
             var layoutRng = CreateSaltedRng(_worldSeed, "shelter_layout");
             ShelterLayout = layouts[layoutRng.Next(layouts.Count)];
-            Debug.Log($"[GameBootstrap] Selected shelter layout: {ShelterLayout.layoutName}");
+            GameLog.Log($"[GameBootstrap] Selected shelter layout: {ShelterLayout.layoutName}");
 
             HouseToBunkerSystem = new HouseToBunkerSystem(CreateSaltedRng(_worldSeed, "house_to_bunker"));
             HouseToBunkerSystem.InitializeFromLayout(ShelterLayout);
@@ -282,7 +282,7 @@ namespace AtomicWar._Game.Core
             BilgePumps.OnWaterRouted += liters =>
             {
                 if (liters > 0f)
-                    Debug.Log($"[GameBootstrap] BILGE: routed {liters:0.#} L purified from floodwater.");
+                    GameLog.Log($"[GameBootstrap] BILGE: routed {liters:0.#} L purified from floodwater.");
             };
         }
 
@@ -346,13 +346,13 @@ namespace AtomicWar._Game.Core
             {
                 ApplyCarrionHatchVisibility();
                 ApplyCarrionMapDanger(true);
-                Debug.Log("[GameBootstrap] CARRION: vultures circling the hatch.");
+                GameLog.Log("[GameBootstrap] CARRION: vultures circling the hatch.");
             };
 
             CarrionBirds.OnVulturesDeparted += _ =>
             {
                 ApplyCarrionMapDanger(false);
-                Debug.Log("[GameBootstrap] CARRION: flock dispersed.");
+                GameLog.Log("[GameBootstrap] CARRION: flock dispersed.");
             };
         }
 

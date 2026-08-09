@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -59,7 +60,7 @@ namespace AtomicWar._Game.Core
             _state.is_discovered = true;
 
             OnDiscovered?.Invoke(node_id);
-            Debug.Log($"[Node_GhostShip] Discovered at node '{node_id}'. Infinite fuel available.");
+            GameLog.Log($"[Node_GhostShip] Discovered at node '{node_id}'. Infinite fuel available.");
         }
 
         /// <summary>
@@ -90,19 +91,19 @@ namespace AtomicWar._Game.Core
 
             if (tetanus)
             {
-                Debug.Log($"[Node_GhostShip] Tetanus triggered in room '{room_id}'.");
+                GameLog.Log($"[Node_GhostShip] Tetanus triggered in room '{room_id}'.");
             }
 
             // Maze trap check — low agility survivors may get trapped
             if (agility_skill < 0.4f)
             {
                 OnSurvivorTrapped?.Invoke("unknown", room_id);
-                Debug.Log($"[Node_GhostShip] Survivor trapped in room '{room_id}' " +
+                GameLog.Log($"[Node_GhostShip] Survivor trapped in room '{room_id}' " +
                           $"(agility {agility_skill:F2} < 0.4).");
                 return false;
             }
 
-            Debug.Log($"[Node_GhostShip] Room '{room_id}' explored. Depth: {_state.maze_depth}.");
+            GameLog.Log($"[Node_GhostShip] Room '{room_id}' explored. Depth: {_state.maze_depth}.");
             return true;
         }
 
@@ -118,7 +119,7 @@ namespace AtomicWar._Game.Core
             float amount = _state.fuel_harvest_rate_per_hour * hours;
             // Fuel is effectively infinite — no depletion
             OnFuelHarvested?.Invoke(amount);
-            Debug.Log($"[Node_GhostShip] Harvested {amount:F1} fuel over {hours:F1} hours.");
+            GameLog.Log($"[Node_GhostShip] Harvested {amount:F1} fuel over {hours:F1} hours.");
             return amount;
         }
 
@@ -138,7 +139,7 @@ namespace AtomicWar._Game.Core
             if (contracted)
             {
                 OnTetanusApplied?.Invoke(survivor_id);
-                Debug.Log($"[Node_GhostShip] Survivor '{survivor_id}' contracted Tetanus.");
+                GameLog.Log($"[Node_GhostShip] Survivor '{survivor_id}' contracted Tetanus.");
             }
 
             return contracted;

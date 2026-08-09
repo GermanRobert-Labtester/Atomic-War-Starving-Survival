@@ -70,7 +70,7 @@ namespace AtomicWar._Game.Core
                     File.Move(tmpPath, finalPath);
                 }
 
-                Debug.Log($"[SaveSystem] Saved to slot '{slotId}' (atomic write + .bak backup).");
+                GameLog.Log($"[SaveSystem] Saved to slot '{slotId}' (atomic write + .bak backup).");
                 return true;
             }
             catch (Exception ex)
@@ -155,7 +155,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 RestoreFromSnapshot(data);
-                Debug.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
+                GameLog.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
                 LastLoadSucceeded = true;
                 // Successful load clears suppress only if host is not holding Continue gate.
                 // Host re-enables after Continue finally block.

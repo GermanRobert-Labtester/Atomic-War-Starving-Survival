@@ -1,5 +1,6 @@
 // GameBootstrap.VictoryPaths.cs — boot/wire remaining Victory_* endgame paths.
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -29,7 +30,7 @@ namespace AtomicWar._Game.Core
             VictoryUnifier = new Victory_Unifier();
 
             WireVictoryPaths();
-            Debug.Log("[GameBootstrap] Victory paths ready (14 endings; TrueEnding remains in batch).");
+            GameLog.Log("[GameBootstrap] Victory paths ready (14 endings; TrueEnding remains in batch).");
         }
 
         private void WireVictoryPaths()
@@ -37,74 +38,74 @@ namespace AtomicWar._Game.Core
             if (VictoryAirlift != null)
             {
                 VictoryAirlift.OnAirliftExtracted += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Airlift extraction complete");
+                    GameLog.Log("[GameBootstrap] VICTORY: Airlift extraction complete");
                 VictoryAirlift.OnDefenseFailed += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Airlift defense failed");
+                    GameLog.Log("[GameBootstrap] VICTORY: Airlift defense failed");
             }
 
             if (VictoryAscendancy != null)
                 VictoryAscendancy.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: Ascendancy (Homo-Radiata)");
+                    GameLog.Log("[GameBootstrap] VICTORY: Ascendancy (Homo-Radiata)");
 
             if (VictoryBuriedAlive != null)
                 VictoryBuriedAlive.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: Buried Alive");
+                    GameLog.Log("[GameBootstrap] VICTORY: Buried Alive");
 
             if (VictoryCannibalKing != null)
                 VictoryCannibalKing.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: Cannibal King");
+                    GameLog.Log("[GameBootstrap] VICTORY: Cannibal King");
 
             if (VictoryDefection != null)
                 VictoryDefection.OnGameOver += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Defection (bad ending)");
+                    GameLog.Log("[GameBootstrap] VICTORY: Defection (bad ending)");
 
             if (VictoryIcebreaker != null)
             {
                 VictoryIcebreaker.OnIcebreakerExtracted += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Icebreaker extraction");
+                    GameLog.Log("[GameBootstrap] VICTORY: Icebreaker extraction");
                 VictoryIcebreaker.OnExtractionFailed += (_, reason) =>
-                    Debug.Log($"[GameBootstrap] VICTORY: Icebreaker failed — {reason}");
+                    GameLog.Log($"[GameBootstrap] VICTORY: Icebreaker failed — {reason}");
             }
 
             if (VictoryLoneSurvivor != null)
                 VictoryLoneSurvivor.OnEndingTriggered += id =>
-                    Debug.Log($"[GameBootstrap] VICTORY: Lone Survivor ({id})");
+                    GameLog.Log($"[GameBootstrap] VICTORY: Lone Survivor ({id})");
 
             if (VictoryMAD != null)
                 VictoryMAD.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: MAD — flash of white");
+                    GameLog.Log("[GameBootstrap] VICTORY: MAD — flash of white");
 
             if (VictoryMigration != null)
                 VictoryMigration.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: Migration (Trail of Tears)");
+                    GameLog.Log("[GameBootstrap] VICTORY: Migration (Trail of Tears)");
 
             if (VictoryTheBroadcast != null)
             {
                 VictoryTheBroadcast.OnUploadComplete += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Broadcast upload complete");
+                    GameLog.Log("[GameBootstrap] VICTORY: Broadcast upload complete");
                 VictoryTheBroadcast.OnUploadFailed += (_, reason) =>
-                    Debug.Log($"[GameBootstrap] VICTORY: Broadcast failed — {reason}");
+                    GameLog.Log($"[GameBootstrap] VICTORY: Broadcast failed — {reason}");
             }
 
             if (VictoryTheCure != null)
                 VictoryTheCure.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: The Cure");
+                    GameLog.Log("[GameBootstrap] VICTORY: The Cure");
 
             if (VictoryTheMartian != null)
                 VictoryTheMartian.OnEndingTriggered += n =>
-                    Debug.Log($"[GameBootstrap] VICTORY: The Martian — {n} launched");
+                    GameLog.Log($"[GameBootstrap] VICTORY: The Martian — {n} launched");
 
             if (VictoryUndergroundCity != null)
             {
                 VictoryUndergroundCity.OnSelfSustainingReached += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Underground City self-sustaining");
+                    GameLog.Log("[GameBootstrap] VICTORY: Underground City self-sustaining");
                 VictoryUndergroundCity.OnHatchSealed += _ =>
-                    Debug.Log("[GameBootstrap] VICTORY: Underground City hatch sealed");
+                    GameLog.Log("[GameBootstrap] VICTORY: Underground City hatch sealed");
             }
 
             if (VictoryUnifier != null)
                 VictoryUnifier.OnEndingTriggered += () =>
-                    Debug.Log("[GameBootstrap] VICTORY: Unifier — peace treaty signed");
+                    GameLog.Log("[GameBootstrap] VICTORY: Unifier — peace treaty signed");
         }
 
         /// <summary>

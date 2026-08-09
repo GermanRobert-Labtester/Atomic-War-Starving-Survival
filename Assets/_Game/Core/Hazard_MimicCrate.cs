@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -55,12 +56,12 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnWireDetected?.Invoke(survivor_id);
-                Debug.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' detected the tripwire " +
+                GameLog.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' detected the tripwire " +
                           $"(perception={perception:F2} >= {_state.perception_threshold:F2}).");
             }
             else
             {
-                Debug.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' did NOT detect the tripwire " +
+                GameLog.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' did NOT detect the tripwire " +
                           $"(perception={perception:F2} < {_state.perception_threshold:F2}).");
             }
 
@@ -99,7 +100,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnWireDetected?.Invoke(survivor_id);
-                Debug.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' safely disarmed the mimic crate.");
+                GameLog.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' safely disarmed the mimic crate.");
                 return (true, true);
             }
 
@@ -118,7 +119,7 @@ namespace AtomicWar._Game.Core
 
             OnCrateExploded?.Invoke(survivor_id);
             OnLootDestroyed?.Invoke(crate_id);
-            Debug.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' opened a mimic crate — " +
+            GameLog.Log($"[Hazard_MimicCrate] Survivor '{survivor_id}' opened a mimic crate — " +
                       $"EXPLOSION ({_state.explosion_damage} damage). Loot destroyed, arms crippled.");
 
             // Survivor survives the blast but is badly hurt; loot is gone

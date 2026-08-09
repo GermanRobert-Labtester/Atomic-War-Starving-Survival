@@ -1,5 +1,6 @@
 // GameBootstrap.CoreFamilies.cs — bulk Boot for remaining Core CaptureState systems.
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -44,7 +45,7 @@ namespace AtomicWar._Game.Core
             // Class kept under Action_StabilizeDNA.cs until a real host calls Stabilize().
             // DEMOTE-Action-remaining — ActionStargazing demoted (ghost). Class kept dormant.
             // DEMOTE-Action-remaining — ActionWorshipIdol demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Action family demoted (all zero-ref Action_* ghosts; classes dormant).");
+            GameLog.Log("[GameBootstrap] Action family demoted (all zero-ref Action_* ghosts; classes dormant).");
         }
 
         private void BootAfflictionFamily()
@@ -68,14 +69,14 @@ namespace AtomicWar._Game.Core
             // DEMOTE-AfflictionItem-batch — AfflictionTBI demoted (ghost). Class kept dormant.
             // DEMOTE-AfflictionItem-batch — AfflictionThyroidCancer demoted (ghost). Class kept dormant.
             // DEMOTE-AfflictionItem-batch — AfflictionTrenchFoot demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Affliction family demoted (pure ghosts dormant).");
+            GameLog.Log("[GameBootstrap] Affliction family demoted (pure ghosts dormant).");
         }
 
         private void BootAudioEventFamily()
         {
             // DEMOTE-NodeAudio-batch — AudioEventDeafening demoted (ghost). Class kept dormant.
             // DEMOTE-NodeAudio-batch — AudioEventHeartbeat demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] AudioEvent family demoted.");
+            GameLog.Log("[GameBootstrap] AudioEvent family demoted.");
         }
 
         private void BootCombatFamily()
@@ -83,32 +84,32 @@ namespace AtomicWar._Game.Core
             // DEMOTE-CombatVehicle-batch — CombatBleedOut demoted (ghost). Class kept dormant.
             // DEMOTE-CombatVehicle-batch — CombatFlanking demoted (ghost). Class kept dormant.
             // DEMOTE-CombatVehicle-batch — CombatSuppression demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Combat family demoted.");
+            GameLog.Log("[GameBootstrap] Combat family demoted.");
         }
 
         private void BootCombatStanceFamily()
         {
             // DEMOTE-CombatVehicle-batch — CombatStanceLastStand demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] CombatStance family demoted.");
+            GameLog.Log("[GameBootstrap] CombatStance family demoted.");
         }
 
         private void BootCrisisFamily()
         {
             // DEMOTE-CombatVehicle-batch — CrisisFeralFlora demoted (ghost). Class kept dormant.
             // DEMOTE-CombatVehicle-batch — CrisisStructuralFailure demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Crisis family demoted.");
+            GameLog.Log("[GameBootstrap] Crisis family demoted.");
         }
 
         private void BootDurabilityFamily()
         {
             // DEMOTE-NodeAudio-batch — DurabilitySuppressor demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Durability family demoted.");
+            GameLog.Log("[GameBootstrap] Durability family demoted.");
         }
 
         private void BootEndgameFamily()
         {
             // DEMOTE-NodeAudio-batch — EndgameUltimatum demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Endgame family demoted.");
+            GameLog.Log("[GameBootstrap] Endgame family demoted.");
         }
 
         private void BootHazardFamily()
@@ -123,13 +124,13 @@ namespace AtomicWar._Game.Core
             HazardMimicCrate = new Hazard_MimicCrate();
             HazardSurgicalBotch = new Hazard_SurgicalBotch();
             HazardWeaponBurst = new Hazard_WeaponBurst();
-            Debug.Log("[GameBootstrap] Hazard family ready (4 live systems; 3 ghosts dormant).");
+            GameLog.Log("[GameBootstrap] Hazard family ready (4 live systems; 3 ghosts dormant).");
         }
 
         private void BootHiddenStatFamily()
         {
             // DEMOTE-NodeAudio-batch — HiddenStatUnseen demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] HiddenStat family demoted.");
+            GameLog.Log("[GameBootstrap] HiddenStat family demoted.");
         }
 
         private void BootItemFamily()
@@ -198,7 +199,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-AfflictionItem-batch — ItemWaterTabs demoted (ghost). Class kept dormant.
             // DEMOTE-AfflictionItem-batch — ItemWeldingGoggles demoted (ghost). Class kept dormant.
             // DEMOTE-AfflictionItem-batch — ItemWristDosimeter demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Item family: AmmoTypes+Keycards live; remaining pure ghosts demoted.");
+            GameLog.Log("[GameBootstrap] Item family: AmmoTypes+Keycards live; remaining pure ghosts demoted.");
         }
 
         private void BootLocationFamily()
@@ -206,13 +207,13 @@ namespace AtomicWar._Game.Core
             // DEMOTE-Location-batch — LocationArcade demoted (ghost). Class kept dormant.
             // DEMOTE-Location-batch — LocationSlaveMarket demoted (ghost). Class kept dormant.
             // DEMOTE-Location-batch — LocationStrandedYacht demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Location family demoted (3 ghosts dormant).");
+            GameLog.Log("[GameBootstrap] Location family demoted (3 ghosts dormant).");
         }
 
         private void BootMapFamily()
         {
             MapAquifer = new AquiferSystem("map_aquifer");
-            Debug.Log("[GameBootstrap] Map family ready (1 systems).");
+            GameLog.Log("[GameBootstrap] Map family ready (1 systems).");
         }
 
         private void BootMiscFamily()
@@ -236,7 +237,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-CombatVehicle-batch — VehicleSystem demoted (ghost). Class kept dormant.
             VisionLossSystem = new VisionLossSystem();
             // DEMOTE-VisitorRNG — VisitorRNGSystem demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Misc family ready (VisitorRNG demoted).");
+            GameLog.Log("[GameBootstrap] Misc family ready (VisitorRNG demoted).");
         }
 
         private void BootNPCFamily()
@@ -276,7 +277,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-NPC-batch — NPCTheOld demoted (ghost). Class kept dormant.
             // DEMOTE-NPC-batch — NPCTheParents demoted (ghost). Class kept dormant.
             // DEMOTE-NPC-batch — NPCTravelingCouple demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] NPC family: PassiveTrader live (REPROMOTE-001); remaining ghosts dormant.");
+            GameLog.Log("[GameBootstrap] NPC family: PassiveTrader live (REPROMOTE-001); remaining ghosts dormant.");
         }
 
         private void BootNodeFamily()
@@ -287,13 +288,13 @@ namespace AtomicWar._Game.Core
             // DEMOTE-NodeAudio-batch — NodePlayerBank demoted (ghost). Class kept dormant.
             // DEMOTE-NodeAudio-batch — NodeSector7G demoted (ghost). Class kept dormant.
             // DEMOTE-NodeAudio-batch — NodeSporeHive demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Node family demoted.");
+            GameLog.Log("[GameBootstrap] Node family demoted.");
         }
 
         private void BootPetFamily()
         {
             // DEMOTE-TraitPetProject-batch — PetFeralCat demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Pet family demoted.");
+            GameLog.Log("[GameBootstrap] Pet family demoted.");
         }
 
         private void BootProjectFamily()
@@ -304,7 +305,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-TraitPetProject-batch — ProjectMinecart demoted (ghost). Class kept dormant.
             // DEMOTE-TraitPetProject-batch — ProjectRadioArray demoted (ghost). Class kept dormant.
             // DEMOTE-TraitPetProject-batch — ProjectSurfaceDome demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Project family demoted.");
+            GameLog.Log("[GameBootstrap] Project family demoted.");
         }
 
         private void BootShelterEventFamily()
@@ -315,7 +316,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-TraitPetProject-batch — ShelterEventRefugees demoted (ghost). Class kept dormant.
             // DEMOTE-TraitPetProject-batch — ShelterEventTheMirror demoted (ghost). Class kept dormant.
             // DEMOTE-TraitPetProject-batch — ShelterEventTribute demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] ShelterEvent family demoted.");
+            GameLog.Log("[GameBootstrap] ShelterEvent family demoted.");
         }
 
         private void BootSkirmishFamily()
@@ -325,13 +326,13 @@ namespace AtomicWar._Game.Core
             SkirmishMil_vs_Terror = new Skirmish_Mil_vs_Terror("skirmish_mil_vs_terror");
             SkirmishRebel_vs_Bandit = new Skirmish_Rebel_vs_Bandit("skirmish_rebel_vs_bandit");
             SkirmishRebel_vs_Terror = new Skirmish_Rebel_vs_Terror("skirmish_rebel_vs_terror");
-            Debug.Log("[GameBootstrap] Skirmish family ready (5 systems).");
+            GameLog.Log("[GameBootstrap] Skirmish family ready (5 systems).");
         }
 
         private void BootTraderFamily()
         {
             TraderPlagueConvoy = new Trader_PlagueConvoy();
-            Debug.Log("[GameBootstrap] Trader family ready (1 systems).");
+            GameLog.Log("[GameBootstrap] Trader family ready (1 systems).");
         }
 
         private void BootTraitFamily()
@@ -342,7 +343,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-TraitPetProject-batch — TraitInheritedGenetics demoted (ghost). Class kept dormant.
             // DEMOTE-TraitPetProject-batch — TraitMatriarch demoted (ghost). Class kept dormant.
             // DEMOTE-TraitPetProject-batch — TraitPTSD demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Trait family ready (6 systems).");
+            GameLog.Log("[GameBootstrap] Trait family ready (6 systems).");
         }
 
         private void BootUIEventFamily()
@@ -355,7 +356,7 @@ namespace AtomicWar._Game.Core
             UIEventLowPower = new UIEvent_LowPower();
             UIEventMapRot = new UIEvent_MapRot();
             UIEventPhantomBlip = new PhantomBlipSystem();
-            Debug.Log("[GameBootstrap] UIEvent family ready (8 systems).");
+            GameLog.Log("[GameBootstrap] UIEvent family ready (8 systems).");
         }
 
         private void BootVehicleFamily()
@@ -363,7 +364,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-CombatVehicle-batch — VehicleArmoredTruck demoted (ghost). Class kept dormant.
             // DEMOTE-CombatVehicle-batch — VehicleMotorcycle demoted (ghost). Class kept dormant.
             // DEMOTE-CombatVehicle-batch — VehicleRowboat demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Vehicle family demoted.");
+            GameLog.Log("[GameBootstrap] Vehicle family demoted.");
         }
 
         private void BootVisitorFamily()
@@ -378,7 +379,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-Visitor-batch — VisitorMilTrainingYard demoted (ghost). Class kept dormant.
             // DEMOTE-Visitor-batch — VisitorQuestFaction demoted (ghost). Class kept dormant.
             // DEMOTE-Visitor-batch — VisitorRebelTrainingYard demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Visitor family demoted (10 ghosts dormant).");
+            GameLog.Log("[GameBootstrap] Visitor family demoted (10 ghosts dormant).");
         }
 
         private void BootWeaponFamily()
@@ -387,7 +388,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-CombatVehicle-batch — WeaponFlamethrower demoted (ghost). Class kept dormant.
             WeaponHMG = new Weapon_HMG(); // REPROMOTE-Weapon-001
             // DEMOTE-CombatVehicle-batch — WeaponRPG demoted (ghost). Class kept dormant.
-            Debug.Log("[GameBootstrap] Weapon family demoted.");
+            GameLog.Log("[GameBootstrap] Weapon family demoted.");
         }
 
         private void BootWorldEventFamily()
@@ -397,7 +398,7 @@ namespace AtomicWar._Game.Core
             WorldEventFissure = new WorldEvent_Fissure();
             WorldEventGreatFamine = new WorldEvent_GreatFamine();
             WorldEventMegafauna = new WorldEvent_Megafauna();
-            Debug.Log("[GameBootstrap] WorldEvent family ready (5 systems).");
+            GameLog.Log("[GameBootstrap] WorldEvent family ready (5 systems).");
         }
 
         private void BootRemainingComplexFamily()
@@ -423,7 +424,7 @@ namespace AtomicWar._Game.Core
             // DEMOTE-NodeAudio-batch — NodeOrphanage demoted (ghost). Class kept dormant.
             PetGuardDog = new Pet_GuardDog("pet_guard_dog"); // REPROMOTE-Pet-001
             FalloutStormHazard = new FalloutStormHazardSystem(WeatherSystem);
-            Debug.Log("[GameBootstrap] Remaining complex family ready (21 systems).");
+            GameLog.Log("[GameBootstrap] Remaining complex family ready (21 systems).");
         }
 
     }

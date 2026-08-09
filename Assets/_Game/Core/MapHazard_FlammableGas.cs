@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -57,7 +58,7 @@ namespace AtomicWar._Game.Core
 
             if (UnsafeEquipment.Contains(equipment_type))
             {
-                Debug.Log($"[MapHazard_FlammableGas] Equipment '{equipment_type}' is UNSAFE in gas zone.");
+                GameLog.Log($"[MapHazard_FlammableGas] Equipment '{equipment_type}' is UNSAFE in gas zone.");
                 return false;
             }
 
@@ -105,7 +106,7 @@ namespace AtomicWar._Game.Core
                         }
 
                         OnSparkIgnited?.Invoke(survivor_id);
-                        Debug.Log($"[MapHazard_FlammableGas] Survivor '{survivor_id}' ignited gas " +
+                        GameLog.Log($"[MapHazard_FlammableGas] Survivor '{survivor_id}' ignited gas " +
                                   $"with '{equipped_items[i]}'. Fatal.");
                         return false;
                     }
@@ -119,7 +120,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnSafePassage?.Invoke(survivor_id);
-            Debug.Log($"[MapHazard_FlammableGas] Survivor '{survivor_id}' passed safely.");
+            GameLog.Log($"[MapHazard_FlammableGas] Survivor '{survivor_id}' passed safely.");
             return true;
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -42,7 +43,7 @@ namespace AtomicWar._Game.Core
         {
             if (!UxoHazardSystem.ApplyDetonation(exp, _medicalSystem)) return false;
             OnUxoDetonated?.Invoke(exp, UxoHazardSystem.DetonationLogMessage);
-            Debug.Log($"[UXO] {UxoHazardSystem.DetonationLogMessage}");
+            GameLog.Log($"[UXO] {UxoHazardSystem.DetonationLogMessage}");
             return true;
         }
 

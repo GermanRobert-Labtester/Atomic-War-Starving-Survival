@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -56,7 +57,7 @@ namespace AtomicWar._Game.Core
             }
 
             _state.node_id = node_id;
-            Debug.Log($"[MapHazard_Ashlanche] Entered node '{node_id}'. Noise threshold: {_state.threshold:F1}.");
+            GameLog.Log($"[MapHazard_Ashlanche] Entered node '{node_id}'. Noise threshold: {_state.threshold:F1}.");
         }
 
         /// <summary>
@@ -86,7 +87,7 @@ namespace AtomicWar._Game.Core
             _state.suffocation_timer_minutes = SuffocationLimitMinutes;
 
             OnAvalancheTriggered?.Invoke(_state.node_id);
-            Debug.Log($"[MapHazard_Ashlanche] Avalanche triggered at node '{_state.node_id}'!");
+            GameLog.Log($"[MapHazard_Ashlanche] Avalanche triggered at node '{_state.node_id}'!");
         }
 
         /// <summary>
@@ -101,7 +102,7 @@ namespace AtomicWar._Game.Core
             _state.buried_survivors.AddRange(survivor_ids);
 
             OnSurvivorsBuried?.Invoke(survivor_ids);
-            Debug.Log($"[MapHazard_Ashlanche] {survivor_ids.Length} survivor(s) buried under radioactive ash " +
+            GameLog.Log($"[MapHazard_Ashlanche] {survivor_ids.Length} survivor(s) buried under radioactive ash " +
                       $"(+{_state.rad_exposure_mSv:F0} mSv).");
         }
 
@@ -127,7 +128,7 @@ namespace AtomicWar._Game.Core
 
             _state.buried_survivors.Remove(survivor_id);
             OnDigComplete?.Invoke(survivor_id, DigFatigueCost);
-            Debug.Log($"[MapHazard_Ashlanche] Survivor '{survivor_id}' dug out. Fatigue cost: {DigFatigueCost:F0}.");
+            GameLog.Log($"[MapHazard_Ashlanche] Survivor '{survivor_id}' dug out. Fatigue cost: {DigFatigueCost:F0}.");
             return true;
         }
 
@@ -149,7 +150,7 @@ namespace AtomicWar._Game.Core
                 {
                     string survivor_id = _state.buried_survivors[i];
                     OnSuffocation?.Invoke(survivor_id);
-                    Debug.Log($"[MapHazard_Ashlanche] Survivor '{survivor_id}' suffocated.");
+                    GameLog.Log($"[MapHazard_Ashlanche] Survivor '{survivor_id}' suffocated.");
                 }
 
                 _state.buried_survivors.Clear();

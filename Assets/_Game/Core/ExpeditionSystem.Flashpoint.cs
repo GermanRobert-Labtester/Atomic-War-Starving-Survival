@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -146,7 +147,7 @@ namespace AtomicWar._Game.Core
                     if (_shelter != null)
                     {
                         _shelter.AddBunkerContamination(LetThemInContaminationRadsPerHour);
-                        Debug.Log($"[Flashpoint] LetThemIn: bunker contamination +{LetThemInContaminationRadsPerHour} rph " +
+                        GameLog.Log($"[Flashpoint] LetThemIn: bunker contamination +{LetThemInContaminationRadsPerHour} rph " +
                                   $"(now {_shelter.BunkerContamination:F1}) after admitting {survivorName}.");
                     }
                     CompleteExpedition(exp);
@@ -168,7 +169,7 @@ namespace AtomicWar._Game.Core
                     if (_shelter != null)
                     {
                         _shelter.AddBunkerContamination(ForceDeconContaminationRadsPerHour);
-                        Debug.Log($"[Flashpoint] ForceDecon: bunker contamination +{ForceDeconContaminationRadsPerHour} rph " +
+                        GameLog.Log($"[Flashpoint] ForceDecon: bunker contamination +{ForceDeconContaminationRadsPerHour} rph " +
                                   $"(now {_shelter.BunkerContamination:F1}) from {survivorName}'s strip-down.");
                     }
                     CompleteExpedition(exp);
@@ -186,7 +187,7 @@ namespace AtomicWar._Game.Core
                     exp.Phase = ExpeditionPhase.Failed;
                     OnExpeditionFailed?.Invoke(exp, "denied_entry");
                     RemoveExpedition(exp);
-                    Debug.Log($"[Flashpoint] DenyEntry: {survivorName} died outside the hatch; " +
+                    GameLog.Log($"[Flashpoint] DenyEntry: {survivorName} died outside the hatch; " +
                               $"{affected} other survivor(s) lost {DenyEntryMoralePenaltyForOtherSurvivors} morale.");
                     break;
             }

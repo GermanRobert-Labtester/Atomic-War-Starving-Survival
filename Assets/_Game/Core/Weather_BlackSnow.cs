@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -48,7 +49,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnSuitCleaned?.Invoke(survivor_id);
-                Debug.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit cleaned with ammonia.");
+                GameLog.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit cleaned with ammonia.");
             }
             else
             {
@@ -63,7 +64,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnSuitRuined?.Invoke(survivor_id);
-                Debug.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit permanently ruined — no ammonia available.");
+                GameLog.Log($"[Weather_BlackSnow] Survivor '{survivor_id}' suit permanently ruined — no ammonia available.");
             }
         }
 

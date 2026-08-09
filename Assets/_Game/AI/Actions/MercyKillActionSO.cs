@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
 
@@ -146,7 +147,7 @@ namespace AtomicWar._Game.AI.Actions
                 }
             }
 
-            Debug.Log($"[MercyKill] {killer.DisplayName} ended {candidate.DisplayName}'s suffering.");
+            GameLog.Log($"[MercyKill] {killer.DisplayName} ended {candidate.DisplayName}'s suffering.");
         }
 
         public static bool IsMercyCandidate(Survivors.Survivor sv, MedicalSystem medical)

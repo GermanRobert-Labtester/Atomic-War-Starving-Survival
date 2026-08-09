@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -44,13 +45,13 @@ namespace AtomicWar._Game.Core
             if (_state.fog_covers_entire_map)
             {
                 OnFogOfWarExpanded?.Invoke();
-                Debug.Log("[MapHazard_MagneticAnomaly] Fog of war expanded to cover entire map.");
+                GameLog.Log("[MapHazard_MagneticAnomaly] Fog of war expanded to cover entire map.");
             }
 
             if (_state.scrambles_electronics)
             {
                 OnCompassScrambled?.Invoke();
-                Debug.Log("[MapHazard_MagneticAnomaly] Compass scrambled.");
+                GameLog.Log("[MapHazard_MagneticAnomaly] Compass scrambled.");
             }
         }
 
@@ -75,7 +76,7 @@ namespace AtomicWar._Game.Core
                 _state.affected_nodes.Remove(node_id);
             }
 
-            Debug.Log($"[MapHazard_MagneticAnomaly] Exited node '{node_id}'. Previously explored nodes now require re-scouting.");
+            GameLog.Log($"[MapHazard_MagneticAnomaly] Exited node '{node_id}'. Previously explored nodes now require re-scouting.");
         }
 
         public MagneticAnomalyState CaptureState()

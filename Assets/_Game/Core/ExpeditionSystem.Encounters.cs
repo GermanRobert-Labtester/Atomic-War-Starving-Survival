@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
@@ -525,7 +526,7 @@ namespace AtomicWar._Game.Core
             string choiceId = chosen != null ? chosen.ChoiceId : "gather_the_weapons";
             DesertersStandSystem.Apply(exp, survivor, _deserterStandRifle, choiceId, _needsSystem);
             OnDesertersStandResolved?.Invoke(exp, DesertersStandSystem.LogMessage);
-            Debug.Log($"[Deserter's Stand] {DesertersStandSystem.LogMessage}");
+            GameLog.Log($"[Deserter's Stand] {DesertersStandSystem.LogMessage}");
         }
 
 

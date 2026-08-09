@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -62,7 +63,7 @@ namespace AtomicWar._Game.Core
             _state.trapped_survivor_ids.Clear();
 
             OnCollapseStarted?.Invoke(node_id);
-            Debug.Log($"[Event_NodeCollapse] Collapse triggered for node '{node_id}'. " +
+            GameLog.Log($"[Event_NodeCollapse] Collapse triggered for node '{node_id}'. " +
                       $"{_state.turns_remaining} turns remaining.");
         }
 
@@ -103,7 +104,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnNodeDeleted?.Invoke(_state.node_id);
-                Debug.Log($"[Event_NodeCollapse] Node '{_state.node_id}' collapsed. " +
+                GameLog.Log($"[Event_NodeCollapse] Node '{_state.node_id}' collapsed. " +
                           $"{_state.trapped_survivor_ids.Count} survivor(s) trapped.");
             }
 
@@ -132,7 +133,7 @@ namespace AtomicWar._Game.Core
                 _state.escaped_survivor_ids.Add(survivor_id);
             }
 
-            Debug.Log($"[Event_NodeCollapse] Survivor '{survivor_id}' escaped node '{_state.node_id}'.");
+            GameLog.Log($"[Event_NodeCollapse] Survivor '{survivor_id}' escaped node '{_state.node_id}'.");
         }
 
         /// <summary>

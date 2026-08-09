@@ -89,7 +89,7 @@ namespace AtomicWar._Game.Core
             IsGameOver = true;
             GameOverReason = reason;
             GameState.Phase = GamePhase.GameOver;
-            Debug.Log($"[GameBootstrap] GAME OVER ({outcome}): {reason}");
+            GameLog.Log($"[GameBootstrap] GAME OVER ({outcome}): {reason}");
         }
 
         public void PauseGame()

@@ -1,4 +1,5 @@
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Data;
 
@@ -95,7 +96,7 @@ namespace AtomicWar._Game.AI.Actions
                 else
                     context.Survivor.Needs.Fatigue = Mathf.Clamp(context.Survivor.Needs.Fatigue + 10f * listenHours, 0f, 100f);
 
-                Debug.Log($"[AI] {context.Survivor.DisplayName} listened to radio for {listenHours}h");
+                GameLog.Log($"[AI] {context.Survivor.DisplayName} listened to radio for {listenHours}h");
 
                 // Note: In production, this would trigger RadioTunerSystem.Tick() and
                 // potentially extract intel. The actual intel extraction would be handled

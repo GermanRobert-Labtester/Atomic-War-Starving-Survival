@@ -387,7 +387,7 @@ namespace AtomicWar._Game.Core
             JournalSystem.OnEntryAdded += entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Text)) return;
-                Debug.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
+                GameLog.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
                 PushJournalEntryToHud(entry);
             };
 
@@ -396,7 +396,7 @@ namespace AtomicWar._Game.Core
             EndgameEngine = new EndgameEngine(GameModeKind.Story, _campaignLengthDays);
             VictoryProject.OnExtractionUnlocked += () =>
             {
-                Debug.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
+                GameLog.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
             };
             VictoryProject.OnEndgameTriggered += summary =>
             {
@@ -546,7 +546,7 @@ namespace AtomicWar._Game.Core
 
             PowerNetwork.OnPowerStateChanged += () => TickLogicGates();
             LogicGates.OnRuleTriggered += ruleId =>
-                Debug.Log($"[GameBootstrap] LOGIC: rule '{ruleId}' triggered.");
+                GameLog.Log($"[GameBootstrap] LOGIC: rule '{ruleId}' triggered.");
         }
 
         /// <summary>

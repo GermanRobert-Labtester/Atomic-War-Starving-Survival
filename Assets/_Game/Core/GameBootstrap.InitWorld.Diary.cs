@@ -107,7 +107,7 @@ namespace AtomicWar._Game.Core
                             if (diary != null && diary.foundInRoomId == roomId && diary.pageOrder == fragmentIndex && !diary.IsFound)
                             {
                                 diary.IsFound = true;
-                                Debug.Log($"[Diary] Found in {roomId}: \"{diary.title}\" — {diary.text}");
+                                GameLog.Log($"[Diary] Found in {roomId}: \"{diary.title}\" — {diary.text}");
                                 return diary.text;
                             }
                         }
@@ -180,7 +180,7 @@ namespace AtomicWar._Game.Core
             FactionRadioIntercepts.OnIntercept += entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Message)) return;
-                Debug.Log($"[Radio intercept] {entry.Message}");
+                GameLog.Log($"[Radio intercept] {entry.Message}");
                 PushRadioInterceptToHud(entry);
             };
 

@@ -78,7 +78,7 @@ namespace AtomicWar._Game.Core
             _state.triggered_survivors.Clear();
 
             OnNodeEntered?.Invoke(_state.node_id);
-            Debug.Log($"[MapHazard_VenusTrap] Entered node '{_state.node_id}' — " +
+            GameLog.Log($"[MapHazard_VenusTrap] Entered node '{_state.node_id}' — " +
                       $"{_state.traps_active} traps active, disguised as berries.");
         }
 
@@ -104,7 +104,7 @@ namespace AtomicWar._Game.Core
 
             if (_state.traps_active <= 0)
             {
-                Debug.Log($"[MapHazard_VenusTrap] No active traps in node '{_state.node_id}'.");
+                GameLog.Log($"[MapHazard_VenusTrap] No active traps in node '{_state.node_id}'.");
                 return true;
             }
 
@@ -114,7 +114,7 @@ namespace AtomicWar._Game.Core
             if (strength >= StrengthEscapeThreshold)
             {
                 OnStrengthCheckPassed?.Invoke(survivor_id);
-                Debug.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' escaped " +
+                GameLog.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' escaped " +
                           $"(strength {strength:F2} >= {StrengthEscapeThreshold}).");
                 survived = true;
             }
@@ -129,7 +129,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnArmLost?.Invoke(survivor_id, arm_id);
-                Debug.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' lost {arm_id}! " +
+                GameLog.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' lost {arm_id}! " +
                           $"(strength {strength:F2} < {StrengthEscapeThreshold}).");
                 survived = false;
             }
@@ -154,7 +154,7 @@ namespace AtomicWar._Game.Core
             if (perception_skill >= PerceptionThreshold && _state.is_disguised)
             {
                 OnDisguiseSpotted?.Invoke(survivor_id);
-                Debug.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' spotted the disguise " +
+                GameLog.Log($"[MapHazard_VenusTrap] Survivor '{survivor_id}' spotted the disguise " +
                           $"(perception {perception_skill:F2}).");
                 return true;
             }

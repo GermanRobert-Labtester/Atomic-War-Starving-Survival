@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -49,7 +50,7 @@ namespace AtomicWar._Game.Core
             {
                 if (_state.codes[i] == code)
                 {
-                    Debug.Log($"[Item_PasswordNote] Code '{code}' already in journal.");
+                    GameLog.Log($"[Item_PasswordNote] Code '{code}' already in journal.");
                     return;
                 }
             }
@@ -59,7 +60,7 @@ namespace AtomicWar._Game.Core
             _state.location_hints.Add(hint);
 
             OnNoteFound?.Invoke(survivor_id, code, hint);
-            Debug.Log($"[Item_PasswordNote] Survivor '{survivor_id}' found code '{code}' " +
+            GameLog.Log($"[Item_PasswordNote] Survivor '{survivor_id}' found code '{code}' " +
                       $"(hint: '{hint}').");
         }
 
@@ -85,12 +86,12 @@ namespace AtomicWar._Game.Core
             if (code == required_code)
             {
                 OnCodeAccepted?.Invoke(code);
-                Debug.Log($"[Item_PasswordNote] Code '{code}' accepted.");
+                GameLog.Log($"[Item_PasswordNote] Code '{code}' accepted.");
                 return true;
             }
 
             OnCodeRejected?.Invoke(code);
-            Debug.Log($"[Item_PasswordNote] Code '{code}' rejected.");
+            GameLog.Log($"[Item_PasswordNote] Code '{code}' rejected.");
             return false;
         }
 

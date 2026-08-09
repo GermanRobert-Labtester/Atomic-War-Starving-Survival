@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -65,7 +66,7 @@ namespace AtomicWar._Game.Core
                 _state.room_explored.Add(false);
             }
 
-            Debug.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' entered the flooded maze. " +
+            GameLog.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' entered the flooded maze. " +
                       $"Breath capacity: {_state.breath_remaining} turns.");
         }
 
@@ -92,7 +93,7 @@ namespace AtomicWar._Game.Core
 
             if (_state.current_room >= _state.total_rooms)
             {
-                Debug.Log("[Encounter_FloodedMaze] No more rooms to explore.");
+                GameLog.Log("[Encounter_FloodedMaze] No more rooms to explore.");
                 return ("empty", _state.is_drowning);
             }
 
@@ -133,7 +134,7 @@ namespace AtomicWar._Game.Core
                 _state.is_drowning = true;
                 _state.breath_remaining = 0;
                 OnDrowningStarted?.Invoke(survivor_id);
-                Debug.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' is drowning!");
+                GameLog.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' is drowning!");
             }
 
             return (result, _state.is_drowning);
@@ -163,11 +164,11 @@ namespace AtomicWar._Game.Core
             if (_state.is_drowning)
             {
                 OnSurvivorDrowned?.Invoke(survivor_id);
-                Debug.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' drowned.");
+                GameLog.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' drowned.");
             }
             else
             {
-                Debug.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' surfaced with " +
+                GameLog.Log($"[Encounter_FloodedMaze] Survivor '{survivor_id}' surfaced with " +
                           $"{_state.collected_loot_ids.Count} loot item(s).");
             }
         }

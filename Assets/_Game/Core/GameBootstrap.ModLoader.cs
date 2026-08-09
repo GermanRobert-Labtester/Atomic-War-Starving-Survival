@@ -1,5 +1,6 @@
 // GameBootstrap.ModLoader.cs — Prompt #864 community JSON mod loader boot.
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -15,18 +16,18 @@ namespace AtomicWar._Game.Core
             ModLoader.SetAsActive();
 
             ModLoader.OnModDiscovered += modName =>
-                Debug.Log($"[GameBootstrap] MOD: discovered '{modName}'");
+                GameLog.Log($"[GameBootstrap] MOD: discovered '{modName}'");
             ModLoader.OnModLoaded += (modName, itemCount) =>
-                Debug.Log($"[GameBootstrap] MOD: loaded '{modName}' ({itemCount} override(s))");
+                GameLog.Log($"[GameBootstrap] MOD: loaded '{modName}' ({itemCount} override(s))");
             ModLoader.OnLoadError += (modName, error) =>
                 Debug.LogWarning($"[GameBootstrap] MOD: [{modName}] {error}");
             ModLoader.OnOverrideApplied += (dataId, modName) =>
-                Debug.Log($"[GameBootstrap] MOD: override '{dataId}' from '{modName}'");
+                GameLog.Log($"[GameBootstrap] MOD: override '{dataId}' from '{modName}'");
 
             string path = System_ModLoader.ResolveDefaultModsPath();
             ModLoader.Initialize(path);
             int loaded = ModLoader.LoadAllMods();
-            Debug.Log($"[GameBootstrap] ModLoader ready: {loaded} mod(s) from '{path}'");
+            GameLog.Log($"[GameBootstrap] ModLoader ready: {loaded} mod(s) from '{path}'");
         }
     }
 }

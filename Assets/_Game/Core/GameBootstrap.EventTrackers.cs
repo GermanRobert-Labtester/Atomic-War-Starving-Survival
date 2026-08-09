@@ -1,6 +1,7 @@
 // GameBootstrap.EventTrackers.cs — boot/wire Event_* narrative systems with CaptureState.
 // (Separate from GameBootstrap.Events.cs which hosts Safe Haven choice handlers.)
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -14,7 +15,7 @@ namespace AtomicWar._Game.Core
         private void BootEvents()
         {
             // DEMOTE-Events-001 — Event_* trackers are unticked dormant classes.
-            Debug.Log("[GameBootstrap] Events demoted (27 dormant trackers).");
+            GameLog.Log("[GameBootstrap] Events demoted (27 dormant trackers).");
         }
 
         private void WireEvents()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -80,7 +81,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnKeycardFound?.Invoke(survivor_id, color);
-            Debug.Log($"[Item_Keycards] Survivor '{survivor_id}' found {card_id}.");
+            GameLog.Log($"[Item_Keycards] Survivor '{survivor_id}' found {card_id}.");
         }
 
         /// <summary>
@@ -115,7 +116,7 @@ namespace AtomicWar._Game.Core
 
             if (!CanOpenDoor(required, owned))
             {
-                Debug.Log($"[Item_Keycards] Survivor '{survivor_id}' cannot open door " +
+                GameLog.Log($"[Item_Keycards] Survivor '{survivor_id}' cannot open door " +
                           $"(requires {required}, not in owned cards).");
                 return false;
             }
@@ -127,7 +128,7 @@ namespace AtomicWar._Game.Core
             }
 
             OnDoorUnlocked?.Invoke(survivor_id, required);
-            Debug.Log($"[Item_Keycards] Survivor '{survivor_id}' unlocked {required} door.");
+            GameLog.Log($"[Item_Keycards] Survivor '{survivor_id}' unlocked {required} door.");
             return true;
         }
 

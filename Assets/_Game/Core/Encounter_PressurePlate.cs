@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -114,7 +115,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnTrapSurvived?.Invoke(survivor_id);
-                Debug.Log($"[Encounter_PressurePlate] Survivor '{survivor_id}' survived " +
+                GameLog.Log($"[Encounter_PressurePlate] Survivor '{survivor_id}' survived " +
                           $"({response}, threshold_met={meets_threshold}).");
             }
             else
@@ -125,7 +126,7 @@ namespace AtomicWar._Game.Core
                 }
 
                 OnTrapKilled?.Invoke(survivor_id);
-                Debug.Log($"[Encounter_PressurePlate] Survivor '{survivor_id}' killed by trap " +
+                GameLog.Log($"[Encounter_PressurePlate] Survivor '{survivor_id}' killed by trap " +
                           $"({response}, threshold_met={meets_threshold}).");
             }
 

@@ -1,5 +1,6 @@
 // GameBootstrap.ShelterModules.cs — boot/wire ShelterModule_* with CaptureState.
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -12,7 +13,7 @@ namespace AtomicWar._Game.Core
         private void BootShelterModules()
         {
             // DEMOTE-ShelterModules-001 — ShelterModule_* trackers are unticked dormant classes.
-            Debug.Log("[GameBootstrap] Shelter modules demoted (46 dormant modules).");
+            GameLog.Log("[GameBootstrap] Shelter modules demoted (46 dormant modules).");
         }
 
         private void WireShelterModules()

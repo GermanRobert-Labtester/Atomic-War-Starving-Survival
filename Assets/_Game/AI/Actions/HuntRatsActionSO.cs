@@ -1,4 +1,5 @@
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Shelter;
 
 namespace AtomicWar._Game.AI.Actions
@@ -58,7 +59,7 @@ namespace AtomicWar._Game.AI.Actions
 
             if (reduced > 0f)
             {
-                Debug.Log($"[HuntRats] {context.Survivor.DisplayName} hunted rats " +
+                GameLog.Log($"[HuntRats] {context.Survivor.DisplayName} hunted rats " +
                           $"(pest level reduced by {reduced:F0}).");
             }
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -60,7 +61,7 @@ namespace AtomicWar._Game.Core
             _state.is_discovered = true;
 
             OnDiscovered?.Invoke(node_id);
-            Debug.Log($"[Node_MutantHive] Discovered at node '{node_id}'.");
+            GameLog.Log($"[Node_MutantHive] Discovered at node '{node_id}'.");
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace AtomicWar._Game.Core
             _state.webbing_active = true;
             OnExpeditionEntered?.Invoke();
             OnWebbingSlowed?.Invoke(_state.speed_multiplier);
-            Debug.Log($"[Node_MutantHive] Expedition entered. Speed multiplier: {_state.speed_multiplier:F1}.");
+            GameLog.Log($"[Node_MutantHive] Expedition entered. Speed multiplier: {_state.speed_multiplier:F1}.");
         }
 
         /// <summary>
@@ -102,7 +103,7 @@ namespace AtomicWar._Game.Core
             if (swarm_spawned)
             {
                 OnSwarmEncounter?.Invoke();
-                Debug.Log($"[Node_MutantHive] Swarm spawned from cocoon '{cocoon_id}'!");
+                GameLog.Log($"[Node_MutantHive] Swarm spawned from cocoon '{cocoon_id}'!");
             }
 
             return !swarm_spawned || combat_skill >= 0.5f;

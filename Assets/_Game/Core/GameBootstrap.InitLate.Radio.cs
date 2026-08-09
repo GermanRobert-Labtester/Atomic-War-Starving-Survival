@@ -118,7 +118,7 @@ namespace AtomicWar._Game.Core
 
         private void HandleIntelExtracted(IntelNode intel)
         {
-            Debug.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
+            GameLog.Log($"[Radio] Extracted intel: {intel.Type} - {intel.Text}");
             // Ghost loops intentionally skip VictoryProject / plume map paths.
             if (intel != null && intel.Type == IntelType.GhostLoop) return;
             VictoryProject?.NotifyIntel(intel);

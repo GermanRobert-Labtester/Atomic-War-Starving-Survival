@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -46,7 +47,7 @@ namespace AtomicWar._Game.Core
             _state.is_glowing = true;
 
             OnSurvivorReturned?.Invoke(survivor_id);
-            Debug.Log($"[Event_CultBlessing] Survivor '{survivor_id}' returned — force-fed isotopes, now glowing as mobile rad emitter.");
+            GameLog.Log($"[Event_CultBlessing] Survivor '{survivor_id}' returned — force-fed isotopes, now glowing as mobile rad emitter.");
         }
 
         public void TickHour(string survivor_id, List<string> nearby_ally_ids)
@@ -76,7 +77,7 @@ namespace AtomicWar._Game.Core
                         continue;
 
                     OnAllyPoisoned?.Invoke(survivor_id, ally_id);
-                    Debug.Log($"[Event_CultBlessing] Ally '{ally_id}' poisoned by emitter '{survivor_id}'.");
+                    GameLog.Log($"[Event_CultBlessing] Ally '{ally_id}' poisoned by emitter '{survivor_id}'.");
                 }
             }
         }
@@ -97,7 +98,7 @@ namespace AtomicWar._Game.Core
             _state.is_glowing = false;
 
             OnChelationApplied?.Invoke(survivor_id);
-            Debug.Log($"[Event_CultBlessing] Chelation applied to '{survivor_id}' — radiation emission stopped.");
+            GameLog.Log($"[Event_CultBlessing] Chelation applied to '{survivor_id}' — radiation emission stopped.");
         }
 
         public bool IsGlowing(string survivor_id)

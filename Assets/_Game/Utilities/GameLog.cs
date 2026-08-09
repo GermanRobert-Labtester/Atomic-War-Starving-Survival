@@ -1,4 +1,5 @@
 using UnityEngine;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Utilities
 {
@@ -20,13 +21,13 @@ namespace AtomicWar._Game.Utilities
         [System.Diagnostics.Conditional("ASHFALL_DEBUG")]
         public static void Log(string message)
         {
-            Debug.Log(message);
+            GameLog.Log(message);
         }
 
         [System.Diagnostics.Conditional("ASHFALL_DEBUG")]
         public static void Log(string tag, string message)
         {
-            Debug.Log($"[{tag}] {message}");
+            GameLog.Log($"[{tag}] {message}");
         }
 
         public static void LogError(string message)
