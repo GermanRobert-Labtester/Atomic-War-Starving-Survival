@@ -613,6 +613,8 @@ namespace AtomicWar._Game.Core
         private System.Action<Survivor> _onNeedsDied;
         private System.Action<Survivor, AtomicWar._Game.Survivors.NeedKind, float> _onNeedChanged;
         private System.Action<int> _onDayTick_SetGameStateDay;
+        private System.Action<Survivor, SurvivorStatus> _onRadiationStatusGained;
+        private System.Action<Survivor, float> _onRadiationDoseChanged;
 
         // -----------------------------------------------------------------
         // GameOver state

@@ -212,13 +212,14 @@ namespace AtomicWar._Game.Core
 
             BeliefSystem = new BeliefSystem(rng: CreateSaltedRng(_worldSeed, "belief"));
             BeliefSystem.SetNeedsSystem(NeedsSystem);
-            RadiationSystem.OnStatusGained += (sv, status) =>
+            _onRadiationStatusGained = (sv, status) =>
             {
                 if (status == SurvivorStatus.AcuteRadiationSyndrome)
                 {
                     BeliefSystem.ShockRecoverNumbness(sv);
                 }
             };
+            RadiationSystem.OnStatusGained += _onRadiationStatusGained;
 
             // World Phase (Civil War -> Flashpoint -> Nuclear Winter). Phase 1 defaults:
             // no radiation, no post-war weather hazards, until the exchange fires.
