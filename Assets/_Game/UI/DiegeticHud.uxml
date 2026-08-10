@@ -74,5 +74,12 @@
             <ui:Label name="endgame-status" class="diegetic-status" text="" />
             <ui:Label name="endgame-body" class="diegetic-body endgame-readout" text="" />
         </ui:VisualElement>
+
+        <ui:VisualElement name="power-grid-panel" class="diegetic-panel power-grid-panel hidden">
+            <ui:Label name="power-grid-title" class="diegetic-title" text="POWER BUDGET" />
+            <ui:Label name="power-grid-budget" class="diegetic-status" text="" />
+            <ui:Label name="power-grid-sources" class="diegetic-body power-grid-readout" text="" />
+            <ui:Label name="power-grid-loads" class="diegetic-body power-grid-readout" text="" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

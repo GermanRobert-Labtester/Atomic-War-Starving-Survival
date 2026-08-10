@@ -172,6 +172,48 @@ namespace AtomicWar._Game.UI
 
             RepaintEventModalIfChanged();
             RepaintEndgameIfChanged();
+            RepaintPowerGridIfChanged();
+        }
+
+        private bool _lastPowerGridOpen;
+        private string _lastPowerBudget;
+        private string _lastPowerSources;
+        private string _lastPowerLoads;
+
+        /// <summary>
+        /// Repaint the power budget when it opens, closes, or any of its three
+        /// blocks change. Polled because PowerGridHUD publishes no event of its
+        /// own -- it subscribes to PowerNetwork.OnPowerStateChanged and refreshes
+        /// its cached strings, but never tells anyone.
+        ///
+        /// All three strings are compared, not just the budget line: a priority
+        /// change (P1 -> P2) or a source flipping state at equal wattage rewrites
+        /// ConsumersSummary / SourcesSummary while leaving BudgetSummary
+        /// byte-identical, and the panel would freeze mid-interaction. When
+        /// nothing changed these are the same string instances, so each compare
+        /// short-circuits on the reference check.
+        /// </summary>
+        private void RepaintPowerGridIfChanged()
+        {
+            if (_diegeticHud == null || _powerGridHud == null) return;
+
+            bool open = _powerGridHud.IsOpen;
+            string budget = open ? _powerGridHud.BudgetSummary : null;
+            string sources = open ? _powerGridHud.SourcesSummary : null;
+            string loads = open ? _powerGridHud.ConsumersSummary : null;
+            if (open == _lastPowerGridOpen
+                && budget == _lastPowerBudget
+                && sources == _lastPowerSources
+                && loads == _lastPowerLoads)
+            {
+                return;
+            }
+
+            _lastPowerGridOpen = open;
+            _lastPowerBudget = budget;
+            _lastPowerSources = sources;
+            _lastPowerLoads = loads;
+            _diegeticHud.PaintPowerGrid(open, budget, sources, loads);
         }
 
         private bool _lastEndgameVisible;
@@ -488,7 +530,7 @@ namespace AtomicWar._Game.UI
 
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
-            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi, _endgameSummaryUi);
+            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi, _endgameSummaryUi, _powerGridHud);
             return _diegeticHud;
         }
 

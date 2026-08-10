@@ -303,6 +303,52 @@ namespace AtomicWar.Tests.PlayMode
                 "hiding the summary must repaint the panel back to hidden");
         }
 
+        /// <summary>
+        /// PowerGridHUD publishes no event either, so this panel is polled too.
+        /// Drives the real widget with Toggle() and lets a frame elapse rather
+        /// than calling Paint() by hand -- a manual paint would pass even if the
+        /// poll were never wired into Update.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator PowerGridPanel_VisibilityTracksThePowerGridHudState()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 30; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.PowerGridPanel, "power grid panel should be bound from the UXML");
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.PowerGridPanel.style.display.value,
+                "the panel starts hidden -- closed until it is toggled open");
+
+            var powerGrid = hud.PowerGridHUD;
+            Assert.IsNotNull(powerGrid, "HUD must hold a PowerGridHUD widget");
+
+            try
+            {
+                powerGrid.Toggle();
+                yield return null;
+
+                Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.Flex, view.PowerGridPanel.style.display.value,
+                    "toggling PowerGridHUD open must repaint the panel from the Update poll");
+                Assert.IsFalse(string.IsNullOrEmpty(view.PowerGridBudget.text),
+                    "budget line must be non-empty after paint -- the UXML ships it " +
+                    "blank, so any text here proves a real paint path");
+            }
+            finally
+            {
+                if (powerGrid.IsOpen) powerGrid.Toggle();
+            }
+
+            yield return null;
+
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.PowerGridPanel.style.display.value,
+                "toggling it closed must repaint the panel back to hidden");
+        }
+
         [UnityTest]
         public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
         {

@@ -36,6 +36,10 @@ namespace AtomicWar._Game.UI
         public const string EndgamePanelName = "endgame-panel";
         public const string EndgameStatusName = "endgame-status";
         public const string EndgameBodyName = "endgame-body";
+        public const string PowerGridPanelName = "power-grid-panel";
+        public const string PowerGridBudgetName = "power-grid-budget";
+        public const string PowerGridSourcesName = "power-grid-sources";
+        public const string PowerGridLoadsName = "power-grid-loads";
 
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
@@ -82,6 +86,10 @@ namespace AtomicWar._Game.UI
         public VisualElement EndgamePanel { get; private set; }
         public Label EndgameStatus { get; private set; }
         public Label EndgameBody { get; private set; }
+        public VisualElement PowerGridPanel { get; private set; }
+        public Label PowerGridBudget { get; private set; }
+        public Label PowerGridSources { get; private set; }
+        public Label PowerGridLoads { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -167,11 +175,25 @@ namespace AtomicWar._Game.UI
             EndgamePanel.Add(EndgameBody);
             Root.Add(EndgamePanel);
 
+            // Three labels rather than one joined block: PowerGridHUD.Refresh
+            // already keeps the budget line, source list and load list apart,
+            // and joining them would allocate a copy on every repaint.
+            PowerGridPanel = MakePanel(PowerGridPanelName, "power-grid-panel");
+            PowerGridPanel.Add(MakeTitle("power-grid-title", "POWER BUDGET"));
+            PowerGridBudget = MakeLabel(PowerGridBudgetName, "diegetic-status");
+            PowerGridSources = MakeLabel(PowerGridSourcesName, "diegetic-body", "power-grid-readout");
+            PowerGridLoads = MakeLabel(PowerGridLoadsName, "diegetic-body", "power-grid-readout");
+            PowerGridPanel.Add(PowerGridBudget);
+            PowerGridPanel.Add(PowerGridSources);
+            PowerGridPanel.Add(PowerGridLoads);
+            Root.Add(PowerGridPanel);
+
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
             SetVisible(EventPanel, false);
             SetVisible(WorkbenchPanel, false);
             SetVisible(EndgamePanel, false);
+            SetVisible(PowerGridPanel, false);
             return Root;
         }
 
@@ -203,11 +225,16 @@ namespace AtomicWar._Game.UI
             EndgamePanel = Root.Q<VisualElement>(EndgamePanelName);
             EndgameStatus = Root.Q<Label>(EndgameStatusName);
             EndgameBody = Root.Q<Label>(EndgameBodyName);
+            PowerGridPanel = Root.Q<VisualElement>(PowerGridPanelName);
+            PowerGridBudget = Root.Q<Label>(PowerGridBudgetName);
+            PowerGridSources = Root.Q<Label>(PowerGridSourcesName);
+            PowerGridLoads = Root.Q<Label>(PowerGridLoadsName);
             // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
             if (HatchPanel == null || EncounterPanel == null
                 || StoresPanel == null || VitalsPanel == null || EventPanel == null
-                || WorkbenchPanel == null || EndgamePanel == null)
+                || WorkbenchPanel == null || EndgamePanel == null
+                || PowerGridPanel == null)
             {
                 return false;
             }
@@ -400,6 +427,22 @@ namespace AtomicWar._Game.UI
             if (!visible) return;
             if (EndgameStatus != null) EndgameStatus.text = statusLine ?? string.Empty;
             if (EndgameBody != null) EndgameBody.text = detailSummary ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Paint the power budget readout. Takes PowerGridHUD's three cached
+        /// summary strings verbatim -- never BuildPanelText(), which calls
+        /// Refresh() internally and would recompute the whole network model on
+        /// every paint.
+        /// </summary>
+        public void PaintPowerGrid(bool open, string budget, string sources, string loads)
+        {
+            if (PowerGridPanel == null) return;
+            SetVisible(PowerGridPanel, open);
+            if (!open) return;
+            if (PowerGridBudget != null) PowerGridBudget.text = budget ?? string.Empty;
+            if (PowerGridSources != null) PowerGridSources.text = sources ?? string.Empty;
+            if (PowerGridLoads != null) PowerGridLoads.text = loads ?? string.Empty;
         }
 
         private static VisualElement MakeNeedRow(string id, NeedBarData data,
