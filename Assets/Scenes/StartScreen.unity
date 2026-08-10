@@ -241,7 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d73b7d0cfb75744f78c22cc453324649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.MainMenu.MainMenuController
-  _gameplaySceneName: SampleScene
+  _gameplaySceneName: Gameplay
   _continueSlotIds:
   - autosave
   - quicksave

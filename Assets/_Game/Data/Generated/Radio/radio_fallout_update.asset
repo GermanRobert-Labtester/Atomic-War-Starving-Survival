@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cec618e187ba50948168de434d64302, type: 3}
+  m_Name: radio_fallout_update
+  m_EditorClassIdentifier: AtomicWar._Game.Data::AtomicWar._Game.Data.RadioBroadcastSO
+  id: radio_fallout_update
+  minDay: 10
+  maxDay: 30
+  message: Radiation levels continue to rise in the northern sectors. Evacuation
+    is no longer recommended. Shelter in place.
+  triggerEventId: 

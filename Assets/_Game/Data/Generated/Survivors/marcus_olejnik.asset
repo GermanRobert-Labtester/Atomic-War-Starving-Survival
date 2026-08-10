@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 24fca0e7db999ab3d8f04f6b56239253, type: 3}
   m_Name: marcus_olejnik
-  m_EditorClassIdentifier: AtomicWar._Game.Data:AtomicWar._Game.Data:SurvivorArchetypeSO
+  m_EditorClassIdentifier: AtomicWar._Game.Data::AtomicWar._Game.Data.SurvivorArchetypeSO
   id: marcus_olejnik
   displayName: Marcus Olejnik
   profession: Mechanical Engineer
   bio: Kept the municipal water plant running for three weeks after the grid fell.
     Came to the bunker when the last pipe froze.
   baseHealth: 90
+  latentExpertTrait: 
+  activeQuestlineId: 

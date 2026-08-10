@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd3829547680934e9845426660c23196, type: 3}
+  m_Name: weapon_hmg
+  m_EditorClassIdentifier: AtomicWar._Game.Inventory::AtomicWar._Game.Inventory.ItemDefinition
+  id: weapon_hmg
+  displayName: Heavy Machine Gun
+  description: Tripod-mounted .50 cal HMG. Provides massive hatch defense bonus when
+    stock is on hand and the gun is mounted + oiled. Requires 2 operators to fire
+    at full efficiency; jams without oil. Two crew + a stock pile of this weapon
+    is the difference between a held hatch and a breached one.
+  iconRef: {fileID: 0}
+  type: 15
+  stackMax: 1
+  weight: 45
+  radProtection: 0
+  durability: 50
+  isEquipable: 0
+  equipSlot: 0
+  contamination: 0
+  hungerRestore: 0
+  thirstRestore: 0
+  healthEffect: 0
+  radCleanse: 0
+  moraleEffect: 0
+  empShielded: 0
+  tradeValue: 280
+  tradeTier: 10
+  scrapValue:
+  - materialId: mechanical_parts
+    amount: 6
+  - materialId: gunpowder
+    amount: 4
+  - materialId: electronic_scrap
+    amount: 2
+  repairRecipe:
+    costs: []
+    hours: 0.5
+    requiresTools: 1
+  disassembleYieldFraction: 0.5

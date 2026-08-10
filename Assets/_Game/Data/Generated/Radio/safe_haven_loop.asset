@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cec618e187ba50948168de434d64302, type: 3}
+  m_Name: safe_haven_loop
+  m_EditorClassIdentifier: AtomicWar._Game.Data::AtomicWar._Game.Data.RadioBroadcastSO
+  id: safe_haven_loop
+  minDay: 35
+  maxDay: 90
+  message: "[LOOPED BROADCAST] Safe haven at grid 4-7-North, twenty miles. Working
+    scrubbers. Hot food. Come in on 107.0. [REPEAT IN 6:00] Safe haven at grid 4-7-North,
+    twenty miles. Working scrubbers. Hot food\u2026"
+  triggerEventId: radio_safe_haven_broadcast

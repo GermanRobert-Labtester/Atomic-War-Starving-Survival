@@ -1,0 +1,122 @@
+using System.Collections;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+using AtomicWar._Game.Core;
+using AtomicWar._Game.UI;
+
+namespace AtomicWar.Tests.PlayMode
+{
+    /// <summary>
+    /// Loads the real gameplay scene and asserts the simulation actually runs.
+    ///
+    /// Every other test in the suite constructs systems directly in C# and never
+    /// loads a scene, so all ~1,100 of them stayed green while the shipped player
+    /// booted into an empty SampleScene. This fixture is the only thing that can
+    /// catch a broken scene or a null Inspector reference.
+    /// </summary>
+    [TestFixture]
+    public class GameplaySceneSmokeTests
+    {
+        const string SceneName = "Gameplay";
+
+        [UnitySetUp]
+        public IEnumerator LoadGameplayScene()
+        {
+            yield return SceneManager.LoadSceneAsync(SceneName, LoadSceneMode.Single);
+            yield return null; // let Awake/Start run
+        }
+
+        static GameBootstrap Bootstrap()
+        {
+            var bootstrap = Object.FindAnyObjectByType<GameBootstrap>();
+            Assert.IsNotNull(bootstrap, "Gameplay scene must contain a GameBootstrap");
+            return bootstrap;
+        }
+
+        [UnityTest]
+        public IEnumerator Scene_BootsWithItsCoreSystemsConstructed()
+        {
+            var bootstrap = Bootstrap();
+
+            Assert.IsNotNull(bootstrap.TimeSystem,  "TimeSystem should be constructed in Awake");
+            Assert.IsNotNull(bootstrap.NeedsSystem, "NeedsSystem should be constructed in Awake");
+            Assert.IsNotNull(bootstrap.SaveSystem,  "SaveSystem should be constructed in Awake");
+            Assert.IsNotNull(Object.FindAnyObjectByType<HUD>(), "Gameplay scene must contain a HUD");
+
+            Assert.IsNotNull(bootstrap.Survivors, "Survivors list should exist");
+            Assert.Greater(bootstrap.Survivors.Count, 0, "a new game should start with survivors");
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Scene_ConstructsTheSystemsBuiltFromCatalogs()
+        {
+            var bootstrap = Bootstrap();
+
+            // GameBootstrap exposes no public catalog accessor, so assert on the
+            // systems built from them instead: these stay null if Awake bailed
+            // partway through initialization.
+            Assert.IsNotNull(bootstrap.CraftingSystem,   "CraftingSystem is built from the recipe catalog");
+            Assert.IsNotNull(bootstrap.EventRunner,      "EventRunner is built from the event catalog");
+            Assert.IsNotNull(bootstrap.ScavengingSystem, "ScavengingSystem is built from the location catalog");
+
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator Clock_AdvancesOverFrames()
+        {
+            var bootstrap = Bootstrap();
+            float before = bootstrap.TimeSystem.TotalElapsedHours;
+
+            for (int i = 0; i < 120; i++)
+                yield return null;
+
+            Assert.Greater(bootstrap.TimeSystem.TotalElapsedHours, before,
+                "the clock must advance while the scene is playing");
+        }
+
+        [UnityTest]
+        public IEnumerator Needs_DecayOverFrames()
+        {
+            var bootstrap = Bootstrap();
+            var survivor = bootstrap.Survivors[0];
+            float thirstBefore = survivor.Needs.Thirst;
+
+            for (int i = 0; i < 120; i++)
+                yield return null;
+
+            Assert.Greater(survivor.Needs.Thirst, thirstBefore,
+                "thirst accumulates upward as time passes");
+        }
+
+        [UnityTest]
+        public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
+        {
+            var bootstrap = Bootstrap();
+
+            for (int i = 0; i < 60; i++)
+                yield return null;
+
+            Assert.IsTrue(bootstrap.SaveSystem.Save("smoke_test"), "save should succeed");
+
+            int dayAtSave = bootstrap.TimeSystem.CurrentDay;
+            float hoursAtSave = bootstrap.TimeSystem.TotalElapsedHours;
+            float thirstAtSave = bootstrap.Survivors[0].Needs.Thirst;
+
+            for (int i = 0; i < 60; i++)
+                yield return null;
+
+            Assert.IsTrue(bootstrap.SaveSystem.Load("smoke_test"), "load should succeed");
+
+            Assert.AreEqual(dayAtSave, bootstrap.TimeSystem.CurrentDay);
+            Assert.AreEqual(hoursAtSave, bootstrap.TimeSystem.TotalElapsedHours, 0.001f);
+            Assert.AreEqual(thirstAtSave, bootstrap.Survivors[0].Needs.Thirst, 0.001f);
+
+            bootstrap.SaveSystem.Delete("smoke_test");
+        }
+    }
+}

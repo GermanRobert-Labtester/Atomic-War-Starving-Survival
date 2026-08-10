@@ -34,11 +34,11 @@ This document maps the project folders to their responsibilities.
 | `Events/` | `AtomicWar._Game.Events` | `GameEvent` ScriptableObject (scripted/narrative events) and `EventRunner` (weighted/scheduled selection + cooldowns). |
 | `Data/` | `AtomicWar._Game.Data` | ScriptableObject **catalogs** that hold collections and are the runtime source of truth, imported from the JSON below (items, recipes, survivors, locations, events, radio). |
 | `Editor/` | `AtomicWar._Game.Editor` | Editor-only importers/validators (`Tools/ASHFALL/...` menu) that turn JSON into ScriptableObject catalogs and check snake_case ids. |
-| `UI/` | `AtomicWar._Game.UI` | Thin MonoBehaviours: `HUD` (root binder), `NeedsBar`, `DosimeterHUD`. No game logic. |
+| `UI/` | `AtomicWar._Game.UI` | Thin MonoBehaviours over UI Toolkit: `HUD` (root binder), the widgets it binds (`NeedsBar`, `DosimeterHUD`, `EventModalUI`, `DiegeticHudController`, …), and `MainMenu/`. No game logic. |
 
 ### `Assets/StreamingAssets/Data/` — authored JSON data
 
-Empty (`[]`) placeholders, one per catalog. Imported by `Assets/_Game/Editor/`:
+One file per catalog, imported by `Assets/_Game/Editor/`:
 
 | File | Feeds |
 | --- | --- |
@@ -49,7 +49,11 @@ Empty (`[]`) placeholders, one per catalog. Imported by `Assets/_Game/Editor/`:
 | `events.json` | `Data/GameEventCatalogSO` → `Events/GameEvent` |
 | `radio.json` | `Data/RadioCatalogSO` → `RadioBroadcastSO` |
 
-**Data flow:** JSON (authored) → Editor importer → ScriptableObject catalog (runtime source of truth) → systems.
+`echoes.json` also lives here. It has no importer and no catalog yet, and no
+`GameBootstrap` field references it.
+
+**Data flow:** JSON (authored) → Editor importer → per-entry ScriptableObject →
+`Tools/ASHFALL/Generate Catalogs` → catalog asset (runtime source of truth) → systems.
 
 ### `Assets/Tests/` — automated tests
 
@@ -59,8 +63,10 @@ Empty (`[]`) placeholders, one per catalog. Imported by `Assets/_Game/Editor/`:
 | `PlayMode/` | `AtomicWar.Tests.PlayMode` | In play mode — integration tests over frames. |
 
 Both are Unity test assemblies (`.asmdef` referencing the Test Runner, gated by
-`UNITY_INCLUDE_TESTS`) and currently contain passing stubs to be replaced as
-systems are implemented.
+`UNITY_INCLUDE_TESTS`). Almost all of them construct systems directly in C# and
+never load a scene, which is why the suite stayed green while the shipped player
+booted into an empty scene. `PlayMode/GameplaySceneSmokeTests.cs` is the fixture
+that loads the real scene and catches that class of failure.
 
 > **Note on test location:** Unity only compiles and runs scripts under
 > `Assets/` (or `Packages/`). A project-root `Tests/` folder would be silently
@@ -69,35 +75,26 @@ systems are implemented.
 
 ## Current state
 
-**The simulation is implemented; the game is not yet wired into a scene.**
+**The simulation runs from the main menu.**
 
-- `Assets/_Game/` holds ~500 implemented C# files. There are **zero**
-  `NotImplementedException` bodies left.
-- Tests are green: **EditMode 1037 / PlayMode 61**, and the suites construct
-  every system directly in code.
-- A Linux player **builds** successfully (~100 MB).
-
-The gap is presentation and scene wiring:
-
-- `Assets/Scenes/SampleScene.unity` is the only scene in Build Settings, and it
-  contains just `Main Camera` and `Global Light 2D`. **`GameBootstrap` is not in
-  it**, and nothing else instantiates it (there is no
-  `RuntimeInitializeOnLoadMethod`). A built player therefore launches and idles —
-  verified by running it with `-batchmode -nographics`, whose log shows no game
-  activity at all.
-- To boot the game, `GameBootstrap` must be added to a scene GameObject and its
-  **12 `[SerializeField]` catalog/profile references** assigned in the Inspector
-  (`NeedsProfile`, `ItemCatalogSO`, `GameEventCatalogSO`, … — the matching assets
-  live in `Assets/_Game/Data/`). It will `NullReferenceException` on `Start` if
-  the component is added without them.
-- There is **no rendering or UI layer**: no sprites, prefabs, materials,
-  animations, Canvas, uGUI, UI Toolkit or TextMeshPro exist. The `*HUD` classes
-  are data/formatting models with no draw code; the only `OnGUI` is IMGUI debug
-  overlay. There is also no localization — all user-facing strings are inline
-  literals.
-
-None of the above is a regression; it is unbuilt work. It is recorded here
-because the passing test count makes the project look more finished than it is.
+- `Assets/Scenes/StartScreen.unity` is the boot scene; NEW EXPEDITION loads
+  `Assets/Scenes/Gameplay.unity`, where `GameBootstrap` initializes every
+  system, the clock advances, and needs decay.
+- Both scenes are generated or authored through `Tools/ASHFALL/` editor
+  commands. `Gameplay.unity` is built by
+  `Tools/ASHFALL/Build Gameplay Scene` and must be regenerated rather than
+  hand-edited — a hand edit survives only until the next rebuild. CI cannot
+  diff the scene to prove this (Unity renumbers every local fileID on each
+  save, so two builds of identical input differ by ~480 lines); instead the
+  builder refuses to save a scene with an unassigned reference, and CI fails
+  when that throws. Generated **data** assets *are* byte-compared.
+- Data assets come from `Assets/StreamingAssets/Data/*.json` via
+  `Tools/ASHFALL/Import All Data`, then
+  `Tools/ASHFALL/Generate Catalogs`.
+- UI is UI Toolkit (UXML/USS + `PanelSettings`). The main menu is complete;
+  the in-game HUD wires 4 of its 21 widgets — the rest are tracked in
+  `GameplaySceneBuilder.HudExpectedUnwired` and land incrementally.
+- There is no localization; all user-facing strings are inline literals.
 
 ## Verify
 
@@ -105,7 +102,11 @@ because the passing test count makes the project look more finished than it is.
 # Compile (opens the project, compiles all assemblies, quits)
 unity -batchmode -quit -nographics -projectPath . -logFile -
 
-# Run EditMode + PlayMode tests
-unity -batchmode -quit -nographics -projectPath . -runTests -testResults results.xml -logFile -
+# Run the tests. Note: no -quit. Combining -quit with -runTests kills the
+# editor before the run finishes, and it exits 0 with an empty result file.
+unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode \
+  -testResults "$(pwd)/em.xml" -logFile -
+unity -batchmode -nographics -projectPath . -runTests -testPlatform PlayMode \
+  -testResults "$(pwd)/pm.xml" -logFile -
 ```
 # Atomic-War-Starving-Survival

@@ -22,10 +22,17 @@ MonoBehaviour:
     MinHour: 0
     MaxHour: 24
     RequireFalloutStorm: 0
+    RequireBlizzard: 0
+    RequireExtremeWeather: 0
     MinShelterAirQuality: -1
     MaxShelterAirQuality: -1
     MinSurvivorRad: -1
     MinSurvivorHunger: -1
     RequiredItemId: 
     RequiredFlagId: 
+    RequiredEventFlags: []
+    RequireResourceStarved: 0
   choices: []
+  threateningBodyText: 
+  threateningFactionId: 
+  threateningTrustBelow: -20

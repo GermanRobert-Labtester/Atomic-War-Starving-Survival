@@ -48,6 +48,69 @@ jobs:
           grep -q 'm_EditorVersion: 6000.5.5f1' ProjectSettings/ProjectVersion.txt
           echo "ProjectVersion pin OK: 6000.5.5f1"
 
+  # The generators are the source of truth for Assets/_Game/Data/Generated and
+  # Gameplay.unity. Without this gate they quietly become decoration: someone
+  # hand-edits a catalog or the scene, the next regeneration silently reverts it,
+  # and nothing ever says so.
+  #
+  # The two halves are gated differently, because only one of them is byte-stable:
+  #
+  #   Data assets  -> compared byte-for-byte. Re-running GenerateAll over an
+  #                   unchanged project produces an identical tree (verified: a
+  #                   full EditMode run, which calls GenerateAll in SetUp, leaves
+  #                   the working tree clean).
+  #   Gameplay.unity -> NOT compared. Unity assigns fresh local fileIDs every time
+  #                   it saves a scene built from scratch, so two consecutive
+  #                   builds of identical input differ by ~480 lines (measured).
+  #                   A byte-diff here would fail on every single run. The real
+  #                   gate is that BuildGameplayScene throws SceneBuildException
+  #                   on any unassigned reference, so the build step below failing
+  #                   IS the check.
+  regenerate:
+    name: Generated Assets Are Current
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-regen-${{ env.UNITY_VERSION }}-${{ hashFiles('Assets/**', 'Packages/manifest.json', 'Packages/packages-lock.json', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-regen-${{ env.UNITY_VERSION }}-
+
+      # targetPlatform is required by unity-builder even when buildMethod does
+      # no building; Linux is the one target installed on this image.
+      - uses: game-ci/unity-builder@v4
+        with:
+          projectPath: .
+          unityVersion: 6000.5.5f1
+          targetPlatform: StandaloneLinux64
+          buildMethod: AtomicWar._Game.Editor.CatalogGenerator.GenerateAll
+          allowDirtyBuild: true
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          projectPath: .
+          unityVersion: 6000.5.5f1
+          targetPlatform: StandaloneLinux64
+          buildMethod: AtomicWar._Game.Editor.GameplaySceneBuilder.BuildGameplayScene
+          allowDirtyBuild: true
+
+      - name: Fail if regenerated data differs from committed
+        run: |
+          # Scene excluded on purpose -- see the comment on this job.
+          if ! git diff --quiet -- Assets/_Game/Data/Generated; then
+            echo "Regenerated data assets differ from what is committed."
+            echo "Re-run Tools/ASHFALL/Generate Catalogs, then commit the result."
+            git diff --stat -- Assets/_Game/Data/Generated
+            exit 1
+          fi
+          echo "OK: generated data assets are current."
+
   test:
     name: EditMode Tests
     needs: validate

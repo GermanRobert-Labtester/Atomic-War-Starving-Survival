@@ -68,6 +68,7 @@ namespace AtomicWar._Game.Editor
             var survivors  = LoadAndValidate<SurvivorJson>(Path.Combine(DataRoot, "survivors.json"), "survivor",  errors);
             var locations  = LoadAndValidate<LocationJson>(Path.Combine(DataRoot, "locations.json"), "location",  errors);
             var events     = LoadAndValidate<EventJson>(Path.Combine(DataRoot, "events.json"),     "event",     errors);
+            var radio      = LoadAndValidate<RadioJson>(Path.Combine(DataRoot, "radio.json"),     "radio",     errors);
 
             // Phase 2: referential integrity
             var itemIds = new HashSet<string>(items.Select(i => i.id));
@@ -96,6 +97,7 @@ namespace AtomicWar._Game.Editor
             EnsureDirectory(Path.Combine(OutputRoot, "Survivors"));
             EnsureDirectory(Path.Combine(OutputRoot, "Locations"));
             EnsureDirectory(Path.Combine(OutputRoot, "Events"));
+            EnsureDirectory(Path.Combine(OutputRoot, "Radio"));
 
             // Phase 4: import (idempotent -- create or update by id)
             var itemAssets = ImportItems(items);
@@ -103,6 +105,7 @@ namespace AtomicWar._Game.Editor
             ImportSurvivors(survivors);
             ImportLocations(locations);
             ImportEvents(events);
+            ImportRadio(radio);
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
@@ -120,6 +123,12 @@ namespace AtomicWar._Game.Editor
             var survivors  = LoadAndValidate<SurvivorJson>(Path.Combine(DataRoot, "survivors.json"), "survivor",  errors);
             var locations  = LoadAndValidate<LocationJson>(Path.Combine(DataRoot, "locations.json"), "location",  errors);
             var events     = LoadAndValidate<EventJson>(Path.Combine(DataRoot, "events.json"),     "event",     errors);
+
+            // Schema-validated only. A radio broadcast's triggerEventId is NOT checked
+            // against events.json, because event ids may also be defined in code --
+            // e.g. radio_safe_haven_broadcast and blood_for_water are declared in
+            // EventRunner.Factories.cs, not authored as JSON.
+            LoadAndValidate<RadioJson>(Path.Combine(DataRoot, "radio.json"), "radio", errors);
 
             // Referential integrity: recipe ingredient/result ids must exist in items
             var itemIds = new HashSet<string>(items.Select(i => i.id));
@@ -156,6 +165,19 @@ namespace AtomicWar._Game.Editor
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
             Debug.Log($"[ASHFALL] Imported {items.Count} items.");
+        }
+
+        [MenuItem("Tools/ASHFALL/Import Radio")]
+        public static void ImportRadioMenu()
+        {
+            var errors = new List<string>();
+            var broadcasts = LoadAndValidate<RadioJson>(Path.Combine(DataRoot, "radio.json"), "radio", errors);
+            if (errors.Count > 0) { LogErrors(errors); return; }
+            EnsureDirectory(Path.Combine(OutputRoot, "Radio"));
+            ImportRadio(broadcasts);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            Debug.Log($"[ASHFALL] Imported {broadcasts.Count} radio broadcasts.");
         }
 
         [MenuItem("Tools/ASHFALL/Import Recipes")]
@@ -226,6 +248,18 @@ namespace AtomicWar._Game.Editor
         // -------------------------------------------------------------------
         // JSON DTOs
         // -------------------------------------------------------------------
+
+        /// <summary>Public so tests can drive <see cref="ImportRadio"/> directly
+        /// without going through the filesystem.</summary>
+        [Serializable]
+        public class RadioJson
+        {
+            public string id;
+            public int    minDay;
+            public int    maxDay = -1;
+            public string message;
+            public string triggerEventId;
+        }
 
         [Serializable]
         class ItemJson
@@ -473,6 +507,7 @@ namespace AtomicWar._Game.Editor
                 SurvivorJson s => s.id,
                 LocationJson l => l.id,
                 EventJson e    => e.id,
+                RadioJson rb   => rb.id,
                 _ => null
             };
         }
@@ -545,6 +580,25 @@ namespace AtomicWar._Game.Editor
                 map[json.id] = so;
             }
             return map;
+        }
+
+        /// <summary>Public (unlike the other importers) so tests can call it directly.</summary>
+        public static List<RadioBroadcastSO> ImportRadio(List<RadioJson> broadcasts)
+        {
+            var result = new List<RadioBroadcastSO>();
+            foreach (var json in broadcasts)
+            {
+                var so = FindOrCreate<RadioBroadcastSO>(Path.Combine(OutputRoot, "Radio"), json.id);
+                so.id             = json.id;
+                so.minDay         = json.minDay;
+                so.maxDay         = json.maxDay;
+                so.message        = json.message;
+                so.triggerEventId = json.triggerEventId;
+
+                EditorUtility.SetDirty(so);
+                result.Add(so);
+            }
+            return result;
         }
 
         static void ImportRecipes(List<RecipeJson> recipes, Dictionary<string, ItemDefinition> itemAssets)

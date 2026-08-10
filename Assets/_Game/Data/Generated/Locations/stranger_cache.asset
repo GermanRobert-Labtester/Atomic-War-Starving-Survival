@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be6ef0b2210c43ed6982c1f3b1f5a7cb, type: 3}
+  m_Name: stranger_cache
+  m_EditorClassIdentifier: AtomicWar._Game.Data::AtomicWar._Game.Data.LocationDefinitionSO
+  id: stranger_cache
+  displayName: The Cartographer's Cache
+  description: "A sealed pre-war storage locker in a collapsed residential block.
+    Coordinates from a stranger. Real or a trap \u2014 you won't know until you're
+    there."
+  dangerLevel: 7
+  travelHours: 3
+  baseRadsPerHour: 25
