@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -39,6 +40,11 @@ namespace AtomicWar._Game.UI
         private bool _tooltipPinned;
         private bool _preferDetached;
         private PanelSettings _runtimePanelSettings;
+        // Set to true when EnsureDocumentMounted adds a UIDocument to the
+        // GameObject because none was assigned in the inspector. OnDestroy
+        // removes the component only in that case -- never a document the
+        // designer wired up by hand.
+        private bool _ownsDocument;
 
         /// <summary>Test / host access to the painted tree.</summary>
         public DiegeticHudView View => _view;
@@ -92,6 +98,13 @@ namespace AtomicWar._Game.UI
                 Destroy(_runtimePanelSettings);
                 _runtimePanelSettings = null;
             }
+            // Only destroy a UIDocument we added ourselves. The inspector
+            // may have wired one up and the designer is responsible for it.
+            if (_ownsDocument && _document != null)
+            {
+                Destroy(_document);
+                _document = null;
+            }
         }
 
         /// <summary>
@@ -109,7 +122,10 @@ namespace AtomicWar._Game.UI
                 _document = GetComponent<UIDocument>();
 
             if (_document == null && _createDocumentIfMissing)
+            {
                 _document = gameObject.AddComponent<UIDocument>();
+                _ownsDocument = true;
+            }
 
             if (_document == null) return false;
 
@@ -228,6 +244,30 @@ namespace AtomicWar._Game.UI
             if (_strip != null && _strip.SelectedIndex >= 0)
                 _tooltipPinned = true;
             Paint();
+        }
+
+        /// <summary>
+        /// Repaint the vitals readout. Separate from <see cref="Paint"/> on
+        /// purpose: Paint() fires on discrete actions (missions, UI commands),
+        /// while needs and dose change continuously, and a vitals panel repainted
+        /// only on those events would sit frozen while the player starved.
+        /// </summary>
+        public void PaintVitals(
+            int day, float hour, float cumulativeDose, float currentRate,
+            IReadOnlyDictionary<string, NeedBarData> needs)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintVitals(day, hour, cumulativeDose, currentRate, needs);
+        }
+
+        /// <summary>Forward an event-prompt paint.</summary>
+        public void PaintEventModal(
+            bool open, string title, string body, IReadOnlyList<EventChoiceLine> choices)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintEventModal(open, title, body, choices);
         }
 
         /// <summary>Repaint all diegetic panels from bound view-models.</summary>

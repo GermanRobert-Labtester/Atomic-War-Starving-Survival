@@ -115,6 +115,76 @@ namespace AtomicWar.Tests.PlayMode
                 "thirst accumulates upward as time passes");
         }
 
+        /// <summary>
+        /// The vitals panel is the only on-screen report of the core loop. Its
+        /// repaint hangs off need/dose events rather than the discrete actions
+        /// that drive the other panels, so this asserts the labels actually hold
+        /// live values after some frames -- a panel wired but never repainted
+        /// looks identical to one that works, until you watch it.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator Vitals_ShowLiveValuesAfterFrames()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 120; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.VitalsClock, "vitals clock label should be bound");
+
+            // Not asserted on the clock: the UXML ships "DAY 1   00:00" as
+            // placeholder text, so a "DAY" check passes even when nothing ever
+            // repaints. The dose label is empty in the UXML and the rows are
+            // built at paint time, so both can only hold after a real paint.
+            Assert.IsNotEmpty(view.VitalsDose.text,
+                "dose label is empty in the UXML, so text here proves a real paint");
+            Assert.AreEqual(DiegeticHudView.CoreNeedIds.Length, view.VitalsNeeds.childCount,
+                "one row per core need should be painted");
+
+            // The dose label is only useful if it holds the DosimeterHUD's
+            // current cumulative dose, not the pre-init zero. "0.00 Sv" was
+            // the symptom of a wiring bug that the IsNotEmpty check above
+            // silently passed, so we assert the value matches the live HUD.
+            // We compare against the DosimeterHUD (not the survivor) because
+            // the HUD is what the vitals panel mirrors; if those drift, this
+            // test fires.
+            var dosimeter = hud.DosimeterHUD;
+            Assert.IsNotNull(dosimeter, "HUD must hold a DosimeterHUD widget");
+            string expectedDose = dosimeter.CumulativeDose.ToString("0.00");
+            StringAssert.Contains(expectedDose, view.VitalsDose.text,
+                $"dose label should reflect DosimeterHUD.CumulativeDose ({expectedDose} Sv); " +
+                "0.00 here means the first RepaintVitals ran before the dose was pushed");
+        }
+
+        /// <summary>
+        /// No event is guaranteed to fire inside a smoke test, so this asserts
+        /// the panel is bound and that its visibility tracks EventModalUI.IsOpen
+        /// -- the wiring, without depending on the event schedule.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator EventPanel_VisibilityTracksTheModalState()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 30; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.EventPanel, "event panel should be bound from the UXML");
+
+            bool modalOpen = hud.EventModalUI != null && hud.EventModalUI.IsOpen;
+            Assert.AreEqual(
+                modalOpen ? UnityEngine.UIElements.DisplayStyle.Flex
+                          : UnityEngine.UIElements.DisplayStyle.None,
+                view.EventPanel.style.display.value,
+                "panel visibility must track EventModalUI.IsOpen");
+        }
+
         [UnityTest]
         public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
         {

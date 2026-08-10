@@ -169,6 +169,47 @@ namespace AtomicWar._Game.UI
             {
                 SetDebugMode(!_debugModeEnabled);
             }
+
+            RepaintEventModalIfChanged();
+        }
+
+        private bool _lastModalOpen;
+        private string _lastModalEventId;
+
+        /// <summary>
+        /// Repaint the event prompt when it opens, closes, or swaps to a
+        /// different event. Deliberately polled rather than driven from
+        /// EventRunner.OnEventTriggered: EventModalUI subscribes to that same
+        /// event and has to update its state before this paints it, and relying
+        /// on subscriber registration order is a dependency no test would catch
+        /// when it broke. Two comparisons a frame buys independence from it.
+        /// </summary>
+        private void RepaintEventModalIfChanged()
+        {
+            if (_eventModalUi == null || _diegeticHud == null) return;
+
+            bool open = _eventModalUi.IsOpen;
+            string id = open && _eventModalUi.ActiveEvent != null
+                ? _eventModalUi.ActiveEvent.id
+                : null;
+
+            if (open == _lastModalOpen && id == _lastModalEventId) return;
+            _lastModalOpen = open;
+            _lastModalEventId = id;
+
+            List<EventChoiceLine> lines = null;
+            if (open && _eventModalUi.VisibleChoices != null)
+            {
+                lines = new List<EventChoiceLine>(_eventModalUi.VisibleChoices.Count);
+                foreach (var c in _eventModalUi.VisibleChoices)
+                    lines.Add(new EventChoiceLine(c.Text, c.IsAvailable && !c.IsGrayedOut));
+            }
+
+            _diegeticHud.PaintEventModal(
+                open,
+                open && _eventModalUi.ActiveEvent != null ? _eventModalUi.ActiveEvent.title : null,
+                open ? _eventModalUi.DisplayBodyText : null,
+                lines);
         }
 
         public void SetDebugMode(bool enabled)
@@ -193,6 +234,7 @@ namespace AtomicWar._Game.UI
                 survivor,
                 _personalQuests,
                 _needsUiRng);
+            RepaintVitals();
         }
 
         /// <summary>Bind radiation system readings to Dosimeter and Geiger Audio.</summary>
@@ -201,6 +243,43 @@ namespace AtomicWar._Game.UI
             EnsureWidgetReferences();
             if (_dosimeterHud != null) _dosimeterHud.SetReading(cumulativeDose, currentRate);
             if (_geigerAudioHook != null) _geigerAudioHook.UpdateExposureRate(currentRate);
+            RepaintVitals();
+        }
+
+        /// <summary>
+        /// Latest clock reading. Pushed in rather than pulled: HUD holds no
+        /// bootstrap or TimeSystem reference, and every other value it shows is
+        /// pushed too. The simulation's clock advances in whole hours, so the
+        /// readout sits at HH:00 between ticks.
+        /// </summary>
+        private int _day = 1;
+        private float _hour;
+
+        public void SetClock(int day, float hour)
+        {
+            _day = day;
+            _hour = hour;
+            RepaintVitals();
+        }
+
+        /// <summary>
+        /// The other diegetic panels repaint on discrete actions via
+        /// RefreshDiegeticHud. Vitals cannot: needs and dose change continuously,
+        /// and a panel painted only on mission events would sit frozen while the
+        /// player starved. Null widgets paint nothing and throw nothing -- the
+        /// HUD must never take down the simulation.
+        /// </summary>
+        private void RepaintVitals()
+        {
+            EnsureWidgetReferences();
+            if (_diegeticHud == null || _needsBar == null) return;
+
+            _diegeticHud.PaintVitals(
+                _day,
+                _hour,
+                _dosimeterHud != null ? _dosimeterHud.CumulativeDose : 0f,
+                _dosimeterHud != null ? _dosimeterHud.CurrentRate : 0f,
+                _needsBar.NeedBars);
         }
 
         /// <summary>
@@ -309,17 +388,6 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             if (_diegeticHud == null) return null;
-
-            // If HUD already carries a UIDocument and the controller does not,
-            // re-home the controller onto this GO so it can own the panel.
-            if (_diegeticHud.GetComponent<UIDocument>() == null)
-            {
-                var hostDoc = GetComponent<UIDocument>();
-                if (hostDoc != null && _diegeticHud.gameObject != gameObject)
-                {
-                    // Controller lives on a child without a document — mount its own.
-                }
-            }
 
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();

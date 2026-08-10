@@ -155,3 +155,64 @@
     flex-direction: column;
     max-height: 148px;
 }
+
+/* Vitals: the core-loop readout. Always visible, unlike the other panels. */
+.vitals-panel {
+    min-width: 320px;
+}
+
+.vitals-needs {
+    flex-direction: column;
+    margin-top: 4px;
+}
+
+.vitals-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.vitals-row__label {
+    width: 84px;
+    -unity-font-style: bold;
+}
+
+.vitals-row__track {
+    flex-grow: 1;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.vitals-row__fill {
+    height: 8px;
+    background-color: rgb(51, 204, 77);
+}
+
+.vitals-row__fill.critical {
+    background-color: rgb(230, 51, 51);
+}
+
+.vitals-row__value {
+    width: 48px;
+    -unity-text-align: middle-right;
+}
+
+/* Event prompt: hidden until EventRunner fires, keys 1/2/3 pick a row. */
+.event-panel {
+    min-width: 420px;
+    max-width: 560px;
+}
+
+.event-choices {
+    flex-direction: column;
+    margin-top: 6px;
+}
+
+.event-choice {
+    margin-bottom: 3px;
+    white-space: normal;
+}
+
+.event-choice--disabled {
+    opacity: 0.45;
+}

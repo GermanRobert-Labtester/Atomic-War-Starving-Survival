@@ -1,6 +1,19 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
     <ui:VisualElement name="diegetic-root" class="diegetic-root" picking-mode="Ignore">
+        <ui:VisualElement name="vitals-panel" class="diegetic-panel vitals-panel">
+            <ui:Label name="vitals-clock" class="diegetic-title" text="DAY 1   00:00" />
+            <ui:Label name="vitals-dose" class="diegetic-status" text="" />
+            <ui:VisualElement name="vitals-needs" class="vitals-needs" />
+            <ui:Label name="vitals-hint" class="diegetic-hint" text="[F1] eat  ·  [F2] drink  ·  [SPACE] pause  ·  [F5] save" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="event-panel" class="diegetic-panel event-panel hidden">
+            <ui:Label name="event-title" class="diegetic-title" text="" />
+            <ui:Label name="event-body" class="diegetic-body" text="" />
+            <ui:VisualElement name="event-choices" class="event-choices" />
+        </ui:VisualElement>
+
         <ui:VisualElement name="hatch-panel" class="diegetic-panel hatch-panel hidden">
             <ui:Label name="hatch-title" class="diegetic-title" text="HATCH DEFENSE" />
             <ui:Label name="hatch-status" class="diegetic-status" text="" />

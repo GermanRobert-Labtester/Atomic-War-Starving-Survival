@@ -23,6 +23,18 @@ namespace AtomicWar._Game.UI
         public const string StoresPanelName = "stores-panel";
         public const string StoresSummaryName = "stores-summary";
         public const string StoresTooltipName = "stores-tooltip";
+        public const string VitalsPanelName = "vitals-panel";
+        public const string VitalsClockName = "vitals-clock";
+        public const string VitalsDoseName = "vitals-dose";
+        public const string VitalsNeedsName = "vitals-needs";
+        public const string EventPanelName = "event-panel";
+        public const string EventTitleName = "event-title";
+        public const string EventBodyName = "event-body";
+        public const string EventChoicesName = "event-choices";
+
+        /// <summary>Core needs, in fixed display order. Fixed so the rows do not
+        /// reshuffle between paints as the model's dictionary ordering changes.</summary>
+        public static readonly string[] CoreNeedIds = { "hunger", "thirst", "fatigue", "warmth" };
 
         public VisualElement Root { get; private set; }
         public VisualElement HatchPanel { get; private set; }
@@ -35,6 +47,14 @@ namespace AtomicWar._Game.UI
         public VisualElement StoresPanel { get; private set; }
         public Label StoresSummary { get; private set; }
         public Label StoresTooltip { get; private set; }
+        public VisualElement VitalsPanel { get; private set; }
+        public Label VitalsClock { get; private set; }
+        public Label VitalsDose { get; private set; }
+        public VisualElement VitalsNeeds { get; private set; }
+        public VisualElement EventPanel { get; private set; }
+        public Label EventTitle { get; private set; }
+        public Label EventBody { get; private set; }
+        public VisualElement EventChoices { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -43,6 +63,30 @@ namespace AtomicWar._Game.UI
             if (string.IsNullOrEmpty(Root.name)) Root.name = RootName;
             Root.AddToClassList("diegetic-root");
             Root.pickingMode = PickingMode.Ignore;
+
+            // Vitals reads first and, unlike the others, never hides: it is the
+            // only on-screen report of the core loop.
+            VitalsPanel = MakePanel(VitalsPanelName, "vitals-panel");
+            VitalsClock = MakeLabel(VitalsClockName, "diegetic-title");
+            VitalsDose = MakeLabel(VitalsDoseName, "diegetic-status");
+            VitalsNeeds = new VisualElement { name = VitalsNeedsName };
+            VitalsNeeds.AddToClassList("vitals-needs");
+            VitalsPanel.Add(VitalsClock);
+            VitalsPanel.Add(VitalsDose);
+            VitalsPanel.Add(VitalsNeeds);
+            VitalsPanel.Add(MakeHint("vitals-hint",
+                "[F1] eat  ·  [F2] drink  ·  [SPACE] pause  ·  [F5] save"));
+            Root.Add(VitalsPanel);
+
+            EventPanel = MakePanel(EventPanelName, "event-panel");
+            EventTitle = MakeLabel(EventTitleName, "diegetic-title");
+            EventBody = MakeLabel(EventBodyName, "diegetic-body");
+            EventChoices = new VisualElement { name = EventChoicesName };
+            EventChoices.AddToClassList("event-choices");
+            EventPanel.Add(EventTitle);
+            EventPanel.Add(EventBody);
+            EventPanel.Add(EventChoices);
+            Root.Add(EventPanel);
 
             HatchPanel = MakePanel(HatchPanelName, "hatch-panel");
             HatchPanel.Add(MakeTitle("hatch-title", "HATCH DEFENSE"));
@@ -76,6 +120,7 @@ namespace AtomicWar._Game.UI
 
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
+            SetVisible(EventPanel, false);
             return Root;
         }
 
@@ -94,7 +139,18 @@ namespace AtomicWar._Game.UI
             StoresPanel = Root.Q<VisualElement>(StoresPanelName);
             StoresSummary = Root.Q<Label>(StoresSummaryName);
             StoresTooltip = Root.Q<Label>(StoresTooltipName);
-            return HatchPanel != null && EncounterPanel != null && StoresPanel != null;
+            VitalsPanel = Root.Q<VisualElement>(VitalsPanelName);
+            VitalsClock = Root.Q<Label>(VitalsClockName);
+            VitalsDose = Root.Q<Label>(VitalsDoseName);
+            VitalsNeeds = Root.Q<VisualElement>(VitalsNeedsName);
+            EventPanel = Root.Q<VisualElement>(EventPanelName);
+            EventTitle = Root.Q<Label>(EventTitleName);
+            EventBody = Root.Q<Label>(EventBodyName);
+            EventChoices = Root.Q<VisualElement>(EventChoicesName);
+            // Every panel is part of the contract: a UXML missing one must fall
+            // back to Build() rather than bind a half-tree and render nothing.
+            return HatchPanel != null && EncounterPanel != null
+                && StoresPanel != null && VitalsPanel != null && EventPanel != null;
         }
 
         public void PaintHatch(bool open, string status, string ammoBreakdown, string armsPreview)
@@ -142,6 +198,104 @@ namespace AtomicWar._Game.UI
                 StoresTooltip.EnableInClassList("exclusive", militaryExclusive);
                 StoresTooltip.EnableInClassList("emphasis", !militaryExclusive && !string.IsNullOrEmpty(tooltip));
             }
+        }
+
+        /// <summary>
+        /// Paint the core-loop readout. Rows are emitted for every id in
+        /// <see cref="CoreNeedIds"/> whether or not the model carries it, so the
+        /// panel keeps a stable height and an absent need reads as "--" rather
+        /// than as zero -- zero means starving, absent means unknown.
+        /// </summary>
+        public void PaintVitals(
+            int day, float hour, float cumulativeDose, float currentRate,
+            IReadOnlyDictionary<string, NeedBarData> needs)
+        {
+            if (VitalsPanel == null) return;
+
+            int h = Mathf.Clamp(Mathf.FloorToInt(hour), 0, 23);
+            int m = Mathf.Clamp(Mathf.FloorToInt((hour - Mathf.Floor(hour)) * 60f), 0, 59);
+            if (VitalsClock != null)
+                VitalsClock.text = $"DAY {day}   {h:00}:{m:00}";
+
+            if (VitalsDose != null)
+                VitalsDose.text = $"☢ {cumulativeDose:0.00} Sv   ({currentRate:0.0}/hr)";
+
+            if (VitalsNeeds == null) return;
+            VitalsNeeds.Clear();
+
+            for (int i = 0; i < CoreNeedIds.Length; i++)
+            {
+                string id = CoreNeedIds[i];
+                NeedBarData data = null;
+                needs?.TryGetValue(id, out data);
+                VitalsNeeds.Add(MakeNeedRow(id, data));
+            }
+        }
+
+        /// <summary>
+        /// Draw the event prompt. The row numbers are the control scheme, not
+        /// decoration: PlayerInputHandler maps Alpha1 to visible index 0, so a
+        /// row that does not show its number cannot be chosen.
+        /// </summary>
+        public void PaintEventModal(
+            bool open, string title, string body, IReadOnlyList<EventChoiceLine> choices)
+        {
+            if (EventPanel == null) return;
+            SetVisible(EventPanel, open);
+            if (!open) return;
+
+            if (EventTitle != null) EventTitle.text = title ?? string.Empty;
+            if (EventBody != null) EventBody.text = body ?? string.Empty;
+            if (EventChoices == null) return;
+
+            EventChoices.Clear();
+            if (choices == null) return;
+
+            for (int i = 0; i < choices.Count; i++)
+            {
+                var row = new Label($"[{i + 1}] {choices[i].Text}")
+                {
+                    name = "event-choice-" + i
+                };
+                row.AddToClassList("event-choice");
+                row.EnableInClassList("event-choice--disabled", !choices[i].IsEnabled);
+                EventChoices.Add(row);
+            }
+        }
+
+        private static VisualElement MakeNeedRow(string id, NeedBarData data)
+        {
+            var row = new VisualElement { name = "vitals-need-" + id };
+            row.AddToClassList("vitals-row");
+
+            var label = new Label(data?.DisplayName ?? id.ToUpperInvariant())
+            {
+                name = "vitals-need-" + id + "-label"
+            };
+            label.AddToClassList("vitals-row__label");
+            row.Add(label);
+
+            var track = new VisualElement { name = "vitals-need-" + id + "-track" };
+            track.AddToClassList("vitals-row__track");
+            var fill = new VisualElement { name = "vitals-need-" + id + "-fill" };
+            fill.AddToClassList("vitals-row__fill");
+            fill.style.width = data != null && data.MaxValue > 0f
+                ? Length.Percent(Mathf.Clamp01(data.CurrentValue / data.MaxValue) * 100f)
+                : Length.Percent(0f);
+            fill.EnableInClassList("critical", data != null && data.IsCritical);
+            track.Add(fill);
+            row.Add(track);
+
+            var value = new Label(data == null
+                ? "--"
+                : Mathf.RoundToInt(data.CurrentValue).ToString() + "%")
+            {
+                name = "vitals-need-" + id + "-value"
+            };
+            value.AddToClassList("vitals-row__value");
+            row.Add(value);
+
+            return row;
         }
 
         public static void SetVisible(VisualElement el, bool visible)

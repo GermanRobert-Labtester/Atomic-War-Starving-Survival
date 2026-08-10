@@ -102,6 +102,21 @@ namespace AtomicWar._Game.Core
             };
             NeedsSystem.OnNeedChanged += _onNeedChanged;
 
+            // Vitals shows the day and hour, and HUD deliberately holds no
+            // TimeSystem reference -- every value it displays is pushed in.
+            // The first SetClock below triggers the first RepaintVitals, which
+            // reads the cached dose off the DosimeterHUD -- so the dose must
+            // land on the HUD before that first paint, or the vitals panel
+            // reads "0.00 Sv" until the next OnDoseChanged event fires. The
+            // smoke test only catches non-empty text, so an off-by-one wiring
+            // here is otherwise invisible.
+            _onHourTickHud = (day, hour) => _hud.SetClock(day, hour);
+            TimeSystem.OnHourTick += _onHourTickHud;
+            var primary = Survivors != null && Survivors.Count > 0 ? Survivors[0] : null;
+            if (primary != null)
+                _hud.OnRadiationUpdated(primary.LifetimeRadiationExposure, primary.RadiationDose);
+            _hud.SetClock(TimeSystem.CurrentDay, TimeSystem.CurrentHour);
+
             // Wire shelter
             _hud.OnShelterUpdated(Shelter);
 
