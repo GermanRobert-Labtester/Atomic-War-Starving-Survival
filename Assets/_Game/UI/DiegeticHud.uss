@@ -157,7 +157,14 @@
 }
 
 /* Vitals: the core-loop readout. Always visible, unlike the other panels. */
+/* Vitals — bottom-centre. Had no positioning at all, so it defaulted to the
+   absolute origin and rendered on top of the event prompt and the workbench.
+   The persistent core readout, so it gets the free bottom edge between the
+   encounter log (bottom-left) and the stores tooltip (bottom-right). */
 .vitals-panel {
+    bottom: 16px;
+    left: 50%;
+    translate: -50% 0;
     min-width: 320px;
 }
 
@@ -197,10 +204,41 @@
     -unity-text-align: middle-right;
 }
 
-/* Event prompt: hidden until EventRunner fires, keys 1/2/3 pick a row. */
+/* Event prompt: hidden until EventRunner fires, keys 1/2/3 pick a row.
+   Screen centre. It previously had no positioning at all and stacked at the
+   absolute origin on top of vitals and the workbench. It is the most
+   attention-demanding transient panel, so it takes the middle. It shares that
+   space with the endgame summary, which is added later in the tree and so
+   draws on top -- deliberate: once the campaign is over the prompt underneath
+   no longer matters.
+
+   The width/max-height pair below is load-bearing and was arrived at by
+   measuring resolved worldBound against a live panel, not by reasoning. In a
+   1440x1080 layout space, true centre is x=720:
+
+     min-width:420 + max-width:560 -> resolved 420.8 wide, centre 667.2  (bad)
+     width:520 + max-height:480    -> resolved 420.8 wide, centre 720.0  (good)
+     no constraints at all         -> resolved 312.8 wide, centre 685.1  (bad)
+
+   Note the resolved width is 420.8 whether width is 520 or the min/max pair,
+   so `width` is not doing what it looks like it does here -- it changes the
+   resolved transform without changing the resolved width. Unexplained, but
+   reproducible. Do not "simplify" these two declarations away without
+   re-measuring; dropping them shrinks the panel and pulls it off centre.
+
+   Separately, this panel renders ~26px below true vertical centre in every
+   configuration tried, including with no constraints at all. Small enough to
+   leave (2.4% of height) and not caused by max-height, contrary to first
+   appearances.
+
+   If a long choice list ever grows this panel tall enough to reach the vitals
+   readout at y=801, bound the inner .event-choices list, not the panel. */
 .event-panel {
-    min-width: 420px;
-    max-width: 560px;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 520px;
+    max-height: 480px;
 }
 
 .event-choices {
