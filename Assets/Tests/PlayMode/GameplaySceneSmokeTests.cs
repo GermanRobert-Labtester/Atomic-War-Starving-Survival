@@ -247,6 +247,62 @@ namespace AtomicWar.Tests.PlayMode
             Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.WorkbenchPanel.style.display.value);
         }
 
+        /// <summary>
+        /// EndgameSummaryUI has no change event, so the panel is driven by
+        /// HUD.RepaintEndgameIfChanged polling it in Update. This drives the real
+        /// widget through Show()/Hide() and lets a frame elapse rather than
+        /// calling Paint() by hand -- a manual paint would pass even if the poll
+        /// were never wired into Update at all.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator EndgamePanel_VisibilityTracksTheEndgameSummaryState()
+        {
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+
+            for (int i = 0; i < 30; i++)
+                yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view, "diegetic view should exist");
+            Assert.IsNotNull(view.EndgamePanel, "endgame panel should be bound from the UXML");
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.EndgamePanel.style.display.value,
+                "the panel starts hidden -- the campaign is still running");
+
+            var endgame = hud.EndgameSummaryUI;
+            Assert.IsNotNull(endgame, "HUD must hold an EndgameSummaryUI widget");
+
+            try
+            {
+                endgame.Show(
+                    "Died",
+                    "The last filter clogged.",
+                    "Nobody came.",
+                    "SUFFOCATION",
+                    daysSurvived: 42,
+                    totalRadiationAbsorbed: 7.5f,
+                    moralChoicesMade: 13);
+                yield return null;
+
+                Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.Flex, view.EndgamePanel.style.display.value,
+                    "showing the summary must repaint the panel from the Update poll");
+                Assert.IsFalse(string.IsNullOrEmpty(view.EndgameStatus.text),
+                    "status must be non-empty after paint -- the UXML ships it blank, " +
+                    "so any text here proves a real paint path");
+                StringAssert.Contains("42", view.EndgameBody.text,
+                    "the detail block must carry the real tallies, not placeholder copy");
+            }
+            finally
+            {
+                endgame.Hide();
+            }
+
+            yield return null;
+
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.None, view.EndgamePanel.style.display.value,
+                "hiding the summary must repaint the panel back to hidden");
+        }
+
         [UnityTest]
         public IEnumerator SaveAndLoad_RoundTripsClockAndNeeds()
         {

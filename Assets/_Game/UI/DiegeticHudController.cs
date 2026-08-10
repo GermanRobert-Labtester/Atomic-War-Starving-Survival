@@ -37,6 +37,7 @@ namespace AtomicWar._Game.UI
         private InventoryStripUI _strip;
         private ExpeditionEncounterLogHUD _encounterLog;
         private WorkbenchUI _workbench;
+        private EndgameSummaryUI _endgame;
         private bool _built;
         private bool _tooltipPinned;
         private bool _preferDetached;
@@ -199,16 +200,18 @@ namespace AtomicWar._Game.UI
             HatchDefenseHUD hatch,
             InventoryStripUI strip,
             ExpeditionEncounterLogHUD encounterLog,
-            WorkbenchUI workbench = null)
+            WorkbenchUI workbench = null,
+            EndgameSummaryUI endgame = null)
         {
-            // Skip the full UnbindSources + rebind + Paint() when the
-            // four sources are identical. The host only re-calls this when
-            // _diegeticHud is null, but a future re-bind path that re-passes
-            // the same widgets would otherwise run a full repaint each time.
+            // Skip the full UnbindSources + rebind + Paint() when every source
+            // is identical. The host only re-calls this when _diegeticHud is
+            // null, but a future re-bind path that re-passes the same widgets
+            // would otherwise run a full repaint each time.
             if (ReferenceEquals(_hatch, hatch)
                 && ReferenceEquals(_strip, strip)
                 && ReferenceEquals(_encounterLog, encounterLog)
-                && ReferenceEquals(_workbench, workbench))
+                && ReferenceEquals(_workbench, workbench)
+                && ReferenceEquals(_endgame, endgame))
             {
                 return;
             }
@@ -217,6 +220,10 @@ namespace AtomicWar._Game.UI
             _strip = strip;
             _encounterLog = encounterLog;
             _workbench = workbench;
+            // No subscription: EndgameSummaryUI exposes no change event, so the
+            // host polls it (HUD.RepaintEndgameIfChanged). It is still held here
+            // so the full Paint() sweep can draw it alongside the others.
+            _endgame = endgame;
 
             if (_strip != null)
                 _strip.OnSelectionChanged += OnStripSelectionChanged;
@@ -253,6 +260,7 @@ namespace AtomicWar._Game.UI
             _strip = null;
             _encounterLog = null;
             _workbench = null;
+            _endgame = null;
         }
 
         private void OnHatchOpenChanged(bool _) => Paint();
@@ -297,6 +305,14 @@ namespace AtomicWar._Game.UI
             _view.PaintWorkbench(open, panelSummary);
         }
 
+        /// <summary>Forward a terminal endgame-readout paint.</summary>
+        public void PaintEndgame(bool visible, string statusLine, string detailSummary)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintEndgame(visible, statusLine, detailSummary);
+        }
+
         /// <summary>Repaint all diegetic panels from bound view-models.</summary>
         public void Paint()
         {
@@ -317,6 +333,11 @@ namespace AtomicWar._Game.UI
             _view.PaintWorkbench(
                 _workbench != null && _workbench.IsOpen,
                 _workbench?.PanelSummary);
+
+            _view.PaintEndgame(
+                _endgame != null && _endgame.IsVisible,
+                _endgame?.StatusLine,
+                _endgame?.DetailSummary);
 
             bool showStores = false;
             string summary = string.Empty;
