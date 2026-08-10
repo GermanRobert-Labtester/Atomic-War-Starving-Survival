@@ -33,6 +33,9 @@ namespace AtomicWar._Game.UI
         public const string EventChoicesName = "event-choices";
         public const string WorkbenchPanelName = "workbench-panel";
         public const string WorkbenchBodyName = "workbench-body";
+        public const string EndgamePanelName = "endgame-panel";
+        public const string EndgameStatusName = "endgame-status";
+        public const string EndgameBodyName = "endgame-body";
 
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
@@ -76,6 +79,9 @@ namespace AtomicWar._Game.UI
         public VisualElement EventChoices { get; private set; }
         public VisualElement WorkbenchPanel { get; private set; }
         public Label WorkbenchBody { get; private set; }
+        public VisualElement EndgamePanel { get; private set; }
+        public Label EndgameStatus { get; private set; }
+        public Label EndgameBody { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -150,10 +156,22 @@ namespace AtomicWar._Game.UI
             WorkbenchPanel.Add(WorkbenchBody);
             Root.Add(WorkbenchPanel);
 
+            // Terminal campaign readout. EndgameSummaryUI.Refresh already
+            // assembles both strings, so this paints them verbatim like the
+            // workbench panel. No hint row: there is nothing left to press.
+            EndgamePanel = MakePanel(EndgamePanelName, "endgame-panel");
+            EndgamePanel.Add(MakeTitle("endgame-title", "CAMPAIGN OVER"));
+            EndgameStatus = MakeLabel(EndgameStatusName, "diegetic-status");
+            EndgameBody = MakeLabel(EndgameBodyName, "diegetic-body", "endgame-readout");
+            EndgamePanel.Add(EndgameStatus);
+            EndgamePanel.Add(EndgameBody);
+            Root.Add(EndgamePanel);
+
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
             SetVisible(EventPanel, false);
             SetVisible(WorkbenchPanel, false);
+            SetVisible(EndgamePanel, false);
             return Root;
         }
 
@@ -182,11 +200,14 @@ namespace AtomicWar._Game.UI
             EventChoices = Root.Q<VisualElement>(EventChoicesName);
             WorkbenchPanel = Root.Q<VisualElement>(WorkbenchPanelName);
             WorkbenchBody = Root.Q<Label>(WorkbenchBodyName);
+            EndgamePanel = Root.Q<VisualElement>(EndgamePanelName);
+            EndgameStatus = Root.Q<Label>(EndgameStatusName);
+            EndgameBody = Root.Q<Label>(EndgameBodyName);
             // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
             if (HatchPanel == null || EncounterPanel == null
                 || StoresPanel == null || VitalsPanel == null || EventPanel == null
-                || WorkbenchPanel == null)
+                || WorkbenchPanel == null || EndgamePanel == null)
             {
                 return false;
             }
@@ -364,6 +385,21 @@ namespace AtomicWar._Game.UI
             SetVisible(WorkbenchPanel, open);
             if (!open) return;
             if (WorkbenchBody != null) WorkbenchBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Paint the terminal campaign readout. EndgameSummaryUI.Refresh already
+        /// formats both the one-line StatusLine and the multi-line DetailSummary
+        /// (outcome, death-screen label, tallies), so both are painted verbatim
+        /// rather than re-derived from the raw counters.
+        /// </summary>
+        public void PaintEndgame(bool visible, string statusLine, string detailSummary)
+        {
+            if (EndgamePanel == null) return;
+            SetVisible(EndgamePanel, visible);
+            if (!visible) return;
+            if (EndgameStatus != null) EndgameStatus.text = statusLine ?? string.Empty;
+            if (EndgameBody != null) EndgameBody.text = detailSummary ?? string.Empty;
         }
 
         private static VisualElement MakeNeedRow(string id, NeedBarData data,

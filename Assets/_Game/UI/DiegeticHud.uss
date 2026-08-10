@@ -231,3 +231,20 @@
     white-space: normal;
     margin-bottom: 0;
 }
+
+/* Endgame summary — screen centre. Every other panel is corner-anchored; this
+   one is terminal and exclusive, so it takes the middle rather than competing
+   for a corner. Centred by offsetting half its own size, which is why the
+   translate is a percentage and not a fixed length. */
+.endgame-panel {
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    min-width: 480px;
+    max-width: 680px;
+}
+
+.endgame-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}

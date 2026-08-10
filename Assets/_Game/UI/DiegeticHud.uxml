@@ -68,5 +68,11 @@
         <ui:VisualElement name="workbench-panel" class="diegetic-panel workbench-panel hidden">
             <ui:Label name="workbench-body" class="diegetic-body workbench-readout" text="" />
         </ui:VisualElement>
+
+        <ui:VisualElement name="endgame-panel" class="diegetic-panel endgame-panel hidden">
+            <ui:Label name="endgame-title" class="diegetic-title" text="CAMPAIGN OVER" />
+            <ui:Label name="endgame-status" class="diegetic-status" text="" />
+            <ui:Label name="endgame-body" class="diegetic-body endgame-readout" text="" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

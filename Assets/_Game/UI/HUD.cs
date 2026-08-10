@@ -171,6 +171,30 @@ namespace AtomicWar._Game.UI
             }
 
             RepaintEventModalIfChanged();
+            RepaintEndgameIfChanged();
+        }
+
+        private bool _lastEndgameVisible;
+        private string _lastEndgameStatus;
+
+        /// <summary>
+        /// Repaint the terminal campaign readout when it appears, disappears, or
+        /// its tallies change. Polled because EndgameSummaryUI is the one HUD
+        /// widget with no change event -- Show()/Hide()/Clear() all just call its
+        /// private Refresh(). Comparing StatusLine covers the tallies too: it is
+        /// rebuilt from state, days and radiation on every Refresh.
+        /// </summary>
+        private void RepaintEndgameIfChanged()
+        {
+            if (_diegeticHud == null || _endgameSummaryUi == null) return;
+
+            bool visible = _endgameSummaryUi.IsVisible;
+            string status = visible ? _endgameSummaryUi.StatusLine : null;
+            if (visible == _lastEndgameVisible && status == _lastEndgameStatus) return;
+
+            _lastEndgameVisible = visible;
+            _lastEndgameStatus = status;
+            _diegeticHud.PaintEndgame(visible, status, _endgameSummaryUi.DetailSummary);
         }
 
         private bool _lastModalOpen;
@@ -464,7 +488,7 @@ namespace AtomicWar._Game.UI
 
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
-            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi);
+            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi, _endgameSummaryUi);
             return _diegeticHud;
         }
 
