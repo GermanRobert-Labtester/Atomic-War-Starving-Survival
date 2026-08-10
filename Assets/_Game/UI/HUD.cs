@@ -175,14 +175,20 @@ namespace AtomicWar._Game.UI
 
         private bool _lastModalOpen;
         private string _lastModalEventId;
+        // Last-painted body text and choice fingerprint while the modal is open.
+        // The body is re-resolved each frame from the live context (faction trust,
+        // survivor state) so a context shift that flips the threatening-copy swap
+        // or greys out a choice repaints without waiting for a new event.
+        private string _lastPaintedBody;
+        private int _lastPaintedChoiceFingerprint;
 
         /// <summary>
-        /// Repaint the event prompt when it opens, closes, or swaps to a
-        /// different event. Deliberately polled rather than driven from
-        /// EventRunner.OnEventTriggered: EventModalUI subscribes to that same
-        /// event and has to update its state before this paints it, and relying
-        /// on subscriber registration order is a dependency no test would catch
-        /// when it broke. Two comparisons a frame buys independence from it.
+        /// Repaint the event prompt when it opens, closes, swaps to a different
+        /// event, or its body / choice gating actually changes. Deliberately
+        /// polled rather than driven from EventRunner.OnEventTriggered:
+        /// EventModalUI subscribes to that same event and has to update its
+        /// state before this paints it, and relying on subscriber registration
+        /// order is a dependency no test would catch when it broke.
         /// </summary>
         private void RepaintEventModalIfChanged()
         {
@@ -193,23 +199,90 @@ namespace AtomicWar._Game.UI
                 ? _eventModalUi.ActiveEvent.id
                 : null;
 
-            if (open == _lastModalOpen && id == _lastModalEventId) return;
-            _lastModalOpen = open;
-            _lastModalEventId = id;
-
-            List<EventChoiceLine> lines = null;
-            if (open && _eventModalUi.VisibleChoices != null)
+            // Fast bail: same open/close + id as the last frame.
+            if (open == _lastModalOpen && id == _lastModalEventId)
             {
-                lines = new List<EventChoiceLine>(_eventModalUi.VisibleChoices.Count);
-                foreach (var c in _eventModalUi.VisibleChoices)
-                    lines.Add(new EventChoiceLine(c.Text, c.IsAvailable && !c.IsGrayedOut));
+                if (!open) return; // closed with same id: no work
+                // Open with same id: re-resolve to track live context (faction
+                // trust can shift the body swap; flags can change gating), but
+                // skip the per-row Label rebuild when the fingerprint matches
+                // the one we last drew.
+                var evStable = _eventModalUi.ActiveEvent;
+                var ctxStable = _eventModalUi.ActiveContext;
+                if (evStable == null || ctxStable == null) return;
+                string bodyStable = evStable.ResolveBodyText(ctxStable);
+                var visibleStable = EventRunner.GetVisibleChoices(evStable, ctxStable);
+                int fingerprintStable = ComputeChoicesFingerprint(visibleStable);
+                if (fingerprintStable == _lastPaintedChoiceFingerprint
+                    && bodyStable == _lastPaintedBody)
+                {
+                    return;
+                }
+                // Things changed; fall through to repaint.
+                _lastPaintedBody = bodyStable;
+                _lastPaintedChoiceFingerprint = fingerprintStable;
+                EmitPaint(open, evStable, bodyStable, visibleStable);
+                return;
             }
 
-            _diegeticHud.PaintEventModal(
-                open,
-                open && _eventModalUi.ActiveEvent != null ? _eventModalUi.ActiveEvent.title : null,
-                open ? _eventModalUi.DisplayBodyText : null,
-                lines);
+            // Open/close or id changed: redraw.
+            _lastModalOpen = open;
+            _lastModalEventId = id;
+            if (!open)
+            {
+                _lastPaintedBody = null;
+                _lastPaintedChoiceFingerprint = 0;
+                _diegeticHud.PaintEventModal(open, null, null, null);
+                return;
+            }
+
+            var ev = _eventModalUi.ActiveEvent;
+            var ctx = _eventModalUi.ActiveContext;
+            if (ev == null || ctx == null) return;
+            string body = ev.ResolveBodyText(ctx);
+            var visible = EventRunner.GetVisibleChoices(ev, ctx);
+            int fingerprint = ComputeChoicesFingerprint(visible);
+            _lastPaintedBody = body;
+            _lastPaintedChoiceFingerprint = fingerprint;
+            EmitPaint(open, ev, body, visible);
+        }
+
+        private void EmitPaint(
+            bool open,
+            GameEvent ev,
+            string body,
+            System.Collections.Generic.IReadOnlyList<PresentedEventChoice> visible)
+        {
+            var lines = new List<EventChoiceLine>(visible.Count);
+            for (int i = 0; i < visible.Count; i++)
+            {
+                var c = visible[i];
+                lines.Add(new EventChoiceLine(c.Text, c.IsAvailable && !c.IsGrayedOut));
+            }
+            _diegeticHud.PaintEventModal(open, ev.title, body, lines);
+        }
+
+        /// <summary>
+        /// Cheap content fingerprint for the visible choice list. Hashes the
+        /// (enabled, text-hash) pair of each row so a re-resolution that didn't
+        /// actually change the gating or copy reads as equal even when the
+        /// list is a freshly-allocated reference.
+        /// </summary>
+        private static int ComputeChoicesFingerprint(System.Collections.Generic.IReadOnlyList<PresentedEventChoice> choices)
+        {
+            unchecked
+            {
+                int h = 17;
+                for (int i = 0; i < choices.Count; i++)
+                {
+                    var c = choices[i];
+                    bool enabled = c.IsAvailable && !c.IsGrayedOut;
+                    int textHash = c.Text == null ? 0 : c.Text.GetHashCode();
+                    h = h * 31 + (enabled ? 1 : 0);
+                    h = h * 31 + textHash;
+                }
+                return h;
+            }
         }
 
         public void SetDebugMode(bool enabled)

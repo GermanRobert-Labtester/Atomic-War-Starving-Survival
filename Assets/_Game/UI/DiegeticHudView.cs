@@ -53,6 +53,23 @@ namespace AtomicWar._Game.UI
         public Label VitalsClock { get; private set; }
         public Label VitalsDose { get; private set; }
         public VisualElement VitalsNeeds { get; private set; }
+
+        // Cached per-need row parts, indexed by CoreNeedIds. Built once in
+        // Build()/BindExisting(); PaintVitals only mutates style.width and
+        // text on these rather than clearing and re-adding new VisualElements
+        // each frame. Needs change 4x per survivor per tick -- rebuilding the
+        // tree each time was a per-frame allocation firehose.
+        private Label[] _rowLabels;
+        private VisualElement[] _rowFills;
+        private Label[] _rowValues;
+        // Fingerprint of the last PaintVitals input. When the new frame's
+        // packed key matches, we bail before any string allocation, so
+        // hourly clock ticks that don't change a need skip the entire body.
+        private int _lastVitalsKey;
+        // Knuth's golden-ratio hash multiplier. Written as an unchecked cast
+        // because 2654435761 does not fit in an int: the bare literal types as
+        // uint and silently widens the whole key expression to long.
+        private const int GoldenRatioHashMul = unchecked((int)2654435761u);
         public VisualElement EventPanel { get; private set; }
         public Label EventTitle { get; private set; }
         public Label EventBody { get; private set; }
@@ -69,7 +86,9 @@ namespace AtomicWar._Game.UI
             Root.pickingMode = PickingMode.Ignore;
 
             // Vitals reads first and, unlike the others, never hides: it is the
-            // only on-screen report of the core loop.
+            // one panel with no toggle -- the others hide until their subsystem
+            // is relevant. Rows are pre-built once and reused on every paint;
+            // PaintVitals only updates their fill width and value text.
             VitalsPanel = MakePanel(VitalsPanelName, "vitals-panel");
             VitalsClock = MakeLabel(VitalsClockName, "diegetic-title");
             VitalsDose = MakeLabel(VitalsDoseName, "diegetic-status");
@@ -80,6 +99,7 @@ namespace AtomicWar._Game.UI
             VitalsPanel.Add(VitalsNeeds);
             VitalsPanel.Add(MakeHint("vitals-hint",
                 "[F1] eat  ·  [F2] drink  ·  [SPACE] pause  ·  [F5] save"));
+            BuildVitalsRows(VitalsNeeds);
             Root.Add(VitalsPanel);
 
             EventPanel = MakePanel(EventPanelName, "event-panel");
@@ -164,9 +184,17 @@ namespace AtomicWar._Game.UI
             WorkbenchBody = Root.Q<Label>(WorkbenchBodyName);
             // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
-            return HatchPanel != null && EncounterPanel != null
-                && StoresPanel != null && VitalsPanel != null && EventPanel != null
-                && WorkbenchPanel != null;
+            if (HatchPanel == null || EncounterPanel == null
+                || StoresPanel == null || VitalsPanel == null || EventPanel == null
+                || WorkbenchPanel == null)
+            {
+                return false;
+            }
+            // Populate the row cache from the UXML-cloned tree. If any row is
+            // missing the panel is malformed and PaintVitals would no-op for
+            // it, so fall back to Build() instead.
+            if (!BindVitalsRows(VitalsNeeds)) return false;
+            return true;
         }
 
         public void PaintHatch(bool open, string status, string ammoBreakdown, string armsPreview)
@@ -217,10 +245,13 @@ namespace AtomicWar._Game.UI
         }
 
         /// <summary>
-        /// Paint the core-loop readout. Rows are emitted for every id in
-        /// <see cref="CoreNeedIds"/> whether or not the model carries it, so the
-        /// panel keeps a stable height and an absent need reads as "--" rather
-        /// than as zero -- zero means starving, absent means unknown.
+        /// Paint the core-loop readout. Rows are pre-built once in
+        /// <see cref="Build"/> / <see cref="BindExisting"/>; this method only
+        /// updates their fill width and value text. Zero allocation on the
+        /// happy path: a 4-int packed key short-circuits the whole body
+        /// when nothing changed (clock, dose, per-row need value/critical),
+        /// and the per-row path only writes label text when the formatted
+        /// value or critical flag actually changed.
         /// </summary>
         public void PaintVitals(
             int day, float hour, float cumulativeDose, float currentRate,
@@ -230,21 +261,63 @@ namespace AtomicWar._Game.UI
 
             int h = Mathf.Clamp(Mathf.FloorToInt(hour), 0, 23);
             int m = Mathf.Clamp(Mathf.FloorToInt((hour - Mathf.Floor(hour)) * 60f), 0, 59);
+            int doseCenti = Mathf.RoundToInt(Mathf.Clamp(cumulativeDose, 0f, 1000f) * 100f);
+            int rateDeci = Mathf.RoundToInt(Mathf.Clamp(currentRate, 0f, 1000f) * 10f);
+
+            if (_rowFills == null) return;
+            // Pack a fingerprint of what would actually change on screen.
+            // Skip the whole paint when every component matches the last frame.
+            unchecked
+            {
+                int key = (day * 73856093)
+                        ^ (h * 19349663)
+                        ^ (m * 83492791)
+                        ^ (doseCenti * GoldenRatioHashMul)
+                        ^ (rateDeci * 805459861);
+                for (int i = 0; i < CoreNeedIds.Length; i++)
+                {
+                    NeedBarData data = null;
+                    needs?.TryGetValue(CoreNeedIds[i], out data);
+                    if (data == null) { key ^= 0x5A5A5A5A; continue; }
+                    key ^= (Mathf.RoundToInt(data.CurrentValue) * GoldenRatioHashMul);
+                    if (data.IsCritical) key ^= 0x3C3C3C3C;
+                }
+                if (key == _lastVitalsKey) return;
+                _lastVitalsKey = key;
+            }
+
             if (VitalsClock != null)
                 VitalsClock.text = $"DAY {day}   {h:00}:{m:00}";
 
             if (VitalsDose != null)
                 VitalsDose.text = $"☢ {cumulativeDose:0.00} Sv   ({currentRate:0.0}/hr)";
 
-            if (VitalsNeeds == null) return;
-            VitalsNeeds.Clear();
-
             for (int i = 0; i < CoreNeedIds.Length; i++)
             {
-                string id = CoreNeedIds[i];
                 NeedBarData data = null;
-                needs?.TryGetValue(id, out data);
-                VitalsNeeds.Add(MakeNeedRow(id, data));
+                needs?.TryGetValue(CoreNeedIds[i], out data);
+
+                var fill = _rowFills[i];
+                if (fill != null)
+                {
+                    bool haveData = data != null;
+                    float pct = haveData && data.MaxValue > 0f
+                        ? Mathf.Clamp01(data.CurrentValue / data.MaxValue) * 100f
+                        : 0f;
+                    fill.style.width = Length.Percent(pct);
+                    bool critical = haveData && data.IsCritical;
+                    if (fill.ClassListContains("critical") != critical)
+                        fill.EnableInClassList("critical", critical);
+                }
+
+                var value = _rowValues[i];
+                if (value != null)
+                {
+                    string next = data == null
+                        ? "--"
+                        : Mathf.RoundToInt(data.CurrentValue).ToString() + "%";
+                    if (value.text != next) value.text = next;
+                }
             }
         }
 
@@ -293,12 +366,13 @@ namespace AtomicWar._Game.UI
             if (WorkbenchBody != null) WorkbenchBody.text = panelSummary ?? string.Empty;
         }
 
-        private static VisualElement MakeNeedRow(string id, NeedBarData data)
+        private static VisualElement MakeNeedRow(string id, NeedBarData data,
+            out Label label, out VisualElement fill, out Label value)
         {
             var row = new VisualElement { name = "vitals-need-" + id };
             row.AddToClassList("vitals-row");
 
-            var label = new Label(data?.DisplayName ?? id.ToUpperInvariant())
+            label = new Label(data?.DisplayName ?? id.ToUpperInvariant())
             {
                 name = "vitals-need-" + id + "-label"
             };
@@ -307,7 +381,7 @@ namespace AtomicWar._Game.UI
 
             var track = new VisualElement { name = "vitals-need-" + id + "-track" };
             track.AddToClassList("vitals-row__track");
-            var fill = new VisualElement { name = "vitals-need-" + id + "-fill" };
+            fill = new VisualElement { name = "vitals-need-" + id + "-fill" };
             fill.AddToClassList("vitals-row__fill");
             fill.style.width = data != null && data.MaxValue > 0f
                 ? Length.Percent(Mathf.Clamp01(data.CurrentValue / data.MaxValue) * 100f)
@@ -316,7 +390,7 @@ namespace AtomicWar._Game.UI
             track.Add(fill);
             row.Add(track);
 
-            var value = new Label(data == null
+            value = new Label(data == null
                 ? "--"
                 : Mathf.RoundToInt(data.CurrentValue).ToString() + "%")
             {
@@ -326,6 +400,56 @@ namespace AtomicWar._Game.UI
             row.Add(value);
 
             return row;
+        }
+
+        /// <summary>
+        /// Build and cache the four vitals rows in fixed CoreNeedIds order.
+        /// Called from <see cref="Build"/>; <see cref="BindExisting"/> uses
+        /// <see cref="BindVitalsRows"/> to look the same parts up by name in
+        /// a UXML-cloned tree.
+        /// </summary>
+        private void BuildVitalsRows(VisualElement needsContainer)
+        {
+            int n = CoreNeedIds.Length;
+            _rowLabels = new Label[n];
+            _rowFills = new VisualElement[n];
+            _rowValues = new Label[n];
+            for (int i = 0; i < n; i++)
+            {
+                string id = CoreNeedIds[i];
+                Label label, value;
+                VisualElement fill;
+                var row = MakeNeedRow(id, null, out label, out fill, out value);
+                _rowLabels[i] = label;
+                _rowFills[i] = fill;
+                _rowValues[i] = value;
+                needsContainer.Add(row);
+            }
+        }
+
+        /// <summary>
+        /// Populate the row cache from a UXML-cloned tree (no rebuilds). If
+        /// any expected name is missing, return false so the caller falls
+        /// back to <see cref="Build"/>.
+        /// </summary>
+        private bool BindVitalsRows(VisualElement needsContainer)
+        {
+            int n = CoreNeedIds.Length;
+            _rowLabels = new Label[n];
+            _rowFills = new VisualElement[n];
+            _rowValues = new Label[n];
+            for (int i = 0; i < n; i++)
+            {
+                string id = CoreNeedIds[i];
+                var label = needsContainer.Q<Label>("vitals-need-" + id + "-label");
+                var fill = needsContainer.Q<VisualElement>("vitals-need-" + id + "-fill");
+                var value = needsContainer.Q<Label>("vitals-need-" + id + "-value");
+                if (label == null || fill == null || value == null) return false;
+                _rowLabels[i] = label;
+                _rowFills[i] = fill;
+                _rowValues[i] = value;
+            }
+            return true;
         }
 
         public static void SetVisible(VisualElement el, bool visible)

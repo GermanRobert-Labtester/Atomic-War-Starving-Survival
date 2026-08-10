@@ -59,7 +59,12 @@ namespace AtomicWar._Game.Core
             // Map screen expedition requests → ExpeditionSystem
             if (_hud.MapScreenUI != null)
             {
-                _hud.MapScreenUI.OnExpeditionRequested += (survivor, nodeId, pathReq) =>
+                // Defensive: if WireHUD ever runs twice in a session (load-game
+                // hot path, future "reset and replay", re-entrant Awake), the
+                // old lambda would orphan in MapScreenUI.OnExpeditionRequested.
+                if (_onMapExpeditionRequested != null)
+                    _hud.MapScreenUI.OnExpeditionRequested -= _onMapExpeditionRequested;
+                _onMapExpeditionRequested = (survivor, nodeId, pathReq) =>
                 {
                     if (ExpeditionSystem == null || survivor == null || pathReq == null) return;
                     var node = GeneratedMap?.GetNode(nodeId);
@@ -77,12 +82,20 @@ namespace AtomicWar._Game.Core
                                 DisplayName = pathReq.NodeId
                             });
                 };
+                _hud.MapScreenUI.OnExpeditionRequested += _onMapExpeditionRequested;
             }
 
             // Wire radiation updates
+            if (_onRadiationDoseChanged != null)
+                RadiationSystem.OnDoseChanged -= _onRadiationDoseChanged;
+            // Snapshot the primary survivor reference once so the hot-path
+            // comparison does not re-index the Survivors list per event.
+            // Null Survivors / empty list is a valid state before the world
+            // is initialised; the lambda becomes a no-op then.
+            var primarySurvivor = Survivors != null && Survivors.Count > 0 ? Survivors[0] : null;
             _onRadiationDoseChanged = (sv, dose) =>
             {
-                if (sv == Survivors?[0]) // primary survivor
+                if (sv == primarySurvivor && sv != null)
                 {
                     _hud.OnRadiationUpdated(sv.LifetimeRadiationExposure, sv.RadiationDose);
                 }
@@ -93,9 +106,11 @@ namespace AtomicWar._Game.Core
             RadiationSystem.OnDoseChanged += _onRadiationDoseChanged;
 
             // Wire needs updates
+            if (_onNeedChanged != null)
+                NeedsSystem.OnNeedChanged -= _onNeedChanged;
             _onNeedChanged = (sv, kind, value) =>
             {
-                if (sv == Survivors?[0])
+                if (sv == primarySurvivor && sv != null)
                 {
                     _hud.Bind(sv);
                 }
@@ -110,6 +125,8 @@ namespace AtomicWar._Game.Core
             // reads "0.00 Sv" until the next OnDoseChanged event fires. The
             // smoke test only catches non-empty text, so an off-by-one wiring
             // here is otherwise invisible.
+            if (_onHourTickHud != null)
+                TimeSystem.OnHourTick -= _onHourTickHud;
             _onHourTickHud = (day, hour) => _hud.SetClock(day, hour);
             TimeSystem.OnHourTick += _onHourTickHud;
             var primary = Survivors != null && Survivors.Count > 0 ? Survivors[0] : null;

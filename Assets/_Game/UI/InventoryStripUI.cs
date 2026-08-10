@@ -44,6 +44,10 @@ namespace AtomicWar._Game.UI
 
         public int IconCount => _icons.Count;
         public string StripSummary { get; private set; } = "STORES: empty";
+        // Pooled StringBuilder for RebuildSummary -- called on every Sync and
+        // selection change. Recycling the buffer removes a per-call
+        // StringBuilder + ToString allocation pair.
+        private readonly System.Text.StringBuilder _summaryBuilder = new System.Text.StringBuilder(128);
 
         /// <summary>Keyboard / mouse focus index into <see cref="Icons"/> (-1 = none).</summary>
         public int SelectedIndex { get; private set; } = -1;
@@ -266,23 +270,28 @@ namespace AtomicWar._Game.UI
         {
             if (_icons.Count == 0)
             {
+                if (StripSummary == "STORES: empty") return;
                 StripSummary = "STORES: empty";
                 return;
             }
-            var sb = new StringBuilder();
-            sb.Append("STORES: ");
+            _summaryBuilder.Clear();
+            _summaryBuilder.Append("STORES: ");
             for (int i = 0; i < _icons.Count; i++)
             {
-                if (i > 0) sb.Append("  ");
+                if (i > 0) _summaryBuilder.Append("  ");
                 var icon = _icons[i];
                 string name = icon.DisplayName ?? icon.ItemId;
                 if (icon.IsCorpse) name = (name ?? "Body") + " [dispose]";
                 else if (icon.IsContaminatedFood) name = (name ?? "Can") + " [rust]";
                 else if (icon.IsMilitaryExclusive) name = (name ?? "Ammo") + " [mil]";
-                if (icon.IsSelected) name = ">" + name;
-                sb.Append(name).Append(' ').Append('x').Append(icon.Amount);
+                if (icon.IsSelected) _summaryBuilder.Append('>');
+                _summaryBuilder.Append(name).Append(' ').Append('x').Append(icon.Amount);
             }
-            StripSummary = sb.ToString();
+            string next = _summaryBuilder.ToString();
+            // Skip the property write when the summary is byte-equal -- the
+            // downstream diegetic panel compares strings on each paint.
+            if (next == StripSummary) return;
+            StripSummary = next;
         }
 
         /// <summary>First corpse icon in the strip, if any (opens dispose UI).</summary>

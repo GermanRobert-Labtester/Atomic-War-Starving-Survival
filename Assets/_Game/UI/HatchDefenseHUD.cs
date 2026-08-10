@@ -63,6 +63,11 @@ namespace AtomicWar._Game.UI
 
         public void SetDay(int day)
         {
+            // Day only changes once per in-game day, but HUD.Tick calls this
+            // every frame. Bailing when nothing changed avoids a full Refresh
+            // (and the cascading OnRefreshed -> diegetic repaint) on every
+            // rendered frame.
+            if (_day == day) return;
             _day = day;
             Refresh();
         }

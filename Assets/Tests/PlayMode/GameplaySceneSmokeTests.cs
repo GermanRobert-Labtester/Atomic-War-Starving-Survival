@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.Events;
 using AtomicWar._Game.UI;
 
 namespace AtomicWar.Tests.PlayMode
@@ -160,9 +161,12 @@ namespace AtomicWar.Tests.PlayMode
         }
 
         /// <summary>
-        /// No event is guaranteed to fire inside a smoke test, so this asserts
-        /// the panel is bound and that its visibility tracks EventModalUI.IsOpen
-        /// -- the wiring, without depending on the event schedule.
+        /// Open the modal explicitly from the test -- the smoke run never
+        /// happens to fire an event, and only checking IsOpen==false would
+        /// pass even if the paint path were completely broken (the UXML
+        /// starts the panel hidden). We force the modal open with a real
+        /// GameEvent and assert the title is non-empty AND the panel flips
+        /// to display:flex. Either can only be true after a real paint.
         /// </summary>
         [UnityTest]
         public IEnumerator EventPanel_VisibilityTracksTheModalState()
@@ -170,19 +174,41 @@ namespace AtomicWar.Tests.PlayMode
             var hud = Object.FindAnyObjectByType<HUD>();
             Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
 
-            for (int i = 0; i < 30; i++)
+            var modal = hud.EventModalUI;
+            Assert.IsNotNull(modal, "HUD must hold an EventModalUI");
+
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = "smoke_test_event";
+            ev.title = "A knock at the hatch";
+            ev.bodyText = "Someone is outside.";
+            ev.choices.Add(new EventChoice
+            {
+                ChoiceId = "open",
+                Text = "[1] Open the hatch"
+            });
+            try
+            {
+                var ctx = new EventContext();
+                modal.ShowEvent(ev, ctx);
                 yield return null;
 
-            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
-            Assert.IsNotNull(view, "diegetic view should exist");
-            Assert.IsNotNull(view.EventPanel, "event panel should be bound from the UXML");
+                var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+                Assert.IsNotNull(view, "diegetic view should exist");
+                Assert.IsNotNull(view.EventPanel, "event panel should be bound from the UXML");
 
-            bool modalOpen = hud.EventModalUI != null && hud.EventModalUI.IsOpen;
-            Assert.AreEqual(
-                modalOpen ? UnityEngine.UIElements.DisplayStyle.Flex
-                          : UnityEngine.UIElements.DisplayStyle.None,
-                view.EventPanel.style.display.value,
-                "panel visibility must track EventModalUI.IsOpen");
+                Assert.IsTrue(modal.IsOpen, "ShowEvent must flip EventModalUI.IsOpen");
+                Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.Flex,
+                    view.EventPanel.style.display.value,
+                    "panel must be display:flex while the modal is open");
+                Assert.IsFalse(string.IsNullOrEmpty(view.EventTitle.text),
+                    "event title must be non-empty after paint -- the UXML ships " +
+                    "it blank, so any text here proves a real paint path");
+            }
+            finally
+            {
+                modal.Close();
+                Object.DestroyImmediate(ev);
+            }
         }
 
         /// <summary>

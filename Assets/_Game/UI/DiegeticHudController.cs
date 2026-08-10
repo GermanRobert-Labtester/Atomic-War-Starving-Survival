@@ -201,6 +201,17 @@ namespace AtomicWar._Game.UI
             ExpeditionEncounterLogHUD encounterLog,
             WorkbenchUI workbench = null)
         {
+            // Skip the full UnbindSources + rebind + Paint() when the
+            // four sources are identical. The host only re-calls this when
+            // _diegeticHud is null, but a future re-bind path that re-passes
+            // the same widgets would otherwise run a full repaint each time.
+            if (ReferenceEquals(_hatch, hatch)
+                && ReferenceEquals(_strip, strip)
+                && ReferenceEquals(_encounterLog, encounterLog)
+                && ReferenceEquals(_workbench, workbench))
+            {
+                return;
+            }
             UnbindSources();
             _hatch = hatch;
             _strip = strip;
