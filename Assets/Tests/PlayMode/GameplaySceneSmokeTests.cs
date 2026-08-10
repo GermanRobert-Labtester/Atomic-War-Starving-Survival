@@ -66,6 +66,28 @@ namespace AtomicWar.Tests.PlayMode
             yield return null;
         }
 
+        /// <summary>
+        /// PlayerInputHandler was fully implemented, covered by EditMode tests that
+        /// AddComponent it onto a throwaway GameObject, and present in no scene at
+        /// all -- so no key the player pressed reached the simulation. Its Awake
+        /// does GetComponent&lt;GameBootstrap&gt;(), so being in the scene is not
+        /// enough: it has to be on the bootstrap's own GameObject.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator Input_IsWiredToTheBootstrapItDrives()
+        {
+            var bootstrap = Bootstrap();
+
+            var input = Object.FindAnyObjectByType<PlayerInputHandler>();
+            Assert.IsNotNull(input, "Gameplay scene must contain a PlayerInputHandler");
+
+            Assert.AreSame(bootstrap.gameObject, input.gameObject,
+                "PlayerInputHandler resolves its bootstrap with GetComponent, so it " +
+                "must share the GameBootstrap GameObject");
+
+            yield return null;
+        }
+
         [UnityTest]
         public IEnumerator Clock_AdvancesOverFrames()
         {
