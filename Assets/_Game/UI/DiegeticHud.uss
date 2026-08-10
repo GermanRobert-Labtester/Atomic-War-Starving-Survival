@@ -248,3 +248,20 @@
     white-space: normal;
     margin-bottom: 0;
 }
+
+/* Power budget — top-centre. The four corners are taken (hatch, encounter,
+   stores, workbench) and the centre belongs to the endgame summary, so this
+   toggled panel takes the remaining free edge. Only the horizontal axis is
+   offset by half its own width; the top stays pinned. */
+.power-grid-panel {
+    top: 16px;
+    left: 50%;
+    translate: -50% 0;
+    min-width: 340px;
+    max-width: 520px;
+}
+
+.power-grid-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}

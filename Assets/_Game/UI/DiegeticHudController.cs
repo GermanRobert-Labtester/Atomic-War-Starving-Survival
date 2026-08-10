@@ -38,6 +38,7 @@ namespace AtomicWar._Game.UI
         private ExpeditionEncounterLogHUD _encounterLog;
         private WorkbenchUI _workbench;
         private EndgameSummaryUI _endgame;
+        private PowerGridHUD _powerGrid;
         private bool _built;
         private bool _tooltipPinned;
         private bool _preferDetached;
@@ -201,7 +202,8 @@ namespace AtomicWar._Game.UI
             InventoryStripUI strip,
             ExpeditionEncounterLogHUD encounterLog,
             WorkbenchUI workbench = null,
-            EndgameSummaryUI endgame = null)
+            EndgameSummaryUI endgame = null,
+            PowerGridHUD powerGrid = null)
         {
             // Skip the full UnbindSources + rebind + Paint() when every source
             // is identical. The host only re-calls this when _diegeticHud is
@@ -211,7 +213,8 @@ namespace AtomicWar._Game.UI
                 && ReferenceEquals(_strip, strip)
                 && ReferenceEquals(_encounterLog, encounterLog)
                 && ReferenceEquals(_workbench, workbench)
-                && ReferenceEquals(_endgame, endgame))
+                && ReferenceEquals(_endgame, endgame)
+                && ReferenceEquals(_powerGrid, powerGrid))
             {
                 return;
             }
@@ -224,6 +227,10 @@ namespace AtomicWar._Game.UI
             // host polls it (HUD.RepaintEndgameIfChanged). It is still held here
             // so the full Paint() sweep can draw it alongside the others.
             _endgame = endgame;
+            // Also eventless: PowerGridHUD subscribes to
+            // PowerNetwork.OnPowerStateChanged but publishes nothing itself,
+            // so HUD.RepaintPowerGridIfChanged polls it.
+            _powerGrid = powerGrid;
 
             if (_strip != null)
                 _strip.OnSelectionChanged += OnStripSelectionChanged;
@@ -261,6 +268,7 @@ namespace AtomicWar._Game.UI
             _encounterLog = null;
             _workbench = null;
             _endgame = null;
+            _powerGrid = null;
         }
 
         private void OnHatchOpenChanged(bool _) => Paint();
@@ -313,6 +321,14 @@ namespace AtomicWar._Game.UI
             _view.PaintEndgame(visible, statusLine, detailSummary);
         }
 
+        /// <summary>Forward a power-budget readout paint.</summary>
+        public void PaintPowerGrid(bool open, string budget, string sources, string loads)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintPowerGrid(open, budget, sources, loads);
+        }
+
         /// <summary>Repaint all diegetic panels from bound view-models.</summary>
         public void Paint()
         {
@@ -338,6 +354,12 @@ namespace AtomicWar._Game.UI
                 _endgame != null && _endgame.IsVisible,
                 _endgame?.StatusLine,
                 _endgame?.DetailSummary);
+
+            _view.PaintPowerGrid(
+                _powerGrid != null && _powerGrid.IsOpen,
+                _powerGrid?.BudgetSummary,
+                _powerGrid?.SourcesSummary,
+                _powerGrid?.ConsumersSummary);
 
             bool showStores = false;
             string summary = string.Empty;
