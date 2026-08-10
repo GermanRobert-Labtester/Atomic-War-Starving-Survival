@@ -619,6 +619,10 @@ namespace AtomicWar._Game.Core
         private System.Action<Survivor, SurvivorStatus> _onRadiationStatusGained;
         private System.Action<Survivor, float> _onRadiationDoseChanged;
         private System.Action<int, int> _onHourTickHud;
+        // H-2: cached so the OnExpeditionRequested subscription can be undone
+        // when the bootstrap is destroyed. Without this, every Awake of a
+        // bootstrap (Editor play-mode, scene reload) would leak the lambda.
+        private System.Action<Survivor, string, ExpeditionPathRequest> _onMapExpeditionRequested;
 
         // -----------------------------------------------------------------
         // GameOver state

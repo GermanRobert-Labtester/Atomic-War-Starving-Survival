@@ -4,7 +4,36 @@
         <ui:VisualElement name="vitals-panel" class="diegetic-panel vitals-panel">
             <ui:Label name="vitals-clock" class="diegetic-title" text="DAY 1   00:00" />
             <ui:Label name="vitals-dose" class="diegetic-status" text="" />
-            <ui:VisualElement name="vitals-needs" class="vitals-needs" />
+            <ui:VisualElement name="vitals-needs" class="vitals-needs">
+                <ui:VisualElement name="vitals-need-hunger" class="vitals-row">
+                    <ui:Label name="vitals-need-hunger-label" class="vitals-row__label" text="HUNGER" />
+                    <ui:VisualElement name="vitals-need-hunger-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-hunger-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-hunger-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+                <ui:VisualElement name="vitals-need-thirst" class="vitals-row">
+                    <ui:Label name="vitals-need-thirst-label" class="vitals-row__label" text="THIRST" />
+                    <ui:VisualElement name="vitals-need-thirst-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-thirst-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-thirst-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+                <ui:VisualElement name="vitals-need-fatigue" class="vitals-row">
+                    <ui:Label name="vitals-need-fatigue-label" class="vitals-row__label" text="FATIGUE" />
+                    <ui:VisualElement name="vitals-need-fatigue-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-fatigue-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-fatigue-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+                <ui:VisualElement name="vitals-need-warmth" class="vitals-row">
+                    <ui:Label name="vitals-need-warmth-label" class="vitals-row__label" text="WARMTH" />
+                    <ui:VisualElement name="vitals-need-warmth-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-warmth-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-warmth-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:Label name="vitals-hint" class="diegetic-hint" text="[F1] eat  ·  [F2] drink  ·  [SPACE] pause  ·  [F5] save" />
         </ui:VisualElement>
 
@@ -34,6 +63,10 @@
             <ui:Label name="stores-summary" class="diegetic-status" text="" />
             <ui:Label name="stores-tooltip" class="diegetic-body" text="" />
             <ui:Label name="stores-hint" class="diegetic-hint" text="[I] next  ·  [Shift+I] prev  ·  [E] use" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="workbench-panel" class="diegetic-panel workbench-panel hidden">
+            <ui:Label name="workbench-body" class="diegetic-body workbench-readout" text="" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

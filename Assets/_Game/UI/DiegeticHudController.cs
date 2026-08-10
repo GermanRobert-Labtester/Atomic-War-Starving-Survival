@@ -36,6 +36,7 @@ namespace AtomicWar._Game.UI
         private HatchDefenseHUD _hatch;
         private InventoryStripUI _strip;
         private ExpeditionEncounterLogHUD _encounterLog;
+        private WorkbenchUI _workbench;
         private bool _built;
         private bool _tooltipPinned;
         private bool _preferDetached;
@@ -197,12 +198,25 @@ namespace AtomicWar._Game.UI
         public void BindSources(
             HatchDefenseHUD hatch,
             InventoryStripUI strip,
-            ExpeditionEncounterLogHUD encounterLog)
+            ExpeditionEncounterLogHUD encounterLog,
+            WorkbenchUI workbench = null)
         {
+            // Skip the full UnbindSources + rebind + Paint() when the
+            // four sources are identical. The host only re-calls this when
+            // _diegeticHud is null, but a future re-bind path that re-passes
+            // the same widgets would otherwise run a full repaint each time.
+            if (ReferenceEquals(_hatch, hatch)
+                && ReferenceEquals(_strip, strip)
+                && ReferenceEquals(_encounterLog, encounterLog)
+                && ReferenceEquals(_workbench, workbench))
+            {
+                return;
+            }
             UnbindSources();
             _hatch = hatch;
             _strip = strip;
             _encounterLog = encounterLog;
+            _workbench = workbench;
 
             if (_strip != null)
                 _strip.OnSelectionChanged += OnStripSelectionChanged;
@@ -213,6 +227,8 @@ namespace AtomicWar._Game.UI
                 _hatch.OnOpenStateChanged += OnHatchOpenChanged;
                 _hatch.OnRefreshed += Paint;
             }
+            if (_workbench != null)
+                _workbench.OnWorkbenchUiChanged += Paint;
 
             if (!_preferDetached)
                 EnsureDocumentMounted();
@@ -231,9 +247,12 @@ namespace AtomicWar._Game.UI
                 _hatch.OnOpenStateChanged -= OnHatchOpenChanged;
                 _hatch.OnRefreshed -= Paint;
             }
+            if (_workbench != null)
+                _workbench.OnWorkbenchUiChanged -= Paint;
             _hatch = null;
             _strip = null;
             _encounterLog = null;
+            _workbench = null;
         }
 
         private void OnHatchOpenChanged(bool _) => Paint();
@@ -270,6 +289,14 @@ namespace AtomicWar._Game.UI
             _view.PaintEventModal(open, title, body, choices);
         }
 
+        /// <summary>Forward a workbench-readout paint.</summary>
+        public void PaintWorkbench(bool open, string panelSummary)
+        {
+            EnsureBuilt();
+            if (_view == null || _view.Root == null) return;
+            _view.PaintWorkbench(open, panelSummary);
+        }
+
         /// <summary>Repaint all diegetic panels from bound view-models.</summary>
         public void Paint()
         {
@@ -286,6 +313,10 @@ namespace AtomicWar._Game.UI
             _view.PaintEncounter(
                 _encounterLog?.StatusLine,
                 _encounterLog?.Lines);
+
+            _view.PaintWorkbench(
+                _workbench != null && _workbench.IsOpen,
+                _workbench?.PanelSummary);
 
             bool showStores = false;
             string summary = string.Empty;
