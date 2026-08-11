@@ -188,7 +188,40 @@ namespace AtomicWar._Game.Core
             FactionRadioIntercepts.OnIntercept += onFactionRadioIntercept;
             _subscriptions.Track(() => FactionRadioIntercepts.OnIntercept -= onFactionRadioIntercept);
 
-        
+            // Expansion II Part II — create the four faction-pressure systems
+            // and wire them into the host. The wiring is a static class
+            // that subscribes its own OnRaidResolved handler and pipes
+            // OnX events to the radio intercept log.
+            GarrisonComplianceLedger = GarrisonComplianceLedger ?? new System_GarrisonComplianceLedger();
+            MilitiaContributionTax = MilitiaContributionTax ?? new System_MilitiaContributionTax();
+            CultLeash = CultLeash ?? new System_CultLeash();
+            WarlordTributeSystem = WarlordTributeSystem ?? new System_WarlordTribute();
+            // Register with the save system so they round-trip cleanly.
+            if (SaveSystem != null)
+            {
+                SaveSystem.SetGarrisonComplianceLedgerSystem(GarrisonComplianceLedger);
+                SaveSystem.SetMilitiaContributionTaxSystem(MilitiaContributionTax);
+                SaveSystem.SetCultLeashSystem(CultLeash);
+                SaveSystem.SetWarlordTributeSystem(WarlordTributeSystem);
+            }
+
+            FactionPressureWiring.GarrisonLedger = GarrisonComplianceLedger;
+            FactionPressureWiring.MilitiaTax = MilitiaContributionTax;
+            FactionPressureWiring.CultLeash = CultLeash;
+            FactionPressureWiring.WarlordTribute = WarlordTributeSystem;
+            FactionPressureWiring.RadioIntercepts = FactionRadioIntercepts;
+            FactionPressureWiring.ShelterIdProvider = () => "shelter_player";
+            FactionPressureWiring.DayProvider = () => TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            FactionPressureWiring.WireIntoHost(this);
+            _subscriptions.Track(() => FactionPressureWiring.Unwire());
+
+            // Cult of the Glow quest: subscribe to the new OnCommunionMissed
+            // event so terminal branches feed the leash system. The quest
+            // is created lazily; FactionPressureWiring.AttachCultQuest(...)
+            // tracks the subscription idempotently.
+            // (No QuestRegistry wired in this host — the wiring helper has
+            // a public AttachCultQuest for any later caller to invoke.)
+
         }
 
 

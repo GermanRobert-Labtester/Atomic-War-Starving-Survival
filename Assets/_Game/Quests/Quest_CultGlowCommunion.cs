@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 
@@ -20,6 +21,7 @@ namespace AtomicWar._Game.Quests
         public const string VisitorIdKey = "visitor_id";
         public const string InfluencedCountKey = "influenced_count";
         public const string ConvertIdKey = "convert_id";
+        public const string ShelterIdKey = "shelter_id";
 
         public Quest_CultGlowCommunion()
         {
@@ -32,6 +34,9 @@ namespace AtomicWar._Game.Quests
                 MaxStages = 4
             };
         }
+        /// <summary>Host hook: fired when the shelter is on a communion miss. shelterId, missedWeeks.</summary>
+        public event Action<string, int> OnCommunionMissed;
+        private int _communionMisses;
 
         protected override void OnBegin()
         {
@@ -58,9 +63,12 @@ namespace AtomicWar._Game.Quests
         public void ResolveAccept(string visitorId)
         {
             SetProgress(VisitorIdKey, 1);
+            SetProgress(ShelterIdKey, 1);
             ApplyMorale?.Invoke(null, 20f);
             ApplyRadiationDose?.Invoke(null, 80f);   // host maps visitorId
             RecordMoralEntry?.Invoke("one of ours went to the Glow. came back smiling too much.");
+            _communionMisses += 1;
+            OnCommunionMissed?.Invoke(ResolveShelterId(), _communionMisses);
             Advance();
         }
 
@@ -77,6 +85,8 @@ namespace AtomicWar._Game.Quests
             GiveItem?.Invoke(null, "prewar_medical_cache", 1);
             AddFactionTrust?.Invoke("faction_cult_of_the_glow", +25f);
             RecordMoralEntry?.Invoke("gave them a permanent convert. the medical cache is real.");
+            _communionMisses += 1;
+            OnCommunionMissed?.Invoke(ResolveShelterId(), _communionMisses);
             Complete();
         }
 
@@ -84,8 +94,19 @@ namespace AtomicWar._Game.Quests
         {
             SubtractFactionTrust?.Invoke("faction_cult_of_the_glow", -25f);
             RecordMoralEntry?.Invoke("refused the convert. their patrols started circling the hatch.");
+            _communionMisses += 1;
+            OnCommunionMissed?.Invoke(ResolveShelterId(), _communionMisses);
             TriggerRaidSoon?.Invoke("faction_cult_of_the_glow", 24 * 3);
             Complete();
+        }
+
+        // Returns the active shelter id stored in quest progress, or an
+        // empty string. The host (FactionPressureWiring) can read this
+        // when an OnCommunionMissed event fires.
+        private string ResolveShelterId()
+        {
+            // Stored as a float in SetProgress; non-zero means present.
+            return GetProgress(ShelterIdKey, 0f) > 0f ? "shelter_player" : string.Empty;
         }
     }
 }

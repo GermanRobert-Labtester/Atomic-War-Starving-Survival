@@ -47,6 +47,8 @@ namespace AtomicWar._Game.UI
         private AirHeatManagementHUD _airHeatManagement;
         private BunkerMaintenanceHUD _bunkerMaintenance;
         private SurvivorTaskBoardHUD _survivorTaskBoard;
+        // Expansion II: faction-pressure HUD widget. Painted in PaintFactionPressure().
+        private FactionPressureHUD _factionPressure;
         private bool _built;
         private bool _tooltipPinned;
         private bool _preferDetached;
@@ -219,7 +221,8 @@ namespace AtomicWar._Game.UI
             WaterPurificationHUD waterPurification = null,
             AirHeatManagementHUD airHeatManagement = null,
             BunkerMaintenanceHUD bunkerMaintenance = null,
-            SurvivorTaskBoardHUD survivorTaskBoard = null)
+            SurvivorTaskBoardHUD survivorTaskBoard = null,
+            FactionPressureHUD factionPressure = null)
         {
             // Skip the full UnbindSources + rebind + Paint() when every source
             // is identical. The host only re-calls this when _diegeticHud is
@@ -238,7 +241,8 @@ namespace AtomicWar._Game.UI
                 && ReferenceEquals(_waterPurification, waterPurification)
                 && ReferenceEquals(_airHeatManagement, airHeatManagement)
                 && ReferenceEquals(_bunkerMaintenance, bunkerMaintenance)
-                && ReferenceEquals(_survivorTaskBoard, survivorTaskBoard))
+                && ReferenceEquals(_survivorTaskBoard, survivorTaskBoard)
+                && ReferenceEquals(_factionPressure, factionPressure))
             {
                 return;
             }
@@ -263,6 +267,7 @@ namespace AtomicWar._Game.UI
             _airHeatManagement = airHeatManagement;
             _bunkerMaintenance = bunkerMaintenance;
             _survivorTaskBoard = survivorTaskBoard;
+            _factionPressure = factionPressure;
 
             if (_strip != null)
                 _strip.OnSelectionChanged += OnStripSelectionChanged;
@@ -291,6 +296,8 @@ namespace AtomicWar._Game.UI
                 _bunkerMaintenance.OnBunkerMaintenanceChanged += Paint;
             if (_survivorTaskBoard != null)
                 _survivorTaskBoard.OnSurvivorTaskBoardChanged += Paint;
+            if (_factionPressure != null)
+                _factionPressure.OnFactionPressureChanged += PaintFactionPressure;
 
             if (!_preferDetached)
                 EnsureDocumentMounted();
@@ -327,6 +334,8 @@ namespace AtomicWar._Game.UI
                 _bunkerMaintenance.OnBunkerMaintenanceChanged -= Paint;
             if (_survivorTaskBoard != null)
                 _survivorTaskBoard.OnSurvivorTaskBoardChanged -= Paint;
+            if (_factionPressure != null)
+                _factionPressure.OnFactionPressureChanged -= PaintFactionPressure;
             _hatch = null;
             _strip = null;
             _encounterLog = null;
@@ -341,6 +350,7 @@ namespace AtomicWar._Game.UI
             _airHeatManagement = null;
             _bunkerMaintenance = null;
             _survivorTaskBoard = null;
+            _factionPressure = null;
         }
 
         private void OnHatchOpenChanged(bool _) => Paint();
@@ -465,6 +475,21 @@ namespace AtomicWar._Game.UI
                 _survivorTaskBoard != null && _survivorTaskBoard.IsOpen,
                 _survivorTaskBoard?.PanelSummary);
 
+            // Faction-pressure panel — driven by its own widget; we still
+            // push a paint from Paint() so the initial render shows
+            // compliant-state text even before the first OnFactionPressureChanged.
+            if (_factionPressure != null)
+            {
+                _factionPressure.Refresh();
+                _view.PaintFactionPressure(
+                    _factionPressure.IsOpen,
+                    FactionPressureHUD.FormatBody(_factionPressure.Capture()));
+            }
+            else
+            {
+                _view.PaintFactionPressure(false, string.Empty);
+            }
+
             bool showStores = false;
             string summary = string.Empty;
             string tip = string.Empty;
@@ -494,6 +519,20 @@ namespace AtomicWar._Game.UI
         {
             _tooltipPinned = false;
             Paint();
+        }
+
+        /// <summary>
+        /// Paint the faction-pressure terminal. Refreshes the snapshot from
+        /// the bound widget, formats a 4-line body (GARRISON / MILITIA / CULT
+        /// / WARLORD) and pushes it to the view.
+        /// </summary>
+        public void PaintFactionPressure()
+        {
+            if (_factionPressure == null) return;
+            _factionPressure.Refresh();
+            bool open = _factionPressure.IsOpen;
+            string body = FactionPressureHUD.FormatBody(_factionPressure.Capture());
+            _view.PaintFactionPressure(open, body);
         }
 
         private void ApplyStylesheet(VisualElement root)

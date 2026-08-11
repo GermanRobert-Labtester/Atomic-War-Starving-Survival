@@ -63,6 +63,9 @@ namespace AtomicWar._Game.UI
         public const string BunkerMaintenanceBodyName = "bunker-maintenance-body";
         public const string SurvivorTaskBoardPanelName = "survivor-task-board-panel";
         public const string SurvivorTaskBoardBodyName = "survivor-task-board-body";
+        // Expansion II: faction-pressure panel (Garrison/Militia/Cult/Warlord).
+        public const string FactionPressurePanelName = "faction-pressure-panel";
+        public const string FactionPressureBodyName = "faction-pressure-body";
 
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
@@ -129,6 +132,9 @@ namespace AtomicWar._Game.UI
         public Label BunkerMaintenanceBody { get; private set; }
         public VisualElement SurvivorTaskBoardPanel { get; private set; }
         public Label SurvivorTaskBoardBody { get; private set; }
+        // Expansion II: faction-pressure panel.
+        public VisualElement FactionPressurePanel { get; private set; }
+        public Label FactionPressureBody { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -267,6 +273,16 @@ namespace AtomicWar._Game.UI
             SurvivorTaskBoardPanel.Add(SurvivorTaskBoardBody);
             Root.Add(SurvivorTaskBoardPanel);
 
+            // Expansion II — faction-pressure readout. One panel, one body,
+            // one hint. Hidden by default; the controller flips it on when
+            // any of the four systems is non-trivial.
+            FactionPressurePanel = MakePanel(FactionPressurePanelName, "faction-pressure-panel");
+            FactionPressurePanel.Add(MakeTitle("faction-pressure-title", "FACTION PRESSURE"));
+            FactionPressureBody = MakeLabel(FactionPressureBodyName, "diegetic-body", "faction-pressure-readout");
+            FactionPressurePanel.Add(FactionPressureBody);
+            FactionPressurePanel.Add(MakeHint("faction-pressure-hint", "Compliant. Patrolled. Tithed. Fed. Or not."));
+            Root.Add(FactionPressurePanel);
+
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
             SetVisible(EventPanel, false);
@@ -281,6 +297,7 @@ namespace AtomicWar._Game.UI
             SetVisible(AirHeatManagementPanel, false);
             SetVisible(BunkerMaintenancePanel, false);
             SetVisible(SurvivorTaskBoardPanel, false);
+            SetVisible(FactionPressurePanel, false);
             return Root;
         }
 
@@ -332,6 +349,8 @@ namespace AtomicWar._Game.UI
             BunkerMaintenanceBody = Root.Q<Label>(BunkerMaintenanceBodyName);
             SurvivorTaskBoardPanel = Root.Q<VisualElement>(SurvivorTaskBoardPanelName);
             SurvivorTaskBoardBody = Root.Q<Label>(SurvivorTaskBoardBodyName);
+            FactionPressurePanel = Root.Q<VisualElement>(FactionPressurePanelName);
+            FactionPressureBody = Root.Q<Label>(FactionPressureBodyName);
             // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
             if (HatchPanel == null || EncounterPanel == null
@@ -340,7 +359,8 @@ namespace AtomicWar._Game.UI
                 || PowerGridPanel == null || ScavengePanel == null || OverflowCratePanel == null
                 || FieldGearLoadoutPanel == null || BunkerRationingPanel == null
                 || WaterPurificationPanel == null || AirHeatManagementPanel == null
-                || BunkerMaintenancePanel == null || SurvivorTaskBoardPanel == null)
+                || BunkerMaintenancePanel == null || SurvivorTaskBoardPanel == null
+                || FactionPressurePanel == null)
             {
                 return false;
             }
@@ -630,6 +650,15 @@ namespace AtomicWar._Game.UI
             SetVisible(SurvivorTaskBoardPanel, open);
             if (!open) return;
             if (SurvivorTaskBoardBody != null) SurvivorTaskBoardBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the faction-pressure terminal (Garrison / Militia / Cult / Warlord).</summary>
+        public void PaintFactionPressure(bool open, string body)
+        {
+            if (FactionPressurePanel == null) return;
+            SetVisible(FactionPressurePanel, open);
+            if (!open) return;
+            if (FactionPressureBody != null) FactionPressureBody.text = body ?? string.Empty;
         }
 
         private static VisualElement MakeNeedRow(string id, NeedBarData data,

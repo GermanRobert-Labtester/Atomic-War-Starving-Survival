@@ -464,6 +464,11 @@ namespace AtomicWar._Game.Core
         public LaborCampSystem LaborCampSystem { get; private set; }
         // Prompt #78 — cult moral disgust.
         public CultMoralDisgustSystem CultMoralSystem { get; private set; }
+        // Expansion II — The Weight of Factions: four faction-pressure systems.
+        public System_GarrisonComplianceLedger GarrisonComplianceLedger { get; private set; }
+        public System_MilitiaContributionTax MilitiaContributionTax { get; private set; }
+        public System_CultLeash CultLeash { get; private set; }
+        public System_WarlordTribute WarlordTributeSystem { get; private set; }
         // Prompt #79 — mutated ecosystem (flora/fauna).
         public MutatedEcosystemSystem EcosystemSystem { get; private set; }
         // Prompt #79–#84 — house-to-bunker transition.
