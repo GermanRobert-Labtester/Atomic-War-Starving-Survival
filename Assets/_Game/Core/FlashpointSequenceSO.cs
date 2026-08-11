@@ -113,6 +113,14 @@ namespace AtomicWar._Game.Flashpoint
 
         [Tooltip("Designer note for the choreography design doc / tests.")]
         [TextArea(2, 4)] public string narrativeNote;
+
+        [Tooltip("Prompts #319–#325 — when actionId is 'weather_event_trigger', " +
+                 "this is the snake_case weather-event id routed by the " +
+                 "bridge in GameBootstrap.Weather.NewContent.cs to the right " +
+                 "Weather_<Name>.Trigger() call. Empty for all other actionIds. " +
+                 "Allowed values: weather_ash_lightning, weather_fog_of_particulate, " +
+                 "weather_thermal_inversion, weather_ice_storm, weather_silence.")]
+        public string weatherEventId;
     }
 
     /// <summary>

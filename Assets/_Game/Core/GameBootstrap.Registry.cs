@@ -147,6 +147,8 @@ namespace AtomicWar._Game.Core
             // Weather_* special-event trackers: countdown/expiry for triggered storms.
             // Without these an active event never expired and its debuff never lifted.
             _registry.RegisterPerSubstep("weather_events_hourly", h => TickWeatherEventsHourly(h));
+            // Prompts #319–#325 — Section X new weather events (5 additions).
+            _registry.RegisterPerSubstep("new_weather_hourly", h => TickNewWeatherSystemsHourly(h));
             _registry.RegisterPerSubstep("weather_events_daily",
                 _registry.DayGated("weather_events", day => TickWeatherEventsDaily(day)));
             _registry.RegisterPerSubstep("perimeter_trap", h => PerimeterTrapSystem?.Tick(h));

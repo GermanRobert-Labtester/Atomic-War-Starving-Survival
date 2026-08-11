@@ -796,6 +796,8 @@ namespace AtomicWar._Game.Core
             WireExpeditionPerkBindings();
             WireSocialPerkBindings();
             WirePersonalQuestBindings();
+            // Prompts #319–#325 — Section XI new recipes (10 additions).
+            BootNewRecipes();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────

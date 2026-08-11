@@ -148,6 +148,14 @@ namespace AtomicWar._Game.Survivors
             public const string TearsInRain = "quest_tears_in_rain";
             public const string MansBestFriend = "quest_mans_best_friend";
             public const string TheTuringTest = "quest_the_turing_test";
+            // Prompts #319–#325 new faction / personal / shelter quests
+            public const string GarrisonLastOrder = "quest_garrison_last_order";
+            public const string MilitiaGrainWar = "quest_militia_grain_war";
+            public const string CultGlowCommunion = "quest_cult_glow_communion";
+            public const string ElenaTriage = "quest_elena_triage";
+            public const string MechanicHighwayHeart = "quest_mechanic_highway_heart";
+            public const string ChildSoldierRifle = "quest_child_soldier_rifle";
+            public const string DeepWell = "quest_deep_well";
         }
     }
 }

@@ -1,0 +1,17 @@
+{
+    "name": "AtomicWar._Game.Quests",
+    "rootNamespace": "AtomicWar._Game.Quests",
+    "references": [
+        "AtomicWar._Game.Survivors",
+        "AtomicWar._Game.Inventory"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

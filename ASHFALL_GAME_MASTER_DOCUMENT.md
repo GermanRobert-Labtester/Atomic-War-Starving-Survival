@@ -1958,3 +1958,108 @@ Review the HatchDefenseSystem and Shelter Infrastructure in Chapter 4. Design an
 ```
 Examine the 321 items and 16 recipes in Chapter 5. Analyze the resource conversion loops (water purification, filter crafting, medical chelation). Identify potential exploit loops and provide a re-balanced JSON trade value and recipe ingredient matrix for Hardcore Survival Mode.
 ```
+---
+
+# Section X — New Weather Events (5 Additions)
+
+Authored as 5 standalone, save/load-safe weather systems in
+`Assets/_Game/Environment/`, following the existing `Weather_<Name>.cs`
++ `<Name>State` + tick-with-isActive pattern (matches
+`Weather_AcidSnow`, `Weather_BioFog`, etc.).
+
+| id                        | name               | duration | effect summary                                                                                              |
+|---------------------------|--------------------|----------|-------------------------------------------------------------------------------------------------------------|
+| `weather_ash_lightning`   | Ash Lightning      | 6 h      | Static discharge; surface expeditions impossible; unshielded electronics can catch fire.                    |
+| `weather_fog_of_particulate` | Particulate Fog | 12 h     | Visibility 2 m; Geiger clicks faster; unmasked breathing adds 5 mSv/h; filters work 2× harder.              |
+| `weather_thermal_inversion` | Thermal Inversion | 24 h    | Surface -5 °C, bunker +12 °C; sound carries 3×; noise discipline critical; surface radiation ×2.            |
+| `weather_ice_storm`       | Ice Storm          | 18 h     | Hatch freezes shut; solar blocked; fuel consumption +50 %.                                                  |
+| `weather_silence`         | The Silence        | 48 h     | No wind, no ash, no rad spike. Clear sky. The most dangerous weather. Survivors want to go outside.        |
+
+The Silence is the dangerous one. The radiation is still there; it is just quiet.
+
+---
+
+# Section XI — New Recipes (10 Additions)
+
+Authored as a single `NewRecipesCatalog` builder in
+`Assets/_Game/Crafting/`. The host calls `NewRecipesCatalog.MaterialiseAll(itemId → ItemDefinition)`
+and merges the returned `Recipe[]` into `RecipeCatalogSO.recipes` at
+boot. No `.asset` files required: the catalog is data-driven and
+JSON-importable.
+
+| id                            | ingredients                                              | station     | time | output                 |
+|-------------------------------|----------------------------------------------------------|-------------|------|------------------------|
+| `craft_tourniquet`            | 2× cloth, 1× rope_2m                                     | workbench   | 0.5h | 1× tourniquet          |
+| `craft_saline_drip`           | 1× salt, 2× clean_water, 1× plastic_material             | workbench   | 1.0h | 1× saline_drip_bag      |
+| `cook_rat_meat`               | 1× raw_rat_meat, 1× fuel                                 | stove       | 0.3h | 1× rat_meat_skewer     |
+| `press_insect_brick`          | 3× raw_insects, 1× salt                                  | workbench   | 1.5h | 2× insect_paste_brick  |
+| `craft_ash_bread`             | 1× wheat_flour, 1× clean_water                           | stove       | 0.5h | 2× ash_bread_flat      |
+| `repair_gasket`               | 2× rubber_gasket_set, 1× duct_tape                       | workbench   | 2.0h | hatch_seal +15 %       |
+| `craft_improvised_molotov`    | 1× water_bottle_empty, 1× fuel, 1× cloth                 | workbench   | 0.3h | 1× improvised_molotov  |
+| `distill_clean_water`         | 3× dirty_water, 2× fuel                                  | distiller   | 1.0h | 2× clean_water         |
+| `craft_lead_vest`             | 2× lead_sheet, 3× cloth, 1× duct_tape                    | workbench   | 4.0h | 1× improvised_lead_vest|
+| `render_tallow_candle`        | 2× raw_meat, 1× cloth                                    | stove       | 1.0h | 3× candle_tallow       |
+
+`repair_gasket` is special: it produces no item, it applies an
+effect (`hatch_seal_integrity +15 %`). The host hook reads
+`Spec.EffectKey` / `Spec.EffectAmount` and calls into
+`ShelterDegradationSystem.RepairHatchSeal` to apply it.
+
+---
+
+# Section XII — Final Design Note
+
+> Every system above should feed into the same emotional core: the
+> player is not saving the world. They are keeping six people alive
+> for one more day. The ash doesn't stop. The cold doesn't
+> negotiate. The Geiger counter doesn't care about your plans.
+>
+> The bunker is not a fortress. It is a wound in the ground that
+> people crawl into to die slowly instead of quickly. The game's job
+> is to make the *slowly* part feel earned.
+>
+> Every item should feel like it was pulled from a dead person's
+> pocket. Every location should feel like someone lived there,
+> recently, and then didn't. Every survivor should feel like they
+> were interrupted mid-sentence by the end of the world and never
+> got to finish.
+>
+> The tone is not despair. Despair implies there was hope to lose.
+> The tone is exhaustion. The tone is doing the same thing tomorrow
+> that you did today, with less, in the dark, and calling it
+> survival because the alternative is to stop.
+>
+> The Geiger counter clicks.
+> The ash falls.
+> You keep going.
+
+
+---
+
+# Section XIII — Authoring Note (turn 5)
+
+How to fire a Section X weather event from a `FlashpointSequenceSO`:
+
+1. Add a `FlashpointChoreographyStep` to the sequence.
+2. Set `actionId = "weather_event_trigger"`.
+3. Set `weatherEventId` to one of the five canonical snake_case ids:
+   - `weather_ash_lightning` (6 h, fire risk on unshielded electronics)
+   - `weather_fog_of_particulate` (12 h, 5 mSv/h unmasked, 2× filter load)
+   - `weather_thermal_inversion` (24 h, 3× noise propagation, 2× surface rad)
+   - `weather_ice_storm` (18 h, hatch frozen, solar blocked, +50 % fuel)
+   - `weather_silence` (48 h, clear sky, temptation builds, ventures die)
+4. The choreography's `delayFromPreviousSeconds` controls when the
+   event fires; the event then runs to its full `durationHours`.
+
+The bridge in `GameBootstrap.Weather.NewContent.cs`
+(`OnFlashpointWeatherEventTriggered`) routes the typed event to the
+matching `Weather_<Name>.Trigger()` call. The diagnostics overlay
+(`F11`) shows the new system as `ACTIVE` the moment `Trigger()` fires.
+
+If a survivor goes outside during `weather_silence`, the host
+raises `MoralChronicleEntryRequested` with `Kind = SurvivorLost`
+and the survivor's name. The chronicle then paints
+"Dead — acute radiation sickness" in the post-campaign fate
+summary when the venture kills (via the existing
+`MoralChronicleBridge.BuildDeathCause` rule that fires on
+`LifetimeRadiationExposure >= 400`).

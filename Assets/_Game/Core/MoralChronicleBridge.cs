@@ -58,6 +58,9 @@ namespace AtomicWar._Game.Core
             EventBus.Subscribe<CampaignEndedEvent>(OnCampaignEnded);
             // Subscribe to moral dilemma resolved events to record timeline entries
             EventBus.Subscribe<MoralDilemmaEvent>(OnMoralDilemmaEvent);
+            // Prompts #319–#325 — generic timeline entry requests (used by the
+            // new weather systems, the new quest arcs, etc.).
+            EventBus.Subscribe<MoralChronicleEntryRequested>(OnMoralChronicleEntryRequested);
         }
 
         private void OnDestroy()
@@ -69,6 +72,7 @@ namespace AtomicWar._Game.Core
             }
             EventBus.Unsubscribe<CampaignEndedEvent>(OnCampaignEnded);
             EventBus.Unsubscribe<MoralDilemmaEvent>(OnMoralDilemmaEvent);
+            EventBus.Unsubscribe<MoralChronicleEntryRequested>(OnMoralChronicleEntryRequested);
         }
 
         // ─────────────────────────────────────────────────────────────────────
@@ -140,6 +144,14 @@ namespace AtomicWar._Game.Core
                 Description = choiceText,
                 Kind = MoralChronicleEntryKind.DesperateChoice
             });
+        }
+
+        // Prompts #319–#325 — generic moral-chronicle entry via EventBus.
+        // Records into the same timeline OnMoralDilemmaEvent does; the
+        // day/kind/survivorName are preserved verbatim from the request.
+        private void OnMoralChronicleEntryRequested(MoralChronicleEntryRequested req)
+        {
+            RecordMoralEntry(req.Day, req.Description, req.Kind, req.SurvivorName);
         }
 
         // ─────────────────────────────────────────────────────────────────────

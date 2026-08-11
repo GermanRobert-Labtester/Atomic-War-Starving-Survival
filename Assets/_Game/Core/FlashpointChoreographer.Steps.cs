@@ -40,6 +40,13 @@ namespace AtomicWar._Game.Flashpoint
                 case "weather_shift":
                     EventBus.Raise(new FlashpointWeatherShifted("Ashfall"));
                     break;
+                case "weather_event_trigger":
+                    // Prompts #319–#325 — Section X new weather events.
+                    // The bridge in GameBootstrap.Weather.NewContent.cs listens
+                    // for this typed event and calls the right Trigger() on the
+                    // new Weather_* systems.
+                    EventBus.Raise(new FlashpointWeatherEventTriggered(step.weatherEventId));
+                    break;
                 case "radiation_hud_unlock":
                     EventBus.Raise(FlashpointRadiationHudUnlocked.Instance);
                     break;

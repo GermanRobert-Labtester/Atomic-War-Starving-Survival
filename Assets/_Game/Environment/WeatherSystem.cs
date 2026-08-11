@@ -34,7 +34,21 @@ namespace AtomicWar._Game.Environment
         /// <summary>Heavy particulate radioactive hail shower.</summary>
         RadHail,
         /// <summary>Toxic algae bloom contaminating surface water bodies.</summary>
-        AlgaeBloom
+        AlgaeBloom,
+        // Prompts #319–#325 — Section X new weather events (5 additions).
+        // These are tracked by their own Weather_* systems (AshLightning,
+        // FogOfParticulate, ThermalInversion, IceStorm, Silence) and fired
+        // via Flashpoint choreographies, not through RollNextState.
+        /// <summary>Static discharge in the ash cloud; surface expeditions blocked; fire risk on unshielded electronics.</summary>
+        AshLightning,
+        /// <summary>Radioactive particulate suspended in moisture; visibility 2 m; 5 mSv/h unmasked; 2× filter load.</summary>
+        ParticulateFog,
+        /// <summary>Cold air trapped under a warm layer; sounds carry 3×; surface radiation 2×.</summary>
+        ThermalInversion,
+        /// <summary>Freezing rain; hatch frozen shut; solar blocked; fuel +50 %.</summary>
+        IceStorm,
+        /// <summary>No wind. No ash. No rad spike. Clear sky. The dangerous one.</summary>
+        Silence
     }
 
     /// <summary>

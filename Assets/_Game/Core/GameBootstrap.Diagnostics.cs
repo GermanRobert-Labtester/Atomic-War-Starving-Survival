@@ -587,6 +587,14 @@ namespace AtomicWar._Game.Core
             // RegisterPerSubstep key ("weather_events_daily"), not the inner DayGated
             // label ("weather_events") — the registry only knows the outer one.
             { "WeatherOzoneHole",        new[] { "weather_events_daily" } },
+            // Prompts #319–#325 — Section X new weather events (5 additions).
+            // All five are tick-registered through the "new_weather_hourly"
+            // per-substep key wired in GameBootstrap.Registry.cs.
+            { "WeatherAshLightning",     new[] { "new_weather_hourly" } },
+            { "WeatherFogOfParticulate", new[] { "new_weather_hourly" } },
+            { "WeatherThermalInversion", new[] { "new_weather_hourly" } },
+            { "WeatherIceStorm",         new[] { "new_weather_hourly" } },
+            { "WeatherSilence",          new[] { "new_weather_hourly" } },
         };
 
         private static bool TryGetRegistryAliases(string propertyName, out string[] aliases)

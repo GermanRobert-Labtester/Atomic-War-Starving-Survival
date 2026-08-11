@@ -132,6 +132,8 @@ namespace AtomicWar._Game.Core
             BootBiomes();
             // Special weather events — acid snow / EMP storm / solar flare / … .
             BootWeather();
+            // Prompts #319–#325 — Section X new weather events.
+            BootNewWeatherSystems();
             // Expedition encounters — amalgamation / burrowers / maze / tank / … .
             BootEncounters();
             // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).

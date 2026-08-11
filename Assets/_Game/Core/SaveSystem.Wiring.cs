@@ -841,6 +841,27 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _weatherAcidSnow, s, "weather_acid_snow",
                 () => s.CaptureState(), o => s.RestoreState((AcidSnowState)o));
 
+        // Prompts #319–#325 — Section X new weather events
+        public void SetWeatherAshLightning(Weather_AshLightning s) =>
+            RegisterSystem(ref _weatherAshLightning, s, "weather_ash_lightning",
+                () => s.CaptureState(), o => s.RestoreState((AshLightningState)o));
+
+        public void SetWeatherFogOfParticulate(Weather_FogOfParticulate s) =>
+            RegisterSystem(ref _weatherFogOfParticulate, s, "weather_fog_of_particulate",
+                () => s.CaptureState(), o => s.RestoreState((ParticulateFogState)o));
+
+        public void SetWeatherThermalInversion(Weather_ThermalInversion s) =>
+            RegisterSystem(ref _weatherThermalInversion, s, "weather_thermal_inversion",
+                () => s.CaptureState(), o => s.RestoreState((ThermalInversionState)o));
+
+        public void SetWeatherIceStorm(Weather_IceStorm s) =>
+            RegisterSystem(ref _weatherIceStorm, s, "weather_ice_storm",
+                () => s.CaptureState(), o => s.RestoreState((IceStormState)o));
+
+        public void SetWeatherSilence(Weather_Silence s) =>
+            RegisterSystem(ref _weatherSilence, s, "weather_silence",
+                () => s.CaptureState(), o => s.RestoreState((SilenceState)o));
+
         public void SetWeatherBioFog(Weather_BioFog s) =>
             RegisterSystem(ref _weatherBioFog, s, "weather_bio_fog",
                 () => s.CaptureState(), o => s.RestoreState((BioFogState)o));

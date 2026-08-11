@@ -273,6 +273,12 @@ namespace AtomicWar._Game.Core
         private Biome_SkyscraperTops _biomeSkyscraperTops;
         private Biome_Suburbs _biomeSuburbs;
         private Weather_AcidSnow _weatherAcidSnow;
+        // Prompts #319–#325 — Section X new weather events
+        private Weather_AshLightning _weatherAshLightning;
+        private Weather_FogOfParticulate _weatherFogOfParticulate;
+        private Weather_ThermalInversion _weatherThermalInversion;
+        private Weather_IceStorm _weatherIceStorm;
+        private Weather_Silence _weatherSilence;
         private Weather_BioFog _weatherBioFog;
         private Weather_BlackSnow _weatherBlackSnow;
         private Weather_BloodRain _weatherBloodRain;

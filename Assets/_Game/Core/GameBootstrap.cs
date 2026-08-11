@@ -327,6 +327,12 @@ namespace AtomicWar._Game.Core
         public Weather_SilentSpring WeatherSilentSpring { get; private set; }
         public Weather_SolarFlare WeatherSolarFlare { get; private set; }
         public Weather_StaticCharge WeatherStaticCharge { get; private set; }
+        // Prompts #319–#325 — Section X new weather events
+        public Weather_AshLightning WeatherAshLightning { get; private set; }
+        public Weather_FogOfParticulate WeatherFogOfParticulate { get; private set; }
+        public Weather_ThermalInversion WeatherThermalInversion { get; private set; }
+        public Weather_IceStorm WeatherIceStorm { get; private set; }
+        public Weather_Silence WeatherSilence { get; private set; }
         // Expedition encounters — combat/exploration set pieces.
         public Encounter_Amalgamation EncounterAmalgamation { get; private set; }
         public BurrowersSystem EncounterBurrowers { get; private set; }
