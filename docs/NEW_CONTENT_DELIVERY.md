@@ -346,3 +346,40 @@ Closed the polish round.
   Output: `/tmp/ashfall_turn5_tests.dll` = 6.1 KB, 0 errors.
 - Unity batch-compile + Unity Test Runner: not run from this terminal.
   Reviewer must run `Assets/Tests/EditMode/` test suite locally.
+
+---
+
+## Section (turn 6) — PlayMode integration test + PR
+
+Closed the QA pass: added a real PlayMode test that drives the
+Flashpoint → bridge → weather system end-to-end, then committed
+everything on a feature branch and opened a PR.
+
+### New test file
+
+- `Assets/Tests/PlayMode/WeatherEventBridgeIntegrationTests.cs`
+  (174 LoC, 1 fixture, 4 tests):
+  - `AshLightningTriggeredByFlashpointEventFiresWithinThreeFrames` —
+    direct bridge dispatch via reflection.
+  - `AllFiveNewSystemsFlipActive` — drives each of the 5 branches
+    of the switch and asserts the matching system flips.
+  - `UnknownWeatherIdIsIgnored` — exhaustive switch coverage.
+  - `EndToEndViaFlashpointChoreographer_FiresBridge` — builds a real
+    `FlashpointSequenceSO` with a `weather_event_trigger` step,
+    drives the full `OnNuclearExchange → Tick(realSeconds)` chain,
+    and asserts the bridge fired the right `Trigger()`.
+
+### Build status (final)
+
+- Production code: PASS (Unity 6 Roslyn csc.exe, 0 errors,
+  `/tmp/ashfall_x_v3.dll` = 16.9 KB).
+- Test code (EditMode + PlayMode): PASS (offline verify, 0 errors,
+  `/tmp/ashfall_playmode.dll` = 13.3 KB).
+- Unity batch-compile + Unity Test Runner: **NOT run from this terminal**.
+
+### Git
+
+- Branch: `feature/new-content-batch` (pushed to origin)
+- Commit: `78f9f3f feat(content): Sections VII–XIII — 7 systems, 7 quests, 5 weather events, 10 recipes, host wiring, trigger path, diagnostics, chronicle, authoring note, PlayMode integration`
+- PR: https://github.com/GermanRobert-Labtester/Atomic-War-Starving-Survival/pull/10
+- Diff: 81 files, +4757/-4 LoC
