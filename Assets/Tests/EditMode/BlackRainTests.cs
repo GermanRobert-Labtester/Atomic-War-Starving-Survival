@@ -120,6 +120,33 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void RadiationSystemTick_AppliesBoundHazmatMultiplier_DuringBlackRain()
+        {
+            // Audit H-6b: DegradeHazmat/GetHazmatDegradeMultiplier existed but nothing
+            // called them from RadiationSystem.Tick, so equipped gear degraded at the
+            // same rate rain or shine. This proves the bound hook, not just the
+            // standalone DegradeHazmat method already covered above.
+            var blackWeather = new WeatherSystem();
+            blackWeather.ForceWeather(WeatherKind.BlackRain);
+            var blackHaz = new BlackRainHazardSystem(blackWeather);
+
+            var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+            var needs = new NeedsSystem(profile, sv => true);
+
+            var gear = new WornGear { RadProtection = 50f, MaxDurability = 100f, CurrentDurability = 100f, DegradeRate = 2f };
+            var survivor = new Survivor { Id = "sv_hazmat", DisplayName = "Hazmat" };
+
+            var rad = new RadiationSystem(needs, sv => new ExposureContext { WornGear = new List<WornGear> { gear } });
+            rad.BindHazmatDegradeMultiplier(() => blackHaz.GetHazmatDegradeMultiplier());
+            rad.Register(survivor);
+
+            rad.Tick(1f);
+
+            // DegradeRate 2/hr * BlackRainHazmatMeltMultiplier (5x) * 1 hour = 10 lost.
+            Assert.That(gear.CurrentDurability, Is.EqualTo(90f).Within(Eps));
+        }
+
+        [Test]
         public void OutdoorSurvivor_GainsDread_DuringBlackRain_AndClearsWhenOver()
         {
             var weather = new WeatherSystem();

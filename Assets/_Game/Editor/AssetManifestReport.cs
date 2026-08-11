@@ -5,6 +5,7 @@ using System.Text;
 using UnityEditor;
 using UnityEngine;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Editor

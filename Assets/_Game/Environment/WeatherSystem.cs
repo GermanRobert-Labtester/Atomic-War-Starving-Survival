@@ -18,7 +18,23 @@ namespace AtomicWar._Game.Environment
         FalloutStorm,
         Blizzard,
         /// <summary>Rare oily hyper-radioactive rain (Prompt #11 Black Rain).</summary>
-        BlackRain
+        BlackRain,
+        /// <summary>Corrosive acid snowfall damaging unshielded metal surface structures.</summary>
+        AcidSnow,
+        /// <summary>Dense biological spore fog increasing respiratory infection risks.</summary>
+        BioFog,
+        /// <summary>Soot-laden heavy fallout snowfall.</summary>
+        BlackSnow,
+        /// <summary>Irradiated blood-red precipitation from atmospheric dust mixing.</summary>
+        BloodRain,
+        /// <summary>Atmospheric ion storm causing electrical grid fluctuations.</summary>
+        EMPStorm,
+        /// <summary>Vitreous silica storm damaging eyes and respiratory tracts.</summary>
+        GlassStorm,
+        /// <summary>Heavy particulate radioactive hail shower.</summary>
+        RadHail,
+        /// <summary>Toxic algae bloom contaminating surface water bodies.</summary>
+        AlgaeBloom
     }
 
     /// <summary>

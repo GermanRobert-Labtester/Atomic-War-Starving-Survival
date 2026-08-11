@@ -125,12 +125,111 @@ namespace AtomicWar._Game.Core
             if (_onMapExpeditionRequested != null && _hud != null && _hud.MapScreenUI != null)
                 _hud.MapScreenUI.OnExpeditionRequested -= _onMapExpeditionRequested;
             _onMapExpeditionRequested = null;
+            if (_onScavengeDispatchRequested != null && _hud != null && _hud.ScavengeDispatchHUD != null)
+                _hud.ScavengeDispatchHUD.OnDispatchRequested -= _onScavengeDispatchRequested;
+            _onScavengeDispatchRequested = null;
+            if (_onScavengeMissionStartedHud != null && ScavengingSystem != null)
+                ScavengingSystem.OnMissionStarted -= _onScavengeMissionStartedHud;
+            if (_onScavengeMissionCompletedHud != null && ScavengingSystem != null)
+                ScavengingSystem.OnMissionCompleted -= _onScavengeMissionCompletedHud;
+            if (_onScavengeAfterActionHud != null && ScavengingSystem != null)
+                ScavengingSystem.OnScavengeAfterActionReady -= _onScavengeAfterActionHud;
+            if (_onOverflowCrateTransferRequested != null && _hud != null && _hud.OverflowCrateHUD != null)
+                _hud.OverflowCrateHUD.OnTransferRequested -= _onOverflowCrateTransferRequested;
+            if (_onFieldGearEquipRequested != null && _hud != null && _hud.FieldGearLoadoutHUD != null)
+                _hud.FieldGearLoadoutHUD.OnEquipRequested -= _onFieldGearEquipRequested;
+            if (_onFieldGearUnequipRequested != null && _hud != null && _hud.FieldGearLoadoutHUD != null)
+                _hud.FieldGearLoadoutHUD.OnUnequipRequested -= _onFieldGearUnequipRequested;
+            if (_onRationLevelAdjustmentRequested != null && _hud != null && _hud.BunkerRationingHUD != null)
+                _hud.BunkerRationingHUD.OnLevelAdjustmentRequested -= _onRationLevelAdjustmentRequested;
+            if (_onWaterQueueCycleRequested != null && _hud != null && _hud.WaterPurificationHUD != null)
+                _hud.WaterPurificationHUD.OnQueueCycleRequested -= _onWaterQueueCycleRequested;
+            if (_onAirHeatPriorityAdjustmentRequested != null && _hud != null && _hud.AirHeatManagementHUD != null)
+                _hud.AirHeatManagementHUD.OnPriorityAdjustmentRequested -= _onAirHeatPriorityAdjustmentRequested;
+            if (_onAirHeatRequestToggleRequested != null && _hud != null && _hud.AirHeatManagementHUD != null)
+                _hud.AirHeatManagementHUD.OnRequestToggleRequested -= _onAirHeatRequestToggleRequested;
+            if (_onMaintenanceRepairRequested != null && _hud != null && _hud.BunkerMaintenanceHUD != null)
+                _hud.BunkerMaintenanceHUD.OnRepairRequested -= _onMaintenanceRepairRequested;
+            if (_onMaintenanceRepairCancellationRequested != null && _hud != null && _hud.BunkerMaintenanceHUD != null)
+                _hud.BunkerMaintenanceHUD.OnRepairCancellationRequested -= _onMaintenanceRepairCancellationRequested;
+            if (_onMaintenanceSurvivorAssignmentRequested != null && _hud != null && _hud.BunkerMaintenanceHUD != null)
+                _hud.BunkerMaintenanceHUD.OnSurvivorAssignmentRequested -= _onMaintenanceSurvivorAssignmentRequested;
+            if (_onMaintenancePriorityAdjustmentRequested != null && _hud != null && _hud.BunkerMaintenanceHUD != null)
+                _hud.BunkerMaintenanceHUD.OnPriorityAdjustmentRequested -= _onMaintenancePriorityAdjustmentRequested;
+            if (_onTaskBoardPriorityAdjustmentRequested != null && _hud != null && _hud.SurvivorTaskBoardHUD != null)
+                _hud.SurvivorTaskBoardHUD.OnPriorityAdjustmentRequested -= _onTaskBoardPriorityAdjustmentRequested;
+            if (_onTaskBoardCancellationRequested != null && _hud != null && _hud.SurvivorTaskBoardHUD != null)
+                _hud.SurvivorTaskBoardHUD.OnCancellationRequested -= _onTaskBoardCancellationRequested;
+            if (_onTaskBoardShiftAssignmentRequested != null && _hud != null && _hud.SurvivorTaskBoardHUD != null)
+                _hud.SurvivorTaskBoardHUD.OnShiftAssignmentRequested -= _onTaskBoardShiftAssignmentRequested;
+            if (_onTaskBoardShiftCancellationRequested != null && _hud != null && _hud.SurvivorTaskBoardHUD != null)
+                _hud.SurvivorTaskBoardHUD.OnShiftCancellationRequested -= _onTaskBoardShiftCancellationRequested;
+            if (_onTaskBoardRecommendationApprovalRequested != null && _hud != null && _hud.SurvivorTaskBoardHUD != null)
+                _hud.SurvivorTaskBoardHUD.OnShiftRecommendationApprovalRequested -= _onTaskBoardRecommendationApprovalRequested;
+            if (OverflowCrateSystem != null)
+            {
+                OverflowCrateSystem.OnChanged -= RefreshOverflowCrateHud;
+                OverflowCrateSystem.Dispose();
+            }
+            if (FieldGearLoadoutSystem != null)
+            {
+                FieldGearLoadoutSystem.OnChanged -= RefreshFieldGearLoadoutHud;
+                FieldGearLoadoutSystem.Dispose();
+            }
+            if (BunkerRationingSystem != null)
+                BunkerRationingSystem.OnChanged -= RefreshBunkerRationingHud;
+            if (WaterEconomySystem != null)
+                WaterEconomySystem.OnWaterStateChanged -= RefreshWaterPurificationHud;
+            if (AirHeatManagementSystem != null)
+            {
+                AirHeatManagementSystem.OnChanged -= RefreshAirHeatManagementHud;
+                AirHeatManagementSystem.Dispose();
+            }
+            if (SurvivorTaskBoardSystem != null)
+            {
+                SurvivorTaskBoardSystem.OnChanged -= RefreshSurvivorTaskBoardHud;
+                SurvivorTaskBoardSystem.Dispose();
+            }
+            if (BunkerMaintenanceSystem != null)
+            {
+                if (Inventory != null)
+                    Inventory.OnInventoryChanged -= BunkerMaintenanceSystem.Refresh;
+                BunkerMaintenanceSystem.OnChanged -= RefreshBunkerMaintenanceHud;
+                if (RepairWorkOrderSystem != null)
+                    RepairWorkOrderSystem.OnChanged -= RefreshBunkerMaintenanceHud;
+                RepairWorkOrderSystem?.Dispose();
+                BunkerMaintenanceSystem.Dispose();
+            }
+            _onScavengeMissionStartedHud = null;
+            _onScavengeMissionCompletedHud = null;
+            _onScavengeAfterActionHud = null;
+            _onOverflowCrateTransferRequested = null;
+            _onFieldGearEquipRequested = null;
+            _onFieldGearUnequipRequested = null;
+            _onRationLevelAdjustmentRequested = null;
+            _onWaterQueueCycleRequested = null;
+            _onAirHeatPriorityAdjustmentRequested = null;
+            _onAirHeatRequestToggleRequested = null;
+            _onMaintenanceRepairRequested = null;
+            _onMaintenanceRepairCancellationRequested = null;
+            _onMaintenanceSurvivorAssignmentRequested = null;
+            _onMaintenancePriorityAdjustmentRequested = null;
+            _onTaskBoardPriorityAdjustmentRequested = null;
+            _onTaskBoardCancellationRequested = null;
+            _onTaskBoardShiftAssignmentRequested = null;
+            _onTaskBoardShiftCancellationRequested = null;
+            _onTaskBoardRecommendationApprovalRequested = null;
 
             // Static/singleton method-group subscriptions.
             if (WorldPhaseSystem != null) TimeSystem.OnDayTick -= WorldPhaseSystem.OnDayTick;
             TimeSystem.OnDayTick -= OnRadioAndWorldDayTick;
             if (FlashpointChoreographer != null) TimeSystem.OnDayTick -= FlashpointChoreographer.OnDayTick;
             if (WorldPhaseSystem != null) WorldPhaseSystem.OnNuclearExchange -= HandleNuclearExchange;
+
+            // C-1: everything tracked via _subscriptions.Track() across the Init*
+            // partials (BunkerSocial, InitFoundation, InitLate*, InitWorld.*,
+            // UiActions.*).
+            _subscriptions.DisposeAll();
 
             // Companion-system cleanup.
             SaveSystem?.Dispose();

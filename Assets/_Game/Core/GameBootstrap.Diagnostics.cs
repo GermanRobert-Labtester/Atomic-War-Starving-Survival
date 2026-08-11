@@ -52,14 +52,42 @@ namespace AtomicWar._Game.Core
             foreach (var prop in type.GetProperties(
                 System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance))
             {
-                if (!IsAtomicWarSystemProperty(prop)) continue;
-                if (prop.GetValue(this) == null) continue;
+                if (!IsAtomicWarSystemProperty(prop) || !prop.CanRead) continue;
+
+                object value;
+                try
+                {
+                    value = prop.GetValue(this);
+                }
+                catch (System.Reflection.TargetInvocationException)
+                {
+                    // A getter that throws is a bug elsewhere, but this diagnostic
+                    // must not take the whole boot sequence down over it.
+                    continue;
+                }
+                if (IsSystemPropertyValueMissing(value)) continue;
+
                 if (!IsPropertyRegisteredInRegistry(prop.Name))
                     unticked.Add(prop.Name);
             }
 
             _untickedCache = unticked;
             return _untickedCache;
+        }
+
+        /// <summary>
+        /// L-3: `value == null` on a boxed <c>object</c> is plain reference equality —
+        /// it does not see UnityEngine.Object's overridden `==`, which also treats a
+        /// destroyed ("fake null") object as null. Reflection boxes every property
+        /// value to <c>object</c>, so a destroyed ScriptableObject/MonoBehaviour system
+        /// (e.g. <see cref="ShelterLayout"/>) would read as still "constructed" here and
+        /// fall through to the registry check instead of being skipped like every other
+        /// torn-down reference in this codebase.
+        /// </summary>
+        private static bool IsSystemPropertyValueMissing(object value)
+        {
+            if (value == null) return true;
+            return value is UnityEngine.Object unityObject && unityObject == null;
         }
 
         /// <summary>

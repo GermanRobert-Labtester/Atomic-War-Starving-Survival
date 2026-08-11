@@ -1,6 +1,15 @@
 // GameBootstrap.CoreFamilies.cs — bulk Boot for remaining Core CaptureState systems.
 using UnityEngine;
 using AtomicWar._Game.Utilities;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.AI.Actions;
+using AtomicWar._Game.Survivors;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.Narrative;
+
+using AtomicWar._Game.Factions;
 
 namespace AtomicWar._Game.Core
 {

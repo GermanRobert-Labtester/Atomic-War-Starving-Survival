@@ -52,6 +52,7 @@ namespace AtomicWar._Game.Radiation
 
         private PersonalQuestSystem _personalQuests;
         private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
+        private Func<float> _hazmatDegradeMultiplier;
 
         /// <summary>Prompt #229/#234 — Synthesizer rad-away mult + Rad-Walker absorb cap.</summary>
         public void BindPersonalQuests(
@@ -60,6 +61,15 @@ namespace AtomicWar._Game.Radiation
         {
             _personalQuests = personalQuests;
             _getSurvivors = getSurvivors;
+        }
+
+        /// <summary>
+        /// Prompt #11 — Black Rain melts hazmat faster. Optional so RadiationSystem stays
+        /// decoupled from Core; when unset, worn gear degrades at its normal rate.
+        /// </summary>
+        public void BindHazmatDegradeMultiplier(Func<float> multiplierProvider)
+        {
+            _hazmatDegradeMultiplier = multiplierProvider;
         }
 
         /// <summary>Fired once when a survivor first gains a radiation-driven status.</summary>
@@ -373,18 +383,19 @@ namespace AtomicWar._Game.Radiation
             }
         }
 
-        private static void DegradeWornGear(List<WornGear> worn, float gameHours)
+        private void DegradeWornGear(List<WornGear> worn, float gameHours)
         {
             if (worn == null)
             {
                 return;
             }
+            float mult = _hazmatDegradeMultiplier != null ? _hazmatDegradeMultiplier() : 1f;
             for (int i = 0; i < worn.Count; i++)
             {
                 var piece = worn[i];
                 if (piece != null)
                 {
-                    piece.Degrade(gameHours);
+                    piece.Degrade(gameHours * mult);
                 }
             }
         }

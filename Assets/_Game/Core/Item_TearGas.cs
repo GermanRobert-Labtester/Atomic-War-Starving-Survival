@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar._Game.Core
 {
     [Serializable]

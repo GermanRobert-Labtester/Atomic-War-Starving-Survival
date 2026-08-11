@@ -2,6 +2,8 @@
 using UnityEngine;
 using AtomicWar._Game.Utilities;
 
+using AtomicWar._Game.Endgame;
+
 namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap

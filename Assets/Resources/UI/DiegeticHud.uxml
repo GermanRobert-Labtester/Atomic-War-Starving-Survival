@@ -1,6 +1,48 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
     <ui:VisualElement name="diegetic-root" class="diegetic-root" picking-mode="Ignore">
+        <ui:VisualElement name="vitals-panel" class="diegetic-panel vitals-panel">
+            <ui:Label name="vitals-clock" class="diegetic-title" text="DAY 1   00:00" />
+            <ui:Label name="vitals-dose" class="diegetic-status" text="" />
+            <ui:VisualElement name="vitals-needs" class="vitals-needs">
+                <ui:VisualElement name="vitals-need-hunger" class="vitals-row">
+                    <ui:Label name="vitals-need-hunger-label" class="vitals-row__label" text="HUNGER" />
+                    <ui:VisualElement name="vitals-need-hunger-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-hunger-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-hunger-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+                <ui:VisualElement name="vitals-need-thirst" class="vitals-row">
+                    <ui:Label name="vitals-need-thirst-label" class="vitals-row__label" text="THIRST" />
+                    <ui:VisualElement name="vitals-need-thirst-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-thirst-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-thirst-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+                <ui:VisualElement name="vitals-need-fatigue" class="vitals-row">
+                    <ui:Label name="vitals-need-fatigue-label" class="vitals-row__label" text="FATIGUE" />
+                    <ui:VisualElement name="vitals-need-fatigue-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-fatigue-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-fatigue-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+                <ui:VisualElement name="vitals-need-warmth" class="vitals-row">
+                    <ui:Label name="vitals-need-warmth-label" class="vitals-row__label" text="WARMTH" />
+                    <ui:VisualElement name="vitals-need-warmth-track" class="vitals-row__track">
+                        <ui:VisualElement name="vitals-need-warmth-fill" class="vitals-row__fill" />
+                    </ui:VisualElement>
+                    <ui:Label name="vitals-need-warmth-value" class="vitals-row__value" text="--" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Label name="vitals-hint" class="diegetic-hint" text="[F1] eat  ·  [F2] drink  ·  [SPACE] pause  ·  [F5] save" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="event-panel" class="diegetic-panel event-panel hidden">
+            <ui:Label name="event-title" class="diegetic-title" text="" />
+            <ui:Label name="event-body" class="diegetic-body" text="" />
+            <ui:VisualElement name="event-choices" class="event-choices" />
+        </ui:VisualElement>
+
         <ui:VisualElement name="hatch-panel" class="diegetic-panel hatch-panel hidden">
             <ui:Label name="hatch-title" class="diegetic-title" text="HATCH DEFENSE" />
             <ui:Label name="hatch-status" class="diegetic-status" text="" />
@@ -21,6 +63,55 @@
             <ui:Label name="stores-summary" class="diegetic-status" text="" />
             <ui:Label name="stores-tooltip" class="diegetic-body" text="" />
             <ui:Label name="stores-hint" class="diegetic-hint" text="[I] next  ·  [Shift+I] prev  ·  [E] use" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="workbench-panel" class="diegetic-panel workbench-panel hidden">
+            <ui:Label name="workbench-body" class="diegetic-body workbench-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="endgame-panel" class="diegetic-panel endgame-panel hidden">
+            <ui:Label name="endgame-title" class="diegetic-title" text="CAMPAIGN OVER" />
+            <ui:Label name="endgame-status" class="diegetic-status" text="" />
+            <ui:Label name="endgame-body" class="diegetic-body endgame-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="power-grid-panel" class="diegetic-panel power-grid-panel hidden">
+            <ui:Label name="power-grid-title" class="diegetic-title" text="POWER BUDGET" />
+            <ui:Label name="power-grid-budget" class="diegetic-status" text="" />
+            <ui:Label name="power-grid-sources" class="diegetic-body power-grid-readout" text="" />
+            <ui:Label name="power-grid-loads" class="diegetic-body power-grid-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="scavenge-panel" class="diegetic-panel scavenge-panel hidden">
+            <ui:Label name="scavenge-body" class="diegetic-body scavenge-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="overflow-crate-panel" class="diegetic-panel overflow-crate-panel hidden">
+            <ui:Label name="overflow-crate-body" class="diegetic-body overflow-crate-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="field-gear-loadout-panel" class="diegetic-panel field-gear-loadout-panel hidden">
+            <ui:Label name="field-gear-loadout-body" class="diegetic-body field-gear-loadout-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="bunker-rationing-panel" class="diegetic-panel bunker-rationing-panel hidden">
+            <ui:Label name="bunker-rationing-body" class="diegetic-body bunker-rationing-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="water-purification-panel" class="diegetic-panel water-purification-panel hidden">
+            <ui:Label name="water-purification-body" class="diegetic-body water-purification-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="air-heat-management-panel" class="diegetic-panel air-heat-management-panel hidden">
+            <ui:Label name="air-heat-management-body" class="diegetic-body air-heat-management-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="bunker-maintenance-panel" class="diegetic-panel bunker-maintenance-panel hidden">
+            <ui:Label name="bunker-maintenance-body" class="diegetic-body bunker-maintenance-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="survivor-task-board-panel" class="diegetic-panel survivor-task-board-panel hidden">
+            <ui:Label name="survivor-task-board-body" class="diegetic-body survivor-task-board-readout" text="" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

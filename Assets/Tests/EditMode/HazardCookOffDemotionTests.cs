@@ -3,6 +3,8 @@ using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>

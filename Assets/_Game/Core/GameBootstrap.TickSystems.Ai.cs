@@ -112,6 +112,7 @@ namespace AtomicWar._Game.Core
             var context = _aiContextScratch;
             context.Shelter = Shelter;
             context.Inventory = Inventory;
+            context.BunkerRationsScheduled = BunkerRationingSystem != null;
             context.Random = _aiRng;
             context.IsFalloutStorm = isStorm;
             context.AmbientRadRate = 5f;
@@ -130,11 +131,14 @@ namespace AtomicWar._Game.Core
             context.WaterStorage = WaterStorage;
             context.NeedsElectronicScrapForCriticalRepair = scrapDeficit > 0;
             context.JunkScavengeUrgency = junkUrgency;
+            context.CorpseCount = CorpseSystem != null ? CorpseSystem.CorpseCount : 0;
+            context.HallucinationSystem = HallucinationSystem;
             context.RadiationSystem = RadiationSystem;
             context.NeedsSystem = NeedsSystem;
             context.VerminSystem = VerminSystem;
             context.WasteSystem = WasteSystem;
             context.JuryRigSystem = JuryRigSystem;
+            context.RepairWorkOrderSystem = RepairWorkOrderSystem;
             context.StructuralIntegrity = StructuralIntegrity;
             context.GetSurvivors = _getSurvivorsCached;
             BindAiShelterSystems(context);
@@ -167,6 +171,7 @@ namespace AtomicWar._Game.Core
             context.ExpeditionPerks = ExpeditionPerks;
             context.SocialPerks = SocialPerks;
             context.PersonalQuests = PersonalQuests;
+            context.PetSystem = PetSystem;
             context.TriageSystem = TriageSystem;
             context.ResilienceSystem = ResilienceSystem;
             context.AntibioticResistSystem = AntibioticResistSystem;
@@ -175,6 +180,10 @@ namespace AtomicWar._Game.Core
             context.MentorshipSystem = MentorshipSystem;
             context.Affinity = MentalBreakSystem != null ? MentalBreakSystem.Affinity : null;
             context.GetUnchartedNodeId = ResolveUnchartedNodeId;
+            context.OnRequestCookMeal = RequestCookMealForSurvivor;
+            context.OnRequestButcherCorpse = RequestButcherCorpseForSurvivor;
+            context.CanSpreadGossip = CanSurvivorSpreadGossip;
+            context.OnRequestSpreadGossip = RequestSpreadGossipForSurvivor;
         }
 
         /// <summary>
@@ -193,6 +202,33 @@ namespace AtomicWar._Game.Core
                     return node.NodeId;
             }
             return null;
+        }
+
+        /// <summary>Cook one meal at the stove for this survivor (for Cook AI action).</summary>
+        private bool RequestCookMealForSurvivor(Survivor survivor)
+        {
+            return CookingSystem != null && CookingSystem.CookMeal(survivor);
+        }
+
+        /// <summary>Break down one corpse into bones/meat for this survivor (for Butcher Corpse AI action).</summary>
+        private bool RequestButcherCorpseForSurvivor(Survivor survivor)
+        {
+            return CorpseSystem != null
+                && CorpseSystem.ProcessForParts(survivor, out _, out _, out _);
+        }
+
+        /// <summary>True if this survivor witnessed a crime they can still gossip about (for Spread Gossip AI action).</summary>
+        private bool CanSurvivorSpreadGossip(Survivor survivor)
+        {
+            return Gossip != null && survivor != null && Gossip.CanSpreadRumor(survivor.Id);
+        }
+
+        /// <summary>Have this survivor tell one more person their witnessed rumor (for Spread Gossip AI action).</summary>
+        private bool RequestSpreadGossipForSurvivor(Survivor survivor)
+        {
+            if (Gossip == null || survivor == null || !Gossip.CanSpreadRumor(survivor.Id)) return false;
+            Gossip.SpreadRumor(survivor.Id);
+            return true;
         }
 
         private void TickEventsAndJournal(float gameHours)
@@ -227,143 +263,6 @@ namespace AtomicWar._Game.Core
                     EventRunner.Run(selectedEvent, eventContext);
                 }
             }
-        }
-
-        private void TickNeedsMedicalAndPsyche(float gameHours)
-        {
-            int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
-
-            // Needs
-            NeedsSystem.Tick(gameHours);
-
-            // Medical triage — Health pressure from active afflictions
-            MedicalSystem?.Tick(Survivors, gameHours);
-
-            // Prompt #55 — blood typing (no per-tick work; transfusion is event-driven).
-            // Prompt #56 — phantom pain daily roll.
-            if (AmputationSystem != null && TimeSystem != null)
-            {
-                // Roll once per day for phantom pain.
-                int day = TimeSystem.CurrentDay;
-                if (_lastPhantomPainDay != day)
-                {
-                    _lastPhantomPainDay = day;
-                    AmputationSystem.TickDaily(Survivors);
-                }
-            }
-
-            // Prompt #57 — scurvy daily advance.
-            if (ScurvySystem != null && TimeSystem != null)
-            {
-                int day = TimeSystem.CurrentDay;
-                if (_lastScurvyDay != day)
-                {
-                    _lastScurvyDay = day;
-                    ScurvySystem.TickDaily(Survivors);
-                }
-            }
-
-            // Prompt #60 — mutagenesis evaluate + tick.
-            if (Mutagenesis != null && TimeSystem != null)
-            {
-                int day = TimeSystem.CurrentDay;
-                if (_lastMutagenesisDay != day)
-                {
-                    _lastMutagenesisDay = day;
-                    Mutagenesis.Evaluate(Survivors);
-                }
-                Mutagenesis.Tick(gameHours, Survivors);
-            }
-
-            // Mental breaks: low-morale tracking, break rolls, BingeEater
-            // consumption, ViolentParanoia sabotage, passive morale drain
-            // to other survivors, and natural cure progress.
-            if (MentalBreakSystem != null)
-            {
-                MentalBreakSystem.Tick(gameHours, Survivors, _mentalBreakRng);
-            }
-
-            // Prompt #10 — Skill Atrophy: morale < 20 for 14 days → skill downgrade.
-            SkillAtrophy?.Tick(gameHours, Survivors);
-
-            // Prompt #180 — use-it-or-lose-it dormant perks (once per day).
-            if (SkillProgression != null && TimeSystem != null)
-            {
-                int day = TimeSystem.CurrentDay;
-                if (_lastSkillProgressionDay != day)
-                {
-                    _lastSkillProgressionDay = day;
-                    SkillProgression.TickDaily(day, Survivors);
-                    // Prompt #213 — Taskmaster: consecutive high-morale days.
-                    SocialPerks?.TickDailyMorale(Survivors, day);
-                }
-            }
-
-            // Prompt #8 — Empath coupling: Empath's morale tracks bunker average.
-            EmpathSystem?.Tick(gameHours, Survivors);
-
-            // Prompt #61 — Survivor Diaries & Privacy Violations.
-            SurvivorDiaries?.Tick(gameHours, Survivors, currentDay, _mentalBreakRng);
-
-            // Prompt #63 — Spatial Psychology Traits (Claustrophobia / Agoraphobia).
-            SpatialPsychology?.Tick(gameHours, Survivors);
-
-            // Prompt #65 — UI Hallucinations & Phantom Utility Actions.
-            HallucinationSystem?.Tick(gameHours, Survivors, _mentalBreakRng);
-
-            // Prompt #7 — Addiction & Withdrawal: dose counting, withdrawal drains, panic destruction.
-            Addiction?.Tick(gameHours, Survivors, currentDay);
-
-            // Prompt #6 — Phantom Intruders: fake hatch breach when Anxiety+Fatigue max out.
-            PhantomIntruders?.Tick(gameHours, Survivors, _phantomRng);
-
-            // Prompt #9 — Child: Hope buff, rations consumption, death check.
-            ChildSystem?.Tick(gameHours, Survivors);
-
-            // Hatch-dilemma prompt: advance the timeout. On expiry the
-            // prompt auto-resolves with ForceDeconOutside.
-            HatchDilemmaPromptField?.Tick(gameHours);
-            ParleyOfferPromptField?.Tick(gameHours);
-
-        }
-
-        private void TickRadiationWaterAndCraft(float gameHours)
-        {
-            // Radiation
-            RadiationSystem.Tick(gameHours);
-            // Cult of the Glow: rad drop across healthy ceiling → hatch raid cascade.
-            EconomySystem?.NotifyPartyRadiationChanged();
-
-            // Water economy: catchment collection + purifier conversion queue.
-            WaterEconomySystem?.Tick(gameHours, WeatherSystem.Current, TimeSystem.CurrentDay, Shelter, WaterStorage);
-
-            // Prompt #11 — Black Rain dread for outdoor scavengers + hatch listeners.
-            if (BlackRainHazardSystem != null && Survivors != null)
-            {
-                BlackRainHazardSystem.TickDread(
-                    Survivors,
-                    isOutdoor: IsSurvivorOnExpedition,
-                    isHatchListener: IsSurvivorHatchListener,
-                    gameHours);
-            }
-
-            // Crafting
-            CraftingSystem.Tick(gameHours);
-
-            // Scavenging & Expeditions
-            ScavengingSystem?.Tick(gameHours);
-            ExpeditionSystem?.Tick(gameHours);
-            
-            // Radio Tuner (intel extraction)
-            if (RadioTunerSystem != null && Shelter != null)
-            {
-                var radioModule = Shelter.GetModule("radio");
-                if (radioModule != null && radioModule.IsOperational && radioModule.Fuel > 0f)
-                {
-                    RadioTunerSystem.Tick(gameHours, WeatherSystem.Current, TimeSystem.CurrentDay);
-                }
-            }
-
         }
 
     }

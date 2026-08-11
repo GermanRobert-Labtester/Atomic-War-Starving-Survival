@@ -19,6 +19,15 @@ namespace AtomicWar._Game.Survivors
         public const float Co2GenerationPerHour = 2.0f; // Air quality reduction per pet per hour
         public const float FurContaminationDepositRate = 0.05f; // Rate fur contamination transfers to room per hour
 
+        /// <summary>Prompt #217 — daily chance per qualifying survivor to tame a wasteland animal.</summary>
+        public const float DailyTameChance = 0.04f;
+
+        private static readonly (string IdPrefix, string Name, PetTraits Trait)[] TameableSpecies =
+        {
+            ("wasteland_dog", "Stray Dog", PetTraits.Barker),
+            ("wasteland_cat", "Feral Cat", PetTraits.RatCatcher),
+        };
+
         private readonly NeedsSystem _needsSystem;
         private readonly Action<string, float> _depositRoomContamination; // (roomId, amount) -> deposits contamination into room
         private readonly Action<float> _addBunkerContamination;           // (amount) -> adds bunker contamination
@@ -52,6 +61,35 @@ namespace AtomicWar._Game.Survivors
             animal.EatsSpoiledMeatOnly = true;
             AddPet(animal);
             return true;
+        }
+
+        /// <summary>
+        /// Prompt #217 — daily chance for each qualifying Zoonotic Expert to tame a
+        /// wasteland animal near the shelter. Call once per day from host.
+        /// Returns the tamed pet, or null if nobody qualified or every roll failed.
+        /// </summary>
+        public PetState TryTameWastelandAnimalDaily(IReadOnlyList<Survivor> survivors, System.Random rng)
+        {
+            if (_personalQuests == null || survivors == null || rng == null) return null;
+            for (int i = 0; i < survivors.Count; i++)
+            {
+                var sv = survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                int max = _personalQuests.GetMaxTamedAnimals(sv);
+                if (max <= 0 || CountPetsOwnedBy(sv.Id) >= max) continue;
+                if (rng.NextDouble() >= DailyTameChance) continue;
+
+                var species = TameableSpecies[rng.Next(TameableSpecies.Length)];
+                var animal = new PetState
+                {
+                    Id = species.IdPrefix + "_" + Guid.NewGuid().ToString("N").Substring(0, 8),
+                    DisplayName = species.Name,
+                    Traits = species.Trait
+                };
+                if (TryTameWastelandAnimal(sv, animal))
+                    return animal;
+            }
+            return null;
         }
 
         public int CountPetsOwnedBy(string ownerId)

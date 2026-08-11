@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using AtomicWar._Game.Core;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>

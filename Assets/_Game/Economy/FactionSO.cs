@@ -68,6 +68,10 @@ namespace AtomicWar._Game.Economy
             public const string DoomsdayPreppers = "doomsday_preppers";
             /// <summary>Concept 16 — worship the fallout; clean blood is heresy.</summary>
             public const string CultOfTheGlow = "cult_of_the_glow";
+            /// <summary>Upland Provincial Militia — local defense network fighting for regional autonomy.</summary>
+            public const string UplandMilitia = "upland_militia";
+            /// <summary>Safe Haven Communities — civilian collectives attempting to rebuild infrastructure.</summary>
+            public const string SafeHavenCommunity = "safe_haven_community";
         }
     }
 }

@@ -5,6 +5,8 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
 
+using AtomicWar._Game.Factions;
+
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>

@@ -10,12 +10,25 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Simulation; // CompostSystem, SterilizationSystem, etc. (audit C-3 split)
 using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.AI; // HallucinationSystem (audit wiring fix)
+using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Crafting; // CraftingSystem, WorkbenchSystem (audit wiring fix)
 using AtomicWar._Game.Events;
+
+using AtomicWar._Game.Endgame;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.World;
+
+using AtomicWar._Game.Narrative;
+
+using AtomicWar._Game.Factions;
 
 namespace AtomicWar._Game.Core
 {
@@ -38,6 +51,42 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _inventory, inventory, "inventory",
                 () => inventory.CaptureState(),
                 o => inventory.RestoreState((InventorySaveState)o, _itemLookup));
+
+        /// <summary>Persistent bunker overflow crate shared by crafting and scavenging returns.</summary>
+        public void SetOverflowStash(Inventory.Inventory overflowStash) =>
+            RegisterSystem(ref _overflowStash, overflowStash, "overflow_stash",
+                () => overflowStash.CaptureState(),
+                o => overflowStash.RestoreState((InventorySaveState)o, _itemLookup));
+
+        /// <summary>Persist the daily bunker food/water policy separately from store contents.</summary>
+        public void SetBunkerRationingSystem(BunkerRationingSystem system) =>
+            RegisterSystem(ref _bunkerRationingSystem, system, "bunker_rationing",
+                () => system.CaptureState(),
+                o => system.RestoreState((BunkerRationingSave)o));
+
+        /// <summary>Persist the assigned repair worker and urgency; condition remains on existing assets.</summary>
+        public void SetBunkerMaintenanceSystem(BunkerMaintenanceSystem system) =>
+            RegisterSystem(ref _bunkerMaintenanceSystem, system, "bunker_maintenance",
+                () => system.CaptureState(),
+                o => system.RestoreState((BunkerMaintenanceSave)o));
+
+        /// <summary>Persist the in-flight maintenance task separately from terminal assignment.</summary>
+        public void SetRepairWorkOrderSystem(RepairWorkOrderSystem system) =>
+            RegisterSystem(ref _repairWorkOrderSystem, system, "repair_work_order",
+                () => system.CaptureState(),
+                o => system.RestoreState((RepairWorkOrderSave)o));
+
+        /// <summary>Persist continuous bunker staffing independently from task-board presentation.</summary>
+        public void SetSurvivorWorkShiftSystem(SurvivorWorkShiftSystem system) =>
+            RegisterSystem(ref _survivorWorkShiftSystem, system, "survivor_work_shifts",
+                () => system.CaptureState(),
+                o => system.RestoreState((SurvivorWorkShiftSave)o));
+
+        /// <summary>Persist board feedback; live work ownership remains in repair_work_order.</summary>
+        public void SetSurvivorTaskBoardSystem(SurvivorTaskBoardSystem system) =>
+            RegisterSystem(ref _survivorTaskBoardSystem, system, "survivor_task_board",
+                () => system.CaptureState(),
+                o => system.RestoreState((SurvivorTaskBoardSave)o));
 
         /// <summary>Inject expedition system (optional; safe to skip in tests).</summary>
         public void SetExpeditionSystem(ExpeditionSystem expeditionSystem)
@@ -535,6 +584,12 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _ironManMode, s, "mode_iron_man",
                 () => s.CaptureState(),
                 o => s.RestoreState((IronManState)o));
+
+        /// <summary>Persist victory/defeat state (H-2); previously reset to in-progress on every load.</summary>
+        public void SetEndgameEngine(EndgameEngine s) =>
+            RegisterSystem(ref _endgameEngine, s, "endgame",
+                () => s.CaptureState(),
+                o => s.RestoreState((CampaignResult)o));
 
         public void SetAndroidNpcSystem(NPC_Android s) =>
             RegisterSystem(ref _androidNpcSystem, s, "npc_android",

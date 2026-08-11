@@ -1,0 +1,16 @@
+{
+    "name": "AtomicWar._Game.World",
+    "rootNamespace": "AtomicWar._Game.World",
+    "references": [
+        "AtomicWar._Game.Utilities"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

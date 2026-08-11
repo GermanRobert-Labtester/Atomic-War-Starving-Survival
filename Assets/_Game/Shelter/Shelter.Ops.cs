@@ -114,7 +114,10 @@ namespace AtomicWar._Game.Shelter
             {
                 if (_modules[i] != null)
                 {
-                    _modules[i].Tick(gameHours, this);
+                    float multiplier = _getModuleConsumptionMultiplier != null
+                        ? _getModuleConsumptionMultiplier(_modules[i])
+                        : 1f;
+                    _modules[i].Tick(gameHours, this, multiplier);
                 }
             }
 

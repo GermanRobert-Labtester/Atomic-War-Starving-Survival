@@ -19,6 +19,8 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
@@ -72,6 +74,8 @@ namespace AtomicWar._Game.Core
 
         private void RegisterShelterAndHorrorSubsteps()
         {
+            // Validate staff before resource systems consume the current substep.
+            _registry.RegisterPerSubstep("survivor_work_shifts", h => SurvivorWorkShiftSystem?.Tick(h));
             _registry.RegisterPerSubstep("shelter", h => Shelter?.Tick(h));
             _registry.RegisterPerSubstep("power_network", h =>
             {
@@ -79,6 +83,13 @@ namespace AtomicWar._Game.Core
                 PowerNetwork.Tick(h, WeatherSystem != null ? WeatherNameOf(WeatherSystem.Current) : null, _tryApplyPedalCostCached);
                 PowerNetwork.ApplyToShelter(Shelter);
             });
+            // C-1: both depend on the power state applied just above, so they stay
+            // registered immediately after power_network to preserve tick order.
+            // Previously they were only refreshed as a side effect nested inside
+            // that closure, invisible to the registry's own C-1 gap diagnostic.
+            _registry.RegisterPerSubstep("air_heat_management", h => AirHeatManagementSystem?.Refresh());
+            _registry.RegisterPerSubstep("bunker_maintenance", h => BunkerMaintenanceSystem?.Refresh());
+            _registry.RegisterPerSubstep("repair_work_order", h => RepairWorkOrderSystem?.Tick(h));
             // Prompt #799 — evaluate IF/THEN rules after power rebalance.
             _registry.RegisterPerSubstep("logic_gates", h => TickLogicGates());
             _registry.RegisterPerSubstep("hatch_defense", h => HatchDefenseSystem?.Tick(h, PowerNetwork));
@@ -172,6 +183,8 @@ namespace AtomicWar._Game.Core
         private void RegisterNeedsPsycheSubsteps()
         {
             _registry.RegisterPerSubstep("needs", h => NeedsSystem?.Tick(h));
+            _registry.RegisterDaily("bunker_rationing", day =>
+                BunkerRationingSystem?.ApplyDailyRations(day, Survivors, NeedsSystem));
             _registry.RegisterPerSubstep("medical", h => MedicalSystem?.Tick(Survivors, h));
             _registry.RegisterPerSubstep("mental_break", h =>
             {
@@ -319,6 +332,10 @@ namespace AtomicWar._Game.Core
             // pianist encounter that happens on the clock rather than on a choice.
             _registry.RegisterPerSubstep("pianist_daily",
                 _registry.DayGated("pianist", RegisterTickPianistDaily));
+            // Audit H-6e: PetSystem.TryTameWastelandAnimal existed but nothing ever
+            // called it — a Zoonotic Expert could never actually tame an animal.
+            _registry.RegisterPerSubstep("pet_taming_daily",
+                _registry.DayGated("pet_taming", RegisterTickPetTamingDaily));
         }
 
         /// <summary>
@@ -378,6 +395,20 @@ namespace AtomicWar._Game.Core
             AtmosphereSystem?.TryPyromaniacDeliberateFire(rng);
             HatchDefenseSystem?.TryAutoAssignSheriffGuard();
             JournalSystem?.TickNewsAnchorJournalSpam(day);
+        }
+
+        private void RegisterTickPetTamingDaily(int day)
+        {
+            if (PetSystem == null || Survivors == null) return;
+            var rng = _mentalBreakRng ?? new System.Random(day + 217);
+            var tamed = PetSystem.TryTameWastelandAnimalDaily(Survivors, rng);
+            if (tamed == null) return;
+
+            var rooms = Shelter?.Rooms;
+            if (rooms != null && rooms.Count > 0 && rooms[0] != null)
+                PetSystem.SetPetRoom(tamed, rooms[0].RoomId);
+
+            GameLog.Log($"[Zoonotic Expert] A {tamed.DisplayName.ToLowerInvariant()} has been tamed. It calls the shelter home now.");
         }
 
         private void RegisterTickRebuildersDaily(int day)
@@ -487,7 +518,10 @@ namespace AtomicWar._Game.Core
                 // REPROMOTE-Pet-001 — guard dog alert fires on hatch raid resolve start:
                 "pet_guard_dog",
                 // REPROMOTE-Weapon-001 — HMG defense power read on GetWeaponPower:
-                "weapon_hmg"
+                "weapon_hmg",
+                // C-1: reactive-only, no autonomous tick -- driven entirely by UI
+                // actions (TryEquip/TryUnequip, TryTransferOne).
+                "field_gear_loadout", "overflow_crate"
             };
             for (int i = 0; i < eventDriven.Length; i++)
                 _registry.RegisterEventDriven(eventDriven[i]);
@@ -501,7 +535,9 @@ namespace AtomicWar._Game.Core
                 "cartography", "bicycle", "flooded_node", "blood_transfusion", "cult_moral",
                 "labor_camp", "location_quest", "ceiling_collapse", "aesthetics", "ham_radio",
                 "polypharmacy", "resilience", "internal_lock", "grief_keepsakes", "mentorship",
-                "flashpoint_choreographer", "diary_catalog"
+                "flashpoint_choreographer", "diary_catalog",
+                // C-1: secondary inventory bucket, mirrors "inventory" above.
+                "overflow_stash"
             };
             for (int i = 0; i < saveOnly.Length; i++)
                 _registry.RegisterSaveOnly(saveOnly[i]);

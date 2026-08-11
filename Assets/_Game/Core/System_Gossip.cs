@@ -239,6 +239,33 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// True if <paramref name="witnessId"/> originated a rumor that still has at
+        /// least one un-informed, non-criminal listener — i.e. SpreadRumor(witnessId)
+        /// would succeed right now. Read-only: safe to call from AI scoring.
+        /// </summary>
+        public bool CanSpreadRumor(string witnessId)
+        {
+            if (string.IsNullOrEmpty(witnessId) || _state.rumors == null || _state.allSurvivorIds == null)
+                return false;
+
+            for (int ri = 0; ri < _state.rumors.Count; ri++)
+            {
+                var rumor = _state.rumors[ri];
+                if (rumor == null || rumor.witnessId != witnessId) continue;
+
+                for (int si = 0; si < _state.allSurvivorIds.Count; si++)
+                {
+                    string survivorId = _state.allSurvivorIds[si];
+                    if (string.IsNullOrEmpty(survivorId)) continue;
+                    if (rumor.informedIds != null && rumor.informedIds.Contains(survivorId)) continue;
+                    if (string.Equals(survivorId, rumor.criminalId, StringComparison.Ordinal)) continue;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Returns true if the survivor has heard a rumor about the criminal.
         /// </summary>
         public bool HasHeardRumor(string survivorId, string criminalId)

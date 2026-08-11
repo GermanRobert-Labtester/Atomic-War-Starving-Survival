@@ -4,6 +4,8 @@ using AtomicWar._Game.Core;
 using AtomicWar._Game.Data;
 using System.Collections.Generic;
 
+using AtomicWar._Game.Factions;
+
 namespace AtomicWar.Tests.EditMode
 {
     public class FixedMapAndVisitorDeckTests

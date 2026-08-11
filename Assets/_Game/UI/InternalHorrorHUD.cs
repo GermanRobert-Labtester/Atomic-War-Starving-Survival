@@ -60,10 +60,23 @@ namespace AtomicWar._Game.UI
         private int _prevFireRoomCount;
         private bool _prevComaUrgent;
 
+        // ApplySnapshot is driven from Update(), so it runs on every rendered
+        // frame while the underlying state (corpses, fires, coma patients)
+        // only changes on simulation ticks. Rebuilding _fireRooms/_comas and
+        // reformatting every status line was a per-frame allocation firehose
+        // identical to the pre-fingerprint DiegeticHudView.PaintVitals. Packing
+        // a fingerprint of the snapshot's contents lets an unchanged frame
+        // bail before any List rebuild, FireRoomView/ComaPatientView
+        // allocation, or string formatting.
+        private int _lastSnapshotKey;
+        private bool _hasAppliedSnapshot;
+        private const int GoldenRatioHashMul = unchecked((int)2654435761u);
+
         public event Action OnBuryRequested;
         public event Action OnProcessFertilizerRequested;
         public event Action<string> OnFightFireRequested;
         public event Action<string> OnSealBulkheadRequested;
+        public event Action<string> OnExtinguishFireRequested;
         public event Action OnStateChanged;
         /// <summary>Rising-edge ping: fire started or care went overdue. Audio may hook this.</summary>
         public event Action<HorrorPingKind> OnHorrorPing;
@@ -81,6 +94,11 @@ namespace AtomicWar._Game.UI
                 Clear();
                 return;
             }
+
+            int key = ComputeSnapshotKey(snap);
+            if (_hasAppliedSnapshot && key == _lastSnapshotKey) return;
+            _lastSnapshotKey = key;
+            _hasAppliedSnapshot = true;
 
             CorpseCount = Mathf.Max(0, snap.CorpseCount);
             CanBury = snap.CanBury && CorpseCount > 0;
@@ -172,6 +190,62 @@ namespace AtomicWar._Game.UI
             OnStateChanged?.Invoke();
         }
 
+        // Fingerprints both the pushed snapshot and the panel/ping toggle
+        // fields that OpenCorpsePanel/OpenFirePanel/SelectFireRoom/
+        // AcknowledgeCarePing mutate directly outside of ApplySnapshot but
+        // that ApplySnapshot's DetailSummary/StatusIconStrip output also
+        // depends on. Omitting them would let a panel-open or fire-select
+        // action go unreflected in DetailSummary until unrelated snapshot
+        // data next changed.
+        private int ComputeSnapshotKey(InternalHorrorSnapshot snap)
+        {
+            unchecked
+            {
+                int key = snap.CorpseCount * 73856093;
+                key ^= snap.CanBury ? 1 : 0;
+                key ^= Mathf.RoundToInt(snap.DaylightHoursAvailable * 100f) * GoldenRatioHashMul;
+                key ^= snap.ContaminatedFoodCount * 19349663;
+                key ^= snap.ComaCareUrgent ? 0x5A5A5A5A : 0;
+                key ^= Mathf.RoundToInt(snap.CareIntervalHours * 100f) * 83492791;
+
+                if (snap.Fires != null)
+                {
+                    for (int i = 0; i < snap.Fires.Length; i++)
+                    {
+                        var f = snap.Fires[i];
+                        if (f == null) continue;
+                        key ^= (f.RoomId == null ? 0 : f.RoomId.GetHashCode()) * GoldenRatioHashMul;
+                        key ^= f.IsOnFire ? 0x3C3C3C3C : 0;
+                        key ^= Mathf.RoundToInt(f.Intensity * 100f) * 805459861;
+                        key ^= Mathf.RoundToInt(f.OxygenFraction * 100f) * 393241;
+                        key ^= Mathf.RoundToInt(f.LocalCoPpm * 100f) * 805306457;
+                        key ^= f.BulkheadSealed ? 0x0F0F0F0F : 0;
+                    }
+                }
+
+                if (snap.Comas != null)
+                {
+                    for (int i = 0; i < snap.Comas.Length; i++)
+                    {
+                        var c = snap.Comas[i];
+                        if (c == null) continue;
+                        key ^= (c.SurvivorId == null ? 0 : c.SurvivorId.GetHashCode()) * GoldenRatioHashMul;
+                        key ^= (c.DisplayName == null ? 0 : c.DisplayName.GetHashCode()) * 452930477;
+                        key ^= Mathf.RoundToInt(c.HoursSinceLastCare * 100f) * 805459861;
+                        key ^= c.NeedsCare ? 0x33333333 : 0;
+                    }
+                }
+
+                key ^= IsCorpsePanelOpen ? 0x11111111 : 0;
+                key ^= IsFirePanelOpen ? 0x22222222 : 0;
+                key ^= (ActiveFireRoomId == null ? 0 : ActiveFireRoomId.GetHashCode()) * 15485863;
+                key ^= FireNotificationPing ? 0x44444444 : 0;
+                key ^= CareNotificationPing ? 0x66666666 : 0;
+
+                return key;
+            }
+        }
+
         public void Clear()
         {
             CorpseCount = 0;
@@ -201,6 +275,8 @@ namespace AtomicWar._Game.UI
             LastPing = HorrorPingKind.None;
             _prevFireRoomCount = 0;
             _prevComaUrgent = false;
+            _lastSnapshotKey = 0;
+            _hasAppliedSnapshot = false;
             OnStateChanged?.Invoke();
         }
 
@@ -294,6 +370,15 @@ namespace AtomicWar._Game.UI
             string id = !string.IsNullOrEmpty(roomId) ? roomId : ActiveFireRoomId;
             if (FindFire(id) == null) return false;
             OnSealBulkheadRequested?.Invoke(id);
+            return true;
+        }
+
+        /// <summary>Extinguish with water/sand — costs clean water, less burn risk.</summary>
+        public bool SelectExtinguishFire(string roomId = null)
+        {
+            string id = !string.IsNullOrEmpty(roomId) ? roomId : ActiveFireRoomId;
+            if (FindFire(id) == null) return false;
+            OnExtinguishFireRequested?.Invoke(id);
             return true;
         }
 
@@ -503,7 +588,7 @@ namespace AtomicWar._Game.UI
 
         public static string FormatFirePanelChoices()
         {
-            return "[1] Fight it (burns)   [2] Seal bulkhead   [Esc] close";
+            return "[1] Fight it (burns)   [2] Seal bulkhead   [3] Extinguish (water)   [Esc] close";
         }
 
         public static string BuildIconStrip(

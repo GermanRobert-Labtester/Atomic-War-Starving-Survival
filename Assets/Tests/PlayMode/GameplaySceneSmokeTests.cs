@@ -68,6 +68,39 @@ namespace AtomicWar.Tests.PlayMode
         }
 
         /// <summary>
+        /// The dispatch board must be more than a rendered catalog: its request
+        /// travels through GameBootstrap's cross-system gate and starts the
+        /// real saveable LocationScavengingSystem mission.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator ScavengeDispatch_RequestsALiveCatalogMission()
+        {
+            var bootstrap = Bootstrap();
+            var hud = Object.FindAnyObjectByType<HUD>();
+            Assert.IsNotNull(hud, "Gameplay scene must contain a HUD");
+            Assert.IsNotNull(bootstrap.ScavengingSystem, "Scavenging system must be live");
+
+            var dispatch = hud.ScavengeDispatchHUD;
+            Assert.IsNotNull(dispatch, "HUD must expose a scavenging dispatch board");
+            int missionsBefore = bootstrap.ScavengingSystem.ActiveMissions.Count;
+
+            dispatch.Open();
+            yield return null;
+
+            var view = hud.DiegeticHud != null ? hud.DiegeticHud.View : null;
+            Assert.IsNotNull(view?.ScavengePanel, "dispatch panel must be bound into the live HUD");
+            Assert.AreEqual(UnityEngine.UIElements.DisplayStyle.Flex, view.ScavengePanel.style.display.value,
+                "opening the board must visibly mount the location list");
+            Assert.IsTrue(dispatch.DispatchSelected(),
+                $"fresh-game selection should request a mission. Outcome: {dispatch.LastOutcome}; Panel: {dispatch.PanelSummary}");
+
+            Assert.AreEqual(missionsBefore + 1, bootstrap.ScavengingSystem.ActiveMissions.Count,
+                "a dispatch request must start the live saveable scavenging mission");
+            StringAssert.Contains("DISPATCHED:", dispatch.LastOutcome,
+                "Core's mission-start event must report the accepted dispatch to the board");
+        }
+
+        /// <summary>
         /// PlayerInputHandler was fully implemented, covered by EditMode tests that
         /// AddComponent it onto a throwaway GameObject, and present in no scene at
         /// all -- so no key the player pressed reached the simulation. Its Awake

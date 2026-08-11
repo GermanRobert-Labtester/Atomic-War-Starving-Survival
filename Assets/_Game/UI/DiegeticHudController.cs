@@ -39,6 +39,14 @@ namespace AtomicWar._Game.UI
         private WorkbenchUI _workbench;
         private EndgameSummaryUI _endgame;
         private PowerGridHUD _powerGrid;
+        private ScavengeDispatchHUD _scavengeDispatch;
+        private OverflowCrateHUD _overflowCrate;
+        private FieldGearLoadoutHUD _fieldGearLoadout;
+        private BunkerRationingHUD _bunkerRationing;
+        private WaterPurificationHUD _waterPurification;
+        private AirHeatManagementHUD _airHeatManagement;
+        private BunkerMaintenanceHUD _bunkerMaintenance;
+        private SurvivorTaskBoardHUD _survivorTaskBoard;
         private bool _built;
         private bool _tooltipPinned;
         private bool _preferDetached;
@@ -203,7 +211,15 @@ namespace AtomicWar._Game.UI
             ExpeditionEncounterLogHUD encounterLog,
             WorkbenchUI workbench = null,
             EndgameSummaryUI endgame = null,
-            PowerGridHUD powerGrid = null)
+            PowerGridHUD powerGrid = null,
+            ScavengeDispatchHUD scavengeDispatch = null,
+            OverflowCrateHUD overflowCrate = null,
+            FieldGearLoadoutHUD fieldGearLoadout = null,
+            BunkerRationingHUD bunkerRationing = null,
+            WaterPurificationHUD waterPurification = null,
+            AirHeatManagementHUD airHeatManagement = null,
+            BunkerMaintenanceHUD bunkerMaintenance = null,
+            SurvivorTaskBoardHUD survivorTaskBoard = null)
         {
             // Skip the full UnbindSources + rebind + Paint() when every source
             // is identical. The host only re-calls this when _diegeticHud is
@@ -214,7 +230,15 @@ namespace AtomicWar._Game.UI
                 && ReferenceEquals(_encounterLog, encounterLog)
                 && ReferenceEquals(_workbench, workbench)
                 && ReferenceEquals(_endgame, endgame)
-                && ReferenceEquals(_powerGrid, powerGrid))
+                && ReferenceEquals(_powerGrid, powerGrid)
+                && ReferenceEquals(_scavengeDispatch, scavengeDispatch)
+                && ReferenceEquals(_overflowCrate, overflowCrate)
+                && ReferenceEquals(_fieldGearLoadout, fieldGearLoadout)
+                && ReferenceEquals(_bunkerRationing, bunkerRationing)
+                && ReferenceEquals(_waterPurification, waterPurification)
+                && ReferenceEquals(_airHeatManagement, airHeatManagement)
+                && ReferenceEquals(_bunkerMaintenance, bunkerMaintenance)
+                && ReferenceEquals(_survivorTaskBoard, survivorTaskBoard))
             {
                 return;
             }
@@ -231,6 +255,14 @@ namespace AtomicWar._Game.UI
             // PowerNetwork.OnPowerStateChanged but publishes nothing itself,
             // so HUD.RepaintPowerGridIfChanged polls it.
             _powerGrid = powerGrid;
+            _scavengeDispatch = scavengeDispatch;
+            _overflowCrate = overflowCrate;
+            _fieldGearLoadout = fieldGearLoadout;
+            _bunkerRationing = bunkerRationing;
+            _waterPurification = waterPurification;
+            _airHeatManagement = airHeatManagement;
+            _bunkerMaintenance = bunkerMaintenance;
+            _survivorTaskBoard = survivorTaskBoard;
 
             if (_strip != null)
                 _strip.OnSelectionChanged += OnStripSelectionChanged;
@@ -243,6 +275,22 @@ namespace AtomicWar._Game.UI
             }
             if (_workbench != null)
                 _workbench.OnWorkbenchUiChanged += Paint;
+            if (_scavengeDispatch != null)
+                _scavengeDispatch.OnScavengeDispatchChanged += Paint;
+            if (_overflowCrate != null)
+                _overflowCrate.OnOverflowCrateChanged += Paint;
+            if (_fieldGearLoadout != null)
+                _fieldGearLoadout.OnFieldGearLoadoutChanged += Paint;
+            if (_bunkerRationing != null)
+                _bunkerRationing.OnBunkerRationingChanged += Paint;
+            if (_waterPurification != null)
+                _waterPurification.OnWaterPurificationChanged += Paint;
+            if (_airHeatManagement != null)
+                _airHeatManagement.OnAirHeatManagementChanged += Paint;
+            if (_bunkerMaintenance != null)
+                _bunkerMaintenance.OnBunkerMaintenanceChanged += Paint;
+            if (_survivorTaskBoard != null)
+                _survivorTaskBoard.OnSurvivorTaskBoardChanged += Paint;
 
             if (!_preferDetached)
                 EnsureDocumentMounted();
@@ -263,12 +311,36 @@ namespace AtomicWar._Game.UI
             }
             if (_workbench != null)
                 _workbench.OnWorkbenchUiChanged -= Paint;
+            if (_scavengeDispatch != null)
+                _scavengeDispatch.OnScavengeDispatchChanged -= Paint;
+            if (_overflowCrate != null)
+                _overflowCrate.OnOverflowCrateChanged -= Paint;
+            if (_fieldGearLoadout != null)
+                _fieldGearLoadout.OnFieldGearLoadoutChanged -= Paint;
+            if (_bunkerRationing != null)
+                _bunkerRationing.OnBunkerRationingChanged -= Paint;
+            if (_waterPurification != null)
+                _waterPurification.OnWaterPurificationChanged -= Paint;
+            if (_airHeatManagement != null)
+                _airHeatManagement.OnAirHeatManagementChanged -= Paint;
+            if (_bunkerMaintenance != null)
+                _bunkerMaintenance.OnBunkerMaintenanceChanged -= Paint;
+            if (_survivorTaskBoard != null)
+                _survivorTaskBoard.OnSurvivorTaskBoardChanged -= Paint;
             _hatch = null;
             _strip = null;
             _encounterLog = null;
             _workbench = null;
             _endgame = null;
             _powerGrid = null;
+            _scavengeDispatch = null;
+            _overflowCrate = null;
+            _fieldGearLoadout = null;
+            _bunkerRationing = null;
+            _waterPurification = null;
+            _airHeatManagement = null;
+            _bunkerMaintenance = null;
+            _survivorTaskBoard = null;
         }
 
         private void OnHatchOpenChanged(bool _) => Paint();
@@ -360,6 +432,38 @@ namespace AtomicWar._Game.UI
                 _powerGrid?.BudgetSummary,
                 _powerGrid?.SourcesSummary,
                 _powerGrid?.ConsumersSummary);
+
+            _view.PaintScavengeDispatch(
+                _scavengeDispatch != null && _scavengeDispatch.IsOpen,
+                _scavengeDispatch?.PanelSummary);
+
+            _view.PaintOverflowCrate(
+                _overflowCrate != null && _overflowCrate.IsOpen,
+                _overflowCrate?.PanelSummary);
+
+            _view.PaintFieldGearLoadout(
+                _fieldGearLoadout != null && _fieldGearLoadout.IsOpen,
+                _fieldGearLoadout?.PanelSummary);
+
+            _view.PaintBunkerRationing(
+                _bunkerRationing != null && _bunkerRationing.IsOpen,
+                _bunkerRationing?.PanelSummary);
+
+            _view.PaintWaterPurification(
+                _waterPurification != null && _waterPurification.IsOpen,
+                _waterPurification?.PanelSummary);
+
+            _view.PaintAirHeatManagement(
+                _airHeatManagement != null && _airHeatManagement.IsOpen,
+                _airHeatManagement?.PanelSummary);
+
+            _view.PaintBunkerMaintenance(
+                _bunkerMaintenance != null && _bunkerMaintenance.IsOpen,
+                _bunkerMaintenance?.PanelSummary);
+
+            _view.PaintSurvivorTaskBoard(
+                _survivorTaskBoard != null && _survivorTaskBoard.IsOpen,
+                _survivorTaskBoard?.PanelSummary);
 
             bool showStores = false;
             string summary = string.Empty;

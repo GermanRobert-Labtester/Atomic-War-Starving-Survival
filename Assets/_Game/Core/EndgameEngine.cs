@@ -115,6 +115,26 @@ namespace AtomicWar._Game.Core
                 summary: summary);
         }
 
+        /// <summary>
+        /// Manually trigger a specific campaign victory path (MAD, Migration, The Broadcast, The Cure, The Martian, True Ending, etc.).
+        /// </summary>
+        public bool TriggerVictory(EndgameConditionKind condition, string summary, int currentDay = 1)
+        {
+            if (Result.IsTerminal) return false;
+            Result.DaysSurvived = Math.Max(1, currentDay);
+            return TriggerEndgame(condition, isVictory: true, summary: summary);
+        }
+
+        /// <summary>
+        /// Manually trigger a specific campaign defeat path.
+        /// </summary>
+        public bool TriggerDefeat(EndgameConditionKind condition, string summary, int currentDay = 1)
+        {
+            if (Result.IsTerminal) return false;
+            Result.DaysSurvived = Math.Max(1, currentDay);
+            return TriggerEndgame(condition, isVictory: false, summary: summary);
+        }
+
         private bool TriggerEndgame(EndgameConditionKind condition, bool isVictory, string summary)
         {
             Result.IsVictory = isVictory;
@@ -152,6 +172,41 @@ namespace AtomicWar._Game.Core
 
             if (filter == null || shielding == null) return false;
             return filter.FilterHealth <= 0f && shielding.FilterHealth <= 0f;
+        }
+
+        // ── Save / Load (H-2) ─────────────────────────────────────────────
+        // Result previously lived only in memory: reloading a save mid-run or
+        // after a terminal outcome silently reset victory/defeat state.
+
+        public CampaignResult CaptureState()
+        {
+            return new CampaignResult
+            {
+                Mode = Result.Mode,
+                TargetDurationDays = Result.TargetDurationDays,
+                DaysSurvived = Result.DaysSurvived,
+                IsVictory = Result.IsVictory,
+                IsDefeat = Result.IsDefeat,
+                ConditionKind = Result.ConditionKind,
+                OutcomeSummary = Result.OutcomeSummary ?? string.Empty,
+                StartCalendarDate = Result.StartCalendarDate
+            };
+        }
+
+        public void RestoreState(CampaignResult state)
+        {
+            if (state == null) return;
+            Result = new CampaignResult
+            {
+                Mode = state.Mode,
+                TargetDurationDays = state.TargetDurationDays,
+                DaysSurvived = state.DaysSurvived,
+                IsVictory = state.IsVictory,
+                IsDefeat = state.IsDefeat,
+                ConditionKind = state.ConditionKind,
+                OutcomeSummary = state.OutcomeSummary ?? string.Empty,
+                StartCalendarDate = state.StartCalendarDate
+            };
         }
     }
 }

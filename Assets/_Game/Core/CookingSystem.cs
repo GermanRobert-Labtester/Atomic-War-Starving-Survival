@@ -20,7 +20,7 @@ namespace AtomicWar._Game.Core
 public class CookingSystem
     {
         public const string StoveStationId = "stove";
-        public const string CookedMealId = "cooked_meal";
+        public const string CookedMealId = "hearty_meal_cooked";
         public const float CleanWaterPerMeal = 1f;
         public const float CookHours = 0.5f;
 

@@ -56,5 +56,35 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(initialHealth, _sickSurvivor.Needs.Health); // 0 health gain
             Assert.AreEqual(0, _hallucinationSystem.GetPhantomsForSurvivor("sick_guy").Count);
         }
+
+        [Test]
+        public void PhantomAction_ScoresZero_WhenSurvivorHasNoActivePhantom()
+        {
+            // Qualifies on health/anxiety, but HallucinationSystem never rolled a spawn:
+            // without the H-6a fix this scored 0.85 anyway and the AI picked a no-op action.
+            float score = _phantomAction.ScoreAction(_sickSurvivor, _hallucinationSystem);
+
+            Assert.AreEqual(0f, score);
+        }
+
+        [Test]
+        public void PhantomAction_Execute_ConsumesTheSurvivorsActivePhantom()
+        {
+            var rng = new System.Random(42);
+            var item = _hallucinationSystem.SpawnPhantomForSurvivor(_sickSurvivor, rng);
+
+            float score = _phantomAction.ScoreAction(_sickSurvivor, _hallucinationSystem);
+            Assert.Greater(score, 0f);
+
+            string raisedId = null;
+            _phantomAction.OnPhantomActionAttempted += (sv, id) => raisedId = id;
+
+            bool executed = _phantomAction.ExecutePhantomAction(_sickSurvivor, _hallucinationSystem, out string message);
+
+            Assert.IsTrue(executed);
+            Assert.AreEqual(item.Id, raisedId);
+            StringAssert.Contains(item.DisplayName, message);
+            Assert.AreEqual(0, _hallucinationSystem.GetPhantomsForSurvivor("sick_guy").Count);
+        }
     }
 }

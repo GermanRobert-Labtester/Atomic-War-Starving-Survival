@@ -6,6 +6,8 @@ using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
 using ShelterClass = AtomicWar._Game.Shelter.Shelter;
 

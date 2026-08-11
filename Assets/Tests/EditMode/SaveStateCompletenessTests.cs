@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.AI.Actions;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar.Tests.EditMode
 {

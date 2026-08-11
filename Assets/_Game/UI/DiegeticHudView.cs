@@ -12,6 +12,13 @@ namespace AtomicWar._Game.UI
     /// </summary>
     public class DiegeticHudView
     {
+        private enum PanelStatus
+        {
+            Default,
+            Warning,
+            Critical
+        }
+
         public const string RootName = "diegetic-root";
         public const string HatchPanelName = "hatch-panel";
         public const string HatchStatusName = "hatch-status";
@@ -40,6 +47,22 @@ namespace AtomicWar._Game.UI
         public const string PowerGridBudgetName = "power-grid-budget";
         public const string PowerGridSourcesName = "power-grid-sources";
         public const string PowerGridLoadsName = "power-grid-loads";
+        public const string ScavengePanelName = "scavenge-panel";
+        public const string ScavengeBodyName = "scavenge-body";
+        public const string OverflowCratePanelName = "overflow-crate-panel";
+        public const string OverflowCrateBodyName = "overflow-crate-body";
+        public const string FieldGearLoadoutPanelName = "field-gear-loadout-panel";
+        public const string FieldGearLoadoutBodyName = "field-gear-loadout-body";
+        public const string BunkerRationingPanelName = "bunker-rationing-panel";
+        public const string BunkerRationingBodyName = "bunker-rationing-body";
+        public const string WaterPurificationPanelName = "water-purification-panel";
+        public const string WaterPurificationBodyName = "water-purification-body";
+        public const string AirHeatManagementPanelName = "air-heat-management-panel";
+        public const string AirHeatManagementBodyName = "air-heat-management-body";
+        public const string BunkerMaintenancePanelName = "bunker-maintenance-panel";
+        public const string BunkerMaintenanceBodyName = "bunker-maintenance-body";
+        public const string SurvivorTaskBoardPanelName = "survivor-task-board-panel";
+        public const string SurvivorTaskBoardBodyName = "survivor-task-board-body";
 
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
@@ -90,6 +113,22 @@ namespace AtomicWar._Game.UI
         public Label PowerGridBudget { get; private set; }
         public Label PowerGridSources { get; private set; }
         public Label PowerGridLoads { get; private set; }
+        public VisualElement ScavengePanel { get; private set; }
+        public Label ScavengeBody { get; private set; }
+        public VisualElement OverflowCratePanel { get; private set; }
+        public Label OverflowCrateBody { get; private set; }
+        public VisualElement FieldGearLoadoutPanel { get; private set; }
+        public Label FieldGearLoadoutBody { get; private set; }
+        public VisualElement BunkerRationingPanel { get; private set; }
+        public Label BunkerRationingBody { get; private set; }
+        public VisualElement WaterPurificationPanel { get; private set; }
+        public Label WaterPurificationBody { get; private set; }
+        public VisualElement AirHeatManagementPanel { get; private set; }
+        public Label AirHeatManagementBody { get; private set; }
+        public VisualElement BunkerMaintenancePanel { get; private set; }
+        public Label BunkerMaintenanceBody { get; private set; }
+        public VisualElement SurvivorTaskBoardPanel { get; private set; }
+        public Label SurvivorTaskBoardBody { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -188,12 +227,60 @@ namespace AtomicWar._Game.UI
             PowerGridPanel.Add(PowerGridLoads);
             Root.Add(PowerGridPanel);
 
+            ScavengePanel = MakePanel(ScavengePanelName, "scavenge-panel");
+            ScavengeBody = MakeLabel(ScavengeBodyName, "diegetic-body", "scavenge-readout");
+            ScavengePanel.Add(ScavengeBody);
+            Root.Add(ScavengePanel);
+
+            OverflowCratePanel = MakePanel(OverflowCratePanelName, "overflow-crate-panel");
+            OverflowCrateBody = MakeLabel(OverflowCrateBodyName, "diegetic-body", "overflow-crate-readout");
+            OverflowCratePanel.Add(OverflowCrateBody);
+            Root.Add(OverflowCratePanel);
+
+            FieldGearLoadoutPanel = MakePanel(FieldGearLoadoutPanelName, "field-gear-loadout-panel");
+            FieldGearLoadoutBody = MakeLabel(FieldGearLoadoutBodyName, "diegetic-body", "field-gear-loadout-readout");
+            FieldGearLoadoutPanel.Add(FieldGearLoadoutBody);
+            Root.Add(FieldGearLoadoutPanel);
+
+            BunkerRationingPanel = MakePanel(BunkerRationingPanelName, "bunker-rationing-panel");
+            BunkerRationingBody = MakeLabel(BunkerRationingBodyName, "diegetic-body", "bunker-rationing-readout");
+            BunkerRationingPanel.Add(BunkerRationingBody);
+            Root.Add(BunkerRationingPanel);
+
+            WaterPurificationPanel = MakePanel(WaterPurificationPanelName, "water-purification-panel");
+            WaterPurificationBody = MakeLabel(WaterPurificationBodyName, "diegetic-body", "water-purification-readout");
+            WaterPurificationPanel.Add(WaterPurificationBody);
+            Root.Add(WaterPurificationPanel);
+
+            AirHeatManagementPanel = MakePanel(AirHeatManagementPanelName, "air-heat-management-panel");
+            AirHeatManagementBody = MakeLabel(AirHeatManagementBodyName, "diegetic-body", "air-heat-management-readout");
+            AirHeatManagementPanel.Add(AirHeatManagementBody);
+            Root.Add(AirHeatManagementPanel);
+
+            BunkerMaintenancePanel = MakePanel(BunkerMaintenancePanelName, "bunker-maintenance-panel");
+            BunkerMaintenanceBody = MakeLabel(BunkerMaintenanceBodyName, "diegetic-body", "bunker-maintenance-readout");
+            BunkerMaintenancePanel.Add(BunkerMaintenanceBody);
+            Root.Add(BunkerMaintenancePanel);
+
+            SurvivorTaskBoardPanel = MakePanel(SurvivorTaskBoardPanelName, "survivor-task-board-panel");
+            SurvivorTaskBoardBody = MakeLabel(SurvivorTaskBoardBodyName, "diegetic-body", "survivor-task-board-readout");
+            SurvivorTaskBoardPanel.Add(SurvivorTaskBoardBody);
+            Root.Add(SurvivorTaskBoardPanel);
+
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
             SetVisible(EventPanel, false);
             SetVisible(WorkbenchPanel, false);
             SetVisible(EndgamePanel, false);
             SetVisible(PowerGridPanel, false);
+            SetVisible(ScavengePanel, false);
+            SetVisible(OverflowCratePanel, false);
+            SetVisible(FieldGearLoadoutPanel, false);
+            SetVisible(BunkerRationingPanel, false);
+            SetVisible(WaterPurificationPanel, false);
+            SetVisible(AirHeatManagementPanel, false);
+            SetVisible(BunkerMaintenancePanel, false);
+            SetVisible(SurvivorTaskBoardPanel, false);
             return Root;
         }
 
@@ -229,12 +316,31 @@ namespace AtomicWar._Game.UI
             PowerGridBudget = Root.Q<Label>(PowerGridBudgetName);
             PowerGridSources = Root.Q<Label>(PowerGridSourcesName);
             PowerGridLoads = Root.Q<Label>(PowerGridLoadsName);
+            ScavengePanel = Root.Q<VisualElement>(ScavengePanelName);
+            ScavengeBody = Root.Q<Label>(ScavengeBodyName);
+            OverflowCratePanel = Root.Q<VisualElement>(OverflowCratePanelName);
+            OverflowCrateBody = Root.Q<Label>(OverflowCrateBodyName);
+            FieldGearLoadoutPanel = Root.Q<VisualElement>(FieldGearLoadoutPanelName);
+            FieldGearLoadoutBody = Root.Q<Label>(FieldGearLoadoutBodyName);
+            BunkerRationingPanel = Root.Q<VisualElement>(BunkerRationingPanelName);
+            BunkerRationingBody = Root.Q<Label>(BunkerRationingBodyName);
+            WaterPurificationPanel = Root.Q<VisualElement>(WaterPurificationPanelName);
+            WaterPurificationBody = Root.Q<Label>(WaterPurificationBodyName);
+            AirHeatManagementPanel = Root.Q<VisualElement>(AirHeatManagementPanelName);
+            AirHeatManagementBody = Root.Q<Label>(AirHeatManagementBodyName);
+            BunkerMaintenancePanel = Root.Q<VisualElement>(BunkerMaintenancePanelName);
+            BunkerMaintenanceBody = Root.Q<Label>(BunkerMaintenanceBodyName);
+            SurvivorTaskBoardPanel = Root.Q<VisualElement>(SurvivorTaskBoardPanelName);
+            SurvivorTaskBoardBody = Root.Q<Label>(SurvivorTaskBoardBodyName);
             // Every panel is part of the contract: a UXML missing one must fall
             // back to Build() rather than bind a half-tree and render nothing.
             if (HatchPanel == null || EncounterPanel == null
                 || StoresPanel == null || VitalsPanel == null || EventPanel == null
                 || WorkbenchPanel == null || EndgamePanel == null
-                || PowerGridPanel == null)
+                || PowerGridPanel == null || ScavengePanel == null || OverflowCratePanel == null
+                || FieldGearLoadoutPanel == null || BunkerRationingPanel == null
+                || WaterPurificationPanel == null || AirHeatManagementPanel == null
+                || BunkerMaintenancePanel == null || SurvivorTaskBoardPanel == null)
             {
                 return false;
             }
@@ -340,6 +446,7 @@ namespace AtomicWar._Game.UI
             if (VitalsDose != null)
                 VitalsDose.text = $"☢ {cumulativeDose:0.00} Sv   ({currentRate:0.0}/hr)";
 
+            bool hasCriticalNeed = false;
             for (int i = 0; i < CoreNeedIds.Length; i++)
             {
                 NeedBarData data = null;
@@ -354,6 +461,7 @@ namespace AtomicWar._Game.UI
                         : 0f;
                     fill.style.width = Length.Percent(pct);
                     bool critical = haveData && data.IsCritical;
+                    hasCriticalNeed |= critical;
                     if (fill.ClassListContains("critical") != critical)
                         fill.EnableInClassList("critical", critical);
                 }
@@ -367,6 +475,9 @@ namespace AtomicWar._Game.UI
                     if (value.text != next) value.text = next;
                 }
             }
+
+            SetPanelStatus(VitalsPanel,
+                hasCriticalNeed ? PanelStatus.Critical : PanelStatus.Default);
         }
 
         /// <summary>
@@ -379,6 +490,7 @@ namespace AtomicWar._Game.UI
         {
             if (EventPanel == null) return;
             SetVisible(EventPanel, open);
+            SetPanelStatus(EventPanel, open ? PanelStatus.Warning : PanelStatus.Default);
             if (!open) return;
 
             if (EventTitle != null) EventTitle.text = title ?? string.Empty;
@@ -443,6 +555,81 @@ namespace AtomicWar._Game.UI
             if (PowerGridBudget != null) PowerGridBudget.text = budget ?? string.Empty;
             if (PowerGridSources != null) PowerGridSources.text = sources ?? string.Empty;
             if (PowerGridLoads != null) PowerGridLoads.text = loads ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Paint the formatted location dispatch board. Mission state remains in
+        /// LocationScavengingSystem; the view only owns its terminal surface.
+        /// </summary>
+        public void PaintScavengeDispatch(bool open, string panelSummary)
+        {
+            if (ScavengePanel == null) return;
+            SetVisible(ScavengePanel, open);
+            if (!open) return;
+            if (ScavengeBody != null) ScavengeBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the bunker receiving crate terminal from its UI-owned string view-model.</summary>
+        public void PaintOverflowCrate(bool open, string panelSummary)
+        {
+            if (OverflowCratePanel == null) return;
+            SetVisible(OverflowCratePanel, open);
+            if (!open) return;
+            if (OverflowCrateBody != null) OverflowCrateBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the field face/body protection terminal.</summary>
+        public void PaintFieldGearLoadout(bool open, string panelSummary)
+        {
+            if (FieldGearLoadoutPanel == null) return;
+            SetVisible(FieldGearLoadoutPanel, open);
+            if (!open) return;
+            if (FieldGearLoadoutBody != null) FieldGearLoadoutBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the bunker food and clean-water policy terminal.</summary>
+        public void PaintBunkerRationing(bool open, string panelSummary)
+        {
+            if (BunkerRationingPanel == null) return;
+            SetVisible(BunkerRationingPanel, open);
+            if (!open) return;
+            if (BunkerRationingBody != null) BunkerRationingBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the clean/dirty/irradiated cistern and purifier terminal.</summary>
+        public void PaintWaterPurification(bool open, string panelSummary)
+        {
+            if (WaterPurificationPanel == null) return;
+            SetVisible(WaterPurificationPanel, open);
+            if (!open) return;
+            if (WaterPurificationBody != null) WaterPurificationBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the bunker air-filtration and heater management terminal.</summary>
+        public void PaintAirHeatManagement(bool open, string panelSummary)
+        {
+            if (AirHeatManagementPanel == null) return;
+            SetVisible(AirHeatManagementPanel, open);
+            if (!open) return;
+            if (AirHeatManagementBody != null) AirHeatManagementBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the bunker module and generator repair-order terminal.</summary>
+        public void PaintBunkerMaintenance(bool open, string panelSummary)
+        {
+            if (BunkerMaintenancePanel == null) return;
+            SetVisible(BunkerMaintenancePanel, open);
+            if (!open) return;
+            if (BunkerMaintenanceBody != null) BunkerMaintenanceBody.text = panelSummary ?? string.Empty;
+        }
+
+        /// <summary>Paint the survivor allocation and work-order terminal.</summary>
+        public void PaintSurvivorTaskBoard(bool open, string panelSummary)
+        {
+            if (SurvivorTaskBoardPanel == null) return;
+            SetVisible(SurvivorTaskBoardPanel, open);
+            if (!open) return;
+            if (SurvivorTaskBoardBody != null) SurvivorTaskBoardBody.text = panelSummary ?? string.Empty;
         }
 
         private static VisualElement MakeNeedRow(string id, NeedBarData data,
@@ -536,6 +723,18 @@ namespace AtomicWar._Game.UI
             if (el == null) return;
             el.EnableInClassList("hidden", !visible);
             el.style.display = visible ? DisplayStyle.Flex : DisplayStyle.None;
+        }
+
+        /// <summary>
+        /// Apply the Figma HUD Panel state without changing the panel's content.
+        /// Warning is reserved for a decision awaiting the player's attention;
+        /// critical is driven by an actual critical need, never by decorative UI.
+        /// </summary>
+        private static void SetPanelStatus(VisualElement panel, PanelStatus status)
+        {
+            if (panel == null) return;
+            panel.EnableInClassList("diegetic-panel--warning", status == PanelStatus.Warning);
+            panel.EnableInClassList("diegetic-panel--critical", status == PanelStatus.Critical);
         }
 
         private static VisualElement MakePanel(string name, string extraClass)

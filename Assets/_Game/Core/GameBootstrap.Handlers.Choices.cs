@@ -157,5 +157,73 @@ namespace AtomicWar._Game.Core
             DebtCollectorSystem.ApplyChoiceFromEvent(ev, choice, ctx);
         }
 
+        /// <summary>Rations offered to buy off a mutiny's followers (Audit H-6g).</summary>
+        private const int MutinyYieldRationUnits = 10;
+
+        /// <summary>
+        /// Audit H-6g: MutinySystem.ResolveNegotiate/ResolveYieldResources/ResolveExecute
+        /// existed and were fully tested but nothing could ever call them — once morale
+        /// crashed for a week and a mutiny started, MutinyActive had no path back to
+        /// false. Presents the standoff as a GameEvent, reusing the existing choice
+        /// pipeline instead of a bespoke panel.
+        /// </summary>
+        private void HandleMutinyStarted(Survivor leader)
+        {
+            if (EventRunner == null) return;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            var ctx = BuildEventContext(day);
+            EventRunner.Run(EncounterEventFactory.CreateMutinyStandoff(), ctx);
+        }
+
+        private void HandleMutinyChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null || BunkerSocial == null) return;
+            if (ev.id != "shelter_mutiny_standoff") return;
+
+            switch (choice.ChoiceId)
+            {
+                case "mutiny_negotiate":
+                    BunkerSocial.ResolveMutinyNegotiate();
+                    break;
+                case "mutiny_yield":
+                    if (!BunkerSocial.ResolveMutinyYield(MutinyYieldRationUnits))
+                        GameLog.Log("[Mutiny] Not enough rations to buy them off — the standoff continues.");
+                    break;
+                case "mutiny_execute":
+                    BunkerSocial.ResolveMutinyExecute();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Audit H-6g: ShelterAtmosphereSystem.ResolveCoLeakEvent existed and was
+        /// fully tested but nothing ever called it — EventRunner applied the
+        /// generic health/morale deltas for "shelter_co_leak" and stopped there,
+        /// so The Canary questline could never actually complete.
+        /// </summary>
+        private void HandleCOLeakChoiceApplied(GameEvent ev, EventChoice choice, EventContext ctx)
+        {
+            if (ev == null || choice == null || AtmosphereSystem == null) return;
+            if (ev.id != "shelter_co_leak") return;
+
+            // "ventilate" fixes the leak before it poisons the rest of the bunker;
+            // "ignore_co" rides it out and leaves everyone else at risk.
+            bool ventilated = choice.ChoiceId == "ventilate";
+
+            float healthLost = 0f;
+            if (choice.Effects != null)
+            {
+                for (int i = 0; i < choice.Effects.Count; i++)
+                {
+                    var eff = choice.Effects[i];
+                    if (eff != null && eff.TargetNeed == "health" && eff.NeedDelta < 0f)
+                        healthLost += -eff.NeedDelta;
+                }
+            }
+
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
+            AtmosphereSystem.ResolveCoLeakEvent(healthLost, minerSavedAnother: ventilated, day);
+        }
+
     }
 }

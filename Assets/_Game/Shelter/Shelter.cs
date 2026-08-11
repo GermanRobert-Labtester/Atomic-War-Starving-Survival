@@ -33,6 +33,12 @@ namespace AtomicWar._Game.Shelter
         public event Action<string> OnModuleRemoved;
         public event Action<ShelterModuleInstance, int> OnModuleUpgraded;
 
+        // Runtime-only bridge for scoped operational modifiers. The simulation
+        // that owns an effect supplies this; modules retain ownership of their
+        // actual fuel and durability state.
+        [NonSerialized]
+        private Func<ShelterModuleInstance, float> _getModuleConsumptionMultiplier;
+
         // Legacy compatibility properties
         public Shielding Shielding { get; private set; }
         public AirFiltration AirFiltration { get; private set; }
@@ -43,6 +49,12 @@ namespace AtomicWar._Game.Shelter
             AirFiltration = new AirFiltration();
             Shielding.BindShelter(this);
             AirFiltration.BindShelter(this);
+        }
+
+        /// <summary>Bind a transient, per-module resource-consumption modifier provider.</summary>
+        public void SetModuleConsumptionMultiplierProvider(Func<ShelterModuleInstance, float> provider)
+        {
+            _getModuleConsumptionMultiplier = provider;
         }
 
         public ShelterModuleInstance GetModule(string moduleId)

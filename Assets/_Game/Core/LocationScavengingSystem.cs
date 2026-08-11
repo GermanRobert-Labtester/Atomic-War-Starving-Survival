@@ -21,6 +21,10 @@ namespace AtomicWar._Game.Core
 
         private readonly RadiationSystem _radSystem;
         private readonly Inventory.Inventory _inventory;
+        // The composition root supplies the persistent bunker overflow stash. It is
+        // deliberately separate from the field bag so a completed mission never
+        // silently destroys an item simply because the player came home full.
+        private readonly Inventory.Inventory _overflowStash;
         private readonly ItemCatalogSO _itemCatalog;
         private readonly RadiationKnowledgeMap _knowledge;
         private readonly Func<int> _getCurrentDay;
@@ -42,6 +46,11 @@ namespace AtomicWar._Game.Core
 
         public event Action<ActiveMission> OnMissionStarted;
         public event Action<ActiveMission, List<ItemDefinition>> OnMissionCompleted;
+        /// <summary>
+        /// Raised after a scavenging mission has placed every recoverable item in
+        /// either the field bag or the persistent bunker overflow stash.
+        /// </summary>
+        public event Action<ScavengeAfterActionReport> OnScavengeAfterActionReady;
         public event Action<ActiveMission, bool> OnSurveyCompleted;
 
         /// <summary>Last exclusive ammo ids injected into a scavenging roll (tests).</summary>
@@ -58,10 +67,12 @@ namespace AtomicWar._Game.Core
             RadiationKnowledgeMap knowledge = null,
             Func<int> getCurrentDay = null,
             LootTableSO lootTable = null,
-            Func<WorldPhase> getCurrentPhase = null)
+            Func<WorldPhase> getCurrentPhase = null,
+            Inventory.Inventory overflowStash = null)
         {
             _radSystem = radSystem;
             _inventory = inventory;
+            _overflowStash = overflowStash;
             _itemCatalog = itemCatalog;
             _knowledge = knowledge;
             _getCurrentDay = getCurrentDay ?? (() => 0);
@@ -72,6 +83,8 @@ namespace AtomicWar._Game.Core
 
         public IReadOnlyList<ActiveMission> ActiveMissions => _active;
         public RadiationKnowledgeMap Knowledge => _knowledge;
+        /// <summary>Most recent completed scavenging report, retained for save/load and UI replay.</summary>
+        public ScavengeAfterActionReport LastAfterActionReport { get; private set; }
 
         /// <summary>
         /// Prompts #208 / #210 — city surveys (Urban Pathfinder) and forest/swamp
@@ -130,6 +143,7 @@ namespace AtomicWar._Game.Core
             if (IsOnMission(survivor.Id)) return false;
 
             float trueRad = ResolveTrueRad(location);
+            float exposurePerHour = ResolveMissionExposurePerHour(trueRad);
 
             var mission = new ActiveMission
             {
@@ -138,12 +152,15 @@ namespace AtomicWar._Game.Core
                 LocationName = location.displayName,
                 HoursRemaining = location.travelHours,
                 TotalHours = location.travelHours,
-                RadPerHour = trueRad,
+                AmbientRadPerHour = trueRad,
+                RadPerHour = exposurePerHour,
                 DangerLevel = location.dangerLevel,
                 Kind = MissionKind.Scavenge,
+                StartingRadiationDose = survivor.RadiationDose,
                 Survivor = survivor
             };
 
+            survivor.State = SurvivorState.Working;
             _active.Add(mission);
             OnMissionStarted?.Invoke(mission);
             return true;
@@ -151,8 +168,8 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Start a survey mission: travel + SurveyHours of readings with a working geiger.
-        /// Fails if no working geiger is in inventory. Exposure uses TrueRad; the recorded
-        /// measurement is biased by the device's calibration.
+        /// Fails if no working geiger is in inventory. Exposure uses the equipped-gear
+        /// protected rate; the recorded ambient measurement is biased by device calibration.
         /// </summary>
         public bool StartSurvey(Survivor survivor, LocationDefinitionSO location)
         {
@@ -161,6 +178,7 @@ namespace AtomicWar._Game.Core
             if (_inventory == null || !_inventory.HasWorkingGeiger()) return false;
 
             float trueRad = ResolveTrueRad(location);
+            float exposurePerHour = ResolveMissionExposurePerHour(trueRad);
             float hours = location.travelHours + SurveyHours;
 
             var mission = new ActiveMission
@@ -170,12 +188,15 @@ namespace AtomicWar._Game.Core
                 LocationName = location.displayName,
                 HoursRemaining = hours,
                 TotalHours = hours,
-                RadPerHour = trueRad,
+                AmbientRadPerHour = trueRad,
+                RadPerHour = exposurePerHour,
                 DangerLevel = location.dangerLevel,
                 Kind = MissionKind.Survey,
+                StartingRadiationDose = survivor.RadiationDose,
                 Survivor = survivor
             };
 
+            survivor.State = SurvivorState.Working;
             _active.Add(mission);
             OnMissionStarted?.Invoke(mission);
             return true;
@@ -211,9 +232,16 @@ namespace AtomicWar._Game.Core
             for (int i = _active.Count - 1; i >= 0; i--)
             {
                 var mission = _active[i];
-                // Cap exposure to time actually spent on the mission (no overshoot dose)
+                // Cap to time actually spent on the mission this tick: any
+                // leftover tick budget is "after" the mission ends, so neither
+                // the rad exposure nor the countdown should claim it. Without
+                // this, a tick larger than HoursRemaining would leave
+                // HoursRemaining negative until the loop completes the mission
+                // on the same pass, which is fine for behaviour but produces
+                // an inconsistent state observable through the public field
+                // (and the SaveState round-trip).
                 float elapsed = Mathf.Min(gameHours, Mathf.Max(0f, mission.HoursRemaining));
-                mission.HoursRemaining -= gameHours;
+                mission.HoursRemaining -= elapsed;
 
                 // Accumulate radiation during travel/survey — always TrueRad
                 if (_radSystem != null && mission.Survivor != null && mission.Survivor.IsAlive
@@ -224,6 +252,13 @@ namespace AtomicWar._Game.Core
 
                 if (mission.HoursRemaining <= 0f)
                 {
+                    // Remove before completing: CompleteMission/CompleteSurvey fire
+                    // OnMissionCompleted/OnSurveyCompleted synchronously, and a
+                    // subscriber reading ActiveMissions during that callback (e.g.
+                    // the scavenge dispatch HUD's block-reason check) must already
+                    // see the mission gone, or the just-finished survivor reads as
+                    // "already scavenging" for one refresh cycle.
+                    _active.RemoveAt(i);
                     if (mission.Kind == MissionKind.Survey)
                     {
                         CompleteSurvey(mission);
@@ -232,36 +267,93 @@ namespace AtomicWar._Game.Core
                     {
                         CompleteMission(mission);
                     }
-                    _active.RemoveAt(i);
                 }
             }
         }
 
         private void CompleteMission(ActiveMission mission)
         {
+            if (mission.Survivor != null)
+                mission.Survivor.State = SurvivorState.Idle;
+
             var loot = RollLoot(mission.DangerLevel, mission.LocationId);
 
             // Prompt #210 — forest/swamp scavenge milestone + empty-loot forager food.
             ApplyForagerOnScavenge(mission, loot);
 
-            if (_inventory != null && loot.Count > 0)
+            var report = new ScavengeAfterActionReport
             {
-                foreach (var item in loot)
+                SurvivorId = mission.SurvivorId,
+                SurvivorName = mission.Survivor != null && !string.IsNullOrEmpty(mission.Survivor.DisplayName)
+                    ? mission.Survivor.DisplayName
+                    : mission.SurvivorId,
+                LocationId = mission.LocationId,
+                LocationName = mission.LocationName,
+                StartingRadiationDose = mission.StartingRadiationDose,
+                EndingRadiationDose = mission.Survivor != null ? mission.Survivor.RadiationDose : mission.StartingRadiationDose,
+                FaceGear = CaptureGearCondition(EquipSlot.Face),
+                BodyGear = CaptureGearCondition(EquipSlot.Body)
+            };
+
+            if (loot != null)
+            {
+                for (int i = 0; i < loot.Count; i++)
                 {
-                    _inventory.Add(item, 1);
+                    var item = loot[i];
+                    if (item == null) continue;
+
+                    if (_inventory != null && _inventory.Add(item, 1))
+                    {
+                        report.RecoveredItemIds.Add(item.id);
+                    }
+                    else if (_overflowStash != null && _overflowStash.Add(item, 1))
+                    {
+                        report.OverflowItemIds.Add(item.id);
+                    }
+                    else
+                    {
+                        // A partial/test host may not wire a stash. Keep this
+                        // visible rather than falsely reporting a recovered item.
+                        report.UnsecuredItemIds.Add(item.id);
+                    }
                 }
             }
+
+            report.RadiationGained = Mathf.Max(0f, report.EndingRadiationDose - report.StartingRadiationDose);
+            LastAfterActionReport = report;
             OnMissionCompleted?.Invoke(mission, loot);
+            OnScavengeAfterActionReady?.Invoke(report);
+        }
+
+        private ScavengeGearCondition CaptureGearCondition(EquipSlot slot)
+        {
+            var equipped = _inventory != null ? _inventory.GetEquipped(slot) : null;
+            if (equipped?.Item == null)
+                return new ScavengeGearCondition { Slot = slot.ToString().ToLowerInvariant() };
+
+            float durabilityPercent = equipped.Item.durability > 0f
+                ? Mathf.Clamp01(equipped.CurrentDurability / equipped.Item.durability) * 100f
+                : -1f;
+            return new ScavengeGearCondition
+            {
+                Slot = slot.ToString().ToLowerInvariant(),
+                ItemId = equipped.Item.id,
+                ItemName = string.IsNullOrEmpty(equipped.Item.displayName) ? equipped.Item.id : equipped.Item.displayName,
+                DurabilityPercent = durabilityPercent
+            };
         }
 
         private void CompleteSurvey(ActiveMission mission)
         {
+            if (mission.Survivor != null)
+                mission.Survivor.State = SurvivorState.Idle;
+
             bool success = false;
             if (_inventory != null && _knowledge != null)
             {
                 var slot = _inventory.FindBestWorkingDevice("geiger_counter");
                 if (slot?.Device != null
-                    && InstrumentDevice.TryRead(slot.Device, mission.RadPerHour, out float measured))
+                    && InstrumentDevice.TryRead(slot.Device, mission.AmbientRadPerHour, out float measured))
                 {
                     int day = _getCurrentDay();
                     InstrumentDevice.DrainBattery(slot.Device, InstrumentDevice.BatteryDrainPerSurvey);
@@ -364,6 +456,18 @@ namespace AtomicWar._Game.Core
             return location.baseRadsPerHour;
         }
 
+        /// <summary>
+        /// Location missions use the same equipped-gear protection calculation as
+        /// the field exposure context. Ambient radiation is retained separately
+        /// for instruments and save-state inspection; RadPerHour is the actual
+        /// dose rate applied to the survivor while this mission is active.
+        /// </summary>
+        private float ResolveMissionExposurePerHour(float ambientRadPerHour)
+        {
+            float protection = _inventory != null ? _inventory.GetEquippedProtection() : 0f;
+            return RadiationSystem.ComputeExposurePerHour(ambientRadPerHour, protection, 0f);
+        }
+
         private bool IsOnMission(string survivorId)
         {
             for (int i = 0; i < _active.Count; i++)
@@ -373,9 +477,18 @@ namespace AtomicWar._Game.Core
             return false;
         }
 
-        private List<ItemDefinition> RollLoot(float dangerLevel)
+        /// <summary>
+        /// Shared search-slot-count / per-slot-recovery-chance curve. This is
+        /// the single source of truth for that math: RollLoot rolls against
+        /// it directly, and GameBootstrap's dispatch-board preview text reads
+        /// it through the same call, so a balance-pass edit here can never
+        /// leave the preview quietly out of sync with what missions actually
+        /// resolve.
+        /// </summary>
+        public static void PreviewLootChances(float dangerLevel, out int searchSlots, out float recoveryChancePercent)
         {
-            return RollLoot(dangerLevel, locationId: null);
+            searchSlots = Mathf.Clamp(1 + Mathf.FloorToInt(dangerLevel / 3f), 1, 4);
+            recoveryChancePercent = Mathf.Clamp01(0.6f + dangerLevel * 0.03f) * 100f;
         }
 
         private List<ItemDefinition> RollLoot(float dangerLevel, string locationId)
@@ -384,8 +497,8 @@ namespace AtomicWar._Game.Core
             LastInjectedAmmoIds.Clear();
             LastInjectedWorldLootIds.Clear();
 
-            int itemCount = 1 + (int)(dangerLevel / 3f);
-            itemCount = Mathf.Clamp(itemCount, 1, 4);
+            PreviewLootChances(dangerLevel, out int itemCount, out float recoveryChancePercent);
+            float perSlotChance = recoveryChancePercent / 100f;
 
             // Military sites / high danger: inject exclusive ammo before generic rolls.
             TryInjectMilitaryAmmo(loot, dangerLevel, locationId);
@@ -403,8 +516,7 @@ namespace AtomicWar._Game.Core
 
                 for (int i = 0; i < itemCount; i++)
                 {
-                    float chance = 0.6f + dangerLevel * 0.03f;
-                    if (_rng.NextDouble() >= chance) continue;
+                    if (_rng.NextDouble() >= perSlotChance) continue;
 
                     double roll = _rng.NextDouble() * totalWeight;
                     for (int e = 0; e < entries.Count; e++)
@@ -425,8 +537,7 @@ namespace AtomicWar._Game.Core
 
             for (int i = 0; i < itemCount; i++)
             {
-                float chance = 0.6f + dangerLevel * 0.03f;
-                if (_rng.NextDouble() < chance)
+                if (_rng.NextDouble() < perSlotChance)
                 {
                     var item = _itemCatalog.items[_rng.Next(_itemCatalog.items.Count)];
                     if (item != null)
@@ -579,17 +690,24 @@ namespace AtomicWar._Game.Core
                     LocationName = m.LocationName,
                     HoursRemaining = m.HoursRemaining,
                     TotalHours = m.TotalHours,
+                    AmbientRadPerHour = m.AmbientRadPerHour,
                     RadPerHour = m.RadPerHour,
                     DangerLevel = m.DangerLevel,
+                    StartingRadiationDose = m.StartingRadiationDose,
                     Kind = (int)m.Kind
                 };
             }
-            return new ScavengingSystemSave { ActiveMissions = missions };
+            return new ScavengingSystemSave
+            {
+                ActiveMissions = missions,
+                LastAfterActionReport = LastAfterActionReport
+            };
         }
 
         public void RestoreState(ScavengingSystemSave save)
         {
             _active.Clear();
+            LastAfterActionReport = save?.LastAfterActionReport;
             if (save?.ActiveMissions == null) return;
             for (int i = 0; i < save.ActiveMissions.Length; i++)
             {
@@ -603,8 +721,14 @@ namespace AtomicWar._Game.Core
                     LocationName = sm.LocationName,
                     HoursRemaining = sm.HoursRemaining,
                     TotalHours = sm.TotalHours,
+                    // Older saves did not retain ambient separately, so their
+                    // saved applied rate remains the best available reading.
+                    AmbientRadPerHour = sm.AmbientRadPerHour > 0f
+                        ? sm.AmbientRadPerHour
+                        : sm.RadPerHour,
                     RadPerHour = sm.RadPerHour,
                     DangerLevel = sm.DangerLevel,
+                    StartingRadiationDose = sm.StartingRadiationDose,
                     Kind = (MissionKind)sm.Kind,
                     Survivor = sv
                 };
@@ -617,6 +741,7 @@ namespace AtomicWar._Game.Core
     public class ScavengingSystemSave
     {
         public ActiveMissionSave[] ActiveMissions;
+        public ScavengeAfterActionReport LastAfterActionReport;
     }
 
     [Serializable]
@@ -627,8 +752,10 @@ namespace AtomicWar._Game.Core
         public string LocationName;
         public float HoursRemaining;
         public float TotalHours;
+        public float AmbientRadPerHour;
         public float RadPerHour;
         public float DangerLevel;
+        public float StartingRadiationDose;
         public int Kind;
     }
 
@@ -646,9 +773,47 @@ namespace AtomicWar._Game.Core
         public string LocationName;
         public float HoursRemaining;
         public float TotalHours;
+        /// <summary>Unmitigated location radiation for instruments and audit UI.</summary>
+        public float AmbientRadPerHour;
+        /// <summary>Mitigated rate actually applied to the survivor during this mission.</summary>
         public float RadPerHour;
         public float DangerLevel;
+        /// <summary>Dose at dispatch; retained so the return report is correct after a save/load.</summary>
+        public float StartingRadiationDose;
         public MissionKind Kind;
         [NonSerialized] public Survivor Survivor;
+    }
+
+    /// <summary>
+    /// Save-safe fact record for a completed scavenging mission. Item definitions
+    /// are represented by ids so this report never serializes ScriptableObject
+    /// references and can be replayed by UI after loading a save.
+    /// </summary>
+    [Serializable]
+    public class ScavengeAfterActionReport
+    {
+        public string SurvivorId;
+        public string SurvivorName;
+        public string LocationId;
+        public string LocationName;
+        public List<string> RecoveredItemIds = new List<string>();
+        public List<string> OverflowItemIds = new List<string>();
+        public List<string> UnsecuredItemIds = new List<string>();
+        public float StartingRadiationDose;
+        public float EndingRadiationDose;
+        public float RadiationGained;
+        public ScavengeGearCondition FaceGear;
+        public ScavengeGearCondition BodyGear;
+    }
+
+    /// <summary>Equipped item state captured at mission return for the after-action report.</summary>
+    [Serializable]
+    public class ScavengeGearCondition
+    {
+        public string Slot;
+        public string ItemId;
+        public string ItemName;
+        /// <summary>-1 when the equipped item has no durability resource.</summary>
+        public float DurabilityPercent = -1f;
     }
 }

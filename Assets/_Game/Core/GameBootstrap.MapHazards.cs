@@ -3,6 +3,8 @@ using AtomicWar._Game.Survivors;
 using UnityEngine;
 using AtomicWar._Game.Utilities;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap

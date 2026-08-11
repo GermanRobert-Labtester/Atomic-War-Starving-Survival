@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AtomicWar._Game.Data;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.UI
 {
@@ -30,6 +32,14 @@ namespace AtomicWar._Game.UI
         [SerializeField] private MapScreenUI _mapScreenUi;
         [SerializeField] private WorkbenchUI _workbenchUi;
         [SerializeField] private HatchDefenseHUD _hatchDefenseHud;
+        [SerializeField] private ScavengeDispatchHUD _scavengeDispatchHud;
+        [SerializeField] private OverflowCrateHUD _overflowCrateHud;
+        [SerializeField] private FieldGearLoadoutHUD _fieldGearLoadoutHud;
+        [SerializeField] private BunkerRationingHUD _bunkerRationingHud;
+        [SerializeField] private WaterPurificationHUD _waterPurificationHud;
+        [SerializeField] private AirHeatManagementHUD _airHeatManagementHud;
+        [SerializeField] private BunkerMaintenanceHUD _bunkerMaintenanceHud;
+        [SerializeField] private SurvivorTaskBoardHUD _survivorTaskBoardHud;
         [SerializeField] private RoomAssignmentHUD _roomAssignmentHud;
         [SerializeField] private RadioInterceptHUD _radioInterceptHud;
         [SerializeField] private FactionRadioVoHook _factionRadioVoHook;
@@ -55,6 +65,14 @@ namespace AtomicWar._Game.UI
         public MapScreenUI MapScreenUI { get { EnsureWidgetReferences(); return _mapScreenUi; } }
         public WorkbenchUI WorkbenchUI { get { EnsureWidgetReferences(); return _workbenchUi; } }
         public HatchDefenseHUD HatchDefenseHUD { get { EnsureWidgetReferences(); return _hatchDefenseHud; } }
+        public ScavengeDispatchHUD ScavengeDispatchHUD { get { EnsureWidgetReferences(); return _scavengeDispatchHud; } }
+        public OverflowCrateHUD OverflowCrateHUD { get { EnsureWidgetReferences(); return _overflowCrateHud; } }
+        public FieldGearLoadoutHUD FieldGearLoadoutHUD { get { EnsureWidgetReferences(); return _fieldGearLoadoutHud; } }
+        public BunkerRationingHUD BunkerRationingHUD { get { EnsureWidgetReferences(); return _bunkerRationingHud; } }
+        public WaterPurificationHUD WaterPurificationHUD { get { EnsureWidgetReferences(); return _waterPurificationHud; } }
+        public AirHeatManagementHUD AirHeatManagementHUD { get { EnsureWidgetReferences(); return _airHeatManagementHud; } }
+        public BunkerMaintenanceHUD BunkerMaintenanceHUD { get { EnsureWidgetReferences(); return _bunkerMaintenanceHud; } }
+        public SurvivorTaskBoardHUD SurvivorTaskBoardHUD { get { EnsureWidgetReferences(); return _survivorTaskBoardHud; } }
         public RoomAssignmentHUD RoomAssignmentHUD { get { EnsureWidgetReferences(); return _roomAssignmentHud; } }
         public RadioInterceptHUD RadioInterceptHUD { get { EnsureWidgetReferences(); return _radioInterceptHud; } }
         public JournalBookUI JournalBookUI { get { EnsureWidgetReferences(); return _journalBookUi; } }
@@ -104,6 +122,30 @@ namespace AtomicWar._Game.UI
             if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
             if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
             if (_hatchDefenseHud == null) _hatchDefenseHud = GetComponentInChildren<HatchDefenseHUD>() ?? gameObject.AddComponent<HatchDefenseHUD>();
+            if (_scavengeDispatchHud == null)
+                _scavengeDispatchHud = GetComponentInChildren<ScavengeDispatchHUD>()
+                    ?? gameObject.AddComponent<ScavengeDispatchHUD>();
+            if (_overflowCrateHud == null)
+                _overflowCrateHud = GetComponentInChildren<OverflowCrateHUD>()
+                    ?? gameObject.AddComponent<OverflowCrateHUD>();
+            if (_fieldGearLoadoutHud == null)
+                _fieldGearLoadoutHud = GetComponentInChildren<FieldGearLoadoutHUD>()
+                    ?? gameObject.AddComponent<FieldGearLoadoutHUD>();
+            if (_bunkerRationingHud == null)
+                _bunkerRationingHud = GetComponentInChildren<BunkerRationingHUD>()
+                    ?? gameObject.AddComponent<BunkerRationingHUD>();
+            if (_waterPurificationHud == null)
+                _waterPurificationHud = GetComponentInChildren<WaterPurificationHUD>()
+                    ?? gameObject.AddComponent<WaterPurificationHUD>();
+            if (_airHeatManagementHud == null)
+                _airHeatManagementHud = GetComponentInChildren<AirHeatManagementHUD>()
+                    ?? gameObject.AddComponent<AirHeatManagementHUD>();
+            if (_bunkerMaintenanceHud == null)
+                _bunkerMaintenanceHud = GetComponentInChildren<BunkerMaintenanceHUD>()
+                    ?? gameObject.AddComponent<BunkerMaintenanceHUD>();
+            if (_survivorTaskBoardHud == null)
+                _survivorTaskBoardHud = GetComponentInChildren<SurvivorTaskBoardHUD>()
+                    ?? gameObject.AddComponent<SurvivorTaskBoardHUD>();
             if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
             if (_radioInterceptHud == null) _radioInterceptHud = GetComponentInChildren<RadioInterceptHUD>() ?? gameObject.AddComponent<RadioInterceptHUD>();
             if (_journalBookUi == null) _journalBookUi = GetComponentInChildren<JournalBookUI>() ?? gameObject.AddComponent<JournalBookUI>();
@@ -512,6 +554,86 @@ namespace AtomicWar._Game.UI
             if (_hatchDefenseHud != null) _hatchDefenseHud.Bind(hatch);
         }
 
+        /// <summary>
+        /// Bind the player-facing dispatch board. Core owns the mission system
+        /// and start eligibility; the HUD only presents its pushed state.
+        /// </summary>
+        public void BindScavengeDispatch(
+            LocationCatalogSO catalog,
+            System.Func<IReadOnlyList<Survivor>> getSurvivors,
+            System.Func<Survivor, string> getDispatchBlockReason,
+            System.Func<Survivor, string> getTaskLabel,
+            System.Func<string> getMissionRoster,
+            System.Func<Survivor, LocationDefinitionSO, string> getPreflightSummary,
+            System.Func<string, string> getRadiationPreview,
+            System.Func<float, string> getLootPreview)
+        {
+            EnsureWidgetReferences();
+            _scavengeDispatchHud?.Bind(
+                catalog,
+                getSurvivors,
+                getDispatchBlockReason,
+                getTaskLabel,
+                getMissionRoster,
+                getPreflightSummary,
+                getRadiationPreview,
+                getLootPreview);
+        }
+
+        /// <summary>Bind the bunker receiving-crate panel to Core-owned snapshot data.</summary>
+        public void BindOverflowCrate(System.Func<OverflowCrateSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _overflowCrateHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the field face/body protection panel to Core snapshot data.</summary>
+        public void BindFieldGearLoadout(System.Func<FieldGearLoadoutSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _fieldGearLoadoutHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the daily bunker ration board to Core-owned policy state.</summary>
+        public void BindBunkerRationing(System.Func<BunkerRationingSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _bunkerRationingHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the cistern/purifier terminal and its ration projection.</summary>
+        public void BindWaterPurification(
+            System.Func<WaterPurificationSnapshot> getWaterSnapshot,
+            System.Func<BunkerRationingSnapshot> getRationSnapshot)
+        {
+            EnsureWidgetReferences();
+            _waterPurificationHud?.Bind(getWaterSnapshot, getRationSnapshot);
+        }
+
+        /// <summary>Bind the climate terminal to a Core-owned air/heat snapshot.</summary>
+        public void BindAirHeatManagement(System.Func<AirHeatManagementSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _airHeatManagementHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the repair-order terminal to Core-owned maintenance state.</summary>
+        public void BindBunkerMaintenance(
+            System.Func<BunkerMaintenanceSnapshot> getSnapshot,
+            System.Func<System.Collections.Generic.IReadOnlyList<AtomicWar._Game.Survivors.Survivor>> getSurvivors,
+            System.Func<RepairWorkOrderSnapshot> getWorkOrderSnapshot = null)
+        {
+            EnsureWidgetReferences();
+            _bunkerMaintenanceHud?.Bind(getSnapshot, getSurvivors, getWorkOrderSnapshot);
+        }
+
+        /// <summary>Bind the survivor allocation board to its detached Core snapshot.</summary>
+        public void BindSurvivorTaskBoard(System.Func<SurvivorTaskBoardSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _survivorTaskBoardHud?.Bind(getSnapshot);
+        }
+
         /// <summary>Ensure expedition combat/encounter log strip exists.</summary>
         public ExpeditionEncounterLogHUD EnsureExpeditionEncounterLog()
         {
@@ -530,7 +652,7 @@ namespace AtomicWar._Game.UI
 
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
-            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi, _endgameSummaryUi, _powerGridHud);
+            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi, _endgameSummaryUi, _powerGridHud, _scavengeDispatchHud, _overflowCrateHud, _fieldGearLoadoutHud, _bunkerRationingHud, _waterPurificationHud, _airHeatManagementHud, _bunkerMaintenanceHud, _survivorTaskBoardHud);
             return _diegeticHud;
         }
 

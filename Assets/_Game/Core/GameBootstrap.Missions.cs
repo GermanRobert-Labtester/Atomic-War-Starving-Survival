@@ -88,6 +88,14 @@ namespace AtomicWar._Game.Core
             return horror != null && horror.SelectSealBulkhead(roomId);
         }
 
+        /// <summary>Player API: extinguish fire with water/sand in a room (or active fire room).</summary>
+        public bool SelectExtinguishFire(string roomId = null)
+        {
+            if (_hud == null) return false;
+            var horror = _hud.EnsureInternalHorrorHud();
+            return horror != null && horror.SelectExtinguishFire(roomId);
+        }
+
         /// <summary>
         /// Simulate inventory strip click at index. Corpse icons open dispose panel.
         /// </summary>

@@ -1,0 +1,16 @@
+{
+    "name": "AtomicWar._Game.Endgame",
+    "rootNamespace": "AtomicWar._Game.Endgame",
+    "references": [
+        "AtomicWar._Game.Utilities"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

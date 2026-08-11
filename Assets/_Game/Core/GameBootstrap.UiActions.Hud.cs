@@ -48,6 +48,7 @@ namespace AtomicWar._Game.Core
                 calAge = InstrumentDevice.DaysSinceCalibration(geiger, day);
             }
             _hud.OnMapKnowledgeUpdated(_knowledgeViewBuffer, hasGeiger, calAge);
+            _hud.ScavengeDispatchHUD?.Refresh();
         }
 
 
@@ -116,12 +117,19 @@ namespace AtomicWar._Game.Core
 
             horror.OnBuryRequested -= HandleBuryTheDead;
             horror.OnBuryRequested += HandleBuryTheDead;
+            _subscriptions.Track(() => horror.OnBuryRequested -= HandleBuryTheDead);
             horror.OnProcessFertilizerRequested -= HandleProcessFertilizer;
             horror.OnProcessFertilizerRequested += HandleProcessFertilizer;
+            _subscriptions.Track(() => horror.OnProcessFertilizerRequested -= HandleProcessFertilizer);
             horror.OnFightFireRequested -= HandleFightFire;
             horror.OnFightFireRequested += HandleFightFire;
+            _subscriptions.Track(() => horror.OnFightFireRequested -= HandleFightFire);
             horror.OnSealBulkheadRequested -= HandleSealBulkhead;
             horror.OnSealBulkheadRequested += HandleSealBulkhead;
+            _subscriptions.Track(() => horror.OnSealBulkheadRequested -= HandleSealBulkhead);
+            horror.OnExtinguishFireRequested -= HandleExtinguishFire;
+            horror.OnExtinguishFireRequested += HandleExtinguishFire;
+            _subscriptions.Track(() => horror.OnExtinguishFireRequested -= HandleExtinguishFire);
 
             // Inventory corpse "click" → open dispose panel.
             var strip = _hud.InventoryStripUI;
@@ -129,6 +137,7 @@ namespace AtomicWar._Game.Core
             {
                 strip.OnIconActivated -= HandleInventoryIconActivated;
                 strip.OnIconActivated += HandleInventoryIconActivated;
+                _subscriptions.Track(() => strip.OnIconActivated -= HandleInventoryIconActivated);
             }
 
             RefreshInternalHorrorHud();
@@ -200,6 +209,20 @@ namespace AtomicWar._Game.Core
                 GameLog.Log($"[Internal Horror] Bulkhead sealed on {roomId}. Whatever was inside stays inside.");
                 RefreshInternalHorrorHud();
             }
+        }
+
+
+
+        private void HandleExtinguishFire(string roomId)
+        {
+            if (AtmosphereSystem == null || string.IsNullOrEmpty(roomId)) return;
+            var fighter = FindFirstLivingSurvivor();
+            if (fighter == null) return;
+            bool out_ = AtmosphereSystem.ExtinguishFire(roomId, fighter, NeedsSystem, WaterStorage);
+            GameLog.Log(out_
+                ? $"[Internal Horror] {fighter.DisplayName} doused the fire in {roomId}."
+                : $"[Internal Horror] {fighter.DisplayName} threw water on the fire in {roomId}. Still burning.");
+            RefreshInternalHorrorHud();
         }
 
 

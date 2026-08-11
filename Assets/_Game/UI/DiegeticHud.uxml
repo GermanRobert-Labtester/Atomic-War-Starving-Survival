@@ -81,5 +81,37 @@
             <ui:Label name="power-grid-sources" class="diegetic-body power-grid-readout" text="" />
             <ui:Label name="power-grid-loads" class="diegetic-body power-grid-readout" text="" />
         </ui:VisualElement>
+
+        <ui:VisualElement name="scavenge-panel" class="diegetic-panel scavenge-panel hidden">
+            <ui:Label name="scavenge-body" class="diegetic-body scavenge-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="overflow-crate-panel" class="diegetic-panel overflow-crate-panel hidden">
+            <ui:Label name="overflow-crate-body" class="diegetic-body overflow-crate-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="field-gear-loadout-panel" class="diegetic-panel field-gear-loadout-panel hidden">
+            <ui:Label name="field-gear-loadout-body" class="diegetic-body field-gear-loadout-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="bunker-rationing-panel" class="diegetic-panel bunker-rationing-panel hidden">
+            <ui:Label name="bunker-rationing-body" class="diegetic-body bunker-rationing-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="water-purification-panel" class="diegetic-panel water-purification-panel hidden">
+            <ui:Label name="water-purification-body" class="diegetic-body water-purification-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="air-heat-management-panel" class="diegetic-panel air-heat-management-panel hidden">
+            <ui:Label name="air-heat-management-body" class="diegetic-body air-heat-management-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="bunker-maintenance-panel" class="diegetic-panel bunker-maintenance-panel hidden">
+            <ui:Label name="bunker-maintenance-body" class="diegetic-body bunker-maintenance-readout" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="survivor-task-board-panel" class="diegetic-panel survivor-task-board-panel hidden">
+            <ui:Label name="survivor-task-board-body" class="diegetic-body survivor-task-board-readout" text="" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

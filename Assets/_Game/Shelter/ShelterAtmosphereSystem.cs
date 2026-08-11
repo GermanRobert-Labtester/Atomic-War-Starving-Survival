@@ -29,8 +29,11 @@ namespace AtomicWar._Game.Shelter
         /// <summary>O2 fraction at which a sealed fire starves out.</summary>
         public const float FireExtinguishO2Threshold = 0.08f;
 
-        /// <summary>O2 below which survivors take hypoxia pressure (hook for needs).</summary>
+        /// <summary>O2 below which survivors in the room take hypoxia damage.</summary>
         public const float HypoxiaO2Threshold = 0.16f;
+
+        /// <summary>#284 Hypoxia health damage per hour for occupants of a low-O2 room.</summary>
+        public const float HypoxiaHealthDamagePerHour = 6f;
 
         /// <summary>Burn health damage when fighting a fire (per attempt).</summary>
         public const float FightFireBurnDamage = 12f;
@@ -231,6 +234,10 @@ namespace AtomicWar._Game.Shelter
                 {
                     power.AddCarbonMonoxide(FireNetworkCoPpmPerHour * intensity * gameHours);
                 }
+
+                // #284 Hypoxia: occupants of a critically low-O2 room take health damage.
+                if (room.OxygenFraction <= HypoxiaO2Threshold)
+                    ApplyGasPenaltyToRoomOccupants(room, HypoxiaHealthDamagePerHour * gameHours);
 
                 // Sealed bulkhead + low O2 starves the fire.
                 if (room.BulkheadSealed && room.OxygenFraction <= FireExtinguishO2Threshold)
@@ -457,6 +464,22 @@ namespace AtomicWar._Game.Shelter
         {
             if (_personalQuests == null || sv == null) return 0f;
             return _personalQuests.ApplyAtmosphereGasPenalty(sv, rawHealthDamage, isO2OrCo2Penalty);
+        }
+
+        /// <summary>#284 Apply the gas penalty to every living survivor currently in this room.</summary>
+        private void ApplyGasPenaltyToRoomOccupants(ShelterRoom room, float rawHealthDamage)
+        {
+            if (room == null || _personalQuests == null || _getSurvivors == null || rawHealthDamage <= 0f)
+                return;
+            var list = _getSurvivors();
+            if (list == null) return;
+            for (int i = 0; i < list.Count; i++)
+            {
+                var sv = list[i];
+                if (sv == null || !sv.IsAlive) continue;
+                if (!string.Equals(sv.CurrentRoomId, room.RoomId, StringComparison.Ordinal)) continue;
+                ApplyGasPenaltyToSurvivor(sv, rawHealthDamage);
+            }
         }
 
         /// <summary>

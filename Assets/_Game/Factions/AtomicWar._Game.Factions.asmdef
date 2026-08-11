@@ -1,0 +1,16 @@
+{
+    "name": "AtomicWar._Game.Factions",
+    "rootNamespace": "AtomicWar._Game.Factions",
+    "references": [
+        "AtomicWar._Game.Utilities"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -177,12 +177,16 @@ namespace AtomicWar._Game.Core
                 EconomySystem,
                 () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             EconomySystem.OnRaidResolved += OnFactionRaidResolved_Handle;
-            FactionRadioIntercepts.OnIntercept += entry =>
+            _subscriptions.Track(() => EconomySystem.OnRaidResolved -= OnFactionRaidResolved_Handle);
+
+            Action<FactionRadioInterceptSystem.InterceptEntry> onFactionRadioIntercept = entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Message)) return;
                 GameLog.Log($"[Radio intercept] {entry.Message}");
                 PushRadioInterceptToHud(entry);
             };
+            FactionRadioIntercepts.OnIntercept += onFactionRadioIntercept;
+            _subscriptions.Track(() => FactionRadioIntercepts.OnIntercept -= onFactionRadioIntercept);
 
         
         }
