@@ -150,6 +150,11 @@ InitTestScene*.unity*
 /em.log
 /pm.xml
 /pm.log
+# Layout diagnostic test artifacts (DiegeticHudLayoutDiagnostic). Removed
+# test file in 2026-08, but the test-results / log filenames it dropped at
+# the project root kept showing up as untracked on every run.
+/lay.xml
+/lay.log
 
 # mimocode tool artifacts
 /.mimocode/
