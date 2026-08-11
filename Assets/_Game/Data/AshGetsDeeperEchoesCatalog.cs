@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-using AtomicWar._Game.Data;
-namespace AtomicWar._Game.Events
+namespace AtomicWar._Game.Data
 {
     /// <summary>
     /// "The Ash Gets Deeper" content batch (Prompts #326–#330) — 10 new
     /// survivor-backstory echoes (lore fragments). Mirrors the brief's
     /// echo table exactly: each row is a Title + Text pair. The catalog
     /// materialises them into <see cref="DiaryFragmentSO"/> instances
-    /// for the existing <c>JournalSystem</c> to consume. Display is
-    /// handled by the host's existing journal UI.
+    /// for the existing <c>JournalSystem</c> (<c>AtomicWar._Game.Events</c>)
+    /// to consume. Lives in the Data assembly alongside DiaryFragmentSO
+    /// itself — Data already depends on Events, so putting this file in
+    /// Events (as originally authored) would need the reverse reference
+    /// and create a circular assembly dependency. Display is handled by
+    /// the host's existing journal UI.
     /// </summary>
     public static class AshGetsDeeperEchoesCatalog
     {

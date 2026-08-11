@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class NPC_FeralChildrenState
     {
-        public string id = "npc_feralchildren";
+        public string id = "npc_feral_children";
         public string displayName = "FeralChildren";
         public bool isActive = false;
         public bool isHostile = false;

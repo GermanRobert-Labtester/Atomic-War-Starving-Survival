@@ -129,8 +129,11 @@ namespace AtomicWar._Game.Inventory
         }
 
         // ── Materialise ──────────────────────────────────────────────────
-        public static ItemDefinition Materialise(Spec spec,
-            System.Func<string, ItemDefinition> lookup)
+        // Unlike NewRecipesCatalog (which resolves ingredient/result item
+        // ids through a host-supplied lookup), these Specs define standalone
+        // items with no cross-item references, so Materialise needs no
+        // lookup delegate.
+        public static ItemDefinition Materialise(Spec spec)
         {
             if (spec == null) return null;
             var def = ScriptableObject.CreateInstance<ItemDefinition>();
@@ -146,12 +149,11 @@ namespace AtomicWar._Game.Inventory
             return def;
         }
 
-        public static List<ItemDefinition> MaterialiseAll(
-            System.Func<string, ItemDefinition> lookup)
+        public static List<ItemDefinition> MaterialiseAll()
         {
             var specs = BuildAll();
             var outList = new List<ItemDefinition>(specs.Count);
-            for (int i = 0; i < specs.Count; i++) outList.Add(Materialise(specs[i], lookup));
+            for (int i = 0; i < specs.Count; i++) outList.Add(Materialise(specs[i]));
             return outList;
         }
 

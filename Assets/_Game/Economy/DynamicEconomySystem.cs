@@ -781,8 +781,11 @@ namespace AtomicWar._Game.Economy
             float demand = GetDemandMultiplier(item.id);
             float marketValue = Item_TradeValues.Resolve(phaseVal, tier, demand, IsSuppliesShort());
 
-            // [Prompts #326-330] Hardcore scarcity overlay.
-            float scarcityMult = GetScarcityMultiplier(CurrentDay, item);
+            // [Prompts #326-330] Hardcore scarcity overlay. Reuses the same
+            // _getDay provider SetDayProvider wires at boot (see TryLaunchRaid
+            // for the same pattern) — DynamicEconomySystem has no standalone
+            // CurrentDay member of its own.
+            float scarcityMult = GetScarcityMultiplier(_getDay != null ? _getDay() : 0, item);
             if (scarcityMult > 0f && !Mathf.Approximately(scarcityMult, 1f))
                 marketValue *= scarcityMult;
 
@@ -791,27 +794,14 @@ namespace AtomicWar._Game.Economy
 
         private float GetScarcityMultiplier(int currentDay, ItemDefinition item)
         {
-            if (_scarcityOverride == null || item == null) return 1.0f;
-            if (currentDay < _scarcityOverride.DayRangeStart) return 1.0f;
-            if (currentDay > _scarcityOverride.DayRangeEnd) return 1.0f;
-            string id = item.id ?? string.Empty;
-            if (IsScarcityBucketHit(id, "clean_water", "iodine_pills", "anti_rad", "air_filter"))
-                return _scarcityOverride.Tier1Critical;
-            if (IsScarcityBucketHit(id, "antibiotics", "medical_kit", "fuel", "water_filter"))
-                return _scarcityOverride.Tier2High;
-            if (IsScarcityBucketHit(id, "bandage", "canned_food", "cloth", "scrap_metal"))
-                return _scarcityOverride.Tier3Moderate;
-            if (IsScarcityBucketHit(id, "jewelry", "currency", "book", "playing_cards_worn"))
-                return _scarcityOverride.Tier4Low;
-            return 1.0f;
-        }
-
-        private static bool IsScarcityBucketHit(string id, params string[] bucket)
-        {
-            if (string.IsNullOrEmpty(id)) return false;
-            for (int i = 0; i < bucket.Length; i++)
-                if (string.Equals(id, bucket[i], StringComparison.OrdinalIgnoreCase)) return true;
-            return false;
+            if (_scarcityOverride == null || !_scarcityOverride.IsHardcore || item == null) return 1.0f;
+            string id = item.id;
+            if (string.IsNullOrEmpty(id)) return 1.0f;
+            // Delegate to HardcoreEconomyTuning, which already gates each tier's
+            // multiplier to its own day range (Critical: 1-15, High: 15-40,
+            // Moderate: 40-80, Low: 80+) — the tier is re-derived from the real
+            // currentDay on every call instead of being frozen at boot time.
+            return HardcoreEconomyTuning.GetScarcityMultiplierForDay(currentDay, id);
         }
 
         /// <summary>
@@ -1763,20 +1753,16 @@ namespace AtomicWar._Game.Economy
     /// [Prompts #326-330] Hardcore economy tuning overlay set by
     /// GameBootstrap.AshGetsDeeper.ApplyHardcoreEconomyTuningIfEnabled()
     /// at boot when the player is in Expert mode (or the inspector
-    /// override _forceHardcoreEconomy is on). The override is read
-    /// inside GetTradeValue and applied multiplicatively to the resolved
-    /// market value of items whose id matches one of the four tier buckets.
+    /// override _forceHardcoreEconomy is on). While <see cref="IsHardcore"/>
+    /// is true, GetTradeValue applies
+    /// <see cref="HardcoreEconomyTuning.GetScarcityMultiplierForDay"/>
+    /// (re-evaluated against the real current day on every call, so each
+    /// tier's day-range window is honoured) to the resolved market value.
     /// </summary>
     [Serializable]
     public class ScarcityOverride
     {
         public string Source;
-        public int DayRangeStart = 1;
-        public int DayRangeEnd = 9999;
-        public float Tier1Critical = 2.5f;
-        public float Tier2High = 2.0f;
-        public float Tier3Moderate = 1.5f;
-        public float Tier4Low = 0.5f;
         public bool IsHardcore;
     }
 

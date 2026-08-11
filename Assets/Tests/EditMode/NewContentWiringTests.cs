@@ -87,12 +87,11 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void AllTenRecipeIdsAreUnique()
         {
-            var ids = NewRecipesCatalog.Ids;
             var set = new System.Collections.Generic.HashSet<string>();
-            set.Add(ids.Tourniquet); set.Add(ids.SalineDrip); set.Add(ids.CookRatMeat);
-            set.Add(ids.PressInsectBrick); set.Add(ids.AshBread); set.Add(ids.RepairGasket);
-            set.Add(ids.ImprovisedMolotov); set.Add(ids.DistillWater); set.Add(ids.LeadVest);
-            set.Add(ids.TallowCandle);
+            set.Add(NewRecipesCatalog.Ids.Tourniquet); set.Add(NewRecipesCatalog.Ids.SalineDrip); set.Add(NewRecipesCatalog.Ids.CookRatMeat);
+            set.Add(NewRecipesCatalog.Ids.PressInsectBrick); set.Add(NewRecipesCatalog.Ids.AshBread); set.Add(NewRecipesCatalog.Ids.RepairGasket);
+            set.Add(NewRecipesCatalog.Ids.ImprovisedMolotov); set.Add(NewRecipesCatalog.Ids.DistillWater); set.Add(NewRecipesCatalog.Ids.LeadVest);
+            set.Add(NewRecipesCatalog.Ids.TallowCandle);
             Assert.AreEqual(10, set.Count);
         }
 

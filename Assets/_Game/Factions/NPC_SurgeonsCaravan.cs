@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class NPC_SurgeonsCaravanState
     {
-        public string id = "npc_surgeonscaravan";
+        public string id = "npc_the_surgeon_caravan";
         public string displayName = "SurgeonsCaravan";
         public bool isActive = false;
         public bool isHostile = false;

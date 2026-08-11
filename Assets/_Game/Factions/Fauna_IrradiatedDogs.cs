@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class Fauna_IrradiatedDogsState
     {
-        public string id = "fauna_irradiateddogs";
+        public string id = "fauna_irradiated_dogs";
         public string displayName = "IrradiatedDogs";
         public bool isPresent = false;
         public int count = 0;

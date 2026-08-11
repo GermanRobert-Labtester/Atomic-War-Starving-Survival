@@ -144,8 +144,11 @@ namespace AtomicWar.Tests.PlayMode
             };
             sequence.steps.Add(step);
 
-            var choreographer = new FlashpointChoreographer();
-            choreographer.SetSequence(sequence);
+            var choreographer = new FlashpointChoreographer(
+                sequence,
+                () => false,
+                new FlashpointChoreographerSystems(),
+                () => false);
             choreographer.OnNuclearExchange();
             // Step delay is 0 → next Tick(realSeconds > 0) fires the step.
             choreographer.Tick(0.1f);

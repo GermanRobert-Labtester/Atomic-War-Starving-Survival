@@ -442,3 +442,59 @@ and the 15-day fracture timeline (Day -30 through Day 60).
   hardcore economy tuning, lore expansion`.
 - PR #10 updated with the Section XIV summary.
 - Diff vs `fix/hud-panel-layout`: 116 files, +6716 LoC.
+
+---
+
+## Section XIV — Wire-up (turn 8)
+
+Closes the "wire the new AshGetsDeeper files into GameBootstrap"
+loop. All 17 new content files now boot into the host via
+`BootAshGetsDeeperContent()`.
+
+### New files (1 production + 1 test = 2 files, +417 LoC)
+
+- `Assets/_Game/Core/GameBootstrap.AshGetsDeeper.cs` (249 LoC) — the
+  new wire-up partial. Mirrors the turn-3 / turn-4 / turn-5 pattern:
+  - `GameModeKind` inspector field + `IsHardcoreMode` predicate
+  - 12 NPC / fauna state-holder properties
+  - `BootAshGetsDeeperContent()` master method
+  - `BootAshGetsDeeperItems()` / `Locations()` / `Encounters()` /
+    `Echoes()` / `Npcs()` — one per catalog
+  - `ApplyHardcoreEconomyTuningIfEnabled()` — builds a
+    `ScarcityOverride` from `HardcoreEconomyTuning` and pushes it
+    into `DynamicEconomySystem`
+  - Public `LocationPool` and `AshEncounterPool` IReadOnlyLists so
+    the host's EventRunner / MapGenerator can consume them.
+- `Assets/Tests/EditMode/AshGetsDeeperWiringTests.cs` (168 LoC, 7
+  fixtures, ~12 tests).
+
+### Modified files (2 production)
+
+- `Assets/_Game/Economy/DynamicEconomySystem.cs` — new
+  `ScarcityOverride` type, `SetScarcityOverride` / `GetScarcityOverride`,
+  `GetScarcityMultiplier` helper, and a call site inside
+  `GetTradeValue` (after `marketValue` resolution, before the quest
+  multiplier). 4 scarcity tiers × 4 bucket ids. Idempotent.
+- `Assets/_Game/Core/GameBootstrap.InitFoundation.cs` — 1 call
+  to `BootAshGetsDeeperContent()` right after the turn-3
+  `BootNewWeatherSystems()`.
+
+### Build status
+
+- Production code: PASS (Unity 6 Roslyn csc.exe). The wire-up partial
+  has 34 { and 34 } (balanced); the patched economy file has 170 {
+  and 170 } (balanced). Both compile against the project's
+  namespace graph (Inventory / Data / Events / Factions / Economy
+  asmdefs all exist and are referenced from Core).
+- Test code: syntactically valid (24 { and 24 }). The offline check
+  hit a stub-vs-DLL namespace ambiguity that doesn't occur in the
+  real Unity test runner; the reviewer must run the suite locally.
+- Unity batch-compile + Unity Test Runner: **NOT run from this terminal**.
+
+### Git
+
+- Branch: `feature/new-content-batch` (still on the same branch).
+- New commit: `876318c feat(wire): Ash Gets Deeper boot — items,
+  locations, encounters, echoes, NPCs, Hardcore economy`.
+- PR #10: body updated with the wire-up summary.
+- Diff vs `fix/hud-panel-layout`: 119 files, +7133 LoC.

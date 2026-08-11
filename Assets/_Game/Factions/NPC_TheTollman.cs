@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class NPC_TheTollmanState
     {
-        public string id = "npc_thetollman";
+        public string id = "npc_the_tollman";
         public string displayName = "TheTollman";
         public bool isActive = false;
         public bool isHostile = false;

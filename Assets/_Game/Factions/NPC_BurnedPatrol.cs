@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class NPC_BurnedPatrolState
     {
-        public string id = "npc_burnedpatrol";
+        public string id = "npc_burned_patrol";
         public string displayName = "BurnedPatrol";
         public bool isActive = false;
         public bool isHostile = false;

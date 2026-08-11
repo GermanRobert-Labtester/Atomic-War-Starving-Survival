@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class NPC_AshWidowsState
     {
-        public string id = "npc_ashwidows";
+        public string id = "npc_ash_widows";
         public string displayName = "AshWidows";
         public bool isActive = false;
         public bool isHostile = false;

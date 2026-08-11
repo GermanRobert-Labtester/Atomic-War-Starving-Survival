@@ -43,11 +43,11 @@ namespace AtomicWar.Tests.EditMode
             };
             var q = new Quest_GarrisonLastOrder
             {
-                AddFactionTrust = (f, r, d) => { if (f == "faction_garrison") garrisonTrust += d; },
-                SubtractFactionTrust = (f, r, d) => { if (f == "faction_militia") militiaTrust += d; if (f == "faction_survivors") survivorTrust += d; },
+                AddFactionTrust = (f, d) => { if (f == "faction_garrison") garrisonTrust += d; },
+                SubtractFactionTrust = (f, d) => { if (f == "faction_militia") militiaTrust += d; if (f == "faction_survivors") survivorTrust += d; },
                 MarkLocationDestroyed = (l, k) => { },
                 BroadcastRadioMessage = (f, m, c) => { },
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             q.ResolveDestroy();
@@ -63,9 +63,9 @@ namespace AtomicWar.Tests.EditMode
             float garrisonTrust = 0;
             var q = new Quest_GarrisonLastOrder
             {
-                AddFactionTrust = (f, r, d) => { },
-                SubtractFactionTrust = (f, r, d) => { if (f == "faction_garrison") garrisonTrust += d; },
-                RecordMoralEntry = (d, t) => { }
+                AddFactionTrust = (f, d) => { },
+                SubtractFactionTrust = (f, d) => { if (f == "faction_garrison") garrisonTrust += d; },
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             q.ResolveRefuse();
@@ -83,8 +83,8 @@ namespace AtomicWar.Tests.EditMode
             float militiaTrust = 0;
             var q = new Quest_MilitiaGrainWar
             {
-                SubtractFactionTrust = (f, r, d) => { if (f == "faction_upland_militia") militiaTrust += d; },
-                RecordMoralEntry = (d, t) => { }
+                SubtractFactionTrust = (f, d) => { if (f == "faction_upland_militia") militiaTrust += d; },
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             q.ResolveDiversionRefuse();
@@ -104,7 +104,7 @@ namespace AtomicWar.Tests.EditMode
             {
                 GrantPerk = (sv, id, n) => perk = id,
                 ApplyMorale = (sv, m) => { },
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             for (int i = 0; i < 5; i++) q.RecordTreatmentSuccess("sv_elena");
@@ -121,7 +121,7 @@ namespace AtomicWar.Tests.EditMode
                 GrantPerk = (sv, id, n) => { },
                 ApplyMorale = (sv, m) => { },
                 AddAffliction = (sv, id) => aff = id,
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             for (int i = 0; i < 3; i++) q.RecordPatientDiedUnderCare("sv_elena");
@@ -140,10 +140,11 @@ namespace AtomicWar.Tests.EditMode
             var q = new Quest_MechanicHighwayHeart
             {
                 GiveItem = (sv, id, n) => given = id,
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
-            q.OnStageEnter(3); // move to extraction
+            q.Advance(); // stage 1 -> 2
+            q.Advance(); // stage 2 -> 3 (extraction)
             // Force a low roll: skill 0.9, roll 0.1 -> success first
             var rng = new System.Random(0); // deterministic
             q.ResolveAttemptExtraction(0.0f, rng);
@@ -163,7 +164,7 @@ namespace AtomicWar.Tests.EditMode
             {
                 TakeItem = (sv, id, n) => { },
                 GrantPerk = (sv, id, n) => { },
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             q.OnRaidDuringQuest();
@@ -177,7 +178,7 @@ namespace AtomicWar.Tests.EditMode
             {
                 TakeItem = (sv, id, n) => { },
                 GrantPerk = (sv, id, n) => { },
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             for (int i = 0; i < 3; i++) q.RecordTalkDay("sv_therapist");
@@ -193,7 +194,7 @@ namespace AtomicWar.Tests.EditMode
         {
             var q = new Quest_DeepWell
             {
-                RecordMoralEntry = (d, t) => { }
+                RecordMoralEntry = (t) => { }
             };
             q.Start(0);
             for (int d = 0; d < 8; d++) q.RecordExcavationDay();

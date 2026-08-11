@@ -200,7 +200,7 @@ namespace AtomicWar._Game.Core
             return y;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_AshLightning system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -209,7 +209,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_FogOfParticulate system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -218,7 +218,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_ThermalInversion system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -227,7 +227,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_IceStorm system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -236,7 +236,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_Silence system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -245,7 +245,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static void DrawWeatherLineImpl(float x, float y, float width, float lineHeight,
+        private void DrawWeatherLineImpl(float x, float y, float width, float lineHeight,
             string label, bool isActive, float durationHours)
         {
             string status = isActive ? "ACTIVE" : "idle  ";

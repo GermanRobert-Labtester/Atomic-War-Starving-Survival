@@ -37,7 +37,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MaterialiseRoundTrips()
         {
-            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll(id => null);
+            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll();
             Assert.AreEqual(80, defs.Count);
             Assert.AreEqual("morphine_ampoule", defs[0].id);
         }

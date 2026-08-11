@@ -2,7 +2,6 @@
 // Deeper") into the host. Mirrors the turn-3 / turn-4 / turn-5 partial
 // pattern: small set of focused boot methods, SaveSystem + diagnostics
 // integration, optional Hardcore economy overlay.
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Data;
@@ -10,6 +9,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -75,9 +75,7 @@ namespace AtomicWar._Game.Core
                 GameLog.LogWarning("[GameBootstrap] _itemCatalog is null; skipping Section XIV items.");
                 return;
             }
-            var lookup = new Func<string, ItemDefinition>(id =>
-                _itemCatalog != null ? _itemCatalog.GetById(id) : null);
-            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll(lookup);
+            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll();
             int added = 0;
             for (int i = 0; i < defs.Count; i++)
             {
@@ -175,14 +173,18 @@ namespace AtomicWar._Game.Core
             if (!_autoDiscoverEchoes) return;
             var defs = AshGetsDeeperEchoesCatalog.MaterialiseAll();
             int added = 0;
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
             for (int i = 0; i < defs.Count; i++)
             {
                 var d = defs[i];
                 if (d == null || string.IsNullOrEmpty(d.id)) continue;
-                // JournalSystem.TryDiscover is fire-once keyed by id; safe to
-                // call at boot. Existing playthroughs that already discovered
-                // the echo will no-op.
-                if (JournalSystem.TryDiscover(d.id, d.text) != null) added++;
+                // The echoes are fully-authored text, not a JournalVoice-composed
+                // knowledge key, so TryAddRawEntry (not TryDiscover) is the right
+                // API: it dedupes fire-once by knowledgeKey via KnowledgeBase the
+                // same way, but inserts the caller-supplied text verbatim instead
+                // of generating it from a trait-voiced template. Existing
+                // playthroughs that already discovered the echo will no-op.
+                if (JournalSystem.TryAddRawEntry(d.id, d.text, null, day) != null) added++;
             }
             GameLog.Log($"[GameBootstrap] Ash Gets Deeper echoes: registered {added} of {defs.Count}.");
         }
@@ -228,20 +230,15 @@ namespace AtomicWar._Game.Core
                     _currentGameMode + ").");
                 return;
             }
-            // 4 price-shock slots; the host can fire them via the existing
-            // EventRunner choice resolution path. We seed them with the
-            // Hardcore tier's per-day multiplier so the baseline value of
-            // every item in the tuned buckets is already applied.
-            EconomySystem.SetScarcityOverride(new DynamicEconomySystem.ScarcityOverride
+            // Flip the override on; GetTradeValue re-derives the correct
+            // tier multiplier from HardcoreEconomyTuning on every trade
+            // using the real current day, so each tier's day-range window
+            // (Critical: 1-15, High: 15-40, Moderate: 40-80, Low: 80+) is
+            // honoured instead of being frozen at boot time.
+            EconomySystem.SetScarcityOverride(new ScarcityOverride
             {
                 Source = "HardcoreEconomyTuning",
-                DayRangeStart = 1,
-                DayRangeEnd = 9999,
-                Tier1Critical = HardcoreEconomyTuning.GetScarcityMultiplierForDay(5, "clean_water"),
-                Tier2High     = HardcoreEconomyTuning.GetScarcityMultiplierForDay(30, "antibiotics"),
-                Tier3Moderate = HardcoreEconomyTuning.GetScarcityMultiplierForDay(60, "bandage"),
-                Tier4Low      = HardcoreEconomyTuning.GetScarcityMultiplierForDay(90, "book"),
-                IsHardcore    = true
+                IsHardcore = true
             });
             GameLog.Log("[GameBootstrap] Hardcore economy tuning: ON (Expert mode).");
         }
