@@ -42,6 +42,43 @@ namespace AtomicWar._Game.UI.MainMenu
         private const float NarrowWidth = 1500f;
         private const float UltrawideWidth = 2200f;
 
+        /// <summary>
+        /// M-1: UXML element names, shared across all MainMenuController.*.cs
+        /// partials. Centralizing these turns a misspelled query from a silent
+        /// null at runtime into a single edit site.
+        /// </summary>
+        private static class ElementNames
+        {
+            public const string GameShell = "game-shell";
+            public const string MenuList = "menu-list";
+            public const string FooterCredit = "footer-credit";
+            public const string SceneImage = "scene-image";
+
+            public const string DialogBackdrop = "dialog-backdrop";
+            public const string DialogPanel = "dialog-panel";
+            public const string DialogEyebrow = "dialog-eyebrow";
+            public const string DialogTitle = "dialog-title";
+            public const string DialogBody = "dialog-body";
+            public const string DialogConfirm = "dialog-confirm";
+            public const string DialogBack = "dialog-back";
+            public const string DialogConfirmLabel = "dialog-confirm-label";
+            public const string DialogBackLabel = "dialog-back-label";
+
+            public const string DifficultyRow = "difficulty-row";
+            public const string DifficultyOperative = "difficulty-operative";
+            public const string DifficultyVeteran = "difficulty-veteran";
+            public const string DifficultyOperativeLabel = "difficulty-operative-label";
+            public const string DifficultyOperativeDetail = "difficulty-operative-detail";
+            public const string DifficultyVeteranLabel = "difficulty-veteran-label";
+            public const string DifficultyVeteranDetail = "difficulty-veteran-detail";
+
+            public const string SettingsBody = "settings-body";
+            public const string SettingVolume = "setting-volume";
+            public const string SettingVolumeValue = "setting-volume-value";
+            public const string SettingFullscreen = "setting-fullscreen";
+            public const string SettingResolution = "setting-resolution";
+        }
+
         private UIDocument _document;
         private VisualElement _root;
         private VisualElement _shell;
@@ -109,8 +146,8 @@ namespace AtomicWar._Game.UI.MainMenu
             _root = _document != null ? _document.rootVisualElement : null;
             if (_root == null) return;
 
-            _shell = _root.Q<VisualElement>("game-shell");
-            _menuList = _root.Q<VisualElement>("menu-list");
+            _shell = _root.Q<VisualElement>(ElementNames.GameShell);
+            _menuList = _root.Q<VisualElement>(ElementNames.MenuList);
             if (_shell == null || _menuList == null)
             {
                 Debug.LogError(
@@ -121,7 +158,7 @@ namespace AtomicWar._Game.UI.MainMenu
 
             _built = true;
 
-            SetLabel("footer-credit", MainMenuModel.FooterCredit);
+            SetLabel(ElementNames.FooterCredit, MainMenuModel.FooterCredit);
 
             _continueSlotId = ProbeContinueSlot();
             BuildRows();

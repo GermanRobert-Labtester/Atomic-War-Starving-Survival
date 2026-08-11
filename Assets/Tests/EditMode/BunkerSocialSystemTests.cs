@@ -206,6 +206,54 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(d.Mutiny.MutinyActive);
         }
 
+        [Test]
+        public void Mutiny_YieldResources_SucceedsAndEndsMutiny()
+        {
+            // Audit H-6g: HandleMutinyChoiceApplied's "mutiny_yield" branch now
+            // reaches this in production — only the can't-afford path had coverage.
+            var m = Make("y2"); ApplyNeeds(m, morale: 12);
+            var f = Make("y3"); ApplyNeeds(f, morale: 12);
+            var roster = Roster(m, f);
+            var d = NewDirector(roster);
+            for (int day = 1; day <= MutinySystem.MutinyWindowDays; day++)
+                d.Mutiny.TickWeekly(day, roster, new System.Random(5));
+            Assert.IsTrue(d.Mutiny.MutinyActive);
+
+            d.YieldBunkerControl = u => true;
+            Assert.IsTrue(d.ResolveMutinyYield(10));
+            Assert.IsFalse(d.Mutiny.MutinyActive);
+            Assert.IsNull(d.Mutiny.LeaderId);
+        }
+
+        [Test]
+        public void Mutiny_ResolveExecute_KillsLeaderAndAppliesMoraleFalloutToOthers()
+        {
+            // Audit H-6g: HandleMutinyChoiceApplied's "mutiny_execute" branch now
+            // reaches this in production — previously untested and uncalled.
+            var m = Make("e0"); ApplyNeeds(m, morale: 15);
+            var f = Make("e1"); ApplyNeeds(f, morale: 10);
+            var roster = Roster(m, f);
+            var d = NewDirector(roster);
+            d.Mutiny.LeadershipScore = sv => sv.EffectiveScienceSkill + 1f;
+
+            for (int day = 1; day <= MutinySystem.MutinyWindowDays; day++)
+                d.Mutiny.TickWeekly(day, roster, new System.Random(3));
+            Assert.IsTrue(d.Mutiny.MutinyActive);
+
+            string leaderId = d.Mutiny.LeaderId;
+            var leader = leaderId == m.Id ? m : f;
+            var other = leaderId == m.Id ? f : m;
+            float otherMoraleBefore = other.Needs.Morale;
+
+            Assert.IsTrue(d.ResolveMutinyExecute());
+            Assert.IsFalse(d.Mutiny.MutinyActive);
+            Assert.IsNull(d.Mutiny.LeaderId);
+            Assert.IsFalse(leader.IsAlive, "Executed leader must be marked Dead.");
+            Assert.AreEqual(0f, leader.Needs.Health, 0.01f);
+            Assert.AreEqual(otherMoraleBefore - MutinySystem.MutinyFalloutMoraleHit, other.Needs.Morale, 0.01f,
+                "Surviving followers must take the execute morale fallout hit.");
+        }
+
         // ─────────────── #472 IMPRISONMENT ───────────────
 
         [Test]

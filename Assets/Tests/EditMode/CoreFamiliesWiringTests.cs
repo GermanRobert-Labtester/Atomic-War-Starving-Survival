@@ -1,13 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Environment;
+using AtomicWar._Game.Inventory;
+using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using ShelterClass = AtomicWar._Game.Shelter.Shelter;
+
+using AtomicWar._Game.Endgame;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.World;
+
+using AtomicWar._Game.Narrative;
+
+using AtomicWar._Game.Factions;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -23,6 +37,84 @@ namespace AtomicWar.Tests.EditMode
             string dir = Path.Combine(Path.GetTempPath(), "ashfall_corefam_" + tag + "_" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(dir);
             return dir;
+        }
+
+        /// <summary>
+        /// Reflection-based Capture/Restore round-trip check. A bare
+        /// Assert.IsNotNull(save) only proves CaptureState() didn't return null —
+        /// it does not prove RestoreState() actually restores anything, so a
+        /// no-op or partially-broken RestoreState would still pass it. This
+        /// mutates each named field on the captured DTO to a distinguishable
+        /// non-default value, restores it into a second fresh instance,
+        /// re-captures, and asserts the named fields survived the round trip.
+        /// Field names are the DTO's own public fields that the class's
+        /// RestoreState is confirmed (by source inspection) to actually read;
+        /// fields never consumed by RestoreState (e.g. hardcoded id tags
+        /// re-stamped on every capture) are intentionally not passed in.
+        /// </summary>
+        private static void AssertRoundTrips<TSource, TSave>(
+            Func<TSource> makeSource,
+            Func<TSource, TSave> capture,
+            Action<TSource, TSave> restore,
+            params string[] fieldsToVerify)
+            where TSave : class
+        {
+            var a = makeSource();
+            var save = capture(a);
+            Assert.IsNotNull(save, typeof(TSource).Name + ".CaptureState() returned null");
+
+            var saveType = typeof(TSave);
+            var mutations = new List<(FieldInfo field, object expected)>();
+            foreach (var name in fieldsToVerify)
+            {
+                var field = saveType.GetField(name, BindingFlags.Public | BindingFlags.Instance);
+                if (field == null) continue;
+                if (!TryMutate(field.FieldType, field.GetValue(save), out object newValue)) continue;
+                try
+                {
+                    field.SetValue(save, newValue);
+                    mutations.Add((field, newValue));
+                }
+                catch (FieldAccessException) { /* readonly at the CLR level; skip */ }
+            }
+
+            var b = makeSource();
+            restore(b, save);
+            var save2 = capture(b);
+            Assert.IsNotNull(save2, typeof(TSource).Name + ".CaptureState() returned null after restore");
+
+            foreach (var (field, expected) in mutations)
+            {
+                object actual = field.GetValue(save2);
+                Assert.AreEqual(expected, actual,
+                    $"{typeof(TSource).Name}.RestoreState did not round-trip field '{field.Name}'");
+            }
+        }
+
+        /// <summary>Best-effort distinguishable mutation for a field's runtime type. Returns
+        /// false (and does nothing) for types this helper does not know how to compare
+        /// generically (collections, nested reference types, etc.) so callers can skip
+        /// verifying those fields rather than risk a false-positive assertion.</summary>
+        private static bool TryMutate(Type t, object current, out object result)
+        {
+            if (t == typeof(string))
+            {
+                result = ((current as string) ?? string.Empty) + "_rt_check";
+                return true;
+            }
+            if (t == typeof(int)) { result = ((int)current) + 12345; return true; }
+            if (t == typeof(float)) { result = ((float)current) + 12345.5f; return true; }
+            if (t == typeof(double)) { result = ((double)current) + 12345.5d; return true; }
+            if (t == typeof(bool)) { result = !(bool)current; return true; }
+            if (t.IsEnum)
+            {
+                foreach (var v in Enum.GetValues(t))
+                {
+                    if (!v.Equals(current)) { result = v; return true; }
+                }
+            }
+            result = null;
+            return false;
         }
 
         private static SaveSystem MakeSave(string dir, Action<SaveSystem> wire)
@@ -52,281 +144,128 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void Action_All_CaptureRestore()
         {
-            var actionAdministerPlacebo = new Action_AdministerPlacebo();
-            var actionAdministerPlaceboSave = actionAdministerPlacebo.CaptureState();
-            Assert.IsNotNull(actionAdministerPlaceboSave);
-            actionAdministerPlacebo.RestoreState(actionAdministerPlaceboSave);
-            Assert.IsNotNull(actionAdministerPlacebo.CaptureState());
-            var actionBarricadeDoor = new Action_BarricadeDoor();
-            var actionBarricadeDoorSave = actionBarricadeDoor.CaptureState();
-            Assert.IsNotNull(actionBarricadeDoorSave);
-            actionBarricadeDoor.RestoreState(actionBarricadeDoorSave);
-            Assert.IsNotNull(actionBarricadeDoor.CaptureState());
-            var actionBoilBatteries = new Action_BoilBatteries();
-            var actionBoilBatteriesSave = actionBoilBatteries.CaptureState();
-            Assert.IsNotNull(actionBoilBatteriesSave);
-            actionBoilBatteries.RestoreState(actionBoilBatteriesSave);
-            Assert.IsNotNull(actionBoilBatteries.CaptureState());
-            var actionBroadcastPropaganda = new Action_BroadcastPropaganda();
-            var actionBroadcastPropagandaSave = actionBroadcastPropaganda.CaptureState();
-            Assert.IsNotNull(actionBroadcastPropagandaSave);
-            actionBroadcastPropaganda.RestoreState(actionBroadcastPropagandaSave);
-            Assert.IsNotNull(actionBroadcastPropaganda.CaptureState());
-            var actionBurnCharcoal = new Action_BurnCharcoal();
-            var actionBurnCharcoalSave = actionBurnCharcoal.CaptureState();
-            Assert.IsNotNull(actionBurnCharcoalSave);
-            actionBurnCharcoal.RestoreState(actionBurnCharcoalSave);
-            Assert.IsNotNull(actionBurnCharcoal.CaptureState());
-            var actionBuryTimeCapsule = new Action_BuryTimeCapsule();
-            var actionBuryTimeCapsuleSave = actionBuryTimeCapsule.CaptureState();
-            Assert.IsNotNull(actionBuryTimeCapsuleSave);
-            actionBuryTimeCapsule.RestoreState(actionBuryTimeCapsuleSave);
-            Assert.IsNotNull(actionBuryTimeCapsule.CaptureState());
-            var actionCallCaravan = new Action_CallCaravan();
-            var actionCallCaravanSave = actionCallCaravan.CaptureState();
-            Assert.IsNotNull(actionCallCaravanSave);
-            actionCallCaravan.RestoreState(actionCallCaravanSave);
-            Assert.IsNotNull(actionCallCaravan.CaptureState());
-            var actionCoverTracks = new Action_CoverTracks();
-            var actionCoverTracksSave = actionCoverTracks.CaptureState();
-            Assert.IsNotNull(actionCoverTracksSave);
-            actionCoverTracks.RestoreState(actionCoverTracksSave);
-            Assert.IsNotNull(actionCoverTracks.CaptureState());
-            var actionCrackMainframe = new Action_CrackMainframe();
-            var actionCrackMainframeSave = actionCrackMainframe.CaptureState();
-            Assert.IsNotNull(actionCrackMainframeSave);
-            actionCrackMainframe.RestoreState(actionCrackMainframeSave);
-            Assert.IsNotNull(actionCrackMainframe.CaptureState());
-            var actionDecrypt = new Action_Decrypt();
-            var actionDecryptSave = actionDecrypt.CaptureState();
-            Assert.IsNotNull(actionDecryptSave);
-            actionDecrypt.RestoreState(actionDecryptSave);
-            Assert.IsNotNull(actionDecrypt.CaptureState());
-            var actionDemandTribute = new Action_DemandTribute();
-            var actionDemandTributeSave = actionDemandTribute.CaptureState();
-            Assert.IsNotNull(actionDemandTributeSave);
-            actionDemandTribute.RestoreState(actionDemandTributeSave);
-            Assert.IsNotNull(actionDemandTribute.CaptureState());
-            var actionEstablishRoute = new Action_EstablishRoute();
-            var actionEstablishRouteSave = actionEstablishRoute.CaptureState();
-            Assert.IsNotNull(actionEstablishRouteSave);
-            actionEstablishRoute.RestoreState(actionEstablishRouteSave);
-            Assert.IsNotNull(actionEstablishRoute.CaptureState());
-            var actionExile = new Action_Exile();
-            var actionExileSave = actionExile.CaptureState();
-            Assert.IsNotNull(actionExileSave);
-            actionExile.RestoreState(actionExileSave);
-            Assert.IsNotNull(actionExile.CaptureState());
-            var actionFish = new Action_Fish();
-            var actionFishSave = actionFish.CaptureState();
-            Assert.IsNotNull(actionFishSave);
-            actionFish.RestoreState(actionFishSave);
-            Assert.IsNotNull(actionFish.CaptureState());
-            var actionHarvestOrgans = new Action_HarvestOrgans();
-            var actionHarvestOrgansSave = actionHarvestOrgans.CaptureState();
-            Assert.IsNotNull(actionHarvestOrgansSave);
-            actionHarvestOrgans.RestoreState(actionHarvestOrgansSave);
-            Assert.IsNotNull(actionHarvestOrgans.CaptureState());
-            var actionInfectSelf = new Action_InfectSelf();
-            var actionInfectSelfSave = actionInfectSelf.CaptureState();
-            Assert.IsNotNull(actionInfectSelfSave);
-            actionInfectSelf.RestoreState(actionInfectSelfSave);
-            Assert.IsNotNull(actionInfectSelf.CaptureState());
-            var actionIsotopeTrace = new Action_IsotopeTrace();
-            var actionIsotopeTraceSave = actionIsotopeTrace.CaptureState();
-            Assert.IsNotNull(actionIsotopeTraceSave);
-            actionIsotopeTrace.RestoreState(actionIsotopeTraceSave);
-            Assert.IsNotNull(actionIsotopeTrace.CaptureState());
-            var actionMercy = new Action_Mercy();
-            var actionMercySave = actionMercy.CaptureState();
-            Assert.IsNotNull(actionMercySave);
-            actionMercy.RestoreState(actionMercySave);
-            Assert.IsNotNull(actionMercy.CaptureState());
-            var actionMixCement = new Action_MixCement();
-            var actionMixCementSave = actionMixCement.CaptureState();
-            Assert.IsNotNull(actionMixCementSave);
-            actionMixCement.RestoreState(actionMixCementSave);
-            Assert.IsNotNull(actionMixCement.CaptureState());
-            var actionMixChems = new Action_MixChems();
-            var actionMixChemsSave = actionMixChems.CaptureState();
-            Assert.IsNotNull(actionMixChemsSave);
-            actionMixChems.RestoreState(actionMixChemsSave);
-            Assert.IsNotNull(actionMixChems.CaptureState());
-            var actionOverwatch = new Action_Overwatch();
-            var actionOverwatchSave = actionOverwatch.CaptureState();
-            Assert.IsNotNull(actionOverwatchSave);
-            actionOverwatch.RestoreState(actionOverwatchSave);
-            Assert.IsNotNull(actionOverwatch.CaptureState());
-            var actionPhysicalTherapy = new Action_PhysicalTherapy();
-            var actionPhysicalTherapySave = actionPhysicalTherapy.CaptureState();
-            Assert.IsNotNull(actionPhysicalTherapySave);
-            actionPhysicalTherapy.RestoreState(actionPhysicalTherapySave);
-            Assert.IsNotNull(actionPhysicalTherapy.CaptureState());
-            var actionPirateRadio = new Action_PirateRadio();
-            var actionPirateRadioSave = actionPirateRadio.CaptureState();
-            Assert.IsNotNull(actionPirateRadioSave);
-            actionPirateRadio.RestoreState(actionPirateRadioSave);
-            Assert.IsNotNull(actionPirateRadio.CaptureState());
-            var actionPlaceBait = new Action_PlaceBait();
-            var actionPlaceBaitSave = actionPlaceBait.CaptureState();
-            Assert.IsNotNull(actionPlaceBaitSave);
-            actionPlaceBait.RestoreState(actionPlaceBaitSave);
-            Assert.IsNotNull(actionPlaceBait.CaptureState());
-            var actionPullTooth = new Action_PullTooth();
-            var actionPullToothSave = actionPullTooth.CaptureState();
-            Assert.IsNotNull(actionPullToothSave);
-            actionPullTooth.RestoreState(actionPullToothSave);
-            Assert.IsNotNull(actionPullTooth.CaptureState());
-            var actionRigCorpse = new Action_RigCorpse();
-            var actionRigCorpseSave = actionRigCorpse.CaptureState();
-            Assert.IsNotNull(actionRigCorpseSave);
-            actionRigCorpse.RestoreState(actionRigCorpseSave);
-            Assert.IsNotNull(actionRigCorpse.CaptureState());
-            var actionRoutePower = new Action_RoutePower();
-            var actionRoutePowerSave = actionRoutePower.CaptureState();
-            Assert.IsNotNull(actionRoutePowerSave);
-            actionRoutePower.RestoreState(actionRoutePowerSave);
-            Assert.IsNotNull(actionRoutePower.CaptureState());
-            var actionSabotage = new Action_Sabotage();
-            var actionSabotageSave = actionSabotage.CaptureState();
-            Assert.IsNotNull(actionSabotageSave);
-            actionSabotage.RestoreState(actionSabotageSave);
-            Assert.IsNotNull(actionSabotage.CaptureState());
-            var actionScorchedEarth = new Action_ScorchedEarth();
-            var actionScorchedEarthSave = actionScorchedEarth.CaptureState();
-            Assert.IsNotNull(actionScorchedEarthSave);
-            actionScorchedEarth.RestoreState(actionScorchedEarthSave);
-            Assert.IsNotNull(actionScorchedEarth.CaptureState());
-            var actionSealRoom = new Action_SealRoom();
-            var actionSealRoomSave = actionSealRoom.CaptureState();
-            Assert.IsNotNull(actionSealRoomSave);
-            actionSealRoom.RestoreState(actionSealRoomSave);
-            Assert.IsNotNull(actionSealRoom.CaptureState());
-            var actionSelfSurgery = new Action_SelfSurgery();
-            var actionSelfSurgerySave = actionSelfSurgery.CaptureState();
-            Assert.IsNotNull(actionSelfSurgerySave);
-            actionSelfSurgery.RestoreState(actionSelfSurgerySave);
-            Assert.IsNotNull(actionSelfSurgery.CaptureState());
-            var actionSilentTakedown = new Action_SilentTakedown();
-            var actionSilentTakedownSave = actionSilentTakedown.CaptureState();
-            Assert.IsNotNull(actionSilentTakedownSave);
-            actionSilentTakedown.RestoreState(actionSilentTakedownSave);
-            Assert.IsNotNull(actionSilentTakedown.CaptureState());
-            var actionSiphonGas = new Action_SiphonGas();
-            var actionSiphonGasSave = actionSiphonGas.CaptureState();
-            Assert.IsNotNull(actionSiphonGasSave);
-            actionSiphonGas.RestoreState(actionSiphonGasSave);
-            Assert.IsNotNull(actionSiphonGas.CaptureState());
-            var actionStabilizeDNA = new Action_StabilizeDNA();
-            var actionStabilizeDNASave = actionStabilizeDNA.CaptureState();
-            Assert.IsNotNull(actionStabilizeDNASave);
-            actionStabilizeDNA.RestoreState(actionStabilizeDNASave);
-            Assert.IsNotNull(actionStabilizeDNA.CaptureState());
-            var actionStargazing = new Action_Stargazing();
-            var actionStargazingSave = actionStargazing.CaptureState();
-            Assert.IsNotNull(actionStargazingSave);
-            actionStargazing.RestoreState(actionStargazingSave);
-            Assert.IsNotNull(actionStargazing.CaptureState());
-            var actionWorshipIdol = new Action_WorshipIdol();
-            var actionWorshipIdolSave = actionWorshipIdol.CaptureState();
-            Assert.IsNotNull(actionWorshipIdolSave);
-            actionWorshipIdol.RestoreState(actionWorshipIdolSave);
-            Assert.IsNotNull(actionWorshipIdol.CaptureState());
+            AssertRoundTrips(() => new Action_AdministerPlacebo(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "clean_water_used", "discovered", "discovery_chance", "success_count", "survivor_id");
+            AssertRoundTrips(() => new Action_BarricadeDoor(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "barricadedRoomIds", "barricaderIds", "requiresCrowbarToBreak");
+            AssertRoundTrips(() => new Action_BoilBatteries(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "chargeRestored", "canOnlyDoOnce");
+            AssertRoundTrips(() => new Action_BroadcastPropaganda(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "targetFactionId", "isFactionRemovedFromPool", "removalDaysRemaining");
+            AssertRoundTrips(() => new Action_BurnCharcoal(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "coConcentration", "requiresSealedBarrel");
+            AssertRoundTrips(() => new Action_BuryTimeCapsule(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "action_id", "item_id", "item_data", "is_buried", "capsule_location", "retrieved_in_new_game");
+            AssertRoundTrips(() => new Action_CallCaravan(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "powerCostWatts", "arrivalTimeHours", "isCaravanEnRoute", "isCaravanKilledEnRoute");
+            AssertRoundTrips(() => new Action_CoverTracks(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "IsActive");
+            AssertRoundTrips(() => new Action_CrackMainframe(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hoursElapsed", "isCompleted", "isRunning", "serverFried");
+            AssertRoundTrips(() => new Action_Decrypt(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "displayName", "hoursRequired", "intelligenceThreshold", "successChance", "isDecoding");
+            AssertRoundTrips(() => new Action_DemandTribute(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "securityThreshold", "armoryThreshold", "tributeFoodPerDay", "tributeWaterPerDay", "hasVassals");
+            AssertRoundTrips(() => new Action_EstablishRoute(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "routeEstablished", "patrolSurvivorIds", "ammoPerDay", "moneyPerDay");
+            AssertRoundTrips(() => new Action_Exile(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "survivorId", "backpackGiven", "foodGiven", "weaponGiven", "exileDay", "somberClosureTriggered", "executed");
+            // Action_Fish.RestoreState is an intentional no-op (dormant ghost, not
+            // Boot/Save wired) -- no field survives a round trip, so none are verified.
+            AssertRoundTrips(() => new Action_Fish(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            AssertRoundTrips(() => new Action_HarvestOrgans(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "moralePenalty", "organTradeValue", "requiresSurgeon", "hasBeenUsed");
+            AssertRoundTrips(() => new Action_InfectSelf(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "curesRadiationSickness", "maxHealthCap", "isInfected", "infectedSurvivorId");
+            AssertRoundTrips(() => new Action_IsotopeTrace(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "action_id", "requires_pristine_geiger", "reveals_safe_paths");
+            AssertRoundTrips(() => new Action_Mercy(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "displayName", "morphineCost", "somberClosureMoraleBuff");
+            AssertRoundTrips(() => new Action_MixCement(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "HoursRemaining", "IsCured", "IsCuring", "IsWet");
+            AssertRoundTrips(() => new Action_MixChems(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "durationHours", "cardiacArrestChance", "isActive", "hoursRemaining", "hasMorphine", "hasAdrenaline", "hasAntiRad");
+            AssertRoundTrips(() => new Action_Overwatch(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "ambushReduction", "rangeNodes", "stationedNodeId", "stationedSniperId");
+            AssertRoundTrips(() => new Action_PhysicalTherapy(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "days_completed", "efficiency_percent", "is_therapy_active", "limb_type", "survivor_id");
+            AssertRoundTrips(() => new Action_PirateRadio(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "displayName", "requiresVinylRecords", "moraleBoostAllies", "raiderCombatReduction", "broadcastDurationHours", "hoursRemaining", "isBroadcasting");
+            AssertRoundTrips(() => new Action_PlaceBait(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "hoursUntilSpawn", "isPlaced");
+            AssertRoundTrips(() => new Action_PullTooth(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "has_pliers", "has_whiskey", "survivor_id", "tooth_pulled");
+            AssertRoundTrips(() => new Action_RigCorpse(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "requiresGrenade", "karmaPenalty", "trapDamage", "passiveLootChance", "isTrapPlaced", "riggedNodeId");
+            AssertRoundTrips(() => new Action_RoutePower(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "action_id", "breakers_required", "copper_per_breaker", "breakers_repaired", "elevator_activated");
+            AssertRoundTrips(() => new Action_Sabotage(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "targetFactionId", "isMissionSuccessful", "isAgentCaughtAndKilled", "globalRaidLevelOverride");
+            AssertRoundTrips(() => new Action_ScorchedEarth(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "isAvailable", "requiresRaidInProgress", "requiresNoAmmo", "killsAllInside", "destroysAllLoot");
+            AssertRoundTrips(() => new Action_SealRoom(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "cementCost");
+            AssertRoundTrips(() => new Action_SelfSurgery(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "hoursRequired", "deathChance", "isAloneRequired", "hasBeenAttempted", "hoursElapsed");
+            // Action_SilentTakedown.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new Action_SilentTakedown(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            AssertRoundTrips(() => new Action_SiphonGas(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "hoursRequired", "poisoningChance", "fuelYieldUnits", "poisoningAffliction");
+            AssertRoundTrips(() => new Action_StabilizeDNA(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "requiresImmunosuppressants", "requiresSurgeon");
+            // Action_Stargazing.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new Action_Stargazing(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            AssertRoundTrips(() => new Action_WorshipIdol(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hoursSpentList", "idolType", "moraleGenerated", "productivityLoss", "roomId", "worshippingSurvivorIds");
         }
 
         [Test]
         public void Affliction_All_CaptureRestore()
         {
-            var afflictionAdrenalineCrash = new Affliction_AdrenalineCrash();
-            var afflictionAdrenalineCrashSave = afflictionAdrenalineCrash.CaptureState();
-            Assert.IsNotNull(afflictionAdrenalineCrashSave);
-            afflictionAdrenalineCrash.RestoreState(afflictionAdrenalineCrashSave);
-            Assert.IsNotNull(afflictionAdrenalineCrash.CaptureState());
-            var afflictionAmnesia = new AmnesiaSystem();
-            var afflictionAmnesiaSave = afflictionAmnesia.CaptureState();
-            Assert.IsNotNull(afflictionAmnesiaSave);
-            afflictionAmnesia.RestoreState(afflictionAmnesiaSave);
-            Assert.IsNotNull(afflictionAmnesia.CaptureState());
-            var afflictionBrainwashed = new Affliction_Brainwashed("affliction_brainwashed");
-            var afflictionBrainwashedSave = afflictionBrainwashed.CaptureState();
-            Assert.IsNotNull(afflictionBrainwashedSave);
-            afflictionBrainwashed.RestoreState(afflictionBrainwashedSave);
-            Assert.IsNotNull(afflictionBrainwashed.CaptureState());
-            var afflictionBrittleBones = new BrittleBonesSystem();
-            var afflictionBrittleBonesSave = afflictionBrittleBones.CaptureState();
-            Assert.IsNotNull(afflictionBrittleBonesSave);
-            afflictionBrittleBones.RestoreState(afflictionBrittleBonesSave);
-            Assert.IsNotNull(afflictionBrittleBones.CaptureState());
-            var afflictionCaveMadness = new CaveMadnessSystem("affliction_cave_madness");
-            var afflictionCaveMadnessSave = afflictionCaveMadness.CaptureState();
-            Assert.IsNotNull(afflictionCaveMadnessSave);
-            afflictionCaveMadness.RestoreState(afflictionCaveMadnessSave);
-            Assert.IsNotNull(afflictionCaveMadness.CaptureState());
-            var afflictionFeralRegression = new FeralRegressionSystem();
-            var afflictionFeralRegressionSave = afflictionFeralRegression.CaptureState();
-            Assert.IsNotNull(afflictionFeralRegressionSave);
-            afflictionFeralRegression.RestoreState(afflictionFeralRegressionSave);
-            Assert.IsNotNull(afflictionFeralRegression.CaptureState());
-            var afflictionImaginaryFriend = new ImaginaryFriendSystem();
-            var afflictionImaginaryFriendSave = afflictionImaginaryFriend.CaptureState();
-            Assert.IsNotNull(afflictionImaginaryFriendSave);
-            afflictionImaginaryFriend.RestoreState(afflictionImaginaryFriendSave);
-            Assert.IsNotNull(afflictionImaginaryFriend.CaptureState());
-            var afflictionNerveDamage = new Affliction_NerveDamage();
-            var afflictionNerveDamageSave = afflictionNerveDamage.CaptureState();
-            Assert.IsNotNull(afflictionNerveDamageSave);
-            afflictionNerveDamage.RestoreState(afflictionNerveDamageSave);
-            Assert.IsNotNull(afflictionNerveDamage.CaptureState());
-            var afflictionOldAge = new Affliction_OldAge();
-            var afflictionOldAgeSave = afflictionOldAge.CaptureState();
-            Assert.IsNotNull(afflictionOldAgeSave);
-            afflictionOldAge.RestoreState(afflictionOldAgeSave);
-            Assert.IsNotNull(afflictionOldAge.CaptureState());
-            var afflictionPhantomLimb = new Affliction_PhantomLimb();
-            var afflictionPhantomLimbSave = afflictionPhantomLimb.CaptureState();
-            Assert.IsNotNull(afflictionPhantomLimbSave);
-            afflictionPhantomLimb.RestoreState(afflictionPhantomLimbSave);
-            Assert.IsNotNull(afflictionPhantomLimb.CaptureState());
-            var afflictionRadHallucinations = new Affliction_RadHallucinations();
-            var afflictionRadHallucinationsSave = afflictionRadHallucinations.CaptureState();
-            Assert.IsNotNull(afflictionRadHallucinationsSave);
-            afflictionRadHallucinations.RestoreState(afflictionRadHallucinationsSave);
-            Assert.IsNotNull(afflictionRadHallucinations.CaptureState());
+            AssertRoundTrips(() => new Affliction_AdrenalineCrash(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "afflictionId", "staminaDropToZero", "restRequiredHours", "hoursRemaining");
+            AssertRoundTrips(() => new AmnesiaSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Affliction_Brainwashed("affliction_brainwashed"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "survivorId", "hoursOfPropaganda", "brainwashThresholdHours", "isBrainwashed", "defectChance", "lastFrequencyId");
+            AssertRoundTrips(() => new BrittleBonesSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new CaveMadnessSystem("affliction_cave_madness"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "daysBelowLevel4", "depthThresholdDays", "isMad", "moraleDrainPerDay", "survivorId");
+            AssertRoundTrips(() => new FeralRegressionSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new ImaginaryFriendSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Affliction_NerveDamage(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "survivorId", "isDamaged", "firearmAccuracyPenalty", "surgeryDisabled", "craftingDisabled", "triggerCause");
+            AssertRoundTrips(() => new Affliction_OldAge(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "afflictionId", "bedriddenDayCounts", "bedriddenSurvivorIds", "dailyStatLoss", "dayThreshold", "isBedridden", "passedSurvivorIds", "trackedSurvivorIds");
+            AssertRoundTrips(() => new Affliction_PhantomLimb(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "episode_active", "episode_hours_remaining", "episodes_per_day", "morphine_hours_remaining", "morphine_suppressed", "survivor_id", "total_episodes");
+            AssertRoundTrips(() => new Affliction_RadHallucinations(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "affliction_id", "stage_threshold", "fake_loot_count");
             var afflictionRadiationBlindness = new RadiationBlindnessSystem();
             var afflictionRadiationBlindnessSave = afflictionRadiationBlindness.CaptureState();
             Assert.IsNotNull(afflictionRadiationBlindnessSave);
             afflictionRadiationBlindness.RestoreState(afflictionRadiationBlindnessSave);
             Assert.IsNotNull(afflictionRadiationBlindness.CaptureState());
-            var afflictionScurvyDegeneration = new Affliction_ScurvyDegeneration();
-            var afflictionScurvyDegenerationSave = afflictionScurvyDegeneration.CaptureState();
-            Assert.IsNotNull(afflictionScurvyDegenerationSave);
-            afflictionScurvyDegeneration.RestoreState(afflictionScurvyDegenerationSave);
-            Assert.IsNotNull(afflictionScurvyDegeneration.CaptureState());
+            AssertRoundTrips(() => new Affliction_ScurvyDegeneration(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "survivorId", "daysSinceScurvy", "degenerationThresholdDays", "isDegenerating", "bleedingFromScars");
             var afflictionSporeLung = new SporeLungSystem();
             var afflictionSporeLungSave = afflictionSporeLung.CaptureState();
             Assert.IsNotNull(afflictionSporeLungSave);
             afflictionSporeLung.RestoreState(afflictionSporeLungSave);
             Assert.IsNotNull(afflictionSporeLung.CaptureState());
-            var afflictionSterile = new Affliction_Sterile();
-            var afflictionSterileSave = afflictionSterile.CaptureState();
-            Assert.IsNotNull(afflictionSterileSave);
-            afflictionSterile.RestoreState(afflictionSterileSave);
-            Assert.IsNotNull(afflictionSterile.CaptureState());
-            var afflictionSurvivorsGuilt = new SurvivorsGuiltSystem();
-            var afflictionSurvivorsGuiltSave = afflictionSurvivorsGuilt.CaptureState();
-            Assert.IsNotNull(afflictionSurvivorsGuiltSave);
-            afflictionSurvivorsGuilt.RestoreState(afflictionSurvivorsGuiltSave);
-            Assert.IsNotNull(afflictionSurvivorsGuilt.CaptureState());
-            var afflictionTBI = new Affliction_TBI();
-            var afflictionTBISave = afflictionTBI.CaptureState();
-            Assert.IsNotNull(afflictionTBISave);
-            afflictionTBI.RestoreState(afflictionTBISave);
-            Assert.IsNotNull(afflictionTBI.CaptureState());
-            var afflictionThyroidCancer = new Affliction_ThyroidCancer();
-            var afflictionThyroidCancerSave = afflictionThyroidCancer.CaptureState();
-            Assert.IsNotNull(afflictionThyroidCancerSave);
-            afflictionThyroidCancer.RestoreState(afflictionThyroidCancerSave);
-            Assert.IsNotNull(afflictionThyroidCancer.CaptureState());
+            AssertRoundTrips(() => new Affliction_Sterile(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "afflictionId", "isPermanent", "radThreshold", "sterileSurvivorIds");
+            AssertRoundTrips(() => new SurvivorsGuiltSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Affliction_TBI(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "head_trauma_count", "severity", "speech_slur", "survivor_id");
+            AssertRoundTrips(() => new Affliction_ThyroidCancer(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "affliction_id", "max_stamina_cap", "max_health_cap", "is_progressing", "diagnosed_survivor_ids", "halted_survivor_ids");
             var afflictionTrenchFoot = new TrenchFootSystem();
             var afflictionTrenchFootSave = afflictionTrenchFoot.CaptureState();
             Assert.IsNotNull(afflictionTrenchFootSave);
@@ -337,486 +276,228 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void AudioEvent_All_CaptureRestore()
         {
-            var audioEventDeafening = new AudioEvent_Deafening();
-            var audioEventDeafeningSave = audioEventDeafening.CaptureState();
-            Assert.IsNotNull(audioEventDeafeningSave);
-            audioEventDeafening.RestoreState(audioEventDeafeningSave);
-            Assert.IsNotNull(audioEventDeafening.CaptureState());
-            var audioEventHeartbeat = new AudioEvent_Heartbeat();
-            var audioEventHeartbeatSave = audioEventHeartbeat.CaptureState();
-            Assert.IsNotNull(audioEventHeartbeatSave);
-            audioEventHeartbeat.RestoreState(audioEventHeartbeatSave);
-            Assert.IsNotNull(audioEventHeartbeat.CaptureState());
+            AssertRoundTrips(() => new AudioEvent_Deafening(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "durationMinutes", "isActive");
+            AssertRoundTrips(() => new AudioEvent_Heartbeat(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "healthThreshold", "isActive");
         }
 
         [Test]
         public void Combat_All_CaptureRestore()
         {
-            var combatBleedOut = new Combat_BleedOut();
-            var combatBleedOutSave = combatBleedOut.CaptureState();
-            Assert.IsNotNull(combatBleedOutSave);
-            combatBleedOut.RestoreState(combatBleedOutSave);
-            Assert.IsNotNull(combatBleedOut.CaptureState());
-            var combatFlanking = new Combat_Flanking();
-            var combatFlankingSave = combatFlanking.CaptureState();
-            Assert.IsNotNull(combatFlankingSave);
-            combatFlanking.RestoreState(combatFlankingSave);
-            Assert.IsNotNull(combatFlanking.CaptureState());
-            var combatSuppression = new Combat_Suppression();
-            var combatSuppressionSave = combatSuppression.CaptureState();
-            Assert.IsNotNull(combatSuppressionSave);
-            combatSuppression.RestoreState(combatSuppressionSave);
-            Assert.IsNotNull(combatSuppression.CaptureState());
+            AssertRoundTrips(() => new Combat_BleedOut(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "mechanicId", "turnsUntilDeath");
+            AssertRoundTrips(() => new Combat_Flanking(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "flankingDamageBonus", "mechanicId", "positionKeys", "positionLanes");
+            AssertRoundTrips(() => new Combat_Suppression(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "accuracyDropToZero", "durationTurns", "mechanicId", "pinnedEnemyIds");
         }
 
         [Test]
         public void CombatStance_All_CaptureRestore()
         {
-            var combatStanceLastStand = new CombatStance_LastStand();
-            var combatStanceLastStandSave = combatStanceLastStand.CaptureState();
-            Assert.IsNotNull(combatStanceLastStandSave);
-            combatStanceLastStand.RestoreState(combatStanceLastStandSave);
-            Assert.IsNotNull(combatStanceLastStand.CaptureState());
+            AssertRoundTrips(() => new CombatStance_LastStand(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "stanceId", "accuracyMultiplier", "damageMultiplier", "canFlee", "deathIsInstant");
         }
 
         [Test]
         public void Crisis_All_CaptureRestore()
         {
-            var crisisFeralFlora = new Crisis_FeralFlora();
-            var crisisFeralFloraSave = crisisFeralFlora.CaptureState();
-            Assert.IsNotNull(crisisFeralFloraSave);
-            crisisFeralFlora.RestoreState(crisisFeralFloraSave);
-            Assert.IsNotNull(crisisFeralFlora.CaptureState());
-            var crisisStructuralFailure = new Crisis_StructuralFailure();
-            var crisisStructuralFailureSave = crisisStructuralFailure.CaptureState();
-            Assert.IsNotNull(crisisStructuralFailureSave);
-            crisisStructuralFailure.RestoreState(crisisStructuralFailureSave);
-            Assert.IsNotNull(crisisStructuralFailure.CaptureState());
+            AssertRoundTrips(() => new Crisis_FeralFlora(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "crisisId", "isOvergrown", "daysSinceLastHarvest", "overgrowthThresholdDays", "airVentClogPercent", "plantHealthPool", "requiresMachete");
+            AssertRoundTrips(() => new Crisis_StructuralFailure(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "crisisId", "daysAtZeroIntegrity", "breachThresholdDays", "isBreached", "shieldingPermanentlyZeroed", "evacuationRequired");
         }
 
         [Test]
         public void Durability_All_CaptureRestore()
         {
-            var durabilitySuppressor = new Durability_Suppressor();
-            var durabilitySuppressorSave = durabilitySuppressor.CaptureState();
-            Assert.IsNotNull(durabilitySuppressorSave);
-            durabilitySuppressor.RestoreState(durabilitySuppressorSave);
-            Assert.IsNotNull(durabilitySuppressor.CaptureState());
+            AssertRoundTrips(() => new Durability_Suppressor(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "IsBroken", "MaxShotsRolled", "ShotsRemaining");
         }
 
         [Test]
         public void Endgame_All_CaptureRestore()
         {
-            var endgameUltimatum = new Endgame_Ultimatum();
-            var endgameUltimatumSave = endgameUltimatum.CaptureState();
-            Assert.IsNotNull(endgameUltimatumSave);
-            endgameUltimatum.RestoreState(endgameUltimatumSave);
-            Assert.IsNotNull(endgameUltimatum.CaptureState());
+            AssertRoundTrips(() => new Endgame_Ultimatum(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "dominantFactionId", "daysRemaining", "isUltimatumActive", "isGameWon", "isGameLost", "selectedEnding");
         }
 
         [Test]
         public void Hazard_All_CaptureRestore()
         {
-            var hazardCookOff = new Hazard_CookOff();
-            var hazardCookOffSave = hazardCookOff.CaptureState();
-            Assert.IsNotNull(hazardCookOffSave);
-            hazardCookOff.RestoreState(hazardCookOffSave);
-            Assert.IsNotNull(hazardCookOff.CaptureState());
-            var hazardExplosiveCrafting = new Hazard_ExplosiveCrafting();
-            var hazardExplosiveCraftingSave = hazardExplosiveCrafting.CaptureState();
-            Assert.IsNotNull(hazardExplosiveCraftingSave);
-            hazardExplosiveCrafting.RestoreState(hazardExplosiveCraftingSave);
-            Assert.IsNotNull(hazardExplosiveCrafting.CaptureState());
-            var hazardFriendlyFire = new Hazard_FriendlyFire();
-            var hazardFriendlyFireSave = hazardFriendlyFire.CaptureState();
-            Assert.IsNotNull(hazardFriendlyFireSave);
-            hazardFriendlyFire.RestoreState(hazardFriendlyFireSave);
-            Assert.IsNotNull(hazardFriendlyFire.CaptureState());
-            var hazardMethane = new MethaneSystem("hazard_methane");
-            var hazardMethaneSave = hazardMethane.CaptureState();
-            Assert.IsNotNull(hazardMethaneSave);
-            hazardMethane.RestoreState(hazardMethaneSave);
-            Assert.IsNotNull(hazardMethane.CaptureState());
-            var hazardMimicCrate = new Hazard_MimicCrate();
-            var hazardMimicCrateSave = hazardMimicCrate.CaptureState();
-            Assert.IsNotNull(hazardMimicCrateSave);
-            hazardMimicCrate.RestoreState(hazardMimicCrateSave);
-            Assert.IsNotNull(hazardMimicCrate.CaptureState());
-            var hazardSurgicalBotch = new Hazard_SurgicalBotch();
-            var hazardSurgicalBotchSave = hazardSurgicalBotch.CaptureState();
-            Assert.IsNotNull(hazardSurgicalBotchSave);
-            hazardSurgicalBotch.RestoreState(hazardSurgicalBotchSave);
-            Assert.IsNotNull(hazardSurgicalBotch.CaptureState());
-            var hazardWeaponBurst = new Hazard_WeaponBurst();
-            var hazardWeaponBurstSave = hazardWeaponBurst.CaptureState();
-            Assert.IsNotNull(hazardWeaponBurstSave);
-            hazardWeaponBurst.RestoreState(hazardWeaponBurstSave);
-            Assert.IsNotNull(hazardWeaponBurst.CaptureState());
+            AssertRoundTrips(() => new Hazard_CookOff(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cookOffChance", "durabilityThreshold", "hazardId");
+            AssertRoundTrips(() => new Hazard_ExplosiveCrafting(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "craftingId", "fatigueThreshold", "skillThreshold", "detonationChance", "isActive");
+            AssertRoundTrips(() => new Hazard_FriendlyFire(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hazardId", "friendlyFireChance", "anxietyThreshold");
+            AssertRoundTrips(() => new MethaneSystem("hazard_methane"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "breachChance", "hazardId", "isDetonated", "isGasPresent");
+            AssertRoundTrips(() => new Hazard_MimicCrate(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hazard_id", "perception_threshold", "explosion_damage", "detected_crate_ids", "exploded_survivor_ids", "destroyed_loot_crate_ids");
+            AssertRoundTrips(() => new Hazard_SurgicalBotch(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "botch_chance", "complication_affliction", "last_botch_surgery", "second_surgery_difficulty");
+            AssertRoundTrips(() => new Hazard_WeaponBurst(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hazardId", "burstChance");
         }
 
         [Test]
         public void HiddenStat_All_CaptureRestore()
         {
-            var hiddenStatUnseen = new HiddenStat_Unseen();
-            var hiddenStatUnseenSave = hiddenStatUnseen.CaptureState();
-            Assert.IsNotNull(hiddenStatUnseenSave);
-            hiddenStatUnseen.RestoreState(hiddenStatUnseenSave);
-            Assert.IsNotNull(hiddenStatUnseen.CaptureState());
+            AssertRoundTrips(() => new HiddenStat_Unseen(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "statId", "currentLevel", "peakThreshold", "risePerDarkRoom");
         }
 
         [Test]
         public void Item_All_CaptureRestore()
         {
-            var itemAICoreData = new Item_AICoreData();
-            var itemAICoreDataSave = itemAICoreData.CaptureState();
-            Assert.IsNotNull(itemAICoreDataSave);
-            itemAICoreData.RestoreState(itemAICoreDataSave);
-            Assert.IsNotNull(itemAICoreData.CaptureState());
-            var itemAmmoTypes = new Item_AmmoTypes();
-            var itemAmmoTypesSave = itemAmmoTypes.CaptureState();
-            Assert.IsNotNull(itemAmmoTypesSave);
-            itemAmmoTypes.RestoreState(itemAmmoTypesSave);
-            Assert.IsNotNull(itemAmmoTypes.CaptureState());
-            var itemAmmonia = new Item_Ammonia();
-            var itemAmmoniaSave = itemAmmonia.CaptureState();
-            Assert.IsNotNull(itemAmmoniaSave);
-            itemAmmonia.RestoreState(itemAmmoniaSave);
-            Assert.IsNotNull(itemAmmonia.CaptureState());
-            var itemAmphetamines = new Item_Amphetamines();
-            var itemAmphetaminesSave = itemAmphetamines.CaptureState();
-            Assert.IsNotNull(itemAmphetaminesSave);
-            itemAmphetamines.RestoreState(itemAmphetaminesSave);
-            Assert.IsNotNull(itemAmphetamines.CaptureState());
-            var itemAshGhillie = new Item_AshGhillie();
-            var itemAshGhillieSave = itemAshGhillie.CaptureState();
-            Assert.IsNotNull(itemAshGhillieSave);
-            itemAshGhillie.RestoreState(itemAshGhillieSave);
-            Assert.IsNotNull(itemAshGhillie.CaptureState());
-            var itemAutoDoc = new Item_AutoDoc();
-            var itemAutoDocSave = itemAutoDoc.CaptureState();
-            Assert.IsNotNull(itemAutoDocSave);
-            itemAutoDoc.RestoreState(itemAutoDocSave);
-            Assert.IsNotNull(itemAutoDoc.CaptureState());
-            var itemBioPlastic = new Item_BioPlastic();
-            var itemBioPlasticSave = itemBioPlastic.CaptureState();
-            Assert.IsNotNull(itemBioPlasticSave);
-            itemBioPlastic.RestoreState(itemBioPlasticSave);
-            Assert.IsNotNull(itemBioPlastic.CaptureState());
-            var itemBloodBag = new Item_BloodBag();
-            var itemBloodBagSave = itemBloodBag.CaptureState();
-            Assert.IsNotNull(itemBloodBagSave);
-            itemBloodBag.RestoreState(itemBloodBagSave);
-            Assert.IsNotNull(itemBloodBag.CaptureState());
-            var itemBoneSaw = new Item_BoneSaw();
-            var itemBoneSawSave = itemBoneSaw.CaptureState();
-            Assert.IsNotNull(itemBoneSawSave);
-            itemBoneSaw.RestoreState(itemBoneSawSave);
-            Assert.IsNotNull(itemBoneSaw.CaptureState());
-            var itemC4 = new Item_C4();
-            var itemC4Save = itemC4.CaptureState();
-            Assert.IsNotNull(itemC4Save);
-            itemC4.RestoreState(itemC4Save);
-            Assert.IsNotNull(itemC4.CaptureState());
-            var itemCaltrops = new Item_Caltrops();
-            var itemCaltropsSave = itemCaltrops.CaptureState();
-            Assert.IsNotNull(itemCaltropsSave);
-            itemCaltrops.RestoreState(itemCaltropsSave);
-            Assert.IsNotNull(itemCaltrops.CaptureState());
-            var itemCarrierBird = new Item_CarrierBird();
-            var itemCarrierBirdSave = itemCarrierBird.CaptureState();
-            Assert.IsNotNull(itemCarrierBirdSave);
-            itemCarrierBird.RestoreState(itemCarrierBirdSave);
-            Assert.IsNotNull(itemCarrierBird.CaptureState());
-            var itemChildsDrawing = new Item_ChildsDrawing();
-            var itemChildsDrawingSave = itemChildsDrawing.CaptureState();
-            Assert.IsNotNull(itemChildsDrawingSave);
-            itemChildsDrawing.RestoreState(itemChildsDrawingSave);
-            Assert.IsNotNull(itemChildsDrawing.CaptureState());
-            var itemCigarettes = new Item_Cigarettes();
-            var itemCigarettesSave = itemCigarettes.CaptureState();
-            Assert.IsNotNull(itemCigarettesSave);
-            itemCigarettes.RestoreState(itemCigarettesSave);
-            Assert.IsNotNull(itemCigarettes.CaptureState());
-            var itemClimbingGear = new Item_ClimbingGear();
-            var itemClimbingGearSave = itemClimbingGear.CaptureState();
-            Assert.IsNotNull(itemClimbingGearSave);
-            itemClimbingGear.RestoreState(itemClimbingGearSave);
-            Assert.IsNotNull(itemClimbingGear.CaptureState());
-            var itemDecoy = new Item_Decoy();
-            var itemDecoySave = itemDecoy.CaptureState();
-            Assert.IsNotNull(itemDecoySave);
-            itemDecoy.RestoreState(itemDecoySave);
-            Assert.IsNotNull(itemDecoy.CaptureState());
-            var itemDogTags = new Item_DogTags();
-            var itemDogTagsSave = itemDogTags.CaptureState();
-            Assert.IsNotNull(itemDogTagsSave);
-            itemDogTags.RestoreState(itemDogTagsSave);
-            Assert.IsNotNull(itemDogTags.CaptureState());
-            var itemEMPGrenade = new Item_EMPGrenade();
-            var itemEMPGrenadeSave = itemEMPGrenade.CaptureState();
-            Assert.IsNotNull(itemEMPGrenadeSave);
-            itemEMPGrenade.RestoreState(itemEMPGrenadeSave);
-            Assert.IsNotNull(itemEMPGrenade.CaptureState());
-            var itemEncryptedDrive = new Item_EncryptedDrive();
-            var itemEncryptedDriveSave = itemEncryptedDrive.CaptureState();
-            Assert.IsNotNull(itemEncryptedDriveSave);
-            itemEncryptedDrive.RestoreState(itemEncryptedDriveSave);
-            Assert.IsNotNull(itemEncryptedDrive.CaptureState());
-            var itemEpiPen = new Item_EpiPen();
-            var itemEpiPenSave = itemEpiPen.CaptureState();
-            Assert.IsNotNull(itemEpiPenSave);
-            itemEpiPen.RestoreState(itemEpiPenSave);
-            Assert.IsNotNull(itemEpiPen.CaptureState());
-            var itemExosuit = new Item_Exosuit();
-            var itemExosuitSave = itemExosuit.CaptureState();
-            Assert.IsNotNull(itemExosuitSave);
-            itemExosuit.RestoreState(itemExosuitSave);
-            Assert.IsNotNull(itemExosuit.CaptureState());
-            var itemFaradayPack = new Item_FaradayPack();
-            var itemFaradayPackSave = itemFaradayPack.CaptureState();
-            Assert.IsNotNull(itemFaradayPackSave);
-            itemFaradayPack.RestoreState(itemFaradayPackSave);
-            Assert.IsNotNull(itemFaradayPack.CaptureState());
-            var itemForeignBook = new Item_ForeignBook();
-            var itemForeignBookSave = itemForeignBook.CaptureState();
-            Assert.IsNotNull(itemForeignBookSave);
-            itemForeignBook.RestoreState(itemForeignBookSave);
-            Assert.IsNotNull(itemForeignBook.CaptureState());
-            var itemGeigerCalibrator = new Item_GeigerCalibrator();
-            var itemGeigerCalibratorSave = itemGeigerCalibrator.CaptureState();
-            Assert.IsNotNull(itemGeigerCalibratorSave);
-            itemGeigerCalibrator.RestoreState(itemGeigerCalibratorSave);
-            Assert.IsNotNull(itemGeigerCalibrator.CaptureState());
-            var itemGlowingMushroom = new GlowingMushroomSystem("item_glowing_mushroom");
-            var itemGlowingMushroomSave = itemGlowingMushroom.CaptureState();
-            Assert.IsNotNull(itemGlowingMushroomSave);
-            itemGlowingMushroom.RestoreState(itemGlowingMushroomSave);
-            Assert.IsNotNull(itemGlowingMushroom.CaptureState());
-            var itemGoldBars = new Item_GoldBars();
-            var itemGoldBarsSave = itemGoldBars.CaptureState();
-            Assert.IsNotNull(itemGoldBarsSave);
-            itemGoldBars.RestoreState(itemGoldBarsSave);
-            Assert.IsNotNull(itemGoldBars.CaptureState());
-            var itemGuitar = new Item_Guitar();
-            var itemGuitarSave = itemGuitar.CaptureState();
-            Assert.IsNotNull(itemGuitarSave);
-            itemGuitar.RestoreState(itemGuitarSave);
-            Assert.IsNotNull(itemGuitar.CaptureState());
-            var itemHeirloom = new Item_Heirloom();
-            var itemHeirloomSave = itemHeirloom.CaptureState();
-            Assert.IsNotNull(itemHeirloomSave);
-            itemHeirloom.RestoreState(itemHeirloomSave);
-            Assert.IsNotNull(itemHeirloom.CaptureState());
-            var itemIBeam = new Item_IBeam();
-            var itemIBeamSave = itemIBeam.CaptureState();
-            Assert.IsNotNull(itemIBeamSave);
-            itemIBeam.RestoreState(itemIBeamSave);
-            Assert.IsNotNull(itemIBeam.CaptureState());
-            var itemImpureIodine = new Item_ImpureIodine();
-            var itemImpureIodineSave = itemImpureIodine.CaptureState();
-            Assert.IsNotNull(itemImpureIodineSave);
-            itemImpureIodine.RestoreState(itemImpureIodineSave);
-            Assert.IsNotNull(itemImpureIodine.CaptureState());
-            var itemJuggernautArmor = new Item_JuggernautArmor();
-            var itemJuggernautArmorSave = itemJuggernautArmor.CaptureState();
-            Assert.IsNotNull(itemJuggernautArmorSave);
-            itemJuggernautArmor.RestoreState(itemJuggernautArmorSave);
-            Assert.IsNotNull(itemJuggernautArmor.CaptureState());
-            var itemKevlarVest = new Item_KevlarVest();
-            var itemKevlarVestSave = itemKevlarVest.CaptureState();
-            Assert.IsNotNull(itemKevlarVestSave);
-            itemKevlarVest.RestoreState(itemKevlarVestSave);
-            Assert.IsNotNull(itemKevlarVest.CaptureState());
-            var itemKeycards = new Item_Keycards();
-            var itemKeycardsSave = itemKeycards.CaptureState();
-            Assert.IsNotNull(itemKeycardsSave);
-            itemKeycards.RestoreState(itemKeycardsSave);
-            Assert.IsNotNull(itemKeycards.CaptureState());
-            var itemLandmine = new Item_Landmine();
-            var itemLandmineSave = itemLandmine.CaptureState();
-            Assert.IsNotNull(itemLandmineSave);
-            itemLandmine.RestoreState(itemLandmineSave);
-            Assert.IsNotNull(itemLandmine.CaptureState());
-            var itemLeadApron = new Item_LeadApron();
-            var itemLeadApronSave = itemLeadApron.CaptureState();
-            Assert.IsNotNull(itemLeadApronSave);
-            itemLeadApron.RestoreState(itemLeadApronSave);
-            Assert.IsNotNull(itemLeadApron.CaptureState());
-            var itemLiquidStitches = new Item_LiquidStitches();
-            var itemLiquidStitchesSave = itemLiquidStitches.CaptureState();
-            Assert.IsNotNull(itemLiquidStitchesSave);
-            itemLiquidStitches.RestoreState(itemLiquidStitchesSave);
-            Assert.IsNotNull(itemLiquidStitches.CaptureState());
-            var itemMaggots = new Item_Maggots();
-            var itemMaggotsSave = itemMaggots.CaptureState();
-            Assert.IsNotNull(itemMaggotsSave);
-            itemMaggots.RestoreState(itemMaggotsSave);
-            Assert.IsNotNull(itemMaggots.CaptureState());
-            var itemMilGasMask = new Item_MilGasMask();
-            var itemMilGasMaskSave = itemMilGasMask.CaptureState();
-            Assert.IsNotNull(itemMilGasMaskSave);
-            itemMilGasMask.RestoreState(itemMilGasMaskSave);
-            Assert.IsNotNull(itemMilGasMask.CaptureState());
-            var itemMutantGland = new Item_MutantGland();
-            var itemMutantGlandSave = itemMutantGland.CaptureState();
-            Assert.IsNotNull(itemMutantGlandSave);
-            itemMutantGland.RestoreState(itemMutantGlandSave);
-            Assert.IsNotNull(itemMutantGland.CaptureState());
-            var itemNanites = new Item_Nanites();
-            var itemNanitesSave = itemNanites.CaptureState();
-            Assert.IsNotNull(itemNanitesSave);
-            itemNanites.RestoreState(itemNanitesSave);
-            Assert.IsNotNull(itemNanites.CaptureState());
-            var itemNightVision = new Item_NightVision();
-            var itemNightVisionSave = itemNightVision.CaptureState();
-            Assert.IsNotNull(itemNightVisionSave);
-            itemNightVision.RestoreState(itemNightVisionSave);
-            Assert.IsNotNull(itemNightVision.CaptureState());
-            var itemPackMule = new Item_PackMule();
-            var itemPackMuleSave = itemPackMule.CaptureState();
-            Assert.IsNotNull(itemPackMuleSave);
-            itemPackMule.RestoreState(itemPackMuleSave);
-            Assert.IsNotNull(itemPackMule.CaptureState());
-            var itemPasswordNote = new Item_PasswordNote();
-            var itemPasswordNoteSave = itemPasswordNote.CaptureState();
-            Assert.IsNotNull(itemPasswordNoteSave);
-            itemPasswordNote.RestoreState(itemPasswordNoteSave);
-            Assert.IsNotNull(itemPasswordNote.CaptureState());
-            var itemPhotoAlbum = new Item_PhotoAlbum();
-            var itemPhotoAlbumSave = itemPhotoAlbum.CaptureState();
-            Assert.IsNotNull(itemPhotoAlbumSave);
-            itemPhotoAlbum.RestoreState(itemPhotoAlbumSave);
-            Assert.IsNotNull(itemPhotoAlbum.CaptureState());
-            var itemPotassiumIodide = new Item_PotassiumIodide();
-            var itemPotassiumIodideSave = itemPotassiumIodide.CaptureState();
-            Assert.IsNotNull(itemPotassiumIodideSave);
-            itemPotassiumIodide.RestoreState(itemPotassiumIodideSave);
-            Assert.IsNotNull(itemPotassiumIodide.CaptureState());
-            var itemPresidentialSeal = new Item_PresidentialSeal();
-            var itemPresidentialSealSave = itemPresidentialSeal.CaptureState();
-            Assert.IsNotNull(itemPresidentialSealSave);
-            itemPresidentialSeal.RestoreState(itemPresidentialSealSave);
-            Assert.IsNotNull(itemPresidentialSeal.CaptureState());
-            var itemPrussianBlue = new Item_PrussianBlue();
-            var itemPrussianBlueSave = itemPrussianBlue.CaptureState();
-            Assert.IsNotNull(itemPrussianBlueSave);
-            itemPrussianBlue.RestoreState(itemPrussianBlueSave);
-            Assert.IsNotNull(itemPrussianBlue.CaptureState());
-            var itemRTGBattery = new Item_RTGBattery();
-            var itemRTGBatterySave = itemRTGBattery.CaptureState();
-            Assert.IsNotNull(itemRTGBatterySave);
-            itemRTGBattery.RestoreState(itemRTGBatterySave);
-            Assert.IsNotNull(itemRTGBattery.CaptureState());
-            var itemSeedLedger = new Item_SeedLedger();
-            var itemSeedLedgerSave = itemSeedLedger.CaptureState();
-            Assert.IsNotNull(itemSeedLedgerSave);
-            itemSeedLedger.RestoreState(itemSeedLedgerSave);
-            Assert.IsNotNull(itemSeedLedger.CaptureState());
-            var itemShockCollar = new Item_ShockCollar();
-            var itemShockCollarSave = itemShockCollar.CaptureState();
-            Assert.IsNotNull(itemShockCollarSave);
-            itemShockCollar.RestoreState(itemShockCollarSave);
-            Assert.IsNotNull(itemShockCollar.CaptureState());
-            var itemSnowshoes = new Item_Snowshoes();
-            var itemSnowshoesSave = itemSnowshoes.CaptureState();
-            Assert.IsNotNull(itemSnowshoesSave);
-            itemSnowshoes.RestoreState(itemSnowshoesSave);
-            Assert.IsNotNull(itemSnowshoes.CaptureState());
-            var itemSurgicalTubing = new Item_SurgicalTubing();
-            var itemSurgicalTubingSave = itemSurgicalTubing.CaptureState();
-            Assert.IsNotNull(itemSurgicalTubingSave);
-            itemSurgicalTubing.RestoreState(itemSurgicalTubingSave);
-            Assert.IsNotNull(itemSurgicalTubing.CaptureState());
-            var itemTearGas = new Item_TearGas();
-            var itemTearGasSave = itemTearGas.CaptureState();
-            Assert.IsNotNull(itemTearGasSave);
-            itemTearGas.RestoreState(itemTearGasSave);
-            Assert.IsNotNull(itemTearGas.CaptureState());
-            var itemTeddyBear = new Item_TeddyBear();
-            var itemTeddyBearSave = itemTeddyBear.CaptureState();
-            Assert.IsNotNull(itemTeddyBearSave);
-            itemTeddyBear.RestoreState(itemTeddyBearSave);
-            Assert.IsNotNull(itemTeddyBear.CaptureState());
-            var itemTrashHazmat = new Item_TrashHazmat();
-            var itemTrashHazmatSave = itemTrashHazmat.CaptureState();
-            Assert.IsNotNull(itemTrashHazmatSave);
-            itemTrashHazmat.RestoreState(itemTrashHazmatSave);
-            Assert.IsNotNull(itemTrashHazmat.CaptureState());
-            var itemUndeliveredMail = new Item_UndeliveredMail();
-            var itemUndeliveredMailSave = itemUndeliveredMail.CaptureState();
-            Assert.IsNotNull(itemUndeliveredMailSave);
-            itemUndeliveredMail.RestoreState(itemUndeliveredMailSave);
-            Assert.IsNotNull(itemUndeliveredMail.CaptureState());
-            var itemVacuumTubes = new Item_VacuumTubes();
-            var itemVacuumTubesSave = itemVacuumTubes.CaptureState();
-            Assert.IsNotNull(itemVacuumTubesSave);
-            itemVacuumTubes.RestoreState(itemVacuumTubesSave);
-            Assert.IsNotNull(itemVacuumTubes.CaptureState());
-            var itemVinylCollection = new Item_VinylCollection();
-            var itemVinylCollectionSave = itemVinylCollection.CaptureState();
-            Assert.IsNotNull(itemVinylCollectionSave);
-            itemVinylCollection.RestoreState(itemVinylCollectionSave);
-            Assert.IsNotNull(itemVinylCollection.CaptureState());
-            var itemVitamins = new Item_Vitamins();
-            var itemVitaminsSave = itemVitamins.CaptureState();
-            Assert.IsNotNull(itemVitaminsSave);
-            itemVitamins.RestoreState(itemVitaminsSave);
-            Assert.IsNotNull(itemVitamins.CaptureState());
-            var itemWalkieTalkie = new Item_WalkieTalkie();
-            var itemWalkieTalkieSave = itemWalkieTalkie.CaptureState();
-            Assert.IsNotNull(itemWalkieTalkieSave);
-            itemWalkieTalkie.RestoreState(itemWalkieTalkieSave);
-            Assert.IsNotNull(itemWalkieTalkie.CaptureState());
-            var itemWastelandSoap = new Item_WastelandSoap();
-            var itemWastelandSoapSave = itemWastelandSoap.CaptureState();
-            Assert.IsNotNull(itemWastelandSoapSave);
-            itemWastelandSoap.RestoreState(itemWastelandSoapSave);
-            Assert.IsNotNull(itemWastelandSoap.CaptureState());
-            var itemWaterTabs = new Item_WaterTabs();
-            var itemWaterTabsSave = itemWaterTabs.CaptureState();
-            Assert.IsNotNull(itemWaterTabsSave);
-            itemWaterTabs.RestoreState(itemWaterTabsSave);
-            Assert.IsNotNull(itemWaterTabs.CaptureState());
-            var itemWeldingGoggles = new Item_WeldingGoggles();
-            var itemWeldingGogglesSave = itemWeldingGoggles.CaptureState();
-            Assert.IsNotNull(itemWeldingGogglesSave);
-            itemWeldingGoggles.RestoreState(itemWeldingGogglesSave);
-            Assert.IsNotNull(itemWeldingGoggles.CaptureState());
-            var itemWristDosimeter = new Item_WristDosimeter();
-            var itemWristDosimeterSave = itemWristDosimeter.CaptureState();
-            Assert.IsNotNull(itemWristDosimeterSave);
-            itemWristDosimeter.RestoreState(itemWristDosimeterSave);
-            Assert.IsNotNull(itemWristDosimeter.CaptureState());
+            AssertRoundTrips(() => new Item_AICoreData(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "installedCoreType", "isCoreInstalled", "lecturedSurvivorIds", "lockedRoomIds");
+            AssertRoundTrips(() => new Item_AmmoTypes(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemIdAP", "itemIdHP", "itemIdStandard");
+            AssertRoundTrips(() => new Item_Ammonia(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isStoredInBox", "toxicGasCloudId");
+            AssertRoundTrips(() => new Item_Amphetamines(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "durationHoursRemaining", "actionSpeedMultiplier", "isFatigueLockedAtZero", "heartAttackRiskPerStormHour");
+            AssertRoundTrips(() => new Item_AshGhillie(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "stealthBonus", "fireVulnerability", "burnDamageOnIgnition", "isEquipped", "durability");
+            AssertRoundTrips(() => new Item_AutoDoc(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "powerDrainActive", "surgerySuccessRate", "isInstalled", "requiresMedicalBed");
+            AssertRoundTrips(() => new Item_BioPlastic(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "aestheticAuraPenalty", "replacesPlasticScrap");
+            AssertRoundTrips(() => new Item_BloodBag(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isSpoiled", "hoursWithoutPower");
+            AssertRoundTrips(() => new Item_BoneSaw(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "requiresGangrene", "traumaInflicted", "infectionGuaranteed", "hoursRequired", "hasBeenUsed");
+            AssertRoundTrips(() => new Item_C4(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "deafensSurvivor", "itemId", "triggersReinforcements");
+            AssertRoundTrips(() => new Item_Caltrops(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "delayHours", "damageToRaiders", "maxUses", "usesRemaining", "deployedNodeId");
+            AssertRoundTrips(() => new Item_CarrierBird(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "predatorEatChance", "isReleased", "isAlive", "lastMessageOrItemId");
+            AssertRoundTrips(() => new Item_ChildsDrawing(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isPinnedOnWall", "parentMoraleBonus", "parentTraumaPenaltyOnChildDeath");
+            AssertRoundTrips(() => new Item_Cigarettes(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "stressReliefAmount", "maxStaminaPenaltyPerSmoke", "barterValueValue");
+            AssertRoundTrips(() => new Item_ClimbingGear(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isEquipped", "setupTimeHours", "rubbleStaminaMultiplier");
+            AssertRoundTrips(() => new Item_Decoy(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "distractionRadius", "distractionDurationSeconds", "requiresBatteries", "requiresElectronics");
+            AssertRoundTrips(() => new Item_DogTags(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "karmaGainOnReturn", "factionRepGainOnReturn", "scrapValueOnSell");
+            AssertRoundTrips(() => new Item_EMPGrenade(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "bunkerPowerOutageHours", "disablesRobotics", "itemId");
+            AssertRoundTrips(() => new Item_EncryptedDrive(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isDecrypted", "revealsFogOfWarAndSecretBunkers");
+            AssertRoundTrips(() => new Item_EpiPen(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "hoursUntilCrash", "healthCrashMultiplier", "fatigueCrashValue");
+            AssertRoundTrips(() => new Item_Exosuit(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "entombedFlags", "equippedSurvivorIds", "isLockedUp");
+            AssertRoundTrips(() => new Item_FaradayPack(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isEMPShielded", "maxCarryCapacityKg");
+            AssertRoundTrips(() => new Item_ForeignBook(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isTranslated", "translationDaysRequired", "daysSpentTranslating", "intelligenceThreshold", "intelNodesYielded");
+            AssertRoundTrips(() => new Item_GeigerCalibrator(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isRepaired", "earlyWarningHours");
+            AssertRoundTrips(() => new GlowingMushroomSystem("item_glowing_mushroom"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "chemicalScrapYield", "isHarvestable", "itemId", "lightOutput", "radiationPerHour", "roomId");
+            AssertRoundTrips(() => new Item_GoldBars(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "scavengerTradeValue", "satisfiesEndgameFactionTribute");
+            AssertRoundTrips(() => new Item_Guitar(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "powerRequired", "noviceSkillThreshold", "masterSkillThreshold", "noviceNoiseGenerated", "masterMoraleBonus", "curesDepressionAtMaster");
+            AssertRoundTrips(() => new Item_Heirloom(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "efficiencyBonus", "equippedById", "isCreated", "itemId", "moraleBuff", "originalOwnerId", "toolType");
+            AssertRoundTrips(() => new Item_IBeam(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "weight", "requiresVehicle", "requiresPortableWinch", "stackMax");
+            AssertRoundTrips(() => new Item_ImpureIodine(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "radReduction", "toxicityHours", "isConsumed");
+            AssertRoundTrips(() => new Item_JuggernautArmor(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "canFlee", "equippedBySurvivorId", "immuneToSmallArms", "isEquipped", "itemId", "speedMultiplier");
+            AssertRoundTrips(() => new Item_KevlarVest(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "ballisticDamageReductionRatio", "radiationProtection", "coldProtection", "animalBiteProtection");
+            AssertRoundTrips(() => new Item_Keycards(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "item_id_prefix", "found_card_ids", "unlocked_door_ids");
+            AssertRoundTrips(() => new Item_Landmine(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "deployedNodeId", "isDeployed", "isIndiscriminate", "itemId");
+            AssertRoundTrips(() => new Item_LeadApron(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "torsoRadiationProtection", "movementSpeedPenalty", "thermalProtection", "ballisticProtection");
+            AssertRoundTrips(() => new Item_LiquidStitches(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "infectionChance", "minorInfectionAffliction");
+            AssertRoundTrips(() => new Item_Maggots(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "cureRate", "horrorDebuff", "painDebuff", "stackMax", "currentStack");
+            AssertRoundTrips(() => new Item_MilGasMask(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isAirborneAfflictionBlocked", "filterDurabilityMinutes", "isSuffocating");
+            AssertRoundTrips(() => new Item_MutantGland(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "sourceCreature", "weight", "isConsumable", "stackMax");
+            AssertRoundTrips(() => new Item_Nanites(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hasBeenInjected", "injectionCount");
+            AssertRoundTrips(() => new Item_NightVision(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "batteryCharges", "stealthBonusRatio", "accuracyBonusRatio");
+            AssertRoundTrips(() => new Item_PackMule(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "carryWeightMultiplier", "speedMultiplier", "panicChance");
+            AssertRoundTrips(() => new Item_PasswordNote(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "item_id", "codes", "location_hints");
+            AssertRoundTrips(() => new Item_PhotoAlbum(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "tradeValue", "stressDecayReductionRatio", "isPlacedOnDesk");
+            AssertRoundTrips(() => new Item_PotassiumIodide(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "preventiveBlockRatio", "reactiveBlockRatio");
+            AssertRoundTrips(() => new Item_PresidentialSeal(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "negotiationSuccessBonusRatio", "isEquipped");
+            AssertRoundTrips(() => new Item_PrussianBlue(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isCraftable", "curedAfflictionId");
+            AssertRoundTrips(() => new Item_RTGBattery(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "powerOutput", "radiationPerHour", "isPluggedIn", "isLeadLined", "weight");
+            AssertRoundTrips(() => new Item_SeedLedger(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isDecrypted", "decryptionDaysRequired", "daysSpentDecrypting", "tradeValue", "cropUnlocked");
+            AssertRoundTrips(() => new Item_ShockCollar(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "isEquipped", "captiveId", "powerRequired", "isCollarActive");
+            AssertRoundTrips(() => new Item_Snowshoes(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "negatesBlizzardAshDriftPenalty", "currentDurability", "asphaltDurabilityDrainPerKm");
+            AssertRoundTrips(() => new Item_SurgicalTubing(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isHighTierCraftingComponent");
+            AssertRoundTrips(() => new Item_TearGas(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "stunDurationTurns", "uselessVsGasMask", "uselessVsMutants");
+            AssertRoundTrips(() => new Item_TeddyBear(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "equippedChildId", "isEquippedByChild", "isDestroyedOrStolen", "mentalBreakSeverityOnLoss");
+            AssertRoundTrips(() => new Item_TrashHazmat(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "radProtection", "tearChance", "isTorn");
+            AssertRoundTrips(() => new Item_UndeliveredMail(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isRead", "isBurnedAsTinder", "tinderHeatDurationHours");
+            AssertRoundTrips(() => new Item_VacuumTubes(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "isEMPProof", "isFragile", "isIntact", "requiredForHamRadio");
+            AssertRoundTrips(() => new Item_VinylCollection(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "currentTrack", "jazzSleepBonus", "classicalCraftingBonus");
+            AssertRoundTrips(() => new Item_Vitamins(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "chargesRemaining", "preventsScurvyAndListless");
+            AssertRoundTrips(() => new Item_WalkieTalkie(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "batteriesRemaining", "maxBatteries", "isEquipped", "isManualControl");
+            AssertRoundTrips(() => new Item_WastelandSoap(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "hygieneRestored", "chemicalBurnChance");
+            AssertRoundTrips(() => new Item_WaterTabs(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "tabletCount");
+            AssertRoundTrips(() => new Item_WeldingGoggles(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "negatesFlashBlindness", "negatesCataracts", "perceptionAccuracyPenalty");
+            AssertRoundTrips(() => new Item_WristDosimeter(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "displayName", "slotType", "isBroken");
         }
 
         [Test]
         public void Location_All_CaptureRestore()
         {
-            var locationArcade = new Location_Arcade();
-            var locationArcadeSave = locationArcade.CaptureState();
-            Assert.IsNotNull(locationArcadeSave);
-            locationArcade.RestoreState(locationArcadeSave);
-            Assert.IsNotNull(locationArcade.CaptureState());
-            var locationSlaveMarket = new Location_SlaveMarket();
-            var locationSlaveMarketSave = locationSlaveMarket.CaptureState();
-            Assert.IsNotNull(locationSlaveMarketSave);
-            locationSlaveMarket.RestoreState(locationSlaveMarketSave);
-            Assert.IsNotNull(locationSlaveMarket.CaptureState());
-            var locationStrandedYacht = new Location_StrandedYacht();
-            var locationStrandedYachtSave = locationStrandedYacht.CaptureState();
-            Assert.IsNotNull(locationStrandedYachtSave);
-            locationStrandedYacht.RestoreState(locationStrandedYachtSave);
-            Assert.IsNotNull(locationStrandedYacht.CaptureState());
+            AssertRoundTrips(() => new Location_Arcade(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "locationId", "displayName", "tokensAvailable", "childScavengersPresent", "acceptedCurrency", "tradeValuePerToken");
+            AssertRoundTrips(() => new Location_SlaveMarket(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "locationId", "displayName", "medicineCostPerSurvivor", "permanentTraitsAdded");
+            AssertRoundTrips(() => new Location_StrandedYacht(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "locationId", "displayName", "mercenaryCount", "mercenaryCombatPower", "luxuryItems", "moraleBonusPerItem", "nutritionValue", "isCleared");
         }
 
         [Test]
         public void Map_All_CaptureRestore()
         {
-            var mapAquifer = new AquiferSystem("map_aquifer");
-            var mapAquiferSave = mapAquifer.CaptureState();
-            Assert.IsNotNull(mapAquiferSave);
-            mapAquifer.RestoreState(mapAquiferSave);
-            Assert.IsNotNull(mapAquifer.CaptureState());
+            AssertRoundTrips(() => new AquiferSystem("map_aquifer"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "caveInRiskIncrease", "floodingRiskIncrease", "hasPumpInstalled", "locationId", "providesInfiniteWater");
         }
 
         [Test]
@@ -837,41 +518,25 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsNotNull(cognitiveDecaySystemSave);
             cognitiveDecaySystem.RestoreState(cognitiveDecaySystemSave);
             Assert.IsNotNull(cognitiveDecaySystem.CaptureState());
-            var lightningStrikesSystem = new LightningStrikesSystem();
-            var lightningStrikesSystemSave = lightningStrikesSystem.CaptureState();
-            Assert.IsNotNull(lightningStrikesSystemSave);
-            lightningStrikesSystem.RestoreState(lightningStrikesSystemSave);
-            Assert.IsNotNull(lightningStrikesSystem.CaptureState());
-            var locationStateRuinSystem = new LocationStateRuinSystem();
-            var locationStateRuinSystemSave = locationStateRuinSystem.CaptureState();
-            Assert.IsNotNull(locationStateRuinSystemSave);
-            locationStateRuinSystem.RestoreState(locationStateRuinSystemSave);
-            Assert.IsNotNull(locationStateRuinSystem.CaptureState());
-            var mobileCampSystem = new MobileCampSystem();
-            var mobileCampSystemSave = mobileCampSystem.CaptureState();
-            Assert.IsNotNull(mobileCampSystemSave);
-            mobileCampSystem.RestoreState(mobileCampSystemSave);
-            Assert.IsNotNull(mobileCampSystem.CaptureState());
-            var moralDilemmaSystem = new MoralDilemmaSystem();
-            var moralDilemmaSystemSave = moralDilemmaSystem.CaptureState();
-            Assert.IsNotNull(moralDilemmaSystemSave);
-            moralDilemmaSystem.RestoreState(moralDilemmaSystemSave);
-            Assert.IsNotNull(moralDilemmaSystem.CaptureState());
-            var needleSterilizationSystem = new NeedleSterilizationSystem();
-            var needleSterilizationSystemSave = needleSterilizationSystem.CaptureState();
-            Assert.IsNotNull(needleSterilizationSystemSave);
-            needleSterilizationSystem.RestoreState(needleSterilizationSystemSave);
-            Assert.IsNotNull(needleSterilizationSystem.CaptureState());
-            var nightScavengeSystem = new NightScavengeSystem();
-            var nightScavengeSystemSave = nightScavengeSystem.CaptureState();
-            Assert.IsNotNull(nightScavengeSystemSave);
-            nightScavengeSystem.RestoreState(nightScavengeSystemSave);
-            Assert.IsNotNull(nightScavengeSystem.CaptureState());
-            var prostheticCraftingSystem = new ProstheticCraftingSystem();
-            var prostheticCraftingSystemSave = prostheticCraftingSystem.CaptureState();
-            Assert.IsNotNull(prostheticCraftingSystemSave);
-            prostheticCraftingSystem.RestoreState(prostheticCraftingSystemSave);
-            Assert.IsNotNull(prostheticCraftingSystem.CaptureState());
+            AssertRoundTrips(() => new LightningStrikesSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hasLightningRod", "strikeChancePerStormHour", "destroyedModules");
+            // LocationStateRuinSystem.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new LocationStateRuinSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            AssertRoundTrips(() => new MobileCampSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "isCampingActive", "vehicleType", "fatigueRestoredPerHour", "nightAmbushChance");
+            // MoralDilemmaSystem.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new MoralDilemmaSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            // NeedleSterilizationSystem.RestoreState is an intentional no-op
+            // (dormant ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new NeedleSterilizationSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            // NightScavengeSystem.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new NightScavengeSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            // ProstheticCraftingSystem.RestoreState is an intentional no-op
+            // (dormant ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new ProstheticCraftingSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
             var seismicVentsSystem = new SeismicVentsSystem();
             var seismicVentsSystemSave = seismicVentsSystem.CaptureState();
             Assert.IsNotNull(seismicVentsSystemSave);
@@ -887,11 +552,13 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsNotNull(tetanusAfflictionSystemSave);
             tetanusAfflictionSystem.RestoreState(tetanusAfflictionSystemSave);
             Assert.IsNotNull(tetanusAfflictionSystem.CaptureState());
-            var timeSystemSys = new TimeSystem();
-            var timeSystemSysSave = timeSystemSys.CaptureState();
-            Assert.IsNotNull(timeSystemSysSave);
-            timeSystemSys.RestoreState(timeSystemSysSave);
-            Assert.IsNotNull(timeSystemSys.CaptureState());
+            // hourAccumulator is intentionally excluded: RestoreState clamps it to
+            // [0, 24] (a corrupted/out-of-range save must not desync the clock), so
+            // the generic "+12345.5" mutation this helper applies to every float
+            // field is not a valid round-trip probe for this one -- it is real
+            // production behavior, not a bug.
+            AssertRoundTrips(() => new TimeSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "day", "totalElapsedSeconds");
             var toothDecaySystem = new ToothDecaySystem();
             var toothDecaySystemSave = toothDecaySystem.CaptureState();
             Assert.IsNotNull(toothDecaySystemSave);
@@ -922,331 +589,154 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void NPC_All_CaptureRestore()
         {
-            var nPCAddictsPassive = new NPC_AddictsPassive();
-            var nPCAddictsPassiveSave = nPCAddictsPassive.CaptureState();
-            Assert.IsNotNull(nPCAddictsPassiveSave);
-            nPCAddictsPassive.RestoreState(nPCAddictsPassiveSave);
-            Assert.IsNotNull(nPCAddictsPassive.CaptureState());
-            var nPCAggroScavengers = new NPC_AggroScavengers();
-            var nPCAggroScavengersSave = nPCAggroScavengers.CaptureState();
-            Assert.IsNotNull(nPCAggroScavengersSave);
-            nPCAggroScavengers.RestoreState(nPCAggroScavengersSave);
-            Assert.IsNotNull(nPCAggroScavengers.CaptureState());
-            var nPCAggroTrader = new NPC_AggroTrader();
-            var nPCAggroTraderSave = nPCAggroTrader.CaptureState();
-            Assert.IsNotNull(nPCAggroTraderSave);
-            nPCAggroTrader.RestoreState(nPCAggroTraderSave);
-            Assert.IsNotNull(nPCAggroTrader.CaptureState());
-            var nPCBandits = new NPC_Bandits();
-            var nPCBanditsSave = nPCBandits.CaptureState();
-            Assert.IsNotNull(nPCBanditsSave);
-            nPCBandits.RestoreState(nPCBanditsSave);
-            Assert.IsNotNull(nPCBandits.CaptureState());
-            var nPCBlackOps = new NPC_BlackOps();
-            var nPCBlackOpsSave = nPCBlackOps.CaptureState();
-            Assert.IsNotNull(nPCBlackOpsSave);
-            nPCBlackOps.RestoreState(nPCBlackOpsSave);
-            Assert.IsNotNull(nPCBlackOps.CaptureState());
-            var nPCBroker = new NPC_Broker();
-            var nPCBrokerSave = nPCBroker.CaptureState();
-            Assert.IsNotNull(nPCBrokerSave);
-            nPCBroker.RestoreState(nPCBrokerSave);
-            Assert.IsNotNull(nPCBroker.CaptureState());
-            var nPCCannibals = new NPC_Cannibals();
-            var nPCCannibalsSave = nPCCannibals.CaptureState();
-            Assert.IsNotNull(nPCCannibalsSave);
-            nPCCannibals.RestoreState(nPCCannibalsSave);
-            Assert.IsNotNull(nPCCannibals.CaptureState());
-            var nPCChemScientists = new NPC_ChemScientists();
-            var nPCChemScientistsSave = nPCChemScientists.CaptureState();
-            Assert.IsNotNull(nPCChemScientistsSave);
-            nPCChemScientists.RestoreState(nPCChemScientistsSave);
-            Assert.IsNotNull(nPCChemScientists.CaptureState());
-            var nPCCityResidents = new NPC_CityResidents();
-            var nPCCityResidentsSave = nPCCityResidents.CaptureState();
-            Assert.IsNotNull(nPCCityResidentsSave);
-            nPCCityResidents.RestoreState(nPCCityResidentsSave);
-            Assert.IsNotNull(nPCCityResidents.CaptureState());
-            var nPCCollaborators = new NPC_Collaborators();
-            var nPCCollaboratorsSave = nPCCollaborators.CaptureState();
-            Assert.IsNotNull(nPCCollaboratorsSave);
-            nPCCollaborators.RestoreState(nPCCollaboratorsSave);
-            Assert.IsNotNull(nPCCollaborators.CaptureState());
-            var nPCConscripts = new NPC_Conscripts();
-            var nPCConscriptsSave = nPCConscripts.CaptureState();
-            Assert.IsNotNull(nPCConscriptsSave);
-            nPCConscripts.RestoreState(nPCConscriptsSave);
-            Assert.IsNotNull(nPCConscripts.CaptureState());
-            var nPCDesperateFamily = new NPC_DesperateFamily();
-            var nPCDesperateFamilySave = nPCDesperateFamily.CaptureState();
-            Assert.IsNotNull(nPCDesperateFamilySave);
-            nPCDesperateFamily.RestoreState(nPCDesperateFamilySave);
-            Assert.IsNotNull(nPCDesperateFamily.CaptureState());
-            var nPCDrunksAggro = new NPC_DrunksAggro();
-            var nPCDrunksAggroSave = nPCDrunksAggro.CaptureState();
-            Assert.IsNotNull(nPCDrunksAggroSave);
-            nPCDrunksAggro.RestoreState(nPCDrunksAggroSave);
-            Assert.IsNotNull(nPCDrunksAggro.CaptureState());
-            var nPCHomeless = new NPC_Homeless();
-            var nPCHomelessSave = nPCHomeless.CaptureState();
-            Assert.IsNotNull(nPCHomelessSave);
-            nPCHomeless.RestoreState(nPCHomelessSave);
-            Assert.IsNotNull(nPCHomeless.CaptureState());
-            var nPCLonePsychopath = new NPC_LonePsychopath();
-            var nPCLonePsychopathSave = nPCLonePsychopath.CaptureState();
-            Assert.IsNotNull(nPCLonePsychopathSave);
-            nPCLonePsychopath.RestoreState(nPCLonePsychopathSave);
-            Assert.IsNotNull(nPCLonePsychopath.CaptureState());
-            var nPCLooters = new NPC_Looters();
-            var nPCLootersSave = nPCLooters.CaptureState();
-            Assert.IsNotNull(nPCLootersSave);
-            nPCLooters.RestoreState(nPCLootersSave);
-            Assert.IsNotNull(nPCLooters.CaptureState());
-            var nPCMercenaries = new NPC_Mercenaries();
-            var nPCMercenariesSave = nPCMercenaries.CaptureState();
-            Assert.IsNotNull(nPCMercenariesSave);
-            nPCMercenaries.RestoreState(nPCMercenariesSave);
-            Assert.IsNotNull(nPCMercenaries.CaptureState());
-            var nPCMilitaryPatrol = new NPC_MilitaryPatrol();
-            var nPCMilitaryPatrolSave = nPCMilitaryPatrol.CaptureState();
-            Assert.IsNotNull(nPCMilitaryPatrolSave);
-            nPCMilitaryPatrol.RestoreState(nPCMilitaryPatrolSave);
-            Assert.IsNotNull(nPCMilitaryPatrol.CaptureState());
-            var nPCPassiveScavengers = new NPC_PassiveScavengers();
-            var nPCPassiveScavengersSave = nPCPassiveScavengers.CaptureState();
-            Assert.IsNotNull(nPCPassiveScavengersSave);
-            nPCPassiveScavengers.RestoreState(nPCPassiveScavengersSave);
-            Assert.IsNotNull(nPCPassiveScavengers.CaptureState());
-            var nPCPassiveTrader = new NPC_PassiveTrader();
-            var nPCPassiveTraderSave = nPCPassiveTrader.CaptureState();
-            Assert.IsNotNull(nPCPassiveTraderSave);
-            nPCPassiveTrader.RestoreState(nPCPassiveTraderSave);
-            Assert.IsNotNull(nPCPassiveTrader.CaptureState());
-            var nPCPsychopathPair = new NPC_PsychopathPair();
-            var nPCPsychopathPairSave = nPCPsychopathPair.CaptureState();
-            Assert.IsNotNull(nPCPsychopathPairSave);
-            nPCPsychopathPair.RestoreState(nPCPsychopathPairSave);
-            Assert.IsNotNull(nPCPsychopathPair.CaptureState());
-            var nPCRebelMilitia = new NPC_RebelMilitia();
-            var nPCRebelMilitiaSave = nPCRebelMilitia.CaptureState();
-            Assert.IsNotNull(nPCRebelMilitiaSave);
-            nPCRebelMilitia.RestoreState(nPCRebelMilitiaSave);
-            Assert.IsNotNull(nPCRebelMilitia.CaptureState());
-            var nPCRebelModerates = new NPC_RebelModerates();
-            var nPCRebelModeratesSave = nPCRebelModerates.CaptureState();
-            Assert.IsNotNull(nPCRebelModeratesSave);
-            nPCRebelModerates.RestoreState(nPCRebelModeratesSave);
-            Assert.IsNotNull(nPCRebelModerates.CaptureState());
-            var nPCRebelSnipers = new NPC_RebelSnipers();
-            var nPCRebelSnipersSave = nPCRebelSnipers.CaptureState();
-            Assert.IsNotNull(nPCRebelSnipersSave);
-            nPCRebelSnipers.RestoreState(nPCRebelSnipersSave);
-            Assert.IsNotNull(nPCRebelSnipers.CaptureState());
-            var nPCRebelZealots = new NPC_RebelZealots();
-            var nPCRebelZealotsSave = nPCRebelZealots.CaptureState();
-            Assert.IsNotNull(nPCRebelZealotsSave);
-            nPCRebelZealots.RestoreState(nPCRebelZealotsSave);
-            Assert.IsNotNull(nPCRebelZealots.CaptureState());
-            var nPCSlavers = new NPC_Slavers();
-            var nPCSlaversSave = nPCSlavers.CaptureState();
-            Assert.IsNotNull(nPCSlaversSave);
-            nPCSlavers.RestoreState(nPCSlaversSave);
-            Assert.IsNotNull(nPCSlavers.CaptureState());
-            var nPCSpecOps = new NPC_SpecOps();
-            var nPCSpecOpsSave = nPCSpecOps.CaptureState();
-            Assert.IsNotNull(nPCSpecOpsSave);
-            nPCSpecOps.RestoreState(nPCSpecOpsSave);
-            Assert.IsNotNull(nPCSpecOps.CaptureState());
-            var nPCSurvivalists = new NPC_Survivalists();
-            var nPCSurvivalistsSave = nPCSurvivalists.CaptureState();
-            Assert.IsNotNull(nPCSurvivalistsSave);
-            nPCSurvivalists.RestoreState(nPCSurvivalistsSave);
-            Assert.IsNotNull(nPCSurvivalists.CaptureState());
-            var nPCTaxCollector = new NPC_TaxCollector();
-            var nPCTaxCollectorSave = nPCTaxCollector.CaptureState();
-            Assert.IsNotNull(nPCTaxCollectorSave);
-            nPCTaxCollector.RestoreState(nPCTaxCollectorSave);
-            Assert.IsNotNull(nPCTaxCollector.CaptureState());
-            var nPCTerrorists = new NPC_Terrorists();
-            var nPCTerroristsSave = nPCTerrorists.CaptureState();
-            Assert.IsNotNull(nPCTerroristsSave);
-            nPCTerrorists.RestoreState(nPCTerroristsSave);
-            Assert.IsNotNull(nPCTerrorists.CaptureState());
-            var nPCTheNegotiator = new NPC_TheNegotiator();
-            var nPCTheNegotiatorSave = nPCTheNegotiator.CaptureState();
-            Assert.IsNotNull(nPCTheNegotiatorSave);
-            nPCTheNegotiator.RestoreState(nPCTheNegotiatorSave);
-            Assert.IsNotNull(nPCTheNegotiator.CaptureState());
-            var nPCTheOld = new NPC_TheOld();
-            var nPCTheOldSave = nPCTheOld.CaptureState();
-            Assert.IsNotNull(nPCTheOldSave);
-            nPCTheOld.RestoreState(nPCTheOldSave);
-            Assert.IsNotNull(nPCTheOld.CaptureState());
-            var nPCTheParents = new NPC_TheParents();
-            var nPCTheParentsSave = nPCTheParents.CaptureState();
-            Assert.IsNotNull(nPCTheParentsSave);
-            nPCTheParents.RestoreState(nPCTheParentsSave);
-            Assert.IsNotNull(nPCTheParents.CaptureState());
-            var nPCTravelingCouple = new NPC_TravelingCouple();
-            var nPCTravelingCoupleSave = nPCTravelingCouple.CaptureState();
-            Assert.IsNotNull(nPCTravelingCoupleSave);
-            nPCTravelingCouple.RestoreState(nPCTravelingCoupleSave);
-            Assert.IsNotNull(nPCTravelingCouple.CaptureState());
+            AssertRoundTrips(() => new NPC_AddictsPassive(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "inSevereWithdrawal", "highValueTradeGoods");
+            AssertRoundTrips(() => new NPC_AggroScavengers(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "warningShotFired", "isHostile", "armorRating", "weaponsEquipped");
+            AssertRoundTrips(() => new NPC_AggroTrader(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isCorneredInDeadEnd", "forcedJunkItem", "forcedPricePremium", "purchaseMade", "isHostile");
+            AssertRoundTrips(() => new NPC_Bandits(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isHostile", "demandedInventoryRatio", "extortionPaid");
+            AssertRoundTrips(() => new NPC_BlackOps(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isHostileToEveryone", "perceptionCheckThreshold", "boobyTrapBleedDamage");
+            AssertRoundTrips(() => new NPC_Broker(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "npcId", "appearsDay", "isVisible", "availableBlueprints", "priceInRaiders", "priceInGold");
+            AssertRoundTrips(() => new NPC_Cannibals(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "hp", "moveSpeedMultiplier", "weaponsEquipped", "horrorMoraleDebuff");
+            AssertRoundTrips(() => new NPC_ChemScientists(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isMustardGasProductionActive", "militaryGuardCount", "isSabotagedOrExecuted", "researchStolen", "rebelTrustGainOnExecution", "chemistryXpGainOnSteal");
+            AssertRoundTrips(() => new NPC_CityResidents(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isPassive", "empathMoraleDropOnLooting");
+            AssertRoundTrips(() => new NPC_Collaborators(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isSaved", "isExecuted", "moraleDropOnWatch", "rewardItem");
+            AssertRoundTrips(() => new NPC_Conscripts(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "totalCount", "aliveCount", "isSurrendered", "fleeChance", "riflesDroppedCount", "playerMoralePenaltyOnExecution");
+            AssertRoundTrips(() => new NPC_DesperateFamily(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isStarving", "charityHopeBuff", "foodRequiredForCharity", "isRobbed", "isHelped");
+            AssertRoundTrips(() => new NPC_DrunksAggro(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "hp", "hasHighPainTolerance", "damageReductionFactor", "karmaLossOnDeath", "lootDrop");
+            AssertRoundTrips(() => new NPC_Homeless(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isPassive", "diseaseRiskChance", "phase1Affliction", "intelNodeSold");
+            AssertRoundTrips(() => new NPC_LonePsychopath(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "canFlee", "bearTrapCount", "tripwireCount", "huntProgress", "requiredHuntProgress", "isHuntedDown");
+            AssertRoundTrips(() => new NPC_Looters(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isHidingInShadows", "isAttacking", "healthPercentageThreshold", "encumbranceThreshold");
+            AssertRoundTrips(() => new NPC_Mercenaries(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "hireCostPreWarMoney", "isHiredToClear", "lootPenaltyRatio");
+            AssertRoundTrips(() => new NPC_MilitaryPatrol(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isHostileToPlayer", "tollDemanded", "tollPaid", "foodTollRequired", "medsTollRequired", "armorRating", "suppressingFireActive");
+            AssertRoundTrips(() => new NPC_PassiveScavengers(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isFled", "hourlyLootDepletionRate", "totalLootDepleted");
+            AssertRoundTrips(() => new NPC_PassiveTrader(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "guardCount", "basePriceMultiplier");
+            AssertRoundTrips(() => new NPC_PsychopathPair(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isSniperAlive", "isMeleeAlive", "isFrenzyActive", "damageMultiplier", "isImmuneToPain");
+            AssertRoundTrips(() => new NPC_RebelMilitia(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isHostile", "requiredKarmaThreshold", "weaponsEquipped", "caughtStealing");
+            AssertRoundTrips(() => new NPC_RebelModerates(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isPassive", "radioBackupCalled", "backupWaveCount", "requiredMedsForIntel");
+            AssertRoundTrips(() => new NPC_RebelSnipers(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "squadSize", "currentCoverStage", "requiredCoverStages", "isMeleeRangeReached", "headshotDamage");
+            AssertRoundTrips(() => new NPC_RebelZealots(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "executeOnSight", "daysSinceMilitaryTrade", "maxDaysTradeMemory");
+            AssertRoundTrips(() => new NPC_Slavers(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "usesTearGas", "usesStunBatons", "isPlayerEnslaved", "destinationNodeId");
+            AssertRoundTrips(() => new NPC_SpecOps(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isNightVisionEquipped", "flashbangCharges", "baseLethalityMultiplier", "canSurrender", "pristineGearLoot");
+            AssertRoundTrips(() => new NPC_Survivalists(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isPassive", "lethalityRating", "wearsHazmatSuit", "acceptedTradeItems");
+            AssertRoundTrips(() => new NPC_TaxCollector(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "npcId", "factionId", "taxPercentage", "isVisible", "hasArrived");
+            AssertRoundTrips(() => new NPC_Terrorists(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "hp", "isSuicideVestEquipped", "hasDetonated", "detonationAoeDamage", "allLootDestroyed");
+            AssertRoundTrips(() => new NPC_TheNegotiator(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isCoveredByPlayerSniper", "isPeaceBrokered", "factionRewards");
+            AssertRoundTrips(() => new NPC_TheOld(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isDefenseless", "teaMoraleRestore", "storySkillXpGain", "isProtectedFromRaid");
+            AssertRoundTrips(() => new NPC_TheParents(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isDoorLocked", "hasBabyInside", "isHostile", "isSneakedPast", "isKilled", "babyFoodItem");
+            AssertRoundTrips(() => new NPC_TravelingCouple(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isPartner1Alive", "isPartner2Alive", "isVengeanceActive", "vengeanceMultiplier");
         }
 
         [Test]
         public void Node_All_CaptureRestore()
         {
-            var nodeAutomatedArmory = new Node_AutomatedArmory();
-            var nodeAutomatedArmorySave = nodeAutomatedArmory.CaptureState();
-            Assert.IsNotNull(nodeAutomatedArmorySave);
-            nodeAutomatedArmory.RestoreState(nodeAutomatedArmorySave);
-            Assert.IsNotNull(nodeAutomatedArmory.CaptureState());
-            var nodeGhostShip = new Node_GhostShip();
-            var nodeGhostShipSave = nodeGhostShip.CaptureState();
-            Assert.IsNotNull(nodeGhostShipSave);
-            nodeGhostShip.RestoreState(nodeGhostShipSave);
-            Assert.IsNotNull(nodeGhostShip.CaptureState());
-            var nodeMutantHive = new Node_MutantHive();
-            var nodeMutantHiveSave = nodeMutantHive.CaptureState();
-            Assert.IsNotNull(nodeMutantHiveSave);
-            nodeMutantHive.RestoreState(nodeMutantHiveSave);
-            Assert.IsNotNull(nodeMutantHive.CaptureState());
-            var nodePlayerBank = new Node_PlayerBank();
-            var nodePlayerBankSave = nodePlayerBank.CaptureState();
-            Assert.IsNotNull(nodePlayerBankSave);
-            nodePlayerBank.RestoreState(nodePlayerBankSave);
-            Assert.IsNotNull(nodePlayerBank.CaptureState());
-            var nodeSector7G = new Node_Sector7G();
-            var nodeSector7GSave = nodeSector7G.CaptureState();
-            Assert.IsNotNull(nodeSector7GSave);
-            nodeSector7G.RestoreState(nodeSector7GSave);
-            Assert.IsNotNull(nodeSector7G.CaptureState());
-            var nodeSporeHive = new Node_SporeHive();
-            var nodeSporeHiveSave = nodeSporeHive.CaptureState();
-            Assert.IsNotNull(nodeSporeHiveSave);
-            nodeSporeHive.RestoreState(nodeSporeHiveSave);
-            Assert.IsNotNull(nodeSporeHive.CaptureState());
+            AssertRoundTrips(() => new Node_AutomatedArmory(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "node_id", "turret_disabled_seconds", "is_disabled", "disable_timer_remaining", "last_disable_method", "survivors_shot");
+            AssertRoundTrips(() => new Node_GhostShip(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "node_id", "is_discovered", "fuel_remaining", "tetanus_chance", "rooms_explored", "maze_depth", "trapped_survivors", "fuel_harvest_rate_per_hour");
+            AssertRoundTrips(() => new Node_MutantHive(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "node_id", "is_discovered", "webbing_active", "speed_multiplier", "cocoons_total", "cocoons_opened", "swarm_spawn_chance", "cocoon_ids", "looted_cocoon_ids");
+            AssertRoundTrips(() => new Node_PlayerBank(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "nodeId", "isEstablished", "storedItemIds", "isGuarded", "banditRaidChance");
+            AssertRoundTrips(() => new Node_Sector7G(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "node_id", "is_discovered", "access_code", "code_entered", "is_unlocked", "dev_names", "loot_available");
+            AssertRoundTrips(() => new Node_SporeHive(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "nodeId", "displayName", "toxicGasLevel", "podCount", "podsOpened", "lootPerPod", "sporeReleaseChance");
         }
 
         [Test]
         public void Pet_All_CaptureRestore()
         {
-            var petFeralCat = new Pet_FeralCat();
-            var petFeralCatSave = petFeralCat.CaptureState();
-            Assert.IsNotNull(petFeralCatSave);
-            petFeralCat.RestoreState(petFeralCatSave);
-            Assert.IsNotNull(petFeralCat.CaptureState());
+            AssertRoundTrips(() => new Pet_FeralCat(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "petId", "pestReductionRate", "bringsDeadRats");
         }
 
         [Test]
         public void Project_All_CaptureRestore()
         {
-            var projectBioReactor = new Project_BioReactor();
-            var projectBioReactorSave = projectBioReactor.CaptureState();
-            Assert.IsNotNull(projectBioReactorSave);
-            projectBioReactor.RestoreState(projectBioReactorSave);
-            Assert.IsNotNull(projectBioReactor.CaptureState());
-            var projectDeepWell = new Project_DeepWell();
-            var projectDeepWellSave = projectDeepWell.CaptureState();
-            Assert.IsNotNull(projectDeepWellSave);
-            projectDeepWell.RestoreState(projectDeepWellSave);
-            Assert.IsNotNull(projectDeepWell.CaptureState());
-            var projectElevator = new Project_Elevator();
-            var projectElevatorSave = projectElevator.CaptureState();
-            Assert.IsNotNull(projectElevatorSave);
-            projectElevator.RestoreState(projectElevatorSave);
-            Assert.IsNotNull(projectElevator.CaptureState());
-            var projectMinecart = new Project_Minecart();
-            var projectMinecartSave = projectMinecart.CaptureState();
-            Assert.IsNotNull(projectMinecartSave);
-            projectMinecart.RestoreState(projectMinecartSave);
-            Assert.IsNotNull(projectMinecart.CaptureState());
-            var projectRadioArray = new Project_RadioArray();
-            var projectRadioArraySave = projectRadioArray.CaptureState();
-            Assert.IsNotNull(projectRadioArraySave);
-            projectRadioArray.RestoreState(projectRadioArraySave);
-            Assert.IsNotNull(projectRadioArray.CaptureState());
-            var projectSurfaceDome = new Project_SurfaceDome();
-            var projectSurfaceDomeSave = projectSurfaceDome.CaptureState();
-            Assert.IsNotNull(projectSurfaceDomeSave);
-            projectSurfaceDome.RestoreState(projectSurfaceDomeSave);
-            Assert.IsNotNull(projectSurfaceDome.CaptureState());
+            AssertRoundTrips(() => new Project_BioReactor(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "projectId", "isBuilt", "constructionDays", "daysSpent", "powerOutput", "moraleDisgustDebuff", "biomassStored", "maxBiomassCapacity");
+            AssertRoundTrips(() => new Project_DeepWell(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "projectId", "constructionDaysRequired", "daysSpent", "isComplete", "pipesRequired", "pumpsRequired", "pipesProvided", "pumpsProvided");
+            AssertRoundTrips(() => new Project_Elevator(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "projectId", "isBuilt", "constructionDays", "daysSpent", "powerRequired", "negatesHaulingFatigue", "trappedSurvivorId", "o2Remaining");
+            AssertRoundTrips(() => new Project_Minecart(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "projectId", "isBuilt", "constructionDays", "daysSpent", "movementSpeedMultiplier", "ramDamage");
+            AssertRoundTrips(() => new Project_RadioArray(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "projectId", "isBuilt", "constructionDays", "daysSpent", "towersBuilt", "towersRequired", "tracksCaravans", "tracksRaids", "tracksWeather");
+            AssertRoundTrips(() => new Project_SurfaceDome(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "projectId", "isBuilt", "constructionDays", "daysSpent", "hatchVisibilityBonus", "powerSavings", "isShattered");
         }
 
         [Test]
         public void ShelterEvent_All_CaptureRestore()
         {
-            var shelterEventCaravanAmbush = new ShelterEvent_CaravanAmbush();
-            var shelterEventCaravanAmbushSave = shelterEventCaravanAmbush.CaptureState();
-            Assert.IsNotNull(shelterEventCaravanAmbushSave);
-            shelterEventCaravanAmbush.RestoreState(shelterEventCaravanAmbushSave);
-            Assert.IsNotNull(shelterEventCaravanAmbush.CaptureState());
-            var shelterEventFalseCure = new ShelterEvent_FalseCure();
-            var shelterEventFalseCureSave = shelterEventFalseCure.CaptureState();
-            Assert.IsNotNull(shelterEventFalseCureSave);
-            shelterEventFalseCure.RestoreState(shelterEventFalseCureSave);
-            Assert.IsNotNull(shelterEventFalseCure.CaptureState());
-            var shelterEventRansom = new ShelterEvent_Ransom();
-            var shelterEventRansomSave = shelterEventRansom.CaptureState();
-            Assert.IsNotNull(shelterEventRansomSave);
-            shelterEventRansom.RestoreState(shelterEventRansomSave);
-            Assert.IsNotNull(shelterEventRansom.CaptureState());
-            var shelterEventRefugees = new ShelterEvent_Refugees();
-            var shelterEventRefugeesSave = shelterEventRefugees.CaptureState();
-            Assert.IsNotNull(shelterEventRefugeesSave);
-            shelterEventRefugees.RestoreState(shelterEventRefugeesSave);
-            Assert.IsNotNull(shelterEventRefugees.CaptureState());
-            var shelterEventTheMirror = new ShelterEvent_TheMirror();
-            var shelterEventTheMirrorSave = shelterEventTheMirror.CaptureState();
-            Assert.IsNotNull(shelterEventTheMirrorSave);
-            shelterEventTheMirror.RestoreState(shelterEventTheMirrorSave);
-            Assert.IsNotNull(shelterEventTheMirror.CaptureState());
-            var shelterEventTribute = new ShelterEvent_Tribute();
-            var shelterEventTributeSave = shelterEventTribute.CaptureState();
-            Assert.IsNotNull(shelterEventTributeSave);
-            shelterEventTribute.RestoreState(shelterEventTributeSave);
-            Assert.IsNotNull(shelterEventTribute.CaptureState());
+            AssertRoundTrips(() => new ShelterEvent_CaravanAmbush(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "traderFactionId", "ammoNeededToDefend", "discountGainedRatio", "isFactionBlacklisted");
+            AssertRoundTrips(() => new ShelterEvent_FalseCure(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "isBroadcastReceived", "isJourneyUndertaken", "destinationNodeId", "trapRevealed", "moralePenalty", "radHealingPromised");
+            AssertRoundTrips(() => new ShelterEvent_Ransom(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "demandingFaction", "waterRansomDemand", "globalKarmaGainOnPay", "moraleDropOnRadioExecution", "isRansomPaid", "isExecutedOnRadio");
+            AssertRoundTrips(() => new ShelterEvent_Refugees(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "totalRefugeeCount", "maxAdmitCapacity", "admittedRefugeeIds", "turnedAwayRefugeeIds");
+            AssertRoundTrips(() => new ShelterEvent_TheMirror(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "IsActive", "IsDepressed", "LockedSurvivorId", "ResolutionPending");
+            AssertRoundTrips(() => new ShelterEvent_Tribute(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "warlordFactionId", "fuelDemand", "foodDemand", "intervalDays", "lastPaidDay", "isProtectionActive", "isLevel5SiegeTriggered");
         }
 
         [Test]
         public void Skirmish_All_CaptureRestore()
         {
-            var skirmishBandit_vs_Terror = new Skirmish_Bandit_vs_Terror("skirmish_bandit_vs_terror");
-            var skirmishBandit_vs_TerrorSave = skirmishBandit_vs_Terror.CaptureState();
-            Assert.IsNotNull(skirmishBandit_vs_TerrorSave);
-            skirmishBandit_vs_Terror.RestoreState(skirmishBandit_vs_TerrorSave);
-            Assert.IsNotNull(skirmishBandit_vs_Terror.CaptureState());
-            var skirmishMil_vs_Rebel = new Skirmish_Mil_vs_Rebel("skirmish_mil_vs_rebel");
-            var skirmishMil_vs_RebelSave = skirmishMil_vs_Rebel.CaptureState();
-            Assert.IsNotNull(skirmishMil_vs_RebelSave);
-            skirmishMil_vs_Rebel.RestoreState(skirmishMil_vs_RebelSave);
-            Assert.IsNotNull(skirmishMil_vs_Rebel.CaptureState());
-            var skirmishMil_vs_Terror = new Skirmish_Mil_vs_Terror("skirmish_mil_vs_terror");
-            var skirmishMil_vs_TerrorSave = skirmishMil_vs_Terror.CaptureState();
-            Assert.IsNotNull(skirmishMil_vs_TerrorSave);
-            skirmishMil_vs_Terror.RestoreState(skirmishMil_vs_TerrorSave);
-            Assert.IsNotNull(skirmishMil_vs_Terror.CaptureState());
-            var skirmishRebel_vs_Bandit = new Skirmish_Rebel_vs_Bandit("skirmish_rebel_vs_bandit");
-            var skirmishRebel_vs_BanditSave = skirmishRebel_vs_Bandit.CaptureState();
-            Assert.IsNotNull(skirmishRebel_vs_BanditSave);
-            skirmishRebel_vs_Bandit.RestoreState(skirmishRebel_vs_BanditSave);
-            Assert.IsNotNull(skirmishRebel_vs_Bandit.CaptureState());
-            var skirmishRebel_vs_Terror = new Skirmish_Rebel_vs_Terror("skirmish_rebel_vs_terror");
-            var skirmishRebel_vs_TerrorSave = skirmishRebel_vs_Terror.CaptureState();
-            Assert.IsNotNull(skirmishRebel_vs_TerrorSave);
-            skirmishRebel_vs_Terror.RestoreState(skirmishRebel_vs_TerrorSave);
-            Assert.IsNotNull(skirmishRebel_vs_Terror.CaptureState());
+            AssertRoundTrips(() => new Skirmish_Bandit_vs_Terror("skirmish_bandit_vs_terror"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "locationId", "isBanditRescued", "isBanditSlaughtered", "hiddenStashLocationId");
+            AssertRoundTrips(() => new Skirmish_Mil_vs_Rebel("skirmish_mil_vs_rebel"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "locationId", "rebelTrustLossOnHelpMil", "militaryTrustLossOnHelpRebel", "milAmmoReward", "rebelAmmoReward", "playerIntervenedForMilitary", "playerIntervenedForRebels");
+            AssertRoundTrips(() => new Skirmish_Mil_vs_Terror("skirmish_mil_vs_terror"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "locationId", "strayBulletChance", "strayBulletDamage", "combatTurnsElapsed", "hasGainedExplodedModifier");
+            AssertRoundTrips(() => new Skirmish_Rebel_vs_Bandit("skirmish_rebel_vs_bandit"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "locationId", "karmaDropOnInterveneAgainstRebels", "isLootingBanditsStealing");
+            AssertRoundTrips(() => new Skirmish_Rebel_vs_Terror("skirmish_rebel_vs_terror"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "locationId", "isPermanentTraderUnlocked", "traderId");
         }
 
         [Test]
         public void Trader_All_CaptureRestore()
         {
-            var traderPlagueConvoy = new Trader_PlagueConvoy();
-            var traderPlagueConvoySave = traderPlagueConvoy.CaptureState();
-            Assert.IsNotNull(traderPlagueConvoySave);
-            traderPlagueConvoy.RestoreState(traderPlagueConvoySave);
-            Assert.IsNotNull(traderPlagueConvoy.CaptureState());
+            AssertRoundTrips(() => new Trader_PlagueConvoy(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "traderId", "displayName", "isCoughingVisible", "discountPercentage", "introducedPlagueAffliction");
         }
 
         [Test]
@@ -1257,206 +747,103 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsNotNull(traitAnthropophobiaSave);
             traitAnthropophobia.RestoreState(traitAnthropophobiaSave);
             Assert.IsNotNull(traitAnthropophobia.CaptureState());
-            var traitClairvoyant = new ClairvoyantSystem();
-            var traitClairvoyantSave = traitClairvoyant.CaptureState();
-            Assert.IsNotNull(traitClairvoyantSave);
-            traitClairvoyant.RestoreState(traitClairvoyantSave);
-            Assert.IsNotNull(traitClairvoyant.CaptureState());
-            var traitGenerationalTrauma = new Trait_GenerationalTrauma();
-            var traitGenerationalTraumaSave = traitGenerationalTrauma.CaptureState();
-            Assert.IsNotNull(traitGenerationalTraumaSave);
-            traitGenerationalTrauma.RestoreState(traitGenerationalTraumaSave);
-            Assert.IsNotNull(traitGenerationalTrauma.CaptureState());
-            var traitInheritedGenetics = new Trait_InheritedGenetics();
-            var traitInheritedGeneticsSave = traitInheritedGenetics.CaptureState();
-            Assert.IsNotNull(traitInheritedGeneticsSave);
-            traitInheritedGenetics.RestoreState(traitInheritedGeneticsSave);
-            Assert.IsNotNull(traitInheritedGenetics.CaptureState());
-            var traitMatriarch = new Trait_Matriarch();
-            var traitMatriarchSave = traitMatriarch.CaptureState();
-            Assert.IsNotNull(traitMatriarchSave);
-            traitMatriarch.RestoreState(traitMatriarchSave);
-            Assert.IsNotNull(traitMatriarch.CaptureState());
-            var traitPTSD = new Trait_PTSD();
-            var traitPTSDSave = traitPTSD.CaptureState();
-            Assert.IsNotNull(traitPTSDSave);
-            traitPTSD.RestoreState(traitPTSDSave);
-            Assert.IsNotNull(traitPTSD.CaptureState());
+            AssertRoundTrips(() => new ClairvoyantSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Trait_GenerationalTrauma(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "appliedTeenIds", "moraleCapPenalty", "traitId", "witnessedChildIds", "witnessedParentIds");
+            AssertRoundTrips(() => new Trait_InheritedGenetics(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "affinityPenaltyWithPure", "parentRadThreshold", "traitId");
+            AssertRoundTrips(() => new Trait_Matriarch(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "descendantsRequired", "matriarchIds", "traitId");
+            AssertRoundTrips(() => new Trait_PTSD(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "hidden_under_bed", "panic_active", "panic_hours_remaining", "survivor_id", "trigger_type");
         }
 
         [Test]
         public void UIEvent_All_CaptureRestore()
         {
-            var uIEventBlurredVision = new UIEvent_BlurredVision();
-            var uIEventBlurredVisionSave = uIEventBlurredVision.CaptureState();
-            Assert.IsNotNull(uIEventBlurredVisionSave);
-            uIEventBlurredVision.RestoreState(uIEventBlurredVisionSave);
-            Assert.IsNotNull(uIEventBlurredVision.CaptureState());
-            var uIEventCorruptionScare = new UIEvent_CorruptionScare();
-            var uIEventCorruptionScareSave = uIEventCorruptionScare.CaptureState();
-            Assert.IsNotNull(uIEventCorruptionScareSave);
-            uIEventCorruptionScare.RestoreState(uIEventCorruptionScareSave);
-            Assert.IsNotNull(uIEventCorruptionScare.CaptureState());
-            var uIEventFalseInventory = new UIEvent_FalseInventory();
-            var uIEventFalseInventorySave = uIEventFalseInventory.CaptureState();
-            Assert.IsNotNull(uIEventFalseInventorySave);
-            uIEventFalseInventory.RestoreState(uIEventFalseInventorySave);
-            Assert.IsNotNull(uIEventFalseInventory.CaptureState());
-            var uIEventGhostRadio = new UIEvent_GhostRadio();
-            var uIEventGhostRadioSave = uIEventGhostRadio.CaptureState();
-            Assert.IsNotNull(uIEventGhostRadioSave);
-            uIEventGhostRadio.RestoreState(uIEventGhostRadioSave);
-            Assert.IsNotNull(uIEventGhostRadio.CaptureState());
-            var uIEventHacking = new UIEvent_Hacking();
-            var uIEventHackingSave = uIEventHacking.CaptureState();
-            Assert.IsNotNull(uIEventHackingSave);
-            uIEventHacking.RestoreState(uIEventHackingSave);
-            Assert.IsNotNull(uIEventHacking.CaptureState());
-            var uIEventLowPower = new UIEvent_LowPower();
-            var uIEventLowPowerSave = uIEventLowPower.CaptureState();
-            Assert.IsNotNull(uIEventLowPowerSave);
-            uIEventLowPower.RestoreState(uIEventLowPowerSave);
-            Assert.IsNotNull(uIEventLowPower.CaptureState());
-            var uIEventMapRot = new UIEvent_MapRot();
-            var uIEventMapRotSave = uIEventMapRot.CaptureState();
-            Assert.IsNotNull(uIEventMapRotSave);
-            uIEventMapRot.RestoreState(uIEventMapRotSave);
-            Assert.IsNotNull(uIEventMapRot.CaptureState());
-            var uIEventPhantomBlip = new PhantomBlipSystem();
-            var uIEventPhantomBlipSave = uIEventPhantomBlip.CaptureState();
-            Assert.IsNotNull(uIEventPhantomBlipSave);
-            uIEventPhantomBlip.RestoreState(uIEventPhantomBlipSave);
-            Assert.IsNotNull(uIEventPhantomBlip.CaptureState());
+            AssertRoundTrips(() => new UIEvent_BlurredVision(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "toxicityThreshold", "feverThreshold", "blurIntensity");
+            AssertRoundTrips(() => new UIEvent_CorruptionScare(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "displayDurationSeconds", "isActive");
+            AssertRoundTrips(() => new UIEvent_FalseInventory(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "paranoiaThreshold", "flickerChance");
+            AssertRoundTrips(() => new UIEvent_GhostRadio(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId");
+            AssertRoundTrips(() => new UIEvent_Hacking(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "event_id", "vault_id", "max_tries", "tries_remaining", "is_permanently_locked", "is_unlocked", "correct_word", "word_pool", "revealed_duds");
+            AssertRoundTrips(() => new UIEvent_LowPower(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "batteryThreshold", "isGlitching");
+            AssertRoundTrips(() => new UIEvent_MapRot(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "rottedNodeIds", "visitedDays", "visitedNodeIds");
+            AssertRoundTrips(() => new PhantomBlipSystem(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "isActive", "phantomHordeSize", "phantomDirection", "durationMinutes", "radiationAnxietyThreshold");
         }
 
         [Test]
         public void Vehicle_All_CaptureRestore()
         {
-            var vehicleArmoredTruck = new Vehicle_ArmoredTruck();
-            var vehicleArmoredTruckSave = vehicleArmoredTruck.CaptureState();
-            Assert.IsNotNull(vehicleArmoredTruckSave);
-            vehicleArmoredTruck.RestoreState(vehicleArmoredTruckSave);
-            Assert.IsNotNull(vehicleArmoredTruck.CaptureState());
-            var vehicleMotorcycle = new Vehicle_Motorcycle();
-            var vehicleMotorcycleSave = vehicleMotorcycle.CaptureState();
-            Assert.IsNotNull(vehicleMotorcycleSave);
-            vehicleMotorcycle.RestoreState(vehicleMotorcycleSave);
-            Assert.IsNotNull(vehicleMotorcycle.CaptureState());
-            var vehicleRowboat = new Vehicle_Rowboat();
-            var vehicleRowboatSave = vehicleRowboat.CaptureState();
-            Assert.IsNotNull(vehicleRowboatSave);
-            vehicleRowboat.RestoreState(vehicleRowboatSave);
-            Assert.IsNotNull(vehicleRowboat.CaptureState());
+            AssertRoundTrips(() => new Vehicle_ArmoredTruck(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "vehicleId", "displayName", "encumbranceCapacityKg", "isImmuneToBanditAmbush", "fuelConsumptionMultiplier", "noiseOutputPercentage");
+            AssertRoundTrips(() => new Vehicle_Motorcycle(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "vehicleId", "displayName", "maxPassengers", "speedMultiplier", "fuelConsumptionMultiplier", "hasRadiationShielding", "hasWeatherProtection");
+            AssertRoundTrips(() => new Vehicle_Rowboat(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "vehicleId", "maxPassengers", "speedMultiplier", "fuelConsumption", "staminaCostPerHour", "sniperVulnerability", "isCrafted", "hullDurability");
         }
 
         [Test]
         public void Visitor_All_CaptureRestore()
         {
-            var visitorAbandonedState = new Visitor_AbandonedState();
-            var visitorAbandonedStateSave = visitorAbandonedState.CaptureState();
-            Assert.IsNotNull(visitorAbandonedStateSave);
-            visitorAbandonedState.RestoreState(visitorAbandonedStateSave);
-            Assert.IsNotNull(visitorAbandonedState.CaptureState());
-            var visitorChurchHostile = new Visitor_ChurchHostile();
-            var visitorChurchHostileSave = visitorChurchHostile.CaptureState();
-            Assert.IsNotNull(visitorChurchHostileSave);
-            visitorChurchHostile.RestoreState(visitorChurchHostileSave);
-            Assert.IsNotNull(visitorChurchHostile.CaptureState());
-            var visitorChurchSanctuary = new Visitor_ChurchSanctuary();
-            var visitorChurchSanctuarySave = visitorChurchSanctuary.CaptureState();
-            Assert.IsNotNull(visitorChurchSanctuarySave);
-            visitorChurchSanctuary.RestoreState(visitorChurchSanctuarySave);
-            Assert.IsNotNull(visitorChurchSanctuary.CaptureState());
-            var visitorExplodedState = new Visitor_ExplodedState();
-            var visitorExplodedStateSave = visitorExplodedState.CaptureState();
-            Assert.IsNotNull(visitorExplodedStateSave);
-            visitorExplodedState.RestoreState(visitorExplodedStateSave);
-            Assert.IsNotNull(visitorExplodedState.CaptureState());
-            var visitorFleeingHorde = new Visitor_FleeingHorde();
-            var visitorFleeingHordeSave = visitorFleeingHorde.CaptureState();
-            Assert.IsNotNull(visitorFleeingHordeSave);
-            visitorFleeingHorde.RestoreState(visitorFleeingHordeSave);
-            Assert.IsNotNull(visitorFleeingHorde.CaptureState());
-            var visitorHospitalPatients = new Visitor_HospitalPatients();
-            var visitorHospitalPatientsSave = visitorHospitalPatients.CaptureState();
-            Assert.IsNotNull(visitorHospitalPatientsSave);
-            visitorHospitalPatients.RestoreState(visitorHospitalPatientsSave);
-            Assert.IsNotNull(visitorHospitalPatients.CaptureState());
-            var visitorHospitalStaff = new Visitor_HospitalStaff();
-            var visitorHospitalStaffSave = visitorHospitalStaff.CaptureState();
-            Assert.IsNotNull(visitorHospitalStaffSave);
-            visitorHospitalStaff.RestoreState(visitorHospitalStaffSave);
-            Assert.IsNotNull(visitorHospitalStaff.CaptureState());
-            var visitorMilTrainingYard = new Visitor_MilTrainingYard();
-            var visitorMilTrainingYardSave = visitorMilTrainingYard.CaptureState();
-            Assert.IsNotNull(visitorMilTrainingYardSave);
-            visitorMilTrainingYard.RestoreState(visitorMilTrainingYardSave);
-            Assert.IsNotNull(visitorMilTrainingYard.CaptureState());
-            var visitorQuestFaction = new Visitor_QuestFaction();
-            var visitorQuestFactionSave = visitorQuestFaction.CaptureState();
-            Assert.IsNotNull(visitorQuestFactionSave);
-            visitorQuestFaction.RestoreState(visitorQuestFactionSave);
-            Assert.IsNotNull(visitorQuestFaction.CaptureState());
-            var visitorRebelTrainingYard = new Visitor_RebelTrainingYard();
-            var visitorRebelTrainingYardSave = visitorRebelTrainingYard.CaptureState();
-            Assert.IsNotNull(visitorRebelTrainingYardSave);
-            visitorRebelTrainingYard.RestoreState(visitorRebelTrainingYardSave);
-            Assert.IsNotNull(visitorRebelTrainingYard.CaptureState());
+            // Visitor_AbandonedState.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new Visitor_AbandonedState(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            AssertRoundTrips(() => new Visitor_ChurchHostile(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "isBellTowerSniperActive", "isGraveyardApproachRequired", "noiseTrapCount", "isDetectedBySniper");
+            AssertRoundTrips(() => new Visitor_ChurchSanctuary(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "isSafeZone", "isFatigueFrozen", "isRestingMidExpedition", "fatigueRestoredPerHour");
+            // Visitor_ExplodedState.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new Visitor_ExplodedState(), x => x.CaptureState(), (x, s) => x.RestoreState(s));
+            AssertRoundTrips(() => new Visitor_FleeingHorde(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "id", "displayName", "isStormPanicActive", "isCombatDisabled", "isStaminaRaceActive");
+            AssertRoundTrips(() => new Visitor_HospitalPatients(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "isDespairAuraActive", "maxStaminaMultiplier");
+            AssertRoundTrips(() => new Visitor_HospitalStaff(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "isTaxDemanded", "isTaxPaid", "medicalTaxRatio", "willHealPlayer");
+            AssertRoundTrips(() => new Visitor_MilTrainingYard(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "militaryNpcCount", "hasHighTierLoot", "requiresEndgameWeapons", "bunkerRaidMultiplier", "raidMultiplierDurationDays");
+            AssertRoundTrips(() => new Visitor_QuestFaction(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "activeQuestId", "targetLocationId", "isSpawned");
+            AssertRoundTrips(() => new Visitor_RebelTrainingYard(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "cardId", "displayName", "trapDensity", "barricadeRating", "rebelTrustGainOnFlank");
         }
 
         [Test]
         public void Weapon_All_CaptureRestore()
         {
-            var weaponChainsaw = new Weapon_Chainsaw();
-            var weaponChainsawSave = weaponChainsaw.CaptureState();
-            Assert.IsNotNull(weaponChainsawSave);
-            weaponChainsaw.RestoreState(weaponChainsawSave);
-            Assert.IsNotNull(weaponChainsaw.CaptureState());
-            var weaponFlamethrower = new Weapon_Flamethrower();
-            var weaponFlamethrowerSave = weaponFlamethrower.CaptureState();
-            Assert.IsNotNull(weaponFlamethrowerSave);
-            weaponFlamethrower.RestoreState(weaponFlamethrowerSave);
-            Assert.IsNotNull(weaponFlamethrower.CaptureState());
-            var weaponHMG = new Weapon_HMG();
-            var weaponHMGSave = weaponHMG.CaptureState();
-            Assert.IsNotNull(weaponHMGSave);
-            weaponHMG.RestoreState(weaponHMGSave);
-            Assert.IsNotNull(weaponHMG.CaptureState());
-            var weaponRPG = new Weapon_RPG();
-            var weaponRPGSave = weaponRPG.CaptureState();
-            Assert.IsNotNull(weaponRPGSave);
-            weaponRPG.RestoreState(weaponRPGSave);
-            Assert.IsNotNull(weaponRPG.CaptureState());
+            AssertRoundTrips(() => new Weapon_Chainsaw(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "fuelPerUse", "ignoresArmor", "noiseDecibels", "weaponId");
+            AssertRoundTrips(() => new Weapon_Flamethrower(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "weaponId", "fuelPerUse", "fearRadius", "tankExplodeOnCritChance");
+            AssertRoundTrips(() => new Weapon_HMG(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "weaponId", "requiresOperators", "isMounted", "isJammed", "shredsRaidLevel", "mountLocation");
+            AssertRoundTrips(() => new Weapon_RPG(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "weaponId", "securityDamagePercent", "concussesAirlockOccupants");
         }
 
         [Test]
         public void WorldEvent_All_CaptureRestore()
         {
-            var worldEventDeforestation = new WorldEvent_Deforestation();
-            var worldEventDeforestationSave = worldEventDeforestation.CaptureState();
-            Assert.IsNotNull(worldEventDeforestationSave);
-            worldEventDeforestation.RestoreState(worldEventDeforestationSave);
-            Assert.IsNotNull(worldEventDeforestation.CaptureState());
-            var worldEventFinalWinter = new WorldEvent_FinalWinter();
-            var worldEventFinalWinterSave = worldEventFinalWinter.CaptureState();
-            Assert.IsNotNull(worldEventFinalWinterSave);
-            worldEventFinalWinter.RestoreState(worldEventFinalWinterSave);
-            Assert.IsNotNull(worldEventFinalWinter.CaptureState());
-            var worldEventFissure = new WorldEvent_Fissure();
-            var worldEventFissureSave = worldEventFissure.CaptureState();
-            Assert.IsNotNull(worldEventFissureSave);
-            worldEventFissure.RestoreState(worldEventFissureSave);
-            Assert.IsNotNull(worldEventFissure.CaptureState());
-            var worldEventGreatFamine = new WorldEvent_GreatFamine();
-            var worldEventGreatFamineSave = worldEventGreatFamine.CaptureState();
-            Assert.IsNotNull(worldEventGreatFamineSave);
-            worldEventGreatFamine.RestoreState(worldEventGreatFamineSave);
-            Assert.IsNotNull(worldEventGreatFamine.CaptureState());
-            var worldEventMegafauna = new WorldEvent_Megafauna();
-            var worldEventMegafaunaSave = worldEventMegafauna.CaptureState();
-            Assert.IsNotNull(worldEventMegafaunaSave);
-            worldEventMegafauna.RestoreState(worldEventMegafaunaSave);
-            Assert.IsNotNull(worldEventMegafauna.CaptureState());
+            AssertRoundTrips(() => new WorldEvent_Deforestation(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "displayName", "triggerDay", "isActive", "woodLootMultiplier");
+            AssertRoundTrips(() => new WorldEvent_FinalWinter(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "triggerDay", "isActive", "currentTemperature", "daysRemaining", "cropsDestroyed", "surfaceWaterFrozen", "bunkerFreezeDeadline");
+            AssertRoundTrips(() => new WorldEvent_Fissure(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "event_id", "is_triggered", "trigger_day", "destroyed_connections", "map_split", "aircraft_required", "severed_nodes");
+            AssertRoundTrips(() => new WorldEvent_GreatFamine(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "triggerDay", "isActive", "foodLootTableZeroed", "hydroponicsViable", "cannibalismAvailable");
+            AssertRoundTrips(() => new WorldEvent_Megafauna(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "eventId", "displayName", "isActive", "currentNodeId", "daysToCrossMap", "daysRemaining", "meatYield", "requiresExplosives");
         }
 
         [Test]
@@ -2509,97 +1896,55 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void RemainingComplex_CaptureRestore()
         {
-            var actionCrawlspace = new Action_Crawlspace();
-            var actionCrawlspaceCap = actionCrawlspace.CaptureState();
-            Assert.IsNotNull(actionCrawlspaceCap);
-            actionCrawlspace.RestoreState(actionCrawlspaceCap);
-            var actionPlay = new Action_Play();
-            var actionPlayCap = actionPlay.CaptureState();
-            Assert.IsNotNull(actionPlayCap);
-            actionPlay.RestoreState(actionPlayCap);
-            var actionSlaughterPet = new Action_SlaughterPet();
-            var actionSlaughterPetCap = actionSlaughterPet.CaptureState();
-            Assert.IsNotNull(actionSlaughterPetCap);
-            actionSlaughterPet.RestoreState(actionSlaughterPetCap);
-            var actionTeachChild = new Action_TeachChild();
-            var actionTeachChildCap = actionTeachChild.CaptureState();
-            Assert.IsNotNull(actionTeachChildCap);
-            actionTeachChild.RestoreState(actionTeachChildCap);
-            var actionTellStories = new Action_TellStories();
-            var actionTellStoriesCap = actionTellStories.CaptureState();
-            Assert.IsNotNull(actionTellStoriesCap);
-            actionTellStories.RestoreState(actionTellStoriesCap);
-            var itemAshGoat = new Item_AshGoat("item_ash_goat");
-            var itemAshGoatCap = itemAshGoat.CaptureState();
-            Assert.IsNotNull(itemAshGoatCap);
-            itemAshGoat.RestoreState(itemAshGoatCap);
-            var itemBoots = new Item_Boots();
-            var itemBootsCap = itemBoots.CaptureState();
-            Assert.IsNotNull(itemBootsCap);
-            itemBoots.RestoreState(itemBootsCap);
-            var itemLiveTrap = new Item_LiveTrap("item_live_trap");
-            var itemLiveTrapCap = itemLiveTrap.CaptureState();
-            Assert.IsNotNull(itemLiveTrapCap);
-            itemLiveTrap.RestoreState(itemLiveTrapCap);
-            var itemMutantChicken = new Item_MutantChicken("item_mutant_chicken");
-            var itemMutantChickenCap = itemMutantChicken.CaptureState();
-            Assert.IsNotNull(itemMutantChickenCap);
-            itemMutantChicken.RestoreState(itemMutantChickenCap);
-            var itemToys = new Item_Toys();
-            var itemToysCap = itemToys.CaptureState();
-            Assert.IsNotNull(itemToysCap);
-            itemToys.RestoreState(itemToysCap);
-            var traitAshTongue = new Trait_AshTongue();
-            var traitAshTongueCap = traitAshTongue.CaptureState();
-            Assert.IsNotNull(traitAshTongueCap);
-            traitAshTongue.RestoreState(traitAshTongueCap);
-            var traitKleptomaniac = new Trait_Kleptomaniac();
-            var traitKleptomaniacCap = traitKleptomaniac.CaptureState();
-            Assert.IsNotNull(traitKleptomaniacCap);
-            traitKleptomaniac.RestoreState(traitKleptomaniacCap);
-            var traitMascot = new Trait_Mascot();
-            var traitMascotCap = traitMascot.CaptureState();
-            Assert.IsNotNull(traitMascotCap);
-            traitMascot.RestoreState(traitMascotCap);
-            var traitStuntedEmpathy = new Trait_StuntedEmpathy();
-            var traitStuntedEmpathyCap = traitStuntedEmpathy.CaptureState();
-            Assert.IsNotNull(traitStuntedEmpathyCap);
-            traitStuntedEmpathy.RestoreState(traitStuntedEmpathyCap);
-            var traitSuperstitious = new Trait_Superstitious();
-            var traitSuperstitiousCap = traitSuperstitious.CaptureState();
-            Assert.IsNotNull(traitSuperstitiousCap);
-            traitSuperstitious.RestoreState(traitSuperstitiousCap);
-            var afflictionBunkerFever = new Affliction_BunkerFever();
-            var afflictionBunkerFeverCap = afflictionBunkerFever.CaptureState();
-            Assert.IsNotNull(afflictionBunkerFeverCap);
-            afflictionBunkerFever.RestoreState(afflictionBunkerFeverCap);
-            var afflictionZoonoticFlu = new Affliction_ZoonoticFlu();
-            var afflictionZoonoticFluCap = afflictionZoonoticFlu.CaptureState();
-            Assert.IsNotNull(afflictionZoonoticFluCap);
-            afflictionZoonoticFlu.RestoreState(afflictionZoonoticFluCap);
-            var moduleRationLock = new Module_RationLock();
-            var moduleRationLockCap = moduleRationLock.CaptureState();
-            Assert.IsNotNull(moduleRationLockCap);
-            moduleRationLock.RestoreState(moduleRationLockCap);
-            var nodeOrphanage = new Node_Orphanage();
-            var nodeOrphanageCap = nodeOrphanage.CaptureState();
-            Assert.IsNotNull(nodeOrphanageCap);
-            nodeOrphanage.RestoreState(nodeOrphanageCap);
-            var petGuardDog = new Pet_GuardDog("pet_guard_dog");
-            var petGuardDogCap = petGuardDog.CaptureState();
-            Assert.IsNotNull(petGuardDogCap);
-            petGuardDog.RestoreState(petGuardDogCap);
+            AssertRoundTrips(() => new Action_Crawlspace(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "caveInChance", "biteChance", "lootMin", "lootMax");
+            AssertRoundTrips(() => new Action_Play(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "moraleGenerated", "noiseGenerated", "quietRulesActive");
+            AssertRoundTrips(() => new Action_SlaughterPet(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "foodYield", "traumaIsPermanent", "hasBeenUsed");
+            AssertRoundTrips(() => new Action_TeachChild(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "skillXpPerHour", "adultFatiguePerHour");
+            AssertRoundTrips(() => new Action_TellStories(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "actionId", "anxietyFreezeHours", "requiresBooks", "adultTimeCostHours", "frozenChildIds", "frozenExpiryTimestamps");
+            AssertRoundTrips(() => new Item_AshGoat("item_ash_goat"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "noiseLevel", "smellLevel", "milkPerDay", "isFed", "totalMilkProduced");
+            AssertRoundTrips(() => new Item_Boots(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Item_LiveTrap("item_live_trap"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "plagueChance", "isSet", "ratsCapturedToday");
+            AssertRoundTrips(() => new Item_MutantChicken("item_mutant_chicken"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "isFed", "isFeral", "eggProductionPerDay", "eggsLaidToday");
+            AssertRoundTrips(() => new Item_Toys(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "itemId", "baseTradeValue", "factionMultiplier", "cultDestroys");
+            AssertRoundTrips(() => new Trait_AshTongue(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Trait_Kleptomaniac(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Trait_Mascot(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "traitId", "resilienceBuffMult", "requiresChildWellFed", "requiresChildHappy");
+            AssertRoundTrips(() => new Trait_StuntedEmpathy(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "traitId", "deathWitnessThreshold", "deathsWitnessed", "moraleShattered", "guaranteedSociopathOnAdult", "trackedChildIds", "trackedDeathCounts", "trackedShatteredFlags");
+            AssertRoundTrips(() => new Trait_Superstitious(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Affliction_BunkerFever(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "keys", "values");
+            AssertRoundTrips(() => new Affliction_ZoonoticFlu(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "afflictionId", "contagionRate", "spreadsViaVents", "isQuarantined", "isInfected", "sourceAnimal", "infectedSurvivorId");
+            AssertRoundTrips(() => new Module_RationLock(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "moduleId", "dailyCap", "resentmentPerDay");
+            AssertRoundTrips(() => new Node_Orphanage(), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "nodeId", "childCount", "hasBeenVisited");
+            AssertRoundTrips(() => new Pet_GuardDog("pet_guard_dog"), x => x.CaptureState(), (x, s) => x.RestoreState(s),
+                "petId", "meatRationsRequired", "isMalnourished", "canFight", "meatFedToday", "veggiesFedToday");
         }
 
         [Test]
         public void FalloutStormHazard_CaptureRestore()
         {
             var weather = new AtomicWar._Game.Environment.WeatherSystem(null, 3);
-            var sys = new FalloutStormHazardSystem(weather);
-            var cap = sys.CaptureState();
-            Assert.IsNotNull(cap);
-            sys.RestoreState(cap);
-            Assert.IsNotNull(sys.CaptureState());
+            // FalloutStormHazardSystem.RestoreState is an intentional no-op (dormant
+            // ghost, not Boot/Save wired) -- no field survives a round trip.
+            AssertRoundTrips(() => new FalloutStormHazardSystem(weather), x => x.CaptureState(), (x, s) => x.RestoreState(s));
         }
     }
 }

@@ -43,8 +43,12 @@ namespace AtomicWar._Game.UI
 
         public void Close()
         {
+            if (!IsOpen) return; // idempotent: skip the rebuild and event on no-op closes
             IsOpen = false;
-            OnWorkbenchUiChanged?.Invoke();
+            // Refresh through the normal path so the panel's PanelSummary and
+            // line list are reset to a known state before the event fires.
+            // Skipping this leaves stale text on the model for the next open.
+            Refresh();
         }
 
         public void Toggle()

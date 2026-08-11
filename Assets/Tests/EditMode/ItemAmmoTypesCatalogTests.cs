@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Shelter;
 
 namespace AtomicWar.Tests.EditMode

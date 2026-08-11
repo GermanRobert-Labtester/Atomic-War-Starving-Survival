@@ -80,6 +80,51 @@ namespace AtomicWar._Game.Core
         public int DailyRunCount { get; private set; }
 
         // -----------------------------------------------------------------
+        // Instance lookup (H-7: service-locator alternative to GameBootstrap
+        // properties). Separate from the tick-dispatch lists above — a system
+        // can be instance-registered here without also being tick-registered
+        // (e.g. save-only systems), and vice versa.
+        // -----------------------------------------------------------------
+
+        private readonly Dictionary<Type, object> _instances = new Dictionary<Type, object>();
+
+        /// <summary>
+        /// Register a system instance for later retrieval via <see cref="Get{T}"/>.
+        /// New systems should call this instead of adding a GameBootstrap property
+        /// (C-3). One instance per type; a later call with the same T replaces
+        /// the earlier one.
+        /// </summary>
+        public void Register<T>(T instance) where T : class
+        {
+            if (instance == null) return;
+            _instances[typeof(T)] = instance;
+        }
+
+        /// <summary>
+        /// Look up a previously <see cref="Register{T}"/>-ed system instance by
+        /// type. Returns null if no instance of T was registered.
+        /// </summary>
+        public T Get<T>() where T : class
+        {
+            return _instances.TryGetValue(typeof(T), out object instance) ? (T)instance : null;
+        }
+
+        /// <summary>
+        /// Non-throwing variant of <see cref="Get{T}"/> for call sites that need
+        /// to branch on presence rather than null-check the result.
+        /// </summary>
+        public bool TryGet<T>(out T instance) where T : class
+        {
+            if (_instances.TryGetValue(typeof(T), out object found))
+            {
+                instance = (T)found;
+                return true;
+            }
+            instance = null;
+            return false;
+        }
+
+        // -----------------------------------------------------------------
         // Registration
         // -----------------------------------------------------------------
 
@@ -188,7 +233,7 @@ namespace AtomicWar._Game.Core
                 }
                 catch (Exception ex)
                 {
-                    Debug.LogError($"[SystemRegistry] Per-substep tick '{name}' threw: {ex.Message}");
+                    Debug.LogError($"[SystemRegistry] Per-substep tick '{name}' threw: {ex}");
                 }
             }
 
@@ -207,7 +252,7 @@ namespace AtomicWar._Game.Core
                     }
                     catch (Exception ex)
                     {
-                        Debug.LogError($"[SystemRegistry] Daily tick '{name}' threw: {ex.Message}");
+                        Debug.LogError($"[SystemRegistry] Daily tick '{name}' threw: {ex}");
                     }
                 }
                 _lastDailyRunDay = currentDay;
@@ -290,6 +335,7 @@ namespace AtomicWar._Game.Core
             _lastDailyRunDay = -1;
             DailyRunCount = 0;
             _currentDayForDayGated = -1;
+            _instances.Clear();
         }
     }
 }

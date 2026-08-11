@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using UnityEngine;
+using AtomicWar._Game.AI;
+using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
@@ -117,6 +119,54 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsNotNull(toId);
             Assert.IsTrue(g.HasHeardRumor(toId, "c"));
             Assert.AreEqual(2, g.GetInformedCount("c"));
+        }
+
+        // ── H-6f: System_Gossip.SpreadRumor existed and was fully tested in
+        // isolation but nothing ever called it in production ──────────────
+
+        [Test]
+        public void CanSpreadRumor_TrueOnlyForWitnessWithUninformedTarget()
+        {
+            var g = MakeWithRoster("w", "c", "a");
+            Assert.IsFalse(g.CanSpreadRumor("w"), "No rumor exists yet.");
+
+            g.WitnessCrime("w", "c", "theft", 1);
+            Assert.IsTrue(g.CanSpreadRumor("w"), "Witness has an uninformed listener (a) available.");
+            Assert.IsFalse(g.CanSpreadRumor("a"), "Non-witness cannot spread a rumor they didn't originate.");
+
+            g.SpreadRumor("w"); // tells "a", the only remaining listener
+            Assert.IsFalse(g.CanSpreadRumor("w"), "No listeners left once everyone but the criminal knows.");
+        }
+
+        [Test]
+        public void SpreadGossipAction_ScoresAndExecutes_ViaHostHooks()
+        {
+            var g = MakeWithRoster("w", "c", "a");
+            g.WitnessCrime("w", "c", "theft", 1);
+
+            var witness = new Survivor { Id = "w", DisplayName = "Witness", State = SurvivorState.Idle };
+            var action = ScriptableObject.CreateInstance<SpreadGossipActionSO>();
+
+            var ctxCannot = new AIContext(witness) { CanSpreadGossip = sv => false };
+            Assert.AreEqual(0f, action.EvaluateRaw(ctxCannot));
+
+            bool executed = false;
+            var ctx = new AIContext(witness)
+            {
+                CanSpreadGossip = sv => g.CanSpreadRumor(sv.Id),
+                OnRequestSpreadGossip = sv =>
+                {
+                    executed = true;
+                    g.SpreadRumor(sv.Id);
+                    return true;
+                }
+            };
+            Assert.Greater(action.EvaluateRaw(ctx), 0f);
+
+            action.Execute(ctx);
+
+            Assert.IsTrue(executed, "Execute should invoke OnRequestSpreadGossip.");
+            Assert.IsTrue(g.HasHeardRumor("a", "c"));
         }
 
         [Test]

@@ -446,6 +446,42 @@ namespace AtomicWar._Game.Data
         }
 
         // ───────────────────────────────────────────────────────────────
+        // Audit H-6g — Shelter Event: Mutiny Standoff
+        // Fired directly by MutinySystem.OnMutinyStarted (GameBootstrap),
+        // not the random pool — weight 0 keeps it out of weighted picks.
+        // ───────────────────────────────────────────────────────────────
+        public static GameEvent CreateMutinyStandoff()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = "shelter_mutiny_standoff";
+            ev.title = "A Line in the Sand";
+            ev.bodyText =
+                "Morale has been on the floor for a week, and now someone has finally " +
+                "said it out loud: they don't answer to you anymore. Followers are at " +
+                "their back. Whatever happens next, the bunker will remember it.";
+            ev.weight = 0f;
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "mutiny_negotiate",
+                    Text = "Talk them down. Give ground, keep the bunker in one piece."
+                },
+                new EventChoice
+                {
+                    ChoiceId = "mutiny_yield",
+                    Text = "Buy them off with rations."
+                },
+                new EventChoice
+                {
+                    ChoiceId = "mutiny_execute",
+                    Text = "End it. Make an example of the leader."
+                }
+            };
+            return ev;
+        }
+
+        // ───────────────────────────────────────────────────────────────
         // Prompt #104 — Shelter Event: The Saboteur
         // ───────────────────────────────────────────────────────────────
         public static GameEvent CreateSaboteur()
@@ -1500,7 +1536,7 @@ namespace AtomicWar._Game.Data
             {
                 CreateChildSniper(), CreateFeralDogPack(), CreateBlindWanderer(),
                 CreateDeserterCache(), CreateMutatedBear(), CreateSinkingMud(),
-                CreateTaintedRain(), CreateKnockingBelow(), CreateCOLeak(), CreateSaboteur(),
+                CreateTaintedRain(), CreateKnockingBelow(), CreateCOLeak(), CreateMutinyStandoff(), CreateSaboteur(),
                 CreateDyingDoctor(), CreateCannibalTrap(), CreateBrokenDrone(), CreateMinefield(),
                 CreateRivalScavenger(), CreateOverturnedAmbulance(), CreateFinalBroadcast(),
                 CreateMutatedCrops(), CreateMomentOfPeace(), CreateGeneratorFire(), CreateStrayCat(),

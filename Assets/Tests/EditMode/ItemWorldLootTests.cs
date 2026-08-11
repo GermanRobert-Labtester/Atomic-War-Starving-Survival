@@ -374,5 +374,36 @@ namespace AtomicWar.Tests.EditMode
             foreach (var id in attPool)
                 CollectionAssert.Contains(Item_WorldCatalog.MilitaryAttachmentIds(), id);
         }
+
+        [Test]
+        public void Faction_WorldLoot_Pools_Contain_Newly_Added_Firearms()
+        {
+            var milPool = Item_WorldCatalog.GetPoolItemIds(WorldLootFaction.Military);
+            CollectionAssert.Contains(milPool, "rifle_m4a1_carbine_556x45");
+            CollectionAssert.Contains(milPool, "rifle_hk416_556x45");
+            CollectionAssert.Contains(milPool, "rifle_fn_fal_762x51");
+            CollectionAssert.Contains(milPool, "shotgun_benelli_m4_super90_12ga");
+            CollectionAssert.Contains(milPool, "sniper_svd_dragunov_762x54r");
+
+            var rebelPool = Item_WorldCatalog.GetPoolItemIds(WorldLootFaction.Rebel);
+            CollectionAssert.Contains(rebelPool, "rifle_ak47_762x39");
+            CollectionAssert.Contains(rebelPool, "rifle_ak74u_545x39");
+            CollectionAssert.Contains(rebelPool, "lmg_rpk74_545x39");
+            CollectionAssert.Contains(rebelPool, "sniper_mosin_nagant_m9031_762x54r");
+
+            var specOpsPool = Item_WorldCatalog.GetPoolItemIds(WorldLootFaction.SpecOpsRebel);
+            CollectionAssert.Contains(specOpsPool, "rifle_fn_scar_l_556x45");
+            CollectionAssert.Contains(specOpsPool, "rifle_q_honey_badger_300blk");
+            CollectionAssert.Contains(specOpsPool, "pdw_fn_p90_57x28");
+            CollectionAssert.Contains(specOpsPool, "pdw_hk_mp7a2_46x30");
+            CollectionAssert.Contains(specOpsPool, "sniper_steyr_ssg08_338lapua");
+
+            var blackOpsPool = Item_WorldCatalog.GetPoolItemIds(WorldLootFaction.BlackOpsMilitary);
+            CollectionAssert.Contains(blackOpsPool, "rifle_sig_mcx_rattler_300blk");
+            CollectionAssert.Contains(blackOpsPool, "rifle_ddm4_pdw_300blk");
+            CollectionAssert.Contains(blackOpsPool, "pdw_cmmg_four6_46x30");
+            CollectionAssert.Contains(blackOpsPool, "sniper_cheytac_m200_intervention_408cheytac");
+            CollectionAssert.Contains(blackOpsPool, "sniper_barrett_m82a1_50bmg");
+        }
     }
 }

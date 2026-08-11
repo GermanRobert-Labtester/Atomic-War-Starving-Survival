@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine;
 
 namespace AtomicWar._Game.Core
 {
@@ -102,9 +103,10 @@ namespace AtomicWar._Game.Core
                 {
                     File.WriteAllText(memorialPath, _state.death_log);
                 }
-                catch
+                catch (Exception ex)
                 {
                     // Best-effort memorial write; don't block save deletion
+                    Debug.LogWarning($"[Mode_IronMan] Failed to write memorial at '{memorialPath}': {ex}");
                 }
             }
 
@@ -115,9 +117,13 @@ namespace AtomicWar._Game.Core
                 {
                     File.Delete(path);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // Deletion may fail on locked files; flag anyway
+                    // Deletion failed (locked file, permissions, etc.) — do not
+                    // report success, or the UI will believe the save is gone.
+                    _state.save_deleted = false;
+                    Debug.LogError($"[Mode_IronMan] Failed to delete save at '{path}': {ex}");
+                    return;
                 }
             }
 

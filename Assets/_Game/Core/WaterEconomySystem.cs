@@ -22,6 +22,7 @@ namespace AtomicWar._Game.Core
     public class WaterEconomySystemSave
     {
         public string systemId = "water_economy_system";
+        public int purifierQueueMode = (int)PurifierQueueMode.Auto;
     }
 public class WaterEconomySystem
     {
@@ -38,6 +39,14 @@ public class WaterEconomySystem
 
         private PersonalQuestSystem _personalQuests;
         private Func<IReadOnlyList<Survivor>> _getSurvivors;
+        private Func<float> _getPurifierHoursPerUnitMultiplier;
+
+        public PurifierQueueMode CurrentPurifierQueue { get; private set; } = PurifierQueueMode.Auto;
+
+        /// <summary>Raised only when cistern contents or purifier runtime state changes.</summary>
+        public event Action OnWaterStateChanged;
+        /// <summary>Raised when the player changes the purifier work queue.</summary>
+        public event Action<PurifierQueueMode> OnPurifierQueueChanged;
 
         /// <summary>Prompt #225 — Hydraulic Master purifier speed + humidity extract.</summary>
         public void BindPersonalQuests(
@@ -48,14 +57,82 @@ public class WaterEconomySystem
             _getSurvivors = getSurvivors;
         }
 
+        /// <summary>Bind a transient multiplier for staffed purifier supervision.</summary>
+        public void SetPurifierHoursPerUnitMultiplierProvider(Func<float> provider)
+        {
+            _getPurifierHoursPerUnitMultiplier = provider;
+            OnWaterStateChanged?.Invoke();
+        }
+
         public void Tick(float gameHours, WeatherKind weather, int currentDay, Shelter.Shelter shelter, WaterStorage storage)
         {
             if (gameHours <= 0f || shelter == null || storage == null) return;
+
+            var before = CaptureStateStamp(shelter, storage);
 
             CollectCatchment(gameHours, weather, currentDay, shelter, storage);
             RunPurifier(gameHours, shelter, storage);
             ExtractHumidityWater(gameHours, shelter, storage);
             ApplyMakeupWaterBurn(gameHours, storage);
+
+            if (HasStateChanged(before, CaptureStateStamp(shelter, storage)))
+                OnWaterStateChanged?.Invoke();
+        }
+
+        /// <summary>Set a player-selected work priority for the powered purifier.</summary>
+        public bool SetPurifierQueueMode(PurifierQueueMode queueMode)
+        {
+            queueMode = ClampQueueMode(queueMode);
+            if (CurrentPurifierQueue == queueMode) return false;
+            CurrentPurifierQueue = queueMode;
+            OnPurifierQueueChanged?.Invoke(CurrentPurifierQueue);
+            OnWaterStateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>Cycle the terminal queue one step in either direction.</summary>
+        public bool CyclePurifierQueue(int direction)
+        {
+            if (direction == 0) return false;
+            int count = Enum.GetValues(typeof(PurifierQueueMode)).Length;
+            int next = ((int)CurrentPurifierQueue + (direction > 0 ? 1 : -1) + count) % count;
+            return SetPurifierQueueMode((PurifierQueueMode)next);
+        }
+
+        /// <summary>Build a display-only cistern, purifier, and next-work projection.</summary>
+        public WaterPurificationSnapshot GetSnapshot(Shelter.Shelter shelter, WaterStorage storage)
+        {
+            var purifier = shelter != null ? shelter.GetModule(PurifierModuleId) : null;
+            bool operational = purifier != null && purifier.IsOperational && purifier.FilterHealth > 0f;
+            var source = SelectConversionSource(storage);
+            float hoursPerUnit = purifier != null ? GetEffectiveHoursPerUnit(purifier) : DefaultConversionHoursPerUnit;
+            float degradationPerUnit = purifier != null
+                ? GetFilterDegradationPerUnit(purifier)
+                : DefaultFilterDegradationPerUnitConverted;
+            int unitsQueued = UnitsForSource(storage, source);
+            float filterBurnPerHour = operational && unitsQueued > 0 && hoursPerUnit > 0f
+                ? degradationPerUnit / hoursPerUnit
+                : 0f;
+            float filterRuntimeHours = filterBurnPerHour > 0f
+                ? Mathf.Max(0f, purifier.FilterHealth) / filterBurnPerHour
+                : -1f;
+            return new WaterPurificationSnapshot
+            {
+                CleanWater = storage != null ? Mathf.Max(0f, storage.CleanWater) : 0f,
+                DirtyWater = storage != null ? Mathf.Max(0f, storage.DirtyWater) : 0f,
+                IrradiatedWater = storage != null ? Mathf.Max(0f, storage.IrradiatedWater) : 0f,
+                QueueMode = CurrentPurifierQueue,
+                PurifierOperational = operational,
+                FilterHealth = purifier != null ? Mathf.Max(0f, purifier.FilterHealth) : 0f,
+                ConversionProgressHours = purifier != null ? Mathf.Max(0f, purifier.WaterConversionProgress) : 0f,
+                HoursPerUnit = hoursPerUnit,
+                FilterDegradationPerUnit = degradationPerUnit,
+                FilterBurnPerHour = filterBurnPerHour,
+                FilterRuntimeHours = filterRuntimeHours,
+                NextSourceLabel = SourceLabel(source),
+                NextOutputLabel = OutputLabel(source),
+                UnitsQueued = unitsQueued
+            };
         }
 
         private static void CollectCatchment(float gameHours, WeatherKind weather, int currentDay, Shelter.Shelter shelter, WaterStorage storage)
@@ -102,36 +179,25 @@ public class WaterEconomySystem
             var purifier = shelter.GetModule(PurifierModuleId);
             if (purifier == null || !purifier.IsOperational || purifier.FilterHealth <= 0f) return;
 
-            var def = purifier.Definition as WaterPurifierModuleSO;
-            float hoursPerUnit = def != null && def.ConversionHoursPerUnit > 0f
-                ? def.ConversionHoursPerUnit
-                : DefaultConversionHoursPerUnit;
-            // Prompt #225 — Hydraulic Master triples purifier speed.
-            float speedMult = _personalQuests != null
-                ? _personalQuests.GetPurifierSpeedMultiplier(_getSurvivors?.Invoke())
-                : 1f;
-            if (speedMult > 1f)
-                hoursPerUnit = Mathf.Max(0.01f, hoursPerUnit / speedMult);
-            float degradePerUnit = def != null ? def.FilterDegradationPerUnitConverted : DefaultFilterDegradationPerUnitConverted;
+            float hoursPerUnit = GetEffectiveHoursPerUnit(purifier);
+            float degradePerUnit = GetFilterDegradationPerUnit(purifier);
 
             purifier.WaterConversionProgress += gameHours;
 
             int safety = 0;
             while (purifier.WaterConversionProgress >= hoursPerUnit && purifier.FilterHealth > 0f && safety < 10000)
             {
-                if (storage.IrradiatedWater > 0f)
+                var source = SelectConversionSource(storage);
+                if (source == ConversionSource.None) break;
+                if (source == ConversionSource.Irradiated)
                 {
                     storage.ConsumeIrradiated(1f);
                     storage.AddDirty(1f);
                 }
-                else if (storage.DirtyWater > 0f)
+                else
                 {
                     storage.ConsumeDirty(1f);
                     storage.AddClean(1f);
-                }
-                else
-                {
-                    break; // nothing left to convert this tick
                 }
 
                 purifier.WaterConversionProgress -= hoursPerUnit;
@@ -186,9 +252,129 @@ public class WaterEconomySystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public WaterEconomySystemSave CaptureState() => new WaterEconomySystemSave();
+        public WaterEconomySystemSave CaptureState() => new WaterEconomySystemSave
+        {
+            purifierQueueMode = (int)CurrentPurifierQueue
+        };
 
-        public void RestoreState(WaterEconomySystemSave saved) { _ = saved; }
+        public void RestoreState(WaterEconomySystemSave saved)
+        {
+            if (saved == null) return;
+            CurrentPurifierQueue = ClampQueueMode((PurifierQueueMode)saved.purifierQueueMode);
+            OnPurifierQueueChanged?.Invoke(CurrentPurifierQueue);
+            OnWaterStateChanged?.Invoke();
+        }
+
+        private float GetEffectiveHoursPerUnit(ShelterModuleInstance purifier)
+        {
+            var def = purifier != null ? purifier.Definition as WaterPurifierModuleSO : null;
+            float hoursPerUnit = def != null && def.ConversionHoursPerUnit > 0f
+                ? def.ConversionHoursPerUnit
+                : DefaultConversionHoursPerUnit;
+            float speedMult = _personalQuests != null
+                ? _personalQuests.GetPurifierSpeedMultiplier(_getSurvivors?.Invoke())
+                : 1f;
+            float perkAdjustedHours = speedMult > 1f
+                ? Mathf.Max(0.01f, hoursPerUnit / speedMult)
+                : hoursPerUnit;
+            float staffingMultiplier = _getPurifierHoursPerUnitMultiplier != null
+                ? _getPurifierHoursPerUnitMultiplier()
+                : 1f;
+            return Mathf.Max(0.01f, perkAdjustedHours * Mathf.Clamp(staffingMultiplier, 0.01f, 1f));
+        }
+
+        private static float GetFilterDegradationPerUnit(ShelterModuleInstance purifier)
+        {
+            var definition = purifier != null ? purifier.Definition as WaterPurifierModuleSO : null;
+            return definition != null && definition.FilterDegradationPerUnitConverted > 0f
+                ? definition.FilterDegradationPerUnitConverted
+                : DefaultFilterDegradationPerUnitConverted;
+        }
+
+        private ConversionSource SelectConversionSource(WaterStorage storage)
+        {
+            if (storage == null) return ConversionSource.None;
+            bool dirtyFirst = CurrentPurifierQueue == PurifierQueueMode.DirtyFirst;
+            if (dirtyFirst && storage.DirtyWater > 0f) return ConversionSource.Dirty;
+            if (storage.IrradiatedWater > 0f) return ConversionSource.Irradiated;
+            if (storage.DirtyWater > 0f) return ConversionSource.Dirty;
+            return ConversionSource.None;
+        }
+
+        private static int UnitsForSource(WaterStorage storage, ConversionSource source)
+        {
+            if (storage == null) return 0;
+            switch (source)
+            {
+                case ConversionSource.Irradiated: return Mathf.FloorToInt(Mathf.Max(0f, storage.IrradiatedWater));
+                case ConversionSource.Dirty: return Mathf.FloorToInt(Mathf.Max(0f, storage.DirtyWater));
+                default: return 0;
+            }
+        }
+
+        private static string SourceLabel(ConversionSource source)
+        {
+            switch (source)
+            {
+                case ConversionSource.Irradiated: return "IRRADIATED";
+                case ConversionSource.Dirty: return "DIRTY";
+                default: return "NONE";
+            }
+        }
+
+        private static string OutputLabel(ConversionSource source)
+        {
+            switch (source)
+            {
+                case ConversionSource.Irradiated: return "DIRTY";
+                case ConversionSource.Dirty: return "CLEAN";
+                default: return "--";
+            }
+        }
+
+        private static PurifierQueueMode ClampQueueMode(PurifierQueueMode queueMode)
+        {
+            return (PurifierQueueMode)Mathf.Clamp((int)queueMode,
+                (int)PurifierQueueMode.Auto, (int)PurifierQueueMode.DirtyFirst);
+        }
+
+        private static WaterStateStamp CaptureStateStamp(Shelter.Shelter shelter, WaterStorage storage)
+        {
+            var purifier = shelter != null ? shelter.GetModule(PurifierModuleId) : null;
+            return new WaterStateStamp
+            {
+                Clean = storage != null ? storage.CleanWater : 0f,
+                Dirty = storage != null ? storage.DirtyWater : 0f,
+                Irradiated = storage != null ? storage.IrradiatedWater : 0f,
+                FilterHealth = purifier != null ? purifier.FilterHealth : 0f,
+                Progress = purifier != null ? purifier.WaterConversionProgress : 0f
+            };
+        }
+
+        private static bool HasStateChanged(WaterStateStamp before, WaterStateStamp after)
+        {
+            return !Mathf.Approximately(before.Clean, after.Clean)
+                || !Mathf.Approximately(before.Dirty, after.Dirty)
+                || !Mathf.Approximately(before.Irradiated, after.Irradiated)
+                || !Mathf.Approximately(before.FilterHealth, after.FilterHealth)
+                || !Mathf.Approximately(before.Progress, after.Progress);
+        }
+
+        private enum ConversionSource
+        {
+            None,
+            Irradiated,
+            Dirty
+        }
+
+        private struct WaterStateStamp
+        {
+            public float Clean;
+            public float Dirty;
+            public float Irradiated;
+            public float FilterHealth;
+            public float Progress;
+        }
 
 }
 }

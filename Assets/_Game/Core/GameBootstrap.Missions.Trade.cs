@@ -38,7 +38,8 @@ namespace AtomicWar._Game.Core
 
         public bool StartScavengeMission(Survivor survivor, LocationDefinitionSO location)
         {
-            if (ScavengingSystem == null || survivor == null || location == null) return false;
+            if (location == null || !string.IsNullOrEmpty(GetScavengeDispatchBlockReason(survivor)))
+                return false;
             return ScavengingSystem.StartMission(survivor, location);
         }
 

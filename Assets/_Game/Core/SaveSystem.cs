@@ -10,13 +10,26 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Simulation; // CompostSystem, SterilizationSystem, etc. (audit C-3 split)
 using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.AI; // HallucinationSystem (audit wiring fix)
+using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Crafting; // CraftingSystem, WorkbenchSystem (audit wiring fix)
 using AtomicWar._Game.Utilities; // SaveSlotPaths (slot file naming shared with the main menu)
+
+using AtomicWar._Game.Endgame;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.World;
+
+using AtomicWar._Game.Narrative;
+
+using AtomicWar._Game.Factions;
 
 namespace AtomicWar._Game.Core
 {
@@ -80,6 +93,12 @@ namespace AtomicWar._Game.Core
         private PhotoperiodSystem _photoPeriodSystem;
         private RadiationKnowledgeMap _knowledgeMap;
         private Inventory.Inventory _inventory;
+        private Inventory.Inventory _overflowStash;
+        private BunkerRationingSystem _bunkerRationingSystem;
+        private BunkerMaintenanceSystem _bunkerMaintenanceSystem;
+        private RepairWorkOrderSystem _repairWorkOrderSystem;
+        private SurvivorWorkShiftSystem _survivorWorkShiftSystem;
+        private SurvivorTaskBoardSystem _survivorTaskBoardSystem;
         private ExpeditionSystem _expeditionSystem;
         private MedicalSystem _medicalSystem;
         private BloodTransfusionSystem _bloodTransfusion;
@@ -198,6 +217,7 @@ namespace AtomicWar._Game.Core
         private DiseaseSystem_Expansion _diseaseExpansionSystem;
         private Dynamic_Scapegoat _dynamicScapegoatSystem;
         private Mode_IronMan _ironManMode;
+        private EndgameEngine _endgameEngine;
         private NPC_Android _androidNpcSystem;
         private Role_Sheriff _sheriffRoleSystem;
         private UI_ScenarioGen _scenarioGenSystem;
@@ -253,6 +273,12 @@ namespace AtomicWar._Game.Core
         private Biome_SkyscraperTops _biomeSkyscraperTops;
         private Biome_Suburbs _biomeSuburbs;
         private Weather_AcidSnow _weatherAcidSnow;
+        // Prompts #319–#325 — Section X new weather events
+        private Weather_AshLightning _weatherAshLightning;
+        private Weather_FogOfParticulate _weatherFogOfParticulate;
+        private Weather_ThermalInversion _weatherThermalInversion;
+        private Weather_IceStorm _weatherIceStorm;
+        private Weather_Silence _weatherSilence;
         private Weather_BioFog _weatherBioFog;
         private Weather_BlackSnow _weatherBlackSnow;
         private Weather_BloodRain _weatherBloodRain;
@@ -681,6 +707,21 @@ namespace AtomicWar._Game.Core
         public bool SuppressAutoSave { get; set; }
 
         /// <summary>
+        /// M-8: True for the duration of <see cref="RestoreFromSnapshot"/>. Restore
+        /// calls RestoreState() on ~20 systems whose setters fire live OnXChanged
+        /// events (Inventory, BunkerMaintenanceSystem, RepairWorkOrderSystem, etc.);
+        /// systems restored early can end up firing those events at listeners in
+        /// systems that have not been restored yet (e.g. Inventory.RestoreState
+        /// fires OnInventoryChanged, which BunkerMaintenanceSystem/FieldGearLoadout/
+        /// OverflowCrateSystem all listen to, but those systems' own RestoreState
+        /// hasn't run yet at that point in the restore order). Event-firing systems
+        /// can check this flag and skip the notify while it's true; SaveSystem does
+        /// not force this on any system today, since retrofitting every listener
+        /// touches call sites well outside SaveSystem itself.
+        /// </summary>
+        public bool IsRestoring { get; private set; }
+
+        /// <summary>
         /// P1: Policy for new SaveSystem instances.
         /// True under UNITY_EDITOR or DEVELOPMENT_BUILD (includes game-ci batchmode
         /// EditMode tests). False in release player builds so a single bad subsystem
@@ -768,6 +809,28 @@ namespace AtomicWar._Game.Core
                 var adapter = new SaveableAdapter(saveId, capture, restore);
                 Register(adapter);
             }
+        }
+
+        /// <summary>
+        /// H-9: Public equivalent of <see cref="RegisterSystem{T}"/> for new
+        /// systems that don't need SaveSystem to hold its own reference to them
+        /// (i.e. nothing elsewhere in SaveSystem special-cases them the way
+        /// EventRunner/ShiftingHotspot/FactionRaidPlan/Expedition are — see the
+        /// note atop CaptureWorldAndFactionSystems). Lets a new system self-wire
+        /// its persistence in one call instead of adding a dedicated SetXxx
+        /// method + backing field to this file.
+        ///
+        /// If a new system DOES need restore-ordering relative to another
+        /// system (e.g. it must rebind to a map after the map is rebuilt), this
+        /// method is the wrong tool — follow the CapIf/RestIf pattern in
+        /// SaveSystem.Capture.*.cs / SaveSystem.Restore.*.cs instead, same as
+        /// the existing special-cased systems.
+        /// </summary>
+        public void RegisterSaveable<T>(T system, string saveId,
+            Func<T, object> capture, Action<T, object> restore) where T : class
+        {
+            if (system == null) return;
+            Register(new SaveableAdapter(saveId, () => capture(system), o => restore(system, o)));
         }
 
         /// <summary>

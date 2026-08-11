@@ -167,5 +167,27 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.That(storage.IrradiatedWater, Is.EqualTo(3f).Within(Eps));
         }
+
+        [Test]
+        public void PurifierSnapshot_ReportsFilterServiceForecastAtCurrentBurn()
+        {
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance(_purifierSO, level: 1)
+            {
+                IsEnabled = true,
+                FilterHealth = 20f
+            });
+            var storage = new WaterStorage { IrradiatedWater = 3f };
+
+            var active = _system.GetSnapshot(shelter, storage);
+            Assert.That(active.FilterDegradationPerUnit, Is.EqualTo(5f));
+            Assert.That(active.FilterBurnPerHour, Is.EqualTo(2.5f).Within(Eps));
+            Assert.That(active.FilterRuntimeHours, Is.EqualTo(8f).Within(Eps));
+
+            storage.IrradiatedWater = 0f;
+            var idle = _system.GetSnapshot(shelter, storage);
+            Assert.That(idle.FilterBurnPerHour, Is.EqualTo(0f));
+            Assert.That(idle.FilterRuntimeHours, Is.EqualTo(-1f));
+        }
     }
 }

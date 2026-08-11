@@ -18,6 +18,22 @@ namespace AtomicWar._Game.Core
         /// Victory (bittersweet): Lifeboat Transmission — exactly one survivor extracted;
         /// the rest condemned (Prompt #20). Mutually exclusive with full RescueExtractionSuccess.
         /// </summary>
-        LifeboatPartialExtraction
+        LifeboatPartialExtraction,
+        /// <summary>Victory: Mutually Assured Destruction — automated strike triggered.</summary>
+        MAD,
+        /// <summary>Victory: Migration — escaped fallout zone via convoy.</summary>
+        Migration,
+        /// <summary>Victory: The Broadcast — established regional emergency communications.</summary>
+        TheBroadcast,
+        /// <summary>Victory: The Cure — synthesized anti-radiation genetic compound.</summary>
+        TheCure,
+        /// <summary>Victory: The Martian — complete closed-loop shelter self-sufficiency.</summary>
+        TheMartian,
+        /// <summary>Victory: True Ending — negotiated lasting peace between faction remnants.</summary>
+        TrueEnding,
+        /// <summary>Victory: Underground City — expanded sub-pen into permanent subterranean settlement.</summary>
+        UndergroundCity,
+        /// <summary>Victory: Unifier — subjugated rival wasteland factions under one banner.</summary>
+        Unifier
     }
 }

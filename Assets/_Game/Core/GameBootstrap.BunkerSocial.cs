@@ -95,12 +95,14 @@ namespace AtomicWar._Game.Core
             };
 
             // #474 returned banished survivor → hatch-breaching Raider Boss.
-            BunkerSocial.Banishment.OnBanishedReturned += rec =>
+            Action<BanishedRecord> onBanishedReturned = rec =>
             {
                 int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
                 EventBus.Raise(new BanishedRaiderRaidEvent { RaiderId = rec.Id, Day = day });
                 BunkerSocialNarrative.Raise("banished_returned", rec.Id, null, null);
             };
+            BunkerSocial.Banishment.OnBanishedReturned += onBanishedReturned;
+            _subscriptions.Track(() => BunkerSocial.Banishment.OnBanishedReturned -= onBanishedReturned);
         }
 
         /// <summary>
@@ -114,21 +116,28 @@ namespace AtomicWar._Game.Core
             RefreshGossipRoster();
 
             // Rumor rot → shared affinity matrix (negative).
-            Gossip.OnAffinityDecayed += (criminalId, targetId, amount) =>
+            Action<string, string, float> onAffinityDecayed = (criminalId, targetId, amount) =>
             {
                 if (BunkerSocial?.Affinity == null || amount <= 0f) return;
                 BunkerSocial.Affinity.Adjust(criminalId, targetId, -amount);
             };
+            Gossip.OnAffinityDecayed += onAffinityDecayed;
+            _subscriptions.Track(() => Gossip.OnAffinityDecayed -= onAffinityDecayed);
 
-            Gossip.OnCrimeWitnessed += (witnessId, criminalId, crime) =>
+            Action<string, string, string> onCrimeWitnessed = (witnessId, criminalId, crime) =>
                 BunkerSocialNarrative.Raise("gossip_crime", witnessId, criminalId, crime);
-            Gossip.OnRumorSpread += (fromId, toId, criminalId) =>
+            Gossip.OnCrimeWitnessed += onCrimeWitnessed;
+            _subscriptions.Track(() => Gossip.OnCrimeWitnessed -= onCrimeWitnessed);
+
+            Action<string, string, string> onRumorSpread = (fromId, toId, criminalId) =>
                 BunkerSocialNarrative.Raise("gossip_spread", fromId, toId, criminalId);
+            Gossip.OnRumorSpread += onRumorSpread;
+            _subscriptions.Track(() => Gossip.OnRumorSpread -= onRumorSpread);
 
             if (BunkerSocial == null) return;
 
             // Tribunal crime → a living witness (first other living survivor) starts the chain.
-            BunkerSocial.Tribunal.OnTribunalStarted += (suspect, crimeId, severity) =>
+            Action<Survivor, string, BunkerCrimeSeverity> onTribunalStarted = (suspect, crimeId, severity) =>
             {
                 if (suspect == null || string.IsNullOrEmpty(suspect.Id)) return;
                 string witness = FindGossipWitness(suspect.Id);
@@ -137,9 +146,11 @@ namespace AtomicWar._Game.Core
                 RefreshGossipRoster();
                 Gossip.WitnessCrime(witness, suspect.Id, crimeId ?? "crime", day);
             };
+            BunkerSocial.Tribunal.OnTribunalStarted += onTribunalStarted;
+            _subscriptions.Track(() => BunkerSocial.Tribunal.OnTribunalStarted -= onTribunalStarted);
 
             // Feud sabotage is witnessed by the victim.
-            BunkerSocial.Feuds.OnSabotageOccurred += (perp, victim, kind) =>
+            Action<Survivor, Survivor, string> onSabotageOccurred = (perp, victim, kind) =>
             {
                 if (perp == null || victim == null) return;
                 if (string.IsNullOrEmpty(perp.Id) || string.IsNullOrEmpty(victim.Id)) return;
@@ -147,6 +158,8 @@ namespace AtomicWar._Game.Core
                 RefreshGossipRoster();
                 Gossip.WitnessCrime(victim.Id, perp.Id, kind ?? "sabotage", day);
             };
+            BunkerSocial.Feuds.OnSabotageOccurred += onSabotageOccurred;
+            _subscriptions.Track(() => BunkerSocial.Feuds.OnSabotageOccurred -= onSabotageOccurred);
         }
 
         private void RefreshGossipRoster()
@@ -192,23 +205,69 @@ namespace AtomicWar._Game.Core
         private void SubscribeBunkerSocialNarrative()
         {
             if (BunkerSocial == null) return;
-            BunkerSocial.Romance.OnBecomeLovers += (a, b) => BunkerSocialNarrative.Raise("lovers", a?.Id, b?.Id);
-            BunkerSocial.Romance.OnBreakup += (a, b) => BunkerSocialNarrative.Raise("breakup", a?.Id, b?.Id);
-            BunkerSocial.Feuds.OnFeudStarted += (a, b) => BunkerSocialNarrative.Raise("feud", a?.Id, b?.Id);
-            BunkerSocial.Mutiny.OnMutinyStarted += l => BunkerSocialNarrative.Raise("mutiny", l?.Id, null);
-            BunkerSocial.Mutiny.OnMutinyResolved += r => BunkerSocialNarrative.Raise("mutiny_resolved", r.ToString(), null);
-            BunkerSocial.Banishment.OnBanish += (sv, penalized) =>
+
+            Action<Survivor, Survivor> onBecomeLovers = (a, b) => BunkerSocialNarrative.Raise("lovers", a?.Id, b?.Id);
+            BunkerSocial.Romance.OnBecomeLovers += onBecomeLovers;
+            _subscriptions.Track(() => BunkerSocial.Romance.OnBecomeLovers -= onBecomeLovers);
+
+            Action<Survivor, Survivor> onRomanceBreakup = (a, b) => BunkerSocialNarrative.Raise("breakup", a?.Id, b?.Id);
+            BunkerSocial.Romance.OnBreakup += onRomanceBreakup;
+            _subscriptions.Track(() => BunkerSocial.Romance.OnBreakup -= onRomanceBreakup);
+
+            Action<Survivor, Survivor> onFeudStarted = (a, b) => BunkerSocialNarrative.Raise("feud", a?.Id, b?.Id);
+            BunkerSocial.Feuds.OnFeudStarted += onFeudStarted;
+            _subscriptions.Track(() => BunkerSocial.Feuds.OnFeudStarted -= onFeudStarted);
+
+            Action<Survivor> onMutinyStartedNarrative = l => BunkerSocialNarrative.Raise("mutiny", l?.Id, null);
+            BunkerSocial.Mutiny.OnMutinyStarted += onMutinyStartedNarrative;
+            _subscriptions.Track(() => BunkerSocial.Mutiny.OnMutinyStarted -= onMutinyStartedNarrative);
+
+            // Audit H-6g: present the standoff choices so the player can actually resolve it.
+            BunkerSocial.Mutiny.OnMutinyStarted += HandleMutinyStarted;
+            _subscriptions.Track(() => BunkerSocial.Mutiny.OnMutinyStarted -= HandleMutinyStarted);
+
+            Action<MutinyResolution> onMutinyResolved = r => BunkerSocialNarrative.Raise("mutiny_resolved", r.ToString(), null);
+            BunkerSocial.Mutiny.OnMutinyResolved += onMutinyResolved;
+            _subscriptions.Track(() => BunkerSocial.Mutiny.OnMutinyResolved -= onMutinyResolved);
+
+            Action<Survivor, bool> onBanish = (sv, penalized) =>
                 BunkerSocialNarrative.Raise("banish", sv?.Id, null, penalized.ToString());
-            BunkerSocial.Brig.OnImprisoned += sv => BunkerSocialNarrative.Raise("imprisoned", sv?.Id, null);
-            BunkerSocial.Brig.OnReleased += sv => BunkerSocialNarrative.Raise("released", sv?.Id, null);
-            BunkerSocial.Pregnancy.OnPregnancyStarted += (p, partner) => BunkerSocialNarrative.Raise("pregnancy", p?.Id, partner?.Id);
-            BunkerSocial.Pregnancy.OnChildBorn += p => BunkerSocialNarrative.Raise("child_born", p?.Id, null);
-            BunkerSocial.Tribunal.OnVerdict += (sv, pun, match, mismatched) =>
+            BunkerSocial.Banishment.OnBanish += onBanish;
+            _subscriptions.Track(() => BunkerSocial.Banishment.OnBanish -= onBanish);
+
+            Action<Survivor> onImprisoned = sv => BunkerSocialNarrative.Raise("imprisoned", sv?.Id, null);
+            BunkerSocial.Brig.OnImprisoned += onImprisoned;
+            _subscriptions.Track(() => BunkerSocial.Brig.OnImprisoned -= onImprisoned);
+
+            Action<Survivor> onBrigReleased = sv => BunkerSocialNarrative.Raise("released", sv?.Id, null);
+            BunkerSocial.Brig.OnReleased += onBrigReleased;
+            _subscriptions.Track(() => BunkerSocial.Brig.OnReleased -= onBrigReleased);
+
+            Action<Survivor, Survivor> onPregnancyStarted = (p, partner) => BunkerSocialNarrative.Raise("pregnancy", p?.Id, partner?.Id);
+            BunkerSocial.Pregnancy.OnPregnancyStarted += onPregnancyStarted;
+            _subscriptions.Track(() => BunkerSocial.Pregnancy.OnPregnancyStarted -= onPregnancyStarted);
+
+            Action<Survivor> onChildBorn = p => BunkerSocialNarrative.Raise("child_born", p?.Id, null);
+            BunkerSocial.Pregnancy.OnChildBorn += onChildBorn;
+            _subscriptions.Track(() => BunkerSocial.Pregnancy.OnChildBorn -= onChildBorn);
+
+            Action<Survivor, BunkerPunishment, PunishmentMatch, bool> onVerdict = (sv, pun, match, mismatched) =>
                 BunkerSocialNarrative.Raise("verdict", sv?.Id, pun.ToString(), match.ToString());
-            BunkerSocial.BlackMarket.OnAllianceFormed += (a, b) => BunkerSocialNarrative.Raise("secret_alliance", a?.Id, b?.Id);
-            BunkerSocial.BlackMarket.OnAllianceExposed += (a, b) => BunkerSocialNarrative.Raise("alliance_exposed", a, b);
-            BunkerSocial.OnGriefMentalBreakApplied += (bereaved, breakId) =>
+            BunkerSocial.Tribunal.OnVerdict += onVerdict;
+            _subscriptions.Track(() => BunkerSocial.Tribunal.OnVerdict -= onVerdict);
+
+            Action<Survivor, Survivor> onAllianceFormed = (a, b) => BunkerSocialNarrative.Raise("secret_alliance", a?.Id, b?.Id);
+            BunkerSocial.BlackMarket.OnAllianceFormed += onAllianceFormed;
+            _subscriptions.Track(() => BunkerSocial.BlackMarket.OnAllianceFormed -= onAllianceFormed);
+
+            Action<string, string> onAllianceExposed = (a, b) => BunkerSocialNarrative.Raise("alliance_exposed", a, b);
+            BunkerSocial.BlackMarket.OnAllianceExposed += onAllianceExposed;
+            _subscriptions.Track(() => BunkerSocial.BlackMarket.OnAllianceExposed -= onAllianceExposed);
+
+            Action<Survivor, string> onGriefMentalBreakApplied = (bereaved, breakId) =>
                 BunkerSocialNarrative.Raise("grief_break", bereaved?.Id, null, breakId);
+            BunkerSocial.OnGriefMentalBreakApplied += onGriefMentalBreakApplied;
+            _subscriptions.Track(() => BunkerSocial.OnGriefMentalBreakApplied -= onGriefMentalBreakApplied);
         }
 
         private bool HasPristineMedicalSuppliesCheck(Survivor patient)

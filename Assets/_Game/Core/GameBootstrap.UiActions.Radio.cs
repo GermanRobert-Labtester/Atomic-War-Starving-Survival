@@ -219,8 +219,10 @@ namespace AtomicWar._Game.Core
             // Avoid stacking handlers if WireHUD / load re-runs.
             strip.OnTunerBandChanged -= HandleRadioHudTunerChanged;
             strip.OnTunerBandChanged += HandleRadioHudTunerChanged;
+            _subscriptions.Track(() => strip.OnTunerBandChanged -= HandleRadioHudTunerChanged);
             RadioTunerSystem.OnFrequencyChanged -= HandleRadioTunerFrequencyChanged;
             RadioTunerSystem.OnFrequencyChanged += HandleRadioTunerFrequencyChanged;
+            _subscriptions.Track(() => RadioTunerSystem.OnFrequencyChanged -= HandleRadioTunerFrequencyChanged);
 
             // Align dial with current tuner state (detuned on fresh boot).
             strip.SyncFromFrequencyId(RadioTunerSystem.State?.CurrentFrequencyId);

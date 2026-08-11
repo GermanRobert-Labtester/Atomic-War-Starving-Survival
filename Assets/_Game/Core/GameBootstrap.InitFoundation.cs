@@ -132,6 +132,13 @@ namespace AtomicWar._Game.Core
             BootBiomes();
             // Special weather events — acid snow / EMP storm / solar flare / … .
             BootWeather();
+            // Prompts #319–#325 — Section X new weather events.
+            BootNewWeatherSystems();
+
+            // Prompts #326–#330 — Section XIV ("The Ash Gets Deeper") content.
+            // Merges 80 items, 10 locations, 15 encounters, 10 echoes,
+            // and 12 NPC/fauna archetypes into the host. Idempotent.
+            BootAshGetsDeeperContent();
             // Expedition encounters — amalgamation / burrowers / maze / tank / … .
             BootEncounters();
             // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).
@@ -178,6 +185,11 @@ namespace AtomicWar._Game.Core
             PowerNetwork.SetRequested("radio", false);
             PowerNetwork.SetRequested("water_purifier", true);
             PowerNetwork.ApplyToShelter(Shelter);
+            AirHeatManagementSystem = new AirHeatManagementSystem(
+                Shelter,
+                PowerNetwork,
+                () => TemperatureSystem != null ? TemperatureSystem.GetIndoorTemperature(Shelter) : 0f,
+                () => TemperatureSystem != null ? TemperatureSystem.AmbientCelsius : 0f);
 
             // Bunker water economy: roof catchment + 3-tier purifier (Prompt #28).
             WaterStorage = new WaterStorage();
@@ -209,6 +221,10 @@ namespace AtomicWar._Game.Core
             // Wire NeedsSystem into all systems that modify survivor needs so they
             // route through Modify (trait caps, perk effects, OnNeedChanged events).
             BlackRainHazardSystem?.SetNeedsSystem(NeedsSystem);
+            // Audit H-6b: DegradeHazmat/GetHazmatDegradeMultiplier existed but nothing
+            // called them, so Black Rain never melted worn gear faster than normal wear.
+            RadiationSystem.BindHazmatDegradeMultiplier(
+                () => BlackRainHazardSystem != null ? BlackRainHazardSystem.GetHazmatDegradeMultiplier() : 1f);
 
             BeliefSystem = new BeliefSystem(rng: CreateSaltedRng(_worldSeed, "belief"));
             BeliefSystem.SetNeedsSystem(NeedsSystem);
@@ -231,14 +247,55 @@ namespace AtomicWar._Game.Core
 
             // Inventory + Crafting + Workbench scrap economy
             Inventory = new Inventory.Inventory { Capacity = 50, MaxWeight = 200f };
-            // CRAFT-003 overflow stash: a separate unlimited-capacity inventory for
-            // craft results that don't fit in the main bag. Modeled as a "post
-            // office box" — the player can retrieve from it on a future tick.
+            // Shared overflow stash: a separate unlimited-capacity inventory for
+            // craft results and scavenging returns that don't fit in the main bag.
+            // Modeled as a bunker receiving crate — the player can retrieve from it on a future tick.
             // Capacity=0 + MaxWeight=0 means infinite (per Inventory.CanAdd
             // short-circuits). Items here are persistent until retrieved.
-            CraftingOverflowStash = new Inventory.Inventory { Capacity = 0, MaxWeight = 0f };
+            OverflowStash = new Inventory.Inventory { Capacity = 0, MaxWeight = 0f };
+            OverflowCrateSystem = new OverflowCrateSystem(OverflowStash, Inventory);
+            FieldGearLoadoutSystem = new FieldGearLoadoutSystem(Inventory, OverflowStash);
+            BunkerRationingSystem = new BunkerRationingSystem(
+                resource => Inventory == null
+                    ? 0
+                    : Inventory.CountByType(resource == RationResource.Food ? ItemType.Food : ItemType.Water),
+                (resource, amount) => Inventory == null || amount <= 0
+                    ? 0
+                    : Inventory.RemoveByType(resource == RationResource.Food ? ItemType.Food : ItemType.Water, amount),
+                () => WaterStorage != null ? Mathf.FloorToInt(WaterStorage.CleanWater) : 0,
+                amount => WaterStorage != null && amount > 0
+                    ? Mathf.FloorToInt(WaterStorage.ConsumeClean(amount))
+                    : 0);
+            BunkerMaintenanceSystem = new BunkerMaintenanceSystem(
+                Shelter,
+                PowerNetwork,
+                itemId => Inventory != null ? Inventory.CountById(itemId) : 0,
+                (itemId, amount) => Inventory != null && Inventory.RemoveById(itemId, amount),
+                () => Survivors);
+            RepairWorkOrderSystem = new RepairWorkOrderSystem(
+                BunkerMaintenanceSystem,
+                () => Survivors);
+            SurvivorWorkShiftSystem = new SurvivorWorkShiftSystem(
+                () => Survivors,
+                IsWorkShiftDutySupported,
+                RepairWorkOrderSystem,
+                (survivor, fatigue) =>
+                {
+                    if (survivor == null || fatigue <= 0f) return;
+                    if (NeedsSystem != null)
+                        NeedsSystem.Modify(survivor, NeedKind.Fatigue, fatigue);
+                    else if (survivor.Needs != null)
+                        survivor.Needs.Fatigue = Mathf.Clamp(survivor.Needs.Fatigue + fatigue, 0f, 100f);
+                },
+                GetWorkShiftRecommendationContext);
+            WireWorkShiftEffects();
+            SurvivorTaskBoardSystem = new SurvivorTaskBoardSystem(
+                RepairWorkOrderSystem,
+                () => Survivors,
+                SurvivorWorkShiftSystem);
+            Inventory.OnInventoryChanged += BunkerMaintenanceSystem.Refresh;
             CraftingSystem = new CraftingSystem(Inventory);
-            CraftingSystem.OverflowStash = CraftingOverflowStash;
+            CraftingSystem.OverflowStash = OverflowStash;
             CraftingSystem.AddStation(new CraftingStation
             {
                 id = WorkbenchSystem.StationId,
@@ -307,7 +364,43 @@ namespace AtomicWar._Game.Core
                 CreateAction<UpgradeShieldingActionSO>(),
                 CreateAction<TunnelActionSO>(),
                 // Prompt #184 — Suppressing Fire (unlocked via perk_suppressing_fire)
-                CreateAction<SuppressingFireActionSO>()
+                CreateAction<SuppressingFireActionSO>(),
+                // Audit C-1: ten implemented actions were never registered, so
+                // Utility AI could never select them. Each has AIContext bindings
+                // already wired (WarmDayTickCaches) and unit tests exercising its
+                // ScoreAction/Execute directly — only the registration was missing.
+                CreateAction<RefuelHeaterActionSO>(),
+                CreateAction<RepairFilterActionSO>(),
+                CreateAction<RepairWorkOrderActionSO>(),
+                CreateAction<DecontaminateActionSO>(),
+                CreateAction<PurifyWaterActionSO>(),
+                CreateAction<ListenToRadioActionSO>(),
+                CreateAction<PanicActionSO>(),
+                CreateAction<TalkDownActionSO>(),
+                CreateAction<SleepwalkActionSO>(),
+                CreateAction<TeachSkillActionSO>(),
+                CreateAction<PhantomActionSO>(),
+                // Audit C-4: CookingSystem existed and was save-wired but no AI
+                // action could ever call CookMeal. AIContext.OnRequestCookMeal is
+                // bound in GameBootstrap.TickSystems.Ai.cs (AI cannot reference
+                // Core's CookingSystem directly — see OnRequestSurvey precedent).
+                CreateAction<CookActionSO>(),
+                // Audit H-5: CorpseManagementSystem.ProcessForParts existed and was
+                // save-wired but nothing could ever call it. Same Core/AI boundary
+                // pattern as CookActionSO above, via AIContext.OnRequestButcherCorpse.
+                CreateAction<ButcherCorpseActionSO>(),
+                // Audit H-6d: MedicalPerkSystem.TryAdministerAdrenaline existed but no
+                // AI action could ever call it — a Death's-Door survivor could only
+                // ever die, never be revived by a Paramedic teammate.
+                CreateAction<AdministerAdrenalineActionSO>(),
+                // Audit H-6e: PetSystem.Decontaminate existed but no AI action could
+                // ever call it — a tamed animal's fur contamination could only rise,
+                // never be washed down.
+                CreateAction<DecontaminatePetActionSO>(),
+                // Audit H-6f: System_Gossip.SpreadRumor existed and was fully tested in
+                // isolation but nothing could ever call it — a witness could only ever
+                // gossip through the passive daily tick, never deliberately.
+                CreateAction<SpreadGossipActionSO>()
             };
 
         }
@@ -384,32 +477,41 @@ namespace AtomicWar._Game.Core
                 // evicted one is released, so steady state needs cap+1 stock.
                 initialCapacity: JournalSystem.MaxEntries + 1);
             JournalSystem.SetEntryFactory(_journalEntryPool.Acquire, _journalEntryPool.Release);
-            JournalSystem.OnEntryAdded += entry =>
+            Action<JournalEntry> onJournalEntryAdded = entry =>
             {
                 if (entry == null || string.IsNullOrEmpty(entry.Text)) return;
                 GameLog.Log($"[Journal] {entry.Timestamp} — {entry.AuthorName}: {entry.Text}");
                 PushJournalEntryToHud(entry);
             };
+            JournalSystem.OnEntryAdded += onJournalEntryAdded;
+            _subscriptions.Track(() => JournalSystem.OnEntryAdded -= onJournalEntryAdded);
 
             // Campaign win/loss — radio extraction + vehicle escape projects
             VictoryProject = new VictoryProjectManager();
             EndgameEngine = new EndgameEngine(GameModeKind.Story, _campaignLengthDays);
-            VictoryProject.OnExtractionUnlocked += () =>
+            Action onExtractionUnlocked = () =>
             {
                 GameLog.Log("[Endgame] Extraction coordinates unlocked (10 military intel). Survive to Day 100.");
             };
-            VictoryProject.OnEndgameTriggered += summary =>
+            VictoryProject.OnExtractionUnlocked += onExtractionUnlocked;
+            _subscriptions.Track(() => VictoryProject.OnExtractionUnlocked -= onExtractionUnlocked);
+
+            Action<EndgameSummaryData> onEndgameTriggered = summary =>
             {
                 if (summary == null) return;
                 ApplyEndgame(summary);
             };
+            VictoryProject.OnEndgameTriggered += onEndgameTriggered;
+            _subscriptions.Track(() => VictoryProject.OnEndgameTriggered -= onEndgameTriggered);
 
             // DEEP3-WIN-001 — EndgameEngine.Evaluate raises OnCampaignEnded and routes
             // a CampaignEndedEvent through the bus, but nothing freezes the run on that
             // path: only VictoryProject.OnEndgameTriggered was wired to ApplyEndgame. A
             // natural all-dead / bunker-collapse / extraction / 100-day ending now sets
             // IsGameOver and pauses the clock instead of silently continuing.
-            EndgameEngine.OnCampaignEnded += _ => ApplyEndgameFromEndgameEngine();
+            Action<CampaignEndedEvent> onCampaignEnded = _ => ApplyEndgameFromEndgameEngine();
+            EndgameEngine.OnCampaignEnded += onCampaignEnded;
+            _subscriptions.Track(() => EndgameEngine.OnCampaignEnded -= onCampaignEnded);
 
         }
 
@@ -544,9 +646,14 @@ namespace AtomicWar._Game.Core
         {
             if (LogicGates == null || PowerNetwork == null) return;
 
-            PowerNetwork.OnPowerStateChanged += () => TickLogicGates();
-            LogicGates.OnRuleTriggered += ruleId =>
+            Action onPowerStateChanged = () => TickLogicGates();
+            PowerNetwork.OnPowerStateChanged += onPowerStateChanged;
+            _subscriptions.Track(() => PowerNetwork.OnPowerStateChanged -= onPowerStateChanged);
+
+            Action<string> onLogicRuleTriggered = ruleId =>
                 GameLog.Log($"[GameBootstrap] LOGIC: rule '{ruleId}' triggered.");
+            LogicGates.OnRuleTriggered += onLogicRuleTriggered;
+            _subscriptions.Track(() => LogicGates.OnRuleTriggered -= onLogicRuleTriggered);
         }
 
         /// <summary>

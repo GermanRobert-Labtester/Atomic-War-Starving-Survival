@@ -72,6 +72,31 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void Atmosphere_Tick_AppliesHypoxiaDamage_ToOccupantsOfLowO2Room()
+        {
+            // H-6c: ApplyGasPenaltyToSurvivor existed but Tick() never called it —
+            // O2 could drop to zero with no survivor consequence.
+            var occupant = new Survivor { Id = "occupant", DisplayName = "Occupant", CurrentRoomId = "plant" };
+            occupant.Needs.Health = 80f;
+            var elsewhere = new Survivor { Id = "elsewhere", DisplayName = "Elsewhere", CurrentRoomId = "bunk" };
+            elsewhere.Needs.Health = 80f;
+            _survivors.Add(occupant);
+            _survivors.Add(elsewhere);
+
+            var atmo = new ShelterAtmosphereSystem();
+            atmo.BindPersonalQuests(_quests, () => _survivors);
+            var room = new ShelterRoom("plant", null);
+            atmo.RegisterRoom(room);
+            atmo.StartFire(room, intensity: 1f);
+            room.OxygenFraction = ShelterAtmosphereSystem.HypoxiaO2Threshold;
+
+            atmo.Tick(1f);
+
+            Assert.Less(occupant.Needs.Health, 80f, "occupant of the hypoxic room must take damage");
+            Assert.AreEqual(80f, elsewhere.Needs.Health, Eps, "survivor in another room must be unaffected");
+        }
+
+        [Test]
         public void Excavation_DeepDelver_ClearsFaster()
         {
             var m = MakeArchetype(PersonalQuestSystem.CoalMinerId, "dig");
@@ -335,12 +360,18 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsTrue(_quests.HasArchivist(lib));
             Assert.IsTrue(_quests.BunkerSkillDecayStopped(_survivors));
 
-            // Grant a perk then ensure TickDaily does not throw / still bound.
+            // Audit M-2: the tautological "|| true" made this assertion pass no
+            // matter what TickDaily did. Grant on day 1, tick on day 100 — a
+            // 99-day gap on the "medical" discipline, well past
+            // DormantAfterUnusedDays (14). Without TickDaily's Archivist early
+            // return, ApplyDecay would push Miracle Worker into DormantPerkIds;
+            // with it (HasArchivist confirmed above), decay never runs at all.
             _progression.TryGrantPerk(lib, PersonalQuestSystem.MiracleWorkerId, 1);
             _progression.TickDaily(100, _survivors);
-            Assert.IsTrue(_progression.HasActivePerk(lib.Id, PersonalQuestSystem.MiracleWorkerId)
-                || lib.HasTrait(PersonalQuestSystem.MiracleWorkerId)
-                || true); // decay skipped entirely when archivist present
+            Assert.IsTrue(_progression.HasActivePerk(lib.Id, PersonalQuestSystem.MiracleWorkerId),
+                "Archivist must keep the perk Active across the 99-day gap — TickDaily's decay pass must not run.");
+            Assert.IsFalse(_progression.HasDormantPerk(lib.Id, PersonalQuestSystem.MiracleWorkerId),
+                "The perk must never be pushed into DormantPerkIds while Archivist is present.");
         }
 
         [Test]

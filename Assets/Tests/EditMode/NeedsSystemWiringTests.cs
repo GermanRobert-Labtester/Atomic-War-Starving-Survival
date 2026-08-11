@@ -60,6 +60,16 @@ namespace AtomicWar.Tests.EditMode
             _survivor.Needs.Health = 100f;
         }
 
+        [TearDown]
+        public void TearDown()
+        {
+            // SeededRandom.WorldSeed is process-global. Resetting only at the end of
+            // a test body (the old pattern below) skips this line whenever an
+            // assertion above it fails, leaking a non-default seed into every test
+            // that runs afterward in the same process. TearDown always runs.
+            AtomicWar._Game.Utilities.SeededRandom.WorldSeed = -1;
+        }
+
         // ── EventRunner.ApplyChoice routes through Modify ───────────────
 
         [Test]
@@ -349,9 +359,6 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.AreNotEqual(valA, valB,
                 "Different world seeds should produce different RNG streams");
-
-            // Reset for other tests
-            AtomicWar._Game.Utilities.SeededRandom.WorldSeed = -1;
         }
 
         [Test]
@@ -363,8 +370,6 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.AreEqual(a.Next(1000), b.Next(1000),
                 "Same salt with default seed should produce same sequence");
-
-            AtomicWar._Game.Utilities.SeededRandom.WorldSeed = -1;
         }
     }
 }

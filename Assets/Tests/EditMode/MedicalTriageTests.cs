@@ -386,6 +386,53 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void AdministerAdrenalineAction_RevivesDeathsDoorPatient_AndConsumesEpiPen()
+        {
+            // H-6d: MedicalPerkSystem.TryAdministerAdrenaline existed but no AI action
+            // could ever call it — a Death's-Door survivor could only ever die.
+            var progression = new SkillProgressionSystem();
+            progression.RegisterDefaultPerks();
+            var perks = new MedicalPerkSystem();
+            var medic = MakeSurvivor("sv_medic");
+            var patient = MakeSurvivor("sv_patient");
+            var survivors = new List<Survivor> { medic, patient };
+            perks.Bind(progression, () => survivors);
+            perks.RecordComaRevive(medic, 1); // grants Paramedic
+            Assert.IsTrue(perks.HasParamedic(medic));
+            Assert.IsTrue(perks.TryEnterDeathsDoor(patient));
+
+            var inv = new Inventory { Capacity = 10 };
+            var epiPen = MakeItem(AdministerAdrenalineActionSO.AdrenalineItemId);
+            inv.Add(epiPen, 1);
+
+            var action = ScriptableObject.CreateInstance<AdministerAdrenalineActionSO>();
+            var ctxNoPatient = new AIContext(medic)
+            {
+                MedicalPerks = perks,
+                Inventory = inv,
+                GetSurvivors = () => new List<Survivor> { medic }
+            };
+            Assert.AreEqual(0f, action.EvaluateRaw(ctxNoPatient));
+
+            var ctx = new AIContext(medic)
+            {
+                MedicalPerks = perks,
+                Inventory = inv,
+                GetSurvivors = () => survivors
+            };
+            Assert.Greater(action.EvaluateRaw(ctx), 0.9f);
+
+            action.Execute(ctx);
+
+            Assert.IsFalse(perks.IsOnDeathsDoor(patient));
+            Assert.AreEqual(MedicalPerkSystem.AdrenalineReviveHealth, patient.Needs.Health, Eps);
+            Assert.AreEqual(0, inv.CountById(AdministerAdrenalineActionSO.AdrenalineItemId));
+
+            Object.DestroyImmediate(action);
+            Object.DestroyImmediate(epiPen);
+        }
+
+        [Test]
         public void RadBurns_ProgressToSepsis_ThenThreatenDeath()
         {
             var med = MakeMedical();
@@ -516,6 +563,85 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.IsTrue(med2.HasAffliction(patient, AfflictionSO.Ids.BrokenBone));
             Assert.That(med2.GetActive(patient)[0].HoursActive, Is.EqualTo(12f).Within(Eps));
+        }
+
+        [Test]
+        public void HighSkillTreatment_LowRoll_SparesSecondaryIngredient()
+        {
+            var bandage = MakeItem("bandage");
+            var tweezers = MakeItem("tweezers", ItemType.Tool);
+            var inv = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inv.Add(bandage, 1);
+            inv.Add(tweezers, 1);
+
+            var bedSO = ScriptableObject.CreateInstance<MedicalBedModuleSO>();
+            bedSO.ModuleId = MedicalSystem.MedicalBedModuleId;
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance(bedSO, level: 1));
+
+            var med = MakeMedical(inv, shelter);
+            // Roll 0.1 < skill(0.9) * 0.4 (0.36): secondary ingredient (tweezers) is spared.
+            med.BindMedicalPerks(null, null, new FixedRandom(0.1));
+            var recipe = MedicalSystem.CreateGunshotFullRecipe(bandage, tweezers);
+            med.RegisterTreatment(recipe);
+
+            var medic = MakeSurvivor("sv_medic");
+            medic.MedicalSkill = 0.9f;
+            var patient = MakeSurvivor("sv_patient");
+            med.Inflict(patient, AfflictionSO.Ids.GunshotWound);
+
+            Assert.IsTrue(med.TryStartTreatment(medic, patient, recipe));
+            Assert.AreEqual(1, inv.Count(tweezers), "A low sparing roll must leave the secondary ingredient uneaten.");
+            Assert.AreEqual(0, inv.Count(bandage), "The primary ingredient is always consumed regardless of the roll.");
+
+            Object.DestroyImmediate(bandage);
+            Object.DestroyImmediate(tweezers);
+            Object.DestroyImmediate(bedSO);
+            Object.DestroyImmediate(recipe);
+        }
+
+        [Test]
+        public void HighSkillTreatment_HighRoll_ConsumesSecondaryIngredient()
+        {
+            var bandage = MakeItem("bandage");
+            var tweezers = MakeItem("tweezers", ItemType.Tool);
+            var inv = new Inventory { Capacity = 20, MaxWeight = 100f };
+            inv.Add(bandage, 1);
+            inv.Add(tweezers, 1);
+
+            var bedSO = ScriptableObject.CreateInstance<MedicalBedModuleSO>();
+            bedSO.ModuleId = MedicalSystem.MedicalBedModuleId;
+            var shelter = new Shelter();
+            shelter.AddModule(new ShelterModuleInstance(bedSO, level: 1));
+
+            var med = MakeMedical(inv, shelter);
+            // Roll 0.9 >= skill(0.9) * 0.4 (0.36): secondary ingredient (tweezers) is consumed as normal.
+            med.BindMedicalPerks(null, null, new FixedRandom(0.9));
+            var recipe = MedicalSystem.CreateGunshotFullRecipe(bandage, tweezers);
+            med.RegisterTreatment(recipe);
+
+            var medic = MakeSurvivor("sv_medic");
+            medic.MedicalSkill = 0.9f;
+            var patient = MakeSurvivor("sv_patient");
+            med.Inflict(patient, AfflictionSO.Ids.GunshotWound);
+
+            Assert.IsTrue(med.TryStartTreatment(medic, patient, recipe));
+            Assert.AreEqual(0, inv.Count(tweezers), "A high sparing roll must consume the secondary ingredient normally.");
+
+            Object.DestroyImmediate(bandage);
+            Object.DestroyImmediate(tweezers);
+            Object.DestroyImmediate(bedSO);
+            Object.DestroyImmediate(recipe);
+        }
+
+        private sealed class FixedRandom : System.Random
+        {
+            private readonly double _value;
+            public FixedRandom(double value) { _value = value; }
+            public override double NextDouble() => _value;
+            public override int Next() => 0;
+            public override int Next(int maxValue) => 0;
+            public override int Next(int minValue, int maxValue) => minValue;
         }
     }
 }

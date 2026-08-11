@@ -20,6 +20,8 @@ namespace AtomicWar._Game.AI
         public Survivor Survivor;
         public Shelter.Shelter Shelter;
         public Inventory.Inventory Inventory;
+        /// <summary>When true, the bunker issues daily food/water centrally instead of AI self-serving stores.</summary>
+        public bool BunkerRationsScheduled;
         public bool IsFalloutStorm;
         public float AmbientRadRate;
         public bool IsRadiationRising;
@@ -92,6 +94,9 @@ namespace AtomicWar._Game.AI
 
         /// <summary>Prompt #52 — jury-rigged modules (repair decisions).</summary>
         public JuryRigSystem JuryRigSystem;
+
+        /// <summary>Persisted, terminal-issued repair task that Utility AI may claim.</summary>
+        public RepairWorkOrderSystem RepairWorkOrderSystem;
 
         /// <summary>Prompt #49 — structural integrity (shoring priority).</summary>
         public StructuralIntegritySystem StructuralIntegrity;
@@ -182,6 +187,9 @@ namespace AtomicWar._Game.AI
         /// <summary>Prompts #214–#219 — personal questlines + latent expert traits.</summary>
         public PersonalQuestSystem PersonalQuests;
 
+        /// <summary>Prompt #217 — tamed wasteland animals (fur decon, room, ownership).</summary>
+        public PetSystem PetSystem;
+
         /// <summary>Prompt #177 — triage board medication permissions.</summary>
         public TriageBoardSystem TriageSystem;
 
@@ -219,6 +227,39 @@ namespace AtomicWar._Game.AI
         /// a mission began. Injected by GameBootstrap so AI actions stay free of Core refs.
         /// </summary>
         public Func<Survivor, bool> OnRequestSurvey;
+
+        /// <summary>
+        /// Optional hook: cook one meal at the stove for this survivor. Returns true if
+        /// a meal was produced. Injected by GameBootstrap so AI actions stay free of Core
+        /// refs (CookingSystem lives in Core, which AI cannot reference).
+        /// </summary>
+        public Func<Survivor, bool> OnRequestCookMeal;
+
+        /// <summary>Number of un-disposed corpses in bunker storage (CorpseManagementSystem.CorpseCount).</summary>
+        public int CorpseCount;
+
+        /// <summary>Prompt #65 — UI Hallucinations & Phantom Utility Actions. Same assembly as AI, bound directly.</summary>
+        public HallucinationSystem HallucinationSystem;
+
+        /// <summary>
+        /// Optional hook: break down one corpse into bones/meat for this survivor. Returns
+        /// true if a corpse was processed. Injected by GameBootstrap so AI actions stay free
+        /// of Core refs (CorpseManagementSystem lives in Core, which AI cannot reference).
+        /// </summary>
+        public Func<Survivor, bool> OnRequestButcherCorpse;
+
+        /// <summary>
+        /// Prompt #839 — true if this survivor witnessed a crime they can still gossip
+        /// about to someone new. Injected by GameBootstrap so AI actions stay free of
+        /// Core refs (System_Gossip lives in Core, which AI cannot reference).
+        /// </summary>
+        public Func<Survivor, bool> CanSpreadGossip;
+
+        /// <summary>
+        /// Optional hook: have this survivor tell one more person the rumor they
+        /// witnessed. Returns true if a listener was told. See CanSpreadGossip.
+        /// </summary>
+        public Func<Survivor, bool> OnRequestSpreadGossip;
 
         public AIContext() { }
 

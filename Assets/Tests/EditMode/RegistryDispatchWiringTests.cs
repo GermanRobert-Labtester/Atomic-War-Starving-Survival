@@ -9,6 +9,8 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Flashpoint;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>

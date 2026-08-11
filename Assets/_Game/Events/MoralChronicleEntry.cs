@@ -45,3 +45,31 @@ namespace AtomicWar._Game.Events
         }
     }
 }
+
+namespace AtomicWar._Game.Events
+{
+    /// <summary>
+    /// Prompts #319–#325 — raised by any host that wants a moral chronicle
+    /// entry pushed for the current campaign. <see cref="MoralChronicleBridge"/>
+    /// subscribes and forwards to its private timeline. Mirrors the
+    /// <c>FlashpointWeatherEventTriggered</c> pattern: typed event instead
+    /// of a direct dependency, so systems in any module can record a moral
+    /// beat without holding a reference to the bridge.
+    /// </summary>
+    public readonly struct MoralChronicleEntryRequested
+    {
+        public readonly int Day;
+        public readonly string Description;
+        public readonly MoralChronicleEntryKind Kind;
+        public readonly string SurvivorName;
+        public MoralChronicleEntryRequested(int day, string description,
+            MoralChronicleEntryKind kind = MoralChronicleEntryKind.Unknown,
+            string survivorName = null)
+        {
+            Day = day;
+            Description = description;
+            Kind = kind;
+            SurvivorName = survivorName;
+        }
+    }
+}

@@ -10,6 +10,8 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>

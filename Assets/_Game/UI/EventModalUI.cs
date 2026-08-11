@@ -40,6 +40,11 @@ namespace AtomicWar._Game.UI
 
             Unbind();
             _boundRunner = runner;
+            // Clear the previous runner's last payload (ActiveEvent /
+            // ActiveContext / VisibleChoices / DisplayBodyText) so the new
+            // bind cannot paint a stale event under a new runner before its
+            // first ShowEvent fires.
+            Close();
             if (runner != null)
             {
                 runner.OnEventTriggered += ShowEvent;

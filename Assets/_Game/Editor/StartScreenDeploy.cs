@@ -36,7 +36,7 @@ namespace AtomicWar._Game.Editor
         public const string SourceImage = "UI_StyleReference_01.jpg";          // repo root
         public const string TargetImage = "Assets/UI_StyleReference_01.jpg";   // imported copy
         public const string ScenePath = "Assets/Scenes/StartScreen.unity";
-        public const string GameplayScenePath = "Assets/Scenes/SampleScene.unity";
+        public const string GameplayScenePath = "Assets/Scenes/Gameplay.unity";
         public const string BuildPath = "Builds/StartScreen/ASHFALL_Start.x86_64";
 
         public const string MenuUxmlPath = "Assets/_Game/UI/MainMenu/MainMenu.uxml";

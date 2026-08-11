@@ -215,40 +215,68 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void Load_V2Save_MigratesToV3()
         {
-            // Write a synthetic V2 save (manually constructed).
-            var v2Data = new SaveData
+            // Audit M-1: this test used to give up on hand-crafting a valid V2
+            // fixture (checksum verification blocked a naive JSON string edit)
+            // and Assert.Pass a comment instead. VerifyChecksum re-serializes the
+            // *deserialized* SaveData rather than diffing raw file bytes, so a
+            // hand-built SaveData object — checksummed the same way Save() does
+            // it — round-trips through Load() exactly like a real V2 file would.
+            var v2 = new SaveData
             {
                 SaveVersion = 2,
-                Checksum = "",
-                GameState = new GameStateSave { Day = 10, Phase = GamePhase.Running }
+                GameState = new GameStateSave { Day = 77, Phase = GamePhase.Running }
             };
 
-            string savesDir = System.IO.Path.Combine(
-                UnityEngine.Application.persistentDataPath, "saves");
-            System.IO.Directory.CreateDirectory(savesDir);
-            string path = System.IO.Path.Combine(savesDir, "save_v2migrate.json");
+            v2.Checksum = "";
+            string body = UnityEngine.JsonUtility.ToJson(v2, true);
+            v2.Checksum = ComputeTestChecksum(body);
+            string finalJson = UnityEngine.JsonUtility.ToJson(v2, true);
 
-            // Write V2 JSON manually (no checksum — load will fail checksum verify).
-            // Instead, use the save system's own format by writing a minimal V2 save.
-            string v2Json = UnityEngine.JsonUtility.ToJson(v2Data, true);
-            // Inject V2 version
-            v2Json = v2Json.Replace("\"SaveVersion\": 2", "\"SaveVersion\": 2");
-            // Compute a fake checksum — or just set Checksum to empty and hope...
-            // Actually, the load checks checksum, so we need to write a valid checksum.
-            // Let's write a save via Save(), then modify it to V2.
-            var saveSystem = CreateMinimalSaveSystem();
-            saveSystem.Save("v2migrate");
+            string dir = SaveSystemTestFactory.TempDir("v2migrate");
+            const string slotId = "v2migrate";
+            string path = AtomicWar._Game.Utilities.SaveSlotPaths.SlotPath(dir, slotId);
+            System.IO.File.WriteAllText(path, finalJson);
 
-            // Read the file, change version to 2, recompute checksum placeholder, write back.
-            string fullJson = System.IO.File.ReadAllText(path);
-            // Replace version 3 with version 2
-            fullJson = fullJson.Replace("\"SaveVersion\": 3", "\"SaveVersion\": 2");
+            try
+            {
+                var gameState = new GameState();
+                var weather = new WeatherSystem(null, 42);
+                var temperature = new TemperatureSystem(null, weather);
+                var profile = UnityEngine.ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var radiation = new AtomicWar._Game.Radiation.RadiationSystem(needs);
+                var shelter = new AtomicWar._Game.Shelter.Shelter();
+                var saveSystem = new SaveSystem(new SaveSystem.CoreDeps
+                {
+                    GameState = gameState,
+                    WeatherSystem = weather,
+                    TemperatureSystem = temperature,
+                    NeedsSystem = needs,
+                    RadiationSystem = radiation,
+                    Shelter = shelter,
+                    GetSurvivors = () => new List<Survivor>(),
+                    ItemLookup = id => null,
+                    ModuleLookup = id => null,
+                    SavesDir = dir
+                });
+                var stub = new StubSaveable("some_v3_only_system");
+                saveSystem.Register(stub);
 
-            // Clear checksum so it's recomputed (but this will fail verify...)
-            // The simplest correct test: just verify V3 is written on fresh save.
-            // Skip the migration round-trip test for now — MigrateV2toV3 is trivial
-            // (adds empty lists) and is covered by the positional-field backward compat.
-            Assert.Pass("V2→V3 migration is a no-op (adds empty SubsystemSaveIds/SubsystemSaveJsons); positional fields preserved.");
+                bool loaded = saveSystem.Load(slotId);
+
+                Assert.IsTrue(loaded,
+                    "A well-formed V2 save must load successfully — checksum and version gates must accept it.");
+                Assert.IsTrue(saveSystem.LastLoadSucceeded);
+                Assert.AreEqual(77, gameState.Day,
+                    "Positional GameState fields must survive the V2->V3 migration untouched.");
+                Assert.AreEqual(0, stub.RestoreCallCount,
+                    "MigrateV2toV3 resets SubsystemSaveIds/SubsystemSaveJsons to empty lists, " +
+                    "so a migrated V2 save must restore zero ISaveable subsystems.");
+            }
+            finally
+            {
+                try { System.IO.Directory.Delete(dir, true); } catch { /* best-effort cleanup */ }
+            }
         }
 
         // -----------------------------------------------------------------
@@ -305,6 +333,17 @@ namespace AtomicWar.Tests.EditMode
                 ItemLookup = id => null,
                 ModuleLookup = id => null
             });
+        }
+
+        /// <summary>Mirrors SaveSystem.IO.cs's private ComputeChecksum exactly, so a
+        /// hand-built SaveData fixture can carry a checksum Load() will accept.</summary>
+        private static string ComputeTestChecksum(string json)
+        {
+            using var sha = System.Security.Cryptography.SHA256.Create();
+            byte[] hash = sha.ComputeHash(System.Text.Encoding.UTF8.GetBytes(json));
+            var sb = new System.Text.StringBuilder(hash.Length * 2);
+            foreach (byte b in hash) sb.Append(b.ToString("x2"));
+            return sb.ToString();
         }
     }
 }

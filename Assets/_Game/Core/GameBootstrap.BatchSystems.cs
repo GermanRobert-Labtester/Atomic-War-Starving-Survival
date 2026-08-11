@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using AtomicWar._Game.Survivors;
 using UnityEngine;
 using AtomicWar._Game.Utilities;
+using AtomicWar._Game.UI;
+
+using AtomicWar._Game.Endgame;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.Factions;
 
 namespace AtomicWar._Game.Core
 {

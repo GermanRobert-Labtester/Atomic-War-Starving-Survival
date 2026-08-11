@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using AtomicWar._Game.Data;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.UI
 {
@@ -30,6 +32,14 @@ namespace AtomicWar._Game.UI
         [SerializeField] private MapScreenUI _mapScreenUi;
         [SerializeField] private WorkbenchUI _workbenchUi;
         [SerializeField] private HatchDefenseHUD _hatchDefenseHud;
+        [SerializeField] private ScavengeDispatchHUD _scavengeDispatchHud;
+        [SerializeField] private OverflowCrateHUD _overflowCrateHud;
+        [SerializeField] private FieldGearLoadoutHUD _fieldGearLoadoutHud;
+        [SerializeField] private BunkerRationingHUD _bunkerRationingHud;
+        [SerializeField] private WaterPurificationHUD _waterPurificationHud;
+        [SerializeField] private AirHeatManagementHUD _airHeatManagementHud;
+        [SerializeField] private BunkerMaintenanceHUD _bunkerMaintenanceHud;
+        [SerializeField] private SurvivorTaskBoardHUD _survivorTaskBoardHud;
         [SerializeField] private RoomAssignmentHUD _roomAssignmentHud;
         [SerializeField] private RadioInterceptHUD _radioInterceptHud;
         [SerializeField] private FactionRadioVoHook _factionRadioVoHook;
@@ -55,6 +65,14 @@ namespace AtomicWar._Game.UI
         public MapScreenUI MapScreenUI { get { EnsureWidgetReferences(); return _mapScreenUi; } }
         public WorkbenchUI WorkbenchUI { get { EnsureWidgetReferences(); return _workbenchUi; } }
         public HatchDefenseHUD HatchDefenseHUD { get { EnsureWidgetReferences(); return _hatchDefenseHud; } }
+        public ScavengeDispatchHUD ScavengeDispatchHUD { get { EnsureWidgetReferences(); return _scavengeDispatchHud; } }
+        public OverflowCrateHUD OverflowCrateHUD { get { EnsureWidgetReferences(); return _overflowCrateHud; } }
+        public FieldGearLoadoutHUD FieldGearLoadoutHUD { get { EnsureWidgetReferences(); return _fieldGearLoadoutHud; } }
+        public BunkerRationingHUD BunkerRationingHUD { get { EnsureWidgetReferences(); return _bunkerRationingHud; } }
+        public WaterPurificationHUD WaterPurificationHUD { get { EnsureWidgetReferences(); return _waterPurificationHud; } }
+        public AirHeatManagementHUD AirHeatManagementHUD { get { EnsureWidgetReferences(); return _airHeatManagementHud; } }
+        public BunkerMaintenanceHUD BunkerMaintenanceHUD { get { EnsureWidgetReferences(); return _bunkerMaintenanceHud; } }
+        public SurvivorTaskBoardHUD SurvivorTaskBoardHUD { get { EnsureWidgetReferences(); return _survivorTaskBoardHud; } }
         public RoomAssignmentHUD RoomAssignmentHUD { get { EnsureWidgetReferences(); return _roomAssignmentHud; } }
         public RadioInterceptHUD RadioInterceptHUD { get { EnsureWidgetReferences(); return _radioInterceptHud; } }
         public JournalBookUI JournalBookUI { get { EnsureWidgetReferences(); return _journalBookUi; } }
@@ -92,36 +110,62 @@ namespace AtomicWar._Game.UI
 
         private void EnsureWidgetReferences()
         {
-            if (_needsBar == null) _needsBar = GetComponentInChildren<NeedsBar>() ?? gameObject.AddComponent<NeedsBar>();
-            if (_dosimeterHud == null) _dosimeterHud = GetComponentInChildren<DosimeterHUD>() ?? gameObject.AddComponent<DosimeterHUD>();
-            if (_healthTrajectoryHud == null) _healthTrajectoryHud = GetComponentInChildren<HealthTrajectoryHUD>() ?? gameObject.AddComponent<HealthTrajectoryHUD>();
-            if (_geigerAudioHook == null) _geigerAudioHook = GetComponentInChildren<GeigerAudioHook>() ?? gameObject.AddComponent<GeigerAudioHook>();
-            if (_environmentStatusHud == null) _environmentStatusHud = GetComponentInChildren<EnvironmentStatusHUD>() ?? gameObject.AddComponent<EnvironmentStatusHUD>();
-            if (_eventModalUi == null) _eventModalUi = GetComponentInChildren<EventModalUI>() ?? gameObject.AddComponent<EventModalUI>();
-            if (_mapKnowledgeHud == null) _mapKnowledgeHud = GetComponentInChildren<MapKnowledgeHUD>() ?? gameObject.AddComponent<MapKnowledgeHUD>();
-            if (_tradeScreenUi == null) _tradeScreenUi = GetComponentInChildren<TradeScreenUI>() ?? gameObject.AddComponent<TradeScreenUI>();
-            if (_powerGridHud == null) _powerGridHud = GetComponentInChildren<PowerGridHUD>() ?? gameObject.AddComponent<PowerGridHUD>();
-            if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
-            if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
-            if (_hatchDefenseHud == null) _hatchDefenseHud = GetComponentInChildren<HatchDefenseHUD>() ?? gameObject.AddComponent<HatchDefenseHUD>();
-            if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
-            if (_radioInterceptHud == null) _radioInterceptHud = GetComponentInChildren<RadioInterceptHUD>() ?? gameObject.AddComponent<RadioInterceptHUD>();
-            if (_journalBookUi == null) _journalBookUi = GetComponentInChildren<JournalBookUI>() ?? gameObject.AddComponent<JournalBookUI>();
-            if (_inventoryStripUi == null) _inventoryStripUi = GetComponentInChildren<InventoryStripUI>() ?? gameObject.AddComponent<InventoryStripUI>();
-            if (_endgameSummaryUi == null) _endgameSummaryUi = GetComponentInChildren<EndgameSummaryUI>() ?? gameObject.AddComponent<EndgameSummaryUI>();
-            if (_internalHorrorHud == null) _internalHorrorHud = GetComponentInChildren<InternalHorrorHUD>() ?? gameObject.AddComponent<InternalHorrorHUD>();
-            if (_expeditionEncounterLogHud == null)
-                _expeditionEncounterLogHud = GetComponentInChildren<ExpeditionEncounterLogHUD>()
-                    ?? gameObject.AddComponent<ExpeditionEncounterLogHUD>();
-            if (_diegeticHud == null)
-                _diegeticHud = GetComponentInChildren<DiegeticHudController>()
-                    ?? gameObject.AddComponent<DiegeticHudController>();
+            EnsureWidget(ref _needsBar);
+            EnsureWidget(ref _dosimeterHud);
+            EnsureWidget(ref _healthTrajectoryHud);
+            EnsureWidget(ref _geigerAudioHook);
+            EnsureWidget(ref _environmentStatusHud);
+            EnsureWidget(ref _eventModalUi);
+            EnsureWidget(ref _mapKnowledgeHud);
+            EnsureWidget(ref _tradeScreenUi);
+            EnsureWidget(ref _powerGridHud);
+            EnsureWidget(ref _mapScreenUi);
+            EnsureWidget(ref _workbenchUi);
+            EnsureWidget(ref _hatchDefenseHud);
+            EnsureWidget(ref _scavengeDispatchHud);
+            EnsureWidget(ref _overflowCrateHud);
+            EnsureWidget(ref _fieldGearLoadoutHud);
+            EnsureWidget(ref _bunkerRationingHud);
+            EnsureWidget(ref _waterPurificationHud);
+            EnsureWidget(ref _airHeatManagementHud);
+            EnsureWidget(ref _bunkerMaintenanceHud);
+            EnsureWidget(ref _survivorTaskBoardHud);
+            EnsureWidget(ref _roomAssignmentHud);
+            EnsureWidget(ref _radioInterceptHud);
+            EnsureWidget(ref _journalBookUi);
+            EnsureWidget(ref _inventoryStripUi);
+            EnsureWidget(ref _endgameSummaryUi);
+            EnsureWidget(ref _internalHorrorHud);
+            EnsureWidget(ref _expeditionEncounterLogHud);
+            EnsureWidget(ref _diegeticHud);
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
                 if (_factionRadioVoHook == null && _radioInterceptHud != null)
                     _factionRadioVoHook = _radioInterceptHud.VoHook;
             }
+        }
+
+        /// <summary>
+        /// H-5: logs a warning the first time a widget isn't found via scene wiring
+        /// or GetComponentInChildren and has to be auto-created, since AddComponent
+        /// yields a default-constructed instance with none of its Inspector-set
+        /// fields — silent auto-creation was hiding missing prefab wiring.
+        /// </summary>
+        private T EnsureWidget<T>(ref T field) where T : Component
+        {
+            if (field != null) return field;
+
+            field = GetComponentInChildren<T>();
+            if (field == null)
+            {
+                Debug.LogWarning(
+                    $"[HUD] {typeof(T).Name} not found via scene wiring — auto-creating with AddComponent(). " +
+                    "Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.",
+                    this);
+                field = gameObject.AddComponent<T>();
+            }
+            return field;
         }
 
         /// <summary>Ensure the diegetic journal book exists on the HUD.</summary>
@@ -169,6 +213,186 @@ namespace AtomicWar._Game.UI
             {
                 SetDebugMode(!_debugModeEnabled);
             }
+
+            RepaintEventModalIfChanged();
+            RepaintEndgameIfChanged();
+            RepaintPowerGridIfChanged();
+        }
+
+        private bool _lastPowerGridOpen;
+        private string _lastPowerBudget;
+        private string _lastPowerSources;
+        private string _lastPowerLoads;
+
+        /// <summary>
+        /// Repaint the power budget when it opens, closes, or any of its three
+        /// blocks change. Polled because PowerGridHUD publishes no event of its
+        /// own -- it subscribes to PowerNetwork.OnPowerStateChanged and refreshes
+        /// its cached strings, but never tells anyone.
+        ///
+        /// All three strings are compared, not just the budget line: a priority
+        /// change (P1 -> P2) or a source flipping state at equal wattage rewrites
+        /// ConsumersSummary / SourcesSummary while leaving BudgetSummary
+        /// byte-identical, and the panel would freeze mid-interaction. When
+        /// nothing changed these are the same string instances, so each compare
+        /// short-circuits on the reference check.
+        /// </summary>
+        private void RepaintPowerGridIfChanged()
+        {
+            if (_diegeticHud == null || _powerGridHud == null) return;
+
+            bool open = _powerGridHud.IsOpen;
+            string budget = open ? _powerGridHud.BudgetSummary : null;
+            string sources = open ? _powerGridHud.SourcesSummary : null;
+            string loads = open ? _powerGridHud.ConsumersSummary : null;
+            if (open == _lastPowerGridOpen
+                && budget == _lastPowerBudget
+                && sources == _lastPowerSources
+                && loads == _lastPowerLoads)
+            {
+                return;
+            }
+
+            _lastPowerGridOpen = open;
+            _lastPowerBudget = budget;
+            _lastPowerSources = sources;
+            _lastPowerLoads = loads;
+            _diegeticHud.PaintPowerGrid(open, budget, sources, loads);
+        }
+
+        private bool _lastEndgameVisible;
+        private string _lastEndgameStatus;
+
+        /// <summary>
+        /// Repaint the terminal campaign readout when it appears, disappears, or
+        /// its tallies change. Polled because EndgameSummaryUI is the one HUD
+        /// widget with no change event -- Show()/Hide()/Clear() all just call its
+        /// private Refresh(). Comparing StatusLine covers the tallies too: it is
+        /// rebuilt from state, days and radiation on every Refresh.
+        /// </summary>
+        private void RepaintEndgameIfChanged()
+        {
+            if (_diegeticHud == null || _endgameSummaryUi == null) return;
+
+            bool visible = _endgameSummaryUi.IsVisible;
+            string status = visible ? _endgameSummaryUi.StatusLine : null;
+            if (visible == _lastEndgameVisible && status == _lastEndgameStatus) return;
+
+            _lastEndgameVisible = visible;
+            _lastEndgameStatus = status;
+            _diegeticHud.PaintEndgame(visible, status, _endgameSummaryUi.DetailSummary);
+        }
+
+        private bool _lastModalOpen;
+        private string _lastModalEventId;
+        // Last-painted body text and choice fingerprint while the modal is open.
+        // The body is re-resolved each frame from the live context (faction trust,
+        // survivor state) so a context shift that flips the threatening-copy swap
+        // or greys out a choice repaints without waiting for a new event.
+        private string _lastPaintedBody;
+        private int _lastPaintedChoiceFingerprint;
+
+        /// <summary>
+        /// Repaint the event prompt when it opens, closes, swaps to a different
+        /// event, or its body / choice gating actually changes. Deliberately
+        /// polled rather than driven from EventRunner.OnEventTriggered:
+        /// EventModalUI subscribes to that same event and has to update its
+        /// state before this paints it, and relying on subscriber registration
+        /// order is a dependency no test would catch when it broke.
+        /// </summary>
+        private void RepaintEventModalIfChanged()
+        {
+            if (_eventModalUi == null || _diegeticHud == null) return;
+
+            bool open = _eventModalUi.IsOpen;
+            string id = open && _eventModalUi.ActiveEvent != null
+                ? _eventModalUi.ActiveEvent.id
+                : null;
+
+            // Fast bail: same open/close + id as the last frame.
+            if (open == _lastModalOpen && id == _lastModalEventId)
+            {
+                if (!open) return; // closed with same id: no work
+                // Open with same id: re-resolve to track live context (faction
+                // trust can shift the body swap; flags can change gating), but
+                // skip the per-row Label rebuild when the fingerprint matches
+                // the one we last drew.
+                var evStable = _eventModalUi.ActiveEvent;
+                var ctxStable = _eventModalUi.ActiveContext;
+                if (evStable == null || ctxStable == null) return;
+                string bodyStable = evStable.ResolveBodyText(ctxStable);
+                var visibleStable = EventRunner.GetVisibleChoices(evStable, ctxStable);
+                int fingerprintStable = ComputeChoicesFingerprint(visibleStable);
+                if (fingerprintStable == _lastPaintedChoiceFingerprint
+                    && bodyStable == _lastPaintedBody)
+                {
+                    return;
+                }
+                // Things changed; fall through to repaint.
+                _lastPaintedBody = bodyStable;
+                _lastPaintedChoiceFingerprint = fingerprintStable;
+                EmitPaint(open, evStable, bodyStable, visibleStable);
+                return;
+            }
+
+            // Open/close or id changed: redraw.
+            _lastModalOpen = open;
+            _lastModalEventId = id;
+            if (!open)
+            {
+                _lastPaintedBody = null;
+                _lastPaintedChoiceFingerprint = 0;
+                _diegeticHud.PaintEventModal(open, null, null, null);
+                return;
+            }
+
+            var ev = _eventModalUi.ActiveEvent;
+            var ctx = _eventModalUi.ActiveContext;
+            if (ev == null || ctx == null) return;
+            string body = ev.ResolveBodyText(ctx);
+            var visible = EventRunner.GetVisibleChoices(ev, ctx);
+            int fingerprint = ComputeChoicesFingerprint(visible);
+            _lastPaintedBody = body;
+            _lastPaintedChoiceFingerprint = fingerprint;
+            EmitPaint(open, ev, body, visible);
+        }
+
+        private void EmitPaint(
+            bool open,
+            GameEvent ev,
+            string body,
+            System.Collections.Generic.IReadOnlyList<PresentedEventChoice> visible)
+        {
+            var lines = new List<EventChoiceLine>(visible.Count);
+            for (int i = 0; i < visible.Count; i++)
+            {
+                var c = visible[i];
+                lines.Add(new EventChoiceLine(c.Text, c.IsAvailable && !c.IsGrayedOut));
+            }
+            _diegeticHud.PaintEventModal(open, ev.title, body, lines);
+        }
+
+        /// <summary>
+        /// Cheap content fingerprint for the visible choice list. Hashes the
+        /// (enabled, text-hash) pair of each row so a re-resolution that didn't
+        /// actually change the gating or copy reads as equal even when the
+        /// list is a freshly-allocated reference.
+        /// </summary>
+        private static int ComputeChoicesFingerprint(System.Collections.Generic.IReadOnlyList<PresentedEventChoice> choices)
+        {
+            unchecked
+            {
+                int h = 17;
+                for (int i = 0; i < choices.Count; i++)
+                {
+                    var c = choices[i];
+                    bool enabled = c.IsAvailable && !c.IsGrayedOut;
+                    int textHash = c.Text == null ? 0 : c.Text.GetHashCode();
+                    h = h * 31 + (enabled ? 1 : 0);
+                    h = h * 31 + textHash;
+                }
+                return h;
+            }
         }
 
         public void SetDebugMode(bool enabled)
@@ -193,6 +417,7 @@ namespace AtomicWar._Game.UI
                 survivor,
                 _personalQuests,
                 _needsUiRng);
+            RepaintVitals();
         }
 
         /// <summary>Bind radiation system readings to Dosimeter and Geiger Audio.</summary>
@@ -201,6 +426,43 @@ namespace AtomicWar._Game.UI
             EnsureWidgetReferences();
             if (_dosimeterHud != null) _dosimeterHud.SetReading(cumulativeDose, currentRate);
             if (_geigerAudioHook != null) _geigerAudioHook.UpdateExposureRate(currentRate);
+            RepaintVitals();
+        }
+
+        /// <summary>
+        /// Latest clock reading. Pushed in rather than pulled: HUD holds no
+        /// bootstrap or TimeSystem reference, and every other value it shows is
+        /// pushed too. The simulation's clock advances in whole hours, so the
+        /// readout sits at HH:00 between ticks.
+        /// </summary>
+        private int _day = 1;
+        private float _hour;
+
+        public void SetClock(int day, float hour)
+        {
+            _day = day;
+            _hour = hour;
+            RepaintVitals();
+        }
+
+        /// <summary>
+        /// The other diegetic panels repaint on discrete actions via
+        /// RefreshDiegeticHud. Vitals cannot: needs and dose change continuously,
+        /// and a panel painted only on mission events would sit frozen while the
+        /// player starved. Null widgets paint nothing and throw nothing -- the
+        /// HUD must never take down the simulation.
+        /// </summary>
+        private void RepaintVitals()
+        {
+            EnsureWidgetReferences();
+            if (_diegeticHud == null || _needsBar == null) return;
+
+            _diegeticHud.PaintVitals(
+                _day,
+                _hour,
+                _dosimeterHud != null ? _dosimeterHud.CumulativeDose : 0f,
+                _dosimeterHud != null ? _dosimeterHud.CurrentRate : 0f,
+                _needsBar.NeedBars);
         }
 
         /// <summary>
@@ -294,6 +556,86 @@ namespace AtomicWar._Game.UI
             if (_hatchDefenseHud != null) _hatchDefenseHud.Bind(hatch);
         }
 
+        /// <summary>
+        /// Bind the player-facing dispatch board. Core owns the mission system
+        /// and start eligibility; the HUD only presents its pushed state.
+        /// </summary>
+        public void BindScavengeDispatch(
+            LocationCatalogSO catalog,
+            System.Func<IReadOnlyList<Survivor>> getSurvivors,
+            System.Func<Survivor, string> getDispatchBlockReason,
+            System.Func<Survivor, string> getTaskLabel,
+            System.Func<string> getMissionRoster,
+            System.Func<Survivor, LocationDefinitionSO, string> getPreflightSummary,
+            System.Func<string, string> getRadiationPreview,
+            System.Func<float, string> getLootPreview)
+        {
+            EnsureWidgetReferences();
+            _scavengeDispatchHud?.Bind(
+                catalog,
+                getSurvivors,
+                getDispatchBlockReason,
+                getTaskLabel,
+                getMissionRoster,
+                getPreflightSummary,
+                getRadiationPreview,
+                getLootPreview);
+        }
+
+        /// <summary>Bind the bunker receiving-crate panel to Core-owned snapshot data.</summary>
+        public void BindOverflowCrate(System.Func<OverflowCrateSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _overflowCrateHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the field face/body protection panel to Core snapshot data.</summary>
+        public void BindFieldGearLoadout(System.Func<FieldGearLoadoutSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _fieldGearLoadoutHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the daily bunker ration board to Core-owned policy state.</summary>
+        public void BindBunkerRationing(System.Func<BunkerRationingSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _bunkerRationingHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the cistern/purifier terminal and its ration projection.</summary>
+        public void BindWaterPurification(
+            System.Func<WaterPurificationSnapshot> getWaterSnapshot,
+            System.Func<BunkerRationingSnapshot> getRationSnapshot)
+        {
+            EnsureWidgetReferences();
+            _waterPurificationHud?.Bind(getWaterSnapshot, getRationSnapshot);
+        }
+
+        /// <summary>Bind the climate terminal to a Core-owned air/heat snapshot.</summary>
+        public void BindAirHeatManagement(System.Func<AirHeatManagementSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _airHeatManagementHud?.Bind(getSnapshot);
+        }
+
+        /// <summary>Bind the repair-order terminal to Core-owned maintenance state.</summary>
+        public void BindBunkerMaintenance(
+            System.Func<BunkerMaintenanceSnapshot> getSnapshot,
+            System.Func<System.Collections.Generic.IReadOnlyList<AtomicWar._Game.Survivors.Survivor>> getSurvivors,
+            System.Func<RepairWorkOrderSnapshot> getWorkOrderSnapshot = null)
+        {
+            EnsureWidgetReferences();
+            _bunkerMaintenanceHud?.Bind(getSnapshot, getSurvivors, getWorkOrderSnapshot);
+        }
+
+        /// <summary>Bind the survivor allocation board to its detached Core snapshot.</summary>
+        public void BindSurvivorTaskBoard(System.Func<SurvivorTaskBoardSnapshot> getSnapshot)
+        {
+            EnsureWidgetReferences();
+            _survivorTaskBoardHud?.Bind(getSnapshot);
+        }
+
         /// <summary>Ensure expedition combat/encounter log strip exists.</summary>
         public ExpeditionEncounterLogHUD EnsureExpeditionEncounterLog()
         {
@@ -310,20 +652,9 @@ namespace AtomicWar._Game.UI
             EnsureWidgetReferences();
             if (_diegeticHud == null) return null;
 
-            // If HUD already carries a UIDocument and the controller does not,
-            // re-home the controller onto this GO so it can own the panel.
-            if (_diegeticHud.GetComponent<UIDocument>() == null)
-            {
-                var hostDoc = GetComponent<UIDocument>();
-                if (hostDoc != null && _diegeticHud.gameObject != gameObject)
-                {
-                    // Controller lives on a child without a document — mount its own.
-                }
-            }
-
             _diegeticHud.EnsureDocumentMounted();
             _diegeticHud.EnsureBuilt();
-            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud);
+            _diegeticHud.BindSources(_hatchDefenseHud, _inventoryStripUi, _expeditionEncounterLogHud, _workbenchUi, _endgameSummaryUi, _powerGridHud, _scavengeDispatchHud, _overflowCrateHud, _fieldGearLoadoutHud, _bunkerRationingHud, _waterPurificationHud, _airHeatManagementHud, _bunkerMaintenanceHud, _survivorTaskBoardHud);
             return _diegeticHud;
         }
 

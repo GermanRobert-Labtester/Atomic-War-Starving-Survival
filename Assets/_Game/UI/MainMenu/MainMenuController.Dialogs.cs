@@ -41,19 +41,19 @@ namespace AtomicWar._Game.UI.MainMenu
 
         private void BuildDialogs()
         {
-            _dialogBackdrop = _root.Q<VisualElement>("dialog-backdrop");
-            _dialogPanel = _root.Q<VisualElement>("dialog-panel");
-            _dialogEyebrow = _root.Q<Label>("dialog-eyebrow");
-            _dialogTitle = _root.Q<Label>("dialog-title");
-            _dialogBody = _root.Q<Label>("dialog-body");
-            _dialogConfirm = _root.Q<Button>("dialog-confirm");
-            _dialogBack = _root.Q<Button>("dialog-back");
-            _dialogConfirmLabel = _root.Q<Label>("dialog-confirm-label");
-            _dialogBackLabel = _root.Q<Label>("dialog-back-label");
+            _dialogBackdrop = _root.Q<VisualElement>(ElementNames.DialogBackdrop);
+            _dialogPanel = _root.Q<VisualElement>(ElementNames.DialogPanel);
+            _dialogEyebrow = _root.Q<Label>(ElementNames.DialogEyebrow);
+            _dialogTitle = _root.Q<Label>(ElementNames.DialogTitle);
+            _dialogBody = _root.Q<Label>(ElementNames.DialogBody);
+            _dialogConfirm = _root.Q<Button>(ElementNames.DialogConfirm);
+            _dialogBack = _root.Q<Button>(ElementNames.DialogBack);
+            _dialogConfirmLabel = _root.Q<Label>(ElementNames.DialogConfirmLabel);
+            _dialogBackLabel = _root.Q<Label>(ElementNames.DialogBackLabel);
 
-            _difficultyRow = _root.Q<VisualElement>("difficulty-row");
-            _difficultyOperative = _root.Q<Button>("difficulty-operative");
-            _difficultyVeteran = _root.Q<Button>("difficulty-veteran");
+            _difficultyRow = _root.Q<VisualElement>(ElementNames.DifficultyRow);
+            _difficultyOperative = _root.Q<Button>(ElementNames.DifficultyOperative);
+            _difficultyVeteran = _root.Q<Button>(ElementNames.DifficultyVeteran);
 
             if (_dialogBackdrop == null || _dialogPanel == null)
             {
@@ -69,10 +69,10 @@ namespace AtomicWar._Game.UI.MainMenu
             if (_dialogBack != null) _dialogBack.clicked += CloseDialog;
             if (_dialogConfirm != null) _dialogConfirm.clicked += ConfirmDialog;
 
-            SetLabelText(_root.Q<Label>("difficulty-operative-label"), MainMenuModel.DifficultyOperativeLabel);
-            SetLabelText(_root.Q<Label>("difficulty-operative-detail"), MainMenuModel.DifficultyOperativeDetail);
-            SetLabelText(_root.Q<Label>("difficulty-veteran-label"), MainMenuModel.DifficultyVeteranLabel);
-            SetLabelText(_root.Q<Label>("difficulty-veteran-detail"), MainMenuModel.DifficultyVeteranDetail);
+            SetLabelText(_root.Q<Label>(ElementNames.DifficultyOperativeLabel), MainMenuModel.DifficultyOperativeLabel);
+            SetLabelText(_root.Q<Label>(ElementNames.DifficultyOperativeDetail), MainMenuModel.DifficultyOperativeDetail);
+            SetLabelText(_root.Q<Label>(ElementNames.DifficultyVeteranLabel), MainMenuModel.DifficultyVeteranLabel);
+            SetLabelText(_root.Q<Label>(ElementNames.DifficultyVeteranDetail), MainMenuModel.DifficultyVeteranDetail);
 
             if (_difficultyOperative != null)
                 _difficultyOperative.clicked += () => SetDifficulty(ExpeditionDifficulty.Operative);

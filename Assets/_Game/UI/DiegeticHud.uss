@@ -19,6 +19,11 @@
     /* Military exclusive — copper rust, not bright red (restrained tone). */
     --exclusive: #c4785a;
     --exclusive-line: rgba(196, 120, 90, 0.45);
+    --critical: #e63333;
+
+    /* Figma HUD Panel layout contract. */
+    --hud-edge: 24px;
+    --hud-panel-padding: 12px;
 
     --font-body: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Regular_SDF.asset");
     --font-semibold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
@@ -54,10 +59,10 @@
     /* Warm accent bar on the leading edge — same language as menu rows. */
     border-left-width: 2px;
     border-left-color: var(--warm);
-    padding-left: 12px;
-    padding-right: 12px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-left: var(--hud-panel-padding);
+    padding-right: var(--hud-panel-padding);
+    padding-top: var(--hud-panel-padding);
+    padding-bottom: var(--hud-panel-padding);
     max-width: 420px;
     picking-mode: position;
 }
@@ -66,18 +71,36 @@
     display: none;
 }
 
+/* Figma HUD Panel variants. The shell remains quiet; only the attention edge
+   and its status line change so live information never reads as decoration. */
+.diegetic-panel--warning {
+    border-left-color: var(--warm);
+}
+
+.diegetic-panel--warning .diegetic-status {
+    color: var(--hot);
+}
+
+.diegetic-panel--critical {
+    border-left-color: var(--critical);
+}
+
+.diegetic-panel--critical .diegetic-status {
+    color: var(--critical);
+}
+
 /* Hatch block — top-right when [H] open */
 .hatch-panel {
-    top: 16px;
-    right: 16px;
+    top: var(--hud-edge);
+    right: var(--hud-edge);
     min-width: 300px;
     max-height: 440px;
 }
 
 /* Encounter log strip — bottom-left */
 .encounter-panel {
-    bottom: 16px;
-    left: 16px;
+    bottom: var(--hud-edge);
+    left: var(--hud-edge);
     min-width: 340px;
     max-width: 500px;
     max-height: 220px;
@@ -87,8 +110,8 @@
 
 /* Stores focus tooltip — bottom-right when inventory strip has keyboard focus */
 .stores-panel {
-    bottom: 16px;
-    right: 16px;
+    bottom: var(--hud-edge);
+    right: var(--hud-edge);
     min-width: 280px;
     max-width: 380px;
 }
@@ -154,4 +177,265 @@
 .encounter-list {
     flex-direction: column;
     max-height: 148px;
+}
+
+/* Vitals: the core-loop readout. Always visible, unlike the other panels. */
+/* Vitals — persistent top-left readout, matching the playable Figma HUD
+   composition. The active workbench can temporarily cover this compact block,
+   but the decision panel remains isolated at screen centre. */
+.vitals-panel {
+    top: var(--hud-edge);
+    left: var(--hud-edge);
+    min-width: 360px;
+}
+
+.vitals-needs {
+    flex-direction: column;
+    margin-top: 4px;
+}
+
+.vitals-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.vitals-row__label {
+    width: 84px;
+    -unity-font-style: bold;
+}
+
+.vitals-row__track {
+    flex-grow: 1;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.vitals-row__fill {
+    height: 8px;
+    background-color: rgb(51, 204, 77);
+}
+
+.vitals-row__fill.critical {
+    background-color: rgb(230, 51, 51);
+}
+
+.vitals-row__value {
+    width: 48px;
+    -unity-text-align: middle-right;
+}
+
+/* Event prompt: hidden until EventRunner fires, keys 1/2/3 pick a row.
+   Screen centre. It previously had no positioning at all and stacked at the
+   absolute origin on top of vitals and the workbench. It is the most
+   attention-demanding transient panel, so it takes the middle. It shares that
+   space with the endgame summary, which is added later in the tree and so
+   draws on top -- deliberate: once the campaign is over the prompt underneath
+   no longer matters.
+
+   The width/max-height pair below is load-bearing and was arrived at by
+   measuring resolved worldBound against a live panel, not by reasoning. In a
+   1440x1080 layout space, true centre is x=720:
+
+     min-width:420 + max-width:560 -> resolved 420.8 wide, centre 667.2  (bad)
+     width:520 + max-height:480    -> resolved 420.8 wide, centre 720.0  (good)
+     no constraints at all         -> resolved 312.8 wide, centre 685.1  (bad)
+
+   Note the resolved width is 420.8 whether width is 520 or the min/max pair,
+   so `width` is not doing what it looks like it does here -- it changes the
+   resolved transform without changing the resolved width. Unexplained, but
+   reproducible. Do not "simplify" these two declarations away without
+   re-measuring; dropping them shrinks the panel and pulls it off centre.
+
+   Separately, this panel renders ~26px below true vertical centre in every
+   configuration tried, including with no constraints at all. Small enough to
+   leave (2.4% of height) and not caused by max-height, contrary to first
+   appearances.
+
+   If a long choice list ever grows this panel tall enough to reach the vitals
+   readout at y=801, bound the inner .event-choices list, not the panel. */
+.event-panel {
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 520px;
+    max-height: 480px;
+}
+
+.event-choices {
+    flex-direction: column;
+    margin-top: 6px;
+}
+
+.event-choice {
+    margin-bottom: 3px;
+    white-space: normal;
+}
+
+.event-choice--disabled {
+    opacity: 0.45;
+}
+
+/* Workbench readout — top-left when [B] open. WorkbenchUI already formats its
+   own header/notes/numbered lines, so this panel is a single terminal block. */
+.workbench-panel {
+    top: var(--hud-edge);
+    left: var(--hud-edge);
+    min-width: 340px;
+    max-width: 480px;
+    max-height: 440px;
+}
+
+.workbench-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Location dispatch — top-right. It temporarily takes the hatch panel's
+   corner because both are explicit, player-opened terminals; the dispatch
+   board is added later in the tree and is therefore the active surface. */
+.scavenge-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.scavenge-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Bunker receiving crate — shares the deliberate terminal corner used by
+   scavenge dispatch. Core closes the other board before opening this one. */
+.overflow-crate-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.overflow-crate-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Field gear is mutually exclusive with the dispatch and crate terminals. */
+.field-gear-loadout-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.field-gear-loadout-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Daily rations are mutually exclusive with the other top-right terminals. */
+.bunker-rationing-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.bunker-rationing-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Water maintenance uses the same exclusive top-right terminal station. */
+.water-purification-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.water-purification-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Climate control uses the same exclusive top-right terminal station. */
+.air-heat-management-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.air-heat-management-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Repair orders share the exclusive top-right terminal station. */
+.bunker-maintenance-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.bunker-maintenance-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Work allocation shares the exclusive top-right terminal station. */
+.survivor-task-board-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.survivor-task-board-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Endgame summary — screen centre. Every other panel is corner-anchored; this
+   one is terminal and exclusive, so it takes the middle rather than competing
+   for a corner. Centred by offsetting half its own size, which is why the
+   translate is a percentage and not a fixed length. */
+.endgame-panel {
+    left: 50%;
+    top: 50%;
+    translate: -50% -50%;
+    min-width: 480px;
+    max-width: 680px;
+}
+
+.endgame-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
+/* Power budget — top-centre. The four corners are taken (hatch, encounter,
+   stores, workbench) and the centre belongs to the endgame summary, so this
+   toggled panel takes the remaining free edge. Only the horizontal axis is
+   offset by half its own width; the top stays pinned. */
+.power-grid-panel {
+    top: var(--hud-edge);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 340px;
+    max-width: 520px;
+}
+
+.power-grid-readout {
+    white-space: normal;
+    margin-bottom: 0;
 }

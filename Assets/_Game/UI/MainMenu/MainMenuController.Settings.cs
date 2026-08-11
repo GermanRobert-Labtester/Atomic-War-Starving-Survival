@@ -31,11 +31,11 @@ namespace AtomicWar._Game.UI.MainMenu
 
         private void BindSettings()
         {
-            _settingsBody = _root.Q<VisualElement>("settings-body");
-            _volumeSlider = _root.Q<Slider>("setting-volume");
-            _volumeValue = _root.Q<Label>("setting-volume-value");
-            _fullscreenToggle = _root.Q<Toggle>("setting-fullscreen");
-            _resolutionDropdown = _root.Q<DropdownField>("setting-resolution");
+            _settingsBody = _root.Q<VisualElement>(ElementNames.SettingsBody);
+            _volumeSlider = _root.Q<Slider>(ElementNames.SettingVolume);
+            _volumeValue = _root.Q<Label>(ElementNames.SettingVolumeValue);
+            _fullscreenToggle = _root.Q<Toggle>(ElementNames.SettingFullscreen);
+            _resolutionDropdown = _root.Q<DropdownField>(ElementNames.SettingResolution);
 
             _resolutions = SettingsManager.AvailableResolutions();
             if (_resolutionDropdown != null)

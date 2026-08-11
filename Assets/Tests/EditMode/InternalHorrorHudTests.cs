@@ -214,8 +214,10 @@ namespace AtomicWar.Tests.EditMode
         {
             string fought = null;
             string sealedRoom = null;
+            string extinguished = null;
             _hud.OnFightFireRequested += id => fought = id;
             _hud.OnSealBulkheadRequested += id => sealedRoom = id;
+            _hud.OnExtinguishFireRequested += id => extinguished = id;
 
             _hud.ApplySnapshot(new InternalHorrorSnapshot
             {
@@ -235,6 +237,8 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(fought, Is.EqualTo("quarters"));
             Assert.IsTrue(_hud.SelectSealBulkhead("quarters"));
             Assert.That(sealedRoom, Is.EqualTo("quarters"));
+            Assert.IsTrue(_hud.SelectExtinguishFire("quarters"));
+            Assert.That(extinguished, Is.EqualTo("quarters"));
         }
 
         [Test]
@@ -405,6 +409,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsFalse(_hud.FireNotificationPing);
             Assert.That(_hud.FirePanelChoicesLine, Does.Contain("[1]"));
             Assert.That(_hud.FirePanelChoicesLine, Does.Contain("[2]"));
+            Assert.That(_hud.FirePanelChoicesLine, Does.Contain("[3]"));
         }
 
         [Test]

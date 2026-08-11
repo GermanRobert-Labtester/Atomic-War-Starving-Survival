@@ -94,4 +94,40 @@ namespace AtomicWar._Game.Shelter
         public float DirtyWater;
         public float IrradiatedWater;
     }
+
+    /// <summary>
+    /// Player-facing purifier queue. Auto preserves the original radiation-first
+    /// safety behavior; the explicit priorities let the player clear an urgent
+    /// dirty reserve or keep processing hot water before it reaches the clean tank.
+    /// </summary>
+    public enum PurifierQueueMode
+    {
+        Auto,
+        IrradiatedFirst,
+        DirtyFirst
+    }
+
+    /// <summary>Read-only display projection for the bunker water terminal.</summary>
+    [Serializable]
+    public sealed class WaterPurificationSnapshot
+    {
+        public float CleanWater;
+        public float DirtyWater;
+        public float IrradiatedWater;
+        public PurifierQueueMode QueueMode;
+        public bool PurifierOperational;
+        public float FilterHealth;
+        public float ConversionProgressHours;
+        public float HoursPerUnit;
+        public float FilterDegradationPerUnit;
+        public float FilterBurnPerHour;
+        public float FilterRuntimeHours = -1f;
+        public string NextSourceLabel;
+        public string NextOutputLabel;
+        public int UnitsQueued;
+
+        public float HoursUntilNextUnit => PurifierOperational && HoursPerUnit > 0f
+            ? Mathf.Max(0f, HoursPerUnit - ConversionProgressHours)
+            : -1f;
+    }
 }

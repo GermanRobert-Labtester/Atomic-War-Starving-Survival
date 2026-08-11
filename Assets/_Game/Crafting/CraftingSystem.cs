@@ -303,7 +303,15 @@ namespace AtomicWar._Game.Crafting
             for (int i = _active.Count - 1; i >= 0; i--)
             {
                 var craft = _active[i];
-                craft.HoursRemaining -= gameHours;
+                // Cap to time actually spent crafting this tick so the
+                // countdown never overshoots into negative territory. With
+                // MaxGameHoursPerStep = 1f the overshoot is bounded, but the
+                // public field is observable through SaveState round-trips
+                // and the HUD progress bar, so keep the state consistent
+                // with the elapsed-time math.
+                float elapsed = Mathf.Min(gameHours, Mathf.Max(0f, craft.HoursRemaining));
+                craft.HoursRemaining -= elapsed;
+
                 if (craft.HoursRemaining <= 0f)
                 {
                     CompleteCraft(craft);

@@ -4,6 +4,8 @@ using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar._Game.Core
 {
     /// <summary>

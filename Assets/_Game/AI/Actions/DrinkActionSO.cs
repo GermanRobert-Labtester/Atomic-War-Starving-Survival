@@ -19,6 +19,7 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null) return 0f;
+            if (context.BunkerRationsScheduled) return 0f;
             float thirst = context.Survivor.Needs.Thirst;
 
             if (context.Inventory != null && context.Inventory.Slots != null)

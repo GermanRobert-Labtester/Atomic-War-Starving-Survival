@@ -70,9 +70,10 @@ namespace AtomicWar._Game.Shelter
 
         public bool IsOperational => IsEnabled && Level > 0;
 
-        public void Tick(float gameHours, Shelter shelter)
+        public void Tick(float gameHours, Shelter shelter, float resourceConsumptionMultiplier = 1f)
         {
             if (!IsOperational || gameHours <= 0f) return;
+            resourceConsumptionMultiplier = Mathf.Max(0f, resourceConsumptionMultiplier);
 
             // A null _definition is not special-cased here: every `is` test below
             // fails for null, so it already falls through to the ModuleId fallback
@@ -81,14 +82,15 @@ namespace AtomicWar._Game.Shelter
             // chain silently overrides both.
             if (_definition is AirFiltrationModuleSO airSO)
             {
-                FilterHealth = Mathf.Max(0f, FilterHealth - airSO.DegradationRatePerHour * gameHours);
+                FilterHealth = Mathf.Max(0f, FilterHealth - airSO.DegradationRatePerHour
+                    * gameHours * resourceConsumptionMultiplier);
             }
             else if (_definition is HeaterModuleSO heaterSO)
             {
                 if (Fuel > 0f)
                 {
                     Fuel = Mathf.Max(0f, Fuel - heaterSO.FuelConsumptionRatePerHour
-                        * gameHours * EffectiveFuelBurnMultiplier);
+                        * gameHours * EffectiveFuelBurnMultiplier * resourceConsumptionMultiplier);
                 }
             }
             else if (_definition is GrowLightModuleSO growSO)
@@ -112,11 +114,12 @@ namespace AtomicWar._Game.Shelter
                 // Generic degradation fallback if ModuleId matches air_filtration without explicit SO instance
                 if (ModuleId == "air_filtration")
                 {
-                    FilterHealth = Mathf.Max(0f, FilterHealth - 2f * gameHours);
+                    FilterHealth = Mathf.Max(0f, FilterHealth - 2f * gameHours * resourceConsumptionMultiplier);
                 }
                 else if (ModuleId == "heater" && Fuel > 0f)
                 {
-                    Fuel = Mathf.Max(0f, Fuel - 1f * gameHours * EffectiveFuelBurnMultiplier);
+                    Fuel = Mathf.Max(0f, Fuel - 1f * gameHours * EffectiveFuelBurnMultiplier
+                        * resourceConsumptionMultiplier);
                 }
                 else if (ModuleId == "grow_light" && Fuel > 0f)
                 {

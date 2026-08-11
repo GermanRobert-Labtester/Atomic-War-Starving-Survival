@@ -32,6 +32,7 @@ namespace AtomicWar._Game.AI.Actions
         public override float EvaluateRaw(AIContext context)
         {
             if (context?.Survivor == null) return 0f;
+            if (context.BunkerRationsScheduled) return 0f;
             // Comatose survivors cannot self-feed
             if (context.MedicalSystem != null && context.MedicalSystem.IsComatose(context.Survivor))
                 return 0f;

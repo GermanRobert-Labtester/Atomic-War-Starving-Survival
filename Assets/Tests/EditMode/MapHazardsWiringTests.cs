@@ -9,6 +9,8 @@ using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using ShelterClass = AtomicWar._Game.Shelter.Shelter;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar.Tests.EditMode
 {
     /// <summary>

@@ -19,6 +19,8 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 
+using AtomicWar._Game.Encounters;
+
 namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
@@ -38,6 +40,7 @@ namespace AtomicWar._Game.Core
                 map: null,
                 radiation: RadiationSystem);
             FactionRaidPlanSystem.OnInterceptOffered += HandleRaidPlanInterceptOffered;
+            _subscriptions.Track(() => FactionRaidPlanSystem.OnInterceptOffered -= HandleRaidPlanInterceptOffered);
 
             _onWorldPhaseChanged = phase =>
             {
@@ -102,6 +105,12 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetKnowledgeMap(KnowledgeMap);
             SaveSystem.SetGeneratedMap(GeneratedMap);
             SaveSystem.SetInventory(Inventory);
+            SaveSystem.SetOverflowStash(OverflowStash);
+            SaveSystem.SetBunkerRationingSystem(BunkerRationingSystem);
+            SaveSystem.SetBunkerMaintenanceSystem(BunkerMaintenanceSystem);
+            SaveSystem.SetRepairWorkOrderSystem(RepairWorkOrderSystem);
+            SaveSystem.SetSurvivorWorkShiftSystem(SurvivorWorkShiftSystem);
+            SaveSystem.SetSurvivorTaskBoardSystem(SurvivorTaskBoardSystem);
             SaveSystem.SetMedicalSystem(MedicalSystem);
             SaveSystem.SetBloodTransfusionSystem(BloodTransfusion);
             SaveSystem.SetAmputationSystem(AmputationSystem);
@@ -125,6 +134,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetDiseaseExpansionSystem(DiseaseExpansion);
             SaveSystem.SetDynamicScapegoatSystem(Scapegoat);
             SaveSystem.SetIronManMode(IronMan);
+            SaveSystem.SetEndgameEngine(EndgameEngine);
             SaveSystem.SetAndroidNpcSystem(AndroidNpcs);
             SaveSystem.SetSheriffRoleSystem(Sheriff);
             SaveSystem.SetScenarioGenSystem(ScenarioGen);
@@ -534,9 +544,18 @@ namespace AtomicWar._Game.Core
             ScavengingSystem = new LocationScavengingSystem(
                 RadiationSystem, Inventory, _itemCatalog, _worldSeed,
                 KnowledgeMap, () => TimeSystem.CurrentDay,
-                _lootTable, () => WorldPhaseSystem.CurrentPhase);
-            ScavengingSystem.OnSurveyCompleted += (mission, success) => RefreshMapKnowledgeHUD();
-            ScavengingSystem.OnMissionCompleted += (mission, loot) => RefreshMapKnowledgeHUD();
+                _lootTable, () => WorldPhaseSystem.CurrentPhase, OverflowStash);
+            Action<ActiveMission, bool> onSurveyCompleted = (mission, success) => RefreshMapKnowledgeHUD();
+            ScavengingSystem.OnSurveyCompleted += onSurveyCompleted;
+            _subscriptions.Track(() => ScavengingSystem.OnSurveyCompleted -= onSurveyCompleted);
+
+            Action<ActiveMission, List<ItemDefinition>> onScavengeMissionCompleted = (mission, loot) =>
+            {
+                RefreshMapKnowledgeHUD();
+                RefreshInventoryStrip();
+            };
+            ScavengingSystem.OnMissionCompleted += onScavengeMissionCompleted;
+            _subscriptions.Track(() => ScavengingSystem.OnMissionCompleted -= onScavengeMissionCompleted);
 
             // Expedition Engine (node-based events, stances, stamina drain, push-your-luck)
             // Wired with the MedicalSystem so the Day-30 flashpoint intercept
@@ -583,6 +602,24 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetBlackRainHazardSystem(BlackRainHazardSystem);
             SaveSystem.SetClothingSystem(ClothingSystem);
 
+            // Audit H-2: SpatialPsychologySystem.OnExpeditionStarted/Ended were only
+            // ever called by tests, so Survivor.IsOnExpedition never reflected reality
+            // in production (Claustrophobia/Agoraphobia traits and ActionScorer's
+            // inBunker check were silently inert). Wire them to the real lifecycle.
+            Action<ExpeditionState> onExpeditionStarted = state =>
+                SpatialPsychology?.OnExpeditionStarted(state?.Survivor);
+            ExpeditionSystem.OnExpeditionStarted += onExpeditionStarted;
+            _subscriptions.Track(() => ExpeditionSystem.OnExpeditionStarted -= onExpeditionStarted);
+
+            Action<ExpeditionState, List<ItemDefinition>> onExpeditionCompleted = (state, _) =>
+                SpatialPsychology?.OnExpeditionEnded(state?.Survivor);
+            ExpeditionSystem.OnExpeditionCompleted += onExpeditionCompleted;
+            _subscriptions.Track(() => ExpeditionSystem.OnExpeditionCompleted -= onExpeditionCompleted);
+
+            Action<ExpeditionState, string> onExpeditionFailed = (state, _) =>
+                SpatialPsychology?.OnExpeditionEnded(state?.Survivor);
+            ExpeditionSystem.OnExpeditionFailed += onExpeditionFailed;
+            _subscriptions.Track(() => ExpeditionSystem.OnExpeditionFailed -= onExpeditionFailed);
         }
 
         /// <summary>Sabotaged caches, shifting hotspots, hatch entrapment, and the second bulk ISaveable block.</summary>
@@ -621,16 +658,18 @@ namespace AtomicWar._Game.Core
             // The copied data logger is what the forecast bonus actually reads.
             WeatherSystem?.BindStationForecast(() => WeatherStation.GetForecastBonusDays());
 
-            ExpeditionSystem.OnSabotagedCacheDetected += (exp, msg) =>
+            Action<ExpeditionState, string> onSabotagedCacheDetected = (exp, msg) =>
             {
                 GameLog.Log($"[Sabotaged Cache] Detected by {exp?.Survivor?.DisplayName}: {msg}");
             };
+            ExpeditionSystem.OnSabotagedCacheDetected += onSabotagedCacheDetected;
+            _subscriptions.Track(() => ExpeditionSystem.OnSabotagedCacheDetected -= onSabotagedCacheDetected);
 
             // Prompt #14 — post-Day-30 windstorms move death-zone rad two path-hops.
             ShiftingHotspotSystem = new ShiftingHotspotSystem(new System.Random(_worldSeed + 20));
             ShiftingHotspotSystem.Bind(GeneratedMap, KnowledgeMap);
             SaveSystem.SetShiftingHotspotSystem(ShiftingHotspotSystem);
-            ShiftingHotspotSystem.OnHotspotShifted += shift =>
+            Action<HotspotShiftResult> onHotspotShifted = shift =>
             {
                 if (shift == null) return;
                 GameLog.Log(
@@ -639,18 +678,23 @@ namespace AtomicWar._Game.Core
                     $"(moved {shift.MovedRad:F0} rad/hr)");
                 RefreshMapKnowledgeHUD();
             };
+            ShiftingHotspotSystem.OnHotspotShifted += onHotspotShifted;
+            _subscriptions.Track(() => ShiftingHotspotSystem.OnHotspotShifted -= onHotspotShifted);
 
             // Prompt #48 — weather buries/freezes the hatch after 72 continuous
             // hours of Blizzard/FalloutStorm; DigOut spikes entry CO2; broken
             // air filter while sealed starts suffocation countdown.
             HatchEntrapmentSystem = new HatchEntrapmentSystem();
             _entryRoom = new ShelterRoom(HatchEntrapmentSystem.EntryRoomId, null);
-            HatchEntrapmentSystem.OnHatchStateChanged += (prev, next) =>
+            Action<HatchState, HatchState> onHatchStateChanged = (prev, next) =>
             {
                 SyncHatchExpeditionLock();
                 GameLog.Log($"[Hatch Entrapment] HatchState {prev} → {next}");
             };
-            HatchEntrapmentSystem.OnBuriedAliveTriggered += () =>
+            HatchEntrapmentSystem.OnHatchStateChanged += onHatchStateChanged;
+            _subscriptions.Track(() => HatchEntrapmentSystem.OnHatchStateChanged -= onHatchStateChanged);
+
+            Action onBuriedAliveTriggered = () =>
             {
                 // Present the Buried Alive event immediately when the seal lands.
                 if (EventRunner == null) return;
@@ -661,6 +705,8 @@ namespace AtomicWar._Game.Core
                 if (buried != null && buried.CanTrigger(ctx))
                     EventRunner.Run(buried, ctx);
             };
+            HatchEntrapmentSystem.OnBuriedAliveTriggered += onBuriedAliveTriggered;
+            _subscriptions.Track(() => HatchEntrapmentSystem.OnBuriedAliveTriggered -= onBuriedAliveTriggered);
             SaveSystem.SetHatchEntrapment(HatchEntrapmentSystem);
             SaveSystem.SetChildDependentSystem(ChildSystem);
             SaveSystem.SetStructuralIntegritySystem(StructuralIntegrity);
@@ -750,6 +796,8 @@ namespace AtomicWar._Game.Core
             WireExpeditionPerkBindings();
             WireSocialPerkBindings();
             WirePersonalQuestBindings();
+            // Prompts #319–#325 — Section XI new recipes (10 additions).
+            BootNewRecipes();
             SyncHatchExpeditionLock();
 
             // ───────────────────────────────────────────────────────────
@@ -773,6 +821,12 @@ namespace AtomicWar._Game.Core
             CorpseSystem.SetItemDefinitions(
                 CorpseManagementSystem.CreateCorpseDefinition(),
                 CorpseManagementSystem.CreateFertilizerDefinition());
+            // Audit H-5: ProcessForParts() fell back to ad-hoc, uncataloged
+            // ItemDefinitions via EnsureBonesDef/EnsureMeatDef when these were
+            // never set. Register the real ones, same as corpse/fertilizer above.
+            CorpseSystem.SetButcherYieldDefinitions(
+                CorpseManagementSystem.CreateBonesDefinition(),
+                CorpseManagementSystem.CreateMeatDefinition());
             CorpseSystem.SetStoresRoom(_storesRoom);
             CorpseSystem.SetSurvivorProvider(() => Survivors);
             // Prompt #188 — Desensitized: no corpse morale drain
@@ -803,14 +857,18 @@ namespace AtomicWar._Game.Core
             // through the EventRunner, then forward the choice back via
             // HatchDilemmaResolvedSignal (which the ExpeditionSystem listens to).
             ExpeditionSystem.OnHatchDilemmaReady += OnHatchDilemmaReady_Handle;
+            _subscriptions.Track(() => ExpeditionSystem.OnHatchDilemmaReady -= OnHatchDilemmaReady_Handle);
             if (Inventory != null)
             {
                 Inventory.OnInventoryChanged += RefreshMapKnowledgeHUD;
+                _subscriptions.Track(() => Inventory.OnInventoryChanged -= RefreshMapKnowledgeHUD);
                 Inventory.OnInventoryChanged += RefreshInventoryStrip;
+                _subscriptions.Track(() => Inventory.OnInventoryChanged -= RefreshInventoryStrip);
             }
             if (KnowledgeMap != null)
             {
                 KnowledgeMap.OnKnowledgeChanged += RefreshMapKnowledgeHUD;
+                _subscriptions.Track(() => KnowledgeMap.OnKnowledgeChanged -= RefreshMapKnowledgeHUD);
             }
 
         }
@@ -851,8 +909,10 @@ namespace AtomicWar._Game.Core
             if (HatchDefenseSystem == null || PetGuardDog == null) return;
 
             HatchDefenseSystem.TryAlertGuardDog = () => PetGuardDog.Alert("bunker");
-            PetGuardDog.OnDogAlerted += (shelterId, canFight) =>
+            Action<string, bool> onDogAlerted = (shelterId, canFight) =>
                 GameLog.Log($"[GameBootstrap] Guard dog alert at '{shelterId}' canFight={canFight}");
+            PetGuardDog.OnDogAlerted += onDogAlerted;
+            _subscriptions.Track(() => PetGuardDog.OnDogAlerted -= onDogAlerted);
         }
 
         /// <summary>REPROMOTE-Weapon-001 — mounted HMG stock contributes via GetWeaponPower.</summary>
@@ -894,7 +954,7 @@ namespace AtomicWar._Game.Core
         {
             if (HatchDefenseSystem == null) return;
 
-            HatchDefenseSystem.OnRaidResolved += result =>
+            Action<RaidResolution> onHatchRaidResolved = result =>
             {
                 if (result.AmmoConsumed > 0)
                     EpilogueStats?.RecordBulletsFired(result.AmmoConsumed);
@@ -902,6 +962,8 @@ namespace AtomicWar._Game.Core
                 if (result.AmmoConsumed >= 10)
                     AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategySnipers);
             };
+            HatchDefenseSystem.OnRaidResolved += onHatchRaidResolved;
+            _subscriptions.Track(() => HatchDefenseSystem.OnRaidResolved -= onHatchRaidResolved);
         }
 
         /// <summary>
@@ -912,11 +974,13 @@ namespace AtomicWar._Game.Core
         {
             if (PerimeterTrapSystem != null)
             {
-                PerimeterTrapSystem.OnTrapDeployed += () =>
+                Action onTrapDeployed = () =>
                     AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
+                PerimeterTrapSystem.OnTrapDeployed += onTrapDeployed;
+                _subscriptions.Track(() => PerimeterTrapSystem.OnTrapDeployed -= onTrapDeployed);
             }
 
-            CombatPerks.OnMilestoneProgress += (sv, key, value) =>
+            Action<Survivor, string, int> onCombatMilestoneProgress = (sv, key, value) =>
             {
                 if (string.IsNullOrEmpty(key)) return;
                 if (string.Equals(key, "stealth_kills", StringComparison.Ordinal))
@@ -926,6 +990,8 @@ namespace AtomicWar._Game.Core
                 else if (string.Equals(key, "traps_deployed", StringComparison.Ordinal))
                     AdaptiveWarlords?.RecordStrategy(System_AdaptiveWarlords.StrategyTraps);
             };
+            CombatPerks.OnMilestoneProgress += onCombatMilestoneProgress;
+            _subscriptions.Track(() => CombatPerks.OnMilestoneProgress -= onCombatMilestoneProgress);
         }
 
         /// <summary>Prompt #174 / #182 — jam during hatch defense uses WeaponMaintenance clear ticks.</summary>
@@ -1038,6 +1104,7 @@ namespace AtomicWar._Game.Core
                     logHud.SetLines(ExpeditionEncounterLog.Lines);
                     ExpeditionEncounterLog.OnLineAdded -= logHud.Push;
                     ExpeditionEncounterLog.OnLineAdded += logHud.Push;
+                    _subscriptions.Track(() => ExpeditionEncounterLog.OnLineAdded -= logHud.Push);
                 }
 
                 _hud.EnsureDiegeticHud();
@@ -1048,6 +1115,15 @@ namespace AtomicWar._Game.Core
             {
                 ExpeditionSystem.OnEncounterResolved -= OnExpeditionEncounterResolved_LogCombat;
                 ExpeditionSystem.OnEncounterResolved += OnExpeditionEncounterResolved_LogCombat;
+                _subscriptions.Track(() => ExpeditionSystem.OnEncounterResolved -= OnExpeditionEncounterResolved_LogCombat);
+                // Audit H-6h: OnEncounterTriggered had zero subscribers anywhere — the
+                // "Silent pass" / "no Hostile Encounter UI" comments in ExpeditionSystem.Ops.cs
+                // were written against a beat nothing ever surfaced, so every expedition
+                // encounter (loud or silent) only ever showed up after the fact, as the
+                // resolved outcome line.
+                ExpeditionSystem.OnEncounterTriggered -= OnExpeditionEncounterTriggered_LogCombat;
+                ExpeditionSystem.OnEncounterTriggered += OnExpeditionEncounterTriggered_LogCombat;
+                _subscriptions.Track(() => ExpeditionSystem.OnEncounterTriggered -= OnExpeditionEncounterTriggered_LogCombat);
             }
 
             // REPROMOTE-Encounter-001 — map/SO roadblock tags → class ResolveChoice.
@@ -1070,6 +1146,18 @@ namespace AtomicWar._Game.Core
             // ecosystem advanced and saved a mutation stage nothing could ever read.
             if (ExpeditionSystem != null && EcosystemSystem != null)
                 ExpeditionSystem.BindEcosystem(EcosystemSystem);
+        }
+
+        private void OnExpeditionEncounterTriggered_LogCombat(ExpeditionState exp, EncounterSO selected)
+        {
+            if (ExpeditionEncounterLog == null || selected == null) return;
+            string who = exp?.Survivor != null
+                ? (exp.Survivor.DisplayName ?? exp.Survivor.Id)
+                : "Scavenger";
+            string enc = !string.IsNullOrEmpty(selected.title)
+                ? selected.title
+                : (selected.id ?? "contact").Replace('_', ' ');
+            ExpeditionEncounterLog.Add($"{who} encounters {enc}...");
         }
 
         private void OnExpeditionEncounterResolved_LogCombat(
@@ -1109,7 +1197,9 @@ namespace AtomicWar._Game.Core
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             CookingSystem.SetMealDefinition(CookingSystem.CreateCookedMealDefinition());
             // Prompt #768 — epilogue meal tally.
-            CookingSystem.OnMealCooked += (_, __) => EpilogueStats?.RecordMealCooked(1);
+            Action<Survivor, bool> onMealCooked = (_, __) => EpilogueStats?.RecordMealCooked(1);
+            CookingSystem.OnMealCooked += onMealCooked;
+            _subscriptions.Track(() => CookingSystem.OnMealCooked -= onMealCooked);
             SaveSystem?.SetCookingSystem(CookingSystem);
 
             CraftingSystem?.BindSurvivalPerks(
@@ -1124,12 +1214,14 @@ namespace AtomicWar._Game.Core
             // Prompt #190 — gastric illness recoveries grant Iron Stomach
             if (MedicalSystem != null)
             {
-                MedicalSystem.OnAfflictionCured += (sv, active) =>
+                Action<Survivor, ActiveAffliction> onAfflictionCured = (sv, active) =>
                 {
                     if (active == null) return;
                     int day = TimeSystem != null ? TimeSystem.CurrentDay : 0;
                     SurvivalPerks.RecordIllnessRecovery(sv, active.AfflictionId, day);
                 };
+                MedicalSystem.OnAfflictionCured += onAfflictionCured;
+                _subscriptions.Track(() => MedicalSystem.OnAfflictionCured -= onAfflictionCured);
             }
         }
 
@@ -1319,25 +1411,33 @@ namespace AtomicWar._Game.Core
                 };
             }
 
-            PersonalQuests.OnCharacterEvolution += (sv, traitId, display) =>
+            Action<Survivor, string, string> onCharacterEvolution = (sv, traitId, display) =>
             {
                 string name = sv != null ? sv.DisplayName : "?";
                 GameLog.Log(
                     "CharacterEvolution",
                     $"{name} unlocked latent expert trait: {display} ({traitId})");
             };
-            PersonalQuests.OnMapNodeSpawnRequested += (nodeId, ownerId) =>
+            PersonalQuests.OnCharacterEvolution += onCharacterEvolution;
+            _subscriptions.Track(() => PersonalQuests.OnCharacterEvolution -= onCharacterEvolution);
+
+            Action<string, string> onMapNodeSpawnRequested = (nodeId, ownerId) =>
             {
                 GameLog.Log(
                     "PersonalQuest",
                     $"Map node requested: {nodeId} for survivor {ownerId}");
             };
-            PersonalQuests.OnBunkerEventRequested += (eventId, ownerId) =>
+            PersonalQuests.OnMapNodeSpawnRequested += onMapNodeSpawnRequested;
+            _subscriptions.Track(() => PersonalQuests.OnMapNodeSpawnRequested -= onMapNodeSpawnRequested);
+
+            Action<string, string> onBunkerEventRequested = (eventId, ownerId) =>
             {
                 GameLog.Log(
                     "PersonalQuest",
                     $"Bunker event requested: {eventId} for survivor {ownerId}");
             };
+            PersonalQuests.OnBunkerEventRequested += onBunkerEventRequested;
+            _subscriptions.Track(() => PersonalQuests.OnBunkerEventRequested -= onBunkerEventRequested);
         }
 
     }

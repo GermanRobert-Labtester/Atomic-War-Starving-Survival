@@ -75,8 +75,12 @@ namespace AtomicWar._Game.Core
                 inventory: Inventory,
                 radioState: RadioTunerSystem?.State);
             if (HatchEntrapmentSystem != null)
+            {
                 HatchEntrapmentSystem.OnFactionRescueApplied += HandleFactionRescueApplied_ScheduleDebt;
+                _subscriptions.Track(() => HatchEntrapmentSystem.OnFactionRescueApplied -= HandleFactionRescueApplied_ScheduleDebt);
+            }
             DebtCollectorSystem.OnCollectorArrived += HandleDebtCollectorArrived;
+            _subscriptions.Track(() => DebtCollectorSystem.OnCollectorArrived -= HandleDebtCollectorArrived);
             SaveSystem.SetDebtCollectorSystem(DebtCollectorSystem);
         }
 
@@ -108,12 +112,14 @@ namespace AtomicWar._Game.Core
                 endgame: EndgameEngine,
                 victory: VictoryProject);
             LifeboatTransmissionSystem.OnContactOffered += HandleLifeboatContactOffered;
+            _subscriptions.Track(() => LifeboatTransmissionSystem.OnContactOffered -= HandleLifeboatContactOffered);
             SaveSystem.SetLifeboatTransmissionSystem(LifeboatTransmissionSystem);
         }
 
         private void WireRadioIntelExtraction()
         {
             RadioTunerSystem.OnIntelExtracted += HandleIntelExtracted;
+            _subscriptions.Track(() => RadioTunerSystem.OnIntelExtracted -= HandleIntelExtracted);
         }
 
         private void HandleIntelExtracted(IntelNode intel)
@@ -132,13 +138,27 @@ namespace AtomicWar._Game.Core
         {
             // Prompt #46 — Radio-triggered GameEvents when a survivor is at the radio.
             RadioSystem.OnBroadcastStarted += HandleRadioBroadcastTrigger;
+            _subscriptions.Track(() => RadioSystem.OnBroadcastStarted -= HandleRadioBroadcastTrigger);
             EventRunner.OnChoiceApplied += HandleSafeHavenChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleSafeHavenChoiceApplied);
             EventRunner.OnChoiceApplied += HandleBloodForWaterChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleBloodForWaterChoiceApplied);
             EventRunner.OnChoiceApplied += HandleHatchEntrapmentChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleHatchEntrapmentChoiceApplied);
             EventRunner.OnChoiceApplied += HandleChildFoundChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleChildFoundChoiceApplied);
             EventRunner.OnChoiceApplied += HandleRaidPlanChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleRaidPlanChoiceApplied);
             EventRunner.OnChoiceApplied += HandleDebtCollectorChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleDebtCollectorChoiceApplied);
             EventRunner.OnChoiceApplied += HandleLifeboatChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleLifeboatChoiceApplied);
+            // Audit H-6g: feeds "shelter_co_leak" choice outcomes into The Canary questline.
+            EventRunner.OnChoiceApplied += HandleCOLeakChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleCOLeakChoiceApplied);
+            // Audit H-6g: resolves the mutiny standoff GameEvent's negotiate/yield/execute choices.
+            EventRunner.OnChoiceApplied += HandleMutinyChoiceApplied;
+            _subscriptions.Track(() => EventRunner.OnChoiceApplied -= HandleMutinyChoiceApplied);
         }
 
         private void WireRadioDayTickAndCaches()

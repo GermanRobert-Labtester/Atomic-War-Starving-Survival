@@ -30,22 +30,20 @@ namespace AtomicWar._Game.Core
 
             int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
 
-            // Primary dispatch: SystemRegistry owns hour + day-gated system ticks.
-            // Previously TickSystems duplicated a subset of registrations and never
-            // called TickAll — so bunker_social, personal quests, chemistry/titles,
-            // rebuilders, and other registry-only systems never advanced (AUDIT-008).
-            if (_registry != null)
-            {
-                _registry.TickAll(gameHours, currentDay);
-                TickHostSideEffectsAfterRegistry(gameHours);
-            }
-            else
-            {
-                // Fallback for partial test hosts that skip RegisterSystemsInRegistry.
-                TickEnvironmentAndHatch(gameHours);
-                TickNeedsMedicalAndPsyche(gameHours);
-                TickRadiationWaterAndCraft(gameHours);
-            }
+            // SystemRegistry owns hour + day-gated system ticks. _registry is
+            // constructed unconditionally in InitFoundation(), so this is only
+            // null for a test host that skipped init entirely — same guard
+            // RegisterSystemsInRegistry() and DisposeSubscriptions() use.
+            //
+            // H-8: this used to fall back to a second, hand-maintained copy of
+            // the tick list when _registry was null. That path was unreachable
+            // in practice (see above) but still had to be kept in sync by hand;
+            // it had already drifted once (AUDIT-008: bunker_social, personal
+            // quests, chemistry/titles, rebuilders were missing from it). Removed
+            // rather than fixed, since there is nothing that legitimately reaches it.
+            if (_registry == null) return;
+            _registry.TickAll(gameHours, currentDay);
+            TickHostSideEffectsAfterRegistry(gameHours);
 
             TickAiWave(gameHours);
             TickEventsAndJournal(gameHours);
@@ -70,105 +68,10 @@ namespace AtomicWar._Game.Core
             EconomySystem?.NotifyPartyRadiationChanged();
         }
 
-        private void TickEnvironmentAndHatch(float gameHours)
-        {
-            int currentDay = TimeSystem != null ? TimeSystem.CurrentDay : 1;
-
-            TickWeatherShelterPower(gameHours, currentDay);
-            TickStructuralWasteAndVermin(gameHours, currentDay);
-            TickFactionAndWorldSideSystems(gameHours, currentDay);
-            TickHouseEcosystemAndTactical(gameHours, currentDay);
-            TickClothing(gameHours);
-        }
-
-        private void TickWeatherShelterPower(float gameHours, int currentDay)
-        {
-            WeatherSystem.Tick(gameHours);
-            TemperatureSystem.Tick(gameHours);
-            PhotoperiodSystem.Tick(gameHours);
-
-            // Prompt #48 — continuous extreme weather seals the hatch.
-            if (HatchEntrapmentSystem != null && WeatherSystem != null)
-            {
-                HatchEntrapmentSystem.Tick(
-                    gameHours,
-                    WeatherSystem.Current,
-                    Shelter,
-                    _getFactionTrustEffective,
-                    _scheduleEventCached,
-                    currentDay);
-                SyncHatchExpeditionLock();
-            }
-
-            Shelter.Tick(gameHours);
-
-            if (PowerNetwork != null)
-            {
-                string weatherName = WeatherSystem != null
-                    ? WeatherNameOf(WeatherSystem.Current)
-                    : null;
-                PowerNetwork.Tick(gameHours, weatherName, _tryApplyPedalCostCached);
-                PowerNetwork.ApplyToShelter(Shelter);
-            }
-
-            HatchDefenseSystem?.Tick(gameHours, PowerNetwork);
-
-            // Prompt #205 — Death's Door timer; expired → true death.
-            if (MedicalPerks != null && NeedsSystem != null)
-            {
-                MedicalPerks.TickDeathsDoor(
-                    gameHours,
-                    Survivors,
-                    forceDeath: sv => NeedsSystem.ForceDeath(sv));
-            }
-
-            // Prompt #197 — HVAC Tech passive ventilation buff while tech is in bunker.
-            if (AtmosphereSystem != null)
-            {
-                if (ShelterPerks != null)
-                    AtmosphereSystem.VentilationClearMultiplier =
-                        ShelterPerks.GetVentilationClearMultiplier(Survivors);
-                AtmosphereSystem.Tick(gameHours, PowerNetwork, Shelter);
-            }
-            TickHazardMethaneFromShelterAir(gameHours);
-
-            CorpseSystem?.Tick(gameHours, Survivors);
-            PantrySystem?.Tick(gameHours, _storesRoom);
-        }
-
         private void TickHazardMethaneFromShelterAir(float gameHours)
         {
             if (HazardMethane == null || Shelter == null) return;
             HazardMethane.Tick(gameHours, Shelter.AirQuality);
-        }
-
-        private void TickStructuralWasteAndVermin(float gameHours, int currentDay)
-        {
-            // Prompt #49 — structural integrity dust leaks + cave-in checks.
-            if (StructuralIntegrity != null && WeatherSystem != null)
-            {
-                var weather = WeatherSystem.Current;
-                if (weather == WeatherKind.FalloutStorm)
-                {
-                    StructuralIntegrity.ApplyDamage(
-                        StructuralIntegritySystem.FalloutStormDamagePerHour * gameHours,
-                        "fallout_storm");
-                }
-                else if (weather == WeatherKind.Blizzard && WorldPhaseSystem != null
-                    && WorldPhaseSystem.CurrentPhase == AtomicWar._Game.Survivors.WorldPhase.CivilWar)
-                {
-                    StructuralIntegrity.ApplyDamage(
-                        StructuralIntegritySystem.MortarStrikeDamage * 0.3f * gameHours,
-                        "mortar_strike");
-                }
-                StructuralIntegrity.Tick(gameHours, Shelter);
-            }
-
-            WasteSystem?.Tick(gameHours, currentDay);
-            VerminSystem?.Tick(gameHours, Inventory);
-            JuryRigSystem?.Tick(gameHours, currentDay);
-            FreezePipeSystem?.Tick(gameHours);
-            TickCompost(gameHours);
         }
 
         /// <summary>
@@ -189,74 +92,6 @@ namespace AtomicWar._Game.Core
                     room = Shelter.Rooms[0];
             }
             CompostSystem.Tick(gameHours, room);
-        }
-
-        private void TickFactionAndWorldSideSystems(float gameHours, int currentDay)
-        {
-            TrackerSystem?.Tick(gameHours,
-                setFactionRaidChance: (factionId, chance) =>
-                    HatchDefenseSystem?.SetRaidChanceOverride(factionId, chance),
-                scheduleEvent: (eventId, fireDay, originFlag) =>
-                    EventRunner?.ScheduleEvent(eventId, fireDay, originFlag),
-                currentDay: currentDay);
-
-            DeadDropSystem?.Tick(gameHours);
-            HostageSystem?.Tick(gameHours);
-            PropagandaSystem?.Tick(gameHours,
-                modifyFactionTrust: (fid, delta) => EconomySystem?.ModifyTrust(fid, delta),
-                reduceRaidChance: (fid, reduction) =>
-                    HatchDefenseSystem?.AdjustRaidChance(fid, -reduction));
-
-            // Prompt #75 — spy sabotage countdown (daily).
-            if (DeserterSystem != null && TimeSystem != null && _lastDeserterDay != currentDay)
-            {
-                _lastDeserterDay = currentDay;
-                DeserterSystem.TickDaily(Shelter,
-                    scheduleEvent: eventId =>
-                        EventRunner?.ScheduleEvent(eventId, currentDay + 1, null));
-            }
-
-            ScapegoatSystem?.Tick(gameHours, WeatherSystem.Current,
-                scheduleEvent: (eventId, fireDay, flag) =>
-                    EventRunner?.ScheduleEvent(eventId, fireDay, flag),
-                currentDay: currentDay);
-        }
-
-        private void TickHouseEcosystemAndTactical(float gameHours, int currentDay)
-        {
-            if (EcosystemSystem != null && TimeSystem != null && _lastEcosystemDay != currentDay)
-            {
-                _lastEcosystemDay = currentDay;
-                float outdoorRad = RadiationSystem != null ? 15f : 0f;
-                bool exchangeTriggered = WorldPhaseSystem != null
-                    && WorldPhaseSystem.HasTriggeredExchange;
-                EcosystemSystem.TickDaily(outdoorRad, exchangeTriggered);
-            }
-
-            TickHouseToBunkerDaily(currentDay);
-
-            bool preDay30 = WorldPhaseSystem != null && !WorldPhaseSystem.HasTriggeredExchange;
-            FloodingSystem?.Tick(gameHours, WeatherSystem.Current == WeatherKind.Rain, preDay30, Shelter,
-                roomId => roomId == "cellar" || roomId == "coal_room");
-            PerimeterTrapSystem?.Tick(gameHours);
-            // #268 Restless night pacing: host night gate via TimeSystem hour.
-            bool isNight = TimeSystem != null
-                && (TimeSystem.CurrentHour < 6 || TimeSystem.CurrentHour >= 22);
-            if (NoiseSystem != null)
-            {
-                if (isNight)
-                    NoiseSystem.TickPersonalQuestNoise(gameHours, isNight: true);
-                else
-                    NoiseSystem.Tick(gameHours);
-            }
-            if (HatchVisibilitySystem != null && TimeSystem != null && _lastHatchVisDay != currentDay)
-            {
-                _lastHatchVisDay = currentDay;
-                HatchVisibilitySystem.TickDaily();
-            }
-
-            if (TimeSystem != null && _systemWiring != null)
-                _systemWiring.WireDaily(BuildDailyWiringContext(currentDay));
         }
 
         private void TickHouseToBunkerDaily(int currentDay)

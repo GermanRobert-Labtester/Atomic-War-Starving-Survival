@@ -2,6 +2,7 @@ using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
+using AtomicWar._Game.Environment;
 
 namespace AtomicWar.Tests.EditMode
 {

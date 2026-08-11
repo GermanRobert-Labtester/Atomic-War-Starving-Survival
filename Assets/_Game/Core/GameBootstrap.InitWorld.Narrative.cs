@@ -52,14 +52,19 @@ namespace AtomicWar._Game.Core
             {
                 GameLog.Log("[Phantom Intruder] Weapon fired at the hatch door!");
             };
-            PhantomIntruders.OnPhantomIntruderTriggered += paranoid =>
+            Action<Survivor> onPhantomIntruderTriggered = paranoid =>
             {
                 GameLog.Log($"[Phantom Intruder] {paranoid.DisplayName} sees a Hatch Breach that isn't there!");
             };
-            PhantomIntruders.OnPhantomIntruderResolved += paranoid =>
+            PhantomIntruders.OnPhantomIntruderTriggered += onPhantomIntruderTriggered;
+            _subscriptions.Track(() => PhantomIntruders.OnPhantomIntruderTriggered -= onPhantomIntruderTriggered);
+
+            Action<Survivor> onPhantomIntruderResolved = paranoid =>
             {
                 GameLog.Log($"[Phantom Intruder] {paranoid.DisplayName} realizes nothing was out there.");
             };
+            PhantomIntruders.OnPhantomIntruderResolved += onPhantomIntruderResolved;
+            _subscriptions.Track(() => PhantomIntruders.OnPhantomIntruderResolved -= onPhantomIntruderResolved);
 
             // ───────────────────────────────────────────────────────────
             // Prompt #9 — The Child Dependent System
@@ -78,7 +83,7 @@ namespace AtomicWar._Game.Core
                 var waterItem = _itemCatalog.GetById("clean_water");
                 if (waterItem != null) Inventory.Remove(waterItem, Mathf.CeilToInt(water / 20f));
             };
-            ChildSystem.OnChildFound += child =>
+            Action<Survivor> onChildFound = child =>
             {
                 if (Survivors != null)
                 {
@@ -87,12 +92,17 @@ namespace AtomicWar._Game.Core
                 }
                 GameLog.Log("[Child] The child has been found and brought into the bunker. Hope rises.");
             };
-            ChildSystem.OnChildDied += _ =>
+            ChildSystem.OnChildFound += onChildFound;
+            _subscriptions.Track(() => ChildSystem.OnChildFound -= onChildFound);
+
+            Action<Survivor> onChildDied = _ =>
             {
                 GameLog.Log("[Child] The child has died. The bunker's hope shatters.");
                 if (SaveSystem != null)
                     SaveSystem.SetWorldFlag(ChildDependentSystem.ChildDiedFlag, true);
             };
+            ChildSystem.OnChildDied += onChildDied;
+            _subscriptions.Track(() => ChildSystem.OnChildDied -= onChildDied);
 
             // ───────────────────────────────────────────────────────────
         

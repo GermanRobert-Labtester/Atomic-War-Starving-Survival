@@ -47,6 +47,18 @@ namespace AtomicWar._Game.AI
             return list;
         }
 
+        /// <summary>Non-allocating existence check for the AI scoring hot path (PhantomActionSO.EvaluateRaw).</summary>
+        public bool HasActivePhantom(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId)) return false;
+            for (int i = 0; i < _activePhantoms.Count; i++)
+            {
+                if (_activePhantoms[i].TargetSurvivorId == survivorId)
+                    return true;
+            }
+            return false;
+        }
+
         public void Tick(float gameHours, IReadOnlyList<Survivor> survivors, System.Random rng)
         {
             if (gameHours <= 0f || survivors == null) return;

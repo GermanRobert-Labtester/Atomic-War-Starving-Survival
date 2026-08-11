@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.Core
 {

@@ -103,7 +103,26 @@ namespace AtomicWar.Tests.EditMode
                 "winter_coat", "work_boots", "wool_blanket", "improvised_rollup_bed",
                 "woolbed", "advanced_heating_bed", "wool_gloves",
                 "family_photograph", "cassette_tape", "sealed_government_document",
-                "pistol_cz75_9x19", "pistol_beretta_92_9x19", "pistol_steyr_m9_9x19"
+                "pistol_cz75_9x19", "pistol_beretta_92_9x19", "pistol_steyr_m9_9x19",
+                "pistol_walther_ppk_380acp", "pistol_grand_power_p380_380acp",
+                "pistol_cz52_762x25", "pistol_norinco_type54_762x25", "pistol_zastava_m57_762x25",
+                "smg_m1928a1_thompson_45acp", "smg_hk_ump45_45acp", "smg_kriss_vector_45acp",
+                "pistol_bt_apc45_mini_45acp", "smg_bt_apc45_45acp",
+                "smg_sites_spectre_m4_9x21", "smg_imi_micro_uzi_9x21", "smg_cz_scorpion_evo3_9x21",
+                "smg_steyr_solo_s1_100_765x21", "smg_mp34_765x21",
+                "shotgun_benelli_m4_super90_12ga", "shotgun_remington_model1100_12ga",
+                "shotgun_browning_auto5_16ga", "shotgun_franchi_al48_16ga",
+                "rifle_m4a1_carbine_556x45", "rifle_hk416_556x45", "rifle_fn_scar_l_556x45", "rifle_steyr_aug_a3_556x45",
+                "rifle_ak47_762x39", "rifle_cmmg_mk47_mutant_762x39",
+                "lmg_rpk74_545x39", "rifle_ak74u_545x39",
+                "rifle_fn_fal_762x51", "rifle_hk_g3_762x51",
+                "rifle_q_honey_badger_300blk", "rifle_sig_mcx_rattler_300blk", "rifle_ddm4_pdw_300blk",
+                "pdw_fn_p90_57x28", "carbine_ruger_lc_57x28",
+                "pdw_hk_mp7a2_46x30", "pdw_cmmg_four6_46x30", "pdw_tb_tactical_t7_46x30",
+                "sniper_mosin_nagant_m9031_762x54r", "sniper_svd_dragunov_762x54r", "sniper_romak3_psl_762x54r",
+                "sniper_steyr_ssg08_338lapua", "sniper_sako_trg42_338lapua", "sniper_dsr1_338lapua",
+                "sniper_cheytac_m200_intervention_408cheytac", "sniper_voere_mk_x3_408cheytac", "sniper_voere_mk_x4_408cheytac",
+                "sniper_barrett_m82a1_50bmg"
             };
 
             foreach (var id in required)
@@ -251,6 +270,71 @@ namespace AtomicWar.Tests.EditMode
         {
             // Original ~70 + expanded ~184
             Assert.Greater(Item_WorldCatalog.AllIds().Count, 200);
+        }
+
+        [Test]
+        public void New_Firearms_Registered_With_Weapon_TradeTier()
+        {
+            string[] newGuns =
+            {
+                "pistol_walther_ppk_380acp",
+                "pistol_grand_power_p380_380acp",
+                "pistol_cz52_762x25",
+                "pistol_norinco_type54_762x25",
+                "pistol_zastava_m57_762x25",
+                "smg_m1928a1_thompson_45acp",
+                "smg_hk_ump45_45acp",
+                "smg_kriss_vector_45acp",
+                "pistol_bt_apc45_mini_45acp",
+                "smg_bt_apc45_45acp",
+                "smg_sites_spectre_m4_9x21",
+                "smg_imi_micro_uzi_9x21",
+                "smg_cz_scorpion_evo3_9x21",
+                "smg_steyr_solo_s1_100_765x21",
+                "smg_mp34_765x21",
+                "shotgun_benelli_m4_super90_12ga",
+                "shotgun_remington_model1100_12ga",
+                "shotgun_browning_auto5_16ga",
+                "shotgun_franchi_al48_16ga",
+                "rifle_m4a1_carbine_556x45",
+                "rifle_hk416_556x45",
+                "rifle_fn_scar_l_556x45",
+                "rifle_steyr_aug_a3_556x45",
+                "rifle_ak47_762x39",
+                "rifle_cmmg_mk47_mutant_762x39",
+                "lmg_rpk74_545x39",
+                "rifle_ak74u_545x39",
+                "rifle_fn_fal_762x51",
+                "rifle_hk_g3_762x51",
+                "rifle_q_honey_badger_300blk",
+                "rifle_sig_mcx_rattler_300blk",
+                "rifle_ddm4_pdw_300blk",
+                "pdw_fn_p90_57x28",
+                "carbine_ruger_lc_57x28",
+                "pdw_hk_mp7a2_46x30",
+                "pdw_cmmg_four6_46x30",
+                "pdw_tb_tactical_t7_46x30",
+                "sniper_mosin_nagant_m9031_762x54r",
+                "sniper_svd_dragunov_762x54r",
+                "sniper_romak3_psl_762x54r",
+                "sniper_steyr_ssg08_338lapua",
+                "sniper_sako_trg42_338lapua",
+                "sniper_dsr1_338lapua",
+                "sniper_cheytac_m200_intervention_408cheytac",
+                "sniper_voere_mk_x3_408cheytac",
+                "sniper_voere_mk_x4_408cheytac",
+                "sniper_barrett_m82a1_50bmg"
+            };
+
+            foreach (var gunId in newGuns)
+            {
+                Assert.IsTrue(Item_WorldCatalog.Contains(gunId), "Missing gun: " + gunId);
+                Assert.IsTrue(Item_WorldCatalog.TryGet(gunId, out var def), gunId);
+                Assert.AreEqual(ItemType.Weapon, def.Type, gunId);
+                Assert.AreEqual(ItemTradeTier.Weapon, def.TradeTier, gunId);
+                Assert.Greater(def.TradeValue, 50f, gunId);
+                Assert.IsTrue(def.MilitaryGrade, gunId);
+            }
         }
     }
 }

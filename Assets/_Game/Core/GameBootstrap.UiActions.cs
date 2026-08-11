@@ -155,6 +155,7 @@ namespace AtomicWar._Game.Core
                 SyncJournalBookFromSystem();
                 // Corpse counts / fire rooms / care urgency after atmosphere+inventory restore.
                 RefreshInventoryStrip();
+                SyncScavengeAfterActionHud();
                 return true;
             }
             return false;

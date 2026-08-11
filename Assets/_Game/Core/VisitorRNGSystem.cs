@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Data;
 
+using AtomicWar._Game.Utilities;
+
 namespace AtomicWar._Game.Core
 {
     [Serializable]

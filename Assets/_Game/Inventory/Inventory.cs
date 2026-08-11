@@ -468,7 +468,11 @@ namespace AtomicWar._Game.Inventory
             if (item == null || !item.isEquipable || item.equipSlot == EquipSlot.None) return false;
             if (Count(item) < 1) return false;
 
-            Unequip(item.equipSlot);
+            // A replacement cannot proceed if its current occupant has nowhere
+            // safe to go. Ignoring this result previously let a full bag keep the
+            // old item equipped while also adding the replacement to the slot.
+            if (GetEquipped(item.equipSlot) != null && Unequip(item.equipSlot) == null)
+                return false;
 
             if (!Remove(item, 1)) return false;
             _equipped.Add(new EquippedItem { Item = item, CurrentDurability = item.durability });
@@ -500,6 +504,38 @@ namespace AtomicWar._Game.Inventory
                 }
             }
             return null;
+        }
+
+        /// <summary>
+        /// Move equipped gear directly into another inventory. This is used by
+        /// bunker-facing systems when the field bag is full: destination capacity
+        /// is preflighted before the equipped entry is removed, so a rejected
+        /// transfer leaves the worn item untouched.
+        /// </summary>
+        public bool TryUnequipTo(EquipSlot slot, Inventory destination)
+        {
+            if (destination == null || ReferenceEquals(destination, this)) return false;
+
+            for (int i = 0; i < _equipped.Count; i++)
+            {
+                var equipped = _equipped[i];
+                if (equipped == null || equipped.Item == null || equipped.Item.equipSlot != slot)
+                    continue;
+
+                var item = equipped.Item;
+                if (!destination.CanAdd(item, 1)) return false;
+
+                _equipped.RemoveAt(i);
+                if (!destination.Add(item, 1))
+                {
+                    _equipped.Insert(i, equipped);
+                    return false;
+                }
+
+                OnInventoryChanged?.Invoke();
+                return true;
+            }
+            return false;
         }
 
         /// <summary>The equipped item in a slot, or null.</summary>

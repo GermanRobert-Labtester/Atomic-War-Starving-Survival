@@ -19,7 +19,12 @@
         "AtomicWar._Game.Data",
         "AtomicWar._Game.Economy",
         "AtomicWar._Game.Editor",
-        "AtomicWar._Game.Settings"
+        "AtomicWar._Game.Settings",
+        "AtomicWar._Game.Endgame",
+        "AtomicWar._Game.Encounters",
+        "AtomicWar._Game.World",
+        "AtomicWar._Game.Narrative",
+        "AtomicWar._Game.Factions"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

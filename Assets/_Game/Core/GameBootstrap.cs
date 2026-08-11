@@ -20,6 +20,16 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 
+using AtomicWar._Game.Endgame;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.World;
+
+using AtomicWar._Game.Narrative;
+
+using AtomicWar._Game.Factions;
+
 namespace AtomicWar._Game.Core
 {
     /// <summary>
@@ -70,9 +80,27 @@ namespace AtomicWar._Game.Core
         public NeedsSystem NeedsSystem { get; private set; }
         public RadiationSystem RadiationSystem { get; private set; }
         public Shelter.Shelter Shelter { get; private set; }
+        /// <summary>Climate-terminal adapter for existing filter, heater, and power-grid state.</summary>
+        public AirHeatManagementSystem AirHeatManagementSystem { get; private set; }
+        /// <summary>Repair-order terminal for existing module and generator condition.</summary>
+        public BunkerMaintenanceSystem BunkerMaintenanceSystem { get; private set; }
+        /// <summary>Timed, Utility-AI claimed repair task issued by the maintenance terminal.</summary>
+        public RepairWorkOrderSystem RepairWorkOrderSystem { get; private set; }
+        /// <summary>Continuous crew reservations for existing bunker duties.</summary>
+        public SurvivorWorkShiftSystem SurvivorWorkShiftSystem { get; private set; }
+        /// <summary>Roster-wide view of active work orders and their survivor reservations.</summary>
+        public SurvivorTaskBoardSystem SurvivorTaskBoardSystem { get; private set; }
         public Inventory.Inventory Inventory { get; private set; }
-        /// <summary>CRAFT-003 — unlimited-capacity stash for craft results that don't fit in the main bag.</summary>
-        public Inventory.Inventory CraftingOverflowStash { get; private set; }
+        /// <summary>Daily food/water policy and its shared survivor consequences.</summary>
+        public BunkerRationingSystem BunkerRationingSystem { get; private set; }
+        /// <summary>Persistent unlimited-capacity bunker stash for returns and craft results that do not fit in the main bag.</summary>
+        public Inventory.Inventory OverflowStash { get; private set; }
+        /// <summary>Safe transfer bridge between the persistent bunker crate and the field bag.</summary>
+        public OverflowCrateSystem OverflowCrateSystem { get; private set; }
+        /// <summary>Safe face/body equipment bridge with receiving-crate fallback.</summary>
+        public FieldGearLoadoutSystem FieldGearLoadoutSystem { get; private set; }
+        /// <summary>Compatibility alias for existing craft integrations.</summary>
+        public Inventory.Inventory CraftingOverflowStash => OverflowStash;
         public CraftingSystem CraftingSystem { get; private set; }
         public WorkbenchSystem WorkbenchSystem { get; private set; }
         public UtilityAI UtilityAI { get; private set; }
@@ -299,6 +327,12 @@ namespace AtomicWar._Game.Core
         public Weather_SilentSpring WeatherSilentSpring { get; private set; }
         public Weather_SolarFlare WeatherSolarFlare { get; private set; }
         public Weather_StaticCharge WeatherStaticCharge { get; private set; }
+        // Prompts #319–#325 — Section X new weather events
+        public Weather_AshLightning WeatherAshLightning { get; private set; }
+        public Weather_FogOfParticulate WeatherFogOfParticulate { get; private set; }
+        public Weather_ThermalInversion WeatherThermalInversion { get; private set; }
+        public Weather_IceStorm WeatherIceStorm { get; private set; }
+        public Weather_Silence WeatherSilence { get; private set; }
         // Expedition encounters — combat/exploration set pieces.
         public Encounter_Amalgamation EncounterAmalgamation { get; private set; }
         public BurrowersSystem EncounterBurrowers { get; private set; }
@@ -557,20 +591,8 @@ namespace AtomicWar._Game.Core
         /// <summary>Reusable fog-of-war view buffer (no per-refresh list allocation).</summary>
         private readonly List<MapTilePlayerView> _knowledgeViewBuffer = new List<MapTilePlayerView>();
 
-        /// <summary>Last day phantom pain was rolled (Prompt #56).</summary>
-        private int _lastSkillProgressionDay = -1;
-        private int _lastPhantomPainDay;
-        /// <summary>Last day scurvy was advanced (Prompt #57).</summary>
-        private int _lastScurvyDay;
-        /// <summary>Last day mutagenesis was evaluated (Prompt #60).</summary>
-        private int _lastMutagenesisDay;
-        /// <summary>Last day deserter spy check was run (Prompt #75).</summary>
-        private int _lastDeserterDay;
-        /// <summary>Last day ecosystem mutation was advanced (Prompt #79).</summary>
-        private int _lastEcosystemDay;
         /// <summary>Last day house artillery damage was applied (Prompt #79).</summary>
         private int _lastHouseDay;
-        private int _lastHatchVisDay;
         /// <summary>Prompt #658 — true while shelter-node danger boost from vultures is applied.</summary>
         private bool _carrionMapDangerApplied;
         /// <summary>Prompt #799 — re-entrancy guard while logic gates apply power actions.</summary>
@@ -603,6 +625,14 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private SystemRegistry _registry;
 
+        /// <summary>
+        /// C-1: bag of unsubscribe actions for the anonymous-lambda / instance-method
+        /// event subscriptions made across the Init* partials. DisposeAll() runs from
+        /// OnDestroy so a destroyed bootstrap can actually be garbage collected instead
+        /// of being kept alive by every long-lived system it once subscribed to.
+        /// </summary>
+        private readonly AtomicWar._Game.Utilities.SubscriptionBag _subscriptions = new AtomicWar._Game.Utilities.SubscriptionBag();
+
         // -----------------------------------------------------------------
         // H-2: Cached delegate fields for OnDestroy cleanup.
         // The lambdas attached to class-level events below are also kept as
@@ -618,6 +648,31 @@ namespace AtomicWar._Game.Core
         private System.Action<int> _onDayTick_SetGameStateDay;
         private System.Action<Survivor, SurvivorStatus> _onRadiationStatusGained;
         private System.Action<Survivor, float> _onRadiationDoseChanged;
+        private System.Action<int, int> _onHourTickHud;
+        // H-2: cached so the OnExpeditionRequested subscription can be undone
+        // when the bootstrap is destroyed. Without this, every Awake of a
+        // bootstrap (Editor play-mode, scene reload) would leak the lambda.
+        private System.Action<Survivor, string, ExpeditionPathRequest> _onMapExpeditionRequested;
+        private System.Func<Survivor, LocationDefinitionSO, bool> _onScavengeDispatchRequested;
+        private System.Action<ActiveMission> _onScavengeMissionStartedHud;
+        private System.Action<ActiveMission, List<ItemDefinition>> _onScavengeMissionCompletedHud;
+        private System.Action<ScavengeAfterActionReport> _onScavengeAfterActionHud;
+        private System.Action<string> _onOverflowCrateTransferRequested;
+        private System.Action<string> _onFieldGearEquipRequested;
+        private System.Action<EquipSlot> _onFieldGearUnequipRequested;
+        private System.Action<RationResource, int> _onRationLevelAdjustmentRequested;
+        private System.Action<int> _onWaterQueueCycleRequested;
+        private System.Action<AirHeatLoad, int> _onAirHeatPriorityAdjustmentRequested;
+        private System.Action<AirHeatLoad> _onAirHeatRequestToggleRequested;
+        private System.Action<MaintenanceTargetType, string> _onMaintenanceRepairRequested;
+        private System.Action _onMaintenanceRepairCancellationRequested;
+        private System.Action<string> _onMaintenanceSurvivorAssignmentRequested;
+        private System.Action<int> _onMaintenancePriorityAdjustmentRequested;
+        private System.Action<int> _onTaskBoardPriorityAdjustmentRequested;
+        private System.Action _onTaskBoardCancellationRequested;
+        private System.Action<WorkShiftDuty, string> _onTaskBoardShiftAssignmentRequested;
+        private System.Action<WorkShiftDuty> _onTaskBoardShiftCancellationRequested;
+        private System.Action _onTaskBoardRecommendationApprovalRequested;
 
         // -----------------------------------------------------------------
         // GameOver state

@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &617587448
+--- !u!1 &81179051
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,170 +127,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 617587450}
-  - component: {fileID: 617587449}
-  m_Layer: 0
-  m_Name: Diagnostics
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &617587449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617587448}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e8e6f162d524b1a9be1515e438157a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: AtomicWar._Game.Core::AtomicWar._Game.Core.DiagnosticsOverlay
-  _devOverlayEnabled: 0
-  _toggleKey: 292
-  _bootstrap: {fileID: 846498688}
---- !u!4 &617587450
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 617587448}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &626879337
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 626879339}
-  - component: {fileID: 626879338}
-  m_Layer: 0
-  m_Name: HUD
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &626879338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626879337}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c82c472a1186d1da982c882a9ceeaf33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.HUD
-  _needsBar: {fileID: 1197509411}
-  _dosimeterHud: {fileID: 1364839688}
-  _healthTrajectoryHud: {fileID: 0}
-  _geigerAudioHook: {fileID: 0}
-  _environmentStatusHud: {fileID: 0}
-  _eventModalUi: {fileID: 786824904}
-  _mapKnowledgeHud: {fileID: 0}
-  _tradeScreenUi: {fileID: 0}
-  _powerGridHud: {fileID: 0}
-  _mapScreenUi: {fileID: 0}
-  _workbenchUi: {fileID: 0}
-  _hatchDefenseHud: {fileID: 0}
-  _roomAssignmentHud: {fileID: 0}
-  _radioInterceptHud: {fileID: 0}
-  _factionRadioVoHook: {fileID: 0}
-  _journalBookUi: {fileID: 0}
-  _inventoryStripUi: {fileID: 0}
-  _endgameSummaryUi: {fileID: 0}
-  _internalHorrorHud: {fileID: 0}
-  _expeditionEncounterLogHud: {fileID: 0}
-  _diegeticHud: {fileID: 1981988297}
-  _debugToggleKey: 283
-  _debugModeEnabled: 0
---- !u!4 &626879339
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 626879337}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1197509410}
-  - {fileID: 1364839687}
-  - {fileID: 786824903}
-  - {fileID: 1981988299}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &786824902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 786824903}
-  - component: {fileID: 786824904}
-  m_Layer: 0
-  m_Name: EventModalUI
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &786824903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786824902}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 626879339}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &786824904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786824902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee1442dc7bb58e5838c141483be062cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.EventModalUI
---- !u!1 &846498687
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 846498689}
-  - component: {fileID: 846498688}
+  - component: {fileID: 81179054}
+  - component: {fileID: 81179053}
+  - component: {fileID: 81179052}
   m_Layer: 0
   m_Name: GameBootstrap
   m_TagString: Untagged
@@ -298,13 +137,48 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &846498688
+--- !u!114 &81179052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846498687}
+  m_GameObject: {fileID: 81179051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df60ce7c87d66d18a9d04cd2a4ea0b61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AtomicWar._Game.Core::AtomicWar._Game.Core.PlayerInputHandler
+  _pauseKey: 32
+  _quickSaveKey: 286
+  _quickLoadKey: 290
+  _consumeFoodKey: 282
+  _consumeWaterKey: 283
+  _consumeIodineKey: 284
+  _consumeAntiRadKey: 285
+  _eventChoice1Key: 49
+  _eventChoice2Key: 50
+  _eventChoice3Key: 51
+  _workbenchKey: 98
+  _hatchDefenseKey: 104
+  _mapKey: 109
+  _parleyKey: 112
+  _radioInterceptKey: 114
+  _radioTunerPrevKey: 91
+  _radioTunerNextKey: 93
+  _journalKey: 106
+  _fastForwardKey: 102
+  _corpseDisposeKey: 99
+  _inventoryCycleKey: 105
+  _inventoryActivateKey: 101
+  _closePanelKey: 27
+--- !u!114 &81179053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81179051}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0cb84146763f92bc092e802cc4446e93, type: 3}
@@ -322,18 +196,18 @@ MonoBehaviour:
   _flashpointSequence: {fileID: 11400000, guid: c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6, type: 2}
   _mentalBreakCatalog: {fileID: 11400000, guid: 4ef1aebd92efd7fb699b2fe08dc2438e, type: 2}
   _lootTable: {fileID: 11400000, guid: 8942cfc84e53d1dd6aa32927f2a384af, type: 2}
-  _hud: {fileID: 626879338}
-  _diagnosticsOverlay: {fileID: 617587449}
+  _hud: {fileID: 1863189173}
+  _diagnosticsOverlay: {fileID: 1898969548}
   _worldSeed: 42
   _secondsPerGameHour: 10
   _campaignLengthDays: 90
---- !u!4 &846498689
+--- !u!4 &81179054
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 846498687}
+  m_GameObject: {fileID: 81179051}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -342,7 +216,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &980656953
+--- !u!1 &305496001
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,8 +224,81 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 980656955}
-  - component: {fileID: 980656954}
+  - component: {fileID: 305496004}
+  - component: {fileID: 305496002}
+  - component: {fileID: 305496003}
+  m_Layer: 0
+  m_Name: DiegeticHud
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &305496002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305496001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9f5d2b38e4a5b0f9d6e7a1b2c3d4e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.DiegeticHudController
+  _document: {fileID: 305496003}
+  _panelSettings: {fileID: 11400000, guid: a3f8c2e17b9d4e6f8a0c1d2e3f4a5b6c, type: 2}
+  _uxml: {fileID: 9197481963319205126, guid: d0a6e3c49f5b6c1a0e7f8b2c3d4e5f6a, type: 3}
+  _uss: {fileID: 7433441132597879392, guid: e1b7f4d50a6c7d2b1f8a9c3d4e5f6a7b, type: 3}
+  _createDocumentIfMissing: 1
+--- !u!114 &305496003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305496001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
+  m_PanelSettings: {fileID: 11400000, guid: a3f8c2e17b9d4e6f8a0c1d2e3f4a5b6c, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 9197481963319205126, guid: d0a6e3c49f5b6c1a0e7f8b2c3d4e5f6a, type: 3}
+  m_SortingOrder: 0
+  m_Position: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+  m_PivotReferenceSize: 0
+  m_Pivot: 0
+  m_WorldSpaceCollider: {fileID: 0}
+--- !u!4 &305496004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305496001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1863189174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &695718310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 695718312}
+  - component: {fileID: 695718311}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -359,13 +306,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!20 &980656954
+--- !u!20 &695718311
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980656953}
+  m_GameObject: {fileID: 695718310}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -410,13 +357,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &980656955
+--- !u!4 &695718312
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 980656953}
+  m_GameObject: {fileID: 695718310}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
@@ -425,7 +372,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1197509409
+--- !u!1 &1222462566
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -433,8 +380,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1197509410}
-  - component: {fileID: 1197509411}
+  - component: {fileID: 1222462567}
+  - component: {fileID: 1222462568}
   m_Layer: 0
   m_Name: NeedsBar
   m_TagString: Untagged
@@ -442,35 +389,35 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1197509410
+--- !u!4 &1222462567
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197509409}
+  m_GameObject: {fileID: 1222462566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 626879339}
+  m_Father: {fileID: 1863189174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1197509411
+--- !u!114 &1222462568
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1197509409}
+  m_GameObject: {fileID: 1222462566}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89a2e973a91958179ab8ff59933b7917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.NeedsBar
   _showRawValues: 0
---- !u!1 &1364839686
+--- !u!1 &1626327568
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -478,8 +425,170 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1364839687}
-  - component: {fileID: 1364839688}
+  - component: {fileID: 1626327569}
+  - component: {fileID: 1626327570}
+  m_Layer: 0
+  m_Name: EventModalUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1626327569
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626327568}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1863189174}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1626327570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1626327568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1442dc7bb58e5838c141483be062cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.EventModalUI
+--- !u!1 &1863189172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1863189174}
+  - component: {fileID: 1863189173}
+  m_Layer: 0
+  m_Name: HUD
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1863189173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863189172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82c472a1186d1da982c882a9ceeaf33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.HUD
+  _needsBar: {fileID: 1222462568}
+  _dosimeterHud: {fileID: 2033705220}
+  _healthTrajectoryHud: {fileID: 0}
+  _geigerAudioHook: {fileID: 0}
+  _environmentStatusHud: {fileID: 0}
+  _eventModalUi: {fileID: 1626327570}
+  _mapKnowledgeHud: {fileID: 0}
+  _tradeScreenUi: {fileID: 0}
+  _powerGridHud: {fileID: 0}
+  _mapScreenUi: {fileID: 0}
+  _workbenchUi: {fileID: 0}
+  _hatchDefenseHud: {fileID: 0}
+  _roomAssignmentHud: {fileID: 0}
+  _radioInterceptHud: {fileID: 0}
+  _factionRadioVoHook: {fileID: 0}
+  _journalBookUi: {fileID: 0}
+  _inventoryStripUi: {fileID: 0}
+  _endgameSummaryUi: {fileID: 0}
+  _internalHorrorHud: {fileID: 0}
+  _expeditionEncounterLogHud: {fileID: 0}
+  _diegeticHud: {fileID: 305496002}
+  _debugToggleKey: 283
+  _debugModeEnabled: 0
+--- !u!4 &1863189174
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1863189172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1222462567}
+  - {fileID: 2033705219}
+  - {fileID: 1626327569}
+  - {fileID: 305496004}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1898969547
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1898969549}
+  - component: {fileID: 1898969548}
+  m_Layer: 0
+  m_Name: Diagnostics
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1898969548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898969547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e8e6f162d524b1a9be1515e438157a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: AtomicWar._Game.Core::AtomicWar._Game.Core.DiagnosticsOverlay
+  _devOverlayEnabled: 0
+  _toggleKey: 292
+  _bootstrap: {fileID: 81179053}
+--- !u!4 &1898969549
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898969547}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2033705218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2033705219}
+  - component: {fileID: 2033705220}
   m_Layer: 0
   m_Name: DosimeterHUD
   m_TagString: Untagged
@@ -487,112 +596,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1364839687
+--- !u!4 &2033705219
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364839686}
+  m_GameObject: {fileID: 2033705218}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 626879339}
+  m_Father: {fileID: 1863189174}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1364839688
+--- !u!114 &2033705220
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364839686}
+  m_GameObject: {fileID: 2033705218}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f8c341db00866b3e95d0398a8b8fbd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.DosimeterHUD
   _showRawValues: 0
---- !u!1 &1981988296
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1981988299}
-  - component: {fileID: 1981988297}
-  - component: {fileID: 1981988298}
-  m_Layer: 0
-  m_Name: DiegeticHud
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1981988297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981988296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9f5d2b38e4a5b0f9d6e7a1b2c3d4e5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: AtomicWar._Game.UI::AtomicWar._Game.UI.DiegeticHudController
-  _document: {fileID: 1981988298}
-  _panelSettings: {fileID: 11400000, guid: a3f8c2e17b9d4e6f8a0c1d2e3f4a5b6c, type: 2}
-  _uxml: {fileID: 9197481963319205126, guid: d0a6e3c49f5b6c1a0e7f8b2c3d4e5f6a, type: 3}
-  _uss: {fileID: 7433441132597879392, guid: e1b7f4d50a6c7d2b1f8a9c3d4e5f6a7b, type: 3}
-  _createDocumentIfMissing: 1
---- !u!114 &1981988298
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981988296}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
-  m_PanelSettings: {fileID: 11400000, guid: a3f8c2e17b9d4e6f8a0c1d2e3f4a5b6c, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: d0a6e3c49f5b6c1a0e7f8b2c3d4e5f6a, type: 3}
-  m_SortingOrder: 0
-  m_Position: 0
-  m_WorldSpaceSizeMode: 1
-  m_WorldSpaceWidth: 1920
-  m_WorldSpaceHeight: 1080
-  m_PivotReferenceSize: 0
-  m_Pivot: 0
-  m_WorldSpaceCollider: {fileID: 0}
---- !u!4 &1981988299
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1981988296}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 626879339}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 980656955}
-  - {fileID: 626879339}
-  - {fileID: 617587450}
-  - {fileID: 846498689}
+  - {fileID: 695718312}
+  - {fileID: 1863189174}
+  - {fileID: 1898969549}
+  - {fileID: 81179054}

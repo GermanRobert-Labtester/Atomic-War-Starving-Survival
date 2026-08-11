@@ -60,5 +60,41 @@ namespace AtomicWar.Tests.EditMode
             UntickedSystemsBaseline.Write(names);
             Debug.Log($"[C-1] Wrote {names.Count} entries to {UntickedSystemsBaseline.RelativePath}");
         }
+
+        [Test]
+        public void GetUntickedSystemNames_TreatsDestroyedUnityObjectSystemAsMissing()
+        {
+            // L-3: `prop.GetValue(this) == null` boxes the value to `object`, which is
+            // plain reference equality -- it never reaches UnityEngine.Object's
+            // overridden `==` that also treats a destroyed ("fake null") object as
+            // null. Reflection erases the static type, so a destroyed
+            // ScriptableObject/MonoBehaviour system property (e.g. ShelterLayout)
+            // used to read as still "constructed" instead of being skipped like every
+            // other torn-down reference in this codebase.
+            var method = typeof(GameBootstrap).GetMethod(
+                "IsSystemPropertyValueMissing", BindingFlags.Static | BindingFlags.NonPublic);
+            Assert.IsNotNull(method, "IsSystemPropertyValueMissing must exist.");
+
+            Assert.IsTrue((bool)method.Invoke(null, new object[] { null }),
+                "A plain C# null must read as missing.");
+            Assert.IsFalse((bool)method.Invoke(null, new object[] { new object() }),
+                "A live plain C# system reference must not be treated as missing.");
+
+            var live = ScriptableObject.CreateInstance<ScriptableObject>();
+            try
+            {
+                Assert.IsFalse((bool)method.Invoke(null, new object[] { live }),
+                    "A live UnityEngine.Object system reference must not be treated as missing.");
+
+                Object.DestroyImmediate(live);
+                Assert.IsTrue((bool)method.Invoke(null, new object[] { live }),
+                    "A destroyed UnityEngine.Object system reference must read as missing, " +
+                    "matching every other != null check on a destroyed object in this codebase.");
+            }
+            finally
+            {
+                if (live != null) Object.DestroyImmediate(live);
+            }
+        }
     }
 }

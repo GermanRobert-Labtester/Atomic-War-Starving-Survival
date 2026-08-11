@@ -2,6 +2,7 @@
 // Distinct from core WeatherSystem (daily/seasonal ambient).
 using UnityEngine;
 using AtomicWar._Game.Utilities;
+using AtomicWar._Game.Environment;
 
 namespace AtomicWar._Game.Core
 {

@@ -134,4 +134,22 @@ namespace AtomicWar._Game.Flashpoint
     {
         public static readonly FlashpointChoreographyCompleted Instance = new FlashpointChoreographyCompleted();
     }
+
+    /// <summary>
+    /// Prompts #319–#325 — Section X new weather events.
+    /// Raised when a Flashpoint choreography step with actionId
+    /// <c>"weather_event_trigger"</c> fires. The host (a weather-event
+    /// bridge wired in <c>GameBootstrap.Weather.NewContent.cs</c>) maps
+    /// <see cref="WeatherEventId"/> to the right
+    /// <c>Weather_&lt;Name&gt;.Trigger()</c> call. Use the canonical
+    /// snake_case ids from each system's <c>State.weatherId</c>:
+    /// <c>weather_ash_lightning</c>, <c>weather_fog_of_particulate</c>,
+    /// <c>weather_thermal_inversion</c>, <c>weather_ice_storm</c>,
+    /// <c>weather_silence</c>.
+    /// </summary>
+    public readonly struct FlashpointWeatherEventTriggered
+    {
+        public readonly string WeatherEventId;
+        public FlashpointWeatherEventTriggered(string weatherEventId) { WeatherEventId = weatherEventId; }
+    }
 }

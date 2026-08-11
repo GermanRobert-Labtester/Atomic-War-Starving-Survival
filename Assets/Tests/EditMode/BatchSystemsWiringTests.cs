@@ -4,11 +4,19 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.TestTools;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.UI;
 using ShelterClass = AtomicWar._Game.Shelter.Shelter;
+
+using AtomicWar._Game.Endgame;
+
+using AtomicWar._Game.Encounters;
+
+using AtomicWar._Game.Factions;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -167,6 +175,64 @@ namespace AtomicWar.Tests.EditMode
                     if (File.Exists(m)) File.Delete(m);
                 }
                 catch { }
+            }
+        }
+
+        [Test]
+        public void IronMan_DeletionFailure_DoesNotReportSaveDeleted()
+        {
+            string dir = Path.Combine(Path.GetTempPath(), "ironman_locked_" + Guid.NewGuid().ToString("N"));
+            Directory.CreateDirectory(dir);
+            string path = Path.Combine(dir, "save.json");
+            File.WriteAllText(path, "{}");
+
+            // On Windows, an open handle blocks File.Delete with IOException.
+            // On Unix, deleting a file requires write permission on its parent
+            // directory (the file's own permissions don't matter), so we lock
+            // the directory instead. Either way this forces File.Delete to
+            // throw so we can assert the honest failure path (C-2: it used to
+            // report success regardless).
+            FileStream lockHandle = null;
+            bool isWindows = Path.DirectorySeparatorChar == '\\';
+            try
+            {
+                if (isWindows)
+                    lockHandle = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                else
+                    RunChmod(dir, "555");
+
+                var mode = new Mode_IronMan();
+                mode.EnableIronMan(path);
+                mode.OnSurvivorDeath("a", 0);
+                Assert.IsTrue(mode.ShouldDeleteSave());
+
+                LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex(
+                    @"\[Mode_IronMan\] Failed to delete save"));
+                mode.DeleteSave();
+
+                Assert.IsTrue(File.Exists(path), "save file should still exist after a failed deletion");
+                var save = mode.CaptureState();
+                Assert.IsFalse(save.save_deleted, "save_deleted must stay false when File.Delete throws");
+                Assert.IsTrue(mode.ShouldDeleteSave(), "mode should still consider the save pending deletion so it can retry");
+            }
+            finally
+            {
+                lockHandle?.Dispose();
+                if (!isWindows) RunChmod(dir, "755");
+                try { Directory.Delete(dir, true); } catch { }
+            }
+        }
+
+        private static void RunChmod(string path, string mode)
+        {
+            var psi = new System.Diagnostics.ProcessStartInfo("chmod", $"{mode} \"{path}\"")
+            {
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+            using (var proc = System.Diagnostics.Process.Start(psi))
+            {
+                proc.WaitForExit(5000);
             }
         }
 
@@ -445,6 +511,58 @@ namespace AtomicWar.Tests.EditMode
                 Assert.IsTrue(Make(b).Load("im"));
                 Assert.IsTrue(b.IsIronManActive());
                 Assert.IsTrue(b.CaptureState().death_log.Contains("x"));
+                UnityEngine.Object.DestroyImmediate(profile);
+            }
+            finally { try { Directory.Delete(dir, true); } catch { } }
+        }
+
+        // ── Endgame (H-2: CampaignResult was never saved) ────────────────
+
+        [Test]
+        public void Endgame_SaveSlot_RoundTrip()
+        {
+            string dir = TempDir("endgame");
+            try
+            {
+                var a = new EndgameEngine(GameModeKind.Expert, 180);
+                a.TriggerVictory(EndgameConditionKind.LongTermSelfSufficiency, "Zero losses in 100 days.", currentDay: 101);
+
+                var profile = ScriptableObject.CreateInstance<NeedsProfile>();
+                var needs = new NeedsSystem(profile, sv => true);
+                var weather = new WeatherSystem(null, 3);
+                var temp = new TemperatureSystem(null, weather);
+                var rad = new RadiationSystem(needs);
+
+                SaveSystem Make(EndgameEngine sys)
+                {
+                    var ss = new SaveSystem(new SaveSystem.CoreDeps
+                    {
+                        GameState = new GameState(),
+                        WeatherSystem = weather,
+                        TemperatureSystem = temp,
+                        NeedsSystem = needs,
+                        RadiationSystem = rad,
+                        Shelter = new ShelterClass(),
+                        GetSurvivors = () => new List<Survivor>(),
+                        ItemLookup = id => null,
+                        ModuleLookup = id => null,
+                        SavesDir = dir
+                    });
+                    ss.SetEndgameEngine(sys);
+                    return ss;
+                }
+
+                Assert.IsTrue(Make(a).Save("endgame"));
+                var b = new EndgameEngine(GameModeKind.Story, 120);
+                Assert.IsTrue(Make(b).Load("endgame"));
+
+                Assert.IsTrue(b.Result.IsVictory, "victory flag must survive save/load (C-2 class bug: was reset to in-progress)");
+                Assert.IsFalse(b.Result.IsDefeat);
+                Assert.AreEqual(EndgameConditionKind.LongTermSelfSufficiency, b.Result.ConditionKind);
+                Assert.AreEqual(101, b.Result.DaysSurvived);
+                Assert.AreEqual(GameModeKind.Expert, b.Result.Mode);
+                Assert.AreEqual(180, b.Result.TargetDurationDays);
+                Assert.AreEqual("Zero losses in 100 days.", b.Result.OutcomeSummary);
                 UnityEngine.Object.DestroyImmediate(profile);
             }
             finally { try { Directory.Delete(dir, true); } catch { } }

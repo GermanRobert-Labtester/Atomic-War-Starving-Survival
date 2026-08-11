@@ -67,7 +67,10 @@ namespace AtomicWar._Game.Core
             float width = 340f;
             float lineHeight = 20f;
 
-            GUI.Box(new Rect(x - 4f, y - 4f, width + 8f, 420f), "", _boxStyle);
+            // Prompts #319–#325 — height bumped 420 → 520 to cover the 5 new
+            // weather-event rows added by DrawWeather (turn 4). Each row is
+            // ~20 px; the new section adds 5 × 20 = 100 px.
+            GUI.Box(new Rect(x - 4f, y - 4f, width + 8f, 520f), "", _boxStyle);
             y = DrawHeader(x, y, width, lineHeight);
 
             if (_bootstrap == null)
@@ -180,7 +183,74 @@ namespace AtomicWar._Game.Core
                 $"Weather: {(weather != null ? weather.Current.ToString() : "?")}  " +
                 $"Indoor: {(temp != null ? temp.GetIndoorTemperature(_bootstrap.Shelter).ToString("F0") + "°C" : "?")}",
                 _labelStyle);
+            y += lineHeight;
+            // Prompts #319–#325 — Section X new weather events diagnostics.
+            // Each line shows id / isActive / duration so testers can confirm
+            // the bridge fired the right Trigger() at the right time.
+            y = DrawNewWeatherLine(x, y, width, lineHeight,
+                "AshLightning", _bootstrap.WeatherAshLightning);
+            y = DrawNewWeatherLine(x, y, width, lineHeight,
+                "FogParticulate", _bootstrap.WeatherFogOfParticulate);
+            y = DrawNewWeatherLine(x, y, width, lineHeight,
+                "ThermalInversion", _bootstrap.WeatherThermalInversion);
+            y = DrawNewWeatherLine(x, y, width, lineHeight,
+                "IceStorm", _bootstrap.WeatherIceStorm);
+            y = DrawNewWeatherLine(x, y, width, lineHeight,
+                "Silence", _bootstrap.WeatherSilence);
+            return y;
+        }
+
+        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+            string label, AtomicWar._Game.Environment.Weather_AshLightning system)
+        {
+            DrawWeatherLineImpl(x, y, width, lineHeight, label,
+                system?.State?.isActive ?? false,
+                system?.State?.durationHours ?? 0f);
             return y + lineHeight;
+        }
+
+        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+            string label, AtomicWar._Game.Environment.Weather_FogOfParticulate system)
+        {
+            DrawWeatherLineImpl(x, y, width, lineHeight, label,
+                system?.State?.isActive ?? false,
+                system?.State?.durationHours ?? 0f);
+            return y + lineHeight;
+        }
+
+        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+            string label, AtomicWar._Game.Environment.Weather_ThermalInversion system)
+        {
+            DrawWeatherLineImpl(x, y, width, lineHeight, label,
+                system?.State?.isActive ?? false,
+                system?.State?.durationHours ?? 0f);
+            return y + lineHeight;
+        }
+
+        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+            string label, AtomicWar._Game.Environment.Weather_IceStorm system)
+        {
+            DrawWeatherLineImpl(x, y, width, lineHeight, label,
+                system?.State?.isActive ?? false,
+                system?.State?.durationHours ?? 0f);
+            return y + lineHeight;
+        }
+
+        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+            string label, AtomicWar._Game.Environment.Weather_Silence system)
+        {
+            DrawWeatherLineImpl(x, y, width, lineHeight, label,
+                system?.State?.isActive ?? false,
+                system?.State?.durationHours ?? 0f);
+            return y + lineHeight;
+        }
+
+        private static void DrawWeatherLineImpl(float x, float y, float width, float lineHeight,
+            string label, bool isActive, float durationHours)
+        {
+            string status = isActive ? "ACTIVE" : "idle  ";
+            string txt = $"  {label,-16} {status} ({durationHours:0}h)";
+            GUI.Label(new Rect(x, y, width, lineHeight), txt, _labelStyle);
         }
 
         private float DrawSurvivors(float x, float y, float width, float lineHeight)

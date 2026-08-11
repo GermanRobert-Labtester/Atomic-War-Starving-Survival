@@ -1,0 +1,18 @@
+{
+    "name": "AtomicWar._Game.Encounters",
+    "rootNamespace": "AtomicWar._Game.Encounters",
+    "references": [
+        "AtomicWar._Game.Utilities",
+        "AtomicWar._Game.Data",
+        "AtomicWar._Game.Inventory"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

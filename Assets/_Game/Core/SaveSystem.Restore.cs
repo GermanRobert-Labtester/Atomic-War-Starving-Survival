@@ -31,17 +31,25 @@ namespace AtomicWar._Game.Core
             // (MISC-005) set out to remove.
             AtomicWar._Game.Utilities.SeededRandom.ResetStreams();
 
-            RestoreGameStateCore(data);
-            RestoreSurvivorsAndShelter(data);
-            RestoreMedicalAndBodySystems(data);
-            RestoreWorldAndFactionSystems(data);
-            RestoreShelterTacticalSystems(data);
-            RestoreSimulationExtras(data);
-            RestoreSubsystemStates(data);
-            RestoreMapWaterAffinity(data);
-            RestorePhantomAndRooms(data);
-            RestoreExpeditions(data.Expeditions);
-            ApplyPostExchangeFlags();
+            IsRestoring = true;
+            try
+            {
+                RestoreGameStateCore(data);
+                RestoreSurvivorsAndShelter(data);
+                RestoreMedicalAndBodySystems(data);
+                RestoreWorldAndFactionSystems(data);
+                RestoreShelterTacticalSystems(data);
+                RestoreSimulationExtras(data);
+                RestoreSubsystemStates(data);
+                RestoreMapWaterAffinity(data);
+                RestorePhantomAndRooms(data);
+                RestoreExpeditions(data.Expeditions);
+                ApplyPostExchangeFlags();
+            }
+            finally
+            {
+                IsRestoring = false;
+            }
         }
 
         private void RestoreGameStateCore(SaveData data)
