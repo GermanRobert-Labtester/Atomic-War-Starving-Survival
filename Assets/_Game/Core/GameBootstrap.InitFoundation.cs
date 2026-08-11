@@ -134,6 +134,11 @@ namespace AtomicWar._Game.Core
             BootWeather();
             // Prompts #319–#325 — Section X new weather events.
             BootNewWeatherSystems();
+
+            // Prompts #326–#330 — Section XIV ("The Ash Gets Deeper") content.
+            // Merges 80 items, 10 locations, 15 encounters, 10 echoes,
+            // and 12 NPC/fauna archetypes into the host. Idempotent.
+            BootAshGetsDeeperContent();
             // Expedition encounters — amalgamation / burrowers / maze / tank / … .
             BootEncounters();
             // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).

@@ -383,3 +383,62 @@ everything on a feature branch and opened a PR.
 - Commit: `78f9f3f feat(content): Sections VII–XIII — 7 systems, 7 quests, 5 weather events, 10 recipes, host wiring, trigger path, diagnostics, chronicle, authoring note, PlayMode integration`
 - PR: https://github.com/GermanRobert-Labtester/Atomic-War-Starving-Survival/pull/10
 - Diff: 81 files, +4757/-4 LoC
+
+---
+
+## Section XIV — The Ash Gets Deeper (turn 7)
+
+Implements Prompts #326–#330 as a single content batch across 4
+modules. Pure-data catalog builders (no engine wiring yet) so the
+data can later be JSON-imported without code changes.
+
+### New files (17 production + 1 test = 18 files, +1990 LoC)
+
+- `Assets/_Game/Inventory/AshGetsDeeperItemsCatalog.cs` (518 LoC) — 80
+  items across 7 categories.
+- `Assets/_Game/Data/AshGetsDeeperLocationsCatalog.cs` (121 LoC) — 10
+  locations.
+- `Assets/_Game/Events/AshGetsDeeperEncountersCatalog.cs` (191 LoC) —
+  15 encounters as `GameEvent` specs.
+- `Assets/_Game/Events/AshGetsDeeperEchoesCatalog.cs` (99 LoC) — 10
+  lore echoes as `DiaryFragmentSO` specs.
+- `Assets/_Game/Factions/AshGetsDeeperNpcIds.cs` (40 LoC) — id
+  registry for the 12 new archetypes.
+- `Assets/_Game/Factions/NPC_AshWidows.cs`, `NPC_TheTollman.cs`,
+  `NPC_BurnedPatrol.cs`, `NPC_TheCollector.cs`, `NPC_FeralChildren.cs`,
+  `NPC_SurgeonsCaravan.cs` (6 × 38 LoC) — one class per archetype,
+  matching the existing `NPC_Bandits.cs` convention.
+- `Assets/_Game/Factions/Fauna_IrradiatedDogs.cs`,
+  `Fauna_AshCrows.cs`, `Fauna_BloatedCattle.cs`, `Fauna_RatSwarm.cs`
+  (4 × 37 LoC) — one class per fauna archetype.
+- `Assets/_Game/Economy/HardcoreEconomyTuning.cs` (146 LoC) —
+  scarcity-tier multipliers, 5 faction trade preferences, 4 dynamic
+  price-shock events. Pure-data static helper, opt-in.
+- `Assets/Tests/EditMode/AshGetsDeeperContentTests.cs` (243 LoC, 8
+  fixtures, ~25 tests).
+
+### Master document (Section XIV)
+
+Appended to `ASHFALL_GAME_MASTER_DOCUMENT.md`. Includes the tone
+reminder, the 80-item / 10-location / 12-NPC / 15-encounter / 10-echo
+tables, the town-of-Tessarat expansion (4,200 people, weekly
+livestock market, 14th-century Church of St. Maren, Broadcast Tower 7),
+and the 15-day fracture timeline (Day -30 through Day 60).
+
+### Build status
+
+- Production code: PASS (Unity 6 Roslyn csc.exe, 4 module DLLs all
+  clean — Items 32.8 KB, Data+Events 30.2 KB, Factions 14.8 KB,
+  Economy 8.2 KB, 0 errors across all 4).
+- Test code: PASS (`/tmp/ashfall_ash_tests.dll` = 11.8 KB, 0 errors).
+- Unity batch-compile + Unity Test Runner: **NOT run from this terminal**.
+
+### Git
+
+- Branch: `feature/new-content-batch` (still on the same branch as
+  turn 6).
+- New commit: `ec0c3c4 feat(content): The Ash Gets Deeper — 80
+  items, 10 locations, 12 NPCs/fauna, 15 encounters, 10 echoes,
+  hardcore economy tuning, lore expansion`.
+- PR #10 updated with the Section XIV summary.
+- Diff vs `fix/hud-panel-layout`: 116 files, +6716 LoC.
