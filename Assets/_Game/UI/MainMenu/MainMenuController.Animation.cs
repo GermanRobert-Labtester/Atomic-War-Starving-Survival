@@ -32,7 +32,7 @@ namespace AtomicWar._Game.UI.MainMenu
             if (_animationsArmed) return;
             _animationsArmed = true;
 
-            _sceneImage = _root.Q<VisualElement>("scene-image");
+            _sceneImage = _root.Q<VisualElement>(ElementNames.SceneImage);
 
             ScheduleEntryStagger();
 

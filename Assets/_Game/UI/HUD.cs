@@ -110,60 +110,62 @@ namespace AtomicWar._Game.UI
 
         private void EnsureWidgetReferences()
         {
-            if (_needsBar == null) _needsBar = GetComponentInChildren<NeedsBar>() ?? gameObject.AddComponent<NeedsBar>();
-            if (_dosimeterHud == null) _dosimeterHud = GetComponentInChildren<DosimeterHUD>() ?? gameObject.AddComponent<DosimeterHUD>();
-            if (_healthTrajectoryHud == null) _healthTrajectoryHud = GetComponentInChildren<HealthTrajectoryHUD>() ?? gameObject.AddComponent<HealthTrajectoryHUD>();
-            if (_geigerAudioHook == null) _geigerAudioHook = GetComponentInChildren<GeigerAudioHook>() ?? gameObject.AddComponent<GeigerAudioHook>();
-            if (_environmentStatusHud == null) _environmentStatusHud = GetComponentInChildren<EnvironmentStatusHUD>() ?? gameObject.AddComponent<EnvironmentStatusHUD>();
-            if (_eventModalUi == null) _eventModalUi = GetComponentInChildren<EventModalUI>() ?? gameObject.AddComponent<EventModalUI>();
-            if (_mapKnowledgeHud == null) _mapKnowledgeHud = GetComponentInChildren<MapKnowledgeHUD>() ?? gameObject.AddComponent<MapKnowledgeHUD>();
-            if (_tradeScreenUi == null) _tradeScreenUi = GetComponentInChildren<TradeScreenUI>() ?? gameObject.AddComponent<TradeScreenUI>();
-            if (_powerGridHud == null) _powerGridHud = GetComponentInChildren<PowerGridHUD>() ?? gameObject.AddComponent<PowerGridHUD>();
-            if (_mapScreenUi == null) _mapScreenUi = GetComponentInChildren<MapScreenUI>() ?? gameObject.AddComponent<MapScreenUI>();
-            if (_workbenchUi == null) _workbenchUi = GetComponentInChildren<WorkbenchUI>() ?? gameObject.AddComponent<WorkbenchUI>();
-            if (_hatchDefenseHud == null) _hatchDefenseHud = GetComponentInChildren<HatchDefenseHUD>() ?? gameObject.AddComponent<HatchDefenseHUD>();
-            if (_scavengeDispatchHud == null)
-                _scavengeDispatchHud = GetComponentInChildren<ScavengeDispatchHUD>()
-                    ?? gameObject.AddComponent<ScavengeDispatchHUD>();
-            if (_overflowCrateHud == null)
-                _overflowCrateHud = GetComponentInChildren<OverflowCrateHUD>()
-                    ?? gameObject.AddComponent<OverflowCrateHUD>();
-            if (_fieldGearLoadoutHud == null)
-                _fieldGearLoadoutHud = GetComponentInChildren<FieldGearLoadoutHUD>()
-                    ?? gameObject.AddComponent<FieldGearLoadoutHUD>();
-            if (_bunkerRationingHud == null)
-                _bunkerRationingHud = GetComponentInChildren<BunkerRationingHUD>()
-                    ?? gameObject.AddComponent<BunkerRationingHUD>();
-            if (_waterPurificationHud == null)
-                _waterPurificationHud = GetComponentInChildren<WaterPurificationHUD>()
-                    ?? gameObject.AddComponent<WaterPurificationHUD>();
-            if (_airHeatManagementHud == null)
-                _airHeatManagementHud = GetComponentInChildren<AirHeatManagementHUD>()
-                    ?? gameObject.AddComponent<AirHeatManagementHUD>();
-            if (_bunkerMaintenanceHud == null)
-                _bunkerMaintenanceHud = GetComponentInChildren<BunkerMaintenanceHUD>()
-                    ?? gameObject.AddComponent<BunkerMaintenanceHUD>();
-            if (_survivorTaskBoardHud == null)
-                _survivorTaskBoardHud = GetComponentInChildren<SurvivorTaskBoardHUD>()
-                    ?? gameObject.AddComponent<SurvivorTaskBoardHUD>();
-            if (_roomAssignmentHud == null) _roomAssignmentHud = GetComponentInChildren<RoomAssignmentHUD>() ?? gameObject.AddComponent<RoomAssignmentHUD>();
-            if (_radioInterceptHud == null) _radioInterceptHud = GetComponentInChildren<RadioInterceptHUD>() ?? gameObject.AddComponent<RadioInterceptHUD>();
-            if (_journalBookUi == null) _journalBookUi = GetComponentInChildren<JournalBookUI>() ?? gameObject.AddComponent<JournalBookUI>();
-            if (_inventoryStripUi == null) _inventoryStripUi = GetComponentInChildren<InventoryStripUI>() ?? gameObject.AddComponent<InventoryStripUI>();
-            if (_endgameSummaryUi == null) _endgameSummaryUi = GetComponentInChildren<EndgameSummaryUI>() ?? gameObject.AddComponent<EndgameSummaryUI>();
-            if (_internalHorrorHud == null) _internalHorrorHud = GetComponentInChildren<InternalHorrorHUD>() ?? gameObject.AddComponent<InternalHorrorHUD>();
-            if (_expeditionEncounterLogHud == null)
-                _expeditionEncounterLogHud = GetComponentInChildren<ExpeditionEncounterLogHUD>()
-                    ?? gameObject.AddComponent<ExpeditionEncounterLogHUD>();
-            if (_diegeticHud == null)
-                _diegeticHud = GetComponentInChildren<DiegeticHudController>()
-                    ?? gameObject.AddComponent<DiegeticHudController>();
+            EnsureWidget(ref _needsBar);
+            EnsureWidget(ref _dosimeterHud);
+            EnsureWidget(ref _healthTrajectoryHud);
+            EnsureWidget(ref _geigerAudioHook);
+            EnsureWidget(ref _environmentStatusHud);
+            EnsureWidget(ref _eventModalUi);
+            EnsureWidget(ref _mapKnowledgeHud);
+            EnsureWidget(ref _tradeScreenUi);
+            EnsureWidget(ref _powerGridHud);
+            EnsureWidget(ref _mapScreenUi);
+            EnsureWidget(ref _workbenchUi);
+            EnsureWidget(ref _hatchDefenseHud);
+            EnsureWidget(ref _scavengeDispatchHud);
+            EnsureWidget(ref _overflowCrateHud);
+            EnsureWidget(ref _fieldGearLoadoutHud);
+            EnsureWidget(ref _bunkerRationingHud);
+            EnsureWidget(ref _waterPurificationHud);
+            EnsureWidget(ref _airHeatManagementHud);
+            EnsureWidget(ref _bunkerMaintenanceHud);
+            EnsureWidget(ref _survivorTaskBoardHud);
+            EnsureWidget(ref _roomAssignmentHud);
+            EnsureWidget(ref _radioInterceptHud);
+            EnsureWidget(ref _journalBookUi);
+            EnsureWidget(ref _inventoryStripUi);
+            EnsureWidget(ref _endgameSummaryUi);
+            EnsureWidget(ref _internalHorrorHud);
+            EnsureWidget(ref _expeditionEncounterLogHud);
+            EnsureWidget(ref _diegeticHud);
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
                 if (_factionRadioVoHook == null && _radioInterceptHud != null)
                     _factionRadioVoHook = _radioInterceptHud.VoHook;
             }
+        }
+
+        /// <summary>
+        /// H-5: logs a warning the first time a widget isn't found via scene wiring
+        /// or GetComponentInChildren and has to be auto-created, since AddComponent
+        /// yields a default-constructed instance with none of its Inspector-set
+        /// fields — silent auto-creation was hiding missing prefab wiring.
+        /// </summary>
+        private T EnsureWidget<T>(ref T field) where T : Component
+        {
+            if (field != null) return field;
+
+            field = GetComponentInChildren<T>();
+            if (field == null)
+            {
+                Debug.LogWarning(
+                    $"[HUD] {typeof(T).Name} not found via scene wiring — auto-creating with AddComponent(). " +
+                    "Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.",
+                    this);
+                field = gameObject.AddComponent<T>();
+            }
+            return field;
         }
 
         /// <summary>Ensure the diegetic journal book exists on the HUD.</summary>

@@ -18,7 +18,6 @@
     --dim: #66675f;
     /* Military exclusive — copper rust, not bright red (restrained tone). */
     --exclusive: #c4785a;
-    --exclusive-line: rgba(196, 120, 90, 0.45);
     --critical: #e63333;
 
     /* Figma HUD Panel layout contract. */
@@ -27,7 +26,6 @@
 
     --font-body: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Regular_SDF.asset");
     --font-semibold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
-    --font-bold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Bold_SDF.asset");
     --font-mono: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
 }
 
@@ -48,7 +46,6 @@
 .diegetic-panel {
     position: absolute;
     background-color: var(--ink-panel);
-    border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
