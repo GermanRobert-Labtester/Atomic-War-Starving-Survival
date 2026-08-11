@@ -209,6 +209,11 @@ namespace AtomicWar._Game.Core
         private System_EpilogueStats _epilogueStatsSystem;
         private System_Gossip _gossipSystem;
         private System_AdaptiveWarlords _adaptiveWarlordsSystem;
+        // Expansion II — The Weight of Factions
+        private System_GarrisonComplianceLedger _garrisonComplianceLedgerSystem;
+        private System_MilitiaContributionTax _militiaContributionTaxSystem;
+        private System_CultLeash _cultLeashSystem;
+        private System_WarlordTribute _warlordTributeSystem;
         private System_BilgePumps _bilgePumpsSystem;
         private System_CarrionBirds _carrionBirdsSystem;
         private System_LogicGates _logicGatesSystem;

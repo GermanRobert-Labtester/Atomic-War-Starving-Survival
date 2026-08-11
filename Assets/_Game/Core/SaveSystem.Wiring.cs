@@ -538,6 +538,32 @@ namespace AtomicWar._Game.Core
                 () => s.CaptureState(),
                 o => s.RestoreState((AdaptiveWarlordsState)o));
 
+        // Expansion II — The Weight of Factions
+
+        /// <summary>Central Garrison compliance ledger (strike / non-compliant / 4-week reinstatement).</summary>
+        public void SetGarrisonComplianceLedgerSystem(System_GarrisonComplianceLedger s) =>
+            RegisterSystem(ref _garrisonComplianceLedgerSystem, s, "garrison_compliance_ledger",
+                () => s.CaptureState(),
+                o => s.RestoreState((GarrisonComplianceLedgerState)o));
+
+        /// <summary>Upland Militia tithe book (10% base, 5% escalation, 3-day refusal grace).</summary>
+        public void SetMilitiaContributionTaxSystem(System_MilitiaContributionTax s) =>
+            RegisterSystem(ref _militiaContributionTaxSystem, s, "militia_contribution_tax",
+                () => s.CaptureState(),
+                o => s.RestoreState((MilitiaContributionTaxState)o));
+
+        /// <summary>Cult of the Glow "leash" (3 visits → blessed; 1 miss warned, 2+ forbidden).</summary>
+        public void SetCultLeashSystem(System_CultLeash s) =>
+            RegisterSystem(ref _cultLeashSystem, s, "cult_leash",
+                () => s.CaptureState(),
+                o => s.RestoreState((CultLeashState)o));
+
+        /// <summary>Scavenger Warlord tribute book (1.5x short escalation, 8x cap, leave-one-thing).</summary>
+        public void SetWarlordTributeSystem(System_WarlordTribute s) =>
+            RegisterSystem(ref _warlordTributeSystem, s, "warlord_tribute",
+                () => s.CaptureState(),
+                o => s.RestoreState((WarlordTributeState)o));
+
         /// <summary>Prompt #806 — automated bilge pumps (flood → purified water).</summary>
         public void SetBilgePumpsSystem(System_BilgePumps s) =>
             RegisterSystem(ref _bilgePumpsSystem, s, "bilge_pumps",
