@@ -532,7 +532,14 @@ namespace AtomicWar._Game.Survivors
             // Force-grant expert if this is their track and not yet earned.
             ForceGrantBestPerk(survivor, state, disciplineId);
 
-            survivor.Needs.Morale = Mathf.Clamp(EpiphanyMoraleRestore, 0f, 100f);
+            // Respect the survivor's morale cap (e.g. Traumatized hard-caps well
+            // below 100). The previous direct write clamped to a flat 100,
+            // bypassing GetMaxMoraleCap so a Traumatized survivor could be raised
+            // to Morale 100 during a skill Epiphany.
+            float moraleCap = _personalQuests != null
+                ? _personalQuests.GetMaxMoraleCap(survivor)
+                : 100f;
+            survivor.Needs.Morale = Mathf.Clamp(EpiphanyMoraleRestore, 0f, Mathf.Max(0f, moraleCap));
             SyncSkillBonuses(survivor, state);
 
             // Fire with the highest-threshold active perk for this discipline, if any.

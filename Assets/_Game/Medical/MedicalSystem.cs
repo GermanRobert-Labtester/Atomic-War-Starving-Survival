@@ -1170,7 +1170,10 @@ namespace AtomicWar._Game.Medical
                     survivor.DisabilityIds.Add(disabilityId);
                     if (disabilityId == DisabilitySO.Ids.ScarredLungs)
                     {
-                        _needs.Modify(survivor, NeedKind.Health, 0f); // Clamps health to MaxHealthCap (75)
+                        // Re-clamp health to the new MaxHealthCap (75). Modify(.., 0f)
+                        // is a no-op (NeedsSystem early-returns on a zero delta); SetHealth
+                        // re-applies the cap so an already-over-cap survivor is brought down.
+                        _needs.SetHealth(survivor, survivor.Needs.Health);
                     }
                 }
             }

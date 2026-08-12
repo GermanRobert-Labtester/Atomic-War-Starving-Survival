@@ -136,7 +136,11 @@ namespace AtomicWar._Game.Survivors
             if (sv == null || !sv.IsAlive) return false;
             var st = Get(sv.Id);
             if (st == null || st.WorkAccidentChance <= 0f) return false;
-            if (rng == null) rng = new System.Random();
+            // Use the seeded stream, not `new System.Random()` — the parameterless
+            // ctor is time-seeded with low resolution (rapid calls share a seed)
+            // and breaks save replayability for a seed-driven game. Matches the
+            // fallback pattern in CombatPerkSystem / BunkerSocialSystems.
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("sleep_work_accident");
             if (rng.NextDouble() < st.WorkAccidentChance)
             {
                 OnWorkAccident?.Invoke(sv, workActionId);

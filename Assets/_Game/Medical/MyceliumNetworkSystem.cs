@@ -318,8 +318,8 @@ namespace AtomicWar._Game.Medical
                     // SporeLung infection
                     if (state.sporeDensity >= SporeLungThreshold)
                     {
-                        float chance = SporeLungInfectionChancePerHour * gameHours *
-                            (state.sporeDensity / 100f);
+                        float chance = Mathf.Clamp01(SporeLungInfectionChancePerHour * gameHours *
+                            (state.sporeDensity / 100f));
                         if (UnityEngine.Random.value < chance)
                         {
                             InflictAffliction?.Invoke(sv.Id, "affliction_spore_lung");
@@ -330,8 +330,8 @@ namespace AtomicWar._Game.Medical
                     // Hallucination trigger at high density
                     if (state.sporeDensity >= HallucinationThreshold)
                     {
-                        float chance = HallucinationInfectionChancePerHour * gameHours *
-                            (state.sporeDensity / 100f);
+                        float chance = Mathf.Clamp01(HallucinationInfectionChancePerHour * gameHours *
+                            (state.sporeDensity / 100f));
                         if (UnityEngine.Random.value < chance)
                         {
                             InflictAffliction?.Invoke(sv.Id, "affliction_myco_hallucinations");

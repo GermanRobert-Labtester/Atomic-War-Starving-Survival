@@ -134,11 +134,22 @@ namespace AtomicWar._Game.Economy
             // A finer-grained item-id match lives in the host's existing
             // DynamicEconomySystem.GetEffectiveValue; the catalog exposes
             // the multiplier as a hint the host may apply on top.
+            if (string.IsNullOrEmpty(itemId)) return 1.0f;
             for (int i = 0; i < ScarcityMultipliers.Count; i++)
             {
                 if (ScarcityMultipliers[i].Tier != tier) continue;
-                if (ScarcityMultipliers[i].AffectedItemIds.IndexOf(itemId, System.StringComparison.OrdinalIgnoreCase) >= 0)
-                    return mult;
+                var ids = ScarcityMultipliers[i].AffectedItemIds;
+                if (string.IsNullOrEmpty(ids)) continue;
+                // Token match, NOT substring: AffectedItemIds is comma-separated,
+                // so IndexOf would let "cloth" match "clothing", "book" match
+                // "notebook", "fuel" match "biofuel" — silently applying this
+                // tier's multiplier to unrelated items.
+                var tokens = ids.Split(',');
+                for (int t = 0; t < tokens.Length; t++)
+                {
+                    if (string.Equals(tokens[t].Trim(), itemId, System.StringComparison.OrdinalIgnoreCase))
+                        return mult;
+                }
             }
             return 1.0f;
         }
