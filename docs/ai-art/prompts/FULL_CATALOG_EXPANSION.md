@@ -6,7 +6,7 @@ This file is a **continuation**, not a replacement. Two prompt libraries already
 2. `ASHFALL_Firefly_Flux_200_Asset_Prompts.pdf` (Desktop) — 200 entries: key art, 5 shelter rooms + 9 bonus shelter variants, 31 named establishing shots, survivor/visitor archetypes, events, UI/map assets, VFX, tiles.
 
 Both predate the game's current data (`items.json`/`locations.json`/`survivors.json` have grown since — expansion work added new catalog entries; see `docs/ai-art/EXISTING_PROMPT_AUDIT.md`). This file fills exactly the gap between what's covered and what exists in the live data today:
-- **170 items** (of 419) with no individual prompt yet
+- **188 items** (of 437) with no individual prompt yet — 170 from the original expansion pass, +18 from the Deep Lore item catalog added afterward (Part A8)
 - **42 locations** (of 47) with no prompt yet — only `abandoned_hospital`, `rural_gas_station`, `suburban_house`, `government_bunker`, `stranger_cache` are covered
 - **All 96 named survivors** (the existing library only has 12 generic profession archetypes, not tied to specific ids)
 - **5 factions** — no coverage yet
@@ -45,7 +45,7 @@ weapon glamour.
 
 ---
 
-# PART A — Missing Items (170 → brings catalog to 419/419)
+# PART A — Missing Items (170 + 18 → brings catalog to 437/437)
 
 ### A1. Deprecated scrap ammo — BATCH (19 calibers, one shared prompt)
 > Small handful of corroded brass cartridge casings, green-black oxidation crusting the surface, dented and bent from age, tarnished headstamp barely visible, loose pile of 3–5 rounds. `[GLOBAL SUFFIX — items]`
@@ -198,7 +198,29 @@ Individually distinct (not fill-variants, still batch-adjacent, 1:1): `iodine_pi
 | `bearing_set_industrial` | Small greased-paper packet of steel bearings, a few visible through a torn corner. |
 | `copper_tubing_1m` | Coiled length of dull copper pipe, dented in two places. |
 
-All rows above append `[GLOBAL SUFFIX — items]` from the top of this document.
+### A8. Deep Lore expansion singles (18 items, added with the narrative-arc/questline catalogs) — table, 1:1 unless noted
+| id | Prompt |
+|---|---|
+| `structural_report` | Clipboard-clamped paper report, hand-drawn cross-section diagram of a cracked floor slab, coffee-ring stain on the corner. |
+| `radio_transcript_142_5` | Spiral-bound notepad page, hand-transcribed log lines under a timestamp column, "142.5" circled in pencil. |
+| `signal_source_report` | Folded topographic map sheet, pencil triangulation lines converging on a marked point, compass resting on the corner. |
+| `refugee_screening_report` | Clipped stack of intake forms, hand-filled checkbox rows, thumb-smudged edges, stub pencil tucked under the clip. |
+| `supply_inventory_report` | Ruled ledger sheet, hand-tallied columns of numbers, worn fold creases down the middle. |
+| `ars_diagnosis_report` | Clinical chart on a clipboard, hand-drawn dosage curve, one figure circled in red pen. |
+| `medical_inventory_report` | Handwritten stock ledger page, tallied drug names and counts, red underlines on the low-stock rows. |
+| `treatment_protocol` | Typed protocol sheet, hand-annotated margins, a risk figure circled in red pen, folded once down the middle. |
+| `intake_valve_report` | Water-warped inspection form, rippled pages, hand-sketched valve diagram, rust stain bleeding through the paper. |
+| `water_sample_contaminated` | Small sealed glass sample vial, cloudy discolored water, hand-written specimen tag wired to the neck. |
+| `concrete_mix` | Large paper sack of grey concrete powder, mouth twist-tied shut, dust caked into the seams. |
+| `steel_rebar` | Short bundle of ridged steel rebar lengths, wire-tied together, rust-orange patina on the ridges. |
+| `antenna_coil` | Tightly wound copper coil on a bakelite spool, exposed windings tarnished green at the edge. |
+| `copper_wiring` | Loose tangle of stripped copper wire, several coiled loops, green oxidation on the salvaged ends. |
+| `blueprint_roll` | Tightly rolled blueprint sheets bound with a frayed ribbon, faded blue-line drafting visible at the curled edge. |
+| `radio_headset` | Worn leather-padded radio headset with a boom mic, foam cracked and compressed, cable fraying near the jack. |
+| `service_pistol` | Aged sidearm with worn bluing, grip panels smoothed by handling, no magazine, a cleaning rag tucked beneath it. |
+| `surgical_mask` | Folded cloth surgical mask, ties frayed, faint rust-colored stain across the fabric. |
+
+All rows above (A1–A8) append `[GLOBAL SUFFIX — items]` from the top of this document.
 
 ---
 

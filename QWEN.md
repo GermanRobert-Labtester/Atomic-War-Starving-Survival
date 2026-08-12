@@ -12,6 +12,7 @@ STACK (do not deviate without asking):
 - Version control: Git; commit after each accepted deliverable
 
 GLOBAL RULES:
+- AI Assets Directory: All AI-generated images, videos, audio, and 3D assets must be saved in `generated_AIassets/` at the game root (`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/generated_AIassets`).
 - snake_case ids everywhere; never invent an id that isn't in the master list
 - Every public system raises C# events on state change (for UI + save)
 - Every system must be save/load safe (serializable state)

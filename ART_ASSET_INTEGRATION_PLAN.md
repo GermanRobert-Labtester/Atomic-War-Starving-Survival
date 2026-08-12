@@ -1,6 +1,6 @@
 # ASHFALL — ART ASSET INTEGRATION MASTER PLAN
 
-> **Source**: `ASHFALL_PROMPT_CATALOG_EXPANSION.md` (44KB, ~500 AI art prompts)
+> **Source**: `prompt_assets/ASHFALL_PROMPT_CATALOG_EXPANSION.md` (44KB, ~500 AI art prompts)
 > **Scope**: Generate & integrate ~330 art assets to bring visual coverage to 100%
 > **Current state**: ~300 existing assets from prior libraries | **Missing**: ~330 assets
 

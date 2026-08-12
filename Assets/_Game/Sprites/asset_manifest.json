@@ -1,7 +1,7 @@
 {
   "version": 1,
   "generated_by": "ASHFALL_PROMPT_CATALOG_EXPANSION.md",
-  "total_assets": 332,
+  "total_assets": 350,
   "categories": {
     "items_ammo_deprecated": {
       "count": 19,
@@ -30,7 +30,7 @@
       ]
     },
     "items_weapons": {
-      "count": 68,
+      "count": 51,
       "style": "item_icon",
       "sprites": [
         "pistol_cz75_9x19", "pistol_beretta_92_9x19", "pistol_steyr_m9_9x19",
@@ -74,7 +74,7 @@
       ]
     },
     "items_devices_medical_tools": {
-      "count": 65,
+      "count": 82,
       "style": "item_icon",
       "sprites": [
         "anti_rad", "prewar_letter", "item_bioluminescent_moss",
@@ -100,7 +100,13 @@
         "item_tungsten_core", "item_pneumatic_hose", "item_galvanized_rebar",
         "item_welders_glass", "item_mirror_shard", "item_bio_plastic",
         "rubber_gasket", "concrete_patch_mix", "insulation_tape",
-        "engine_block_intact", "bearing_set_industrial", "copper_tubing_1m"
+        "engine_block_intact", "bearing_set_industrial", "copper_tubing_1m",
+        "structural_report", "radio_transcript_142_5", "signal_source_report",
+        "refugee_screening_report", "supply_inventory_report", "ars_diagnosis_report",
+        "medical_inventory_report", "treatment_protocol", "intake_valve_report",
+        "water_sample_contaminated", "concrete_mix", "steel_rebar",
+        "antenna_coil", "copper_wiring", "blueprint_roll",
+        "radio_headset", "service_pistol", "surgical_mask"
       ]
     },
     "locations": {
@@ -131,7 +137,7 @@
       ]
     },
     "survivors": {
-      "count": 96,
+      "count": 100,
       "style": "hand_painted_3x4",
       "sprites": [
         "elena_vasquez", "marcus_olejnik", "suki_tanaka",

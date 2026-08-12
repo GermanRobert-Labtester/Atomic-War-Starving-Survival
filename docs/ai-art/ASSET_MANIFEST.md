@@ -29,15 +29,17 @@ Two external, pre-existing Desktop libraries were discovered this pass and are n
 - `ASHFALL_Firefly_Item_Icon_Prompts.md` — 321 items individually prompted.
 - `ASHFALL_Firefly_Flux_200_Asset_Prompts.pdf` — 200 entries: key art, shelter rooms, 12 generic survivor/visitor archetypes, events, UI/map/VFX.
 
-`docs/ai-art/prompts/FULL_CATALOG_EXPANSION.md` (synced copies: game root `ASHFALL_PROMPT_CATALOG_EXPANSION.md`, Desktop `New Folder (1)/ASHFALL_PROMPT_CATALOG_EXPANSION.md`) fills the gap between those two files and the live catalog data:
+`docs/ai-art/prompts/FULL_CATALOG_EXPANSION.md` (synced copies: game root `prompt_assets/ASHFALL_PROMPT_CATALOG_EXPANSION.md`, Desktop `New Folder (1)/ASHFALL_PROMPT_CATALOG_EXPANSION.md`) fills the gap between those two files and the live catalog data:
 
 | Family | Total in data | Covered before this pass | Covered by this file | Now at |
 |---|---|---|---|---|
-| **Items** | 419 (`items.json`) | 249 (321-item file, actual per-item match) | +170 | 419/419 |
+| **Items** | 437 (`items.json`) | 249 (321-item file, actual per-item match) | +188 (170 original pass + 18 Deep Lore items, Part A8) | 437/437 |
 | **Locations** | 47 (`locations.json`) | 5 (only ids that actually match the PDF's pre-expansion location names) | +42 | 47/47 |
 | **Survivors** | 96 (`survivors.json`) | 0 individually (PDF only has 12 generic profession archetypes) | +96 | 96/96 |
 | **Factions** | 5 (GDD Ch2.3) | 0 | +5 (lineup-level, new territory) | 5/5 |
 | **Weather** | 22 (`WeatherKind` enum) | 7 (generic icon sheet + key art panoramas) | +15 | 22/22 |
+
+`items.json` grew from 419 to 437 after this table was first drafted (18 new Deep Lore items: 10 quest/report documents, 4 materials, 4 comfort keepsakes — see `FULL_CATALOG_EXPANSION.md` Part A8 and `Assets/_Game/Sprites/asset_manifest.json`'s `items_devices_medical_tools` category, both updated to match).
 
 Prompt depth differs by family on purpose: items/locations/survivors are compact production-table rows (id + one dense visual-delta sentence); the 10 pilot-batch assets in `prompts/pilot_batch.md` remain the only entries with full multi-model Master Asset Briefs. Scale up any row to that depth on demand before it actually goes through a generator.
 

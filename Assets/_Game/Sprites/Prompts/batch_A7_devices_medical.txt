@@ -1,4 +1,4 @@
-# ASHFALL — Devices Medical Tools (64)
+# ASHFALL — Devices Medical Tools (82)
 # Model: Flux 2 Pro via Firefly | Aspect: 1:1 | 1024×1024
 # Suffix: post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements
 # Negative: cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
@@ -322,4 +322,94 @@ Output: bearing_set_industrial.png
 Isolated inventory object: copper tubing 1m. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
 --negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
 Output: copper_tubing_1m.png
+
+## structural_report
+Isolated inventory object: structural report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: structural_report.png
+
+## radio_transcript_142_5
+Isolated inventory object: radio transcript 142 5. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: radio_transcript_142_5.png
+
+## signal_source_report
+Isolated inventory object: signal source report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: signal_source_report.png
+
+## refugee_screening_report
+Isolated inventory object: refugee screening report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: refugee_screening_report.png
+
+## supply_inventory_report
+Isolated inventory object: supply inventory report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: supply_inventory_report.png
+
+## ars_diagnosis_report
+Isolated inventory object: ars diagnosis report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ars_diagnosis_report.png
+
+## medical_inventory_report
+Isolated inventory object: medical inventory report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: medical_inventory_report.png
+
+## treatment_protocol
+Isolated inventory object: treatment protocol. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: treatment_protocol.png
+
+## intake_valve_report
+Isolated inventory object: intake valve report. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: intake_valve_report.png
+
+## water_sample_contaminated
+Isolated inventory object: water sample contaminated. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_sample_contaminated.png
+
+## concrete_mix
+Isolated inventory object: concrete mix. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: concrete_mix.png
+
+## steel_rebar
+Isolated inventory object: steel rebar. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: steel_rebar.png
+
+## antenna_coil
+Isolated inventory object: antenna coil. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: antenna_coil.png
+
+## copper_wiring
+Isolated inventory object: copper wiring. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: copper_wiring.png
+
+## blueprint_roll
+Isolated inventory object: blueprint roll. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: blueprint_roll.png
+
+## radio_headset
+Isolated inventory object: radio headset. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: radio_headset.png
+
+## service_pistol
+Isolated inventory object: service pistol. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: service_pistol.png
+
+## surgical_mask
+Isolated inventory object: surgical mask. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: surgical_mask.png
 
