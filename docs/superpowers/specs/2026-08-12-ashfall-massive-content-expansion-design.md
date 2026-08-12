@@ -82,8 +82,9 @@ ordered to match the table and the batch order in §5.
 | 9 | Echoes (relics) | +25 | — | No (JSON) |
 | 10 | Radio broadcasts | +35 | Factions (propaganda), world state | No (JSON) |
 
-Total: ~530 new content entries, 5 new C# systems, ~10 new affliction classes, 1 content-only vehicle
-extension.
+Total: ~550 new content entries (100 items + 10 illnesses + 50 locations + ~200 encounters + 32
+survivors + 31 faction entities/questlines + 50 moral events + 20 questlines + 25 echoes + 35 radio), 5
+new C# systems, ~10 new affliction classes, 1 content-only vehicle extension.
 
 ### 3.1 Items (+100)
 
