@@ -567,5 +567,125 @@
         "trustDelta": -8.0
       }
     ]
+  },
+  {
+    "id": "contaminated_water_trade",
+    "title": "The Contaminated Water Trade",
+    "bodyText": "A gaunt woman pounds on the hatch. Behind her, a child coughs — a wet, rattling sound. 'Please,' she begs. 'Clean water. Just enough for my daughter. I have ammunition. Military-grade. It's yours.' The bunker's water reserves are already low.",
+    "weight": 2.5,
+    "minDay": 10,
+    "choices": [
+      { "choiceId": "trade_water", "text": "Trade the water. A child's life is worth it.", "moraleDelta": 15.0, "effects": [{ "type": "remove_water", "amount": 10 }, { "type": "add_item", "itemId": "ammo_556", "amount": 30 }] },
+      { "choiceId": "refuse_trade", "text": "We can't spare it. Every drop counts.", "moraleDelta": -15.0, "effects": [{ "type": "add_trait", "traitId": "guilt_water_trade" }] },
+      { "choiceId": "offer_half", "text": "Half now. Half if she brings more ammunition.", "moraleDelta": 5.0, "effects": [{ "type": "remove_water", "amount": 5 }] }
+    ]
+  },
+  {
+    "id": "infected_refugee_isolation",
+    "title": "The Infected Refugee",
+    "bodyText": "A survivor stumbles into the airlock and collapses. Their skin is mottled — not radiation burns, but something else. A rash spreading up their neck. They're burning with fever. 'I just need to rest,' they whisper. 'Please don't send me back out.' The bunker has no quarantine room.",
+    "weight": 2.0,
+    "minDay": 5,
+    "choices": [
+      { "choiceId": "admit_and_quarantine", "text": "Confine them to the stores room. Everyone stays clear.", "moraleDelta": 5.0, "effects": [{ "type": "add_survivor", "survivorId": "infected_refugee" }, { "type": "set_quarantine", "roomId": "stores" }] },
+      { "choiceId": "admit_openly", "text": "Welcome them in. We don't abandon the sick.", "moraleDelta": 10.0, "effects": [{ "type": "add_survivor", "survivorId": "infected_refugee" }, { "type": "infection_risk", "chance": 0.40 }] },
+      { "choiceId": "turn_away", "text": "Close the hatch. The risk is too great.", "moraleDelta": -10.0, "effects": [{ "type": "add_trait", "traitId": "guilt_refugee_turned" }] }
+    ]
+  },
+  {
+    "id": "sabotaged_air_filter",
+    "title": "The Sabotaged Filter",
+    "bodyText": "The air filtration unit failed overnight. But the filter isn't just worn — it's been cut. Someone inside the bunker deliberately damaged it. The cut is clean, deliberate. Paranoia spreads faster than radiation.",
+    "weight": 1.5,
+    "minDay": 15,
+    "choices": [
+      { "choiceId": "investigate", "text": "Search every room. Question everyone.", "moraleDelta": -10.0, "effects": [{ "type": "suspicion_increase", "amount": 30 }, { "type": "discover_saboteur", "chance": 0.60 }] },
+      { "choiceId": "replace_quietly", "text": "Replace the filter. Say nothing. Watch from the shadows.", "moraleDelta": 0.0, "effects": [{ "type": "remove_item", "itemId": "air_filter", "amount": 1 }, { "type": "suspicion_increase", "amount": 10 }] },
+      { "choiceId": "public_address", "text": "Call a meeting. Whoever did this, come forward. No punishment.", "moraleDelta": 5.0, "effects": [{ "type": "confession_chance", "chance": 0.35 }] }
+    ]
+  },
+  {
+    "id": "faction_deserter_asylum",
+    "title": "The Faction Deserter",
+    "bodyText": "A Garrison officer in full uniform stands at the hatch, hands raised. 'I'm deserting,' they say flatly. 'I have schematics — patrol routes, supply caches, artillery positions. But the Garrison will come looking for me. They always do.' The officer waits for your answer.",
+    "weight": 2.0,
+    "minDay": 20,
+    "choices": [
+      { "choiceId": "grant_asylum", "text": "Welcome them in. The intel is worth the risk.", "moraleDelta": 5.0, "effects": [{ "type": "add_survivor", "survivorId": "garrison_deserter" }, { "type": "add_map_intel", "amount": 3 }, { "type": "faction_standing", "factionId": "garrison", "delta": -30 }] },
+      { "choiceId": "take_intel_only", "text": "Give us the schematics and we'll give you supplies. Then go.", "moraleDelta": -5.0, "effects": [{ "type": "add_map_intel", "amount": 2 }, { "type": "remove_food", "amount": 5 }] },
+      { "choiceId": "turn_away_deserter", "text": "We can't afford a Garrison manhunt. Leave.", "moraleDelta": -5.0, "effects": [{ "type": "faction_standing", "factionId": "garrison", "delta": 10 }] }
+    ]
+  },
+  {
+    "id": "stranded_expedition_rescue",
+    "title": "The Stranded Expedition",
+    "bodyText": "The radio crackles: 'This is Scavenger Team Three — we're trapped. The building collapsed. Mika is pinned. The radiation is climbing. We need help. Please.' The coordinates are deep in a high-radiation zone. Sending a rescue team risks multiple lives to save one.",
+    "weight": 1.5,
+    "minDay": 10,
+    "choices": [
+      { "choiceId": "send_rescue", "text": "Send a rescue team. No one gets left behind.", "moraleDelta": 10.0, "effects": [{ "type": "start_rescue_expedition", "locationId": "collapsed_building" }] },
+      { "choiceId": "talk_them_through", "text": "Guide them over the radio. Talk Mika through freeing herself.", "moraleDelta": 5.0, "effects": [{ "type": "rescue_survival_chance", "chance": 0.40 }] },
+      { "choiceId": "cannot_risk", "text": "We can't risk more lives. I'm sorry.", "moraleDelta": -20.0, "effects": [{ "type": "add_trait", "traitId": "guilt_stranded_rescue" }] }
+    ]
+  },
+  {
+    "id": "stolen_medication",
+    "title": "The Stolen Iodine",
+    "bodyText": "The iodine pill count doesn't match. Ten pills missing. Marcus accuses Suki — 'She was in the stores alone yesterday.' Suki denies it, voice cracking. 'I would never. Someone is framing me.' Both are valuable. Both are furious. The pills are still missing.",
+    "weight": 1.8,
+    "minDay": 8,
+    "choices": [
+      { "choiceId": "search_quarters", "text": "Search everyone's quarters. Find the truth.", "moraleDelta": -10.0, "effects": [{ "type": "discover_truth_chance", "chance": 0.70 }, { "type": "trust_penalty_all", "amount": -10.0 }] },
+      { "choiceId": "mediate_dispute", "text": "Sit them down together. Work this out.", "moraleDelta": 5.0, "effects": [{ "type": "resolve_dispute_chance", "chance": 0.50 }] },
+      { "choiceId": "ration_penalty", "text": "Both lose rations for a week. That's fair.", "moraleDelta": -15.0, "effects": [{ "type": "morale_penalty_targets", "targetIds": ["sv_marcus", "sv_suki"], "delta": -10.0 }] }
+    ]
+  },
+  {
+    "id": "dying_trader_bargain",
+    "title": "The Dying Trader's Bargain",
+    "bodyText": "A trader collapses at the hatch, a locked military crate dragging behind them. Their skin is grey, eyes sunken. 'Terminal,' they rasp. 'Got maybe two days. This crate — it's worth more than you can imagine. Just let me die somewhere warm. Somewhere with walls.' The crate's lock is military-grade. No key in sight.",
+    "weight": 2.0,
+    "minDay": 12,
+    "choices": [
+      { "choiceId": "grant_last_wish", "text": "Bring them inside. Make them comfortable.", "moraleDelta": 10.0, "effects": [{ "type": "add_locked_crate", "itemId": "military_supply_crate" }, { "type": "terminal_guest", "survivorId": "dying_trader" }] },
+      { "choiceId": "take_crate_only", "text": "Take the crate. They can die outside like everyone else.", "moraleDelta": -15.0, "effects": [{ "type": "add_locked_crate", "itemId": "military_supply_crate" }, { "type": "add_trait", "traitId": "cruel_trader_death" }] },
+      { "choiceId": "refuse_both", "text": "We don't need a corpse in the bunker. Move on.", "moraleDelta": -8.0, "effects": [] }
+    ]
+  },
+  {
+    "id": "broken_generator_dilemma",
+    "title": "The Broken Generator",
+    "bodyText": "The generator seizes at 3 AM. Temperature: -15°C outside. The remaining battery has one hour of charge. You can route it to the air filtration system — or to the room heaters. You cannot do both. In the dark, people start to shiver. In the silence, the filter stops humming.",
+    "weight": 1.5,
+    "minDay": 20,
+    "choices": [
+      { "choiceId": "route_to_heaters", "text": "Route to heaters. We'll breathe unfiltered air but we won't freeze.", "moraleDelta": -5.0, "effects": [{ "type": "heat_active", "durationHours": 12 }, { "type": "radiation_exposure_all", "amount": 5.0 }] },
+      { "choiceId": "route_to_filter", "text": "Route to filtration. The air stays clean — bundle up.", "moraleDelta": -5.0, "effects": [{ "type": "filter_active", "durationHours": 12 }, { "type": "cold_damage_all", "amount": 10.0 }] },
+      { "choiceId": "split_power", "text": "Split it. Half to each. Neither will be enough, but it's fair.", "moraleDelta": 0.0, "effects": [{ "type": "partial_heat", "durationHours": 6 }, { "type": "partial_filter", "durationHours": 6 }] }
+    ]
+  },
+  {
+    "id": "unwanted_bounty",
+    "title": "The Unwanted Bounty",
+    "bodyText": "A warlord's messenger arrives at the hatch with a photograph. It's one of your survivors — wanted for 'crimes against the free market.' The bounty: three months of food. 'Just tell us where they are,' the messenger says. 'No one has to know it was you.' The accused survivor watches from the shadows.",
+    "weight": 1.5,
+    "minDay": 15,
+    "choices": [
+      { "choiceId": "refuse_bounty", "text": "Tell the messenger to leave. Our people are not for sale.", "moraleDelta": 10.0, "effects": [{ "type": "faction_standing", "factionId": "warlord", "delta": -40 }, { "type": "loyalty_bonus_all", "amount": 10.0 }] },
+      { "choiceId": "negotiate_bounty", "text": "The bounty is too low. Double it or walk.", "moraleDelta": -5.0, "effects": [{ "type": "faction_standing", "factionId": "warlord", "delta": -10 }] },
+      { "choiceId": "accept_bounty", "text": "Hand them over. Three months of food saves everyone else.", "moraleDelta": -30.0, "effects": [{ "type": "remove_survivor", "survivorId": "bounty_target" }, { "type": "add_food", "amount": 90 }] }
+    ]
+  },
+  {
+    "id": "false_distress_signal",
+    "title": "The False Distress Signal",
+    "bodyText": "A repeating radio distress signal leads your scavenger team to a quiet building. Too quiet. The 'survivors' are mannequins. The 'supplies' are empty crates. The door slams shut behind them — tripwire. This was a raider ambush, carefully staged. Your team is trapped.",
+    "weight": 1.5,
+    "minDay": 10,
+    "choices": [
+      { "choiceId": "fight_through", "text": "Fight your way out. Use whatever cover you can find.", "moraleDelta": -5.0, "effects": [{ "type": "combat_encounter", "encounterId": "raider_ambush" }, { "type": "survival_chance", "chance": 0.55 }] },
+      { "choiceId": "negotiate_surrender", "text": "Offer a surrender. Trade half your gear for safe passage.", "moraleDelta": -10.0, "effects": [{ "type": "remove_half_inventory" }, { "type": "safe_retreat" }] },
+      { "choiceId": "signal_backup", "text": "Radio for backup. Hold position until help arrives.", "moraleDelta": 0.0, "effects": [{ "type": "start_rescue_expedition", "locationId": "raider_trap_location" }] }
+    ]
   }
 ]
