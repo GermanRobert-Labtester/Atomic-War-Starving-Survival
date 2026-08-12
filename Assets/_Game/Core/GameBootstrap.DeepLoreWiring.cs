@@ -38,7 +38,7 @@ namespace AtomicWar._Game.Core
                 },
                 FireNarrativeEvent = (eventId, context) =>
                 {
-                    EventRunner?.TriggerEventById(eventId);
+                    TriggerEventById(eventId);
                 },
                 FindSurvivor = id => FindSurvivorById(id),
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
@@ -63,12 +63,12 @@ namespace AtomicWar._Game.Core
                 Action<GameEvent, EventChoice, EventContext> onChoice =
                     (evt, choice, ctx) =>
                     {
-                        if (evt?.Id == null) return;
+                        if (evt?.id == null) return;
                         foreach (var sv in Survivors ?? new List<Survivor>())
                         {
                             if (sv == null || !sv.IsAlive) continue;
-                            NarrativeArcSystem.CheckArisMilestone(sv, evt.Id);
-                            NarrativeArcSystem.CheckVanceMilestone(sv, evt.Id);
+                            NarrativeArcSystem.CheckArisMilestone(sv, evt.id);
+                            NarrativeArcSystem.CheckVanceMilestone(sv, evt.id);
                         }
                     };
                 EventRunner.OnChoiceApplied += onChoice;
@@ -93,17 +93,17 @@ namespace AtomicWar._Game.Core
                 Action<GameEvent, EventChoice, EventContext> onChoiceApplied =
                     (evt, choice, ctx) =>
                     {
-                        if (evt?.Id == null || choice?.ChoiceId == null) return;
+                        if (evt?.id == null || choice?.ChoiceId == null) return;
                         if (choice.ChoiceId.Contains("branch_a"))
                         {
-                            string svId = ExtractSurvivorIdFromEvent(evt.Id);
+                            string svId = ExtractSurvivorIdFromEvent(evt.id);
                             var sv = FindSurvivorById(svId);
                             if (sv != null)
                                 NarrativeArcSystem.ChooseBranch(sv, "a");
                         }
                         else if (choice.ChoiceId.Contains("branch_b"))
                         {
-                            string svId = ExtractSurvivorIdFromEvent(evt.Id);
+                            string svId = ExtractSurvivorIdFromEvent(evt.id);
                             var sv = FindSurvivorById(svId);
                             if (sv != null)
                                 NarrativeArcSystem.ChooseBranch(sv, "b");
@@ -115,7 +115,7 @@ namespace AtomicWar._Game.Core
                             choice.ChoiceId.Contains("trace") ||
                             choice.ChoiceId.Contains("review"))
                         {
-                            string svId = ExtractSurvivorIdFromEvent(evt.Id);
+                            string svId = ExtractSurvivorIdFromEvent(evt.id);
                             if (!string.IsNullOrEmpty(svId))
                             {
                                 var sv = FindSurvivorById(svId);

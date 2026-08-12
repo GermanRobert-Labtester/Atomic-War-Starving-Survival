@@ -1,6 +1,7 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
     <ui:VisualElement name="terminal-prognosis-root" class="terminal-prognosis-banner">
-        <ui:Label name="terminal-prognosis-text" class="terminal-prognosis-text" text="" />
+        <ui:Label name="terminal-prognosis-text" class="terminal-prognosis-text prognosis-text" text="" />
     </ui:VisualElement>
 </ui:UXML>

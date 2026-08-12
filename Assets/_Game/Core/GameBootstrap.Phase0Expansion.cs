@@ -4,6 +4,7 @@ using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Medical;
+using AtomicWar._Game.Environment;
 
 namespace AtomicWar._Game.Core
 {
@@ -52,7 +53,7 @@ namespace AtomicWar._Game.Core
                 GrantChronicIllness = (sv, id) =>
                 {
                     if (sv != null && MedicalSystem != null)
-                        MedicalSystem.GrantChronicIllness(sv, id);
+                        MedicalSystem.Inflict(sv, id);
                 },
                 MarkChronicFibrosis = sv =>
                 {
@@ -261,7 +262,7 @@ namespace AtomicWar._Game.Core
                 },
                 IsInFalloutStorm = () =>
                 {
-                    return WeatherSystem?.CurrentWeather?.id == "fallout_storm";
+                    return WeatherSystem?.Current == WeatherKind.FalloutStorm;
                 },
                 IsInAshZone = () =>
                 {

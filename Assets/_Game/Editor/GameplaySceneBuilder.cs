@@ -33,7 +33,13 @@ namespace AtomicWar._Game.Editor
             "_radiationPhaseIndicator", "_phantomMemoryVignette",
             "_hypervigilanceIndicator", "_moralBranchDisplay",
             "_keepsakeSlotUi", "_memorialWallUi",
-            "_terminalPrognosisBanner", "_addictionDetoxIndicator"
+            "_terminalPrognosisBanner", "_addictionDetoxIndicator",
+            "_locationDetailPanel", "_itemConditionBadge",
+            "_questlineProgressTracker", "_siegeStatusHud",
+            "_factionIntelligencePanel", "_vehicleStatusPanel",
+            "_tacticalCommandBar", "_questlineStageTracker",
+            "_loreCodexPanel", "_factionRelationshipMap",
+            "_characterArcProgressPanel"
         };
 
         /// <summary>
@@ -151,6 +157,31 @@ namespace AtomicWar._Game.Editor
             BindPhase11Document(terminal, diegeticDoc);
             BindPhase11Document(addiction, diegeticDoc);
 
+            // Expansions 3 & 4 + Deep Lore — share DiegeticHud UIDocument
+            var locationDetail   = Child<LocationDetailPanel>(root, "LocationDetailPanel");
+            var itemBadge        = Child<ItemConditionBadge>(root, "ItemConditionBadge");
+            var questTracker     = Child<QuestlineProgressTracker>(root, "QuestlineProgressTracker");
+            var siegeHud         = Child<SiegeStatusHUD>(root, "SiegeStatusHUD");
+            var factionIntel     = Child<FactionIntelligencePanel>(root, "FactionIntelligencePanel");
+            var vehiclePanel     = Child<VehicleStatusPanel>(root, "VehicleStatusPanel");
+            var tacticalBar      = Child<TacticalCommandBar>(root, "TacticalCommandBar");
+            var stageTracker     = Child<QuestlineStageTracker>(root, "QuestlineStageTracker");
+            var loreCodex        = Child<LoreCodexPanel>(root, "LoreCodexPanel");
+            var factionMap       = Child<FactionRelationshipMap>(root, "FactionRelationshipMap");
+            var arcPanel         = Child<CharacterArcProgressPanel>(root, "CharacterArcProgressPanel");
+
+            BindPhase11Document(locationDetail, diegeticDoc);
+            BindPhase11Document(itemBadge, diegeticDoc);
+            BindPhase11Document(questTracker, diegeticDoc);
+            BindPhase11Document(siegeHud, diegeticDoc);
+            BindPhase11Document(factionIntel, diegeticDoc);
+            BindPhase11Document(vehiclePanel, diegeticDoc);
+            BindPhase11Document(tacticalBar, diegeticDoc);
+            BindPhase11Document(stageTracker, diegeticDoc);
+            BindPhase11Document(loreCodex, diegeticDoc);
+            BindPhase11Document(factionMap, diegeticDoc);
+            BindPhase11Document(arcPanel, diegeticDoc);
+
             var so = new SerializedObject(hud);
             so.FindProperty("_needsBar").objectReferenceValue     = needsBar;
             so.FindProperty("_dosimeterHud").objectReferenceValue = dosimeter;
@@ -164,6 +195,17 @@ namespace AtomicWar._Game.Editor
             so.FindProperty("_memorialWallUi").objectReferenceValue          = memorial;
             so.FindProperty("_terminalPrognosisBanner").objectReferenceValue = terminal;
             so.FindProperty("_addictionDetoxIndicator").objectReferenceValue = addiction;
+            so.FindProperty("_locationDetailPanel").objectReferenceValue = locationDetail;
+            so.FindProperty("_itemConditionBadge").objectReferenceValue = itemBadge;
+            so.FindProperty("_questlineProgressTracker").objectReferenceValue = questTracker;
+            so.FindProperty("_siegeStatusHud").objectReferenceValue = siegeHud;
+            so.FindProperty("_factionIntelligencePanel").objectReferenceValue = factionIntel;
+            so.FindProperty("_vehicleStatusPanel").objectReferenceValue = vehiclePanel;
+            so.FindProperty("_tacticalCommandBar").objectReferenceValue = tacticalBar;
+            so.FindProperty("_questlineStageTracker").objectReferenceValue = stageTracker;
+            so.FindProperty("_loreCodexPanel").objectReferenceValue = loreCodex;
+            so.FindProperty("_factionRelationshipMap").objectReferenceValue = factionMap;
+            so.FindProperty("_characterArcProgressPanel").objectReferenceValue = arcPanel;
             so.ApplyModifiedPropertiesWithoutUndo();
 
             return hud;
@@ -237,6 +279,22 @@ namespace AtomicWar._Game.Editor
 
             so.FindProperty("_hud").objectReferenceValue = hud;
             so.FindProperty("_diagnosticsOverlay").objectReferenceValue = overlay;
+
+            // Expansion IV overlays — live as HUD children beside DiegeticHudController
+            var structuralWireframe = Child<StructuralStressWireframe>(hud.gameObject, "StructuralStressWireframe");
+            var letheDripGauge      = Child<LetheDripGauge>(hud.gameObject, "LetheDripGauge");
+            var ozoneOverlay        = Child<OzoneScourgeOverlay>(hud.gameObject, "OzoneScourgeOverlay");
+            var memoryFlash         = Child<MemoryFlashVignette>(hud.gameObject, "MemoryFlashVignette");
+            var exp4Controller      = Child<Expansion4HudController>(hud.gameObject, "Expansion4HudController");
+            // MoralChronicleBridge lives on the bootstrap GameObject so GetComponent resolves it
+            var moralBridge         = bootstrap.gameObject.AddComponent<MoralChronicleBridge>();
+
+            so.FindProperty("_structuralWireframe").objectReferenceValue     = structuralWireframe;
+            so.FindProperty("_letheDripGauge").objectReferenceValue          = letheDripGauge;
+            so.FindProperty("_ozoneOverlayComp").objectReferenceValue        = ozoneOverlay;
+            so.FindProperty("_memoryFlashComp").objectReferenceValue         = memoryFlash;
+            so.FindProperty("_expansion4HudController").objectReferenceValue = exp4Controller;
+            so.FindProperty("_moralChronicleBridge").objectReferenceValue    = moralBridge;
 
             so.ApplyModifiedPropertiesWithoutUndo();
         }

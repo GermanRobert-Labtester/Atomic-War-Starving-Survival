@@ -1,0 +1,43 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="faction-relationship-map" class="faction-relationship-map hidden" picking-mode="Position">
+        <ui:Label class="map-title" text="FACTION RELATIONSHIPS" />
+        <ui:VisualElement name="map-canvas" class="map-canvas">
+            <ui:VisualElement name="relation-lines" class="relation-lines" />
+            <ui:VisualElement name="node-garrison" class="faction-node garrison-node">
+                <ui:VisualElement class="faction-emblem-large garrison-emblem" />
+                <ui:Label class="node-label" text="IRON GARRISON" />
+                <ui:VisualElement class="standing-indicator" />
+            </ui:VisualElement>
+            <ui:VisualElement name="node-militia" class="faction-node militia-node">
+                <ui:VisualElement class="faction-emblem-large militia-emblem" />
+                <ui:Label class="node-label" text="ASH MILITIA" />
+                <ui:VisualElement class="standing-indicator" />
+            </ui:VisualElement>
+            <ui:VisualElement name="node-cult" class="faction-node cult-node">
+                <ui:VisualElement class="faction-emblem-large cult-emblem" />
+                <ui:Label class="node-label" text="CULT OF ASH SIGN" />
+                <ui:VisualElement class="standing-indicator" />
+            </ui:VisualElement>
+            <ui:VisualElement name="node-warlords" class="faction-node warlords-node">
+                <ui:VisualElement class="faction-emblem-large warlords-emblem" />
+                <ui:Label class="node-label" text="WARLORDS SECTOR 4" />
+                <ui:VisualElement class="standing-indicator" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="map-legend">
+            <ui:VisualElement class="legend-item">
+                <ui:VisualElement class="legend-line hostile-line" />
+                <ui:Label class="legend-label" text="HOSTILE" />
+            </ui:VisualElement>
+            <ui:VisualElement class="legend-item">
+                <ui:VisualElement class="legend-line neutral-line" />
+                <ui:Label class="legend-label" text="NEUTRAL" />
+            </ui:VisualElement>
+            <ui:VisualElement class="legend-item">
+                <ui:VisualElement class="legend-line allied-line" />
+                <ui:Label class="legend-label" text="ALLIED" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

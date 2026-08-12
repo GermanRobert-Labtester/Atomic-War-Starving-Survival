@@ -1,3 +1,4 @@
+using AtomicWar._Game.Inventory;
 using UnityEngine;
 using UnityEngine.UIElements;
 

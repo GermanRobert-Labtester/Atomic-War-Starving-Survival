@@ -1,0 +1,52 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="lore-codex-panel" class="lore-codex-panel hidden" picking-mode="Position">
+        <ui:VisualElement class="codex-header">
+            <ui:Label class="codex-title" text="SURVIVAL CODEX" />
+            <ui:VisualElement class="codex-tabs">
+                <ui:Button name="tab-history" class="codex-tab" text="HISTORY" />
+                <ui:Button name="tab-factions" class="codex-tab" text="FACTIONS" />
+                <ui:Button name="tab-characters" class="codex-tab" text="SURVIVORS" />
+            </ui:VisualElement>
+            <ui:Button name="close-button" class="codex-close-button" text="×" />
+        </ui:VisualElement>
+        <ui:VisualElement name="history-content" class="codex-content">
+            <ui:Label class="section-title" text="CHRONOLOGY OF THE FALLOUT" />
+            <ui:ScrollView name="history-scroll" class="codex-scroll">
+                <ui:VisualElement name="era-pre-exchange" class="era-section">
+                    <ui:VisualElement class="era-header">
+                        <ui:VisualElement class="era-icon icon-pre-exchange" />
+                        <ui:Label class="era-title" text="PRE-EXCHANGE ERA" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="era-divider" />
+                <ui:VisualElement name="era-hour-zero" class="era-section">
+                    <ui:VisualElement class="era-header">
+                        <ui:VisualElement class="era-icon icon-hour-zero" />
+                        <ui:Label class="era-title" text="HOUR ZERO: THE EXCHANGE" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="era-divider" />
+                <ui:VisualElement name="era-black-sky" class="era-section">
+                    <ui:VisualElement class="era-header">
+                        <ui:VisualElement class="era-icon icon-black-sky" />
+                        <ui:Label class="era-title" text="THE BLACK SKY (MONTHS 1–6)" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+                <ui:VisualElement class="era-divider" />
+                <ui:VisualElement name="era-ashfall" class="era-section">
+                    <ui:VisualElement class="era-header">
+                        <ui:VisualElement class="era-icon icon-ashfall" />
+                        <ui:Label class="era-title" text="THE ASHFALL ERA (PRESENT DAY)" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:ScrollView>
+        </ui:VisualElement>
+        <ui:VisualElement name="factions-content" class="codex-content hidden">
+            <ui:ScrollView name="factions-scroll" class="codex-scroll" />
+        </ui:VisualElement>
+        <ui:VisualElement name="characters-content" class="codex-content hidden">
+            <ui:ScrollView name="characters-scroll" class="codex-scroll" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

@@ -8,6 +8,7 @@ using AtomicWar._Game.World;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Narrative;
 using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.Core
 {
@@ -85,7 +86,7 @@ namespace AtomicWar._Game.Core
             SleepwalkingSystem = new SleepwalkingSystem
             {
                 GetMissedNights = sv =>
-                    SleepDeprivationSystem?.GetOrCreate(sv.Id)?.MissedNights ?? 0,
+                    SleepDeprivation?.GetOrCreate(sv.Id)?.MissedNights ?? 0,
                 GetStressLevel = sv =>
                     sv.GuiltInsomniaSeverity,
                 GetRoomIds = () =>
@@ -93,13 +94,13 @@ namespace AtomicWar._Game.Core
                     var ids = new List<string>();
                     if (Shelter?.Rooms != null)
                         foreach (var room in Shelter.Rooms)
-                            ids.Add(room.Id);
+                            ids.Add(room.RoomId);
                     return ids;
                 },
                 IsRoomHazardous = roomId =>
                     roomId == "plant" || roomId == "deep_vault",
-                IsHatchLocked = () => Shelter?.IsHatchLocked() ?? false,
-                UnlockHatch = () => Shelter?.UnlockHatch(),
+                IsHatchLocked = () => false, // Shelter has no IsHatchLocked API yet
+                UnlockHatch = () => { },     // Shelter has no UnlockHatch API yet
                 MoveFoodItems = (itemId, count) =>
                     Inventory?.RemoveById(itemId, count),
                 Rng = new System.Random(_worldSeed + 63)
@@ -136,8 +137,8 @@ namespace AtomicWar._Game.Core
             {
                 GetDaysSinceLastWoundTreatment = sv =>
                 {
-                    // Simplified — reads from medical system
-                    return MedicalSystem?.DaysSinceLastTreatment(sv.Id) ?? 0f;
+                    // MedicalSystem has no DaysSinceLastTreatment API; placeholder
+                    return 0f;
                 },
                 ApplyCraftingSpeedPenalty = (sv, penalty) =>
                 {
@@ -168,8 +169,8 @@ namespace AtomicWar._Game.Core
                 // Ash storms trigger ash accumulation
                 EventBus.Subscribe<WeatherKind>(weather =>
                 {
-                    if (weather == WeatherKind.AshStorm ||
-                        weather == WeatherKind.BlackSnow)
+                    if (weather == WeatherKind.Ashfall ||
+                        weather == WeatherKind.FalloutStorm)
                         AshDriftBurialSystem.OnAshStorm(0.8f);
                 });
             }
@@ -185,16 +186,16 @@ namespace AtomicWar._Game.Core
             // Register known locations
             if (_locationCatalog != null)
             {
-                foreach (var loc in _locationCatalog.AllLocations)
-                    LocationEvolutionSystem.RegisterLocation(loc.Id);
+                foreach (var loc in _locationCatalog.locations)
+                    LocationEvolutionSystem.RegisterLocation(loc.id);
             }
 
             // #57: Wildlife Migration System
             WildlifeMigrationSystem = new WildlifeMigrationSystem();
             _registry.RegisterDaily("wildlifeMigration",
                 d => WildlifeMigrationSystem.Tick(d,
-                    WeatherSystem?.CurrentWeather?.id ?? "clear",
-                    WeatherSystem?.CurrentWeather?.id == "fallout_storm",
+                    WeatherSystem != null ? WeatherSystem.Current.ToString().ToLowerInvariant() : "clear",
+                    WeatherSystem?.Current == WeatherKind.FalloutStorm,
                     new System.Random(_worldSeed + 73)));
             _registry.Register<WildlifeMigrationSystem>(
                 WildlifeMigrationSystem);
@@ -209,15 +210,15 @@ namespace AtomicWar._Game.Core
             LandmarkDegradationSystem = new LandmarkDegradationSystem();
             _registry.RegisterDaily("landmarkDegradation",
                 d => LandmarkDegradationSystem.Tick(d,
-                    WeatherSystem?.CurrentWeather?.id == "black_rain",
+                    WeatherSystem?.Current == WeatherKind.BlackRain,
                     new System.Random(_worldSeed + 75)));
             _registry.Register<LandmarkDegradationSystem>(
                 LandmarkDegradationSystem);
 
             if (_locationCatalog != null)
             {
-                foreach (var loc in _locationCatalog.AllLocations)
-                    LandmarkDegradationSystem.RegisterLandmark(loc.Id);
+                foreach (var loc in _locationCatalog.locations)
+                    LandmarkDegradationSystem.RegisterLandmark(loc.id);
             }
         }
 
@@ -244,18 +245,18 @@ namespace AtomicWar._Game.Core
             {
                 Action<ItemDefinition, int> onItemAdded = (itemDef, amount) =>
                 {
-                    if (itemDef?.Id == null) return;
+                    if (itemDef?.id == null) return;
                     // Cultural artifacts: books, records, artwork
-                    if (itemDef.Id.Contains("book") ||
-                        itemDef.Id.Contains("vinyl") ||
-                        itemDef.Id.Contains("art") ||
-                        itemDef.Id.Contains("painting") ||
-                        itemDef.Id.Contains("record"))
+                    if (itemDef.id.Contains("book") ||
+                        itemDef.id.Contains("vinyl") ||
+                        itemDef.id.Contains("art") ||
+                        itemDef.id.Contains("painting") ||
+                        itemDef.id.Contains("record"))
                     {
                         var sv = Survivors != null && Survivors.Count > 0
                             ? Survivors[0] : null;
                         CulturalPreservationSystem.PreserveArtifact(
-                            itemDef.Id, sv);
+                            itemDef.id, sv);
                     }
                 };
                 Inventory.OnItemAdded += onItemAdded;

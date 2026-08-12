@@ -1,6 +1,8 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
     <ui:VisualElement name="hypervigilance-indicator-root" class="hypervigilance-indicator">
-        <ui:Label name="hypervigilance-eye" class="hypervigilance-eye" text="" />
+        <ui:Label name="hypervigilance-eye" class="hypervigilance-eye eye-icon" text="" />
     </ui:VisualElement>
+    <ui:VisualElement name="hypervigilance-flash-root" class="hypervigilance-flash hidden" picking-mode="Ignore" />
 </ui:UXML>

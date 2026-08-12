@@ -1,0 +1,48 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="character-arc-panel" class="character-arc-panel hidden" picking-mode="Position">
+        <ui:Label name="character-name" class="character-name" text="SURVIVOR" />
+        <ui:Label name="character-profession" class="character-profession" text="" />
+        <ui:Label name="character-bio" class="character-bio" text="" />
+        <ui:VisualElement name="arc-timeline" class="arc-timeline">
+            <ui:VisualElement class="arc-stage">
+                <ui:VisualElement name="stage-1-circle" class="stage-circle" />
+                <ui:Label class="stage-title" text="STAGE 1: DISCOVERY" />
+                <ui:Label name="stage-1-desc" class="stage-desc" text="" />
+            </ui:VisualElement>
+            <ui:VisualElement class="stage-connector-vertical" />
+            <ui:VisualElement class="arc-stage">
+                <ui:VisualElement name="stage-2-circle" class="stage-circle" />
+                <ui:Label class="stage-title" text="STAGE 2: INVESTIGATION" />
+                <ui:Label name="stage-2-desc" class="stage-desc" text="" />
+            </ui:VisualElement>
+            <ui:VisualElement class="stage-connector-vertical" />
+            <ui:VisualElement class="arc-stage arc-crisis">
+                <ui:VisualElement name="stage-3-circle" class="stage-circle crisis-circle" />
+                <ui:Label class="stage-title crisis-title" text="STAGE 3: CRISIS" />
+                <ui:Label name="stage-3-desc" class="stage-desc" text="" />
+                <ui:VisualElement name="branch-indicators" class="branch-indicators">
+                    <ui:VisualElement name="branch-a" class="branch-option">
+                        <ui:VisualElement class="branch-icon branch-a-icon" />
+                        <ui:Label name="branch-a-label" class="branch-label" text="PATH A" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="branch-b" class="branch-option">
+                        <ui:VisualElement class="branch-icon branch-b-icon" />
+                        <ui:Label name="branch-b-label" class="branch-label" text="PATH B" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="stage-connector-vertical" />
+            <ui:VisualElement class="arc-stage">
+                <ui:VisualElement name="stage-4-circle" class="stage-circle" />
+                <ui:Label class="stage-title" text="STAGE 4: RESOLUTION" />
+                <ui:Label name="stage-4-desc" class="stage-desc" text="" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="arc-reward">
+            <ui:Label class="reward-title" text="ARC REWARD" />
+            <ui:VisualElement class="reward-icon" />
+            <ui:Label name="reward-trait-name" class="reward-name" text="" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

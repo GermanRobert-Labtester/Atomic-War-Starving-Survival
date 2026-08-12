@@ -1,6 +1,10 @@
 # PROMPT_RULES.md
 
+> **Supersession note (2026-08-12):** two pre-existing, already-in-production Desktop prompt libraries were found after this file was first written — `ASHFALL_Firefly_Item_Icon_Prompts.md` (321 items) and `ASHFALL_Firefly_Flux_200_Asset_Prompts.pdf` (200 key art/env/character/VFX entries), both built against Flux 2 Pro via Adobe Firefly. Where their established GLOBAL SUFFIX / visual bible differs from the `GLOBAL_STYLE` below, **treat the Desktop files as canonical** — they represent ~300+ already-produced real assets, and new work should stay consistent with what's already made rather than drift toward this file's independently-derived version. Concretely: items use a photorealistic product-shot register (pure black background, rim-lit), not the graphic-novel-illustration register below; everything else (environments/survivors/factions/weather) uses a hand-painted gouache-and-charcoal register, closer to but not identical to the illustration language below. See `docs/ai-art/prompts/FULL_CATALOG_EXPANSION.md` for the two real GLOBAL STYLE blocks quoted verbatim, and use those for any new item/location/survivor/faction/weather prompt.
+
 ## GLOBAL_STYLE
+
+*(This project's own independently-derived version — still the right reference for asset families the Desktop libraries don't cover, e.g. props, UI icons, VFX. See the supersession note above before applying it to items, locations, survivors, factions, or weather.)*
 
 Every prompt = `GLOBAL_STYLE + asset-specific delta`. Never paste the full art bible into one prompt — compress to whichever form fits the model's length band (see `IMAGE_MODEL_PROFILES.md`).
 

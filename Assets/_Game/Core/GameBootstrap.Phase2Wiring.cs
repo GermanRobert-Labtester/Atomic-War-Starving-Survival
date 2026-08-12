@@ -6,6 +6,7 @@ using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Data;
+using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.Core
 {
@@ -40,7 +41,7 @@ namespace AtomicWar._Game.Core
                         int checkCount = Math.Min(3, items.Count);
                         for (int j = 0; j < checkCount; j++)
                         {
-                            PhantomMemorySystem?.OnItemScavenged(sv, items[j].Id);
+                            PhantomMemorySystem?.OnItemScavenged(sv, items[j].id);
                         }
                     };
                 ExpeditionSystem.OnExpeditionCompleted += onExpeditionCompleted;
@@ -87,7 +88,7 @@ namespace AtomicWar._Game.Core
                     (gameEvent, choice, context) =>
                     {
                         if (choice == null) return;
-                        string eventId = gameEvent?.Id ?? "unknown";
+                        string eventId = gameEvent?.id ?? "unknown";
                         string choiceId = choice.ChoiceId ?? choice.Text ?? "unknown";
                         float severity = GetGuiltSeverityForChoice(eventId, choiceId);
                         if (severity <= 0f) return;

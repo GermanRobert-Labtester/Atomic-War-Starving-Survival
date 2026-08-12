@@ -39,7 +39,15 @@ namespace AtomicWar._Game.UI
                 _stagesContainer.Clear();
                 for (int i = 0; i < 4; i++)
                 {
-                    var circle = new VisualElement { style = { width = 24, height = 24, borderRadius = 12, marginRight = 8 } };
+                    var circle = new VisualElement
+                    {
+                        style =
+                        {
+                            width = 24, height = 24, marginRight = 8,
+                            borderTopLeftRadius = 12, borderTopRightRadius = 12,
+                            borderBottomLeftRadius = 12, borderBottomRightRadius = 12
+                        }
+                    };
                     if (i < currentStage) { circle.style.backgroundColor = new StyleColor(new Color(0.3f, 0.69f, 0.31f)); circle.Add(new Label("✓") { style = { fontSize = 12, color = Color.white, unityTextAlign = TextAnchor.MiddleCenter } }); }
                     else if (i == currentStage) circle.style.backgroundColor = new StyleColor(new Color(1f, 0.76f, 0.03f));
                     else circle.style.backgroundColor = new StyleColor(new Color(0.46f, 0.46f, 0.46f));

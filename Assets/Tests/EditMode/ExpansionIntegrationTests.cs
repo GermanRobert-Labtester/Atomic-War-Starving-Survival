@@ -3,6 +3,7 @@ using NUnit.Framework;
 using UnityEngine;
 using Random = System.Random;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Medical;
 
 namespace AtomicWar.Tests.EditMode
 {

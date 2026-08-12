@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="tactical-command-bar" class="tactical-command-bar hidden" picking-mode="Position">
+        <ui:Button name="cmd-hold-line" class="tactical-cmd-button" text="HOLD">
+            <ui:VisualElement name="cooldown-overlay" class="cooldown-overlay" />
+        </ui:Button>
+        <ui:Button name="cmd-retreat" class="tactical-cmd-button" text="RETREAT">
+            <ui:VisualElement name="cooldown-overlay" class="cooldown-overlay" />
+        </ui:Button>
+        <ui:Button name="cmd-suppressive" class="tactical-cmd-button" text="SUPPRESS">
+            <ui:VisualElement name="cooldown-overlay" class="cooldown-overlay" />
+        </ui:Button>
+        <ui:Button name="cmd-deploy-trap" class="tactical-cmd-button" text="TRAP">
+            <ui:VisualElement name="cooldown-overlay" class="cooldown-overlay" />
+        </ui:Button>
+        <ui:Button name="cmd-decon-flush" class="tactical-cmd-button" text="FLUSH">
+            <ui:VisualElement name="cooldown-overlay" class="cooldown-overlay" />
+        </ui:Button>
+    </ui:VisualElement>
+</ui:UXML>

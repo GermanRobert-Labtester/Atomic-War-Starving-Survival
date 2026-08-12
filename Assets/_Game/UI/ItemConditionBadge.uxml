@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="item-condition-badge" class="item-condition-badge" picking-mode="Ignore">
+        <ui:VisualElement class="condition-bar-track">
+            <ui:VisualElement name="condition-bar-fill" class="condition-bar-fill" />
+        </ui:VisualElement>
+        <ui:Label name="condition-text" class="condition-text" text="" />
+        <ui:VisualElement name="contamination-icon" class="contamination-icon" />
+        <ui:Label name="expiration-label" class="expiration-label" text="" />
+    </ui:VisualElement>
+</ui:UXML>

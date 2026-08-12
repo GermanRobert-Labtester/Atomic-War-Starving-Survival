@@ -1,7 +1,32 @@
 /* ===================================================================
-   Phase 11 — Expansion UI Widget Stylesheet
-   Shared styles for all 8 Phase 11 widgets.
+   Phase 11 + Expansions 3/4 + Deep Lore — Shared Widget Stylesheet
+   Tokens from design-tokens.json / UIBatch11_A.uss palette
    =================================================================== */
+
+:root {
+    --ink: #090b0c;
+    --pale: #e6e0d2;
+    --warm: #d3aa62;
+    --muted: #938f84;
+    --dim: #66675f;
+    --line: rgba(217, 196, 152, 0.27);
+    --amber: #FFC107;
+    --amber-bright: #FFD54F;
+    --red: #F44336;
+    --green: #4CAF50;
+    --blue: #42A5F5;
+    --grey: #9E9E9E;
+    --phase-healthy: #4CAF50;
+    --phase-prodromal: #FFC107;
+    --phase-manifest: #F44336;
+    --phase-fibrosis: #9E9E9E;
+    --phase-recovery: #2196F3;
+    --moral-compassion: #6ea3a8;
+    --keepsake-gold: #d3aa62;
+    --terminal-amber: #f4c875;
+}
+
+.hidden { display: none; }
 
 /* ── Radiation Phase Indicator ──────────────────────────────────── */
 .radiation-phase-indicator {
@@ -9,20 +34,23 @@
     align-items: center;
     margin: 4px 8px;
 }
-.phase-dot {
+.radiation-phase-dot, .phase-dot {
     width: 14px;
     height: 14px;
     border-radius: 7px;
     margin-right: 6px;
+    background-color: var(--phase-healthy);
 }
-.phase-dot.healthy { background-color: #4CAF50; }
-.phase-dot.prodromal { background-color: #FFC107; animation: pulse 1s infinite; }
-.phase-dot.latent { background-color: #4CAF50; }
-.phase-dot.latent::after { content: "?"; color: #FFC107; font-size: 10px; }
-.phase-dot.manifest { background-color: #F44336; animation: flash 0.5s infinite; }
-.phase-dot.chronic { background-color: #9E9E9E; }
-.phase-dot.recovery { background-color: #2196F3; }
-.phase-tooltip { font-size: 11px; color: #9E9E9E; margin-left: 4px; }
+.radiation-phase-dot--prodromal, .phase-dot.prodromal { background-color: var(--phase-prodromal); }
+.radiation-phase-dot--manifest, .phase-dot.manifest { background-color: var(--phase-manifest); }
+.radiation-phase-dot--fibrosis, .phase-dot.chronic { background-color: var(--phase-fibrosis); }
+.radiation-phase-dot--recovery, .phase-dot.recovery { background-color: var(--phase-recovery); }
+.radiation-phase-label, .phase-tooltip {
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 4px;
+    letter-spacing: 1px;
+}
 
 /* ── Phantom Memory Vignette ────────────────────────────────────── */
 .phantom-memory-vignette {
@@ -30,102 +58,531 @@
     top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none;
     opacity: 0;
-    transition: opacity 0.3s ease;
+    justify-content: center;
+    align-items: center;
 }
-.phantom-memory-vignette.active { opacity: 1; }
-.vignette-gradient { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-.vignette-gradient.motivation { background: radial-gradient(circle, transparent 40%, rgba(180,120,60,0.4) 100%); }
-.vignette-gradient.breakdown { background: radial-gradient(circle, transparent 40%, rgba(60,80,120,0.5) 100%); }
-.memory-text {
-    position: absolute; bottom: 80px; left: 0; right: 0;
-    text-align: center; font-size: 20px;
-    -unity-font: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
-    color: #FFD54F;
+.phantom-memory-vignette--motivation .vignette-gradient { background-color: rgba(185, 138, 94, 0.35); }
+.phantom-memory-vignette--breakdown .vignette-gradient { background-color: rgba(110, 163, 168, 0.40); }
+.vignette-gradient {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+}
+.phantom-memory-text, .memory-text {
+    position: relative;
+    max-width: 70%;
+    text-align: center;
+    font-size: 20px;
+    color: var(--amber-bright);
+    white-space: normal;
+    padding: 24px;
+    background-color: rgba(9, 11, 12, 0.72);
+    border-width: 1px;
+    border-color: var(--line);
 }
 
 /* ── Hypervigilance Indicator ───────────────────────────────────── */
-.hypervigilance-indicator { position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; }
-.eye-icon { width: 14px; height: 14px; }
-.eye-icon.low { background-color: #FFC107; border-radius: 7px; animation: pulse 2s infinite; }
-.eye-icon.high { background-color: #F44336; border-radius: 7px; animation: pulse 0.8s infinite; }
-@keyframes eye-shake {
-    0%, 100% { transform: translate(0,0); }
-    25% { transform: translate(-2px,0); }
-    75% { transform: translate(2px,0); }
+.hypervigilance-indicator {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
 }
-.eye-icon.false-alarm { animation: eye-shake 0.3s infinite; background-color: #F44336; }
+.hypervigilance-eye, .eye-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: var(--amber);
+    -unity-text-align: middle-center;
+    font-size: 9px;
+    color: var(--ink);
+}
+.hypervigilance-eye--alert { background-color: var(--red); }
+.hypervigilance-eye--shake { border-color: var(--red); }
+.hypervigilance-flash {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(244, 67, 54, 0.25);
+    pointer-events: none;
+}
+.hypervigilance-flash--active { display: flex; }
 
 /* ── Moral Branch Display ───────────────────────────────────────── */
-.moral-branch-display { flex-direction: row; align-items: center; margin: 2px 4px; }
-.branch-icon { width: 16px; height: 16px; margin-right: 4px; }
-.branch-icon.numbed { background-color: #9E9E9E; }
-.branch-icon.compassion { background-color: #42A5F5; }
-.branch-label { font-size: 10px; color: #9E9E9E; -unity-font-style: italic; }
+.moral-branch-display {
+    flex-direction: row;
+    align-items: center;
+    margin: 2px 4px;
+}
+.moral-branch-icon, .branch-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    font-size: 12px;
+    -unity-text-align: middle-center;
+    color: var(--grey);
+}
+.moral-branch-icon--compassion, .branch-icon.compassion { color: var(--moral-compassion); }
+.branch-icon.numbed { color: var(--grey); }
+.moral-branch-label, .branch-label {
+    font-size: 10px;
+    color: var(--muted);
+    -unity-font-style: italic;
+}
 
 /* ── Keepsake Slot ──────────────────────────────────────────────── */
 .keepsake-slot {
-    width: 48px; height: 48px;
+    width: 48px;
+    height: 48px;
     border-width: 2px;
-    border-color: #FFD54F;
+    border-color: var(--keepsake-gold);
     border-radius: 4px;
     margin: 4px;
     align-items: center;
     justify-content: center;
 }
-.keepsake-slot.lost { border-color: #F44336; opacity: 0.5; }
-.slot-border { width: 44px; height: 44px; }
-.item-icon { width: 40px; height: 40px; }
-.cracked-overlay {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-    opacity: 0;
-    transition: opacity 0.3s;
+.keepsake-slot--lost, .keepsake-slot.lost { border-color: var(--red); opacity: 0.5; }
+.slot-border {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    border-width: 1px;
+    border-color: var(--line);
 }
-.cracked-overlay.visible { opacity: 0.7; }
+.keepsake-slot-icon, .item-icon {
+    font-size: 10px;
+    color: var(--pale);
+    -unity-text-align: middle-center;
+}
+.keepsake-crack-overlay, .cracked-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0;
+    background-color: rgba(230, 51, 51, 0.15);
+}
+.keepsake-crack-overlay--visible, .cracked-overlay.visible { opacity: 0.7; }
 .grief-vignette {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
     background-color: rgba(244, 67, 54, 0.3);
+    pointer-events: none;
 }
 
 /* ── Memorial Wall ──────────────────────────────────────────────── */
 .memorial-wall {
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
     background-color: rgba(28, 28, 28, 0.97);
     flex-direction: column;
     padding: 24px;
 }
-.wall-background { position: absolute; top: 0; left: 0; right: 0; bottom: 0; opacity: 0.15; }
-.entries-scroll { flex-grow: 1; margin: 12px 0; }
-.memorial-entry { flex-direction: row; align-items: center; padding: 8px 0;
-    border-bottom-width: 1px; border-bottom-color: rgba(189,189,189,0.2); }
-.memorial-entry .name { font-size: 16px; color: #BDBDBD; margin-right: 12px; }
-.memorial-entry .detail { font-size: 12px; color: #757575; }
-.pay-respects-button {
-    background-color: rgba(255,193,7,0.2);
-    border-width: 1px; border-color: #FFC107;
-    border-radius: 4px; padding: 8px 24px;
-    font-size: 14px; color: #FFC107;
+.wall-background {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.15;
+    background-color: var(--dim);
+}
+.memorial-wall-title {
+    font-size: 16px;
+    color: var(--warm);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+.memorial-entry-list, .entries-scroll {
+    flex-grow: 1;
+    margin: 12px 0;
+}
+.memorial-entry-row {
+    flex-direction: row;
+    padding: 8px 0;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(189, 189, 189, 0.2);
+}
+.memorial-entry-name { flex-grow: 1; font-size: 16px; color: #BDBDBD; }
+.memorial-entry-day { font-size: 12px; color: #757575; }
+.memorial-pay-respects-btn, .pay-respects-button {
+    background-color: rgba(255, 193, 7, 0.2);
+    border-width: 1px;
+    border-color: var(--amber);
+    border-radius: 4px;
+    padding: 8px 24px;
+    font-size: 14px;
+    color: var(--amber);
     align-self: flex-end;
 }
-.pay-respects-button:hover { background-color: rgba(255,193,7,0.4); }
-.empty-state { font-size: 16px; color: #757575; -unity-font-style: italic; text-align: center; margin-top: 40px; }
+.memorial-wall-empty, .empty-state {
+    font-size: 16px;
+    color: #757575;
+    -unity-font-style: italic;
+    text-align: center;
+    margin-top: 40px;
+}
 
 /* ── Terminal Prognosis Banner ──────────────────────────────────── */
 .terminal-prognosis-banner {
-    height: 24px; flex-direction: row; align-items: center;
-    padding: 0 8px; margin: 2px 0; border-radius: 2px;
+    height: 24px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 8px;
+    margin: 2px 0;
+    border-radius: 2px;
+    border-width: 1px;
+    border-color: var(--terminal-amber);
+    background-color: rgba(255, 193, 7, 0.15);
 }
-.terminal-prognosis-banner.active { background-color: rgba(255,193,7,0.15); border-width: 1px; border-color: #FFC107; }
-.terminal-prognosis-banner.completed { background-color: rgba(255,213,79,0.15); border-width: 1px; border-color: #FFD54F; }
-.terminal-prognosis-banner.failed { background-color: rgba(158,158,158,0.15); border-width: 1px; border-color: #9E9E9E; }
-.prognosis-text { font-size: 11px; color: #FFC107; }
+.terminal-prognosis-banner--completed { border-color: var(--amber-bright); background-color: rgba(255, 213, 79, 0.15); }
+.terminal-prognosis-banner--failed { border-color: var(--grey); background-color: rgba(158, 158, 158, 0.15); }
+.terminal-prognosis-text, .prognosis-text {
+    font-size: 11px;
+    color: var(--amber);
+}
 
 /* ── Addiction Detox Indicator ──────────────────────────────────── */
-.addiction-detox-indicator { width: 16px; height: 16px; border-radius: 8px; margin: 2px; }
-.addiction-detox-indicator.dependent { background-color: #FF9800; }
-.addiction-detox-indicator.withdrawal { background-color: #F44336; animation: pulse 0.5s infinite; }
-.addiction-detox-indicator.managed-detox { background-color: #FFC107; animation: pulse 2s infinite; }
-.addiction-detox-indicator.recovered { background-color: #4CAF50; transition: opacity 1s; }
-.addiction-detox-indicator.recovered.fading { opacity: 0; }
+.addiction-detox-indicator {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    margin: 2px;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF9800;
+}
+.addiction-detox-indicator--withdrawal { background-color: var(--red); }
+.addiction-detox-indicator--detox { background-color: var(--amber); }
+.addiction-detox-indicator--recovered { background-color: var(--green); }
+.addiction-detox-icon, .detox-icon {
+    font-size: 9px;
+    color: var(--ink);
+    -unity-text-align: middle-center;
+}
+
+/* ── Location Detail Panel ──────────────────────────────────────── */
+.location-detail-panel {
+    position: absolute;
+    right: 16px;
+    top: 80px;
+    width: 280px;
+    padding: 16px;
+    background-color: rgba(9, 11, 12, 0.94);
+    border-width: 1px;
+    border-color: var(--line);
+    flex-direction: column;
+}
+.location-name {
+    font-size: 16px;
+    color: var(--amber);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+.location-detail-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.location-detail-label {
+    width: 80px;
+    font-size: 10px;
+    color: var(--muted);
+}
+.location-radiation-bar, .location-collapse-bar {
+    flex-grow: 1;
+    height: 8px;
+    margin-right: 8px;
+}
+.radiation-value { font-size: 11px; color: var(--pale); }
+.danger-skulls { flex-direction: row; margin: 8px 0; }
+.location-faction-row { flex-direction: row; align-items: center; margin: 8px 0; }
+.faction-icon { width: 24px; height: 24px; margin-right: 8px; }
+.faction-name { font-size: 12px; color: var(--pale); }
+.loot-preview-title { font-size: 10px; color: var(--muted); margin-top: 8px; }
+.loot-preview { margin-top: 4px; }
+
+/* ── Item Condition Badge ───────────────────────────────────────── */
+.item-condition-badge {
+    flex-direction: column;
+    padding: 4px;
+    min-width: 64px;
+}
+.condition-bar-track {
+    height: 4px;
+    background-color: rgba(255,255,255,0.1);
+    margin-bottom: 2px;
+}
+.condition-bar-fill {
+    height: 100%;
+    width: 100%;
+    background-color: var(--green);
+}
+.condition-text { font-size: 9px; color: var(--amber); }
+.contamination-icon {
+    width: 12px;
+    height: 12px;
+    background-color: var(--green);
+    opacity: 0;
+    margin-top: 2px;
+}
+.expiration-label { font-size: 9px; color: var(--red); }
+
+/* ── Questline Progress Tracker ─────────────────────────────────── */
+.questline-tracker {
+    position: absolute;
+    left: 16px;
+    bottom: 120px;
+    width: 320px;
+    padding: 12px;
+    background-color: rgba(9, 11, 12, 0.92);
+    border-width: 1px;
+    border-color: var(--line);
+}
+.quest-title { font-size: 14px; color: var(--amber); margin-bottom: 8px; }
+.stages-container { flex-direction: row; align-items: center; margin-bottom: 8px; }
+.stage-description { font-size: 12px; color: var(--pale); margin-bottom: 8px; }
+.choices-container { flex-direction: row; }
+
+/* ── Siege Status HUD ───────────────────────────────────────────── */
+.siege-status {
+    position: absolute;
+    left: 50%;
+    top: 48px;
+    translate: -50% 0;
+    width: 360px;
+    padding: 12px;
+    background-color: rgba(9, 11, 12, 0.94);
+    border-width: 2px;
+    border-color: var(--red);
+    flex-direction: column;
+}
+.siege-label { font-size: 14px; color: var(--red); letter-spacing: 2px; margin-bottom: 8px; }
+.siege-bar-label { font-size: 10px; color: var(--muted); margin-top: 4px; }
+.hatch-integrity-bar, .breach-progress-bar { height: 10px; margin: 4px 0; }
+.reinforcement-icon { width: 32px; height: 32px; margin: 8px 0; }
+.reinforcement-icon.wood { background-color: #8D6E63; }
+.reinforcement-icon.steel { background-color: #78909C; }
+.reinforcement-icon.composite { background-color: #546E7A; border-color: var(--amber); border-width: 1px; }
+.active-effects { flex-direction: row; flex-wrap: wrap; margin: 8px 0; }
+.command-buttons { flex-direction: row; flex-wrap: wrap; }
+.command-button {
+    margin: 2px;
+    padding: 4px 8px;
+    font-size: 10px;
+    background-color: rgba(255, 193, 7, 0.15);
+    border-color: var(--amber);
+    color: var(--pale);
+}
+
+/* ── Faction Intelligence Panel ─────────────────────────────────── */
+.faction-intelligence-panel {
+    position: absolute;
+    right: 16px;
+    bottom: 80px;
+    width: 300px;
+    padding: 12px;
+    background-color: rgba(9, 11, 12, 0.94);
+    border-width: 1px;
+    border-color: var(--line);
+}
+.faction-intel-name { font-size: 14px; color: var(--amber); margin-bottom: 8px; }
+.standing-bar { height: 10px; margin: 4px 0; }
+.standing-value { font-size: 12px; color: var(--pale); }
+.tribute-info { font-size: 11px; color: var(--muted); margin: 8px 0; }
+.intel-section { margin: 8px 0; max-height: 120px; }
+.agent-section { flex-direction: row; margin-top: 8px; }
+.intel-action-button {
+    flex-grow: 1;
+    margin: 0 4px;
+    font-size: 10px;
+    background-color: rgba(255, 193, 7, 0.15);
+    border-color: var(--amber);
+    color: var(--pale);
+}
+
+/* ── Vehicle Status Panel ───────────────────────────────────────── */
+.vehicle-status-panel {
+    position: absolute;
+    left: 16px;
+    top: 200px;
+    width: 260px;
+    padding: 12px;
+    background-color: rgba(9, 11, 12, 0.94);
+    border-width: 1px;
+    border-color: var(--line);
+}
+.vehicle-name { font-size: 14px; color: var(--amber); margin-bottom: 8px; }
+.vehicle-bar-label { font-size: 10px; color: var(--muted); margin-top: 4px; }
+.vehicle-condition-bar, .vehicle-fuel-bar, .vehicle-cargo-bar { height: 8px; margin: 2px 0; }
+.fuel-value, .cargo-value { font-size: 10px; color: var(--pale); }
+.mod-slots { flex-direction: row; flex-wrap: wrap; margin-top: 8px; }
+.breakdown-risk { font-size: 11px; color: var(--amber); margin-top: 8px; }
+
+/* ── Tactical Command Bar ───────────────────────────────────────── */
+.tactical-command-bar {
+    position: absolute;
+    left: 50%;
+    bottom: 24px;
+    translate: -50% 0;
+    flex-direction: row;
+    padding: 8px;
+    background-color: rgba(9, 11, 12, 0.92);
+    border-width: 1px;
+    border-color: var(--line);
+}
+.tactical-cmd-button {
+    width: 64px;
+    height: 48px;
+    margin: 0 4px;
+    font-size: 9px;
+    background-color: rgba(255, 193, 7, 0.12);
+    border-color: var(--amber);
+    color: var(--pale);
+}
+.cooldown-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+}
+
+/* ── Questline Stage Tracker ────────────────────────────────────── */
+.questline-stage-tracker {
+    position: absolute;
+    left: 16px;
+    top: 120px;
+    width: 340px;
+    height: 280px;
+    flex-direction: row;
+    background-color: rgba(9, 11, 12, 0.94);
+    border-width: 1px;
+    border-color: var(--line);
+}
+.quest-list { width: 140px; border-right-width: 1px; border-right-color: var(--line); }
+.quest-detail { flex-grow: 1; padding: 12px; flex-direction: column; }
+.quest-entry { padding: 8px; border-bottom-width: 1px; border-bottom-color: var(--line); }
+.objective-text { font-size: 12px; color: var(--pale); margin-bottom: 8px; }
+.objective-checkboxes { flex-grow: 1; }
+.dispatch-button {
+    margin-top: 8px;
+    background-color: rgba(76, 175, 80, 0.2);
+    border-color: var(--green);
+    color: var(--pale);
+}
+
+/* ── Lore Codex Panel ───────────────────────────────────────────── */
+.lore-codex-panel {
+    position: absolute;
+    left: 8%; right: 8%; top: 6%; bottom: 6%;
+    background-color: rgba(9, 11, 12, 0.96);
+    border-width: 2px;
+    border-color: var(--warm);
+    flex-direction: column;
+    padding: 20px;
+}
+.codex-header { flex-direction: row; align-items: center; margin-bottom: 16px; }
+.codex-title { font-size: 28px; color: var(--amber); flex-grow: 1; letter-spacing: 2px; }
+.codex-tabs { flex-direction: row; }
+.codex-tab {
+    margin: 0 4px;
+    padding: 6px 12px;
+    font-size: 11px;
+    background-color: rgba(255, 193, 7, 0.1);
+    border-color: var(--amber);
+    color: var(--pale);
+}
+.codex-close-button {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    background-color: transparent;
+    border-color: var(--line);
+    color: var(--pale);
+}
+.codex-content { flex-grow: 1; flex-direction: column; }
+.codex-scroll { flex-grow: 1; }
+.section-title { font-size: 14px; color: var(--pale); margin-bottom: 12px; }
+.era-section { margin-bottom: 12px; padding: 8px; }
+.era-header { flex-direction: row; align-items: center; }
+.era-icon { width: 24px; height: 24px; margin-right: 8px; background-color: var(--amber); }
+.era-title { font-size: 18px; color: white; }
+.era-divider { height: 1px; background-color: rgba(255, 193, 7, 0.2); margin: 8px 0; }
+.history-entry { padding: 8px; margin-bottom: 8px; background-color: rgba(255,255,255,0.03); }
+.faction-entry { padding: 12px; margin-bottom: 12px; border-width: 1px; border-color: var(--line); }
+
+/* ── Faction Relationship Map ─────────────────────────────────── */
+.faction-relationship-map {
+    position: absolute;
+    left: 10%; right: 10%; top: 10%; bottom: 10%;
+    background-color: rgba(9, 11, 12, 0.96);
+    border-width: 1px;
+    border-color: var(--line);
+    flex-direction: column;
+    padding: 16px;
+}
+.map-title { font-size: 16px; color: var(--amber); letter-spacing: 2px; margin-bottom: 12px; }
+.map-canvas {
+    flex-grow: 1;
+    position: relative;
+    min-height: 240px;
+}
+.faction-node {
+    position: absolute;
+    width: 100px;
+    align-items: center;
+    padding: 8px;
+    border-width: 1px;
+    border-color: var(--line);
+    background-color: rgba(255,255,255,0.04);
+}
+.garrison-node { top: 8px; left: 50%; translate: -50% 0; }
+.militia-node { top: 50%; left: 8px; translate: 0 -50%; }
+.cult-node { top: 50%; right: 8px; translate: 0 -50%; }
+.warlords-node { bottom: 8px; left: 50%; translate: -50% 0; }
+.faction-emblem-large { width: 32px; height: 32px; margin-bottom: 4px; background-color: var(--grey); }
+.node-label { font-size: 9px; color: var(--pale); -unity-text-align: middle-center; white-space: normal; }
+.standing-indicator { width: 8px; height: 8px; border-radius: 4px; margin-top: 4px; background-color: var(--grey); }
+.map-legend { flex-direction: row; justify-content: center; margin-top: 12px; }
+.legend-item { flex-direction: row; align-items: center; margin: 0 8px; }
+.legend-line { width: 24px; height: 2px; margin-right: 4px; }
+.hostile-line { background-color: var(--red); }
+.neutral-line { background-color: var(--grey); }
+.allied-line { background-color: var(--blue); }
+.legend-label { font-size: 9px; color: var(--muted); }
+.faction-node.pulse { border-color: var(--amber); border-width: 2px; }
+
+/* ── Character Arc Progress Panel ───────────────────────────────── */
+.character-arc-panel {
+    position: absolute;
+    right: 8%;
+    top: 8%;
+    width: 320px;
+    max-height: 80%;
+    padding: 16px;
+    background-color: rgba(9, 11, 12, 0.96);
+    border-width: 1px;
+    border-color: var(--line);
+    flex-direction: column;
+}
+.character-name { font-size: 18px; color: white; }
+.character-profession { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
+.character-bio { font-size: 12px; color: var(--pale); margin-bottom: 12px; white-space: normal; }
+.arc-timeline { flex-direction: column; }
+.arc-stage { flex-direction: row; align-items: flex-start; margin-bottom: 4px; }
+.stage-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    margin-right: 8px;
+    background-color: var(--grey);
+    flex-shrink: 0;
+}
+.crisis-circle { border-color: var(--red); border-width: 2px; }
+.stage-title { font-size: 11px; color: var(--pale); }
+.crisis-title { color: var(--red); }
+.stage-desc { font-size: 10px; color: var(--muted); white-space: normal; }
+.stage-connector-vertical { width: 2px; height: 16px; margin-left: 9px; background-color: var(--grey); }
+.branch-indicators { flex-direction: row; margin-top: 8px; }
+.branch-option { flex-direction: column; align-items: center; margin-right: 16px; }
+.branch-label { font-size: 9px; color: var(--muted); }
+.arc-reward { margin-top: 12px; padding-top: 12px; border-top-width: 1px; border-top-color: var(--line); }
+.reward-title { font-size: 10px; color: var(--amber); margin-bottom: 4px; }
+.reward-name { font-size: 12px; color: var(--green); }
 
 /* ── Shared Animations ──────────────────────────────────────────── */
 @keyframes pulse {
@@ -136,3 +593,4 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
 }
+.radiation-phase-dot--pulse { opacity: 1; }

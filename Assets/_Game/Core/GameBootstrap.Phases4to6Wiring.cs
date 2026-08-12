@@ -56,8 +56,8 @@ namespace AtomicWar._Game.Core
 
             Action<Recipe> onCraftCompleted = (recipe) =>
             {
-                if (recipe?.result?.Id == null) return;
-                string itemId = recipe.result.Id;
+                if (recipe?.result?.id == null) return;
+                string itemId = recipe.result.id;
                 if (Survivors == null) return;
                 // Apply to the survivor most likely crafting
                 for (int i = 0; i < Survivors.Count; i++)
@@ -220,8 +220,8 @@ namespace AtomicWar._Game.Core
 
                     for (int i = 0; i < items.Count; i++)
                     {
-                        if (items[i]?.Id == null) continue;
-                        string id = items[i].Id;
+                        if (items[i]?.id == null) continue;
+                        string id = items[i].id;
                         if (id.Contains("letter") || id.Contains("mail") ||
                             id.Contains("correspondence") || id.Contains("undelivered"))
                         {
@@ -265,9 +265,9 @@ namespace AtomicWar._Game.Core
                         if (state == null || items == null) return;
                         for (int i = 0; i < items.Count; i++)
                         {
-                            if (items[i]?.Id == null) continue;
-                            if (items[i].Id.Contains("damaged_map") ||
-                                items[i].Id.Contains("map_fragment"))
+                            if (items[i]?.id == null) continue;
+                            if (items[i].id.Contains("damaged_map") ||
+                                items[i].id.Contains("map_fragment"))
                             {
                                 // Map pieces tracked; assembly checked in
                                 // DamagedMapSystem which reads inventory
@@ -284,9 +284,9 @@ namespace AtomicWar._Game.Core
             {
                 Action<ItemDefinition, int> onItemAdded = (itemDef, amount) =>
                 {
-                    if (itemDef?.Id == null) return;
-                    if (itemDef.Id.Contains("cassette") ||
-                        itemDef.Id.Contains("audio_tape"))
+                    if (itemDef?.id == null) return;
+                    if (itemDef.id.Contains("cassette") ||
+                        itemDef.id.Contains("audio_tape"))
                     {
                         // Cassette collection tracked; set completion
                         // checked in AudioCassetteSystem

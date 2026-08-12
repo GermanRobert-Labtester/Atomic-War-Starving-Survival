@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Inventory;
 
 namespace AtomicWar._Game.Core
 {
@@ -40,15 +42,7 @@ namespace AtomicWar._Game.Core
         {
             if (SomaticFlashbackSystem == null) return;
 
-            // Subscribe to emergency siren events via AudioEventBus
-            Action<EmergencySirenAudioEvent> onSirenChanged = (sirenEvent) =>
-            {
-                if (sirenEvent.IsActive)
-                    SomaticFlashbackSystem.OnAudioEvent("siren", 0.9f);
-            };
-            AudioEventBus.OnEmergencySirenStateChanged += onSirenChanged;
-            _subscriptions.Track(() =>
-                AudioEventBus.OnEmergencySirenStateChanged -= onSirenChanged);
+            // TODO: AudioEventBus is an instance class; wire siren when bus ref available.
 
             // Subscribe to raid resolutions as explosion-like triggers
             EventBus.Subscribe<RaidResolution>((resolution) =>
@@ -145,15 +139,15 @@ namespace AtomicWar._Game.Core
             RegisterChemicalDependencyItems();
 
             // Hook into existing AddictionSystem's consumption tracking
-            if (AddictionSystem != null)
+            if (Addiction != null)
             {
                 Action<Survivor> onAddicted = (sv) =>
                 {
                     // When AddictionSystem detects addiction, also register
                     // with ChemicalDependencySystem if the item is known
                 };
-                AddictionSystem.OnAddicted += onAddicted;
-                _subscriptions.Track(() => AddictionSystem.OnAddicted -= onAddicted);
+                Addiction.OnAddicted += onAddicted;
+                _subscriptions.Track(() => Addiction.OnAddicted -= onAddicted);
             }
 
             // Hook into item consumption via Inventory
@@ -163,7 +157,7 @@ namespace AtomicWar._Game.Core
                     (itemDef, amount) =>
                     {
                         if (itemDef == null || amount <= 0) return;
-                        var kind = GetChemicalDependencyKindForItem(itemDef.Id);
+                        var kind = GetChemicalDependencyKindForItem(itemDef.id);
                         if (kind == null) return;
 
                         if (Survivors == null) return;
@@ -175,7 +169,7 @@ namespace AtomicWar._Game.Core
                                 sv.State != SurvivorState.Dead)
                             {
                                 ChemicalDependencySystem.OnSubstanceConsumed(
-                                    sv, itemDef.Id, kind.Value);
+                                    sv, itemDef.id, kind.Value);
                                 break; // only one survivor per consumption
                             }
                         }

@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="questline-tracker" class="questline-tracker hidden" picking-mode="Position">
+        <ui:Label name="quest-title" class="quest-title" text="QUESTLINE" />
+        <ui:VisualElement name="stages-container" class="stages-container" />
+        <ui:Label name="stage-description" class="stage-description" text="" />
+        <ui:VisualElement name="choices-container" class="choices-container" />
+    </ui:VisualElement>
+</ui:UXML>

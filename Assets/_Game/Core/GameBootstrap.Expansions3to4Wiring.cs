@@ -28,7 +28,7 @@ namespace AtomicWar._Game.Core
         private void InitExpansions3to4()
         {
             InitExpansion3Systems();
-            InitExpansion4Systems();
+            InitExpansionPack4Systems();
             WireExpansions3to4Callbacks();
         }
 
@@ -48,7 +48,7 @@ namespace AtomicWar._Game.Core
                 GetCurrentDay = () => TimeSystem?.CurrentDay ?? 1,
                 FireNarrativeEvent = (eventId, context) =>
                 {
-                    EventRunner?.TriggerEventById(eventId);
+                    TriggerEventById(eventId);
                 },
                 Rng = new System.Random(_worldSeed + 83)
             };
@@ -73,9 +73,9 @@ namespace AtomicWar._Game.Core
                                 {
                                     foreach (var item in items)
                                     {
-                                        if (item?.Id != null)
+                                        if (item?.id != null)
                                             DynamicQuestlines.CompleteObjective(
-                                                quest.QuestId, item.Id);
+                                                quest.QuestId, item.id);
                                     }
                                 }
                                 // Advance stage if location reached
@@ -94,7 +94,7 @@ namespace AtomicWar._Game.Core
         // Expansion 4: Siege, Faction Intel, Vehicles
         // ═══════════════════════════════════════════════════════════════
 
-        private void InitExpansion4Systems()
+        private void InitExpansionPack4Systems()
         {
             // ── Faction Intelligence System ────────────────────────────
             FactionIntel = new FactionIntelligenceSystem
@@ -102,7 +102,7 @@ namespace AtomicWar._Game.Core
                 GetFactionStanding = factionId =>
                 {
                     if (EconomySystem != null)
-                        return EconomySystem.GetStanding(factionId);
+                        return EconomySystem.GetTrust(factionId);
                     return 0f;
                 },
                 GetAvailableResource = resourceType =>
@@ -144,7 +144,7 @@ namespace AtomicWar._Game.Core
         private void WireExpansions3to4Callbacks()
         {
             // ── Procedural loot integration with scavenging ────────────
-            if (LocationScavengingSystem != null && ProceduralLoot != null)
+            if (ScavengingSystem != null && ProceduralLoot != null)
             {
                 // Hook: when scavenging completes, use ProceduralLootGenerator
                 // to add variance to the returned items
@@ -156,7 +156,7 @@ namespace AtomicWar._Game.Core
                 Action<DynamicQuestState, int> onStageAdvanced = (quest, stage) =>
                 {
                     string eventId = $"narrative_{quest.QuestId}_stage_{stage}";
-                    EventRunner.TriggerEventById(eventId);
+                    TriggerEventById(eventId);
                 };
                 DynamicQuestlines.OnStageAdvanced += onStageAdvanced;
                 _subscriptions.Track(() =>
@@ -167,6 +167,23 @@ namespace AtomicWar._Game.Core
             if (FactionIntel != null && RadioTunerSystem != null)
             {
                 // Radio frequency decoding can yield intel
+            }
+        }
+
+        /// <summary>
+        /// Find a GameEvent by id in the EventRunner pool and Run it immediately.
+        /// No-op when EventRunner is null or the event id is not found.
+        /// </summary>
+        private void TriggerEventById(string eventId)
+        {
+            if (EventRunner == null || string.IsNullOrEmpty(eventId)) return;
+            for (int i = 0; i < EventRunner.Pool.Count; i++)
+            {
+                if (EventRunner.Pool[i]?.id == eventId)
+                {
+                    EventRunner.Run(EventRunner.Pool[i]);
+                    return;
+                }
             }
         }
     }

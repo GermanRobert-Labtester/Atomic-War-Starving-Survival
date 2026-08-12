@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Shelter;
 
 namespace AtomicWar._Game.Core
 {

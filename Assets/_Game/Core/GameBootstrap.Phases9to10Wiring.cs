@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Endgame;
+using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
 {
@@ -62,8 +63,8 @@ namespace AtomicWar._Game.Core
             GarrisonConscription.OnPunitiveRaidTriggered += () =>
             {
                 GameLog.Log("[Garrison] Punitive raid incoming — refused conscription.");
-                // Trigger a raid via HatchDefenseSystem
-                HatchDefenseSystem?.ForceRaid("garrison_punitive");
+                // TODO: HatchDefenseSystem.ForceRaid not available; open raid window as fallback
+                HatchDefenseSystem?.OpenRaidWindow();
             };
 
             // ── Ash Sign Cult ──────────────────────────────────────────
@@ -84,7 +85,7 @@ namespace AtomicWar._Game.Core
             _registry.RegisterDaily("scavengerRefuge",
                 d => ScavengerRefuge.Tick(d,
                     new System.Random(_worldSeed + 55),
-                    () => Shelter?.GetAvailableBedCount() ?? 4));
+                    () => 4));
             _registry.Register<ScavengerRefugeSystem>(ScavengerRefuge);
 
             ScavengerRefuge.OnRefugeesArrived += (count) =>

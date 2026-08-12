@@ -2,6 +2,7 @@
     <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
     <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
     <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
     <ui:VisualElement name="diegetic-root" class="diegetic-root" picking-mode="Ignore">
         <ui:VisualElement name="vitals-panel" class="diegetic-panel vitals-panel">
             <ui:Label name="vitals-clock" class="diegetic-title" text="DAY 1   00:00" />
@@ -204,8 +205,10 @@
             </ui:VisualElement>
             <ui:Label name="survivor-status-label"    class="diegetic-body emphasis" text="" />
             <ui:VisualElement name="keepsake-slot-root" class="keepsake-slot hidden" picking-mode="Ignore">
-                <ui:Label name="keepsake-slot-icon" class="keepsake-slot-icon" text="" />
-                <ui:VisualElement name="keepsake-crack-overlay" class="keepsake-crack-overlay" />
+                <ui:VisualElement name="slot-border" class="slot-border" />
+                <ui:Label name="keepsake-slot-icon" class="keepsake-slot-icon item-icon" text="" />
+                <ui:VisualElement name="keepsake-crack-overlay" class="keepsake-crack-overlay cracked-overlay" />
+                <ui:VisualElement name="grief-vignette" class="grief-vignette" />
             </ui:VisualElement>
         </ui:VisualElement>
 
@@ -455,7 +458,8 @@
 
         <ui:VisualElement name="phase11-overlay-layer" class="phase11-overlay-layer" picking-mode="Ignore">
             <ui:VisualElement name="phantom-memory-vignette-root" class="phantom-memory-vignette hidden" picking-mode="Ignore">
-                <ui:Label name="phantom-memory-text" class="phantom-memory-text" text="" />
+                <ui:VisualElement name="vignette-gradient" class="vignette-gradient" />
+                <ui:Label name="phantom-memory-text" class="phantom-memory-text memory-text" text="" />
             </ui:VisualElement>
             <ui:VisualElement name="hypervigilance-flash-root" class="hypervigilance-flash hidden" picking-mode="Ignore" />
         </ui:VisualElement>
@@ -470,11 +474,49 @@
 
         <!-- 6 Memorial Wall modal -->
         <ui:VisualElement name="memorial-wall-root" class="memorial-wall hidden">
+            <ui:VisualElement name="wall-background" class="wall-background" />
             <ui:Label name="memorial-wall-title" class="memorial-wall-title" text="MEMORIAL WALL" />
-            <ui:Label name="memorial-wall-empty" class="memorial-wall-empty" text="" />
-            <ui:ScrollView name="memorial-entry-list" class="memorial-entry-list" />
-            <ui:Button name="memorial-pay-respects-btn" class="memorial-pay-respects-btn" text="PAY RESPECTS (1h)" />
+            <ui:Label name="memorial-wall-empty" class="memorial-wall-empty empty-state" text="" />
+            <ui:ScrollView name="memorial-entry-list" class="memorial-entry-list entries-scroll" />
+            <ui:Button name="memorial-pay-respects-btn" class="memorial-pay-respects-btn pay-respects-button" text="PAY RESPECTS (1h)" />
         </ui:VisualElement>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             EXPANSIONS 3 & 4 + DEEP LORE — overlay panels
+             ═══════════════════════════════════════════════════════════════ -->
+
+        <ui:Template src="project://database/Assets/_Game/UI/LocationDetailPanel.uxml" name="LocationDetailPanelTemplate" />
+        <ui:Instance template="LocationDetailPanelTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/ItemConditionBadge.uxml" name="ItemConditionBadgeTemplate" />
+        <ui:Instance template="ItemConditionBadgeTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/QuestlineProgressTracker.uxml" name="QuestlineProgressTrackerTemplate" />
+        <ui:Instance template="QuestlineProgressTrackerTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/SiegeStatusHUD.uxml" name="SiegeStatusHUDTemplate" />
+        <ui:Instance template="SiegeStatusHUDTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/FactionIntelligencePanel.uxml" name="FactionIntelligencePanelTemplate" />
+        <ui:Instance template="FactionIntelligencePanelTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/VehicleStatusPanel.uxml" name="VehicleStatusPanelTemplate" />
+        <ui:Instance template="VehicleStatusPanelTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/TacticalCommandBar.uxml" name="TacticalCommandBarTemplate" />
+        <ui:Instance template="TacticalCommandBarTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/QuestlineStageTracker.uxml" name="QuestlineStageTrackerTemplate" />
+        <ui:Instance template="QuestlineStageTrackerTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/LoreCodexPanel.uxml" name="LoreCodexPanelTemplate" />
+        <ui:Instance template="LoreCodexPanelTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/FactionRelationshipMap.uxml" name="FactionRelationshipMapTemplate" />
+        <ui:Instance template="FactionRelationshipMapTemplate" />
+
+        <ui:Template src="project://database/Assets/_Game/UI/CharacterArcProgressPanel.uxml" name="CharacterArcProgressPanelTemplate" />
+        <ui:Instance template="CharacterArcProgressPanelTemplate" />
 
     </ui:VisualElement>
 </ui:UXML>

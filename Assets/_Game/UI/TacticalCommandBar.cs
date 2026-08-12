@@ -29,6 +29,11 @@ namespace AtomicWar._Game.UI
         public void ShowCommands(bool[] available, float[] cooldowns, System.Action<int> callback)
         {
             EnsureBound();
+            // #region agent log
+            AtomicWar._Game.Utilities.AgentDebugLog.Write("H3", "TacticalCommandBar.ShowCommands", "show",
+                "{\"rootNull\":" + (_root == null ? "true" : "false")
+                + ",\"btn0Null\":" + (_buttons[0] == null ? "true" : "false") + "}");
+            // #endregion
             if (_root == null) return;
             _root.style.display = DisplayStyle.Flex;
             for (int i = 0; i < 5 && i < _buttons.Length; i++)

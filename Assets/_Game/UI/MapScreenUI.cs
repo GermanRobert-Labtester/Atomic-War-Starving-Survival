@@ -114,6 +114,10 @@ namespace AtomicWar._Game.UI
             RebuildPath();
             RebuildDetail();
             OnMapScreenChanged?.Invoke();
+            // #region agent log
+            AtomicWar._Game.Utilities.AgentDebugLog.Write("H2", "MapScreenUI.SelectNode", "node selected",
+                "{\"nodeId\":\"" + (nodeId ?? "") + "\"}");
+            // #endregion
             return true;
         }
 
