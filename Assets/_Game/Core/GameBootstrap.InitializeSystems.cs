@@ -64,6 +64,9 @@ namespace AtomicWar._Game.Core
             // Siege Tactics, Faction Intel, Vehicle Systems
             InitExpansions3to4();
 
+            // Deep Lore — Narrative arcs, world history, faction lore
+            InitDeepLore();
+
             FinishSystemRegistration();
         }
 

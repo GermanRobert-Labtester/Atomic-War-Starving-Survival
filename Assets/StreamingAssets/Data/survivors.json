@@ -33,7 +33,7 @@
     "id": "the_pharmacist",
     "displayName": "The Pharmacist",
     "profession": "Pharmacist",
-    "bio": "Empty bottles line their pockets. The old CVS still has their logbook \u2014 if they dare go alone.",
+    "bio": "Empty bottles line their pockets. The old CVS still has their logbook — if they dare go alone.",
     "baseHealth": 85,
     "latentExpertTrait": "trait_alchemist",
     "activeQuestlineId": "quest_the_empty_bottles"
@@ -69,7 +69,7 @@
     "id": "the_veteran",
     "displayName": "The Veteran",
     "profession": "Soldier",
-    "bio": "Day 1 never ended for them. The old squad still calls on the radio \u2014 and something answers back.",
+    "bio": "Day 1 never ended for them. The old squad still calls on the radio — and something answers back.",
     "baseHealth": 110,
     "latentExpertTrait": "trait_warlord",
     "activeQuestlineId": "quest_ghosts_of_day_1"
@@ -78,7 +78,7 @@
     "id": "the_cop",
     "displayName": "The Cop",
     "profession": "Police Officer",
-    "bio": "They still wear the badge under the coat. The precinct lockbox is still there \u2014 if the streets allow it.",
+    "bio": "They still wear the badge under the coat. The precinct lockbox is still there — if the streets allow it.",
     "baseHealth": 100,
     "latentExpertTrait": "trait_peacekeeper",
     "activeQuestlineId": "quest_the_precinct"
@@ -96,7 +96,7 @@
     "id": "the_hunter",
     "displayName": "The Hunter",
     "profession": "Hunter",
-    "bio": "They tracked game before the blast. Something white still moves out there \u2014 and only a bow feels honest.",
+    "bio": "They tracked game before the blast. Something white still moves out there — and only a bow feels honest.",
     "baseHealth": 95,
     "latentExpertTrait": "trait_apex_predator",
     "activeQuestlineId": "quest_the_white_elk"
@@ -802,7 +802,9 @@
     "profession": "Cave Mapper",
     "bio": "They mapped the limestone networks before the war. They know where the bedrock is solid and where it's hollow. The dark is their oldest friend.",
     "baseHealth": 90,
-    "traits": ["trait_dark_acclimated"]
+    "traits": [
+      "trait_dark_acclimated"
+    ]
   },
   {
     "id": "survivor_sump_diver",
@@ -810,7 +812,9 @@
     "profession": "Scuba Scavenger",
     "bio": "They dive into the black water to pull copper from the drowned grid. Their skin is perpetually damp and pale. The water doesn't scare them anymore.",
     "baseHealth": 105,
-    "traits": ["trait_thalassophobia_resist"]
+    "traits": [
+      "trait_thalassophobia_resist"
+    ]
   },
   {
     "id": "survivor_mycologist",
@@ -818,7 +822,9 @@
     "profession": "Fungus Farmer",
     "bio": "They study the Ash-Blight. They know which molds will kill you, and which ones will numb the pain of dying. Their hands are stained blue-green.",
     "baseHealth": 80,
-    "traits": ["trait_rot_immunity"]
+    "traits": [
+      "trait_rot_immunity"
+    ]
   },
   {
     "id": "survivor_hydro_engineer",
@@ -826,7 +832,9 @@
     "profession": "Pump Specialist",
     "bio": "They understand fluid dynamics and pressure valves. They can hear a water main cracking three rooms away. The Black Aquifer doesn't surprise them.",
     "baseHealth": 95,
-    "traits": ["trait_dark_acclimated"]
+    "traits": [
+      "trait_dark_acclimated"
+    ]
   },
   {
     "id": "survivor_mole",
@@ -834,7 +842,9 @@
     "profession": "Tunnel Rat",
     "bio": "Small, quiet, and entirely comfortable in the dark. They fit through the ventilation shafts when the doors jam. The tight spaces are where they sleep best.",
     "baseHealth": 85,
-    "traits": ["trait_dark_acclimated"]
+    "traits": [
+      "trait_dark_acclimated"
+    ]
   },
   {
     "id": "survivor_rot_farmer",
@@ -842,7 +852,9 @@
     "profession": "Composter",
     "bio": "They smell of ammonia and wet earth. They don't mind the maggots; they consider them protein. The Ash-Blight is just another crop to them.",
     "baseHealth": 90,
-    "traits": ["trait_rot_immunity"]
+    "traits": [
+      "trait_rot_immunity"
+    ]
   },
   {
     "id": "survivor_sapper",
@@ -850,7 +862,9 @@
     "profession": "EOD Tech",
     "bio": "They spent the war clearing minefields. Now they clear the peace. They walk softly and never, ever rush. The ground remembers their footsteps.",
     "baseHealth": 95,
-    "traits": ["trait_uxo_instinct"]
+    "traits": [
+      "trait_uxo_instinct"
+    ]
   },
   {
     "id": "survivor_lineman",
@@ -858,7 +872,9 @@
     "profession": "Telecomm Tech",
     "bio": "They strung the copper that tied the country together. Now they strip it from the walls to keep the lights on. Every wire tells a story.",
     "baseHealth": 85,
-    "traits": ["trait_faraday_paranoia"]
+    "traits": [
+      "trait_faraday_paranoia"
+    ]
   },
   {
     "id": "survivor_drone_op",
@@ -866,7 +882,9 @@
     "profession": "UAV Pilot",
     "bio": "They used to fly Reapers from an air-conditioned trailer. Now they fly a duct-taped quadcopter with a mirror on a stick. The screen is smaller, but the kills are the same.",
     "baseHealth": 80,
-    "traits": ["trait_tinnitus"]
+    "traits": [
+      "trait_tinnitus"
+    ]
   },
   {
     "id": "survivor_acoustic_tech",
@@ -874,7 +892,9 @@
     "profession": "Sonar Operator",
     "bio": "Deaf in one ear. They can hear the click of a pressure plate under three feet of ash. The machines cannot hide from them.",
     "baseHealth": 90,
-    "traits": ["trait_tinnitus"]
+    "traits": [
+      "trait_tinnitus"
+    ]
   },
   {
     "id": "survivor_machinist",
@@ -882,7 +902,9 @@
     "profession": "CNC Operator",
     "bio": "They don't trust computers. They trust lathes, calipers, and cold-rolled steel. The EMP took the code, but the metal remembers its shape.",
     "baseHealth": 100,
-    "traits": ["trait_magnetism_phobia"]
+    "traits": [
+      "trait_magnetism_phobia"
+    ]
   },
   {
     "id": "survivor_logistician",
@@ -890,7 +912,9 @@
     "profession": "Supply Chain Mgr",
     "bio": "They know exactly how many rounds of 5.45mm are in a standard Crate B. They weep when you waste ammo. Every bullet has a spreadsheet.",
     "baseHealth": 85,
-    "traits": ["trait_uxo_instinct"]
+    "traits": [
+      "trait_uxo_instinct"
+    ]
   },
   {
     "id": "survivor_bunker_born",
@@ -898,7 +922,11 @@
     "profession": "Scavenger/Scrap",
     "bio": "Born in the dark. They navigate by air pressure and hum. The surface is a terrifying myth.",
     "baseHealth": 85,
-    "traits": ["trait_bunker_born", "trait_agoraphobia_severe", "trait_artifact_reverence"]
+    "traits": [
+      "trait_bunker_born",
+      "trait_agoraphobia_severe",
+      "trait_artifact_reverence"
+    ]
   },
   {
     "id": "survivor_the_waking",
@@ -906,7 +934,9 @@
     "profession": "Patient",
     "bio": "The amnestics wore off. They remember the flash, the heat, the shadows burned into the walls. They scream when the heater clicks.",
     "baseHealth": 70,
-    "traits": ["trait_hyperthymesia"]
+    "traits": [
+      "trait_hyperthymesia"
+    ]
   },
   {
     "id": "survivor_osteophage",
@@ -914,7 +944,9 @@
     "profession": "Scrapper",
     "bio": "Heavy metal poisoning. They chew on copper wire to stop the tremors. Immune to Affliction_Tetanus.",
     "baseHealth": 90,
-    "traits": ["trait_rot_immunity"]
+    "traits": [
+      "trait_rot_immunity"
+    ]
   },
   {
     "id": "survivor_archivist",
@@ -922,7 +954,9 @@
     "profession": "Monk/Historian",
     "bio": "They guard the item_vinyl_collection with a shotgun. They believe the pre-war world was a pantheon of gods.",
     "baseHealth": 75,
-    "traits": ["trait_artifact_reverence"]
+    "traits": [
+      "trait_artifact_reverence"
+    ]
   },
   {
     "id": "survivor_concrete_boss",
@@ -930,7 +964,10 @@
     "profession": "Foreman",
     "bio": "They can hear the rebar rusting. They smell carbonation. They are the only thing keeping the ceiling from crushing you.",
     "baseHealth": 110,
-    "traits": ["trait_concrete_boss", "trait_concrete_lung"]
+    "traits": [
+      "trait_concrete_boss",
+      "trait_concrete_lung"
+    ]
   },
   {
     "id": "survivor_uv_penitent",
@@ -938,6 +975,64 @@
     "profession": "Cultist",
     "bio": "They survived the Ozone Scourge by hiding under a corpse. Now they worship the burns.",
     "baseHealth": 80,
-    "traits": ["trait_sun_blindness"]
+    "traits": [
+      "trait_sun_blindness"
+    ]
+  },
+  {
+    "id": "aris_thorne",
+    "displayName": "Dr. Aris Thorne",
+    "profession": "Chief Structural Engineer",
+    "bio": "Designed the civilian shelter network before the war. Watched his wife and daughter die when an unreinforced hatch failed under an ash slide. Every crack in the concrete feels personal.",
+    "baseHealth": 95,
+    "latentExpertTrait": "trait_resilient_builder",
+    "activeQuestlineId": "quest_the_cracked_floor",
+    "baseTraits": [
+      "trait_methodical",
+      "trait_insomniac",
+      "trait_guilt_ridden"
+    ]
+  },
+  {
+    "id": "maya_lin",
+    "displayName": "Maya Lin",
+    "profession": "Radio Signal Technician",
+    "bio": "Spent three years locked in a radio room scanning static for her brother's unit. Speaks in calm, measured cadences over the airwaves but flinches at loud noises and struggles with the cold reality of life underground.",
+    "baseHealth": 80,
+    "latentExpertTrait": "trait_voice_of_hope",
+    "activeQuestlineId": "quest_the_dying_signal",
+    "baseTraits": [
+      "trait_keen_hearing",
+      "trait_denial",
+      "trait_fragile_health"
+    ]
+  },
+  {
+    "id": "victor_vance",
+    "displayName": "Captain Victor Vance",
+    "profession": "Garrison Tactical Commander",
+    "bio": "Deserted the Iron Garrison after refusing an order to execute civilians who failed a food tribute quota. Views survival through a strict tactical lens. His presence unnerves the civilian survivors who see only the uniform.",
+    "baseHealth": 110,
+    "latentExpertTrait": "trait_guardian_captain",
+    "activeQuestlineId": "quest_the_refugee_mass_influx",
+    "baseTraits": [
+      "trait_martial_discipline",
+      "trait_unforgiving",
+      "trait_tactical_mind"
+    ]
+  },
+  {
+    "id": "elena_rostov",
+    "displayName": "Dr. Elena Rostov",
+    "profession": "Trauma Surgeon",
+    "bio": "Treated shrapnel wounds in frontline triage tents for years before the Exchange. Speaks in flat, clinical terms — patients are complex biological machines. It is the only way she knows to keep working.",
+    "baseHealth": 90,
+    "latentExpertTrait": "trait_healers_soul",
+    "activeQuestlineId": "quest_the_ars_crisis",
+    "baseTraits": [
+      "trait_clinical_detachment",
+      "trait_surgical_precision",
+      "trait_chronic_cough"
+    ]
   }
 ]
