@@ -1,11 +1,14 @@
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine.UIElements;
-using AtomicWar._Game.Utilities;
+using AtomicWar._Game.UI;
 
 namespace AtomicWar.Tests.EditMode
 {
-    /// <summary>Debug-session probe: does DiegeticHud.uxml clone named expansion panels?</summary>
+    /// <summary>
+    /// Authored DiegeticHud.uxml must expose expansion / Phase 11 roots, and
+    /// EnsureBuilt must bind that tree instead of wiping it.
+    /// </summary>
     [TestFixture]
     public class DiegeticHudUxmlExpansionProbeTests
     {
@@ -19,64 +22,34 @@ namespace AtomicWar.Tests.EditMode
 
             var root = uxml.CloneTree();
             Assert.IsNotNull(root);
-
-            string[] names =
-            {
-                "diegetic-root",
-                "vitals-panel",
-                "radiation-phase-root",
-                "keepsake-slot-root",
-                "location-detail-panel",
-                "item-condition-badge",
-                "questline-tracker",
-                "siege-status",
-                "faction-intelligence-panel",
-                "vehicle-status-panel",
-                "tactical-command-bar",
-                "questline-stage-tracker",
-                "lore-codex-panel",
-                "faction-relationship-map",
-                "character-arc-panel"
-            };
-
-            var sb = new System.Text.StringBuilder();
-            sb.Append('{');
-            sb.Append("\"childCount\":").Append(root.childCount);
-            for (int i = 0; i < names.Length; i++)
-            {
-                bool found = root.Q(names[i]) != null;
-                sb.Append(",\"").Append(names[i]).Append("\":").Append(found ? "true" : "false");
-            }
-            sb.Append('}');
-            AgentDebugLog.Write("H1", "DiegeticHudUxmlExpansionProbeTests.CloneTree", "uxml clone probe", sb.ToString());
-
             Assert.IsNotNull(root.Q("diegetic-root"));
             Assert.IsNotNull(root.Q("vitals-panel"));
+            Assert.IsNotNull(root.Q("radiation-phase-root"));
+            Assert.IsNotNull(root.Q("location-detail-panel"));
+            Assert.IsNotNull(root.Q("siege-status"));
+            Assert.IsNotNull(root.Q("tactical-command-bar"));
+            Assert.IsNotNull(root.Q("lore-codex-panel"));
+            Assert.IsNotNull(root.Q("character-arc-panel"));
         }
 
         [Test]
         public void EnsureBuilt_KeepsExpansionRoots()
         {
             var go = new UnityEngine.GameObject("DiegeticHudExpansionProbe");
-            var diegetic = go.AddComponent<AtomicWar._Game.UI.DiegeticHudController>();
+            var diegetic = go.AddComponent<DiegeticHudController>();
             try
             {
                 Assert.IsTrue(diegetic.EnsureDocumentMounted());
                 diegetic.EnsureBuilt();
                 var docRoot = diegetic.Document != null ? diegetic.Document.rootVisualElement : null;
-                bool hasLoc = docRoot != null && docRoot.Q("location-detail-panel") != null;
-                bool hasSiege = docRoot != null && docRoot.Q("siege-status") != null;
-                bool hasRad = docRoot != null && docRoot.Q("radiation-phase-root") != null;
-                AgentDebugLog.Write("H5", "DiegeticHudUxmlExpansionProbeTests.EnsureBuilt", "controller probe",
-                    "{\"docNull\":" + (diegetic.Document == null ? "true" : "false")
-                    + ",\"isBuilt\":" + (diegetic.IsBuilt ? "true" : "false")
-                    + ",\"hasLocationPanel\":" + (hasLoc ? "true" : "false")
-                    + ",\"hasSiege\":" + (hasSiege ? "true" : "false")
-                    + ",\"hasRadPhase\":" + (hasRad ? "true" : "false")
-                    + ",\"viewRootName\":\"" + (diegetic.View != null && diegetic.View.Root != null ? diegetic.View.Root.name : "null") + "\"}");
+                Assert.IsNotNull(docRoot);
                 Assert.IsTrue(diegetic.IsBuilt);
-                Assert.IsTrue(hasLoc, "EnsureBuilt must keep location-detail-panel from authored UXML");
-                Assert.IsTrue(hasRad, "EnsureBuilt must keep radiation-phase-root from authored UXML");
+                Assert.IsNotNull(docRoot.Q("location-detail-panel"),
+                    "EnsureBuilt must keep location-detail-panel from authored UXML");
+                Assert.IsNotNull(docRoot.Q("radiation-phase-root"),
+                    "EnsureBuilt must keep radiation-phase-root from authored UXML");
+                Assert.IsNotNull(docRoot.Q("siege-status"),
+                    "EnsureBuilt must keep siege-status from authored UXML");
             }
             finally
             {

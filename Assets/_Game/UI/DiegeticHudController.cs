@@ -178,14 +178,6 @@ namespace AtomicWar._Game.UI
                 {
                     // UXML may already define diegetic-root; else build under doc root.
                     bool boundExisting = _view.BindExisting(docRoot);
-                    // #region agent log
-                    AtomicWar._Game.Utilities.AgentDebugLog.Write("H1", "DiegeticHudController.EnsureBuilt", "bind-or-rebuild",
-                        "{\"boundExisting\":" + (boundExisting ? "true" : "false")
-                        + ",\"hasLocationPanel\":" + (docRoot.Q("location-detail-panel") != null ? "true" : "false")
-                        + ",\"hasRadPhase\":" + (docRoot.Q("radiation-phase-root") != null ? "true" : "false")
-                        + ",\"childCount\":" + docRoot.childCount
-                        + ",\"uxml\":\"" + (_uxml != null ? _uxml.name : "null") + "\"}");
-                    // #endregion
                     if (!boundExisting)
                     {
                         // Never wipe an authored diegetic-root — Build() cannot recreate
@@ -198,12 +190,6 @@ namespace AtomicWar._Game.UI
                         }
                         docRoot.Clear();
                         _view.Build(docRoot);
-                        // #region agent log
-                        AtomicWar._Game.Utilities.AgentDebugLog.Write("H5", "DiegeticHudController.EnsureBuilt", "cleared and rebuilt",
-                            "{\"hasLocationPanelAfter\":" + (docRoot.Q("location-detail-panel") != null ? "true" : "false")
-                            + ",\"hasRadPhaseAfter\":" + (docRoot.Q("radiation-phase-root") != null ? "true" : "false")
-                            + ",\"childCountAfter\":" + docRoot.childCount + "}");
-                        // #endregion
                     }
                     ApplyStylesheet(docRoot);
                     _built = true;

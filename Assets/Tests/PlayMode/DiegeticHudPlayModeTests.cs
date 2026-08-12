@@ -87,6 +87,11 @@ namespace AtomicWar.Tests.PlayMode
             var encounter = _diegetic.Document.rootVisualElement.Q<VisualElement>(DiegeticHudView.EncounterPanelName)
                 ?? _diegetic.View.EncounterPanel;
             Assert.That(encounter, Is.Not.Null);
+
+            var docRoot = _diegetic.Document.rootVisualElement;
+            Assert.That(docRoot.Q("location-detail-panel"), Is.Not.Null, "Play Mode must keep location-detail-panel");
+            Assert.That(docRoot.Q("radiation-phase-root"), Is.Not.Null, "Play Mode must keep radiation-phase-root");
+            Assert.That(docRoot.Q("siege-status"), Is.Not.Null, "Play Mode must keep siege-status");
         }
 
         [UnityTest]

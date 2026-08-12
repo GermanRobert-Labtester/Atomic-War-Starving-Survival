@@ -31,15 +31,7 @@ namespace AtomicWar._Game.UI
         {
             if (_bound || _document == null) return;
             _root = _document.rootVisualElement?.Q<VisualElement>("location-detail-panel");
-            if (_root == null)
-            {
-                // #region agent log
-                AtomicWar._Game.Utilities.AgentDebugLog.Write("H1", "LocationDetailPanel.EnsureBound", "root missing",
-                    "{\"docNull\":" + (_document == null ? "true" : "false")
-                    + ",\"visualRootNull\":" + (_document != null && _document.rootVisualElement == null ? "true" : "false") + "}");
-                // #endregion
-                return;
-            }
+            if (_root == null) return;
             _locationName = _root.Q<Label>("location-name");
             _radiationBar = _root.Q<ProgressBar>("radiation-bar");
             _radiationValue = _root.Q<Label>("radiation-value");
@@ -49,10 +41,6 @@ namespace AtomicWar._Game.UI
             _factionName = _root.Q<Label>("faction-name");
             _lootPreview = _root.Q<VisualElement>("loot-preview");
             _bound = true;
-            // #region agent log
-            AtomicWar._Game.Utilities.AgentDebugLog.Write("H1", "LocationDetailPanel.EnsureBound", "bound",
-                "{\"rootFound\":true}");
-            // #endregion
         }
 
         public void ShowLocation(string locationId, string displayName,

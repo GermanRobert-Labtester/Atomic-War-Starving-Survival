@@ -54,10 +54,6 @@ namespace AtomicWar._Game.Shelter
             HatchIntegrityPct = Mathf.Clamp01(
                 HatchIntegrityPct - (damage / 100f) * tierMultiplier);
             OnHatchIntegrityChanged?.Invoke(HatchIntegrityPct);
-            // #region agent log
-            AtomicWar._Game.Utilities.AgentDebugLog.Write("H2", "HatchDefenseSystem.TakeHatchDamage", "integrity changed",
-                "{\"integrity\":" + HatchIntegrityPct.ToString("0.###") + ",\"underSiege\":" + (IsUnderSiege ? "true" : "false") + "}");
-            // #endregion
         }
 
         /// <summary>Repair hatch integrity.</summary>

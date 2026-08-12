@@ -8,9 +8,7 @@ using AtomicWar._Game.Quests;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
-using AtomicWar._Game.Utilities;
 using AtomicWar._Game.World;
-using UnityEngine.UIElements;
 
 namespace AtomicWar._Game.Core
 {
@@ -35,14 +33,7 @@ namespace AtomicWar._Game.Core
         private void BindExp34Documents()
         {
             var doc = _hud.DiegeticHud != null ? _hud.DiegeticHud.Document : null;
-            if (doc == null)
-            {
-                // #region agent log
-                AgentDebugLog.Write("H4", "GameBootstrap.Expansions3to4DeepLoreHud.BindExp34Documents", "no document",
-                    "{\"diegeticNull\":" + (_hud.DiegeticHud == null ? "true" : "false") + "}");
-                // #endregion
-                return;
-            }
+            if (doc == null) return;
             _hud.LocationDetailPanel?.BindDocument(doc);
             _hud.ItemConditionBadge?.BindDocument(doc);
             _hud.QuestlineProgressTracker?.BindDocument(doc);
@@ -54,45 +45,15 @@ namespace AtomicWar._Game.Core
             _hud.LoreCodexPanel?.BindDocument(doc);
             _hud.FactionRelationshipMap?.BindDocument(doc);
             _hud.CharacterArcProgressPanel?.BindDocument(doc);
-            // #region agent log
-            var root = doc.rootVisualElement;
-            string[] names = {
-                "location-detail-panel","item-condition-badge","questline-tracker","siege-status",
-                "faction-intelligence-panel","vehicle-status-panel","tactical-command-bar",
-                "questline-stage-tracker","lore-codex-panel","faction-relationship-map",
-                "character-arc-panel","radiation-phase-root","keepsake-slot-root"
-            };
-            var found = new System.Text.StringBuilder();
-            found.Append('{');
-            for (int i = 0; i < names.Length; i++)
-            {
-                if (i > 0) found.Append(',');
-                bool ok = root != null && root.Q(names[i]) != null;
-                found.Append('"').Append(names[i]).Append("\":").Append(ok ? "true" : "false");
-            }
-            found.Append(",\"childCount\":").Append(root != null ? root.childCount : -1);
-            found.Append(",\"uxml\":\"").Append(doc.visualTreeAsset != null ? doc.visualTreeAsset.name : "null").Append('"');
-            found.Append(",\"hudWidgets\":{");
-            found.Append("\"location\":").Append(_hud.LocationDetailPanel != null ? "true" : "false");
-            found.Append(",\"siege\":").Append(_hud.SiegeStatusHud != null ? "true" : "false");
-            found.Append(",\"tactical\":").Append(_hud.TacticalCommandBar != null ? "true" : "false");
-            found.Append(",\"arc\":").Append(_hud.CharacterArcProgressPanel != null ? "true" : "false");
-            found.Append("}}");
-            AgentDebugLog.Write("H1", "GameBootstrap.Expansions3to4DeepLoreHud.BindExp34Documents", "exp34 bind probe", found.ToString());
-            // #endregion
         }
 
         private void WireExp34Widgets()
         {
-            bool locationWired = false;
-            bool siegeWired = false;
-
             if (_hud.MapScreenUI != null && _hud.LocationDetailPanel != null)
             {
                 Action onMapChanged = PushSelectedLocationToDetailPanel;
                 _hud.MapScreenUI.OnMapScreenChanged += onMapChanged;
                 _subscriptions.Track(() => _hud.MapScreenUI.OnMapScreenChanged -= onMapChanged);
-                locationWired = true;
             }
 
             if (HatchDefenseSystem != null && _hud.SiegeStatusHud != null)
@@ -134,19 +95,7 @@ namespace AtomicWar._Game.Core
                 Action<RaidResolution> onRaid = _ => HatchDefenseSystem.SetUnderSiege(true);
                 HatchDefenseSystem.OnRaidResolved += onRaid;
                 _subscriptions.Track(() => HatchDefenseSystem.OnRaidResolved -= onRaid);
-                siegeWired = true;
             }
-
-            // #region agent log
-            AgentDebugLog.Write("H2", "GameBootstrap.Expansions3to4DeepLoreHud.WireExp34Widgets", "wire branches",
-                "{\"mapScreen\":" + (_hud.MapScreenUI != null ? "true" : "false")
-                + ",\"hatchDefense\":" + (HatchDefenseSystem != null ? "true" : "false")
-                + ",\"locationTodo\":" + (locationWired ? "false" : "true")
-                + ",\"siegeTodo\":" + (siegeWired ? "false" : "true")
-                + ",\"factionIntel\":" + (FactionIntel != null ? "true" : "false")
-                + ",\"vehicle\":" + (VehicleMaintenance != null ? "true" : "false")
-                + ",\"quests\":" + (DynamicQuestlines != null ? "true" : "false") + "}");
-            // #endregion
 
             if (FactionIntel != null && _hud.FactionIntelligencePanel != null)
             {
