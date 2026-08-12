@@ -36,21 +36,39 @@ namespace AtomicWar._Game.UI
 
         public void RestoreState(SaveState s) { /* entries rebuilt from system */ }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Hide();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Hide();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("memorial-wall-root");
             _entryList = _root?.Q("memorial-entry-list");
             _emptyLabel = _root?.Q<Label>("memorial-wall-empty");
             _payBtn = _root?.Q<Button>("memorial-pay-respects-btn");
             if (_payBtn != null)
-                _payBtn.clicked += () =>
-                {
-                    if (!string.IsNullOrEmpty(_activeSurvivorId))
-                        OnPayRespectsRequested?.Invoke(_activeSurvivorId);
-                };
-            Hide();
+            {
+                _payBtn.clicked -= OnPayClicked;
+                _payBtn.clicked += OnPayClicked;
+            }
+        }
+
+        private void OnPayClicked()
+        {
+            if (!string.IsNullOrEmpty(_activeSurvivorId))
+                OnPayRespectsRequested?.Invoke(_activeSurvivorId);
         }
 
         public void SetActiveSurvivor(string survivorId) => _activeSurvivorId = survivorId;

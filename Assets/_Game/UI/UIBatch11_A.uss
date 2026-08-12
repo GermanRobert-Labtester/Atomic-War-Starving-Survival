@@ -117,7 +117,17 @@
     background-color: var(--hyper-red);
 }
 .hypervigilance-eye--shake {
-    /* animated via C# schedule */
+    /* UI Toolkit lacks CSS keyframes — C# FlashRoutine toggles this class */
+    translate: 2px 0;
+}
+@keyframes ashfall-shake {
+    0% { translate: 0 0; }
+    25% { translate: -2px 0; }
+    75% { translate: 2px 0; }
+    100% { translate: 0 0; }
+}
+.shake {
+    /* Plan-spec class name; hypervigilance uses hypervigilance-eye--shake */
 }
 .hypervigilance-flash {
     position: absolute;

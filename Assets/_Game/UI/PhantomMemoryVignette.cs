@@ -33,13 +33,26 @@ namespace AtomicWar._Game.UI
         public SaveState CaptureState() => _lastState;
         public void RestoreState(SaveState s) => _lastState = s;
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Hide();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Hide();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("phantom-memory-vignette-root");
             _textLabel = _root?.Q<Label>("phantom-memory-text");
-            Hide();
         }
 
         public void Trigger(string displayName, string narrativeText, bool isMotivation)

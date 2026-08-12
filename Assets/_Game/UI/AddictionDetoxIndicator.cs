@@ -48,13 +48,26 @@ namespace AtomicWar._Game.UI
                 ShowDependency(s.focusedSurvivorId, s.focused.itemId, s.focused.state);
         }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Refresh();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Refresh();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("addiction-detox-root");
             _iconLabel = _root?.Q<Label>("addiction-detox-icon");
-            Refresh();
         }
 
         public void SetFocusedSurvivor(string survivorId)
@@ -79,6 +92,18 @@ namespace AtomicWar._Game.UI
             }
             OnStateChanged?.Invoke(survivorId, state, itemId);
         }
+
+        /// <summary>Plan alias — cold-turkey withdrawal badge.</summary>
+        public void ShowWithdrawal(string survivorId) =>
+            ShowDependency(survivorId, "", DetoxState.Withdrawal);
+
+        /// <summary>Plan alias — managed detox progress (0..1 unused visually beyond state).</summary>
+        public void ShowDetoxProgress(string survivorId, float progress) =>
+            ShowDependency(survivorId, "", DetoxState.ManagedDetox);
+
+        /// <summary>Plan alias — clear badge for a survivor.</summary>
+        public void Hide(string survivorId) =>
+            ShowDependency(survivorId, "", DetoxState.Clean);
 
         public void TickRecoveredFade(string survivorId, float gameHours)
         {

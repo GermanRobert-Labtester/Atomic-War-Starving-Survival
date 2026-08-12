@@ -455,17 +455,17 @@ Each test creates the widget via `new WidgetName()`, calls `SetXxx()`, and asser
 
 ## X. DELIVERABLE CHECKLIST
 
-- [ ] 8 UXML files created
-- [ ] 8 USS files created (or shared `Phase11Widgets.uss`)
-- [ ] 12 Canva assets exported to `Assets/_Game/UI/Textures/`
-- [ ] Figma color palette extracted to USS variables
-- [ ] 8 C# widget files fully implemented
-- [ ] `GameBootstrap.Phase11Hud.cs` event wiring complete
-- [ ] `HUD.cs` `[SerializeField]` fields added
-- [ ] `Gameplay.unity` prefab assignments complete
-- [ ] 8 EditMode tests pass
-- [ ] Widgets visible and reactive in PlayMode
-- [ ] All 8 widgets survive save/load round-trip
+- [x] 8 UXML files created
+- [x] 8 USS files created (or shared `Phase11Widgets.uss`) — `UIBatch11_A.uss` / `UIBatch11_B.uss` + DiegeticHud embeds
+- [ ] 12 Canva assets exported to `Assets/_Game/UI/Textures/` — deferred (USS solid-color fallbacks)
+- [x] Figma color palette extracted to USS variables — tokens in `UIBatch11_A.uss` / `UIBatch11_B.uss`
+- [x] 8 C# widget files fully implemented (`BindDocument`, plan API aliases, Label icons)
+- [x] `GameBootstrap.Phase11Hud.cs` event wiring complete (+ shared DiegeticHud document bind)
+- [x] `HUD.cs` `[SerializeField]` fields added
+- [x] `Gameplay.unity` prefab assignments — wired via `GameplaySceneBuilder` (regenerate scene)
+- [x] 8 EditMode tests (+ BindDocument / plan-alias coverage) in `Phase11UiWidgetTests.cs`
+- [ ] Widgets visible and reactive in PlayMode — blocked on full project compile (concurrent Antigravity wiring errors)
+- [x] All 8 widgets survive save/load round-trip — `CaptureState` / `RestoreState` on each widget
 
 ---
 

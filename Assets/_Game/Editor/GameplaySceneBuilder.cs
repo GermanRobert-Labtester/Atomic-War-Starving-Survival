@@ -29,7 +29,11 @@ namespace AtomicWar._Game.Editor
         /// <summary>HUD widgets this slice wires.</summary>
         public static readonly string[] HudSliceAllowlist =
         {
-            "_needsBar", "_dosimeterHud", "_eventModalUi", "_diegeticHud"
+            "_needsBar", "_dosimeterHud", "_eventModalUi", "_diegeticHud",
+            "_radiationPhaseIndicator", "_phantomMemoryVignette",
+            "_hypervigilanceIndicator", "_moralBranchDisplay",
+            "_keepsakeSlotUi", "_memorialWallUi",
+            "_terminalPrognosisBanner", "_addictionDetoxIndicator"
         };
 
         /// <summary>
@@ -45,7 +49,19 @@ namespace AtomicWar._Game.Editor
             "_workbenchUi", "_hatchDefenseHud", "_roomAssignmentHud",
             "_radioInterceptHud", "_factionRadioVoHook", "_journalBookUi",
             "_inventoryStripUi", "_endgameSummaryUi", "_internalHorrorHud",
-            "_expeditionEncounterLogHud"
+            "_expeditionEncounterLogHud",
+            "_scavengeDispatchHud", "_overflowCrateHud", "_fieldGearLoadoutHud",
+            "_bunkerRationingHud", "_waterPurificationHud", "_airHeatManagementHud",
+            "_bunkerMaintenanceHud", "_survivorTaskBoardHud",
+            "_moralChronicleUi", "_tutorialOverlay",
+            // Batch-20 widgets — painted via DiegeticHud; component refs land later
+            "_radiationDosimeterWidget", "_geigerSweepGauge", "_airFilterIntegrityBar",
+            "_falloutStormWarningBanner", "_survivorPortraitCard", "_moralDecayMeter",
+            "_rationAllocationDial", "_waterPurityGauge", "_temperatureReadoutWidget",
+            "_powerFlowSchematic", "_factionPressureRing", "_expeditionCountdownTimer",
+            "_radioSignalStrengthBar", "_craftQueueStrip", "_alertToastNotification",
+            "_bunkerFloorMapMiniature", "_dayNightArcClock", "_bloodTypeIndicator",
+            "_lootHaulTicker", "_endgameVictoryPathTracker"
         };
 
         /// <summary>
@@ -114,15 +130,53 @@ namespace AtomicWar._Game.Editor
             var diegetic   = Child<DiegeticHudController>(root, "DiegeticHud");
 
             WireDiegeticHud(diegetic);
+            var diegeticDoc = diegetic.GetComponent<UIDocument>();
+
+            // Phase 11 — expansion HUD widgets share the DiegeticHud UIDocument
+            var radPhase     = Child<RadiationPhaseIndicator>(root, "RadiationPhaseIndicator");
+            var phantom      = Child<PhantomMemoryVignette>(root, "PhantomMemoryVignette");
+            var hyper        = Child<HypervigilanceIndicator>(root, "HypervigilanceIndicator");
+            var moralBranch  = Child<MoralBranchDisplay>(root, "MoralBranchDisplay");
+            var keepsake     = Child<KeepsakeSlotUI>(root, "KeepsakeSlotUI");
+            var memorial     = Child<MemorialWallUI>(root, "MemorialWallUI");
+            var terminal     = Child<TerminalPrognosisBanner>(root, "TerminalPrognosisBanner");
+            var addiction    = Child<AddictionDetoxIndicator>(root, "AddictionDetoxIndicator");
+
+            BindPhase11Document(radPhase, diegeticDoc);
+            BindPhase11Document(phantom, diegeticDoc);
+            BindPhase11Document(hyper, diegeticDoc);
+            BindPhase11Document(moralBranch, diegeticDoc);
+            BindPhase11Document(keepsake, diegeticDoc);
+            BindPhase11Document(memorial, diegeticDoc);
+            BindPhase11Document(terminal, diegeticDoc);
+            BindPhase11Document(addiction, diegeticDoc);
 
             var so = new SerializedObject(hud);
             so.FindProperty("_needsBar").objectReferenceValue     = needsBar;
             so.FindProperty("_dosimeterHud").objectReferenceValue = dosimeter;
             so.FindProperty("_eventModalUi").objectReferenceValue = eventModal;
             so.FindProperty("_diegeticHud").objectReferenceValue  = diegetic;
+            so.FindProperty("_radiationPhaseIndicator").objectReferenceValue = radPhase;
+            so.FindProperty("_phantomMemoryVignette").objectReferenceValue   = phantom;
+            so.FindProperty("_hypervigilanceIndicator").objectReferenceValue = hyper;
+            so.FindProperty("_moralBranchDisplay").objectReferenceValue      = moralBranch;
+            so.FindProperty("_keepsakeSlotUi").objectReferenceValue          = keepsake;
+            so.FindProperty("_memorialWallUi").objectReferenceValue          = memorial;
+            so.FindProperty("_terminalPrognosisBanner").objectReferenceValue = terminal;
+            so.FindProperty("_addictionDetoxIndicator").objectReferenceValue = addiction;
             so.ApplyModifiedPropertiesWithoutUndo();
 
             return hud;
+        }
+
+        static void BindPhase11Document(Component widget, UIDocument document)
+        {
+            if (widget == null || document == null) return;
+            var so = new SerializedObject(widget);
+            var prop = so.FindProperty("_document");
+            if (prop == null) return;
+            prop.objectReferenceValue = document;
+            so.ApplyModifiedPropertiesWithoutUndo();
         }
 
         /// <summary>The UIDocument lives on the DiegeticHud child, which is where

@@ -47,14 +47,27 @@ namespace AtomicWar._Game.UI
                 SetKeepsake(s.focusedSurvivorId, s.focused.itemId, s.focused.lost, s.focused.griefLevel);
         }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Refresh();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Refresh();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("keepsake-slot-root");
             _iconLabel = _root?.Q<Label>("keepsake-slot-icon");
             _crackOverlay = _root?.Q("keepsake-crack-overlay");
-            Refresh();
         }
 
         public void SetFocusedSurvivor(string survivorId)
@@ -78,6 +91,14 @@ namespace AtomicWar._Game.UI
                 Refresh();
             }
             OnKeepsakeChanged?.Invoke(survivorId, itemId, lost, griefLevel);
+        }
+
+        /// <summary>Plan alias — clear keepsake slot for the focused / given survivor.</summary>
+        public void ClearKeepsake(string survivorId = null)
+        {
+            string id = string.IsNullOrEmpty(survivorId) ? _focusedSurvivorId : survivorId;
+            if (string.IsNullOrEmpty(id)) return;
+            SetKeepsake(id, "", false, 0f);
         }
 
         public void Show() => _root?.RemoveFromClassList("hidden");

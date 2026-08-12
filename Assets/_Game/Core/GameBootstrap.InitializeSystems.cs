@@ -60,6 +60,10 @@ namespace AtomicWar._Game.Core
             // (Phases 16-19: Physical Quirks, Environmental, Legacy Arcs)
             InitAntigravitySystems();
 
+            // Expansions 3 & 4 — Procedural Loot, Dynamic Questlines,
+            // Siege Tactics, Faction Intel, Vehicle Systems
+            InitExpansions3to4();
+
             FinishSystemRegistration();
         }
 

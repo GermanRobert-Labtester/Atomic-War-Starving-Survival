@@ -898,6 +898,42 @@ namespace AtomicWar._Game.Survivors
         /// <summary>Effective weapon accuracy modifier accounting for nerve damage.</summary>
         public float EffectiveWeaponAccuracy =>
             HasActiveNerveDamage ? (1f - WeaponAccuracyModifier) : 1f;
+
+        // ===================================================================
+        // EXPANSIONS 3 & 4 — Siege, Faction, Vehicle, Tactical Fields
+        // ===================================================================
+
+        // ---- #91-100: Faction Intelligence ----
+        /// <summary>True if this survivor is deployed as a double agent.</summary>
+        public bool IsDoubleAgent;
+        /// <summary>Faction id the survivor has infiltrated.</summary>
+        public string InfiltratedFactionId;
+        /// <summary>0..1 chance of being discovered each day.</summary>
+        public float AgentDiscoveryRisk;
+
+        // ---- #101-110: Vehicle & Tactical Gear ----
+        /// <summary>True if suppressor is equipped on weapon.</summary>
+        public bool HasSuppressorEquipped;
+        /// <summary>True if night-vision goggles are equipped.</summary>
+        public bool HasNVGEquipped;
+        /// <summary>True if thermal insulation suit is worn.</summary>
+        public bool HasThermalInsulation;
+        /// <summary>Number of replacement armor plates carried.</summary>
+        public int ArmorPlateCount;
+        /// <summary>Hours of mandatory rest needed after intense combat.</summary>
+        public float PostBattleFatigueHours;
+        /// <summary>True if currently under mandatory post-combat rest.</summary>
+        public bool RequiresPostBattleRest => PostBattleFatigueHours > 0f;
+
+        // ---- Narrative Arc Fields (Deep Lore expansion) ----
+        /// <summary>Current narrative arc milestone 0-3.</summary>
+        public int NarrativeArcMilestone;
+        /// <summary>Branch chosen at crisis point ("a" or "b").</summary>
+        public string NarrativeArcBranchId;
+        /// <summary>True if the full narrative arc is complete.</summary>
+        public bool IsNarrativeArcComplete;
+        /// <summary>Accumulated narrative stress separate from leader stress.</summary>
+        public float NarrativeStressAccumulation;
     }
 
     /// <summary>

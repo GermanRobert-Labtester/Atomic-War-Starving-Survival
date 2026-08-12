@@ -40,7 +40,7 @@ namespace AtomicWar._Game.Survivors
         // ── Host hooks ─────────────────────────────────────────────────
         public Action<Survivor, string, float> GrantSkillBonus;
         public Action<Survivor, float> ApplyMoraleDelta;
-        public Func<string> GetNarrativeEventId;
+        public Func<string, string> GetNarrativeEventId;
         // professionId → narrativeEventId
         public Action<string, Survivor> FireNarrativeEvent;
 

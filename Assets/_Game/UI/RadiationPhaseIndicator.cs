@@ -53,16 +53,29 @@ namespace AtomicWar._Game.UI
                 SetPhase(s.focusedSurvivorId, s.focusedPhase);
         }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument (elements live in DiegeticHud.uxml).</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Refresh();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Refresh();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("radiation-phase-root");
             if (_root == null) return;
             _dot = _root.Q("radiation-phase-dot");
             _phaseLabel = _root.Q<Label>("radiation-phase-label");
             _root.RegisterCallback<PointerEnterEvent>(_ => { if (_root != null) _root.tooltip = _tooltipText; });
-            Refresh();
         }
 
         public void SetFocusedSurvivor(string survivorId)

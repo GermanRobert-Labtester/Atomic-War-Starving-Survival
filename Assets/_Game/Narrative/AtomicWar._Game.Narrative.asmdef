@@ -2,7 +2,8 @@
     "name": "AtomicWar._Game.Narrative",
     "rootNamespace": "AtomicWar._Game.Narrative",
     "references": [
-        "AtomicWar._Game.Utilities"
+        "AtomicWar._Game.Utilities",
+        "AtomicWar._Game.Survivors"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

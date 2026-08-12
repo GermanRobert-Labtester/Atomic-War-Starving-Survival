@@ -128,5 +128,46 @@ namespace AtomicWar.Tests.EditMode
 
             Object.DestroyImmediate(go);
         }
+
+        [Test]
+        public void Phase11Widgets_BindDocument_AcceptsNullSafe()
+        {
+            var go = new GameObject("phase11_bind");
+            go.AddComponent<RadiationPhaseIndicator>().BindDocument(null);
+            go.AddComponent<PhantomMemoryVignette>().BindDocument(null);
+            go.AddComponent<HypervigilanceIndicator>().BindDocument(null);
+            go.AddComponent<MoralBranchDisplay>().BindDocument(null);
+            go.AddComponent<KeepsakeSlotUI>().BindDocument(null);
+            go.AddComponent<MemorialWallUI>().BindDocument(null);
+            go.AddComponent<TerminalPrognosisBanner>().BindDocument(null);
+            go.AddComponent<AddictionDetoxIndicator>().BindDocument(null);
+            Assert.Pass();
+            Object.DestroyImmediate(go);
+        }
+
+        [Test]
+        public void PlanApiAliases_TerminalAndAddictionAndKeepsake()
+        {
+            var go = new GameObject("aliases");
+            var terminal = go.AddComponent<TerminalPrognosisBanner>();
+            terminal.Show("sv_1", 3f, "wish_a");
+            terminal.MarkWishCompleted("sv_1");
+            Assert.AreEqual(TerminalPrognosisBanner.WishOutcome.Completed, terminal.CaptureState().focused.outcome);
+            terminal.MarkWishFailed("sv_1");
+            Assert.AreEqual(TerminalPrognosisBanner.WishOutcome.Failed, terminal.CaptureState().focused.outcome);
+
+            var detox = go.AddComponent<AddictionDetoxIndicator>();
+            detox.ShowWithdrawal("sv_1");
+            Assert.AreEqual(AddictionDetoxIndicator.DetoxState.Withdrawal, detox.CaptureState().focused.state);
+            detox.Hide("sv_1");
+            Assert.AreEqual(AddictionDetoxIndicator.DetoxState.Clean, detox.CaptureState().focused.state);
+
+            var keepsake = go.AddComponent<KeepsakeSlotUI>();
+            keepsake.SetKeepsake("sv_1", "ring", true, 0.5f);
+            keepsake.ClearKeepsake("sv_1");
+            Assert.IsTrue(string.IsNullOrEmpty(keepsake.CaptureState().focused.itemId));
+
+            Object.DestroyImmediate(go);
+        }
     }
 }

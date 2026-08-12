@@ -53,6 +53,7 @@ namespace AtomicWar._Game.Core
             if (_hud == null || _phase11HudWired) return;
             _phase11HudWired = true;
 
+            BindPhase11Documents();
             RegisterPhase11Ticks();
 
             WirePhase11RadiationIndicator();
@@ -66,6 +67,25 @@ namespace AtomicWar._Game.Core
             WirePhase11PortraitSelection();
 
             PaintPhase11InitialState();
+        }
+
+        /// <summary>
+        /// Phase 11 widgets query named elements inside DiegeticHud.uxml, so they
+        /// must share the DiegeticHud UIDocument rather than owning their own.
+        /// </summary>
+        private void BindPhase11Documents()
+        {
+            var doc = _hud.DiegeticHud != null ? _hud.DiegeticHud.Document : null;
+            if (doc == null) return;
+
+            _hud.RadiationPhaseIndicator?.BindDocument(doc);
+            _hud.PhantomMemoryVignette?.BindDocument(doc);
+            _hud.HypervigilanceIndicator?.BindDocument(doc);
+            _hud.MoralBranchDisplay?.BindDocument(doc);
+            _hud.KeepsakeSlotUi?.BindDocument(doc);
+            _hud.MemorialWallUi?.BindDocument(doc);
+            _hud.TerminalPrognosisBanner?.BindDocument(doc);
+            _hud.AddictionDetoxIndicator?.BindDocument(doc);
         }
 
         private void WirePhase11PortraitSelection()

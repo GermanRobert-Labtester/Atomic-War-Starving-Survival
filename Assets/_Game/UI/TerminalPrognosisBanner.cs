@@ -49,13 +49,26 @@ namespace AtomicWar._Game.UI
                 Show(s.focusedSurvivorId, s.focused.daysRemaining, s.focused.wishId);
         }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Refresh();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Refresh();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("terminal-prognosis-root");
             _textLabel = _root?.Q<Label>("terminal-prognosis-text");
-            Refresh();
         }
 
         public void SetFocusedSurvivor(string survivorId)
@@ -90,6 +103,14 @@ namespace AtomicWar._Game.UI
             _states[survivorId] = st;
             if (survivorId == _focusedSurvivorId) Refresh();
         }
+
+        /// <summary>Plan alias for SetWishOutcome(Completed).</summary>
+        public void MarkWishCompleted(string survivorId) =>
+            SetWishOutcome(survivorId, WishOutcome.Completed);
+
+        /// <summary>Plan alias for SetWishOutcome(Failed).</summary>
+        public void MarkWishFailed(string survivorId) =>
+            SetWishOutcome(survivorId, WishOutcome.Failed);
 
         public void HideForSurvivor(string survivorId)
         {
