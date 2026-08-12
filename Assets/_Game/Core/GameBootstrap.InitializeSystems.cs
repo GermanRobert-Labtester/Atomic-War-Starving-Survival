@@ -36,6 +36,11 @@ namespace AtomicWar._Game.Core
             InitEventsAndSurvivors();
             InitSaveAndExpeditions();
             InitRadioAndEndgame();
+
+            // Phase 2 — Wire psychological systems into live gameplay
+            // (EventRunner, HatchDefenseSystem, ExpeditionSystem must exist)
+            InitPhase2Wiring();
+
             FinishSystemRegistration();
         }
 
