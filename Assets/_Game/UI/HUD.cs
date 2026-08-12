@@ -84,6 +84,19 @@ namespace AtomicWar._Game.UI
         [SerializeField] private MemorialWallUI _memorialWallUi;
         [SerializeField] private TerminalPrognosisBanner _terminalPrognosisBanner;
         [SerializeField] private AddictionDetoxIndicator _addictionDetoxIndicator;
+        [Header("Expansions 3 & 4 — UI Elements")]
+        [SerializeField] private LocationDetailPanel _locationDetailPanel;
+        [SerializeField] private ItemConditionBadge _itemConditionBadge;
+        [SerializeField] private QuestlineProgressTracker _questlineProgressTracker;
+        [SerializeField] private SiegeStatusHUD _siegeStatusHud;
+        [SerializeField] private FactionIntelligencePanel _factionIntelligencePanel;
+        [SerializeField] private VehicleStatusPanel _vehicleStatusPanel;
+        [SerializeField] private TacticalCommandBar _tacticalCommandBar;
+        [SerializeField] private QuestlineStageTracker _questlineStageTracker;
+        [Header("Deep Lore — UI Elements")]
+        [SerializeField] private LoreCodexPanel _loreCodexPanel;
+        [SerializeField] private FactionRelationshipMap _factionRelationshipMap;
+        [SerializeField] private CharacterArcProgressPanel _characterArcProgressPanel;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -150,6 +163,19 @@ namespace AtomicWar._Game.UI
         public MemorialWallUI MemorialWallUi { get { EnsureWidgetReferences(); return _memorialWallUi; } }
         public TerminalPrognosisBanner TerminalPrognosisBanner { get { EnsureWidgetReferences(); return _terminalPrognosisBanner; } }
         public AddictionDetoxIndicator AddictionDetoxIndicator { get { EnsureWidgetReferences(); return _addictionDetoxIndicator; } }
+        // ── Expansions 3 & 4 property accessors ─────────────────────
+        public LocationDetailPanel LocationDetailPanel { get { EnsureWidgetReferences(); return _locationDetailPanel; } }
+        public ItemConditionBadge ItemConditionBadge { get { EnsureWidgetReferences(); return _itemConditionBadge; } }
+        public QuestlineProgressTracker QuestlineProgressTracker { get { EnsureWidgetReferences(); return _questlineProgressTracker; } }
+        public SiegeStatusHUD SiegeStatusHud { get { EnsureWidgetReferences(); return _siegeStatusHud; } }
+        public FactionIntelligencePanel FactionIntelligencePanel { get { EnsureWidgetReferences(); return _factionIntelligencePanel; } }
+        public VehicleStatusPanel VehicleStatusPanel { get { EnsureWidgetReferences(); return _vehicleStatusPanel; } }
+        public TacticalCommandBar TacticalCommandBar { get { EnsureWidgetReferences(); return _tacticalCommandBar; } }
+        public QuestlineStageTracker QuestlineStageTracker { get { EnsureWidgetReferences(); return _questlineStageTracker; } }
+        // ── Deep Lore property accessors ────────────────────────────
+        public LoreCodexPanel LoreCodexPanel { get { EnsureWidgetReferences(); return _loreCodexPanel; } }
+        public FactionRelationshipMap FactionRelationshipMap { get { EnsureWidgetReferences(); return _factionRelationshipMap; } }
+        public CharacterArcProgressPanel CharacterArcProgressPanel { get { EnsureWidgetReferences(); return _characterArcProgressPanel; } }
 
         public FactionRadioVoHook FactionRadioVoHook
         {
@@ -239,6 +265,17 @@ namespace AtomicWar._Game.UI
             EnsureWidget(ref _memorialWallUi);
             EnsureWidget(ref _terminalPrognosisBanner);
             EnsureWidget(ref _addictionDetoxIndicator);
+            EnsureWidget(ref _locationDetailPanel);
+            EnsureWidget(ref _itemConditionBadge);
+            EnsureWidget(ref _questlineProgressTracker);
+            EnsureWidget(ref _siegeStatusHud);
+            EnsureWidget(ref _factionIntelligencePanel);
+            EnsureWidget(ref _vehicleStatusPanel);
+            EnsureWidget(ref _tacticalCommandBar);
+            EnsureWidget(ref _questlineStageTracker);
+            EnsureWidget(ref _loreCodexPanel);
+            EnsureWidget(ref _factionRelationshipMap);
+            EnsureWidget(ref _characterArcProgressPanel);
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
