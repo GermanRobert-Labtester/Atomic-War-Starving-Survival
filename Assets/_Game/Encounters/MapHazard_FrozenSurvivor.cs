@@ -94,7 +94,7 @@ namespace AtomicWar._Game.Encounters
                 return !_state.was_rescued && !_state.was_looted;
             }
 
-            rng ??= SeededRandom.CreateFixed("frozen_survivor:" + (nodeId ?? "node"));
+            rng ??= SeededRandom.Create(SeededRandom.WorldSeed, "frozen_survivor:" + (nodeId ?? "node"));
             _state.node_id = id;
             _state.was_entered = true;
             _state.is_alive = rng.NextDouble() < 0.6f; // 60% chance they're still alive
@@ -132,7 +132,7 @@ namespace AtomicWar._Game.Encounters
         {
             if (!_state.is_alive || _state.was_rescued) return false;
 
-            rng ??= SeededRandom.CreateFixed("frozen_survivor_rescue:" + _state.node_id);
+            rng ??= SeededRandom.Create(SeededRandom.WorldSeed, "frozen_survivor_rescue:" + _state.node_id);
             float chance = RescueBaseChance + (medicalSkill / 200f);
             chance = Mathf.Clamp01(chance);
 

@@ -88,7 +88,8 @@ namespace AtomicWar._Game.Medical
 
         public AddictionSystem(System.Random rng = null)
         {
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("addiction_system");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "addiction_system");
         }
 
         /// <summary>

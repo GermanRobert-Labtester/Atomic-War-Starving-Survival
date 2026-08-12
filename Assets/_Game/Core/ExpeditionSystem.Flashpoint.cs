@@ -181,7 +181,7 @@ namespace AtomicWar._Game.Core
                     // to every OTHER living survivor in the bunker.
                     if (exp.Survivor != null)
                     {
-                        exp.Survivor.State = SurvivorState.Dead;
+                        SurvivorNeedWrite.SetHealth(exp.Survivor, 0f);
                     }
                     int affected = PropagateDenyEntryMoralePenalty(exp.SurvivorId);
                     exp.Phase = ExpeditionPhase.Failed;

@@ -406,4 +406,25 @@ namespace AtomicWar._Game.Core
         /// custom value silently reverted to the stock number instead of vanishing.</summary>
         public float SecurityContribution;
     }
+
+    /// <summary>
+    /// Section VII — per-survivor sleep-debt snapshot. JsonUtility cannot
+    /// serialize a root-level List, so SleepDeprivationSystem's dictionary
+    /// values travel inside this wrapper (same pattern as GraftRejectionSave).
+    /// </summary>
+    [Serializable]
+    public class SleepDeprivationSave
+    {
+        public List<SleepDeprivationSystem.State> Entries = new List<SleepDeprivationSystem.State>();
+    }
+
+    /// <summary>
+    /// Section VII — per-survivor kcal ledger snapshot. Root-level List
+    /// wrapper for the same JsonUtility constraint as SleepDeprivationSave.
+    /// </summary>
+    [Serializable]
+    public class CalorieAccountingSave
+    {
+        public List<CalorieAccountingSystem.State> Entries = new List<CalorieAccountingSystem.State>();
+    }
 }

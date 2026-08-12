@@ -47,6 +47,8 @@ public class WaterEconomySystem
         public event Action OnWaterStateChanged;
         /// <summary>Raised when the player changes the purifier work queue.</summary>
         public event Action<PurifierQueueMode> OnPurifierQueueChanged;
+        /// <summary>Raised when clean water is produced by the purifier (Expansion IV Lethe hook).</summary>
+        public event Action<float, IReadOnlyList<Survivor>> OnWaterPurified;
 
         /// <summary>Prompt #225 — Hydraulic Master purifier speed + humidity extract.</summary>
         public void BindPersonalQuests(
@@ -184,6 +186,7 @@ public class WaterEconomySystem
 
             purifier.WaterConversionProgress += gameHours;
 
+            float cleanProduced = 0f;
             int safety = 0;
             while (purifier.WaterConversionProgress >= hoursPerUnit && purifier.FilterHealth > 0f && safety < 10000)
             {
@@ -198,12 +201,16 @@ public class WaterEconomySystem
                 {
                     storage.ConsumeDirty(1f);
                     storage.AddClean(1f);
+                    cleanProduced += 1f;
                 }
 
                 purifier.WaterConversionProgress -= hoursPerUnit;
                 purifier.FilterHealth = Mathf.Max(0f, purifier.FilterHealth - degradePerUnit);
                 safety++;
             }
+
+            if (cleanProduced > 0f)
+                OnWaterPurified?.Invoke(cleanProduced, _getSurvivors?.Invoke());
         }
 
         /// <summary>

@@ -42,7 +42,8 @@ namespace AtomicWar._Game.Medical
         private int _headTraumaCount;
         private bool _speechSlur;
 
-        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("affliction_tbi");
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.Create(
+            AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "affliction_tbi");
 
         // ── Public API ─────────────────────────────────────────────────
 

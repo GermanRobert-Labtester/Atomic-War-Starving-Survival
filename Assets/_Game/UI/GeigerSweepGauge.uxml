@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_A.uss" />
+    <ui:VisualElement name="geiger-sweep-root" class="geiger-sweep-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="dosimeter-header">
+            <ui:Label name="geiger-title" class="ashfall-title" text="GEIGER COUNTER" />
+            <ui:Label name="geiger-unit" class="ashfall-mono" text="CPM DETECTOR" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="geiger-counter-readout">
+            <ui:Label name="cpm-val" class="geiger-cpm-label" text="000,000" />
+            <ui:Label class="ashfall-mono" text="CPM" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="needle-container" class="geiger-needle-container">
+            <ui:VisualElement name="needle-indicator" class="geiger-needle-indicator" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="geiger-status-strip">
+            <ui:Label name="status-clear" class="geiger-status-pill active-clear" text="CLEAR" />
+            <ui:Label name="status-elevated" class="geiger-status-pill" text="ELEVATED" />
+            <ui:Label name="status-alert" class="geiger-status-pill" text="ALERT" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

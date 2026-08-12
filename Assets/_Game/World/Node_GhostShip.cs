@@ -37,12 +37,12 @@ namespace AtomicWar._Game.World
 
         public string NodeId => _state.node_id;
 
-        public Node_GhostShip() : this(AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_ghostship")) { }
+        public Node_GhostShip() : this(SeededRandom.Create(SeededRandom.WorldSeed, "node_ghostship")) { }
 
         public Node_GhostShip(System.Random rng)
         {
             _state = new GhostShipState();
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_ghostship");
+            _rng = rng ?? SeededRandom.Create(SeededRandom.WorldSeed, "node_ghostship");
         }
 
         /// <summary>

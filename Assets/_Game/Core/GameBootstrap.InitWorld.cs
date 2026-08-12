@@ -24,6 +24,9 @@ namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
     {
+        // Cached delegate guard for the Expansion IV coming-of-age HUD subscription.
+        private Action<ComingOfAgeEvent> _onComingOfAgeHud;
+
         private void InitWorldSideSystems()
         {
             InitCartographyAndTravel();
@@ -33,6 +36,45 @@ namespace AtomicWar._Game.Core
 
             LocationQuestSystem = new LocationQuestSystem();
             InjectQuestNodesIntoMap();
+        }
+
+        /// <summary>
+        /// Wires the Expansion IV overlay controller to the four Chapter 45 systems.
+        /// Called from WireHUD() after the HUD and the systems are both live.
+        /// </summary>
+        private void WireExpansion4HudController()
+        {
+            // Inspector reference wins; the controller lives beside
+            // DiegeticHudController ([RequireComponent]) on the HUD, so scope
+            // the fallback search there instead of a scene-wide FindObjectOfType.
+            var controller = _expansion4HudController != null
+                ? _expansion4HudController
+                : (_hud != null ? _hud.GetComponentInChildren<Expansion4HudController>() : null);
+            if (controller == null)
+            {
+                Debug.LogWarning("[InitWorld] Expansion4HudController not assigned and not found under the HUD. " +
+                                 "Attach it to the HUD GameObject to enable Expansion IV overlays.");
+                return;
+            }
+
+            controller.Bind(
+                entropySystem: StructuralEntropySystem,
+                letheSystem:   LetheProtocolSystem,
+                ozoneSystem:   OzoneScourgeSystem,
+                genSystem:     GenerationalPsychologySystem,
+                getSurvivors:  () => Survivors);
+
+            if (_onComingOfAgeHud != null)
+                GenerationalPsychologySystem.OnComingOfAgeEventBus -= _onComingOfAgeHud;
+
+            _onComingOfAgeHud = evt =>
+            {
+                if (_hud != null)
+                    _hud.PushEventText(
+                        $"{evt.DisplayName} has come of age. " +
+                        "They have never known sunlight.");
+            };
+            GenerationalPsychologySystem.OnComingOfAgeEventBus += _onComingOfAgeHud;
         }
 
         private void InitCartographyAndTravel()
@@ -104,6 +146,97 @@ namespace AtomicWar._Game.Core
                 if (rng.NextDouble() < chance)
                     apply(node.NodeId);
             }
+        }
+
+        /// <summary>
+        /// Section VII new-content batch — sleep deprivation, grief, shelter
+        /// degradation, ash accumulation, disease mutation, noise discipline,
+        /// calorie accounting. Construction + host callbacks only; tick
+        /// registration lives in GameBootstrap.Registry.cs and save wiring in
+        /// GameBootstrap.InitLate.cs.
+        /// </summary>
+        private void InitSection7Systems()
+        {
+            // Noise discipline has no autonomous tick — hosts register/toggle
+            // sources (generator, hammering, radio) and it recomputes on change.
+            NoiseDiscipline = new NoiseDisciplineSystem();
+
+            SleepDeprivation = new SleepDeprivationSystem
+            {
+                GetShelterNoiseLevel = () => NoiseDiscipline != null ? NoiseDiscipline.CurrentLevel : 0f,
+                // System expects a 0..1 comfort scalar centred on 0.5; reuse the
+                // Prompt #32 temperature→quality curve over live indoor °C.
+                GetRoomTemperatureForSurvivor = _ => SleepQualitySystem.TemperatureMultiplier(
+                    TemperatureSystem != null ? TemperatureSystem.GetIndoorTemperature(Shelter) : 15f),
+                ApplyMoraleDelta = (sv, delta) => NeedsSystem?.Modify(sv, NeedKind.Morale, delta)
+            };
+
+            Grief = new GriefSystem
+            {
+                GetDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                // InterpersonalAffinity.Get is [-100,+100]; grief thresholds want 0..1.
+                GetAffinity = (a, b) => Mathf.InverseLerp(-100f, 100f,
+                    MentalBreakSystem != null ? MentalBreakSystem.Affinity.Get(a?.Id, b?.Id) : 0f),
+                ApplyMoraleDelta = (sv, delta) => NeedsSystem?.Modify(sv, NeedKind.Morale, delta),
+                AddAffliction = (sv, afflictionId) => MedicalSystem?.Inflict(sv, afflictionId),
+                Rng = CreateSaltedRng(_worldSeed, "grief")
+            };
+
+            ShelterDegradation = new ShelterDegradationSystem
+            {
+                GetDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                GetShelterNoiseLevel = () => NoiseDiscipline != null ? NoiseDiscipline.CurrentLevel : 0f,
+                RequestConsumeItem = (itemId, count) =>
+                {
+                    if (Inventory != null && !string.IsNullOrEmpty(itemId))
+                        Inventory.RemoveById(itemId, Mathf.Max(1, Mathf.CeilToInt(count)));
+                },
+                AddWaterLossPerDay = (sourceId, litersPerDay) =>
+                    GameLog.Log($"[ShelterDegradation] Water loss {litersPerDay:0.#} L/day registered: {sourceId}."),
+                QueueFireRisk = (sourceId, chance, scale) =>
+                    GameLog.LogWarning($"[ShelterDegradation] Fire risk queued from {sourceId}: {chance:P0} (x{scale:0.##})."),
+                Rng = CreateSaltedRng(_worldSeed, "shelter_degradation")
+            };
+
+            AshAccumulation = new AshAccumulationSystem
+            {
+                GetDay = () => TimeSystem != null ? TimeSystem.CurrentDay : 0,
+                IsAshStormActive = () => WeatherSystem != null
+                    && (WeatherSystem.Current == WeatherKind.Ashfall
+                        || WeatherSystem.Current == WeatherKind.FalloutStorm),
+                ApplyFilterClogMultiplier = (sourceId, baseRate, multiplier) =>
+                    GameLog.Log($"[AshAccumulation] Filter clog x{multiplier:0.#} from {sourceId}."),
+                BurySurfaceNode = nodeId =>
+                    GameLog.Log($"[AshAccumulation] Surface node buried in ash: {nodeId}."),
+                ReduceSolarOutput = fraction =>
+                    GameLog.Log($"[AshAccumulation] Solar output reduced by {fraction:P0}."),
+                GetRosterSize = () =>
+                {
+                    int alive = 0;
+                    if (Survivors != null)
+                        for (int i = 0; i < Survivors.Count; i++)
+                            if (Survivors[i] != null && Survivors[i].IsAlive) alive++;
+                    return Mathf.Max(1, alive);
+                }
+            };
+
+            DiseaseMutation = new DiseaseMutationSystem
+            {
+                RequestConsumeItem = (itemId, count) =>
+                {
+                    if (Inventory != null && !string.IsNullOrEmpty(itemId))
+                        Inventory.RemoveById(itemId, Mathf.Max(1, Mathf.CeilToInt(count)));
+                },
+                SpawnAffliction = afflictionId =>
+                    GameLog.LogWarning($"[DiseaseMutation] Infection escalated: {afflictionId}."),
+                GetItemId = itemId =>
+                    _itemCatalog != null && _itemCatalog.GetById(itemId) != null ? itemId : null,
+                Rng = CreateSaltedRng(_worldSeed, "disease_mutation")
+            };
+
+            CalorieAccounting = new CalorieAccountingSystem();
+
+            GameLog.Log("[Section7] Sleep/grief/degradation/ash/mutation/noise/calorie systems initialized.");
         }
 
         private void InitShelterTacticalSystems()

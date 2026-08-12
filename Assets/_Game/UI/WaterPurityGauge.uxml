@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_A.uss" />
+    <ui:VisualElement name="water-purity-root" class="water-purity-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="dosimeter-header">
+            <ui:Label name="water-title" class="ashfall-title" text="WATER PURITY" />
+            <ui:Label name="purification-status" class="ashfall-mono" text="FILTERING" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="water-stat-group">
+            <ui:Label class="water-stat-lbl" text="RAW RESERVE" />
+            <ui:Label name="reserve-val" class="water-stat-val" text="120.0 L" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="water-stat-group">
+            <ui:Label class="water-stat-lbl" text="OUTPUT RATE" />
+            <ui:Label name="output-rate-val" class="water-stat-val" text="15.5 L/DAY" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="water-stat-group">
+            <ui:Label class="water-stat-lbl" text="CONTAMINATION" />
+            <ui:Label name="contamination-val" class="water-stat-val" text="4.2%" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="contam-bar-track" class="water-contam-bar-track">
+            <ui:VisualElement name="contam-bar-fill" class="water-contam-bar-fill" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

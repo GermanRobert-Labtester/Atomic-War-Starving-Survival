@@ -1,0 +1,29 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_A.uss" />
+    <ui:VisualElement name="temperature-readout-root" class="temperature-readout-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="dosimeter-header">
+            <ui:Label name="temp-title" class="ashfall-title" text="THERMAL STATUS" />
+            <ui:Label name="heating-source-label" class="ashfall-mono" text="DIESEL BURNER #1" />
+        </ui:VisualElement>
+
+        <ui:VisualElement class="temp-readings-row">
+            <ui:VisualElement class="temp-val-box">
+                <ui:Label class="ashfall-mono" text="INT TEMP" />
+                <ui:Label name="temp-internal-val" class="temp-val-num" text="18°C" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="temp-val-box">
+                <ui:Label class="ashfall-mono" text="EXT TEMP" />
+                <ui:Label name="temp-external-val" class="temp-val-num" text="-12°C" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:Label name="heat-status-label" class="temp-status-badge" text="NORMAL" />
+
+        <ui:VisualElement class="temp-fuel-row">
+            <ui:Label class="ashfall-mono" text="FUEL RESERVE:" />
+            <ui:Label name="fuel-hours-val" class="ashfall-mono" text="48.0 HRS" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

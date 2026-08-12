@@ -175,7 +175,7 @@ namespace AtomicWar._Game.Survivors
 
         public bool TryTriggerAgoraphobicExpeditionBreak(Survivor sv)
         {
-            if (!SuffersAgoraphobicExpeditionBreak(sv) || sv == null) return false;
+            if (sv == null || !SuffersAgoraphobicExpeditionBreak(sv)) return false;
             if (string.IsNullOrEmpty(sv.currentMentalBreakId))
                 sv.currentMentalBreakId = "panic";
             return true;
@@ -343,8 +343,9 @@ namespace AtomicWar._Game.Survivors
             }
             if (string.Equals(partner.ArchetypeId, TwinBetaId, StringComparison.Ordinal))
             {
-                // Beta: suicide event.
-                partner.State = SurvivorState.Dead;
+                // Beta: suicide event. Route through the centralized kill so the
+                // world reacts to the death (DEATH-006).
+                SurvivorNeedWrite.SetHealth(partner, 0f);
             }
         }
 
@@ -1049,7 +1050,7 @@ namespace AtomicWar._Game.Survivors
         {
             if (!DiesWhenPowerNetworkFails(core) || core == null) return;
             if (!HasOmniscience(core))
-                core.State = SurvivorState.Dead;
+                SurvivorNeedWrite.SetHealth(core, 0f);
         }
 
         public bool CanProgramAutomationMacros(Survivor sv) => HasOmniscience(sv);

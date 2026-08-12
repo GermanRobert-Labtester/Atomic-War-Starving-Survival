@@ -48,6 +48,7 @@ namespace AtomicWar._Game.Core
             RegisterNeedsPsycheSubsteps();
             RegisterRadiationCraftSubsteps();
             RegisterDailyAndHouseSubsteps();
+            RegisterSection7Systems();
             RegisterEventDrivenAndSaveOnlySystems();
 
             // H-5: Verify no system is constructed but unticked.
@@ -341,6 +342,12 @@ namespace AtomicWar._Game.Core
             // called it — a Zoonotic Expert could never actually tame an animal.
             _registry.RegisterPerSubstep("pet_taming_daily",
                 _registry.DayGated("pet_taming", RegisterTickPetTamingDaily));
+            // New-content quests: evaluates day-gate / roster / resource trigger
+            // conditions once per day and drives the quest daily counters.
+            // Outer and DayGated keys share the canonical name so the C-1
+            // audit resolves the GameBootstrap.QuestRegistry property.
+            _registry.RegisterPerSubstep("quest_registry",
+                _registry.DayGated("quest_registry", TickQuestTriggersDaily));
 
             // ── Protocol Zero — permafrost expansion systems ─────────
             _registry.RegisterPerSubstep("thermal_grid", h =>
@@ -403,6 +410,55 @@ namespace AtomicWar._Game.Core
                 _registry.DayGated("expansion4", DailyTickExpansion4));
             // OzoneScourgeSystem is event/query-driven via its WeatherSystem reference;
             // no separate hourly tick registration needed.
+        }
+
+        /// <summary>
+        /// Section VII new-content batch. Grief, shelter degradation and ash
+        /// accumulation carry their own LastSimulatedDay guards, but they are
+        /// still routed through DayGated so the once-per-day cadence is
+        /// explicit and auditable. Sleep deprivation and calorie accounting
+        /// loop the roster once per day. Disease mutation and noise discipline
+        /// are purely host-driven (pill administered / source toggled).
+        /// </summary>
+        private void RegisterSection7Systems()
+        {
+            // Outer and DayGated keys share the canonical snake_case name (same
+            // convention as "house_to_bunker") so the C-1 audit resolves each
+            // GameBootstrap property without an alias-table entry.
+            _registry.RegisterPerSubstep("sleep_deprivation",
+                _registry.DayGated("sleep_deprivation", day => TickSleepDeprivationDaily(day)));
+            _registry.RegisterPerSubstep("grief",
+                _registry.DayGated("grief", day => Grief?.Tick()));
+            _registry.RegisterPerSubstep("shelter_degradation",
+                _registry.DayGated("shelter_degradation", day => ShelterDegradation?.Tick()));
+            _registry.RegisterPerSubstep("ash_accumulation",
+                _registry.DayGated("ash_accumulation", day => AshAccumulation?.Tick()));
+            _registry.RegisterPerSubstep("calorie_accounting",
+                _registry.DayGated("calorie_accounting", day => TickCalorieAccountingDaily(day)));
+            _registry.RegisterEventDriven("disease_mutation");
+            _registry.RegisterEventDriven("noise_discipline");
+        }
+
+        private void TickSleepDeprivationDaily(int day)
+        {
+            if (SleepDeprivation == null || Survivors == null) return;
+            float cycleHour = TimeSystem != null ? TimeSystem.CurrentHour : 8f;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null || !sv.IsAlive) continue;
+                // No explicit hours-slept tracker exists yet; derive last
+                // night's rest from end-of-day fatigue (0 rested .. 100 spent).
+                float hoursSlept = Mathf.Clamp01(1f - sv.Needs.Fatigue / 100f) * 8f;
+                SleepDeprivation.OnEndOfDay(sv, day, cycleHour, hoursSlept);
+            }
+        }
+
+        private void TickCalorieAccountingDaily(int day)
+        {
+            if (CalorieAccounting == null || Survivors == null) return;
+            for (int i = 0; i < Survivors.Count; i++)
+                CalorieAccounting.Tick(Survivors[i], day);
         }
 
         /// <summary>
@@ -588,7 +644,9 @@ namespace AtomicWar._Game.Core
                 "weapon_hmg",
                 // C-1: reactive-only, no autonomous tick -- driven entirely by UI
                 // actions (TryEquip/TryUnequip, TryTransferOne).
-                "field_gear_loadout", "overflow_crate"
+                "field_gear_loadout", "overflow_crate",
+                // Expansion IV: event/query-driven systems (no autonomous tick).
+                "lethe_protocol", "ozone_scourge"
             };
             for (int i = 0; i < eventDriven.Length; i++)
                 _registry.RegisterEventDriven(eventDriven[i]);

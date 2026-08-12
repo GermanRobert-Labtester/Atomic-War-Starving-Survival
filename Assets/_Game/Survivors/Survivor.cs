@@ -15,6 +15,48 @@ namespace AtomicWar._Game.Survivors
         Dead
     }
 
+    // -------------------------------------------------------------------
+    // Expansion enums — Phase 0 foundation for 40-system expansion.
+    // -------------------------------------------------------------------
+
+    /// <summary>
+    /// Explicit radiation sickness phase tracking. Replaces the binary
+    /// HasAcuteRadiationSickness with a full clinical progression model.
+    /// Owned by AtomicWar._Game.Radiation.RadiationPhaseProgression.
+    /// </summary>
+    public enum RadiationSicknessPhase
+    {
+        Healthy,
+        Prodromal,
+        Latent,
+        ManifestIllness,
+        ChronicFibrosis,
+        RecoveryOrDeath
+    }
+
+    /// <summary>
+    /// Direction of moral branching after accumulating 5+ moral choices.
+    /// Owned by AtomicWar._Game.Survivors.MoralBranchingSystem.
+    /// </summary>
+    public enum MoralBranchDirection
+    {
+        Neutral,
+        NumbedResilience,
+        BurdenedCompassion
+    }
+
+    /// <summary>
+    /// Kinds of chemical dependency beyond the base AddictionSystem.
+    /// Owned by AtomicWar._Game.Medical.ChemicalDependencySystem.
+    /// </summary>
+    public enum ChemicalDependencyKind
+    {
+        Opioid,
+        Alcohol,
+        Stimulant,
+        Sedative
+    }
+
     /// <summary>
     /// Runtime model for a single survivor: identity, activity state, and current
     /// need values. Save/load safe (primitives only); behaviour lives in
@@ -493,6 +535,216 @@ namespace AtomicWar._Game.Survivors
         /// <summary>Effective ScienceSkill with active progression perks.</summary>
         public float EffectiveScienceSkill =>
             Mathf.Clamp01(ScienceSkill + ProgressionScienceBonus);
+
+        // ===================================================================
+        // PHASE 0 — Massive Expansion Foundation Fields
+        // ===================================================================
+        // These ~30 fields support 40+ new systems across 4 expansion
+        // categories. Each block is owned by a specific system (see doc).
+        // All are plain serializable fields — no auto-properties — so
+        // JsonUtility correctly round-trips them through save/load.
+        // ===================================================================
+
+        // ---- System 1: Radiation Phase Progression ----
+        /// <summary>Explicit phase in the Prodromal→Latent→Manifest→ChronicFibrosis
+        /// pipeline. Owned by RadiationPhaseProgression.</summary>
+        public RadiationSicknessPhase SicknessPhase = RadiationSicknessPhase.Healthy;
+        /// <summary>Hours elapsed in current SicknessPhase.</summary>
+        public float PhaseHoursElapsed;
+        /// <summary>0..100 lung capacity. Permanently reduced by ChronicFibrosis.</summary>
+        public float LungCapacity = 100f;
+        /// <summary>True when ChronicFibrosis has permanently damaged lungs.</summary>
+        public bool HasPermanentLungDamage;
+
+        // ---- System 2: Phantom Memory Triggers ----
+        /// <summary>snake_case background id driving phantom trigger selection
+        /// (e.g. child_refugee, former_soldier, nurse).</summary>
+        public string PhantomBackgroundId;
+        /// <summary>Count of phantom triggers experienced this campaign.</summary>
+        public int PhantomTriggersExperienced;
+        /// <summary>Hours remaining on motivation boost after a positive trigger.</summary>
+        public float PhantomMotivationBoostHours;
+
+        // ---- System 3: Guilt-Driven Insomnia ----
+        /// <summary>List of guilt sources from ruthless decisions.</summary>
+        public System.Collections.Generic.List<GuiltRecord> GuiltSources =
+            new System.Collections.Generic.List<GuiltRecord>();
+        /// <summary>0..1 severity multiplying sleep quality penalty.</summary>
+        public float GuiltInsomniaSeverity;
+        /// <summary>Hours remaining of sedative compensation for guilt insomnia.</summary>
+        public float SedativeCompensationHours;
+
+        // ---- System 4: Combat Trauma & Hypervigilance ----
+        /// <summary>Total combat encounters survived. Drives hypervigilance.</summary>
+        public int CombatEncountersSurvived;
+        /// <summary>0..1 — increases defense but causes false-alarm events.</summary>
+        public float HypervigilanceLevel;
+        /// <summary>Hours since last combat. Hypervigilance decays if this is high.</summary>
+        public float HoursSinceLastCombat;
+        /// <summary>True if a false alarm already fired tonight (once per night max).</summary>
+        public bool HadFalseAlarmTonight;
+
+        // ---- System 5: Somatic Flashback Episodes ----
+        /// <summary>0..1 susceptibility to audio-triggered flashbacks.</summary>
+        public float FlashbackSusceptibility;
+        /// <summary>True while another companion is grounding this survivor.</summary>
+        public bool IsGroundedByCompanion;
+        /// <summary>0..1 current work efficiency penalty from active flashback.</summary>
+        public float FlashbackWorkEfficiencyPenalty;
+
+        // ---- System 6: Desensitization vs Empathy Branching ----
+        /// <summary>Total moral choices made. At 5, branching is decided.</summary>
+        public int MoralChoiceCount;
+        /// <summary>Which branch the survivor is on (Neutral until decided).</summary>
+        public MoralBranchDirection BranchDirection = MoralBranchDirection.Neutral;
+        /// <summary>0..1 — higher = more immune to death morale loss.</summary>
+        public float NumbedResilienceLevel;
+        /// <summary>0..1 — higher = stronger shelter buff when helping others.</summary>
+        public float BurdenedCompassionLevel;
+
+        // ---- System 7: Respiratory Degenerative Illness ----
+        /// <summary>0..100 irreversible respiratory damage from fallout ash.</summary>
+        public float RespiratoryDegradation;
+        /// <summary>True when survivor needs an inhaler to function normally.</summary>
+        public bool RequiresInhaler;
+        /// <summary>Hours of relief remaining after using a medical inhaler.</summary>
+        public float InhalerReliefHours;
+
+        // ---- System 8: Survivor Trade Specialties ----
+        /// <summary>snake_case pre-war profession id (electrician, nurse, machinist, teacher).</summary>
+        public string PreWarProfessionId;
+        /// <summary>List of craft milestone ids completed by this survivor.</summary>
+        public System.Collections.Generic.List<string> CraftMilestonesCompleted =
+            new System.Collections.Generic.List<string>();
+
+        // ---- System 9: Terminal Illness & Final Wishes ----
+        /// <summary>True when a terminal prognosis has been declared.</summary>
+        public bool HasTerminalPrognosis;
+        /// <summary>Days remaining before terminal outcome. Counts down.</summary>
+        public float TerminalPrognosisDaysRemaining;
+        /// <summary>True if the final wish questline was completed.</summary>
+        public bool FinalWishCompleted;
+
+        // ---- System 10: Chemical Dependency Arcs ----
+        /// <summary>Expanded chemical dependencies beyond base addiction.</summary>
+        public System.Collections.Generic.List<ChemicalDependency> ChemicalDependencies =
+            new System.Collections.Generic.List<ChemicalDependency>();
+
+        // ---- System 11: Personal Keepsake Slot ----
+        /// <summary>snake_case item id of the survivor's single designated keepsake.
+        /// Set at game start. Losing it causes severe grief.</summary>
+        public string PersonalKeepsakeItemId;
+        /// <summary>True if the keepsake has been permanently lost/traded.</summary>
+        public bool HasLostKeepsake;
+        /// <summary>0..1 grief intensity from lost keepsake. Decays slowly.</summary>
+        public float KeepsakeGriefLevel;
+
+        // ---- System 13: Bunker Wall Carvings ----
+        /// <summary>Days since this survivor last carved a wall tally/drawing.</summary>
+        public int DaysSinceLastWallCarving = 7;
+        /// <summary>True if already carved today (once per day max).</summary>
+        public bool HasCarvedTallyToday;
+
+        // ---- System 14: Lost Correspondence ----
+        /// <summary>Letter item ids recovered for this survivor's family subplot.</summary>
+        public System.Collections.Generic.List<string> RecoveredLetterIds =
+            new System.Collections.Generic.List<string>();
+        /// <summary>Family fate subplot ids that have been resolved.</summary>
+        public System.Collections.Generic.List<string> ResolvedFamilyFateIds =
+            new System.Collections.Generic.List<string>();
+
+        // ---- System 19: Memorial Wall ----
+        /// <summary>True if survivor has paid respects at the memorial wall.</summary>
+        public bool HasPaidRespectsAtMemorial;
+        /// <summary>Hours remaining of memorial comfort morale buff.</summary>
+        public float MemorialComfortHours;
+
+        // ---- System 21: Shared Trauma Bonding ----
+        /// <summary>Records of trauma bonds formed with other survivors.</summary>
+        public System.Collections.Generic.List<TraumaBondRecord> TraumaBonds =
+            new System.Collections.Generic.List<TraumaBondRecord>();
+
+        // ---- System 22: Ideological Friction ----
+        /// <summary>snake_case belief profile id for roommate compatibility checks.</summary>
+        public string BeliefProfileId;
+
+        // ---- System 23: Ration Allocation Conflicts ----
+        /// <summary>0..1 — how fair this survivor perceives ration distribution to be.</summary>
+        public float PerceivedRationFairness = 1f;
+        /// <summary>Id of the survivor most resented for over-allocation (or empty).</summary>
+        public string RationResentmentTargetId;
+        /// <summary>0..1 — accumulated resentment toward RationResentmentTargetId.</summary>
+        public float RationResentmentLevel;
+
+        // ---- System 25: Confession & Reconciliation ----
+        /// <summary>Ids of survivors this survivor holds a permanent grudge against.</summary>
+        public System.Collections.Generic.List<string> GrudgeIds =
+            new System.Collections.Generic.List<string>();
+
+        // ---- System 27: Desertion Risk ----
+        /// <summary>0..1 — accumulated desertion intent from low morale + faction pressure.</summary>
+        public float DesertionIntent;
+        /// <summary>Days since last desertion attempt (cooldown).</summary>
+        public float DaysSinceDesertionAttempt = 30f;
+
+        // ---- System 29: Leadership ----
+        /// <summary>True if designated as the informal bunker leader.</summary>
+        public bool IsDesignatedLeader;
+        /// <summary>0..100 accumulated leader stress from deaths and crises.</summary>
+        public float LeaderStressAccumulation;
+        /// <summary>Count of deaths witnessed while leader.</summary>
+        public int LeaderDeathsWitnessed;
+
+        // ---- System 30: Compassionate Caregiving ----
+        /// <summary>Id of the survivor currently being cared for by this survivor.</summary>
+        public string CaregivingTargetId;
+        /// <summary>Id of the survivor currently providing care to this survivor.</summary>
+        public string CaregiverId;
+        /// <summary>0..1 accumulated caregiving bond strength with CaregiverId.</summary>
+        public float CaregivingBondStrength;
+
+        // ---- System 11b: GriefKeepsake expansion ----
+        /// <summary>True if this survivor has at least one keepsake from a fallen friend.</summary>
+        public bool HasGriefKeepsake =>
+            KeepsakeItemIds != null && KeepsakeItemIds.Count > 0;
+
+        // ---- Convenience helpers for new fields ----
+
+        /// <summary>True if in an active radiation sickness phase (not Healthy).</summary>
+        public bool HasActiveRadiationSickness =>
+            SicknessPhase != RadiationSicknessPhase.Healthy &&
+            SicknessPhase != RadiationSicknessPhase.RecoveryOrDeath;
+
+        /// <summary>True if the survivor has any chemical dependency registered.</summary>
+        public bool HasChemicalDependency =>
+            ChemicalDependencies != null && ChemicalDependencies.Count > 0;
+
+        /// <summary>True if the moral branch has been decided (non-Neutral).</summary>
+        public bool HasMoralBranch => BranchDirection != MoralBranchDirection.Neutral;
+
+        /// <summary>True if this survivor has a trauma bond with the given survivor.</summary>
+        public bool HasTraumaBondWith(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId) || TraumaBonds == null) return false;
+            for (int i = 0; i < TraumaBonds.Count; i++)
+            {
+                if (string.Equals(TraumaBonds[i].BondedSurvivorId, survivorId,
+                    System.StringComparison.Ordinal)) return true;
+            }
+            return false;
+        }
+
+        /// <summary>True if this survivor holds a grudge against the given survivor.</summary>
+        public bool HasGrudgeAgainst(string survivorId)
+        {
+            if (string.IsNullOrEmpty(survivorId) || GrudgeIds == null) return false;
+            for (int i = 0; i < GrudgeIds.Count; i++)
+            {
+                if (string.Equals(GrudgeIds[i], survivorId,
+                    System.StringComparison.OrdinalIgnoreCase)) return true;
+            }
+            return false;
+        }
     }
 
     /// <summary>
@@ -509,6 +761,89 @@ namespace AtomicWar._Game.Survivors
         {
             ItemId = itemId;
             DayConsumed = dayConsumed;
+        }
+    }
+
+    // ===================================================================
+    // Phase 0 — New Serializable Structs for Expansion Fields
+    // ===================================================================
+
+    /// <summary>
+    /// A guilt source recorded when a survivor makes or witnesses a ruthless
+    /// decision. Owned by GuiltInsomniaSystem.
+    /// </summary>
+    [System.Serializable]
+    public struct GuiltRecord
+    {
+        /// <summary>snake_case id of the decision/event that caused guilt.</summary>
+        public string SourceId;
+        /// <summary>Campaign day when guilt was recorded.</summary>
+        public int DayRecorded;
+        /// <summary>0..1 severity of this guilt source.</summary>
+        public float Severity;
+
+        public GuiltRecord(string sourceId, int dayRecorded, float severity)
+        {
+            SourceId = sourceId;
+            DayRecorded = dayRecorded;
+            Severity = severity;
+        }
+    }
+
+    /// <summary>
+    /// A chemical dependency on a specific addictive substance. Extends
+    /// the base AddictionSystem with substance-specific tracking.
+    /// Owned by ChemicalDependencySystem.
+    /// </summary>
+    [System.Serializable]
+    public struct ChemicalDependency
+    {
+        /// <summary>snake_case item id of the addictive substance.</summary>
+        public string ItemId;
+        /// <summary>0..1 dependency level. Higher = worse withdrawal.</summary>
+        public float DependencyLevel;
+        /// <summary>Kind of chemical (opioid, alcohol, stimulant, sedative).</summary>
+        public ChemicalDependencyKind Kind;
+        /// <summary>True if currently in a managed detox program.</summary>
+        public bool InManagedDetox;
+        /// <summary>Hours of detox progress accumulated.</summary>
+        public float DetoxProgressHours;
+
+        public ChemicalDependency(string itemId, float dependencyLevel,
+            ChemicalDependencyKind kind, bool inManagedDetox = false,
+            float detoxProgressHours = 0f)
+        {
+            ItemId = itemId;
+            DependencyLevel = dependencyLevel;
+            Kind = kind;
+            InManagedDetox = inManagedDetox;
+            DetoxProgressHours = detoxProgressHours;
+        }
+    }
+
+    /// <summary>
+    /// A trauma bond formed between two survivors who endured a shared
+    /// hazard together. Owned by TraumaBondSystem.
+    /// </summary>
+    [System.Serializable]
+    public struct TraumaBondRecord
+    {
+        /// <summary>Id of the other survivor in this bond.</summary>
+        public string BondedSurvivorId;
+        /// <summary>0..1 bond strength. Decays without shared activity.</summary>
+        public float BondStrength;
+        /// <summary>snake_case id of the hazard that formed this bond.</summary>
+        public string SharedHazardId;
+        /// <summary>Campaign day when this bond was formed.</summary>
+        public int DayFormed;
+
+        public TraumaBondRecord(string bondedSurvivorId, float bondStrength,
+            string sharedHazardId, int dayFormed)
+        {
+            BondedSurvivorId = bondedSurvivorId;
+            BondStrength = bondStrength;
+            SharedHazardId = sharedHazardId;
+            DayFormed = dayFormed;
         }
     }
 }

@@ -59,6 +59,11 @@ namespace AtomicWar._Game.Core
 
         [Header("UI")]
         [SerializeField] private HUD _hud;
+        [Tooltip("Core-side bridge for the post-game moral chronicle. Auto-created " +
+                 "on this GameObject when unassigned.")]
+        [SerializeField] private MoralChronicleBridge _moralChronicleBridge;
+        [Tooltip("Scene loaded when the chronicle's Main Menu button is pressed.")]
+        [SerializeField] private string _mainMenuSceneName = "StartScreen";
 
         [Header("Diagnostics (M-1)")]
         [SerializeField] private DiagnosticsOverlay _diagnosticsOverlay;
@@ -214,6 +219,22 @@ namespace AtomicWar._Game.Core
         public AI.HallucinationSystem HallucinationSystem { get; private set; }
         // Prompt #66 — Skill mentorship action.
         public MentorshipSystem MentorshipSystem { get; private set; }
+
+        // ── Section VII new-content batch ────────────────────────────
+        // Sleep debt bands (Tired → Hallucinating → Microsleep → Collapsed).
+        public SleepDeprivationSystem SleepDeprivation { get; private set; }
+        // Death-of-survivor grief cascade (work refusal, survivor's guilt).
+        public GriefSystem Grief { get; private set; }
+        // Bunker subsystem integrity decay (concrete/hatch seal/wiring/pipes).
+        public ShelterDegradationSystem ShelterDegradation { get; private set; }
+        // Surface ash buildup on intake/panels/hatch; daily clear chore.
+        public AshAccumulationSystem AshAccumulation { get; private set; }
+        // Antibiotic course abandonment → resistance evolution.
+        public DiseaseMutationSystem DiseaseMutation { get; private set; }
+        // Bunker noise source aggregation → raid probability modifier.
+        public NoiseDisciplineSystem NoiseDiscipline { get; private set; }
+        // Per-survivor kcal ledger replacing abstract hunger pressure.
+        public CalorieAccountingSystem CalorieAccounting { get; private set; }
 
         // Prompt #7 — Addiction & Withdrawal pipeline.
         public AddictionSystem Addiction { get; private set; }

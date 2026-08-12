@@ -99,6 +99,7 @@ namespace AtomicWar._Game.Core
         private RepairWorkOrderSystem _repairWorkOrderSystem;
         private SurvivorWorkShiftSystem _survivorWorkShiftSystem;
         private SurvivorTaskBoardSystem _survivorTaskBoardSystem;
+        private MoralChronicleBridge _moralChronicleBridge;
         private ExpeditionSystem _expeditionSystem;
         private MedicalSystem _medicalSystem;
         private BloodTransfusionSystem _bloodTransfusion;
@@ -214,6 +215,14 @@ namespace AtomicWar._Game.Core
         private System_GarrisonComplianceLedger _garrisonComplianceLedgerSystem;
         private System_MilitiaContributionTax _militiaContributionTaxSystem;
         private System_CultLeash _cultLeashSystem;
+        // Section VII new-content batch
+        private SleepDeprivationSystem _sleepDeprivationSystem;
+        private GriefSystem _griefSystem;
+        private ShelterDegradationSystem _shelterDegradationSystem;
+        private AshAccumulationSystem _ashAccumulationSystem;
+        private DiseaseMutationSystem _diseaseMutationSystem;
+        private NoiseDisciplineSystem _noiseDisciplineSystem;
+        private CalorieAccountingSystem _calorieAccountingSystem;
         private System_WarlordTribute _warlordTributeSystem;
         private System_BilgePumps _bilgePumpsSystem;
         private System_CarrionBirds _carrionBirdsSystem;
@@ -693,6 +702,10 @@ namespace AtomicWar._Game.Core
         private HydrostaticPressureSystem _hydrostaticPressureSystem;
         private TunnelingAndStructuralStress _tunnelingStressSystem;
         private MyceliumNetworkSystem _myceliumNetworkSystem;
+        // Expansion IV: Chronos Decay & Lethe Protocol
+        private StructuralEntropySystem _structuralEntropySystem;
+        private LetheProtocolSystem _letheProtocolSystem;
+        private GenerationalPsychologySystem _generationalPsychologySystem;
         // Expansion III: Dead Hand systems
         private UXOFieldSystem _uxoFieldSystem;
         private Encounters.AutomatedThreatSystem _automatedThreatSystem;

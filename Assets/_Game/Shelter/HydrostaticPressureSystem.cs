@@ -28,7 +28,7 @@ namespace AtomicWar._Game.Shelter
         public string systemId = "hydrostatic_pressure";
         public float cleanLensDepth = 2.5f;
         public float sludgePressureKpa = 40f;
-        public float pumpRateLitersPerHour = 5f;
+        public float pumpRateLitersPerHour = 3f;
         public float toxicityIndex;
         public float filterDamageAccumulated;
         public float totalWaterExtracted;
@@ -96,7 +96,7 @@ namespace AtomicWar._Game.Shelter
         // ── State ─────────────────────────────────────────────────────
         private float _cleanLensDepth = 2.5f;
         private float _sludgePressureKpa = 40f;
-        private float _pumpRateLitersPerHour = 5f;
+        private float _pumpRateLitersPerHour = 3f;
         private float _toxicityIndex;
         private float _filterDamageAccumulated;
         private float _totalWaterExtracted;
@@ -332,7 +332,7 @@ namespace AtomicWar._Game.Shelter
             {
                 _cleanLensDepth = 2.5f;
                 _sludgePressureKpa = 40f;
-                _pumpRateLitersPerHour = 5f;
+                _pumpRateLitersPerHour = LensRechargeRatePerHour;
                 _toxicityIndex = 0f;
                 _filterDamageAccumulated = 0f;
                 _totalWaterExtracted = 0f;

@@ -41,6 +41,10 @@ namespace AtomicWar._Game.Crafting
         public event Action<Recipe> OnCraftCompleted;
         /// <summary>Fired when a craft completes with the assigned crafter (may be null).</summary>
         public event Action<Recipe, Survivor> OnCraftCompletedBy;
+        /// <summary>CRAFT-003: fired when the inventory rejects the completed result.
+        /// The result is either stashed in <see cref="OverflowStash"/> (if wired) or
+        /// the ingredients are refunded (if no stash is available).</summary>
+        public event Action<Recipe, ItemDefinition, int> OnCraftResultOverflow;
 
         public CraftingSystem(Inventory.Inventory inventory)
         {
@@ -365,6 +369,7 @@ namespace AtomicWar._Game.Crafting
                 bool placed = _inventory.Add(result, amount);
                 if (!placed)
                 {
+                    OnCraftResultOverflow?.Invoke(recipe, result, amount);
                     if (OverflowStash != null)
                     {
                         OverflowStash.Add(result, amount);

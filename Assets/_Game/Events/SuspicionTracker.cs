@@ -418,7 +418,7 @@ namespace AtomicWar._Game.Events
             if (context == null) return;
             var thief = FindSurvivor(context.AllSurvivors, TrueThiefId);
             if (thief != null)
-                thief.State = SurvivorState.Dead;
+                SurvivorNeedWrite.SetHealth(thief, 0f);
 
             ApplyGroupMorale(context, GroupTraumaMorale);
             // Group trauma flag

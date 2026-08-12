@@ -1,0 +1,623 @@
+/*
+ * UIBatch20_B.uss — Stylesheet for ASHFALL UI Elements 11 through 20.
+ * Adheres strictly to ASHFALL design tokens.
+ */
+
+:root {
+    --ink: #090b0c;
+    --ink-panel: rgba(9, 11, 12, 0.86);
+    --line: rgba(217, 196, 152, 0.27);
+    --line-soft: rgba(217, 196, 152, 0.14);
+    --warm: #d3aa62;
+    --hot: #f4c875;
+    --pale: #e6e0d2;
+    --muted: #938f84;
+    --dim: #66675f;
+    --critical: #e63333;
+    --exclusive: #c4785a;
+    --entropy: #c97b3a;
+    --lethe: #6ea3a8;
+}
+
+.hidden {
+    display: none;
+}
+
+/* 11. FactionPressureRing */
+.faction-pressure-panel {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 280px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    border-left-width: 3px;
+    border-left-color: var(--warm);
+    padding: 12px;
+}
+.faction-ring-header {
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    font-size: 14px;
+    color: var(--warm);
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.faction-ring-container {
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.faction-ring-center {
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border-width: 1px;
+    border-color: var(--line-soft);
+    background-color: rgba(0,0,0,0.4);
+    width: 100%;
+}
+.faction-dominant-title {
+    font-size: 10px;
+    color: var(--muted);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.faction-dominant-name {
+    font-size: 16px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    letter-spacing: 1px;
+}
+.faction-bars-list {
+    margin-top: 8px;
+}
+.faction-bar-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.faction-name-label {
+    width: 70px;
+    font-size: 11px;
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.faction-bar-track {
+    flex-grow: 1;
+    height: 8px;
+    background-color: rgba(0,0,0,0.6);
+    border-width: 1px;
+    border-color: var(--line-soft);
+}
+.faction-bar-fill {
+    height: 100%;
+}
+.faction-val-label {
+    width: 35px;
+    text-align: right;
+    font-size: 11px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+
+.faction-garrison { color: var(--muted); background-color: var(--muted); }
+.faction-militia { color: var(--warm); background-color: var(--warm); }
+.faction-cultists { color: var(--entropy); background-color: var(--entropy); }
+.faction-warlords { color: var(--critical); background-color: var(--critical); }
+
+/* 12. ExpeditionCountdownTimer */
+.expedition-countdown-panel {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    width: 320px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    border-left-width: 3px;
+    border-left-color: var(--warm);
+    padding: 12px;
+}
+.expedition-header {
+    font-size: 14px;
+    color: var(--warm);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.expedition-info-row {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.expedition-label {
+    font-size: 11px;
+    color: var(--muted);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.expedition-value {
+    font-size: 11px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.danger-bar-track {
+    height: 10px;
+    background-color: rgba(0,0,0,0.6);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.danger-bar-fill {
+    height: 100%;
+    background-color: var(--critical);
+    width: 40%;
+}
+.expedition-overdue-banner {
+    background-color: rgba(230, 51, 51, 0.25);
+    border-width: 1px;
+    border-color: var(--critical);
+    padding: 4px;
+    align-items: center;
+    margin-top: 4px;
+}
+.expedition-overdue-text {
+    color: var(--critical);
+    font-size: 14px;
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    letter-spacing: 2px;
+}
+
+/* 13. RadioSignalStrengthBar */
+.radio-signal-panel {
+    width: 260px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    padding: 10px;
+}
+.radio-signal-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.radio-freq-text {
+    font-size: 16px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.radio-type-text {
+    font-size: 10px;
+    color: var(--warm);
+    background-color: rgba(211, 170, 98, 0.15);
+    border-width: 1px;
+    border-color: var(--warm);
+    padding: 2px 6px;
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.signal-bars-container {
+    flex-direction: row;
+    align-items: flex-end;
+    height: 24px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    padding-left: 4px;
+}
+.signal-bar-segment {
+    width: 8px;
+    margin-right: 4px;
+    background-color: var(--dim);
+    opacity: 0.3;
+}
+.signal-bar-segment.active {
+    background-color: var(--warm);
+    opacity: 1.0;
+}
+.radio-noise-row {
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--muted);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+
+/* 14. CraftQueueStrip */
+.craft-queue-panel {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    translate: -50% 0;
+    width: 620px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    border-top-width: 2px;
+    border-top-color: var(--warm);
+    padding: 10px;
+}
+.craft-queue-title {
+    font-size: 12px;
+    color: var(--warm);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+.craft-queue-scroll {
+    flex-direction: row;
+}
+.craft-slot {
+    width: 140px;
+    background-color: rgba(0,0,0,0.5);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    padding: 6px;
+    margin-right: 8px;
+}
+.craft-slot-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.craft-icon-tag {
+    font-size: 10px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.btn-cancel {
+    font-size: 11px;
+    color: var(--critical);
+    background-color: transparent;
+    border-width: 0;
+    padding: 0;
+}
+.craft-item-name {
+    font-size: 11px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    margin-top: 2px;
+    margin-bottom: 4px;
+}
+.craft-progress-track {
+    height: 6px;
+    background-color: rgba(0,0,0,0.8);
+    border-width: 1px;
+    border-color: var(--line-soft);
+}
+.craft-progress-fill {
+    height: 100%;
+    background-color: var(--warm);
+}
+.craft-eta-label {
+    font-size: 9px;
+    color: var(--dim);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+    margin-top: 2px;
+    text-align: right;
+}
+
+/* 15. AlertToastNotification */
+.alert-toast-container {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    translate: -50% 0;
+    width: 400px;
+    align-items: center;
+}
+.toast-item {
+    width: 100%;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    border-left-width: 4px;
+    border-left-color: var(--warm);
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    flex-direction: row;
+    align-items: center;
+}
+.toast-item.severity-info { border-left-color: var(--lethe); }
+.toast-item.severity-warning { border-left-color: var(--warm); }
+.toast-item.severity-critical { border-left-color: var(--critical); }
+.toast-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: var(--warm);
+}
+.toast-dot.dot-info { background-color: var(--lethe); }
+.toast-dot.dot-warning { background-color: var(--warm); }
+.toast-dot.dot-critical { background-color: var(--critical); }
+.toast-content {
+    flex-grow: 1;
+}
+.toast-msg {
+    font-size: 13px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+}
+.toast-sub {
+    font-size: 10px;
+    color: var(--muted);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+
+/* 16. BunkerFloorMapMiniature */
+.bunker-map-panel {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    width: 260px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    padding: 10px;
+}
+.bunker-map-header {
+    font-size: 12px;
+    color: var(--warm);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+}
+.bunker-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.bunker-room-cell {
+    width: 54px;
+    height: 40px;
+    margin-bottom: 6px;
+    border-width: 1px;
+    border-color: var(--line-soft);
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+}
+.bunker-room-cell.status-operational { background-color: rgba(110, 163, 168, 0.25); border-color: var(--lethe); }
+.bunker-room-cell.status-damaged { background-color: rgba(211, 170, 98, 0.25); border-color: var(--warm); }
+.bunker-room-cell.status-critical { background-color: rgba(230, 51, 51, 0.25); border-color: var(--critical); }
+.bunker-room-cell.status-offline { background-color: rgba(0, 0, 0, 0.8); border-color: var(--dim); }
+.room-cell-code {
+    font-size: 9px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.bunker-tooltip {
+    background-color: var(--ink);
+    border-width: 1px;
+    border-color: var(--warm);
+    padding: 4px 8px;
+    margin-top: 4px;
+}
+.bunker-tooltip-text {
+    font-size: 10px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+
+/* 17. DayNightArcClock */
+.day-night-clock-panel {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    width: 220px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    padding: 10px;
+}
+.clock-arc-header {
+    align-items: center;
+    margin-bottom: 6px;
+}
+.clock-arc-visual {
+    width: 180px;
+    height: 16px;
+    border-top-left-radius: 90px;
+    border-top-right-radius: 90px;
+    border-width: 1px;
+    border-color: var(--line);
+    background-color: rgba(0,0,0,0.5);
+    flex-direction: row;
+    overflow: hidden;
+}
+.clock-arc-day { flex-grow: 1; background-color: var(--warm); opacity: 0.6; }
+.clock-arc-night { flex-grow: 1; background-color: var(--dim); opacity: 0.4; }
+.clock-main-display {
+    align-items: center;
+}
+.clock-time-val {
+    font-size: 20px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+    letter-spacing: 2px;
+}
+.clock-sub-row {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 4px;
+}
+.clock-day-val {
+    font-size: 11px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+}
+.clock-season-val {
+    font-size: 10px;
+    color: var(--muted);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+
+/* 18. BloodTypeIndicator */
+.blood-type-panel {
+    width: 60px;
+    height: 32px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--critical);
+    padding: 2px 4px;
+    justify-content: space-between;
+}
+.blood-badge-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.blood-type-code {
+    font-size: 13px;
+    color: var(--critical);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+}
+.blood-donor-tag {
+    font-size: 7px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.blood-dots-row {
+    flex-direction: row;
+    align-items: center;
+}
+.blood-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: var(--critical);
+    margin-right: 2px;
+    opacity: 0.3;
+}
+.blood-dot.active {
+    opacity: 1.0;
+}
+
+/* 19. LootHaulTicker */
+.loot-haul-panel {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    translate: -50% 0;
+    width: 420px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--warm);
+    border-left-width: 4px;
+    border-left-color: var(--hot);
+    padding: 8px 12px;
+}
+.loot-ticker-row {
+    flex-direction: row;
+    align-items: center;
+}
+.loot-icon-box {
+    font-size: 11px;
+    color: var(--hot);
+    background-color: rgba(244, 200, 117, 0.15);
+    border-width: 1px;
+    border-color: var(--hot);
+    padding: 2px 6px;
+    margin-right: 10px;
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.loot-qty-text {
+    font-size: 14px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    margin-right: 8px;
+}
+.loot-name-text {
+    font-size: 14px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    flex-grow: 1;
+}
+.loot-dismiss-track {
+    height: 2px;
+    background-color: rgba(0,0,0,0.5);
+    margin-top: 6px;
+}
+.loot-dismiss-fill {
+    height: 100%;
+    background-color: var(--hot);
+    width: 100%;
+}
+
+/* 20. EndgameVictoryPathTracker */
+.endgame-victory-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    width: 720px;
+    max-height: 520px;
+    background-color: var(--ink-panel);
+    border-width: 1px;
+    border-color: var(--line);
+    border-top-width: 3px;
+    border-top-color: var(--hot);
+    padding: 16px;
+}
+.endgame-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--line-soft);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+.endgame-title {
+    font-size: 18px;
+    color: var(--hot);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+    letter-spacing: 1.5px;
+}
+.endgame-score-label {
+    font-size: 14px;
+    color: var(--warm);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.endgame-paths-scroll {
+    max-height: 420px;
+}
+.victory-path-card {
+    background-color: rgba(0,0,0,0.4);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    padding: 8px 12px;
+    margin-bottom: 8px;
+}
+.victory-path-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.victory-path-name {
+    font-size: 13px;
+    color: var(--pale);
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
+}
+.status-badge {
+    font-size: 10px;
+    padding: 2px 6px;
+    -unity-font-definition: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
+}
+.status-badge.status-locked { color: var(--dim); background-color: rgba(102,103,95,0.2); }
+.status-badge.status-in_progress { color: var(--warm); background-color: rgba(211,170,98,0.2); }
+.status-badge.status-achieved { color: var(--lethe); background-color: rgba(110,163,168,0.25); }
+.status-badge.status-failed { color: var(--critical); background-color: rgba(230,51,51,0.25); }
+
+.victory-path-track {
+    height: 6px;
+    background-color: rgba(0,0,0,0.8);
+    border-width: 1px;
+    border-color: var(--line-soft);
+}
+.victory-path-fill {
+    height: 100%;
+    background-color: var(--warm);
+}

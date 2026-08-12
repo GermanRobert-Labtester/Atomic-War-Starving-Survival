@@ -80,7 +80,7 @@ namespace AtomicWar._Game.Environment
         public const float StressReliefPerShoring = 10f;
 
         /// <summary>Stress reduction per pneumatic jack installed.</summary>
-        public const float StressReliefPerJack = 25f;
+        public const float StressReliefPerJack = 12f;
 
         /// <summary>Material shielding threshold — cave-in triggers above this.</summary>
         public const float DefaultMaterialThreshold = 100f;
@@ -183,7 +183,12 @@ namespace AtomicWar._Game.Environment
                 if (room.excavationHoursRemaining <= 0f)
                 {
                     room.excavationHoursRemaining = 0f;
+                    _excavatedRooms[i] = room;
                     FinalizeExcavation(room);
+                }
+                else
+                {
+                    _excavatedRooms[i] = room;
                 }
             }
 
@@ -261,12 +266,20 @@ namespace AtomicWar._Game.Environment
             {
                 var room = _excavatedRooms[i];
                 if (room.level <= SafeDepthLevel) continue;
-                if (room.excavationHoursRemaining > 0f) continue;
 
-                float roomStress = StressPerDeepRoom * (room.level - SafeDepthLevel);
+                // Stress accrues proportionally while excavation is underway so the HUD
+                // fraction reflects active deep digging, not just completed rooms.
+                float totalHours = BaseExcavationHours * (room.hasPneumaticJack ? 1f : NoJackTimeMultiplier);
+                float completion = room.excavationHoursRemaining <= 0f
+                    ? 1f
+                    : Mathf.Clamp01(1f - (room.excavationHoursRemaining / totalHours));
+                if (completion <= 0f) continue;
+
+                float roomStress = StressPerDeepRoom * (room.level - SafeDepthLevel) * completion;
                 if (room.hasShoring) roomStress -= StressReliefPerShoring;
                 if (room.hasPneumaticJack) roomStress -= StressReliefPerJack;
                 room.stressContribution = Mathf.Max(0f, roomStress);
+                _excavatedRooms[i] = room;
                 stress += room.stressContribution;
             }
             _overburdenStress = stress;
@@ -350,6 +363,7 @@ namespace AtomicWar._Game.Environment
                 if (room.roomId == roomId && !room.hasShoring && room.excavationHoursRemaining <= 0f)
                 {
                     room.hasShoring = true;
+                    _excavatedRooms[i] = room;
                     _shoringTimberInstalled++;
                     RecalculateStress();
                     OnStressChanged?.Invoke(_overburdenStress);
@@ -370,6 +384,7 @@ namespace AtomicWar._Game.Environment
                 if (room.roomId == roomId && !room.hasPneumaticJack && room.excavationHoursRemaining <= 0f)
                 {
                     room.hasPneumaticJack = true;
+                    _excavatedRooms[i] = room;
                     _pneumaticJacksInstalled++;
                     RecalculateStress();
                     OnStressChanged?.Invoke(_overburdenStress);

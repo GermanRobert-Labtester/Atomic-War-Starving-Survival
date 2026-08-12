@@ -1,0 +1,19 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
+    <ui:VisualElement name="day-night-clock-root" class="day-night-clock-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="clock-arc-header">
+            <ui:VisualElement class="clock-arc-visual">
+                <ui:VisualElement name="clock_arc_day" class="clock-arc-day" />
+                <ui:VisualElement name="clock_arc_night" class="clock-arc-night" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement class="clock-main-display">
+            <ui:Label name="clock_time_text" text="14:30" class="clock-time-val" />
+            <ui:VisualElement class="clock-sub-row">
+                <ui:Label name="clock_day_text" text="DAY 042" class="clock-day-val" />
+                <ui:Label name="clock_season_text" text="FALLOUT WINTER" class="clock-season-val" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

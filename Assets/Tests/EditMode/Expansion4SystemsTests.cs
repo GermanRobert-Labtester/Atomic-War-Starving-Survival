@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Medical;
@@ -123,6 +124,35 @@ namespace AtomicWar.Tests.EditMode
             bool deployed = genSystem.EvaluateExpeditionDeployment(child);
             Assert.IsFalse(deployed, "Deployment of agoraphobic bunker-born survivor should fail.");
             Assert.AreEqual(GenerationalPsychologySystem.MentalBreak_PanicAttack, child.currentMentalBreakId);
+        }
+
+        [Test]
+        public void GenerationalPsychology_SaveLoad_RestoresCounters()
+        {
+            var genSystem = new GenerationalPsychologySystem();
+            var dir = SaveSystemTestFactory.TempDir("gen_psych");
+            var saveSystem = SaveSystemTestFactory.MakeSave(dir, ss => ss.SetGenerationalPsychologySystem(genSystem));
+
+            var child = new Survivor
+            {
+                Id = "c1",
+                DisplayName = "Child 1",
+                IsChild = true,
+                Age = 12
+            };
+            genSystem.DailyTick(365, new List<Survivor> { child });
+
+            Assert.AreEqual(1, genSystem.ComingOfAgeCount, "Coming-of-age counter should tick.");
+            Assert.IsFalse(string.IsNullOrEmpty(genSystem.LastComingOfAgeEvent), "Last coming-of-age text should be set.");
+
+            Assert.IsTrue(saveSystem.Save("gen_psych_roundtrip"));
+
+            var restoredGen = new GenerationalPsychologySystem();
+            var saveSystem2 = SaveSystemTestFactory.MakeSave(dir, ss => ss.SetGenerationalPsychologySystem(restoredGen));
+            Assert.IsTrue(saveSystem2.Load("gen_psych_roundtrip"));
+
+            Assert.AreEqual(genSystem.ComingOfAgeCount, restoredGen.ComingOfAgeCount, "Coming-of-age count should persist.");
+            Assert.AreEqual(genSystem.LastComingOfAgeEvent, restoredGen.LastComingOfAgeEvent, "Last coming-of-age text should persist.");
         }
 
         [Test]

@@ -397,8 +397,7 @@ namespace AtomicWar._Game.Survivors
                     forceDeath(sv);
                 else if (sv.State != SurvivorState.Dead)
                 {
-                    sv.State = SurvivorState.Dead;
-                    sv.Needs.Health = 0f;
+                    SurvivorNeedWrite.SetHealth(sv, 0f);
                 }
             }
         }

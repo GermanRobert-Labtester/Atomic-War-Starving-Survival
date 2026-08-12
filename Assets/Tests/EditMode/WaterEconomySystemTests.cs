@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Environment;
+using AtomicWar._Game.Survivors;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -128,6 +130,40 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(storage.DirtyWater, Is.EqualTo(0f).Within(Eps));
             Assert.That(storage.CleanWater, Is.EqualTo(3f).Within(Eps));
             Assert.That(purifierInst.FilterHealth, Is.LessThan(95f));
+        }
+
+        [Test]
+        public void Purifier_EmitsOnWaterPurified_WhenDirtyConvertedToClean()
+        {
+            var shelter = new Shelter();
+            var purifierInst = new ShelterModuleInstance(_purifierSO, level: 1)
+            {
+                IsEnabled = true,
+                FilterHealth = 100f
+            };
+            shelter.AddModule(purifierInst);
+
+            var storage = new WaterStorage();
+            storage.AddDirty(3f);
+
+            var survivors = new List<Survivor> { new Survivor { Id = "sv_1", DisplayName = "Test" } };
+            _system.BindPersonalQuests(null, () => survivors);
+
+            float capturedVolume = 0f;
+            IReadOnlyList<Survivor> capturedSurvivors = null;
+            _system.OnWaterPurified += (volume, sv) =>
+            {
+                capturedVolume = volume;
+                capturedSurvivors = sv;
+            };
+
+            // ConversionHoursPerUnit = 2h: 3 dirty units need 6 hours.
+            _system.Tick(7f, WeatherKind.Clear, currentDay: 10, shelter, storage);
+
+            Assert.That(storage.DirtyWater, Is.EqualTo(0f).Within(Eps));
+            Assert.That(storage.CleanWater, Is.EqualTo(3f).Within(Eps));
+            Assert.That(capturedVolume, Is.EqualTo(3f).Within(Eps));
+            Assert.That(capturedSurvivors, Is.SameAs(survivors));
         }
 
         [Test]

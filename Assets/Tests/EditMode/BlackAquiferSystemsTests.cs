@@ -105,7 +105,7 @@ namespace AtomicWar.Tests.EditMode
             sys.SetPumpRate(15f);
             sys.Tick(10f);
             sys.RestoreState(null);
-            Assert.AreEqual(5f, sys.PumpRateLitersPerHour, 0.001f);
+            Assert.AreEqual(HydrostaticPressureSystem.LensRechargeRatePerHour, sys.PumpRateLitersPerHour, 0.001f);
             Assert.AreEqual(0f, sys.ToxicityIndex, 0.001f);
         }
 

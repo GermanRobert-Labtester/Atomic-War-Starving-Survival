@@ -132,6 +132,18 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetGossipSystem(Gossip);
             SaveSystem.SetAdaptiveWarlordsSystem(AdaptiveWarlords);
             SaveSystem.SetBilgePumpsSystem(BilgePumps);
+            // Section VII new-content batch — all seven carry serializable state.
+            SaveSystem.SetSleepDeprivationSystem(SleepDeprivation);
+            SaveSystem.SetGriefSystem(Grief);
+            SaveSystem.SetShelterDegradationSystem(ShelterDegradation);
+            SaveSystem.SetAshAccumulationSystem(AshAccumulation);
+            SaveSystem.SetDiseaseMutationSystem(DiseaseMutation);
+            SaveSystem.SetNoiseDisciplineSystem(NoiseDiscipline);
+            SaveSystem.SetCalorieAccountingSystem(CalorieAccounting);
+            // EXP4-SAVE: Expansion IV systems with persistent state.
+            SaveSystem.SetStructuralEntropySystem(StructuralEntropySystem);
+            SaveSystem.SetGenerationalPsychologySystem(GenerationalPsychologySystem);
+            SaveSystem.SetLetheProtocolSystem(LetheProtocolSystem);
             SaveSystem.SetCarrionBirdsSystem(CarrionBirds);
             SaveSystem.SetLogicGatesSystem(LogicGates);
             SaveSystem.SetModLoaderSystem(ModLoader);
@@ -165,6 +177,9 @@ namespace AtomicWar._Game.Core
             InitWorldEventAndUtilitySystems();
             WireCraftingAndPerkBindings();
             InitAtmosphereCorpsePantrySystems();
+            // New-content quests (7): construct + wire + save-register. Runs
+            // late so Economy/Medical/Crafting/HatchDefense all exist.
+            BootQuestRegistry();
         }
 
         /// <summary>

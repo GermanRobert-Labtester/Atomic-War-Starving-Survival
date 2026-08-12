@@ -178,7 +178,106 @@ namespace AtomicWar._Game.Core
             RefreshMapKnowledgeHUD();
 
             // Expansion IV — wire structural/lethe/ozone/generational overlay controller.
-            WireExpansion4Hud();
+            WireExpansion4HudController();
+
+            // Prompt #42 — post-game moral chronicle (bridge + screen).
+            WireMoralChronicleHud();
+            // First-run guided tutorial (days 1–3).
+            WireTutorialOverlay();
+            // Batch-20 UI elements scene-level wiring
+            WireBatch20HudElements();
+        }
+
+        // -----------------------------------------------------------------
+        // Moral chronicle (Prompt #42)
+        // -----------------------------------------------------------------
+
+        /// <summary>Guard against a WireHUD re-run double-initialising the bridge.</summary>
+        private bool _moralChronicleWired;
+
+        /// <summary>World flag recorded once the tutorial ends (any cause).</summary>
+        private const string TutorialCompletedFlag = "tutorial_completed";
+
+        /// <summary>
+        /// Host the Core-side bridge on this GameObject, bind it to the HUD's
+        /// chronicle screen, and translate its navigation events. The bridge
+        /// subscribes itself to the process-wide EventBus in Initialise and
+        /// unsubscribes in its own OnDestroy — it shares this GameObject's
+        /// lifetime, so no extra cleanup is needed here beyond the tracked
+        /// bootstrap-side handlers.
+        /// </summary>
+        private void WireMoralChronicleHud()
+        {
+            if (_hud == null) return;
+            var chronicleUi = _hud.EnsureMoralChronicle();
+            if (chronicleUi == null) return;
+
+            if (_moralChronicleBridge == null)
+                _moralChronicleBridge = GetComponent<MoralChronicleBridge>();
+            if (_moralChronicleBridge == null)
+                _moralChronicleBridge = gameObject.AddComponent<MoralChronicleBridge>();
+
+            if (_moralChronicleWired) return;
+            _moralChronicleWired = true;
+
+            _moralChronicleBridge.Initialise(chronicleUi, Survivors);
+            SaveSystem?.SetMoralChronicleBridge(_moralChronicleBridge);
+
+            _moralChronicleBridge.OnMainMenuRequested += HandleChronicleMainMenuRequested;
+            var bridge = _moralChronicleBridge;
+            _subscriptions.Track(() => bridge.OnMainMenuRequested -= HandleChronicleMainMenuRequested);
+
+            // Cache the journal text at campaign end. The player only opens the
+            // snapshot from the already-shown chronicle screen, so running after
+            // the bridge's own CampaignEndedEvent handler is safe.
+            Action<CampaignEndedEvent> onCampaignEndedSnapshot =
+                _ => bridge.SetJournalSnapshot(BuildFinalJournalSnapshot());
+            EventBus.Subscribe<CampaignEndedEvent>(onCampaignEndedSnapshot);
+            _subscriptions.Track(() => EventBus.Unsubscribe<CampaignEndedEvent>(onCampaignEndedSnapshot));
+        }
+
+        private string BuildFinalJournalSnapshot()
+        {
+            var entries = JournalSystem?.Entries;
+            if (entries == null || entries.Count == 0) return string.Empty;
+            var sb = new System.Text.StringBuilder();
+            for (int i = 0; i < entries.Count; i++)
+            {
+                if (entries[i] == null) continue;
+                sb.AppendLine(entries[i].ToString());
+            }
+            return sb.ToString().TrimEnd();
+        }
+
+        private void HandleChronicleMainMenuRequested()
+        {
+            if (string.IsNullOrEmpty(_mainMenuSceneName)) return;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(_mainMenuSceneName);
+        }
+
+        // -----------------------------------------------------------------
+        // Tutorial overlay
+        // -----------------------------------------------------------------
+
+        /// <summary>
+        /// Bind the overlay's day provider and persist the completion flag.
+        /// Activation itself happens in Awake after any pending load resolves.
+        /// </summary>
+        private void WireTutorialOverlay()
+        {
+            if (_hud == null) return;
+            var tutorial = _hud.EnsureTutorialOverlay();
+            if (tutorial == null) return;
+
+            tutorial.SetDayProvider(() => TimeSystem != null ? TimeSystem.CurrentDay : 0);
+            tutorial.OnTutorialEnded -= HandleTutorialEnded;
+            tutorial.OnTutorialEnded += HandleTutorialEnded;
+            _subscriptions.Track(() => tutorial.OnTutorialEnded -= HandleTutorialEnded);
+        }
+
+        private void HandleTutorialEnded()
+        {
+            SaveSystem?.SetWorldFlag(TutorialCompletedFlag, true);
         }
 
         /// <summary>

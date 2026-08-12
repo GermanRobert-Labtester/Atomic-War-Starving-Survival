@@ -30,7 +30,8 @@ namespace AtomicWar._Game.Radiation
 
         public AfflictionPipeline(Random rng = null)
         {
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("affliction_pipeline");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "affliction_pipeline");
         }
 
         /// <summary>

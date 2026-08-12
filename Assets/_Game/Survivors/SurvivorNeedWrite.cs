@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace AtomicWar._Game.Survivors
@@ -10,6 +11,15 @@ namespace AtomicWar._Game.Survivors
     /// </summary>
     public static class SurvivorNeedWrite
     {
+        /// <summary>
+        /// DEATH-006 centralized kill event. Fired whenever <see cref="SetHealth"/>
+        /// (or <see cref="Kill"/>) transitions a survivor to Health=0 / State=Dead.
+        /// The bootstrap wires this to the same death chain that
+        /// <see cref="NeedsSystem.OnDied"/> runs, so any system that cannot hold a
+        /// <see cref="NeedsSystem"/> reference still produces world-reacting deaths.
+        /// </summary>
+        public static event Action<Survivor> OnKilled;
+
         public static void AdjustHealth(Survivor sv, float delta)
         {
             if (sv == null || sv.Needs == null || !sv.IsAlive || delta == 0f) return;
@@ -63,15 +73,28 @@ namespace AtomicWar._Game.Survivors
             {
                 sv.State = SurvivorState.Dead;
                 onKilled?.Invoke(sv);
+                OnKilled?.Invoke(sv);
             }
-            else if (newHealth <= 0f && sv.IsAlive)
+            else if (!forceRevive && newHealth <= 0f && sv.IsAlive)
             {
                 // Health was already 0 (e.g. after a previous kill), but the
                 // survivor was somehow still marked alive. Transition to Dead
                 // and fire the chain exactly once.
                 sv.State = SurvivorState.Dead;
                 onKilled?.Invoke(sv);
+                OnKilled?.Invoke(sv);
             }
+        }
+
+        /// <summary>
+        /// DEATH-006 centralized kill helper: set Health to 0 and State to Dead,
+        /// firing the same <see cref="OnKilled"/> chain that a natural death
+        /// uses. Use this instead of writing <c>State = SurvivorState.Dead</c>
+        /// directly so the world reacts to the death.
+        /// </summary>
+        public static void Kill(Survivor sv)
+        {
+            SetHealth(sv, 0f);
         }
     }
 }

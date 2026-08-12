@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_A.uss" />
+    <ui:VisualElement name="radiation-dosimeter-root" class="radiation-dosimeter-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="dosimeter-header">
+            <ui:Label name="dosimeter-title" class="ashfall-title" text="DOSIMETER" />
+            <ui:Label name="dosimeter-status-tag" class="ashfall-mono" text="ACTIVE" />
+        </ui:VisualElement>
+        
+        <ui:VisualElement class="dosimeter-main-dose">
+            <ui:Label name="dose-val" class="dosimeter-dose-val" text="0.00 Sv" />
+            <ui:Label name="dose-rate-val" class="dosimeter-rate-val" text="0.0 mSv/hr" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="arc-track" class="dosimeter-arc-track">
+            <ui:VisualElement name="arc-fill" class="dosimeter-arc-fill" />
+        </ui:VisualElement>
+
+        <ui:Label name="critical-badge" class="dosimeter-critical-badge hidden" text="CRITICAL DOSE EXCEEDED" />
+    </ui:VisualElement>
+</ui:UXML>

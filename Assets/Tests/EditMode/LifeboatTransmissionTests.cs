@@ -165,6 +165,36 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void ResolveSend_KillsFireCentralizedDeathEvent()
+        {
+            // DEATH-006 regression: pre-fix, LifeboatTransmissionSystem wrote
+            // State = SurvivorState.Dead directly, so the world never reacted to the
+            // deaths. Post-fix, ResolveSend routes through SurvivorNeedWrite.SetHealth
+            // and the static OnKilled event fires.
+            var (boat, _, _) = MakeStack();
+            int killCount = 0;
+            System.Action<Survivor> handler = sv => killCount++;
+            SurvivorNeedWrite.OnKilled += handler;
+
+            try
+            {
+                var ev = boat.OfferContact(_survivors, 82);
+                Assert.IsNotNull(ev);
+
+                Assert.IsTrue(boat.ResolveSend("s_ren"));
+                Assert.That(killCount, Is.EqualTo(2), "Two left-behind survivors must fire OnKilled.");
+                Assert.That(_survivors.Find(s => s.Id == "s_mara").State, Is.EqualTo(SurvivorState.Dead));
+                Assert.That(_survivors.Find(s => s.Id == "s_jon").State, Is.EqualTo(SurvivorState.Dead));
+
+                _toDestroy.Add(ev);
+            }
+            finally
+            {
+                SurvivorNeedWrite.OnKilled -= handler;
+            }
+        }
+
+        [Test]
         public void Lifeboat_BlocksFullRescueExtractionSuccess()
         {
             var (boat, engine, victory) = MakeStack();

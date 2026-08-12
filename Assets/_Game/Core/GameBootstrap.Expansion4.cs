@@ -14,7 +14,7 @@ namespace AtomicWar._Game.Core
     ///
     /// Call order in GameBootstrap:
     ///   InitializeSystems() → … → InitExpansion4Systems()  (after InitMedicalSystems)
-    ///   WireHUD()           → … → WireExpansion4Hud()       (at end of WireHUD)
+    ///   WireHUD()           → … → WireExpansion4HudController() (lives in InitWorld.cs)
     ///   DailyTick()         → … → DailyTickExpansion4()     (alongside other daily ticks)
     /// </summary>
     public partial class GameBootstrap
@@ -44,9 +44,10 @@ namespace AtomicWar._Game.Core
         [SerializeField] private LetheDripGauge            _letheDripGauge;
         [SerializeField] private OzoneScourgeOverlay        _ozoneOverlayComp;
         [SerializeField] private MemoryFlashVignette        _memoryFlashComp;
-
-        // Cached delegate guard — prevents double-subscribe across load-game restores.
-        private Action<ComingOfAgeEvent> _onComingOfAgeHud;
+        [Tooltip("Paint pump for the four overlays above. Lives beside " +
+                 "DiegeticHudController on the HUD; falls back to a HUD-hierarchy " +
+                 "lookup when unassigned.")]
+        [SerializeField] private Expansion4HudController    _expansion4HudController;
 
         // ----------------------------------------------------------------
         // Initialisation
@@ -66,7 +67,7 @@ namespace AtomicWar._Game.Core
             // Register all shelter rooms that already exist at init time.
             if (Shelter != null)
             {
-                var rooms = Shelter.GetAllRooms();
+                var rooms = Shelter.Rooms;
                 if (rooms != null)
                     foreach (var room in rooms)
                         StructuralEntropySystem.RegisterRoom(room);
@@ -74,14 +75,19 @@ namespace AtomicWar._Game.Core
 
             // Atmosphere changes can accelerate carbonation.
             if (AtmosphereSystem != null)
+            {
                 AtmosphereSystem.OnAtmosphereChanged += StructuralEntropySystem.OnAtmosphereChanged;
+                _subscriptions.Track(() => AtmosphereSystem.OnAtmosphereChanged -= StructuralEntropySystem.OnAtmosphereChanged);
+            }
 
             // Surface spalling events to the event bus for diary/radio reactions.
-            StructuralEntropySystem.OnSpallingEventBus += spallingEvt =>
+            Action<SpallingEvent> onSpalling = spallingEvt =>
             {
                 if (EventRunner != null)
                     EventRunner.RaiseSpallingOccurred(spallingEvt.RoomId);
             };
+            StructuralEntropySystem.OnSpallingEventBus += onSpalling;
+            _subscriptions.Track(() => StructuralEntropySystem.OnSpallingEventBus -= onSpalling);
 
             // 2. Lethe Protocol ---------------------------------------------------
             LetheProtocolSystem = new LetheProtocolSystem(CreateSaltedRng(_worldSeed, "lethe"));
@@ -89,15 +95,21 @@ namespace AtomicWar._Game.Core
 
             // Hook reservoir depletion into water-purifier volume events.
             if (WaterEconomySystem != null)
-                WaterEconomySystem.OnWaterPurified += (volumeLitres, survivors) =>
+            {
+                Action<float, IReadOnlyList<Survivor>> onWaterPurified = (volumeLitres, survivors) =>
                     LetheProtocolSystem.ConsumeAmnesticDose(volumeLitres, survivors ?? Survivors);
+                WaterEconomySystem.OnWaterPurified += onWaterPurified;
+                _subscriptions.Track(() => WaterEconomySystem.OnWaterPurified -= onWaterPurified);
+            }
 
             // Expose Waking Sickness to the event bus.
-            LetheProtocolSystem.OnWakingSicknessEventBus += evt =>
+            Action<WakingSicknessEvent> onWakingSickness = evt =>
             {
                 if (EventRunner != null)
                     EventRunner.RaiseWakingSicknessStarted(evt.ReservoirLevel, evt.AffectedCount);
             };
+            LetheProtocolSystem.OnWakingSicknessEventBus += onWakingSickness;
+            _subscriptions.Track(() => LetheProtocolSystem.OnWakingSicknessEventBus -= onWakingSickness);
 
             // 3. Ozone Scourge ----------------------------------------------------
             // OzoneScourgeSystem reads WeatherSystem directly via its constructor.
@@ -109,64 +121,13 @@ namespace AtomicWar._Game.Core
             GenerationalPsychologySystem.BindDependencies(NeedsSystem, MentalBreakSystem);
 
             // Agoraphobic panic → diary entry for narrative texture.
-            GenerationalPsychologySystem.OnAgoraphobicPanicAttack += sv =>
+            Action<Survivor> onAgoraphobicPanic = sv =>
             {
                 if (SurvivorDiaries != null && sv != null)
                     SurvivorDiaries.RecordEntry(sv, "Panic. The sky. I cannot.");
             };
-        }
-
-        // ----------------------------------------------------------------
-        // HUD wiring
-        // ----------------------------------------------------------------
-
-        /// <summary>
-        /// Wires the Expansion4HudController to all four systems.
-        /// Called at the end of WireHUD() — after EnsureDiegeticHud() has run.
-        /// </summary>
-        private void WireExpansion4Hud()
-        {
-            // The Expansion4HudController is a sibling MonoBehaviour on the
-            // same GameObject as DiegeticHudController. Fetch it from the
-            // scene; it is guaranteed to exist once the HUD prefab is spawned.
-            var exp4Ctrl = FindObjectOfType<Expansion4HudController>();
-            if (exp4Ctrl == null)
-            {
-                // Not a hard error — the overlay prefab may not be in the scene yet
-                // (e.g. stripped test builds). Log and continue gracefully.
-                Debug.LogWarning("[Expansion4] Expansion4HudController not found in scene. " +
-                                 "Attach it to the HUD GameObject to enable Expansion IV overlays.");
-                return;
-            }
-
-            exp4Ctrl.Bind(
-                entropySystem:  StructuralEntropySystem,
-                letheSystem:    LetheProtocolSystem,
-                ozoneSystem:    OzoneScourgeSystem,
-                genSystem:      GenerationalPsychologySystem,
-                getSurvivors:   () => Survivors,
-                wireframe:      _structuralWireframe,
-                dripGauge:      _letheDripGauge,
-                ozoneComp:      _ozoneOverlayComp,
-                flashComp:      _memoryFlashComp);
-
-            // Subscribe the HUD to the coming-of-age event so the event footer
-            // in the Generational panel is driven by an event, not just polling.
-            // Unsubscribe any prior subscription first (hot-reload / load-game safety).
-            if (_onComingOfAgeHud != null)
-                GenerationalPsychologySystem.OnComingOfAgeEventBus -= _onComingOfAgeHud;
-
-            _onComingOfAgeHud = evt =>
-            {
-                // GenerationalPsychologySystem.LastComingOfAgeEvent is already set
-                // at this point; the controller's next Update() will pick it up.
-                // Optionally also push a diegetic event panel notification here.
-                if (_hud != null)
-                    _hud.PushEventText(
-                        $"{evt.DisplayName} has come of age. " +
-                        "They have never known sunlight.");
-            };
-            GenerationalPsychologySystem.OnComingOfAgeEventBus += _onComingOfAgeHud;
+            GenerationalPsychologySystem.OnAgoraphobicPanicAttack += onAgoraphobicPanic;
+            _subscriptions.Track(() => GenerationalPsychologySystem.OnAgoraphobicPanicAttack -= onAgoraphobicPanic);
         }
 
         // ----------------------------------------------------------------

@@ -25,8 +25,8 @@ namespace AtomicWar._Game.Core
     {
         private void InitializeSystems()
         {
-            // Seed the global RNG so every CreateFixed() fallback produces
-            // campaign-specific streams instead of the same sequence every run.
+            // Seed the global RNG so every SeededRandom.Create() fallback uses
+            // the campaign world seed instead of the same sequence every run.
             AtomicWar._Game.Utilities.SeededRandom.WorldSeed = _worldSeed;
 
             InitFoundation();

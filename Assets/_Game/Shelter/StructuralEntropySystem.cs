@@ -128,7 +128,18 @@ namespace AtomicWar._Game.Shelter
         public void TriggerSpalling(ShelterRoom room)
         {
             if (room == null) return;
+            bool alreadySpalling = room.IsSpalling;
             room.IsSpalling = true;
+
+            // Idempotent: do not re-damage occupants or re-apply shielding loss if
+            // this room is already spalling. Events are still raised so callers can
+            // observe the spalling state without relying on the automatic threshold path.
+            if (alreadySpalling)
+            {
+                OnSpallingTriggered?.Invoke(room);
+                OnSpallingEventBus?.Invoke(new SpallingEvent(room.RoomId, room.MaterialShielding));
+                return;
+            }
             room.MaterialShielding = Mathf.Max(0.1f, room.MaterialShielding - SpallingShieldingLoss);
             room.AmbientRadiation += SpallingAmbientRadLeak;
 
@@ -177,7 +188,7 @@ namespace AtomicWar._Game.Shelter
         {
             if (room == null || martyr == null) return false;
 
-            martyr.State = SurvivorState.Dead;
+            SurvivorNeedWrite.SetHealth(martyr, 0f);
             room.RebarCorrosion = 0f;
             room.CarbonationDepth = 0f;
             room.IsSpalling = false;

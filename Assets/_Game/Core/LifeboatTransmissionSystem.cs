@@ -200,7 +200,7 @@ namespace AtomicWar._Game.Core
                 var s = survivors[i];
                 if (s == null || !s.IsAlive) continue;
                 if (ReferenceEquals(s, chosen)) continue;
-                s.State = SurvivorState.Dead;
+                SurvivorNeedWrite.SetHealth(s, 0f);
                 _leftBehindIds.Add(s.Id ?? string.Empty);
                 _leftBehindNames.Add(string.IsNullOrEmpty(s.DisplayName) ? s.Id : s.DisplayName);
             }

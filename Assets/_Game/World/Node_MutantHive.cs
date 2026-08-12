@@ -38,12 +38,12 @@ namespace AtomicWar._Game.World
 
         public string NodeId => _state.node_id;
 
-        public Node_MutantHive() : this(AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_mutanthive")) { }
+        public Node_MutantHive() : this(SeededRandom.Create(SeededRandom.WorldSeed, "node_mutanthive")) { }
 
         public Node_MutantHive(System.Random rng)
         {
             _state = new MutantHiveState();
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("node_mutanthive");
+            _rng = rng ?? SeededRandom.Create(SeededRandom.WorldSeed, "node_mutanthive");
         }
 
         /// <summary>

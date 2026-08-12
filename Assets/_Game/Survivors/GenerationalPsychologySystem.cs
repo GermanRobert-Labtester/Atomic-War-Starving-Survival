@@ -63,6 +63,14 @@ namespace AtomicWar._Game.Survivors
         /// </summary>
         public string LastComingOfAgeEvent { get; private set; } = string.Empty;
 
+        private int _comingOfAgeCount;
+        private int _agoraphobicPanicCount;
+        private int _artifactReverenceBrawlCount;
+
+        public int ComingOfAgeCount => _comingOfAgeCount;
+        public int AgoraphobicPanicCount => _agoraphobicPanicCount;
+        public int ArtifactReverenceBrawlCount => _artifactReverenceBrawlCount;
+
         public void BindDependencies(NeedsSystem needsSystem, MentalBreakSystem mentalBreakSystem)
         {
             _needsSystem = needsSystem;
@@ -107,6 +115,7 @@ namespace AtomicWar._Game.Survivors
 
                     var comingOfAgePayload = new ComingOfAgeEvent(sv.Id, sv.DisplayName, sv.Age, true);
                     LastComingOfAgeEvent = $"{sv.DisplayName} (age {sv.Age}) has grown up inside. They have never seen the sky.";
+                    _comingOfAgeCount++;
                     OnComingOfAge?.Invoke(sv, comingOfAgePayload);
                     OnComingOfAgeEventBus?.Invoke(comingOfAgePayload);
                 }
@@ -134,6 +143,7 @@ namespace AtomicWar._Game.Survivors
                 }
 
                 OnAgoraphobicPanicAttack?.Invoke(survivor);
+                _agoraphobicPanicCount++;
                 return false;
             }
 
@@ -172,6 +182,7 @@ namespace AtomicWar._Game.Survivors
                         _needsSystem.Modify(sv, NeedKind.Morale, -30f);
                     }
 
+                    _artifactReverenceBrawlCount++;
                     OnArtifactReverenceBrawlEventBus?.Invoke(new ArtifactReverenceBrawlEvent(sv.Id, itemId));
                 }
             }
@@ -182,5 +193,34 @@ namespace AtomicWar._Game.Survivors
             if (string.IsNullOrEmpty(itemId)) return false;
             return itemId == Item_CassetteTape || itemId == Item_PreWarPhotoAlbum || itemId == Item_VinylCollection;
         }
+
+        public object CaptureState()
+        {
+            return new GenerationalPsychologySave
+            {
+                LastComingOfAgeEvent = LastComingOfAgeEvent,
+                ComingOfAgeCount = _comingOfAgeCount,
+                AgoraphobicPanicCount = _agoraphobicPanicCount,
+                ArtifactReverenceBrawlCount = _artifactReverenceBrawlCount
+            };
+        }
+
+        public void RestoreState(object state)
+        {
+            if (state is not GenerationalPsychologySave save) return;
+            LastComingOfAgeEvent = save.LastComingOfAgeEvent ?? string.Empty;
+            _comingOfAgeCount = save.ComingOfAgeCount;
+            _agoraphobicPanicCount = save.AgoraphobicPanicCount;
+            _artifactReverenceBrawlCount = save.ArtifactReverenceBrawlCount;
+        }
+    }
+
+    [Serializable]
+    public class GenerationalPsychologySave
+    {
+        public string LastComingOfAgeEvent;
+        public int ComingOfAgeCount;
+        public int AgoraphobicPanicCount;
+        public int ArtifactReverenceBrawlCount;
     }
 }

@@ -1,0 +1,41 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
+    <ui:VisualElement name="faction-pressure-root" class="faction-pressure-panel hidden" picking-mode="Ignore">
+        <ui:Label text="FACTION THREAT READOUT" class="faction-ring-header" />
+        <ui:VisualElement class="faction-ring-center">
+            <ui:Label text="DOMINANT FACTION" class="faction-dominant-title" />
+            <ui:Label name="dominant_faction_label" text="GARRISON" class="faction-dominant-name" />
+        </ui:VisualElement>
+        <ui:VisualElement class="faction-bars-list">
+            <ui:VisualElement class="faction-bar-row">
+                <ui:Label text="GARRISON" class="faction-name-label faction-garrison" />
+                <ui:VisualElement class="faction-bar-track">
+                    <ui:VisualElement name="garrison_bar_fill" class="faction-bar-fill faction-garrison" style="width: 50%;" />
+                </ui:VisualElement>
+                <ui:Label name="garrison_val_label" text="50%" class="faction-val-label" />
+            </ui:VisualElement>
+            <ui:VisualElement class="faction-bar-row">
+                <ui:Label text="MILITIA" class="faction-name-label faction-militia" />
+                <ui:VisualElement class="faction-bar-track">
+                    <ui:VisualElement name="militia_bar_fill" class="faction-bar-fill faction-militia" style="width: 30%;" />
+                </ui:VisualElement>
+                <ui:Label name="militia_val_label" text="30%" class="faction-val-label" />
+            </ui:VisualElement>
+            <ui:VisualElement class="faction-bar-row">
+                <ui:Label text="CULTISTS" class="faction-name-label faction-cultists" />
+                <ui:VisualElement class="faction-bar-track">
+                    <ui:VisualElement name="cultist_bar_fill" class="faction-bar-fill faction-cultists" style="width: 15%;" />
+                </ui:VisualElement>
+                <ui:Label name="cultist_val_label" text="15%" class="faction-val-label" />
+            </ui:VisualElement>
+            <ui:VisualElement class="faction-bar-row">
+                <ui:Label text="WARLORDS" class="faction-name-label faction-warlords" />
+                <ui:VisualElement class="faction-bar-track">
+                    <ui:VisualElement name="warlord_bar_fill" class="faction-bar-fill faction-warlords" style="width: 5%;" />
+                </ui:VisualElement>
+                <ui:Label name="warlord_val_label" text="5%" class="faction-val-label" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

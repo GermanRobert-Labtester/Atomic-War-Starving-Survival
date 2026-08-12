@@ -37,6 +37,13 @@ namespace AtomicWar._Game.UI
         public bool IsActive { get; private set; }
         public string CurrentMessage { get; private set; }
 
+        /// <summary>
+        /// Fired once when the tutorial leaves the active state — player dismissed
+        /// it or the day-3 rollover ended it. GameBootstrap persists the
+        /// "tutorial_completed" world flag from this.
+        /// </summary>
+        public event System.Action OnTutorialEnded;
+
         private int _lastDay = -1;
 
         private static readonly string[] Messages =
@@ -76,9 +83,28 @@ namespace AtomicWar._Game.UI
 
         public void EndTutorial()
         {
+            if (!IsActive) return;
             CurrentStep = TutorialStep.None;
             IsActive = false;
             CurrentMessage = "";
+            OnTutorialEnded?.Invoke();
+        }
+
+        /// <summary>
+        /// Day-rollover check, split out of Update so EditMode tests can drive it
+        /// without the Input API. Ends the tutorial once day 3 arrives.
+        /// </summary>
+        public void CheckDayRollover()
+        {
+            if (!IsActive || _getCurrentDay == null) return;
+
+            int day = _getCurrentDay();
+            if (day == _lastDay) return;
+            _lastDay = day;
+            if (day >= 3 && CurrentStep < TutorialStep.Done)
+            {
+                EndTutorial();
+            }
         }
 
         private void Update()
@@ -86,18 +112,7 @@ namespace AtomicWar._Game.UI
             if (!IsActive) return;
 
             // Auto-advance on day change for later steps
-            if (_getCurrentDay != null)
-            {
-                int day = _getCurrentDay();
-                if (day != _lastDay)
-                {
-                    _lastDay = day;
-                    if (day >= 3 && CurrentStep < TutorialStep.Done)
-                    {
-                        EndTutorial();
-                    }
-                }
-            }
+            CheckDayRollover();
 
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return))
             {

@@ -361,5 +361,21 @@
     "dangerLevel": 10.0,
     "travelHours": 9.0,
     "baseRadsPerHour": 80.0
+  },
+  {
+    "id": "highway_pileup",
+    "displayName": "Highway Pileup",
+    "description": "Two kilometres of welded-together cars on the old ring road. One of the engines still turns over. Loot: engine_block_intact, copper_wire_10m_of_10m, fertilizer.",
+    "dangerLevel": 6.0,
+    "travelHours": 5.0,
+    "baseRadsPerHour": 25.0
+  },
+  {
+    "id": "prewar_medical_cache",
+    "displayName": "Pre-War Medical Cache",
+    "description": "A clinic basement sealed before the exchange. The cult keeps finding these first. Loot: antibiotics, bandage, medical_kit.",
+    "dangerLevel": 4.0,
+    "travelHours": 3.0,
+    "baseRadsPerHour": 15.0
   }
 ]

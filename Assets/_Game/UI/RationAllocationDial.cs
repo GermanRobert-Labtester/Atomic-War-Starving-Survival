@@ -1,0 +1,146 @@
+using System;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace AtomicWar._Game.UI
+{
+    /// <summary>
+    /// UI Element #07 — Ration Allocation Dial.
+    /// Centre modal: survivor name, 3 food slot options, calorie count, +/- adjust.
+    /// Raises OnRationConfirmed / OnRationSkipped.
+    /// </summary>
+    public class RationAllocationDial : MonoBehaviour
+    {
+        public event Action<string, string, int> OnRationConfirmed; // (survivor_id, food_id, kcal)
+        public event Action<string> OnRationSkipped;                 // (survivor_id)
+
+        [SerializeField] private UIDocument _document;
+
+        private VisualElement _root;
+        private Label _survivorLabel;
+        private Label _calorieLabel;
+        private Label[] _slotLabels  = new Label[3];
+        private Button[] _slotButtons = new Button[3];
+        private Button _confirmButton;
+        private Label _skipLabel;
+
+        private string _survivorId;
+        private string[] _foodIds    = new string[3];
+        private string[] _foodNames  = new string[3];
+        private int[]    _foodKcal   = new int[3];
+        private int      _selectedSlot = 0;
+        private int      _multiplier   = 1;
+
+        [Serializable]
+        public struct SaveState
+        {
+            public string survivorId;
+            public string[] foodIds;
+            public int selectedSlot;
+            public int multiplier;
+        }
+        public SaveState CaptureState() => new SaveState
+        {
+            survivorId = _survivorId, foodIds = _foodIds,
+            selectedSlot = _selectedSlot, multiplier = _multiplier
+        };
+
+        private void OnEnable()
+        {
+            if (_document == null) _document = GetComponent<UIDocument>();
+            if (_document == null) return;
+            _root = _document.rootVisualElement.Q("ration-dial-root");
+            if (_root == null) return;
+
+            _survivorLabel = _root.Q<Label>("ration-survivor-label");
+            _calorieLabel  = _root.Q<Label>("ration-calorie-label");
+
+            for (int i = 0; i < 3; i++)
+            {
+                int idx = i;
+                _slotLabels[i]  = _root.Q<Label>($"ration-slot-label-{i}");
+                _slotButtons[i] = _root.Q<Button>($"ration-slot-btn-{i}");
+                if (_slotButtons[i] != null)
+                    _slotButtons[i].clicked += () => SelectSlot(idx);
+            }
+
+            var incBtn = _root.Q<Button>("ration-inc-btn");
+            var decBtn = _root.Q<Button>("ration-dec-btn");
+            if (incBtn != null) incBtn.clicked += () => { _multiplier = Mathf.Min(_multiplier + 1, 3); RefreshCalorie(); };
+            if (decBtn != null) decBtn.clicked += () => { _multiplier = Mathf.Max(_multiplier - 1, 1); RefreshCalorie(); };
+
+            _confirmButton = _root.Q<Button>("ration-confirm-btn");
+            if (_confirmButton != null)
+                _confirmButton.clicked += Confirm;
+
+            _skipLabel = _root.Q<Label>("ration-skip-label");
+            if (_skipLabel != null)
+                _skipLabel.RegisterCallback<ClickEvent>(_ => Skip());
+
+            Hide();
+        }
+
+        public void Open(string survivorId, string survivorName,
+                         (string id, string name, int kcal)[] slots)
+        {
+            _survivorId = survivorId;
+            if (_survivorLabel != null) _survivorLabel.text = survivorName?.ToUpper() ?? "";
+            for (int i = 0; i < 3; i++)
+            {
+                if (i < slots.Length)
+                {
+                    _foodIds[i]   = slots[i].id;
+                    _foodNames[i] = slots[i].name;
+                    _foodKcal[i]  = slots[i].kcal;
+                    if (_slotLabels[i] != null)
+                        _slotLabels[i].text = $"{slots[i].name?.ToUpper()}  {slots[i].kcal} kcal";
+                }
+                else if (_slotLabels[i] != null)
+                {
+                    _slotLabels[i].text = "— EMPTY SLOT —";
+                }
+            }
+            _selectedSlot = 0;
+            _multiplier   = 1;
+            RefreshSelection();
+            RefreshCalorie();
+            Show();
+        }
+
+        public void Show() => _root?.RemoveFromClassList("hidden");
+        public void Hide() => _root?.AddToClassList("hidden");
+
+        private void SelectSlot(int idx)
+        {
+            _selectedSlot = idx;
+            RefreshSelection();
+            RefreshCalorie();
+        }
+
+        private void RefreshSelection()
+        {
+            for (int i = 0; i < 3; i++)
+                if (_slotButtons[i] != null)
+                    _slotButtons[i].EnableInClassList("ration-slot--selected", i == _selectedSlot);
+        }
+
+        private void RefreshCalorie()
+        {
+            int total = _selectedSlot < 3 ? _foodKcal[_selectedSlot] * _multiplier : 0;
+            if (_calorieLabel != null) _calorieLabel.text = $"TOTAL: {total} kcal  ×{_multiplier}";
+        }
+
+        private void Confirm()
+        {
+            int total = _selectedSlot < 3 ? _foodKcal[_selectedSlot] * _multiplier : 0;
+            OnRationConfirmed?.Invoke(_survivorId, _foodIds[_selectedSlot], total);
+            Hide();
+        }
+
+        private void Skip()
+        {
+            OnRationSkipped?.Invoke(_survivorId);
+            Hide();
+        }
+    }
+}

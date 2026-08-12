@@ -87,6 +87,12 @@ namespace AtomicWar._Game.Core
                 () => system.CaptureState(),
                 o => system.RestoreState((SurvivorTaskBoardSave)o));
 
+        /// <summary>Persist the moral-chronicle timeline + journal snapshot across save/load.</summary>
+        public void SetMoralChronicleBridge(MoralChronicleBridge bridge) =>
+            RegisterSystem(ref _moralChronicleBridge, bridge, "moral_chronicle",
+                () => bridge.CaptureState(),
+                o => bridge.RestoreState((MoralChronicleBridge.BridgeSave)o));
+
         /// <summary>Inject expedition system (optional; safe to skip in tests).</summary>
         public void SetExpeditionSystem(ExpeditionSystem expeditionSystem)
         {
@@ -532,6 +538,50 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _gossipSystem, s, "gossip",
                 () => s.CaptureState(),
                 o => s.RestoreState((GossipSystemState)o));
+
+        // ── Section VII new-content batch ────────────────────────────
+
+        /// <summary>Section VII — per-survivor sleep debt (wrapped: JsonUtility rejects root List).</summary>
+        public void SetSleepDeprivationSystem(SleepDeprivationSystem s) =>
+            RegisterSystem(ref _sleepDeprivationSystem, s, "sleep_deprivation",
+                () => new SleepDeprivationSave { Entries = s.CaptureState() },
+                o => s.RestoreState(((SleepDeprivationSave)o)?.Entries));
+
+        /// <summary>Section VII — grief cascade state (per-survivor refusal + recent deaths).</summary>
+        public void SetGriefSystem(GriefSystem s) =>
+            RegisterSystem(ref _griefSystem, s, "grief",
+                () => s.CaptureState(),
+                o => s.RestoreState((GriefSystem.State)o));
+
+        /// <summary>Section VII — bunker subsystem integrity decay.</summary>
+        public void SetShelterDegradationSystem(ShelterDegradationSystem s) =>
+            RegisterSystem(ref _shelterDegradationSystem, s, "shelter_degradation",
+                () => s.CaptureState(),
+                o => s.RestoreState((ShelterDegradationSystem.State)o));
+
+        /// <summary>Section VII — ash buildup on surface/intake/panels/hatch.</summary>
+        public void SetAshAccumulationSystem(AshAccumulationSystem s) =>
+            RegisterSystem(ref _ashAccumulationSystem, s, "ash_accumulation",
+                () => s.CaptureState(),
+                o => s.RestoreState((AshAccumulationSystem.State)o));
+
+        /// <summary>Section VII — infection resistance evolution ledger.</summary>
+        public void SetDiseaseMutationSystem(DiseaseMutationSystem s) =>
+            RegisterSystem(ref _diseaseMutationSystem, s, "disease_mutation",
+                () => s.CaptureState(),
+                o => s.RestoreState((DiseaseMutationSystem.State)o));
+
+        /// <summary>Section VII — bunker noise sources + mitigation factors.</summary>
+        public void SetNoiseDisciplineSystem(NoiseDisciplineSystem s) =>
+            RegisterSystem(ref _noiseDisciplineSystem, s, "noise_discipline",
+                () => s.CaptureState(),
+                o => s.RestoreState((NoiseDisciplineSystem.State)o));
+
+        /// <summary>Section VII — per-survivor kcal ledger (wrapped: JsonUtility rejects root List).</summary>
+        public void SetCalorieAccountingSystem(CalorieAccountingSystem s) =>
+            RegisterSystem(ref _calorieAccountingSystem, s, "calorie_accounting",
+                () => new CalorieAccountingSave { Entries = s.CaptureState() },
+                o => s.RestoreState(((CalorieAccountingSave)o)?.Entries));
 
         /// <summary>Prompt #861 — adaptive warlord counters across playthroughs.</summary>
         public void SetAdaptiveWarlordsSystem(System_AdaptiveWarlords s) =>
@@ -2588,6 +2638,23 @@ namespace AtomicWar._Game.Core
         public void SetElectromagneticDecaySystem(Shelter.ElectromagneticDecaySystem s) =>
             RegisterSystem(ref _electromagneticDecaySystem, s, "electromagnetic_decay",
                 () => s.CaptureState(), o => s.RestoreState((Shelter.ElectromagneticDecaySave)o));
+
+        // ── Expansion IV: Chronos Decay & Lethe Protocol ─────────────
+
+        /// <summary>Structural entropy: per-room rebar corrosion and spalling state.</summary>
+        public void SetStructuralEntropySystem(StructuralEntropySystem s) =>
+            RegisterSystem(ref _structuralEntropySystem, s, "structural_entropy",
+                () => s.GetState(), o => s.RestoreState((StructuralEntropySave)o));
+
+        /// <summary>Generational psychology: bunker-born counters and recent event history.</summary>
+        public void SetGenerationalPsychologySystem(GenerationalPsychologySystem s) =>
+            RegisterSystem(ref _generationalPsychologySystem, s, "generational_psychology",
+                () => s.CaptureState(), o => s.RestoreState((GenerationalPsychologySave)o));
+
+        /// <summary>Lethe Protocol: amnestic reservoir depletion and Waking Sickness state.</summary>
+        public void SetLetheProtocolSystem(LetheProtocolSystem s) =>
+            RegisterSystem(ref _letheProtocolSystem, s, "lethe_protocol",
+                () => s.GetState(), o => s.RestoreState((LetheSave)o));
 
     }
 }

@@ -202,4 +202,115 @@ namespace AtomicWar.Tests.EditMode
             Assert.AreEqual(QuestStatus.Success, q.State.Status);
         }
     }
+
+    [TestFixture]
+    public class QuestRegistrySaveLoadTests
+    {
+        [Test]
+        public void StateRoundTripsThroughJsonUtility()
+        {
+            // The host registers QuestRegistry as a generic ISaveable whose
+            // payload crosses the wire via JsonUtility (SaveSystem.Entities).
+            // This proves the DTO graph is JsonUtility-compatible.
+            var a = new QuestRegistry();
+            a.Start(QuestRegistry.IdDeepWell, 3);
+            var well = a.Get<Quest_DeepWell>(QuestRegistry.IdDeepWell);
+            well.RecordExcavationDay();
+            well.RecordExcavationDay();
+
+            string json = UnityEngine.JsonUtility.ToJson(a.CaptureState());
+            var restored = UnityEngine.JsonUtility.FromJson<QuestRegistry.State>(json);
+
+            var b = new QuestRegistry();
+            b.RestoreState(restored);
+
+            var s = b.Get(QuestRegistry.IdDeepWell).State;
+            Assert.IsNotNull(s, "restored registry must reattach state to the live runtime");
+            Assert.AreEqual(QuestStatus.InProgress, s.Status);
+            Assert.AreEqual(3, s.StartedOnDay);
+            Assert.AreEqual(2f, b.Get<Quest_DeepWell>(QuestRegistry.IdDeepWell)
+                .GetProgress(Quest_DeepWell.DaysKey), 0.001f);
+            // Untouched quest must stay NotStarted with no state row.
+            Assert.IsNull(b.Get(QuestRegistry.IdMilitiaGrainWar).State);
+        }
+    }
+
+    [TestFixture]
+    public class QuestDataReferenceTests
+    {
+        private static string ReadDataFile(string name)
+        {
+            string path = System.IO.Path.Combine(
+                UnityEngine.Application.streamingAssetsPath, "Data", name);
+            Assert.IsTrue(System.IO.File.Exists(path), $"{name} not found at {path}");
+            return System.IO.File.ReadAllText(path);
+        }
+
+        [Test]
+        public void ItemsJson_CoversQuestItemIds()
+        {
+            // Quest payouts / material bills resolve through the items.json-backed
+            // catalog; a missing id silently pays out nothing.
+            string json = ReadDataFile("items.json");
+            foreach (string itemId in new[]
+            {
+                "rubber_gasket",        // ShelterDegradationSystem.RepairHatchSeal
+                "concrete_patch_mix",   // Shelter repairs + quest_deep_well bill
+                "insulation_tape",      // ShelterDegradationSystem.RepairWiring
+                "engine_block_intact",  // quest_mechanic_highway_heart reward
+                "bearing_set_industrial", // quest_deep_well bill
+                "copper_tubing_1m"      // quest_deep_well bill
+            })
+            {
+                StringAssert.Contains($"\"id\": \"{itemId}\"", json,
+                    $"'{itemId}' is referenced by a quest/shelter system but is not in items.json");
+            }
+        }
+
+        [Test]
+        public void LocationsJson_CoversQuestLocationIds()
+        {
+            string json = ReadDataFile("locations.json");
+            foreach (string locationId in new[] { "highway_pileup", "prewar_medical_cache" })
+            {
+                StringAssert.Contains($"\"id\": \"{locationId}\"", json,
+                    $"'{locationId}' is referenced by a quest but is not in locations.json");
+            }
+        }
+
+        [Test]
+        public void RepairGasketSpec_DeclaresHatchSealIntegrityEffect()
+        {
+            // GameBootstrap.WireRepairGasketCraftEffect reads this spec at boot to
+            // decide the patch amount — the wiring breaks silently if the recipe
+            // stops declaring the effect.
+            var specs = AtomicWar._Game.Crafting.NewRecipesCatalog.BuildAll();
+            var spec = specs.Find(s => s.Id == AtomicWar._Game.Crafting.NewRecipesCatalog.Ids.RepairGasket);
+            Assert.IsNotNull(spec, "repair_gasket recipe missing from NewRecipesCatalog");
+            Assert.AreEqual("hatch_seal_integrity", spec.EffectKey);
+            Assert.Greater(spec.EffectAmount, 0f);
+            Assert.IsTrue(string.IsNullOrEmpty(spec.ResultItemId) || spec.ResultAmount <= 0,
+                "repair_gasket must stay effect-only; item output would double-pay with the patch");
+        }
+
+        [Test]
+        public void ApplyHatchSealPatch_RestoresIntegrityWithoutConsumingItems()
+        {
+            var sys = new AtomicWar._Game.Shelter.ShelterDegradationSystem();
+            sys.Current.HatchSealIntegrity = 0.5f;
+
+            bool consumed = false;
+            sys.RequestConsumeItem = (id, n) => { consumed = true; };
+
+            Assert.IsTrue(sys.ApplyHatchSealPatch(0.15f));
+            Assert.AreEqual(0.65f, sys.Current.HatchSealIntegrity, 0.001f);
+            Assert.IsFalse(consumed, "patch must not charge the inventory — the recipe already consumed its ingredients");
+
+            // Clamp at 1 and refuse no-op repairs.
+            Assert.IsTrue(sys.ApplyHatchSealPatch(0.9f));
+            Assert.AreEqual(1f, sys.Current.HatchSealIntegrity, 0.001f);
+            Assert.IsFalse(sys.ApplyHatchSealPatch(0.15f), "full seal must refuse a patch");
+            Assert.IsFalse(sys.ApplyHatchSealPatch(0f), "non-positive amount must refuse");
+        }
+    }
 }

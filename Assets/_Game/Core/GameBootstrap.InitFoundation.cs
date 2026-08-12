@@ -323,6 +323,11 @@ namespace AtomicWar._Game.Core
             CreateSurvivor("sv_marcus", "Marcus Olejnik");
             CreateSurvivor("sv_suki", "Suki Tanaka");
 
+            // Phase 0 — Massive Expansion foundation (40 new systems).
+            // Must run after survivors and core systems exist, but before
+            // InitUtilityAI which references survivor state.
+            InitPhase0Expansion();
+
         }
 
         private void InitUtilityAI()
@@ -439,6 +444,7 @@ namespace AtomicWar._Game.Core
             InitAddictionAndMedicalPrompts();
             InitWorldSideSystems();
             InitShelterTacticalSystems();
+            InitSection7Systems();
             InitNarrativeDependentSystems();
             InitAtmosphereHygieneSystems();
             InitProtocolZeroSystems();
@@ -625,6 +631,8 @@ namespace AtomicWar._Game.Core
                 EmpathSystem.OnSurvivorDied(deceased, Survivors);
                 ChildSystem?.CheckChildDeath(Survivors);
                 GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");
+                // Section VII — grief cascade (bond-scaled morale hit, memorial window).
+                Grief?.OnSurvivorDied(deceased, Survivors);
                 // #469 lover-grief mental break + cleanup.
                 BunkerSocial?.NotifySurvivorDied(deceased, null);
                 // Prompt #862 — Iron Man save deletion when last survivor dies.
@@ -632,17 +640,16 @@ namespace AtomicWar._Game.Core
             };
             NeedsSystem.OnDied += _onNeedsDied;
 
+            // DEATH-006 centralized kill wire: SurvivorNeedWrite.SetHealth / Kill
+            // are used by systems that cannot hold a NeedsSystem reference. The
+            // static OnKilled event fires the same death chain as NeedsSystem.OnDied
+            // so direct State=Dead writes no longer produce silent deaths.
+            SurvivorNeedWrite.OnKilled += _onNeedsDied;
+
             // DEATH-001 wire: Tribunal.Execution and ResolveExecute go through
             // SurvivorNeedWrite.SetHealth which bypasses NeedsSystem.OnDied. The
-            // OnKilled / OnLeaderKilled delegates below run the same death chain
-            // so a Tribunal execution or a successful mutiny kills the survivor
-            // the same way a natural death does.
-            if (BunkerSocial != null)
-            {
-                BunkerSocial.OnKilled = _onNeedsDied;
-                if (BunkerSocial.Mutiny != null)
-                    BunkerSocial.Mutiny.OnLeaderKilled = _onNeedsDied;
-            }
+            // centralized OnKilled event above now handles the death chain, so the
+            // per-system callbacks are no longer required.
 
             // ───────────────────────────────────────────────────────────
         }
