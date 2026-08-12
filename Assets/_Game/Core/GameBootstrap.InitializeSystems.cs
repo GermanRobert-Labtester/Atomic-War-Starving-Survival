@@ -44,6 +44,10 @@ namespace AtomicWar._Game.Core
             // Phase 3 — Wire flashback, moral branching, chemical dependency
             InitPhase3Wiring();
 
+            // Phases 4-6 — Trade specialties, final wishes, diegetic artifacts,
+            // ham radio, damaged maps, audio cassettes
+            InitPhases4to6Wiring();
+
             FinishSystemRegistration();
         }
 
