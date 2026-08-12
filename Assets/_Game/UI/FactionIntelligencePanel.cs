@@ -41,6 +41,7 @@ namespace AtomicWar._Game.UI
 
         public void AddIntelEntry(string description, float hoursRemaining)
         {
+            EnsureBound();
             if (_intelSection == null) return;
             var entry = new Label($"[{hoursRemaining:F0}h] {description}") { style = { fontSize = 12, color = new StyleColor(new Color(0.88f, 0.88f, 0.88f)), marginBottom = 4 } };
             _intelSection.Add(entry);

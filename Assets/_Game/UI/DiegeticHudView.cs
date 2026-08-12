@@ -521,14 +521,15 @@ namespace AtomicWar._Game.UI
             GenerationalEvent = Root.Q<Label>(GenerationalEventName);
             // Every pre-Expansion-IV panel is part of the contract: a UXML missing
             // one must fall back to Build() rather than bind a half-tree and render nothing.
+            // FactionPressurePanel is Expansion II and is opportunistic — requiring it
+            // caused EnsureBuilt to Clear() authored UXML and destroy Phase 11 / expansion widgets.
             if (HatchPanel == null || EncounterPanel == null
                 || StoresPanel == null || VitalsPanel == null || EventPanel == null
                 || WorkbenchPanel == null || EndgamePanel == null
                 || PowerGridPanel == null || ScavengePanel == null || OverflowCratePanel == null
                 || FieldGearLoadoutPanel == null || BunkerRationingPanel == null
                 || WaterPurificationPanel == null || AirHeatManagementPanel == null
-                || BunkerMaintenancePanel == null || SurvivorTaskBoardPanel == null
-                || FactionPressurePanel == null)
+                || BunkerMaintenancePanel == null || SurvivorTaskBoardPanel == null)
             {
                 return false;
             }

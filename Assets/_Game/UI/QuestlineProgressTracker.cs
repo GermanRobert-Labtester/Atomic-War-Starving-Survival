@@ -59,6 +59,7 @@ namespace AtomicWar._Game.UI
 
         public void ShowChoices(string branchA, string branchB, System.Action<string> onChoice)
         {
+            EnsureBound();
             if (_choicesContainer == null) return;
             _choicesContainer.Clear();
             _choicesContainer.style.display = DisplayStyle.Flex;

@@ -117,6 +117,12 @@
             <ui:Label name="survivor-task-board-body" class="diegetic-body survivor-task-board-readout" text="" />
         </ui:VisualElement>
 
+        <ui:VisualElement name="faction-pressure-panel" class="diegetic-panel faction-pressure-panel hidden">
+            <ui:Label name="faction-pressure-title" class="diegetic-title" text="FACTION PRESSURE" />
+            <ui:Label name="faction-pressure-body" class="diegetic-body faction-pressure-readout" text="" />
+            <ui:Label name="faction-pressure-hint" class="diegetic-hint" text="Compliant. Patrolled. Tithed. Fed. Or not." />
+        </ui:VisualElement>
+
         <!-- ═══════════════════════════════════════════════════════════════
              BATCH 20 UI ELEMENTS — produced 2026-08-12
              Each panel is controlled by its respective MonoBehaviour.

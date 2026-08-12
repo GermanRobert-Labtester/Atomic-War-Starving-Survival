@@ -188,6 +188,14 @@ namespace AtomicWar._Game.UI
                     // #endregion
                     if (!boundExisting)
                     {
+                        // Never wipe an authored diegetic-root — Build() cannot recreate
+                        // Phase 11 / expansion Template instances.
+                        if (docRoot.Q(DiegeticHudView.RootName) != null)
+                        {
+                            ApplyStylesheet(docRoot);
+                            _built = true;
+                            return;
+                        }
                         docRoot.Clear();
                         _view.Build(docRoot);
                         // #region agent log

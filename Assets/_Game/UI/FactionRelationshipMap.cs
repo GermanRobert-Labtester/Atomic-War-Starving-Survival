@@ -39,6 +39,7 @@ namespace AtomicWar._Game.UI
         public void SetFactionNodeData(string factionId, string displayName,
             float standing, string relationshipToPlayer)
         {
+            EnsureBound();
             var node = GetNode(factionId);
             if (node == null) return;
             var standingIndicator = node.Q<VisualElement>(className: "standing-indicator");

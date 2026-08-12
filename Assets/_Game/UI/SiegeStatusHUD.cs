@@ -41,10 +41,19 @@ namespace AtomicWar._Game.UI
             }
         }
 
-        public void UpdateIntegrity(float v) { if (_hatchBar != null) _hatchBar.value = v * 100f; }
-        public void UpdateBreachProgress(float v) { if (_breachBar != null) _breachBar.value = v; }
+        public void UpdateIntegrity(float v)
+        {
+            EnsureBound();
+            if (_hatchBar != null) { _hatchBar.highValue = 100f; _hatchBar.value = v * 100f; }
+        }
+        public void UpdateBreachProgress(float v)
+        {
+            EnsureBound();
+            if (_breachBar != null) { _breachBar.highValue = 100f; _breachBar.value = v * 100f; }
+        }
         public void AddActiveEffect(string effectId, float duration)
         {
+            EnsureBound();
             if (_activeEffects == null) return;
             var badge = new Label(effectId.Replace("_", " ").ToUpper()) { style = { fontSize = 10, color = new StyleColor(new Color(1f, 0.76f, 0.03f)), marginRight = 6 } };
             _activeEffects.Add(badge);

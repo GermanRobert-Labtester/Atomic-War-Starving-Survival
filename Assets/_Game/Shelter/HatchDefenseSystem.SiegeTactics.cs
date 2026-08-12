@@ -26,6 +26,15 @@ namespace AtomicWar._Game.Shelter
         public event Action<float> OnBreachProgressChanged;
         public event Action<string, float> OnTacticalEffectActivated;
 
+        /// <summary>Enter or leave siege. Fires <see cref="OnSiegeStateChanged"/>.</summary>
+        public void SetUnderSiege(bool under)
+        {
+            if (IsUnderSiege == under) return;
+            IsUnderSiege = under;
+            if (!under) BreachProgress = 0f;
+            OnSiegeStateChanged?.Invoke(under);
+        }
+
         // ── Tactical effects tracking ──────────────────────────────────
         private readonly Dictionary<string, float> _activeEffects =
             new Dictionary<string, float>();
