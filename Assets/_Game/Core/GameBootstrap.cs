@@ -863,6 +863,8 @@ namespace AtomicWar._Game.Core
 
         // ── CoreFamilies bulk properties (auto) ─────────────────────────
         public FalloutStormHazardSystem FalloutStormHazard { get; private set; }
+        /// <summary>Process-wide audio event bus shared with flashback/siren wiring.</summary>
+        private AudioEventBus _audioBus;
         public Action_Crawlspace ActionCrawlspace { get; private set; }
         public Action_Play ActionPlay { get; private set; }
         public Action_SlaughterPet ActionSlaughterPet { get; private set; }

@@ -42,7 +42,26 @@ namespace AtomicWar._Game.Core
         {
             if (SomaticFlashbackSystem == null) return;
 
-            // TODO: AudioEventBus is an instance class; wire siren when bus ref available.
+            // AudioEventBus is a process-wide service — ensure one exists
+            // and share it with FalloutStormHazardSystem if it was built
+            // without one.
+            if (_audioBus == null)
+            {
+                _audioBus = new AudioEventBus();
+                if (FalloutStormHazard != null)
+                    FalloutStormHazard.SetAudioBus(_audioBus);
+            }
+
+            // Subscribe to emergency siren state changes — sirens are the
+            // strongest somatic flashback trigger.
+            Action<EmergencySirenAudioEvent> onSirenChanged = (sirenEvent) =>
+            {
+                if (sirenEvent.IsActive)
+                    SomaticFlashbackSystem.OnAudioEvent("siren", 0.9f);
+            };
+            _audioBus.OnEmergencySirenStateChanged += onSirenChanged;
+            _subscriptions.Track(() =>
+                _audioBus.OnEmergencySirenStateChanged -= onSirenChanged);
 
             // Subscribe to raid resolutions as explosion-like triggers
             EventBus.Subscribe<RaidResolution>((resolution) =>

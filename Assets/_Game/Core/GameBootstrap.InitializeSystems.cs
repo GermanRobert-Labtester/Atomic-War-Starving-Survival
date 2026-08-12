@@ -67,6 +67,9 @@ namespace AtomicWar._Game.Core
             // Deep Lore — Narrative arcs, world history, faction lore
             InitDeepLore();
 
+            // Register all expansion systems with internal state into SaveSystem
+            RegisterExpansionSaveables();
+
             FinishSystemRegistration();
         }
 
