@@ -55,12 +55,13 @@ namespace AtomicWar._Game.AI.Actions
 
             float score = baseScore;
 
-            // Sociopath: no hesitation.
-            if (context.Survivor.RiskBias == Survivors.RiskBiasTrait.Sociopath)
+            // Sociopath: no hesitation. (Trait, not RiskBias — RiskBias is never
+            // Sociopath; see EmpathSystem for the same correction.)
+            if (context.PersonalQuests != null && context.PersonalQuests.HasSociopath(context.Survivor))
                 score += 0.3f;
 
             // Empath: severe reluctance but may still do it out of compassion.
-            if (context.Survivor.RiskBias == Survivors.RiskBiasTrait.Empath)
+            if (context.PersonalQuests != null && context.PersonalQuests.HasHyperEmpathetic(context.Survivor))
                 score -= 0.2f;
 
             // High morale survivors are less willing to kill.

@@ -19,6 +19,11 @@ namespace AtomicWar._Game.Survivors
         private NeedsSystem _needsSystem;
         public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
+        // Sociopath immunity is a TRAIT (trait_sociopath), not a RiskBias value;
+        // see EmpathSystem for the same correction. RiskBias is never Sociopath.
+        private PersonalQuestSystem _personalQuests;
+        public void SetPersonalQuestSystem(PersonalQuestSystem pqs) => _personalQuests = pqs;
+
         /// <summary>Morale per hour applied to every other survivor while the child is alive.</summary>
         public const float HopeBuffPerHour = 0.15f;
 
@@ -238,8 +243,11 @@ namespace AtomicWar._Game.Survivors
                     var sv = survivors[i];
                     if (sv == null || !sv.IsAlive || sv.Id == childId) continue;
 
-                    // Sociopath is immune to the child's death too
-                    if (sv.RiskBias == RiskBiasTrait.Sociopath) continue;
+                    // Sociopath is immune to the child's death too.
+                    bool sociopathImmune = _personalQuests != null
+                        ? _personalQuests.HasSociopath(sv)
+                        : sv.HasTrait(PersonalQuestSystem.SociopathId);
+                    if (sociopathImmune) continue;
 
                     if (_needsSystem != null)
                         _needsSystem.Modify(sv, NeedKind.Morale, -ChildDeathMoralePenalty);

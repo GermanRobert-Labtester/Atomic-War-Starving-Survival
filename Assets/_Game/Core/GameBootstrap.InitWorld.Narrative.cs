@@ -75,6 +75,7 @@ namespace AtomicWar._Game.Core
         private void InitChildDependentSystem()
         {ChildSystem = new ChildDependentSystem();
             ChildSystem.SetNeedsSystem(NeedsSystem);
+            ChildSystem.SetPersonalQuestSystem(PersonalQuests);
             ChildSystem.ConsumeChildRationsHandler = (food, water) =>
             {
                 if (Inventory == null || _itemCatalog == null) return;

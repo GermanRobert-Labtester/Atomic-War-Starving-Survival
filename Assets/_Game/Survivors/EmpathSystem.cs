@@ -42,6 +42,24 @@ namespace AtomicWar._Game.Survivors
         private NeedsSystem _needsSystem;
         public void SetNeedsSystem(NeedsSystem ns) => _needsSystem = ns;
 
+        // PersonalQuestSystem owns the Sociopath/Empath trait identity (Prompt #253).
+        // The death-morale path below used to gate immunity on `sv.RiskBias ==
+        // RiskBiasTrait.Sociopath`, but RiskBias is the survivor's risk disposition
+        // (Paranoid/Cautious/Realist/...) and is NEVER assigned Sociopath in code or
+        // data, so the documented "Sociopath feels zero morale loss when another
+        // survivor dies" perk was entirely dead, and the "Sociopath terrifies
+        // onlookers" cascade never fired.
+        private PersonalQuestSystem _personalQuests;
+        public void SetPersonalQuestSystem(PersonalQuestSystem pqs) => _personalQuests = pqs;
+
+        private bool IsSociopathSurvivor(Survivor sv)
+        {
+            if (sv == null) return false;
+            return _personalQuests != null
+                ? _personalQuests.HasSociopath(sv)
+                : sv.HasTrait(PersonalQuestSystem.SociopathId);
+        }
+
         // -----------------------------------------------------------------
         // Tick
         // -----------------------------------------------------------------
@@ -108,7 +126,7 @@ namespace AtomicWar._Game.Survivors
             for (int i = 0; i < allSurvivors.Count; i++)
             {
                 var sv = allSurvivors[i];
-                if (sv != null && sv.IsAlive && sv.RiskBias == RiskBiasTrait.Sociopath)
+                if (sv != null && sv.IsAlive && IsSociopathSurvivor(sv))
                 {
                     sociopath = sv;
                     break;
@@ -123,7 +141,7 @@ namespace AtomicWar._Game.Survivors
                 if (sv == null || !sv.IsAlive || sv == deceased) continue;
 
                 // Sociopath is immune to death morale loss
-                if (sv.RiskBias == RiskBiasTrait.Sociopath) continue;
+                if (IsSociopathSurvivor(sv)) continue;
                 if (sv.Needs == null) continue;
 
                 if (_needsSystem != null)

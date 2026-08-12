@@ -613,6 +613,7 @@ namespace AtomicWar._Game.Core
             // ───────────────────────────────────────────────────────────
             EmpathSystem = new EmpathSystem();
             EmpathSystem.SetNeedsSystem(NeedsSystem);
+            EmpathSystem.SetPersonalQuestSystem(PersonalQuests);
             SurvivorDiaries = new SurvivorDiariesSystem();
             InternalLockSystem = new InternalLockSystem();
             SpatialPsychology = new SpatialPsychologySystem();
