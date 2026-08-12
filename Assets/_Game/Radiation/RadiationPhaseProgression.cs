@@ -88,11 +88,18 @@ namespace AtomicWar._Game.Radiation
         }
 
         /// <summary>
-        /// Tick the phase state machine. Call once per game-hour substep.
+        /// Tick the phase state machine. Call once per game-hour substep,
+        /// AFTER PrognosisPipeline.Tick has already run (which updates PrognosisStage).
+        /// This method syncs SicknessPhase from PrognosisStage and then applies
+        /// phase-specific health/morale/stamina effects.
         /// </summary>
         public void Tick(Survivor sv, float gameHours)
         {
             if (sv == null || !sv.IsAlive) return;
+
+            // Sync from PrognosisPipeline's stage (the authoritative source)
+            SyncPhaseFromPrognosisStage(sv);
+
             if (sv.SicknessPhase == RadiationSicknessPhase.Healthy ||
                 sv.SicknessPhase == RadiationSicknessPhase.RecoveryOrDeath)
                 return;
@@ -102,47 +109,71 @@ namespace AtomicWar._Game.Radiation
             switch (sv.SicknessPhase)
             {
                 case RadiationSicknessPhase.Prodromal:
-                    if (sv.PhaseHoursElapsed >= ProdromalDurationHours)
-                        TransitionTo(sv, RadiationSicknessPhase.Latent);
+                    // Nausea effects — ongoing health/morale drain
+                    if (ApplyHealthDelta != null)
+                        ApplyHealthDelta(sv, -ProdromalHealthDip * (gameHours / ProdromalDurationHours) * ProdromalFatigueRate);
                     break;
 
                 case RadiationSicknessPhase.Latent:
-                    if (sv.PhaseHoursElapsed >= sv.OnsetTimer)
-                    {
-                        // Manifest onset
-                        float severity = Math.Min(1f,
-                            sv.LatentDamage / PrognosisPipeline.LatentDamageSeverityReference);
-                        float crash = ManifestHealthCrashMin +
-                            severity * (ManifestHealthCrashMax - ManifestHealthCrashMin);
-                        TransitionTo(sv, RadiationSicknessPhase.ManifestIllness);
-                        if (ApplyHealthDelta != null) ApplyHealthDelta(sv, -crash);
-                    }
+                    // Silent phase — survivor feels fine, damage is hidden
                     break;
 
                 case RadiationSicknessPhase.ManifestIllness:
                 {
                     // Daily health bleed
                     float bleed = ManifestBleedPerDay * (gameHours / 24f);
-                    // Bed rest mitigates
                     if (sv.State == SurvivorState.Resting)
                         bleed *= (1f - BedRestMitigation);
                     if (ApplyHealthDelta != null) ApplyHealthDelta(sv, -bleed);
-
-                    // Resolution after Manifest duration
-                    float manifestDuration = ManifestMinDurationHours +
-                        (1f - Math.Min(1f, sv.LatentDamage / PrognosisPipeline.LatentDamageSeverityReference)) *
-                        (ManifestMaxDurationHours - ManifestMinDurationHours);
-                    if (sv.PhaseHoursElapsed >= manifestDuration)
-                    {
-                        ResolveManifest(sv);
-                    }
                     break;
                 }
 
                 case RadiationSicknessPhase.ChronicFibrosis:
-                    // Permanent state — no recovery. Lung capacity stays reduced.
+                    // Permanent state — lung capacity stays reduced.
+                    // No ongoing damage, just the permanent penalty.
                     break;
             }
+        }
+
+        /// <summary>
+        /// Sync SicknessPhase to match PrognosisStage (the authoritative source
+        /// set by PrognosisPipeline). Also detects Manifest resolution to
+        /// trigger ChronicFibrosis or Terminal prognosis.
+        /// </summary>
+        private void SyncPhaseFromPrognosisStage(Survivor sv)
+        {
+            var prognosis = sv.PrognosisStage;
+            var currentPhase = sv.SicknessPhase;
+
+            RadiationSicknessPhase targetPhase;
+            switch (prognosis)
+            {
+                case PrognosisStage.Healthy:
+                    targetPhase = RadiationSicknessPhase.Healthy;
+                    break;
+                case PrognosisStage.Prodromal:
+                    targetPhase = RadiationSicknessPhase.Prodromal;
+                    break;
+                case PrognosisStage.Latent:
+                    targetPhase = RadiationSicknessPhase.Latent;
+                    break;
+                case PrognosisStage.Manifest:
+                    targetPhase = RadiationSicknessPhase.ManifestIllness;
+                    break;
+                case PrognosisStage.RecoveryOrDeath:
+                    // Only resolve once — when transitioning FROM Manifest
+                    if (currentPhase == RadiationSicknessPhase.ManifestIllness)
+                    {
+                        ResolveManifest(sv);
+                    }
+                    // targetPhase stays as whatever ResolveManifest sets
+                    return;
+                default:
+                    return;
+            }
+
+            if (targetPhase != currentPhase)
+                TransitionTo(sv, targetPhase);
         }
 
         private void ResolveManifest(Survivor sv)
