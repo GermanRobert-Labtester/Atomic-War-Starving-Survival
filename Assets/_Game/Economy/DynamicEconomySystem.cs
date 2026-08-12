@@ -1106,18 +1106,53 @@ namespace AtomicWar._Game.Economy
             IReadOnlyList<BarterLine> lines)
         {
             if (lines == null) return true;
+            // Atomic all-or-nothing transfer. Without tracking the lines already
+            // moved, a failure on line N leaves lines 1..N-1 stranded in `to`
+            // while the caller treats the trade as failed — silent item loss, and
+            // the ask-side rollback in TryExecuteTrade can then hand the player
+            // free faction-ask items. We accumulate moved lines and reverse them
+            // on any failure so both inventories are restored exactly.
+            var moved = new List<BarterLine>();
             for (int i = 0; i < lines.Count; i++)
             {
                 var line = lines[i];
                 if (line.Item == null || line.Amount <= 0) continue;
-                if (!from.Remove(line.Item, line.Amount)) return false;
+                if (!from.Remove(line.Item, line.Amount))
+                {
+                    ReverseMoved(to, from, moved);
+                    return false;
+                }
                 if (!to.Add(line.Item, line.Amount))
                 {
                     from.Add(line.Item, line.Amount);
+                    ReverseMoved(to, from, moved);
                     return false;
                 }
+                moved.Add(line);
             }
             return true;
+        }
+
+        /// <summary>
+        /// Reverse a partial transfer: move each previously-moved line from its
+        /// current location back to its origin. Best-effort; the items were held
+        /// by the origin immediately before the transfer so the reverse Add is
+        /// expected to succeed.
+        /// </summary>
+        private static void ReverseMoved(
+            Inventory.Inventory currentLocation,
+            Inventory.Inventory originalLocation,
+            List<BarterLine> moved)
+        {
+            if (moved == null) return;
+            for (int j = 0; j < moved.Count; j++)
+            {
+                var m = moved[j];
+                // BarterLine is a struct — no null check on m itself.
+                if (m.Item == null || m.Amount <= 0) continue;
+                if (currentLocation.Remove(m.Item, m.Amount))
+                    originalLocation.Add(m.Item, m.Amount);
+            }
         }
 
         // -----------------------------------------------------------------

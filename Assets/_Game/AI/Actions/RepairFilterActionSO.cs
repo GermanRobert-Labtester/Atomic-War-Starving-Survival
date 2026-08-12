@@ -52,6 +52,12 @@ namespace AtomicWar._Game.AI.Actions
             var airModule = context.Shelter.GetModule("air_filtration");
             if (airModule == null) return;
 
+            // Consume one air_filter cartridge. EvaluateRaw gates this action on
+            // the item existing, but without removing it here the same cartridge
+            // would restore the filter to 100% forever (infinite free filters).
+            if (context.Inventory == null || !context.Inventory.RemoveById(AirFilterItemId, 1))
+                return;
+
             airModule.ReplaceFilter();
 
             // Prompt #197 — HVAC Tech: count filter ops during FalloutStorms.
