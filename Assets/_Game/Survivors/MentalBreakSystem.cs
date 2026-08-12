@@ -286,6 +286,25 @@ namespace AtomicWar._Game.Survivors
             }
         }
 
+        /// <summary>
+        /// Force-apply a specific mental break by id, bypassing morale gates.
+        /// Used by Expansion III systems (e.g. GriefCascade from ChildDevelopmentSystem).
+        /// No-op if the break id is not registered or the survivor is immune.
+        /// </summary>
+        public bool TryApply(Survivor sv, string breakId)
+        {
+            if (sv == null || string.IsNullOrEmpty(breakId)) return false;
+            if (!_breaksById.TryGetValue(breakId, out var br)) return false;
+            if (!string.IsNullOrEmpty(sv.currentMentalBreakId)) return false;
+            if (_personalQuests != null && _personalQuests.IsImmuneToAllMentalBreaks(sv))
+                return false;
+
+            sv.currentMentalBreakId = breakId;
+            sv.mentalBreakCureProgress = 0f;
+            OnBreakStarted?.Invoke(sv, breakId);
+            return true;
+        }
+
         /// <summary>Roll a weighted-random MentalBreakSO based on the survivor's
         /// <c>RiskBiasTrait</c>. Sets <c>currentMentalBreakId</c> and resets
         /// cure progress. No-op if no breaks are registered or all weights

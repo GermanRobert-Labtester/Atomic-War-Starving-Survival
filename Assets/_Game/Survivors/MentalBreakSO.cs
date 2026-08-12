@@ -73,6 +73,8 @@ namespace AtomicWar._Game.Survivors
             public const string ViolentParanoia = "violent_paranoia";
             public const string Catatonia       = "catatonia";
             public const string FugueState      = "fugue_state";
+            // Expansion III — triggered when a parent sees their child armed
+            public const string GriefCascade    = "mental_break_grief_cascade";
         }
     }
 

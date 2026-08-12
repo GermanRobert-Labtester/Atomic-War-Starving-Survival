@@ -161,10 +161,11 @@ namespace AtomicWar._Game.Survivors
 
         private float ResolveBedFraction(Survivor sv)
         {
-            string bedId = GetBedTypeIdForSurvivor?.Invoke(sv) ?? "floor";
-            if (string.IsNullOrEmpty(bedId)) bedId = "floor";
+            if (GetBedTypeIdForSurvivor == null) return 1.0f;
+            string bedId = GetBedTypeIdForSurvivor(sv) ?? "bed";
+            if (string.IsNullOrEmpty(bedId)) bedId = "bed";
             if (BedRecoveryFraction.TryGetValue(bedId, out float f)) return f;
-            return 0.40f;
+            return 1.0f;
         }
 
         public float GetSkillAccuracyPenalty(Survivor sv)

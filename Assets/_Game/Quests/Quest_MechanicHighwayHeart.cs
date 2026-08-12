@@ -80,6 +80,7 @@ namespace AtomicWar._Game.Quests
                 float dur = GetProgress(DurabilityKey) - 40f;
                 SetProgress(DurabilityKey, Mathf.Max(0, dur));
                 RecordMoralEntry?.Invoke("the engine came out damaged. durability -40.");
+                GiveItem?.Invoke(null, EngineItem, 1);
                 // still advance so quest can complete via repair path
                 SetProgress(ExtractedKey, 1);
                 Advance();

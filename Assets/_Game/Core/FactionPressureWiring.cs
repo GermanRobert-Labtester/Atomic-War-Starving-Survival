@@ -213,8 +213,9 @@ namespace AtomicWar._Game.Core
                     // Cult raid repelled = shelter didn't honor communion.
                     // Use RecordMissedCommunion (the system's canonical
                     // "miss" entry point); this is what the cult quest's
-                    // OnCommunionMissed event also drives.
-                    CultLeash.RecordMissedCommunion(shelterId, SafeDay());
+                    // OnCommunionMissed event also drives. One missed week
+                    // per raid resolved.
+                    CultLeash.RecordMissedCommunion(shelterId);
                 }
             }
         }
@@ -232,11 +233,11 @@ namespace AtomicWar._Game.Core
 
             if (choiceId == "refuse_invitation" || choiceId == "refuse_convert")
             {
-                CultLeash.RecordMissedCommunion(shelterId, SafeDay());
+                CultLeash.RecordMissedCommunion(shelterId);
             }
             else if (choiceId == "give_convert")
             {
-                CultLeash.RecordVisit(shelterId, SafeDay());
+                CultLeash.RecordVisit(shelterId);
             }
         }
 
@@ -289,13 +290,21 @@ namespace AtomicWar._Game.Core
                 string s = ShelterIdProvider != null ? ShelterIdProvider() : null;
                 return string.IsNullOrEmpty(s) ? "shelter_player" : s;
             }
-            catch { return "shelter_player"; }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[FactionPressureWiring] SafeShelterId failed: {ex.Message}");
+                return "shelter_player";
+            }
         }
 
         private static int SafeDay()
         {
             try { return DayProvider != null ? DayProvider() : 0; }
-            catch { return 0; }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[FactionPressureWiring] SafeDay failed: {ex.Message}");
+                return 0;
+            }
         }
 
         private static int SafeRadioDay()
@@ -304,7 +313,10 @@ namespace AtomicWar._Game.Core
             {
                 if (RadioDayProvider != null) return RadioDayProvider();
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[FactionPressureWiring] SafeRadioDay failed: {ex.Message}");
+            }
             return SafeDay();
         }
 
@@ -342,7 +354,10 @@ namespace AtomicWar._Game.Core
                 if (f != null && f.FieldType == typeof(string))
                     return f.GetValue(o) as string;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.LogWarning($"[FactionPressureWiring] TryGetStringProp '{name}' failed: {ex.Message}");
+            }
             return null;
         }
     }

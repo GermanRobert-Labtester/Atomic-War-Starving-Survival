@@ -78,9 +78,12 @@ namespace AtomicWar.Tests.EditMode
             t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Dictionary<,>);
 
         /// <summary>A DTO that only carries its own id persists nothing.</summary>
-        private static bool CarriesNoPayload(Type dto) =>
-            dto.GetFields(BindingFlags.Public | BindingFlags.Instance)
-               .All(f => f.Name == "systemId");
+        private static bool CarriesNoPayload(Type dto)
+        {
+            if (dto.IsGenericType && dto.GetGenericTypeDefinition() == typeof(List<>)) return false;
+            return dto.GetFields(BindingFlags.Public | BindingFlags.Instance)
+                       .All(f => f.Name == "systemId");
+        }
 
         [Test]
         public void EverySystemOwningAStateMap_PersistsIt()

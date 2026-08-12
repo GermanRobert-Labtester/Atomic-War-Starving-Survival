@@ -34,12 +34,332 @@
   {
     "id": "stranger_cache",
     "displayName": "The Cartographer's Cache",
-    "description": "A sealed pre-war storage locker in a collapsed residential block. Coordinates from a stranger. Real or a trap — you won't know until you're there.",
+    "description": "A sealed pre-war storage locker in a collapsed residential block. Coordinates from a stranger. Real or a trap \u2014 you won't know until you're there.",
     "dangerLevel": 7,
     "travelHours": 3.0,
     "baseRadsPerHour": 25,
     "requiredFlagId": "stranger_has_coordinates",
     "cleanWaterRewardFlag": "stranger_given_clean_water",
     "ambushFlag": "stranger_given_irradiated_water"
+  },
+  {
+    "id": "location_geo_thermal_plant_ruins",
+    "displayName": "Geo-Thermal Plant Ruins",
+    "description": "Unstable ground, boiling toxic mud. The pipes still hiss with underground steam. High chance of geothermal salvage.",
+    "dangerLevel": 8.0,
+    "travelHours": 6.0,
+    "baseRadsPerHour": 45.0
+  },
+  {
+    "id": "location_arcology_sector_4",
+    "displayName": "Arcology Sector 4",
+    "description": "Sealed blast doors. Starving, inbred elite descendants guard pre-war luxuries with improvised weapons.",
+    "dangerLevel": 9.0,
+    "travelHours": 8.0,
+    "baseRadsPerHour": 20.0
+  },
+  {
+    "id": "location_frozen_river_barge",
+    "displayName": "Frozen River Barge",
+    "description": "Stuck in the ice. Guarded by cannibalistic dockworkers who have been surviving on frozen cargo for years.",
+    "dangerLevel": 6.0,
+    "travelHours": 4.5,
+    "baseRadsPerHour": 30.0
+  },
+  {
+    "id": "location_crashed_icebreaker_convoy",
+    "displayName": "Crashed Icebreaker Convoy",
+    "description": "Derailed military train. A cracked RTG creates a localized radiation hotspot visible from kilometers away.",
+    "dangerLevel": 7.0,
+    "travelHours": 5.0,
+    "baseRadsPerHour": 85.0
+  },
+  {
+    "id": "location_silent_observatory",
+    "displayName": "The Silent Observatory",
+    "description": "High altitude. -60C ambient. The air is so clear you can see the curvature of the ash-choked earth.",
+    "dangerLevel": 8.0,
+    "travelHours": 7.0,
+    "baseRadsPerHour": 15.0
+  },
+  {
+    "id": "location_subterranean_seed_vault",
+    "displayName": "Subterranean Seed Vault",
+    "description": "Heavily trapped, frozen solid. Designed to survive a century underground. The seeds inside are the last unmutated crops.",
+    "dangerLevel": 6.0,
+    "travelHours": 5.5,
+    "baseRadsPerHour": 10.0
+  },
+  {
+    "id": "location_ministry_of_truth_bunker",
+    "displayName": "Ministry of Truth Bunker",
+    "description": "Propaganda servers still humming on backup power. The truth about Protocol Zero is buried in encrypted data-drives.",
+    "dangerLevel": 9.0,
+    "travelHours": 6.0,
+    "baseRadsPerHour": 40.0
+  },
+  {
+    "id": "location_ash_dune_cemetery",
+    "displayName": "Ash Dune Cemetery",
+    "description": "A massive dumping ground for frozen corpses. The ash preserves them perfectly. Disease risk is extreme.",
+    "dangerLevel": 5.0,
+    "travelHours": 3.0,
+    "baseRadsPerHour": 60.0
+  },
+  {
+    "id": "location_abandoned_ski_resort",
+    "displayName": "Abandoned Ski Resort",
+    "description": "Cable cars frozen mid-swing. Luxury items preserved in sub-zero temperatures. The wealthy died warm in their furs.",
+    "dangerLevel": 4.0,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 25.0
+  },
+  {
+    "id": "location_geothermal_borehole_site",
+    "displayName": "Geothermal Borehole Site",
+    "description": "Deep drilling equipment surrounded by toxic groundwater. The borehole goes down 3 kilometers into the earth's crust.",
+    "dangerLevel": 8.0,
+    "travelHours": 5.0,
+    "baseRadsPerHour": 55.0
+  },
+  {
+    "id": "location_flooded_subway_depot",
+    "displayName": "Flooded Subway Depot",
+    "description": "Pitch black, waist-deep toxic water. Requires waders. The Sump-Dredgers navigate by echolocation. Pre-war transit tech buried in the silt.",
+    "dangerLevel": 7.0,
+    "travelHours": 3.5,
+    "baseRadsPerHour": 40.0
+  },
+  {
+    "id": "location_sub_level_4_transit",
+    "displayName": "Sub-Level 4 Transit Hub",
+    "description": "Sealed elite transit tunnels. Overgrown with bioluminescent Ash-Blight. The walls breathe. Pneumatic jacks and encrypted drives in the maintenance bays.",
+    "dangerLevel": 9.0,
+    "travelHours": 5.0,
+    "baseRadsPerHour": 20.0
+  },
+  {
+    "id": "location_municipal_sewage",
+    "displayName": "Municipal Sewage Treatment",
+    "description": "High methane risk. Requires rebreather. The pipes groan with pressurised sludge. Chemicals, fertiliser, and scrap metal in the settling tanks.",
+    "dangerLevel": 6.0,
+    "travelHours": 2.5,
+    "baseRadsPerHour": 30.0
+  },
+  {
+    "id": "location_collapsed_salt_mine",
+    "displayName": "Collapsed Salt Mine",
+    "description": "Massive caverns, high cave-in risk. Salt is vital for food preservation. Shoring timber scattered among the collapsed support beams.",
+    "dangerLevel": 5.0,
+    "travelHours": 6.0,
+    "baseRadsPerHour": 10.0
+  },
+  {
+    "id": "location_bio_remediation_lab",
+    "displayName": "Bio-Remediation Lab",
+    "description": "Ground Zero for the Myco-Protocol. Lethal spore density. The fungus learned to eat people here. Fungicide formula and military hazmat suits in sealed lockers.",
+    "dangerLevel": 8.0,
+    "travelHours": 4.5,
+    "baseRadsPerHour": 50.0
+  },
+  {
+    "id": "location_submerged_data_center",
+    "displayName": "Submerged Data Center",
+    "description": "Flooded server farm. Requires improvised scuba gear. Watertight server blades and solar cells in the raised floor plenum.",
+    "dangerLevel": 7.0,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 25.0
+  },
+  {
+    "id": "location_geothermal_vent_shaft",
+    "displayName": "Geothermal Vent Shaft",
+    "description": "Boiling mud, toxic sulfur gas. The earth's mantle bleeds heat through fractured rock. Geothermal valves and thermal paste in the control room.",
+    "dangerLevel": 8.0,
+    "travelHours": 5.5,
+    "baseRadsPerHour": 60.0
+  },
+  {
+    "id": "location_the_sump_cathedral",
+    "displayName": "The Sump Cathedral",
+    "description": "An underground cistern turned shrine by the Dredgers. Bioluminescent moss covers every surface. They trade pure water for UV lamps and iodine.",
+    "dangerLevel": 6.0,
+    "travelHours": 3.0,
+    "baseRadsPerHour": 35.0
+  },
+  {
+    "id": "location_abandoned_desalination",
+    "displayName": "Abandoned Desalination Plant",
+    "description": "Rusted RO membranes and cracked high-pressure hoses. The Hydro-Barons' former stronghold. Reverse osmosis salvage for the desperate.",
+    "dangerLevel": 7.0,
+    "travelHours": 4.5,
+    "baseRadsPerHour": 45.0
+  },
+  {
+    "id": "location_deep_core_borehole",
+    "displayName": "Deep Core Borehole",
+    "description": "Endgame location. A 2-mile deep shaft tapping the mantle. The mantle tap valve inside could unlock infinite geothermal power — if you survive the descent.",
+    "dangerLevel": 9.0,
+    "travelHours": 8.0,
+    "baseRadsPerHour": 80.0
+  },
+  {
+    "id": "location_uxo_highway_choke",
+    "displayName": "UXO Highway Choke",
+    "description": "A six-lane highway paved entirely with unexploded cluster bombs. Every step is a gamble. Mine prodders and tactical scrap in the median strip.",
+    "dangerLevel": 9.0,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 30.0
+  },
+  {
+    "id": "location_radar_array_spire",
+    "displayName": "Radar Array Spire",
+    "description": "Massive, groaning metal dish. High magnetic anomaly that rips compasses from your pocket. Vacuum tubes and copper wire in the control shack.",
+    "dangerLevel": 8.0,
+    "travelHours": 6.5,
+    "baseRadsPerHour": 45.0
+  },
+  {
+    "id": "location_drone_hive_silo",
+    "displayName": "Drone Hive Silo",
+    "description": "An open missile silo repurposed as a nesting ground for loitering munitions. They buzz like hornets. Car batteries and explosive powder in the launch bay.",
+    "dangerLevel": 10.0,
+    "travelHours": 7.0,
+    "baseRadsPerHour": 60.0
+  },
+  {
+    "id": "location_automated_mortar_pit",
+    "displayName": "Automated Mortar Pit",
+    "description": "A bunker firing blindly into the ash-wastes on a 12-hour timer. The Custodian does not sleep. Mortar shells and gunpowder in the magazine.",
+    "dangerLevel": 9.0,
+    "travelHours": 5.0,
+    "baseRadsPerHour": 40.0
+  },
+  {
+    "id": "location_scrap_neuromancer_camp",
+    "displayName": "Wire-Head Camp",
+    "description": "A camp built inside the chassis of a downed cargo plane. The Wire-Heads worship logic gates and sell bypass codes. Faraday mesh and circuit boards for trade.",
+    "dangerLevel": 6.0,
+    "travelHours": 3.5,
+    "baseRadsPerHour": 20.0
+  },
+  {
+    "id": "location_magnetic_anomaly_crater",
+    "displayName": "Magnetic Crater",
+    "description": "A localised magnetic storm that rips metal from your hands. Compasses spin, dosimeters lie. Tungsten bars and RTG batteries in the impact core.",
+    "dangerLevel": 8.0,
+    "travelHours": 4.5,
+    "baseRadsPerHour": 55.0
+  },
+  {
+    "id": "location_abandoned_convoy_yard",
+    "displayName": "Abandoned Convoy Yard",
+    "description": "Rusted transport trucks in rows. Guarded by a single, glitching sentry gun that tracks movement but cannot lead targets. Engine blocks and fuel jerrycans.",
+    "dangerLevel": 7.0,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 25.0
+  },
+  {
+    "id": "location_acoustic_testing_facility",
+    "displayName": "Acoustic Test Facility",
+    "description": "Anechoic chambers. Dead silence so complete you can hear your own blood. High psychological stress. Sound baffling and military headphones in the test rigs.",
+    "dangerLevel": 8.0,
+    "travelHours": 5.5,
+    "baseRadsPerHour": 15.0
+  },
+  {
+    "id": "location_substation_omega",
+    "displayName": "Substation Omega",
+    "description": "A massive electrical transformer yard. High EMP risk from arcing capacitors. Generator alternators and electrical cable in the switching house.",
+    "dangerLevel": 7.0,
+    "travelHours": 3.0,
+    "baseRadsPerHour": 35.0
+  },
+  {
+    "id": "location_the_dead_hand_core",
+    "displayName": "The Dead Hand Core",
+    "description": "Endgame location. The regional server controlling the UXO fields. The Custodian's last outpost. The master override key inside silences the machines — forever.",
+    "dangerLevel": 10.0,
+    "travelHours": 9.0,
+    "baseRadsPerHour": 80.0
+  },
+  {
+    "id": "location_lethe_water_treatment",
+    "displayName": "Lethe Water Treatment",
+    "description": "The hidden sub-level where the amnestics were synthesized. Loot: item_scopolamine_root, item_lithium_salts.",
+    "dangerLevel": 9.0,
+    "travelHours": 5.0,
+    "baseRadsPerHour": 40.0
+  },
+  {
+    "id": "location_observatory_dome",
+    "displayName": "Shattered Observatory",
+    "description": "High altitude, zero ash cover. Lethal UV Scourge. Loot: item_welders_glass, item_mirror_shard.",
+    "dangerLevel": 10.0,
+    "travelHours": 7.0,
+    "baseRadsPerHour": 20.0
+  },
+  {
+    "id": "location_submerged_arcology",
+    "displayName": "Submerged Luxury Arcology",
+    "description": "Pre-war elite bunker. They starved in velvet. Loot: item_vinyl_collection, item_gold_bars, item_epoxy_resin.",
+    "dangerLevel": 8.0,
+    "travelHours": 6.0,
+    "baseRadsPerHour": 30.0
+  },
+  {
+    "id": "location_concrete_batching_plant",
+    "displayName": "Concrete Batching Plant",
+    "description": "Industrial ruin. High structural collapse risk. Loot: item_galvanized_rebar, item_cement_mix.",
+    "dangerLevel": 6.0,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 25.0
+  },
+  {
+    "id": "location_seed_vault_antechamber",
+    "displayName": "Seed Vault Antechamber",
+    "description": "The outer doors failed; the inner doors held. Loot: item_seed_ledger, item_non_irradiated_wheat.",
+    "dangerLevel": 7.0,
+    "travelHours": 5.5,
+    "baseRadsPerHour": 15.0
+  },
+  {
+    "id": "location_hospital_psych_wing",
+    "displayName": "Hospital Psychiatric Wing",
+    "description": "Echoes of the early panic. High psychological stress. Loot: item_opioid_painkillers, item_straitjacket_canvas.",
+    "dangerLevel": 8.0,
+    "travelHours": 4.5,
+    "baseRadsPerHour": 50.0
+  },
+  {
+    "id": "location_mirror_factory",
+    "displayName": "Mirror Manufacturing Plant",
+    "description": "Shattered glass everywhere. Requires item_work_boots. Loot: item_mirror_shard, item_silver_nitrate.",
+    "dangerLevel": 5.0,
+    "travelHours": 3.5,
+    "baseRadsPerHour": 20.0
+  },
+  {
+    "id": "location_radio_telescope_array",
+    "displayName": "Radio Telescope Array",
+    "description": "Massive, groaning dishes pointing at a dead sky. Loot: item_vacuum_tube, item_copper_wire_10m.",
+    "dangerLevel": 9.0,
+    "travelHours": 8.0,
+    "baseRadsPerHour": 45.0
+  },
+  {
+    "id": "location_ash_whale_carcass",
+    "displayName": "Ash-Whale Carcass",
+    "description": "The fossilized remains of a massive, pre-war subterranean root network. Loot: item_bio_plastic, item_fertilizer.",
+    "dangerLevel": 7.0,
+    "travelHours": 4.0,
+    "baseRadsPerHour": 60.0
+  },
+  {
+    "id": "location_the_memory_vault",
+    "displayName": "The Memory Vault",
+    "description": "Endgame. A server farm dedicated to backing up civilian social media. Loot: item_hard_drive_platter.",
+    "dangerLevel": 10.0,
+    "travelHours": 9.0,
+    "baseRadsPerHour": 80.0
   }
 ]

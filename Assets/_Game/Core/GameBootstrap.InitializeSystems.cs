@@ -32,6 +32,7 @@ namespace AtomicWar._Game.Core
             InitFoundation();
             InitUtilityAI();
             InitMedicalSystems();
+            InitExpansion4Systems();
             InitEventsAndSurvivors();
             InitSaveAndExpeditions();
             InitRadioAndEndgame();

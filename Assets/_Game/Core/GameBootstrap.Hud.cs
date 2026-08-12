@@ -176,6 +176,9 @@ namespace AtomicWar._Game.Core
 
             // Initial fog-of-war push
             RefreshMapKnowledgeHUD();
+
+            // Expansion IV — wire structural/lethe/ozone/generational overlay controller.
+            WireExpansion4Hud();
         }
 
         /// <summary>

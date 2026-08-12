@@ -26,6 +26,24 @@ namespace AtomicWar._Game.Core
         public List<string> survivorsDead = new List<string>();
         public List<string> deathLocations = new List<string>();
         public List<string> journalEntries = new List<string>();
+
+        // ── Expansion IV: The Logistics of Ruin ───────────────────────
+        public int totalCaloriesConsumed;
+        public int caloriesDeniedForGenerator;
+        public int starvationDeathsWhilePantryHeld;
+        public int raidersRepelled;
+        public int raidersExecutedAfterSurrender;
+        public int bulletsIntoUnarmedScavengers;
+        public int corpsesProcessedForMaterials;
+        public int goldFillingsExtracted;
+        public int clothingStrippedArticles;
+        public int decoyBroadcastsSent;
+        public int factionPatrolsDiverted;
+        public int estimatedDeceptionCasualties;
+        public int crematoriumVisits;
+        public int lightlessTrades;
+        public int lightlessKilled;
+        public string victoryType;
     }
 
     /// <summary>
@@ -160,6 +178,97 @@ namespace AtomicWar._Game.Core
             }
 
             sb.Append(" The bunker is empty now. The wind writes the rest.");
+            return sb.ToString();
+        }
+
+        /// <summary>
+        /// Expansion IV — The Receipt of Survival. A brutal administrative audit
+        /// printed on the MoralChronicleUI. The screen is black. A dot-matrix
+        /// printer sound plays. Text types out, line by line.
+        /// </summary>
+        public string GenerateReceiptOfSurvival(EpilogueRecord record)
+        {
+            if (record == null) return "NO RECORD FOUND.";
+
+            var sb = new System.Text.StringBuilder();
+
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine("  RECEIPT OF SURVIVAL — ASHFALL");
+            sb.AppendLine("  TESSARAT CIVIL DEFENSE DISTRICT");
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine();
+
+            // ── On Resource Management ────────────────────────────────
+            sb.AppendLine("── ON RESOURCE MANAGEMENT ──────────────");
+            sb.AppendLine($"  Total Calories Consumed: {record.totalCaloriesConsumed:N0}.");
+            sb.AppendLine($"  Total Calories Denied to Keep the Generator Running: {record.caloriesDeniedForGenerator:N0}.");
+            sb.AppendLine($"  Survivors Who Died of Starvation While the Pantry Held >10 Items: {record.starvationDeathsWhilePantryHeld}.");
+            sb.AppendLine();
+            sb.AppendLine("  The Math: You chose the heater over the hungry.");
+            sb.AppendLine("  The heater kept the pipes from freezing. The pipes");
+            sb.AppendLine("  kept the water flowing. The water kept the rest of");
+            sb.AppendLine("  you alive. The math is correct. The ghosts do not");
+            sb.AppendLine("  care about the math.");
+            sb.AppendLine();
+
+            // ── On Violence & The Hatch ───────────────────────────────
+            sb.AppendLine("── ON VIOLENCE & THE HATCH ─────────────");
+            sb.AppendLine($"  Raiders Repelled: {record.raidersRepelled}.");
+            sb.AppendLine($"  Raiders Executed After Surrendering: {record.raidersExecutedAfterSurrender}.");
+            sb.AppendLine($"  Bullets Fired into Unarmed Scavengers: {record.bulletsIntoUnarmedScavengers}.");
+            sb.AppendLine();
+            sb.AppendLine("  The Math: Ammunition is finite. Mercy is a luxury");
+            sb.AppendLine("  of the well-fed. You saved the bunker. You lost");
+            sb.AppendLine("  the ability to look at the children without seeing");
+            sb.AppendLine("  the boy's face.");
+            sb.AppendLine();
+
+            // ── On The Dead & The Bureaucracy ─────────────────────────
+            sb.AppendLine("── ON THE DEAD & THE BUREAUCRACY ───────");
+            sb.AppendLine($"  Corpses Processed for Materials: {record.corpsesProcessedForMaterials}.");
+            sb.AppendLine($"  Gold Fillings Extracted and Traded for Iodine: {record.goldFillingsExtracted}.");
+            sb.AppendLine($"  Clothing Stripped and Worn by Survivors: {record.clothingStrippedArticles} articles.");
+            sb.AppendLine();
+            sb.AppendLine("  The Math: The dead do not need coats. The living");
+            sb.AppendLine("  freeze without them. You became an undertaker who");
+            sb.AppendLine("  bills the clients.");
+            sb.AppendLine();
+
+            // ── On The Radio & Lies ───────────────────────────────────
+            sb.AppendLine("── ON THE RADIO & LIES ─────────────────");
+            sb.AppendLine($"  Decoy Broadcasts Transmitted: {record.decoyBroadcastsSent}.");
+            sb.AppendLine($"  Faction Patrols Diverted into Hazard Zones: {record.factionPatrolsDiverted}.");
+            sb.AppendLine($"  Estimated Casualties Caused by Your Deception: {record.estimatedDeceptionCasualties}.");
+            sb.AppendLine();
+            sb.AppendLine("  The Math: You did not pull the trigger. You just");
+            sb.AppendLine("  moved the target. The ash buried them just the same.");
+            sb.AppendLine();
+
+            // ── On The Undercity ──────────────────────────────────────
+            if (record.lightlessTrades > 0 || record.lightlessKilled > 0 || record.crematoriumVisits > 0)
+            {
+                sb.AppendLine("── ON THE UNDERCITY ────────────────────");
+                if (record.crematoriumVisits > 0)
+                    sb.AppendLine($"  Crematorium Visits: {record.crematoriumVisits}.");
+                if (record.lightlessTrades > 0)
+                    sb.AppendLine($"  Trades Completed with the Lightless: {record.lightlessTrades}.");
+                if (record.lightlessKilled > 0)
+                    sb.AppendLine($"  Lightless Killed: {record.lightlessKilled}.");
+                sb.AppendLine();
+                sb.AppendLine("  The Math: They were not monsters. They were people");
+                sb.AppendLine("  who went underground and never came back up. You");
+                sb.AppendLine("  traded candle tallow for water filters. The math");
+                sb.AppendLine("  was fair. The dark does not care about fairness.");
+                sb.AppendLine();
+            }
+
+            // ── Final Frame ───────────────────────────────────────────
+            sb.AppendLine("═══════════════════════════════════════");
+            sb.AppendLine($"  DAYS SURVIVED: {record.daysSurvived}");
+            sb.AppendLine($"  SOULS LOST: {record.survivorsDead?.Count ?? 0}");
+            sb.AppendLine($"  VICTORY TYPE: {record.victoryType ?? "NONE"}");
+            sb.AppendLine("═══════════════════════════════════════");
+
             return sb.ToString();
         }
 

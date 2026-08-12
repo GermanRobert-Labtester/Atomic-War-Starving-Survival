@@ -48,7 +48,11 @@ namespace AtomicWar._Game.Environment
         /// <summary>Freezing rain; hatch frozen shut; solar blocked; fuel +50 %.</summary>
         IceStorm,
         /// <summary>No wind. No ash. No rad spike. Clear sky. The dangerous one.</summary>
-        Silence
+        Silence,
+        /// <summary>Expansion IV — Ash plumes break, exposing unfiltered depleted-ozone UV radiation microwave.</summary>
+        FalseSpring,
+        /// <summary>Expansion IV — Deep silence of shattered sky with extreme UV index.</summary>
+        SilentSpring
     }
 
     /// <summary>

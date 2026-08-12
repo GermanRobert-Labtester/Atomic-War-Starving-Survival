@@ -115,7 +115,8 @@ namespace AtomicWar._Game.Core
 
         // Record a single cult emissary visit. Increments visit count
         // and raises OnVisitRecorded (carrying the new total).
-        public void RecordVisit(string shelterId, int day)
+        // day is a logging context only (not used by this method).
+        public void RecordVisit(string shelterId, int day = 0)
         {
             if (string.IsNullOrEmpty(shelterId)) return;
             var entry = GetOrCreate(shelterId);
@@ -155,7 +156,8 @@ namespace AtomicWar._Game.Core
 
         // Record a missed communion (the shelter failed to show this week).
         // 1 miss = warned, 2+ = forbidden to leave.
-        public void RecordMissedCommunion(string shelterId, int weekIndex)
+        // weekIndex is a logging/tracking context only (not used by this method).
+        public void RecordMissedCommunion(string shelterId, int weekIndex = 0)
         {
             if (string.IsNullOrEmpty(shelterId)) return;
             var entry = GetOrCreate(shelterId);

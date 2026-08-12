@@ -91,7 +91,7 @@ namespace AtomicWar._Game.Medical
         /// </summary>
         public bool AbortTreatment(Infection inf)
         {
-            if (inf == null || inf.Aborted) return false;
+            if (inf == null || inf.Resistance == Resistance.MultiResistant) return false;
             inf.Aborted = true;
             if (inf.Resistance == Resistance.None)
             {

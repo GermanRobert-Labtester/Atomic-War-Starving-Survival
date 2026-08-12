@@ -125,7 +125,34 @@ namespace AtomicWar._Game.Inventory
             AddTech(list);
             AddFood(list);
             AddClothing(list);
+            AddIntoTheAshItems(list);
             return list;
+        }
+
+        private static void AddIntoTheAshItems(List<Spec> list)
+        {
+            var rows = IntoTheAshItemsCatalog.SpecRows;
+            if (rows == null) return;
+            int limit = System.Math.Min(15, rows.Count);
+            for (int i = 0; i < limit; i++)
+            {
+                var r = rows[i];
+                ItemType t = ItemType.Quest;
+                if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Weapon) t = ItemType.Weapon;
+                else if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Material) t = ItemType.Material;
+                else if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Tool) t = ItemType.Tool;
+                else if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Comfort || r.Category == IntoTheAshItemsCatalog.ItemCategory.Lore) t = ItemType.Comfort;
+                
+                list.Add(new Spec {
+                    Id = r.Id,
+                    DisplayName = r.DisplayName,
+                    Type = t,
+                    StackMax = r.StackSize,
+                    Weight = r.Weight,
+                    TradeValue = r.TradeValue,
+                    Description = r.Description
+                });
+            }
         }
 
         // ── Materialise ──────────────────────────────────────────────────

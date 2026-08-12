@@ -1023,6 +1023,23 @@ namespace AtomicWar._Game.Core
         public VehicleSystem VehicleSystem { get; private set; }
         public VisionLossSystem VisionLossSystem { get; private set; }
         public VisitorRNGSystem VisitorRNGSystem { get; private set; }
+
+        // ── Protocol Zero expansion systems ──────────────────────────
+        public ThermalGridSystem ThermalGrid { get; private set; }
+        public AshTideScheduler AshTideScheduler { get; private set; }
+        public AtmosphereToxicitySystem AtmosphereToxicity { get; private set; }
+        public ConvoyLogisticsSystem ConvoyLogistics { get; private set; }
+
+        // ── Expansion II Addendum: Black Aquifer systems ──────────────
+        public HydrostaticPressureSystem HydrostaticPressure { get; private set; }
+        public TunnelingAndStructuralStress TunnelingStress { get; private set; }
+        public MyceliumNetworkSystem MyceliumNetwork { get; private set; }
+
+        // ── Expansion III: Dead Hand systems ──────────────────────────
+        public UXOFieldSystem UXOField { get; private set; }
+        public Encounters.AutomatedThreatSystem AutomatedThreats { get; private set; }
+        public Shelter.ElectromagneticDecaySystem ElectromagneticDecay { get; private set; }
+
         public NPC_AddictsPassive NPCAddictsPassive { get; private set; }
         public NPC_AggroScavengers NPCAggroScavengers { get; private set; }
         public NPC_AggroTrader NPCAggroTrader { get; private set; }

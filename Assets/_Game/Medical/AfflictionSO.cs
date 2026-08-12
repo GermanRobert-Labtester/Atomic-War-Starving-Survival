@@ -108,6 +108,70 @@ namespace AtomicWar._Game.Medical
             // Prompt #60 — radiation mutagenesis stages.
             public const string HairLoss = "hair_loss";
             public const string CellularBreakdown = "cellular_breakdown";
+
+            // ── Expansion III: The Ghosts in the Concrete ─────────────
+            /// <summary>Pterygium / Rad Cataracts. Ash + UV + ionizing radiation.</summary>
+            public const string AshBlindness = "affliction_ash_blindness";
+            /// <summary>Hypersensitivity Pneumonitis. Recycled air, black mold, concrete dust.</summary>
+            public const string BunkerCough = "affliction_bunker_cough";
+            /// <summary>Fatal mold colonization of lungs. Terminal progression of Bunker Cough.</summary>
+            public const string SporeLung = "affliction_spore_lung";
+            /// <summary>Heavy Metal Psychosis. Lead from car batteries/solar cells.</summary>
+            public const string LeadMadness = "affliction_lead_madness";
+            /// <summary>Calcium loss from chelation treatment for lead poisoning.</summary>
+            public const string BrittleBones = "affliction_brittle_bones";
+            /// <summary>Decompression Sickness. Digging too deep without pressure equalization.</summary>
+            public const string TheBends = "affliction_the_bends";
+            /// <summary>Radiation-Induced Sarcoma. Cumulative dose > 2,500 mSv. Terminal.</summary>
+            public const string Kaposi = "affliction_kaposi";
+            /// <summary>Asbestos exposure from 1962 bunker layer excavation.</summary>
+            public const string Mesothelioma = "affliction_mesothelioma";
+            /// <summary>Severe food poisoning from 40-year-old MREs.</summary>
+            public const string FoodPoisoningSevere = "affliction_food_poisoning_severe";
+
+            // ── Expansion IV: The Logistics of Ruin ───────────────────
+            /// <summary>Ash Delirium. Whiteout exposure with low morale. Wandering into the grey.</summary>
+            public const string AshDelirium = "affliction_ash_delirium";
+            /// <summary>Ash Exhaustion. Sinking in ash without snowshoes. 300% fatigue burn.</summary>
+            public const string AshExhaustion = "affliction_ash_exhaustion";
+            /// <summary>Corpse Thief Shame. Wearing clothes stripped from a named corpse.</summary>
+            public const string CorpseThiefShame = "affliction_corpse_thief_shame";
+
+            // ── Expansion VI: The Architecture of Paranoia ────────────
+            /// <summary>Claustrophobia. Assigned to unlit bunker rooms.</summary>
+            public const string Claustrophobia = "affliction_claustrophobia";
+            /// <summary>Stigmatized. Targeted by gossip and scapegoating.</summary>
+            public const string Stigmatized = "affliction_stigmatized";
+            /// <summary>Paranoia. From phantom knocks, contraband, and sleep deprivation.</summary>
+            public const string Paranoia = "affliction_paranoia";
+
+            // ── Expansion VII: The Marrow & The Mythology ─────────────
+            /// <summary>Psychosomatic Nausea. Autopsy room adjacent to kitchen.</summary>
+            public const string PsychosomaticNausea = "affliction_psychosomatic_nausea";
+            /// <summary>Chronic Fatigue. Generator hum adjacent to bunkhouse.</summary>
+            public const string ChronicFatigue = "affliction_chronic_fatigue";
+            /// <summary>Night Terrors. Hearing screams through ventilation.</summary>
+            public const string NightTerrors = "affliction_night_terrors";
+            /// <summary>Phantom Limb. Feeling missing appendage after amputation.</summary>
+            public const string PhantomLimb = "affliction_phantom_limb";
+            /// <summary>Nerve Damage. From crude prosthetics or toxic anesthetic.</summary>
+            public const string NerveDamage = "affliction_nerve_damage";
+            /// <summary>Dysentery Outbreak. BioLatrine adjacent to water supply.</summary>
+            public const string DysenteryOutbreak = "affliction_dysentery_outbreak";
+
+            // ── Expansion II Addendum: The Black Aquifer & Myco-Necrosis ─
+            /// <summary>Chemical Toxicity. Liver failure and blindness from Black Aquifer sludge in drinking water.</summary>
+            public const string ChemicalToxicity = "affliction_chemical_toxicity";
+            /// <summary>Myco-Hallucinations. High spore density causes Utility AI breakdown; survivors attack shadows.</summary>
+            public const string MycoHallucinations = "affliction_myco_hallucinations";
+
+            // ── Expansion III: The Dead Hand & The Oxide Wastes ──────
+            /// <summary>Traumatic Amputation. Failed UXO probe detonation. Permanent limb loss.</summary>
+            public const string TraumaticAmputation = "affliction_traumatic_amputation";
+            /// <summary>EMP Phantom Blip. Corrupted electronics inject false data into perception.</summary>
+            public const string EMPPhantomBlip = "affliction_emp_phantom_blip";
+            /// <summary>Logic Gate Failure. Device corruption causes lethal automated errors.</summary>
+            public const string LogicGateFailure = "affliction_logic_gate_failure";
         }
     }
 }

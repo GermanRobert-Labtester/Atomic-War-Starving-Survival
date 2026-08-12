@@ -18,7 +18,6 @@
     --dim: #66675f;
     /* Military exclusive — copper rust, not bright red (restrained tone). */
     --exclusive: #c4785a;
-    --exclusive-line: rgba(196, 120, 90, 0.45);
     --critical: #e63333;
 
     /* Figma HUD Panel layout contract. */
@@ -27,7 +26,6 @@
 
     --font-body: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Regular_SDF.asset");
     --font-semibold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
-    --font-bold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Bold_SDF.asset");
     --font-mono: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
 }
 
@@ -48,7 +46,6 @@
 .diegetic-panel {
     position: absolute;
     background-color: var(--ink-panel);
-    border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
@@ -438,4 +435,313 @@
 .power-grid-readout {
     white-space: normal;
     margin-bottom: 0;
+}
+
+/* ==========================================================================
+   EXPANSION IV — THE CHRONOS DECAY & THE LETHE PROTOCOL
+   Panels: structural-entropy · lethe-drip · ozone-scourge · memory-flash
+           · generational-psychology
+   Token legend: same as above. New tokens:
+     --entropy:   corroded amber  (concrete aging)
+     --lethe:     faded cyan-grey (amnestic reservoir)
+     --ozone:     bleached white  (UV scorch feedback)
+     --ghost:     near-black with warm cast (memory flash)
+   ========================================================================== */
+
+:root {
+    --entropy:    #c97b3a;
+    --lethe:      #6ea3a8;
+    --ozone:      #dde8e8;
+    --ghost:      rgba(9, 11, 12, 0.92);
+    --entropy-glow: rgba(201, 123, 58, 0.18);
+    --lethe-amber: #d4a35a;
+    --lethe-red:   #d94040;
+}
+
+/* ---- STRUCTURAL ENTROPY WIREFRAME PANEL ---------------------------------
+   Bottom-right, below stores. Appears only when a Concrete-Boss/Architect
+   survivor is selected. Left edge accent matches the corrosion palette. */
+.structural-entropy-panel {
+    bottom: calc(var(--hud-edge) + 180px);
+    right: var(--hud-edge);
+    min-width: 300px;
+    max-width: 420px;
+    max-height: 320px;
+    border-left-color: var(--entropy);
+}
+
+.structural-entropy-panel .diegetic-title {
+    color: var(--entropy);
+}
+
+.structural-entropy-panel .diegetic-status {
+    color: var(--entropy);
+    letter-spacing: 0.4px;
+}
+
+/* Rebar grid: a thin flex grid of rebar-cell elements painted by the system */
+.rebar-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    width: 100%;
+    max-height: 88px;
+}
+
+.rebar-cell {
+    width: 18px;
+    height: 18px;
+    margin: 2px;
+    border-radius: 2px;
+    background-color: rgba(32, 200, 60, 0.28);
+}
+
+.rebar-cell--rusting {
+    background-color: rgba(200, 100, 20, 0.72);
+}
+
+.rebar-cell--spalling {
+    background-color: rgba(8, 8, 8, 0.95);
+    border-width: 1px;
+    border-color: var(--entropy);
+}
+
+.entropy-integrity-bar {
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.07);
+    margin-top: 4px;
+}
+
+.entropy-integrity-fill {
+    height: 6px;
+    background-color: var(--entropy);
+    transition-property: width;
+    transition-duration: 0.6s;
+}
+
+.entropy-integrity-fill.critical {
+    background-color: var(--critical);
+}
+
+/* ---- LETHE DRIP GAUGE PANEL --------------------------------------------
+   Embedded in the WaterPurification terminal readout (top-right station).
+   Visible whenever the water purifier panel is open. */
+.lethe-drip-panel {
+    top: calc(var(--hud-edge) + 320px);
+    right: var(--hud-edge);
+    min-width: 260px;
+    max-width: 380px;
+    border-left-color: var(--lethe);
+}
+
+.lethe-drip-panel .diegetic-title {
+    color: var(--lethe);
+}
+
+/* Sight-gauge: tall narrow fill column, left-to-right level bar */
+.lethe-sight-gauge-track {
+    height: 12px;
+    background-color: rgba(110, 163, 168, 0.12);
+    margin-top: 6px;
+    margin-bottom: 2px;
+    border-width: 1px;
+    border-color: var(--lethe);
+    border-radius: 2px;
+}
+
+.lethe-sight-gauge-fill {
+    height: 12px;
+    background-color: var(--lethe-amber);
+    transition-property: width;
+    transition-duration: 1.2s;
+}
+
+.lethe-sight-gauge-fill.redline {
+    background-color: var(--lethe-red);
+}
+
+.lethe-drip-status {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--lethe);
+    letter-spacing: 0.6px;
+    margin-bottom: 3px;
+}
+
+.lethe-drip-status.redline {
+    color: var(--lethe-red);
+}
+
+/* Animated droplet dots — three small circles that "drip" via scale animation */
+.lethe-droplets {
+    flex-direction: row;
+    margin-top: 4px;
+}
+
+.lethe-droplet {
+    width: 6px;
+    height: 9px;
+    border-radius: 3px;
+    background-color: var(--lethe);
+    margin-right: 4px;
+    opacity: 0.7;
+}
+
+.lethe-droplet.slow {
+    background-color: var(--lethe-red);
+    opacity: 0.45;
+}
+
+/* ---- OZONE SCOURGE OVERLAY PANEL --------------------------------------
+   Full-screen white flash + diagnostic text. Position: screen top-centre,
+   high z-order. Visible only during Weather_FalseSpring / SilentSpring. */
+.ozone-scourge-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(221, 232, 232, 0.0);
+    picking-mode: ignore;
+    /* Transition driven by C# setting style.backgroundColor directly. */
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+
+.ozone-scourge-overlay.active {
+    background-color: rgba(221, 232, 232, 0.88);
+}
+
+.ozone-warning-panel {
+    top: var(--hud-edge);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 380px;
+    max-width: 560px;
+    border-left-color: var(--ozone);
+    background-color: rgba(9, 11, 12, 0.94);
+}
+
+.ozone-warning-panel .diegetic-title {
+    color: var(--ozone);
+    letter-spacing: 2.4px;
+}
+
+.ozone-warning-panel .diegetic-status {
+    color: var(--hot);
+}
+
+.ozone-timer-bar-track {
+    height: 4px;
+    background-color: rgba(221, 232, 232, 0.14);
+    margin-top: 6px;
+}
+
+.ozone-timer-bar-fill {
+    height: 4px;
+    background-color: var(--ozone);
+    transition-property: width;
+    transition-duration: 0.25s;
+}
+
+.ozone-timer-bar-fill.danger {
+    background-color: var(--critical);
+}
+
+/* ---- MEMORY FLASH VIGNETTE ---------------------------------------------
+   Full-screen hard vignette + desaturated centre. Triggered by
+   trait_hyperthymesia survivors; lasts 0.2 s then fades out. */
+.memory-flash-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    picking-mode: ignore;
+    background-color: rgba(9, 11, 12, 0.0);
+    transition-property: background-color;
+    transition-duration: 0.08s;
+}
+
+.memory-flash-vignette.active {
+    background-color: rgba(230, 224, 210, 0.82);
+}
+
+.memory-flash-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    -unity-font-definition: var(--font-semibold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(9, 11, 12, 0.55);
+    -unity-text-align: middle-center;
+}
+
+/* ---- GENERATIONAL PSYCHOLOGY READOUT PANEL ----------------------------
+   Left side, below vitals. Persistent once Bunker-Born come of age.
+   Accent edge in the muted spectrum to signal sociological dread, not
+   physical danger — same register as the encounter log. */
+.generational-psychology-panel {
+    top: calc(var(--hud-edge) + 200px);
+    left: var(--hud-edge);
+    min-width: 320px;
+    max-width: 440px;
+    max-height: 280px;
+    border-left-color: var(--muted);
+}
+
+.generational-psychology-panel .diegetic-title {
+    color: var(--muted);
+    letter-spacing: 1.4px;
+}
+
+.gen-cohort-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.gen-cohort-label {
+    width: 110px;
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+}
+
+.gen-cohort-bar-track {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.gen-cohort-bar-fill {
+    height: 6px;
+    background-color: var(--muted);
+}
+
+.gen-cohort-bar-fill.born-bunker {
+    background-color: var(--warm);
+}
+
+.gen-cohort-value {
+    width: 36px;
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+    -unity-text-align: middle-right;
+}
+
+.gen-event-text {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+    white-space: normal;
+    margin-top: 6px;
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+    padding-top: 4px;
 }

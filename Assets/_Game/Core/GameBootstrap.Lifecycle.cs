@@ -280,7 +280,7 @@ namespace AtomicWar._Game.Core
             if (_hud != null)
             {
                 string weatherName = GetWeatherDisplayName(WeatherSystem.Current);
-                string seasonName = TemperatureSystem.CurrentSeason?.displayName ?? "Nuclear Winter";
+                string seasonName = GetSeasonDisplayName();
                 _hud.Tick(TimeSystem.CurrentDay, TimeSystem.CurrentHourFloat, weatherName, seasonName, TimeSystem.TimeScale);
                 _hud.OnShelterUpdated(Shelter);
                 // Live radio hardware (signal + tuned label) on the intercept strip.
@@ -292,6 +292,8 @@ namespace AtomicWar._Game.Core
 
         private WeatherKind _cachedWeatherKind;
         private string _cachedWeatherName;
+        private string _cachedSeasonName;
+        private int _cachedSeasonDay = -1;
 
         /// <summary>
         /// Enum-to-label lookup for the HUD's weather strip.
@@ -309,6 +311,21 @@ namespace AtomicWar._Game.Core
                 _cachedWeatherName = kind.ToString();
             }
             return _cachedWeatherName;
+        }
+
+        /// <summary>
+        /// Season display-name cache. Season changes at most once per
+        /// game-day, so caching avoids the null-conditional chain every frame.
+        /// </summary>
+        private string GetSeasonDisplayName()
+        {
+            int day = TimeSystem?.CurrentDay ?? 0;
+            if (_cachedSeasonName == null || _cachedSeasonDay != day)
+            {
+                _cachedSeasonDay = day;
+                _cachedSeasonName = TemperatureSystem?.CurrentSeason?.displayName ?? "Nuclear Winter";
+            }
+            return _cachedSeasonName;
         }
 
         /// <summary>

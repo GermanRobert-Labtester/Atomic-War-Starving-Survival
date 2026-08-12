@@ -27,14 +27,25 @@ namespace AtomicWar._Game.Core
             {
                 _preCaptureHook?.Invoke();
                 var snapshot = CaptureSnapshot();
-                snapshot.GameState.Phase = _gameState.Phase;
-                snapshot.GameState.Day = _gameState.Day;
-                snapshot.GameState.IsPaused = _gameState.IsPaused;
+                if (_gameState != null && snapshot.GameState != null)
+                {
+                    snapshot.GameState.Phase = _gameState.Phase;
+                    snapshot.GameState.Day = _gameState.Day;
+                    snapshot.GameState.IsPaused = _gameState.IsPaused;
+                }
 
                 snapshot.Checksum = "";
+                // H-4: Serialize once, then inject the checksum directly into the
+                // JSON text instead of calling ToJson a second time. Injection is
+                // safe because JsonUtility emits `"Checksum": ""` deterministically
+                // for the empty-string placeholder, and the field name is unique.
                 string body = JsonUtility.ToJson(snapshot, true);
-                snapshot.Checksum = ComputeChecksum(body);
-                string finalJson = JsonUtility.ToJson(snapshot, true);
+                string checksum = ComputeChecksum(body);
+                const string placeholder = "\"Checksum\": \"\"";
+                int idx = body.IndexOf(placeholder, StringComparison.Ordinal);
+                string finalJson = idx >= 0
+                    ? body.Substring(0, idx) + $"\"Checksum\": \"{checksum}\"" + body.Substring(idx + placeholder.Length)
+                    : body;
 
                 Directory.CreateDirectory(_savesDir);
 
@@ -157,6 +168,21 @@ namespace AtomicWar._Game.Core
                 }
 
                 RestoreFromSnapshot(data);
+
+                // HARDEN: Post-restore sanity check. A corrupt or incomplete
+                // save could restore with zero survivors or a negative day,
+                // producing a zombie world that the next autosave would
+                // write back over the player's good slot.
+                if (!ValidateAfterRestore(data))
+                {
+                    Debug.LogError(
+                        $"[SaveSystem] Slot '{slotId}' failed post-restore validation. " +
+                        "Refusing to commit the restored state.");
+                    LastLoadSucceeded = false;
+                    SuppressAutoSave = true;
+                    return false;
+                }
+
                 Debug.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
                 LastLoadSucceeded = true;
                 // Successful load clears suppress only if host is not holding Continue gate.
@@ -267,6 +293,66 @@ namespace AtomicWar._Game.Core
             string computed = ComputeChecksum(body);
             data.Checksum = saved;
             return string.Equals(computed, saved, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        /// HARDEN: Post-restore sanity check. Verifies that the restored world
+        /// state is coherent enough to continue. Catches corrupt saves where
+        /// individual systems restored successfully but the aggregate world
+        /// doesn't make sense (zero survivors on a non-empty save, negative day,
+        /// etc.). Returns false to signal Load should abort rather than commit
+        /// a broken state that the next autosave would write over the player's
+        /// good slot.
+        /// </summary>
+        private bool ValidateAfterRestore(SaveData data)
+        {
+            if (data == null) return false;
+
+            // Day must not be negative (day < 0 means corrupted state).
+            if (data.GameState != null && data.GameState.Day < 0)
+            {
+                Debug.LogWarning("[SaveSystem] Post-restore validation failed: GameState.Day < 0.");
+                return false;
+            }
+
+            // A save that claims to have survivors must actually have them.
+            if (data.Survivors != null && data.Survivors.Count > 0)
+            {
+                bool anyAlive = false;
+                for (int i = 0; i < data.Survivors.Count; i++)
+                {
+                    if (data.Survivors[i] != null && data.Survivors[i].State != SurvivorState.Dead)
+                    {
+                        anyAlive = true;
+                        break;
+                    }
+                }
+                if (!anyAlive)
+                {
+                    // All survivors dead is valid (Iron Man trigger) — don't block.
+                    // Only block if the save says there are survivors but ALL are null.
+                    bool allNull = true;
+                    for (int i = 0; i < data.Survivors.Count; i++)
+                    {
+                        if (data.Survivors[i] != null) { allNull = false; break; }
+                    }
+                    if (allNull)
+                    {
+                        Debug.LogWarning("[SaveSystem] Post-restore validation failed: all survivor entries are null.");
+                        return false;
+                    }
+                }
+            }
+
+            // SaveVersion must be within supported range.
+            if (data.SaveVersion < 1 || data.SaveVersion > CurrentSaveVersion)
+            {
+                Debug.LogWarning(
+                    $"[SaveSystem] Post-restore validation failed: unsupported SaveVersion {data.SaveVersion}.");
+                return false;
+            }
+
+            return true;
         }
 
         private static void Migrate(SaveData data)

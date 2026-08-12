@@ -26,6 +26,12 @@ namespace AtomicWar._Game.Inventory
         /// <summary>Dead body occupying bunker storage (Internal Horror — corpse management).</summary>
         Corpse,
         /// <summary>Food spoiled by humidity/rust; eating risks botulism.</summary>
-        ContaminatedFood
+        ContaminatedFood,
+        /// <summary>
+        /// Expansion IV: pre-war cultural artefact (cassette tapes, photo albums, vinyl).
+        /// No consumption mechanics; Bunker-Born survivors treat them as sacred objects.
+        /// Dismantling triggers ArtifactReverenceBrawlEvent.
+        /// </summary>
+        Relic
     }
 }

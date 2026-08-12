@@ -97,12 +97,12 @@ namespace AtomicWar._Game.Core
         private void TickHouseToBunkerDaily(int currentDay)
         {
             if (HouseToBunkerSystem == null || TimeSystem == null) return;
+            if (WorldPhaseSystem == null) return;
 
             if (_lastHouseDay != currentDay && currentDay < WorldPhaseSystem.FlashpointDay)
             {
                 _lastHouseDay = currentDay;
-                if (WorldPhaseSystem != null
-                    && WorldPhaseSystem.CurrentPhase == AtomicWar._Game.Survivors.WorldPhase.CivilWar)
+                if (WorldPhaseSystem.CurrentPhase == AtomicWar._Game.Survivors.WorldPhase.CivilWar)
                 {
                     HouseToBunkerSystem.ApplyArtilleryDamage();
                 }
@@ -110,7 +110,6 @@ namespace AtomicWar._Game.Core
 
             if (currentDay >= WorldPhaseSystem.FlashpointDay
                 && !HouseToBunkerSystem.HouseDestroyed
-                && WorldPhaseSystem != null
                 && WorldPhaseSystem.HasTriggeredExchange)
             {
                 HouseToBunkerSystem.CollapseHouse();

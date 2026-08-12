@@ -753,5 +753,191 @@
     "baseTraits": [
       "trait_ruthless"
     ]
+  },
+  {
+    "id": "survivor_cryo_tech",
+    "displayName": "The Cryo-Tech",
+    "profession": "HVAC Specialist",
+    "bio": "They kept the server farms cool before the war. Now they keep the bunker from becoming an oven or a tomb.",
+    "baseHealth": 90.0
+  },
+  {
+    "id": "survivor_bunker_archivist",
+    "displayName": "The Archivist",
+    "profession": "Bureaucrat",
+    "bio": "They know the blueprint of every sub-pen built in 1982. They also know which ones were sealed with people inside.",
+    "baseHealth": 75.0
+  },
+  {
+    "id": "survivor_ice_walker",
+    "displayName": "The Ice-Walker",
+    "profession": "Nomad",
+    "bio": "They don't speak much. They navigate by the sound of the wind over the black ice.",
+    "baseHealth": 100.0
+  },
+  {
+    "id": "survivor_defrosted_aristocrat",
+    "displayName": "The Thawed VIP",
+    "profession": "Politician",
+    "bio": "Woke up in a silk suit. Demands a private room. Knows the bank codes, but has never held a shovel.",
+    "baseHealth": 60.0
+  },
+  {
+    "id": "survivor_thawed_medic",
+    "displayName": "The Thawed Surgeon",
+    "profession": "Cryo-Medic",
+    "bio": "Put to sleep in 2024. Woke up to a nightmare. Their medical knowledge is pre-war, but their mind is fragile.",
+    "baseHealth": 85.0
+  },
+  {
+    "id": "survivor_ash_diver",
+    "displayName": "The Ash-Diver",
+    "profession": "Scavenger",
+    "bio": "They dive into the radioactive ash-drifts to pull scrap from buried cars. Their lungs are already failing.",
+    "baseHealth": 110.0
+  },
+  {
+    "id": "survivor_speleologist",
+    "displayName": "The Speleologist",
+    "profession": "Cave Mapper",
+    "bio": "They mapped the limestone networks before the war. They know where the bedrock is solid and where it's hollow. The dark is their oldest friend.",
+    "baseHealth": 90,
+    "traits": ["trait_dark_acclimated"]
+  },
+  {
+    "id": "survivor_sump_diver",
+    "displayName": "The Sump-Diver",
+    "profession": "Scuba Scavenger",
+    "bio": "They dive into the black water to pull copper from the drowned grid. Their skin is perpetually damp and pale. The water doesn't scare them anymore.",
+    "baseHealth": 105,
+    "traits": ["trait_thalassophobia_resist"]
+  },
+  {
+    "id": "survivor_mycologist",
+    "displayName": "The Mycologist",
+    "profession": "Fungus Farmer",
+    "bio": "They study the Ash-Blight. They know which molds will kill you, and which ones will numb the pain of dying. Their hands are stained blue-green.",
+    "baseHealth": 80,
+    "traits": ["trait_rot_immunity"]
+  },
+  {
+    "id": "survivor_hydro_engineer",
+    "displayName": "The Hydro-Engineer",
+    "profession": "Pump Specialist",
+    "bio": "They understand fluid dynamics and pressure valves. They can hear a water main cracking three rooms away. The Black Aquifer doesn't surprise them.",
+    "baseHealth": 95,
+    "traits": ["trait_dark_acclimated"]
+  },
+  {
+    "id": "survivor_mole",
+    "displayName": "The Mole",
+    "profession": "Tunnel Rat",
+    "bio": "Small, quiet, and entirely comfortable in the dark. They fit through the ventilation shafts when the doors jam. The tight spaces are where they sleep best.",
+    "baseHealth": 85,
+    "traits": ["trait_dark_acclimated"]
+  },
+  {
+    "id": "survivor_rot_farmer",
+    "displayName": "The Rot Farmer",
+    "profession": "Composter",
+    "bio": "They smell of ammonia and wet earth. They don't mind the maggots; they consider them protein. The Ash-Blight is just another crop to them.",
+    "baseHealth": 90,
+    "traits": ["trait_rot_immunity"]
+  },
+  {
+    "id": "survivor_sapper",
+    "displayName": "The Sapper",
+    "profession": "EOD Tech",
+    "bio": "They spent the war clearing minefields. Now they clear the peace. They walk softly and never, ever rush. The ground remembers their footsteps.",
+    "baseHealth": 95,
+    "traits": ["trait_uxo_instinct"]
+  },
+  {
+    "id": "survivor_lineman",
+    "displayName": "The Lineman",
+    "profession": "Telecomm Tech",
+    "bio": "They strung the copper that tied the country together. Now they strip it from the walls to keep the lights on. Every wire tells a story.",
+    "baseHealth": 85,
+    "traits": ["trait_faraday_paranoia"]
+  },
+  {
+    "id": "survivor_drone_op",
+    "displayName": "The Drone Op",
+    "profession": "UAV Pilot",
+    "bio": "They used to fly Reapers from an air-conditioned trailer. Now they fly a duct-taped quadcopter with a mirror on a stick. The screen is smaller, but the kills are the same.",
+    "baseHealth": 80,
+    "traits": ["trait_tinnitus"]
+  },
+  {
+    "id": "survivor_acoustic_tech",
+    "displayName": "The Acoustic Tech",
+    "profession": "Sonar Operator",
+    "bio": "Deaf in one ear. They can hear the click of a pressure plate under three feet of ash. The machines cannot hide from them.",
+    "baseHealth": 90,
+    "traits": ["trait_tinnitus"]
+  },
+  {
+    "id": "survivor_machinist",
+    "displayName": "The Machinist",
+    "profession": "CNC Operator",
+    "bio": "They don't trust computers. They trust lathes, calipers, and cold-rolled steel. The EMP took the code, but the metal remembers its shape.",
+    "baseHealth": 100,
+    "traits": ["trait_magnetism_phobia"]
+  },
+  {
+    "id": "survivor_logistician",
+    "displayName": "The Logistician",
+    "profession": "Supply Chain Mgr",
+    "bio": "They know exactly how many rounds of 5.45mm are in a standard Crate B. They weep when you waste ammo. Every bullet has a spreadsheet.",
+    "baseHealth": 85,
+    "traits": ["trait_uxo_instinct"]
+  },
+  {
+    "id": "survivor_bunker_born",
+    "displayName": "The Bunker-Born",
+    "profession": "Scavenger/Scrap",
+    "bio": "Born in the dark. They navigate by air pressure and hum. The surface is a terrifying myth.",
+    "baseHealth": 85,
+    "traits": ["trait_bunker_born", "trait_agoraphobia_severe", "trait_artifact_reverence"]
+  },
+  {
+    "id": "survivor_the_waking",
+    "displayName": "The Waking",
+    "profession": "Patient",
+    "bio": "The amnestics wore off. They remember the flash, the heat, the shadows burned into the walls. They scream when the heater clicks.",
+    "baseHealth": 70,
+    "traits": ["trait_hyperthymesia"]
+  },
+  {
+    "id": "survivor_osteophage",
+    "displayName": "The Osteophage",
+    "profession": "Scrapper",
+    "bio": "Heavy metal poisoning. They chew on copper wire to stop the tremors. Immune to Affliction_Tetanus.",
+    "baseHealth": 90,
+    "traits": ["trait_rot_immunity"]
+  },
+  {
+    "id": "survivor_archivist",
+    "displayName": "The Archivist",
+    "profession": "Monk/Historian",
+    "bio": "They guard the item_vinyl_collection with a shotgun. They believe the pre-war world was a pantheon of gods.",
+    "baseHealth": 75,
+    "traits": ["trait_artifact_reverence"]
+  },
+  {
+    "id": "survivor_concrete_boss",
+    "displayName": "The Concrete Boss",
+    "profession": "Foreman",
+    "bio": "They can hear the rebar rusting. They smell carbonation. They are the only thing keeping the ceiling from crushing you.",
+    "baseHealth": 110,
+    "traits": ["trait_concrete_boss", "trait_concrete_lung"]
+  },
+  {
+    "id": "survivor_uv_penitent",
+    "displayName": "The UV Penitent",
+    "profession": "Cultist",
+    "bio": "They survived the Ozone Scourge by hiding under a corpse. Now they worship the burns.",
+    "baseHealth": 80,
+    "traits": ["trait_sun_blindness"]
   }
 ]

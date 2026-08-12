@@ -294,5 +294,357 @@
     "resultAmount": 1,
     "craftingTimeHours": 12.0,
     "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_frostbite_salve",
+    "recipeName": "Craft Frostbite Salve",
+    "ingredients": [
+      {
+        "itemId": "alcohol_wipes_box_10_of_10",
+        "amount": 2
+      },
+      {
+        "itemId": "cooking_oil",
+        "amount": 1
+      },
+      {
+        "itemId": "scrap_wood",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_frostbite_salve",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_improvised_snow_goggles",
+    "recipeName": "Craft Improvised Snow Goggles",
+    "ingredients": [
+      {
+        "itemId": "scrap_wood",
+        "amount": 1
+      },
+      {
+        "itemId": "cloth",
+        "amount": 1
+      },
+      {
+        "itemId": "duct_tape",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_snow_goggles_improvised",
+    "resultAmount": 1,
+    "craftingTimeHours": 0.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_co2_scrubber",
+    "recipeName": "Craft CO2 Scrubber Cartridge",
+    "ingredients": [
+      {
+        "itemId": "chemicals",
+        "amount": 3
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      },
+      {
+        "itemId": "air_filter",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_co2_scrubber_cartridge",
+    "resultAmount": 1,
+    "craftingTimeHours": 2.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "thaw_frozen_pipe",
+    "recipeName": "Thaw Frozen Pipe",
+    "ingredients": [
+      {
+        "itemId": "item_thermal_paste",
+        "amount": 1
+      },
+      {
+        "itemId": "fuel_1l",
+        "amount": 1
+      },
+      {
+        "itemId": "item_epoxy_injector",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_thermal_paste",
+    "resultAmount": 0,
+    "craftingTimeHours": 1.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_mycelium_bricks",
+    "recipeName": "Craft Mycelium Bricks",
+    "ingredients": [
+      {
+        "itemId": "scrap_wood",
+        "amount": 5
+      },
+      {
+        "itemId": "scrap_wood",
+        "amount": 2
+      },
+      {
+        "itemId": "dirty_water",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_mycelium_bricks",
+    "resultAmount": 2,
+    "craftingTimeHours": 4.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "purify_black_water",
+    "recipeName": "Purify Black Water",
+    "ingredients": [
+      {
+        "itemId": "item_black_water_vial",
+        "amount": 2
+      },
+      {
+        "itemId": "item_ro_membrane",
+        "amount": 1
+      },
+      {
+        "itemId": "chemicals",
+        "amount": 3
+      }
+    ],
+    "resultItemId": "clean_water",
+    "resultAmount": 1,
+    "craftingTimeHours": 2.0,
+    "requiredStationId": "water_purifier"
+  },
+  {
+    "id": "craft_rebreather",
+    "recipeName": "Craft Rebreather",
+    "ingredients": [
+      {
+        "itemId": "gas_mask",
+        "amount": 1
+      },
+      {
+        "itemId": "item_rebreather_scrubber",
+        "amount": 2
+      },
+      {
+        "itemId": "rubber_hose",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_rebreather_scrubber",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_fungicide_fogger",
+    "recipeName": "Craft Fungicide Fogger",
+    "ingredients": [
+      {
+        "itemId": "chemicals",
+        "amount": 1
+      },
+      {
+        "itemId": "sulphur",
+        "amount": 1
+      },
+      {
+        "itemId": "metal_pipe",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_fungicide_fogger",
+    "resultAmount": 1,
+    "craftingTimeHours": 2.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_faraday_mesh",
+    "recipeName": "Craft Faraday Mesh",
+    "ingredients": [
+      {
+        "itemId": "copper_wire_10m_of_10m",
+        "amount": 5
+      },
+      {
+        "itemId": "cloth",
+        "amount": 3
+      },
+      {
+        "itemId": "plastic_material",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_faraday_mesh",
+    "resultAmount": 1,
+    "craftingTimeHours": 3.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_acoustic_decoy",
+    "recipeName": "Craft Acoustic Decoy",
+    "ingredients": [
+      {
+        "itemId": "handheld_radio",
+        "amount": 1
+      },
+      {
+        "itemId": "battery",
+        "amount": 1
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 2
+      }
+    ],
+    "resultItemId": "item_acoustic_decoy",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.5,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_mine_prod",
+    "recipeName": "Craft Mine Prodder",
+    "ingredients": [
+      {
+        "itemId": "metal_pipe",
+        "amount": 1
+      },
+      {
+        "itemId": "duct_tape",
+        "amount": 1
+      },
+      {
+        "itemId": "scrap_metal",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_mine_prod",
+    "resultAmount": 1,
+    "craftingTimeHours": 1.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_sound_baffling",
+    "recipeName": "Craft Sound Baffling",
+    "ingredients": [
+      {
+        "itemId": "cloth",
+        "amount": 4
+      },
+      {
+        "itemId": "scrap_wood",
+        "amount": 2
+      },
+      {
+        "itemId": "item_epoxy_injector",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_sound_baffling",
+    "resultAmount": 1,
+    "craftingTimeHours": 2.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "craft_epoxy_injector",
+    "recipeName": "Craft Epoxy Injector",
+    "ingredients": [
+      {
+        "itemId": "chemicals",
+        "amount": 2
+      },
+      {
+        "itemId": "item_bio_plastic",
+        "amount": 1
+      },
+      {
+        "itemId": "metal_pipe",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_epoxy_injector",
+    "resultAmount": 1,
+    "craftingTimeHours": 4.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "brew_lethe_substitute",
+    "recipeName": "Brew Lethe Substitute",
+    "ingredients": [
+      {
+        "itemId": "item_scopolamine_root",
+        "amount": 1
+      },
+      {
+        "itemId": "item_lithium_salts",
+        "amount": 1
+      },
+      {
+        "itemId": "clean_water",
+        "amount": 2
+      }
+    ],
+    "resultItemId": "item_amnestic_syrup",
+    "resultAmount": 3,
+    "craftingTimeHours": 2.0,
+    "requiredStationId": "distiller"
+  },
+  {
+    "id": "craft_lead_visor",
+    "recipeName": "Craft Lead-Lined Visor",
+    "ingredients": [
+      {
+        "itemId": "item_lead_visor",
+        "amount": 1
+      },
+      {
+        "itemId": "item_welders_glass",
+        "amount": 2
+      },
+      {
+        "itemId": "cloth",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_lead_visor",
+    "resultAmount": 1,
+    "craftingTimeHours": 3.0,
+    "requiredStationId": "workbench"
+  },
+  {
+    "id": "inject_concrete_pillar",
+    "recipeName": "Deep Structural Rebar Injection",
+    "ingredients": [
+      {
+        "itemId": "item_epoxy_injector",
+        "amount": 1
+      },
+      {
+        "itemId": "item_galvanized_rebar",
+        "amount": 2
+      },
+      {
+        "itemId": "item_epoxy_injector",
+        "amount": 1
+      }
+    ],
+    "resultItemId": "item_galvanized_rebar",
+    "resultAmount": 0,
+    "craftingTimeHours": 8.0,
+    "requiredStationId": "workbench"
   }
 ]

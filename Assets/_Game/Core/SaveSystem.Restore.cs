@@ -32,6 +32,7 @@ namespace AtomicWar._Game.Core
             AtomicWar._Game.Utilities.SeededRandom.ResetStreams();
 
             IsRestoring = true;
+            EventBus.IsSuppressed = true;
             try
             {
                 RestoreGameStateCore(data);
@@ -49,6 +50,7 @@ namespace AtomicWar._Game.Core
             finally
             {
                 IsRestoring = false;
+                EventBus.IsSuppressed = false;
             }
         }
 

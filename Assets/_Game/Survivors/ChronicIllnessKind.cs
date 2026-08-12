@@ -3,6 +3,7 @@ namespace AtomicWar._Game.Survivors
     /// <summary>
     /// Kinds of chronic illnesses resulting from long-term nuclear fallout exposure or acute radiation syndrome (Prompt #39).
     /// </summary>
+    [System.Serializable]
     public enum ChronicIllnessKind
     {
         /// <summary>Permanent lung scarring: caps max stamina at 60 and increases fatigue drain.</summary>

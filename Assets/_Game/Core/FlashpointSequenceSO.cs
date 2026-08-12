@@ -120,7 +120,7 @@ namespace AtomicWar._Game.Flashpoint
                  "Weather_<Name>.Trigger() call. Empty for all other actionIds. " +
                  "Allowed values: weather_ash_lightning, weather_fog_of_particulate, " +
                  "weather_thermal_inversion, weather_ice_storm, weather_silence.")]
-        public string weatherEventId;
+        public string weatherEventId = string.Empty;
     }
 
     /// <summary>

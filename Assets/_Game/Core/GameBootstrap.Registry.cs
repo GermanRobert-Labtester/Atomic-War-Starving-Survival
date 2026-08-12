@@ -317,6 +317,9 @@ namespace AtomicWar._Game.Core
                 _registry.DayGated("mutagenesis", day => Mutagenesis?.Evaluate(Survivors)));
             _registry.RegisterPerSubstep("hatch_visibility_daily",
                 _registry.DayGated("hatch_visibility", day => HatchVisibilitySystem?.TickDaily()));
+            // "Into the Ash" quest chains — evaluates time-gated quest stage triggers each day.
+            _registry.RegisterPerSubstep("expansion_quest_daily",
+                _registry.DayGated("expansion_quests", day => ExpansionQuests?.TickDaily()));
             // Reuse TickHouseToBunkerDaily from TickSystems (same behavior; DayGated once/day).
             _registry.RegisterPerSubstep("house_to_bunker",
                 _registry.DayGated("house_to_bunker", TickHouseToBunkerDaily));
@@ -338,6 +341,68 @@ namespace AtomicWar._Game.Core
             // called it — a Zoonotic Expert could never actually tame an animal.
             _registry.RegisterPerSubstep("pet_taming_daily",
                 _registry.DayGated("pet_taming", RegisterTickPetTamingDaily));
+
+            // ── Protocol Zero — permafrost expansion systems ─────────
+            _registry.RegisterPerSubstep("thermal_grid", h =>
+                ThermalGrid?.Tick(h, NeedsSystem, Survivors));
+            _registry.RegisterPerSubstep("ash_tide", h =>
+                AshTideScheduler?.Tick(h, TimeSystem?.CurrentDay ?? 1));
+            _registry.RegisterPerSubstep("atmosphere_toxicity", h =>
+            {
+                int aliveCount = 0;
+                if (Survivors != null)
+                    for (int i = 0; i < Survivors.Count; i++)
+                        if (Survivors[i] != null && Survivors[i].IsAlive) aliveCount++;
+                bool heaterOn = Shelter?.GetModule("heater")?.IsOperational ?? false;
+                AtmosphereToxicity?.Tick(h, aliveCount, heaterOn);
+            });
+            _registry.RegisterPerSubstep("convoy_logistics", h =>
+            {
+                bool isBlizzard = WeatherSystem?.Current == WeatherKind.Blizzard;
+                ConvoyLogistics?.Tick(h, TimeSystem?.CurrentDay ?? 1, isBlizzard,
+                    NeedsSystem,
+                    id => Survivors?.Find(s => s.Id == id));
+            });
+
+            // ── Expansion II Addendum: Black Aquifer systems ─────────
+            _registry.RegisterPerSubstep("hydrostatic_pressure", h =>
+                HydrostaticPressure?.Tick(h));
+            _registry.RegisterPerSubstep("hydrostatic_daily",
+                _registry.DayGated("hydrostatic_daily", day =>
+                    HydrostaticPressure?.TickDaily(day)));
+            _registry.RegisterPerSubstep("tunneling_stress", h =>
+                TunnelingStress?.Tick(h, _mentalBreakRng));
+            _registry.RegisterPerSubstep("mycelium_network", h =>
+                MyceliumNetwork?.Tick(h));
+            _registry.RegisterPerSubstep("mycelium_daily",
+                _registry.DayGated("mycelium_daily", day =>
+                    MyceliumNetwork?.TickDaily(Survivors)));
+
+            // ── Expansion III: Dead Hand systems ─────────────────────
+            _registry.RegisterPerSubstep("uxo_field", h =>
+                UXOField?.Tick(h, _mentalBreakRng));
+            _registry.RegisterPerSubstep("automated_threats", h =>
+            {
+                float sig = UXOField?.GlobalAcousticSignature ?? 0f;
+                AutomatedThreats?.Tick(h, sig, _mentalBreakRng);
+            });
+            _registry.RegisterPerSubstep("automated_threats_daily",
+                _registry.DayGated("automated_threats_daily", day =>
+                {
+                    float sig = UXOField?.GlobalAcousticSignature ?? 0f;
+                    AutomatedThreats?.TickDaily(sig, null, _mentalBreakRng);
+                }));
+            _registry.RegisterPerSubstep("electromagnetic_decay_daily",
+                _registry.DayGated("electromagnetic_decay", day =>
+                    ElectromagneticDecay?.TickDaily(_mentalBreakRng)));
+
+            // ── Expansion IV: Chronos Decay & Lethe Protocol ─────────
+            // Structural entropy: hour tick for ongoing carbonation/corrosion.
+            // DailyTickExpansion4 wraps the 24h bulk tick + generational DailyTick.
+            _registry.RegisterPerSubstep("expansion4_daily",
+                _registry.DayGated("expansion4", DailyTickExpansion4));
+            // OzoneScourgeSystem is event/query-driven via its WeatherSystem reference;
+            // no separate hourly tick registration needed.
         }
 
         /// <summary>
@@ -535,7 +600,7 @@ namespace AtomicWar._Game.Core
                 "event_runner", "suspicion_tracker", "lifeboat", "sabotaged_cache",
                 "shifting_hotspot", "faction_raid_plan", "debt_collector", "ghost_station",
                 "cartography", "bicycle", "flooded_node", "blood_transfusion", "cult_moral",
-                "labor_camp", "location_quest", "ceiling_collapse", "aesthetics", "ham_radio",
+                "labor_camp", "location_quest", "expansion_quest_chains", "ceiling_collapse", "aesthetics", "ham_radio",
                 "polypharmacy", "resilience", "internal_lock", "grief_keepsakes", "mentorship",
                 "flashpoint_choreographer", "diary_catalog",
                 // C-1: secondary inventory bucket, mirrors "inventory" above.

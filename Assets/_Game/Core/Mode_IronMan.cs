@@ -110,12 +110,16 @@ namespace AtomicWar._Game.Core
                 }
             }
 
-            // Delete the save file
-            if (!string.IsNullOrEmpty(path) && File.Exists(path))
+            // Delete the main save file, backup file (.bak), and temp file (.tmp)
+            if (!string.IsNullOrEmpty(path))
             {
                 try
                 {
-                    File.Delete(path);
+                    if (File.Exists(path)) File.Delete(path);
+                    string bak = path + ".bak";
+                    if (File.Exists(bak)) File.Delete(bak);
+                    string tmp = path + ".tmp";
+                    if (File.Exists(tmp)) File.Delete(tmp);
                 }
                 catch (Exception ex)
                 {

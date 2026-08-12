@@ -67,6 +67,33 @@ namespace AtomicWar._Game.UI
         public const string FactionPressurePanelName = "faction-pressure-panel";
         public const string FactionPressureBodyName = "faction-pressure-body";
 
+        // Expansion IV: structural entropy wireframe (rebar grid overlay).
+        public const string StructuralEntropyPanelName   = "structural-entropy-panel";
+        public const string StructuralEntropyStatusName  = "structural-entropy-status";
+        public const string StructuralEntropyBarName     = "structural-entropy-bar-fill";
+        public const string RebarGridName                = "rebar-grid";
+
+        // Expansion IV: lethe drip gauge (amnestic reservoir sight-glass).
+        public const string LetheDripPanelName     = "lethe-drip-panel";
+        public const string LetheDripStatusName    = "lethe-drip-status";
+        public const string LetheDripGaugeFillName = "lethe-drip-gauge-fill";
+        public const string LetheDropletsName      = "lethe-droplets";
+
+        // Expansion IV: ozone scourge overlay + warning panel.
+        public const string OzoneScourgeOverlayName = "ozone-scourge-overlay";
+        public const string OzoneWarningPanelName   = "ozone-warning-panel";
+        public const string OzoneWarningStatusName  = "ozone-warning-status";
+        public const string OzoneTimerBarFillName   = "ozone-timer-bar-fill";
+
+        // Expansion IV: memory flash vignette (full-screen monochrome burst).
+        public const string MemoryFlashVignetteName = "memory-flash-vignette";
+        public const string MemoryFlashTextName     = "memory-flash-text";
+
+        // Expansion IV: generational psychology cohort readout.
+        public const string GenerationalPanelName    = "generational-psychology-panel";
+        public const string GenerationalBodyName     = "generational-body";
+        public const string GenerationalEventName    = "generational-event-text";
+
         /// <summary>Core needs, in fixed display order. Fixed so the rows do not
         /// reshuffle between paints as the model's dictionary ordering changes.</summary>
         public static readonly string[] CoreNeedIds = { "hunger", "thirst", "fatigue", "warmth" };
@@ -135,6 +162,33 @@ namespace AtomicWar._Game.UI
         // Expansion II: faction-pressure panel.
         public VisualElement FactionPressurePanel { get; private set; }
         public Label FactionPressureBody { get; private set; }
+
+        // Expansion IV: structural entropy wireframe.
+        public VisualElement StructuralEntropyPanel    { get; private set; }
+        public Label         StructuralEntropyStatus   { get; private set; }
+        public VisualElement StructuralEntropyBarFill  { get; private set; }
+        public VisualElement RebarGrid                 { get; private set; }
+
+        // Expansion IV: lethe drip gauge.
+        public VisualElement LetheDripPanel     { get; private set; }
+        public Label         LetheDripStatus    { get; private set; }
+        public VisualElement LetheDripGaugeFill { get; private set; }
+        public VisualElement LetheDropletsRow   { get; private set; }
+
+        // Expansion IV: ozone scourge overlay.
+        public VisualElement OzoneScourgeOverlay { get; private set; }
+        public VisualElement OzoneWarningPanel   { get; private set; }
+        public Label         OzoneWarningStatus  { get; private set; }
+        public VisualElement OzoneTimerBarFill   { get; private set; }
+
+        // Expansion IV: memory flash vignette.
+        public VisualElement MemoryFlashVignette { get; private set; }
+        public Label         MemoryFlashText     { get; private set; }
+
+        // Expansion IV: generational psychology cohort readout.
+        public VisualElement GenerationalPanel { get; private set; }
+        public Label         GenerationalBody  { get; private set; }
+        public Label         GenerationalEvent { get; private set; }
 
         /// <summary>Build the full tree under <paramref name="host"/> (or a new root).</summary>
         public VisualElement Build(VisualElement host = null)
@@ -273,15 +327,103 @@ namespace AtomicWar._Game.UI
             SurvivorTaskBoardPanel.Add(SurvivorTaskBoardBody);
             Root.Add(SurvivorTaskBoardPanel);
 
-            // Expansion II — faction-pressure readout. One panel, one body,
-            // one hint. Hidden by default; the controller flips it on when
-            // any of the four systems is non-trivial.
+            // Expansion II — faction-pressure readout.
             FactionPressurePanel = MakePanel(FactionPressurePanelName, "faction-pressure-panel");
             FactionPressurePanel.Add(MakeTitle("faction-pressure-title", "FACTION PRESSURE"));
             FactionPressureBody = MakeLabel(FactionPressureBodyName, "diegetic-body", "faction-pressure-readout");
             FactionPressurePanel.Add(FactionPressureBody);
             FactionPressurePanel.Add(MakeHint("faction-pressure-hint", "Compliant. Patrolled. Tithed. Fed. Or not."));
             Root.Add(FactionPressurePanel);
+
+            // ----------------------------------------------------------------
+            // Expansion IV — CHRONOS DECAY & LETHE PROTOCOL
+            // ----------------------------------------------------------------
+
+            // 1. Structural Entropy Wireframe — bottom-right, inspector role only.
+            StructuralEntropyPanel = MakePanel(StructuralEntropyPanelName, "structural-entropy-panel");
+            StructuralEntropyPanel.Add(MakeTitle("structural-entropy-title", "STRUCTURAL INTEGRITY"));
+            StructuralEntropyStatus = MakeLabel(StructuralEntropyStatusName, "diegetic-status");
+            StructuralEntropyPanel.Add(StructuralEntropyStatus);
+            RebarGrid = new VisualElement { name = RebarGridName };
+            RebarGrid.AddToClassList("rebar-grid");
+            StructuralEntropyPanel.Add(RebarGrid);
+            var entropyBarTrack = new VisualElement { name = "structural-entropy-bar-track" };
+            entropyBarTrack.AddToClassList("entropy-integrity-bar");
+            StructuralEntropyBarFill = new VisualElement { name = StructuralEntropyBarName };
+            StructuralEntropyBarFill.AddToClassList("entropy-integrity-fill");
+            StructuralEntropyBarFill.style.width = Length.Percent(100f);
+            entropyBarTrack.Add(StructuralEntropyBarFill);
+            StructuralEntropyPanel.Add(entropyBarTrack);
+            StructuralEntropyPanel.Add(MakeHint("structural-entropy-hint",
+                "Select Concrete Boss or Architect to activate X-ray scan."));
+            Root.Add(StructuralEntropyPanel);
+
+            // 2. Lethe Drip Gauge — attached to water purifier terminal corner.
+            LetheDripPanel = MakePanel(LetheDripPanelName, "lethe-drip-panel");
+            LetheDripPanel.Add(MakeTitle("lethe-drip-title", "AMNESTIC RESERVOIR"));
+            LetheDripStatus = new Label { name = LetheDripStatusName };
+            LetheDripStatus.AddToClassList("lethe-drip-status");
+            LetheDripPanel.Add(LetheDripStatus);
+            var lethTrack = new VisualElement { name = "lethe-sight-gauge-track" };
+            lethTrack.AddToClassList("lethe-sight-gauge-track");
+            LetheDripGaugeFill = new VisualElement { name = LetheDripGaugeFillName };
+            LetheDripGaugeFill.AddToClassList("lethe-sight-gauge-fill");
+            LetheDripGaugeFill.style.width = Length.Percent(100f);
+            lethTrack.Add(LetheDripGaugeFill);
+            LetheDripPanel.Add(lethTrack);
+            LetheDropletsRow = new VisualElement { name = LetheDropletsName };
+            LetheDropletsRow.AddToClassList("lethe-droplets");
+            for (int d = 0; d < 3; d++)
+            {
+                var dot = new VisualElement { name = "lethe-droplet-" + d };
+                dot.AddToClassList("lethe-droplet");
+                LetheDropletsRow.Add(dot);
+            }
+            LetheDripPanel.Add(LetheDropletsRow);
+            LetheDripPanel.Add(MakeHint("lethe-drip-hint",
+                "< 20% reservoir: droplet cadence slows. Breathing changes."));
+            Root.Add(LetheDripPanel);
+
+            // 3. Ozone Scourge — full-screen overlay + top-centre warning panel.
+            OzoneScourgeOverlay = new VisualElement { name = OzoneScourgeOverlayName };
+            OzoneScourgeOverlay.AddToClassList("ozone-scourge-overlay");
+            OzoneScourgeOverlay.pickingMode = PickingMode.Ignore;
+            OzoneWarningPanel = MakePanel(OzoneWarningPanelName, "ozone-warning-panel");
+            OzoneWarningPanel.Add(MakeTitle("ozone-warning-title", "OPTIC NERVE DEGRADATION DETECTED"));
+            OzoneWarningStatus = MakeLabel(OzoneWarningStatusName, "diegetic-status");
+            OzoneWarningPanel.Add(OzoneWarningStatus);
+            var ozoneBarTrack = new VisualElement { name = "ozone-timer-bar-track" };
+            ozoneBarTrack.AddToClassList("ozone-timer-bar-track");
+            OzoneTimerBarFill = new VisualElement { name = OzoneTimerBarFillName };
+            OzoneTimerBarFill.AddToClassList("ozone-timer-bar-fill");
+            OzoneTimerBarFill.style.width = Length.Percent(0f);
+            ozoneBarTrack.Add(OzoneTimerBarFill);
+            OzoneWarningPanel.Add(ozoneBarTrack);
+            OzoneWarningPanel.Add(MakeHint("ozone-hint",
+                "Equip item_welders_glass to block UV exposure."));
+            OzoneScourgeOverlay.Add(OzoneWarningPanel);
+            Root.Add(OzoneScourgeOverlay);
+
+            // 4. Memory Flash Vignette — full-screen monochrome burst.
+            MemoryFlashVignette = new VisualElement { name = MemoryFlashVignetteName };
+            MemoryFlashVignette.AddToClassList("memory-flash-vignette");
+            MemoryFlashVignette.pickingMode = PickingMode.Ignore;
+            MemoryFlashText = MakeLabel(MemoryFlashTextName, "memory-flash-text");
+            MemoryFlashText.text = "REMEMBER";
+            MemoryFlashVignette.Add(MemoryFlashText);
+            Root.Add(MemoryFlashVignette);
+
+            // 5. Generational Psychology Cohort Readout — left side, below vitals.
+            GenerationalPanel = MakePanel(GenerationalPanelName, "generational-psychology-panel");
+            GenerationalPanel.Add(MakeTitle("generational-title", "POPULATION COHORTS"));
+            GenerationalBody = MakeLabel(GenerationalBodyName, "diegetic-body");
+            GenerationalPanel.Add(GenerationalBody);
+            GenerationalEvent = new Label { name = GenerationalEventName };
+            GenerationalEvent.AddToClassList("gen-event-text");
+            GenerationalPanel.Add(GenerationalEvent);
+            GenerationalPanel.Add(MakeHint("generational-hint",
+                "Bunker-Born know no sunlight. They grieve differently."));
+            Root.Add(GenerationalPanel);
 
             SetVisible(HatchPanel, false);
             SetVisible(StoresPanel, false);
@@ -298,6 +440,12 @@ namespace AtomicWar._Game.UI
             SetVisible(BunkerMaintenancePanel, false);
             SetVisible(SurvivorTaskBoardPanel, false);
             SetVisible(FactionPressurePanel, false);
+            // Expansion IV — hidden by default.
+            SetVisible(StructuralEntropyPanel, false);
+            SetVisible(LetheDripPanel, false);
+            SetVisible(OzoneScourgeOverlay, false);
+            SetVisible(MemoryFlashVignette, false);
+            SetVisible(GenerationalPanel, false);
             return Root;
         }
 
@@ -351,8 +499,28 @@ namespace AtomicWar._Game.UI
             SurvivorTaskBoardBody = Root.Q<Label>(SurvivorTaskBoardBodyName);
             FactionPressurePanel = Root.Q<VisualElement>(FactionPressurePanelName);
             FactionPressureBody = Root.Q<Label>(FactionPressureBodyName);
-            // Every panel is part of the contract: a UXML missing one must fall
-            // back to Build() rather than bind a half-tree and render nothing.
+            // Expansion IV panels — not contract-blocking if absent in legacy UXML;
+            // the Build() path always creates them, so they are available after
+            // a fresh tree is built. Bind them opportunistically.
+            StructuralEntropyPanel   = Root.Q<VisualElement>(StructuralEntropyPanelName);
+            StructuralEntropyStatus  = Root.Q<Label>(StructuralEntropyStatusName);
+            StructuralEntropyBarFill = Root.Q<VisualElement>(StructuralEntropyBarName);
+            RebarGrid                = Root.Q<VisualElement>(RebarGridName);
+            LetheDripPanel     = Root.Q<VisualElement>(LetheDripPanelName);
+            LetheDripStatus    = Root.Q<Label>(LetheDripStatusName);
+            LetheDripGaugeFill = Root.Q<VisualElement>(LetheDripGaugeFillName);
+            LetheDropletsRow   = Root.Q<VisualElement>(LetheDropletsName);
+            OzoneScourgeOverlay = Root.Q<VisualElement>(OzoneScourgeOverlayName);
+            OzoneWarningPanel   = Root.Q<VisualElement>(OzoneWarningPanelName);
+            OzoneWarningStatus  = Root.Q<Label>(OzoneWarningStatusName);
+            OzoneTimerBarFill   = Root.Q<VisualElement>(OzoneTimerBarFillName);
+            MemoryFlashVignette = Root.Q<VisualElement>(MemoryFlashVignetteName);
+            MemoryFlashText     = Root.Q<Label>(MemoryFlashTextName);
+            GenerationalPanel = Root.Q<VisualElement>(GenerationalPanelName);
+            GenerationalBody  = Root.Q<Label>(GenerationalBodyName);
+            GenerationalEvent = Root.Q<Label>(GenerationalEventName);
+            // Every pre-Expansion-IV panel is part of the contract: a UXML missing
+            // one must fall back to Build() rather than bind a half-tree and render nothing.
             if (HatchPanel == null || EncounterPanel == null
                 || StoresPanel == null || VitalsPanel == null || EventPanel == null
                 || WorkbenchPanel == null || EndgamePanel == null
@@ -500,10 +668,16 @@ namespace AtomicWar._Game.UI
                 hasCriticalNeed ? PanelStatus.Critical : PanelStatus.Default);
         }
 
+        private List<Label> _eventChoicePool = new List<Label>();
+
         /// <summary>
         /// Draw the event prompt. The row numbers are the control scheme, not
         /// decoration: PlayerInputHandler maps Alpha1 to visible index 0, so a
         /// row that does not show its number cannot be chosen.
+        ///
+        /// H-6: Labels are pooled. New Labels are only allocated when the
+        /// number of choices exceeds what was shown before; a steady-state
+        /// event modal produces zero GC.
         /// </summary>
         public void PaintEventModal(
             bool open, string title, string body, IReadOnlyList<EventChoiceLine> choices)
@@ -517,18 +691,40 @@ namespace AtomicWar._Game.UI
             if (EventBody != null) EventBody.text = body ?? string.Empty;
             if (EventChoices == null) return;
 
-            EventChoices.Clear();
-            if (choices == null) return;
-
-            for (int i = 0; i < choices.Count; i++)
+            if (choices == null)
             {
-                var row = new Label($"[{i + 1}] {choices[i].Text}")
-                {
-                    name = "event-choice-" + i
-                };
-                row.AddToClassList("event-choice");
+                EventChoices.Clear();
+                return;
+            }
+
+            int needed = choices.Count;
+
+            // Grow the pool only when the modal shows more choices than ever before.
+            while (_eventChoicePool.Count < needed)
+            {
+                var label = new Label();
+                label.AddToClassList("event-choice");
+                _eventChoicePool.Add(label);
+                EventChoices.Add(label);
+            }
+
+            // Reuse pooled labels, adding any that were previously removed.
+            for (int i = 0; i < needed; i++)
+            {
+                var row = _eventChoicePool[i];
+                if (row.parent != EventChoices)
+                    EventChoices.Add(row);
+                row.name = "event-choice-" + i;
+                row.text = $"[{i + 1}] {choices[i].Text}";
                 row.EnableInClassList("event-choice--disabled", !choices[i].IsEnabled);
-                EventChoices.Add(row);
+            }
+
+            // Hide (remove) excess pooled labels that are not needed this paint.
+            for (int i = needed; i < _eventChoicePool.Count; i++)
+            {
+                var row = _eventChoicePool[i];
+                if (row.parent == EventChoices)
+                    row.RemoveFromHierarchy();
             }
         }
 
@@ -795,6 +991,156 @@ namespace AtomicWar._Game.UI
             var l = new Label(text) { name = name };
             l.AddToClassList("diegetic-hint");
             return l;
+        }
+
+        // ----------------------------------------------------------------
+        // Expansion IV Paint Methods
+        // ----------------------------------------------------------------
+
+        /// <summary>
+        /// Paint the structural entropy wireframe panel.
+        /// <paramref name="open"/> is true when a Concrete-Boss/Architect survivor is selected.
+        /// <paramref name="integrity"/> is [0,1] — overall shelter integrity.
+        /// <paramref name="rooms"/> is a flat list of (isSpalling, corrosion01) tuples,
+        /// one per visible room cell (max ~20 for the grid).
+        /// </summary>
+        public void PaintStructuralEntropy(
+            bool open,
+            float integrity,
+            string statusLine,
+            System.Collections.Generic.IReadOnlyList<(bool isSpalling, float corrosion)> rooms)
+        {
+            if (StructuralEntropyPanel == null) return;
+            SetVisible(StructuralEntropyPanel, open);
+            if (!open) return;
+
+            if (StructuralEntropyStatus != null)
+                StructuralEntropyStatus.text = statusLine ?? string.Empty;
+
+            // Rebuild the rebar grid cells each paint (max 20 cells — cheap).
+            if (RebarGrid != null)
+            {
+                RebarGrid.Clear();
+                if (rooms != null)
+                {
+                    int n = UnityEngine.Mathf.Min(rooms.Count, 20);
+                    for (int i = 0; i < n; i++)
+                    {
+                        var cell = new VisualElement { name = "rebar-cell-" + i };
+                        cell.AddToClassList("rebar-cell");
+                        if (rooms[i].isSpalling)
+                            cell.AddToClassList("rebar-cell--spalling");
+                        else if (rooms[i].corrosion > 0.35f)
+                            cell.AddToClassList("rebar-cell--rusting");
+                        RebarGrid.Add(cell);
+                    }
+                }
+            }
+
+            if (StructuralEntropyBarFill != null)
+            {
+                float pct = UnityEngine.Mathf.Clamp01(integrity) * 100f;
+                StructuralEntropyBarFill.style.width = Length.Percent(pct);
+                StructuralEntropyBarFill.EnableInClassList("critical", integrity < 0.3f);
+            }
+        }
+
+        /// <summary>
+        /// Paint the Lethe drip gauge on the water purifier terminal.
+        /// <paramref name="open"/> mirrors WaterPurificationPanel visibility.
+        /// <paramref name="level"/> is [0,1] — amnestic reservoir fill.
+        /// </summary>
+        public void PaintLetheDripGauge(bool open, float level, string statusLine, bool isRedLine)
+        {
+            if (LetheDripPanel == null) return;
+            SetVisible(LetheDripPanel, open);
+            if (!open) return;
+
+            if (LetheDripStatus != null)
+            {
+                LetheDripStatus.text = statusLine ?? string.Empty;
+                LetheDripStatus.EnableInClassList("redline", isRedLine);
+            }
+
+            if (LetheDripGaugeFill != null)
+            {
+                LetheDripGaugeFill.style.width = Length.Percent(UnityEngine.Mathf.Clamp01(level) * 100f);
+                LetheDripGaugeFill.EnableInClassList("redline", isRedLine);
+            }
+
+            if (LetheDropletsRow != null)
+            {
+                foreach (var child in LetheDropletsRow.Children())
+                    child.EnableInClassList("slow", isRedLine);
+            }
+        }
+
+        /// <summary>
+        /// Paint the ozone scourge full-screen overlay.
+        /// <paramref name="scourgeActive"/> true during Weather_FalseSpring/SilentSpring.
+        /// <paramref name="stareProgress"/> is [0,1]: how far into unshielded exposure.
+        /// <paramref name="warningVisible"/> true when stare exceeds 2 s threshold.
+        /// </summary>
+        public void PaintOzoneScourge(
+            bool scourgeActive,
+            float stareProgress,
+            bool warningVisible,
+            string statusLine)
+        {
+            if (OzoneScourgeOverlay == null) return;
+            SetVisible(OzoneScourgeOverlay, scourgeActive);
+            if (!scourgeActive) return;
+
+            OzoneScourgeOverlay.EnableInClassList("active", stareProgress > 0.05f);
+
+            if (OzoneWarningPanel != null)
+            {
+                SetVisible(OzoneWarningPanel, warningVisible);
+                if (warningVisible && OzoneWarningStatus != null)
+                    OzoneWarningStatus.text = statusLine ?? string.Empty;
+            }
+
+            if (OzoneTimerBarFill != null)
+            {
+                OzoneTimerBarFill.style.width = Length.Percent(UnityEngine.Mathf.Clamp01(stareProgress) * 100f);
+                OzoneTimerBarFill.EnableInClassList("danger", stareProgress > 0.6f);
+            }
+        }
+
+        /// <summary>
+        /// Trigger or clear the memory flash vignette.
+        /// <paramref name="flashing"/> true for 0.2 s after TriggerMemoryFlash fires.
+        /// </summary>
+        public void PaintMemoryFlash(bool flashing)
+        {
+            if (MemoryFlashVignette == null) return;
+            SetVisible(MemoryFlashVignette, flashing);
+            MemoryFlashVignette.EnableInClassList("active", flashing);
+        }
+
+        /// <summary>
+        /// Paint the generational psychology cohort readout.
+        /// <paramref name="open"/> is true once any Bunker-Born survivor has come of age.
+        /// <paramref name="preWarCount"/> / <paramref name="bunkerBornCount"/> are survivor headcounts.
+        /// <paramref name="eventLine"/> is the last ComingOfAge or faction-psychology event.
+        /// </summary>
+        public void PaintGenerationalReadout(
+            bool open,
+            int preWarCount,
+            int bunkerBornCount,
+            string bodyText,
+            string eventLine)
+        {
+            if (GenerationalPanel == null) return;
+            SetVisible(GenerationalPanel, open);
+            if (!open) return;
+
+            if (GenerationalBody != null) GenerationalBody.text = bodyText ?? string.Empty;
+            if (GenerationalEvent != null)
+            {
+                GenerationalEvent.text = eventLine ?? string.Empty;
+                SetVisible(GenerationalEvent, !string.IsNullOrEmpty(eventLine));
+            }
         }
     }
 }

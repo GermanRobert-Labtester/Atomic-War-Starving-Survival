@@ -25,6 +25,8 @@ namespace AtomicWar._Game.Survivors
     {
         public string Id;
         public string DisplayName;
+        public int Age = 30;
+        public bool IsBunkerBorn;
 
         // Plain field, not an auto-property: JsonUtility does not serialize
         // properties, so a { get; set; } here would silently fail to save/load.

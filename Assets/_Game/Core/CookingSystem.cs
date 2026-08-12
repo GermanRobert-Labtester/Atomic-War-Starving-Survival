@@ -16,8 +16,10 @@ namespace AtomicWar._Game.Core
     public class CookingSystemSave
     {
         public string systemId = "cooking_system";
+        public int totalMealsCooked;
     }
-public class CookingSystem
+
+    public class CookingSystem
     {
         public const string StoveStationId = "stove";
         public const string CookedMealId = "hearty_meal_cooked";
@@ -33,6 +35,7 @@ public class CookingSystem
         private Func<int> _getDay;
         private ItemDefinition _mealDef;
         private ItemDefinition _cleanWaterItem; // optional inventory clean_water packs
+        private int _totalMealsCooked;
 
         public event Action<Survivor, bool> OnMealCooked; // cook, freeWater
         public event Action OnCookingStateChanged;
@@ -122,6 +125,8 @@ public class CookingSystem
             int day = _getDay != null ? _getDay() : 0;
             _survivalPerks?.RecordMealCooked(cook, day);
 
+            _totalMealsCooked++;
+
             OnMealCooked?.Invoke(cook, skipWater);
             OnCookingStateChanged?.Invoke();
             return true;
@@ -158,9 +163,16 @@ public class CookingSystem
         }
     
         // ── Save / Load ────────────────────────────────────────────────
-        public CookingSystemSave CaptureState() => new CookingSystemSave();
+        public CookingSystemSave CaptureState() => new CookingSystemSave
+        {
+            totalMealsCooked = _totalMealsCooked
+        };
 
-        public void RestoreState(CookingSystemSave saved) { _ = saved; }
+        public void RestoreState(CookingSystemSave saved)
+        {
+            if (saved != null)
+                _totalMealsCooked = saved.totalMealsCooked;
+        }
 
 }
 }

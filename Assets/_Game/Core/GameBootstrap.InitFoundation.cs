@@ -139,6 +139,11 @@ namespace AtomicWar._Game.Core
             // Merges 80 items, 10 locations, 15 encounters, 10 echoes,
             // and 12 NPC/fauna archetypes into the host. Idempotent.
             BootAshGetsDeeperContent();
+
+            // "Into the Ash" expansion (Parts II & III) — 31 items, 8 locations,
+            // 6 multi-stage narrative quest chains. Idempotent.
+            BootIntoTheAshContent();
+
             // Expedition encounters — amalgamation / burrowers / maze / tank / … .
             BootEncounters();
             // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).
@@ -436,6 +441,9 @@ namespace AtomicWar._Game.Core
             InitShelterTacticalSystems();
             InitNarrativeDependentSystems();
             InitAtmosphereHygieneSystems();
+            InitProtocolZeroSystems();
+            InitBlackAquiferSystems();
+            InitDeadHandSystems();
             InitDiaryAndHatchSystems();
             InitFactionMapSystems();
         }

@@ -18,9 +18,8 @@ using AtomicWar._Game.AI; // HallucinationSystem (audit wiring fix)
 using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Crafting; // CraftingSystem, WorkbenchSystem (audit wiring fix)
-using AtomicWar._Game.Events;
-
 using AtomicWar._Game.Endgame;
+using AtomicWar._Game.Events;
 
 using AtomicWar._Game.Encounters;
 
@@ -336,6 +335,8 @@ namespace AtomicWar._Game.Core
         public void SetWeatherStation(Encounter_WeatherStation enc) => RegisterSystem(ref _weatherStation, enc, "enc_weather_station", () => enc.CaptureState(), o => enc.RestoreState((WeatherStationState)o));
         /// <summary>Inject Prompt #904 the pianist for save/load.</summary>
         public void SetPianist(Encounter_Pianist enc) => RegisterSystem(ref _pianist, enc, "enc_pianist", () => enc.CaptureState(), o => enc.RestoreState((PianistState)o));
+        /// <summary>Inject "Into the Ash" quest chains for save/load.</summary>
+        public void SetExpansionQuestChainsSystem(ExpansionQuestChainsSystem sys) => RegisterSystem(ref _expansionQuestChainsSystem, sys, "expansion_quest_chains", () => sys.CaptureState(), o => sys.RestoreState((ExpansionQuestChainsSave)o));
         /// <summary>Inject Prompt #85-94 location quests for save/load.</summary>
         public void SetLocationQuestSystem(LocationQuestSystem sys) => RegisterSystem(ref _locationQuestSystem, sys, "location_quest", () => sys.CaptureState(), o => sys.RestoreState((LocationQuestSave)o));
         public void SetExcavationSystem(ExcavationSystem s) => RegisterSystem(ref _excavationSystem, s, "excavation", () => s.CaptureState(), o => s.RestoreState((ExcavationSave)o));
@@ -685,7 +686,7 @@ namespace AtomicWar._Game.Core
         public void SetVictoryMigrationSystem(Victory_Migration s) =>
             RegisterSystem(ref _victoryMigrationSystem, s, "victory_migration",
                 () => s.CaptureState(),
-                o => s.RestoreState((MigrationState)o));
+                o => s.RestoreState((Victory_Migration.MigrationState)o));
 
         public void SetVictoryTheBroadcastSystem(Victory_TheBroadcast s) =>
             RegisterSystem(ref _victoryTheBroadcastSystem, s, "victory_the_broadcast",
@@ -2041,6 +2042,32 @@ namespace AtomicWar._Game.Core
             RegisterSystem(ref _locationStrandedYacht, s, "location_stranded_yacht",
                 () => s.CaptureState(), o => s.RestoreState((StrandedYachtState)o));
 
+        // ── "Into the Ash" expansion locations ──────────────────────
+        public void SetLocationDistrictCoordOffice(Location_DistrictCoordinationOffice s) =>
+            RegisterSystem(ref _locationDistrictCoordOffice, s, "location_dco",
+                () => s.CaptureState(), o => s.RestoreState((DistrictCoordinationOfficeState)o));
+        public void SetLocationCheckpointKilo(Location_CheckpointKiloMemorial s) =>
+            RegisterSystem(ref _locationCheckpointKilo, s, "location_checkpoint_kilo",
+                () => s.CaptureState(), o => s.RestoreState((CheckpointKiloMemorialState)o));
+        public void SetLocationMilitiaGrainExchange(Location_MilitiaGrainExchange s) =>
+            RegisterSystem(ref _locationMilitiaGrainExchange, s, "location_grain_exchange",
+                () => s.CaptureState(), o => s.RestoreState((MilitiaGrainExchangeState)o));
+        public void SetLocationGlowChapel(Location_GlowChapel s) =>
+            RegisterSystem(ref _locationGlowChapel, s, "location_glow_chapel",
+                () => s.CaptureState(), o => s.RestoreState((GlowChapelState)o));
+        public void SetLocationTollHouse(Location_TollHouse s) =>
+            RegisterSystem(ref _locationTollHouse, s, "location_toll_house",
+                () => s.CaptureState(), o => s.RestoreState((TollHouseState)o));
+        public void SetLocationStMarenAnnex(Location_StMarenHospitalAnnex s) =>
+            RegisterSystem(ref _locationStMarenAnnex, s, "location_st_maren",
+                () => s.CaptureState(), o => s.RestoreState((StMarenHospitalAnnexState)o));
+        public void SetLocationRadioTowerSeven(Location_RadioTowerSevenBunker s) =>
+            RegisterSystem(ref _locationRadioTowerSeven, s, "location_tower_seven",
+                () => s.CaptureState(), o => s.RestoreState((RadioTowerSevenBunkerState)o));
+        public void SetLocationMartaFarmhouse(Location_MartaFarmhouse s) =>
+            RegisterSystem(ref _locationMartaFarmhouse, s, "location_marta_farm",
+                () => s.CaptureState(), o => s.RestoreState((MartaFarmhouseState)o));
+
         public void SetMapAquifer(AquiferSystem s) =>
             RegisterSystem(ref _mapAquifer, s, "map_aquifer",
                 () => s.CaptureState(), o => s.RestoreState((AquiferState)o));
@@ -2505,6 +2532,62 @@ namespace AtomicWar._Game.Core
         public void SetWorldEventMegafauna(WorldEvent_Megafauna s) =>
             RegisterSystem(ref _worldEventMegafauna, s, "world_event_megafauna",
                 () => s.CaptureState(), o => s.RestoreState((MegafaunaState)o));
+
+        // ── Protocol Zero expansion systems ────────────────────────────
+
+        /// <summary>Thermal grid heat-transfer simulation + pipe freeze/burst.</summary>
+        public void SetThermalGridSystem(ThermalGridSystem s) =>
+            RegisterSystem(ref _thermalGridSystem, s, "thermal_grid",
+                () => s.CaptureState(), o => s.RestoreState((ThermalGridSave)o));
+
+        /// <summary>14-day Ash-Tide super-storm scheduler.</summary>
+        public void SetAshTideScheduler(AshTideScheduler s) =>
+            RegisterSystem(ref _ashTideScheduler, s, "ash_tide",
+                () => s.CaptureState(), o => s.RestoreState((AshTideSave)o));
+
+        /// <summary>Atmosphere toxicity: O2/CO2/CO tracking + scrubbers.</summary>
+        public void SetAtmosphereToxicitySystem(AtmosphereToxicitySystem s) =>
+            RegisterSystem(ref _atmosphereToxicitySystem, s, "atmosphere_toxicity",
+                () => s.CaptureState(), o => s.RestoreState((AtmosphereToxicitySave)o));
+
+        /// <summary>Multi-day convoy expeditions with snow-crawler + sled.</summary>
+        public void SetConvoyLogisticsSystem(ConvoyLogisticsSystem s) =>
+            RegisterSystem(ref _convoyLogisticsSystem, s, "convoy_logistics",
+                () => s.CaptureState(), o => s.RestoreState((ConvoyLogisticsSave)o));
+
+        // ── Expansion II Addendum: Black Aquifer & Myco-Necrosis ─────
+
+        /// <summary>Hydrostatic pressure: Black Aquifer fluid dynamics + pump management.</summary>
+        public void SetHydrostaticPressureSystem(HydrostaticPressureSystem s) =>
+            RegisterSystem(ref _hydrostaticPressureSystem, s, "hydrostatic_pressure",
+                () => s.CaptureState(), o => s.RestoreState((HydrostaticPressureSave)o));
+
+        /// <summary>Tunneling stress: overburden, cave-ins, gas pockets.</summary>
+        public void SetTunnelingStressSystem(TunnelingAndStructuralStress s) =>
+            RegisterSystem(ref _tunnelingStressSystem, s, "tunneling_stress",
+                () => s.CaptureState(), o => s.RestoreState((TunnelingAndStructuralStressSave)o));
+
+        /// <summary>Mycelium network: Ash-Blight spore density, bloom cycle, infections.</summary>
+        public void SetMyceliumNetworkSystem(MyceliumNetworkSystem s) =>
+            RegisterSystem(ref _myceliumNetworkSystem, s, "mycelium_network",
+                () => s.CaptureState(), o => s.RestoreState((MyceliumNetworkSave)o));
+
+        // ── Expansion III: Dead Hand & The Oxide Wastes ──────────────
+
+        /// <summary>UXO field: probing mechanic, acoustic signature, loitering munitions.</summary>
+        public void SetUXOFieldSystem(UXOFieldSystem s) =>
+            RegisterSystem(ref _uxoFieldSystem, s, "uxo_field",
+                () => s.CaptureState(), o => s.RestoreState((UXOFieldSystemSave)o));
+
+        /// <summary>Automated threats: ghost sentries, ammo burnout, acoustic decoy.</summary>
+        public void SetAutomatedThreatSystem(Encounters.AutomatedThreatSystem s) =>
+            RegisterSystem(ref _automatedThreatSystem, s, "automated_threats",
+                () => s.CaptureState(), o => s.RestoreState((Encounters.AutomatedThreatSystemSave)o));
+
+        /// <summary>Electromagnetic decay: per-room EMP tracking, Faraday shielding, device corruption.</summary>
+        public void SetElectromagneticDecaySystem(Shelter.ElectromagneticDecaySystem s) =>
+            RegisterSystem(ref _electromagneticDecaySystem, s, "electromagnetic_decay",
+                () => s.CaptureState(), o => s.RestoreState((Shelter.ElectromagneticDecaySave)o));
 
     }
 }

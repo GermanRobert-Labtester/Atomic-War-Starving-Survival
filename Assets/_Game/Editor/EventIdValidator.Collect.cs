@@ -114,7 +114,11 @@ namespace AtomicWar._Game.Editor
             if (!System.IO.File.Exists(path)) return;
             string text;
             try { text = System.IO.File.ReadAllText(path); }
-            catch { return; }
+            catch (System.Exception ex)
+            {
+                UnityEngine.Debug.LogWarning($"[EventIdValidator] Could not read events.json: {ex.Message}");
+                return;
+            }
             // Id strings are quoted. Capture them.
             var idRegex = new Regex("\"id\"\\s*:\\s*\"([^\"]+)\"");
             var matches = idRegex.Matches(text);
