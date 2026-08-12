@@ -79,5 +79,15 @@ compile and tests. Canonical commands live in `README.md`/`docs/CI.md`. Gotchas:
 
 ### Runnable without a license
 
-The CI "Data Validation Gate" (StreamingAssets JSON syntax + ProjectVersion pin) is
-pure Python and needs no Unity/license — handy for a quick sanity check.
+- The CI "Data Validation Gate" (StreamingAssets JSON syntax + ProjectVersion pin) is
+  pure Python and needs no Unity/license — handy for a quick sanity check.
+- **Offline Roslyn compile (limited):** the editor ships a usable compiler at
+  `Editor/Data/DotNetSdk/sdk/*/Roslyn/bincore/csc.dll` + BCL under
+  `Editor/Data/UnityReferenceAssemblies/unity-4.8-api` + `UnityEngine` modules.
+  Leaf assemblies (e.g. `AtomicWar._Game.Utilities`, then `Survivors`) can be
+  compiled without activating a license. This does **not** replace `-runTests` or
+  a player build — packages are unresolved, and UnityEngine.Object "fake null"
+  blocks running ScriptableObject-based systems under plain mono. Use it only as
+  a syntax/API smoke check when no license is available.
+- Full EditMode/PlayMode suites, scene play, and Linux player builds are **out of
+  scope** until Unity license secrets are provided.
