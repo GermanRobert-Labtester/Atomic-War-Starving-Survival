@@ -45,14 +45,27 @@ namespace AtomicWar._Game.UI
                 UpdateLevel(s.focusedSurvivorId, s.focusedLevel);
         }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument (elements live in DiegeticHud.uxml).</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Refresh();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
+            BindElements();
+            Refresh();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
             _root = _document.rootVisualElement.Q("hypervigilance-indicator-root");
             _eye = _root?.Q<Label>("hypervigilance-eye");
             _flash = _document.rootVisualElement.Q("hypervigilance-flash-root");
-            Refresh();
         }
 
         public void SetFocusedSurvivor(string survivorId)

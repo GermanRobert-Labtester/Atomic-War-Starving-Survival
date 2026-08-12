@@ -186,7 +186,7 @@
             <ui:Label name="survivor-name-label"      class="diegetic-title"  text="" />
             <ui:Label name="survivor-role-label"      class="diegetic-status" text="" />
             <ui:VisualElement name="moral-branch-root" class="moral-branch-display hidden" picking-mode="Ignore">
-                <ui:VisualElement name="moral-branch-icon" class="moral-branch-icon" />
+                <ui:Label name="moral-branch-icon" class="moral-branch-icon" text="" />
                 <ui:Label name="moral-branch-label" class="moral-branch-label" text="" />
             </ui:VisualElement>
             <ui:Label name="survivor-blood-type-label" class="survivor-blood-badge" text="" />

@@ -14,7 +14,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private UIDocument _document;
 
         private VisualElement _root;
-        private VisualElement _icon;
+        private Label _icon;
         private Label _label;
         private readonly Dictionary<string, MoralBranchDirection> _branches = new();
         private string _focusedSurvivorId;
@@ -40,14 +40,27 @@ namespace AtomicWar._Game.UI
                 SetBranch(s.focusedSurvivorId, s.focusedBranch);
         }
 
+        /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
+        public void BindDocument(UIDocument document)
+        {
+            _document = document;
+            BindElements();
+            Refresh();
+        }
+
         private void OnEnable()
         {
             if (_document == null) _document = GetComponent<UIDocument>();
-            if (_document == null) return;
-            _root = _document.rootVisualElement.Q("moral-branch-root");
-            _icon = _root?.Q("moral-branch-icon");
-            _label = _root?.Q<Label>("moral-branch-label");
+            BindElements();
             Refresh();
+        }
+
+        private void BindElements()
+        {
+            if (_document == null || _document.rootVisualElement == null) return;
+            _root = _document.rootVisualElement.Q("moral-branch-root");
+            _icon = _root?.Q<Label>("moral-branch-icon");
+            _label = _root?.Q<Label>("moral-branch-label");
         }
 
         public void SetFocusedSurvivor(string survivorId)
