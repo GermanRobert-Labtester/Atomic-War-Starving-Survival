@@ -1,0 +1,15 @@
+[
+  { "item_id": "morphine", "dependency_kind": "opioid", "severity": 0.90, "description": "Pharmaceutical morphine. Highly addictive. Withdrawal causes severe tremors, cold sweats, and intense cravings." },
+  { "item_id": "opium", "dependency_kind": "opioid", "severity": 0.85, "description": "Raw opium. Slightly less refined than morphine but equally addictive." },
+  { "item_id": "painkiller_opioid", "dependency_kind": "opioid", "severity": 0.80, "description": "Prescription opioid painkillers. Dependency builds faster than most survivors realize." },
+  { "item_id": "alcohol", "dependency_kind": "alcohol", "severity": 0.70, "description": "Generic alcohol. Used for sterilizing, celebrating, and forgetting. Dependency is slow but tenacious." },
+  { "item_id": "vodka", "dependency_kind": "alcohol", "severity": 0.75, "description": "Vodka. The wasteland's most reliable currency and its most reliable crutch." },
+  { "item_id": "whiskey", "dependency_kind": "alcohol", "severity": 0.70, "description": "Whiskey. Pre-war quality, post-war consequences." },
+  { "item_id": "moonshine", "dependency_kind": "alcohol", "severity": 0.65, "description": "Homemade moonshine. The dependency is real, but the craftsmanship is appreciated." },
+  { "item_id": "amphetamines", "dependency_kind": "stimulant", "severity": 0.60, "description": "Amphetamines. Keeps a survivor going through the night — and then keeps them going when they should stop." },
+  { "item_id": "caffeine_pills", "dependency_kind": "stimulant", "severity": 0.40, "description": "Concentrated caffeine. The mildest dependency, but the headaches without it are real." },
+  { "item_id": "stimulant", "dependency_kind": "stimulant", "severity": 0.55, "description": "Generic stimulant. Dependency creeps up quietly until the crash hits." },
+  { "item_id": "sedative", "dependency_kind": "sedative", "severity": 0.50, "description": "Sedatives. For sleep, for anxiety, for the screaming in your head. Dependency is a softer prison but still a prison." },
+  { "item_id": "sleeping_pills", "dependency_kind": "sedative", "severity": 0.45, "description": "Sleeping pills. After enough nights with them, the nights without become impossible." },
+  { "item_id": "tranquilizer", "dependency_kind": "sedative", "severity": 0.55, "description": "Tranquilizers. For calming the panicked. Dependency makes the panic worse when they wear off." }
+]

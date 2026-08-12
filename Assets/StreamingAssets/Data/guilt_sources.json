@@ -1,0 +1,122 @@
+[
+  {
+    "choice_pattern": "cut_ration",
+    "severity": 0.80,
+    "description": "Cutting rations for those who could not contribute. The hollow eyes of the hungry follow {name} through every corridor.",
+    "title": "The Ration Cut"
+  },
+  {
+    "choice_pattern": "reduce_food",
+    "severity": 0.75,
+    "description": "Reducing food distribution below subsistence. {name} remembers every bowl they made smaller.",
+    "title": "The Empty Bowls"
+  },
+  {
+    "choice_pattern": "starve",
+    "severity": 0.90,
+    "description": "Deliberately withholding food. The sound of hunger — a quiet, persistent thing — haunts {name}'s sleep.",
+    "title": "The Starvation Order"
+  },
+  {
+    "choice_pattern": "leave_behind",
+    "severity": 0.70,
+    "description": "Leaving a companion behind during an expedition. {name} still checks over their shoulder, expecting to see the face they abandoned.",
+    "title": "The Abandoned"
+  },
+  {
+    "choice_pattern": "abandon",
+    "severity": 0.75,
+    "description": "Abandoning someone who trusted {name}. Trust, once broken, leaves a scar on both sides.",
+    "title": "The Betrayal of Trust"
+  },
+  {
+    "choice_pattern": "refuse_help",
+    "severity": 0.50,
+    "description": "Turning away a stranger in need. {name} wonders if that person survived the night.",
+    "title": "The Turned Back"
+  },
+  {
+    "choice_pattern": "turn_away",
+    "severity": 0.55,
+    "description": "Closing the hatch on desperate faces. {name} can still hear the knocking.",
+    "title": "The Closed Hatch"
+  },
+  {
+    "choice_pattern": "execute",
+    "severity": 0.90,
+    "description": "Taking a life in cold judgment. {name} sees that face every time they close their eyes.",
+    "title": "The Execution"
+  },
+  {
+    "choice_pattern": "kill",
+    "severity": 0.85,
+    "description": "Ending a life, even in necessity. {name} counts the names in the dark hours before dawn.",
+    "title": "The Taking of Life"
+  },
+  {
+    "choice_pattern": "shoot",
+    "severity": 0.80,
+    "description": "Pulling the trigger on another human being. The recoil leaves a bruise that never heals.",
+    "title": "The Shot"
+  },
+  {
+    "choice_pattern": "steal",
+    "severity": 0.45,
+    "description": "Taking what wasn't offered. {name} hides the stolen goods and the shame in equal measure.",
+    "title": "The Theft"
+  },
+  {
+    "choice_pattern": "hoard",
+    "severity": 0.40,
+    "description": "Keeping more than a fair share while others go without. The excess weighs heavier than hunger.",
+    "title": "The Hoard"
+  },
+  {
+    "choice_pattern": "take_all",
+    "severity": 0.60,
+    "description": "Stripping a cache bare, leaving nothing for those who might follow. {name} knows they condemned someone.",
+    "title": "The Empty Cache"
+  },
+  {
+    "choice_pattern": "lie",
+    "severity": 0.35,
+    "description": "A lie told to protect oneself at another's expense. The truth surfaces in {name}'s dreams.",
+    "title": "The Lie"
+  },
+  {
+    "choice_pattern": "deceive",
+    "severity": 0.40,
+    "description": "A deception that shifted burden onto the innocent. {name} avoids the eyes of those they deceived.",
+    "title": "The Deception"
+  },
+  {
+    "choice_pattern": "betray",
+    "severity": 0.75,
+    "description": "A betrayal of someone who called {name} friend. The word 'friend' has tasted like ash ever since.",
+    "title": "The Betrayal"
+  },
+  {
+    "choice_pattern": "harsh",
+    "severity": 0.20,
+    "description": "Harsh words spoken in a moment of weakness. {name} wishes they could take them back.",
+    "title": "The Harsh Word"
+  },
+  {
+    "choice_pattern": "refuse",
+    "severity": 0.25,
+    "description": "A refusal that cost someone dearly. {name} replays the conversation, looking for a different answer.",
+    "title": "The Refusal"
+  },
+  {
+    "choice_pattern": "deny",
+    "severity": 0.25,
+    "description": "Denying someone what they needed. The denial was logical at the time — now it just feels cruel.",
+    "title": "The Denial"
+  },
+  {
+    "choice_pattern": "sacrifice_other",
+    "severity": 0.85,
+    "description": "Sacrificing another to save the many. The math is sound; the heart rejects it completely.",
+    "title": "The Sacrifice of Another"
+  }
+]
