@@ -52,6 +52,10 @@ namespace AtomicWar._Game.Core
             // ration conflicts, leadership, caregiving, desertion
             InitPhases7to8Wiring();
 
+            // Phases 9-10 — Faction arcs (Garrison, Cult, Refugees) +
+            // Endgame branching refinement
+            InitPhases9to10Wiring();
+
             FinishSystemRegistration();
         }
 
