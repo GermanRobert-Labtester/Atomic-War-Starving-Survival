@@ -1314,3 +1314,65 @@
 .victory-path-status--achieved { color: rgba(32,200,60,0.9); }
 .victory-path-status--failed   { color: var(--critical); }
 .victory-path-status--progress { color: var(--warm); }
+
+/* ==========================================================================
+   BATCH 11 — Phase 11 expansion HUD layout anchors
+   ========================================================================== */
+
+.batch11-rad-phase {
+    top: calc(var(--hud-edge) + 168px);
+    left: var(--hud-edge);
+    min-width: 140px;
+    padding: 6px 10px;
+    border-left-color: var(--lethe);
+}
+
+.batch20-portrait-card {
+    position: relative;
+}
+
+#hypervigilance-indicator-root {
+    position: absolute;
+}
+
+#moral-branch-root {
+    position: absolute;
+}
+
+#keepsake-slot-root {
+    position: absolute;
+}
+
+#terminal-prognosis-root {
+    position: absolute;
+}
+
+#addiction-detox-root {
+    position: absolute;
+}
+
+.batch20-portrait-card #terminal-prognosis-root {
+    top: -28px;
+    left: 0;
+    right: 0;
+}
+
+.batch20-portrait-card #hypervigilance-indicator-root {
+    top: 4px;
+    right: 4px;
+}
+
+.batch20-portrait-card #addiction-detox-root {
+    bottom: 4px;
+    left: 4px;
+}
+
+.batch20-portrait-card #moral-branch-root {
+    top: 36px;
+    left: 8px;
+}
+
+.batch20-portrait-card #keepsake-slot-root {
+    bottom: 8px;
+    right: 8px;
+}

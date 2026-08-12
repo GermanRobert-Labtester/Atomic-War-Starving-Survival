@@ -186,6 +186,8 @@ namespace AtomicWar._Game.Core
             WireTutorialOverlay();
             // Batch-20 UI elements scene-level wiring
             WireBatch20HudElements();
+            // Phase 11 — expansion psychology HUD widgets
+            WirePhase11ExpansionHud();
         }
 
         // -----------------------------------------------------------------

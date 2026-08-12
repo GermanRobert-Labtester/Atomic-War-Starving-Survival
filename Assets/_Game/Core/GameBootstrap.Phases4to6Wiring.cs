@@ -24,6 +24,9 @@ namespace AtomicWar._Game.Core
     /// </summary>
     public partial class GameBootstrap
     {
+        public MemorialWallSystem MemorialWallSystem { get; private set; }
+        public PersonalKeepsakeSystem PersonalKeepsakeSystem { get; private set; }
+
         /// <summary>
         /// Call during InitializeSystems, after CraftingSystem,
         /// RadioTunerSystem, and ExpeditionSystem exist.
@@ -110,8 +113,14 @@ namespace AtomicWar._Game.Core
 
         private void WireDiegeticArtifacts()
         {
+            MemorialWallSystem = new MemorialWallSystem();
+            PersonalKeepsakeSystem = new PersonalKeepsakeSystem();
+            _registry.Register<MemorialWallSystem>(MemorialWallSystem);
+            _registry.Register<PersonalKeepsakeSystem>(PersonalKeepsakeSystem);
+
             // ── Personal Keepsakes — set at survivor creation ──────────
             AssignInitialKeepsakes();
+            WirePersonalKeepsakeInventory();
 
             // ── Memorial Wall — track dog tag collection ───────────────
             WireMemorialWall();
@@ -157,20 +166,36 @@ namespace AtomicWar._Game.Core
 
         private void WireMemorialWall()
         {
-            if (Inventory == null) return;
+            if (Inventory == null || MemorialWallSystem == null) return;
 
-            // Track dog tag items being added to inventory
             Action<ItemDefinition, int> onItemAdded = (itemDef, amount) =>
             {
-                if (itemDef?.Id == null || amount <= 0) return;
-                if (itemDef.Id.Contains("dog_tag") || itemDef.Id.Contains("dogtag"))
+                if (itemDef?.id == null || amount <= 0) return;
+                if (!itemDef.id.Contains("dog_tag") && !itemDef.id.Contains("dogtag")) return;
+                MemorialWallSystem.AddEntry(new MemorialEntry
                 {
-                    // Memorial entries handled by MemorialWallSystem
-                    // which reads dog tag items on request
-                }
+                    SurvivorId = itemDef.id,
+                    DisplayName = itemDef.displayName ?? itemDef.id,
+                    DeathDay = TimeSystem?.CurrentDay ?? 0,
+                    HasDogTag = true
+                });
             };
             Inventory.OnItemAdded += onItemAdded;
             _subscriptions.Track(() => Inventory.OnItemAdded -= onItemAdded);
+        }
+
+        private void WirePersonalKeepsakeInventory()
+        {
+            if (Inventory == null || PersonalKeepsakeSystem == null || Survivors == null) return;
+
+            Action<ItemDefinition, int> onRemoved = (itemDef, amount) =>
+            {
+                if (itemDef?.id == null || amount <= 0) return;
+                for (int i = 0; i < Survivors.Count; i++)
+                    PersonalKeepsakeSystem.OnInventoryItemRemoved(Survivors[i], itemDef.id);
+            };
+            Inventory.OnItemRemoved += onRemoved;
+            _subscriptions.Track(() => Inventory.OnItemRemoved -= onRemoved);
         }
 
         private void WireWallCarvings()

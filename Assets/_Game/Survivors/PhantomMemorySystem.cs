@@ -44,7 +44,8 @@ namespace AtomicWar._Game.Survivors
         /// of matching category, roll motivationChance for motivation vs breakdown.
         /// </summary>
         public void RegisterRule(string backgroundId, string itemCategory,
-            float motivationChance, string descriptionKey)
+            float motivationChance, string descriptionKey,
+            string motivationText = null, string breakdownText = null)
         {
             if (!RulesByBackground.TryGetValue(backgroundId, out var rules))
             {
@@ -55,8 +56,34 @@ namespace AtomicWar._Game.Survivors
             {
                 ItemCategory = itemCategory,
                 MotivationChance = motivationChance,
-                DescriptionKey = descriptionKey
+                DescriptionKey = descriptionKey,
+                MotivationText = motivationText,
+                BreakdownText = breakdownText
             });
+        }
+
+        /// <summary>
+        /// Resolve vignette narrative text for a phantom trigger outcome.
+        /// </summary>
+        public string ResolveTriggerText(Survivor sv, string itemId, bool isMotivation)
+        {
+            if (sv == null) return string.Empty;
+            string category = GetCategoryFromId(itemId);
+            if (string.IsNullOrEmpty(category)) return string.Empty;
+            if (!RulesByBackground.TryGetValue(sv.PhantomBackgroundId, out var rules))
+                return string.Empty;
+
+            for (int i = 0; i < rules.Count; i++)
+            {
+                var rule = rules[i];
+                if (!string.Equals(rule.ItemCategory, category, StringComparison.OrdinalIgnoreCase))
+                    continue;
+                string template = isMotivation ? rule.MotivationText : rule.BreakdownText;
+                if (string.IsNullOrEmpty(template)) return string.Empty;
+                string name = string.IsNullOrEmpty(sv.DisplayName) ? "Someone" : sv.DisplayName;
+                return template.Replace("{name}", name);
+            }
+            return string.Empty;
         }
 
         /// <summary>
@@ -147,5 +174,7 @@ namespace AtomicWar._Game.Survivors
         public string ItemCategory;
         public float MotivationChance;
         public string DescriptionKey;
+        public string MotivationText;
+        public string BreakdownText;
     }
 }

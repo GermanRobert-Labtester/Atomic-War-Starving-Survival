@@ -5,6 +5,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Shelter;
+using AtomicWar._Game.Data;
 
 namespace AtomicWar._Game.Core
 {
@@ -152,7 +153,10 @@ namespace AtomicWar._Game.Core
         {
             if (PhantomMemorySystem == null) return;
 
-            // child_refugee: toys, photos, letters trigger strong emotional responses
+            PhantomTriggerCatalogLoader.LoadInto(PhantomMemorySystem);
+            if (PhantomMemorySystem.RulesByBackground.Count > 0) return;
+
+            // Fallback defaults if JSON missing
             PhantomMemorySystem.RegisterRule("child_refugee", "childhood", 0.3f,
                 "description_phantom_child_toy");
             PhantomMemorySystem.RegisterRule("child_refugee", "photograph", 0.5f,

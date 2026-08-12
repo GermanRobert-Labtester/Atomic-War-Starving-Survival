@@ -75,6 +75,16 @@ namespace AtomicWar._Game.UI
         [SerializeField] private LootHaulTicker           _lootHaulTicker;
         [SerializeField] private EndgameVictoryPathTracker _endgameVictoryPathTracker;
 
+        [Header("Phase 11 — Expansion UI Elements")]
+        [SerializeField] private RadiationPhaseIndicator _radiationPhaseIndicator;
+        [SerializeField] private PhantomMemoryVignette _phantomMemoryVignette;
+        [SerializeField] private HypervigilanceIndicator _hypervigilanceIndicator;
+        [SerializeField] private MoralBranchDisplay _moralBranchDisplay;
+        [SerializeField] private KeepsakeSlotUI _keepsakeSlotUi;
+        [SerializeField] private MemorialWallUI _memorialWallUi;
+        [SerializeField] private TerminalPrognosisBanner _terminalPrognosisBanner;
+        [SerializeField] private AddictionDetoxIndicator _addictionDetoxIndicator;
+
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
 
@@ -130,6 +140,17 @@ namespace AtomicWar._Game.UI
         public BloodTypeIndicator       BloodTypeIndicator       { get { EnsureWidgetReferences(); return _bloodTypeIndicator; } }
         public LootHaulTicker           LootHaulTicker           { get { EnsureWidgetReferences(); return _lootHaulTicker; } }
         public EndgameVictoryPathTracker EndgameVictoryPathTracker{ get { EnsureWidgetReferences(); return _endgameVictoryPathTracker; } }
+
+        // ── Phase 11 property accessors ────────────────────────────────────
+        public RadiationPhaseIndicator RadiationPhaseIndicator { get { EnsureWidgetReferences(); return _radiationPhaseIndicator; } }
+        public PhantomMemoryVignette PhantomMemoryVignette { get { EnsureWidgetReferences(); return _phantomMemoryVignette; } }
+        public HypervigilanceIndicator HypervigilanceIndicator { get { EnsureWidgetReferences(); return _hypervigilanceIndicator; } }
+        public MoralBranchDisplay MoralBranchDisplay { get { EnsureWidgetReferences(); return _moralBranchDisplay; } }
+        public KeepsakeSlotUI KeepsakeSlotUi { get { EnsureWidgetReferences(); return _keepsakeSlotUi; } }
+        public MemorialWallUI MemorialWallUi { get { EnsureWidgetReferences(); return _memorialWallUi; } }
+        public TerminalPrognosisBanner TerminalPrognosisBanner { get { EnsureWidgetReferences(); return _terminalPrognosisBanner; } }
+        public AddictionDetoxIndicator AddictionDetoxIndicator { get { EnsureWidgetReferences(); return _addictionDetoxIndicator; } }
+
         public FactionRadioVoHook FactionRadioVoHook
         {
             get
@@ -210,6 +231,14 @@ namespace AtomicWar._Game.UI
             EnsureWidget(ref _bloodTypeIndicator);
             EnsureWidget(ref _lootHaulTicker);
             EnsureWidget(ref _endgameVictoryPathTracker);
+            EnsureWidget(ref _radiationPhaseIndicator);
+            EnsureWidget(ref _phantomMemoryVignette);
+            EnsureWidget(ref _hypervigilanceIndicator);
+            EnsureWidget(ref _moralBranchDisplay);
+            EnsureWidget(ref _keepsakeSlotUi);
+            EnsureWidget(ref _memorialWallUi);
+            EnsureWidget(ref _terminalPrognosisBanner);
+            EnsureWidget(ref _addictionDetoxIndicator);
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
