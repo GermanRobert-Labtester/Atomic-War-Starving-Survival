@@ -1131,6 +1131,9 @@ namespace AtomicWar._Game.Core
                 {
                     strip.TooltipResolver = Item_AmmoTypes.FormatItemTooltip;
                     strip.MilitaryExclusiveChecker = Item_AmmoTypes.IsMilitaryExclusiveTooltip;
+                    // Resources/Art wins per item id; legacy iconRef is the fallback.
+                    strip.SpriteResolver = def => _gameAssets.GetSprite(
+                        GameAssetKeys.ItemIcon(def.id), def.iconRef);
                     strip.Sync(Inventory);
                 }
 

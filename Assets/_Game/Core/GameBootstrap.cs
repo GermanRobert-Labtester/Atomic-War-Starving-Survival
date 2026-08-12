@@ -659,6 +659,13 @@ namespace AtomicWar._Game.Core
         /// </summary>
         private readonly AtomicWar._Game.Utilities.SubscriptionBag _subscriptions = new AtomicWar._Game.Utilities.SubscriptionBag();
 
+        /// <summary>
+        /// Shared art/audio resolver: Resources/Art paths win when authored, each call
+        /// site supplies its legacy direct-reference fallback (e.g. iconRef).
+        /// </summary>
+        private readonly AtomicWar._Game.Utilities.GameAssetService _gameAssets =
+            new AtomicWar._Game.Utilities.GameAssetService();
+
         // -----------------------------------------------------------------
         // H-2: Cached delegate fields for OnDestroy cleanup.
         // The lambdas attached to class-level events below are also kept as
