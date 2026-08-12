@@ -15,7 +15,7 @@ MonoBehaviour:
   id: smoke_grenade
   displayName: Smoke Grenade
   description: Screening smoke. Cover and signal.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8b6d34fa75b0b45c3b3f17c47c7261f3, type: 3}
   type: 15
   stackMax: 6
   weight: 0.35

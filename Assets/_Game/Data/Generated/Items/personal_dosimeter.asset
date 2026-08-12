@@ -15,7 +15,7 @@ MonoBehaviour:
   id: personal_dosimeter
   displayName: Personal Dosimeter
   description: Logs cumulative dose.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0212916d801fdca8ba55e17bfb751375, type: 3}
   type: 14
   stackMax: 2
   weight: 0.3

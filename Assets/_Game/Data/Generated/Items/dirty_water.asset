@@ -15,7 +15,7 @@ MonoBehaviour:
   id: dirty_water
   displayName: Dirty Water
   description: Contaminated water. Boil or filter it before drinking.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 9b9afe91079543318a105cfc28cb7c81, type: 3}
   type: 2
   stackMax: 10
   weight: 0.5

@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Electronic Scrap
   description: Boards, wire, and cracked vacuum tubes. Needed to repair instruments
     and the purifier.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: aa945da3dc90c41cfa7f10853e64aaf1, type: 3}
   type: 10
   stackMax: 50
   weight: 0.1

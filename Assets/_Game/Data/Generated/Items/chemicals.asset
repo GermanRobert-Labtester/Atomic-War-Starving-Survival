@@ -15,7 +15,7 @@ MonoBehaviour:
   id: chemicals
   displayName: Chemicals
   description: Solvents and reagents scavenged from labs and garages.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 62b2743ecf87af9f38ddddc7f1892452, type: 3}
   type: 10
   stackMax: 30
   weight: 0.25

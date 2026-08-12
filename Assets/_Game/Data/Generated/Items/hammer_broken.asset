@@ -15,7 +15,7 @@ MonoBehaviour:
   id: hammer_broken
   displayName: Hammer Broken
   description: Broken tool. Scrap only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 7a0ada33fe886d54d917a83718776304, type: 3}
   type: 10
   stackMax: 5
   weight: 0.5

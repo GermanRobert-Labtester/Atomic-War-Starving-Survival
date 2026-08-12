@@ -15,7 +15,7 @@ MonoBehaviour:
   id: soy_and_rice_milk_1l_of_1l
   displayName: Soy and Rice Milk 1L/1L
   description: "Drains 0.25L/use \u2192 high-quality oat breakfast \xD72."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 21beb3c819dc21c6c9d6a1e04cea1aef, type: 3}
   type: 0
   stackMax: 6
   weight: 1.05

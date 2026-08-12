@@ -15,7 +15,7 @@ MonoBehaviour:
   id: alcohol_distiller
   displayName: Alcohol Distiller
   description: Spirits still. Fuel and yeast.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a2e848997c3cb4c28ab151e9fc2b508d, type: 3}
   type: 14
   stackMax: 1
   weight: 12

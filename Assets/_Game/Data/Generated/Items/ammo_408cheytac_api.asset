@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_408cheytac_api
   displayName: .408 CheyTac API
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ef99a15cfcb3712eca00170c3c42a29e, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

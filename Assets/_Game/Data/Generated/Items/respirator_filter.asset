@@ -15,7 +15,7 @@ MonoBehaviour:
   id: respirator_filter
   displayName: Respirator Filter (1x)
   description: Single filter cartridge.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: eaf28d0f49c21e86a8cc00fe2d73cf10, type: 3}
   type: 9
   stackMax: 20
   weight: 0.08

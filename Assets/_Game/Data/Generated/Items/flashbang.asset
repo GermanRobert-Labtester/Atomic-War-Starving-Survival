@@ -15,7 +15,7 @@ MonoBehaviour:
   id: flashbang
   displayName: Flashbang
   description: Stun charge. Self-defense.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 84dac2fc69dc6660188a60493745ca40, type: 3}
   type: 15
   stackMax: 6
   weight: 0.3

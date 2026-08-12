@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vegetable_beetroot
   displayName: "Vegetable \u2014 Beetroot"
   description: "Vegetable \u2014 Beetroot"
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f2bb149270c976be68900fe8751d1231, type: 3}
   type: 0
   stackMax: 20
   weight: 0.2

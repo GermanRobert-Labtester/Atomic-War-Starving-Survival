@@ -15,7 +15,7 @@ MonoBehaviour:
   id: iodine_pills
   displayName: Iodine Pills
   description: Potassium iodide. Grants temporary radiation resistance while active.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 86107a0e96bfe94818e7f954665978f3, type: 3}
   type: 5
   stackMax: 5
   weight: 0.1

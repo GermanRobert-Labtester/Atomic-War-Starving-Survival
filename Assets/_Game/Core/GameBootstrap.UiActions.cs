@@ -156,6 +156,9 @@ namespace AtomicWar._Game.Core
                 // Corpse counts / fire rooms / care urgency after atmosphere+inventory restore.
                 RefreshInventoryStrip();
                 SyncScavengeAfterActionHud();
+                // Phase 11 widgets keep in-memory CaptureState; re-paint from
+                // restored survivor fields so the live HUD matches the slot.
+                PaintPhase11InitialState();
                 return true;
             }
             return false;

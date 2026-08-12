@@ -1,0 +1,105 @@
+# ASHFALL — Containers (20)
+# Model: Flux 2 Pro via Firefly | Aspect: 1:1 | 1024×1024
+# Suffix: post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements
+# Negative: cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+
+## water_bottle_1l_of_2l
+Isolated inventory object: water bottle 1l of 2l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_bottle_1l_of_2l.png
+
+## water_bottle_0_5l_of_1l
+Isolated inventory object: water bottle 0 5l of 1l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_bottle_0_5l_of_1l.png
+
+## water_bottle_0_5l_of_2l
+Isolated inventory object: water bottle 0 5l of 2l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_bottle_0_5l_of_2l.png
+
+## water_bottle_1_5l_of_2l
+Isolated inventory object: water bottle 1 5l of 2l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_bottle_1_5l_of_2l.png
+
+## fuel_0_5l_of_1l
+Isolated inventory object: fuel 0 5l of 1l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: fuel_0_5l_of_1l.png
+
+## accelerant_half
+Isolated inventory object: accelerant half. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: accelerant_half.png
+
+## ejuice_10ml_10mg
+Isolated inventory object: ejuice 10ml 10mg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ejuice_10ml_10mg.png
+
+## ejuice_10ml_20mg
+Isolated inventory object: ejuice 10ml 20mg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ejuice_10ml_20mg.png
+
+## ejuice_20ml_35mg
+Isolated inventory object: ejuice 20ml 35mg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ejuice_20ml_35mg.png
+
+## water_purification_tablets_40_of_40
+Isolated inventory object: water purification tablets 40 of 40. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_purification_tablets_40_of_40.png
+
+## water_purification_tablets_20_of_40
+Isolated inventory object: water purification tablets 20 of 40. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_purification_tablets_20_of_40.png
+
+## water_purification_tablets_0_of_40
+Isolated inventory object: water purification tablets 0 of 40. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: water_purification_tablets_0_of_40.png
+
+## iodine_pills_bottle_10_of_10
+Isolated inventory object: iodine pills bottle 10 of 10. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: iodine_pills_bottle_10_of_10.png
+
+## jetfuel_jerrycan_10l_of_10l
+Isolated inventory object: jetfuel jerrycan 10l of 10l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: jetfuel_jerrycan_10l_of_10l.png
+
+## instant_coffee_10x_container
+Isolated inventory object: instant coffee 10x container. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: instant_coffee_10x_container.png
+
+## ice_tea_0_5l_package
+Isolated inventory object: ice tea 0 5l package. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ice_tea_0_5l_package.png
+
+## package_rolled_oats_1kg_of_1kg
+Isolated inventory object: package rolled oats 1kg of 1kg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: package_rolled_oats_1kg_of_1kg.png
+
+## dry_rice_1kg_of_1kg
+Isolated inventory object: dry rice 1kg of 1kg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: dry_rice_1kg_of_1kg.png
+
+## dried_pasta_2kg_of_2kg
+Isolated inventory object: dried pasta 2kg of 2kg. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: dried_pasta_2kg_of_2kg.png
+
+## soy_and_rice_milk_1l_of_1l
+Isolated inventory object: soy and rice milk 1l of 1l. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: soy_and_rice_milk_1l_of_1l.png
+

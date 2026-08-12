@@ -15,7 +15,7 @@ MonoBehaviour:
   id: jam_preserves
   displayName: Jam Preserves
   description: Sweet jar. Morale sugar.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: aee99455590b89deca471f36d5e6ca29, type: 3}
   type: 0
   stackMax: 10
   weight: 0.4

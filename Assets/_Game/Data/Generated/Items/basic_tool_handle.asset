@@ -15,7 +15,7 @@ MonoBehaviour:
   id: basic_tool_handle
   displayName: Basic Tool Handle
   description: Wooden handle blank.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8e959bde09a3f9d91b34a94ec4915c53, type: 3}
   type: 10
   stackMax: 20
   weight: 0.2

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: herbs
   displayName: Herbs
   description: Mixed garden herbs.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ff64f81107fd8254a9752fcbde8f66b6, type: 3}
   type: 10
   stackMax: 40
   weight: 0.05

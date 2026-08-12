@@ -15,7 +15,7 @@ MonoBehaviour:
   id: improvised_herb_garden
   displayName: Improvised Herb Garden
   description: Tins and dirt.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 91ee12ee12440ac21b79fae276e3120d, type: 3}
   type: 14
   stackMax: 1
   weight: 8

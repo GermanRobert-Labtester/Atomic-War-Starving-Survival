@@ -15,7 +15,7 @@ MonoBehaviour:
   id: splint
   displayName: Splint
   description: Immobilises a limb.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 9efe17f45130fc1218f4f942eb53ebb4, type: 3}
   type: 3
   stackMax: 5
   weight: 0.4

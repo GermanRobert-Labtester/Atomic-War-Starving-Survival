@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_556x45
   displayName: Deprecated Bullets (556x45)
   description: "Corroded cal_556x45 rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 759f4686e25f75754833dfef8f33129a, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

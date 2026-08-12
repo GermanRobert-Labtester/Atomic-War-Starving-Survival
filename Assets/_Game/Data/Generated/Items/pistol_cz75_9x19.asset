@@ -15,7 +15,7 @@ MonoBehaviour:
   id: pistol_cz75_9x19
   displayName: "CZ-75 9\xD719mm Pistol"
   description: "Service pistol. Chambers 9\xD719."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 2d5920d2fd25d673ab82501bfa40d736, type: 3}
   type: 15
   stackMax: 1
   weight: 1.1

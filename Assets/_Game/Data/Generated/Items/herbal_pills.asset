@@ -15,7 +15,7 @@ MonoBehaviour:
   id: herbal_pills
   displayName: Herbal Pills
   description: Mild herbal dose.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 14d852c4ebdd362568ac8a3b48db8d6d, type: 3}
   type: 3
   stackMax: 20
   weight: 0.02

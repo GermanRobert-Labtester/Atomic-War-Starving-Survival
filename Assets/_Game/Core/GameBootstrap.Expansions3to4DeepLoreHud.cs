@@ -205,7 +205,14 @@ namespace AtomicWar._Game.Core
 
         private void WireDeepLoreWidgets()
         {
-            // LoreCodexPanel — wire to JournalSystem knowledge entries
+            // LoreCodexPanel — populate from the Deep Lore catalogs, then wire
+            // future unlocks to JournalSystem knowledge entries.
+            if (_hud.LoreCodexPanel != null)
+            {
+                WorldHistoryCatalogLoader.LoadInto(_hud.LoreCodexPanel, JournalSystem?.Knowledge);
+                FactionLoreCatalogLoader.LoadInto(_hud.LoreCodexPanel);
+            }
+
             if (JournalSystem != null && _hud.LoreCodexPanel != null)
             {
                 Action<JournalEntry> onEntry = entry =>

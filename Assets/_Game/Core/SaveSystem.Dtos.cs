@@ -353,6 +353,18 @@ namespace AtomicWar._Game.Core
         public float QuestProgress;
         public int DaysAlive;
         public bool MoraleHitZero;
+
+        // Phase 11 HUD-backed survivor fields (widgets re-paint from these on load).
+        public RadiationSicknessPhase SicknessPhase = RadiationSicknessPhase.Healthy;
+        public float PhaseHoursElapsed;
+        public float HypervigilanceLevel;
+        public MoralBranchDirection BranchDirection = MoralBranchDirection.Neutral;
+        public bool HasTerminalPrognosis;
+        public float TerminalPrognosisDaysRemaining;
+        public string PersonalKeepsakeItemId;
+        public bool HasLostKeepsake;
+        public float KeepsakeGriefLevel;
+        public List<ChemicalDependency> ChemicalDependencies = new List<ChemicalDependency>();
     }
 
     /// <summary>Serializable mirror of Survivors.ConsumptionRecord for save/load.</summary>

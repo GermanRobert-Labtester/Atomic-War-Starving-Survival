@@ -56,6 +56,7 @@ namespace AtomicWar._Game.Core
             }
         }
 
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         private void OnGUI()
         {
             if (!_devOverlayEnabled || !_visible) return;
@@ -92,6 +93,7 @@ namespace AtomicWar._Game.Core
             y = DrawSurvivors(x, y, width, lineHeight);
             DrawSaveables(x, y, width, lineHeight);
         }
+#endif
 
         private float DrawHeader(float x, float y, float width, float lineHeight)
         {

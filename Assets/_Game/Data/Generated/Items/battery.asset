@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Battery
   description: Cell pack for geiger counters and dosimeters. Without power, instruments
     go dark.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e9970abe3057c943b8f495e4ab896367, type: 3}
   type: 10
   stackMax: 10
   weight: 0.2

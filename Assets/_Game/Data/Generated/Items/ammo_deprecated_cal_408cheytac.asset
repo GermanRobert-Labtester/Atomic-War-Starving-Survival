@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_408cheytac
   displayName: Deprecated Bullets (408cheytac)
   description: "Corroded cal_408cheytac rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: d54ae62f26202c0de9abcf3e947c0775, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

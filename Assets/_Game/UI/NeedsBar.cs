@@ -24,7 +24,9 @@ namespace AtomicWar._Game.UI
     public class NeedsBar : MonoBehaviour
     {
         [SerializeField] private bool _showRawValues = false;
+#pragma warning disable 0414 // only read inside #if DEVELOPMENT_BUILD || UNITY_EDITOR below
         [SerializeField] private bool _drawDebugGui = true;
+#pragma warning restore 0414
 
         private readonly Dictionary<string, NeedBarData> _needBars = new Dictionary<string, NeedBarData>();
         private readonly Dictionary<string, float> _pulseTimers = new Dictionary<string, float>();
@@ -41,11 +43,13 @@ namespace AtomicWar._Game.UI
             EnsureInitialized();
         }
 
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         private void OnGUI()
         {
             if (!_drawDebugGui || !Application.isPlaying) return;
             DrawDebugOverlay();
         }
+#endif
 
         private void DrawDebugOverlay()
         {

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: woolbed
   displayName: Wool Bed
   description: Proper wool bed.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: c3f7f3837f78772c2892d2b1e926de61, type: 3}
   type: 12
   stackMax: 1
   weight: 8

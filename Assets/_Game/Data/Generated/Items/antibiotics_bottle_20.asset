@@ -15,7 +15,7 @@ MonoBehaviour:
   id: antibiotics_bottle_20
   displayName: Antibiotics Bottle (20x)
   description: Uses 2 per treatment.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0e5528a63bfa61a2ea3060ce3a1ef685, type: 3}
   type: 3
   stackMax: 5
   weight: 0.08

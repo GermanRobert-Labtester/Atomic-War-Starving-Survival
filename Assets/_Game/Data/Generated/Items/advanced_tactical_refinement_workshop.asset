@@ -15,7 +15,7 @@ MonoBehaviour:
   id: advanced_tactical_refinement_workshop
   displayName: Advanced Tactical Refinement Workshop
   description: Top refine workshop.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 95b63c4272206f04caf8c9f7890b1cad, type: 3}
   type: 14
   stackMax: 1
   weight: 16

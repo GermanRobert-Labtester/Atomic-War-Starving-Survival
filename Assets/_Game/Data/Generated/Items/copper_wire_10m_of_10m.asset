@@ -15,7 +15,7 @@ MonoBehaviour:
   id: copper_wire_10m_of_10m
   displayName: Copper Wire 10M / 10M
   description: Ten metres copper. 1M per use.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 7be2bffe0a103b2b091ef99032e97852, type: 3}
   type: 10
   stackMax: 5
   weight: 0.5

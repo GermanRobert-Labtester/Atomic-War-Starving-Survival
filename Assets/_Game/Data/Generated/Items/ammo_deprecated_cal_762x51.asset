@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_762x51
   displayName: Deprecated Bullets (762x51)
   description: "Corroded cal_762x51 rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: dbce19b94475f2e59adae3d4e3b28027, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

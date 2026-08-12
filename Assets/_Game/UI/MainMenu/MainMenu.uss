@@ -127,6 +127,11 @@
     margin-right: 15px;
 }
 
+.brand-text {
+    flex-shrink: 1;
+    min-width: 0;
+}
+
 .brand-bar {
     width: 4px;
     margin-right: 3px;

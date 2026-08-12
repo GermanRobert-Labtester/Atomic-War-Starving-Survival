@@ -35,14 +35,12 @@ namespace AtomicWar._Game.Medical
                 if (sv == null || !sv.IsAlive) continue;
                 if (sv.HasTinnitus) continue;
 
-                float chance = severity * ExplosionTriggerThreshold;
-                if ((Rng?.NextDouble() ?? 0.5) < chance)
-                {
-                    sv.HasTinnitus = true;
-                    sv.TinnitusHoursRemaining = TinnitusDurationHours;
-                    sv.IsDeafToWarnings = true;
-                    OnTinnitusStarted?.Invoke(sv);
-                }
+                if (severity < ExplosionTriggerThreshold) continue;
+
+                sv.HasTinnitus = true;
+                sv.TinnitusHoursRemaining = TinnitusDurationHours;
+                sv.IsDeafToWarnings = true;
+                OnTinnitusStarted?.Invoke(sv);
             }
         }
 

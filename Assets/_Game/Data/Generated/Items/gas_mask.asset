@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Gas Mask
   description: Filters airborne fallout from the lungs. Moderate protection, degrades
     with use.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f7caaf8c772e247e998ded39bcc29ecd, type: 3}
   type: 6
   stackMax: 1
   weight: 1.5

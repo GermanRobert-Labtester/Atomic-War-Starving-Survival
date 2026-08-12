@@ -15,7 +15,7 @@ MonoBehaviour:
   id: anti_rad
   displayName: Anti-Rad
   description: Decorporation medication. Cleanses a chunk of current radiation dose.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 46bf4eed241c86a9481f256dfe446476, type: 3}
   type: 4
   stackMax: 5
   weight: 0.1

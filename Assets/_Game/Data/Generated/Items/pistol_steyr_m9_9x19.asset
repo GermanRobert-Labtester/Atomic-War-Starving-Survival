@@ -15,7 +15,7 @@ MonoBehaviour:
   id: pistol_steyr_m9_9x19
   displayName: "Steyr M9 9\xD719mm Pistol"
   description: "Polymer 9\xD719 sidearm."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 2d39936b7b1d4252ba098b0a43d2883e, type: 3}
   type: 15
   stackMax: 1
   weight: 0.95

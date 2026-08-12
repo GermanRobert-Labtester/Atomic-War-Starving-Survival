@@ -15,7 +15,7 @@ MonoBehaviour:
   id: multitool_broken
   displayName: Multitool Broken
   description: Broken tool. Scrap only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 3d66bd961d1c2cd39a170712ee0894db, type: 3}
   type: 10
   stackMax: 5
   weight: 0.5

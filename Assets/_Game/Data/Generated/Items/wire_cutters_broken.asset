@@ -15,7 +15,7 @@ MonoBehaviour:
   id: wire_cutters_broken
   displayName: Wire Cutters Broken
   description: Broken tool. Scrap only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8eb1f7443576b52ab8fc27aff3649602, type: 3}
   type: 10
   stackMax: 5
   weight: 0.5

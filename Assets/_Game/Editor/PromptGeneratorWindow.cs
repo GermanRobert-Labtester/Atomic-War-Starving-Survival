@@ -60,6 +60,106 @@ namespace AtomicWar._Game.Editor
             Debug.Log("[PromptGen] All item prompt files generated in " + PromptsOutputDir);
         }
 
+        [MenuItem("Tools/ASHFALL/Generate AI Prompts/All From Manifest")]
+        public static void GenerateAllFromManifest()
+        {
+            if (!File.Exists(ManifestPath))
+            {
+                Debug.LogError("[PromptGen] asset_manifest.json not found.");
+                return;
+            }
+
+            var manifest = JsonUtility.FromJson<ManifestRoot>(File.ReadAllText(ManifestPath));
+            if (manifest?.categories == null)
+            {
+                Debug.LogError("[PromptGen] Manifest categories failed to parse.");
+                return;
+            }
+
+            WriteCategoryPrompts("batch_A1_deprecated_ammo.txt", "Deprecated Ammo", "item",
+                manifest.categories.items_ammo_deprecated);
+            WriteCategoryPrompts("batch_A2_military_ammo_boxes.txt", "Military Ammo Boxes", "item",
+                manifest.categories.items_ammo_military_boxes);
+            WriteCategoryPrompts("batch_A3_weapons.txt", "Weapons", "item",
+                manifest.categories.items_weapons);
+            WriteCategoryPrompts("batch_A6_containers.txt", "Containers", "item",
+                manifest.categories.items_containers);
+            WriteCategoryPrompts("batch_A7_devices_medical.txt", "Devices Medical Tools", "item",
+                manifest.categories.items_devices_medical_tools);
+            WriteCategoryPrompts("batch_D_locations.txt", "Locations", "location",
+                manifest.categories.locations);
+            WriteCategoryPrompts("batch_E_portraits.txt", "Survivor Portraits", "portrait",
+                manifest.categories.survivors);
+            WriteCategoryPrompts("batch_F_factions.txt", "Factions", "faction",
+                manifest.categories.factions);
+            WriteCategoryPrompts("batch_F_weather.txt", "Weather", "weather",
+                manifest.categories.weather);
+
+            Debug.Log("[PromptGen] All manifest prompt files generated in " + PromptsOutputDir);
+        }
+
+        private static void WriteCategoryPrompts(string filename, string title, string kind, ManifestSpriteList list)
+        {
+            if (list?.sprites == null || list.sprites.Length == 0) return;
+
+            var sb = new StringBuilder();
+            string suffix = kind == "item" ? ItemSuffix : kind == "portrait" ? PortraitSuffix : EnvSuffix;
+            string negative = kind == "item" ? ItemNegative : GlobalNegative;
+            string aspect = kind == "item" ? "1:1 | 1024×1024" : kind == "portrait" ? "3:4 | 768×1024" : "16:9 | 1920×1080";
+
+            sb.AppendLine($"# ASHFALL — {title} ({list.sprites.Length})");
+            sb.AppendLine($"# Model: Flux 2 Pro via Firefly | Aspect: {aspect}");
+            sb.AppendLine("# Suffix: " + suffix);
+            sb.AppendLine("# Negative: " + negative);
+            sb.AppendLine();
+
+            foreach (var id in list.sprites)
+            {
+                string readable = id.Replace('_', ' ');
+                string subject = kind switch
+                {
+                    "item" => $"Isolated inventory object: {readable}.",
+                    "portrait" => $"Chest-up three-quarter portrait of survivor {readable}, exhausted restrained expression, worn cold-weather layers.",
+                    "location" => $"Establishing shot of {readable} after nuclear winter, ash, repair marks, no people in focus.",
+                    "faction" => $"Group lineup of {readable}, three to four figures, functional gear, no flags or readable insignia.",
+                    _ => $"Weather overlay of {readable} over ruined concrete and ash."
+                };
+                sb.AppendLine($"## {id}");
+                sb.AppendLine($"{subject} [{suffix}]");
+                sb.AppendLine($"--negative {negative}");
+                sb.AppendLine($"Output: {id}.png");
+                sb.AppendLine();
+            }
+
+            WritePromptFile(filename, sb.ToString());
+        }
+
+        [System.Serializable]
+        private class ManifestRoot
+        {
+            public ManifestCategories categories;
+        }
+
+        [System.Serializable]
+        private class ManifestCategories
+        {
+            public ManifestSpriteList items_ammo_deprecated;
+            public ManifestSpriteList items_ammo_military_boxes;
+            public ManifestSpriteList items_weapons;
+            public ManifestSpriteList items_containers;
+            public ManifestSpriteList items_devices_medical_tools;
+            public ManifestSpriteList locations;
+            public ManifestSpriteList survivors;
+            public ManifestSpriteList factions;
+            public ManifestSpriteList weather;
+        }
+
+        [System.Serializable]
+        private class ManifestSpriteList
+        {
+            public string[] sprites;
+        }
+
         [MenuItem("Tools/ASHFALL/Generate AI Prompts/A1 - Deprecated Ammo (19)")]
         public static void GenerateAmmoDeprecatedPrompts()
         {

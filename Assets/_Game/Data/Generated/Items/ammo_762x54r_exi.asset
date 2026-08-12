@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_762x54r_exi
   displayName: "7.62\xD754R EXI"
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: eef2bcc59f669a23d89e66213a241327, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

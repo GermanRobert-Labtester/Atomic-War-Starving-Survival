@@ -57,19 +57,20 @@ namespace AtomicWar._Game.UI
 
         public void Trigger(string displayName, string narrativeText, bool isMotivation)
         {
-            if (_root == null) return;
-            if (_animRoutine != null) StopCoroutine(_animRoutine);
             string prefix = isMotivation ? "Resolve: " : "Memory: ";
             string body = string.IsNullOrEmpty(narrativeText)
                 ? $"{displayName} is shaken by a buried memory."
                 : narrativeText;
+            _lastState = new SaveState { isVisible = true, isMotivation = isMotivation, lastText = body };
+            OnVignetteTriggered?.Invoke(isMotivation);
+
+            if (_root == null) return;
+            if (_animRoutine != null) StopCoroutine(_animRoutine);
             if (_textLabel != null) _textLabel.text = prefix + body;
 
             _root.EnableInClassList("phantom-memory-vignette--motivation", isMotivation);
             _root.EnableInClassList("phantom-memory-vignette--breakdown", !isMotivation);
-            _lastState = new SaveState { isVisible = true, isMotivation = isMotivation, lastText = body };
             _animRoutine = StartCoroutine(AnimateVignette());
-            OnVignetteTriggered?.Invoke(isMotivation);
         }
 
         private IEnumerator AnimateVignette()

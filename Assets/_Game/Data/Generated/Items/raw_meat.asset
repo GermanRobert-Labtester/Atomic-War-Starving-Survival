@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Raw Meat
   description: Uncooked meat from mutated fauna. Slightly contaminated; cook before
     eating.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0a7ad7a1efa34a1e1838277dfada6c55, type: 3}
   type: 0
   stackMax: 5
   weight: 0.5

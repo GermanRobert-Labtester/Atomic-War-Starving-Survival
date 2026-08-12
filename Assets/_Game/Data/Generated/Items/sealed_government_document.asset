@@ -15,7 +15,7 @@ MonoBehaviour:
   id: sealed_government_document
   displayName: Sealed Government Document
   description: Quest item. Do not open lightly.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b6f7450a76263016b9ade4428bdfddb8, type: 3}
   type: 13
   stackMax: 1
   weight: 0.05

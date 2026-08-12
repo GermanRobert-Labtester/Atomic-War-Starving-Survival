@@ -15,7 +15,7 @@ MonoBehaviour:
   id: herbal_cigarette
   displayName: Herbal Cigarette
   description: Garden herbs rolled.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e738e490ae4edc1ccbf7e838c86afb35, type: 3}
   type: 12
   stackMax: 30
   weight: 0.01

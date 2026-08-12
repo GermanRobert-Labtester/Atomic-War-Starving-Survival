@@ -15,7 +15,7 @@ MonoBehaviour:
   id: oat_flour
   displayName: Oat Flour (High Quality)
   description: Fine oat flour.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0438fbb209c6220d4a6736fa910497ce, type: 3}
   type: 10
   stackMax: 12
   weight: 1

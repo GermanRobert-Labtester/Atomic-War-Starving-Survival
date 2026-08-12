@@ -15,7 +15,7 @@ MonoBehaviour:
   id: body_armour_deprecated
   displayName: Deprecated Body Armour
   description: Cracked plates.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 684a202be529344b7830d9995af39c7b, type: 3}
   type: 6
   stackMax: 1
   weight: 2.5

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: iodine_pills_bottle_10_of_10
   displayName: Iodine Pills Bottle 10/10
   description: Thyroid block. 1 per use.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 428af5b5906481efc8afbb171399e0ad, type: 3}
   type: 5
   stackMax: 5
   weight: 0.05

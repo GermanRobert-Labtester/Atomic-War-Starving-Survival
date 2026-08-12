@@ -15,7 +15,7 @@ MonoBehaviour:
   id: scrap_wood
   displayName: Scrap Wood
   description: Broken boards. Crude repairs.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 6bd71ca2279a6fa038c4439b22fa7509, type: 3}
   type: 10
   stackMax: 40
   weight: 0.8

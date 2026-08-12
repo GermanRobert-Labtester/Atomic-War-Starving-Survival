@@ -15,7 +15,7 @@ MonoBehaviour:
   id: sulphur
   displayName: Sulphur
   description: Yellow powder for chemistry mixes.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a76cf3e3e1768e68cb122571ad7ca7d4, type: 3}
   type: 10
   stackMax: 30
   weight: 0.05

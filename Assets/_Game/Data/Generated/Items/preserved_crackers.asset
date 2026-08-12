@@ -15,7 +15,7 @@ MonoBehaviour:
   id: preserved_crackers
   displayName: Preserved Crackers
   description: Preserved Crackers
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e8842b83ec8361e40bdf64ab9c8c6c8d, type: 3}
   type: 0
   stackMax: 25
   weight: 0.2

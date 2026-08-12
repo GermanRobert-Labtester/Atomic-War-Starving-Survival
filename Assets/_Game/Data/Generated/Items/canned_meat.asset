@@ -15,7 +15,7 @@ MonoBehaviour:
   id: canned_meat
   displayName: Canned Meat
   description: Canned Meat
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: c7a9a5b0366cbd52e9320a7f6e9817ba, type: 3}
   type: 0
   stackMax: 10
   weight: 0.45

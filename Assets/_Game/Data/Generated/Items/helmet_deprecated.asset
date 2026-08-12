@@ -15,7 +15,7 @@ MonoBehaviour:
   id: helmet_deprecated
   displayName: Deprecated Helmet
   description: Split shell.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 2950e1cd77c48b7658b09084f3deb776, type: 3}
   type: 6
   stackMax: 1
   weight: 2.5

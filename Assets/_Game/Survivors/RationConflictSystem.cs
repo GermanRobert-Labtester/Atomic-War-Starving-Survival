@@ -55,8 +55,9 @@ namespace AtomicWar._Game.Survivors
             float fairness = 1f - Math.Abs(myAllocation - average);
             sv.PerceivedRationFairness = Mathf.Clamp01(fairness);
 
-            // If getting less than average, build resentment
-            if (myAllocation < average - FairnessDeviationThreshold)
+            // If getting less than average by the fairness threshold, build resentment.
+            float deficit = average - myAllocation;
+            if (deficit + 0.001f >= FairnessDeviationThreshold)
             {
                 // Find the most over-allocated survivor
                 Survivor mostOverAllocated = null;

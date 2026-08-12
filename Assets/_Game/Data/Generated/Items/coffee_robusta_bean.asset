@@ -15,7 +15,7 @@ MonoBehaviour:
   id: coffee_robusta_bean
   displayName: Coffee Robusta Bean
   description: Harsh strong bean.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 2e24e657b71f58c4c82a88ebe5649f43, type: 3}
   type: 10
   stackMax: 25
   weight: 0.05

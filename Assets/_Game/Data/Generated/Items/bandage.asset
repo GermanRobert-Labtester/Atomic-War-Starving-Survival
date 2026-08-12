@@ -15,7 +15,7 @@ MonoBehaviour:
   id: bandage
   displayName: Bandage
   description: Sterile dressing. Restores health when used.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ecf18ef975410fdd68d39c093e494154, type: 3}
   type: 3
   stackMax: 10
   weight: 0.1

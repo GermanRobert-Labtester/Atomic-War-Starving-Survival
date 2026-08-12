@@ -15,7 +15,7 @@ MonoBehaviour:
   id: water_bottle_0_5l_of_2l
   displayName: Water Bottle 0.5L / 2L
   description: Water Bottle 0.5L / 2L
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ada80695693d6b2aab8d6cbd50813037, type: 3}
   type: 1
   stackMax: 4
   weight: 1.1

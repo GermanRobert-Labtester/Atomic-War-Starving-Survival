@@ -15,7 +15,7 @@ MonoBehaviour:
   id: sawdust_block
   displayName: Sawdust Block
   description: Compressed sawdust. Kindling and filler.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a7961934741dab8d2a6c1b7f535b98ec, type: 3}
   type: 10
   stackMax: 30
   weight: 0.4

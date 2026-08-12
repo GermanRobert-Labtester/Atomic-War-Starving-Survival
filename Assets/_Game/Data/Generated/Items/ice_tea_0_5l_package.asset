@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ice_tea_0_5l_package
   displayName: Ice Tea 0.5L Package
   description: Sweet cold tea.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5186d8ab67bea0532a3ffa2600c3625f, type: 3}
   type: 0
   stackMax: 10
   weight: 0.55

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: instant_coffee
   displayName: Instant Coffee
   description: One serve powder.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 7c81b93a5a902d2458deb4599a70b6bc, type: 3}
   type: 0
   stackMax: 30
   weight: 0.02

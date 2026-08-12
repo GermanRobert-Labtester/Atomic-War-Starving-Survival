@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Snow Goggles
   description: Tinted lenses in a rubber frame. The strap is frayed but holds. Cuts
     the glare off the ash-fields and makes the horizon stop hurting.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b80c15e85a37dd31686f2f0d0cbd45e5, type: 3}
   type: 6
   stackMax: 1
   weight: 0.2

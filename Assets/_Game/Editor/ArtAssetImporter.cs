@@ -49,20 +49,22 @@ namespace AtomicWar._Game.Editor
                 var itemDef = AssetDatabase.LoadAssetAtPath<AtomicWar._Game.Inventory.ItemDefinition>(itemPath);
                 if (itemDef == null) continue;
 
-                string spriteName = itemDef.id ?? itemDef.name;
-                string spritePath = $"{ItemsPath}/{spriteName}.png";
-                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
+                string spriteName = string.IsNullOrEmpty(itemDef.id) ? itemDef.name : itemDef.id;
+                var sprite = LoadSprite(ItemsPath, spriteName);
 
                 if (sprite != null)
                 {
-                    // Assign sprite via SerializedObject
                     var so = new SerializedObject(itemDef);
-                    var iconProp = so.FindProperty("icon");
+                    var iconProp = so.FindProperty("iconRef") ?? so.FindProperty("icon");
                     if (iconProp != null)
                     {
                         iconProp.objectReferenceValue = sprite;
                         so.ApplyModifiedProperties();
                         assigned++;
+                    }
+                    else
+                    {
+                        missing++;
                     }
                 }
                 else
@@ -89,9 +91,8 @@ namespace AtomicWar._Game.Editor
                 var locDef = AssetDatabase.LoadAssetAtPath<AtomicWar._Game.Data.LocationDefinitionSO>(locPath);
                 if (locDef == null) continue;
 
-                string spriteName = locDef.id ?? locDef.name;
-                string spritePath = $"{LocationsPath}/{spriteName}.png";
-                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(spritePath);
+                string spriteName = string.IsNullOrEmpty(locDef.id) ? locDef.name : locDef.id;
+                var sprite = LoadSprite(LocationsPath, spriteName);
 
                 if (sprite != null)
                 {
@@ -148,6 +149,17 @@ namespace AtomicWar._Game.Editor
             Debug.Log($"[ArtAssetImporter] Survivor portraits: {assigned} assigned, {missing} sprites missing.");
         }
 
+        [MenuItem("Tools/ASHFALL/Import Art Assets/Generate Placeholders And Assign")]
+        public static void GeneratePlaceholdersAndAssign()
+        {
+            GeneratePlaceholders();
+            FixItemImportSettings();
+            AssignItemIcons();
+            AssignLocationImages();
+            AssignSurvivorPortraits();
+            PrintMissingReport();
+        }
+
         [MenuItem("Tools/ASHFALL/Import Art Assets/Generate Missing Sprite Placeholders")]
         public static void GeneratePlaceholders()
         {
@@ -195,6 +207,11 @@ namespace AtomicWar._Game.Editor
                 manifest.categories.factions.sprites, FactionsPath);
             created += CreatePlaceholdersForCategory(
                 manifest.categories.weather.sprites, WeatherPath);
+
+            created += CreatePlaceholdersForGeneratedIds(
+                "t:ItemDefinition", ItemsDataPath, ItemsPath);
+            created += CreatePlaceholdersForGeneratedIds(
+                "t:LocationDefinitionSO", LocationsDataPath, LocationsPath);
 
             AssetDatabase.Refresh();
             Debug.Log($"[ArtAssetImporter] Created {created} placeholder sprites. " +
@@ -284,6 +301,39 @@ namespace AtomicWar._Game.Editor
                 created++;
             }
             return created;
+        }
+
+        private static int CreatePlaceholdersForGeneratedIds(string filter, string dataPath, string spriteDir)
+        {
+            if (!Directory.Exists(dataPath)) return 0;
+            var ids = new List<string>();
+            var guids = AssetDatabase.FindAssets(filter, new[] { dataPath });
+            foreach (var guid in guids)
+            {
+                string assetPath = AssetDatabase.GUIDToAssetPath(guid);
+                var obj = AssetDatabase.LoadMainAssetAtPath(assetPath);
+                if (obj == null) continue;
+                var idField = obj.GetType().GetField("id");
+                string id = idField != null ? idField.GetValue(obj) as string : null;
+                if (string.IsNullOrEmpty(id)) id = obj.name;
+                ids.Add(id);
+            }
+            return CreatePlaceholdersForCategory(ids.ToArray(), spriteDir);
+        }
+
+        private static Sprite LoadSprite(string dir, string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            string path = $"{dir}/{id}.png";
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+            if (sprite != null) return sprite;
+            var assets = AssetDatabase.LoadAllAssetsAtPath(path);
+            if (assets != null)
+            {
+                for (int i = 0; i < assets.Length; i++)
+                    if (assets[i] is Sprite s) return s;
+            }
+            return null;
         }
 
         private static void CreateDirectoryIfMissing(string dir)

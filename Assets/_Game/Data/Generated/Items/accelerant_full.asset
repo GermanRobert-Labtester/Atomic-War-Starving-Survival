@@ -15,7 +15,7 @@ MonoBehaviour:
   id: accelerant_full
   displayName: Accelerant (Full)
   description: Accelerant (Full)
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 48870c7dc98257f449329090851b7839, type: 3}
   type: 8
   stackMax: 10
   weight: 1.2

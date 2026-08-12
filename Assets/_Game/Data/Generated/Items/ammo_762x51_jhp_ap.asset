@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_762x51_jhp_ap
   displayName: "7.62\xD751mm NATO JHP+AP"
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 71256e0af775513eab2e02151b1c9776, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

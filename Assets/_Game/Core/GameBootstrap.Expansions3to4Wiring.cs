@@ -55,6 +55,11 @@ namespace AtomicWar._Game.Core
             _registry.RegisterEventDriven("dynamicQuestlines");
             _registry.Register<DynamicQuestlineSystem>(DynamicQuestlines);
 
+            // Deep Lore catalogs — narrative arc quests (4 named survivors)
+            // and standalone dynamic quests, both StartQuest into the same system.
+            NarrativeQuestlineCatalogLoader.LoadInto(DynamicQuestlines);
+            DynamicQuestlineCatalogLoader.LoadInto(DynamicQuestlines);
+
             // Wire quest completion to expedition returns
             if (ExpeditionSystem != null)
             {

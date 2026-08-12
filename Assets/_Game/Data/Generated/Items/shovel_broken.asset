@@ -15,7 +15,7 @@ MonoBehaviour:
   id: shovel_broken
   displayName: Shovel Broken
   description: Broken tool. Scrap only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a64d6506bcf83ca68bf71017742291c5, type: 3}
   type: 10
   stackMax: 5
   weight: 0.5

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: nv_goggles_military
   displayName: Military Grade NV Goggles
   description: Night-vision goggles.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: c7f94ac5bd3ad5b279c7f685e0d1f7a0, type: 3}
   type: 6
   stackMax: 1
   weight: 4

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: cassette_tape
   displayName: Cassette Tape
   description: Recorded voice. Rare comfort.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 17ce171170885dc3a826b64a869c467d, type: 3}
   type: 12
   stackMax: 8
   weight: 0.05

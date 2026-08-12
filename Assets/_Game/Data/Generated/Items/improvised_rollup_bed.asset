@@ -15,7 +15,7 @@ MonoBehaviour:
   id: improvised_rollup_bed
   displayName: Improvised Rollup Bed
   description: Scrap bedroll.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b8cda73525aae3307b10c0258fac5579, type: 3}
   type: 12
   stackMax: 2
   weight: 2

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using AtomicWar._Game.Data;
 using AtomicWar._Game.Narrative;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Events;
@@ -48,6 +49,10 @@ namespace AtomicWar._Game.Core
             _registry.RegisterPerSubstep("narrativeArc",
                 h => TickNarrativeArcSurvivors(h));
             _registry.Register<SurvivorNarrativeArcSystem>(NarrativeArcSystem);
+
+            // Personalised identity fields for the 4 named arc survivors
+            // (keepsake, profession, belief profile, philosophical stance).
+            DeepLoreSurvivorFieldsLoader.LoadInto(Survivors);
 
             // Wire narrative arc milestone checks
             WireNarrativeArcTriggers();

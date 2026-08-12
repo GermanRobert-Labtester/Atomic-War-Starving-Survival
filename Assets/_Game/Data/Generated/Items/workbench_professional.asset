@@ -15,7 +15,7 @@ MonoBehaviour:
   id: workbench_professional
   displayName: Workbench (Professional)
   description: Top-tier civilian craft.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5db899d33c45dedd4bb51e9ccf94952a, type: 3}
   type: 14
   stackMax: 1
   weight: 16

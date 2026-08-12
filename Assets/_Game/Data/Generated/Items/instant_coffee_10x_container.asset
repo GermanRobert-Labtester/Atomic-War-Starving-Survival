@@ -15,7 +15,7 @@ MonoBehaviour:
   id: instant_coffee_10x_container
   displayName: Instant Coffee 10x Container
   description: Ten serves.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 17f2a342bd129064b98f62b5309042f9, type: 3}
   type: 0
   stackMax: 5
   weight: 0.2

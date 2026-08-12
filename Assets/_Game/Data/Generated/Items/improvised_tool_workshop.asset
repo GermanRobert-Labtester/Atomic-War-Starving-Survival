@@ -15,7 +15,7 @@ MonoBehaviour:
   id: improvised_tool_workshop
   displayName: Improvised Tool Workshop
   description: Scrap tool bench.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: d12ce421c3694d4e8a431e6d6462adfe, type: 3}
   type: 14
   stackMax: 1
   weight: 8

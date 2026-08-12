@@ -206,6 +206,9 @@ namespace AtomicWar._Game.UI
 
         private void EnsureWidgetReferences()
         {
+            // Scene reload / SubscriptionBag dispose can query HUD getters after
+            // Destroy; Unity fake-null still invokes instance methods.
+            if (!this) return;
             EnsureWidget(ref _needsBar);
             EnsureWidget(ref _dosimeterHud);
             EnsureWidget(ref _healthTrajectoryHud);
@@ -292,6 +295,7 @@ namespace AtomicWar._Game.UI
         /// </summary>
         private T EnsureWidget<T>(ref T field) where T : Component
         {
+            if (!this) return field;
             if (field != null) return field;
 
             field = GetComponentInChildren<T>();

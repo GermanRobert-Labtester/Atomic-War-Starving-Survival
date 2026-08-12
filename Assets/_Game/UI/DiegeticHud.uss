@@ -319,6 +319,21 @@
     margin-bottom: 0;
 }
 
+/* Faction pressure terminal (Expansion II) — shares the exclusive
+   top-right terminal station with the other opportunistic panels. */
+.faction-pressure-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.faction-pressure-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
 /* Field gear is mutually exclusive with the dispatch and crate terminals. */
 .field-gear-loadout-panel {
     top: var(--hud-edge);

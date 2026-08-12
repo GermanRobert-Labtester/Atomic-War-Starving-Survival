@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Solar Cell
   description: A cracked photovoltaic panel pried off a weather station. It still
     charges, slowly, on the four hours a day the ash thins enough to let light through.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 91d110e572d09b6a0bd9cb1ec10dec91, type: 3}
   type: 10
   stackMax: 10
   weight: 1.2

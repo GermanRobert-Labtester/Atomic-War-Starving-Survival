@@ -15,7 +15,7 @@ MonoBehaviour:
   id: cooked_meat
   displayName: Cooked Meat
   description: Cooked meat. Hearty meal that restores hunger and a little morale.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 17b6783335a4ae0508e1d8ba99678b55, type: 3}
   type: 0
   stackMax: 5
   weight: 0.5

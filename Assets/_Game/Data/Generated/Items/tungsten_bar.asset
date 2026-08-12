@@ -15,7 +15,7 @@ MonoBehaviour:
   id: tungsten_bar
   displayName: Tungsten Bar
   description: Dense hard metal bar.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5a8732c9ecf2bb3a3a47d3ef59a674b5, type: 3}
   type: 10
   stackMax: 5
   weight: 1.5

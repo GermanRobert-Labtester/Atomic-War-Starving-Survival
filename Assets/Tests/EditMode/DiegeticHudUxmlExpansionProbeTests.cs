@@ -24,12 +24,12 @@ namespace AtomicWar.Tests.EditMode
             Assert.IsNotNull(root);
             Assert.IsNotNull(root.Q("diegetic-root"));
             Assert.IsNotNull(root.Q("vitals-panel"));
-            Assert.IsNotNull(root.Q("radiation-phase-root"));
-            Assert.IsNotNull(root.Q("location-detail-panel"));
-            Assert.IsNotNull(root.Q("siege-status"));
-            Assert.IsNotNull(root.Q("tactical-command-bar"));
-            Assert.IsNotNull(root.Q("lore-codex-panel"));
-            Assert.IsNotNull(root.Q("character-arc-panel"));
+            Assert.AreEqual(19, DiegeticHudController.ExpansionWidgetRootNames.Length);
+            for (int i = 0; i < DiegeticHudController.ExpansionWidgetRootNames.Length; i++)
+            {
+                string name = DiegeticHudController.ExpansionWidgetRootNames[i];
+                Assert.IsNotNull(root.Q(name), "DiegeticHud.uxml must expose " + name);
+            }
         }
 
         [Test]

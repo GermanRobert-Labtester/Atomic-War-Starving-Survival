@@ -15,7 +15,7 @@ MonoBehaviour:
   id: accelerant_half
   displayName: Accelerant (Half-Full)
   description: Accelerant (Half-Full)
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 15549021455c17e16bc21226b1f394b1, type: 3}
   type: 8
   stackMax: 10
   weight: 0.7

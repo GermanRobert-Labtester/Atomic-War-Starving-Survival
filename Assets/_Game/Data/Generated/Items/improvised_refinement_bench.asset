@@ -15,7 +15,7 @@ MonoBehaviour:
   id: improvised_refinement_bench
   displayName: Improvised Refinement Bench
   description: Scrap refine.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5a3e7cf2ed892d4ca8897ad6395c0b34, type: 3}
   type: 14
   stackMax: 1
   weight: 8

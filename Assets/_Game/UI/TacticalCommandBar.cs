@@ -51,5 +51,12 @@ namespace AtomicWar._Game.UI
         }
 
         public void HideCommands() { if (_root != null) _root.style.display = DisplayStyle.None; }
+
+        /// <summary>Issue a bound command by index (0 hold_line … 4 decon_flush).</summary>
+        public void IssueCommand(int index)
+        {
+            EnsureBound();
+            _onCommand?.Invoke(index);
+        }
     }
 }

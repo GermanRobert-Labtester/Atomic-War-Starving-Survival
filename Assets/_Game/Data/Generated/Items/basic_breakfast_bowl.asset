@@ -15,7 +15,7 @@ MonoBehaviour:
   id: basic_breakfast_bowl
   displayName: Basic Breakfast Bowl
   description: Cooked oats bowl.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 17c0bfa86658c3dd081ccb2b0535bfda, type: 3}
   type: 0
   stackMax: 10
   weight: 0.35

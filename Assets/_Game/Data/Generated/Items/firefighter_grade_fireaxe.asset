@@ -15,7 +15,7 @@ MonoBehaviour:
   id: firefighter_grade_fireaxe
   displayName: Firefighter Grade Fireaxe
   description: Heavy breach axe.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f708ea055f3235371a08aefb6eefb819, type: 3}
   type: 15
   stackMax: 1
   weight: 2.8

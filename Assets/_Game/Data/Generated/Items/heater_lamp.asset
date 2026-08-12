@@ -15,7 +15,7 @@ MonoBehaviour:
   id: heater_lamp
   displayName: Heater Lamp
   description: Small radiant lamp.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 2786c4ff927042b9095503da90afd804, type: 3}
   type: 14
   stackMax: 1
   weight: 10

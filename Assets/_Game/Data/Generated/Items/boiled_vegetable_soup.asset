@@ -15,7 +15,7 @@ MonoBehaviour:
   id: boiled_vegetable_soup
   displayName: Boiled Vegetable Soup
   description: Boiled Vegetable Soup
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: cae6bf0de6f92305ab62207e0927c134, type: 3}
   type: 0
   stackMax: 6
   weight: 0.5

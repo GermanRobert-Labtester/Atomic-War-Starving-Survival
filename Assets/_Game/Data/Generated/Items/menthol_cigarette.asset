@@ -15,7 +15,7 @@ MonoBehaviour:
   id: menthol_cigarette
   displayName: Menthol Cigarette
   description: Menthol smoke.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: cf18bba108c461685b62d1b31b116ed6, type: 3}
   type: 12
   stackMax: 30
   weight: 0.01

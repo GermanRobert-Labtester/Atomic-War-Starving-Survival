@@ -15,7 +15,7 @@ MonoBehaviour:
   id: amber
   displayName: Amber
   description: Fossil resin.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b328d456ea02a6710b7b291274ae4f4d, type: 3}
   type: 11
   stackMax: 8
   weight: 0.02

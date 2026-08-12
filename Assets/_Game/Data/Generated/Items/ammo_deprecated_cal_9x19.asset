@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_9x19
   displayName: Deprecated Bullets (9x19)
   description: "Corroded cal_9x19 rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f9e4967831170474e95ac59ab2254331, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

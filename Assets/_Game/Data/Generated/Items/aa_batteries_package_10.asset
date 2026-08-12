@@ -15,7 +15,7 @@ MonoBehaviour:
   id: aa_batteries_package_10
   displayName: AA Batteries Package (10x)
   description: Home upgrades craft.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 49f4021378f51d21e98cc70aa67dfa4e, type: 3}
   type: 10
   stackMax: 10
   weight: 0.2

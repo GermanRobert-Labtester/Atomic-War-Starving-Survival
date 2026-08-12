@@ -15,7 +15,7 @@ MonoBehaviour:
   id: electrical_cable
   displayName: Electrical Cable
   description: Insulated cable length.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 07bfd764815ea4ca9baf1069ad68ad39, type: 3}
   type: 10
   stackMax: 20
   weight: 0.3

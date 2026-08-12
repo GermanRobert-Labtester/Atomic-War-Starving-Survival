@@ -15,7 +15,7 @@ MonoBehaviour:
   id: water_bottle_2l_full
   displayName: Water Bottle 2L (Full)
   description: Water Bottle 2L (Full)
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 46e782cbc3bfb731e8999ddec22e1f5d, type: 3}
   type: 1
   stackMax: 4
   weight: 2.2

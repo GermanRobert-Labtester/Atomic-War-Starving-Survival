@@ -463,6 +463,8 @@ namespace AtomicWar._Game.Core
             // (catalog, 6 Ensure* chains, encounter factory) are merged
             // into a single call with built-in duplicate-id detection.
             var eventPool = EventPoolBuilder.Build(_eventCatalog);
+            eventPool.AddRange(NarrativeArcEventCatalogLoader.Load());
+            EventPoolBuilder.ValidateNoDuplicateIds(eventPool);
             EventRunner.SetPool(eventPool);
 
             SuspicionTracker = new SuspicionTracker();

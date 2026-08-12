@@ -15,7 +15,7 @@ MonoBehaviour:
   id: package_rolled_oats_1kg_of_1kg
   displayName: Package of Rolled Oats 1KG/1KG
   description: "Drains 0.1KG/use \u2192 2 basic breakfast bowls (needs 1\xD7 water)."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 55b7b0b3846de88fbab4eec47e3b1ba6, type: 3}
   type: 0
   stackMax: 4
   weight: 1.1

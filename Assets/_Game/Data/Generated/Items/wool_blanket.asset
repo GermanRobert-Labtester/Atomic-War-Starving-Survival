@@ -15,7 +15,7 @@ MonoBehaviour:
   id: wool_blanket
   displayName: Wool Blanket
   description: Sleep warmth.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 56651b2dcb8a5fe5591268a856ac783a, type: 3}
   type: 12
   stackMax: 4
   weight: 1.2

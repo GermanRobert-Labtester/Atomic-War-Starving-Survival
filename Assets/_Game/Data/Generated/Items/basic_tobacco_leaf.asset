@@ -15,7 +15,7 @@ MonoBehaviour:
   id: basic_tobacco_leaf
   displayName: Basic Tobacco Leaf
   description: Dried leaf. Harsh smoke.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 6013d3aa7e011d8f4863cc81628ff4ea, type: 3}
   type: 10
   stackMax: 30
   weight: 0.05

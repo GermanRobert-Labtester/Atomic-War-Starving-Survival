@@ -26,6 +26,33 @@ namespace AtomicWar._Game.UI
 
         public const float DefaultSortingOrder = 50f;
 
+        /// <summary>
+        /// Named roots for the 19 Phase 11 / expansion / deep-lore widgets
+        /// authored into DiegeticHud.uxml (inline or via Template instances).
+        /// </summary>
+        public static readonly string[] ExpansionWidgetRootNames =
+        {
+            "radiation-phase-root",
+            "phantom-memory-vignette-root",
+            "hypervigilance-indicator-root",
+            "moral-branch-root",
+            "keepsake-slot-root",
+            "memorial-wall-root",
+            "terminal-prognosis-root",
+            "addiction-detox-root",
+            "location-detail-panel",
+            "item-condition-badge",
+            "questline-tracker",
+            "siege-status",
+            "faction-intelligence-panel",
+            "vehicle-status-panel",
+            "tactical-command-bar",
+            "questline-stage-tracker",
+            "lore-codex-panel",
+            "faction-relationship-map",
+            "character-arc-panel"
+        };
+
         [SerializeField] private UIDocument _document;
         [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private VisualTreeAsset _uxml;

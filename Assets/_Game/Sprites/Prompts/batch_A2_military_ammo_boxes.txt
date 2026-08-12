@@ -1,0 +1,85 @@
+# ASHFALL — Military Ammo Boxes (16)
+# Model: Flux 2 Pro via Firefly | Aspect: 1:1 | 1024×1024
+# Suffix: post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements
+# Negative: cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+
+## ammo_545x39_jhp_ap
+Isolated inventory object: ammo 545x39 jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_545x39_jhp_ap.png
+
+## ammo_545x39_exi
+Isolated inventory object: ammo 545x39 exi. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_545x39_exi.png
+
+## ammo_545x39_api
+Isolated inventory object: ammo 545x39 api. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_545x39_api.png
+
+## ammo_300blk_jhp_ap
+Isolated inventory object: ammo 300blk jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_300blk_jhp_ap.png
+
+## ammo_57x28_jhp_ap
+Isolated inventory object: ammo 57x28 jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_57x28_jhp_ap.png
+
+## ammo_57x28_exi
+Isolated inventory object: ammo 57x28 exi. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_57x28_exi.png
+
+## ammo_57x28_api
+Isolated inventory object: ammo 57x28 api. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_57x28_api.png
+
+## ammo_762x54r_jhp_ap
+Isolated inventory object: ammo 762x54r jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_762x54r_jhp_ap.png
+
+## ammo_762x54r_exi
+Isolated inventory object: ammo 762x54r exi. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_762x54r_exi.png
+
+## ammo_762x54r_api
+Isolated inventory object: ammo 762x54r api. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_762x54r_api.png
+
+## ammo_338lapua_jhp_ap
+Isolated inventory object: ammo 338lapua jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_338lapua_jhp_ap.png
+
+## ammo_408cheytac_jhp_ap
+Isolated inventory object: ammo 408cheytac jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_408cheytac_jhp_ap.png
+
+## ammo_762x51_jhp_ap
+Isolated inventory object: ammo 762x51 jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_762x51_jhp_ap.png
+
+## ammo_762x51_exi
+Isolated inventory object: ammo 762x51 exi. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_762x51_exi.png
+
+## ammo_50bmg_jhp_ap
+Isolated inventory object: ammo 50bmg jhp ap. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_50bmg_jhp_ap.png
+
+## ammo_50bmg_exi
+Isolated inventory object: ammo 50bmg exi. [post-apocalyptic survival game inventory icon, isolated object centered on pure flat black (#000000) background, dramatic directional rim lighting from top-left, volumetric dust particles, desaturated color palette with selective orange-amber highlights, worn and weathered textures, micro-scratches and grime detail, photorealistic material rendering, cinematic product shot, no text, no labels, no shadows outside object, no background elements]
+--negative cartoon, anime, flat icon, logo, watermark, signature, text, label, gradient background, colorful background, bright colors, clean new condition, fantasy, sci-fi laser, alien, UI chrome
+Output: ammo_50bmg_exi.png
+

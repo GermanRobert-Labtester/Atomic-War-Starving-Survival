@@ -15,7 +15,7 @@ MonoBehaviour:
   id: workbench_basic
   displayName: Workbench (Basic)
   description: Entry craft station.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8b81484eb7221e278a19f61d89d8fb7c, type: 3}
   type: 14
   stackMax: 1
   weight: 10

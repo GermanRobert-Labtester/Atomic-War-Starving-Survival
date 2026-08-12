@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_46x30
   displayName: Deprecated Bullets (46x30)
   description: "Corroded cal_46x30 rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ee601c9cb9f8d8988887c9c885b51268, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

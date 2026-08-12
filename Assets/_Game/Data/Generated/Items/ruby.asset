@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ruby
   displayName: Ruby
   description: Red gem.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e220d6e734d1dbcd2b1ea245f22f00e7, type: 3}
   type: 11
   stackMax: 5
   weight: 0.01

@@ -34,6 +34,7 @@ namespace AtomicWar._Game.Survivors
         public Func<IReadOnlyList<Survivor>> GetSurvivors;
 
         private string _currentLeaderId;
+        private Survivor _currentLeader;
         private float _stepDownCooldown;
 
         public string CurrentLeaderId => _currentLeaderId;
@@ -46,7 +47,7 @@ namespace AtomicWar._Game.Survivors
             // Clear previous leader
             if (!string.IsNullOrEmpty(_currentLeaderId))
             {
-                var prevLeader = FindSurvivor(_currentLeaderId);
+                var prevLeader = ResolveLeader();
                 if (prevLeader != null)
                 {
                     prevLeader.IsDesignatedLeader = false;
@@ -55,6 +56,7 @@ namespace AtomicWar._Game.Survivors
             }
 
             sv.IsDesignatedLeader = true;
+            _currentLeader = sv;
             _currentLeaderId = sv.Id;
             OnLeaderDesignated?.Invoke(sv);
             return true;
@@ -64,6 +66,7 @@ namespace AtomicWar._Game.Survivors
         {
             if (sv == null || sv.Id != _currentLeaderId) return false;
             sv.IsDesignatedLeader = false;
+            _currentLeader = null;
             _currentLeaderId = null;
             _stepDownCooldown = StepDownCooldownDays;
             OnLeaderSteppedDown?.Invoke(sv);
@@ -73,7 +76,7 @@ namespace AtomicWar._Game.Survivors
         public void OnSurvivorDied(Survivor dead)
         {
             if (dead == null || string.IsNullOrEmpty(_currentLeaderId)) return;
-            var leader = FindSurvivor(_currentLeaderId);
+            var leader = ResolveLeader();
             if (leader == null || !leader.IsAlive) return;
 
             leader.LeaderStressAccumulation =
@@ -89,7 +92,7 @@ namespace AtomicWar._Game.Survivors
         public void OnCrisisEvent()
         {
             if (string.IsNullOrEmpty(_currentLeaderId)) return;
-            var leader = FindSurvivor(_currentLeaderId);
+            var leader = ResolveLeader();
             if (leader == null || !leader.IsAlive) return;
 
             // Apply morale aura to all survivors during crisis
@@ -102,12 +105,19 @@ namespace AtomicWar._Game.Survivors
                 _stepDownCooldown -= gameHours / 24f;
 
             if (string.IsNullOrEmpty(_currentLeaderId)) return;
-            var leader = FindSurvivor(_currentLeaderId);
+            var leader = ResolveLeader();
             if (leader == null || !leader.IsAlive) return;
 
             leader.LeaderStressAccumulation = Math.Max(0f,
                 leader.LeaderStressAccumulation -
                 LeaderStressDecayPerDay * (gameHours / 24f));
+        }
+
+        private Survivor ResolveLeader()
+        {
+            if (_currentLeader != null && _currentLeader.Id == _currentLeaderId)
+                return _currentLeader;
+            return FindSurvivor(_currentLeaderId);
         }
 
         private Survivor FindSurvivor(string id)

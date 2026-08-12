@@ -15,7 +15,7 @@ MonoBehaviour:
   id: body_armour_military
   displayName: Military Grade Body Armour
   description: Plate carrier with inserts.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f86c9c36f7a5a9256a400a7b8323b2df, type: 3}
   type: 6
   stackMax: 1
   weight: 4

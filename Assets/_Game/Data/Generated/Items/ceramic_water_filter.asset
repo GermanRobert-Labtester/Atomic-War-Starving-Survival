@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ceramic_water_filter
   displayName: Ceramic Water Filter
   description: Reusable ceramic filter.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 87a8f7bdd556f6e65a2f6b608a564aa6, type: 3}
   type: 9
   stackMax: 5
   weight: 0.6

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: body_armour_heavy_deprecated
   displayName: Deprecated Heavy Body Armour
   description: Warped heavy plates.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e4b98401b7a2138b18385c9cbc9bf073, type: 3}
   type: 6
   stackMax: 1
   weight: 2.5

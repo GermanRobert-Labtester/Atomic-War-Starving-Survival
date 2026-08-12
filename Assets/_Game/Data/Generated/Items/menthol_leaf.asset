@@ -15,7 +15,7 @@ MonoBehaviour:
   id: menthol_leaf
   displayName: Menthol Leaf
   description: Cool leaf.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 099c49bae22e2df9fa7582d426cae101, type: 3}
   type: 10
   stackMax: 25
   weight: 0.04

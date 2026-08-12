@@ -15,7 +15,7 @@ MonoBehaviour:
   id: canned_food
   displayName: Canned Food
   description: Preserved rations. Restores hunger and a little morale.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 09997dff682cbb0fe883b6b85f192084, type: 3}
   type: 0
   stackMax: 10
   weight: 0.5
