@@ -166,13 +166,19 @@ namespace AtomicWar._Game.Core
             // Wire ash storms to burial
             if (WeatherSystem != null)
             {
-                // Ash storms trigger ash accumulation
-                EventBus.Subscribe<WeatherKind>(weather =>
+                // Ash storms trigger ash accumulation. Track the subscription for
+                // explicit teardown — the EventBus is process-wide and is NOT
+                // cleared on scene teardown (GameBootstrap.Lifecycle.cs), so an
+                // untracked lambda would leak + accumulate one stale handler per
+                // reload (each storm would then fire OnAshStorm N times).
+                Action<WeatherKind> onWeatherForAshBurial = weather =>
                 {
                     if (weather == WeatherKind.Ashfall ||
                         weather == WeatherKind.FalloutStorm)
                         AshDriftBurialSystem.OnAshStorm(0.8f);
-                });
+                };
+                EventBus.Subscribe(onWeatherForAshBurial);
+                _subscriptions.Track(() => EventBus.Unsubscribe(onWeatherForAshBurial));
             }
 
             // #55: Location Evolution System

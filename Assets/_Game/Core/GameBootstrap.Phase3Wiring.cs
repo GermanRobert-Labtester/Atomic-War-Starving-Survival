@@ -63,14 +63,19 @@ namespace AtomicWar._Game.Core
             _subscriptions.Track(() =>
                 _audioBus.OnEmergencySirenStateChanged -= onSirenChanged);
 
-            // Subscribe to raid resolutions as explosion-like triggers
-            EventBus.Subscribe<RaidResolution>((resolution) =>
+            // Subscribe to raid resolutions as explosion-like triggers.
+            // The EventBus is process-wide and is intentionally NOT cleared on
+            // scene teardown (see GameBootstrap.Lifecycle.cs), so this lambda
+            // must be tracked for explicit unsubscribe — otherwise it leaks the
+            // old bootstrap and accumulates one extra stale handler per reload
+            // (each raid would then fire the explosion flashback N times).
+            Action<RaidResolution> onRaidResolved = (resolution) =>
             {
                 if (resolution != null && resolution.Launched)
                     SomaticFlashbackSystem.OnAudioEvent("explosion", 0.7f);
-            });
-            // Note: EventBus subscriptions are not tracked in _subscriptions;
-            // they're cleared on scene teardown via EventBus.Clear().
+            };
+            EventBus.Subscribe(onRaidResolved);
+            _subscriptions.Track(() => EventBus.Unsubscribe(onRaidResolved));
         }
 
         // ── Moral Branching Wiring ─────────────────────────────────────
