@@ -188,6 +188,8 @@ namespace AtomicWar._Game.Core
             WireBatch20HudElements();
             // Phase 11 — expansion psychology HUD widgets
             WirePhase11ExpansionHud();
+            // Expansions 3&4 + Deep Lore — 11 new HUD widgets
+            WireExpansions3to4DeepLoreHud();
         }
 
         // -----------------------------------------------------------------
