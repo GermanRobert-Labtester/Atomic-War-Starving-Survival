@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.5276375">
-  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="2344" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.527638" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.5995441">
+  <test-suite type="TestSuite" id="1000" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="2344" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.599544" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
     <properties>
       <property name="platform" value="EditMode" />
     </properties>
-    <test-suite type="Assembly" id="3615" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="2344" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.505952" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <test-suite type="Assembly" id="3615" name="AtomicWar.Tests.EditMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.EditMode.dll" runstate="Runnable" testcasecount="2344" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.580744" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
       <properties>
-        <property name="_PID" value="635576" />
+        <property name="_PID" value="645459" />
         <property name="_APPDOMAIN" value="Unity Child Domain" />
         <property name="platform" value="EditMode" />
         <property name="EditorOnly" value="True" />
       </properties>
-      <test-suite type="TestSuite" id="3616" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="2344" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.501474" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <test-suite type="TestSuite" id="3616" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="2344" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.575287" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
         <properties />
-        <test-suite type="TestSuite" id="3620" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="2336" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.497338" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <test-suite type="TestSuite" id="3620" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="2336" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.570625" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
           <properties />
-          <test-suite type="TestSuite" id="3621" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="2336" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.492179" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <test-suite type="TestSuite" id="3621" name="EditMode" fullname="AtomicWar.Tests.EditMode" runstate="Runnable" testcasecount="2336" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.566059" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
             <properties />
-            <test-suite type="TestFixture" id="1633" name="DiegeticHudUxmlExpansionProbeTests" fullname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" classname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.459243" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <test-suite type="TestFixture" id="1633" name="DiegeticHudUxmlExpansionProbeTests" fullname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" classname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.521127" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
               <properties />
-              <test-case id="1634" name="CloneTree_ExposesExpansionAndPhase11Roots" fullname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests.CloneTree_ExposesExpansionAndPhase11Roots" methodname="CloneTree_ExposesExpansionAndPhase11Roots" classname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" runstate="Runnable" seed="866145601" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.264834" asserts="0">
+              <test-case id="1634" name="CloneTree_ExposesExpansionAndPhase11Roots" fullname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests.CloneTree_ExposesExpansionAndPhase11Roots" methodname="CloneTree_ExposesExpansionAndPhase11Roots" classname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" runstate="Runnable" seed="1096838023" result="Passed" start-time="2026-08-12 17:59:56Z" end-time="2026-08-12 17:59:57Z" duration="0.327022" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />
                 </properties>
               </test-case>
-              <test-case id="1635" name="EnsureBuilt_KeepsExpansionRoots" fullname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests.EnsureBuilt_KeepsExpansionRoots" methodname="EnsureBuilt_KeepsExpansionRoots" classname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" runstate="Runnable" seed="1074051096" result="Passed" start-time="2026-08-12 17:54:34Z" end-time="2026-08-12 17:54:34Z" duration="0.166349" asserts="0">
+              <test-case id="1635" name="EnsureBuilt_KeepsExpansionRoots" fullname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests.EnsureBuilt_KeepsExpansionRoots" methodname="EnsureBuilt_KeepsExpansionRoots" classname="AtomicWar.Tests.EditMode.DiegeticHudUxmlExpansionProbeTests" runstate="Runnable" seed="398823019" result="Passed" start-time="2026-08-12 17:59:57Z" end-time="2026-08-12 17:59:57Z" duration="0.169961" asserts="0">
                 <properties>
                   <property name="retryIteration" value="0" />
                   <property name="repeatIteration" value="0" />

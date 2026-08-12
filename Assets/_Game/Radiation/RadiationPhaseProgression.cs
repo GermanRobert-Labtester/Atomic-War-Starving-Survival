@@ -180,7 +180,7 @@ namespace AtomicWar._Game.Radiation
         {
             // Death check: if health critically low, chance of death
             float healthRatio = sv.Needs?.Health > 0f ? sv.Needs.Health / 100f : 0f;
-            float deathChance = 1f - healthRatio;
+            float deathChance = Mathf.Clamp01(1f - healthRatio);
             if (Rng != null && Rng.NextDouble() < deathChance)
             {
                 // Terminal prognosis — final wish triggers

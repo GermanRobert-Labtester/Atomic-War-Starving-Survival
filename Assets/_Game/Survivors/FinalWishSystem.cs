@@ -151,6 +151,8 @@ namespace AtomicWar._Game.Survivors
                 _wishStates[sv.Id] = state;
             }
 
+            // Apply the bunker-wide grief penalty for a failed wish.
+            ApplyPermanentShelterMoraleBuff?.Invoke(WishFailedMoralePenalty);
             OnFinalWishFailed?.Invoke(sv);
         }
 

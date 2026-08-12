@@ -55,17 +55,23 @@ namespace AtomicWar._Game.Core
             _registry.Register<GarrisonConscriptionSystem>(GarrisonConscription);
 
             // Wire conscription events
-            GarrisonConscription.OnConscriptionDemand += (food, survivors) =>
+            Action<int, int> onConscriptionDemand = (food, survivorsCount) =>
             {
                 GameLog.Log($"[Garrison] Conscription demand: {food} food, " +
-                    $"{survivors} young survivor(s) for military service.");
+                    $"{survivorsCount} young survivor(s) for military service.");
             };
-            GarrisonConscription.OnPunitiveRaidTriggered += () =>
+            GarrisonConscription.OnConscriptionDemand += onConscriptionDemand;
+            _subscriptions.Track(() =>
+                GarrisonConscription.OnConscriptionDemand -= onConscriptionDemand);
+
+            Action onPunitiveRaid = () =>
             {
                 GameLog.Log("[Garrison] Punitive raid incoming — refused conscription.");
-                // TODO: HatchDefenseSystem.ForceRaid not available; open raid window as fallback
                 HatchDefenseSystem?.OpenRaidWindow();
             };
+            GarrisonConscription.OnPunitiveRaidTriggered += onPunitiveRaid;
+            _subscriptions.Track(() =>
+                GarrisonConscription.OnPunitiveRaidTriggered -= onPunitiveRaid);
 
             // ── Ash Sign Cult ──────────────────────────────────────────
             AshSignCult = new AshSignCultSystem();
@@ -74,11 +80,14 @@ namespace AtomicWar._Game.Core
                     new System.Random(_worldSeed + 53)));
             _registry.Register<AshSignCultSystem>(AshSignCult);
 
-            AshSignCult.OnRitualOffered += (sv) =>
+            Action<Survivor> onRitualOffered = (sv) =>
             {
                 GameLog.Log($"[Cult] Ritual offered to {sv.DisplayName}: " +
                     "24h in irradiated hotspot for herbal remedy.");
             };
+            AshSignCult.OnRitualOffered += onRitualOffered;
+            _subscriptions.Track(() =>
+                AshSignCult.OnRitualOffered -= onRitualOffered);
 
             // ── Scavenger Refuge ───────────────────────────────────────
             ScavengerRefuge = new ScavengerRefugeSystem();
@@ -88,11 +97,14 @@ namespace AtomicWar._Game.Core
                     () => 4));
             _registry.Register<ScavengerRefugeSystem>(ScavengerRefuge);
 
-            ScavengerRefuge.OnRefugeesArrived += (count) =>
+            Action<int> onRefugeesArrived = (count) =>
             {
                 GameLog.Log($"[Refuge] {count} desperate civilians " +
                     "seeking shelter at the bunker hatch.");
             };
+            ScavengerRefuge.OnRefugeesArrived += onRefugeesArrived;
+            _subscriptions.Track(() =>
+                ScavengerRefuge.OnRefugeesArrived -= onRefugeesArrived);
         }
 
         // ═══════════════════════════════════════════════════════════════
