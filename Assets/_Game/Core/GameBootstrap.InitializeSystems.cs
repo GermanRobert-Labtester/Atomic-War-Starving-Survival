@@ -41,6 +41,9 @@ namespace AtomicWar._Game.Core
             // (EventRunner, HatchDefenseSystem, ExpeditionSystem must exist)
             InitPhase2Wiring();
 
+            // Phase 3 — Wire flashback, moral branching, chemical dependency
+            InitPhase3Wiring();
+
             FinishSystemRegistration();
         }
 
