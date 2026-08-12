@@ -48,6 +48,10 @@ namespace AtomicWar._Game.Core
             // ham radio, damaged maps, audio cassettes
             InitPhases4to6Wiring();
 
+            // Phases 7-8 — Interpersonal dynamics: trauma bonds, friction,
+            // ration conflicts, leadership, caregiving, desertion
+            InitPhases7to8Wiring();
+
             FinishSystemRegistration();
         }
 
