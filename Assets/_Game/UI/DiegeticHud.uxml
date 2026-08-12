@@ -191,7 +191,7 @@
             </ui:VisualElement>
             <ui:Label name="survivor-blood-type-label" class="survivor-blood-badge" text="" />
             <ui:VisualElement name="hypervigilance-indicator-root" class="hypervigilance-indicator hidden" picking-mode="Ignore">
-                <ui:VisualElement name="hypervigilance-eye" class="hypervigilance-eye" />
+                <ui:Label name="hypervigilance-eye" class="hypervigilance-eye" text="" />
             </ui:VisualElement>
             <ui:VisualElement name="addiction-detox-root" class="addiction-detox-indicator hidden" picking-mode="Ignore">
                 <ui:Label name="addiction-detox-icon" class="addiction-detox-icon" text="" />

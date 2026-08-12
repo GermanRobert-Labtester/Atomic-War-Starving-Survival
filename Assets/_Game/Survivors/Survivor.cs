@@ -58,6 +58,19 @@ namespace AtomicWar._Game.Survivors
     }
 
     /// <summary>
+    /// Philosophical stance adopted by a survivor. Dictates which emergency
+    /// decisions trigger morale recovery versus severe distress.
+    /// Owned by BeliefSystem (extended for Antigravity #49).
+    /// </summary>
+    public enum PhilosophicalStance
+    {
+        Undecided,
+        Stoicism,
+        Faith,
+        MaterialRationalism
+    }
+
+    /// <summary>
     /// Runtime model for a single survivor: identity, activity state, and current
     /// need values. Save/load safe (primitives only); behaviour lives in
     /// NeedsSystem, RadiationSystem, and the Utility AI.
@@ -745,6 +758,146 @@ namespace AtomicWar._Game.Survivors
             }
             return false;
         }
+
+        // ===================================================================
+        // ANTIGRAVITY EXPANSION — Mechanics #41–80 Fields
+        // ===================================================================
+
+        // ---- #41: Claustrophobic Tremors ----
+        /// <summary>0..1 — builds from prolonged low-ceiling confinement.</summary>
+        public float ClaustrophobiaLevel;
+        /// <summary>Hours of outdoor/ventilated time needed to calm claustrophobia.</summary>
+        public float OutdoorHoursNeeded;
+        /// <summary>True when claustrophobia is causing active panic penalty.</summary>
+        public bool HasClaustrophobicPanic;
+
+        // ---- #42: Auditory Tinnitus ----
+        /// <summary>True if survivor has tinnitus from blast/exposure.</summary>
+        public bool HasTinnitus;
+        /// <summary>Hours remaining of tinnitus episode.</summary>
+        public float TinnitusHoursRemaining;
+        /// <summary>True when tinnitus blocks verbal raid warnings.</summary>
+        public bool IsDeafToWarnings;
+
+        // ---- #43: Somnambulism (Sleepwalking) ----
+        /// <summary>0..1 risk of sleepwalking tonight.</summary>
+        public float SleepwalkingRisk;
+        /// <summary>Last room id the survivor sleepwalked to.</summary>
+        public string LastSleepwalkRoomId;
+        /// <summary>True if sleepwalked tonight (once per night max).</summary>
+        public bool DidSleepwalkTonight;
+
+        // ---- #44: Phantom Hunger & Hoarding ----
+        /// <summary>True if survivor compulsively hoards food.</summary>
+        public bool HasHoardingCompulsion;
+        /// <summary>Count of food items hidden in personal quarters.</summary>
+        public int HiddenFoodCount;
+        /// <summary>True if hoard was discovered during room inspection.</summary>
+        public bool HoardWasDiscovered;
+
+        // ---- #45: Hyper-Vigilant Scavenger's Eye ----
+        /// <summary>True if this survivor developed the scavenger's eye perk.</summary>
+        public bool HasScavengerEye;
+        /// <summary>Count of hidden caches discovered with this perk.</summary>
+        public int HiddenCachesFound;
+
+        // ---- #46: Nerve Damage & Steady Hand Strain ----
+        /// <summary>True if survivor has nerve damage from radiation/wounds.</summary>
+        public bool HasNerveDamage;
+        /// <summary>Hours remaining of nerve stabilizer drug effect.</summary>
+        public float NerveStabilizerHours;
+        /// <summary>0..1 weapon accuracy penalty from nerve damage.</summary>
+        public float WeaponAccuracyModifier;
+
+        // ---- #47: Survivor Bond Resilience (Lifeline) ----
+        /// <summary>Id of the bonded partner who grants the Lifeline perk.</summary>
+        public string LifelinePartnerId;
+        /// <summary>True if this survivor has the Lifeline perk active.</summary>
+        public bool HasLifelinePerk;
+
+        // ---- #48: Anosmia (Loss of Smell) ----
+        /// <summary>True if survivor lost sense of smell from toxic exposure.</summary>
+        public bool HasAnosmia;
+        /// <summary>True when anosmia makes them blind to gas leaks.</summary>
+        public bool IsBlindToGasLeaks;
+
+        // ---- #49: Survivor Faith / Philosophy ----
+        /// <summary>Philosophical stance adopted by the survivor.</summary>
+        public PhilosophicalStance Stance = PhilosophicalStance.Undecided;
+
+        // ---- #50: Terminal Radiation Acceptance ----
+        /// <summary>True when survivor has accepted their fate at 800+ mSv.</summary>
+        public bool HasTerminalAcceptance;
+        /// <summary>True when acceptance grants immunity to morale loss from volunteering.</summary>
+        public bool VolunteerMoraleImmune;
+
+        // ---- #51: Fallout Season Transitions ----
+        /// <summary>Current season as perceived by survivor (affects mood).</summary>
+        public string PerceivedSeasonId;
+
+        // ---- #52: Ash Drift Room Burial ----
+        /// <summary>Hours since the hatch was last cleared of ash.</summary>
+        public float HoursSinceAshClearing;
+
+        // ---- #55: Ghost Town Repopulation ----
+        /// <summary>Set of location ids this survivor has seen change state.</summary>
+        public System.Collections.Generic.List<string> WitnessedLocationChanges =
+            new System.Collections.Generic.List<string>();
+
+        // ---- #60: Survivor Graveyard ----
+        /// <summary>Count of times this survivor has visited grave markers.</summary>
+        public int GraveVisitsCount;
+        /// <summary>Hours remaining of grave-visit morale buff.</summary>
+        public float GraveVisitComfortHours;
+
+        // ---- #71: Survival Codex / Bunker Manifesto ----
+        /// <summary>The law code this survivor follows.</summary>
+        public string ManifestoLawCodeId;
+        /// <summary>0..1 how strongly this survivor adheres to the manifesto.</summary>
+        public float ManifestoAdherence;
+
+        // ---- #72: Generational Knowledge Transfer ----
+        /// <summary>Count of skills successfully transferred to younger survivors.</summary>
+        public int SkillsTransferredCount;
+
+        // ---- #73: Vault of Pre-War Culture ----
+        /// <summary>Count of cultural artifacts this survivor has preserved.</summary>
+        public int CulturalArtifactsPreserved;
+        /// <summary>0..1 permanent psychological resilience from culture.</summary>
+        public float CulturalResilience;
+
+        // ---- #75: Deep Geothermal / Aquifer Project ----
+        /// <summary>Hours contributed to the deep aquifer drilling project.</summary>
+        public float AquiferProjectHoursContributed;
+
+        // ---- #78: Faction Peace Treaty ----
+        /// <summary>True if this survivor witnessed the peace treaty signing.</summary>
+        public bool WitnessedPeaceTreaty;
+
+        // ---- #79: Final Fallout Cleansing Forecast ----
+        /// <summary>Known days until primary fallout dissipates.</summary>
+        public float KnownFalloutCleansingDays;
+
+        // ---- #80: Campaign Legacy ----
+        /// <summary>List of campaign milestone ids recorded for this survivor.</summary>
+        public System.Collections.Generic.List<string> CampaignMilestoneIds =
+            new System.Collections.Generic.List<string>();
+
+        // ---- Convenience helpers for Antigravity fields ----
+
+        /// <summary>True if claustrophobia is currently active.</summary>
+        public bool HasActiveClaustrophobia => ClaustrophobiaLevel > 0.5f;
+
+        /// <summary>True if nerve damage is currently affecting performance.</summary>
+        public bool HasActiveNerveDamage =>
+            HasNerveDamage && NerveStabilizerHours <= 0f;
+
+        /// <summary>True if philosophy stance has been chosen.</summary>
+        public bool HasPhilosophicalStance => Stance != PhilosophicalStance.Undecided;
+
+        /// <summary>Effective weapon accuracy modifier accounting for nerve damage.</summary>
+        public float EffectiveWeaponAccuracy =>
+            HasActiveNerveDamage ? (1f - WeaponAccuracyModifier) : 1f;
     }
 
     /// <summary>
@@ -844,6 +997,100 @@ namespace AtomicWar._Game.Survivors
             BondStrength = bondStrength;
             SharedHazardId = sharedHazardId;
             DayFormed = dayFormed;
+        }
+    }
+
+    // ===================================================================
+    // Antigravity Expansion — New Serializable Structs (#41–80)
+    // ===================================================================
+
+    /// <summary>
+    /// A hidden food hoard discovered during room inspection.
+    /// Owned by HoardingBehaviorSystem (#44).
+    /// </summary>
+    [System.Serializable]
+    public struct HiddenFoodHoard
+    {
+        public string ItemId;
+        public int Count;
+        public int DayHidden;
+        public bool IsDiscovered;
+
+        public HiddenFoodHoard(string itemId, int count, int dayHidden)
+        {
+            ItemId = itemId;
+            Count = count;
+            DayHidden = dayHidden;
+            IsDiscovered = false;
+        }
+    }
+
+    /// <summary>
+    /// A sleepwalking incident recorded for a survivor.
+    /// Owned by SleepwalkingSystem (#43, extends SleepDeprivationSystem).
+    /// </summary>
+    [System.Serializable]
+    public struct SleepwalkIncident
+    {
+        public int DayOccurred;
+        public string OriginRoomId;
+        public string DestinationRoomId;
+        public string ActionTaken; // "moved_food", "unlocked_hatch", "wandered_hazard"
+
+        public SleepwalkIncident(int day, string origin, string dest, string action)
+        {
+            DayOccurred = day;
+            OriginRoomId = origin;
+            DestinationRoomId = dest;
+            ActionTaken = action;
+        }
+    }
+
+    /// <summary>
+    /// A manifesto law entry in the Survival Codex.
+    /// Owned by BunkerManifestoSystem (#71).
+    /// </summary>
+    [System.Serializable]
+    public struct ManifestoLaw
+    {
+        public string LawId;
+        public string Category; // rationing, medical, defense, justice
+        public string DisplayText;
+        public int DayEnacted;
+        public float AdherenceBonus; // morale effect for followers
+
+        public ManifestoLaw(string lawId, string category, string text,
+            int dayEnacted, float adherenceBonus)
+        {
+            LawId = lawId;
+            Category = category;
+            DisplayText = text;
+            DayEnacted = dayEnacted;
+            AdherenceBonus = adherenceBonus;
+        }
+    }
+
+    /// <summary>
+    /// A single campaign milestone for the Chronicle of Ash.
+    /// Owned by ChronicleLogger (#80).
+    /// </summary>
+    [System.Serializable]
+    public struct CampaignMilestone
+    {
+        public string MilestoneId;
+        public int DayRecorded;
+        public string Category; // death, moral_choice, faction_deal, storm_survival, discovery
+        public string Description;
+        public string[] InvolvedSurvivorIds;
+
+        public CampaignMilestone(string id, int day, string category,
+            string description, string[] involvedIds)
+        {
+            MilestoneId = id;
+            DayRecorded = day;
+            Category = category;
+            Description = description;
+            InvolvedSurvivorIds = involvedIds ?? new string[0];
         }
     }
 }

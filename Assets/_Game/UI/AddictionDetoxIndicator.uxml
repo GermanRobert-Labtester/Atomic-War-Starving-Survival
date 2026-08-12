@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
+    <ui:VisualElement name="addiction-detox-root" class="addiction-detox-indicator">
+        <ui:Label name="addiction-detox-icon" class="addiction-detox-icon" text="" />
+    </ui:VisualElement>
+</ui:UXML>

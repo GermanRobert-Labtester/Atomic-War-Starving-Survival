@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
+    <ui:VisualElement name="keepsake-slot-root" class="keepsake-slot">
+        <ui:Label name="keepsake-slot-icon" class="keepsake-slot-icon" text="" />
+        <ui:VisualElement name="keepsake-crack-overlay" class="keepsake-crack-overlay" />
+    </ui:VisualElement>
+</ui:UXML>

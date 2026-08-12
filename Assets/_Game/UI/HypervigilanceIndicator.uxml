@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
+    <ui:VisualElement name="hypervigilance-indicator-root" class="hypervigilance-indicator">
+        <ui:Label name="hypervigilance-eye" class="hypervigilance-eye" text="" />
+    </ui:VisualElement>
+</ui:UXML>

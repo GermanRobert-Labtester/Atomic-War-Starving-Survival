@@ -10,11 +10,50 @@ namespace AtomicWar._Game.Core
     {
         private string _phase11FocusedSurvivorId;
         private bool _phase11HudWired;
+        private bool _phase11TicksRegistered;
+
+        private void RegisterPhase11Ticks()
+        {
+            if (_phase11TicksRegistered) return;
+            _phase11TicksRegistered = true;
+            _registry.RegisterPerSubstep("phase11KeepsakeGrief", h => TickKeepsakeGriefSurvivors(h));
+            _registry.RegisterPerSubstep("phase11AddictionFade", h => TickAddictionRecoveredFade(h));
+        }
+
+        private void TickKeepsakeGriefSurvivors(float gameHours)
+        {
+            if (PersonalKeepsakeSystem == null || Survivors == null) return;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null) continue;
+                PersonalKeepsakeSystem.TickGriefDecay(sv, gameHours);
+                if (_hud?.KeepsakeSlotUi != null &&
+                    string.Equals(sv.Id, _phase11FocusedSurvivorId, StringComparison.Ordinal))
+                {
+                    _hud.KeepsakeSlotUi.SetKeepsake(sv.Id, sv.PersonalKeepsakeItemId,
+                        sv.HasLostKeepsake, sv.KeepsakeGriefLevel);
+                }
+            }
+        }
+
+        private void TickAddictionRecoveredFade(float gameHours)
+        {
+            if (_hud?.AddictionDetoxIndicator == null || Survivors == null) return;
+            for (int i = 0; i < Survivors.Count; i++)
+            {
+                var sv = Survivors[i];
+                if (sv == null) continue;
+                _hud.AddictionDetoxIndicator.TickRecoveredFade(sv.Id, gameHours);
+            }
+        }
 
         private void WirePhase11ExpansionHud()
         {
             if (_hud == null || _phase11HudWired) return;
             _phase11HudWired = true;
+
+            RegisterPhase11Ticks();
 
             WirePhase11RadiationIndicator();
             WirePhase11PhantomVignette();

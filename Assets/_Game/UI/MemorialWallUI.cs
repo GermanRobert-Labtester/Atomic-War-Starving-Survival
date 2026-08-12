@@ -117,8 +117,10 @@ namespace AtomicWar._Game.UI
 
         public void Hide()
         {
-            _root?.AddToClassList("hidden");
-            OnClosed?.Invoke();
+            if (_root == null) return;
+            bool wasVisible = !_root.ClassListContains("hidden");
+            _root.AddToClassList("hidden");
+            if (wasVisible) OnClosed?.Invoke();
         }
     }
 }

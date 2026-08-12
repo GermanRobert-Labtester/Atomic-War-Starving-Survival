@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
+    <ui:VisualElement name="radiation-phase-root" class="radiation-phase-indicator">
+        <ui:VisualElement name="radiation-phase-dot" class="radiation-phase-dot" />
+        <ui:Label name="radiation-phase-label" class="radiation-phase-label" text="" />
+    </ui:VisualElement>
+</ui:UXML>

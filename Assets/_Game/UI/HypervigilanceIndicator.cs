@@ -18,7 +18,7 @@ namespace AtomicWar._Game.UI
         [SerializeField] private UIDocument _document;
 
         private VisualElement _root;
-        private VisualElement _eye;
+        private Label _eye;
         private VisualElement _flash;
         private readonly Dictionary<string, float> _levels = new();
         private string _focusedSurvivorId;
@@ -50,7 +50,7 @@ namespace AtomicWar._Game.UI
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
             _root = _document.rootVisualElement.Q("hypervigilance-indicator-root");
-            _eye = _root?.Q("hypervigilance-eye");
+            _eye = _root?.Q<Label>("hypervigilance-eye");
             _flash = _document.rootVisualElement.Q("hypervigilance-flash-root");
             Refresh();
         }

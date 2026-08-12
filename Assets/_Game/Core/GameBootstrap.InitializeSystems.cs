@@ -56,6 +56,10 @@ namespace AtomicWar._Game.Core
             // Endgame branching refinement
             InitPhases9to10Wiring();
 
+            // Antigravity Expansion — Mechanics #41-80
+            // (Phases 16-19: Physical Quirks, Environmental, Legacy Arcs)
+            InitAntigravitySystems();
+
             FinishSystemRegistration();
         }
 
