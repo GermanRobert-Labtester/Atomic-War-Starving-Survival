@@ -57,7 +57,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("fallout-storm-root");
+            _root = _document.rootVisualElement?.Q("fallout-storm-root");
             if (_root == null) return;
             _stormNameLabel  = _root.Q<Label>("storm-name-label");
             _windLabel       = _root.Q<Label>("storm-wind-label");

@@ -58,7 +58,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("power-flow-root");
+            _root = _document.rootVisualElement?.Q("power-flow-root");
             if (_root == null) return;
             _budgetLabel   = _root.Q<Label>("power-budget-label");
             _blackoutLabel = _root.Q<Label>("power-blackout-label");

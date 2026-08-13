@@ -18,6 +18,10 @@ namespace AtomicWar._Game.UI
         [SerializeField] private UIDocument _document;
 
         private VisualElement _root;
+
+        /// <summary>Tree the click handler is already registered on; guards against double-registration.</summary>
+        private VisualElement _wiredRoot;
+
         private Label _nameLabel;
         private Label _roleLabel;
         private Label _statusLabel;
@@ -54,7 +58,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("survivor-portrait-root");
+            _root = _document.rootVisualElement?.Q("survivor-portrait-root");
             if (_root == null) return;
             _nameLabel      = _root.Q<Label>("survivor-name-label");
             _roleLabel      = _root.Q<Label>("survivor-role-label");
@@ -64,8 +68,17 @@ namespace AtomicWar._Game.UI
             _moraleFill     = _root.Q("survivor-morale-fill");
             _fatigueFill    = _root.Q("survivor-fatigue-fill");
             _radFill        = _root.Q("survivor-rad-fill");
-            if (_root != null)
+
+            // This card is pooled, so enable/disable is its normal path and
+            // OnEnable runs many times. UIDocument keeps the same visual tree
+            // across that cycle, so registering again would stack a second
+            // handler on the same element and raise OnCardClicked twice per
+            // click. Register only when the tree is genuinely new.
+            if (!ReferenceEquals(_wiredRoot, _root))
+            {
+                _wiredRoot = _root;
                 _root.RegisterCallback<ClickEvent>(_ => OnCardClicked?.Invoke(_survivorId));
+            }
         }
 
         public void Bind(string survivorId, string name, string role,

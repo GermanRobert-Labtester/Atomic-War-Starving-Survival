@@ -46,7 +46,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("air-filter-root");
+            _root = _document.rootVisualElement?.Q("air-filter-root");
             if (_root == null) return;
             _fillBar              = _root.Q("air-filter-fill");
             _integrityLabel       = _root.Q<Label>("air-filter-integrity-label");

@@ -35,7 +35,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("geiger-sweep-root");
+            _root = _document.rootVisualElement?.Q("geiger-sweep-root");
             if (_root == null) return;
             _cpmLabel    = _root.Q<Label>("geiger-cpm-label");
             _statusLabel = _root.Q<Label>("geiger-status-label");

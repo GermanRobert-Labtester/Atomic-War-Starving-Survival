@@ -54,7 +54,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("temperature-readout-root");
+            _root = _document.rootVisualElement?.Q("temperature-readout-root");
             if (_root == null) return;
             _internalTempLabel = _root.Q<Label>("temp-internal-label");
             _externalTempLabel = _root.Q<Label>("temp-external-label");

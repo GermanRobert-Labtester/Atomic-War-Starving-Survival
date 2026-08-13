@@ -34,7 +34,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("moral-decay-root");
+            _root = _document.rootVisualElement?.Q("moral-decay-root");
             if (_root == null) return;
             _breakingLabel = _root.Q<Label>("moral-breaking-label");
             _moraleLabel   = _root.Q<Label>("moral-pct-label");

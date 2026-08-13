@@ -51,7 +51,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("water-purity-root");
+            _root = _document.rootVisualElement?.Q("water-purity-root");
             if (_root == null) return;
             _reserveLabel       = _root.Q<Label>("water-reserve-label");
             _statusLabel        = _root.Q<Label>("water-status-label");

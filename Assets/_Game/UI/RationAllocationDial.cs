@@ -17,6 +17,10 @@ namespace AtomicWar._Game.UI
         [SerializeField] private UIDocument _document;
 
         private VisualElement _root;
+
+        /// <summary>Tree the callbacks are already wired to; guards against double-subscription.</summary>
+        private VisualElement _wiredRoot;
+
         private Label _survivorLabel;
         private Label _calorieLabel;
         private Label[] _slotLabels  = new Label[3];
@@ -82,7 +86,7 @@ namespace AtomicWar._Game.UI
         {
             if (_document == null) _document = GetComponent<UIDocument>();
             if (_document == null) return;
-            _root = _document.rootVisualElement.Q("ration-dial-root");
+            _root = _document.rootVisualElement?.Q("ration-dial-root");
             if (_root == null) return;
 
             _survivorLabel = _root.Q<Label>("ration-survivor-label");
@@ -90,9 +94,31 @@ namespace AtomicWar._Game.UI
 
             for (int i = 0; i < 3; i++)
             {
-                int idx = i;
                 _slotLabels[i]  = _root.Q<Label>($"ration-slot-label-{i}");
                 _slotButtons[i] = _root.Q<Button>($"ration-slot-btn-{i}");
+            }
+
+            _confirmButton = _root.Q<Button>("ration-confirm-btn");
+            _skipLabel     = _root.Q<Label>("ration-skip-label");
+
+            WireCallbacks();
+            Hide();
+        }
+
+        /// <summary>
+        /// UIDocument keeps the same visual tree across a disable/enable cycle,
+        /// so subscribing on every OnEnable would stack a second handler on the
+        /// same Button and raise OnRationConfirmed twice for one click —
+        /// consuming the ration twice. Subscribe only when the tree is new.
+        /// </summary>
+        private void WireCallbacks()
+        {
+            if (ReferenceEquals(_wiredRoot, _root)) return;
+            _wiredRoot = _root;
+
+            for (int i = 0; i < 3; i++)
+            {
+                int idx = i;
                 if (_slotButtons[i] != null)
                     _slotButtons[i].clicked += () => SelectSlot(idx);
             }
@@ -102,15 +128,11 @@ namespace AtomicWar._Game.UI
             if (incBtn != null) incBtn.clicked += () => { _multiplier = Mathf.Min(_multiplier + 1, 3); RefreshCalorie(); };
             if (decBtn != null) decBtn.clicked += () => { _multiplier = Mathf.Max(_multiplier - 1, 1); RefreshCalorie(); };
 
-            _confirmButton = _root.Q<Button>("ration-confirm-btn");
             if (_confirmButton != null)
                 _confirmButton.clicked += Confirm;
 
-            _skipLabel = _root.Q<Label>("ration-skip-label");
             if (_skipLabel != null)
                 _skipLabel.RegisterCallback<ClickEvent>(_ => Skip());
-
-            Hide();
         }
 
         public void Open(string survivorId, string survivorName,
