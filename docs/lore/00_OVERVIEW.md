@@ -27,9 +27,10 @@ the expansion spec was quoting the second one:
 |---|---|---|
 | `iron_garrison` | `faction_central_garrison` | The Iron Garrison |
 | `ash_militia` | `faction_upland_militia` | The Ash Militia |
-| `cult_of_ash_sign` | *(no systems id found)* | The Cult of the Ash Sign |
-| `warlords_sector_4` | *(no systems id found)* | The Warlords of Sector 4 |
-| *(no lore entry)* | `faction_rebuilders` | The Rebuilders |
+| `cult_of_ash_sign` | `faction_cult_of_the_glow` | The Cult of the Ash Sign |
+| `warlords_sector_4` | `faction_scavenger_warlords` | The Warlords of Sector 4 |
+| *(uses systems id)* | `faction_rebuilders` | The Rebuilders — see `06` |
+| *(uses systems id)* | `faction_black_ops` | D/9 — see `06` |
 
 - **Lore/UI**: `faction_lore.json`, read by `FactionLoreCatalogLoader` into
   `LoreCodexPanel`.
@@ -39,8 +40,14 @@ the expansion spec was quoting the second one:
 **This is a live defect, not just untidiness.** `Quest_MilitiaGrainWar.cs`
 awards trust to `faction_upland_militia`; the Lore Codex shows trust for
 `ash_militia`. They are the same faction and the two will never agree.
-`faction_rebuilders` has hegemony tracked in `WorldStateConsequenceSystem` but
-has no `faction_lore.json` entry at all, so it is invisible to the player.
+
+Two further systems ids had no `faction_lore.json` entry at all, so the player
+could be starved by one and killed by the other without the game ever naming
+either: `faction_rebuilders` (hegemony-tracked, owns the medical supply) and
+`faction_black_ops` (traps, hostile to everyone). Both are now written in
+`06_REBUILDERS_AND_BLACK_OPS.md`, using the **systems id as the lore id** —
+neither had a lore-side twin yet, so matching the code is the only choice that
+does not create a second instance of the militia bug.
 
 Reconciling the namespaces is a code task, out of scope for this bible, but
 **no new content should pick a side until it is done.** New factions in
@@ -92,6 +99,7 @@ could not?"
 | `03_LOCATIONS.md` | new locations, with history and hooks |
 | `04_ENCOUNTERS.md` | character encounters and situational encounters |
 | `05_FACTIONS.md` | Powers vs Currents; 8 non-territorial factions, peaceful and dangerous |
+| `06_REBUILDERS_AND_BLACK_OPS.md` | the two faction ids already live in code with no lore — written to the code, not around it |
 
 ## The spine, in one paragraph
 
@@ -122,6 +130,11 @@ See `02_THE_LIST.md`.
 - **No fifth territorial power.** The four in `faction_lore.json` hold the
   ground and that map stays closed. Additional factions are **Currents** —
   they cross territory rather than holding it. See `05_FACTIONS.md`.
+  The two in `06` do not breach this: the Rebuilders sit on one uncontested
+  floodplain and their hegemony gates a *market* rather than ground — their
+  only map mutation is `Mutation_MedicalSupplyGone` — and D/9 is
+  anti-territorial by doctrine, denying fixed infrastructure instead of
+  holding it.
 - **No new victory paths.** 15 `Victory_*.cs` already exist.
 - **No new afflictions.** 27 `Affliction_*.cs` already exist and the pathology
   space is genuinely crowded.
