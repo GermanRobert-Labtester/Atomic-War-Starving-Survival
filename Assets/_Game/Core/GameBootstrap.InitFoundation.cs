@@ -19,6 +19,7 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 using Ashfall.Core.Journal;
+using JournalSystem = AtomicWar._Game.Events.JournalSystem;
 
 namespace AtomicWar._Game.Core
 {
@@ -492,7 +493,7 @@ namespace AtomicWar._Game.Core
                 },
                 // +1: at a full list the new entry is acquired before the
                 // evicted one is released, so steady state needs cap+1 stock.
-                initialCapacity: JournalSystem.MaxEntries + 1);
+                initialCapacity: Ashfall.Core.Journal.JournalSystem.MaxEntries + 1);
             JournalSystem.SetEntryFactory(_journalEntryPool.Acquire, _journalEntryPool.Release);
             Action<JournalEntry> onJournalEntryAdded = entry =>
             {

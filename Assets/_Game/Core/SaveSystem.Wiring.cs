@@ -28,6 +28,8 @@ using AtomicWar._Game.World;
 using AtomicWar._Game.Narrative;
 
 using AtomicWar._Game.Factions;
+using Ashfall.Core.Journal;
+using JournalSystem = AtomicWar._Game.Events.JournalSystem;
 
 namespace AtomicWar._Game.Core
 {

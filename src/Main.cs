@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using AtomicWar.Journal;
 using Ashfall.Core;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.GodotApp
 {
