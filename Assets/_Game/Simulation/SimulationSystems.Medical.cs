@@ -149,7 +149,7 @@ namespace AtomicWar._Game.Simulation
         /// <summary>Concatenated dose game-hours, grouped by Counts.</summary>
         public float[] ValuesFlat;
         /// <summary>Legacy jagged form; not JsonUtility-safe.</summary>
-        public float[][] ValuesJagged;
+        [NonSerialized] public float[][] ValuesJagged;
     }
 
 }

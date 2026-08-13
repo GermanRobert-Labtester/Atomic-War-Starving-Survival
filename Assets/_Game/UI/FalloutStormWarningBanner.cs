@@ -72,12 +72,13 @@ namespace AtomicWar._Game.UI
             _stormName       = name;
             _windDirection   = windDirection;
             _intensity       = intensity;
-            _countdownSeconds = durationSeconds;
+            float effectiveDuration = durationSeconds > 0f ? durationSeconds : _autoDismissSeconds;
+            _countdownSeconds = effectiveDuration;
             _active          = true;
             RefreshLabels();
             Show();
             if (_dismissCoroutine != null) StopCoroutine(_dismissCoroutine);
-            _dismissCoroutine = StartCoroutine(AutoDismiss(durationSeconds));
+            _dismissCoroutine = StartCoroutine(AutoDismiss(effectiveDuration));
         }
 
         public void Show() => _root?.RemoveFromClassList("hidden");

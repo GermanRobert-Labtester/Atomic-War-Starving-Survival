@@ -30,7 +30,7 @@ namespace AtomicWar.Tests.PlayMode
 
             Assert.That(assigned, Is.True, "300+ lifetime radiation exposure must trigger chronic illness assignment.");
             Assert.That(_survivor.HasChronicIllness, Is.True);
-            Assert.That(_survivor.ActiveChronicIllness.HasValue, Is.True);
+            Assert.That(_survivor.IsChronicIllnessManaged, Is.False);
         }
 
         [UnityTest]
@@ -40,10 +40,10 @@ namespace AtomicWar.Tests.PlayMode
             _pipeline.Evaluate(_survivor);
             yield return null;
 
-            Assert.That(_survivor.ActiveChronicIllness.HasValue, Is.True);
+            Assert.That(_survivor.HasChronicIllness, Is.True);
 
             // Assert stat penalty is active when unmanaged
-            var illness = _survivor.ActiveChronicIllness.Value;
+            var illness = _survivor.ActiveChronicIllness;
             switch (illness)
             {
                 case ChronicIllnessKind.LungFibrosis:

@@ -255,7 +255,7 @@ namespace AtomicWar._Game.Core
 
         private void PaintPhase11InitialState()
         {
-            if (Survivors == null || Survivors.Count == 0) return;
+            if (_hud == null || Survivors == null || Survivors.Count == 0) return;
             MemorialWallSystem?.SyncDeadSurvivors(Survivors);
             if (MemorialWallSystem != null && _hud.MemorialWallUi != null)
             {

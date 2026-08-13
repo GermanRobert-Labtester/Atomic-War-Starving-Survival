@@ -163,8 +163,8 @@ namespace AtomicWar._Game.AI.Actions
             if (sv.HasAcuteRadiationSyndrome && sv.Needs.Health < 20f) return true;
 
             // Terminal OrganFailure.
-            if (sv.ActiveChronicIllness.HasValue
-                && sv.ActiveChronicIllness.Value == Survivors.ChronicIllnessKind.OrganFailure
+            if (sv.HasChronicIllness
+                && sv.ActiveChronicIllness == Survivors.ChronicIllnessKind.OrganFailure
                 && sv.Needs.Health < 15f)
                 return true;
 

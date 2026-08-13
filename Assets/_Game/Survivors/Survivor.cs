@@ -481,7 +481,7 @@ namespace AtomicWar._Game.Survivors
         // -------------------------------------------------------------------
         // Chronic Disease Pipeline (Prompt #39).
         // -------------------------------------------------------------------
-        public ChronicIllnessKind? ActiveChronicIllness;
+        public ChronicIllnessKind ActiveChronicIllness;
         public float ChronicIllnessManagedHours;
 
         public bool IsChronicIllnessManaged => ChronicIllnessManagedHours > 0f;
@@ -491,8 +491,8 @@ namespace AtomicWar._Game.Survivors
         {
             get
             {
-                if (IsChronicIllnessManaged || !ActiveChronicIllness.HasValue) return 1.0f;
-                switch (ActiveChronicIllness.Value)
+                if (IsChronicIllnessManaged || !HasChronicIllness) return 1.0f;
+                switch (ActiveChronicIllness)
                 {
                     case ChronicIllnessKind.BoneMarrowDepression: return 2.0f;
                     case ChronicIllnessKind.LungFibrosis: return 1.5f;
@@ -506,8 +506,8 @@ namespace AtomicWar._Game.Survivors
         {
             get
             {
-                if (IsChronicIllnessManaged || !ActiveChronicIllness.HasValue) return 1.0f;
-                return ActiveChronicIllness.Value == ChronicIllnessKind.RadiationCataracts ? 0.5f : 1.0f;
+                if (IsChronicIllnessManaged || !HasChronicIllness) return 1.0f;
+                return ActiveChronicIllness == ChronicIllnessKind.RadiationCataracts ? 0.5f : 1.0f;
             }
         }
 
@@ -517,8 +517,8 @@ namespace AtomicWar._Game.Survivors
             get
             {
                 float baseStam = BaseMaxStamina > 0f ? BaseMaxStamina : 100f;
-                if (!ActiveChronicIllness.HasValue) return baseStam;
-                return ActiveChronicIllness.Value == ChronicIllnessKind.LungFibrosis
+                if (!HasChronicIllness) return baseStam;
+                return ActiveChronicIllness == ChronicIllnessKind.LungFibrosis
                     ? Mathf.Min(60f, baseStam) : baseStam;
             }
         }

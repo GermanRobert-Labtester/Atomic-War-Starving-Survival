@@ -18,11 +18,25 @@ namespace AtomicWar._Game.Narrative
     /// MoralBranchingSystem, and EventRunner.
     /// </summary>
     [Serializable]
+    public class ArcMilestoneEntry
+    {
+        public string SurvivorId;
+        public int Milestone;
+    }
+
+    [Serializable]
+    public class ArcBranchEntry
+    {
+        public string SurvivorId;
+        public string Branch;
+    }
+
+    [Serializable]
     public class NarrativeArcSaveState
     {
         public List<string> CompletedArcSurvivorIds = new List<string>();
-        public Dictionary<string, int> ArcMilestones = new Dictionary<string, int>();
-        public Dictionary<string, string> ArcBranches = new Dictionary<string, string>();
+        public List<ArcMilestoneEntry> ArcMilestones = new List<ArcMilestoneEntry>();
+        public List<ArcBranchEntry> ArcBranches = new List<ArcBranchEntry>();
     }
 
     public class SurvivorNarrativeArcSystem
@@ -225,9 +239,9 @@ namespace AtomicWar._Game.Narrative
             {
                 var sv = survivors[i];
                 if (sv == null) continue;
-                state.ArcMilestones[sv.Id] = sv.NarrativeArcMilestone;
+                state.ArcMilestones.Add(new ArcMilestoneEntry { SurvivorId = sv.Id, Milestone = sv.NarrativeArcMilestone });
                 if (!string.IsNullOrEmpty(sv.NarrativeArcBranchId))
-                    state.ArcBranches[sv.Id] = sv.NarrativeArcBranchId;
+                    state.ArcBranches.Add(new ArcBranchEntry { SurvivorId = sv.Id, Branch = sv.NarrativeArcBranchId });
                 if (sv.IsNarrativeArcComplete)
                     state.CompletedArcSurvivorIds.Add(sv.Id);
             }
@@ -242,10 +256,12 @@ namespace AtomicWar._Game.Narrative
             {
                 var sv = survivors[i];
                 if (sv == null) continue;
-                if (state.ArcMilestones.TryGetValue(sv.Id, out int m))
-                    sv.NarrativeArcMilestone = m;
-                if (state.ArcBranches.TryGetValue(sv.Id, out string b))
-                    sv.NarrativeArcBranchId = b;
+                var milestone = state.ArcMilestones.Find(e => e.SurvivorId == sv.Id);
+                if (milestone != null)
+                    sv.NarrativeArcMilestone = milestone.Milestone;
+                var branch = state.ArcBranches.Find(e => e.SurvivorId == sv.Id);
+                if (branch != null)
+                    sv.NarrativeArcBranchId = branch.Branch;
                 sv.IsNarrativeArcComplete =
                     state.CompletedArcSurvivorIds.Contains(sv.Id);
             }

@@ -70,9 +70,9 @@ namespace AtomicWar._Game.World
         /// </summary>
         public bool IsSafeTravelHour(float currentHour)
         {
-            if (SafeTravelStartHour > SafeTravelEndHour)
-                return currentHour >= SafeTravelStartHour || currentHour < SafeTravelEndHour;
-            return currentHour >= SafeTravelStartHour && currentHour < SafeTravelEndHour;
+            // Wrap-around window (const: SafeTravelStartHour=22, SafeTravelEndHour=4).
+            // 22f > 4f is compile-time true, so the non-wrapping branch was unreachable.
+            return currentHour >= SafeTravelStartHour || currentHour < SafeTravelEndHour;
         }
 
         /// <summary>

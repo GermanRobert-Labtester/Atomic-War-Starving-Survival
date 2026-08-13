@@ -99,7 +99,7 @@ namespace AtomicWar._Game.Core
                 CurrentRoomId            = sv.CurrentRoomId ?? string.Empty,
 
                 // Chronic Disease (pre-existing gap)
-                ActiveChronicIllness       = sv.ActiveChronicIllness.HasValue ? sv.ActiveChronicIllness.Value.ToString() : string.Empty,
+                ActiveChronicIllness       = sv.HasChronicIllness ? sv.ActiveChronicIllness.ToString() : string.Empty,
                 ChronicIllnessManagedHours = sv.ChronicIllnessManagedHours,
                 DisabilityIds             = sv.DisabilityIds != null ? new List<string>(sv.DisabilityIds) : new List<string>(),
 
@@ -228,9 +228,14 @@ namespace AtomicWar._Game.Core
 
             // Chronic Disease (pre-existing gap)
             if (!string.IsNullOrEmpty(save.ActiveChronicIllness) && System.Enum.TryParse<Survivors.ChronicIllnessKind>(save.ActiveChronicIllness, out var kind))
+            {
                 sv.ActiveChronicIllness = kind;
+                sv.HasChronicIllness = true;
+            }
             else
-                sv.ActiveChronicIllness = null;
+            {
+                sv.HasChronicIllness = false;
+            }
             sv.ChronicIllnessManagedHours = save.ChronicIllnessManagedHours;
             sv.DisabilityIds              = save.DisabilityIds != null ? new List<string>(save.DisabilityIds) : new List<string>();
 

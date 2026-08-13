@@ -83,8 +83,13 @@ namespace AtomicWar._Game.Core
                 current.ActiveAgents.Clear();
                 current.ActiveAgents.AddRange(incoming.ActiveAgents);
                 current.TributeDemands.Clear();
-                foreach (var kv in incoming.TributeDemands)
-                    current.TributeDemands[kv.Key] = kv.Value;
+                foreach (var entry in incoming.TributeDemands)
+                    current.TributeDemands.Add(new TributeDemandEntry
+                    {
+                        FactionId = entry.FactionId,
+                        ResourceType = entry.ResourceType,
+                        Amount = entry.Amount
+                    });
                 current.AlliedFactionIds.Clear();
                 current.AlliedFactionIds.AddRange(incoming.AlliedFactionIds);
                 current.InformantNetworkActive = incoming.InformantNetworkActive;

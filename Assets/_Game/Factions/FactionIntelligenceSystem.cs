@@ -1,3 +1,4 @@
+#pragma warning disable CS0067 // Public API event surface; subscribers arrive with feature wiring
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,11 +36,19 @@ namespace AtomicWar._Game.Factions
     }
 
     [Serializable]
+    public class TributeDemandEntry
+    {
+        public string FactionId;
+        public string ResourceType;
+        public float Amount;
+    }
+
+    [Serializable]
     public class FactionIntelligenceSaveState
     {
         public List<IntelEntry> ActiveIntel = new List<IntelEntry>();
         public List<DoubleAgentState> ActiveAgents = new List<DoubleAgentState>();
-        public Dictionary<string, float> TributeDemands = new Dictionary<string, float>();
+        public List<TributeDemandEntry> TributeDemands = new List<TributeDemandEntry>();
         public List<string> AlliedFactionIds = new List<string>();
         public bool InformantNetworkActive;
     }
@@ -120,7 +129,14 @@ namespace AtomicWar._Game.Factions
         public void DemandTribute(string factionId, string resourceType,
             int amount)
         {
-            _state.TributeDemands[$"{factionId}_{resourceType}"] = amount;
+            var existing = _state.TributeDemands.Find(e => e.FactionId == factionId && e.ResourceType == resourceType);
+            if (existing != null) existing.Amount = amount;
+            else _state.TributeDemands.Add(new TributeDemandEntry
+            {
+                FactionId = factionId,
+                ResourceType = resourceType,
+                Amount = amount
+            });
             OnTributeDemanded?.Invoke(factionId, amount);
         }
 
