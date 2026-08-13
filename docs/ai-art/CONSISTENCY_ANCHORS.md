@@ -1,25 +1,47 @@
-# CONSISTENCY_ANCHORS.md
+# CONSISTENCY_ANCHORS
 
-Tracks what must stay identical across every future generation of a recurring subject. This file is seeded by the pilot batch, not invented ahead of art existing — entries get locked in only once a piece is actually generated and approved.
+## A01 — Inventory icon family (locked)
 
-## Location anchor: The Shelter (Tessarat sub-pen)
-- **Seed reference:** `UI_StyleReference_01.jpg` — the one finished piece in the repo (also the Figma main-menu background). Check every future shelter-room illustration against it for linework weight, palette, and light logic before accepting it.
-- **Fixed:** 2D graphic-novel ink illustration; single warm practical bulb/fixture as the dominant light source; cold blue-grey light from any window/exterior opening; bare concrete/brick with visible damage; exposed conduit and wiring; clutter mixing scavenged domestic and military objects.
-- **Free to vary per room:** furniture set, room-specific equipment (Medical Bay ≠ Power Room ≠ Hydroponics), camera framing.
-- **Rooms still needing a first piece:** Medical Bay (this batch — `env_shelter_medical_bay`), Hydroponics, Power Room, Decontamination, Workshop, Radio Room. Once Medical Bay is approved, add it here as a second reference alongside the menu background.
+- **Seed reference:** `generated_AIassets/ammo_545x39_jhp_ap.png` controls black field, object scale, top-left light and material wear only. It does not control another object's geometry.
+- **Frame:** 1:1; object occupies 72–82% of width and height; 8% minimum edge clearance; no cast-off props unless quantity defines the item.
+- **Camera:** centered three-quarter view. Use exact side profile for firearms and long attachments; shallow top-down only for papers, kits and trays.
+- **Background:** opaque flat black, no horizon, floor plane, vignette, texture or drop shadow.
+- **Rendering:** dry-gouache material blocks, restrained ink edge, no soft photographic bokeh.
+- **Light:** top-left rim/key; weak warm bounce; contact darkening stays inside the silhouette.
+- **Wear:** one functional wear pattern: grip polish, edge chips, ash in seams, mineral scale, soot or oxidation.
+- **Text:** no readable labels, brands, serials, flags or insignia. Labels may be blank color fields.
+- **Output path:** raw model output to `generated_AIassets/<item_id>.png`; human-painted result to `Assets/Resources/Art/Items/<item_id>.png`.
 
-## Character anchor: Elena Vasquez (`elena_vasquez`)
-- **Status:** no art yet — this batch's portrait becomes the seed reference once generated and approved.
-- **Fixed once seeded:** age range (30s–40s), thin build (rationing-worn), medical smock over layered scavenged clothing, restrained/composed expression, steady hands as a deliberate visual detail (per her authored bio: "her hands never shake").
-- **Why she's first:** she's the only pilot character with a named quest already in the codebase (`quest_elena_triage`), so she's the most likely to need a second, consistent appearance soon.
+## A02 — Quantity and fill-state families (locked)
 
-## UI icon family anchor (`icon_eye`, `icon_shield`, `icon_heart`, `icon_pill`, `icon_hourglass`, `icon_checkmark`)
-- **Fixed:** single stroke weight, no fill gradients, symmetrical construction, flat vector (Recraft), semantic color from `design-tokens.json` — not `INTEGRATION_PLAN_FOR_CURSOR.md`'s inline hex where the two disagree (see `EXISTING_PROMPT_AUDIT.md`; e.g. that doc's heart-icon `#42A5F5` vs. the token file's `moral_compassion #6ea3a8` — token file wins, it's what actually feeds the USS).
-- **Free to vary:** the symbol itself and its assigned color.
-- `icon_eye` is generated first in this batch and becomes the literal stroke-weight/size reference for the other five.
+- Reuse identical container geometry, camera, label block, cap and lighting across a family.
+- Change only fill height, count, damage or listed tier components.
+- Show fill states exactly: 0.5/1 L = half; 0.5/2 L = quarter; 1/2 L = half; 1.5/2 L = three quarters.
+- Counted items show the stated count when practical; dense tablets use a visibly full/half/empty bottle plus the manifest count.
+- Generate the anchor before any derivative that names it as a reference.
 
-## Faction anchors (drafted in `prompts/FULL_CATALOG_EXPANSION.md` Part D — not yet generated)
-Five factions exist (GDD Ch2.3), no art yet. Prompts are written as establishing lineups (3-4 figures, 16:9). When first generated, lock: **Central Garrison Remnants** — disciplined military-surplus gear, faded insignia. **Upland Provincial Militia** — hunting/agrarian gear, local-made patches. **Cultists of the Glow** — robes of scavenged fabric, symbols painted in blood/rust (already specified in the old prompt file — worth keeping). **Scavenger Warlords** — mismatched scavenged armor, improvised weapons. **Safe Haven Communities** — deliberately under-armed civilian silhouette, to read as non-threatening against the other four. Once each lineup is approved, the named NPCs that belong to it (`NPC_AshWidows`, `NPC_TheTollman`, `NPC_BurnedPatrol`, `NPC_TheCollector`, `NPC_FeralChildren`, `NPC_SurgeonsCaravan`, `NPC_Bandits`) should reuse its visual DNA rather than being generated independently.
+## A03 — Medical family (locked)
 
-## Palette anchor
-See `GAME_VISUAL_DNA.md` for full detail. Illustrative tier: ash blue / charcoal grey / rust orange / mud brown, warm amber practical-light accent. UI semantic tier: exact hex from `Assets/_Game/UI/Phase11/design-tokens.json` — don't re-derive by eye.
+- Dull cream, amber glass, off-white gauze, brushed steel and one muted blue indicator patch.
+- Clinical wear, not filth: creased wrappers, chipped caps, sterilization marks. No blood, red-cross emblem or readable pharmaceutical branding.
+
+## A04 — Radiation and filtration family (locked)
+
+- Instruments use olive/charcoal cases, small blank gauges or displays, recessed controls and repair tape.
+- Filters expose pleats, ceramic, charcoal media or gaskets; contamination appears as dust/mineral staining, never green fantasy glow.
+- Protective equipment remains empty and unmodeled; lenses are scratched or lightly fogged, not opaque.
+
+## A05 — Tool and shelter-device family (locked)
+
+- Tools show the working end and grip. Devices show input, control and output components without cutaway diagrams.
+- Basic tier: complete civilian construction. Improvised tier: welded scrap and mismatched fasteners. Advanced tier: added guards, gauges and reinforcement while preserving the anchor footprint.
+
+## A06 — Existing approved bases
+
+- The 30 high-resolution ammunition PNGs in `generated_AIassets/` are production bases; preserve them and perform the required human paintover/import pass.
+- `generated_AIassets/crowbar_item.jpg` is the `crowbar` base; preserve its silhouette and relink after human paintover.
+- `geiger_counter_icon.jpg`, `iodine_pills_box.jpg` and `hazmat_suit_prop.jpg` control object identity only; Nano Banana Pro removes baked text/background and normalizes the family treatment.
+
+## Deferred anchors
+
+The main-menu reference remains the environment style seed. Character, location, faction and weather anchors are intentionally not locked until runtime image destinations exist and one human-approved production asset is available.
