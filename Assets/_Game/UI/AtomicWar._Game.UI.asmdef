@@ -14,7 +14,8 @@
         "AtomicWar._Game.Data",
         "AtomicWar._Game.Crafting",
         "AtomicWar._Game.Settings",
-        "AtomicWar._Game.Medical"
+        "AtomicWar._Game.Medical",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

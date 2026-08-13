@@ -41,12 +41,14 @@ namespace AtomicWar._Game.Editor
             var events    = LoadAll<GameEvent>(GeneratedRoot + "/Events");
             var locations = LoadAll<LocationDefinitionSO>(GeneratedRoot + "/Locations");
             var radio     = LoadAll<RadioBroadcastSO>(GeneratedRoot + "/Radio");
+            var survivors = LoadAll<SurvivorArchetypeSO>(GeneratedRoot + "/Survivors");
 
             Refresh<ItemCatalogSO>("ItemCatalog",           c => c.items      = items);
             Refresh<RecipeCatalogSO>("RecipeCatalog",       c => c.recipes    = recipes);
             Refresh<GameEventCatalogSO>("GameEventCatalog", c => c.events     = events);
             Refresh<LocationCatalogSO>("LocationCatalog",   c => c.locations  = locations);
             Refresh<RadioCatalogSO>("RadioCatalog",         c => c.broadcasts = radio);
+            Refresh<SurvivorCatalogSO>("SurvivorCatalog",   c => c.archetypes = survivors);
 
             // Tuning profiles: the C# field defaults are the balanced values.
             CreateIfAbsent<NeedsProfile>("NeedsProfile");
@@ -72,7 +74,8 @@ namespace AtomicWar._Game.Editor
             AssetDatabase.Refresh();
 
             Debug.Log($"[ASHFALL] Catalogs generated: {items.Count} items, {recipes.Count} recipes, " +
-                      $"{events.Count} events, {locations.Count} locations, {radio.Count} broadcasts.");
+                      $"{events.Count} events, {locations.Count} locations, {radio.Count} broadcasts, " +
+                      $"{survivors.Count} survivor archetypes.");
         }
 
         static void Refresh<T>(string assetName, Action<T> fill) where T : ScriptableObject

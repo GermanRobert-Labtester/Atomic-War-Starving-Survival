@@ -22,6 +22,9 @@ namespace AtomicWar._Game.Core
         public const string Faction_Cult = "faction_cult_of_the_glow";
         public const string Faction_Warlords = "faction_scavenger_warlords";
         public const string Faction_Rebuilders = "faction_rebuilders";
+        // Deliberately NOT added to _hegemony: D/9 is hostile to everyone (NPC_BlackOps.isHostileToEveryone).
+        // A faction with no possible allies has no hegemony to track. Do not "fix" this by initialising it —
+        // that would give a hostile-to-everyone faction a reputation bar. (docs/lore/06_REBUILDERS_AND_BLACK_OPS.md)
         public const string Faction_BlackOps = "faction_black_ops";
 
         // ── Hegemony thresholds ───────────────────────────────────────
@@ -45,6 +48,20 @@ namespace AtomicWar._Game.Core
         public const string Mutation_CultShrineAirIntake = "mutation_cult_shrine_air_intake";
         public const string Mutation_RoadblockCleared = "mutation_roadblock_cleared";
         public const string Mutation_MedicalSupplyGone = "mutation_medical_supply_gone";
+        public const string Mutation_IceRoadTax = "mutation_ice_road_tax";
+        public const string Mutation_LevyColumn = "mutation_levy_column";
+        // Nobody's Charter mutations
+        public const string Mutation_CrossingCharterRevealed = "mutation_crossing_charter_revealed";
+        public const string Mutation_CrossingHonestTrader = "mutation_crossing_honest_trader";
+        public const string Mutation_CrossingUnderwriteBurned = "mutation_crossing_underwrite_burned";
+        public const string Mutation_CrossingUnderwriteReliable = "mutation_crossing_underwrite_reliable";
+        public const string Mutation_CrossingPetitionRevised = "mutation_crossing_petition_revised";
+        public const string Mutation_CrossingPetitionLeaked = "mutation_crossing_petition_leaked";
+        public const string Mutation_CrossingStandingRigged = "mutation_crossing_standing_rigged";
+        public const string Mutation_CrossingStandingHonest = "mutation_crossing_standing_honest";
+        public const string Mutation_CrossingForfeitHonoured = "mutation_crossing_forfeit_honoured";
+        public const string Mutation_CrossingVoteClean = "mutation_crossing_vote_clean";
+        public const string Mutation_CrossingVoteSabotaged = "mutation_crossing_vote_sabotaged";
 
         // ── Travel time modifiers ─────────────────────────────────────
         public const float Highway9TravelReduction = 0.40f; // 40% faster
@@ -215,6 +232,17 @@ namespace AtomicWar._Game.Core
                 DayApplied = 0 // Host provides current day
             });
             OnMapMutationApplied?.Invoke(mutationId);
+        }
+
+        /// <summary>
+        /// Public host hook for Holdfast mutations. Does not add the Office to hegemony.
+        /// </summary>
+        public bool TryApplyMutation(string mutationId, string description)
+        {
+            if (string.IsNullOrEmpty(mutationId)) return false;
+            if (_appliedMutations.Contains(mutationId)) return false;
+            ApplyMutation(mutationId, description ?? "");
+            return true;
         }
 
         // ── Travel time modifiers ─────────────────────────────────────

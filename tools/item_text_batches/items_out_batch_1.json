@@ -1,0 +1,442 @@
+[
+ {
+  "id": "dosimeter",
+  "description": "A pen-sized instrument on a worn lanyard, its window scratched but the needle still free. It measures accumulated dose in rads, no batteries needed, just a charge you cannot renew. One per person is the rule in every bunker that still keeps rules. Worth thirty at any settlement counter, because the ones that survived are the ones that were already carried. It tells you how long you can stay outside, which is the only question that matters."
+ },
+ {
+  "id": "geiger_counter",
+  "description": "A boxy field unit with a speaker grille and a dial marked in rads per hour. It reads the fallout around you, where the dosimeter only counts what you already absorbed. The click rate climbs with the contamination, so you hear the danger before you see it. One kilo, worth forty-two, and it trades fast. The needle still moves on every ash drift. Some scavengers say the clicks are the only honest sound left."
+ },
+ {
+  "id": "iodine_pills",
+  "description": "A small blister strip of potassium iodide tablets in foil that still crinkles. Taken before or just after exposure, they saturate the thyroid so it passes on the radioactive kind. Five pills to a pack, light enough to forget in a pocket, worth six. The taste is bitter and chalky. People hoard them for the children first, and say nothing about that at the trade table."
+ },
+ {
+  "id": "anti_rad",
+  "description": "Decorporation medication in a foil pack of capsules. Taken after exposure, it pulls accumulated dose out of the body, clearing fifty rads per dose. Not a cure, just a deduction, and the body pays for it later. Five packs to a stack, nearly weightless, worth eight. Pharmacies that still stand trade it only for things they cannot scavenge. People argue over the last pack like it is a promise."
+ },
+ {
+  "id": "gas_mask",
+  "description": "A full-face respirator with twin filter canisters and a rubber seal that still holds. It cuts airborne contamination by thirty percent, enough for minutes in heavy ash and hours in light drift. Full durability when found, and the seal is what you check first, every time. A kilo and a half, worth forty. Most masks still in circulation came off mannequins in closed shops, and the filters are older than the people wearing them."
+ },
+ {
+  "id": "hazmat_suit",
+  "description": "A one-piece sealed suit of layered PVC with boot covers and a hood. It stops eighty percent of radiation on the body, the best protection you can wear into a hot zone, and every percent shows in the weight: five kilos of plastic and seams. Full durability when it is whole; a tear is a hole you cannot properly patch. Worth forty. The first ones came from hospital stockrooms, and the last wearers died anyway, but slowly, in clean rooms."
+ },
+ {
+  "id": "water_filter",
+  "description": "A hand pump filter the size of a thermos, a ceramic element inside and a rubber bulb outside. It turns standing water into something you can drink without trading rads for thirst, and no power is needed. One filter outfits a bunker for a season if it is kept clean. Half a kilo, worth twenty. Scavengers carry them on long runs and argue over whose turn it is to prime the bulb."
+ },
+ {
+  "id": "air_filter",
+  "description": "A rectangular panel filter for shelter air systems, sealed in heavy paper. It pulls fallout dust out of the air drawn into a bunker, and the sealing edge has to sit perfectly or it is just a cardboard rectangle. One kilo, worth twenty. Shelters that ran out of these last winter switched to tarps and blankets, and the cough started in December. Check the date stamp. Most of them are three years old now."
+ },
+ {
+  "id": "clean_water",
+  "description": "A sealed bottle of clean water, clear to the bottom. It restores forty points of thirst without adding anything to your dose, and even that small certainty, drinking without checking the color first, lifts morale a little. Half a kilo carried, worth fifteen at any settlement. Water this clean is the measure of the exchange: people barter it the way the old world bartered gold."
+ },
+ {
+  "id": "irradiated_water",
+  "description": "Murky water in a plastic bottle, silt settled in the bottom. It restores twenty-five points of thirst, but drinking it adds half a point of contamination to your dose. Traded at two, because someone always drinks it. People ration it for the last stretch of a long walk, when thirst outweighs the math. The taste is flat and metallic, and no one describes it out loud."
+ },
+ {
+  "id": "canned_food",
+  "description": "A tin can with a paper label gone grey at the edges. It restores forty points of hunger, and the slow ceremony of heating it, or eating it cold from the tin, is worth two points of morale on its own. Half a kilo, worth twelve. The best ones are three years past their printed date, and the worst are older than that. The dented ones are cheaper, and every so often one has gone bad, which everyone pretends is a rumor."
+ },
+ {
+  "id": "fuel",
+  "description": "A plastic jerrycan of fuel, sloshing heavy. Two kilos of diesel or kerosene, worth fourteen, and every liter has a story about who siphoned it and from what. Twenty cans stack in a corner of the bunker, and the corner becomes the warmest place in winter. Fuel is the only thing that turns cold into heat and rust into movement. People measure the winter in cans, not days."
+ },
+ {
+  "id": "cloth",
+  "description": "Folded cloth, cotton or wool or whatever was left in a factory flat. A fifth of a kilo a bolt, worth a little over one, and it stacks twenty deep. It mends clothes, lines boots, wraps wounds, muffles sound and covers windows. In the old world it was called fabric. Now it is called cloth, and you do not throw any of it away."
+ },
+ {
+  "id": "scrap_metal",
+  "description": "Pieces of metal: brackets, panels, a car door someone already stripped. Half a kilo each, worth a little over one, and twenty stack to a load a person can carry. It becomes braces, patch plates, traps and stove pipe. Nothing is thrown away if it is still metal. The ground is full of it now, which is the only part of the world that got richer."
+ },
+ {
+  "id": "bandage",
+  "description": "A rolled bandage with a strip of tape and a sealed gauze pad. It restores thirty points of health, stopping the bleed and covering a wound until it can heal on its own. Not a cure, a delay that gives the body time. Worth ten, which is what a hand is worth when you cut it open opening a can. Every bunker has one taped to the inside of a door, waiting."
+ },
+ {
+  "id": "raw_meat",
+  "description": "A slab of raw meat wrapped in paper, still cold at the edges. Eaten uncooked it adds three tenths of a point of contamination to your dose, so it is always cooked first, over a fire or a stove. Half a kilo, worth twelve, and the animal it came from is never discussed. The meat trades out of sight, because some settlements do not ask where it came from, and others ask too much."
+ },
+ {
+  "id": "cooked_meat",
+  "description": "Cooked meat, dark on the outside, still warm in the middle of the cut. It restores fifty points of hunger and three points of morale, because meat is the difference between surviving and having had dinner. Half a kilo, worth twelve, and it trades faster than anything else in the markets. People who have eaten nothing but roots all month smell it from two stalls away and stop walking."
+ },
+ {
+  "id": "dirty_water",
+  "description": "Water scooped from a puddle or a barrel, brown at the bottom. Drinking it adds six tenths of a point of contamination to your dose, and it offers nothing back in return. Worth two, and that price is only for the desperate. People boil it anyway, because the fire is cheaper than the dose. The taste of boiled mud stays with you longer than the water does."
+ },
+ {
+  "id": "medical_kit",
+  "description": "A canvas kit with rolled bandages, tape, scissors and a small bottle of antiseptic. It restores sixty points of health, a proper field kit that can close a cut, pack a wound and stabilize someone for the walk back. Half a kilo, worth ten, and the five kits in a stack are what a bunker calls a clinic. People who carry one tend to walk a little straighter, and everyone notices."
+ },
+ {
+  "id": "battery",
+  "description": "A sealed battery, the kind that powered car doors and sirens in another year. Two tenths of a kilo, worth five, and ten stack in a crate that keeps radios, clocks and meters alive a little longer. Every battery is a countdown that started the day it left the factory. People sell the half-dead ones to the people who cannot afford the half-alive ones."
+ },
+ {
+  "id": "calibration_kit",
+  "description": "A small case of weights, shims and reference cards for zeroing instruments. It keeps dosimeters and geiger counters honest, because a meter that lies gets people killed by the numbers. Four tenths of a kilo, worth eighteen, and five kits stack in a sack. The people who know how to use it are older than the instruments they service. Nobody regrets paying for an honest reading."
+ },
+ {
+  "id": "tweezers",
+  "description": "Stainless tweezers with a fine point, kept in a leather sleeve. Worth eighteen, which sounds like a lot for a pair of tweezers, until you need a shard of glass out of a hand or a splinter out of a boot sole. A tenth of a kilo, five to a stack. They are one of those things you only understand the value of after you have watched someone work on a wound with a knife because the tweezers were gone."
+ },
+ {
+  "id": "splint",
+  "description": "Two flat boards with padding and a roll of webbing, sized for an arm or a leg. It holds a broken bone straight so the break can set, worth nine, four tenths of a kilo. The webbing gets reused until it frays, and the boards get carved down until they are kindling. A broken leg without a splint is a long walk on the road; with one, it is three months of favors and boredom."
+ },
+ {
+  "id": "antibiotics",
+  "description": "A blister pack of antibiotics, sealed and dry. Ten packs stack to a weight you can forget, each pack worth ten, which makes it the best value per gram in the wasteland. They treat the infections that turn a small wound into a fever, and the fever into a funeral. Expiry dates were printed on the foil; nobody looks at them anymore. People trade these last, and only for what they cannot steal."
+ },
+ {
+  "id": "jewelry",
+  "description": "A small piece of jewelry: a ring, a chain, a pin that catches the light. It restores two points of morale when worn, because the person who wears it is not completely reduced yet. Nearly weightless, fifty trade units, and twenty stack in a cloth bag. Wedding rings are the most common, then watches, then everything else. Nobody asks what it cost the previous owner, because the answer is always the same."
+ },
+ {
+  "id": "currency",
+  "description": "Paper currency from before, bundled with a band that still says a bank name nobody visits. Worth twenty at trade tables, which is what a collector pays and what a fire starter would not. A hundred bills stack to nothing. The old faces on the notes are all gone from the world, and the ink is the only part of them that remains. People use it for the exchange, and never for what it once meant."
+ },
+ {
+  "id": "mechanical_parts",
+  "description": "Gears, shafts, bearings and fasteners in a greasy bag, the innards of machines that no longer run whole. Three trade units for a fifteenth of a kilo, fifty to a stack. They rebuild pumps, generators, latches and anything else with moving parts. The wasteland runs on salvage, and this is what salvage looks like before it becomes a tool. A machine is just parts that have not been taken apart yet."
+ },
+ {
+  "id": "electronic_scrap",
+  "description": "Circuit boards, wiring and chips pulled from dead electronics, the EMP and the years having done the killing. A tenth of a kilo, six trade units, fifty to a stack. Some of it is worth nothing, and some of it is a radio waiting for a soldering iron and an afternoon. People sort it by hand, on a table, in the evenings. The gold pins still shine, and the rest is dust."
+ },
+ {
+  "id": "solar_cell",
+  "description": "A single solar cell, glass intact or cracked, frame bent but the wafer still blue. One point two kilos, twenty-two trade units, ten to a stack. Charged, it feeds a battery; broken, it is still the best glass around. The sun still does its part, every day, on schedule. It is the only utility left in the world that has not failed, and people treat it accordingly: first pick, first price, no haggling."
+ },
+ {
+  "id": "chemicals",
+  "description": "Containers of industrial chemicals: acids, solvents, powders in unlabeled jars. Two hundred fifty grams, five trade units, thirty to a stack, and handling them carries a contamination risk of one twentieth of a point. They clean metal, strip paint, set dyes and burn. The jars have no labels, because the labels washed off or were removed. You smell them before you read them."
+ },
+ {
+  "id": "handheld_radio",
+  "description": "A handheld radio with a rubber antenna and a cracked dial face. It receives the bands that still carry voices, static, and the occasional transmission from a settlement you cannot reach. Eight tenths of a kilo, worth twenty-two, and it only works if the batteries hold. People listen to it at night, in the dark, alone. The silence between broadcasts is the loudest thing in the bunker."
+ },
+ {
+  "id": "engine",
+  "description": "An engine block, complete enough to turn: pistons, head, and the wiring that used to be the harness. Twenty-five kilos, worth eighty, full durability when it is whole, and one is all a person carries. It powers a pump, a generator, a workshop belt, or a wagon already half-built in someone's yard. Engines are the heartbeat of the rebuild. People trade whole summers of salvage for one that turns over."
+ },
+ {
+  "id": "roots",
+  "description": "Washed roots, pale and knobby, tied in a bundle. Eight points of hunger per serving, one trade unit, two tenths of a kilo, twenty to a stack. They boil soft in an hour and taste like nothing, which is fine, because nothing is what people can afford. Children are told the thin white ones are the sweet ones. No one argues with them."
+ },
+ {
+  "id": "berries",
+  "description": "A handful of dark berries in a folded leaf, soft at the press of a thumb. Six points of hunger, one trade unit, twenty bundles to a stack. Foragers argue about which bushes are safe, and the argument has no referee. People pick in the middle of the day when the light is good, and they bring them home whole. Berries are a small meal and a large question."
+ },
+ {
+  "id": "att_mil_suppressor",
+  "description": "A military suppressor, matte black, threaded and machined in one piece. Full durability when found, four tenths of a kilo, worth fifty-five, and there is exactly one to a person. It keeps the shot from carrying across the valley, which is worth more than the shot itself. The people who hold these do not tell the settlement. They shoot, they walk away, and the sound stays in the barrel."
+ },
+ {
+  "id": "att_mil_laserdot",
+  "description": "A military laserdot sight, a small box with a lens the color of a warning. Full durability, four tenths of a kilo, worth fifty-five. It throws a point of red light where the barrel is aimed, so the shot lands where the light sits. The batteries are the problem, always. The people who use it keep the button covered until the moment it matters, because a light in the dark is also a signal."
+ },
+ {
+  "id": "att_mil_tactical_grip",
+  "description": "A tactical foregrip, polymer over a steel core, angled for a gloved hand. Full durability, four tenths of a kilo, worth fifty-five. It steadies the weapon on the off hand and cuts the sway when the arms are tired, which is most of the time now. The ones that survived did so in armories, or in crates sealed before the exchange. The grip outlived the unit it was issued to."
+ },
+ {
+  "id": "att_mil_long_range_scope",
+  "description": "A long range scope with a brass body and turret knobs that still click. Full durability, four tenths of a kilo, worth fifty-five. It puts the far ridge inside the glass, so a person can read a situation before it reads them. The glass is the part nobody can make anymore. Every scope like this one came out of a case that was already packed. The rifles it fits are rarer than the scope, which is why it trades on its own."
+ },
+ {
+  "id": "att_mil_holosight",
+  "description": "A holosight, a small tube that projects a reticle without magnification. Full durability, four tenths of a kilo, worth fifty-five. Both eyes stay open, the target stays in view, and the dot sits where the round will go at close range. It eats batteries like a mouth. The reticle floats in the glass like a second sun, and people have learned not to stare at it too long after dark."
+ },
+ {
+  "id": "att_mil_double_scope_5x_10x",
+  "description": "A double scope with two magnification rings, five and ten power, and a throw lever between them. Full durability, four tenths of a kilo, worth sixty, the most expensive glass in its class. At five it scans, at ten it counts the buttons on a coat. The lens caps still carry unit marks, and nobody writes the unit's name over the marks. The rifle that carried it is in someone's wall or in pieces."
+ },
+ {
+  "id": "shell_casing",
+  "description": "Spent shotgun hulls and shell casings, brass mouths and crimped ends. A hundredth of a kilo, four tenths of a trade unit, fifty to a stack. Reloaded, they hold powder and shot again, and fire again, until the brass splits. People sort them by size in the evenings and argue about whose turn the reloading press is. A casing is a promise that was kept once and will be kept again."
+ },
+ {
+  "id": "bullet_casing",
+  "description": "Small caliber bullet casings, rimmed and rimless mixed together, dirty at the neck. Five grams apiece, four tenths of a trade unit, eighty to a stack. Primed, they are half a cartridge; the press and the powder are the other half. People who reload keep their casings in tins, sorted, and they do not let anyone borrow them."
+ },
+ {
+  "id": "gunpowder",
+  "description": "Gunpowder in a sealed tin, fine-grained, darker than sand. Twenty grams, three and a half trade units, forty tins to a stack. It reloads casings, seeds charges, and makes noise when noise is the point. Stored dry it keeps; stored damp it is a paste that teaches patience. The tins are marked with dates in three different hands, and the last date is older than the youngest scavenger."
+ },
+ {
+  "id": "weapon_hmg",
+  "description": "A heavy machine gun on its mount: forty-five kilos of barrel, receiver and tripod steel. Half durability when found, worth two hundred eighty, and one is a stack, because one is already more than most settlements own. It holds a hatch from the roof or a road from the ridge, and the sound of it is the sound of a line that holds. Ammunition is the real price; the gun is only the bill."
+ },
+ {
+  "id": "sulphur",
+  "description": "Sulphur in a bag, yellow and sharp-smelling, the color of a warning lamp. Fifty grams, two trade units, thirty bags to a stack. It compounds into powders, dousings, medicines and matches. Every chemist in the wasteland wants more of it than they can carry. The smell is the same as the smell after a strike, which is why some people will not handle it bare-handed."
+ },
+ {
+  "id": "explosive_powder_nitroglycerin",
+  "description": "Nitroglycerin-based powder in a padded canister, eighty grams, worth eighteen, ten to a stack. It cracks rock, drops walls, and clears a road that is blocked by what a road should not be blocked by. It is handled with the respect of a live animal: slow movements, no heat, no argument. The people who mix it do it outside, away from the shelter, and they do it alone."
+ },
+ {
+  "id": "fertilizer",
+  "description": "A sack of fertilizer, grey-white crystals, a full kilo and worth two. It feeds the soil that feeds the bunker, and it trades at two because everyone understands the chain. Twenty sacks to a stack, enough to keep a greenhouse through a season of ash. Some of it comes from old farming cooperatives, some from warehouses nobody guarded. The ground remembers what it needs."
+ },
+ {
+  "id": "salvaged_tech_trash",
+  "description": "Salvaged tech-trash: broken boards, dead screens and rusted connectors in a mesh bag. Three tenths of a kilo, two trade units, twenty-five bags to a stack. Mostly it is worth the copper and the effort, and occasionally it is worth everything: a working part someone threw away by mistake. People pick through it like ground after a flood. The best find anyone admits to is a radio that came back on."
+ },
+ {
+  "id": "ammo_deprecated_cal_9x19",
+  "description": "Boxes of 9x19 rounds, sealed, the brass still bright. Fifteen grams each, half a trade unit, sixty to a stack. Nothing in the wasteland chambers this caliber, so the boxes gather dust behind the stall. Buyers want the brass and the powder; the slugs go into a tin for casting."
+ },
+ {
+  "id": "ammo_deprecated_cal_380acp",
+  "description": "Small .380 ACP rounds in a pasteboard box, made for pocket pistols that were lost years ago. Fifteen grams, half a trade unit, sixty to a stack. The pistols are gone, traded away or buried, but the ammunition outlived them. People buy the boxes for components, never for what they were meant to do."
+ },
+ {
+  "id": "ammo_deprecated_cal_762x25",
+  "description": "Slim 7.62x25 rounds, the load of old service pistols, paper-wrapped. Fifteen grams, half a trade unit, sixty to a stack. The holsters went empty years ago, and the guns changed hands until they stopped changing hands. The rounds still stack neatly, which is more than can be said for most things now."
+ },
+ {
+  "id": "ammo_deprecated_cal_45acp",
+  "description": "Fat .45 ACP rounds, heavy for their size, in a rusted tin. Fifteen grams, half a trade unit, sixty to a stack. The pistols that ate these are heirlooms now, and the rounds are worth the brass more than the bullet. A collector pays double; a practical person passes the tin."
+ },
+ {
+  "id": "ammo_deprecated_cal_9x21",
+  "description": "9x21 rounds, a caliber that never found a real home, sealed in greased paper. Fifteen grams, half a trade unit, sixty to a stack. The guns that used it were few, and fewer still survive in working order. Most of these boxes were found still in factory wrapping, like a rumor that never quite happened."
+ },
+ {
+  "id": "ammo_deprecated_cal_765x21",
+  "description": "7.65x21 rounds, old police issue, boxed in faded green. Fifteen grams, half a trade unit, sixty to a stack. The precincts that carried them are concrete rubble now, and the pistols were taken apart for parts long ago. The ammunition is intact and pointless, which is a summary of most things that survived."
+ },
+ {
+  "id": "ammo_deprecated_cal_12ga",
+  "description": "12 gauge shells in a cardboard box, the paper crimps still firm. Fifteen grams, half a trade unit, sixty to a stack. The scatterguns are gone, or their chambers have grown too soft to trust, so the shells trade as scrap and components. People weigh them in their hands anyway, remembering the sound."
+ },
+ {
+  "id": "ammo_deprecated_cal_16ga",
+  "description": "16 gauge shells, the middle size, in a box with a faded hunting scene. Fifteen grams, half a trade unit, sixty to a stack. Sixteen gauge was a farmer's round, and the farmers are not coming back. The shells are mostly bought for powder and shot. The picture on the box is the only hunting that survives."
+ },
+ {
+  "id": "ammo_deprecated_cal_556x45",
+  "description": "5.56x45 rounds in bandolier lots, an army's old standard. Fifteen grams, half a trade unit, sixty to a stack. The rifles that fired them are in pieces, in collections, or in the ground, so the ammunition trades below its weight. Buyers sort them for reloading and remember the supply that used to be endless."
+ },
+ {
+  "id": "ammo_deprecated_cal_762x39",
+  "description": "7.62x39 rounds, sealed in greased wrap, the old rifle caliber of half the world. Fifteen grams, half a trade unit, sixty to a stack. The rifles were simple and everywhere, and now the working ones are behind doors that do not open. The ammunition still turns up in crates, and the crates make people talk about old times, quietly."
+ },
+ {
+  "id": "ammo_deprecated_cal_545x39",
+  "description": "Short 5.45x39 rounds, light and fast, in a sealed military can. Fifteen grams, half a trade unit, sixty to a stack. They were made in numbers no war could empty, and the war that emptied the world used other things. The cans are found intact, which is more than can be said for the guns."
+ },
+ {
+  "id": "ammo_deprecated_cal_762x51",
+  "description": "Full-power 7.62x51 rounds in an ammo can, still greased at the neck. Fifteen grams, half a trade unit, sixty to a stack. The machine guns and marksman rifles that used them have all been taken apart or kept out of sight. The round is accurate beyond blame, which is why collectors buy it at twice the asking price."
+ },
+ {
+  "id": "ammo_deprecated_cal_300blk",
+  "description": ".300 Blackout rounds, a newer design for short barrels, boxed in plastic. Fifteen grams, half a trade unit, sixty to a stack. They were the round of the years before the exchange, and the rifles were the last new machines most people will ever own. The boxes are found in basements, still sealed, with the receipts clipped inside."
+ },
+ {
+  "id": "ammo_deprecated_cal_57x28",
+  "description": "Slender 5.7x28 rounds, armor-piercing tips in a polymer box. Fifteen grams, half a trade unit, sixty to a stack. The pistols that fired them were rare, and the ones that survived are traded like instruments. The ammunition is bought by people who know exactly what it is and say less. It stays at the back of the stall."
+ },
+ {
+  "id": "ammo_deprecated_cal_46x30",
+  "description": "Tiny 4.6x30 rounds, the smallest rifle cartridge in the pile, boxed in foam. Fifteen grams, half a trade unit, sixty to a stack. They came from submachine guns that were never common anywhere. The round is precise and small, like a secret with no owner left to keep it."
+ },
+ {
+  "id": "ammo_deprecated_cal_762x54r",
+  "description": "Rimmed 7.62x54R rounds, the old machine gun load, packed in a wooden crate. Fifteen grams, half a trade unit, sixty to a stack. The belt guns that fired them were dragged away years ago, but the ammunition keeps arriving, as if the supply lines never got the news. The rim still catches, on nothing."
+ },
+ {
+  "id": "ammo_deprecated_cal_338lapua",
+  "description": "Long .338 Lapua rounds in a foam case, sniper issue, each one heavy in the hand. Half a trade unit, sixty to a stack. The rifles that shot this far are museum pieces now, or the pride of people who do not say where they got them. The cases are handled slowly, the way you handle something that could still travel a kilometer."
+ },
+ {
+  "id": "ammo_deprecated_cal_408cheytac",
+  "description": "Enormous .408 CheyTac rounds, made to reach farther than a person can see. Half a trade unit, sixty to a stack. Only a handful of rifles ever chambered them, and none are known to work today. The rounds are bought as curiosities and paperweights. They are the last word in a language nobody speaks."
+ },
+ {
+  "id": "ammo_deprecated_cal_50bmg",
+  "description": "The largest rounds in the crate, made to stop engines and walls. Half a trade unit each, sixty to a stack, which is the price of a thing with no chamber left to fit. The machine guns that fired them are the same ones that trade in parts now. People keep one round on a shelf, as a conversation and a warning."
+ },
+ {
+  "id": "body_armour_deprecated",
+  "description": "An older body armor vest, the ceramic plates cracked and the carrier frayed at the shoulders. Two and a half kilos, worth four, with only twenty durability left in it. It will stop a little and fail the rest, and everyone who wears one knows which is which. The people who sell these never wear them. They are sold to the desperate, and the desperate take what fits."
+ },
+ {
+  "id": "body_armour_military",
+  "description": "A military plate carrier with hard plates front and back, four kilos, worth forty-eight. One hundred twenty durability when whole, and it gives two points of radiation protection, enough to be worth the weight on a long walk through light ash. The plates were made to stop fragments, and they still do. The stitching says a unit name; the unit is not on the map anymore."
+ },
+ {
+  "id": "helmet_military",
+  "description": "A military helmet, four kilos of composite shell with a liner that still smells of its factory. It gives one point of radiation protection, which is nearly nothing, and eighty durability, which is why people wear it anyway. Worth twenty-two. It stops what falls and what flies, and the person under it keeps both ears. Helmets outlived the heads that wore them by the thousands. This one is waiting for its turn."
+ },
+ {
+  "id": "nv_goggles_military",
+  "description": "Night vision goggles in a hard case, four kilos with the mount, worth fifty-five. Sixty durability, and the tubes are the part that cannot be replaced, so people guard them like the only pair. They turn the ash-dark nights into green fields. The batteries are a separate problem, and the people who own these carry spares in a belt pouch. Seeing at night is the closest thing to an advantage left."
+ },
+ {
+  "id": "helmet_heavy_military",
+  "description": "A heavy military helmet, a thicker shell, four kilos, worth thirty-five. Two points of radiation protection and one hundred forty durability, the strongest head protection in circulation. It sits heavy on the neck by the end of a day. The people who wear them are usually the ones who carry the guns and do the talking at the gate. The helmet does not talk back, which is a kind of wisdom."
+ },
+ {
+  "id": "armour_heavy_military",
+  "description": "Heavy military armor, plate over plate, four kilos, worth seventy, the most a body will wear. Four points of radiation protection and one hundred eighty durability, the highest numbers in the trade. It slows you down a little, and that is the price. The sets that survived came out of armories that were sealed early, and the people selling them are usually not the people who wore them first."
+ },
+ {
+  "id": "helmet_heavy_deprecated",
+  "description": "An old heavy helmet, dented at the crown, the liner cracked and dry. Two and a half kilos, worth three, fifteen durability left. It covers the head the way a promise covers a debt. The people who sell these say it saved someone once. They do not say who, and they do not say from what, and the story is cheaper than the helmet."
+ },
+ {
+  "id": "helmet_deprecated",
+  "description": "An older helmet, thin steel, rusted at the rim where the strap attaches. Two and a half kilos, worth two, ten durability left in it. It is a hat with a history and no future. People buy them for the metal, or for the shape under a coat on a cold watch. The last one of these was issued before the exchange, and the paperwork is gone, which is what usually happens to paperwork."
+ },
+ {
+  "id": "body_armour_heavy_deprecated",
+  "description": "An old heavy vest, plates clattering inside a stiff carrier. Two and a half kilos, worth five, twenty-five durability left. The plates were good steel once, and the stitching has gone brittle with age. People sell them to settlers who want to feel a weight on their chest. The weight is real; that is the part that works."
+ },
+ {
+  "id": "vegetable_carrot",
+  "description": "A carrot, dirt-cracked and thick, grown in shelter soil. Eight points of hunger and two of thirst, one trade unit, and twenty stack to a crate. The soil it grew in was hauled up from a basement by hand, and the water was rationed and counted. Eating one is a small argument with the winter. People save the tops for soup and say nothing when they are thirsty."
+ },
+ {
+  "id": "vegetable_potato",
+  "description": "A potato, lumpy, with eyes sprouting in the dark of the bag. Ten points of hunger and one of thirst, one trade unit, twenty to a sack. Potatoes are the backbone of every bunker garden: they forgive neglect, cold and short light. A sack in the corner is insurance. People count them like days and weigh them like arguments. The skin goes in the compost, which is a promise to next year."
+ },
+ {
+  "id": "vegetable_beetroot",
+  "description": "A beetroot, heavy and deep red, with the greens still attached. Nine points of hunger, two of thirst, one trade unit, twenty to a crate. The color stains everything it touches, which people take as a sign of something worth growing. The greens boil into a meal on their own. Beets keep in the cold cellar all winter, and a cellar full of them is a quiet kind of wealth."
+ },
+ {
+  "id": "canned_meat",
+  "description": "A can of meat with the label soaked off long ago. Twenty-two points of hunger, three trade units, and ten cans stack in a box. The key that opens it is taped to the lid, because everyone learned that lesson once. Canned meat is the honest middle of the food trade: not the best, never rotten, always there. People keep one can back for the day the pots come up empty."
+ },
+ {
+  "id": "preserved_crackers",
+  "description": "A sealed packet of crackers, pale and dry, with a foil strip that still tears clean. Twelve points of hunger, one and a half trade units, twenty-five to a stack. They taste of cardboard and they last for years, which is the whole review. People eat them with anything: water, soup, nothing. The packet is the most honest food product in the market, and the least loved, and always sold out."
+ },
+ {
+  "id": "mre_military",
+  "description": "A military meal pack, olive pouch with a heater sleeve and a spoon inside. Thirty points of hunger and eight of thirst from one pouch, six tenths of a kilo, worth twelve, eight to a case. The heat pack works with a splash of water, and the food is the best thing most people have eaten in a month. The pouches are dated from before the exchange, and nobody checks the dates anymore."
+ },
+ {
+  "id": "boiled_vegetable_soup",
+  "description": "A sealed jar of boiled vegetable soup, still warm when it trades. Fourteen points of hunger and twelve of thirst, two points of morale, worth three, and six jars to a crate. It is what a kitchen makes when there is nothing else, which is most nights. The hot part is the point: a jar in the hands on a cold watch is dinner and a hand warmer at once. People remember the bowls more than the taste."
+ },
+ {
+  "id": "hearty_meal_cooked",
+  "description": "A cooked meal in a covered dish, the kind a bunker makes on purpose. Twenty-eight points of hunger, six of thirst, six points of morale, worth six, and four dishes to a stack. It is meat, grain and vegetables together, and eating it is the closest thing to a holiday that remains. Four to a stack because a full meal is a rare object. People talk about it for days afterward, which is the real measure."
+ },
+ {
+  "id": "fuel_1l",
+  "description": "A one-liter can of fuel, sealed with a plastic collar. One kilo, worth four, ten cans to a stack. It runs a stove, a lamp, a pump or a heater, depending on the hour and the need. The liter is the unit of the wasteland economy, and people trade in it the way old markets traded in coin. A can in the shelter is a small fire in waiting."
+ },
+ {
+  "id": "fuel_0_5l_of_1l",
+  "description": "A half-liter of fuel in the bottom of a one-liter can, worth two. Five hundred fifty grams with the can, ten to a stack. It is what is left when a job is almost done: a lamp that will go out mid-evening, a stove that will die before the pot boils. People price it honestly and buy it dishonestly, hoping the math works out. Sometimes it does."
+ },
+ {
+  "id": "accelerant_full",
+  "description": "A full can of accelerant, labeled with a flame and a warning in two languages. One point two kilos, worth six, ten to a stack. It makes damp wood burn and slow fires hurry, which covers half the mornings in the wasteland. It is not for cooking and it is not for drinking, and people know both without being told. The smell stays on the hands all day, which is how you know it worked."
+ },
+ {
+  "id": "accelerant_half",
+  "description": "A half-used can of accelerant, the label finger-smudged, the cap cross-threaded. Seven tenths of a kilo, worth three, ten to a stack. It is the remainder of a morning that went well or badly, depending on what needed burning. People buy it at half price and use it at full strength, which is the only arithmetic left that works in their favor."
+ },
+ {
+  "id": "knife_improvised",
+  "description": "An improvised knife: a file blade, a wrapped handle, the tang peened over. Four tenths of a kilo, worth six, forty durability and every point of it earned by hand. It cuts rope, food and arguments in equal measure. The blade is straight because the maker had one chance to get it right. The people who carry these know the maker's name, and that is a kind of quality certificate."
+ },
+ {
+  "id": "knife_swiss_battle",
+  "description": "A battle knife with a full tang and a serrated back, made to outlive its owners. Three hundred fifty grams, worth twelve, full durability at one hundred. It splits wood, opens cans, cleans game and, when there is no other answer, finishes the argument. The edge holds through a season of use. People hand these down, and the hand they come from is usually mentioned."
+ },
+ {
+  "id": "bayonet_swiss_machete",
+  "description": "A long machete with a bayonet lug and a scabbard that clips to a belt. One point one kilos, worth eighteen, one hundred twenty durability, the most in its class. It clears brush, splits kindling and opens a path through the undergrowth where the roads used to be. The balance is forward, which tells you what it was made for and what it is still used for, quietly, in the dark."
+ },
+ {
+  "id": "hammer",
+  "description": "A claw hammer, the head worn smooth on one face, the handle dark with grip. Eight tenths of a kilo, worth four, eighty durability. It builds the walls, shelves, crates and coffins of the wasteland, and it does not care which. A hammer in the hand is a person at work; a hammer on the bench is a house under repair. People name their hammers, which the hammers tolerate."
+ },
+ {
+  "id": "screwdriver",
+  "description": "A flathead screwdriver, the shaft twisted a little at the tip from being used as a pry. Two tenths of a kilo, worth three, sixty durability. It opens panels, radios, doors and the last screws of the old world. Every machine that can be fixed still has its screws, and this is the tool that talks to them. People keep it on the shelf where the old owners kept the good silver."
+ },
+ {
+  "id": "multitool",
+  "description": "A multitool with pliers, knife, file and screw bits folded into one handle. Three tenths of a kilo, worth ten, ninety durability. It is the whole toolbox for a pocket, and it fixes half of everything if the owner is patient. The pliers are the part that gets used hardest. People who carry one reach for it the way other generations reached for a phone, and it has never once failed to answer."
+ },
+ {
+  "id": "shovel",
+  "description": "A full shovel, the blade worn bright at the tip, the handle split at the collar and wrapped. Two kilos, worth six, one hundred durability. It digs graves, gardens, trenches and latrines, in that order of frequency and in no particular order of honor. The ground is the one material that never runs out. People know a good shovel by the way it bites, and they will trade for one without haggling."
+ },
+ {
+  "id": "grenade_military",
+  "description": "A military hand grenade, olive body, the pin seated in the spoon. Four tenths of a kilo, worth ninety-five, and one use: durability is one, which is the price of a mistake. It clears a room, a ridge or a problem, once. The pin is taped for transport, and the tape is replaced by everyone who handles it. People who carry these keep the spoon pressed and their thumb where it belongs."
+ },
+ {
+  "id": "crowbar",
+  "description": "A crowbar, two and a half kilos of forged steel, worth fourteen, one hundred twenty durability. It opens doors, crates, locks and cars, and it does not ask permission, which is the entire point. The prying end is polished bright from use. In the wasteland it is a tool, a weapon and a key in one. The people who lost their keys in the old world found them again in this."
+ },
+ {
+  "id": "wire_cutters",
+  "description": "Wire cutters with insulated handles, the jaws still aligned. Four tenths of a kilo, worth five, seventy durability. They cut fence, cable, snare and the wires that should not be there. Every boundary in the wasteland is a fence or a tripwire, and these are the polite way through. People keep them on a lanyard, because the moment you need them is never the moment you can look for them."
+ },
+ {
+  "id": "lockpick",
+  "description": "A set of lockpicks in a flat leather roll, fifty grams, worth fifteen, thirty durability and every use a risk. They open the doors that have keys, and the keys are gone, which is most of the doors. The work is patient: feel the pins, count the clicks, do not hurry. People who are good at it do not advertise, and people who are bad at it buy new ones. The roll fits in a shirt pocket, which is the other half of the skill."
+ },
+ {
+  "id": "metal_pipe",
+  "description": "A length of metal pipe, one and a half kilos, worth two, fifty durability. It is plumbing before it is anything else, and a bar, a lever and a sturdier kind of stick when the plumbing is past. It props a door, drains a tank, or makes the point that words did not. People buy them cheap and value them precisely: the cost is two, and the usefulness is everything."
+ },
+ {
+  "id": "crowbar_broken",
+  "description": "A crowbar snapped at the bend, the handle end still holding the grip's shape. Half a kilo, half a trade unit, five to a stack. It is no longer a tool and not yet scrap, which is the definition of most things worth keeping. The break is clean, which means bad steel or a hard pull, and neither is a comfort."
+ },
+ {
+  "id": "wire_cutters_broken",
+  "description": "Wire cutters with a jaw cracked at the pivot, still closing but not cutting. Half a kilo, half a trade unit, five to a stack. The handles are good and the pivot is rebuildable, so it is kept, because nothing that might become a tool is thrown away. The crack is the story, and the story is boring, which is fine."
+ },
+ {
+  "id": "metal_pipe_broken",
+  "description": "A metal pipe bent past straight, kinked at the middle. Half a kilo, half a trade unit, five to a stack. It is useless as a pipe and honest as a weight, so it goes in the scrap pile with the rest. People look at it and remember pulling something that would not give. It did not give; the pipe did."
+ },
+ {
+  "id": "shovel_broken",
+  "description": "A shovel snapped at the neck, the blade still good and the handle gone. Half a kilo, half a trade unit, five to a stack. The blade will hang on a workshop wall until someone carves a new handle, and someone always does. A good blade and a spare afternoon is a new shovel. The wasteland runs on afternoons like that."
+ },
+ {
+  "id": "multitool_broken",
+  "description": "A multitool with the plier pivot sheared, the blades still folding. Half a kilo, half a trade unit, five to a stack. It is a parts box for one patient evening: the knife blades are good, and the file is sharper than most new ones. People keep the pieces in a tin and call it a project. Projects are the second-most common currency."
+ },
+ {
+  "id": "knife_broken",
+  "description": "A knife with the tip snapped off, the edge still holding where the blade is whole. Half a kilo, half a trade unit, five to a stack. It is a blade with a story and a shortened future, good still for the tasks that do not need the point. The tip is in someone's palm or someone's floor, and neither of them talks about it."
+ },
+ {
+  "id": "hammer_broken",
+  "description": "A hammer with the head loosened past re-peening, the handle cracked at the eye. Half a kilo, half a trade unit, five to a stack. The head is good steel and will find a new handle someday, or a doorstop, or a weight. The crack is where a hundred nails went in. It gave out the way tools do: without complaint, and mid-strike."
+ },
+ {
+  "id": "screwdriver_broken",
+  "description": "A screwdriver snapped at the tip, the handle still bright and the shaft straight. Half a kilo, half a trade unit, five to a stack. The handle is worth more than the whole tool and will be swapped onto something else. People read the break like a note: the screw did not move and the tool did. The screw won, once."
+ },
+ {
+  "id": "water_bottle_1l_full",
+  "description": "A one-liter bottle of water, full, the cap still sealed. One point one kilos, worth five, and four bottles to a stack. It restores twenty points of thirst and costs nothing in dose, which makes it the cleanest trade in the market. The seal is the selling point: a bottle that has not been opened is a promise that has been kept. People open them last, and drink them slow."
+ },
+ {
+  "id": "water_bottle_2l_full",
+  "description": "A two-liter bottle of water, full and clear, the weight of it a comfort. Two point two kilos, worth eight, four to a stack. It restores forty points of thirst, the same as clean water from a tap ever did, and it costs nothing but the price. The big bottle is the family size, carried for two, or for one who has learned to ration. The cap goes back on between sips, always."
+ }
+]

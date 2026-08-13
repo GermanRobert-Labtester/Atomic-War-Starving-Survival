@@ -8,6 +8,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -21,9 +22,13 @@ namespace AtomicWar._Game.Core
             float maxLootCapacity = MaxCarryingCapacityDefault)
         {
             if (!CanStartExpedition(survivor) || location == null) return false;
+            if (IsIceRoadBlocked(location.id)) return false;
+            if (IsCrossingGated(location.id, false)) return false;
 
             float trueRad = ResolveTrueRad(location);
             float travelHours = location.travelHours * CurrentWeatherTravelMultiplier();
+            if (_iceRoadSystem != null)
+                travelHours *= _iceRoadSystem.TravelHoursMultiplier(location.id);
             return RegisterNewExpedition(survivor, new PathRequest
             {
                 NodeId = location.id,
@@ -47,6 +52,8 @@ namespace AtomicWar._Game.Core
             float maxLootCapacity = MaxCarryingCapacityDefault)
         {
             if (!CanStartExpedition(survivor) || node == null || node.IsShelter) return false;
+            if (IsIceRoadBlocked(node.NodeId)) return false;
+            if (IsCrossingGated(node.NodeId, node.Tags != null && node.Tags.Contains(CrossingIds.Region))) return false;
 
             return RegisterNewExpedition(survivor, new PathRequest
             {
@@ -64,6 +71,8 @@ namespace AtomicWar._Game.Core
         {
             if (!CanStartExpedition(survivor) || string.IsNullOrEmpty(request.NodeId)) return false;
             if (request.NodeId == GeneratedMap.ShelterNodeId) return false;
+            if (IsIceRoadBlocked(request.NodeId)) return false;
+            if (IsCrossingGated(request.NodeId, false)) return false;
 
             // Prefer live map data when available
             MapNode node = _generatedMap?.GetNode(request.NodeId);
@@ -86,7 +95,48 @@ namespace AtomicWar._Game.Core
             // #271 Blind Preacher: cannot leave on expeditions.
             if (_personalQuests != null && !_personalQuests.CanGoOnExpedition(survivor))
                 return false;
+            if (_censusClaim != null && _censusClaim.IsAssignedAway(survivor.Id))
+                return false;
             return !IsOnExpedition(survivor.Id);
+        }
+
+        private bool IsIceRoadBlocked(string nodeId) =>
+            _iceRoadSystem != null && _iceRoadSystem.IsTravelBlocked(nodeId);
+
+        // ── ASHFALL: NOBODY'S CHARTER — the viaduct social gate ────────────
+        /// <summary>
+        /// Crossing nodes that refuse departure while the gate is closed.
+        /// Ids come from CrossingIds.Locations (the master list) so the
+        /// LocationDefinitionSO path (no region field) is covered too.
+        /// </summary>
+        private static readonly HashSet<string> CrossingGatedNodeIds = new HashSet<string>
+        {
+            CrossingIds.Locations.ViaductGate,
+            CrossingIds.Locations.Scalehouse,
+            CrossingIds.Locations.Stallrow,
+            CrossingIds.Locations.Watchtower,
+            CrossingIds.Locations.Weighbridge,
+            CrossingIds.Locations.Underwrite,
+            CrossingIds.Locations.RecordsRoom,
+            CrossingIds.Locations.Nightfire
+        };
+
+        /// <summary>
+        /// True while the viaduct watch turns the party back: no name on the
+        /// crossing ledger, no crossing. A diegetic refusal line, not a
+        /// lockout modal — the gate is social, not a wall.
+        /// </summary>
+        private bool IsCrossingGated(string nodeId, bool regionTagged)
+        {
+            if (_vouchAccess == null || _vouchAccess.HasAccess) return false;
+            bool gated = regionTagged
+                || (nodeId != null && CrossingGatedNodeIds.Contains(nodeId));
+            if (gated)
+            {
+                LastCrossingRefusal =
+                    "The viaduct watch turns the party back. \"No charter, no guard — ask for someone.\" No name on the crossing ledger, no crossing.";
+            }
+            return gated;
         }
 
         private float ResolveNodeTrueRad(MapNode node)
@@ -140,6 +190,9 @@ namespace AtomicWar._Game.Core
 
             // Prompt #569 — river node: bridge / boat / wade time + one-shot wade rads.
             travelHours = ApplyRiverCrossingTravel(survivor, request.NodeId, travelHours);
+
+            if (_iceRoadSystem != null)
+                travelHours *= _iceRoadSystem.TravelHoursMultiplier(request.NodeId);
 
             int distanceTicks = Mathf.Max(1, Mathf.RoundToInt(travelHours));
             var state = new ExpeditionState

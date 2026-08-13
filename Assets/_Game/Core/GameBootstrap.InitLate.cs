@@ -20,6 +20,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 
 using AtomicWar._Game.Encounters;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -604,6 +605,20 @@ namespace AtomicWar._Game.Core
                 });
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
             ExpeditionSystem.SetNeedsSystem(NeedsSystem);
+            // Lore bible — located knowledge: first arrival at a location
+            // discovers its world_history entries into the journal/Codex.
+            {
+                var exp = ExpeditionSystem;
+                exp.OnFirstArrival += OnExpeditionFirstArrival;
+                _subscriptions.Track(() => exp.OnFirstArrival -= OnExpeditionFirstArrival);
+            }
+            // Lore bible 05_FACTIONS — Lamplighters interlock: lit routes are
+            // faster and safer; after withdrawal the unlit routes are slower
+            // and worse. Delegates read the live access state each call.
+            ExpeditionSystem.RouteTravelMultiplier = () =>
+                NPCLamplighters == null ? 1f : (NPCLamplighters.State.accessGranted ? 0.85f : 1.15f);
+            ExpeditionSystem.RouteEncounterMultiplier = () =>
+                NPCLamplighters == null ? 1f : (NPCLamplighters.State.accessGranted ? 0.6f : 1.4f);
             ExpeditionSystem.SetBicycleSystem(BicycleSystem);
             ExpeditionSystem.SetFloodedNodeSystem(FloodedNodeSystem);
             ExpeditionSystem.SetRiverNodeSystem(RiverNodeSystem);

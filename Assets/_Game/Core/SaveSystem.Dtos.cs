@@ -14,6 +14,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {

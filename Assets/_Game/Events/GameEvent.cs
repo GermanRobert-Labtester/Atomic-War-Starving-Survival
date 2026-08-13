@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Events
 {
@@ -273,6 +274,18 @@ namespace AtomicWar._Game.Events
         public float MinSurvivorHunger = -1f;
         public string RequiredItemId;
         public string RequiredFlagId;
+        /// <summary>
+        /// Fire-once gate: when set, the event only fires while this flag is NOT
+        /// set. The event's own choice then sets the flag to suppress re-fires.
+        /// (Lore bible — event_standby_cycle fires exactly once.)
+        /// </summary>
+        public string BlockedFlagId;
+        /// <summary>
+        /// Located-knowledge gate (lore bible). When set, the event only fires if
+        /// <see cref="EventContext.Knowledge"/> reports the snake_case knowledge_key
+        /// as discovered (e.g. lore_bs_the_vault_holds gating the Day-200 claim).
+        /// </summary>
+        public string RequiredKnowledgeKey;
         /// <summary>All listed eventFlags must be set for the event to fire.</summary>
         public List<string> RequiredEventFlags = new List<string>();
         /// <summary>
@@ -342,6 +355,9 @@ namespace AtomicWar._Game.Events
 
         private bool PassesFlagConditions(EventContext context)
         {
+            if (!string.IsNullOrEmpty(conditions.BlockedFlagId) && context.GetFlag(conditions.BlockedFlagId))
+                return false;
+
             if (!string.IsNullOrEmpty(conditions.RequiredFlagId) && !context.GetFlag(conditions.RequiredFlagId))
                 return false;
 
@@ -368,6 +384,13 @@ namespace AtomicWar._Game.Events
             return true;
         }
 
+        private bool PassesKnowledgeCondition(EventContext context)
+        {
+            if (string.IsNullOrEmpty(conditions.RequiredKnowledgeKey)) return true;
+            if (context == null || context.Knowledge == null) return false;
+            return context.Knowledge.Has(conditions.RequiredKnowledgeKey);
+        }
+
         public virtual bool CanTrigger(EventContext context)
         {
             if (context == null) return false;
@@ -379,6 +402,7 @@ namespace AtomicWar._Game.Events
             if (!PassesSurvivorConditions(context)) return false;
             if (!PassesFlagConditions(context)) return false;
             if (!PassesItemAndResourceConditions(context)) return false;
+            if (!PassesKnowledgeCondition(context)) return false;
 
             return true;
         }

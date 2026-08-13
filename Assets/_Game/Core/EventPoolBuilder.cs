@@ -91,6 +91,37 @@ namespace AtomicWar._Game.Core
             // 7. Child Found in the Ash (Prompt #9).
             AddSingleWithDedup(pool, CreateChildFoundEvent());
 
+            // 8. Allocation 12 — the Day-200 arrival (lore bible 02_THE_LIST).
+            AddSingleWithDedup(pool, EventRunner.CreateAllocation12ClaimEvent());
+            AddSingleWithDedup(pool, EventRunner.CreateAllocation12BagFoundEvent());
+
+            // 9. Lore bible 04_ENCOUNTERS — trust-reactive scenes + hazard events.
+            AddRangeWithDedup(pool, EventRunner.CreateTrustReactiveScenes());
+            AddRangeWithDedup(pool, EventRunner.CreateHazardEvents());
+
+            // 10. Lore bible 04_ENCOUNTERS Part I — the Lasko deserter vote chain.
+            AddSingleWithDedup(pool, EventRunner.CreateLaskoVoteEvent());
+            AddSingleWithDedup(pool, EventRunner.CreateLaskoAftermathEvent());
+
+            // 11. Lore bible 05_FACTIONS §8 — the Kittiwake chart decision.
+            AddSingleWithDedup(pool, EventRunner.CreateKittiwakeChartEvent());
+
+            // 12. Lore bible 05_FACTIONS interlocks — the two ends.
+            AddSingleWithDedup(pool, EventRunner.CreateTwoEndsEvent());
+
+            // 14. ASHFALL: THE HOLDFAST — Ice Road / census / levy / hatch.
+            AddRangeWithDedup(pool, EventRunner.CreateHoldfastEvents());
+
+            // 15. ASHFALL: THE GLASS ORCHARD (Expansion XI) — greenhouse
+            // narrative + mechanic events (first sprout, blight, tainted
+            // harvest, the Rot Farmers' offering, the dead gardener, glass).
+            AddRangeWithDedup(pool, GreenhouseEventFactory.CreateAll());
+
+            // 13. Echoes pipeline — echoes.json is authored with the full
+            // interactive schema; EchoCatalogLoader materialises it into
+            // GameEvents (lore bible 04_ENCOUNTERS II-b).
+            AddRangeWithDedup(pool, EchoCatalogLoader.Load());
+
             // 8. Encounter event factory (Prompts #95-#104).
             // L-11: Gated behind IncludeEncounterFactoryEvents so
             // developers can disable it for targeted scenario testing.

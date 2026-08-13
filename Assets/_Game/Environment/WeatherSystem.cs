@@ -3,57 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using Random = System.Random;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Environment
 {
-    /// <summary>
-    /// Kinds of weather, including fallout storms that spike radiation exposure.
-    /// </summary>
-    public enum WeatherKind
-    {
-        Clear,
-        Rain,
-        Overcast,
-        Ashfall,
-        FalloutStorm,
-        Blizzard,
-        /// <summary>Rare oily hyper-radioactive rain (Prompt #11 Black Rain).</summary>
-        BlackRain,
-        /// <summary>Corrosive acid snowfall damaging unshielded metal surface structures.</summary>
-        AcidSnow,
-        /// <summary>Dense biological spore fog increasing respiratory infection risks.</summary>
-        BioFog,
-        /// <summary>Soot-laden heavy fallout snowfall.</summary>
-        BlackSnow,
-        /// <summary>Irradiated blood-red precipitation from atmospheric dust mixing.</summary>
-        BloodRain,
-        /// <summary>Atmospheric ion storm causing electrical grid fluctuations.</summary>
-        EMPStorm,
-        /// <summary>Vitreous silica storm damaging eyes and respiratory tracts.</summary>
-        GlassStorm,
-        /// <summary>Heavy particulate radioactive hail shower.</summary>
-        RadHail,
-        /// <summary>Toxic algae bloom contaminating surface water bodies.</summary>
-        AlgaeBloom,
-        // Prompts #319–#325 — Section X new weather events (5 additions).
-        // These are tracked by their own Weather_* systems (AshLightning,
-        // FogOfParticulate, ThermalInversion, IceStorm, Silence) and fired
-        // via Flashpoint choreographies, not through RollNextState.
-        /// <summary>Static discharge in the ash cloud; surface expeditions blocked; fire risk on unshielded electronics.</summary>
-        AshLightning,
-        /// <summary>Radioactive particulate suspended in moisture; visibility 2 m; 5 mSv/h unmasked; 2× filter load.</summary>
-        ParticulateFog,
-        /// <summary>Cold air trapped under a warm layer; sounds carry 3×; surface radiation 2×.</summary>
-        ThermalInversion,
-        /// <summary>Freezing rain; hatch frozen shut; solar blocked; fuel +50 %.</summary>
-        IceStorm,
-        /// <summary>No wind. No ash. No rad spike. Clear sky. The dangerous one.</summary>
-        Silence,
-        /// <summary>Expansion IV — Ash plumes break, exposing unfiltered depleted-ozone UV radiation microwave.</summary>
-        FalseSpring,
-        /// <summary>Expansion IV — Deep silence of shattered sky with extreme UV index.</summary>
-        SilentSpring
-    }
+    // WeatherKind now lives in Ashfall.Core (Assets/Ashfall.Core/WeatherKind.cs) so the
+    // simulation core and both hosts share ONE definition. The duplicate that used to sit
+    // here had identical members and ordering, which is exactly how a fork silently drifts.
 
     /// <summary>
     /// Drives weather state transitions over time via seeded weighted-random rolls

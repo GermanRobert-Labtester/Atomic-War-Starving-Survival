@@ -9,6 +9,7 @@ using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Inventory;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.UI
 {

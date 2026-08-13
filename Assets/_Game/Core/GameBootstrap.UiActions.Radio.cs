@@ -18,6 +18,7 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -32,7 +33,10 @@ namespace AtomicWar._Game.Core
             {
                 JournalSystem.HudIsOpen = book.IsOpen;
                 if (book.IsOpen)
+                {
                     JournalSystem.MarkRead();
+                    JournalSystem.MarkTabViewed(JournalSystem.ActiveTab);
+                }
             }
         }
 
@@ -45,6 +49,7 @@ namespace AtomicWar._Game.Core
             {
                 JournalSystem.HudIsOpen = true;
                 JournalSystem.MarkRead();
+                JournalSystem.MarkTabViewed(JournalSystem.ActiveTab);
             }
         }
 
@@ -191,7 +196,8 @@ namespace AtomicWar._Game.Core
             book.ApplyUiState(
                 JournalSystem.HudIsOpen,
                 JournalSystem.HasUnread,
-                JournalSystem.NotificationPing);
+                JournalSystem.NotificationPing,
+                JournalSystem.ActiveTab);
         }
 
         /// <summary>

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "faction_the_office",
+    "display_name": "The Office",
+    "alignment": "conditional",
+    "home_region": "the_cluster",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "item_census_return_blank",
+      "named_occupancy",
+      "item_order_12c"
+    ],
+    "offers": [
+      "process_water_credit",
+      "block_c_guesting",
+      "regular_rate"
+    ],
+    "signature_quote": "I am not collecting you. I am scheduling you.",
+    "access_rule": "Access plus named claims. You cannot conquer them. You can lose the Ice Road and gain a file. Threat is tone, not a seventh Power.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_the_cutters",
+    "display_name": "The Cutters",
+    "alignment": "conditional",
+    "home_region": "the_cut",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "item_beacon_oil",
+      "item_ice_spike_bar",
+      "calories"
+    ],
+    "offers": [
+      "lit_window",
+      "accident_book",
+      "waystation_overnight"
+    ],
+    "signature_quote": "I don't open it for you. I open it. If it's dark, you wait.",
+    "access_rule": "Dark and lit are moral words. Will not guide a column onto ice marked dark. Will not blast. Relight-for-a-trap is Ivy's exception, northern: lamps out over eleven days, access gone.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_the_fleet",
+    "display_name": "The Fleet",
+    "alignment": "peaceful",
+    "home_region": "the_shelf",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "stand_up_order",
+      "allocation_number",
+      "item_fleet_pad_copy"
+    ],
+    "offers": [
+      "hearth4_hatch",
+      "roadstead_lift",
+      "schedule_crystal"
+    ],
+    "signature_quote": "The authenticator wanted a number. A number was found, or a person was asked ashore.",
+    "access_rule": "Waiting for a stand-up that uses the same authentication family as a land pad. Some paper only works on land. Blasting is refused. The Ridge is hours and cold.",
+    "badge_asset_id": ""
+  }
+]

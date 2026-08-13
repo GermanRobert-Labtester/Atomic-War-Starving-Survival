@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using AtomicWar._Game.Data;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.UI;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -216,6 +218,242 @@ namespace AtomicWar.Tests.EditMode
             var runner = new EventRunner();
             Assert.That(runner.ObserveDiscoveries(journal, context), Is.EqualTo(1));
             Assert.That(journal.Knowledge.Has(KnowledgeKeys.HighCo2), Is.True);
+        }
+
+        // -----------------------------------------------------------------
+        // Codex unlocks + tabs (docs/ui/JOURNAL_UI_PLAN.md §5, §7)
+        // -----------------------------------------------------------------
+
+        [Test]
+        public void CodexUnlock_ItemSeen_FiresOnce_DeduplicatedByKey()
+        {
+            var journal = new JournalSystem();
+            int unlocked = 0;
+            string lastKey = null;
+            journal.OnCodexUnlocked += key => { unlocked++; lastKey = key; };
+
+            Assert.That(journal.UnlockItemSeen("dosimeter"), Is.True);
+            Assert.That(journal.UnlockItemSeen("dosimeter"), Is.False, "Second unlock must be a no-op");
+            Assert.That(unlocked, Is.EqualTo(1));
+            Assert.That(lastKey, Is.EqualTo("item_seen_dosimeter"));
+            Assert.That(journal.IsItemSeen("dosimeter"), Is.True);
+            Assert.That(journal.IsItemSeen("geiger_counter"), Is.False);
+        }
+
+        [Test]
+        public void CodexUnlock_KnowledgeKeyNamespaces_MatchMasterListConventions()
+        {
+            var journal = new JournalSystem();
+            journal.UnlockLocationVisited("loc_grange_hall");
+            journal.UnlockSurvivorMet("sv_elena");
+            journal.UnlockEventFired("filter_failure");
+
+            Assert.That(journal.Knowledge.Has(KnowledgeKeys.LocationVisited("loc_grange_hall")), Is.True);
+            Assert.That(journal.Knowledge.Has(KnowledgeKeys.SurvivorMet("sv_elena")), Is.True);
+            Assert.That(journal.Knowledge.Has(KnowledgeKeys.EventFired("filter_failure")), Is.True);
+            Assert.That(journal.Knowledge.Has(KnowledgeKeys.ItemSeen("dosimeter")), Is.False);
+        }
+
+        [Test]
+        public void TabState_SwitchTab_ClampsAndRaisesOnTabChanged()
+        {
+            var journal = new JournalSystem();
+            int changed = 0;
+            int lastTab = -1;
+            journal.OnTabChanged += tab => { changed++; lastTab = tab; };
+
+            Assert.That(journal.ActiveTab, Is.EqualTo(0));
+            journal.SwitchTab(2);
+            Assert.That(journal.ActiveTab, Is.EqualTo(2));
+            Assert.That(changed, Is.EqualTo(1));
+            Assert.That(lastTab, Is.EqualTo(2));
+
+            // Same tab → no event
+            journal.SwitchTab(2);
+            Assert.That(changed, Is.EqualTo(1));
+
+            // Out of range clamps
+            journal.SwitchTab(99);
+            Assert.That(journal.ActiveTab, Is.EqualTo(JournalSystem.TabCount - 1));
+            journal.SwitchTab(-5);
+            Assert.That(journal.ActiveTab, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void TabState_UnreadPerTab_TracksEntryCountAtLastView()
+        {
+            var journal = new JournalSystem();
+            var author = new Survivor { Id = "sv1", DisplayName = "Ren", RiskBias = RiskBiasTrait.Realist };
+            journal.TryDiscover(KnowledgeKeys.HighCo2, author, 1);
+            journal.MarkTabViewed(2);
+            Assert.That(journal.HasUnreadForTab(2), Is.False);
+
+            journal.TryDiscover(KnowledgeKeys.FilterFailing, author, 2);
+            Assert.That(journal.HasUnreadForTab(2), Is.True, "New entry after last view must mark tab unread");
+            journal.MarkTabViewed(2);
+            Assert.That(journal.HasUnreadForTab(2), Is.False);
+        }
+
+        [Test]
+        public void JournalSaveRestore_RoundTripsTabsAndCodexUnlocks()
+        {
+            var journal = new JournalSystem();
+            journal.UnlockItemSeen("dosimeter");
+            journal.UnlockLocationVisited("loc_grange_hall");
+            journal.SwitchTab(3);
+            journal.MarkTabViewed(3);
+            journal.TryDiscover(KnowledgeKeys.HighCo2,
+                new Survivor { Id = "sv", DisplayName = "Kai", RiskBias = RiskBiasTrait.Cautious }, 32);
+
+            var snap = journal.CaptureState();
+            journal.Clear();
+            journal.RestoreState(snap);
+
+            Assert.That(journal.ActiveTab, Is.EqualTo(3));
+            Assert.That(journal.IsItemSeen("dosimeter"), Is.True);
+            Assert.That(journal.IsLocationVisited("loc_grange_hall"), Is.True);
+            Assert.That(journal.EntryCount, Is.EqualTo(1));
+            // MarkTabViewed ran before the entry was added → nothing seen in tab 3 yet.
+            Assert.That(journal.GetLastSeenIndex(3), Is.EqualTo(0));
+            // Unlock events must not re-fire on restore (knowledge is data, not discovery).
+            int reFired = 0;
+            journal.OnCodexUnlocked += _ => reFired++;
+            journal.RestoreState(snap);
+            Assert.That(reFired, Is.EqualTo(0));
+        }
+
+        [Test]
+        public void JournalBook_TabSwitch_ReflectsSystemAndRendersCodexProvider()
+        {
+            var book = _hud.EnsureJournalBook();
+            book.SetCodexProvider(tab =>
+            {
+                if (tab == JournalTab.Items)
+                {
+                    return new List<JournalCodexRow>
+                    {
+                        new JournalCodexRow { DisplayName = "Dosimeter", Meta = "0.5 kg", Body = "Counts rads.", IsLocked = false },
+                        JournalCodexRow.Locked("Geiger Counter")
+                    };
+                }
+                return new List<JournalCodexRow>();
+            });
+
+            book.Open();
+            Assert.That(book.ActiveTab, Is.EqualTo(0));
+            int tabChanged = 0;
+            book.OnTabChanged += _ => tabChanged++;
+
+            book.SwitchTab(1);
+            Assert.That(book.ActiveTab, Is.EqualTo(1));
+            Assert.That(tabChanged, Is.EqualTo(1));
+            Assert.That(book.StatusLine, Does.Contain("Items"));
+            Assert.That(book.DetailSummary, Does.Contain("Dosimeter"));
+            Assert.That(book.DetailSummary, Does.Contain("Counts rads."));
+            Assert.That(book.DetailSummary, Does.Contain("[---] Geiger Counter"), "Locked rows must show the silhouette");
+
+            book.SwitchTab(0);
+            Assert.That(book.ActiveTab, Is.EqualTo(0));
+            Assert.That(book.DetailSummary, Does.Contain("No pages yet"), "Empty log shows the empty-state text");
+        }
+
+        // -----------------------------------------------------------------
+        // Codex unread counter + dossier shelf (docs/ui/JOURNAL_UI_PLAN.md §8)
+        // -----------------------------------------------------------------
+
+        [Test]
+        public void CodexUnlock_TracksUnreadPerTab_UntilTabViewed()
+        {
+            var journal = new JournalSystem();
+            journal.SwitchTab(2); // People — viewed, count baseline captured
+            Assert.That(journal.HasUnreadForTab(2), Is.False);
+
+            journal.UnlockSurvivorMet("sv_elena");
+            Assert.That(journal.CodexUnlockCount, Is.EqualTo(1));
+            Assert.That(journal.HasUnreadForTab(2), Is.True, "Unlock after last view must mark the tab unread");
+
+            journal.MarkTabViewed(2);
+            Assert.That(journal.HasUnreadForTab(2), Is.False);
+
+            // Log tab still mirrors global entry unread, not codex unlocks.
+            journal.UnlockItemSeen("dosimeter");
+            Assert.That(journal.HasUnreadForTab(0), Is.False);
+        }
+
+        [Test]
+        public void JournalSaveRestore_RoundTripsCodexUnlockCount()
+        {
+            var journal = new JournalSystem();
+            journal.UnlockItemSeen("dosimeter");
+            journal.UnlockLocationVisited("loc_grange_hall");
+            journal.SwitchTab(1);
+            var snap = journal.CaptureState();
+
+            journal.Clear();
+            Assert.That(journal.CodexUnlockCount, Is.EqualTo(0));
+            journal.RestoreState(snap);
+
+            Assert.That(journal.CodexUnlockCount, Is.EqualTo(2));
+            Assert.That(journal.IsItemSeen("dosimeter"), Is.True);
+            Assert.That(journal.ActiveTab, Is.EqualTo(1));
+            Assert.That(journal.HasUnreadForTab(1), Is.False, "Tab was viewed after the unlocks");
+        }
+
+        [Test]
+        public void JournalCodex_DossierShelf_LockedUntilArchetypeMet()
+        {
+            var journal = new JournalSystem();
+            var catalog = ScriptableObject.CreateInstance<SurvivorCatalogSO>();
+            catalog.archetypes = new List<SurvivorArchetypeSO>
+            {
+                ScriptableObject.CreateInstance<SurvivorArchetypeSO>() // id set below
+            };
+            catalog.archetypes[0].id = "elena_vasquez";
+            catalog.archetypes[0].displayName = "Elena Vasquez";
+            catalog.archetypes[0].profession = "Paramedic";
+            catalog.archetypes[0].bio = "Hands never shake.";
+
+            var codex = new JournalCodex(
+                journal, null, null, null, () => new List<Survivor>(),
+                survivorCatalog: catalog);
+
+            var rows = codex.BuildRows(JournalTab.People);
+            Assert.That(rows.Count, Is.EqualTo(1));
+            Assert.That(rows[0].IsLocked, Is.True, "Unmet archetype must show as locked");
+            Assert.That(rows[0].DisplayName, Is.EqualTo("Elena Vasquez"));
+
+            journal.UnlockSurvivorMet("elena_vasquez");
+            rows = codex.BuildRows(JournalTab.People);
+            Assert.That(rows[0].IsLocked, Is.False);
+            Assert.That(rows[0].Body, Is.EqualTo("Hands never shake."));
+            Assert.That(rows[0].Meta, Is.EqualTo("Paramedic"));
+        }
+
+        [Test]
+        public void JournalCodex_ItemRows_LockedUntilSeen()
+        {
+            var journal = new JournalSystem();
+            var catalog = ScriptableObject.CreateInstance<ItemCatalogSO>();
+            var item = ScriptableObject.CreateInstance<ItemDefinition>();
+            item.id = "dosimeter";
+            item.displayName = "Dosimeter";
+            item.type = ItemType.Device;
+            item.weight = 0.5f;
+            item.tradeValue = 30f;
+            item.description = "Counts the rads you already took.";
+            catalog.items = new List<ItemDefinition> { item };
+
+            var codex = new JournalCodex(journal, catalog, null, null, () => new List<Survivor>());
+
+            var rows = codex.BuildRows(JournalTab.Items);
+            Assert.That(rows[0].IsLocked, Is.True);
+
+            journal.UnlockItemSeen("dosimeter");
+            rows = codex.BuildRows(JournalTab.Items);
+            Assert.That(rows[0].IsLocked, Is.False);
+            Assert.That(rows[0].Body, Is.EqualTo("Counts the rads you already took."));
+            Assert.That(rows[0].Meta, Does.Contain("0.5 kg"));
+            Assert.That(rows[0].Meta, Does.Contain("30"));
         }
     }
 }

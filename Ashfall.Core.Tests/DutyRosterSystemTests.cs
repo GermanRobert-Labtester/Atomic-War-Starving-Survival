@@ -1,0 +1,340 @@
+using System.Collections.Generic;
+using System.IO;
+using Xunit;
+using Ashfall.Core;
+
+namespace Ashfall.Core.Tests
+{
+    public class DutyRosterSystemTests
+    {
+        private static DutyRosterSystem Sys(int seed = 1208) => new DutyRosterSystem(seed);
+
+        private static List<DutyRosterOccupant> Occupants(params (string id, string name, string job)[] people)
+        {
+            var list = new List<DutyRosterOccupant>();
+            for (int i = 0; i < people.Length; i++)
+            {
+                list.Add(new DutyRosterOccupant
+                {
+                    survivorId = people[i].id,
+                    displayName = people[i].name,
+                    occupationObserved = people[i].job,
+                    sleptHere = true
+                });
+            }
+            return list;
+        }
+
+        [Fact]
+        public void BlankUntilUnlock()
+        {
+            var roster = Sys();
+            Assert.False(roster.IsUnlocked);
+            Assert.Equal(DutyRosterSystem.ScriptBlank, roster.ChartScript);
+            Assert.False(roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true));
+            Assert.Equal(0, roster.OccupiedRowCount);
+        }
+
+        [Fact]
+        public void ChartGateDayOrInspect()
+        {
+            var roster = Sys();
+            roster.Unlock(10);
+            Assert.False(roster.CanBeginChart(10, false, false));
+            Assert.True(roster.CanBeginChart(DutyRosterSystem.SoftGateDay, false, false));
+            roster.NotifyWallInspected();
+            Assert.True(roster.CanBeginChart(10, false, false));
+        }
+
+        [Fact]
+        public void PencilMorningFill()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            Assert.True(roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60));
+            Assert.True(roster.MutationInUse);
+            var home = Occupants(
+                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"));
+            roster.TickMorning(61, home);
+            Assert.Equal(2, roster.OccupiedRowCount);
+            Assert.Equal(DutyRosterSystem.ScriptPencil, roster.GetRow(DutyRosterSystem.NpcKessAdler).script);
+            Assert.Equal(61, roster.GetRow(DutyRosterSystem.NpcAnselDuth).lastSleptDay);
+        }
+
+        [Fact]
+        public void InkNeverAutoFills()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            var two = Occupants(
+                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"));
+            roster.TickMorning(61, two);
+            Assert.True(roster.SetRowScript(DutyRosterSystem.NpcKessAdler, DutyRosterSystem.ScriptInk));
+            Assert.Equal(DutyRosterSystem.ScriptInk, roster.ChartScript);
+            var three = Occupants(
+                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"),
+                ("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant"));
+            roster.TickMorning(62, three);
+            Assert.Equal(2, roster.OccupiedRowCount);
+            Assert.Null(roster.GetRow("npc_hadi_morrow"));
+        }
+
+        [Fact]
+        public void FourteenCap()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            for (int i = 0; i < DutyRosterSystem.ManifestCap; i++)
+            {
+                string id = "survivor_" + i.ToString("00");
+                Assert.True(roster.WriteName(id, id, "unlisted", DutyRosterSystem.ScriptPencil, 60, true));
+            }
+
+            Assert.Equal(14, roster.OccupiedRowCount);
+            Assert.False(roster.WriteName("survivor_14", "extra", "unlisted", DutyRosterSystem.ScriptPencil, 60, true));
+        }
+
+        [Fact]
+        public void CannotAssignDead()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            Assert.True(roster.WriteName(DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent", DutyRosterSystem.ScriptPencil, 60, true));
+            Assert.True(roster.SetStatus(DutyRosterSystem.NpcAnselDuth, DutyRosterSystem.StatusDead));
+            Assert.False(roster.Assign(DutyRosterSystem.RoleNightWatch, DutyRosterSystem.NpcAnselDuth));
+        }
+
+        [Fact]
+        public void BlankRowsInkWithdrawsAccess()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.RegisterBlankRowsLivingName("npc_nila_brant");
+            Assert.True(roster.BlankRowsAccess);
+            Assert.False(roster.WriteName("npc_nila_brant", "Nila Brant", "lamp_oil_clerk", DutyRosterSystem.ScriptPencil, 60, true));
+            Assert.True(roster.WriteName("npc_nila_brant", "Nila Brant", "lamp_oil_clerk", DutyRosterSystem.ScriptInk, 60, true));
+            Assert.False(roster.BlankRowsAccess);
+        }
+
+        [Fact]
+        public void LeaveBlankFortyDays()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            Assert.True(roster.ResolveChartChoice(DutyRosterSystem.ChoiceLeaveBlank, 60));
+            var home = Occupants((DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"));
+            for (int d = 1; d <= DutyRosterSystem.StillBlankDays; d++)
+                roster.TickMorning(60 + d, home);
+            Assert.True(roster.State.mutationRosterStillBlank);
+            Assert.Equal(0, roster.OccupiedRowCount);
+        }
+
+        [Fact]
+        public void HiddenOmittedFromNorthCopy()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.WriteName("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant", DutyRosterSystem.ScriptPencil, 60, true);
+            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
+            roster.HideFromNorthCopy("npc_hadi_morrow");
+            var north = roster.CopyForNorth();
+            Assert.Single(north);
+            Assert.Equal(DutyRosterSystem.NpcKessAdler, north[0].survivorId);
+            Assert.True(roster.LevyRequiresRows);
+            Assert.False(roster.IsValidLevyName("npc_hadi_morrow"));
+            Assert.True(roster.IsValidLevyName(DutyRosterSystem.NpcKessAdler));
+        }
+
+        [Fact]
+        public void SameSeedSameAssignment()
+        {
+            var home = Occupants(
+                (DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk"),
+                (DutyRosterSystem.NpcAnselDuth, "Ansel Duth", "parent"),
+                ("npc_hadi_morrow", "Hadi Morrow", "veterinary_assistant"));
+            var a = Sys(1208);
+            var b = Sys(1208);
+            a.Unlock(60);
+            b.Unlock(60);
+            a.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            b.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            a.TickMorning(61, home);
+            b.TickMorning(61, home);
+            a.AutoAssignDefaults(61);
+            b.AutoAssignDefaults(61);
+            Assert.Equal(a.GetAssignment(DutyRosterSystem.RoleNightWatch), b.GetAssignment(DutyRosterSystem.RoleNightWatch));
+            Assert.Equal(a.GetAssignment(DutyRosterSystem.RoleMess), b.GetAssignment(DutyRosterSystem.RoleMess));
+            Assert.Equal(a.GetAssignment(DutyRosterSystem.RoleHatchOpener), b.GetAssignment(DutyRosterSystem.RoleHatchOpener));
+        }
+
+        [Fact]
+        public void LadleProtocolAndBurn()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
+            Assert.True(roster.ResolveLadleChoice(DutyRosterSystem.ChoiceLadleProtocol, 61));
+            Assert.True(roster.State.mutationRationProtocol);
+            Assert.True(roster.BurnChart(80));
+            Assert.Equal(DutyRosterSystem.ScriptBurned, roster.ChartScript);
+            Assert.Equal(0, roster.OccupiedRowCount);
+            Assert.False(roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 81, true));
+        }
+
+        [Fact]
+        public void SaveRoundtrip()
+        {
+            var json = new SystemTextJsonSerializer();
+            var roster = Sys(1208);
+            roster.Unlock(60);
+            roster.NotifyWallInspected();
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
+            roster.Assign(DutyRosterSystem.RoleNightWatch, DutyRosterSystem.NpcKessAdler);
+            roster.HideFromNorthCopy(DutyRosterSystem.NpcKessAdler);
+            string blob = json.Serialize(roster.CaptureState());
+            var restored = new DutyRosterSystem(1);
+            restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob));
+            Assert.True(restored.IsUnlocked);
+            Assert.True(restored.MutationInUse);
+            Assert.Equal(DutyRosterSystem.NpcKessAdler, restored.GetAssignment(DutyRosterSystem.RoleNightWatch));
+            Assert.NotNull(restored.GetRow(DutyRosterSystem.NpcKessAdler));
+            Assert.False(restored.IsValidLevyName(DutyRosterSystem.NpcKessAdler));
+            Assert.Equal(1208, restored.State.seedSalt);
+        }
+
+        [Fact]
+        public void PencilRefusesUnsleptName()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            Assert.False(roster.WriteName("npc_on_stool", "Edor Vale", "census_clerk", DutyRosterSystem.ScriptPencil, 60, false));
+        }
+    }
+
+    public class MoraleMarkSystemTests
+    {
+        [Fact]
+        public void FlagAndLaterProse()
+        {
+            var catalog = LoadCatalog();
+            var marks = new MoraleMarkSystem();
+            marks.BindCatalog(catalog);
+            Assert.False(marks.HasMark("mark_bowl_cold"));
+            marks.SetMark("mark_bowl_cold", payload: "left until cold", day: 62);
+            Assert.True(marks.HasMark("mark_bowl_cold"));
+            Assert.Equal("left until cold", marks.GetPayload("mark_bowl_cold"));
+            Assert.Contains("enamel", marks.GetLaterProse("mark_bowl_cold"));
+        }
+
+        [Fact]
+        public void DoesNotClearOnNewDay_OnlyAuthoredClear()
+        {
+            var marks = new MoraleMarkSystem();
+            marks.SetMark("mark_ladle_default", day: 70);
+            marks.SetMark("mark_bowl_cold", day: 71);
+            Assert.Equal(2, marks.Count);
+            Assert.True(marks.ClearMark("mark_ladle_default"));
+            Assert.False(marks.HasMark("mark_ladle_default"));
+            Assert.True(marks.HasMark("mark_bowl_cold"));
+        }
+
+        [Fact]
+        public void SaveRoundtrip()
+        {
+            var json = new SystemTextJsonSerializer();
+            var marks = new MoraleMarkSystem();
+            marks.SetMark("mark_child_levy_story", payload: "north, forms, thirty days", day: 90);
+            string blob = json.Serialize(marks.CaptureState());
+            var restored = new MoraleMarkSystem();
+            restored.RestoreState(json.Deserialize<MoraleMarkSystemState>(blob));
+            Assert.True(restored.HasMark("mark_child_levy_story"));
+            Assert.Equal("north, forms, thirty days", restored.GetPayload("mark_child_levy_story"));
+        }
+
+        private static DutyRosterCatalog LoadCatalog()
+        {
+            var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            return loader.Load(DutyRosterCatalogTests.DataDir());
+        }
+    }
+
+    public class DutyRosterCatalogTests
+    {
+        internal static string DataDir()
+        {
+            string start = Directory.GetCurrentDirectory();
+            if (CatalogLocator.TryFindDataDirectory(start, out string found))
+                return found;
+            if (CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out found))
+                return found;
+            throw new DirectoryNotFoundException("Assets/StreamingAssets/Data not found from " + start);
+        }
+
+        [Fact]
+        public void StackWingIdsUniqueSnakeCase()
+        {
+            var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            Assert.True(catalog.Locations.Count >= 4);
+            var set = new HashSet<string>();
+            for (int i = 0; i < catalog.Locations.Count; i++)
+            {
+                var e = catalog.Locations[i];
+                Assert.False(string.IsNullOrEmpty(e.id));
+                Assert.True(set.Add(e.id), "duplicate " + e.id);
+                Assert.Equal(e.id, e.id.ToLowerInvariant());
+                Assert.Equal(0f, e.travelHours);
+                Assert.Equal("the_stack", e.region);
+            }
+
+            var wall = catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
+            Assert.NotNull(wall);
+            Assert.Contains("Fourteen rows", wall.inspect);
+            Assert.Contains("ALLOCATION 12", wall.description);
+            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackMess));
+            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackSleeping));
+            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackFiltration));
+        }
+
+        [Fact]
+        public void ChartAndLadleQuestsRegistered()
+        {
+            var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            Assert.True(catalog.Quests.Count >= 2);
+            var chart = catalog.GetQuest(DutyRosterSystem.QuestTheChart);
+            Assert.NotNull(chart);
+            Assert.Equal("shelter", chart.type);
+            Assert.Equal(DutyRosterSystem.LocStackRosterWall, chart.target_location_id);
+            Assert.Equal("lore_dr_chart", chart.knowledge_key);
+            Assert.Equal("mutation_roster_in_use", chart.complete_mutation);
+            Assert.Contains(chart.choices, c => c.id == DutyRosterSystem.ChoiceWritePencil);
+            var ladle = catalog.GetQuest(DutyRosterSystem.QuestWhoEats);
+            Assert.NotNull(ladle);
+            Assert.Equal(DutyRosterSystem.QuestTheChart, ladle.prereq_quest_id);
+            Assert.Equal(DutyRosterSystem.LocStackMess, ladle.target_location_id);
+            Assert.Contains(ladle.choices, c => c.id == DutyRosterSystem.ChoiceLadleProtocol);
+        }
+
+        [Fact]
+        public void MarksHaveLaterProse()
+        {
+            var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            Assert.NotNull(catalog.GetMark("mark_bowl_cold"));
+            Assert.Contains("enamel", catalog.GetMark("mark_bowl_cold").later);
+            Assert.NotNull(catalog.GetMark("mark_ladle_default"));
+        }
+    }
+}

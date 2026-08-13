@@ -49,6 +49,13 @@
 ExportedObj/
 .consulo/
 *.csproj
+# EXCEPTION: Ashfall.csproj is the hand-written Godot .NET project file, not a
+# Unity-generated one. It is the authority for what the Godot host compiles and
+# MUST stay in version control. Without this negation the `*.csproj` rule above
+# silently drops the entire Godot build definition from the repo.
+!Ashfall.csproj
+!Ashfall.Core/Ashfall.Core.csproj
+!Ashfall.Core.Tests/Ashfall.Core.Tests.csproj
 *.unityproj
 *.sln
 *.suo
@@ -164,3 +171,18 @@ InitTestScene*.unity*
 
 # One-shot codebase export dump used by audit tooling, not part of the source tree.
 /unity_codebase.txt
+
+# ---------------------------------------------------------------------------
+# Godot host (.NET / C#)
+# ---------------------------------------------------------------------------
+# Godot's import/build cache. Regenerated on open; never commit.
+/.godot/
+# .NET build output for the Godot assembly.
+/bin/
+/obj/
+/Ashfall.Core/bin/
+/Ashfall.Core/obj/
+/Ashfall.Core.Tests/bin/
+/Ashfall.Core.Tests/obj/
+# Godot export presets carry local absolute paths and signing config.
+/export_presets.cfg

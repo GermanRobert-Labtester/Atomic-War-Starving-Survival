@@ -8,6 +8,8 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -49,9 +51,18 @@ namespace AtomicWar._Game.Core
         private void ApplyStaminaAndFatigue(ExpeditionState exp, float tickHours)
         {
             float staminaDrain = CalculateStaminaDrain(exp, tickHours);
+            float fatigueMul = 1f;
+            float warmthDrain = 0f;
+            if (_iceRoadSystem != null)
+                _iceRoadSystem.ApplyOpenWindowNeeds(exp.TargetLocationId, out fatigueMul, out warmthDrain);
+            staminaDrain *= fatigueMul;
             exp.Stamina = Mathf.Clamp(exp.Stamina - staminaDrain, 0f, 100f);
             if (_needsSystem != null)
+            {
                 _needsSystem.Modify(exp.Survivor, NeedKind.Fatigue, staminaDrain * 0.5f);
+                if (warmthDrain > 0f)
+                    _needsSystem.Modify(exp.Survivor, NeedKind.Warmth, -warmthDrain * tickHours);
+            }
             else
                 exp.Survivor.Needs.Fatigue = Mathf.Clamp(exp.Survivor.Needs.Fatigue + staminaDrain * 0.5f, 0f, 100f);
 
@@ -106,11 +117,14 @@ namespace AtomicWar._Game.Core
         private void AdvanceOutbound(ExpeditionState exp)
         {
             float travelStep = exp.Stance == ExpeditionStance.Speed ? 1.5f : 1.0f;
+            if (RouteTravelMultiplier != null)
+                travelStep *= Mathf.Max(0.25f, RouteTravelMultiplier());
             exp.TravelTicksCompleted += Mathf.RoundToInt(travelStep);
             if (exp.TravelTicksCompleted < exp.TotalDistanceTicks) return;
 
             // First arrival: mark proc-gen node visited + reveal fog-of-war
             _generatedMap?.MarkVisited(exp.TargetLocationId);
+            OnFirstArrival?.Invoke(exp.TargetLocationId);
             exp.Phase = ExpeditionPhase.Looting;
             // Prompt #69 — flooded subway / ruins wading or pump drain.
             _floodedNodeSystem?.ProcessFloodedArrival(exp, _hasItem);

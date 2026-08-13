@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
+using Ashfall.Core; // SaveChecksum (host-independent save integrity hash)
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
@@ -34,18 +35,14 @@ namespace AtomicWar._Game.Core
                     snapshot.GameState.IsPaused = _gameState.IsPaused;
                 }
 
-                snapshot.Checksum = "";
-                // H-4: Serialize once, then inject the checksum directly into the
-                // JSON text instead of calling ToJson a second time. Injection is
-                // safe because JsonUtility emits `"Checksum": ""` deterministically
-                // for the empty-string placeholder, and the field name is unique.
-                string body = JsonUtility.ToJson(snapshot, true);
-                string checksum = ComputeChecksum(body);
-                const string placeholder = "\"Checksum\": \"\"";
-                int idx = body.IndexOf(placeholder, StringComparison.Ordinal);
-                string finalJson = idx >= 0
-                    ? body.Substring(0, idx) + $"\"Checksum\": \"{checksum}\"" + body.Substring(idx + placeholder.Length)
-                    : body;
+                // C-2: the checksum covers the snapshot's STATE, not its serialized text, so a
+                // save written by the Unity host still verifies under the Godot host and vice
+                // versa. Hashing pretty-printed JSON coupled save validity to indent width and
+                // null-string spelling, which differ between JsonUtility and System.Text.Json.
+                // SaveChecksum skips the root Checksum field itself, so no placeholder dance and
+                // no mutating the snapshot to blank it first.
+                snapshot.Checksum = SaveChecksum.Compute(snapshot);
+                string finalJson = JsonUtility.ToJson(snapshot, true);
 
                 Directory.CreateDirectory(_savesDir);
 
@@ -285,14 +282,43 @@ namespace AtomicWar._Game.Core
             return sb.ToString();
         }
 
+        /// <summary>
+        /// C-2: state-based verification, with a fallback to the legacy text-based scheme so saves
+        /// written before this change still load. A legacy save re-verifies only on the host that
+        /// wrote it — that is inherent to the old scheme and is what this change exists to end —
+        /// but nothing that used to load stops loading, and the next Save rewrites the slot with a
+        /// portable checksum.
+        /// </summary>
         private static bool VerifyChecksum(SaveData data, string rawJson)
         {
             string saved = data.Checksum;
-            data.Checksum = "";
-            string body = JsonUtility.ToJson(data, true);
-            string computed = ComputeChecksum(body);
-            data.Checksum = saved;
-            return string.Equals(computed, saved, StringComparison.Ordinal);
+            if (string.IsNullOrEmpty(saved)) return false;
+
+            if (string.Equals(SaveChecksum.Compute(data), saved, StringComparison.Ordinal))
+                return true;
+
+            return VerifyLegacyTextChecksum(data, saved);
+        }
+
+        /// <summary>
+        /// Pre-C-2 scheme: SHA256 over the pretty-printed JSON with the Checksum field blanked.
+        /// Retained for backward compatibility only; do not use for new saves.
+        /// </summary>
+        private static bool VerifyLegacyTextChecksum(SaveData data, string saved)
+        {
+            string original = data.Checksum;
+            try
+            {
+                data.Checksum = "";
+                string computed = ComputeChecksum(JsonUtility.ToJson(data, true));
+                return string.Equals(computed, saved, StringComparison.Ordinal);
+            }
+            finally
+            {
+                // Restore even if serialization throws: the caller's SaveData must not be left
+                // with its checksum blanked.
+                data.Checksum = original;
+            }
         }
 
         /// <summary>

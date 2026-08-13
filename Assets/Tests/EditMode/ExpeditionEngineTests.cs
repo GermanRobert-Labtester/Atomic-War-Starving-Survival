@@ -9,6 +9,7 @@ using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

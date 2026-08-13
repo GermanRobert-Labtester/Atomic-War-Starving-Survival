@@ -1,4 +1,5 @@
 using UnityEngine;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Survivors
 {
@@ -76,10 +77,17 @@ namespace AtomicWar._Game.Survivors
     /// NeedsSystem, RadiationSystem, and the Utility AI.
     /// </summary>
     [System.Serializable]
-    public class Survivor
+    public class Survivor : Ashfall.Core.Journal.ISurvivorAuthor
     {
         public string Id;
         public string DisplayName;
+
+        // Explicit interface implementation so the shared journal domain in Ashfall.Core can
+        // accept a Survivor as an author without Id/DisplayName/RiskBias becoming properties —
+        // JsonUtility does not serialize properties, so converting them would break save/load.
+        string Ashfall.Core.Journal.ISurvivorAuthor.Id => Id;
+        string Ashfall.Core.Journal.ISurvivorAuthor.DisplayName => DisplayName;
+        Ashfall.Core.Journal.RiskBiasTrait Ashfall.Core.Journal.ISurvivorAuthor.RiskBias => RiskBias;
         public int Age = 30;
         public bool IsBunkerBorn;
 

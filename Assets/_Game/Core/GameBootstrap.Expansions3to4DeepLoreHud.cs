@@ -9,6 +9,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
 using AtomicWar._Game.World;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -223,6 +224,11 @@ namespace AtomicWar._Game.Core
                 };
                 JournalSystem.OnEntryAdded += onEntry;
                 _subscriptions.Track(() => JournalSystem.OnEntryAdded -= onEntry);
+
+                // Lore bible — Layer-1 bunker inspection: the wrongnesses,
+                // the open door, the nameplates. Discovered once here so the
+                // Codex can show them as found rather than locked.
+                DiscoverShelterInspectionLore();
             }
 
             // FactionRelationshipMap

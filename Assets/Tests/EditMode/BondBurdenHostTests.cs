@@ -12,6 +12,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
 using InventoryClass = AtomicWar._Game.Inventory.Inventory;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

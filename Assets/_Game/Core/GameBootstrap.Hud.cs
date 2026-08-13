@@ -18,6 +18,7 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -80,6 +81,7 @@ namespace AtomicWar._Game.Core
             SyncRadioInterceptHudFromLog();
             _hud.EnsureJournalBook();
             SyncJournalBookFromSystem();
+            WireJournalCodex();
             _hud.EnsureExpeditionEncounterLog();
             // Ammo tooltips / hatch stockpile / combat log (safe if ItemAmmoTypes not ready yet).
             WireAmmoUiBindings();
@@ -579,6 +581,7 @@ namespace AtomicWar._Game.Core
                 ? Survivors[0].Id
                 : null;
             ctx.Suspicion = SuspicionTracker;
+            ctx.Knowledge = JournalSystem != null ? JournalSystem.Knowledge : null;
             ctx.ActiveIntelReliability = IntelReliability.Unverified;
             ctx.IsOnRadio = false;
             ctx.IsResourceStarved = false;

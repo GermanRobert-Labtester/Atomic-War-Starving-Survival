@@ -18,6 +18,7 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -148,6 +149,7 @@ namespace AtomicWar._Game.Core
             else if (id == "sv_marcus") sv.CurrentRoomId = "stores";
             else if (id == "sv_suki") sv.CurrentRoomId = "entry";
             Survivors.Add(sv);
+            UnlockSurvivorMet(sv);
             NeedsSystem.Register(sv);
             RadiationSystem.Register(sv);
             // Prompt #829 — assign blood type at creation; keep BloodTransfusion enum in sync.
@@ -288,6 +290,19 @@ namespace AtomicWar._Game.Core
             {
                 if (SaveSystem != null)
                     SaveSystem.SetWorldFlag(flagId, value);
+
+                // Lore bible 05_FACTIONS §8 — distributing the Kittiwake chart
+                // ends the Undertow's business model and opens the late-game Drown.
+                if (value && flagId == EventRunner.FlagKittiwakeChartDistributed)
+                {
+                    NPCUndertow?.ChartDistributed();
+                    NPCArchivists?.EndIsolation();
+                    if (SaveSystem != null)
+                    {
+                        SaveSystem.SetWorldFlag(EventRunner.FlagColdStoreOpen, true);
+                        SaveSystem.SetWorldFlag(EventRunner.FlagRecordsAnnexOpen, true);
+                    }
+                }
             };
             _tryApplyPedalCostCached ??= TryApplyPedalCost;
         }

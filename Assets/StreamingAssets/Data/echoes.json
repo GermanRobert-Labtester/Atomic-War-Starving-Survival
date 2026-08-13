@@ -660,5 +660,207 @@
         ]
       }
     ]
+  },
+  {
+    "id": "echo_the_nameplates",
+    "title": "The Nameplates",
+    "bodyText": "A tin behind the filtration stack, the kind that held boiled sweets. Fourteen brass nameplates inside, each with two screw holes and a surname. None of the surnames belong to anyone here. Somebody took them down in the first week and could not make themselves throw them away, and neither could anyone since.",
+    "weight": 1.2,
+    "minDay": 5,
+    "conditions": {
+      "MinDay": 5
+    },
+    "choices": [
+      {
+        "choiceId": "mount_them",
+        "text": "Mount them in the corridor where they were.",
+        "moraleDelta": -8.0,
+        "effects": [
+          { "setWorldFlag": "nameplates_hung", "worldFlagValue": true }
+        ]
+      },
+      {
+        "choiceId": "leave_the_tin",
+        "text": "Leave the tin where it is.",
+        "moraleDelta": 0.0,
+        "effects": []
+      },
+      {
+        "choiceId": "melt_them",
+        "text": "Melt them for brass.",
+        "moraleDelta": -20.0,
+        "effects": [
+          { "setWorldFlag": "nameplates_melted", "worldFlagValue": true, "itemId": "brass_fittings", "itemAmount": 14 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "echo_unopened_boots",
+    "title": "The Unopened Crate",
+    "bodyText": "A crate in the deep stores, banded, never opened. Children's winter boots, sizes 1 through 4, eight pairs. The packing note lists a delivery date three days after the Exchange and a recipient reference: ALLOC-12/DEP.",
+    "weight": 1.0,
+    "minDay": 5,
+    "conditions": {
+      "MinDay": 5
+    },
+    "choices": [
+      {
+        "choiceId": "open_it",
+        "text": "Cut the bands. The boots will fit somebody.",
+        "moraleDelta": -3.0,
+        "effects": []
+      },
+      {
+        "choiceId": "leave_it_banded",
+        "text": "Leave it banded. The note has a date on it.",
+        "moraleDelta": 0.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "echo_the_frying_pan",
+    "title": "The Second Place Setting",
+    "bodyText": "A cast-iron pan on a cold stove in an empty Grid kitchen, with a meal in it, burned to carbon and then to dust, and a second place set at the table with the cutlery squared.",
+    "weight": 1.0,
+    "minDay": 15,
+    "conditions": {
+      "MinDay": 15
+    },
+    "choices": [
+      {
+        "choiceId": "take_the_pan",
+        "text": "Take the pan. It will scrub clean.",
+        "moraleDelta": 0.0,
+        "effects": []
+      },
+      {
+        "choiceId": "leave_the_table",
+        "text": "Leave the table set.",
+        "moraleDelta": -4.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "echo_school_register",
+    "title": "The Register",
+    "bodyText": "The register at the gymnasium school, current, nine names. Behind it in the same drawer, the register from before, four hundred and six names, with a pencil line drawn through some of them and not others, and the drawing stopped partway down page three.",
+    "weight": 1.0,
+    "minDay": 15,
+    "conditions": {
+      "MinDay": 15
+    },
+    "choices": [
+      {
+        "choiceId": "close_the_drawer",
+        "text": "Close the drawer.",
+        "moraleDelta": -5.0,
+        "effects": []
+      },
+      {
+        "choiceId": "count_them",
+        "text": "Count them. Somebody should.",
+        "moraleDelta": -2.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "echo_dosimeter_pilgrim",
+    "title": "The Pilgrim",
+    "bodyText": "A dosimeter on the switchbacks, hung on a marker post at eye height, reading. Beside it a pair of boots, placed together, and a folded coat, and nothing else at all.",
+    "weight": 1.0,
+    "minDay": 50,
+    "conditions": {
+      "MinDay": 50
+    },
+    "choices": [
+      {
+        "choiceId": "leave_it",
+        "text": "Leave it with the boots.",
+        "moraleDelta": 0.0,
+        "effects": []
+      },
+      {
+        "choiceId": "take_the_dosimeter",
+        "text": "Take the dosimeter. It still works.",
+        "moraleDelta": -3.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "echo_the_receipt",
+    "title": "The Receipt",
+    "bodyText": "A Warlord receipt in a dead man's inside pocket, waxed paper, entirely legible. Passage for one, paid in full, dated yesterday. The bridge is four kilometres behind him and he was walking away from it.",
+    "weight": 1.0,
+    "minDay": 20,
+    "conditions": {
+      "MinDay": 20
+    },
+    "choices": [
+      {
+        "choiceId": "bury_it_with_him",
+        "text": "Bury it with him.",
+        "moraleDelta": 0.0,
+        "effects": []
+      },
+      {
+        "choiceId": "keep_it",
+        "text": "Keep the receipt.",
+        "moraleDelta": -3.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "echo_answering_service",
+    "title": "The Answering Service",
+    "bodyText": "A pre-war medical answering service, solar, still cycling. Forty-one messages. Most are appointment cancellations. Number 39 is a man apologising, at length and very calmly, for missing a scan, and promising to reschedule as soon as things settle down.",
+    "weight": 1.0,
+    "minDay": 25,
+    "conditions": {
+      "MinDay": 25
+    },
+    "choices": [
+      {
+        "choiceId": "listen_to_all",
+        "text": "Listen to all of them.",
+        "moraleDelta": -6.0,
+        "effects": []
+      },
+      {
+        "choiceId": "switch_it_off",
+        "text": "Switch it off.",
+        "moraleDelta": 0.0,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "echo_the_second_chalk_count",
+    "title": "The Second Chalk Count",
+    "bodyText": "Chalk on the wall at the stair head: fourteen marks, ruled through in groups of five. Then a gap of about a metre. Then six marks, in the same hand, much later, much less steady.",
+    "weight": 1.0,
+    "minDay": 60,
+    "conditions": {
+      "MinDay": 60
+    },
+    "choices": [
+      {
+        "choiceId": "move_on",
+        "text": "Move on.",
+        "moraleDelta": 0.0,
+        "effects": []
+      },
+      {
+        "choiceId": "count_again",
+        "text": "Count them again.",
+        "moraleDelta": -2.0,
+        "effects": []
+      }
+    ]
   }
 ]

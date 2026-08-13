@@ -8,6 +8,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -461,6 +462,10 @@ namespace AtomicWar._Game.Core
             float encounterChance = 0.25f + (exp.DangerLevel * 0.05f);
             if (exp.Stance == ExpeditionStance.Speed) encounterChance *= 1.4f;
             else if (exp.Stance == ExpeditionStance.Stealth) encounterChance *= 0.6f;
+
+            // Lore bible 05_FACTIONS — Lamplighters interlock: lit routes, fewer ambushes.
+            if (RouteEncounterMultiplier != null)
+                encounterChance *= Mathf.Clamp(RouteEncounterMultiplier(), 0f, 2f);
 
             // Prompt #223 Apex Predator / #254 Butcher: full stealth (no random encounters).
             if (_personalQuests != null && exp.Survivor != null)

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Environment
 {
@@ -40,6 +41,9 @@ namespace AtomicWar._Game.Environment
         private readonly WeatherSystem _weatherSystem;
         private NeedsSystem _needsSystem;
 
+        /// <summary>Holdfast Cut albedo tax. Host sets 1.35 while the Ice Road is open.</summary>
+        public float IceAlbedoMultiplier { get; set; } = 1f;
+
         public event Action<Survivor, string> OnUVAfflictionApplied;
         public event Action<OzoneScourgeWarningEvent> OnOzoneScourgeWarningEventBus;
 
@@ -55,8 +59,8 @@ namespace AtomicWar._Game.Environment
 
         public float GetAmbientUV()
         {
-            if (_weatherSystem == null) return StandardUVIndex;
-            return GetAmbientUVForWeather(_weatherSystem.Current);
+            if (_weatherSystem == null) return StandardUVIndex * Mathf.Max(1f, IceAlbedoMultiplier);
+            return GetAmbientUVForWeather(_weatherSystem.Current) * Mathf.Max(1f, IceAlbedoMultiplier);
         }
 
         public static float GetAmbientUVForWeather(WeatherKind kind)

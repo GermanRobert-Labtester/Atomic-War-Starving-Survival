@@ -9,6 +9,7 @@ using AtomicWar._Game.Factions;
 using AtomicWar._Game.Narrative;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {

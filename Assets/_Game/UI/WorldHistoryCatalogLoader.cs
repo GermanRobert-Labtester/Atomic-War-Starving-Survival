@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using AtomicWar._Game.Events;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.UI
 {

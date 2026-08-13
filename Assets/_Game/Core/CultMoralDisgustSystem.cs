@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -89,7 +90,7 @@ namespace AtomicWar._Game.Core
                     // Sociopath is a TRAIT, not a RiskBias — the old RiskBias check
                     // never matched (see EmpathSystem for the same correction).
                     if (sv.HasTrait(PersonalQuestSystem.SociopathId)
-                        || sv.RiskBias == Survivors.RiskBiasTrait.Fatalist)
+                        || sv.RiskBias == RiskBiasTrait.Fatalist)
                         continue;
 
                     if (_needsSystem != null)

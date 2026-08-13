@@ -11,6 +11,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {

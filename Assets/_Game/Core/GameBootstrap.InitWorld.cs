@@ -19,6 +19,7 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {

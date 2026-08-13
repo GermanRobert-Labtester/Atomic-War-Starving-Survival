@@ -1,0 +1,414 @@
+[
+  {
+    "id": "npc_bram_ostrowski",
+    "display_name": "Bram Ostrowski",
+    "profession": "Mapmaker",
+    "bio": "Walks the corridor selling maps he surveys himself, on waxed paper, priced by the sheet. Accurate to a degree that makes people uncomfortable about how he obtained the detail.",
+    "faction": "none",
+    "region": "the_toll",
+    "first_day": 20,
+    "location_id": "",
+    "wants": [
+      "map_corrections"
+    ],
+    "offers": [
+      "reduced_travel_time",
+      "hazard_forewarning"
+    ],
+    "will_not": [
+      "carry_a_message",
+      "take_a_passenger",
+      "name_his_buyers"
+    ],
+    "signature_quote": "I don't sell where people are. I sell where things are. People move. That's their business and it's not on the paper."
+  },
+  {
+    "id": "npc_sergeant_pell",
+    "display_name": "Sergeant Pell",
+    "profession": "Garrison Intake Officer",
+    "bio": "Runs intake at the district conscription office. Polite, thorough, and entirely sincere when he explains that service is the fastest route to rations. He believes it, because it is true. Ask him what happens to the ones who decline, and he answers honestly. That is the encounter.",
+    "faction": "military_remnants",
+    "region": "the_grid",
+    "first_day": 15,
+    "location_id": "loc_conscription_office",
+    "wants": [
+      "to_hit_his_numbers_without_lying"
+    ],
+    "offers": [
+      "garrison_protection",
+      "medical_access",
+      "straight_answers"
+    ],
+    "will_not": [],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_doctor_ianov",
+    "display_name": "Doctor Ianov",
+    "profession": "Large-Animal Veterinarian",
+    "bio": "Performs human medicine because he is the closest thing available and everyone including him knows it. He does the arithmetic on paper in front of the patient every single time, and he has never once rounded in the direction that would be easier.",
+    "faction": "upland_militia",
+    "region": "the_verge",
+    "first_day": 10,
+    "location_id": "loc_veterinary_surgery",
+    "wants": [
+      "a_human_formulary"
+    ],
+    "offers": [
+      "surgery_at_stated_odds"
+    ],
+    "will_not": [],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_wren",
+    "display_name": "Wren",
+    "profession": "Trader",
+    "bio": "Eleven. Attends the nine-pupil school at the gymnasium. Trades small found objects at prices that are always slightly too generous to the player. Born the year of the Exchange: every explanation the player gives is the first and only version they will ever hear, and the game records which ones were told and whether they were true.",
+    "faction": "none",
+    "region": "the_verge",
+    "first_day": 25,
+    "location_id": "loc_school_gymnasium",
+    "wants": [
+      "to_know_what_things_were_for"
+    ],
+    "offers": [
+      "minor_salvage",
+      "verge_gossip"
+    ],
+    "will_not": [],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_kestrel",
+    "display_name": "Kestrel",
+    "profession": "Pilgrim",
+    "bio": "Walks the switchbacks in stages. Visibly in the second phase of acute radiation sickness, lucid, unhurried, and entirely at peace. Declines medical aid, politely, every time it is offered, and does not argue. She is dying of a choice she made freely and is not frightened. The narration does not comment.",
+    "faction": "cult_of_the_glow",
+    "region": "the_spine",
+    "first_day": 60,
+    "location_id": "loc_pilgrim_switchbacks",
+    "wants": [],
+    "offers": [
+      "safe_passage",
+      "hot_zone_routes",
+      "her_boots_late"
+    ],
+    "will_not": [
+      "accept_medical_aid"
+    ],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_nomi_fisk",
+    "display_name": "Nomi Fisk",
+    "profession": "Shallows Trader",
+    "bio": "Runs a nine-metre launch at the Shallows. Trades with all four factions on the same afternoon without difficulty. She explains the hull etiquette once. If the crew violates it, she does not retaliate - she simply is not at the Shallows again, and the Drown closes.",
+    "faction": "none",
+    "region": "the_drown",
+    "first_day": 90,
+    "location_id": "loc_the_shallows_market",
+    "wants": [
+      "cargo_that_does_not_pick_a_side"
+    ],
+    "offers": [
+      "water_transport",
+      "access_to_cold_store",
+      "access_to_records_annex"
+    ],
+    "will_not": [
+      "explain_the_etiquette_twice"
+    ],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_ivor_lasko",
+    "display_name": "Ivor Lasko",
+    "profession": "Garrison Deserter",
+    "bio": "Hiding in a Verge outbuilding. The Militia is holding a vote on whether to return him. Voss's standing order is unambiguous and publicly posted. He waits to learn what his neighbours decide, and he does not run.",
+    "faction": "none",
+    "region": "the_verge",
+    "first_day": 40,
+    "location_id": "loc_grange_hall",
+    "wants": [
+      "a_vote"
+    ],
+    "offers": [],
+    "will_not": [
+      "beg"
+    ],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_the_cartwright_sisters",
+    "display_name": "The Cartwright Sisters",
+    "profession": "Press Operators",
+    "bio": "Run the cider press. Ada speaks and negotiates. Ruth has not spoken since Hour Zero and does the work. They want apples, fuel for the boiler, and no questions about Ruth. Late in a long partnership, Ruth hands over a written note rather than speaking. It is four words long and it is not about herself.",
+    "faction": "upland_militia",
+    "region": "the_verge",
+    "first_day": 35,
+    "location_id": "loc_cider_press",
+    "wants": [
+      "apples",
+      "boiler_fuel",
+      "no_questions_about_ruth"
+    ],
+    "offers": [
+      "ethanol"
+    ],
+    "will_not": [],
+    "signature_quote": ""
+  },
+  {
+    "id": "npc_edor_vale",
+    "display_name": "Edor Vale",
+    "profession": "Census Clerk Grade III",
+    "bio": "Junior enumerator. Score 60.4 — lowest allocated band. He knows it. Offers to read the form again. Will not enter the bunker uninvited. Will not falsify a date of birth.",
+    "faction": "none",
+    "region": "the_cut",
+    "first_day": 90,
+    "location_id": "loc_weighbridge",
+    "wants": [
+      "corrected_occupations",
+      "dates_of_birth_once"
+    ],
+    "offers": [
+      "the_pink_copy",
+      "to_wait_in_the_ash"
+    ],
+    "will_not": [
+      "enter_uninvited",
+      "falsify_a_dob"
+    ],
+    "signature_quote": "Most people want it read again. That's all right. There isn't a time limit on understanding it. There is a time limit on the ice."
+  },
+  {
+    "id": "npc_yara_holm",
+    "display_name": "Yara Holm",
+    "profession": "Cutter",
+    "bio": "Harbour ice-pilot. Score 44. Unlisted. Hired because the allocated would not go out in year one. Dark and lit are moral words. Will not guide a column onto ice she has marked dark. Will not blast.",
+    "faction": "none",
+    "region": "the_cut",
+    "first_day": 90,
+    "location_id": "loc_cut_waystation_a",
+    "wants": [
+      "item_beacon_oil",
+      "columns_that_wait"
+    ],
+    "offers": [
+      "lit_hours",
+      "accident_book",
+      "overnight_at_a"
+    ],
+    "will_not": [
+      "guide_dark_ice",
+      "blast"
+    ],
+    "signature_quote": "I don't open it for you. I open it. If it's dark, you wait. If you don't wait, I write the accident in the book and I don't fetch you."
+  },
+  {
+    "id": "npc_leva_quist",
+    "display_name": "Leva Quist",
+    "profession": "Shift Lead",
+    "bio": "Municipal RO technician. Never allocated — in situ essential. Counts out loud. Will not shut the plant to spite Ormund. Corrects people who say abandoned.",
+    "faction": "hydro_barons",
+    "region": "the_saltworks",
+    "first_day": 90,
+    "location_id": "loc_salt_grade_hut",
+    "wants": [
+      "item_ro_resin",
+      "brass_fittings",
+      "outfall_hands"
+    ],
+    "offers": [
+      "salt_trade",
+      "shift_whistle",
+      "volume_12"
+    ],
+    "will_not": [
+      "shut_the_plant_to_spite"
+    ],
+    "signature_quote": "They scored high enough to be continued. The membranes don't care."
+  },
+  {
+    "id": "npc_cael_ormund",
+    "display_name": "Cael Ormund",
+    "profession": "Registrar-General",
+    "bio": "Logistics planner, Office of Continuity. RUR 34, score 62.1, ALLOCATED. Civil-service present tense. Will not falsify a score. Will not raise his voice. Will not call anyone a thief.",
+    "faction": "none",
+    "region": "the_cluster",
+    "first_day": 90,
+    "location_id": "loc_cluster_office",
+    "wants": [
+      "occupancy_return",
+      "levy_honour",
+      "item_order_12c"
+    ],
+    "offers": [
+      "the_schedule",
+      "regular_rate",
+      "discrepancy_noted"
+    ],
+    "will_not": [
+      "falsify_a_score",
+      "raise_his_voice",
+      "call_anyone_a_thief"
+    ],
+    "signature_quote": "You are living in a facility that authenticated for fourteen. The fourteen did not arrive. I am not collecting you. I am scheduling you."
+  },
+  {
+    "id": "npc_halden_mire",
+    "display_name": "Halden Mire",
+    "profession": "Sparks",
+    "bio": "Fleet radio. The authenticator above the boarding hatch is still a small green lamp. He will not open for unauthenticated boarding. He logs every refusal.",
+    "faction": "none",
+    "region": "the_shelf",
+    "first_day": 110,
+    "location_id": "loc_shelf_hearth4",
+    "wants": [
+      "stand_up_order",
+      "allocation_number"
+    ],
+    "offers": [
+      "hatch_log",
+      "schedule_crystal"
+    ],
+    "will_not": [
+      "open_unauthenticated",
+      "blast_the_ice"
+    ],
+    "signature_quote": "The authenticator wanted a number."
+  },
+  {
+    "id": "npc_cluster_teacher",
+    "display_name": "Cluster Teacher",
+    "profession": "Schoolteacher",
+    "bio": "Unnamed. Nineteen children. Curriculum includes the Reconstruction Utility Rating, taught as arithmetic. A dependent is worth points. That is on the worksheet.",
+    "faction": "none",
+    "region": "the_cluster",
+    "first_day": 90,
+    "location_id": "loc_cluster_school",
+    "wants": [
+      "consistency"
+    ],
+    "offers": [
+      "the_hour",
+      "the_rubric"
+    ],
+    "will_not": [
+      "allow_a_referendum"
+    ],
+    "signature_quote": "A dependent is worth points. Sit the hour. Correct a sum or let it stand."
+  },
+  {
+    "id": "npc_osran_kell",
+    "display_name": "Osran Kell",
+    "profession": "Scale Keeper",
+    "bio": "Keeps the depot scale honest. The number is real; what people infer from it is not his problem. His office has one chair for him and none for you; he will fetch a second one, and he always does.",
+    "faction": "none",
+    "region": "region_crossing",
+    "first_day": 20,
+    "location_id": "loc_crossing_scalehouse",
+    "wants": [
+      "trade_goods"
+    ],
+    "offers": [
+      "verification",
+      "weighing"
+    ],
+    "will_not": [
+      "rig_a_weight",
+      "claim_authority_he_would_have_to_defend"
+    ],
+    "signature_quote": "The number is real. What people infer from it is not my problem."
+  },
+  {
+    "id": "npc_mattis_cray",
+    "display_name": "Mattis Cray",
+    "profession": "Gate Attendant",
+    "bio": "The last-resort vouch at the Crossing's viaduct gate. Will vouch, will run messages, will not pick a bloc. When someone burns his name he does not offer it a second time.",
+    "faction": "none",
+    "region": "region_crossing",
+    "first_day": 20,
+    "location_id": "loc_crossing_viaduct_gate",
+    "wants": [
+      "reliable_messages"
+    ],
+    "offers": [
+      "vouch",
+      "message_running"
+    ],
+    "will_not": [
+      "pick_a_bloc",
+      "vouch_twice_for_the_burned"
+    ],
+    "signature_quote": "I vouch for you, not the Crossing. Keep them separate and we stay friends."
+  },
+  {
+    "id": "npc_dessa_vane",
+    "display_name": "Dessa Vane",
+    "profession": "Underwrite Keeper",
+    "bio": "Runs the Underwrite Hall. Draws contracts, reads them twice, collects forfeits at the hall — never at the hatch. She is not the Tally. The Tally will walk to your door. Dessa will not leave the hall.",
+    "faction": "faction_the_underwrite",
+    "region": "region_crossing",
+    "first_day": 20,
+    "location_id": "loc_crossing_underwrite_hall",
+    "wants": [
+      "contracts_honoured"
+    ],
+    "offers": [
+      "credit",
+      "structured_debt"
+    ],
+    "will_not": [
+      "lie_about_a_term",
+      "waive_a_forfeit_on_the_record",
+      "leave_the_hall_to_collect"
+    ],
+    "signature_quote": "Read it twice. I'll say it twice. After the second time there is only the ink."
+  },
+  {
+    "id": "npc_perrin_ashby",
+    "display_name": "Perrin Ashby",
+    "profession": "Charter Drafter",
+    "bio": "Drafts charters for a place that has never had one. Earnest, precise, slightly too fond of 'finally.' Osran's only joke about anyone. The Compact's advocate at the Petition Tent.",
+    "faction": "faction_the_compact",
+    "region": "region_crossing",
+    "first_day": 20,
+    "location_id": "loc_crossing_petition_tent",
+    "wants": [
+      "a_written_charter"
+    ],
+    "offers": [
+      "drafting",
+      "canvassing"
+    ],
+    "will_not": [
+      "pass_a_known_unfair_clause",
+      "admit_the_scoring_clause_resembles_a_rur"
+    ],
+    "signature_quote": "None of that is a reason it cannot also be a town, with a vote, and a code, and an appeal that is not 'find three backers faster.'"
+  },
+  {
+    "id": "npc_ivo_fenn",
+    "display_name": "Ivo Fenn",
+    "profession": "Records Clerk",
+    "bio": "Keeps five years of the Crossing filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. His records do not lie. He will not summarise the Charter — he produces files.",
+    "faction": "none",
+    "region": "region_crossing",
+    "first_day": 20,
+    "location_id": "loc_crossing_records_room",
+    "wants": [
+      "order"
+    ],
+    "offers": [
+      "records",
+      "filing"
+    ],
+    "will_not": [
+      "destroy_a_record",
+      "summarise_the_charter"
+    ],
+    "signature_quote": "I file things. That is the whole job. If you want a summary, ask someone who thinks paper is negotiable."
+  }
+]

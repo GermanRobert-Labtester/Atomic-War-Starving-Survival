@@ -1,3 +1,5 @@
+using Ashfall.Core;
+
 namespace AtomicWar._Game.Environment
 {
     /// <summary>

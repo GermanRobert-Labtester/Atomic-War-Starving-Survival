@@ -1,0 +1,86 @@
+[
+  {
+    "id": "loc_crossing_viaduct_gate",
+    "displayName": "The Viaduct Gate",
+    "dangerLevel": 4.5,
+    "travelHours": 8,
+    "baseRadsPerHour": 22.0,
+    "region": "region_crossing",
+    "inspect": "A rail truss over the Drown's edge, planked over for feet instead of axles. The paint on the sign has texture from how many times it has been redone: NO CHARTER NO GUARD ASK FOR SOMEONE. Someone added, smaller, underneath, in different paint: WE MEAN IT.",
+    "description": "The gate is not a wall. It is a threshold you are allowed to cross only because someone staked their own name on you. Until someone vouches, it stays closed and the viaduct stays quiet.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_scalehouse",
+    "displayName": "The Scalehouse",
+    "dangerLevel": 3.0,
+    "travelHours": 1,
+    "baseRadsPerHour": 18.0,
+    "region": "region_crossing",
+    "inspect": "A truck scale built for loads nobody hauls anymore, kept calibrated for reasons that stopped being obvious around the same time the reasons stopped mattering less. Osran's office has one chair for him and none for you. He'll fetch a second one. He always fetches a second one.",
+    "description": "Every load that leaves the Crossing is weighed here, once, on a scale that has never been argued into lying. Osran keeps the weights he trusts in a drawer he does not lock. Nobody has ever tried.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_stallrow",
+    "displayName": "Stallrow",
+    "dangerLevel": 3.5,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 20.0,
+    "region": "region_crossing",
+    "inspect": "The market the Scale vouches for, stalls chalked with claim marks in the Scavenger Guild's old pattern — copied, unofficially, because it is the only enforcement anybody here has seen work without a government behind it.",
+    "description": "Trade happens on chalked claims and a shared patience that can break. Stallrow is where the Crossing becomes legible to a stranger: prices, rivalries, and three different versions of the same founding story.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_watchtower",
+    "displayName": "The Watchtower",
+    "dangerLevel": 4.0,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 24.0,
+    "region": "region_crossing",
+    "inspect": "The Drown side of the viaduct, watched. Two people, a stove, and a long list of every face that came across the rail truss and why.",
+    "description": "The watch keeps the gate honest. They answer to no single Power and keep no order but the order they are asked to keep. What they remember is a ledger of its own.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_weighbridge",
+    "displayName": "The Deck Scale",
+    "dangerLevel": 3.0,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 18.0,
+    "region": "region_crossing",
+    "inspect": "The bridge scale itself, heavy as a doctrine. What it reports is a number; the argument is about what the number means. Osran reads it and records it; the record outlives every argument about it.",
+    "description": "Where loads are weighed on the way out and the way in. Its honesty is a shared assumption nobody wants to be the first to break, which is exactly why it has stayed honest.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_underwrite_hall",
+    "displayName": "The Underwrite Hall",
+    "dangerLevel": 3.2,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 18.0,
+    "region": "region_crossing",
+    "inspect": "A long table, a ledger chained to it — not against theft, Dessa will tell you, unprompted, the first time you ask. Against convenient memory. The fire is always lit. Somebody's interest paid for the wood.",
+    "description": "Where help is given at a plainly named price. Every contract here is read twice before it is signed, and after the second reading there is only the ink.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_records_room",
+    "displayName": "The Records Room",
+    "dangerLevel": 3.0,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 18.0,
+    "region": "region_crossing",
+    "inspect": "Five years of the Crossing, filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. Ivo Fenn keeps it, and Ivo Fenn's records do not lie.",
+    "description": "Ledgers, claims, and every reading the Deck Scale has reported, filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. What is filed here has outlived every argument filed about it. Ask, and Ivo Fenn will find the page — given the hour and a reason he accepts.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  }
+]

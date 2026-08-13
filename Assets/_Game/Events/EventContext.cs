@@ -6,6 +6,8 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using Random = System.Random;
+using Ashfall.Core;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Events
 {
@@ -99,6 +101,12 @@ namespace AtomicWar._Game.Events
 
         /// <summary>Live suspicion / internal-mystery state (optional).</summary>
         public SuspicionTracker Suspicion;
+
+        /// <summary>
+        /// Optional located-knowledge base (JournalSystem). Enables knowledge-gated
+        /// events via <see cref="EventConditions.RequiredKnowledgeKey"/>.
+        /// </summary>
+        public KnowledgeBase Knowledge;
 
         public EventContext() { }
 

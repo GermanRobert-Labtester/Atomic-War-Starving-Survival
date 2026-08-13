@@ -3,6 +3,7 @@ using UnityEngine;
 using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.AI.Actions
 {
@@ -100,7 +101,7 @@ namespace AtomicWar._Game.AI.Actions
             var killer = context.Survivor;
             var trait = killer.RiskBias;
 
-            if (trait == Survivors.RiskBiasTrait.Sociopath)
+            if (trait == RiskBiasTrait.Sociopath)
             {
                 // No morale penalty. Other survivors are terrified.
                 for (int i = 0; i < survivors.Count; i++)
@@ -114,7 +115,7 @@ namespace AtomicWar._Game.AI.Actions
                     ApplyAffinityHit?.Invoke(killer, w, -15f);
                 }
             }
-            else if (trait == Survivors.RiskBiasTrait.Empath)
+            else if (trait == RiskBiasTrait.Empath)
             {
                 // Massive mourning: 10-day debuff.
                 if (context.NeedsSystem != null)
@@ -123,7 +124,7 @@ namespace AtomicWar._Game.AI.Actions
                     killer.Needs.Morale = Mathf.Clamp(killer.Needs.Morale - 30f, 0f, 100f);
                 // Mourning duration handled by external system via OnMercyKill event.
             }
-            else if (trait == Survivors.RiskBiasTrait.Paranoid)
+            else if (trait == RiskBiasTrait.Paranoid)
             {
                 // Other survivors lose trust in the killer.
                 for (int i = 0; i < survivors.Count; i++)

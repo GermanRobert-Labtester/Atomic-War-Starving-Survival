@@ -3,6 +3,7 @@ using UnityEngine;
 using AtomicWar._Game.AI;
 using AtomicWar._Game.AI.Actions;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

@@ -29,6 +29,13 @@ namespace AtomicWar._Game.Factions
 
         public NPC_OsteophagesState State => _state;
 
+        /// <summary>GameBootstrap bridge: applies the currents.json entry at construction.</summary>
+        public void Initialise(string displayName)
+        {
+            if (!string.IsNullOrEmpty(displayName)) _state.displayName = displayName;
+            _state.isActive = true;
+        }
+
         public bool ProcessScrapRecycling(string trashItemId, out string resultItemId, out int resultAmount)
         {
             resultItemId = "item_scrap_metal";

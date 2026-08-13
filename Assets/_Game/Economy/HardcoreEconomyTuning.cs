@@ -90,6 +90,11 @@ namespace AtomicWar._Game.Economy
                 "water_purification_tablet, seed_*, book, circuit_board",
                 "weapon_*",
                 "Clean water, labor, shelter access"),
+            new FactionTradePreference(
+                "hydro_barons",
+                "canned_food, calories, brass_fittings, iodine_pills, seed_*",
+                "weapon_hmg, grenade_military",
+                "Process water, salt, resin"),
         };
 
         // ── Dynamic price-shock events (Section V) ───────────────────────

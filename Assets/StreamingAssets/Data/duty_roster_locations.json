@@ -1,0 +1,50 @@
+[
+  {
+    "id": "loc_stack_roster_wall",
+    "displayName": "The Chart",
+    "inspect": "Fourteen rows. A pencil on a string. The heading is older than anyone sleeping here.",
+    "description": "A wall chart headed `ALLOCATION 12 — DUTY ROSTER`, print date before the Exchange, paper that has gone the colour of tea. Fourteen rows. Columns: name, occupation, watch, remarks. The remarks column was never meant for the living. A hole is punched in the lower left; a pencil hangs through it on a string darkened by hands. The point is short. There is a knife-nick in the rail where someone meant to start a name and did not. Four unfaded rectangles on the corridor behind you are the same width as brass plates. If the rows are still blank, dust has been wiped in a rectangle the size of a palm, daily. If they are written, the graphite shines when the lamp is lit and dulls when it is not. You can take the pencil. The next morning will be guessed. You can write a name that has not slept here. Kess will erase it before the kettle boils.",
+    "dangerLevel": 2.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 2.0,
+    "region": "the_stack",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_stack_sleeping",
+    "displayName": "The Sleeping Stack",
+    "inspect": "Eleven bolted footboards. Three pads. One extra blanket folded as if it were a person.",
+    "description": "Bunks sized for eleven, numbered in stencil that skipped 4 and 13 the way some buildings skip floors. The manifest in the airlock still reads fourteen. Three camp-pads fill the difference, edges taped, names on paper tags if anyone has claimed a fourteenth. A blanket is folded on the empty pad even when no one is due. It keeps the shape of a chest. Under A7, a sock. Under A2, a dosimeter on a nail, ticking slower than the intake. You can take the blanket. The pad will look like a pad. You can move a tag from one board to another. Kess will put it back if the person did not sleep there. The air is breath and wool and the ghost of iodine.",
+    "dangerLevel": 3.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 4.0,
+    "region": "the_stack",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_stack_mess",
+    "displayName": "The Mess",
+    "inspect": "One table. Portion rings burned into enamel. A ladle that has a queue.",
+    "description": "A table that seats eight if no one brings elbows. Enamel bowls with rings where stew sat and was not eaten, or sat and was. A ladle hangs on a nail at head height so children cannot vote with it unless lifted. Knife-scratches on the table edge count something that is not days: extra portions, or the times the count was short. A tin of salt with a lid that does not match. If three people are north, two bowls wait at the far end with cloth over them, and the cloth gets a skin of dust by evening. You can take the ladle. The next meal will be poured with a mug. You can leave a bowl until it is cold. The ring it leaves is a mark. Ansel will not point at it.",
+    "dangerLevel": 2.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 2.0,
+    "region": "the_stack",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_stack_filtration",
+    "displayName": "Filtration Stack",
+    "inspect": "Canisters. A tin behind them that everyone puts back. The intake bunk is the one with the cough.",
+    "description": "The filtration stack is a throat of metal and cloth. Canisters notch-filed for days, the way Waystation A's filter is notched for a window. Behind it, a tin. Fourteen brass nameplates. Everyone who has found them has put them back. The tin is heavier than it looks until it isn't. A stool is bolted nearest the intake; the person who sleeps there tastes the filter first. A rag on a hook is Hadi's if he is here, and is still Hadi's if he is not. You can take a canister. The next night the intake bunk will know. You can take the tin. The rectangles in the corridor will not grow brass. You can screw one plate under a living name. It will catch the lamp. Nobody will mention the tin.",
+    "dangerLevel": 4.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 8.0,
+    "region": "the_stack",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  }
+]

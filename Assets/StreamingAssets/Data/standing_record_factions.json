@@ -1,0 +1,22 @@
+[
+  {
+    "id": "faction_the_overlay",
+    "display_name": "The Overlay",
+    "alignment": "conditional",
+    "home_region": "all_regions",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "brass_fittings",
+      "item_sr_stencil_pot",
+      "lamp_oil"
+    ],
+    "offers": [
+      "cadastral_keys",
+      "travel_correction_on_named_sites"
+    ],
+    "signature_quote": "The Schedule named households. The Record names ground. Ground does not argue.",
+    "access_rule": "Scrape three plates without writing a lived name or a Continuity number, and Overlay labour withdraws. They do not raid. Rooms go dark of juniors. Posts stay posts.",
+    "badge_asset_id": ""
+  }
+]

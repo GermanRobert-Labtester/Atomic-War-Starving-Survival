@@ -9,6 +9,7 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 using Random = System.Random;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

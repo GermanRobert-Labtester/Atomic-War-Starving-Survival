@@ -207,9 +207,9 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
-        public void FiveFactionTradePreferences()
+        public void SixFactionTradePreferences()
         {
-            Assert.AreEqual(5, HardcoreEconomyTuning.FactionTradePreferences.Count);
+            Assert.AreEqual(6, HardcoreEconomyTuning.FactionTradePreferences.Count);
         }
 
         [Test]

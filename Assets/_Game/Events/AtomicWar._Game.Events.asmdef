@@ -7,7 +7,8 @@
         "AtomicWar._Game.Inventory",
         "AtomicWar._Game.Radiation",
         "AtomicWar._Game.Environment",
-        "AtomicWar._Game.Utilities"
+        "AtomicWar._Game.Utilities",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

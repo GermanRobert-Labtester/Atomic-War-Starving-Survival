@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Environment
 {

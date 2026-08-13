@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using AtomicWar._Game.Survivors;
 using System.Collections.Generic;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

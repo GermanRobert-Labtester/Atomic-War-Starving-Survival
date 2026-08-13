@@ -1,0 +1,106 @@
+# Godot Migration Status
+
+**Direction:** Unity 6 → Godot 4.7 (.NET/C#). Unity stays usable and supported throughout.
+**Strategy:** Strangler — shrink the Unity-coupled surface by moving logic into engine-agnostic
+plain C#, then add a thin Godot host. No big-bang rewrite.
+
+Baseline measured 2026-08-14. Re-measure with the commands at the bottom; do not hand-edit numbers.
+
+---
+
+## Headline
+
+| Metric | Value |
+|---|---|
+| Unity gameplay code (`Assets/_Game`) | 228,489 LOC / 1,307 `.cs` files |
+| Godot host code (`src/`, `scripts/`) | 2,118 LOC / 13 `.cs` files |
+| Godot share of total C# | **~0.9%** |
+| Unity files that are already engine-agnostic | **244 / 1307 (18.7%, strict)** |
+| Subsystems with a Godot host | **1 of 24** (Journal) |
+| Subsystems consuming `Ashfall.Core` | **0 — Core is orphaned** |
+
+> The per-subsystem table below uses a `using`-line scan, which reports 19.5% and is **optimistic**:
+> 11 files hide fully-qualified `UnityEngine.` references with no `using` (e.g.
+> `Events/JournalSystem.cs` calls `UnityEngine.Mathf.Clamp` inline). The strict count above also
+> catches `MonoBehaviour` / `ScriptableObject` / `[SerializeField]`. See
+> `ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md`.
+
+**Read this honestly:** the port is a beachhead, not a migration in progress. One subsystem
+(Journal) runs under Godot. The other 23 are Unity-only. The 19.5% agnostic figure is the real
+asset here — that code needs no porting at all, only a host.
+
+## Verified working
+
+- `dotnet build Ashfall.csproj` → **0 errors**, 56 nullability warnings.
+- `godot --headless --path . --quit-after 2` → boots, prints the Ashfall init banner.
+- Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
+  forked per engine, which is what makes the incremental migration viable.
+
+## Per-subsystem readiness
+
+`agnostic/total` = files with no `UnityEngine`/`UnityEditor`/`TMPro`/`Unity.*` import. Higher is
+closer to portable. Sorted by how cheap the port is.
+
+| Subsystem | Agnostic/Total | % | Godot host |
+|---|---|---|---|
+| Encounters | 24/56 | 43% | — |
+| Medical | 18/42 | 43% | — |
+| Economy | 2/5 | 40% | — |
+| Narrative | 21/52 | 40% | — |
+| Events | 8/22 | 36% | — |
+| Utilities | 8/15 | 53% | — |
+| Survivors | 26/90 | 29% | — |
+| World | 18/61 | 30% | — |
+| Inventory | 22/88 | 25% | — |
+| Core | 51/258 | 20% | — |
+| AI | 16/94 | 17% | — |
+| Shelter | 18/124 | 15% | — |
+| Environment | 5/41 | 12% | — |
+| Factions | 6/74 | 8% | — |
+| Endgame | 2/21 | 10% | — |
+| Data | 3/41 | 7% | — |
+| Radiation | 1/15 | 7% | — |
+| Simulation | 1/6 | 17% | — |
+| UI | 5/165 | 3% | — |
+| Crafting | 0/5 | 0% | — |
+| Quests | 0/12 | 0% | — |
+| Editor | 0/19 | 0% | Unity-only by nature |
+| Settings | 0/1 | 0% | — |
+| Journal | — | — | **✅ ported** (`src/Journal/`) |
+
+Notes:
+- **UI (5/165, 3%)** is the hardest wall and the largest single subsystem after Core. Expect this
+  to be rewritten against Godot Control nodes rather than ported. Plan for it explicitly.
+- **Editor (0/19)** is Unity authoring tooling. It does not need to migrate.
+- **Core (51/258)** is the highest-value target: it is the widest dependency and 20% is already clean.
+
+## Recommended order
+
+1. **Utilities → Economy → Events** — small, already >35% agnostic. Proves the port loop cheaply.
+2. **Encounters + Medical + Narrative** — best size-to-portability ratio, real gameplay value.
+3. **Core** — do it once the loop is proven; everything else depends on it.
+4. **UI last** — treat as a Godot-native rebuild, not a port.
+
+## Invariants
+
+- Moving logic into engine-agnostic C# is progress. A Godot-only reimplementation of logic that
+  still exists in Unity is a **regression** — it forks the source of truth.
+- A save written by one host must load in the other.
+- Same seed ⇒ same simulation in both engines (invariant culture, stable collection ordering).
+- JSON in `Assets/StreamingAssets/Data` stays the single authority for both engines.
+
+## Re-measure
+
+```bash
+# Godot host size
+find src scripts -name '*.cs' | xargs wc -l | tail -1
+
+# Unity size
+find Assets/_Game -name '*.cs' | xargs wc -l | tail -1
+
+# Portable fraction, per subsystem
+for d in Assets/_Game/*/; do n=$(basename "$d"); t=$(find "$d" -name '*.cs' | wc -l);
+  [ "$t" -eq 0 ] && continue;
+  c=$(grep -LE "^using (UnityEngine|UnityEditor|TMPro|Unity\.)" $(find "$d" -name '*.cs') | wc -l);
+  printf "%-14s %3s/%-4s\n" "$n" "$c" "$t"; done
+```

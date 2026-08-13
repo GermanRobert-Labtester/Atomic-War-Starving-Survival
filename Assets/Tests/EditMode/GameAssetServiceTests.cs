@@ -23,10 +23,18 @@ namespace AtomicWar.Tests.EditMode
             public int ProbesFor(string path) => Probes.FindAll(p => p == path).Count;
         }
 
-        private static Sprite MakeSprite()
+        private readonly List<Sprite> _createdSprites = new List<Sprite>();
+
+        private Sprite MakeSprite()
         {
-            var tex = new Texture2D(2, 2);
-            return Sprite.Create(tex, new Rect(0, 0, 2, 2), Vector2.one * 0.5f);
+            var tex = new Texture2D(2, 2)
+            {
+                hideFlags = HideFlags.DontSave
+            };
+            var sprite = Sprite.Create(tex, new Rect(0, 0, 2, 2), Vector2.one * 0.5f);
+            sprite.hideFlags = HideFlags.DontSave;
+            _createdSprites.Add(sprite);
+            return sprite;
         }
 
         private FakeProvider _provider;
@@ -37,6 +45,20 @@ namespace AtomicWar.Tests.EditMode
         {
             _provider = new FakeProvider();
             _service = new GameAssetService(_provider) { LogMissingOnce = false };
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            for (int i = 0; i < _createdSprites.Count; i++)
+            {
+                var sp = _createdSprites[i];
+                if (sp != null)
+                {
+                    RenderTargetUtility.SafeDestroy(ref sp, destroyTexture: true);
+                }
+            }
+            _createdSprites.Clear();
         }
 
         [Test]

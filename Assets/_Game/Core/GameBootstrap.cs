@@ -29,6 +29,7 @@ using AtomicWar._Game.World;
 using AtomicWar._Game.Narrative;
 
 using AtomicWar._Game.Factions;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -52,6 +53,7 @@ namespace AtomicWar._Game.Core
         [SerializeField] private GameEventCatalogSO _eventCatalog;
         [SerializeField] private LocationCatalogSO _locationCatalog;
         [SerializeField] private RadioCatalogSO _radioCatalog;
+        [SerializeField] private SurvivorCatalogSO _survivorCatalog;
         [SerializeField] private WorldPhaseConfigSO _worldPhaseConfig;
         [SerializeField] private FlashpointSequenceSO _flashpointSequence;
         [SerializeField] private MentalBreakCatalogSO _mentalBreakCatalog;

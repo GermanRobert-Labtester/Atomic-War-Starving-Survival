@@ -52,7 +52,7 @@ Seedream 5.0 Pro: 35.
 **Prompt:**
 
 > Isolated heavy field-grade helmet: one heavy ballistic helmet in three-quarter view, thick brow plate, side guards, reinforced rail and padded suspension, centered on flat black. Dry-gouache inventory illustration, restrained ink edges, top-left rim light, worn ash-grey/rust/amber palette; no readable text, brands or insignia.
-
+-----------------------------------------------------------------------------
 **Destination:** Raw: `generated_AIassets/helmet_heavy_military.png`; approved: `Assets/Resources/Art/Items/helmet_heavy_military.png`  
 **Reason for model choice:** Structured composition and material control suit this intricate protective or evidence object.
 
@@ -71,7 +71,7 @@ Seedream 5.0 Pro: 35.
 
 **Destination:** Raw: `generated_AIassets/armour_heavy_military.png`; approved: `Assets/Resources/Art/Items/armour_heavy_military.png`  
 **Reason for model choice:** Structured composition and material control suit this intricate protective or evidence object.
-
+-----------------------------------------------------------------------
 ## helmet_heavy_deprecated — Deprecated Heavy Helmet
 
 **Priority:** P1  
@@ -795,7 +795,7 @@ FLUX.2 Text-to-Image Pro: 237.
 
 **Destination:** Raw: `generated_AIassets/chemicals.png`; approved: `Assets/Resources/Art/Items/chemicals.png`  
 **Reason for model choice:** FLUX.2 Pro fits a single high-quality illustrated object without reference-heavy editing.
-
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 ## roots — Roots
 
 **Priority:** P1  
@@ -4187,7 +4187,7 @@ FLUX.2 Text-to-Image Pro: 237.
 
 **Destination:** Raw: `generated_AIassets/signal_source_report.png`; approved: `Assets/Resources/Art/Items/signal_source_report.png`  
 **Reason for model choice:** FLUX.2 Pro fits a single high-quality illustrated object without reference-heavy editing.
-
+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+//
 ## refugee_screening_report — Refugee Screening Report
 
 **Priority:** P1  
@@ -4315,7 +4315,7 @@ FLUX.2 Text-to-Image Pro: 237.
 
 **Destination:** Raw: `generated_AIassets/water_sample_contaminated.png`; approved: `Assets/Resources/Art/Items/water_sample_contaminated.png`  
 **Reason for model choice:** FLUX.2 Pro fits a single high-quality illustrated object without reference-heavy editing.
-
+-------+-++-+-+-+-+-
 ## service_pistol — Old Service Pistol
 
 **Priority:** P2  

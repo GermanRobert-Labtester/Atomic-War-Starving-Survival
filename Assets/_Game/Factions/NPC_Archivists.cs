@@ -11,6 +11,8 @@ namespace AtomicWar._Game.Factions
         public string displayName = "The Archivists of the Before";
         public bool isActive = true;
         public float ancestralReputation = 50f;
+        /// <summary>Lore bible 05_FACTIONS — reachable only by boat; the chart ends it.</summary>
+        public bool isolated = true;
     }
 
     /// <summary>
@@ -23,8 +25,29 @@ namespace AtomicWar._Game.Factions
         private NPC_ArchivistsState _state = new NPC_ArchivistsState();
 
         public event Action<NPC_ArchivistsState, float> OnTitheOffered;
+        /// <summary>Raised once when the Kittiwake chart ends the Archivists' isolation.</summary>
+        public event Action<NPC_ArchivistsState> OnIsolationEnded;
 
         public NPC_ArchivistsState State => _state;
+
+        /// <summary>GameBootstrap bridge: applies the currents.json entry at construction.</summary>
+        public void Initialise(string displayName)
+        {
+            if (!string.IsNullOrEmpty(displayName)) _state.displayName = displayName;
+            _state.isActive = true;
+        }
+
+        /// <summary>
+        /// Lore bible 05_FACTIONS interlocks — distributing the Kittiwake chart
+        /// makes the Memory Vault reachable for everyone. The Archivists stop
+        /// being isolated, and their safety ends at the same moment.
+        /// </summary>
+        public void EndIsolation()
+        {
+            if (!_state.isolated) return;
+            _state.isolated = false;
+            OnIsolationEnded?.Invoke(_state);
+        }
 
         public bool SubmitAncestralTithe(string relicItemId, out float moraleBonus, out string rewardItemId)
         {

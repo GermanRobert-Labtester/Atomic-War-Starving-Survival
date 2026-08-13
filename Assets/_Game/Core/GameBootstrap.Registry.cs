@@ -20,6 +20,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 
 using AtomicWar._Game.Encounters;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -478,6 +479,7 @@ namespace AtomicWar._Game.Core
                 CurrentRoomId = "entry"
             };
             Survivors.Add(refugee);
+            UnlockSurvivorMet(refugee);
             NeedsSystem?.Register(refugee);
             RadiationSystem?.Register(refugee);
             GameLog.Log(

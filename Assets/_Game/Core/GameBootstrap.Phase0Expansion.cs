@@ -5,6 +5,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Environment;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {

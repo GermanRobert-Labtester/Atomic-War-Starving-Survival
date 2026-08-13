@@ -4,6 +4,8 @@ using AtomicWar._Game.Data;
 using AtomicWar._Game.Narrative;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Events;
+using AtomicWar._Game.Utilities;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -48,6 +50,15 @@ namespace AtomicWar._Game.Core
             };
             _registry.RegisterPerSubstep("narrative_arc",
                 h => TickNarrativeArcSurvivors(h));
+
+            // Lore bible 05_FACTIONS — the Currents' code layer.
+            BootCurrents();
+            // ASHFALL: THE HOLDFAST — Ice Road, census, brine, waystation.
+            BootHoldfast();
+            // ASHFALL: NOBODY'S CHARTER — the Crossing's social gate.
+            BootNobodyCharter();
+            // ASHFALL: THE GLASS ORCHARD (Expansion XI) — bunker greenhouse.
+            BootGreenhouse();
             _registry.Register<SurvivorNarrativeArcSystem>(NarrativeArcSystem);
 
             // Personalised identity fields for the 4 named arc survivors
@@ -137,7 +148,7 @@ namespace AtomicWar._Game.Core
             // World history discovery via JournalSystem
             if (JournalSystem != null)
             {
-                Action<JournalEntry> onEntry = entry =>
+                Action<Ashfall.Core.Journal.JournalEntry> onEntry = entry =>
                 {
                     if (entry?.KnowledgeKey != null &&
                         entry.KnowledgeKey.StartsWith("lore_"))
@@ -165,6 +176,97 @@ namespace AtomicWar._Game.Core
             if (Survivors == null) return;
             for (int i = 0; i < Survivors.Count; i++)
                 NarrativeArcSystem?.Tick(Survivors[i], gameHours);
+        }
+
+        // ── Located knowledge (lore bible) ────────────────────────────
+
+        /// <summary>
+        /// Expedition first arrival → world_history discovery. Entries land in
+        /// the journal via TryAddRawEntry (fire-once per knowledge_key), which
+        /// raises OnEntryAdded and unlocks the matching LoreCodexPanel entry.
+        /// </summary>
+        private void OnExpeditionFirstArrival(string locationId)
+        {
+            if (JournalSystem == null || string.IsNullOrEmpty(locationId)) return;
+            var entries = LoreDiscoveryIndex.EntriesAtLocation(locationId);
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+
+            if (entries != null && entries.Count > 0)
+            {
+                int added = 0;
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    if (JournalSystem.TryAddRawEntry(entries[i].Key, entries[i].Value, null, day) != null)
+                        added++;
+                }
+                if (added > 0)
+                    GameLog.Log($"[GameBootstrap] Lore: discovered {added} history entries at '{locationId}'.");
+            }
+
+            // Lore bible 04_ENCOUNTERS Part I — meeting the people who live there.
+            DiscoverCharactersAtLocation(locationId);
+
+            // Lore bible 05_FACTIONS §8 — the Kittiwake chart (Undertow interlock).
+            DiscoverKittiwakeChart(locationId, day);
+        }
+
+        /// <summary>
+        /// Arrival at the survey launch finds the logbook. The journal records it
+        /// and the kittiwake_chart_found flag opens the chart-decision event.
+        /// </summary>
+        private void DiscoverKittiwakeChart(string locationId, int day)
+        {
+            if (locationId != "loc_bathymetric_boat") return;
+
+            JournalSystem?.TryAddRawEntry(
+                "kittiwake_chart",
+                "The Kittiwake's logbook continues eleven days past the Exchange: soundings " +
+                "in metres, with timestamps, kept as the flooding happened. It is the only " +
+                "accurate chart of the Drown that exists, and the reason any of it can be " +
+                "navigated at all.",
+                null,
+                day);
+
+            SaveSystem?.SetWorldFlag(EventRunner.FlagKittiwakeChartFound, true);
+        }
+
+        /// <summary>
+        /// First arrival at a location also introduces the characters bound to
+        /// it (characters.json location_id), as fire-once journal entries.
+        /// </summary>
+        private void DiscoverCharactersAtLocation(string locationId)
+        {
+            var chars = CharactersCatalogLoader.AtLocation(locationId);
+            if (chars == null || chars.Count == 0 || JournalSystem == null) return;
+
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+            for (int i = 0; i < chars.Count; i++)
+            {
+                var c = chars[i];
+                if (c == null) continue;
+                JournalSystem.TryAddRawEntry(
+                    "npc_met_" + c.id,
+                    $"{c.display_name}. {c.bio}",
+                    null,
+                    day);
+            }
+        }
+
+        /// <summary>
+        /// Bunker inspection: discover the player_shelter inspection entries
+        /// (the Layer-1 wrongnesses, the open door, the nameplates). Called once
+        /// when the lore HUD wires — opening the bunker's own history is the
+        /// inspection. Fire-once via KnowledgeBase.
+        /// </summary>
+        private void DiscoverShelterInspectionLore()
+        {
+            if (JournalSystem == null) return;
+            var entries = LoreDiscoveryIndex.ShelterInspectionEntries();
+            if (entries == null || entries.Count == 0) return;
+
+            int day = TimeSystem != null ? TimeSystem.CurrentDay : 1;
+            for (int i = 0; i < entries.Count; i++)
+                JournalSystem.TryAddRawEntry(entries[i].Key, entries[i].Value, null, day);
         }
     }
 }

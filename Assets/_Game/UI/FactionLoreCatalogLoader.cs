@@ -15,6 +15,8 @@ namespace AtomicWar._Game.UI
             public string ash_militia;
             public string cult_of_ash_sign;
             public string warlords_sector_4;
+            public string faction_rebuilders;
+            public string faction_black_ops;
         }
 
         [Serializable]
@@ -36,11 +38,12 @@ namespace AtomicWar._Game.UI
         }
 
         // FactionRelationships is a fixed-field DTO (JsonUtility can't deserialize into a
-        // Dictionary), so it only has slots for these 4 factions. A 5th faction id here
-        // would have any relationship data referencing it silently dropped by JsonUtility.
+        // Dictionary), so it only has slots for these 6 factions. A faction id outside this
+        // list would have any relationship data referencing it silently dropped by JsonUtility.
         private static readonly string[] KnownRelationshipFactionIds =
         {
-            "iron_garrison", "ash_militia", "cult_of_ash_sign", "warlords_sector_4"
+            "iron_garrison", "ash_militia", "cult_of_ash_sign", "warlords_sector_4",
+            "faction_rebuilders", "faction_black_ops"
         };
 
         public static void LoadInto(LoreCodexPanel panel)
@@ -85,6 +88,8 @@ namespace AtomicWar._Game.UI
             AddIfPresent(map, factionId, "ash_militia", rel.ash_militia);
             AddIfPresent(map, factionId, "cult_of_ash_sign", rel.cult_of_ash_sign);
             AddIfPresent(map, factionId, "warlords_sector_4", rel.warlords_sector_4);
+            AddIfPresent(map, factionId, "faction_rebuilders", rel.faction_rebuilders);
+            AddIfPresent(map, factionId, "faction_black_ops", rel.faction_black_ops);
             return map;
         }
 

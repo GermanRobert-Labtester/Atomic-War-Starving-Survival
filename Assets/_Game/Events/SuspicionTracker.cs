@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Events
 {

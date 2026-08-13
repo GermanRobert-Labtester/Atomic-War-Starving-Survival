@@ -1,0 +1,105 @@
+[
+  {
+    "id": "quest_roster_the_chart",
+    "display_name": "The Blank Chart",
+    "type": "shelter",
+    "briefing": "The corridor still has four cleaner rectangles where brass was. The chart at the end of it has fourteen rows and no names. A woman you have seen wipe dust into a palm-sized rectangle is standing under it with a pencil on a string. She does not start. She waits. The kettle in the mess clicks off and nobody fetches it. She will not write the first name unless someone says the wall may be used.",
+    "prereq_quest_id": "",
+    "min_day": 60,
+    "knowledge_key": "lore_dr_chart",
+    "target_location_id": "loc_stack_roster_wall",
+    "complete_mutation": "mutation_roster_in_use",
+    "fail_mutation": "mutation_roster_still_blank",
+    "stages": [
+      {
+        "id": "stage_inspect",
+        "text": "Print date before the Exchange. Fourteen rows. Occupation, watch, remarks. Remarks were not ruled for jokes. The pencil point is four millimetres. A knife-nick in the rail, one letter wide, aborted. You can steal the pencil. You can leave it."
+      },
+      {
+        "id": "stage_rule",
+        "text": "Who slept here. That's the only column she can fill without lying. She will not write a Blank Rows name. She will not write a person on a stool. She will not write a nickname unless you tell her the nickname is what they answer to. Graphite comes off. That's the point of it."
+      },
+      {
+        "id": "stage_choose",
+        "text": "Pencil morning row, leave the dust, or wait for ink. Ink is a levy. She does not choose ink."
+      },
+      {
+        "id": "stage_edor",
+        "text": "Optional: if the clerk has started, three occupations on his form, each wrong by one. Mason / caretaker. Clerk / clerk-grade. Veterinary assistant / veterinarian. You held the two papers in the same lamp."
+      },
+      {
+        "id": "stage_tell",
+        "text": "Mess. Ladle on its nail. Tell the Stack, or don't. People read walls."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_write_pencil",
+        "text": "Write who slept here. Pencil. The string ticks the rail. She writes three names you can see from here, occupation as observed, watch blank. The graphite shines. She does not look proud. She looks at the kettle.",
+        "set_flag": "mutation_roster_in_use"
+      },
+      {
+        "id": "roster_leave_blank",
+        "text": "Leave it. Wipe the dust if you want. Forty days of this is a politics. She will ask again. She will not ask twice in one morning.",
+        "set_flag": "mutation_roster_still_blank"
+      },
+      {
+        "id": "roster_wait_ink",
+        "text": "Wait. If we write, we write so it doesn't come off. Ink is a levy. She doesn't choose ink. She will wait. The dust will still come. She will still wipe it. Do not take that for agreement.",
+        "set_flag": "flag_wait_ink"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_who_eats",
+    "display_name": "The Ladle",
+    "type": "shelter",
+    "briefing": "Evening. Steam on the enamel. Kess has scratched a line on the rim of the pot: heads, then scoops. The numbers do not match. Either a portion is missing, or two bowls at the far end are covered because three people are north and the cloth is already taking dust. Ansel's child is on the bench, feet not touching the floor. The ladle hangs too high for them. She can pour. She cannot decide. Deciding is why the ladle is on a nail.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_stack_mess",
+    "complete_mutation": "mutation_ration_protocol",
+    "fail_mutation": "mark_ladle_default",
+    "stages": [
+      {
+        "id": "stage_count",
+        "text": "Heads in the room. Scoops in the pot. Covered bowls if levy honoured. A ring on one bowl from a noon that was not eaten. The arithmetic is public."
+      },
+      {
+        "id": "stage_ladle",
+        "text": "Who goes without, who takes extra, or leave the last bowl until it is cold. The ladle is the vote."
+      },
+      {
+        "id": "stage_child",
+        "text": "Tell the child the truth, a softer sentence, or send them out. Ansel will not ask twice whether you told the truth at the table."
+      },
+      {
+        "id": "stage_protocol",
+        "text": "Optional: Kess can write an order on the mess wall, not the duty chart. Child first. Watch first. Sick first. She will not write fair. She will write an order. Different paper. Different crime."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_ladle_child",
+        "text": "The last scoop goes to the child. An adult's bowl is water and salt. Ansel does not thank you. The child looks at the water-bowl and then does not.",
+        "set_flag": "mark_bowl_adult_water"
+      },
+      {
+        "id": "roster_ladle_hatch",
+        "text": "The last scoop goes to whoever has the night slate. They eat standing. The child asks why the ladle likes the grille.",
+        "set_flag": "mark_bowl_watch"
+      },
+      {
+        "id": "roster_ladle_leave",
+        "text": "The last bowl sits until it is cold. Nobody takes it. The ring it leaves is brown and stays.",
+        "set_flag": "mark_bowl_cold"
+      },
+      {
+        "id": "roster_ladle_protocol",
+        "text": "She pencils an order on the mess wall, not the duty chart. Child first, or watch first, or sick first. She will not write fair.",
+        "set_flag": "mutation_ration_protocol"
+      }
+    ]
+  }
+]

@@ -156,6 +156,24 @@ namespace AtomicWar._Game.Survivors
             public const string MechanicHighwayHeart = "quest_mechanic_highway_heart";
             public const string ChildSoldierRifle = "quest_child_soldier_rifle";
             public const string DeepWell = "quest_deep_well";
+            // ASHFALL: THE HOLDFAST — main questline
+            public const string HoldfastTheSheet = "quest_holdfast_the_sheet";
+            public const string HoldfastTheClerk = "quest_holdfast_the_clerk";
+            public const string HoldfastTheWindow = "quest_holdfast_the_window";
+            public const string HoldfastThePlant = "quest_holdfast_the_plant";
+            public const string HoldfastAuthentication = "quest_holdfast_authentication";
+            public const string HoldfastTheDrawer = "quest_holdfast_the_drawer";
+            public const string HoldfastTheLevy = "quest_holdfast_the_levy";
+            public const string HoldfastTheMembrane = "quest_holdfast_the_membrane";
+            public const string HoldfastTheSecondList = "quest_holdfast_the_second_list";
+            public const string HoldfastTheHatch = "quest_holdfast_the_hatch";
+            // ASHFALL: NOBODY'S CHARTER — live quest cards (crossing_quests.json)
+            public const string CrossingTheVouch = "quest_crossing_the_vouch";
+            public const string CrossingFirstWeigh = "quest_crossing_first_weigh";
+            public const string CrossingScaleIntegrity = "quest_crossing_scale_integrity";
+            public const string CrossingTheTerms = "quest_crossing_the_terms";
+            public const string CrossingThePetition = "quest_crossing_the_petition";
+            public const string CrossingTheStanding = "quest_crossing_the_standing";
         }
     }
 }

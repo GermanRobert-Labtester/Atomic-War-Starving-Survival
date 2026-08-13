@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {

@@ -36,6 +36,7 @@ namespace AtomicWar._Game.Core
         private GUIStyle _boxStyle;
         private GUIStyle _labelStyle;
         private GUIStyle _warnStyle;
+        private Texture2D _boxBgTex;
         private bool _stylesInitialized;
 
         private void Update()
@@ -289,13 +290,36 @@ namespace AtomicWar._Game.Core
             _lastSaveSlot = slotId;
         }
 
+        private void OnDisable()
+        {
+            CleanupStyles();
+        }
+
+        private void OnDestroy()
+        {
+            CleanupStyles();
+        }
+
+        private void CleanupStyles()
+        {
+            if (_boxBgTex != null)
+            {
+                AtomicWar._Game.Utilities.RenderTargetUtility.SafeDestroy(ref _boxBgTex);
+            }
+            _boxStyle = null;
+            _labelStyle = null;
+            _warnStyle = null;
+            _stylesInitialized = false;
+        }
+
         private void InitStyles()
         {
             if (_stylesInitialized) return;
             _stylesInitialized = true;
 
             _boxStyle = new GUIStyle(GUI.skin.box);
-            _boxStyle.normal.background = MakeTex(2, 2, new Color(0f, 0f, 0f, 0.75f));
+            _boxBgTex = MakeTex(2, 2, new Color(0f, 0f, 0f, 0.75f));
+            _boxStyle.normal.background = _boxBgTex;
             _boxStyle.padding = new RectOffset(8, 8, 8, 8);
 
             _labelStyle = new GUIStyle(GUI.skin.label);
@@ -312,7 +336,10 @@ namespace AtomicWar._Game.Core
         {
             var pixels = new Color[width * height];
             for (int i = 0; i < pixels.Length; i++) pixels[i] = color;
-            var tex = new Texture2D(width, height);
+            var tex = new Texture2D(width, height)
+            {
+                hideFlags = HideFlags.DontSave
+            };
             tex.SetPixels(pixels);
             tex.Apply();
             return tex;

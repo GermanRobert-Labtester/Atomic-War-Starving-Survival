@@ -5,6 +5,7 @@ using UnityEngine;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.UI
 {

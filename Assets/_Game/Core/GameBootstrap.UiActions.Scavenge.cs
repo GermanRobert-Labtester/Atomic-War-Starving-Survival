@@ -4,6 +4,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using UnityEngine;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -22,6 +23,8 @@ namespace AtomicWar._Game.Core
                 return "Hatch sealed — no one leaves.";
             if (ExpeditionSystem != null && ExpeditionSystem.IsOnExpedition(survivor.Id))
                 return "Operative is already on expedition.";
+            if (CensusClaimSystem != null && CensusClaimSystem.IsAssignedAway(survivor.Id))
+                return "Operative is on the levy column.";
 
             string reservation = SurvivorTaskBoardSystem != null
                 ? SurvivorTaskBoardSystem.GetAssignmentConflictReason(survivor)
@@ -278,6 +281,14 @@ namespace AtomicWar._Game.Core
             if (!string.IsNullOrEmpty(reason))
             {
                 board?.ReportDispatchHeld(reason);
+                return false;
+            }
+
+            if (IceRoadSystem != null && IceRoadSystem.IsTravelBlocked(location.id))
+            {
+                board?.ReportDispatchHeld(IceRoadSystem.IsUnlocked
+                    ? "The Cut is dark. Wait for a lit window."
+                    : "The estuary is a rumour. No road yet.");
                 return false;
             }
 
