@@ -117,6 +117,11 @@ namespace AtomicWar._Game.Core
             PersonalKeepsakeSystem = new PersonalKeepsakeSystem();
             _registry.Register<MemorialWallSystem>(MemorialWallSystem);
             _registry.Register<PersonalKeepsakeSystem>(PersonalKeepsakeSystem);
+            // C-1: MemorialWall is host-driven (SyncDeadSurvivors on phase-11 paint
+            // and PayRespects from the UI) — event-driven, no autonomous tick.
+            _registry.RegisterEventDriven("memorial_wall");
+            // C-1: keepsake grief decays hour by hour; nothing drove it before.
+            _registry.RegisterPerSubstep("personal_keepsake", TickPersonalKeepsakeSurvivors);
 
             // ── Personal Keepsakes — set at survivor creation ──────────
             AssignInitialKeepsakes();
@@ -130,6 +135,14 @@ namespace AtomicWar._Game.Core
 
             // ── Lost Correspondence — track letter recovery ────────────
             WireLostCorrespondence();
+        }
+
+        /// <summary>C-1 wiring: keepsake grief decays hour by hour (nothing drove it before).</summary>
+        private void TickPersonalKeepsakeSurvivors(float gameHours)
+        {
+            if (Survivors == null || PersonalKeepsakeSystem == null) return;
+            for (int i = 0; i < Survivors.Count; i++)
+                PersonalKeepsakeSystem.TickGriefDecay(Survivors[i], gameHours);
         }
 
         private void AssignInitialKeepsakes()

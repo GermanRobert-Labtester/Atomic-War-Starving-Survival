@@ -128,7 +128,7 @@ namespace AtomicWar._Game.Core
                     MentalBreakSystem?.Affinity?.Adjust(a, b, d),
                 Rng = new System.Random(_worldSeed + 65)
             };
-            _registry.RegisterDaily("hoardingBehavior",
+            _registry.RegisterDaily("hoarding_behavior",
                 d => HoardingBehaviorSystem.TickDaily(Survivors, d));
             _registry.Register<HoardingBehaviorSystem>(HoardingBehaviorSystem);
 
@@ -146,7 +146,7 @@ namespace AtomicWar._Game.Core
                 },
                 Rng = new System.Random(_worldSeed + 67)
             };
-            _registry.RegisterPerSubstep("nerveDamage",
+            _registry.RegisterPerSubstep("nerve_damage",
                 h => TickNerveDamageSurvivors(h));
             _registry.Register<NerveDamageSystem>(NerveDamageSystem);
         }
@@ -159,7 +159,7 @@ namespace AtomicWar._Game.Core
         {
             // #52: Ash Drift Burial System
             AshDriftBurialSystem = new AshDriftBurialSystem();
-            _registry.RegisterPerSubstep("ashDriftBurial",
+            _registry.RegisterPerSubstep("ash_drift_burial",
                 h => AshDriftBurialSystem.Tick(h));
             _registry.Register<AshDriftBurialSystem>(AshDriftBurialSystem);
 
@@ -183,7 +183,7 @@ namespace AtomicWar._Game.Core
 
             // #55: Location Evolution System
             LocationEvolutionSystem = new LocationEvolutionSystem();
-            _registry.RegisterDaily("locationEvolution",
+            _registry.RegisterDaily("location_evolution",
                 d => LocationEvolutionSystem.Tick(d,
                     new System.Random(_worldSeed + 71)));
             _registry.Register<LocationEvolutionSystem>(
@@ -198,7 +198,7 @@ namespace AtomicWar._Game.Core
 
             // #57: Wildlife Migration System
             WildlifeMigrationSystem = new WildlifeMigrationSystem();
-            _registry.RegisterDaily("wildlifeMigration",
+            _registry.RegisterDaily("wildlife_migration",
                 d => WildlifeMigrationSystem.Tick(d,
                     WeatherSystem != null ? WeatherSystem.Current.ToString().ToLowerInvariant() : "clear",
                     WeatherSystem?.Current == WeatherKind.FalloutStorm,
@@ -214,7 +214,7 @@ namespace AtomicWar._Game.Core
 
             // #58: Landmark Degradation System
             LandmarkDegradationSystem = new LandmarkDegradationSystem();
-            _registry.RegisterDaily("landmarkDegradation",
+            _registry.RegisterDaily("landmark_degradation",
                 d => LandmarkDegradationSystem.Tick(d,
                     WeatherSystem?.Current == WeatherKind.BlackRain,
                     new System.Random(_worldSeed + 75)));
@@ -236,13 +236,13 @@ namespace AtomicWar._Game.Core
         {
             // #71: Bunker Manifesto System
             BunkerManifestoSystem = new BunkerManifestoSystem();
-            _registry.RegisterPerSubstep("bunkerManifesto",
+            _registry.RegisterPerSubstep("bunker_manifesto",
                 h => TickBunkerManifestoSurvivors(h));
             _registry.Register<BunkerManifestoSystem>(BunkerManifestoSystem);
 
             // #73: Cultural Preservation System
             CulturalPreservationSystem = new CulturalPreservationSystem();
-            _registry.RegisterEventDriven("culturalPreservation");
+            _registry.RegisterEventDriven("cultural_preservation");
             _registry.Register<CulturalPreservationSystem>(
                 CulturalPreservationSystem);
 
@@ -272,13 +272,13 @@ namespace AtomicWar._Game.Core
 
             // #75: Deep Aquifer Project System
             DeepAquiferProjectSystem = new DeepAquiferProjectSystem();
-            _registry.RegisterEventDriven("deepAquiferProject");
+            _registry.RegisterEventDriven("deep_aquifer_project");
             _registry.Register<DeepAquiferProjectSystem>(
                 DeepAquiferProjectSystem);
 
             // #78: Peace Treaty System
             PeaceTreatySystem = new PeaceTreatySystem();
-            _registry.RegisterEventDriven("peaceTreaty");
+            _registry.RegisterEventDriven("peace_treaty");
             _registry.Register<PeaceTreatySystem>(PeaceTreatySystem);
         }
 

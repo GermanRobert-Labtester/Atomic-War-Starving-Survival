@@ -41,6 +41,8 @@ namespace AtomicWar._Game.Core
             // ── Procedural Loot Generator ──────────────────────────────
             ProceduralLoot = new ProceduralLootGenerator(_worldSeed + 81);
             _registry.Register<ProceduralLootGenerator>(ProceduralLoot);
+            // C-1: stateless generator, called on-demand from loot/scavenge paths.
+            _registry.RegisterEventDriven("procedural_loot");
 
             // ── Dynamic Questline System ───────────────────────────────
             DynamicQuestlines = new DynamicQuestlineSystem
@@ -52,7 +54,7 @@ namespace AtomicWar._Game.Core
                 },
                 Rng = new System.Random(_worldSeed + 83)
             };
-            _registry.RegisterEventDriven("dynamicQuestlines");
+            _registry.RegisterEventDriven("dynamic_questlines");
             _registry.Register<DynamicQuestlineSystem>(DynamicQuestlines);
 
             // Deep Lore catalogs — narrative arc quests (4 named survivors)
@@ -123,14 +125,14 @@ namespace AtomicWar._Game.Core
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
                 Rng = new System.Random(_worldSeed + 85)
             };
-            _registry.RegisterPerSubstep("factionIntel",
+            _registry.RegisterPerSubstep("faction_intel",
                 h => FactionIntel.Tick(h));
             _registry.Register<FactionIntelligenceSystem>(FactionIntel);
 
             // ── Vehicle Maintenance System ─────────────────────────────
             VehicleMaintenance = new VehicleMaintenanceSystem();
             VehicleMaintenance.SetRng(new System.Random(_worldSeed + 87));
-            _registry.RegisterDaily("vehicleMaintenance",
+            _registry.RegisterDaily("vehicle_maintenance",
                 d => VehicleMaintenance.TickDaily(d));
             _registry.Register<VehicleMaintenanceSystem>(VehicleMaintenance);
 

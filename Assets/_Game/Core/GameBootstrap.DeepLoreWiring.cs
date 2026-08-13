@@ -46,7 +46,7 @@ namespace AtomicWar._Game.Core
                 GetSurvivors = () => Survivors,
                 Rng = new System.Random(_worldSeed + 91)
             };
-            _registry.RegisterPerSubstep("narrativeArc",
+            _registry.RegisterPerSubstep("narrative_arc",
                 h => TickNarrativeArcSurvivors(h));
             _registry.Register<SurvivorNarrativeArcSystem>(NarrativeArcSystem);
 

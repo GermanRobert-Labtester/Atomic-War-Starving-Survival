@@ -34,7 +34,14 @@ namespace AtomicWar._Game.UI
             entryCount = _entries.Count
         };
 
-        public void RestoreState(SaveState s) { /* entries rebuilt from system */ }
+        public void RestoreState(SaveState s)
+        {
+            // Entries themselves are rebuilt from MemorialWallSystem on phase-11 paint
+            // (ClearEntries + AddEntry per entry). This UI owns only the modal visibility,
+            // so restore exactly that.
+            if (s.isOpen) Show();
+            else Hide();
+        }
 
         /// <summary>Bind to the shared DiegeticHud UIDocument.</summary>
         public void BindDocument(UIDocument document)

@@ -58,7 +58,7 @@ namespace AtomicWar._Game.Core
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
                 Rng = new System.Random(_worldSeed + 41)
             };
-            _registry.RegisterPerSubstep("traumaBond",
+            _registry.RegisterPerSubstep("trauma_bond",
                 h => TickTraumaBondSurvivors(h));
             _registry.Register<TraumaBondSystem>(TraumaBondSystem);
 
@@ -77,7 +77,7 @@ namespace AtomicWar._Game.Core
                         StringComparison.Ordinal),
                 Rng = new System.Random(_worldSeed + 43)
             };
-            _registry.RegisterPerSubstep("ideologicalFriction",
+            _registry.RegisterPerSubstep("ideological_friction",
                 h => TickIdeologicalFriction(h));
             _registry.Register<IdeologicalFrictionSystem>(
                 IdeologicalFrictionSystem);
@@ -107,7 +107,7 @@ namespace AtomicWar._Game.Core
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
                 Rng = new System.Random(_worldSeed + 45)
             };
-            _registry.RegisterDaily("rationConflict",
+            _registry.RegisterDaily("ration_conflict",
                 d => TickRationConflictsDaily());
             _registry.Register<RationConflictSystem>(RationConflictSystem);
         }

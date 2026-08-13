@@ -49,7 +49,7 @@ namespace AtomicWar._Game.Core
         {
             // ── Garrison Conscription ──────────────────────────────────
             GarrisonConscription = new GarrisonConscriptionSystem();
-            _registry.RegisterDaily("garrisonConscription",
+            _registry.RegisterDaily("garrison_conscription",
                 d => GarrisonConscription.Tick(d, Survivors,
                     new System.Random(_worldSeed + 51)));
             _registry.Register<GarrisonConscriptionSystem>(GarrisonConscription);
@@ -75,7 +75,7 @@ namespace AtomicWar._Game.Core
 
             // ── Ash Sign Cult ──────────────────────────────────────────
             AshSignCult = new AshSignCultSystem();
-            _registry.RegisterDaily("ashSignCult",
+            _registry.RegisterDaily("ash_sign_cult",
                 d => AshSignCult.Tick(d, Survivors,
                     new System.Random(_worldSeed + 53)));
             _registry.Register<AshSignCultSystem>(AshSignCult);
@@ -91,7 +91,7 @@ namespace AtomicWar._Game.Core
 
             // ── Scavenger Refuge ───────────────────────────────────────
             ScavengerRefuge = new ScavengerRefugeSystem();
-            _registry.RegisterDaily("scavengerRefuge",
+            _registry.RegisterDaily("scavenger_refuge",
                 d => ScavengerRefuge.Tick(d,
                     new System.Random(_worldSeed + 55),
                     () => 4));

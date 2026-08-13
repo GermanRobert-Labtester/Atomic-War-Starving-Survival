@@ -66,7 +66,7 @@ namespace AtomicWar._Game.Core
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
                 Rng = new System.Random(_worldSeed + 17)
             };
-            _registry.RegisterPerSubstep("radiationPhaseProgression",
+            _registry.RegisterPerSubstep("radiation_phase_progression",
                 h => TickPhase0RadiationSystems(h));
             _registry.Register<RadiationPhaseProgression>(RadiationPhaseProgression);
 
@@ -95,7 +95,7 @@ namespace AtomicWar._Game.Core
                 },
                 Rng = new System.Random(_worldSeed + 19)
             };
-            _registry.RegisterPerSubstep("phantomMemory",
+            _registry.RegisterPerSubstep("phantom_memory",
                 h => TickPhantomMemorySurvivors(h));
             _registry.Register<PhantomMemorySystem>(PhantomMemorySystem);
 
@@ -104,7 +104,7 @@ namespace AtomicWar._Game.Core
             GuiltInsomniaSystem.SetNeedsSystem(NeedsSystem);
             GuiltInsomniaSystem.GetDay = () => TimeSystem?.CurrentDay ?? 1;
             GuiltInsomniaSystem.Rng = new System.Random(_worldSeed + 21);
-            _registry.RegisterPerSubstep("guiltInsomnia",
+            _registry.RegisterPerSubstep("guilt_insomnia",
                 h => TickGuiltInsomniaSurvivors(h));
             _registry.Register<GuiltInsomniaSystem>(GuiltInsomniaSystem);
 
@@ -119,7 +119,7 @@ namespace AtomicWar._Game.Core
             CombatTraumaSystem.GetDay = () => TimeSystem?.CurrentDay ?? 1;
             CombatTraumaSystem.GetSurvivors = () => Survivors;
             CombatTraumaSystem.Rng = new System.Random(_worldSeed + 23);
-            _registry.RegisterPerSubstep("combatTrauma",
+            _registry.RegisterPerSubstep("combat_trauma",
                 h => TickCombatTraumaSurvivors(h));
             _registry.Register<CombatTraumaSystem>(CombatTraumaSystem);
 
@@ -140,7 +140,7 @@ namespace AtomicWar._Game.Core
                 GetSurvivors = () => Survivors,
                 Rng = new System.Random(_worldSeed + 25)
             };
-            _registry.RegisterPerSubstep("somaticFlashback",
+            _registry.RegisterPerSubstep("somatic_flashback",
                 h => TickSomaticFlashbackSurvivors(h));
             _registry.Register<SomaticFlashbackSystem>(SomaticFlashbackSystem);
 
@@ -164,7 +164,7 @@ namespace AtomicWar._Game.Core
                 }
             };
             // Event-driven only — no per-substep tick
-            _registry.RegisterEventDriven("moralBranching");
+            _registry.RegisterEventDriven("moral_branching");
             _registry.Register<MoralBranchingSystem>(MoralBranchingSystem);
 
             // ── 7. Chemical Dependency System ──────────────────────────
@@ -186,7 +186,7 @@ namespace AtomicWar._Game.Core
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
                 Rng = new System.Random(_worldSeed + 27)
             };
-            _registry.RegisterPerSubstep("chemicalDependency",
+            _registry.RegisterPerSubstep("chemical_dependency",
                 h => TickChemicalDependencySurvivors(h));
             _registry.Register<ChemicalDependencySystem>(ChemicalDependencySystem);
 
@@ -221,7 +221,7 @@ namespace AtomicWar._Game.Core
                     // Placeholder — wired into EventRunner in Phase 11
                 }
             };
-            _registry.RegisterEventDriven("tradeSpecialty");
+            _registry.RegisterEventDriven("trade_specialty");
             _registry.Register<TradeSpecialtySystem>(TradeSpecialtySystem);
 
             // ── 9. Final Wish System ───────────────────────────────────
@@ -248,7 +248,7 @@ namespace AtomicWar._Game.Core
                 GetWishNarrativeText = wishId => wishId,
                 Rng = new System.Random(_worldSeed + 29)
             };
-            _registry.RegisterPerSubstep("finalWish",
+            _registry.RegisterPerSubstep("final_wish",
                 h => TickFinalWishSurvivors(h));
             _registry.Register<FinalWishSystem>(FinalWishSystem);
 
@@ -281,7 +281,7 @@ namespace AtomicWar._Game.Core
                 GetDay = () => TimeSystem?.CurrentDay ?? 1,
                 Rng = new System.Random(_worldSeed + 31)
             };
-            _registry.RegisterPerSubstep("respiratoryDegeneration",
+            _registry.RegisterPerSubstep("respiratory_degeneration",
                 h => TickRespiratoryDegenerationSurvivors(h));
             _registry.Register<RespiratoryDegenerationSystem>(RespiratoryDegenerationSystem);
         }

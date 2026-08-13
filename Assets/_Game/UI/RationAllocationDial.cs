@@ -36,14 +36,47 @@ namespace AtomicWar._Game.UI
         {
             public string survivorId;
             public string[] foodIds;
+            public string[] foodNames;
+            public int[] foodKcal;
             public int selectedSlot;
             public int multiplier;
         }
         public SaveState CaptureState() => new SaveState
         {
             survivorId = _survivorId, foodIds = _foodIds,
+            foodNames = _foodNames, foodKcal = _foodKcal,
             selectedSlot = _selectedSlot, multiplier = _multiplier
         };
+
+        /// <summary>Restores the dial exactly as saved: food slots, selection, multiplier, visibility.</summary>
+        public void RestoreState(SaveState s)
+        {
+            if (s.foodIds == null || s.foodIds.Length == 0)
+            {
+                Hide();
+                return;
+            }
+
+            _survivorId = s.survivorId;
+            _foodIds = new string[3];
+            _foodNames = new string[3];
+            _foodKcal = new int[3];
+            for (int i = 0; i < 3 && i < s.foodIds.Length; i++)
+            {
+                _foodIds[i] = s.foodIds[i];
+                _foodNames[i] = s.foodNames != null && i < s.foodNames.Length ? s.foodNames[i] : null;
+                _foodKcal[i] = s.foodKcal != null && i < s.foodKcal.Length ? s.foodKcal[i] : 0;
+                if (_slotLabels[i] != null)
+                    _slotLabels[i].text = !string.IsNullOrEmpty(_foodIds[i])
+                        ? $"{(_foodNames[i] ?? _foodIds[i]).ToUpper()}  {_foodKcal[i]} kcal"
+                        : "— EMPTY SLOT —";
+            }
+            _selectedSlot = Mathf.Clamp(s.selectedSlot, 0, 2);
+            _multiplier = Mathf.Clamp(s.multiplier, 1, 3);
+            RefreshSelection();
+            RefreshCalorie();
+            Show();
+        }
 
         private void OnEnable()
         {
