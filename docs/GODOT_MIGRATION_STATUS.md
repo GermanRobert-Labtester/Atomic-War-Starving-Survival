@@ -49,6 +49,15 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
   rendering blank broadcasts (dead fields + a wrong-typed `signalStrength` that zeroed
   all 37 entries), dose_registers snake_case fields unbound. Binding-assertion regression
   gates added across every loaded catalog. All loaders now match their files.
+- Utility AI port (2026-08-15): NPC decision core in Ashfall.Core/UtilityAI
+  (UtilityActionDef + ResponseCurve, AIActionContext, UtilityActionScorer
+  with trait veto matrix, UtilityAiSystem with deterministic ISeededRng
+  noise); fixed latent Unity defect A9 (vetoed actions can no longer win
+  selection); utility_actions.json (4 crossing companion actions, Unity
+  parity numbers); host session + panel + menu + uitest; debug loop 01-05
+  (3 defects fixed: unsorted curves, tuning loader IncludeFields, null
+  bundle lists); audit docs/audits/utility_ai_AUDIT.md; 29 unit tests + 13
+  probes + 7-check selftest + uitest; cross-process hash f58c6a54.
 - Economy port (2026-08-14): market/pricing core in Ashfall.Core/Economy
   (GoodsCatalog + validation, MarketSystem with Unity-parity demand clamps,
   deterministic ISeededRng walk, versioned MarketState, whole-unit barter
