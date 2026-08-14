@@ -89,27 +89,47 @@ namespace Ashfall.Core
     }
 
     /// <summary>
-    /// Integer-seeded System.Random. IceRoad window length does not use this;
-    /// it uses a salt modulo so it stays identical across runtimes.
+    /// Deterministic PRNG using xorshift64*. Same seed produces identical
+    /// sequences on every .NET runtime/version, satisfying the cross-engine
+    /// determinism invariant. Do NOT replace with System.Random.
     /// </summary>
     public sealed class SeededRng : ISeededRng
     {
-        private readonly Random _rng;
+        private ulong _state;
 
         public int Seed { get; }
 
         public SeededRng(int seed)
         {
             Seed = seed;
-            _rng = new Random(seed);
+            // SplitMix64 initializer: spreads a small seed across all 64 bits.
+            _state = (ulong)(seed ^ (long)((uint)seed >> 30)) * 0xbf58476d1ce4e5b9UL;
+            _state = (ulong)((long)_state ^ (long)((uint)_state >> 27)) * 0x94d049bb133111ebUL;
+            _state = (ulong)((long)_state ^ (long)((uint)_state >> 31));
         }
 
-        public int Next(int minInclusive, int maxExclusive) =>
-            _rng.Next(minInclusive, maxExclusive);
+        public int Next(int minInclusive, int maxExclusive)
+        {
+            if (minInclusive >= maxExclusive)
+                throw new ArgumentOutOfRangeException(nameof(maxExclusive), "maxExclusive must be greater than minInclusive");
+            long range = (long)maxExclusive - minInclusive;
+            ulong v = NextRaw();
+            // Modulo bias is negligible for game-use ranges and avoids int overflow.
+            return minInclusive + (int)(v % (ulong)range);
+        }
 
-        public float NextFloat() => (float)_rng.NextDouble();
+        public float NextFloat() => (float)NextDouble();
 
-        public double NextDouble() => _rng.NextDouble();
+        public double NextDouble() => NextRaw() / (double)ulong.MaxValue;
+
+        private ulong NextRaw()
+        {
+            // xorshift64* — deterministic, fast, single-state.
+            _state ^= _state >> 12;
+            _state ^= _state << 25;
+            _state ^= _state >> 27;
+            return _state * 0x2545F4914F6CDD1DUL;
+        }
     }
 
     /// <summary>

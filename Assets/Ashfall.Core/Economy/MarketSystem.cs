@@ -166,10 +166,11 @@ namespace Ashfall.Core.Economy
         }
 
         /// <summary>Effective unit price for an item: base x demand (elasticity-weighted).</summary>
+        /// <returns>Price in currency units, or <see cref="float.NaN"/> if the good is unknown.</returns>
         public float GetPrice(string itemId)
         {
             var good = FindGood(itemId);
-            if (good == null) return 0f;
+            if (good == null) return float.NaN;
             float demand = GetDemandMultiplier(itemId);
             float price = good.basePrice * demand;
             return Math.Clamp(price, good.basePrice * PriceFloorFraction, good.basePrice * PriceCeilingFraction);

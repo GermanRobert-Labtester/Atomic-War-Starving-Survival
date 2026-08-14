@@ -380,5 +380,28 @@ namespace Ashfall.Core.Tests
             sys.AdjustDemand("w", -0.1f); // 1.3 < 1.35
             Assert.False(sys.IsSuppliesShort());
         }
+
+        [Fact]
+        public void Ledger_Conservation_BarterLegsAreEqualValue()
+        {
+            // Buy/Sell only record the player side; conservation only applies
+            // to barter where both legs are explicitly booked.
+            var sys = NewMarket(Catalog(
+                ("water", 10f, 0f, 1f),
+                ("scrap", 4f, 0f, 1f),
+                ("food", 12f, 0f, 1f)));
+
+            sys.Buy("water", 2, 1, "faction_a");
+            sys.Sell("scrap", 3, 2, "market");
+            sys.Barter("food", 1, "water", 3); // 12 value -> 1 water
+
+            // Barter legs must book the SAME exchanged total.
+            var barterEntries = sys.State.ledger.FindAll(e => e.counterparty == "barter");
+            Assert.Equal(2, barterEntries.Count);
+            Assert.Equal(barterEntries[0].totalValue, barterEntries[1].totalValue);
+
+            // Non-barter entries reflect player-side value change, not conservation.
+            Assert.Equal(4, sys.State.ledger.Count); // 2 barter + 1 buy + 1 sell
+        }
     }
 }

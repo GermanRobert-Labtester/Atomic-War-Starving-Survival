@@ -170,7 +170,7 @@ namespace Ashfall.Core.Tests
             var sys = new MarketSystem();
             sys.BindCatalog(new GoodsCatalog());
             sys.TickDay(1, new SeededRng(1)); // no crash
-            Assert.Equal(0f, sys.GetPrice("anything"));
+            Assert.True(float.IsNaN(sys.GetPrice("anything")));
             Assert.False(sys.Buy("anything", 1, 1).Accepted);
             Assert.False(sys.Barter("a", 1, "b", 1).Accepted);
         }
