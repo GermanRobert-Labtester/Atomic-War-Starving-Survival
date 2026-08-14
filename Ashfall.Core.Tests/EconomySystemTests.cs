@@ -1,0 +1,384 @@
+using System;
+using System.Collections.Generic;
+using Ashfall.Core;
+using Ashfall.Core.Economy;
+using Xunit;
+
+namespace Ashfall.Core.Tests
+{
+    public class GoodsCatalogTests
+    {
+        private static GoodsCatalogLoadResult LoadRaw(string json)
+        {
+            return GoodsCatalogLoader.Load(
+                "/tmp", new FakeFileIO(json), new SystemTextJsonSerializer());
+        }
+
+        private sealed class FakeFileIO : IFileIO
+        {
+            private readonly string _content;
+            public FakeFileIO(string content) { _content = content; }
+            public bool DirectoryExists(string path) => true;
+            public bool FileExists(string path) => true;
+            public string ReadAllText(string path) => _content;
+            public void WriteAllText(string path, string contents) { }
+            public string Combine(params string[] parts) => string.Join("/", parts);
+        }
+
+        [Fact]
+        public void ValidGoods_LoadWithoutErrors()
+        {
+            var result = LoadRaw(@"[
+                { ""id"": ""clean_water"", ""displayName"": ""Water"", ""category"": ""water"",
+                  ""basePrice"": 8, ""volatility"": 0.1, ""elasticity"": 1.0, ""stackSize"": 5, ""weightKg"": 1 } ]");
+            Assert.False(result.HasErrors);
+            Assert.Single(result.Goods);
+            Assert.Equal("clean_water", result.Goods[0].id);
+        }
+
+        [Fact]
+        public void DuplicateIds_AreErrors()
+        {
+            var result = LoadRaw(@"[
+                { ""id"": ""clean_water"", ""displayName"": ""A"", ""category"": ""water"", ""basePrice"": 1 },
+                { ""id"": ""clean_water"", ""displayName"": ""B"", ""category"": ""water"", ""basePrice"": 2 } ]");
+            Assert.True(result.HasErrors);
+            Assert.Contains(result.Errors, e => e.Contains("duplicate id 'clean_water'"));
+            Assert.Single(result.Goods); // first wins
+        }
+
+        [Fact]
+        public void MissingRequiredFields_AreErrors()
+        {
+            // First-error-wins per entry: the loader reports the first missing
+            // required field and stops validating that entry.
+            var result = LoadRaw(@"[ { ""id"": ""x"" } ]");
+            Assert.True(result.HasErrors);
+            Assert.Contains(result.Errors, e => e.Contains("displayName"));
+            Assert.Empty(result.Goods);
+
+            // A second entry with displayName but no category reports category.
+            var result2 = LoadRaw(@"[ { ""id"": ""x"", ""displayName"": ""X"", ""basePrice"": 1 } ]");
+            Assert.True(result2.HasErrors);
+            Assert.Contains(result2.Errors, e => e.Contains("category"));
+        }
+
+        [Fact]
+        public void InvalidRanges_AreErrors()
+        {
+            Assert.Contains(LoadRaw(@"[{ ""id"": ""x"", ""displayName"": ""X"", ""category"": ""water"", ""basePrice"": 0 }]").Errors,
+                e => e.Contains("basePrice"));
+            Assert.Contains(LoadRaw(@"[{ ""id"": ""x"", ""displayName"": ""X"", ""category"": ""water"", ""basePrice"": 1, ""volatility"": 2 }]").Errors,
+                e => e.Contains("volatility"));
+            Assert.Contains(LoadRaw(@"[{ ""id"": ""x"", ""displayName"": ""X"", ""category"": ""water"", ""basePrice"": 1, ""elasticity"": 0 }]").Errors,
+                e => e.Contains("elasticity"));
+            Assert.Contains(LoadRaw(@"[{ ""id"": ""x"", ""displayName"": ""X"", ""category"": ""water"", ""basePrice"": 1, ""stackSize"": 0 }]").Errors,
+                e => e.Contains("stackSize"));
+        }
+
+        [Fact]
+        public void UnknownCategory_IsError()
+        {
+            var result = LoadRaw(@"[{ ""id"": ""x"", ""displayName"": ""X"", ""category"": ""alchemy"", ""basePrice"": 1 }]");
+            Assert.True(result.HasErrors);
+            Assert.Contains(result.Errors, e => e.Contains("unknown category 'alchemy'"));
+        }
+
+        [Fact]
+        public void NonSnakeCaseId_IsError()
+        {
+            var result = LoadRaw(@"[{ ""id"": ""Clean Water"", ""displayName"": ""X"", ""category"": ""water"", ""basePrice"": 1 }]");
+            Assert.True(result.HasErrors);
+            Assert.Contains(result.Errors, e => e.Contains("not snake_case"));
+        }
+
+        [Fact]
+        public void MalformedJson_IsError()
+        {
+            var result = LoadRaw("{ not json");
+            Assert.True(result.HasErrors);
+            Assert.Contains(result.Errors, e => e.Contains("malformed"));
+        }
+
+        [Fact]
+        public void MissingFile_IsError()
+        {
+            var result = GoodsCatalogLoader.Load(
+                "/nonexistent", new FileSystemIO(), new SystemTextJsonSerializer());
+            Assert.True(result.HasErrors);
+        }
+
+        [Fact]
+        public void Catalog_AllSortedOrdinal()
+        {
+            var result = LoadRaw(@"[
+                { ""id"": ""zeta"", ""displayName"": ""Z"", ""category"": ""water"", ""basePrice"": 1 },
+                { ""id"": ""alpha"", ""displayName"": ""A"", ""category"": ""water"", ""basePrice"": 1 } ]");
+            var catalog = GoodsCatalogLoader.ToCatalog(result);
+            var all = catalog.All();
+            Assert.Equal("alpha", all[0].id);
+            Assert.Equal("zeta", all[1].id);
+        }
+    }
+
+    public class MarketSystemTests
+    {
+        private static GoodsCatalog Catalog(params (string id, float price, float vol, float el)[] goods)
+        {
+            var result = new GoodsCatalogLoadResult();
+            foreach (var (id, price, vol, el) in goods)
+            {
+                result.Goods.Add(new GoodDefinition
+                {
+                    id = id, displayName = id, category = "misc",
+                    basePrice = price, volatility = vol, elasticity = el
+                });
+            }
+            return GoodsCatalogLoader.ToCatalog(result);
+        }
+
+        private static MarketSystem NewMarket(GoodsCatalog catalog = null)
+        {
+            var sys = new MarketSystem();
+            sys.BindCatalog(catalog ?? Catalog(("water", 8f, 0.1f, 1f)));
+            return sys;
+        }
+
+        private static SeededRng Rng(int seed) => new SeededRng(seed);
+
+        [Fact]
+        public void Price_BoundsInvariant_AllTicks()
+        {
+            var sys = NewMarket(Catalog(
+                ("a", 10f, 0.5f, 2f), ("b", 5f, 0.2f, 0.5f), ("c", 1f, 1f, 1f)));
+            for (int day = 1; day <= 200; day++)
+            {
+                sys.TickDay(day, Rng(day));
+                foreach (var good in new[] { "a", "b", "c" })
+                {
+                    float price = sys.GetPrice(good);
+                    float basePrice = sys.FindGood(good).basePrice;
+                    Assert.True(price >= basePrice * MarketSystem.PriceFloorFraction,
+                        $"day {day} {good}: price {price} below floor");
+                    Assert.True(price <= basePrice * MarketSystem.PriceCeilingFraction,
+                        $"day {day} {good}: price {price} above ceiling");
+                }
+            }
+        }
+
+        [Fact]
+        public void Demand_StaysWithinUnityClamps()
+        {
+            var sys = NewMarket();
+            sys.AdjustDemand("water", 100f);
+            Assert.Equal(MarketSystem.MaxDemandMult, sys.GetDemandMultiplier("water"));
+            sys.AdjustDemand("water", -1000f);
+            Assert.Equal(MarketSystem.MinDemandMult, sys.GetDemandMultiplier("water"));
+        }
+
+        [Fact]
+        public void DeterministicReplay_SameSeedSameTrajectory()
+        {
+            var a = NewMarket(Catalog(("w", 8f, 0.3f, 1f), ("s", 3f, 0.2f, 0.8f)));
+            var b = NewMarket(Catalog(("w", 8f, 0.3f, 1f), ("s", 3f, 0.2f, 0.8f)));
+            for (int day = 1; day <= 30; day++)
+            {
+                a.TickDay(day, Rng(99));
+                b.TickDay(day, Rng(99));
+                Assert.Equal(a.GetPrice("w"), b.GetPrice("w"));
+                Assert.Equal(a.GetPrice("s"), b.GetPrice("s"));
+            }
+        }
+
+        [Fact]
+        public void DifferentSeeds_Diverge()
+        {
+            var a = NewMarket(Catalog(("w", 8f, 0.4f, 1f)));
+            var b = NewMarket(Catalog(("w", 8f, 0.4f, 1f)));
+            for (int day = 1; day <= 20; day++)
+            {
+                a.TickDay(day, Rng(1));
+                b.TickDay(day, Rng(2));
+            }
+            Assert.NotEqual(a.GetPrice("w"), b.GetPrice("w"));
+        }
+
+        [Fact]
+        public void SaveLoad_RoundTripEquality()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0.3f, 1f), ("s", 3f, 0.2f, 0.8f)));
+            for (int day = 1; day <= 10; day++) sys.TickDay(day, Rng(7));
+            sys.Buy("w", 3, 10, "faction_a");
+            sys.Sell("s", 5, 11, "market");
+
+            var restored = NewMarket();
+            restored.RestoreState(sys.CaptureState());
+            restored.BindCatalog(sys.State != null ? Catalog(("w", 8f, 0.3f, 1f), ("s", 3f, 0.2f, 0.8f)) : null);
+
+            Assert.Equal(sys.Day, restored.Day);
+            Assert.Equal(sys.TickCount, restored.TickCount);
+            Assert.Equal(sys.GetDemandMultiplier("w"), restored.GetDemandMultiplier("w"));
+            Assert.Equal(sys.GetPrice("w"), restored.GetPrice("w"));
+            Assert.Equal(sys.State.ledger.Count, restored.State.ledger.Count);
+        }
+
+        [Fact]
+        public void SaveLoad_ResumesIdenticalTrajectory()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0.3f, 1f)));
+            for (int day = 1; day <= 10; day++) sys.TickDay(day, Rng(11));
+
+            var restored = NewMarket(Catalog(("w", 8f, 0.3f, 1f)));
+            restored.RestoreState(sys.CaptureState());
+
+            for (int day = 11; day <= 20; day++)
+            {
+                sys.TickDay(day, Rng(11));
+                restored.TickDay(day, Rng(11));
+                Assert.Equal(sys.GetPrice("w"), restored.GetPrice("w"));
+                Assert.Equal(sys.GetDemandMultiplier("w"), restored.GetDemandMultiplier("w"));
+            }
+        }
+
+        [Fact]
+        public void CorruptState_NewerVersionFailsLoudly()
+        {
+            var sys = NewMarket();
+            var future = new MarketState { version = MarketState.Version + 1 };
+            Assert.Throws<InvalidOperationException>(() => sys.RestoreState(future));
+        }
+
+        [Fact]
+        public void CorruptState_OldVersionMigratesPredictably()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0.1f, 1f)));
+            var old = new MarketState { version = 0, day = 5, tickCount = 5 }; // no demand rows
+            sys.RestoreState(old);
+            Assert.Equal(1, sys.State.version);
+            Assert.Equal(5, sys.Day);
+            Assert.Equal(1f, sys.GetDemandMultiplier("w")); // missing rows read 1.0
+        }
+
+        [Fact]
+        public void Transactions_BookAtCurrentPrice()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0f, 1f)));
+            var t = sys.Buy("w", 3, 1);
+            Assert.True(t.Accepted);
+            Assert.Equal(24f, t.TotalValue);
+            Assert.Equal(8f, t.UnitPrice);
+            Assert.Single(sys.State.ledger);
+        }
+
+        [Fact]
+        public void Transactions_UnknownOrZeroRejected()
+        {
+            var sys = NewMarket();
+            Assert.False(sys.Buy("missing", 1, 1).Accepted);
+            Assert.False(sys.Buy("w", 0, 1).Accepted);
+            Assert.False(sys.Buy("w", -2, 1).Accepted);
+            Assert.Empty(sys.State.ledger);
+        }
+
+        [Fact]
+        public void Barter_ExchangesEqualValue()
+        {
+            var sys = NewMarket(Catalog(("w", 10f, 0f, 1f), ("s", 4f, 0f, 1f)));
+            var result = sys.Barter("w", 4, "s", 1); // 40 value -> 10 scrap
+            Assert.True(result.Accepted);
+            Assert.Equal(10, result.Quantity);
+            Assert.Equal(2, sys.State.ledger.Count);
+            Assert.Equal(40f, sys.State.ledger[0].totalValue);
+            Assert.Equal(40f, sys.State.ledger[1].totalValue);
+        }
+
+        [Fact]
+        public void Barter_TooValuableRejected()
+        {
+            var sys = NewMarket(Catalog(("w", 1f, 0f, 1f), ("s", 100f, 0f, 1f)));
+            Assert.False(sys.Barter("w", 1, "s", 1).Accepted);
+            Assert.Empty(sys.State.ledger);
+        }
+
+        [Fact]
+        public void Barter_NonExactRatio_KeepsEqualLedgerAndReportsRemainder()
+        {
+            var sys = NewMarket(Catalog(("w", 10f, 0f, 1f), ("s", 3f, 0f, 1f)));
+            // Give 4 water = 40 value; scrap at 3 -> 13 whole items (39), remainder 1.
+            var result = sys.Barter("w", 4, "s", 1);
+            Assert.True(result.Accepted);
+            Assert.Equal(13, result.Quantity);
+            Assert.Equal(39f, result.TotalValue);
+            Assert.Equal(1f, result.RemainderValue);
+            Assert.Equal(2, sys.State.ledger.Count);
+            // Equal-value invariant: both legs book the SAME exchanged total.
+            Assert.Equal(sys.State.ledger[0].totalValue, sys.State.ledger[1].totalValue);
+        }
+
+        [Fact]
+        public void RestoreState_DeduplicatesDemandRows()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0f, 1f)));
+            var corrupt = new MarketState
+            {
+                version = MarketState.Version,
+                demand = new List<DemandEntry>
+                {
+                    new DemandEntry { itemId = "w", multiplier = 1.5f },
+                    new DemandEntry { itemId = "w", multiplier = 2.5f }
+                }
+            };
+            sys.RestoreState(corrupt);
+            Assert.Single(sys.State.demand);
+            Assert.Equal(1.5f, sys.GetDemandMultiplier("w"));
+            // GetDemandMultiplier and IsSuppliesShort now agree (single row).
+            Assert.Equal(1.5f >= MarketSystem.ShortageThreshold, sys.IsSuppliesShort());
+        }
+
+        [Fact]
+        public void TickDay_RaisesEconomyChanged()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0.1f, 1f)));
+            int changed = 0;
+            sys.OnEconomyChanged += () => changed++;
+            sys.TickDay(1, Rng(1));
+            Assert.True(changed >= 1);
+        }
+
+        [Fact]
+        public void CaptureState_ReturnsSnapshotNotLiveState()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0.1f, 1f)));
+            sys.AdjustDemand("w", 0.5f);
+            var snapshot = sys.CaptureState();
+            snapshot.demand[0].multiplier = 99f;
+            snapshot.ledger.Add(new LedgerEntry { itemId = "injected" });
+            Assert.Equal(1.5f, sys.GetDemandMultiplier("w"));
+            Assert.Empty(sys.State.ledger);
+        }
+
+        [Fact]
+        public void SaveLoad_ChecksumStable()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0.3f, 1f), ("s", 3f, 0.2f, 0.8f)));
+            for (int day = 1; day <= 6; day++) sys.TickDay(day, Rng(3));
+            sys.Buy("w", 2, 6);
+            string before = SaveChecksum.Compute(sys.CaptureState());
+
+            var restored = NewMarket();
+            restored.RestoreState(sys.CaptureState());
+            string after = SaveChecksum.Compute(restored.CaptureState());
+            Assert.Equal(before, after);
+        }
+
+        [Fact]
+        public void IsSuppliesShort_UnityThresholdParity()
+        {
+            var sys = NewMarket(Catalog(("w", 8f, 0f, 1f)));
+            sys.AdjustDemand("w", 0.4f); // 1.4 >= 1.35
+            Assert.True(sys.IsSuppliesShort());
+            sys.AdjustDemand("w", -0.1f); // 1.3 < 1.35
+            Assert.False(sys.IsSuppliesShort());
+        }
+    }
+}
