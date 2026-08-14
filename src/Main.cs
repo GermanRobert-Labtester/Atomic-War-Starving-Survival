@@ -14,6 +14,7 @@ using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
 using AtomicWar.GodotApp.Dose;
 using AtomicWar.GodotApp.Economy;
+using AtomicWar.GodotApp.UtilityAI;
 
 namespace AtomicWar.GodotApp
 {
@@ -60,6 +61,8 @@ namespace AtomicWar.GodotApp
         private EconomyHostSession _economy = null!;
         private bool _economyDirty;
         private EconomyMarketPanel _economyPanel = null!;
+        private UtilityAiHostSession _utilityAi = null!;
+        private UtilityAiPanel _utilityAiPanel = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -176,6 +179,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.UtilityAiSelfTest:
                     GetTree().Quit(HostCli.RunUtilityAiSelfTest(_dataDir));
+                    return;
+                case HostCliAction.UtilityAiUiTest:
+                    RunUtilityAiUiTestAndQuit();
                     return;
                 case HostCliAction.InventoryUiTest:
                     RunInventoryUiTestAndQuit();
@@ -465,6 +471,8 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Economy: buy 4 clean water", () => OnEconomyBuyClicked("clean_water", 4));
             AddMenuButton("Economy: barter 20 scrap for water", () => OnEconomyBarterClicked("scrap_metal", 20, "clean_water"));
             AddMenuButton("Economy: save", OnEconomySaveClicked);
+            // ── UTILITY AI (NPC decisions) ───────────────────────────
+            AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); GetTree().Quit(); });
@@ -1270,6 +1278,32 @@ namespace AtomicWar.GodotApp
                 _survivors.RestoreSave(save);
         }
 
+        // ── UTILITY AI (NPC decisions) host wiring ───────────────────
+
+        private void SetupUtilityAi()
+        {
+            if (_utilityAi != null) return;
+            _utilityAi = UtilityAiHostSession.Create(_dataDir);
+
+            if (_utilityAiPanel == null && _rightColumn != null)
+            {
+                _utilityAiPanel = new UtilityAiPanel();
+                _rightColumn.AddChild(_utilityAiPanel);
+            }
+            if (_utilityAiPanel != null)
+            {
+                _utilityAiPanel.BindSession(_utilityAi);
+                _utilityAiPanel.RefreshView();
+            }
+        }
+
+        private void OnUtilityAiEvaluateClicked()
+        {
+            SetupUtilityAi();
+            _statusLabel.Text = _utilityAi.EvaluateDemo("survivor_gunner_mikhail", 30f, 0.7f);
+            _utilityAiPanel.RefreshView();
+        }
+
         // ── ECONOMY (market core) host wiring ─────────────────────────
 
         private void SetupEconomy()
@@ -1574,6 +1608,33 @@ namespace AtomicWar.GodotApp
                 _catalogLabel.Text = _core.CatalogLine() + "\n" + _core.CensusLine();
             if (_briefingPreviewLabel != null)
                 _briefingPreviewLabel.Text = HoldfastBriefingView.PreviewLine(_core.CurrentQuest);
+        }
+
+        /// <summary>
+        /// Headless smoke: utility AI panel builds, scores render, refresh +
+        /// rebind are leak-free, evaluation selects an action.
+        /// </summary>
+        private void RunUtilityAiUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupUtilityAi();
+
+            bool panel = _utilityAiPanel != null;
+            bool catalog = _utilityAi.Actions.Count == 4;
+
+            int before = _utilityAiPanel.GetChild(0).GetChildCount();
+            _utilityAiPanel.RefreshView();
+            _utilityAiPanel.RefreshView();
+            int after = _utilityAiPanel.GetChild(0).GetChildCount();
+            bool noLeak = before == after;
+
+            string result = _utilityAi.EvaluateDemo("sv_demo", 30f, 0.7f);
+            bool selected = result.Contains("selects");
+
+            bool pass = panel && catalog && noLeak && selected;
+            GD.Print($"[UtilityAiUiTest] panel={panel} catalog={catalog} noLeak={noLeak} selected={selected}");
+            GD.Print(pass ? "UTILITY_AI_UITEST PASS" : "UTILITY_AI_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
         }
 
         /// <summary>

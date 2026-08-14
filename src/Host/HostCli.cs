@@ -56,6 +56,7 @@ namespace AtomicWar.GodotApp
         EconomySelfTest,
         EconomyUiTest,
         UtilityAiSelfTest,
+        UtilityAiUiTest,
         DataIntegritySelfTest,
         CaravanSelfTest,
         AssetRegistrySelfTest
@@ -148,6 +149,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.EconomyUiTest;
             if (Has(args, "--utility-ai-selftest"))
                 return HostCliAction.UtilityAiSelfTest;
+            if (Has(args, "--utility-ai-uitest"))
+                return HostCliAction.UtilityAiUiTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
