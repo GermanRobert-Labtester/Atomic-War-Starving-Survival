@@ -202,7 +202,8 @@ namespace Ashfall.Core.Economy
             if (affectedIds.Count == 0) return true; // empty list = all items
             foreach (var token in affectedIds)
             {
-                if (string.Equals(token.Trim(), itemId, StringComparison.OrdinalIgnoreCase))
+                var trimmed = token.Trim();
+                if (trimmed == "*" || string.Equals(trimmed, itemId, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
             return false;

@@ -43,7 +43,7 @@ namespace AtomicWar._Game.UI
 
         public event Action<bool> OnTradeClosed; // true if a trade completed
         public event Action OnQuoteChanged;
-        public event Action<FactionSurrenderResult> OnParleyResolved;
+        public event Action<AtomicWar._Game.Economy.FactionSurrenderResult> OnParleyResolved;
 
         private DynamicEconomySystem _economy;
         private Inventory.Inventory _playerInv;
