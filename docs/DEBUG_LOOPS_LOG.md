@@ -324,3 +324,23 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
   Regression: selftest save-integrity block (write -> tamper -> refuse).
   Files: src/Host/EconomySaveStore.cs, src/Host/HostCli.cs.
   Gates: 558/558 tests, economy selftest 11/11 + integrity PASS, hash bca960f4 (both runs).
+- Cycle 03 — Probe: reload continuity through the REAL save slot (mid-sequence
+  save -> reload -> continue). Defect: NO. 40-day uninterrupted run vs 20+save+
+  20 resumed: checksums identical. Files: src/Host/HostCli.cs (probe). GREEN.
+- Cycle 04 — Probe: UI path (missing-icon fallback, open/close leak). Defect: NO.
+  EconomyMarketPanel builds; node-count leak meter flat across repeated
+  refreshes; 1 fallback icon exercised; ECONOMY_UITEST PASS.
+- Cycle 05 — Probe: seed fuzz with interleaved buy/sell/barter (100 seeds x 200
+  ticks). Defect: NO. No exceptions, no NaN/Inf, all ledger totals finite.
+- Cycle 06 — Probe: UI smoke determinism. Defect: NO. ECONOMY_UITEST PASS 5/5;
+  no stray user:// saves.
+- Cycle 07 — Probe: cross-process determinism. Defect: NO. Two processes hash
+  identical (29591ce1, selftest surface grew with continuity probe - noted).
+- Cycle 08 — Probe: legacy bare save (pre-checksum shape) must migrate.
+  Defect: YES (host store). Repro: bare MarketState JSON on the slot -> TryLoad
+  returned null (state silently dropped on upgrade). Root cause: TryLoad only
+  parsed the envelope shape. Fix: legacy fallback parse (bare MarketState with
+  systemId) accepted with one-time warn; tamper gate unchanged for envelopes.
+  Regression: selftest legacy-save block. Files: src/Host/EconomySaveStore.cs,
+  src/Host/HostCli.cs. Gates: 559/559, selftest 11/11 + integrity/legacy/
+  continuity PASS, uitest PASS.

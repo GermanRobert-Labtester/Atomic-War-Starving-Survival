@@ -67,13 +67,25 @@ namespace AtomicWar.GodotApp
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
                 var envelope = s_json.Deserialize<EconomySaveEnvelope>(raw);
-                if (envelope == null || envelope.State == null) return null;
-                if (string.IsNullOrEmpty(envelope.Checksum)) return null;
-                // Tamper gate: recompute over the state; mismatch refuses the save.
-                if (!string.Equals(SaveChecksum.Compute(envelope.State), envelope.Checksum,
-                        StringComparison.Ordinal))
-                    return null;
-                return envelope.State;
+                if (envelope != null && envelope.State != null)
+                {
+                    if (string.IsNullOrEmpty(envelope.Checksum)) return null;
+                    // Tamper gate: recompute over the state; mismatch refuses the save.
+                    if (!string.Equals(SaveChecksum.Compute(envelope.State), envelope.Checksum,
+                            StringComparison.Ordinal))
+                        return null;
+                    return envelope.State;
+                }
+                // Legacy migration: a bare MarketState (pre-checksum store shape)
+                // has no envelope; accept it so an upgrade never silently loses
+                // the economy. Legacy saves carry no checksum by definition.
+                var legacy = s_json.Deserialize<MarketState>(raw);
+                if (legacy != null && !string.IsNullOrEmpty(legacy.systemId))
+                {
+                    GD.Print("[Economy] legacy bare save migrated (pre-checksum shape).");
+                    return legacy;
+                }
+                return null;
             }
             catch (Exception e)
             {

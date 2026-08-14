@@ -53,6 +53,7 @@ namespace AtomicWar.GodotApp
         SurvivorsSelfTest,
         WorldSelfTest,
         EconomySelfTest,
+        EconomyUiTest,
         DataIntegritySelfTest,
         CaravanSelfTest,
         AssetRegistrySelfTest
@@ -141,6 +142,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.WorldSelfTest;
             if (Has(args, "--economy-selftest"))
                 return HostCliAction.EconomySelfTest;
+            if (Has(args, "--economy-uitest"))
+                return HostCliAction.EconomyUiTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -692,6 +695,88 @@ namespace AtomicWar.GodotApp
             finally
             {
                 if (File.Exists(tmpPath)) File.Delete(tmpPath);
+            }
+
+            // Legacy-save probe: a bare MarketState (pre-checksum store shape)
+            // must migrate, not be silently dropped as corrupt.
+            string legacyPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_economy_legacy_" + Guid.NewGuid().ToString("N") + ".json");
+            try
+            {
+                var legacy = new MarketState
+                {
+                    version = MarketState.Version,
+                    day = 7,
+                    tickCount = 7,
+                    demand = new System.Collections.Generic.List<DemandEntry>
+                    {
+                        new DemandEntry { itemId = "legacy_good", multiplier = 1.4f }
+                    }
+                };
+                File.WriteAllText(legacyPath, new SystemTextJsonSerializer().Serialize(legacy));
+                var legacyLoaded = EconomySaveStore.TryLoad(legacyPath);
+                bool legacyOk = legacyLoaded != null && legacyLoaded.day == 7
+                    && legacyLoaded.tickCount == 7
+                    && legacyLoaded.demand != null && legacyLoaded.demand.Count == 1;
+                GD.Print(legacyOk
+                    ? "[PASS] legacy bare save migrates (pre-checksum shape)"
+                    : "[FAIL] legacy bare save dropped as corrupt");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] legacy-save probe threw: " + e.Message);
+            }
+            finally
+            {
+                if (File.Exists(legacyPath)) File.Delete(legacyPath);
+            }
+
+            // Reload-continuity probe: mid-sequence save via the REAL store slot,
+            // reload, continue — the resumed trajectory must match an
+            // uninterrupted run hash-for-hash.
+            string continuityPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_economy_continuity_" + Guid.NewGuid().ToString("N") + ".json");
+            try
+            {
+                var catalogResult = new GoodsCatalogLoadResult();
+                catalogResult.Goods.Add(new GoodDefinition
+                {
+                    id = "cont_good", displayName = "Cont", category = "misc",
+                    basePrice = 7f, volatility = 0.4f, elasticity = 1.4f
+                });
+                var contCatalog = GoodsCatalogLoader.ToCatalog(catalogResult);
+
+                var uninterrupted = new MarketSystem();
+                uninterrupted.BindCatalog(contCatalog);
+                for (int day = 1; day <= 40; day++)
+                    uninterrupted.TickDay(day, new SeededRng(31337));
+                string expected = SaveChecksum.Compute(uninterrupted.CaptureState());
+
+                var sliced = new MarketSystem();
+                sliced.BindCatalog(contCatalog);
+                for (int day = 1; day <= 20; day++)
+                    sliced.TickDay(day, new SeededRng(31337));
+                bool saved = EconomySaveStore.TrySave(sliced.CaptureState(), continuityPath);
+                var reloaded = EconomySaveStore.TryLoad(continuityPath);
+                var resumed = new MarketSystem();
+                resumed.BindCatalog(contCatalog);
+                if (reloaded != null) resumed.RestoreState(reloaded);
+                for (int day = 21; day <= 40; day++)
+                    resumed.TickDay(day, new SeededRng(31337));
+
+                bool continuity = saved && reloaded != null
+                    && SaveChecksum.Compute(resumed.CaptureState()) == expected;
+                GD.Print(continuity
+                    ? "[PASS] reload-continuity: resumed trajectory matches uninterrupted run"
+                    : "[FAIL] reload-continuity: trajectory diverged");
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] reload-continuity probe threw: " + e.Message);
+            }
+            finally
+            {
+                if (File.Exists(continuityPath)) File.Delete(continuityPath);
             }
             GD.Print(report.Summary);
             return report.ExitCode;
