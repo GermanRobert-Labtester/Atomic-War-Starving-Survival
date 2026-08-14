@@ -1,4 +1,5 @@
 using System;
+using Ashfall.Core;
 using Ashfall.Core.Economy;
 using System.Collections.Generic;
 using System.Linq;
@@ -306,18 +307,16 @@ namespace AtomicWar._Game.Economy
                 _trust[faction.id] = Mathf.Clamp(faction.startingTrust, MinTrust, MaxTrust);
 
             // Mirror into the engine-agnostic stance engine.
-            _stanceEngine.RegisterFaction(new FactionThresholds
-            {
-                FactionId = faction.id,
-                RaidThreshold = faction.raidThreshold,
-                RobThreshold = faction.robThreshold,
-                MinTrustToTrade = faction.minTrustToTrade,
-                IntelShareThreshold = faction.intelShareThreshold,
-                RaidAggression = faction.raidAggression,
-                TrustInversion = faction.trustInversion,
-                HealthyRadiationCeiling = faction.healthyRadiationCeiling,
-                HighRadiationFloor = faction.highRadiationFloor
-            });
+            _stanceEngine.RegisterFaction(new FactionThresholds(
+                faction.id,
+                raidThreshold: faction.raidThreshold,
+                robThreshold: faction.robThreshold,
+                minTrustToTrade: faction.minTrustToTrade,
+                intelShareThreshold: faction.intelShareThreshold,
+                raidAggression: faction.raidAggression,
+                trustInversion: faction.trustInversion,
+                healthyRadiationCeiling: faction.healthyRadiationCeiling,
+                highRadiationFloor: faction.highRadiationFloor));
             if (!_successionGeneration.ContainsKey(faction.id))
                 _successionGeneration[faction.id] = 0;
             if (!_leaderName.ContainsKey(faction.id) || string.IsNullOrEmpty(_leaderName[faction.id]))

@@ -91,8 +91,7 @@ namespace Ashfall.Core.Economy
             float trust = GetEffectiveTrust(factionId);
             if (!TryGetThresholds(factionId, out var fac))
             {
-                fac = new FactionThresholds(
-                    factionId,
+                fac = new FactionThresholds(factionId,
                     raidThreshold: -50f,
                     robThreshold: -20f,
                     minTrustToTrade: -40f,

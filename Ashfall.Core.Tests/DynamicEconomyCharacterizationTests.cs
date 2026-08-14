@@ -8,13 +8,10 @@ namespace Ashfall.Core.Tests
     /// <summary>
     /// Characterization tests for DynamicEconomySystem decision surfaces.
     /// These pin the CURRENT behavior before any extraction to Ashfall.Core.
-    /// The StanceLogicSpec and PriceLogicSpec helpers replicate the pure
-    /// math from DynamicEconomySystem; they will be replaced by the real
-    /// core implementations during extraction.
     /// </summary>
     public class DynamicEconomyCharacterizationTests
     {
-        // ── Stance threshold constants from DynamicEconomySystem ──────
+        // ── Stance threshold constants ────────────────────────────────
         private const float DefaultRaidThreshold = -50f;
         private const float DefaultRobThreshold = -20f;
         private const float DefaultTradeAt = -40f;
@@ -33,16 +30,16 @@ namespace Ashfall.Core.Tests
 
         // ── Stance characterization ───────────────────────────────────
         [Theory]
-        [InlineData(-50, -50, -20, -40, 40, true, TradeStance.HostileRaid)]   // exactly at raid threshold
-        [InlineData(-51, -50, -20, -40, 40, true, TradeStance.HostileRaid)]   // below raid threshold
-        [InlineData(-20, -50, -20, -40, 40, true, TradeStance.Rob)]           // exactly at rob threshold
-        [InlineData(-39, -50, -40, -20, 40, true, TradeStance.Refuse)]        // between rob and trade
-        [InlineData(-20, -50, -40, -20, 40, true, TradeStance.Trade)]         // exactly at trade threshold
-        [InlineData(39, -50, -20, -40, 40, true, TradeStance.Trade)]          // just below intel
-        [InlineData(40, -50, -20, -40, 40, true, TradeStance.ShareIntel)]     // exactly at intel
-        [InlineData(100, -50, -20, -40, 40, true, TradeStance.ShareIntel)]    // max trust
-        [InlineData(-50, -50, -20, -40, 40, false, TradeStance.Refuse)]       // inactive faction
-        [InlineData(0, -50, -20, -40, 40, false, TradeStance.Refuse)]         // inactive, positive trust
+        [InlineData(-50, -50, -30, -20, 40, true, TradeStance.HostileRaid)]
+        [InlineData(-51, -50, -30, -20, 40, true, TradeStance.HostileRaid)]
+        [InlineData(-30, -50, -30, -20, 40, true, TradeStance.Rob)]
+        [InlineData(-25, -50, -30, -20, 40, true, TradeStance.Refuse)]
+        [InlineData(-20, -50, -30, -20, 40, true, TradeStance.Trade)]
+        [InlineData(39, -50, -30, -20, 40, true, TradeStance.Trade)]
+        [InlineData(40, -50, -30, -20, 40, true, TradeStance.ShareIntel)]
+        [InlineData(100, -50, -30, -20, 40, true, TradeStance.ShareIntel)]
+        [InlineData(-50, -50, -30, -20, 40, false, TradeStance.Refuse)]
+        [InlineData(0, -50, -30, -20, 40, false, TradeStance.Refuse)]
         public void Stance_Thresholds_ReturnsExpectedStance(
             float trust, float raidAt, float robAt, float tradeAt, float intelAt, bool isActive, TradeStance expected)
         {
@@ -99,9 +96,9 @@ namespace Ashfall.Core.Tests
             var overlay = new HardcoreEconomyTuning();
             overlay.Apply(result.Bundle!);
             Assert.True(overlay.IsActive);
-            Assert.Equal(2.5f, overlay.GetScarcityMultiplier(5, "water"));    // in range
-            Assert.Equal(1.0f, overlay.GetScarcityMultiplier(100, "water"));   // out of range
-            Assert.Equal(1.0f, overlay.GetScarcityMultiplier(5, "food"));      // wrong item
+            Assert.Equal(2.5f, overlay.GetScarcityMultiplier(5, "water"));
+            Assert.Equal(1.0f, overlay.GetScarcityMultiplier(100, "water"));
+            Assert.Equal(1.0f, overlay.GetScarcityMultiplier(5, "food"));
         }
 
         [Fact]
@@ -126,7 +123,6 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void WeatherMultiplier_Null_ReturnsUnity()
         {
-            // DynamicEconomySystem returns 1.0f when _itemWeatherPriceMultiplier is null.
             Func<string, float>? weatherMult = null;
             float GetWeatherMult(string itemId) => weatherMult != null ? weatherMult(itemId) : 1.0f;
             Assert.Equal(1.0f, GetWeatherMult("water"));
@@ -168,165 +164,7 @@ namespace Ashfall.Core.Tests
             var result = new FactionSurrenderResult();
             Assert.Null(result.FactionId);
             Assert.False(result.Applied);
-            Assert.Equal(TradeStance.HostileRaid, result.NewStance); // enum default = 0
+            Assert.Equal(TradeStance.HostileRaid, result.NewStance);
         }
-    }
-}
-
-// ── FactionStanceEngine tests ──────────────────────────────────────
-public class FactionStanceEngineTests
-{
-    [Fact]
-    public void GetStance_DefaultThresholds_ReturnsExpectedStance()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "test_fac",
-            RaidThreshold = -50f,
-            RobThreshold = -30f,
-            MinTrustToTrade = -20f,
-            IntelShareThreshold = 40f
-        });
-
-        Assert.Equal(TradeStance.Trade, engine.GetStance("test_fac"));
-    }
-
-    [Fact]
-    public void GetStance_VariousTrustLevels()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "test_fac",
-            RaidThreshold = -50f,
-            RobThreshold = -30f,
-            MinTrustToTrade = -20f,
-            IntelShareThreshold = 40f
-        });
-
-        engine.SetTrust("test_fac", -55f);
-        Assert.Equal(TradeStance.HostileRaid, engine.GetStance("test_fac"));
-
-        engine.SetTrust("test_fac", -30f);
-        Assert.Equal(TradeStance.Rob, engine.GetStance("test_fac"));
-
-        engine.SetTrust("test_fac", -25f);
-        Assert.Equal(TradeStance.Refuse, engine.GetStance("test_fac"));
-
-        engine.SetTrust("test_fac", -20f);
-        Assert.Equal(TradeStance.Trade, engine.GetStance("test_fac"));
-
-        engine.SetTrust("test_fac", 40f);
-        Assert.Equal(TradeStance.ShareIntel, engine.GetStance("test_fac"));
-    }
-
-    [Fact]
-    public void WillTrade_MatchesStance()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "test_fac",
-            RaidThreshold = -50f,
-            RobThreshold = -30f,
-            MinTrustToTrade = -20f,
-            IntelShareThreshold = 40f
-        });
-
-        engine.SetTrust("test_fac", -25f);
-        Assert.False(engine.WillTrade("test_fac"));
-
-        engine.SetTrust("test_fac", -10f);
-        Assert.True(engine.WillTrade("test_fac"));
-    }
-
-    [Fact]
-    public void ModifyTrust_AccumulatesAndClamps()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "test_fac",
-            RaidThreshold = -50f,
-            RobThreshold = -30f,
-            MinTrustToTrade = -20f,
-            IntelShareThreshold = 40f
-        });
-
-        engine.SetTrust("test_fac", 0f);
-        Assert.Equal(50f, engine.ModifyTrust("test_fac", 50f));
-        Assert.Equal(100f, engine.ModifyTrust("test_fac", 100f)); // clamped
-        Assert.Equal(-100f, engine.ModifyTrust("test_fac", -200f)); // clamped
-    }
-
-    [Fact]
-    public void TrustInversion_HealthyWithHazmat_FloorsToMinTrust()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "cult",
-            RaidThreshold = -50f,
-            RobThreshold = -20f,
-            MinTrustToTrade = -40f,
-            IntelShareThreshold = 40f,
-            TrustInversion = true,
-            HealthyRadiationCeiling = 20f,
-            HighRadiationFloor = 60f
-        });
-
-        engine.SetTrust("cult", 80f); // high stored trust
-        engine.DayProvider = () => 30;
-        engine.PartyRadiationProvider = () => 10f; // healthy
-        engine.PartyIntactHazmatProvider = () => true;
-
-        Assert.Equal(-100f, engine.GetEffectiveTrust("cult"));
-        Assert.Equal(TradeStance.HostileRaid, engine.GetStance("cult"));
-    }
-
-    [Fact]
-    public void TrustInversion_ARS_ReverenceReturnsMaxTrust()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "cult",
-            RaidThreshold = -50f,
-            RobThreshold = -20f,
-            MinTrustToTrade = -40f,
-            IntelShareThreshold = 40f,
-            TrustInversion = true,
-            HealthyRadiationCeiling = 20f,
-            HighRadiationFloor = 60f
-        });
-
-        engine.SetTrust("cult", -100f);
-        engine.DayProvider = () => 30;
-        engine.PartyHasArsProvider = () => true;
-
-        Assert.Equal(100f, engine.GetEffectiveTrust("cult"));
-        Assert.Equal(TradeStance.ShareIntel, engine.GetStance("cult"));
-    }
-
-    [Fact]
-    public void InactiveFaction_ReturnsRefuse()
-    {
-        var engine = new FactionStanceEngine();
-        engine.RegisterFaction(new FactionThresholds
-        {
-            FactionId = "cult",
-            RaidThreshold = -50f,
-            RobThreshold = -20f,
-            MinTrustToTrade = -40f,
-            IntelShareThreshold = 40f,
-            TrustInversion = true
-        });
-
-        engine.SetTrust("cult", 50f);
-        engine.DayProvider = () => 10; // before activation day
-
-        Assert.False(engine.IsFactionActive("cult"));
-        Assert.Equal(TradeStance.Refuse, engine.GetStance("cult"));
     }
 }

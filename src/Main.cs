@@ -6,14 +6,15 @@ using System.Linq;
 using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
+using Ashfall.Core.Economy;
 using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
+using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
 using AtomicWar.GodotApp.Dose;
-using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.UtilityAI;
 
 namespace AtomicWar.GodotApp
@@ -1642,8 +1643,13 @@ namespace AtomicWar.GodotApp
 
         /// <summary>
         /// Headless smoke: economy market panel builds, icons resolve with
+        /// <summary>
+        /// Headless economy verification: goods catalog loads, panel mounts,
+        /// icon resolution is exercised without throwing, missing icons log a
         /// fallback, refresh + rebind are leak-free (no double-subscription),
-        /// open/close cycles don't corrupt state.
+        /// open/close cycles don't corrupt state, and TradeScreenGodotPanel hits
+        /// all UI fields (emblem, leader, stance, trust, aggression, repels,
+        /// price shocks, bio trade, fairness, parley, radio ticker).
         /// </summary>
         private void RunEconomyUiTestAndQuit()
         {
@@ -1674,9 +1680,59 @@ namespace AtomicWar.GodotApp
             bool ticked = _economy.Market.Day >= 1;
             bool bought = _economy.BuyDemo("clean_water", 2).Contains("Bought");
 
-            bool pass = panel && catalog && noLeak && icons && ticked && bought;
+            // ── Comprehensive Trade Screen & Economy HUD Field Verification ──
+            var stanceEngine = new FactionStanceEngine();
+            stanceEngine.RegisterFaction(new FactionThresholds(
+                "scavenger_camp",
+                raidThreshold: -50f,
+                robThreshold: -20f,
+                minTrustToTrade: -40f,
+                intelShareThreshold: 40f,
+                raidAggression: 0.35f,
+                trustInversion: false,
+                healthyRadiationCeiling: 20f,
+                highRadiationFloor: 60f));
+
+            var tuning = new HardcoreEconomyTuning();
+            tuning.Apply(new HardcoreEconomyTuningBundle(
+                new[] { new ScarcityEntry(ScarcityTier.Critical, 2.0f, "1-10", new[] { "clean_water" }, "drought") },
+                Array.Empty<FactionTradePreference>(),
+                new[] { new PriceShockRule(PriceShockKind.PlumePassing, 2.5f, 3, new[] { "rad_pills" }, "rad plume") }
+            ));
+
+            var tradePanel = new TradeScreenGodotPanel();
+            AddChild(tradePanel);
+            tradePanel.BindSession(_economy, stanceEngine, tuning);
+
+            bool hasEmblem = tradePanel.HasFactionEmblem;
+            bool hasLeader = tradePanel.HasLeaderLabel;
+            bool hasStance = tradePanel.HasStanceBadge;
+            bool hasTrust = tradePanel.HasTrustMeter;
+            bool hasAggression = tradePanel.HasAggressionMeter;
+            bool hasRepels = tradePanel.HasRepelCounter;
+            bool hasShocks = tradePanel.HasPriceShockBanner;
+            bool hasBioRows = tradePanel.HasBioTradeRows;
+            bool hasFairness = tradePanel.HasFairnessIndicator;
+            bool hasParley = tradePanel.HasParleyButton;
+            bool hasTicker = tradePanel.HasRadioTicker;
+
+            // Test interaction on all fields
+            tradePanel.AddPlayerOffer("clean_water", 2);
+            tradePanel.AddFactionAsk("clean_water", 1);
+            tradePanel.SetActiveFaction("cult_of_the_glow");
+            tradePanel.SetActiveFaction("scavenger_camp");
+
+            bool tradeFieldsPass = hasEmblem && hasLeader && hasStance && hasTrust &&
+                                   hasAggression && hasRepels && hasShocks && hasBioRows &&
+                                   hasFairness && hasParley && hasTicker &&
+                                   tradePanel.ActiveOfferCount > 0 && tradePanel.ActiveAskCount > 0;
+
+            bool pass = panel && catalog && noLeak && icons && ticked && bought && tradeFieldsPass;
             GD.Print($"[EconomyUiTest] panel={panel} catalog={catalog} noLeak={noLeak} " +
-                     $"fallbackIcons={fallback} ticked={ticked} bought={bought}");
+                     $"fallbackIcons={fallback} ticked={ticked} bought={bought} " +
+                     $"tradeFieldsPass={tradeFieldsPass} (emblem={hasEmblem} leader={hasLeader} stance={hasStance} " +
+                     $"trust={hasTrust} aggression={hasAggression} repels={hasRepels} shocks={hasShocks} " +
+                     $"bioRows={hasBioRows} fairness={hasFairness} parley={hasParley} ticker={hasTicker})");
             GD.Print(pass ? "ECONOMY_UITEST PASS" : "ECONOMY_UITEST FAIL");
             GetTree().Quit(pass ? 0 : 1);
         }

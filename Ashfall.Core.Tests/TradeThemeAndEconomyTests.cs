@@ -11,15 +11,16 @@ namespace Ashfall.Core.Tests
         public void FactionStanceEngine_NormalFaction_EvaluatesStancesCorrectly()
         {
             var engine = new FactionStanceEngine();
-            engine.RegisterFaction(new FactionThresholds
-            {
-                FactionId = "scavenger_camp",
-                RaidThreshold = -60f,
-                RobThreshold = -30f,
-                MinTrustToTrade = -15f,
-                IntelShareThreshold = 50f,
-                RaidAggression = 0.4f
-            });
+            engine.RegisterFaction(new FactionThresholds(
+                "scavenger_camp",
+                raidThreshold: -60f,
+                robThreshold: -30f,
+                minTrustToTrade: -15f,
+                intelShareThreshold: 50f,
+                raidAggression: 0.4f,
+                trustInversion: false,
+                healthyRadiationCeiling: 20f,
+                highRadiationFloor: 60f));
 
             Assert.True(engine.IsFactionActive("scavenger_camp"));
             Assert.Equal(0.4f, engine.GetRaidAggression("scavenger_camp"));
@@ -61,17 +62,16 @@ namespace Ashfall.Core.Tests
             engine.PartyHasArsProvider = () => hasArs;
             engine.PartyIntactHazmatProvider = () => hasHazmat;
 
-            engine.RegisterFaction(new FactionThresholds
-            {
-                FactionId = "cult_of_the_glow",
-                RaidThreshold = -50f,
-                RobThreshold = -20f,
-                MinTrustToTrade = -40f,
-                IntelShareThreshold = 40f,
-                TrustInversion = true,
-                HealthyRadiationCeiling = 20f,
-                HighRadiationFloor = 60f
-            });
+            engine.RegisterFaction(new FactionThresholds(
+                "cult_of_the_glow",
+                raidThreshold: -50f,
+                robThreshold: -20f,
+                minTrustToTrade: -40f,
+                intelShareThreshold: 40f,
+                raidAggression: 0.5f,
+                trustInversion: true,
+                healthyRadiationCeiling: 20f,
+                highRadiationFloor: 60f));
 
             // Before Day 30: inactive -> Refuse
             Assert.False(engine.IsFactionActive("cult_of_the_glow"));

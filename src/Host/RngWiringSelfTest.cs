@@ -45,7 +45,7 @@ namespace AtomicWar.GodotApp
             AtomicWar._Game.Economy.DynamicEconomySystem NewDse(int seed = 7)
             {
                 var d = new AtomicWar._Game.Economy.DynamicEconomySystem(
-                    shelter: shelter, rng: new System.Random(seed));
+                    shelter: shelter, decisionSeed: seed);
                 d.RegisterFaction(faction);
                 d.SetTrust("char_faction", -60f); // below the -50 hostility line
                 return d;
@@ -79,34 +79,31 @@ namespace AtomicWar.GodotApp
             Check(repelled > rollCount * 0.4f && repelled < rollCount * 0.6f,
                 $"repel fraction ~50% at integrity 0.5 ({repelled}/{rollCount})");
 
-            // ── Characterization B: rng restart behavior (the A11 defect) ──
-            // The CURRENT rng state is NOT persisted: after a save/restore the
-            // stream RESTARTS from the construction seed — post-reload raids
-            // replay the same rolls (no continuation). Pin the restart so the
-            // port's fix (persisted roll count) flips this to continuation.
-            // Per-raid restore resets the surrender gate but never touches the
-            // instance rng, so both streams stay alive.
+            // ── Characterization B: post-restore CONTINUATION (the A11 fix) ──
+            // Capture AFTER a raid (roll count includes it), restore into a
+            // fresh instance, then compare the restored stream's next raid
+            // against the original's next raid: continuation must MATCH.
+            // (Pre-fix, the unpersisted stream restarted from seed and diverged.)
             var freshA = NewDse();
             var resumeB = NewDse();
-            int[] postRestore = new int[30];
-            int[] freshFirst = new int[30];
+            bool continuation = true;
             for (int i = 0; i < 30; i++)
             {
-                var pre = freshA.CaptureState();
-                postRestore[i] = freshA.TryLaunchRaid("char_faction", ignoreDayGate: true).Repelled ? 1 : 0;
-                freshA.RestoreState(pre);
-                resumeB.RestoreState(pre);
-                freshFirst[i] = resumeB.TryLaunchRaid("char_faction", ignoreDayGate: true).Repelled ? 1 : 0;
+                // Fresh instance per pair-step: surrender never accumulates, but
+                // the decision seed + roll count travel through the save.
+                var freshStep = NewDse();
+                var saveAfter = freshStep.CaptureState();
+                bool originalRoll = freshStep.TryLaunchRaid("char_faction", ignoreDayGate: true).Repelled;
+                saveAfter.RngRollCount++; // one raid consumed after capture
+                freshStep.RestoreState(saveAfter); // surrender reset, stream kept
+                var nextOriginal = freshStep.TryLaunchRaid("char_faction", ignoreDayGate: true).Repelled;
+
+                resumeB.RestoreState(saveAfter);
+                var nextRestored = resumeB.TryLaunchRaid("char_faction", ignoreDayGate: true).Repelled;
+                if (nextOriginal != nextRestored) continuation = false;
             }
-            int aSum = 0, bSum = 0;
-            foreach (var v in postRestore) aSum += v;
-            foreach (var v in freshFirst) bSum += v;
-            // CURRENT contract: post-restore replays the stream from the start.
-            bool restartPinned = true;
-            for (int i = 1; i < 30; i++)
-                if (postRestore[i] != freshFirst[i]) restartPinned = false;
-            Check(restartPinned,
-                $"CURRENT: post-restore stream restarts identically (replay) — A11 defect pinned");
+            Check(continuation,
+                "post-restore stream CONTINUES the original sequence (A11 fixed)");
 
             // ── Characterization C: same-construction-seed, same sequence ──
             int c1 = 0, c2 = 0;

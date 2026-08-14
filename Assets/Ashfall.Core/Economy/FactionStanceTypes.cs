@@ -3,61 +3,20 @@ namespace Ashfall.Core.Economy
     using System;
 
     /// <summary>
-    /// Engine-agnostic faction stance queries. Implemented by FactionStanceEngine and DynamicEconomySystem.
-    /// </summary>
-    public interface IFactionStanceProvider
-    {
-        float GetTrust(string factionId);
-        float GetEffectiveTrust(string factionId);
-        float ModifyTrust(string factionId, float delta);
-        void SetTrust(string factionId, float value);
-        TradeStance GetStance(string factionId);
-        bool WillTrade(string factionId);
-        bool WillShareIntel(string factionId);
-        float GetRaidAggression(string factionId);
-        void SetRaidAggression(string factionId, float value);
-        bool IsFactionActive(string factionId);
-    }
-
-    /// <summary>
-    /// Surface for querying active transient price shocks.
-    /// Engine-agnostic: backed by HardcoreEconomyTuning overlay.
-    /// </summary>
-    public interface IPriceShockProvider
-    {
-        bool TryGetPriceShock(PriceShockKind kind, int dayOffsetFromShockStart, out PriceShockRule rule);
-        float GetScarcityMultiplier(int day, string itemId);
-    }
-
-    /// <summary>
-    /// Trade event notification surface for reactive UI binding.
-    /// Engine-agnostic event signatures.
-    /// </summary>
-    public interface ITradeEvents
-    {
-        event Action<string, float, float> OnTrustChanged;
-        event Action<FactionRaidResult> OnRaidResolved;
-        event Action<FactionSuccessionResult> OnFactionSuccession;
-        event Action<FactionSurrenderResult> OnFactionSurrender;
-        event Action OnEconomyChanged;
-        event Action<bool> OnBarterOnlyModeChanged;
-    }
-
-    /// <summary>
     /// Immutable faction threshold data. Hosts populate this from FactionSO
     /// or any other data source; the core engine never touches UnityEngine.
     /// </summary>
-    public struct FactionThresholds
+    public readonly struct FactionThresholds
     {
-        public string FactionId { get; set; }
-        public float RaidThreshold { get; set; }
-        public float RobThreshold { get; set; }
-        public float MinTrustToTrade { get; set; }
-        public float IntelShareThreshold { get; set; }
-        public float RaidAggression { get; set; }
-        public bool TrustInversion { get; set; }
-        public float HealthyRadiationCeiling { get; set; }
-        public float HighRadiationFloor { get; set; }
+        public string FactionId { get; }
+        public float RaidThreshold { get; }
+        public float RobThreshold { get; }
+        public float MinTrustToTrade { get; }
+        public float IntelShareThreshold { get; }
+        public float RaidAggression { get; }
+        public bool TrustInversion { get; }
+        public float HealthyRadiationCeiling { get; }
+        public float HighRadiationFloor { get; }
 
         public FactionThresholds(
             string factionId,
