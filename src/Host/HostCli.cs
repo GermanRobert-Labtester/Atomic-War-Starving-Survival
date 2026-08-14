@@ -6,6 +6,7 @@ using Ashfall.Core.Narrative;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
 using Ashfall.Core.Economy;
+using Ashfall.Core.UtilityAI;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -54,6 +55,7 @@ namespace AtomicWar.GodotApp
         WorldSelfTest,
         EconomySelfTest,
         EconomyUiTest,
+        UtilityAiSelfTest,
         DataIntegritySelfTest,
         CaravanSelfTest,
         AssetRegistrySelfTest
@@ -144,6 +146,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.EconomySelfTest;
             if (Has(args, "--economy-uitest"))
                 return HostCliAction.EconomyUiTest;
+            if (Has(args, "--utility-ai-selftest"))
+                return HostCliAction.UtilityAiSelfTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -778,6 +782,13 @@ namespace AtomicWar.GodotApp
             {
                 if (File.Exists(continuityPath)) File.Delete(continuityPath);
             }
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunUtilityAiSelfTest(string dataDirectory)
+        {
+            var report = UtilityAiHeadlessDemo.Run(dataDirectory, new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }

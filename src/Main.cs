@@ -174,6 +174,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.EconomyUiTest:
                     RunEconomyUiTestAndQuit();
                     return;
+                case HostCliAction.UtilityAiSelfTest:
+                    GetTree().Quit(HostCli.RunUtilityAiSelfTest(_dataDir));
+                    return;
                 case HostCliAction.InventoryUiTest:
                     RunInventoryUiTestAndQuit();
                     return;
