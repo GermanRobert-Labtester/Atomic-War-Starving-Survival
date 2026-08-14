@@ -179,6 +179,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --dose-ledger-selftest       Dose Ledger save write → reload → restore → checksum/tamper checks");
             GD.Print("  --data-integrity-selftest  Cross-reference every id in the 55 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
             GD.Print("  --asset-registry-selftest  Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
+            GD.Print("  --economy-selftest        Run the engine-agnostic economy headless demo (goods load, market ticks, barter, save/load round-trip)");
             GD.Print("  --host-help              This list");
         }
 
@@ -887,5 +888,6 @@ namespace AtomicWar.GodotApp
             GD.Print(report.Summary);
             return report.Clean ? 0 : 1;
         }
+
     }
 }

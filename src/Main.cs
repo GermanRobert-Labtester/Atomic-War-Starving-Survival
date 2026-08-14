@@ -13,6 +13,7 @@ using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
 using AtomicWar.GodotApp.Dose;
+using AtomicWar.GodotApp.Economy;
 
 namespace AtomicWar.GodotApp
 {
@@ -56,6 +57,9 @@ namespace AtomicWar.GodotApp
 
         // Survivors (needs + radiation, ported from Unity Survivors/Radiation)
         private SurvivorsHostSession _survivors = null!;
+        private EconomyHostSession _economy = null!;
+        private bool _economyDirty;
+        private EconomyMarketPanel _economyPanel = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -300,6 +304,7 @@ namespace AtomicWar.GodotApp
                 SaveMuster();
                 SaveInventory();
                 SaveSurvivors();
+                SaveEconomy();
                 // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
                 Ashfall.Bridge.BridgeRuntime.Shutdown();
                 GetTree().Quit();
@@ -448,9 +453,15 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Survivors: expose Mikhail to 60 mSv/hr", () => OnSurvivorsExposeClicked("survivor_gunner_mikhail", 60f));
             AddMenuButton("Survivors: iodine for Mikhail", () => OnSurvivorsIodineClicked("survivor_gunner_mikhail"));
             AddMenuButton("Survivors: anti-rad for Mikhail", () => OnSurvivorsAntiRadClicked("survivor_gunner_mikhail", 30f));
+            // ── ECONOMY (market core) ─────────────────────────────────
+            AddMenuButton("Economy: open market", OnEconomyOpenClicked);
+            AddMenuButton("Economy: tick 1 day", OnEconomyTickClicked);
+            AddMenuButton("Economy: buy 4 clean water", () => OnEconomyBuyClicked("clean_water", 4));
+            AddMenuButton("Economy: barter 20 scrap for water", () => OnEconomyBarterClicked("scrap_metal", 20, "clean_water"));
+            AddMenuButton("Economy: save", OnEconomySaveClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1251,6 +1262,83 @@ namespace AtomicWar.GodotApp
             var save = SurvivorsSaveStore.TryLoad();
             if (save != null && save.survivors.Count > 0)
                 _survivors.RestoreSave(save);
+        }
+
+        // ── ECONOMY (market core) host wiring ─────────────────────────
+
+        private void SetupEconomy()
+        {
+            if (_economy != null) return;
+            _economy = EconomyHostSession.Create(_dataDir);
+            _economy.StateChanged += () => _economyDirty = true;
+            var save = EconomySaveStore.TryLoad();
+            if (save != null)
+            {
+                _economy.Market.RestoreState(save);
+                _economyDirty = false; // restore just raised state-change events
+                GD.Print("[Ashfall Godot] Economy state restored.");
+            }
+
+            if (_economyPanel == null && _rightColumn != null)
+            {
+                _economyPanel = new EconomyMarketPanel();
+                _rightColumn.AddChild(_economyPanel);
+            }
+            if (_economyPanel != null)
+            {
+                _economyPanel.BindSession(_economy);
+                _economyPanel.RefreshView();
+            }
+        }
+
+        private void OnEconomyOpenClicked()
+        {
+            SetupEconomy();
+            _statusLabel.Text = _economy.StatusLine();
+            _codexViewer.Text = _economy.StatusLine();
+        }
+
+        private void OnEconomyTickClicked()
+        {
+            SetupEconomy();
+            _statusLabel.Text = _economy.TickDemo(1);
+            FlushEconomyIfDirty();
+            _codexViewer.Text = _economy.StatusLine();
+        }
+
+        private void OnEconomyBuyClicked(string itemId, int quantity)
+        {
+            SetupEconomy();
+            _statusLabel.Text = _economy.BuyDemo(itemId, quantity);
+            FlushEconomyIfDirty();
+        }
+
+        private void OnEconomyBarterClicked(string giveId, int giveQty, string takeId)
+        {
+            SetupEconomy();
+            _statusLabel.Text = _economy.BarterDemo(giveId, giveQty, takeId);
+            FlushEconomyIfDirty();
+        }
+
+        private void OnEconomySaveClicked()
+        {
+            SetupEconomy();
+            SaveEconomy();
+        }
+
+        private void SaveEconomy()
+        {
+            if (_economy == null) return;
+            if (EconomySaveStore.TrySave(_economy.CaptureSave()))
+            {
+                _economyDirty = false;
+                GD.Print("[Ashfall Godot] Economy save written.");
+            }
+        }
+
+        private void FlushEconomyIfDirty()
+        {
+            if (_economyDirty) SaveEconomy();
         }
 
         private void OnSurvivorsOpenClicked()
