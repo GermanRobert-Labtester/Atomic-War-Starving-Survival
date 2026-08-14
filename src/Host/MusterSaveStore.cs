@@ -11,6 +11,7 @@ namespace AtomicWar.GodotApp
     {
         public MusterState Muster;
         public CoalitionCampState Camp;
+        public string Checksum = string.Empty;
     }
 
     /// <summary>
@@ -38,6 +39,8 @@ namespace AtomicWar.GodotApp
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
+                // Recompute so a mutated envelope cannot persist a stale hash.
+                save.Checksum = SaveChecksum.Compute(save);
                 System.IO.File.WriteAllText(path, s_json.Serialize(save));
                 return true;
             }
@@ -56,7 +59,20 @@ namespace AtomicWar.GodotApp
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
-                return s_json.Deserialize<MusterHostSave>(raw);
+                var save = s_json.Deserialize<MusterHostSave>(raw);
+                if (save == null) return null;
+                // Absent checksum = pre-integrity save or foreign file; tolerate
+                // it, but reject a present checksum that does not match.
+                if (!string.IsNullOrEmpty(save.Checksum))
+                {
+                    string actual = SaveChecksum.Compute(save);
+                    if (!string.Equals(save.Checksum, actual, StringComparison.Ordinal))
+                    {
+                        GD.PrintErr("[Muster] load failed: checksum mismatch (corrupt or foreign save).");
+                        return null;
+                    }
+                }
+                return save;
             }
             catch (Exception e)
             {

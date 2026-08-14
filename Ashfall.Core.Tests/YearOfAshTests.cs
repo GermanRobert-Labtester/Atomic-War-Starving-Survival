@@ -266,6 +266,13 @@ namespace Ashfall.Core.Tests
             Assert.Contains(items, item => item.id == "item_boron_shielding_tile");
             Assert.Contains(items, item => item.id == "item_brass_stamping_die");
             Assert.Contains(items, item => item.id == "item_evacuation_manifest_scroll");
+            // Binding parity: the file's schema must actually reach the DTO fields
+            // (Unity's JsonUtility binds these; the Godot serializer must too).
+            foreach (var item in items)
+            {
+                Assert.False(string.IsNullOrEmpty(item.name), item.id + " name unbound");
+                Assert.False(string.IsNullOrEmpty(item.category), item.id + " category unbound");
+            }
 
             var events = YearOfAshCatalogLoader.LoadEvents(dataDir, fileIO, json);
             Assert.True(events.Count >= 48, $"Expected >= 48 events, got {events.Count}");
@@ -273,6 +280,11 @@ namespace Ashfall.Core.Tests
             Assert.Contains(events, ev => ev.id == "event_black_mud_thaw_inundation");
             Assert.Contains(events, ev => ev.id == "event_granite_arsenal_foundry_explosion");
             Assert.Contains(events, ev => ev.id == "event_final_dawn_year_one");
+            foreach (var ev in events)
+            {
+                Assert.False(string.IsNullOrEmpty(ev.description), ev.id + " description unbound");
+                Assert.True(ev.day >= 180, ev.id + " day unbound");
+            }
 
             var questSystem = new QuestlineSystem();
             int initialQuests = questSystem.Catalog.Count;
@@ -329,6 +341,12 @@ namespace Ashfall.Core.Tests
             Assert.Contains(locations, l => l.id == "loc_brine_pumping_sluice");
             Assert.Contains(locations, l => l.id == "loc_granite_arsenal_foundry");
             Assert.Contains(locations, l => l.id == "loc_the_final_dawn_outlook");
+            foreach (var loc in locations)
+            {
+                Assert.False(string.IsNullOrEmpty(loc.displayName), loc.id + " displayName unbound");
+                Assert.False(string.IsNullOrEmpty(loc.sector), loc.id + " sector unbound");
+                Assert.True(loc.riskLevel >= 1, loc.id + " riskLevel unbound");
+            }
 
             var radio = YearOfAshCatalogLoader.LoadRadioBroadcasts(dataDir, fileIO, json);
             Assert.True(radio.Count >= 36, $"Expected >= 36 radio broadcasts, got {radio.Count}");
@@ -336,6 +354,13 @@ namespace Ashfall.Core.Tests
             Assert.Contains(radio, r => r.id == "radio_garrison_martial_edict");
             Assert.Contains(radio, r => r.id == "radio_granite_arsenal_mobilization_broadcast");
             Assert.Contains(radio, r => r.id == "radio_day_360_beacon_silence");
+            foreach (var r in radio)
+            {
+                Assert.False(string.IsNullOrEmpty(r.message), r.id + " message unbound");
+                Assert.False(string.IsNullOrEmpty(r.source), r.id + " source unbound");
+                Assert.False(string.IsNullOrEmpty(r.frequency), r.id + " frequency unbound");
+                Assert.True(r.dayTrigger > 0, r.id + " dayTrigger unbound");
+            }
 
             var survivors = YearOfAshCatalogLoader.LoadSurvivors(dataDir, fileIO, json);
             Assert.True(survivors.Count >= 36, $"Expected >= 36 survivors, got {survivors.Count}");
@@ -343,6 +368,11 @@ namespace Ashfall.Core.Tests
             Assert.Contains(survivors, s => s.id == "survivor_anneke_ruhl");
             Assert.Contains(survivors, s => s.id == "survivor_markov_arsenal_assayer");
             Assert.Contains(survivors, s => s.id == "survivor_talia_upland_commander");
+            foreach (var s in survivors)
+            {
+                Assert.False(string.IsNullOrEmpty(s.name), s.id + " name unbound");
+                Assert.False(string.IsNullOrEmpty(s.moralAlignment), s.id + " moralAlignment unbound");
+            }
             Assert.Contains(survivors, s => s.id == "survivor_anton_salt_trader");
         }
 

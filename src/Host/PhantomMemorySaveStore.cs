@@ -5,6 +5,13 @@ using Ashfall.Core;
 
 namespace AtomicWar.GodotApp
 {
+    /// <summary>Phantom Memory envelope: engine state + integrity checksum.</summary>
+    public class PhantomMemoryHostSave
+    {
+        public PhantomMemoryEngineState State;
+        public string Checksum = string.Empty;
+    }
+
     /// <summary>
     /// Phantom Memory (Antigravity #41) save persistence — same thin pattern as
     /// the other host stores: user:// path, try/catch, codec serialization.
@@ -26,11 +33,14 @@ namespace AtomicWar.GodotApp
             try
             {
                 if (state == null) return false;
+                var envelope = new PhantomMemoryHostSave { State = state };
+                // Recompute so a mutated envelope cannot persist a stale hash.
+                envelope.Checksum = SaveChecksum.Compute(envelope);
                 string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(state));
+                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
                 return true;
             }
             catch (Exception e)
@@ -48,7 +58,20 @@ namespace AtomicWar.GodotApp
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
-                return s_json.Deserialize<PhantomMemoryEngineState>(raw);
+                var envelope = s_json.Deserialize<PhantomMemoryHostSave>(raw);
+                if (envelope == null || envelope.State == null) return null;
+                // Absent checksum = pre-integrity save or foreign file; tolerate
+                // it, but reject a present checksum that does not match.
+                if (!string.IsNullOrEmpty(envelope.Checksum))
+                {
+                    string actual = SaveChecksum.Compute(envelope);
+                    if (!string.Equals(envelope.Checksum, actual, StringComparison.Ordinal))
+                    {
+                        GD.PrintErr("[PhantomMemory] load failed: checksum mismatch (corrupt or foreign save).");
+                        return null;
+                    }
+                }
+                return envelope.State;
             }
             catch (Exception e)
             {

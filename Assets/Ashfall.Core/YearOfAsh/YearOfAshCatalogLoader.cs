@@ -7,15 +7,11 @@ namespace Ashfall.Core.YearOfAsh
     public class YearOfAshItemEntry
     {
         public string id = string.Empty;
-        public string displayName = string.Empty;
+        public string name = string.Empty;
+        public string category = string.Empty;
         public string description = string.Empty;
-        public string type = string.Empty;
-        public int stackMax = 1;
-        public float weight = 1.0f;
-        public float tradeValue = 10f;
-        public float thirstRestore = 0f;
-        public float hungerRestore = 0f;
-        public float moraleEffect = 0f;
+        public float tradeValue = 0f;
+        public float weightKg = 0f;
     }
 
     [Serializable]
@@ -23,11 +19,11 @@ namespace Ashfall.Core.YearOfAsh
     {
         public string id = string.Empty;
         public string title = string.Empty;
-        public string bodyText = string.Empty;
-        public float weight = 1.0f;
-        public int minDay = 180;
-        public int maxDay = 360;
+        public string description = string.Empty;
+        public int day = 180;
+        public string hazardType = string.Empty;
         public string phase = string.Empty;
+        public float temperatureDeltaC = 0f;
     }
 
     [Serializable]
@@ -35,26 +31,22 @@ namespace Ashfall.Core.YearOfAsh
     {
         public string id = string.Empty;
         public string displayName = string.Empty;
+        public string sector = string.Empty;
+        public int riskLevel = 1;
+        public float radiationUsv = 0f;
         public string description = string.Empty;
-        public int dangerLevel = 5;
-        public int travelHours = 4;
-        public float baseRadsPerHour = 20.0f;
-        public float collapseRisk = 0.3f;
-        public string primaryFaction = string.Empty;
-        public List<string> lootCategories = new List<string>();
-        public List<string> specialEvents = new List<string>();
     }
 
     [Serializable]
     public class YearOfAshRadioEntry
     {
         public string id = string.Empty;
-        public string callSign = string.Empty;
         public string frequency = string.Empty;
-        public int minDay = 180;
-        public int maxDay = 360;
-        public string bodyText = string.Empty;
+        public int dayTrigger = 180;
         public bool isEmergency = false;
+        public string message = string.Empty;
+        public string signalStrength = string.Empty; // "S7" etc. — the radio signal scale, not a number
+        public string source = string.Empty;
     }
 
     [Serializable]
@@ -64,12 +56,15 @@ namespace Ashfall.Core.YearOfAsh
         public string name = string.Empty;
         public string occupation = string.Empty;
         public float rurScore = 10.0f;
-        public string moralBranch = "humanist";
-        public string background = string.Empty;
+        public string moralAlignment = string.Empty;
+        public int age = 30;
+        public float healthPercent = 100f;
+        public float radiationDoseMsv = 0f;
+        public int guiltScore = 0;
+        public string backstory = string.Empty;
+        public string confession = string.Empty;
+        public string factionAffinity = string.Empty;
         public List<string> traits = new List<string>();
-        public int startingMorale = 50;
-        public int startingGuilt = 10;
-        public string favoredFaction = string.Empty;
     }
 
     [Serializable]

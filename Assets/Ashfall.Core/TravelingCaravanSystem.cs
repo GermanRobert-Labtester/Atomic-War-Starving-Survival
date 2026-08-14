@@ -180,9 +180,44 @@ namespace Ashfall.Core
 
         public void RestoreState(TravelingCaravanState state)
         {
-            _state = state ?? new TravelingCaravanState();
-            if (_state.activeCaravans == null)
-                _state.activeCaravans = new List<CaravanEntry>();
+            if (state == null) return;
+            _state.completedTradesCount = Math.Max(0, state.completedTradesCount);
+            _state.activeCaravans.Clear();
+            if (state.activeCaravans != null)
+            {
+                foreach (var c in state.activeCaravans)
+                {
+                    if (c == null) continue;
+                    var copy = new CaravanEntry
+                    {
+                        caravanId = c.caravanId,
+                        caravanName = c.caravanName,
+                        factionId = c.factionId,
+                        currentNodeId = c.currentNodeId,
+                        routeIndex = c.routeIndex,
+                        daysAtCurrentNode = c.daysAtCurrentNode,
+                        stayDurationDays = c.stayDurationDays,
+                        guardCount = c.guardCount,
+                        isRobbed = c.isRobbed,
+                        routeNodeIds = c.routeNodeIds != null ? new List<string>(c.routeNodeIds) : new List<string>(),
+                        inventory = new List<CaravanInventoryItem>()
+                    };
+                    if (c.inventory != null)
+                    {
+                        foreach (var inv in c.inventory)
+                        {
+                            if (inv == null) continue;
+                            copy.inventory.Add(new CaravanInventoryItem
+                            {
+                                itemId = inv.itemId,
+                                quantity = inv.quantity,
+                                priceRations = inv.priceRations
+                            });
+                        }
+                    }
+                    _state.activeCaravans.Add(copy);
+                }
+            }
         }
     }
 }

@@ -110,5 +110,26 @@ namespace Ashfall.Core.Tests
             Assert.Equal(1, newSystem.State.completedTradesCount);
             Assert.NotNull(newSystem.GetCaravanAtNode("node_x"));
         }
+
+        [Fact]
+        public void RestoreState_DoesNotAliasEnvelopeCollections()
+        {
+            var route = new List<string> { "node_x" };
+            var src = new TravelingCaravanSystem();
+            src.SpawnCaravan("c1", "Trader", "f1", route);
+            var snapshot = src.CaptureState();
+
+            var restored = new TravelingCaravanSystem();
+            restored.RestoreState(snapshot);
+
+            // Mutating the envelope after restore must not touch live state.
+            snapshot.activeCaravans.Clear();
+            snapshot.activeCaravans.Add(null);
+            snapshot.completedTradesCount = 99;
+
+            Assert.Equal(1, restored.CaravanCount);
+            Assert.Equal(0, restored.State.completedTradesCount);
+            Assert.NotNull(restored.GetCaravanAtNode("node_x"));
+        }
     }
 }

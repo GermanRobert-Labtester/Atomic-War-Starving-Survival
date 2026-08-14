@@ -71,7 +71,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
             int visibleCount = 0;
             foreach (var b in _broadcasts)
             {
-                if (currentDay < b.minDay || currentDay > b.maxDay) continue;
+                if (currentDay < b.dayTrigger) continue;
 
                 var panel = new PanelContainer();
                 var vbox = new VBoxContainer();
@@ -79,14 +79,14 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
                 var header = new Label
                 {
-                    Text = $"[{b.frequency}] {b.callSign} {(b.isEmergency ? "● EMERGENCY" : "○ CIVIL")}"
+                    Text = $"[{b.frequency}] {b.source} {(b.isEmergency ? "● EMERGENCY" : "○ CIVIL")}"
                 };
                 header.AddThemeFontSizeOverride("font_size", 11);
                 vbox.AddChild(header);
 
                 var body = new Label
                 {
-                    Text = b.bodyText,
+                    Text = b.message,
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
                 body.AddThemeFontSizeOverride("font_size", 10);

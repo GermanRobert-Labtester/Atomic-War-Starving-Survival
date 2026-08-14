@@ -95,7 +95,21 @@ namespace Ashfall.Core
             _state.backerPool.Clear();
             if (defs == null) return;
             for (int i = 0; i < defs.Count; i++)
-                _state.backerPool.Add(defs[i]);
+            {
+                var d = defs[i];
+                if (d == null) continue;
+                // Deep copy: the pool owns its backers, so a caller mutating
+                // (or reusing) the source list cannot change live rulings.
+                _state.backerPool.Add(new BackerDef
+                {
+                    id = d.id,
+                    displayName = d.displayName,
+                    wants = d.wants,
+                    willNot = d.willNot,
+                    principled = d.principled,
+                    isAlive = d.isAlive
+                });
+            }
             RaiseChanged();
         }
 

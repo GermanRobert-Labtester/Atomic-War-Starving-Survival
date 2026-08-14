@@ -53,7 +53,25 @@ namespace Ashfall.Core.Tests
             {
                 Assert.False(string.IsNullOrEmpty(n.disposition));
                 Assert.False(string.IsNullOrEmpty(n.action));
+                // Binding parity: snake_case JSON keys must reach the DTO fields
+                // (Unity's JsonUtility binds these case-insensitively; the Godot
+                // serializer needs the exact snake_case names).
+                Assert.False(string.IsNullOrEmpty(n.action_label),
+                    n.id + " action_label unbound");
             }
+        }
+
+        [Fact]
+        public void Load_BandThresholdsBind()
+        {
+            string dataDir = FindDataDir();
+            if (string.IsNullOrEmpty(dataDir)) return;
+
+            var catalog = DoseRegistersCatalogLoader.Load(
+                dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+            Assert.Equal(600f, catalog.bands[3].threshold_msv);
+            Assert.Equal(300f, catalog.bands[2].threshold_msv);
+            Assert.Equal(100f, catalog.bands[1].threshold_msv);
         }
 
         [Fact]

@@ -124,8 +124,18 @@ namespace Ashfall.Core
                 foreach (var e in saved.entries)
                 {
                     if (e == null || string.IsNullOrEmpty(e.survivorId)) continue;
-                    _entries[e.survivorId + "|" + e.task] = e;
-                    _state.entries.Add(e);
+                    var copy = new VolunteerEntry
+                    {
+                        survivorId = e.survivorId,
+                        task = e.task,
+                        acceptedDay = e.acceptedDay,
+                        completedDay = e.completedDay,
+                        doseIncurred = e.doseIncurred,
+                        reasonText = e.reasonText,
+                        completed = e.completed
+                    };
+                    _entries[copy.survivorId + "|" + copy.task] = copy;
+                    _state.entries.Add(copy);
                 }
             }
             RaiseChanged();

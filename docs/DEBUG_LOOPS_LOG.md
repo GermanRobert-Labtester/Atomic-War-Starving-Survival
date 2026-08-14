@@ -191,6 +191,30 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 408/408, crossing 33/33, arbitration 58/58,
   endings 11/11, expansions 236/236, muster 25/25, dose PASS, gate 0 errors.
 
+## PARITY AUDIT (Unity-identifies-X vs Godot-binding) — schema alignment sweep
+- Root cause class: Unity's JsonUtility binds JSON keys to DTO fields (snake_case
+  loaders), while Godot's SystemTextJsonSerializer (case-insensitive only, no
+  snake_case policy) left camelCase DTO fields dead or the whole container throwing.
+- FIXED 1 — YearOfAsh loader DTOs were written against an imagined schema:
+  items (name/category/weightKg), events (description/day/hazardType/temperatureDeltaC),
+  locations (sector/riskLevel/radiationUsv), radio (dayTrigger/message/signalStrength
+  string/source), survivors (moralAlignment/age/healthPercent/radiationDoseMsv/guilt/
+  backstory/confession/factionAffinity/traits) — all aligned to the real JSON.
+- FIXED 2 — RadioBroadcastTerminal rendered BLANK broadcasts (called dead
+  callSign/bodyText/minDay): now source/message/dayTrigger; signalStrength is a
+  STRING ("S7") in the file — a float field made the whole container throw (0 radios).
+- FIXED 3 — dose_registers.json threshold_msv/action_label never bound (camelCase
+  DTOs): renamed to snake_case per loader convention; BandThresholdsBind + NPC
+  action_label binding tests added.
+- Binding regression gates added: every YOA item/event/location/radio/survivor now
+  asserts the real fields populate (would fail instantly if a field ever unbinds).
+- Verified all other loaders match their files: Holdfast (snake_case ✓), Crossing
+  (snake_case ✓), DoorEncounters (camelCase ✓), Phantom triggers (snake_case ✓),
+  Currents/Witness/Epilogue (snake_case ✓).
+- Verify: build 0 warnings, tests 411/411, all selftests + uitests PASS, gate 0
+  errors / 275 info across 59 catalogs.
+
+
 
 
 

@@ -643,7 +643,7 @@ namespace Ashfall.Core
 
             if (pool.Count == 0) return null;
             int salt = _state.seedSalt + SeedUtilityOffset + day * 17 + StableHash(role);
-            int n = salt < 0 ? -salt : salt;
+            int n = (int)(((long)salt & 0x7FFFFFFF));
             return pool[n % pool.Count];
         }
 

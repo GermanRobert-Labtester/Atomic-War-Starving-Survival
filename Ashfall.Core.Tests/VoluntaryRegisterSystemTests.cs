@@ -150,5 +150,24 @@ namespace Ashfall.Core.Tests
 
             Assert.Equal(before, after);
         }
+
+        [Fact]
+        public void SaveLoad_RestoreDoesNotAliasEnvelope()
+        {
+            var sys = new VoluntaryRegisterSystem();
+            sys.Volunteer("sv_mae", "water_haul", 240);
+            var snapshot = sys.CaptureState();
+
+            var restored = new VoluntaryRegisterSystem();
+            restored.RestoreState(snapshot);
+
+            // Mutating the envelope after restore must not touch live state.
+            snapshot.entries.Clear();
+            snapshot.entries.Add(new VolunteerEntry { survivorId = "sv_ghost", task = "x", acceptedDay = 1 });
+
+            Assert.Single(restored.Entries);
+            Assert.NotNull(FindEntry(restored.Entries, "sv_mae"));
+            Assert.Null(FindEntry(restored.Entries, "sv_ghost"));
+        }
     }
 }

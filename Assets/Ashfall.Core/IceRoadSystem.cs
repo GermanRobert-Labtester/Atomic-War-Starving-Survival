@@ -399,7 +399,7 @@ namespace Ashfall.Core
         {
             int salt = _state.seedSalt + day * 17 + _state.windowsCompleted * 808;
             int span = MaxWindowDays - MinWindowDays + 1;
-            int n = salt < 0 ? -salt : salt;
+            int n = (int)(((long)salt & 0x7FFFFFFF));
             return MinWindowDays + (n % span);
         }
 

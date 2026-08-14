@@ -7,7 +7,7 @@ namespace Ashfall.Core
     {
         public string id = string.Empty;
         public string label = string.Empty;
-        public float thresholdMsv;
+        public float threshold_msv;
         public string disposition = string.Empty;
     }
 
@@ -36,7 +36,7 @@ namespace Ashfall.Core
         public string name = string.Empty;
         public string register = string.Empty;
         public string disposition = string.Empty;
-        public string actionLabel = string.Empty;
+        public string action_label = string.Empty;
         public string action = string.Empty;
     }
 

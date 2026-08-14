@@ -105,9 +105,11 @@ namespace Ashfall.Core
         public void RestoreState(VouchAccessSystemState saved)
         {
             if (saved == null) return;
-            _state = saved;
-            if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
-            if (_state.vouchedBy == null) _state.vouchedBy = "";
+            _state.systemId = SystemId;
+            _state.vouchedBy = saved.vouchedBy ?? string.Empty;
+            _state.vouchBurned = saved.vouchBurned;
+            _state.accessSoftened = saved.accessSoftened;
+            _state.lastResortUsed = saved.lastResortUsed;
             RaiseChanged();
         }
 
