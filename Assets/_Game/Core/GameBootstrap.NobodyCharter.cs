@@ -189,6 +189,9 @@ namespace AtomicWar._Game.Core
                 };
                 Arbitration.OnRulingOverturned += ruling =>
                     GameLog.Log("[Nobody's Charter] Standing ruling overturned: " + ruling.topic);
+                Arbitration.OnBribeRefused += (backerId, topic) =>
+                    GameLog.Log("[Nobody's Charter] " + backerId + " refuses to be bought on " + topic
+                        + " — and says so where the board is. The ruling is marked.");
             }
 
             if (Ledger != null)
@@ -269,6 +272,14 @@ namespace AtomicWar._Game.Core
         /// <summary>Overturn a held ruling with 3+ counter-backers.</summary>
         public bool OverturnCrossingRuling(string topic, IReadOnlyList<string> counterBackerIds)
             => Arbitration?.OverturnRuling(topic, counterBackerIds) ?? false;
+
+        /// <summary>
+        /// Attempt to buy a backer's support on a pending Standing. A principled
+        /// backer refuses publicly (a mark); a non-principled backer accepts and
+        /// the ruling will hold Rigged, never Honest.
+        /// </summary>
+        public BribeResult TryBribeCrossingBacker(string topic, string backerId)
+            => Arbitration?.TryBribeBacker(topic, backerId) ?? BribeResult.Invalid;
 
         /// <summary>True when the topic's ruling is currently held (honest, 3+ backers).</summary>
         public bool IsCrossingRulingHeld(string topic)

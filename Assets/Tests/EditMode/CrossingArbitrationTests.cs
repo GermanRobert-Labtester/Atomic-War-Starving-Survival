@@ -223,6 +223,159 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(sys.Rulings.Count, Is.Zero);
         }
 
+        // ── Phase 3: principled bribery cap + re-Standing ───────────────
+
+        [Test]
+        public void BribePrincipled_RefusesPubliclyAndMarks()
+        {
+            var sys = CreateSystem();
+            string refusedBacker = null, refusedTopic = null;
+            sys.OnBribeRefused += (b, t) => { refusedBacker = b; refusedTopic = t; };
+
+            Assert.That(sys.CallStanding("dispute_1", 70), Is.True);
+            Assert.That(sys.TryBribeBacker("dispute_1", "b1"), Is.EqualTo(BribeResult.RefusedPrincipled));
+            Assert.That(refusedBacker, Is.EqualTo("b1"));
+            Assert.That(refusedTopic, Is.EqualTo("dispute_1"));
+            var ruling = sys.GetRuling("dispute_1");
+            Assert.That(ruling.bribeMarks, Is.EqualTo(1));
+            Assert.That(ruling.backers.Count, Is.Zero);
+            Assert.That(ruling.shape, Is.EqualTo(RulingShape.Pending));
+        }
+
+        [Test]
+        public void BribeNonPrincipled_AcceptsAndBoughtRulingHoldsRigged()
+        {
+            var sys = CreateSystem();
+            sys.CallStanding("dispute_1", 70);
+            sys.DeclareBacker("dispute_1", "b1"); // principled
+            sys.DeclareBacker("dispute_1", "b4"); // principled
+
+            Assert.That(sys.TryBribeBacker("dispute_1", "b2"), Is.EqualTo(BribeResult.Accepted));
+
+            var ruling = sys.GetRuling("dispute_1");
+            Assert.That(ruling.shape, Is.EqualTo(RulingShape.Rigged),
+                "a bought ruling is rigged even with a principled majority");
+            Assert.That(ruling.bribedBackers, Contains.Item("b2"));
+            Assert.That(sys.IsRulingHeld("dispute_1"), Is.False);
+            Assert.That(sys.TryBribeBacker("dispute_1", "b3"), Is.EqualTo(BribeResult.Invalid),
+                "cannot bribe a final ruling");
+        }
+
+        [Test]
+        public void ReStandingAfterOverturn_CreatesFreshPending()
+        {
+            var sys = CreateSystem();
+            sys.CallStanding("dispute_1", 70);
+            sys.DeclareBacker("dispute_1", "b1");
+            sys.DeclareBacker("dispute_1", "b4");
+            sys.DeclareBacker("dispute_1", "b6");
+            Assert.That(sys.OverturnRuling("dispute_1",
+                new List<string> { "b2", "b3", "b5" }), Is.True);
+
+            Assert.That(sys.CallStanding("dispute_1", 71), Is.True, "nothing is permanently settled");
+            Assert.That(sys.GetRulingHistory("dispute_1").Count, Is.EqualTo(2));
+            Assert.That(sys.State.standingRepeats, Is.EqualTo(1));
+            Assert.That(sys.GetRuling("dispute_1").shape, Is.EqualTo(RulingShape.Pending));
+            Assert.That(sys.IsRulingOverturned("dispute_1"), Is.False);
+
+            sys.DeclareBacker("dispute_1", "b1");
+            sys.DeclareBacker("dispute_1", "b4");
+            sys.DeclareBacker("dispute_1", "b6");
+            Assert.That(sys.IsRulingHeld("dispute_1"), Is.True);
+        }
+
+        [Test]
+        public void SaveRoundTrip_PreservesBribeAndRepeatState()
+        {
+            var sys = CreateSystem();
+            sys.CallStanding("dispute_1", 70);
+            sys.DeclareBacker("dispute_1", "b1");
+            sys.DeclareBacker("dispute_1", "b4");
+            sys.DeclareBacker("dispute_1", "b6");
+            sys.OverturnRuling("dispute_1", new List<string> { "b2", "b3", "b5" });
+            sys.CallStanding("dispute_1", 71);
+
+            sys.CallStanding("dispute_2", 72);
+            sys.TryBribeBacker("dispute_2", "b1"); // principled refusal → mark
+            sys.TryBribeBacker("dispute_2", "b2"); // accepted
+
+            var captured = sys.CaptureState();
+            var restored = new CrossingArbitrationSystem();
+            restored.RestoreState(captured);
+
+            Assert.That(restored.GetRulingHistory("dispute_1").Count, Is.EqualTo(2));
+            Assert.That(restored.State.standingRepeats, Is.EqualTo(1));
+            Assert.That(restored.GetRuling("dispute_2").bribeMarks, Is.EqualTo(1));
+            Assert.That(restored.GetRuling("dispute_2").bribedBackers, Contains.Item("b2"));
+            Assert.That(restored.GetRuling("dispute_2").refusedBribes, Contains.Item("b1"));
+
+            // Snapshot isolation: CaptureState returns a copy, so mutating the
+            // live system after capture must not leak into the captured state.
+            sys.DeclareBacker("dispute_2", "b4");
+            sys.DeclareBacker("dispute_2", "b6");
+            Assert.That(captured.GetRuling("dispute_2").backers.Count, Is.EqualTo(1),
+                "captured state is a snapshot, not an alias");
+            Assert.That(restored.GetRuling("dispute_2").backers.Count, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void Overturn_RejectsSameHoldersDuplicatesAndUnknowns()
+        {
+            var sys = CreateSystem();
+            sys.CallStanding("dispute_1", 70);
+            sys.DeclareBacker("dispute_1", "b1");
+            sys.DeclareBacker("dispute_1", "b4");
+            sys.DeclareBacker("dispute_1", "b6");
+
+            Assert.That(sys.OverturnRuling("dispute_1",
+                new List<string> { "b1", "b4", "b6" }), Is.False,
+                "the same trio cannot overturn its own ruling");
+            Assert.That(sys.OverturnRuling("dispute_1",
+                new List<string> { "b2", "b2", "b3" }), Is.False, "duplicates rejected");
+            Assert.That(sys.OverturnRuling("dispute_1",
+                new List<string> { "b2", "b3", "nope" }), Is.False, "unknown rejected");
+            Assert.That(sys.OverturnRuling("dispute_1",
+                new List<string> { "b2", "b3", "b5" }), Is.True, "a different set overturns");
+        }
+
+        [Test]
+        public void BribeRefusal_RecordedOnceAndDeduped()
+        {
+            var sys = CreateSystem();
+            int refusals = 0;
+            sys.OnBribeRefused += (_, __) => refusals++;
+            sys.CallStanding("dispute_1", 70);
+
+            Assert.That(sys.TryBribeBacker("dispute_1", "b1"), Is.EqualTo(BribeResult.RefusedPrincipled));
+            Assert.That(sys.TryBribeBacker("dispute_1", "b1"), Is.EqualTo(BribeResult.Invalid),
+                "pushing a principled backer twice yields nothing new");
+            Assert.That(sys.GetRuling("dispute_1").bribeMarks, Is.EqualTo(1));
+            Assert.That(sys.GetRuling("dispute_1").refusedBribes.Count, Is.EqualTo(1));
+            Assert.That(refusals, Is.EqualTo(1));
+        }
+
+        [Test]
+        public void IsRulingActive_DistinguishesHeldBoughtAndNone()
+        {
+            var sys = CreateSystem();
+            Assert.That(sys.IsRulingActive("dispute_1"), Is.False);
+
+            sys.CallStanding("dispute_1", 70);
+            sys.DeclareBacker("dispute_1", "b1");
+            sys.DeclareBacker("dispute_1", "b4");
+            sys.DeclareBacker("dispute_1", "b6");
+            Assert.That(sys.IsRulingActive("dispute_1"), Is.True);
+            Assert.That(sys.IsRulingHeld("dispute_1"), Is.True);
+
+            var bought = CreateSystem();
+            bought.CallStanding("dispute_1", 70);
+            bought.DeclareBacker("dispute_1", "b1");
+            bought.DeclareBacker("dispute_1", "b4");
+            bought.TryBribeBacker("dispute_1", "b2");
+            Assert.That(bought.IsRulingActive("dispute_1"), Is.True, "a bought ruling is on the board");
+            Assert.That(bought.IsRulingHeld("dispute_1"), Is.False);
+        }
+
         // ── NPC_DessaVane ──────────────────────────────────────────────
 
         [Test]

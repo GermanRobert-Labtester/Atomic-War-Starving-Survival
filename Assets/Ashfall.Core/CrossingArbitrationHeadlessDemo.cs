@@ -9,6 +9,7 @@ namespace Ashfall.Core
         public CrossingArbitrationState Arbitration;
         public int RulingsCalled;
         public int RulingsOverturned;
+        public int BribesRefused;
     }
 
     /// <summary>
@@ -47,6 +48,8 @@ namespace Ashfall.Core
             var sys = new CrossingArbitrationSystem();
             sys.OnStandingCalled += _ => report.RulingsCalled++;
             sys.OnRulingOverturned += _ => report.RulingsOverturned++;
+            int bribesRefused = 0;
+            sys.OnBribeRefused += (_, __) => bribesRefused++;
             sys.LoadBackerPool(new List<BackerDef>
             {
                 new BackerDef { id = "npc_osran_kell", displayName = "Osran Kell", principled = true },
@@ -87,6 +90,37 @@ namespace Ashfall.Core
             Check(sys.GetRuling(riggedTopic).shape == RulingShape.Rigged, "non-principled majority → rigged");
             Check(!sys.IsRulingHeld(riggedTopic), "rigged rulings do not hold");
 
+            // The principled cap on bribery: a principled backer refuses
+            // publicly (a mark); a bought ruling holds Rigged, never Honest.
+            const string bribeTopic = CrossingIds.FirstWeigh;
+            Check(sys.CallStanding(bribeTopic, 48), "bribe standing called");
+            Check(sys.TryBribeBacker(bribeTopic, CrossingIds.NpcOsran) == BribeResult.RefusedPrincipled,
+                "principled backer refuses a bribe");
+            Check(sys.GetRuling(bribeTopic).bribeMarks == 1, "refusal is a public mark");
+            Check(sys.GetRuling(bribeTopic).backers.Count == 0, "refused backer does not hold");
+            Check(bribesRefused == 1, "OnBribeRefused fired once");
+            Check(sys.DeclareBacker(bribeTopic, CrossingIds.NpcOsran), "principled backer declares honestly");
+            Check(sys.DeclareBacker(bribeTopic, CrossingIds.NpcMattis), "second principled backer declares");
+            Check(sys.TryBribeBacker(bribeTopic, "npc_bram_ostrowski") == BribeResult.Accepted,
+                "non-principled backer takes the bribe");
+            Check(sys.GetRuling(bribeTopic).shape == RulingShape.Rigged,
+                "a bought ruling is rigged even with a principled majority");
+            Check(sys.GetRuling(bribeTopic).bribedBackers.Count == 1, "bought backer recorded");
+            Check(!sys.IsRulingHeld(bribeTopic), "bought rulings do not hold honestly");
+            Check(sys.TryBribeBacker(bribeTopic, "npc_leva_quist") == BribeResult.Invalid,
+                "cannot bribe a final ruling");
+
+            // Nothing is permanently settled: an overturned ruling can be re-Stood.
+            Check(sys.CallStanding(topic, 49), "overturned ruling re-Stood");
+            Check(sys.GetRulingHistory(topic).Count == 2, "topic carries ruling history");
+            Check(sys.State.standingRepeats == 1, "re-Standing counted");
+            Check(sys.GetRuling(topic).shape == RulingShape.Pending, "re-Stood ruling is pending");
+            Check(!sys.IsRulingOverturned(topic), "re-Stood topic is no longer overturned");
+            Check(sys.DeclareBacker(topic, CrossingIds.NpcOsran), "re-Stood first backer");
+            Check(sys.DeclareBacker(topic, CrossingIds.NpcMattis), "re-Stood second backer");
+            Check(sys.DeclareBacker(topic, "npc_halden_mire"), "re-Stood third backer");
+            Check(sys.IsRulingHeld(topic), "re-Stood ruling holds honestly again");
+
             // Death lets a held ruling fall back to pending.
             Check(sys.CallStanding(CrossingIds.TheTerms, 47), "third standing called");
             Check(sys.DeclareBacker(CrossingIds.TheTerms, CrossingIds.NpcOsran), "holder one");
@@ -103,11 +137,19 @@ namespace Ashfall.Core
             var restored = new CrossingArbitrationSystem();
             restored.RestoreState(json.Deserialize<CrossingArbitrationState>(blob));
             Check(restored.BackerPool.Count == 5, "roundtrip backer pool");
-            Check(restored.IsRulingOverturned(topic), "roundtrip overturned ruling");
+            Check(restored.GetRulingHistory(topic).Count == 2, "roundtrip ruling history");
+            Check(restored.GetRuling(topic).shape == RulingShape.Pending,
+                "roundtrip: holder death dropped the re-Stood ruling to pending");
+            Check(restored.GetRuling(topic).backers.Count == 2, "roundtrip: two living holders remain");
+            Check(!restored.IsRulingHeld(topic), "roundtrip: no held ruling without three living backers");
+            Check(restored.State.standingRepeats == 1, "roundtrip re-Standing count");
+            Check(restored.GetRuling(bribeTopic).bribeMarks == 1, "roundtrip bribe marks");
+            Check(restored.GetRuling(bribeTopic).bribedBackers.Count == 1, "roundtrip bought backers");
             Check(restored.State.rulingsCalled == sys.State.rulingsCalled, "roundtrip call count");
             Check(restored.State.rulingsOverturned == sys.State.rulingsOverturned, "roundtrip overturn count");
 
             report.Arbitration = sys.CaptureState();
+            report.BribesRefused = bribesRefused;
             report.Passed = report.FailedCount == 0;
             var sb = new StringBuilder();
             sb.Append("CrossingArbitrationHeadlessDemo ");

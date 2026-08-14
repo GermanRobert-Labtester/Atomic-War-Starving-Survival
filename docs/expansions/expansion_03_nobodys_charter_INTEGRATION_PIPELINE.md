@@ -58,9 +58,16 @@ The bible's Appendix C Sprint 1. Establishes the region's identity and the **soc
 - SCALE quests: `quest_crossing_first_weigh`, `quest_crossing_scale_integrity` (side). ✱ registered (cards + CrossingIds)
 - Osran companion behaviour surface. Gate: compile + tests. ✱ done
 
-### Phase 3 — CrossingArbitrationSystem (Standing) + `quest_crossing_the_standing`
+### Phase 3 — CrossingArbitrationSystem (Standing) + `quest_crossing_the_standing`  ← *implemented in this change-set*
 - Bible §5.1 + main quest. `StandingRuling {topic, backers[], shape}`; **3-backer rule**; overturn support; principled backer cap on bribery; events `OnStandingCalled/RulingMade/RulingOverturned`. Save/load.
-- Gate: **cross-tool QA** (vouch × backers coupling).
+- ✱ System + 3-backer rule + overturn + principled majority (pre-existing from the big integration commit); this change-set adds the missing spec surfaces:
+  - `TryBribeBacker` / `BribeResult {Invalid, Accepted, RefusedPrincipled}` — principled backers refuse outright and the refusal is a public mark (`bribeMarks`, `refusedBribes` recorded once, deduped); a bought ruling holds **Rigged, never Honest**; `OnBribeRefused` event.
+  - Re-Standing: an overturned ruling can be re-Stood (`CallStanding` on an Overturned topic starts a fresh pending ruling; `GetRuling` = latest match; `GetRulingHistory` keeps the board's history; `standingRepeats` counter). Nothing is permanently settled.
+  - Overturn validation: counters must be 3+ distinct, living backers, a *different* set from the holders (§5.1 "a different 3+ backers").
+  - `IsRulingActive` (held or bought = on the board) for "who controls X" queries; `IsRulingHeld` stays honest-only.
+  - `_Game/Core` `CaptureState` fixed to deep-copy (snapshot semantics) + null-safe `RestoreState`.
+  - Host wiring: `GameBootstrap.TryBribeCrossingBacker`, `OnBribeRefused` log; headless demo + core tests + EditMode tests extended (bribe cap, re-Standing, overturn validation, snapshot isolation, round-trip of new fields).
+- **Gate:** cross-tool QA (vouch × backers coupling) — reviewer (different tool) returned FAIL with 7 findings; 6 addressed in this change-set (deep-copy snapshot, refusal dedup/record, overturn "different set" validation, Honest/Rigged + IsRulingActive docs, §5.1 header, fixture-id check = false alarm — all ids are in `characters.json`); finding 1 (dual-copy `_Game`/`Ashfall.Core` fork) is a pre-existing architecture debt of the whole expansion suite — tracked as a follow-up de-fork task, not Phase 3 scope. `dotnet test` green + Godot build clean (worktree-isolated).
 
 ### Phase 4 — Underwrite + Compact blocs + LedgerDebtSystem
 - `LedgerDebtSystem` §5.3 (`DebtContract{debtorId,principal,termDays,rate,forfeit}`), contract-shown-twice, forfeit named up front, `OnContractSigned/Paid/Renegotiated/OnForfeitTriggered/OnLedgerTampered`. Save/load.
@@ -85,8 +92,8 @@ The bible's Appendix C Sprint 1. Establishes the region's identity and the **soc
 1. Restate goal in 2 lines. 2. List files touched/created. 3. Re-grep id collisions. 4. Implement (thin MonoBehaviours; logic in plain C#; events). 5. Save-wire via `SaveSystem.Register`. 6. Verify batch EditMode. 7. Commit per AGENTS.md. 8. Provide exact next prompt.
 
 ## 4. Cross-tool QA register
-| System | Coupled vars | Reviewer (not implementer) |
-|---|---|---|
-| `VouchAccessSystem` (P1) | vouch state × future Standing backers × future debt terms | must review diff only |
-| `CrossingArbitrationSystem` (P3) | ruling backers × vouch × Standing repeats | must review diff only |
-| `LedgerDebtSystem` (P4) | contract × vouch × backers × forfeit | must review diff only |
+| System | Coupled vars | Reviewer (not implementer) | Outcome |
+|---|---|---|---|
+| `VouchAccessSystem` (P1) | vouch state × future Standing backers × future debt terms | must review diff only | — |
+| `CrossingArbitrationSystem` (P3) | ruling backers × vouch × Standing repeats | different tool (sub-agent) | FAIL → findings addressed in change-set (see Phase 3 gate notes); re-verify in Phase 4 gate |
+| `LedgerDebtSystem` (P4) | contract × vouch × backers × forfeit | must review diff only | — |
