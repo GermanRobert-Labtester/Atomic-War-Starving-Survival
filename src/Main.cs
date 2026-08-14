@@ -7,8 +7,10 @@ using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Journal;
+using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
+using AtomicWar.GodotApp.Muster;
 
 namespace AtomicWar.GodotApp
 {
@@ -37,6 +39,11 @@ namespace AtomicWar.GodotApp
         private PhantomMemoryHostSession _phantomMemory = null!;
         private DoseLedgerHostSession _doseLedger = null!;
         private bool _doseLedgerDirty;
+
+        // Muster (Expansion 06, Days 180-360 escalation)
+        private MusterHostSession _muster = null!;
+        private CurrentsRosterWidget _currentsRoster = null!;
+        private ApproachSelectionModal _approachModal = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -142,6 +149,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.JournalUiTest:
                     RunJournalUiTestAndQuit();
                     return;
+                case HostCliAction.MusterUiTest:
+                    RunMusterUiTestAndQuit();
+                    return;
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
                     return;
@@ -245,6 +255,7 @@ namespace AtomicWar.GodotApp
                 SaveExpansionHub();
                 SavePhantomMemory();
                 SaveDoseLedger();
+                SaveMuster();
                 // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
                 Ashfall.Bridge.BridgeRuntime.Shutdown();
                 GetTree().Quit();
@@ -369,9 +380,13 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Dose: name to Sick List", OnDoseDiagnoseClicked);
             AddMenuButton("Dose: book a Cohort child", OnDoseCohortClicked);
             AddMenuButton("Dose: sign a volunteer", OnDoseVolunteerClicked);
+            // ── THE MUSTER (Exp 06) ────────────────────────────────────
+            AddMenuButton("Muster: escalate to Day 260", OnMusterEscalateClicked);
+            AddMenuButton("Muster: show currents (15)", OnMusterRosterClicked);
+            AddMenuButton("Muster: Rate Card War approaches", OnMusterRateCardClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1069,6 +1084,77 @@ namespace AtomicWar.GodotApp
             if (_doseLedgerDirty) SaveDoseLedger();
         }
 
+        // ── THE MUSTER (Exp 06) host wiring ─────────────────────────────
+
+        private void SetupMuster()
+        {
+            if (_muster != null) return;
+            _muster = MusterHostSession.Create(_dataDir);
+            _muster.StateChanged += () => SaveMuster();
+
+            if (_currentsRoster == null)
+            {
+                _currentsRoster = new CurrentsRosterWidget();
+                _rightColumn.AddChild(_currentsRoster);
+            }
+            _currentsRoster.Bind(_muster.Roster, _muster.Engine);
+            _currentsRoster.RefreshView();
+
+            if (_approachModal == null)
+            {
+                _approachModal = new ApproachSelectionModal();
+                _approachModal.OnApproachChosen += OnMusterApproachChosen;
+                _approachModal.OnModalClosed += () => _approachModal.QueueFree();
+                AddChild(_approachModal);
+            }
+
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            _muster.Escalate(day);
+            GD.Print("[Ashfall Godot] Muster ready. Day " + day +
+                     (_muster.Engine.MusterTriggered ? " — THE MUSTER IS OPEN." : "."));
+        }
+
+        private void OnMusterEscalateClicked()
+        {
+            SetupMuster();
+            int target = Math.Min(360, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay + 10 : _simDay + 10);
+            _statusLabel.Text = _muster.Escalate(target);
+            _currentsRoster.RefreshView();
+        }
+
+        private void OnMusterRosterClicked()
+        {
+            SetupMuster();
+            _statusLabel.Text = $"Currents shown: {_muster.Roster.Count} (fifteenth: faction_hydro_barons).";
+        }
+
+        private void OnMusterRateCardClicked()
+        {
+            SetupMuster();
+            var def = _muster.Engine.FindDefinition("quest_the_rate_card_war");
+            if (def == null)
+            {
+                _statusLabel.Text = "Rate Card War questline not registered.";
+                return;
+            }
+            _approachModal.ShowQuestline(def.questlineId, def.approaches);
+            _statusLabel.Text = "Rate Card War: choose an approach.";
+        }
+
+        private void OnMusterApproachChosen(QuestApproach approach)
+        {
+            if (_muster == null) return;
+            _statusLabel.Text = _muster.SelectApproach("quest_the_rate_card_war", approach);
+            _currentsRoster.RefreshView();
+        }
+
+        private void SaveMuster()
+        {
+            if (_muster == null) return;
+            if (MusterSaveStore.TrySave(_muster.CaptureSave()))
+                GD.Print("[Ashfall Godot] Muster save written.");
+        }
+
         private void RefreshIceRoadLabel()
         {
             if (_core == null) return;
@@ -1079,6 +1165,27 @@ namespace AtomicWar.GodotApp
                 _catalogLabel.Text = _core.CatalogLine() + "\n" + _core.CensusLine();
             if (_briefingPreviewLabel != null)
                 _briefingPreviewLabel.Text = HoldfastBriefingView.PreviewLine(_core.CurrentQuest);
+        }
+
+        /// <summary>Headless smoke: muster roster widget + approach modal render, escalate, select.</summary>
+        private void RunMusterUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupMuster();
+
+            bool roster = _currentsRoster != null && _muster.Roster.Count >= 15;
+            bool modal = _approachModal != null;
+            bool escalate = _muster.Escalate(300).Contains("Muster is open");
+            bool resolved = _muster.SelectApproach("quest_the_rate_card_war", QuestApproach.A)
+                .Contains("selected");
+            bool ending = _muster.Engine.EndingKeyFor("quest_the_rate_card_war") == "the_rate_card_revised";
+
+            bool pass = roster && modal && escalate && resolved && ending;
+            GD.Print($"[MusterUiTest] roster={roster} modal={modal} escalate={escalate} select={resolved} ending={ending}");
+            GD.Print(pass ? "MUSTER_UITEST PASS" : "MUSTER_UITEST FAIL");
+            if (System.IO.File.Exists(MusterSaveStore.SavePath))
+                System.IO.File.Delete(MusterSaveStore.SavePath);
+            GetTree().Quit(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke test: build the book, open it, cycle every tab.</summary>

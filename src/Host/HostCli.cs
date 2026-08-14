@@ -25,6 +25,7 @@ namespace AtomicWar.GodotApp
         EndingsSelfTest,
         JournalSelfTest,
         JournalUiTest,
+        MusterUiTest,
         BridgeSelfTest,
         DutyRosterSelfTest,
         StandingRecordSelfTest,
@@ -94,6 +95,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.JournalSelfTest;
             if (Has(args, "--journal-uitest"))
                 return HostCliAction.JournalUiTest;
+            if (Has(args, "--muster-uitest"))
+                return HostCliAction.MusterUiTest;
             if (Has(args, "--bridge-selftest"))
                 return HostCliAction.BridgeSelfTest;
             if (Has(args, "--year-of-ash-save-selftest"))

@@ -82,6 +82,21 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 346/346, muster 13/13, gate 0 errors/312 info,
   expansions 236/236 GREEN.
 
+## EXPANSION 06 SPRINT — Phase 2 (Godot host wiring + presentation)
+- Core: CurrentsCatalogLoader (engine-agnostic, IFileIO/IJsonSerializer ports) reads
+  currents.json -> 15 CurrentDefinition entries; 4 unit tests (fifteen found, hydro-barons
+  template fields, dormant majority, missing-dir empty).
+- Host: MusterHostSession (day escalation from sector clock, approach selection, events,
+  save/restore) + MusterSaveStore (user://, thin pattern); both exit paths persist.
+- Presentation: CurrentsRosterWidget (15-current panel, escalation banner) +
+  ApproachSelectionModal (generic data-driven approach fork, reused per questline).
+- Main.cs: 3 menu buttons, SetupMuster on demand, rate-card modal flow, day-260 escalate.
+- Smoke: --muster-uitest headless (roster>=15, modal, escalate-to-300, select A, ending
+  key) PASS; save cleaned up after smoke to keep dev saves pristine.
+- Verify: build 0 warnings, tests 350/350, muster 13/13, uitest PASS x2 (deterministic),
+  gate 0 errors, expansions 236/236 GREEN.
+
+
 
 
 
