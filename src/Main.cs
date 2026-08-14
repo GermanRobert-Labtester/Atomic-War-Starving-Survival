@@ -11,11 +11,13 @@ using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
+using Ashfall.Core.Radio;
 using AtomicWar.GodotApp.Economy;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
 using AtomicWar.GodotApp.Dose;
 using AtomicWar.GodotApp.UtilityAI;
+using AtomicWar.GodotApp.Radio;
 
 namespace AtomicWar.GodotApp
 {
@@ -1700,9 +1702,19 @@ namespace AtomicWar.GodotApp
                 new[] { new PriceShockRule(PriceShockKind.PlumePassing, 2.5f, 3, new[] { "rad_pills" }, "rad plume") }
             ));
 
+            // ── Load Radio Corpus & Initialize Core Radio Engine ──
+            var radioCorpusPath = Path.Combine(AppContext.BaseDirectory, "Assets/StreamingAssets/Data/faction_radio_corpus.json");
+            if (!File.Exists(radioCorpusPath))
+            {
+                radioCorpusPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets/StreamingAssets/Data/faction_radio_corpus.json");
+            }
+            string radioJson = File.Exists(radioCorpusPath) ? File.ReadAllText(radioCorpusPath) : "{}";
+            var radioEngine = FactionRadioEngine.LoadFromJson(radioJson);
+            var radioRng = new SeededRng(2026);
+
             var tradePanel = new TradeScreenGodotPanel();
             AddChild(tradePanel);
-            tradePanel.BindSession(_economy, stanceEngine, tuning);
+            tradePanel.BindSession(_economy, stanceEngine, tuning, radioEngine, radioRng);
 
             bool hasEmblem = tradePanel.HasFactionEmblem;
             bool hasLeader = tradePanel.HasLeaderLabel;
@@ -1738,7 +1750,7 @@ namespace AtomicWar.GodotApp
             // ── Part 4: Empty States Probe ──
             var emptyPanel = new TradeScreenGodotPanel();
             AddChild(emptyPanel);
-            emptyPanel.BindSession(_economy, stanceEngine, null);
+            emptyPanel.BindSession(_economy, stanceEngine, null, radioEngine, radioRng);
             emptyPanel.SetActiveFaction("unknown_nomads");
             bool emptyStatePass = emptyPanel.ActiveOfferCount == 0 &&
                                  emptyPanel.ActiveAskCount == 0 &&
@@ -1758,19 +1770,60 @@ namespace AtomicWar.GodotApp
             bool nonMutationPass = _economy.Market.State.ledger.Count == preStateLedgerCount &&
                                    _economy.Market.Day == preDay;
 
+            // ── Part 5: Faction Radio HUD Probing (The Heterodyne Rack) ──
+            var radioPanel = new FactionRadioHudPanel();
+            AddChild(radioPanel);
+            radioPanel.BindProvider(radioEngine, radioRng, _economy.Market.Day);
+
+            bool radioHasFrame = radioPanel.HasFrameTexture;
+            bool radioHasTuner = radioPanel.HasFrequencyDial;
+            bool radioHasSmeter = radioPanel.HasSMeter;
+            bool radioHasCrt = radioPanel.HasCrtOverlay;
+            bool radioHasLive = radioPanel.HasLiveDisplay;
+            bool radioHasBadge = radioPanel.HasFactionBadge;
+
+            // Tuning sweeps across spectrum
+            radioPanel.TuneToFrequency(88.4f); // Military remnants
+            bool radioHitMilitary = radioPanel.HasFactionBadge && Math.Abs(radioPanel.TunedFrequency - 88.4f) < 0.05f;
+
+            radioPanel.TuneToFrequency(142.85f); // Cult of the glow
+            bool radioHitCult = radioPanel.HasFactionBadge && Math.Abs(radioPanel.TunedFrequency - 142.85f) < 0.05f;
+
+            radioPanel.TuneToFrequency(50.0f); // Dead air / Silence
+            bool radioHitSilence = !radioPanel.HasFactionBadge && radioPanel.HasLiveDisplay;
+
+            // Resolution sweep for Radio HUD
+            bool radioResPass = true;
+            foreach (var res in resolutions)
+            {
+                radioPanel.CustomMinimumSize = new Vector2(Math.Min(res.X, 720), Math.Min(res.Y, 480));
+                if (radioPanel.CustomMinimumSize.X < 720 || radioPanel.CustomMinimumSize.Y < 400)
+                {
+                    radioResPass = false;
+                }
+            }
+
+            bool radioHudPass = radioHasFrame && radioHasTuner && radioHasSmeter &&
+                                radioHasCrt && radioHasLive && radioHitMilitary &&
+                                radioHitCult && radioHitSilence && radioResPass &&
+                                radioPanel.LogCount >= 3;
+
             bool tradeFieldsPass = hasEmblem && hasLeader && hasStance && hasTrust &&
                                    hasAggression && hasRepels && hasShocks && hasBioRows &&
                                    hasFairness && hasParley && hasTicker &&
                                    tradePanel.ActiveOfferCount > 0 && tradePanel.ActiveAskCount > 0 &&
                                    resolutionsPass && emptyStatePass && nonMutationPass;
 
-            bool pass = panel && catalog && noLeak && icons && ticked && bought && tradeFieldsPass;
+            bool pass = panel && catalog && noLeak && icons && ticked && bought && tradeFieldsPass && radioHudPass;
             GD.Print($"[EconomyUiTest] panel={panel} catalog={catalog} noLeak={noLeak} " +
                      $"fallbackIcons={fallback} ticked={ticked} bought={bought} " +
                      $"tradeFieldsPass={tradeFieldsPass} (resSweep={resolutionsPass} emptyState={emptyStatePass} " +
                      $"nonMutation={nonMutationPass} emblem={hasEmblem} leader={hasLeader} stance={hasStance} " +
                      $"trust={hasTrust} aggression={hasAggression} repels={hasRepels} shocks={hasShocks} " +
-                     $"bioRows={hasBioRows} fairness={hasFairness} parley={hasParley} ticker={hasTicker})");
+                     $"bioRows={hasBioRows} fairness={hasFairness} parley={hasParley} ticker={hasTicker}) " +
+                     $"radioHudPass={radioHudPass} (frame={radioHasFrame} tuner={radioHasTuner} smeter={radioHasSmeter} " +
+                     $"crt={radioHasCrt} live={radioHasLive} mil={radioHitMilitary} cult={radioHitCult} " +
+                     $"silence={radioHitSilence} radioRes={radioResPass} logCount={radioPanel.LogCount})");
             GD.Print(pass ? "ECONOMY_UITEST PASS" : "ECONOMY_UITEST FAIL");
             GetTree().Quit(pass ? 0 : 1);
         }

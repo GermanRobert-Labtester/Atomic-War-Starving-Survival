@@ -39,5 +39,19 @@
 ## 4. Production Asset Hygiene
 - All icons and badges saved as 32-bit transparent PNGs.
 - Kebab-case naming convention (`faction_icon_*.png`, `icon_bio_*.png`, `badge_scarcity_*.png`, `icon_shock_*.png`).
-- 9-slice textures: `panel_bg_9slice.png` (border 16px), `header_bar_9slice.png` (border 12px x 8px).
-- Maximum memory budget: 2 MB atlas size (current actual: ~25 KB).
+- 9-slice textures: `panel_bg_9slice.png` (border 16px), `header_bar_9slice.png` (border 12px x 8px), `radio_frame_9slice.png` (border 16px).
+- Maximum memory budget: 2 MB atlas size (current actual: ~31 KB).
+
+## 5. Radio HUD Architecture & Layout Rules
+- **Concept Pattern**: Concept 1 (The Heterodyne Rack).
+- **Control Layout**:
+  - Root Frame: `MinWidth = 720px`, `MinHeight = 480px`, stamped steel 9-slice (`radio_frame_9slice.png`, border 16px).
+  - Left Column (Tuner & Gauges): `Width = 280px`, includes frequency readout, slider (50..150 MHz), analogue S-meter gauge, faction emblem badge, and 12-faction quick presets scrollbank.
+  - Right Column (CRT Terminal & Transcript Archive): Live CRT monitor with scanline overlay (`signal_static_overlay.png`) and historical wiretap log scrollback buffer.
+- **Signal Strength Hierarchy**:
+  - S7..S9: `Theme.Hot` (#F4C875) — Carrier lock confirmed.
+  - S3..S6: `Theme.Pale` (#E6E0D2) — Weak modulation.
+  - S1..S2: `Theme.Dim` (#66675F) — Noise floor / Dead air.
+- **Determinism Requirement**:
+  - Radio transmissions and chatter rotation must be selected exclusively through `ISeededRng` in core (`Ashfall.Core.Radio.FactionRadioEngine`), guaranteeing cross-process playback reproducibility.
+

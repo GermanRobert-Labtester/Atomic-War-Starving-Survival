@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "version": "1.0.0",
-  "name": "Ashfall Trade Screen & Economy HUD Production Assets",
-  "exportDate": "2026-08-15T02:07:00Z",
+  "version": "1.1.0",
+  "name": "Ashfall Trade Screen & Faction Radio HUD Production Assets",
+  "exportDate": "2026-08-15T02:16:00Z",
   "artDirection": {
     "style": "Grim 2D survival-management, This War of Mine / Sheltered inspired",
     "palette": "Muted desaturated ash greys (#1A1A1A, #2C2C2C), faded olive (#66675F), rust/amber accents (#D3AA62, #F4C875), blood red (#E63333)",
@@ -11,8 +11,8 @@
   },
   "budget": {
     "maxAtlasSizeBytes": 2097152,
-    "currentTotalDiskBytes": 25192,
-    "assetCount": 26,
+    "currentTotalDiskBytes": 31450,
+    "assetCount": 30,
     "status": "GREEN"
   },
   "assets": [
@@ -37,6 +37,47 @@
       "prompt": "heavy oxidized iron header title bar with tarnished brass rivet accents, 9-slice sliceable",
       "tool": "Canva MCP / Local Procedural Kernel",
       "usedIn": ["TradeScreenUI", "TradeScreenGodotPanel"]
+    },
+    {
+      "id": "radio_frame_9slice",
+      "class": "Texture9Slice",
+      "path": "Assets/UI/Textures/radio_frame_9slice.png",
+      "dimensions": [128, 128],
+      "format": "PNG-RGBA32",
+      "border": [16, 16, 16, 16],
+      "prompt": "cold-war stamped steel radio receiver bezel with brass corner rivets, 9-slice seamless tileable",
+      "tool": "Canva MCP / Local Procedural Kernel",
+      "usedIn": ["FactionRadioHudPanel"]
+    },
+    {
+      "id": "frequency_dial",
+      "class": "RadioFurniture",
+      "path": "Assets/UI/Textures/frequency_dial.png",
+      "dimensions": [256, 32],
+      "format": "PNG-RGBA32",
+      "prompt": "analogue radio frequency dial with tick marks 50 to 150 MHz and amber cursor needle",
+      "tool": "Canva MCP / Local Procedural Kernel",
+      "usedIn": ["FactionRadioHudPanel.Tuner"]
+    },
+    {
+      "id": "signal_static_overlay",
+      "class": "RadioFurniture",
+      "path": "Assets/UI/Textures/signal_static_overlay.png",
+      "dimensions": [128, 128],
+      "format": "PNG-RGBA32",
+      "prompt": "CRT horizontal raster scanline noise and subtle analog static overlay, transparent background",
+      "tool": "Canva MCP / Local Procedural Kernel",
+      "usedIn": ["FactionRadioHudPanel.CRT"]
+    },
+    {
+      "id": "meter_signal_strength",
+      "class": "RadioFurniture",
+      "path": "Assets/UI/Icons/meter_signal_strength.png",
+      "dimensions": [64, 32],
+      "format": "PNG-RGBA32",
+      "prompt": "analogue radio S-meter gauge with calibrated green-amber-red decibel scale and indicator needle",
+      "tool": "Canva MCP / Local Procedural Kernel",
+      "usedIn": ["FactionRadioHudPanel.SMeter"]
     },
     {
       "id": "icon_bio_blood",
@@ -166,7 +207,7 @@
       "format": "PNG-RGBA32",
       "prompt": "scavenger camp faction emblem: crossed prybar and scrap knife over rusted gear, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_cult_of_the_glow",
@@ -176,7 +217,7 @@
       "format": "PNG-RGBA32",
       "prompt": "cult of the glow faction emblem: radiant trinity trefoil symbol with irradiated halo, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_military_remnants",
@@ -186,7 +227,7 @@
       "format": "PNG-RGBA32",
       "prompt": "military remnants faction emblem: shielded chevron with bayonet crest, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_upland_militia",
@@ -196,7 +237,7 @@
       "format": "PNG-RGBA32",
       "prompt": "upland militia faction emblem: mountain peak silhouette with crossed hunting rifles, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_hydro_barons",
@@ -206,7 +247,7 @@
       "format": "PNG-RGBA32",
       "prompt": "hydro barons faction emblem: pressurized valve wheel enclosing a water droplet, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_rot_farmers",
@@ -216,7 +257,7 @@
       "format": "PNG-RGBA32",
       "prompt": "rot farmers faction emblem: bioluminescent mushroom cap over sickle blade, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_wire_heads",
@@ -226,7 +267,7 @@
       "format": "PNG-RGBA32",
       "prompt": "wire heads faction emblem: vacuum tube and coiled copper antenna array, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_sump_dredgers",
@@ -236,7 +277,7 @@
       "format": "PNG-RGBA32",
       "prompt": "sump dredgers faction emblem: dredge scoop shovel and industrial filter canister, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_custodians",
@@ -246,7 +287,7 @@
       "format": "PNG-RGBA32",
       "prompt": "custodians faction emblem: concrete monolith archway enclosing an open book, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_doomsday_preppers",
@@ -256,7 +297,7 @@
       "format": "PNG-RGBA32",
       "prompt": "doomsday preppers faction emblem: steel blast door lock wheel with padlock, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_echo_bats",
@@ -266,7 +307,7 @@
       "format": "PNG-RGBA32",
       "prompt": "echo bats faction emblem: spread bat wings enclosing sonar radar pulse rings, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     },
     {
       "id": "faction_icon_safe_haven_community",
@@ -276,7 +317,7 @@
       "format": "PNG-RGBA32",
       "prompt": "safe haven community faction emblem: wooden palisade fence with sheltering open hands, transparent background",
       "tool": "Canva MCP / Local Procedural Kernel",
-      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header"]
+      "usedIn": ["TradeScreenUI.Header", "TradeScreenGodotPanel.Header", "FactionRadioHudPanel.Presets"]
     }
   ]
 }

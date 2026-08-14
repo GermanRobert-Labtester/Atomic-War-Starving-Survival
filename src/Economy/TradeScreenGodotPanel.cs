@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using Ashfall.Core;
 using Ashfall.Core.Economy;
+using Ashfall.Core.Radio;
 namespace AtomicWar.GodotApp.Economy
 {
     
@@ -367,14 +369,21 @@ namespace AtomicWar.GodotApp.Economy
 
         // ── Binding & Lifecycle ──────────────────────────────────────
 
+        private IFactionRadioProvider _radioProvider;
+        private ISeededRng _rng;
+
         public void BindSession(
             EconomyHostSession session,
             IFactionStanceProvider stanceProvider = null,
-            IPriceShockProvider priceShockProvider = null)
+            IPriceShockProvider priceShockProvider = null,
+            IFactionRadioProvider radioProvider = null,
+            ISeededRng rng = null)
         {
             _session = session;
             _stanceProvider = stanceProvider;
             _priceShockProvider = priceShockProvider;
+            _radioProvider = radioProvider;
+            _rng = rng ?? new SeededRng(2026);
 
             if (_session != null)
             {
@@ -460,6 +469,13 @@ namespace AtomicWar.GodotApp.Economy
 
             // 4. Update Arbitrator
             RefreshCalculations();
+
+            // 5. Update Radio Ticker
+            if (_radioProvider != null && _lblRadioTicker != null)
+            {
+                var intercept = _radioProvider.GetFactionEvent(_activeFactionId, RadioEventKind.InterceptChatter, day, _rng);
+                _lblRadioTicker.Text = $"RADIO: [{intercept.Callsign}] {intercept.Message}";
+            }
         }
 
         private void PopulateGoodsLists()
@@ -575,7 +591,15 @@ namespace AtomicWar.GodotApp.Economy
         {
             if (_lblRadioTicker != null)
             {
-                _lblRadioTicker.Text = "RADIO: Barter confirmed. Goods exchanged at checkpoint.";
+                if (_radioProvider != null)
+                {
+                    var intercept = _radioProvider.GetFactionEvent(_activeFactionId, RadioEventKind.TradeReaction, _session?.Market?.Day ?? 1, _rng);
+                    _lblRadioTicker.Text = $"RADIO: [{intercept.Callsign}] {intercept.Message}";
+                }
+                else
+                {
+                    _lblRadioTicker.Text = "RADIO: Barter confirmed. Goods exchanged at checkpoint.";
+                }
             }
             _playerOfferCounts.Clear();
             _factionAskCounts.Clear();
@@ -587,7 +611,15 @@ namespace AtomicWar.GodotApp.Economy
         {
             if (_lblRadioTicker != null)
             {
-                _lblRadioTicker.Text = "RADIO: Parley demand transmitted. Awaiting emissary.";
+                if (_radioProvider != null)
+                {
+                    var intercept = _radioProvider.GetFactionEvent(_activeFactionId, RadioEventKind.ParleyResolution, _session?.Market?.Day ?? 1, _rng);
+                    _lblRadioTicker.Text = $"RADIO: [{intercept.Callsign}] {intercept.Message}";
+                }
+                else
+                {
+                    _lblRadioTicker.Text = "RADIO: Parley demand transmitted. Awaiting emissary.";
+                }
             }
         }
 

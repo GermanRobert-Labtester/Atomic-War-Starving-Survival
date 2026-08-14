@@ -179,7 +179,7 @@ namespace Ashfall.Core.Tests
             using var doc = JsonDocument.Parse(json);
             var root = doc.RootElement;
 
-            Assert.Equal("1.0.0", root.GetProperty("version").GetString());
+            Assert.StartsWith("1.", root.GetProperty("version").GetString());
             var assets = root.GetProperty("assets");
             Assert.True(assets.GetArrayLength() >= 26, "Expected at least 26 assets in manifest");
 

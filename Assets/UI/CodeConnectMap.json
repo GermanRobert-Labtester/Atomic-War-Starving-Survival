@@ -100,12 +100,67 @@
     },
     {
       "figmaNodeId": "107:8",
-      "figmaComponentName": "Radio/WiretapTicker",
+      "figmaComponentName": "TradeScreen/RadioTicker",
       "codeSymbol": "TradeScreenGodotPanel._lblRadioTicker",
       "unityCodeSymbol": "TradeScreenUI.radioTickerText",
       "properties": {
-        "typography": "Theme.FontSizeLabel (10px)",
-        "color": "Theme.Dim (#66675F)"
+        "typography": "Theme.FontSizeMono (12px)",
+        "color": "Theme.Hot (#F4C875)"
+      }
+    },
+    {
+      "figmaNodeId": "201:1",
+      "figmaComponentName": "RadioHUD/RootPanel",
+      "codeSymbol": "AtomicWar.GodotApp.Radio.FactionRadioHudPanel",
+      "sourceFile": "src/Radio/FactionRadioHudPanel.cs",
+      "properties": {
+        "minWidth": "720px",
+        "minHeight": "480px",
+        "backgroundStyle": "radio_frame_9slice.png"
+      }
+    },
+    {
+      "figmaNodeId": "202:5",
+      "figmaComponentName": "RadioHUD/FrequencyTuner",
+      "codeSymbol": "FactionRadioHudPanel._sliderFrequency",
+      "sourceFile": "src/Radio/FactionRadioHudPanel.cs",
+      "properties": {
+        "range": "50.0..150.0 MHz",
+        "step": "0.1 MHz",
+        "dialTexture": "frequency_dial.png"
+      }
+    },
+    {
+      "figmaNodeId": "203:2",
+      "figmaComponentName": "RadioHUD/SMeter",
+      "codeSymbol": "FactionRadioHudPanel._textureSmeter",
+      "sourceFile": "src/Radio/FactionRadioHudPanel.cs",
+      "properties": {
+        "size": "64x32",
+        "texture": "meter_signal_strength.png",
+        "scale": "S1..S9"
+      }
+    },
+    {
+      "figmaNodeId": "204:10",
+      "figmaComponentName": "RadioHUD/CRTMonitor",
+      "codeSymbol": "FactionRadioHudPanel._lblCrtLiveText",
+      "sourceFile": "src/Radio/FactionRadioHudPanel.cs",
+      "properties": {
+        "typography": "Theme.FontSizeBody (14px)",
+        "overlay": "signal_static_overlay.png",
+        "color": "Theme.Pale (#E6E0D2)"
+      }
+    },
+    {
+      "figmaNodeId": "205:4",
+      "figmaComponentName": "RadioHUD/TranscriptArchive",
+      "codeSymbol": "FactionRadioHudPanel._logEntriesContainer",
+      "sourceFile": "src/Radio/FactionRadioHudPanel.cs",
+      "properties": {
+        "typography": "Theme.FontSizeSmall (11px)",
+        "metaColor": "Theme.Muted (#938F84)",
+        "textColor": "Theme.Pale (#E6E0D2)"
       }
     }
   ]

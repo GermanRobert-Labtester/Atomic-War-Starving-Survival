@@ -1,0 +1,525 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "description": "Ashfall Faction Radio & Intercept Log HUD Chatter Corpus",
+  "silence_events": [
+    "STATIC... [ Carrier hum steady at 50 Hz. Faint ionospheric rush. ] ...STATIC",
+    "STATIC... [ Distant thunderstorm discharge crackles across the lower band. No voice detected. ]",
+    "STATIC... [ Atmospheric flutter. The heterodyne whistle shifts two octaves into silence. ]",
+    "STATIC... [ Automated repeater beacon clicks twice. Null modulation. ] ...STATIC",
+    "STATIC... [ Long silence. Faint acoustic resonance of wind whistling through the antenna array. ]",
+    "STATIC... [ White noise hiss. Cosmic radiation background hums in the vacuum tubes. ]",
+    "STATIC... [ Thermal drift in the receiver coils. Carrier wave drops into dead air. ]",
+    "STATIC... [ Low frequency rumble of distant artillery or thunder. No transmission. ]",
+    "STATIC... [ Squelch gate cuts the rush. Pure analog silence fills the headphones. ]",
+    "STATIC... [ Faint Morse code echoes from beyond the horizon, too degraded to transcribe. ]",
+    "STATIC... [ Dead carrier. A transmitter remains powered somewhere in the dark ruins, unmonitored. ]",
+    "STATIC... [ The static breathes with the rhythm of the rising radioactive fallout plume. ]"
+  ],
+  "factions": {
+    "military_remnants": {
+      "frequency_mhz": 88.4,
+      "callsign": "OVERLORD ACTUAL / 9TH BATTALION",
+      "intercept_chatter": [
+        "OVERLORD ACTUAL. Convoy Romeo-4 inbound Grid K7. Three wounded, ordnance secure. Acknowledge.",
+        "All stations: Decree 14-B remains active. Unscheduled movement across Sector 4 viaduct will be engaged without warning.",
+        "Ration ledger updated. Week ending Day 42: forty-two cases 7.62 expended, zero grain deficit tolerated.",
+        "Patrol Echo reporting. Perimeter sensor delta tripped at checkpoint gamma. Dispatching recon fireteam.",
+        "Reclamation is not repudiation. Officers on duty will maintain 24-hour logbooks in accordance with Standing Order 1.",
+        "Checkpoint Bravo log: six civilian scavengers turned back at the perimeter. Contraband confiscated per protocol.",
+        "Relay station 4 operating on backup generator. Fuel supply critical. Requesting diesel tanker escort.",
+        "Garrison continuity directive 8: Any weapon without an authorized armory serial number is subject to field seizure.",
+        "Radio check, station Sierra-9. Signal strength S8. Maintain radio silence on tactical frequencies until 0600.",
+        "Artillery battery two reports ammunition reserves at thirty-four percent. Conserve heavy munitions for breach defense.",
+        "Field court-martial concluded at Outpost Victor. Sentence executed at dawn. The chain of command remains unbroken.",
+        "Log entry: Heavy ash snowfall obscuring optical rangefinders on Ridge 3. Switch to thermal surveillance grid."
+      ],
+      "parley_resolution": [
+        "Parley terms approved by Garrison command. Emissary may approach Checkpoint Gamma under white banner.",
+        "Parley rejected. Your group failed to submit mandatory labor quota. Clear the approach corridor immediately.",
+        "Truce confirmed for forty-eight hours. Exchange of wounded to take place at neutral marker sixty-four.",
+        "The Continuity Office acknowledges your petition. Terms will be read at the next scheduled garrison assembly.",
+        "Ceasefire holding along the perimeter trench. Any unscheduled weapon discharge will terminate negotiations.",
+        "Parley accepted with conditions: all weapons must be slung and cleared prior to crossing the gate line."
+      ],
+      "raid_warning": [
+        "FLASH TRAFFIC: Perimeter breach detected at Sector 2 wire. Armed hostility confirmed. All units engage!",
+        "Code Red at Outpost Alpha. Multiple hostiles closing on the ammo bunker. Suppressive fire authorized!",
+        "Combat alert: Mortar fire incoming on the east redoubt. Take cover and man the defensive parapets!",
+        "Breach in progress. Heavy armor detachment moving to reinforce perimeter gate four. Hold the line!",
+        "Hostile raiders advancing through the ash fog. Sentry positions open fire on visual contact!",
+        "Alert: Unknown combatants deploying smoke canisters at the south barricade. Weapons free."
+      ],
+      "trade_reaction": [
+        "Quartermaster receipt stamped: Munitions and medical stores received. Account credited per regulation.",
+        "Trade rejected by Garrison logistics: Contaminated items do not meet military intake standards.",
+        "Transaction completed. Fair weight verified on garrison ordnance scales. Move off the loading dock.",
+        "Barter logged in official register. Civilian ration cards updated for the current bi-weekly cycle.",
+        "Supplies accepted. Next supply requisition will be processed at the beginning of the next calendar month.",
+        "Quartermaster note: Good quality brass received. Clean water ration released to authorized carrier."
+      ]
+    },
+    "cult_of_the_glow": {
+      "frequency_mhz": 142.85,
+      "callsign": "THE ASH SIGN / REVERED CRATER",
+      "intercept_chatter": [
+        "The Warmth does not judge the flesh; it purifies the vessel. Step into the plume and be counted.",
+        "Four hundred rads is not illness, traveler. It is the beginning of sight. Drink the crater water.",
+        "The reactor core still whispers to the faithful. We hear the psalm in every click of the dosimeter tube.",
+        "Praise the sacred isotope. What the fire spared is holy; what it consumed was merely dust.",
+        "Pilgrims gathering at the rim of Crater Nine. The glowing ash falls like manna upon our open hands.",
+        "Do not shield your eyes from the luminescence. The new world is born in the holy thermal flare.",
+        "The survey cairn registered eighty roentgens this morning. The breath of the great furnace is strong.",
+        "The Vessel speaks from the deep chamber: All who carry the sickness carry the blessing of ascension.",
+        "Holy water collected from the cooling pond. Cleanse your brow and let the fever burn away the past.",
+        "The geiger counter sings the morning prayer. Listen to the steady rhythm of eternal transformation.",
+        "We do not mourn the burned cities. The corrupt world was melted so the pure glass could form.",
+        "The ash settles upon our shoulders like a consecrated shroud. Rejoice in the warmth of the second dawn."
+      ],
+      "parley_resolution": [
+        "The Warmth welcomes your emissary into the sanctuary. Come without fear of the sacred radiation.",
+        "Your delegation clings to the old world's leaden shields. Cleanse your spirit before approaching the shrine.",
+        "Peace is granted in the shadow of the cooling towers. We will share the holy water with your people.",
+        "The shrine-keepers have cast the ash. The omens favor communion between our flock and your settlement.",
+        "The parley is sealed with consecrated salt. May the holy fallout guide our shared path.",
+        "We accept your offering at the cairn. Walk in the radiance without fear of our guardians."
+      ],
+      "raid_warning": [
+        "The unfaithful strike at the sacred shrine! Let the cleansing fire descend upon their blasphemy!",
+        "Defend the holy reactor core! The blind ones come to extinguish the sacred illumination!",
+        "Hostiles entering the high-radiation perimeter. Let the holy fever seize their limbs and strike them down!",
+        "The shrine bell rings! Take up the consecrated blades and repel the defilers from the holy ash!",
+        "Intruders in the pilgrimage trench. Stand firm in the warmth and drive them into the hot zone!",
+        "Sacred grounds breached. Channel the righteous fury of the atomic dawn against the invaders!"
+      ],
+      "trade_reaction": [
+        "The Warmth finds your offering acceptable. May the sacred isotope shine favorably upon your camp.",
+        "Your offering lacks spiritual devotion. Take back your lead and bring true repentance.",
+        "Tithe recorded at the survey cairn. The blessings of the radiant sanctuary are extended to your shelter.",
+        "Barter completed under the holy glow. The medicine of the shrine will soothe your burned skin.",
+        "We accept the surgical steel. It will serve in the consecration of new vessels in the deep chamber.",
+        "The exchange is blessed. Go forth into the fallout with the protection of the ash."
+      ]
+    },
+    "scavenger_camp": {
+      "frequency_mhz": 61.9,
+      "callsign": "SCAVENGER RECOVERY / LEANING SILO",
+      "intercept_chatter": [
+        "Got two rolls of unpitted copper wire and three clean filters. If you want 'em, bring dry grain before dusk.",
+        "Keep your eyes open near the railway cut. Scrap hounds are stripping the rail beds clean.",
+        "No credit at the leaning crane. You show metal first, or you talk to the trench.",
+        "Scored twelve working spark plugs and a car battery from the basement garage. Bidding starts at noon.",
+        "Watch out for the collapsed overpass on Route 9. The rubble shifted after last night's tremor.",
+        "Anyone got a replacement cutting torch nozzle? Will trade three gallons of refined diesel.",
+        "Caravan arriving from the east ruins. Canned peaches, lead ingots, and pre-war medical gauze on offer.",
+        "Don't go digging near the chemical plant without thick boots. The runoff ate straight through Miller's soles.",
+        "Found a cache of galvanized pipe behind the warehouse. Bringing it in on the hand-carts now.",
+        "The market scale is open. Weigh your scrap honestly or get tossed into the muck.",
+        "Scrap run three returning with six hundred pounds of structural steel. Clear the hoist platform.",
+        "Rumor says the military patrol is checking vehicle chassis numbers near the river. Take the back trail."
+      ],
+      "parley_resolution": [
+        "Deal's struck. Your people can haul through our checkpoint without paying the double scrap toll.",
+        "No deal. Your offer was insulting. Come back when you've got real barter goods instead of promises.",
+        "Truce signed on the crane deck. We keep our scrapers on our side of the cut, you keep yours on yours.",
+        "We shook hands on it. Forty pounds of clean copper wire for safe passage across the valley floor.",
+        "Agreement logged. If your scavengers stay off our marked rubble piles, there won't be any shooting.",
+        "Parley accepted. Leave your guns at the barrel line and step up to the trading table."
+      ],
+      "raid_warning": [
+        "RAIDERS ON THE PERIMETER! Grab your pipe rifles and get behind the scrap barricades!",
+        "They're trying to breach the warehouse gate! Man the catwalks and light the oil bottles!",
+        "Heavy gunfire at scrap pile four! Fall back to the crane and pin 'em down in the alley!",
+        "Alarm at the south fence! Cutters on the wire! Light 'em up with the searchlights!",
+        "They're after the fuel drums! Converge on the generator shack now!",
+        "Under attack! Don't let 'em get the hand-carts! Defend the perimeter trench!"
+      ],
+      "trade_reaction": [
+        "Good doing business with ya. That copper's clean as pre-war whistle. Pleasure trading.",
+        "Get this junk outta my face. Rusted sheet metal ain't worth a thimble of dirty water.",
+        "Fair swap on the scales. Take your goods and make room for the next hand-cart.",
+        "Barter finalized. If you find more working vacuum tubes, bring 'em straight to my stall.",
+        "Weigh-slip stamped and signed. That lead sheeting will patch the bunker roof real nice.",
+        "Done deal. Keep your fingers count and your powder dry out there."
+      ]
+    },
+    "upland_militia": {
+      "frequency_mhz": 104.2,
+      "callsign": "RIDGE WATCH / GRANGE COUNCIL",
+      "intercept_chatter": [
+        "Ridge watch reports track marks along North Pass. Militia council voted: we hold the bridge until the snows break.",
+        "Smokehouse is full for the third winter, neighbors. If you've got spare kerosene, the grange is open.",
+        "We didn't survive the firestorm to bend knee to city uniforms. Tell the Garrison our rifles are sighted.",
+        "Lookout post three reporting: heavy fog rolling down the timber valley. Maintain double watch on the trails.",
+        "Militia council meeting called for nineteen hundred hours. Topic: grain distribution and winter firewood quotas.",
+        "Good harvest from the potato terraces. Council approved sharing two sacks per family unit this week.",
+        "Timber crew brought down four fallen pines near the upper logging road. Firewood distribution begins tomorrow.",
+        "Hunting party returning from the high ridge. Three deer dressed and salted for the communal smokehouse.",
+        "Keep the perimeter lanterns lit along the orchard wall. Wolves were spotted circling the goat pen.",
+        "Rifle inspection on Saturday morning. Clean your actions and check your firing pins, neighbors.",
+        "The mountain water is running sweet from the high spring. Fill your cisterns before the freeze sets in.",
+        "Remember the Grange Hall covenant: We look after our elderly, we teach our children, and we stand together."
+      ],
+      "parley_resolution": [
+        "Council voted six to one to accept your truce. Our gates are open to your emissary under white banner.",
+        "Council refused your demands. The Upland Militia does not pay tribute to anyone. State your business or leave.",
+        "Agreement signed by the Grange elders. We agree to trade dried meat and timber for winter medicine.",
+        "Truce accepted for the duration of the blizzard. Shared guard posts established along the pass.",
+        "The terms are fair and neighborly. We welcome your travelers to warm themselves at our council hearth.",
+        "Pledge confirmed. As long as your people respect our ridge boundaries, our rifles will remain lowered."
+      ],
+      "raid_warning": [
+        "BELL TOLLING AT THE GRANGE! Raiders attacking the lower gate! Every rifle to the ramparts!",
+        "Hostiles climbing the timber ridge! Take defensive positions behind the stone wall!",
+        "Breach at the orchard fence! Defend the homesteads and protect the children!",
+        "Heavy fire coming from the tree line! Keep your heads down and return fire by squads!",
+        "They're torching the hay barn! Squad two, suppress the tree line while squad one douses the flames!",
+        "Militia to arms! Drive the raiders back into the valley! Hold the ridge line at all costs!"
+      ],
+      "trade_reaction": [
+        "Council thanks you for the trade. These medical supplies will save lives in the high snows.",
+        "Trade declined. The militia council determined your prices are unneighborly and unreasonable.",
+        "Fair exchange on the grange floor. May these smoked rations keep your hearth fed through the winter.",
+        "Barter completed. The council clerk has recorded the timber delivery in the public ledger.",
+        "Good honest trade. It is a pleasure dealing with folks who keep their word.",
+        "Supplies accepted. Take these warm wool blankets with our community's blessing."
+      ]
+    },
+    "hydro_barons": {
+      "frequency_mhz": 96.1,
+      "callsign": "AQUEDUCT CENTRAL / PUMP CAVERN",
+      "intercept_chatter": [
+        "Manifold B pressure dropping two PSI. Divert thirty gallons to Sector 2 or shut the feeder valve.",
+        "Clean water isn't a right; it's a hydraulic calculation. Pay the quota or taste the brine.",
+        "Turbine four is back online. Filtration yield at ninety-four percent. All pipeline taps remain locked.",
+        "Salinity levels in the east aquifer steady at four hundred PPM. Reverse osmosis filters holding within spec.",
+        "Pressure test on pipeline seven completed. Zero leaks detected along the four-kilometer run.",
+        "Warning: Unauthorized tapping of the main conduit will result in immediate pressure surge and floodout.",
+        "Aqueduct manifold inspection scheduled for shift two. All valves must be greased and seated properly.",
+        "Desalination stage three output: eight hundred barrels of potable water ready for distribution.",
+        "Water meter readings logged for all district outposts. Deficit accounts will be throttled at midnight.",
+        "Centrifugal pump bearings replaced in Cavern Three. Lubrication oil levels verified at full capacity.",
+        "The reservoir depth is holding at fourteen meters. Maintain strict allocation ratios until spring runoff.",
+        "Flow rate through the south sluice gate throttled to thirty percent. Conserve head pressure in the cisterns."
+      ],
+      "parley_resolution": [
+        "Water contract ratified. Valve six will be opened to supply sixty gallons daily per terms.",
+        "Contract proposal rejected. Your settlement's collateral does not justify opening the pipeline valve.",
+        "Pipeline access protocol agreed upon. Maintenance teams from both sides will oversee the metering station.",
+        "Hydro Baron council approves the lease. Payment in copper tubing and generator fuel is due weekly.",
+        "Truce signed at the pumping station. Interference with water infrastructure is classified as breach of contract.",
+        "Agreement confirmed. The tap will flow for thirty days subject to verified delivery of filtration media."
+      ],
+      "raid_warning": [
+        "SECURITY ALERT: Saboteurs attempting to breach the pump cavern blast doors! Arm the security turrets!",
+        "Hostile forces attacking the intake manifold! Sluice gate security, engage with lethal force!",
+        "Breach detected at pipeline valve station three! Rapid response team deploy immediately!",
+        "They are trying to poison the reservoir! Defend the filtration chambers at all costs!",
+        "Intruders on the cat-walks above turbine two! Suppress and neutralize the hostile elements!",
+        "Emergency alarm: Explosives reported near the aqueduct support pylons! Intercept the bombers!"
+      ],
+      "trade_reaction": [
+        "Transaction completed. The potable water allotment has been released to your sealed tankers.",
+        "Trade rejected. We do not accept contaminated scrap in exchange for verified clean water.",
+        "Bill of lading verified and logged. Filter mesh cartridges accepted at the agreed valuation.",
+        "Barter concluded. Forty barrels of clean water transferred to your authorized logistics convoy.",
+        "Payment received in high-grade brass valve fittings. Reservoir credit slip issued to carrier.",
+        "Account balanced. Water meters reset for the upcoming delivery cycle."
+      ]
+    },
+    "rot_farmers": {
+      "frequency_mhz": 74.3,
+      "callsign": "MYCELIUM NETWORK / CAVERN BEDS",
+      "intercept_chatter": [
+        "The blue cap bloom is heavy this cycle. Three baskets of protein paste ready for the market floor.",
+        "Keep the vent damp. Dry air kills the spawn faster than cold ash. Watch the spore depth.",
+        "Everything returns to the soil eventually. The bunker floor makes the richest loam if you give it time.",
+        "Agar slurry tanks bubbling at optimum temperature. The fungal yield will double before the freeze.",
+        "Harvesting the glowing bracket mushrooms from Chamber Four. Handle with care; the sap is acidic.",
+        "Compost bed temperature holding at thirty-eight degrees. Mycelial threads spreading through the organic mulch.",
+        "Spore count in the nursery cavern is dense. Workers must wear damp respirators during turning.",
+        "Bioluminescent moss transplanted along the access tunnels. Natural lighting established without electricity.",
+        "The white truffle strain took root in the old library archives. High calorie density observed.",
+        "Organic waste collection schedule: Bring all kitchen scraps and spoiled rations to the compost pit.",
+        "Damp cellar humidity maintained at ninety-two percent. The spore clouds are thriving in the dark.",
+        "From decay comes life; from the rot comes sustenance. The fungal network binds the deep earth together."
+      ],
+      "parley_resolution": [
+        "The spore elders accept your emissary. Walk softly among the mushroom beds and speak your truth.",
+        "Your settlement brings too much dry ash into our damp caves. Parley is refused until you wash your boots.",
+        "Covenant of the cavern agreed upon. We will trade protein paste for clean water and timber mulch.",
+        "Truce confirmed under the glowing fungus. We will not spread spores into your ventilation corridors.",
+        "Agreement sealed with medicinal salve. Safe passage through the lower fungus tunnels is granted.",
+        "The elders have tasted your harvest. We agree to trade fungal antibiotics for your metal tools."
+      ],
+      "raid_warning": [
+        "ALARM IN THE CAVES! Intruders torching the mushroom beds! Extinguish the fire and hunt them down!",
+        "Raiders in the nursery cavern! Protect the mother mycelium at all costs!",
+        "Hostiles pushing through the damp access tunnels! Deploy the toxic spore canisters to drive them back!",
+        "They are trampling the harvest! Ambush them from the shadow of the giant shelf brackets!",
+        "Defenders to arms! Blind the intruders with bioluminescent flash powder and strike!",
+        "Cave perimeter breached! Fall back to the damp chambers and defend the compost reserves!"
+      ],
+      "trade_reaction": [
+        "The trade is made. This protein loaf will keep your scouts fed through the hardest winter trek.",
+        "We cannot accept dry scrap. Bring organic waste, sterile glass vials, or clean compost media.",
+        "Barter concluded. Fungal antibiotic paste packaged in airtight ceramic pots for your infirmary.",
+        "Exchange recorded. The spore elders are pleased with the quality of the organic fertilizer.",
+        "Transaction completed. Treat the spore culture gently and keep the container shielded from sunlight.",
+        "Fair exchange in the deep cellar. May the harvest sustain your community through the dark months."
+      ]
+    },
+    "wire_heads": {
+      "frequency_mhz": 118.5,
+      "callsign": "SIGNAL CORPS / REPEATER HUB",
+      "intercept_chatter": [
+        "Tuning capacitor on repeater three is drifting two kilohertz. Who has a spare 12AX7 tube?",
+        "Carrier wave detected on 104.7. Modulation is noisy but the loop is live. Check your ground wire.",
+        "If you burn that transformer with dirty generator voltage, you'll be sending smoke signals all winter.",
+        "RF amplifier output peaked at fifty watts. Relay tower transmitting across the entire western sector.",
+        "Soldering iron heated up in the workshop. Patching the heterodyne oscillator board before sundown.",
+        "Oscilloscope shows severe harmonic distortion on channel six. Rewind the copper inductor coil.",
+        "Found a box of pre-war ceramic disc capacitors in the radio tower shack. Perfect condition.",
+        "Morse code beacon active on 3.5 MHz. Continual loop transmitting sector coordinates for surviving tech.",
+        "Watch your coaxial cable bends. Sharp kinks cause signal reflection and fry the final amplifier stage.",
+        "The shortwave band is alive tonight. Caught faint voice broadcast bouncing off the ionized troposphere.",
+        "Clean your potentiometer contacts with pure alcohol. Scratchy audio ruins the wiretap recording.",
+        "Information is the only current that flows without resistance. Keep the radio grid illuminated."
+      ],
+      "parley_resolution": [
+        "Communication protocol established. Frequency 118.5 MHz is designated as our neutral calling channel.",
+        "Transmission rejected. Your carrier signal is too dirty and your terms are frequency-scrambled garbage.",
+        "Pact verified by encrypted broadcast. We agree to provide repeater relay service in exchange for batteries.",
+        "Truce acknowledged on all frequencies. Wire Heads will route emergency distress traffic for your camp.",
+        "The audio circuit is clear. We welcome your technical representative to the radio shack.",
+        "Agreement confirmed via Morse handshake. Safe passage guaranteed within five kilometers of the relay tower."
+      ],
+      "raid_warning": [
+        "SIGNAL COMPROMISED! Armed attackers climbing the relay tower! Cut the main feed and defend the transmitter!",
+        "Hostiles at the perimeter fence! Power up the high-voltage perimeter wire immediately!",
+        "They are trying to steal the vacuum tubes! Man the radio shack barricades with shotguns!",
+        "Direct hit on the antenna array! Switch to the backup dipole and repel the boarders!",
+        "Alarm at the generator bunker! Protect the fuel cells or the entire radio grid goes dark!",
+        "Emergency breach! Broadcast SOS on all frequencies while we fight off the raiders!"
+      ],
+      "trade_reaction": [
+        "Transmission confirmed. These lead-acid batteries will power our repeater through the winter.",
+        "Trade rejected. Burnt-out vacuum tubes and stripped wires are worthless in our workshop.",
+        "Barter logged on the frequency ledger. Handing over two working handheld transceivers with fresh crystals.",
+        "Transaction completed. The copper antenna wire is pure and unoxidized. Excellent trade.",
+        "Receipt acknowledged via telegraph tape. Take these calibrated resistors with our compliments.",
+        "Exchange verified. Your radio receiver has been aligned and re-tubed to military spec."
+      ]
+    },
+    "sump_dredgers": {
+      "frequency_mhz": 52.8,
+      "callsign": "SUMP DREDGE ALPHA / SLUDGE HOIST",
+      "intercept_chatter": [
+        "Sump pump two clogged with industrial sludge again. Pull the screen and clear the impeller.",
+        "Dredge haul yielded four lead ingots and fifty gallons of heavy grease. Haul it up to the hoist.",
+        "Don't let the sump runoff touch bare skin. It burns straight through canvas in under an hour.",
+        "Slurry pump running at maximum RPM. The muck from the chemical runoff basin is yielding heavy minerals.",
+        "Filter cloth torn on dredge screen three. Shut down the intake before the silt ruins the pump motor.",
+        "Grease the crane cables before the morning shift. Sump moisture rusts bare wire rope in three days.",
+        "Found an engine block buried eight feet deep in the chemical sludge. Rig the heavy chains to hoist it.",
+        "Wear your rubberized apron and face shield during sludge skimming. The toxic vapor is thick today.",
+        "Settling basin four is decanting cleanly. Skim the floating fuel slick off the top for the heaters.",
+        "The dredge bucket hit solid steel in the old drainage canal. Could be a sunken cargo container.",
+        "Heavy dredge haul returning to the dock. Clear the sorting tables and light the carbide lamps.",
+        "Work the muck, haul the lead, grease the gears. The sump feeds whoever is willing to dig in the filth."
+      ],
+      "parley_resolution": [
+        "Dredge council agrees to the deal. Your barges can navigate the runoff canals without toll.",
+        "Deal refused. You want our heavy grease and lead for peanuts. Shovel your own sludge.",
+        "Agreement ratified at the hoist house. We trade salvaged machinery parts for clean food and dry boots.",
+        "Truce established across the drainage basin. Sump dredgers will not foul your water intake pipes.",
+        "Parley confirmed. Leave your weapons on the pier and step inside the hoist office.",
+        "Terms accepted. Safe passage through the industrial swamp guaranteed under dredger escort."
+      ],
+      "raid_warning": [
+        "RAIDERS ON THE SLUDGE DOCKS! Man the dredge cranes and drop the heavy iron scrap on 'em!",
+        "They're boarding dredge barge one! Open up with the grease guns and blast 'em into the sump!",
+        "Hostiles attacking the hoist house! Defend the winch motors and hold the catwalks!",
+        "Alarm at the drainage lock! Raiders trying to blow the flood gates! Repel the attackers!",
+        "Heavy fire from the sludge embankment! Grab your lead pipes and shotguns and push 'em back!",
+        "Intruders in the refinery yard! Protect the salvaged fuel tanks with your lives!"
+      ],
+      "trade_reaction": [
+        "Haul accepted. These heavy lead sheets will shield our workers from the hot chemical steam.",
+        "Trade rejected. That flimsy tin plate ain't worth a bucket of warm sludge.",
+        "Barter concluded at the scale. Fifty gallons of industrial grease transferred to your drums.",
+        "Transaction completed. The salvaged diesel injector nozzles are clean and ready for installation.",
+        "Good honest dredge swap. Take these heavy steel chains and may they hold your loads true.",
+        "Weigh-ticket stamped with the dredger seal. Moving your metal onto the cargo wagon now."
+      ]
+    },
+    "custodians": {
+      "frequency_mhz": 128.1,
+      "callsign": "MUNICIPAL ARCHIVE / DOCKET OFFICE",
+      "intercept_chatter": [
+        "Pursuant to Docket 88-Alpha: All grain weighings must be stamped by two sworn clerks. No exceptions.",
+        "The municipal archive recorded forty-four parcels in Sector 4. The registry remains open for inspection.",
+        "Motion to audit the checkpoint receipts was carried four to one. Minute the dissenting vote.",
+        "Notice of hearing: Boundary dispute between agricultural plots seven and eight scheduled for Thursday.",
+        "Archival preservation protocol 3: Store all parchment ledgers in airtight zinc cases with silica gel.",
+        "Quorum achieved at the morning assembly. Clerk will proceed with the reading of the daily docket.",
+        "All citizens are reminded that property deeds from the pre-war era are preserved under archive law.",
+        "Court of arbitration ruling number four hundred and two has been inscribed into the standing record.",
+        "Typing ribbons running low in the registry. Will trade certified grain vouchers for pre-war typewriter ink.",
+        "The law is not a weapon of war; it is the scaffolding of the peace to come. Maintain the record.",
+        "Audit completed on the public seed bank. Discrepancies noted and forwarded to the council magistrate.",
+        "Without records, a civilization has no memory; without memory, survival is merely animal instinct."
+      ],
+      "parley_resolution": [
+        "By unanimous resolution of the archival council: The diplomatic treaty is ratified and entered into the ledger.",
+        "Petition denied. The application failed to meet procedural requirements outlined in Municipal Statute 12.",
+        "Arbitration agreement signed and sealed in duplicate. One copy deposited in the municipal vault.",
+        "Truce entered into the standing record. Both parties bound by sworn oath under archive jurisdiction.",
+        "The court recognizes your delegation. Hearing convened in the main reading room under peace seals.",
+        "Treaty terms transcribed and witnessed by three sworn clerks. The covenants are legally binding."
+      ],
+      "raid_warning": [
+        "SECURITY ALERT: Vandals and marauders attempting to breach the municipal archive vault! To arms!",
+        "Defend the public records! Deploy the archive security detachment to seal the outer bronze doors!",
+        "Hostiles storming the registry hall! Protect the historical parchment cabinets from arson!",
+        "Intruders in the library stacks! Engage with defensive fire and extinguish any open flames!",
+        "Breach at the record annex! Secure the legal codices and fall back to the reinforced reading room!",
+        "All sworn citizens assemble! Protect the law of the land from lawless destruction!"
+      ],
+      "trade_reaction": [
+        "Transaction validated and recorded under ledger entry nine hundred and fourteen. Receipts issued.",
+        "Transaction rejected. The submitted vouchers lack certified magistrate stamps and proper witnessing.",
+        "Barter concluded. Paper, ink, and binding twine accepted in exchange for legal consultation and seed.",
+        "Exchange ratified by the clerk of the court. Good quality parchment received in clean condition.",
+        "Municipal seal applied to the trade manifest. Your settlement account is marked in good standing.",
+        "Contract completed in accordance with fair trade ordinances. May the law protect our mutual commerce."
+      ]
+    },
+    "doomsday_preppers": {
+      "frequency_mhz": 136.7,
+      "callsign": "FORTRESS COMPASS / BUNKER 101",
+      "intercept_chatter": [
+        "Tripwire delta tripped on the north perimeter. Armed and scanning. Do not approach the bunker hatch.",
+        "Air scrubber running at ninety-eight percent efficiency. Canned stores verified for eight hundred days.",
+        "Whoever is poking around the septic exhaust: you are in the crosshairs. Step back five paces.",
+        "Bunker seal integrity test passed at thirty PSI overpressure. Radiation filters sealed and locked.",
+        "Motion sensor ping in sector six. Camera five shows two scavengers with prybars. Warning shot fired.",
+        "Inventory audit: Canned beans, freeze-dried beef, and water purification tablets all accounted for.",
+        "Perimeter Claymore mines re-armed and zeroed. Trespassers will not receive a second verbal warning.",
+        "Generator running on solar battery bank. Conserving diesel fuel for secondary winter heating.",
+        "Keep the security cameras wiped clean of fallout ash. Visual surveillance must remain uninterrupted.",
+        "Bug-out bags inspected and restocked with emergency rations, iodine pills, and waterproof matches.",
+        "The world burned just like we said it would. Trust nobody outside the concrete perimeter.",
+        "OPSEC is life. Do not reveal our bunker depth, antenna location, or food stockpile numbers on air."
+      ],
+      "parley_resolution": [
+        "We will talk through the speaker grille at the blast door. Leave your weapons at the flag line.",
+        "Parley refused. We do not negotiate with outsiders. Step off our blast radius or face Claymore detonation.",
+        "Non-aggression treaty agreed upon. Stay three hundred yards away from our vents and we won't shoot.",
+        "Barter exchange will occur through the airlock drawer only. One item at a time, fully inspected.",
+        "Agreement confirmed. We will monitor your caravan through the pass and hold our fire if you keep moving.",
+        "Truce acknowledged. Do not attempt to locate our hidden ventilation intake shafts."
+      ],
+      "raid_warning": [
+        "BUNKER PERIMETER UNDER ATTACK! Arming all claymores and activating the electrified concertina wire!",
+        "They're attempting to breach the outer blast door with explosives! Man the firing ports!",
+        "Intruders in the trench zone! Open fire with automated sentry turrets and sniper rifles!",
+        "Air intake under assault! Switch to closed-circuit internal oxygen and repel the boarders!",
+        "Perimeter breached at sector two! Detonating defensive minefield Bravo now!",
+        "Combat alert! Defend the bunker entrance! Drive the raiders out of the ravine!"
+      ],
+      "trade_reaction": [
+        "Airlock exchange complete. The military MREs and 5.56 ammunition are verified intact.",
+        "Trade rejected. Your goods failed our radiation dosimeter and chemical swab tests. Take them away.",
+        "Transaction completed through the hatch drawer. Sealed antibiotics received in good order.",
+        "Barter logged. We accepted your spare diesel fuel in exchange for water filtration elements.",
+        "Airlock cycled. Clean trade. Step away from the concrete apron immediately.",
+        "Swap concluded. The freeze-dried rations are vacuum-sealed and guaranteed for ten years."
+      ]
+    },
+    "echo_bats": {
+      "frequency_mhz": 68.2,
+      "callsign": "METRO ACOUSTIC / THE LOW TUNNELS",
+      "intercept_chatter": [
+        "Tap... tap... tap... The eastern tunnel is clear for two hundred meters. Floor is dry.",
+        "Listen to the rails ring. Heavy footsteps coming down from Station Four. Four boots, dragging metal.",
+        "The dark doesn't hide anything if you have ears to hear the stone speak.",
+        "Seismic sensor detecting ground tremor in the abandoned subway tube. Possible cave-in near Sector B.",
+        "Acoustic survey complete: Ventilation shaft nine is singing clear in the draft. Fresh air is flowing.",
+        "Tap... tap... Water dripping in the conduit chamber. Six drops a second. Pipe is ruptured above.",
+        "Keep your flashlights off in the deep tunnels. The light blinds your ears and attracts the scavengers.",
+        "Subway platform three is secure. Sleep with your ear to the rail to hear the patrol trains coming.",
+        "The acoustics in the grand station dome are perfect. A whisper at the turnstiles carries to the vault.",
+        "Sonar reflection shows hollow space behind the bricked-up archway. Bring chisels and silence.",
+        "The surface is loud and blind with ash. Down here in the bedrock, the quiet tells the truth.",
+        "Walk with soft soles on the ballast gravel. A clumsy step echoes three stations away."
+      ],
+      "parley_resolution": [
+        "The Tunnel Elders heard your message in the pipes. Come down the central stairwell without torches.",
+        "Your boots are too loud and your heart is too frantic. The tunnels reject your noisy emissary.",
+        "Pact of the Deep Rails agreed. We guide your messengers through the dark in exchange for kerosene.",
+        "Truce acknowledged in the stone. We will not set acoustic traps along your transit line.",
+        "The darkness accepts your peace offering. Safe passage through Metro Line Two is granted.",
+        "Agreement tapped out on the rails. Walk in the shadows with our guides and fear no ambush."
+      ],
+      "raid_warning": [
+        "VIBRATION SPIKE IN THE TUNNELS! Armed boots charging down the escalators! Ambush them in the dark!",
+        "They brought torches into the station! Strike from the rafters and extinguish their lights!",
+        "Intruders on the track bed! Trigger the acoustic shrapnel traps and collapse the tunnel ceiling!",
+        "The metro platform is under assault! Sound the war chimes and blind them with darkness!",
+        "Hostiles pushing into the service conduits! Surround them in the maze and let the stone judge them!",
+        "Tunnel defense active! Push the attackers into the flooded sump and hold the subway gates!"
+      ],
+      "trade_reaction": [
+        "The trade is struck in the quiet. These silent rubber-soled boots will serve our scouts well.",
+        "We have no use for noisy scrap. Bring sulfur, tallow candles, or soundproofing acoustic foam.",
+        "Barter completed under the platform. Flashlight batteries and glow sticks received in silence.",
+        "Transaction concluded. The metro route map with safe dry bypasses has been marked for your camp.",
+        "Fair exchange in the shadows. Take this subterranean mushroom salve to soothe your ears.",
+        "The darkness thanks you for your offering. Go in peace and walk softly on the ballast."
+      ]
+    },
+    "safe_haven_community": {
+      "frequency_mhz": 112.3,
+      "callsign": "SAFE HAVEN / COMMUNITY COMMONS",
+      "intercept_chatter": [
+        "The soup kettle is boiling in the courtyard. Anyone with an empty bowl is welcome before curfew.",
+        "We have three dry cots open in the school basement for travelers caught in the ash plume.",
+        "If we stop sharing what little we have, the winter has already beaten us. Keep the lantern lit.",
+        "Community nursery report: All children fed and warm by the hearth. Story hour starting at seven.",
+        "Volunteer work crew needed to patch the roof of the communal greenhouse before the snowstorm.",
+        "Bread ration distribution in the dining hall. Please bring your family token and clean bowls.",
+        "Medical clinic is open in Room 102. Basic bandages and boiled herbal tea available for the injured.",
+        "Remember to check on the elderly neighbors in the south wing. Keep their charcoal braziers stocked.",
+        "The evening lantern is burning in the bell tower. Follow the light if you are lost in the ash fog.",
+        "Community sewing circle completed eight wool blankets today. Ready for distribution to new arrivals.",
+        "We survived the apocalypse not by building fortresses, but by keeping our doors open to the needy.",
+        "Kindness is not weakness; it is the seed of tomorrow. Rest your weary feet and share our table."
+      ],
+      "parley_resolution": [
+        "Our community welcomes your representatives with open arms. Join us at the common table for dinner.",
+        "We cannot welcome your group if you bring weapons of war into our peaceful sanctuary. Leave arms outside.",
+        "Pact of Mutual Aid ratified by community vote. We will share food and shelter during winter emergencies.",
+        "Truce signed with tears and hope. Let our children play without fear of crossfire between our camps.",
+        "Agreement confirmed. We offer hospitality to your travelers in exchange for security on the outer road.",
+        "Peace covenant blessed by the community elders. Our doors remain open to all who seek shelter."
+      ],
+      "raid_warning": [
+        "ALARM! RAIDERS ATTACKING THE COMMONS! Move all children and elderly into the reinforced basement!",
+        "Defend the perimeter gates! Volunteer watch, hold the barricades with hunting rifles!",
+        "They are trying to torch the greenhouse! Form a bucket line while the defense squad returns fire!",
+        "Breach at the courtyard wall! Stand together, neighbors, and protect our home!",
+        "Emergency alert! Evacuate the outer dormitories and fall back to the central hall!",
+        "Hold the line with courage! We fight to protect the only kindness left in this wasteland!"
+      ],
+      "trade_reaction": [
+        "Thank you from the bottom of our hearts. These medical supplies will heal many sick children.",
+        "We are sorry, but our community cannot afford such steep prices. We must save our bread for the hungry.",
+        "Barter completed with gratitude. May these warm woolen socks and loaves of bread bring comfort to your camp.",
+        "Exchange recorded. Your generosity has brought warmth and joy to our community tonight.",
+        "Bless you for this trade. The vegetable seeds will be planted in the communal garden tomorrow.",
+        "Fair and kind transaction. Go with our prayers and may your journey be safe from the storm."
+      ]
+    }
+  }
+}
