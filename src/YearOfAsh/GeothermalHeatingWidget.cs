@@ -64,13 +64,34 @@ namespace AtomicWar.GodotApp.YearOfAsh
             rootVbox.AddChild(_btnClearIntakeIce);
         }
 
+        private Action<float> _temperatureChangedHandler;
+
+        public GeothermalHeatingWidget()
+        {
+            _temperatureChangedHandler = _ => RefreshView();
+        }
+
         public void BindSession(YearOfAshHostSession session)
         {
+            UnbindSession();
             _session = session;
             if (_session == null) return;
 
-            _session.DeepFreeze.OnTemperatureChanged += t => RefreshView();
+            _session.DeepFreeze.OnTemperatureChanged += _temperatureChangedHandler;
             RefreshView();
+        }
+
+        private void UnbindSession()
+        {
+            if (_session == null) return;
+            _session.DeepFreeze.OnTemperatureChanged -= _temperatureChangedHandler;
+            _session = null;
+        }
+
+        public override void _ExitTree()
+        {
+            UnbindSession();
+            base._ExitTree();
         }
 
         private void OnClearIntakeIcePressed()

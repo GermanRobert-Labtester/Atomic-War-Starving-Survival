@@ -77,13 +77,34 @@ namespace AtomicWar.GodotApp.YearOfAsh
             buttonHbox.AddChild(_btnSealFissures);
         }
 
+        private Action<float> _radonChangedHandler;
+
+        public RadonVentilationWidget()
+        {
+            _radonChangedHandler = _ => RefreshView();
+        }
+
         public void BindSession(YearOfAshHostSession session)
         {
+            UnbindSession();
             _session = session;
             if (_session == null) return;
 
-            _session.Radon.OnRadonLevelChanged += lvl => RefreshView();
+            _session.Radon.OnRadonLevelChanged += _radonChangedHandler;
             RefreshView();
+        }
+
+        private void UnbindSession()
+        {
+            if (_session == null) return;
+            _session.Radon.OnRadonLevelChanged -= _radonChangedHandler;
+            _session = null;
+        }
+
+        public override void _ExitTree()
+        {
+            UnbindSession();
+            base._ExitTree();
         }
 
         private void OnReplaceScrubberPressed()

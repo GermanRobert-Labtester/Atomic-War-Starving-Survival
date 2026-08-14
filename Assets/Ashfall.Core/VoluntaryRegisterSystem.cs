@@ -45,6 +45,10 @@ namespace Ashfall.Core
         public bool Volunteer(string survivorId, string task, int day, string reasonText = null)
         {
             if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(task)) return false;
+            // A new signature is for a new task: double-signing the same task
+            // would diverge the live list from the saved list (silent data loss).
+            string key = survivorId + "|" + task;
+            if (_entries.ContainsKey(key)) return false;
             var entry = new VolunteerEntry
             {
                 survivorId = survivorId,
@@ -52,7 +56,7 @@ namespace Ashfall.Core
                 acceptedDay = day,
                 reasonText = reasonText ?? string.Empty
             };
-            _entries[survivorId + "|" + task] = entry;
+            _entries[key] = entry;
             _state.entries.Add(entry);
             OnVolunteered?.Invoke(survivorId, task);
             RaiseChanged();
@@ -86,10 +90,27 @@ namespace Ashfall.Core
 
         public VoluntaryRegisterSystemState CaptureState()
         {
-            _state.entries.Clear();
-            foreach (var kv in _entries)
-                _state.entries.Add(kv.Value);
-            return _state;
+            // Fresh copy with deep-copied entries, ordinal-ordered by
+            // survivor+task (aliasing + cross-host determinism).
+            var copy = new VoluntaryRegisterSystemState { systemId = _state.systemId };
+            var keys = new List<string>(_entries.Count);
+            foreach (var kv in _entries) keys.Add(kv.Key);
+            keys.Sort(string.CompareOrdinal);
+            for (int i = 0; i < keys.Count; i++)
+            {
+                var e = _entries[keys[i]];
+                copy.entries.Add(new VolunteerEntry
+                {
+                    survivorId = e.survivorId,
+                    task = e.task,
+                    acceptedDay = e.acceptedDay,
+                    completedDay = e.completedDay,
+                    doseIncurred = e.doseIncurred,
+                    reasonText = e.reasonText,
+                    completed = e.completed
+                });
+            }
+            return copy;
         }
 
         public void RestoreState(VoluntaryRegisterSystemState saved)

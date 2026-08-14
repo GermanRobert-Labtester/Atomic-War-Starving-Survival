@@ -84,11 +84,15 @@ namespace Ashfall.Core
 
         public CohortSystemState CaptureState()
         {
-            _state.children.Clear();
-            foreach (var kv in _children)
+            // Fresh copy, ordinal-ordered (aliasing + cross-host determinism).
+            var copy = new CohortSystemState { systemId = _state.systemId };
+            var keys = new List<string>(_children.Count);
+            foreach (var kv in _children) keys.Add(kv.Key);
+            keys.Sort(string.CompareOrdinal);
+            for (int i = 0; i < keys.Count; i++)
             {
-                var c = kv.Value;
-                _state.children.Add(new CohortChild
+                var c = _children[keys[i]];
+                copy.children.Add(new CohortChild
                 {
                     survivorId = c.survivorId,
                     guessBand = c.guessBand,
@@ -99,7 +103,7 @@ namespace Ashfall.Core
                     parentIds = new List<string>(c.parentIds)
                 });
             }
-            return _state;
+            return copy;
         }
 
         public void RestoreState(CohortSystemState saved)

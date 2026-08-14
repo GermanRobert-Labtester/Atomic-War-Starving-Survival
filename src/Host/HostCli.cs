@@ -26,6 +26,7 @@ namespace AtomicWar.GodotApp
         JournalSelfTest,
         JournalUiTest,
         MusterUiTest,
+        DoseUiTest,
         BridgeSelfTest,
         DutyRosterSelfTest,
         StandingRecordSelfTest,
@@ -97,6 +98,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.JournalUiTest;
             if (Has(args, "--muster-uitest"))
                 return HostCliAction.MusterUiTest;
+            if (Has(args, "--dose-uitest"))
+                return HostCliAction.DoseUiTest;
             if (Has(args, "--bridge-selftest"))
                 return HostCliAction.BridgeSelfTest;
             if (Has(args, "--year-of-ash-save-selftest"))
@@ -594,6 +597,9 @@ namespace AtomicWar.GodotApp
             try
             {
                 var session = DoseLedgerHostSession.Create(dataDirectory);
+                Check(session.Registers.npcs.Count == 4, "dose_registers catalog loads the four antagonists");
+                Check(session.Registers.bands.Count == 4 && session.Registers.plans.Count == 3,
+                    "band and plan vocabulary loaded");
                 session.SealDemoSurvivors();
                 session.ScribeReading(180f, highEnergy: true);
                 session.DiagnoseDemo(DoseLedgerSystem.BandRed);

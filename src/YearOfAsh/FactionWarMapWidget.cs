@@ -59,14 +59,35 @@ namespace AtomicWar.GodotApp.YearOfAsh
 
         public void BindSession(YearOfAshHostSession session)
         {
+            UnbindSession();
             _session = session;
             if (_session == null) return;
 
             _session.Timeline.OnPhaseTransitioned += OnPhaseTransition;
             _session.Timeline.OnDayAdvanced += OnDayAdvanced;
-            _session.FactionWar.OnFactionStandingChanged += (f, s) => RefreshView();
+            _session.FactionWar.OnFactionStandingChanged += OnFactionStandingChanged;
 
             RefreshView();
+        }
+
+        private void UnbindSession()
+        {
+            if (_session == null) return;
+            _session.Timeline.OnPhaseTransitioned -= OnPhaseTransition;
+            _session.Timeline.OnDayAdvanced -= OnDayAdvanced;
+            _session.FactionWar.OnFactionStandingChanged -= OnFactionStandingChanged;
+            _session = null;
+        }
+
+        private void OnFactionStandingChanged(string factionId, int standing)
+        {
+            RefreshView();
+        }
+
+        public override void _ExitTree()
+        {
+            UnbindSession();
+            base._ExitTree();
         }
 
         private void OnPhaseTransition(YearOfAshPhase phase)

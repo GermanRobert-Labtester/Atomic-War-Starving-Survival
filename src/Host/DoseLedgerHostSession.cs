@@ -19,6 +19,7 @@ namespace AtomicWar.GodotApp
         public SickListSystem SickList { get; }
         public CohortSystem Cohort { get; }
         public VoluntaryRegisterSystem Voluntary { get; }
+        public DoseRegistersCatalog Registers { get; }
 
         private readonly System.Random _rng;
 
@@ -29,12 +30,14 @@ namespace AtomicWar.GodotApp
             DoseLedgerSystem ledger = null,
             SickListSystem sickList = null,
             CohortSystem cohort = null,
-            VoluntaryRegisterSystem voluntary = null)
+            VoluntaryRegisterSystem voluntary = null,
+            DoseRegistersCatalog registers = null)
         {
             Ledger = ledger ?? new DoseLedgerSystem();
             SickList = sickList ?? new SickListSystem();
             Cohort = cohort ?? new CohortSystem();
             Voluntary = voluntary ?? new VoluntaryRegisterSystem();
+            Registers = registers ?? new DoseRegistersCatalog();
             _rng = new System.Random(DemoSeed);
 
             // Persistence: any register mutation marks the save dirty.
@@ -47,7 +50,14 @@ namespace AtomicWar.GodotApp
         public static DoseLedgerHostSession Create(string dataDir, ILog log = null)
         {
             CatalogLocator.UseInvariantCulture();
-            return new DoseLedgerHostSession();
+            var registers = new DoseRegistersCatalog();
+            if (!string.IsNullOrEmpty(dataDir))
+            {
+                var fileIO = new FileSystemIO();
+                var serializer = new SystemTextJsonSerializer();
+                registers = DoseRegistersCatalogLoader.Load(dataDir, fileIO, serializer);
+            }
+            return new DoseLedgerHostSession(registers: registers);
         }
 
         // ── Cross-host save ──────────────────────────────────────────

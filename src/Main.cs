@@ -11,6 +11,7 @@ using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
 using AtomicWar.GodotApp.Muster;
+using AtomicWar.GodotApp.Dose;
 
 namespace AtomicWar.GodotApp
 {
@@ -39,6 +40,7 @@ namespace AtomicWar.GodotApp
         private PhantomMemoryHostSession _phantomMemory = null!;
         private DoseLedgerHostSession _doseLedger = null!;
         private bool _doseLedgerDirty;
+        private DoseRegisterSurface _doseSurface = null!;
 
         // Muster (Expansion 06, Days 180-360 escalation)
         private MusterHostSession _muster = null!;
@@ -153,6 +155,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.MusterUiTest:
                     RunMusterUiTestAndQuit();
+                    return;
+                case HostCliAction.DoseUiTest:
+                    RunDoseUiTestAndQuit();
                     return;
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
@@ -382,6 +387,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Dose: name to Sick List", OnDoseDiagnoseClicked);
             AddMenuButton("Dose: book a Cohort child", OnDoseCohortClicked);
             AddMenuButton("Dose: sign a volunteer", OnDoseVolunteerClicked);
+            AddMenuButton("Dose: open the Register", OnDoseRegisterClicked);
             // ── THE MUSTER (Exp 06) ────────────────────────────────────
             AddMenuButton("Muster: escalate to Day 260", OnMusterEscalateClicked);
             AddMenuButton("Muster: show currents (15)", OnMusterRosterClicked);
@@ -1029,6 +1035,23 @@ namespace AtomicWar.GodotApp
                 _doseLedgerDirty = false; // restore just raised state-change events
                 GD.Print("[Ashfall Godot] Dose Ledger state restored.");
             }
+
+            if (_doseSurface == null && _rightColumn != null)
+            {
+                _doseSurface = new DoseRegisterSurface();
+                _rightColumn.AddChild(_doseSurface);
+            }
+            if (_doseSurface != null)
+            {
+                _doseSurface.BindSession(_doseLedger);
+                _doseSurface.RefreshView();
+            }
+        }
+
+        private void OnDoseRegisterClicked()
+        {
+            SetupDoseLedger();
+            _statusLabel.Text = "The Dose Register is open. Four tabs, four people who keep books.";
         }
 
         private void OnDoseSealClicked()
@@ -1276,6 +1299,37 @@ namespace AtomicWar.GodotApp
                 _catalogLabel.Text = _core.CatalogLine() + "\n" + _core.CensusLine();
             if (_briefingPreviewLabel != null)
                 _briefingPreviewLabel.Text = HoldfastBriefingView.PreviewLine(_core.CurrentQuest);
+        }
+
+        /// <summary>Headless smoke: dose register surface builds, actions run, tabs render.</summary>
+        private void RunDoseUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupDoseLedger();
+
+            bool surface = _doseSurface != null;
+            bool npcs = _doseLedger.Registers.npcs.Count == 4;
+
+            _doseLedger.SealDemoSurvivors();
+            string booked = _doseLedger.ScribeReading(120f, highEnergy: true);
+            bool book = booked.Contains("band");
+            bool diagnose = _doseLedger.DiagnoseDemo(DoseLedgerSystem.BandRed).Contains("Diagnosed");
+            bool palliative = _doseLedger.SickList.AssignPalliative("survivor_gunner_mikhail", "plan_morphine_tray");
+            string child = _doseLedger.BookDemoChild();
+            bool cohort = child.Contains("corrected");
+            bool volunteer = _doseLedger.SignDemoVolunteer().Contains("banked");
+
+            string ledgerText = _doseLedger.LedgerLine();
+            bool rendered = ledgerText.Contains("survivor_gunner_mikhail")
+                && _doseLedger.SickList.Bands.Count == 1
+                && _doseLedger.Cohort.Children.Count == 1
+                && _doseLedger.Voluntary.Entries.Count == 1;
+
+            bool pass = surface && npcs && book && diagnose && palliative && cohort && volunteer && rendered;
+            GD.Print($"[DoseUiTest] surface={surface} npcs={npcs} book={book} diagnose={diagnose} " +
+                     $"palliative={palliative} cohort={cohort} volunteer={volunteer} rendered={rendered}");
+            GD.Print(pass ? "DOSE_UITEST PASS" : "DOSE_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
         }
 
         /// <summary>Headless smoke: muster roster widget + approach modal render, escalate, select.</summary>

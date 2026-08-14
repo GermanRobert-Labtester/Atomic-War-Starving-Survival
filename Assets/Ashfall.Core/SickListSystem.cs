@@ -47,6 +47,8 @@ namespace Ashfall.Core
             var entry = _bands.TryGetValue(survivorId, out var existing)
                 ? existing
                 : new SickBand { survivorId = survivorId, diagnosedDay = day };
+            if (!_bands.ContainsKey(survivorId))
+                _state.bands.Add(entry);
             _bands[survivorId] = entry;
             entry.band = band;
             entry.releaseDay = -1;
@@ -80,11 +82,17 @@ namespace Ashfall.Core
 
         public SickListSystemState CaptureState()
         {
-            _state.bands.Clear();
-            foreach (var kv in _bands)
+            // Fresh copy, ordinal-ordered: never return the live state to the
+            // envelope (aliasing), and dictionary iteration order is not a
+            // cross-host guarantee.
+            var copy = new SickListSystemState { systemId = _state.systemId };
+            var keys = new List<string>(_bands.Count);
+            foreach (var kv in _bands) keys.Add(kv.Key);
+            keys.Sort(string.CompareOrdinal);
+            for (int i = 0; i < keys.Count; i++)
             {
-                var b = kv.Value;
-                _state.bands.Add(new SickBand
+                var b = _bands[keys[i]];
+                copy.bands.Add(new SickBand
                 {
                     survivorId = b.survivorId,
                     band = b.band,
@@ -93,7 +101,7 @@ namespace Ashfall.Core
                     palliativePlan = b.palliativePlan
                 });
             }
-            return _state;
+            return copy;
         }
 
         public void RestoreState(SickListSystemState saved)

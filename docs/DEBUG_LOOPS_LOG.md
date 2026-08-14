@@ -137,6 +137,29 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 369/369, muster 25/25, uitest PASS x2, expansions
   236/236, all 17 selftests PASS, gate 0 errors / 315 info across 58 catalogs.
 
+## EXPANSION 07 SPRINT — THE DOSE (missing slices) — FINISHED
+- Audit vs docs/expansions/expansion_07_the_dose_IMPLEMENTATION.md: 4 core systems +
+  codec + host session/store + selftest existed; MISSING: dose_registers.json (A4),
+  tests for 3 of 4 systems (A5), the Dose Register surface (B/C).
+- Data: dose_registers.json (4 bands / 3 plans / 3 guesses / 4 registers / the four
+  antagonists with dispositions + one-button actions); the 4 NPCs registered in
+  characters.json with real master-list location ids.
+- Core: DoseRegistersCatalogLoader (engine-agnostic, BandLabel); CaptureState
+  rewritten in SickListSystem/CohortSystem/VoluntaryRegisterSystem (fresh deep copy +
+  ordinal — all three returned the LIVE state); fixed SickListSystem.Diagnose never
+  adding new diagnoses to _state.bands (silent save loss).
+- Host: session loads the catalog; DoseRegisterSurface (one folder, four tabs,
+  chaired rows, diegetic one-button actions Book/Name/Assign/Sign, flux-§ marker,
+  catalog labels); --dose-uitest smoke.
+- Debug + cross-tool QA fixes: my tests used the wrong guess vocab (core validates
+  low/medium/high per A1); review found VoluntaryRegisterSystem.Volunteer divergence
+  (double-sign same task diverged live vs saved state) — refused + 2 regression
+  tests; § marker now per-reading fluxAmbiguous; plan/guess rendered via labels.
+- Tests: +36 (3 system suites + catalog + characters registration + double-sign).
+- Verify: build 0 warnings, tests 405/405, dose selftest + uitest PASS x2, expansions
+  236/236, all 19 selftests PASS, gate 0 errors / 319 info across 59 catalogs.
+
+
 
 
 
