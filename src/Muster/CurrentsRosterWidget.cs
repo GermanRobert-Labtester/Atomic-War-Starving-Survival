@@ -62,9 +62,12 @@ namespace AtomicWar.GodotApp.Muster
 
             if (_muster != null)
             {
-                _lblEscalation.Text = _muster.MusterTriggered
-                    ? $"Escalation: Day {_muster.EscalationDay} — THE MUSTER IS OPEN"
-                    : $"Escalation: Day {_muster.EscalationDay} (opens Day {MusterSystem.MusterOpeningDay})";
+                if (_muster.EscalationDay < 0)
+                    _lblEscalation.Text = "Escalation: dormant";
+                else if (_muster.MusterTriggered)
+                    _lblEscalation.Text = $"Escalation: Day {_muster.EscalationDay} — THE MUSTER IS OPEN";
+                else
+                    _lblEscalation.Text = $"Escalation: Day {_muster.EscalationDay} (opens Day {MusterSystem.MusterOpeningDay})";
             }
 
             for (int i = 0; i < _roster.Count; i++)

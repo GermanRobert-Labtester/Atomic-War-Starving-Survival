@@ -84,6 +84,10 @@ namespace Ashfall.Core.Muster
             snapshot.records[0].endingKey = "injected";
             Check(sys.ResolveEndingKey() == "the_corridor", "capture returns snapshot, not live state");
 
+            // Epilogue matrix: resolved key maps to a matrix outcome.
+            Check(sys.EndingKeyForAny("the_corridor"), "resolved corridor key detected in the matrix");
+            Check(!sys.EndingKeyForAny("the_amnesty"), "unresolved amnesty key absent from the matrix");
+
             report.Muster = sys.CaptureState();
             report.Passed = report.FailedCount == 0;
             report.Summary =

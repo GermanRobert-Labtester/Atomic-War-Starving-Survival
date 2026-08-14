@@ -1,587 +1,668 @@
 [
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-10Y",
-  "title": "The Water Wars",
-  "body": "Clean groundwater aquifers became the world's most contested resource. International treaties crumbled as nations diverted rivers and drilled deeper than ever before. The construction of deep subterranean bunkers became standard state procedure — not for nuclear war, but for resource hoarding.",
-  "discovery_location_id": "loc_water_treatment_plant",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_pre_exchange_water_wars"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-5Y",
-  "title": "The Rare Earth Crisis",
-  "body": "Microchip fabrication halted across three continents when China suspended rare earth mineral exports. The global economy staggered. Military stockpiles became the only source of advanced electronics. Civilian infrastructure — power grids, water treatment, telecommunications — was deemed 'non-essential' by national security directives.",
-  "discovery_location_id": "loc_substation_yard",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_pre_exchange_rare_earth"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-4Y",
-  "title": "The Office of Continuity",
-  "body": "A civil-service department, not a military one. Its remit was to decide, on paper, which households would be continued if the worst happened, and its staff believed the fairest way to choose was to have no one choose at all: only a formula, applied to everyone, with the arithmetic shown. The Office of Continuity was proud of how boring it was.",
-  "discovery_location_id": "location_ministry_of_truth_bunker",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_pre_continuity_office"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-3Y",
-  "title": "The Bunker Boom",
-  "body": "Private construction firms won trillion-dollar contracts to build civilian shelters. The specifications were lies — most were designed to withstand conventional bombing, not nuclear groundbursts. Municipal governments sold 'guaranteed spots' to wealthy families. The poor were given pamphlets and plastic sheeting.",
-  "discovery_location_id": "loc_civil_defense_bunker",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_pre_exchange_bunker_boom"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-3Y",
-  "title": "The Reconstruction Utility Rating",
-  "body": "Occupation was worth up to forty points. A water engineer scored 31. A paediatric nurse scored 28. A records clerk scored 9. The department published the rubric openly, in the belief that transparency was the same thing as fairness.",
-  "discovery_location_id": "location_ministry_of_truth_bunker",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_pre_the_formula"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1Y",
-  "title": "The Last Harvest",
-  "body": "Agricultural monitoring stations reported unprecedented crop failures. Not from drought or pestilence — from the slow accumulation of industrial toxins in the topsoil. Farmers burned their fields in protest. The smoke was visible from orbit. No one came to help.",
-  "discovery_location_id": "loc_agricultural_coop",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_pre_exchange_last_harvest"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1Y",
-  "title": "The Obstacle-Marking Annex",
-  "body": "Denial doctrine requires that friendly obstacles be marked, so that your own people do not walk into them. Every trap in Sector 4 is marked: a specific scratch on a guardrail, a stone moved to a specific side of a culvert, a strip of tape at a specific height. Nothing hidden. Fully, correctly, uselessly signposted, in a notation that four people alive can read.",
-  "discovery_location_id": "location_ministry_of_truth_bunker",
-  "discovery_trigger": "inspection",
-  "knowledge_key": "lore_denial_marks"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-2M",
-  "title": "The Letters That Went Out",
-  "body": "The letters went out two months before the Exchange. They did not say what they were for. They listed a date, a muster point, and what to pack, and they were signed by an office most recipients had never heard of. Some people went. Some people framed the letter. Most filed it somewhere and did not think about it again.",
-  "discovery_location_id": "loc_evacuation_bus_depot",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_pre_allocation_letters"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1M",
-  "title": "The Quiet Evacuation",
-  "body": "Military families and government officials began disappearing from cities. Helicopters landed on rooftops at 3 AM. The official story was 'readiness drills.' The truth was the Emergency Continuity Protocol — a plan that had been revised 47 times since the first nuclear test in 1945. The 48th revision was the one that mattered.",
-  "discovery_location_id": "loc_police_precinct",
-  "discovery_trigger": "radio_intercept",
-  "knowledge_key": "lore_pre_exchange_quiet_evacuation"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1M",
-  "title": "The Missing Chair",
-  "body": "Allocation shelters were fitted from local requisition, in a hurry, from the nearest supplier. Somebody drove a dental chair out to a hole in the ground and left it for a dentist who scored 58.4. Three practices on this street are stripped to the walls. The fourth is missing only its chair.",
-  "discovery_location_id": "loc_dentists_row",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_grid_the_missing_chair"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1M",
-  "title": "Convoy Slots",
-  "body": "The Quiet Evacuation was routed from this room. The grease pencil marks on the route maps are convoy departure slots. Convoy 12's slot is circled twice, and beside it, in the same hand: HELD - DOB QUERY.",
-  "discovery_location_id": "loc_transit_authority_hq",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_grid_convoy_slots"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1M",
-  "title": "Sent Back",
-  "body": "Forty-one buses, nose to tail, all pointing back toward the city. They were turned around, not abandoned. The order to return was given and obeyed. The evacuation of the unlisted was performed, carefully, in the wrong direction.",
-  "discovery_location_id": "loc_bus_reversal_loop",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_toll_sent_back"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1M",
-  "title": "A Discrepancy in a Date of Birth",
-  "body": "Convoy 12 was held at the Sector 4 east checkpoint for six hours and eleven minutes while a duty officer telephoned a department that had already been evacuated. The child's birth year was recorded twice, once correctly. The officer was following procedure.",
-  "discovery_location_id": "loc_highway_checkpoint",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_pre_the_discrepancy"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-1W",
-  "title": "The Final Broadcasts",
-  "body": "Radio stations switched to automated loop: 'This is not a test. Seek shelter immediately.' Some DJs stayed on air, reading the names of towns they knew were already gone. A classical music station played Bach's Cello Suite No. 1 on repeat for six hours. Then static.",
-  "discovery_location_id": "loc_comm_array",
-  "discovery_trigger": "radio_intercept",
-  "knowledge_key": "lore_pre_exchange_final_broadcasts"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+0",
-  "title": "The Forty-Five Minute War",
-  "body": "Atmospheric detonations at 40,000 feet triggered continent-wide EMP waves. Every unshielded electronic device — pacemakers, car engines, water pumps, radio towers — died in the same microsecond. Groundburst strikes followed: silos, dams, industrial hubs, hospitals. The exchange lasted less time than it takes to cook a meal.",
-  "discovery_location_id": "loc_missile_silo",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_hour_zero_duration"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+0",
-  "title": "The EMP Silence",
-  "body": "The electromagnetic pulse propagated at the speed of light. One moment the world was connected by 5G networks and satellite relays. The next moment: silence. Amateur radio operators with vacuum-tube equipment were the only voices left on the air. They became the first post-Exchange broadcasters, reading casualty reports into the void.",
-  "discovery_location_id": "loc_comm_array",
-  "discovery_trigger": "radio_intercept",
-  "knowledge_key": "lore_hour_zero_emp"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+0",
-  "title": "The Open Door",
-  "body": "Allocation 12 was provisioned for fourteen and sealed for none. The outer hatch was on standby cycle, awaiting arrival authentication. Standby cycle holds the hatch unlocked.",
-  "discovery_location_id": "player_shelter",
-  "discovery_trigger": "inspection",
-  "knowledge_key": "lore_hz_open_door"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+0",
-  "title": "Convoy 12 Turns Back",
-  "body": "The roads closed behind Convoy 12. The order to return came over a frequency that had gone silent by the time they received it, and the drivers obeyed it anyway, because it was the last order anyone would give them. The trucks are still in the yard, all pointing the same way.",
-  "discovery_location_id": "location_abandoned_convoy_yard",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_hz_convoy_12_turns_back"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+1D",
-  "title": "The First Night",
-  "body": "The sun didn't rise. Not really. The airborne debris — 200 million tons of irradiated particulate matter — reduced daylight to a dim amber glow. Temperatures dropped 15°C in the first six hours. Survivors huddled in basements, subway tunnels, and the few bunkers whose blast doors had sealed properly. Most doors hadn't.",
-  "discovery_location_id": "loc_suburban_district",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_hour_zero_first_night"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+1D",
-  "title": "The Registrar Stays",
-  "body": "When the Ministry evacuated, the senior grades left. The filing staff stayed, because nobody had issued instructions to stop, and because the alternative was to go outside. One woman kept working.",
-  "discovery_location_id": "location_ministry_of_truth_bunker",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_hz_the_registrar_stays"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+3D",
-  "title": "The Hospital Triage",
-  "body": "Hospitals operated by candlelight and generator power for 72 hours before the fuel ran out. Doctors made choices no medical textbook had prepared them for. The young were prioritized. The old were made comfortable. The burn wards ran out of morphine on the second day. The screaming continued for a week.",
-  "discovery_location_id": "loc_regional_hospital",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_hour_zero_hospitals"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+3D",
-  "title": "Take a Number",
-  "body": "Voss's second order - deserters will be shot - is posted at the desk in the same typeface as the pre-war opening hours. The ticket machine still works. People still take a number.",
-  "discovery_location_id": "loc_conscription_office",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_grid_take_a_number"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+3D",
-  "title": "The Nameplates",
-  "body": "Somebody in the first week walked the corridor with a screwdriver and took down fourteen brass nameplates belonging to people who had not come. They were not thrown away. They are in a tin, behind the filtration stack, and everyone who has found them has put them back.",
-  "discovery_location_id": "player_shelter",
-  "discovery_trigger": "inspection",
-  "knowledge_key": "lore_hz_nameplates"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+1W",
-  "title": "The Garrison Forms",
-  "body": "Colonel Voss assumed command of the remaining military forces at Bunker Sigma-7 within 72 hours. His first order: 'Civilian dependents will contribute labor or food to the defense effort.' His second order: 'Deserters will be shot.' The Iron Garrison was born — not from ideology, but from the cold mathematics of a commander who had calculated exactly how many mouths his supplies could feed.",
-  "discovery_location_id": "loc_highway_checkpoint",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_hour_zero_garrison"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+1W",
-  "title": "The First Council",
-  "body": "The Ash Militia voted here for the first time. The ledger's first page records 47 names and 12 rifles, noted in the margin. Twenty-two of those names have a small cross beside them now, added later, in a different hand.",
-  "discovery_location_id": "loc_grange_hall",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_verge_first_council"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+1W",
-  "title": "The Codes",
-  "body": "Nobody has verified in five years that the detonator works. The Tollman's entire authority rests on nobody wanting to be the one who checks. The charges are still taped to the underside of the span, where everyone can see them.",
-  "discovery_location_id": "loc_bridge_seven",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_toll_the_codes"
- },
- {
-  "era": "hour_zero",
-  "year_month": "Exchange+2W",
-  "title": "The Militia Gathering",
-  "body": "In the agricultural sectors, survivors who had been turned away by Garrison patrols began organizing. A pre-war farmer named Delacroix — no military experience, no combat training — stood on a grain silo and said: 'If we turn into monsters just to survive, the war already won.' The Ash Militia was founded with 47 members and 12 rifles.",
-  "discovery_location_id": "loc_grain_silo",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_hour_zero_militia"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+3W",
-  "title": "The Failure",
-  "body": "The gate lost power mid-cycle at Exchange+3W and the river took back the land it had been kept off for ninety years. The Drown is not a bomb crater. It is a maintenance failure, which is why it keeps getting deeper.",
-  "discovery_location_id": "loc_lock_gate_four",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_drown_the_failure"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+1M",
-  "title": "The Nuclear Winter Begins",
-  "body": "Airborne debris blocked 80% of sunlight. Surface temperatures dropped to -35°C. Rivers froze solid. Fuel became more valuable than gold. Survivors burned furniture, books, bodies — anything that would produce heat. The concept of 'tomorrow' narrowed to a single question: will the fire last through the night?",
-  "discovery_location_id": "loc_ash_woodland",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_black_sky_winter"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+2M",
-  "title": "The Ozone Collapse",
-  "body": "Atmospheric chemical reactions stripped the ozone layer to 40% of pre-war levels. Ultraviolet radiation poured through the ash clouds. Survivors who ventured to the surface returned with burns that penetrated to the bone. The phrase 'ash blindness' entered the vocabulary of every shelter.",
-  "discovery_location_id": "loc_metro_tunnel",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_black_sky_ozone"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+2M",
-  "title": "Allocation 12-B",
-  "body": "Allocation 12-B was a fallback designation on a form, not a prepared shelter. A subway maintenance level, never stocked, never intended for occupancy. The people who reached it stayed two years.",
-  "discovery_location_id": "location_flooded_subway_depot",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_bs_alloc_12b"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+3M",
-  "title": "The First Black Rain",
-  "body": "Atmospheric moisture combined with stratospheric particulate matter to create something no weather model had predicted: black rain. The drops were heavy, oily, and carried radioactive isotopes that penetrated concrete. Shelters without sealed roofs — which was most of them — became death traps. The rain fell for eleven days.",
-  "discovery_location_id": "loc_basement_vault",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_black_sky_black_rain"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+3M",
-  "title": "The Vessel's Cell",
-  "body": "Where the Cult's prophet is said to have emerged unscathed. The room is shielded on three sides by accident of construction, and there are eleven weeks of tally marks on the wall. Both the miracle and the mundane explanation are fully supported by the evidence, and the game never picks.",
-  "discovery_location_id": "loc_the_vessels_cell",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_spine_the_cell"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+4M",
-  "title": "The Cult Arises",
-  "body": "In the highest fallout zones — areas too lethal for military patrols — a figure known only as The Vessel emerged from the ruins of a destroyed reactor. They were emaciated, hairless, their skin mottled with radiation burns. But they were alive. And they were speaking. 'The fire burned away the old world's lies,' they said. 'Drink the ash and be renewed.' The Cult of the Ash Sign was born.",
-  "discovery_location_id": "loc_missile_silo",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_black_sky_cult"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+4M",
-  "title": "The Vault Holds",
-  "body": "Nine people in the Memory Vault maintain the Continuity Allocation Schedule in full. It is useless. They maintain it anyway.",
-  "discovery_location_id": "location_the_memory_vault",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_bs_the_vault_holds"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+5M",
-  "title": "The Tunnel Exodus",
-  "body": "Surface conditions became unsurvivable. The remaining population moved underground — subway systems, sewer networks, mining tunnels. Communities formed in the dark. Children were born who had never seen the sun. The concept of 'surface' became mythological — a place parents described to children the way earlier generations described heaven.",
-  "discovery_location_id": "loc_metro_tunnel",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_black_sky_exodus"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+5M",
-  "title": "The Garrison Requests the Schedule",
-  "body": "The Garrison asked the Ministry for the Continuity Allocation Schedule. The request was filed correctly, in triplicate, and no one exists who can answer it.",
-  "discovery_location_id": "location_ministry_of_truth_bunker",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_bs_garrison_requests_schedule"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+6M",
-  "title": "The Warlords Emerge",
-  "body": "With military command structures fragmented, power vacuums filled from below. Armed scavengers took control of highway bottlenecks and fuel depots. The Tollman — a former bridge engineer — became the first to understand that in a world without functioning infrastructure, the person who controls the river crossing controls everything.",
-  "discovery_location_id": "loc_fuel_depot",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_black_sky_warlords"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+6M",
-  "title": "The Wrong Archive",
-  "body": "Sector 4's civil records. The Garrison has searched it twice for the Continuity Allocation Schedule and not found it, because the Schedule was never municipal. The fire suppression discharged at some point and everything below waist height is a solid grey brick of paper.",
-  "discovery_location_id": "loc_municipal_archive",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_grid_wrong_archive"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+6M",
-  "title": "What Score Were You?",
-  "body": "It became a way of asking a stranger what they had been, without asking what they had been. In the Toll they still ask it. Nobody who answers with a number above sixty is telling the truth, because everyone above sixty went inside.",
-  "discovery_location_id": "loc_toll_house",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_bs_what_score_were_you"
- },
- {
-  "era": "black_sky",
-  "year_month": "Exchange+1Y",
-  "title": "Two Hives",
-  "body": "Forty hives stood in the field. Two colonies survived the first winter. The Militia treats them as strategic infrastructure and posts a guard, which from a distance looks absurd, and is not.",
-  "discovery_location_id": "loc_apiary_rows",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_verge_two_hives"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+1Y",
-  "title": "The Ashfall Begins",
-  "body": "The atmospheric debris began to settle. It didn't fall as snow — it fell as fine grey ash, accumulating in drifts that buried buildings to their rooftops. The sky remained a perpetual charcoal haze. Surface radiation levels dropped slightly — enough for short expeditions. The first scavengers emerged, wrapped in improvised protective gear, hunting for canned food and medicine.",
-  "discovery_location_id": "loc_evacuation_bus_depot",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_ashfall_begins"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+2Y",
-  "title": "The Scavenger Economy",
-  "body": "Clean water, unexpired canned goods, and functional HEPA filters became currency. A working AA battery could buy a week of protection. A sealed bottle of iodine pills was worth more than a pre-war sports car. Trade routes formed between surviving enclaves. The Tollman's Bridge became the busiest crossing in the wasteland — and the most expensive.",
-  "discovery_location_id": "loc_toll_house",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_ashfall_economy"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+2Y",
-  "title": "The Engineer Dies at 12-B",
-  "body": "Halvard Renn kept the water potable at Allocation 12-B for two years using equipment he improvised from what the tunnels had in them. The improvised equipment is still in place and still working. He is not.",
-  "discovery_location_id": "location_sub_level_4_transit",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_af_renn_dies"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "The Defection Crisis",
-  "body": "Garrison soldiers began deserting in unprecedented numbers. The reasons varied: moral objections to civilian executions, hunger, the slow realization that Colonel Voss's 'temporary martial law' had become permanent. Each deserter brought weapons, intelligence, and a story. The Garrison responded with punitive raids — which only produced more deserters.",
-  "discovery_location_id": "loc_highway_checkpoint",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_ashfall_defections"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "The Children of the Dark",
-  "body": "The first generation born entirely underground reached adolescence. They had never seen the sun, trees, or open sky. Their eyes were adapted to low light. Their lungs had never breathed unfiltered air. They navigated by air pressure and the hum of ventilation systems. The surface was a terrifying myth — a place of searing light and poisonous wind.",
-  "discovery_location_id": "loc_civil_defense_bunker",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_ashfall_children"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "The Reading",
-  "body": "A dosimeter is mounted at the top of the shrine, at eye height, and it works. It is not decorative and it is not ironic. It is read aloud daily, accurately, as liturgy.",
-  "discovery_location_id": "loc_ash_sign_shrine",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_spine_the_reading"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "The Grain Exchange",
-  "body": "The old Militia Grain Exchange became a neutral trading hub — one of the few places where Garrison troops, Militia farmers, and even Cult members could trade without bloodshed. The unspoken rule: no weapons inside. The spoken rule: fair scales or broken fingers. The Exchange handled 80% of the region's food distribution.",
-  "discovery_location_id": "loc_grain_silo",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_ashfall_grain_exchange"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "Provenance",
-  "body": "The only place in Sector 4 that can measure accurately enough to distinguish fallout isotopes by origin. Whoever controls it can prove where a bomb came from. Nobody in Sector 4 wants that proved.",
-  "discovery_location_id": "loc_low_background_lab",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_spine_provenance"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "The Walk",
-  "body": "Six people left the tunnel and walked. They were going to a specific hatch, on the strength of a document four years old. The adults knew what the document was worth. They walked anyway.",
-  "discovery_location_id": "loc_metro_tunnel",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_af_the_walk_begins"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+5Y",
-  "title": "The Present Day",
-  "body": "Five years after the Exchange. The sky is still grey. The rain is still black. But somewhere, in bunkers and basements and subway tunnels, people are still alive. They repair. They trade. They fight. They bury their dead and keep going. The war ended in 45 minutes. The survival has lasted five years. It will last as long as someone is still willing to wake up and check the air filter.",
-  "discovery_location_id": "loc_civil_defense_bunker",
-  "discovery_trigger": "survivor_dialogue",
-  "knowledge_key": "lore_ashfall_present"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+5Y",
-  "title": "The Paperwork Survives",
-  "body": "Paper survives longer than people, if it is kept dry and handled with cotton gloves. The Schedule is complete. Every name is legible. It will outlast everyone who has ever read it.",
-  "discovery_location_id": "location_the_memory_vault",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_af_paperwork_survives"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+5Y",
-  "title": "The Claim",
-  "body": "Six people at the outer hatch. They do not attempt entry. They know exactly which hatch this is, and one of them is carrying a laminated card in a freezer bag.",
-  "discovery_location_id": "player_shelter",
-  "discovery_trigger": "inspection",
-  "knowledge_key": "lore_af_the_claim"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+5Y",
-  "title": "The Wrongnesses",
-  "body": "Five things in the shelter that do not match the people using them. A dental chair, bolted, with no dental instruments and no dentist. Bunks sized for eleven when the manifest sheet in the airlock reads 14. Four unfaded rectangles on the corridor wall where nameplates were unscrewed. A crate of children's winter boots, sizes 1 through 4, never opened. A wall-mounted chart headed ALLOCATION 12 - DUTY ROSTER, all rows blank.",
-  "discovery_location_id": "player_shelter",
-  "discovery_trigger": "inspection",
-  "knowledge_key": "lore_allocation_wrongness"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "A Road That Is Not There in Summer",
-  "body": "Bram Ostrowski sells waxed sheets of the estuary. A road is drawn where summer water should be. He will not say who walked it. Channel markers do not match the last Sector 4 lamp. Ivy confirms the post. She does not confirm the road. She does not cross.",
-  "discovery_location_id": "loc_ice_road_gate",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_hf_sheet"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "Two Schedules",
-  "body": "Ormund's right-hand drawer holds the Sector 4 Schedule, complete. Sole is there, not allocated. Renn is there, allocated, not arrived. Frayne is not. Completeness is not execution. He executes. Margit Sole's copy in the Drown is the same Schedule in a different room.",
-  "discovery_location_id": "loc_cluster_office",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_hf_two_schedules"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "Forty Rooms",
-  "body": "Forty apartments held for arrivals. Dusted. Walk three. You will find boots. Sizes one through four. You may leave them. You may not call them unclaimed. They are claimed by a timetable.",
-  "discovery_location_id": "loc_cluster_block_c",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_hf_forty_rooms"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "The Schedule Holds",
-  "body": "The duty roster on the bunker wall has names on it that are not the names that slept there. Block C has plates where paper was. Process water comes south in barrels that lose a fifth to the Cut, and the Verge still boils what it has. In the Office drawer the discrepancy file is closed with a stamp that does not say resolved. It says entered. Children in the Cluster school add a working that includes a caretaker. The teacher circles the rubric anyway. The chains on the Quad have not found their seats. Someone has tied a rag to one of them, so that in wind it looks as if a swing were trying.",
-  "discovery_location_id": "loc_cluster_office",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_hf_ending_schedule"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "The Reserve",
-  "body": "Receipts in triplicate: pink in a satchel that went south, yellow in a weigh hut, white in a drawer. Nobody was shot. Columns moved. If a dependent was claimed, a clinic autoclave cycled for a child who knew a tunnel better than a stairwell, and a kit of small handwriting stayed in a hole that no longer had its water memory. Margit Sole filed 12-C and did not sign it. Cael Ormund executed it and did not raise his voice. The ice took a column south and a column north on the same window. Yara wrote both masses. She did not write which one was fair.",
-  "discovery_location_id": "loc_cluster_office",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_hf_ending_reserve"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "The Road Goes Dark",
-  "body": "District 8 continues without the unlisted hole. Forty apartments stay dusted. The yellow cultivars fail on their own timetable. In a weigh hut, after a thaw, a census return is found incomplete, in a good hand, occupations still adjacent-wrong, a date of birth written once. The remarks column of the accident book has a line that is not for the dead. It says incomplete. Lamps on the Cut go out in the ordinary way, one wick at a time, because windows close. Ivy's 19 stays lit. The seam between ash and salt is still a poorly taped join. Nobody crosses it who does not already know how.",
-  "discovery_location_id": "player_shelter",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_hf_ending_dark_road"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+4Y",
-  "title": "Stand-Up",
-  "body": "The Fleet stops being a rumour. Hearth-4's lamp is still green; green was current; current is now people on a quay that is a field. The Cluster votes on beds. Some vote with work tickets. Some vote with the indoor thermometer. Mire logs the vote and does not vote. A pad that would not verify a land form still will not. It did not have to. The authenticator wanted a number and a number was found, or a person was asked ashore, which was a different request. Migration and Icebreaker land in a place. The place has a playground with chains. The new coats on the school pegs are damp with salt.",
-  "discovery_location_id": "loc_shelf_hearth4",
-  "discovery_trigger": "journal",
-  "knowledge_key": "lore_hf_ending_tender"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-3Y",
-  "title": "The Municipal Feeding Program",
-  "body": "When the rationing began in earnest, the city glassed over its last public park and grew food under leaded panes — a civic greenhouse, lit by lamps that ran on the grid while the grid still meant something. It was meant to be a stopgap. It outlasted the stopgap, the crisis it was built for, and, in the end, the city itself. The planter beds were poured concrete, built to be permanent. They are still there, under the ash.",
-  "discovery_location_id": "loc_allotment_glasshouse_complex",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_greenhouse_municipal_feeding"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-6Y",
-  "title": "The Seed Vault",
-  "body": "Behind a civil-defense door, in a room kept colder than the winter outside it now, the state stored its agricultural memory: thousands of sealed tins of pre-war cultivar, catalogued by hand, meant to outlive whatever was coming. The vault was built on the assumption that someone, afterward, would want to grow things again. That part of the plan, at least, was correct.",
-  "discovery_location_id": "location_subterranean_seed_vault",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_greenhouse_seed_vault"
- },
- {
-  "era": "ashfall",
-  "year_month": "Exchange+3Y",
-  "title": "The First Gardener",
-  "body": "No one agrees anymore who it was — only that someone, in the first long winter, sifted the ash out of a tray of earth and planted something in it, and tended it with a lamp jury-rigged to a dying battery, and waited. The story is told several ways because the thing that mattered was not the person but the proof: that a seed would still keep its promise if someone kept theirs.",
-  "discovery_location_id": "loc_allotment_glasshouse_complex",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_greenhouse_first_gardener"
- },
- {
-  "era": "pre_exchange",
-  "year_month": "Exchange-4Y",
-  "title": "The Lead-Glass Works",
-  "body": "The glass that lets a leaf live blocks what would kill it. Leaded panes were cast for the civic greenhouse at the old food-processing plant, where the Hydro Barons later ran their tanks — strong enough to turn the killing light into something a plant could bear, brittle enough that a single hard ashfall starred it white. Every pane was a bargain struck between the sky and the soil. The bargain held, mostly, until it didn't.",
-  "discovery_location_id": "loc_hydro_baron_aqueduct_manifold",
-  "discovery_trigger": "location_explore",
-  "knowledge_key": "lore_greenhouse_lead_glass_works"
- }
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-10Y",
+    "title": "The Water Wars",
+    "body": "Clean groundwater aquifers became the world's most contested resource. International treaties crumbled as nations diverted rivers and drilled deeper than ever before. The construction of deep subterranean bunkers became standard state procedure — not for nuclear war, but for resource hoarding.",
+    "discovery_location_id": "loc_water_treatment_plant",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_pre_exchange_water_wars"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-5Y",
+    "title": "The Rare Earth Crisis",
+    "body": "Microchip fabrication halted across three continents when China suspended rare earth mineral exports. The global economy staggered. Military stockpiles became the only source of advanced electronics. Civilian infrastructure — power grids, water treatment, telecommunications — was deemed 'non-essential' by national security directives.",
+    "discovery_location_id": "loc_substation_yard",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_pre_exchange_rare_earth"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-4Y",
+    "title": "The Office of Continuity",
+    "body": "A civil-service department, not a military one. Its remit was to decide, on paper, which households would be continued if the worst happened, and its staff believed the fairest way to choose was to have no one choose at all: only a formula, applied to everyone, with the arithmetic shown. The Office of Continuity was proud of how boring it was.",
+    "discovery_location_id": "location_ministry_of_truth_bunker",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_pre_continuity_office"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-3Y",
+    "title": "The Bunker Boom",
+    "body": "Private construction firms won trillion-dollar contracts to build civilian shelters. The specifications were lies — most were designed to withstand conventional bombing, not nuclear groundbursts. Municipal governments sold 'guaranteed spots' to wealthy families. The poor were given pamphlets and plastic sheeting.",
+    "discovery_location_id": "loc_civil_defense_bunker",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_pre_exchange_bunker_boom"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-3Y",
+    "title": "The Reconstruction Utility Rating",
+    "body": "Occupation was worth up to forty points. A water engineer scored 31. A paediatric nurse scored 28. A records clerk scored 9. The department published the rubric openly, in the belief that transparency was the same thing as fairness.",
+    "discovery_location_id": "location_ministry_of_truth_bunker",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_pre_the_formula"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1Y",
+    "title": "The Last Harvest",
+    "body": "Agricultural monitoring stations reported unprecedented crop failures. Not from drought or pestilence — from the slow accumulation of industrial toxins in the topsoil. Farmers burned their fields in protest. The smoke was visible from orbit. No one came to help.",
+    "discovery_location_id": "loc_agricultural_coop",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_pre_exchange_last_harvest"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1Y",
+    "title": "The Obstacle-Marking Annex",
+    "body": "Denial doctrine requires that friendly obstacles be marked, so that your own people do not walk into them. Every trap in Sector 4 is marked: a specific scratch on a guardrail, a stone moved to a specific side of a culvert, a strip of tape at a specific height. Nothing hidden. Fully, correctly, uselessly signposted, in a notation that four people alive can read.",
+    "discovery_location_id": "location_ministry_of_truth_bunker",
+    "discovery_trigger": "inspection",
+    "knowledge_key": "lore_denial_marks"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-2M",
+    "title": "The Letters That Went Out",
+    "body": "The letters went out two months before the Exchange. They did not say what they were for. They listed a date, a muster point, and what to pack, and they were signed by an office most recipients had never heard of. Some people went. Some people framed the letter. Most filed it somewhere and did not think about it again.",
+    "discovery_location_id": "loc_evacuation_bus_depot",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_pre_allocation_letters"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1M",
+    "title": "The Quiet Evacuation",
+    "body": "Military families and government officials began disappearing from cities. Helicopters landed on rooftops at 3 AM. The official story was 'readiness drills.' The truth was the Emergency Continuity Protocol — a plan that had been revised 47 times since the first nuclear test in 1945. The 48th revision was the one that mattered.",
+    "discovery_location_id": "loc_police_precinct",
+    "discovery_trigger": "radio_intercept",
+    "knowledge_key": "lore_pre_exchange_quiet_evacuation"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1M",
+    "title": "The Missing Chair",
+    "body": "Allocation shelters were fitted from local requisition, in a hurry, from the nearest supplier. Somebody drove a dental chair out to a hole in the ground and left it for a dentist who scored 58.4. Three practices on this street are stripped to the walls. The fourth is missing only its chair.",
+    "discovery_location_id": "loc_dentists_row",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_grid_the_missing_chair"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1M",
+    "title": "Convoy Slots",
+    "body": "The Quiet Evacuation was routed from this room. The grease pencil marks on the route maps are convoy departure slots. Convoy 12's slot is circled twice, and beside it, in the same hand: HELD - DOB QUERY.",
+    "discovery_location_id": "loc_transit_authority_hq",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_grid_convoy_slots"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1M",
+    "title": "Sent Back",
+    "body": "Forty-one buses, nose to tail, all pointing back toward the city. They were turned around, not abandoned. The order to return was given and obeyed. The evacuation of the unlisted was performed, carefully, in the wrong direction.",
+    "discovery_location_id": "loc_bus_reversal_loop",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_toll_sent_back"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1M",
+    "title": "A Discrepancy in a Date of Birth",
+    "body": "Convoy 12 was held at the Sector 4 east checkpoint for six hours and eleven minutes while a duty officer telephoned a department that had already been evacuated. The child's birth year was recorded twice, once correctly. The officer was following procedure.",
+    "discovery_location_id": "loc_highway_checkpoint",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_pre_the_discrepancy"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-1W",
+    "title": "The Final Broadcasts",
+    "body": "Radio stations switched to automated loop: 'This is not a test. Seek shelter immediately.' Some DJs stayed on air, reading the names of towns they knew were already gone. A classical music station played Bach's Cello Suite No. 1 on repeat for six hours. Then static.",
+    "discovery_location_id": "loc_comm_array",
+    "discovery_trigger": "radio_intercept",
+    "knowledge_key": "lore_pre_exchange_final_broadcasts"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+0",
+    "title": "The Forty-Five Minute War",
+    "body": "Atmospheric detonations at 40,000 feet triggered continent-wide EMP waves. Every unshielded electronic device — pacemakers, car engines, water pumps, radio towers — died in the same microsecond. Groundburst strikes followed: silos, dams, industrial hubs, hospitals. The exchange lasted less time than it takes to cook a meal.",
+    "discovery_location_id": "loc_missile_silo",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_hour_zero_duration"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+0",
+    "title": "The EMP Silence",
+    "body": "The electromagnetic pulse propagated at the speed of light. One moment the world was connected by 5G networks and satellite relays. The next moment: silence. Amateur radio operators with vacuum-tube equipment were the only voices left on the air. They became the first post-Exchange broadcasters, reading casualty reports into the void.",
+    "discovery_location_id": "loc_comm_array",
+    "discovery_trigger": "radio_intercept",
+    "knowledge_key": "lore_hour_zero_emp"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+0",
+    "title": "The Open Door",
+    "body": "Allocation 12 was provisioned for fourteen and sealed for none. The outer hatch was on standby cycle, awaiting arrival authentication. Standby cycle holds the hatch unlocked.",
+    "discovery_location_id": "player_shelter",
+    "discovery_trigger": "inspection",
+    "knowledge_key": "lore_hz_open_door"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+0",
+    "title": "Convoy 12 Turns Back",
+    "body": "The roads closed behind Convoy 12. The order to return came over a frequency that had gone silent by the time they received it, and the drivers obeyed it anyway, because it was the last order anyone would give them. The trucks are still in the yard, all pointing the same way.",
+    "discovery_location_id": "location_abandoned_convoy_yard",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_hz_convoy_12_turns_back"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+1D",
+    "title": "The First Night",
+    "body": "The sun didn't rise. Not really. The airborne debris — 200 million tons of irradiated particulate matter — reduced daylight to a dim amber glow. Temperatures dropped 15°C in the first six hours. Survivors huddled in basements, subway tunnels, and the few bunkers whose blast doors had sealed properly. Most doors hadn't.",
+    "discovery_location_id": "loc_suburban_district",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_hour_zero_first_night"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+1D",
+    "title": "The Registrar Stays",
+    "body": "When the Ministry evacuated, the senior grades left. The filing staff stayed, because nobody had issued instructions to stop, and because the alternative was to go outside. One woman kept working.",
+    "discovery_location_id": "location_ministry_of_truth_bunker",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_hz_the_registrar_stays"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+3D",
+    "title": "The Hospital Triage",
+    "body": "Hospitals operated by candlelight and generator power for 72 hours before the fuel ran out. Doctors made choices no medical textbook had prepared them for. The young were prioritized. The old were made comfortable. The burn wards ran out of morphine on the second day. The screaming continued for a week.",
+    "discovery_location_id": "loc_regional_hospital",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_hour_zero_hospitals"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+3D",
+    "title": "Take a Number",
+    "body": "Voss's second order - deserters will be shot - is posted at the desk in the same typeface as the pre-war opening hours. The ticket machine still works. People still take a number.",
+    "discovery_location_id": "loc_conscription_office",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_grid_take_a_number"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+3D",
+    "title": "The Nameplates",
+    "body": "Somebody in the first week walked the corridor with a screwdriver and took down fourteen brass nameplates belonging to people who had not come. They were not thrown away. They are in a tin, behind the filtration stack, and everyone who has found them has put them back.",
+    "discovery_location_id": "player_shelter",
+    "discovery_trigger": "inspection",
+    "knowledge_key": "lore_hz_nameplates"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+1W",
+    "title": "The Garrison Forms",
+    "body": "Colonel Voss assumed command of the remaining military forces at Bunker Sigma-7 within 72 hours. His first order: 'Civilian dependents will contribute labor or food to the defense effort.' His second order: 'Deserters will be shot.' The Iron Garrison was born — not from ideology, but from the cold mathematics of a commander who had calculated exactly how many mouths his supplies could feed.",
+    "discovery_location_id": "loc_highway_checkpoint",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_hour_zero_garrison"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+1W",
+    "title": "The First Council",
+    "body": "The Ash Militia voted here for the first time. The ledger's first page records 47 names and 12 rifles, noted in the margin. Twenty-two of those names have a small cross beside them now, added later, in a different hand.",
+    "discovery_location_id": "loc_grange_hall",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_verge_first_council"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+1W",
+    "title": "The Codes",
+    "body": "Nobody has verified in five years that the detonator works. The Tollman's entire authority rests on nobody wanting to be the one who checks. The charges are still taped to the underside of the span, where everyone can see them.",
+    "discovery_location_id": "loc_bridge_seven",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_toll_the_codes"
+  },
+  {
+    "era": "hour_zero",
+    "year_month": "Exchange+2W",
+    "title": "The Militia Gathering",
+    "body": "In the agricultural sectors, survivors who had been turned away by Garrison patrols began organizing. A pre-war farmer named Delacroix — no military experience, no combat training — stood on a grain silo and said: 'If we turn into monsters just to survive, the war already won.' The Ash Militia was founded with 47 members and 12 rifles.",
+    "discovery_location_id": "loc_grain_silo",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_hour_zero_militia"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+3W",
+    "title": "The Failure",
+    "body": "The gate lost power mid-cycle at Exchange+3W and the river took back the land it had been kept off for ninety years. The Drown is not a bomb crater. It is a maintenance failure, which is why it keeps getting deeper.",
+    "discovery_location_id": "loc_lock_gate_four",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_drown_the_failure"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+1M",
+    "title": "The Nuclear Winter Begins",
+    "body": "Airborne debris blocked 80% of sunlight. Surface temperatures dropped to -35°C. Rivers froze solid. Fuel became more valuable than gold. Survivors burned furniture, books, bodies — anything that would produce heat. The concept of 'tomorrow' narrowed to a single question: will the fire last through the night?",
+    "discovery_location_id": "loc_ash_woodland",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_black_sky_winter"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+2M",
+    "title": "The Ozone Collapse",
+    "body": "Atmospheric chemical reactions stripped the ozone layer to 40% of pre-war levels. Ultraviolet radiation poured through the ash clouds. Survivors who ventured to the surface returned with burns that penetrated to the bone. The phrase 'ash blindness' entered the vocabulary of every shelter.",
+    "discovery_location_id": "loc_metro_tunnel",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_black_sky_ozone"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+2M",
+    "title": "Allocation 12-B",
+    "body": "Allocation 12-B was a fallback designation on a form, not a prepared shelter. A subway maintenance level, never stocked, never intended for occupancy. The people who reached it stayed two years.",
+    "discovery_location_id": "location_flooded_subway_depot",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_bs_alloc_12b"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+3M",
+    "title": "The First Black Rain",
+    "body": "Atmospheric moisture combined with stratospheric particulate matter to create something no weather model had predicted: black rain. The drops were heavy, oily, and carried radioactive isotopes that penetrated concrete. Shelters without sealed roofs — which was most of them — became death traps. The rain fell for eleven days.",
+    "discovery_location_id": "loc_basement_vault",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_black_sky_black_rain"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+3M",
+    "title": "The Vessel's Cell",
+    "body": "Where the Cult's prophet is said to have emerged unscathed. The room is shielded on three sides by accident of construction, and there are eleven weeks of tally marks on the wall. Both the miracle and the mundane explanation are fully supported by the evidence, and the game never picks.",
+    "discovery_location_id": "loc_the_vessels_cell",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_spine_the_cell"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+4M",
+    "title": "The Cult Arises",
+    "body": "In the highest fallout zones — areas too lethal for military patrols — a figure known only as The Vessel emerged from the ruins of a destroyed reactor. They were emaciated, hairless, their skin mottled with radiation burns. But they were alive. And they were speaking. 'The fire burned away the old world's lies,' they said. 'Drink the ash and be renewed.' The Cult of the Ash Sign was born.",
+    "discovery_location_id": "loc_missile_silo",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_black_sky_cult"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+4M",
+    "title": "The Vault Holds",
+    "body": "Nine people in the Memory Vault maintain the Continuity Allocation Schedule in full. It is useless. They maintain it anyway.",
+    "discovery_location_id": "location_the_memory_vault",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_bs_the_vault_holds"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+5M",
+    "title": "The Tunnel Exodus",
+    "body": "Surface conditions became unsurvivable. The remaining population moved underground — subway systems, sewer networks, mining tunnels. Communities formed in the dark. Children were born who had never seen the sun. The concept of 'surface' became mythological — a place parents described to children the way earlier generations described heaven.",
+    "discovery_location_id": "loc_metro_tunnel",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_black_sky_exodus"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+5M",
+    "title": "The Garrison Requests the Schedule",
+    "body": "The Garrison asked the Ministry for the Continuity Allocation Schedule. The request was filed correctly, in triplicate, and no one exists who can answer it.",
+    "discovery_location_id": "location_ministry_of_truth_bunker",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_bs_garrison_requests_schedule"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+6M",
+    "title": "The Warlords Emerge",
+    "body": "With military command structures fragmented, power vacuums filled from below. Armed scavengers took control of highway bottlenecks and fuel depots. The Tollman — a former bridge engineer — became the first to understand that in a world without functioning infrastructure, the person who controls the river crossing controls everything.",
+    "discovery_location_id": "loc_fuel_depot",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_black_sky_warlords"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+6M",
+    "title": "The Wrong Archive",
+    "body": "Sector 4's civil records. The Garrison has searched it twice for the Continuity Allocation Schedule and not found it, because the Schedule was never municipal. The fire suppression discharged at some point and everything below waist height is a solid grey brick of paper.",
+    "discovery_location_id": "loc_municipal_archive",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_grid_wrong_archive"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+6M",
+    "title": "What Score Were You?",
+    "body": "It became a way of asking a stranger what they had been, without asking what they had been. In the Toll they still ask it. Nobody who answers with a number above sixty is telling the truth, because everyone above sixty went inside.",
+    "discovery_location_id": "loc_toll_house",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_bs_what_score_were_you"
+  },
+  {
+    "era": "black_sky",
+    "year_month": "Exchange+1Y",
+    "title": "Two Hives",
+    "body": "Forty hives stood in the field. Two colonies survived the first winter. The Militia treats them as strategic infrastructure and posts a guard, which from a distance looks absurd, and is not.",
+    "discovery_location_id": "loc_apiary_rows",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_verge_two_hives"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+1Y",
+    "title": "The Ashfall Begins",
+    "body": "The atmospheric debris began to settle. It didn't fall as snow — it fell as fine grey ash, accumulating in drifts that buried buildings to their rooftops. The sky remained a perpetual charcoal haze. Surface radiation levels dropped slightly — enough for short expeditions. The first scavengers emerged, wrapped in improvised protective gear, hunting for canned food and medicine.",
+    "discovery_location_id": "loc_evacuation_bus_depot",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_ashfall_begins"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+2Y",
+    "title": "The Scavenger Economy",
+    "body": "Clean water, unexpired canned goods, and functional HEPA filters became currency. A working AA battery could buy a week of protection. A sealed bottle of iodine pills was worth more than a pre-war sports car. Trade routes formed between surviving enclaves. The Tollman's Bridge became the busiest crossing in the wasteland — and the most expensive.",
+    "discovery_location_id": "loc_toll_house",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_ashfall_economy"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+2Y",
+    "title": "The Engineer Dies at 12-B",
+    "body": "Halvard Renn kept the water potable at Allocation 12-B for two years using equipment he improvised from what the tunnels had in them. The improvised equipment is still in place and still working. He is not.",
+    "discovery_location_id": "location_sub_level_4_transit",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_af_renn_dies"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "The Defection Crisis",
+    "body": "Garrison soldiers began deserting in unprecedented numbers. The reasons varied: moral objections to civilian executions, hunger, the slow realization that Colonel Voss's 'temporary martial law' had become permanent. Each deserter brought weapons, intelligence, and a story. The Garrison responded with punitive raids — which only produced more deserters.",
+    "discovery_location_id": "loc_highway_checkpoint",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_ashfall_defections"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "The Children of the Dark",
+    "body": "The first generation born entirely underground reached adolescence. They had never seen the sun, trees, or open sky. Their eyes were adapted to low light. Their lungs had never breathed unfiltered air. They navigated by air pressure and the hum of ventilation systems. The surface was a terrifying myth — a place of searing light and poisonous wind.",
+    "discovery_location_id": "loc_civil_defense_bunker",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_ashfall_children"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "The Reading",
+    "body": "A dosimeter is mounted at the top of the shrine, at eye height, and it works. It is not decorative and it is not ironic. It is read aloud daily, accurately, as liturgy.",
+    "discovery_location_id": "loc_ash_sign_shrine",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_spine_the_reading"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "The Grain Exchange",
+    "body": "The old Militia Grain Exchange became a neutral trading hub — one of the few places where Garrison troops, Militia farmers, and even Cult members could trade without bloodshed. The unspoken rule: no weapons inside. The spoken rule: fair scales or broken fingers. The Exchange handled 80% of the region's food distribution.",
+    "discovery_location_id": "loc_grain_silo",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_ashfall_grain_exchange"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "Provenance",
+    "body": "The only place in Sector 4 that can measure accurately enough to distinguish fallout isotopes by origin. Whoever controls it can prove where a bomb came from. Nobody in Sector 4 wants that proved.",
+    "discovery_location_id": "loc_low_background_lab",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_spine_provenance"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "The Walk",
+    "body": "Six people left the tunnel and walked. They were going to a specific hatch, on the strength of a document four years old. The adults knew what the document was worth. They walked anyway.",
+    "discovery_location_id": "loc_metro_tunnel",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_af_the_walk_begins"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+5Y",
+    "title": "The Present Day",
+    "body": "Five years after the Exchange. The sky is still grey. The rain is still black. But somewhere, in bunkers and basements and subway tunnels, people are still alive. They repair. They trade. They fight. They bury their dead and keep going. The war ended in 45 minutes. The survival has lasted five years. It will last as long as someone is still willing to wake up and check the air filter.",
+    "discovery_location_id": "loc_civil_defense_bunker",
+    "discovery_trigger": "survivor_dialogue",
+    "knowledge_key": "lore_ashfall_present"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+5Y",
+    "title": "The Paperwork Survives",
+    "body": "Paper survives longer than people, if it is kept dry and handled with cotton gloves. The Schedule is complete. Every name is legible. It will outlast everyone who has ever read it.",
+    "discovery_location_id": "location_the_memory_vault",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_af_paperwork_survives"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+5Y",
+    "title": "The Claim",
+    "body": "Six people at the outer hatch. They do not attempt entry. They know exactly which hatch this is, and one of them is carrying a laminated card in a freezer bag.",
+    "discovery_location_id": "player_shelter",
+    "discovery_trigger": "inspection",
+    "knowledge_key": "lore_af_the_claim"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+5Y",
+    "title": "The Wrongnesses",
+    "body": "Five things in the shelter that do not match the people using them. A dental chair, bolted, with no dental instruments and no dentist. Bunks sized for eleven when the manifest sheet in the airlock reads 14. Four unfaded rectangles on the corridor wall where nameplates were unscrewed. A crate of children's winter boots, sizes 1 through 4, never opened. A wall-mounted chart headed ALLOCATION 12 - DUTY ROSTER, all rows blank.",
+    "discovery_location_id": "player_shelter",
+    "discovery_trigger": "inspection",
+    "knowledge_key": "lore_allocation_wrongness"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "A Road That Is Not There in Summer",
+    "body": "Bram Ostrowski sells waxed sheets of the estuary. A road is drawn where summer water should be. He will not say who walked it. Channel markers do not match the last Sector 4 lamp. Ivy confirms the post. She does not confirm the road. She does not cross.",
+    "discovery_location_id": "loc_ice_road_gate",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_hf_sheet"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "Two Schedules",
+    "body": "Ormund's right-hand drawer holds the Sector 4 Schedule, complete. Sole is there, not allocated. Renn is there, allocated, not arrived. Frayne is not. Completeness is not execution. He executes. Margit Sole's copy in the Drown is the same Schedule in a different room.",
+    "discovery_location_id": "loc_cluster_office",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_hf_two_schedules"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "Forty Rooms",
+    "body": "Forty apartments held for arrivals. Dusted. Walk three. You will find boots. Sizes one through four. You may leave them. You may not call them unclaimed. They are claimed by a timetable.",
+    "discovery_location_id": "loc_cluster_block_c",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_hf_forty_rooms"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "The Schedule Holds",
+    "body": "The duty roster on the bunker wall has names on it that are not the names that slept there. Block C has plates where paper was. Process water comes south in barrels that lose a fifth to the Cut, and the Verge still boils what it has. In the Office drawer the discrepancy file is closed with a stamp that does not say resolved. It says entered. Children in the Cluster school add a working that includes a caretaker. The teacher circles the rubric anyway. The chains on the Quad have not found their seats. Someone has tied a rag to one of them, so that in wind it looks as if a swing were trying.",
+    "discovery_location_id": "loc_cluster_office",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_hf_ending_schedule"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "The Reserve",
+    "body": "Receipts in triplicate: pink in a satchel that went south, yellow in a weigh hut, white in a drawer. Nobody was shot. Columns moved. If a dependent was claimed, a clinic autoclave cycled for a child who knew a tunnel better than a stairwell, and a kit of small handwriting stayed in a hole that no longer had its water memory. Margit Sole filed 12-C and did not sign it. Cael Ormund executed it and did not raise his voice. The ice took a column south and a column north on the same window. Yara wrote both masses. She did not write which one was fair.",
+    "discovery_location_id": "loc_cluster_office",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_hf_ending_reserve"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "The Road Goes Dark",
+    "body": "District 8 continues without the unlisted hole. Forty apartments stay dusted. The yellow cultivars fail on their own timetable. In a weigh hut, after a thaw, a census return is found incomplete, in a good hand, occupations still adjacent-wrong, a date of birth written once. The remarks column of the accident book has a line that is not for the dead. It says incomplete. Lamps on the Cut go out in the ordinary way, one wick at a time, because windows close. Ivy's 19 stays lit. The seam between ash and salt is still a poorly taped join. Nobody crosses it who does not already know how.",
+    "discovery_location_id": "player_shelter",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_hf_ending_dark_road"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+4Y",
+    "title": "Stand-Up",
+    "body": "The Fleet stops being a rumour. Hearth-4's lamp is still green; green was current; current is now people on a quay that is a field. The Cluster votes on beds. Some vote with work tickets. Some vote with the indoor thermometer. Mire logs the vote and does not vote. A pad that would not verify a land form still will not. It did not have to. The authenticator wanted a number and a number was found, or a person was asked ashore, which was a different request. Migration and Icebreaker land in a place. The place has a playground with chains. The new coats on the school pegs are damp with salt.",
+    "discovery_location_id": "loc_shelf_hearth4",
+    "discovery_trigger": "journal",
+    "knowledge_key": "lore_hf_ending_tender"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-3Y",
+    "title": "The Municipal Feeding Program",
+    "body": "When the rationing began in earnest, the city glassed over its last public park and grew food under leaded panes — a civic greenhouse, lit by lamps that ran on the grid while the grid still meant something. It was meant to be a stopgap. It outlasted the stopgap, the crisis it was built for, and, in the end, the city itself. The planter beds were poured concrete, built to be permanent. They are still there, under the ash.",
+    "discovery_location_id": "loc_allotment_glasshouse_complex",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_greenhouse_municipal_feeding"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-6Y",
+    "title": "The Seed Vault",
+    "body": "Behind a civil-defense door, in a room kept colder than the winter outside it now, the state stored its agricultural memory: thousands of sealed tins of pre-war cultivar, catalogued by hand, meant to outlive whatever was coming. The vault was built on the assumption that someone, afterward, would want to grow things again. That part of the plan, at least, was correct.",
+    "discovery_location_id": "location_subterranean_seed_vault",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_greenhouse_seed_vault"
+  },
+  {
+    "era": "ashfall",
+    "year_month": "Exchange+3Y",
+    "title": "The First Gardener",
+    "body": "No one agrees anymore who it was — only that someone, in the first long winter, sifted the ash out of a tray of earth and planted something in it, and tended it with a lamp jury-rigged to a dying battery, and waited. The story is told several ways because the thing that mattered was not the person but the proof: that a seed would still keep its promise if someone kept theirs.",
+    "discovery_location_id": "loc_allotment_glasshouse_complex",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_greenhouse_first_gardener"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-4Y",
+    "title": "The Lead-Glass Works",
+    "body": "The glass that lets a leaf live blocks what would kill it. Leaded panes were cast for the civic greenhouse at the old food-processing plant, where the Hydro Barons later ran their tanks — strong enough to turn the killing light into something a plant could bear, brittle enough that a single hard ashfall starred it white. Every pane was a bargain struck between the sky and the soil. The bargain held, mostly, until it didn't.",
+    "discovery_location_id": "loc_hydro_baron_aqueduct_manifold",
+    "discovery_trigger": "location_explore",
+    "knowledge_key": "lore_greenhouse_lead_glass_works"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 240",
+    "title": "Day 238 — The Continuity Reclamation Decree",
+    "body": "The notice board at Checkpoint Gamma is repapered overnight. The old bulletin, signed Voss, is gone. The new one is signed Harven and says nothing about why.",
+    "discovery_location_id": "loc_garrison_checkpoint_gamma",
+    "discovery_trigger": "day_240_reached",
+    "knowledge_key": "history_continuity_reclamation_decree"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-6Y",
+    "title": "The Rate Card's Origin",
+    "body": "The rate card predates the Exchange by six years. It was a drought-season surcharge sheet from a contractor called the Halloway Concern. Nobody has revised a single line of it. The apocalypse changed what the water was worth; it did not change how the company decided who paid more.",
+    "discovery_location_id": "loc_hydro_baron_aqueduct_manifold",
+    "discovery_trigger": "first_visit",
+    "knowledge_key": "history_hydro_baron_rate_card_origin"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 174",
+    "title": "The Coalition's Founding",
+    "body": "Someone has scratched a tally into the transformer housing — one mark per person who made it here and stayed. The first mark is dated to a fuel embargo that never technically happened, according to Garrison records. It happened.",
+    "discovery_location_id": "loc_denial_cut_substation",
+    "discovery_trigger": "membersRallied_reaches_5",
+    "knowledge_key": "history_deserter_coalition_founding"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-3Y",
+    "title": "The Cold Count Before the Lab",
+    "body": "Four researchers signed up for a civil-defence isotope survey and never left. Their instruments were bought, not salvaged. The lab outlived the agency that commissioned it.",
+    "discovery_location_id": "loc_low_background_lab",
+    "discovery_trigger": "provenanceDataComplete",
+    "knowledge_key": "history_cold_count_before_the_lab"
+  },
+  {
+    "era": "pre_exchange",
+    "year_month": "Exchange-2Y",
+    "title": "The Provisioned's Head Start",
+    "body": "The homestead's log predates the Allocation Schedule by three winters of stocked supply runs. Someone here believed this was coming with enough certainty to spend a decade preparing for it alone, and never once tried to sell that certainty to anyone who might have used it.",
+    "discovery_location_id": "loc_second_winter_homestead",
+    "discovery_trigger": "respectScore_threshold",
+    "knowledge_key": "history_the_provisioned_advance_knowledge"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 241",
+    "title": "Witness 1 — The Checkpoint Conscript",
+    "body": "A boy barely old enough for the uniform, three drinks past careful: Voss was shot by his own staff for refusing a direct order to fire on a Rebuilder grain convoy. He says it like a confession, then asks it never be repeated — which it cannot be, because it is already in the journal.",
+    "discovery_location_id": "loc_garrison_checkpoint_gamma",
+    "discovery_trigger": "witness_1_heard",
+    "knowledge_key": "history_checkpoint_conscripts_confession"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 243",
+    "title": "Witness 2 — The Quartermaster's Paperwork",
+    "body": "Reassignment orders, coastal liaison, dated Day 240, signature illegible in the way every signature on this form is illegible. Voss rotated out at the outset of Phase V. Officers leave the worst postings all the time. The paperwork is real. That isn't the same as the story being true.",
+    "discovery_location_id": "loc_maritime_icebreaker_dock",
+    "discovery_trigger": "witness_2_heard",
+    "knowledge_key": "history_quartermasters_paperwork"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 261",
+    "title": "Witness 3 — The Intercepted Cipher",
+    "body": "An unregistered, low-power signal, three weeks after Day 240, using an authentication cipher retired with Voss's old command. Ruhl's note, verbatim: 'I don't chase ghosts. I log them.' The cipher is real. Whoever is using it is not required to explain themselves to a filing cabinet.",
+    "discovery_location_id": "loc_d9_cache_bunker_delta",
+    "discovery_trigger": "witness_3_heard",
+    "knowledge_key": "history_the_intercepted_cipher"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 262",
+    "title": "The Ledger Nobody Signed",
+    "body": "Three pages, one code, marked PAID in three different hands across what has to be years. Nobody currently employed by any of the three ledgers it appears in can say who opened the account. The oldest page is the only one signed — one initial, no name, and the ink has held up better than anything written since.",
+    "discovery_location_id": "loc_d9_cache_bunker_delta",
+    "discovery_trigger": "third_ledger_page_collected",
+    "knowledge_key": "history_the_ledger_nobody_signed"
+  }
 ]

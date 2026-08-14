@@ -323,6 +323,13 @@
       "message": "ALL CLEAR. ALL CLEAR. This concludes the emergency transponder loop on 142.850 MHz. Sector 4 transit corridor is declared open under civilian maritime authority. Stand down all combat postures. Begin spring reconstruction.",
       "signalStrength": "S9",
       "isEmergency": false
+    },
+    {
+      "id": "radio_harven_succession_decree",
+      "frequency": "106.300 MHz",
+      "dayTrigger": 240,
+      "source": "Sector 4 Garrison Command (Acting)",
+      "message": "TO ALL SHELTERS. BY ORDER OF THE CONTINUITY RECLAMATION DECREE, EFFECTIVE IMMEDIATELY: Colonel Harven assumes command of Sector 4 Garrison. All standing orders issued under the previous command are revoked. Movement permits must be re-issued at Checkpoint Gamma. The previous command's coastal liaison detachments are closed. Reassignment orders dated prior to this broadcast are void. AMENDED: no further announcements will be made on this channel. KEEP THE WIRE CLEAR. CZC."
     }
   ]
 }

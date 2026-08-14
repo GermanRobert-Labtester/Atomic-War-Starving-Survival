@@ -45,6 +45,7 @@ namespace AtomicWar.GodotApp
         private CurrentsRosterWidget _currentsRoster = null!;
         private ApproachSelectionModal _approachModal = null!;
         private DeserterCoalitionCampWidget _campWidget = null!;
+        private JournalWitnessPanel _witnessPanel = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -388,6 +389,9 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Muster: rally a deserter", OnMusterRallyClicked);
             AddMenuButton("Muster: strategy B (Standing Ground)", OnMusterStrategyBClicked);
             AddMenuButton("Muster: strategy D (Blood Price)", OnMusterStrategyDClicked);
+            AddMenuButton("Muster: three witnesses (Harven)", OnMusterWitnessesClicked);
+            AddMenuButton("Muster: witness author bias", OnMusterAuthorBiasClicked);
+            AddMenuButton("Muster: epilogue matrix", OnMusterEpiloguesClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); GetTree().Quit(); });
@@ -1112,6 +1116,14 @@ namespace AtomicWar.GodotApp
             _campWidget.Bind(_muster.Camp);
             _campWidget.RefreshView();
 
+            if (_witnessPanel == null)
+            {
+                _witnessPanel = new JournalWitnessPanel();
+                _rightColumn.AddChild(_witnessPanel);
+            }
+            _witnessPanel.Bind(_muster.Witnesses);
+            _witnessPanel.RefreshView(_yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay, _muster.AuthorBias);
+
             if (_approachModal == null)
             {
                 _approachModal = new ApproachSelectionModal();
@@ -1160,6 +1172,56 @@ namespace AtomicWar.GodotApp
             _campWidget.RefreshView();
         }
 
+        private void OnMusterWitnessesClicked()
+        {
+            SetupMuster();
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            _witnessPanel.RefreshView(day, _muster.AuthorBias);
+            _statusLabel.Text = _muster.Witnesses.Count == 0
+                ? "No witness accounts loaded."
+                : $"Three accounts: {_muster.Witnesses.Count} loaded. Day {day} · {_muster.AuthorBias} author.";
+        }
+
+        private void OnMusterAuthorBiasClicked()
+        {
+            SetupMuster();
+            int day = _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay : _simDay;
+            _statusLabel.Text = _muster.CycleAuthorBias();
+            _witnessPanel.RefreshView(day, _muster.AuthorBias);
+        }
+
+        private void OnMusterEpiloguesClicked()
+        {
+            SetupMuster();
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine("=== THE EPILOGUE MATRIX (DAY 360) ===");
+            for (int i = 0; i < _muster.Epilogues.Count; i++)
+            {
+                var e = _muster.Epilogues[i];
+                bool resolved = _muster.Engine.EndingKeyForAny(e.endingKey);
+                sb.AppendLine(resolved
+                    ? $"[RESOLVED] {e.title}"
+                    : $"[open]     {e.title}");
+            }
+            sb.AppendLine();
+            sb.AppendLine("=== RESOLVED OUTCOMES ===");
+            bool any = false;
+            for (int i = 0; i < _muster.Epilogues.Count; i++)
+            {
+                var e = _muster.Epilogues[i];
+                string prose = _muster.EndingProseFor(e.endingKey);
+                if (_muster.Engine.EndingKeyForAny(e.endingKey) && prose.Length > 0)
+                {
+                    any = true;
+                    sb.AppendLine(prose);
+                    sb.AppendLine();
+                }
+            }
+            if (!any) sb.AppendLine("None. The Muster has not resolved an outcome yet.");
+            _codexViewer.Text = sb.ToString();
+            _statusLabel.Text = $"Epilogue matrix: {_muster.Epilogues.Count} outcomes.";
+        }
+
         private void OnMusterRosterClicked()
         {
             SetupMuster();
@@ -1194,6 +1256,7 @@ namespace AtomicWar.GodotApp
             _muster.Escalate(_yearOfAsh.Timeline.CurrentDay);
             _currentsRoster.RefreshView();
             _campWidget.RefreshView();
+            _witnessPanel.RefreshView(_yearOfAsh.Timeline.CurrentDay, _muster.AuthorBias);
         }
 
         private void SaveMuster()
@@ -1223,6 +1286,8 @@ namespace AtomicWar.GodotApp
 
             bool roster = _currentsRoster != null && _muster.Roster.Count >= 15;
             bool camp = _campWidget != null;
+            bool witnesses = _witnessPanel != null && _muster.Witnesses.Count == 3;
+            bool epilogues = _muster.Epilogues.Count >= 8;
             bool modal = _approachModal != null;
             bool escalate = _muster.Escalate(300).Contains("Muster is open");
             bool campFormed = _muster.Camp.Formed && _muster.Camp.MembersRallied == CoalitionCampSystem.BaseMembers;
@@ -1230,10 +1295,16 @@ namespace AtomicWar.GodotApp
             bool resolved = _muster.SelectApproach("quest_the_rate_card_war", QuestApproach.A)
                 .Contains("selected");
             bool ending = _muster.Engine.EndingKeyFor("quest_the_rate_card_war") == "the_rate_card_revised";
+            bool matrix = _muster.Engine.EndingKeyForAny("the_rate_card_revised")
+                && _muster.EndingProseFor("the_rate_card_revised").Contains("rate card is finally a published price");
+            _muster.CycleAuthorBias();
+            bool biasCycle = _muster.AuthorBias != RiskBiasTrait.Realist;
 
-            bool pass = roster && camp && modal && escalate && campFormed && strategy && resolved && ending;
-            GD.Print($"[MusterUiTest] roster={roster} camp={camp} modal={modal} escalate={escalate} " +
-                     $"campFormed={campFormed} strategy={strategy} select={resolved} ending={ending}");
+            bool pass = roster && camp && witnesses && epilogues && modal && escalate &&
+                        campFormed && strategy && resolved && ending && matrix && biasCycle;
+            GD.Print($"[MusterUiTest] roster={roster} camp={camp} witnesses={witnesses} " +
+                     $"epilogues={epilogues} modal={modal} escalate={escalate} campFormed={campFormed} " +
+                     $"strategy={strategy} select={resolved} ending={ending} matrix={matrix}");
             GD.Print(pass ? "MUSTER_UITEST PASS" : "MUSTER_UITEST FAIL");
             if (System.IO.File.Exists(MusterSaveStore.SavePath))
                 System.IO.File.Delete(MusterSaveStore.SavePath);

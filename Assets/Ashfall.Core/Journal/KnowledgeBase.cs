@@ -16,13 +16,33 @@ namespace Ashfall.Core.Journal
         public const string FilterFailing = "filter_failing";
         public const string FreezingShelter = "freezing_shelter";
 
+        // Expansion 06 — The Muster (world history, Section XI).
+        public const string ContinuityReclamationDecree = "history_continuity_reclamation_decree";
+        public const string HydroBaronRateCardOrigin = "history_hydro_baron_rate_card_origin";
+        public const string DeserterCoalitionFounding = "history_deserter_coalition_founding";
+        public const string ColdCountBeforeTheLab = "history_cold_count_before_the_lab";
+        public const string ProvisionedAdvanceKnowledge = "history_the_provisioned_advance_knowledge";
+        public const string CheckpointConscriptsConfession = "history_checkpoint_conscripts_confession";
+        public const string QuartermastersPaperwork = "history_quartermasters_paperwork";
+        public const string InterceptedCipher = "history_the_intercepted_cipher";
+        public const string LedgerNobodySigned = "history_the_ledger_nobody_signed";
+
         public static readonly string[] All =
         {
             HighCo2,
             HasSeenRadiation,
             HasExperiencedStorm,
             FilterFailing,
-            FreezingShelter
+            FreezingShelter,
+            ContinuityReclamationDecree,
+            HydroBaronRateCardOrigin,
+            DeserterCoalitionFounding,
+            ColdCountBeforeTheLab,
+            ProvisionedAdvanceKnowledge,
+            CheckpointConscriptsConfession,
+            QuartermastersPaperwork,
+            InterceptedCipher,
+            LedgerNobodySigned
         };
 
         // -----------------------------------------------------------------

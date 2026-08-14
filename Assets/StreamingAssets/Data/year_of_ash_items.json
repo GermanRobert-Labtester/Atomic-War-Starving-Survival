@@ -390,5 +390,69 @@
     "tradeValue": 30,
     "category": "currency",
     "description": "A stamped brass token proving a place in the desalination queue. Relic or live currency depending on how the Rate Card War resolves."
+  },
+  {
+    "id": "item_prewar_diagnostic_scanner",
+    "name": "Prewar Diagnostic Scanner",
+    "weightKg": 3.4,
+    "tradeValue": 140,
+    "category": "survival_gear",
+    "description": "A pre-Exchange clinical imaging unit, still calibrated, available from no other source in the sector. The Provisioned hold the only working one."
+  },
+  {
+    "id": "item_deserter_coalition_forged_papers",
+    "name": "Forged Deserter Papers",
+    "weightKg": 0.2,
+    "tradeValue": 60,
+    "category": "documents",
+    "description": "Quiet House craftsmanship or a Tally contract, inked to match Garrison forms. Fulfils the Coalition's literal want: papers."
+  },
+  {
+    "id": "item_scavenger_guild_claim_marker",
+    "name": "Scavenger Guild Claim Marker",
+    "weightKg": 0.5,
+    "tradeValue": 25,
+    "category": "tools",
+    "description": "A stamped peg a Guild apprentice hammers into a site to file a formal claim. The mechanical trigger for claiming salvage."
+  },
+  {
+    "id": "item_long_walk_route_ledger",
+    "name": "Long Walk Route Ledger",
+    "weightKg": 1.1,
+    "tradeValue": 45,
+    "category": "documents",
+    "description": "A physical copy of the Long Walk's situation report — re-readable without waiting for the next crossing, and always slightly stale."
+  },
+  {
+    "id": "item_cold_count_provenance_seal",
+    "name": "Cold Count Provenance Seal",
+    "weightKg": 0.3,
+    "tradeValue": 90,
+    "category": "documents",
+    "description": "The seal accompanying the provenance broadcast. Referenced by The Measured Truth ending. It is not a measurement. It is a finding."
+  },
+  {
+    "id": "item_unsigned_debt_ledger_page",
+    "name": "Unsigned Ledger Page",
+    "weightKg": 0.05,
+    "tradeValue": 10,
+    "category": "documents",
+    "description": "One of three matching pages, each stamped PAID in a different hand. Holding all three does not unlock a resolution; it unlocks an admission that there isn't one."
+  },
+  {
+    "id": "item_amnesty_petition_dossier",
+    "name": "Amnesty Petition Dossier",
+    "weightKg": 1.8,
+    "tradeValue": 70,
+    "category": "documents",
+    "description": "Compiled testimony and provenance evidence. The physical object the Amnesty campaign's success or failure is checked against."
+  },
+  {
+    "id": "item_garrison_manifest_forgery_kit",
+    "name": "Garrison Manifest Forgery Kit",
+    "weightKg": 0.9,
+    "tradeValue": 55,
+    "category": "tools",
+    "description": "A morally neutral tool: forge transit papers for the Railroad, or fabricate a manifest entry that covers an informant's tracks. The game does not gate which use is allowed."
   }
 ]

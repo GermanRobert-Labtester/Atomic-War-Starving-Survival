@@ -115,6 +115,29 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 360/360, muster 23/23, uitest PASS x2, expansions
   236/236, journal + bridge + all 15 demos PASS, gate 0 errors.
 
+## EXPANSION 06 SPRINT — Phase 4 (content + witnesses + epilogue matrix) — FINISHED
+- Data (§XIII finish line): 8 Section IX items (57 total), 6 Section VIII locations
+  spec-exact (66 total), 9 Section XI world-history entries (74 total, canon day/trigger/
+  location values per bible), Harven succession radio broadcast (day 240), 8 Muster
+  questlines with real 3-stage content (32 total), muster_witnesses.json (3 accounts),
+  muster_epilogues.json (9 outcomes: 8 matrix keys + the_measured_truth).
+- Core: WitnessCatalogLoader + EpilogueMatrixLoader (ports, engine-agnostic);
+  JournalVoice extended with the 9 Muster knowledge keys, bias-weighted framings for
+  all 8 traits (Empath does not write the dark accounts; Sociopath records them as
+  transactions); MusterSystem.EndingKeyForAny.
+- Host: JournalWitnessPanel — framing keyed to the RECORDING survivor's RiskBiasTrait
+  (Section III mechanic), author-bias cycle button; epilogue-matrix viewer (resolved vs
+  open outcomes + prose); session loads witnesses/epilogues; tick path refreshes panel.
+- Debug + cross-tool QA fixes: syntax/type errors; case-sensitive assert; radio canon
+  day 238 -> 240; AMMEND typo; world-history triggers/locations aligned to bible;
+  locations displayName/description spec-exact (The Cut etc.); author_bias removed from
+  witness data (survivor-keyed framing replaces it); explicit Sociopath cases.
+- Tests: +9 (witness load, matrix coverage incl. every catalog ending key, bias
+  weighting, sociopath transaction, radio parse, quest stages, EndingKeyForAny).
+- Verify: build 0 warnings, tests 369/369, muster 25/25, uitest PASS x2, expansions
+  236/236, all 17 selftests PASS, gate 0 errors / 315 info across 58 catalogs.
+
+
 
 
 

@@ -150,6 +150,17 @@ namespace Ashfall.Core.Muster
             return r != null && r.resolved ? r.endingKey : string.Empty;
         }
 
+        /// <summary>True when any questline resolved to this matrix key.</summary>
+        public bool EndingKeyForAny(string endingKey)
+        {
+            for (int i = 0; i < _state.records.Count; i++)
+            {
+                var r = _state.records[i];
+                if (r.resolved && r.endingKey == endingKey) return true;
+            }
+            return false;
+        }
+
         // ── Save / Load ────────────────────────────────────────────────
 
         public MusterState CaptureState()

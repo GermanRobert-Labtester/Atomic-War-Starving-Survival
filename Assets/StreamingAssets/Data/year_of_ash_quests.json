@@ -632,11 +632,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 2 content wiring.",
+          "objective": "The coalition holds loc_denial_cut_substation. Meet Ola Vask before the fork.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Choose the campaign: amnesty, standing ground, corridor, or the blood price.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "See the Muster through to Day 320.",
           "requiredItemId": null,
           "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 320
     },
     {
       "id": "quest_the_rate_card_war",
@@ -646,11 +659,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 2 content wiring.",
+          "objective": "Speak to Meret Odalen at the aqueduct manifold. Leave with a queue chit and a number.",
+          "requiredItemId": "item_hydro_baron_queue_chit",
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Choose a front: undercut with the Grain Exchange, audit with the Cold Count, or bring the Tally in.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Resolve the rate card: revised price, reformed plant, seized plant, or enforced contract.",
           "requiredItemId": null,
           "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 360
     },
     {
       "id": "quest_the_unsigned_order",
@@ -660,11 +686,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 2 content wiring.",
+          "objective": "Send a survivor to Checkpoint Gamma. The conscript will talk after three drinks.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Trade at the motor pool. The quartermaster's paperwork says the coast.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Find the D/9 cache and the signals log. Ruhl's assessment is recorded verbatim.",
           "requiredItemId": null,
           "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 360
     },
     {
       "id": "quest_four_names_on_the_roster",
@@ -674,11 +713,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 4 content wiring.",
+          "objective": "Reach loc_low_background_lab. Four researchers are still on the roster.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Sustain them: regular power and shielding deliveries.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Complete the provenance run before Day 300.",
           "requiredItemId": null,
           "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 300
     },
     {
       "id": "quest_the_second_winter",
@@ -688,11 +740,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 4 content wiring.",
+          "objective": "Locate the Second Winter Homestead and its anonymous resupply log.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Act without asking: stock the homestead's line the way Quenna Brix would.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Decide what the Provisioned's advance knowledge is worth to the sector.",
           "requiredItemId": null,
           "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 360
     },
     {
       "id": "quest_the_eleven_month_circuit",
@@ -702,11 +767,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 4 content wiring.",
+          "objective": "Cross paths with the Long Walk's circuit near the valley viaduct.",
           "requiredItemId": null,
           "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Escort a leg of the circuit, or trade resupply at arm's length.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Receive the route ledger and its deliberately stale intelligence.",
+          "requiredItemId": "item_long_walk_route_ledger",
+          "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 360
     },
     {
       "id": "quest_the_second_color_ledger",
@@ -716,11 +794,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 4 content wiring.",
+          "objective": "Present yourself at the Guildhall. The claims board is not to be touched.",
           "requiredItemId": null,
           "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Apprentice to the Guild, or freelance at the standing risk of blacklist.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Handle a claimed site under the second color's rules.",
+          "requiredItemId": "item_scavenger_guild_claim_marker",
+          "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 360
     },
     {
       "id": "quest_nothing_to_offer",
@@ -730,11 +821,24 @@
       "stages": [
         {
           "stageIndex": 1,
-          "objective": "Approach selection pending Phase 4 content wiring.",
+          "objective": "Reach the Iron Raiders' Den. They have nothing to offer, and they mean it.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 2,
+          "objective": "Negotiate with people who do not negotiate.",
+          "requiredItemId": null,
+          "isCompleted": false
+        },
+        {
+          "stageIndex": 3,
+          "objective": "Leave the Den exactly as scheduled — the schedule is theirs.",
           "requiredItemId": null,
           "isCompleted": false
         }
-      ]
+      ],
+      "maxDay": 360
     }
   ]
 }
