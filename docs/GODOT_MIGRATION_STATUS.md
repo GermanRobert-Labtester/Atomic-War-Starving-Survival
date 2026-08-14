@@ -49,6 +49,14 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
   rendering blank broadcasts (dead fields + a wrong-typed `signalStrength` that zeroed
   all 37 entries), dose_registers snake_case fields unbound. Binding-assertion regression
   gates added across every loaded catalog. All loaders now match their files.
+- Economy adoption (2026-08-15, Candidate A): the Unity-coupled
+  DynamicEconomySystem now delegates ALL demand state to the core
+  MarketSystem (BindCoreMarket; `_demand` dict removed; save/restore map
+  through the core envelope) and scarcity to the core HardcoreEconomyTuning
+  overlay (BindCoreTuning; GameBootstrap loads hardcore_economy_tuning.json
+  in Expert mode). Legacy Unity static tuning kept only as unbound fallback.
+  Legacy-surface shrink: ~40 LOC of Unity demand logic removed. Adapter
+  probes (7) + selftest probes (adapter + tuning); hash 29629bd7.
 - Utility AI port (2026-08-15): NPC decision core in Ashfall.Core/UtilityAI
   (UtilityActionDef + ResponseCurve, AIActionContext, UtilityActionScorer
   with trait veto matrix, UtilityAiSystem with deterministic ISeededRng

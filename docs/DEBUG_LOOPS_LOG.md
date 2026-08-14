@@ -380,3 +380,19 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Final: build 0/0, tests 601/601, utility-ai selftest 7/7 + uitest,
   economy selftest 11/11 + uitest, expansions 236/236 GREEN, data gate
   0 errors / 64 catalogs, cross-process hash f58c6a54 stable.
+
+## CANDIDATE A DEBUG LOOP (adapter) — probe cycles
+- Cycle 01 — Probe: DSE demand delegation (headless DSE + BindCoreMarket).
+  Defect: NO. Delegation mirrors the core; save/restore round-trips.
+- Cycle 02 — Probe: tuning JSON load + overlay gate (day 5 clean_water x2.50).
+  Defect: NO.
+- Cycle 03 — Probe suite (7 adapter probes): delegation contract, clamps,
+  sentinel zero/negative, save/restore checksum stability, overlay day gates
+  + empty fallback, malformed/unknown-tier/forward-version rejection.
+  Defect: NO — all green first run.
+- Cycle 04 — Probe: cross-process hash + UI. Defect: NO. Hash 29629bd7
+  identical across processes (changed from efb2fbd6: selftest gained adapter
+  + tuning probe lines — test-surface growth only, documented).
+- Cycle 05 — Probe: full battery + gates. Defect: NO. 608/608, all 31
+  selftests/uitests PASS, data gate 0 errors / 64 catalogs.
+- Defects found: 0 (adapter built against the already-hardened core).

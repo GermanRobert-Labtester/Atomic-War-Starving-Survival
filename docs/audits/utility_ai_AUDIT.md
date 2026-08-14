@@ -32,3 +32,13 @@ Low (A4, A5, A7): preserved + tested.
 | # | Layer | Severity | Location | Finding | Disposition |
 |---|---|---|---|---|---|
 | A9 | Correctness | HIGH | UtilityAI.cs:63-66 (Unity) | Selection accepts score 0 as a winner: `bestScore` starts at -1, so a hard-vetoed action (score 0) beats the initial sentinel and is selected when ALL candidates are vetoed — a survivor with a hard veto executes the vetoed action. | Fixed in the port (`score > 0f && score > bestScore`); regression test `Selection_AllVetoedReturnsNull`; documented as an intentional Unity-defect fix. |
+
+## Candidate A adoption audit (market adapter, 2026-08-15)
+
+| # | Layer | Severity | Finding | Disposition |
+|---|---|---|---|---|
+| A10 | Architecture | MED | DSE demand state lived in a Unity dict (`_demand`), forked from core | Adapter: `_demand` removed; DSE delegates to core MarketSystem (single source of truth); save/restore map through the core envelope |
+| A11 | Determinism | HIGH | DSE raid/parley `_rng` is System.Random (NOT the demand path — non-goal surface) | Documented; demand path after adoption has zero System.Random; cross-process hash verified |
+| A12 | Correctness | MED | Scarcity consulted the legacy static `HardcoreEconomyTuning` (hardcoded data) | Adapter: `BindCoreTuning` routes to the core JSON overlay; legacy static kept only as unbound fallback |
+| A13 | Correctness | LOW | GameBootstrap hardcoded the legacy overlay in Expert mode | Wired to load hardcore_economy_tuning.json via the core loader; legacy fallback when JSON absent |
+| A14 | Integrity | MED | Sentinel: zero/negative demand rows must clamp on restore (adapter maps through Mathf.Clamp + core re-clamps) | Probe-tested (Probe_Sentinel_ZeroAndNegativeClamped) |
