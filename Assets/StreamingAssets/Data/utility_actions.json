@@ -1,0 +1,66 @@
+[
+  {
+    "id": "action_weigh_goods",
+    "displayName": "Weigh Goods",
+    "description": "Verifies cargo mass against depot calibration. Osran Kell companion bias.",
+    "basePriority": 0.1,
+    "weight": 1.0,
+    "isOverrideAction": false,
+    "tags": ["loud_labor"],
+    "curvePoints": [
+      { "x": 0.0, "y": 0.0 },
+      { "x": 1.0, "y": 1.0 }
+    ],
+    "baseScore": 0.40,
+    "fatigueGate": 85.0,
+    "skillBonusFactor": 0.25
+  },
+  {
+    "id": "action_read_contract",
+    "displayName": "Read Contract",
+    "description": "Studies a contract line by line before signing. The Tally's companion bias.",
+    "basePriority": 0.1,
+    "weight": 1.0,
+    "isOverrideAction": false,
+    "tags": [],
+    "curvePoints": [
+      { "x": 0.0, "y": 0.0 },
+      { "x": 1.0, "y": 1.0 }
+    ],
+    "baseScore": 0.35,
+    "fatigueGate": 90.0,
+    "skillBonusFactor": 0.2
+  },
+  {
+    "id": "action_canvas_support",
+    "displayName": "Canvas Support",
+    "description": "Walks the hall collecting signatures for the petition. Amnesty-campaign companion bias.",
+    "basePriority": 0.1,
+    "weight": 1.0,
+    "isOverrideAction": false,
+    "tags": ["menial_labor"],
+    "curvePoints": [
+      { "x": 0.0, "y": 0.0 },
+      { "x": 1.0, "y": 1.0 }
+    ],
+    "baseScore": 0.45,
+    "fatigueGate": 80.0,
+    "skillBonusFactor": 0.15
+  },
+  {
+    "id": "action_run_vouch",
+    "displayName": "Run Vouch",
+    "description": "Vouches for a stranger at the gate. Standing-record companion bias.",
+    "basePriority": 0.1,
+    "weight": 1.0,
+    "isOverrideAction": false,
+    "tags": [],
+    "curvePoints": [
+      { "x": 0.0, "y": 0.0 },
+      { "x": 1.0, "y": 1.0 }
+    ],
+    "baseScore": 0.30,
+    "fatigueGate": 88.0,
+    "skillBonusFactor": 0.1
+  }
+]
