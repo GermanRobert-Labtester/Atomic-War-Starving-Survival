@@ -227,9 +227,29 @@ namespace AtomicWar._Game.Core
             if (!IsHardcoreMode)
             {
                 EconomySystem.SetScarcityOverride(null);
+                EconomySystem.BindCoreTuning(null);
                 GameLog.Log("[GameBootstrap] Hardcore economy tuning: OFF (mode = " +
                     _currentGameMode + ").");
                 return;
+            }
+            // Adopted path: load the core JSON overlay (engine-agnostic source of
+            // truth) and bind it; the DSE consults it per trade. Falls back to
+            // the legacy static data when the JSON is absent.
+            var tuningLoad = Ashfall.Core.Economy.HardcoreEconomyTuningLoader.Load(
+                System.IO.File.ReadAllText(
+                    System.IO.Path.Combine(Ashfall.Core.CatalogLocator.RelativeDataPath,
+                        "hardcore_economy_tuning.json")));
+            if (tuningLoad != null && tuningLoad.IsValid && tuningLoad.Bundle != null)
+            {
+                var overlay = new Ashfall.Core.Economy.HardcoreEconomyTuning();
+                overlay.Apply(tuningLoad.Bundle);
+                EconomySystem.BindCoreTuning(overlay);
+                GameLog.Log("[GameBootstrap] Hardcore economy tuning: ON (core JSON overlay).");
+            }
+            else
+            {
+                EconomySystem.BindCoreTuning(null);
+                GameLog.Log("[GameBootstrap] Hardcore economy tuning: ON (legacy static data).");
             }
             // Flip the override on; GetTradeValue re-derives the correct
             // tier multiplier from HardcoreEconomyTuning on every trade

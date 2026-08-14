@@ -738,6 +738,38 @@ namespace AtomicWar.GodotApp
                 if (File.Exists(legacyPath)) File.Delete(legacyPath);
             }
 
+            // Tuning-integration probe (Candidate A slice 4): the core overlay
+            // loaded from the sample JSON must bind into DSE and gate scarcity.
+            try
+            {
+                var tuningLoad = Ashfall.Core.Economy.HardcoreEconomyTuningLoader.Load(
+                    System.IO.File.ReadAllText(System.IO.Path.Combine(
+                        dataDirectory, "hardcore_economy_tuning.json")));
+                bool loaded = tuningLoad != null && tuningLoad.IsValid && tuningLoad.Bundle != null;
+                GD.Print(loaded
+                    ? "[PASS] hardcore tuning JSON loads via the core loader"
+                    : "[FAIL] hardcore tuning JSON failed to load");
+
+                var overlay = new Ashfall.Core.Economy.HardcoreEconomyTuning();
+                overlay.Apply(tuningLoad.Bundle);
+                var dse = new AtomicWar._Game.Economy.DynamicEconomySystem();
+                dse.BindCoreTuning(overlay);
+                dse.SetScarcityOverride(new AtomicWar._Game.Economy.ScarcityOverride
+                {
+                    Source = "core_tuning",
+                    IsHardcore = true
+                });
+                float day5Water = overlay.GetScarcityMultiplier(5, "clean_water");
+                bool gates = day5Water > 1.0f && day5Water <= 2.5f + 1e-6f;
+                GD.Print(gates
+                    ? $"[PASS] core overlay gates scarcity (day 5 clean_water x{day5Water:0.00})"
+                    : $"[FAIL] core overlay scarcity gate wrong ({day5Water:0.00})");
+            }
+            catch (System.Exception e)
+            {
+                GD.Print("[FAIL] tuning-integration probe threw: " + e.Message);
+            }
+
             // Adapter probe (Candidate A): the Unity-coupled DynamicEconomySystem
             // must delegate demand to the core MarketSystem, and its save/restore
             // must round-trip through the core (single source of truth).

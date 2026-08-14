@@ -24,8 +24,19 @@ namespace AtomicWar._Game.Economy
 
         // [Prompts #326-330] Scarcity override (The Ash Gets Deeper)
         private ScarcityOverride _scarcityOverride;
+        private Ashfall.Core.Economy.HardcoreEconomyTuning _coreTuning;
         public void SetScarcityOverride(ScarcityOverride o) => _scarcityOverride = o;
         public ScarcityOverride GetScarcityOverride() => _scarcityOverride;
+
+        /// <summary>
+        /// Bind the core HardcoreEconomyTuning overlay (JSON-loaded, empty by
+        /// default). When bound, scarcity multipliers come from the core —
+        /// the engine-agnostic single source of truth.
+        /// </summary>
+        public void BindCoreTuning(Ashfall.Core.Economy.HardcoreEconomyTuning tuning)
+        {
+            _coreTuning = tuning;
+        }
 
         /// <summary>Prompt #236 — Demagogue: FactionTrust floor 0 + tribute drops.</summary>
         public void BindPersonalQuests(
@@ -801,10 +812,11 @@ namespace AtomicWar._Game.Economy
             if (_scarcityOverride == null || !_scarcityOverride.IsHardcore || item == null) return 1.0f;
             string id = item.id;
             if (string.IsNullOrEmpty(id)) return 1.0f;
-            // Delegate to HardcoreEconomyTuning, which already gates each tier's
-            // multiplier to its own day range (Critical: 1-15, High: 15-40,
-            // Moderate: 40-80, Low: 80+) — the tier is re-derived from the real
-            // currentDay on every call instead of being frozen at boot time.
+            // Adopted path: when a core tuning overlay is bound, consult it (the
+            // engine-agnostic source of truth). The legacy Unity static remains
+            // only as an unbound fallback so existing hosts keep their data.
+            if (_coreTuning != null)
+                return _coreTuning.GetScarcityMultiplier(currentDay, id);
             return HardcoreEconomyTuning.GetScarcityMultiplierForDay(currentDay, id);
         }
 
