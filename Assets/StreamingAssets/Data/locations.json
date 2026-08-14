@@ -793,5 +793,53 @@
   "dangerLevel": 2,
   "travelHours": 1.5,
   "baseRadsPerHour": 8
+ },
+ {
+  "id": "loc_grain_silo",
+  "displayName": "The Grain Exchange",
+  "description": "The old Militia grain silo leans two degrees off true and has leaned that way for three years without picking a direction to fall. Underneath it, on packed earth between the legs of the structure, the Exchange runs six days a week: trestle tables, a hand-cranked scale nobody has caught cheating, and a chalked sign that says no weapons past the rope in four different hands, because it has been repainted by four different people who all meant it. Garrison quartermasters haggle two tables down from Ash Militia grain-runners, and neither reaches for a sidearm, because the unspoken rule is older than either of them: fair scales or broken fingers, and the fingers get broken by consensus, not by guards. Nineteen rads an hour, low enough that people linger. The Exchange moves something like eighty percent of the district's food through this one leaning building, which is either a triumph of neutral ground or a single point of failure, depending on who you ask and how the war is going that week.",
+  "dangerLevel": 3,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 19
+ },
+ {
+  "id": "loc_garrison_checkpoint_gamma",
+  "displayName": "Checkpoint Gamma",
+  "description": "Sandbags gone the color of the ash they hold back, a boom barrier painted with a stripe pattern nobody has refreshed since the paint still matched a regulation. The notice board by the guard shack has been repapered so many times the corkboard shows through in patches, and the current bulletin is signed Harven in a hand that presses hard enough to be read from a distance. Rads sit at twenty-six an hour, unremarkable, the kind of number a checkpoint clerk stops mentioning after the first week. Conscription lists are posted here on the first of the month, and the queue that forms below them is orderly in the particular way of people who have learned that disorder gets noted in a file. Off to one side, half-covered by a supply tarp, is an older sign, taken down but never thrown out, that still says VOSS in the same hard hand. Somebody keeps propping it back up when the wind knocks it flat.",
+  "dangerLevel": 4,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 26
+ },
+ {
+  "id": "loc_railway_span_44_alpha",
+  "displayName": "Railway Span 44-Alpha",
+  "description": "A single rail bridge over a dry cutting, one of the last spans in the district still theoretically load-bearing, and theoretically is doing a lot of work in that sentence. Charges are wired along the underside trusses in a pattern that looks careless and is not: Denial Detachment 9 marked every lead with a strip of reflective tape at a specific height, per doctrine, so that their own people don't walk into their own demolition. Thirty-one rads an hour on the deck. A weatherproofed speaker box is bolted to the near pier, and it has been transmitting the same automated loop on 96.100 for years now — station null, target grid primed, remain in shelter — to nobody in particular, because the order to stand the charges down has never come and there is nobody left with the authority to give it. The rails themselves are intact, rust-bright at the wheel line, which means something heavy crossed recently. Nobody currently controls this bridge. Several factions would very much like to.",
+  "dangerLevel": 6,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 31
+ },
+ {
+  "id": "loc_forward_roster_camp",
+  "displayName": "The Forward Roster Camp",
+  "description": "A dozen tents and one salvaged shipping container pitched in the dead lot between the Exchange and the Garrison checkpoint, close enough to both that it reads less like a camp and more like a hyphen. The watch schedule is chalked on the container door in a hand that still writes like it's taking minutes, four names to a shift, crossed off and rewritten as people rotate. Nobody has painted a sign. Twenty-two rads an hour, unremarkable. The fire pit sits exactly equidistant from the Exchange's lamps and the checkpoint's floodlight, which nobody here will admit was measured on purpose, though it clearly was.",
+  "dangerLevel": 5,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 22
+ },
+ {
+  "id": "loc_shrine_switchback_waystation",
+  "displayName": "The Switchback Waystation",
+  "description": "A lean-to and a water barrel halfway up the trail to the Ash Sign Shrine, built by pilgrims for pilgrims, maintained by whoever's climbing that week. A board nailed to the lean-to's post carries three years of names and dates in a dozen hands, the closest thing the trail has to a guestbook, and a line near the bottom reads only turned back, no name, no date crossed through to explain what stopped them. Thirty-one rads an hour, climbing steadily with the trail. Pilgrims rest here exactly once each way, by unspoken custom, whether or not they need to.",
+  "dangerLevel": 4,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 31
+ },
+ {
+  "id": "loc_understory_transmitter",
+  "displayName": "The Understory Relay",
+  "description": "A transmitter mast wired into what used to be a parking structure's stairwell, the antenna run up through a gap in the collapsed roof and guyed to rebar that was never meant to hold a mast and has held one for three years anyway. Nobody broadcasts from here more than once; the signal gets relayed onward from a different stairwell the next week, and the one after that from somewhere else, which is the entire reason the district has never managed to shut The Understory down. Eighteen rads an hour, low, chosen for exactly that reason. The log taped inside the stairwell door lists only call times, never names, in more handwriting styles than any one broadcaster could produce alone.",
+  "dangerLevel": 3,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 18
  }
 ]

@@ -24,11 +24,15 @@ namespace AtomicWar.GodotApp.Economy
         private EconomyHostSession _session;
         private IFactionStanceProvider _stanceProvider;
         private IPriceShockProvider _priceShockProvider;
+        private ITradeScreenViewModel _viewModel;
+        private ITradeIntentSink _intentSink;
 
         private string _activeFactionId = "scavenger_camp";
         private readonly Dictionary<string, int> _playerOfferCounts = new();
         private readonly Dictionary<string, int> _factionAskCounts = new();
         private readonly Dictionary<BiologicalTradeItem, int> _bioOfferCounts = new();
+        private readonly Dictionary<BiologicalTradeItem, Label> _bioCountLabels = new();
+        private readonly List<Button> _bioStepperButtons = new();
 
         // ── UI Controls ──────────────────────────────────────────────
         // Header
@@ -36,13 +40,15 @@ namespace AtomicWar.GodotApp.Economy
         private Label _lblFactionName;
         private Label _lblLeader;
         private Label _badgeStance;
+        private Label _lblTellPlate;
         private Label _lblTrust;
         private Label _lblAggression;
         private Label _lblRepels;
         private Label _lblParleyStatus;
 
-        // Market & Shocks Banner
+        // News from Outside strip (world phase/day + shocks + scarcity)
         private Label _lblPhaseDay;
+        private HBoxContainer _newsStrip;
         private HBoxContainer _shocksContainer;
         private Label _lblScarcitySummary;
 
@@ -55,8 +61,14 @@ namespace AtomicWar.GodotApp.Economy
         private VBoxContainer _factionStockList;
         private Label _lblFactionAskWorth;
 
+        // Grim drawer (biological trading, collapsed by default)
+        private Button _grimDrawerToggle;
+        private VBoxContainer _grimDrawerBody;
+
         // Arbitrator
         private Label _lblFairness;
+        private ColorRect _scalePlayerFill;
+        private ColorRect _scaleFactionFill;
         private Button _btnConfirmTrade;
         private Button _btnDemandParley;
 
@@ -75,6 +87,11 @@ namespace AtomicWar.GodotApp.Economy
         public bool HasFairnessIndicator => !string.IsNullOrEmpty(_lblFairness?.Text);
         public bool HasParleyButton => _btnDemandParley != null;
         public bool HasRadioTicker => _lblRadioTicker != null;
+        public bool HasTellPlate => !string.IsNullOrEmpty(_lblTellPlate?.Text);
+        public bool HasNewsStrip => _newsStrip != null && _newsStrip.GetChildCount() > 0;
+        public bool HasArbitratorScale => _scalePlayerFill != null && _scaleFactionFill != null;
+        public bool IsGrimDrawerCollapsed => _grimDrawerBody == null || !_grimDrawerBody.Visible;
+        public bool IsViewModelBound => _viewModel != null;
         public int ActiveOfferCount => _playerOfferCounts.Count;
         public int ActiveAskCount => _factionAskCounts.Count;
         public int ActiveBioCount => _bioOfferCounts.Count;
@@ -199,25 +216,41 @@ namespace AtomicWar.GodotApp.Economy
             headerHbox.AddChild(statusVbox);
             mainVbox.AddChild(headerContainer);
 
-            // 2. Market & Price Shock Banner
-            var shockBanner = new HBoxContainer();
-            shockBanner.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingMd);
+            // 1b. Tell Plate — the trader's readable posture (data-defined line)
+            _lblTellPlate = new Label
+            {
+                Text = "",
+                HorizontalAlignment = HorizontalAlignment.Left,
+                AutowrapMode = TextServer.AutowrapMode.WordSmart
+            };
+            _lblTellPlate.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
+            _lblTellPlate.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Muted));
+            mainVbox.AddChild(_lblTellPlate);
+
+            // 2. News from Outside strip — the world intruding on the deal
+            _newsStrip = new HBoxContainer();
+            _newsStrip.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingMd);
+
+            var lblNewsTitle = new Label { Text = "NEWS FROM OUTSIDE ·" };
+            lblNewsTitle.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
+            lblNewsTitle.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Dim));
+            _newsStrip.AddChild(lblNewsTitle);
 
             _lblPhaseDay = new Label { Text = "Phase: CivilWar · Day 1" };
             _lblPhaseDay.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
             _lblPhaseDay.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Pale));
-            shockBanner.AddChild(_lblPhaseDay);
+            _newsStrip.AddChild(_lblPhaseDay);
 
             _shocksContainer = new HBoxContainer();
             _shocksContainer.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingSm);
-            shockBanner.AddChild(_shocksContainer);
+            _newsStrip.AddChild(_shocksContainer);
 
             _lblScarcitySummary = new Label { Text = "Scarcity: Normal" };
             _lblScarcitySummary.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
             _lblScarcitySummary.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Muted));
-            shockBanner.AddChild(_lblScarcitySummary);
+            _newsStrip.AddChild(_lblScarcitySummary);
 
-            mainVbox.AddChild(shockBanner);
+            mainVbox.AddChild(_newsStrip);
 
             // 3. Two-Column Barter Body
             var columnsHbox = new HBoxContainer();
@@ -241,15 +274,29 @@ namespace AtomicWar.GodotApp.Economy
             _lblPlayerWorth.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Warm));
             playerCol.AddChild(_lblPlayerWorth);
 
-            // Biological Trade Section
-            var lblBioTitle = new Label { Text = "BIOLOGICAL TRADING" };
-            lblBioTitle.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
-            lblBioTitle.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Critical));
-            playerCol.AddChild(lblBioTitle);
+            // Biological Trade — the grim drawer beneath the table.
+            // Collapsed by default; deliberately unsettling, never required.
+            _grimDrawerToggle = new Button
+            {
+                Text = "▸ BIOLOGICAL — THE DRAWER",
+                ToggleMode = true,
+                ButtonPressed = false
+            };
+            _grimDrawerToggle.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
+            _grimDrawerToggle.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Critical));
+            _grimDrawerToggle.Toggled += on =>
+            {
+                _grimDrawerBody.Visible = on;
+                _grimDrawerToggle.Text = on ? "▾ BIOLOGICAL — THE DRAWER" : "▸ BIOLOGICAL — THE DRAWER";
+            };
+            playerCol.AddChild(_grimDrawerToggle);
+
+            _grimDrawerBody = new VBoxContainer { Visible = false };
+            playerCol.AddChild(_grimDrawerBody);
 
             _bioTradeContainer = new VBoxContainer();
             BuildBioTradeRows();
-            playerCol.AddChild(_bioTradeContainer);
+            _grimDrawerBody.AddChild(_bioTradeContainer);
 
             columnsHbox.AddChild(playerCol);
 
@@ -276,6 +323,21 @@ namespace AtomicWar.GodotApp.Economy
             // 4. Center Arbitrator & Buttons
             var arbitratorHbox = new HBoxContainer();
             arbitratorHbox.AddThemeConstantOverride("separation", global::Ashfall.Core.UI.Theme.SpacingMd);
+
+            // The arbitrator's scale: balance bar etched at table center.
+            // The explicit FAIR/SHORT label is retained (gates check the label).
+            _scalePlayerFill = new ColorRect
+            {
+                Color = ToGodotColor(global::Ashfall.Core.UI.Theme.Hot),
+                CustomMinimumSize = new Vector2(70, 8)
+            };
+            _scaleFactionFill = new ColorRect
+            {
+                Color = ToGodotColor(global::Ashfall.Core.UI.Theme.Muted),
+                CustomMinimumSize = new Vector2(70, 8)
+            };
+            arbitratorHbox.AddChild(_scalePlayerFill);
+            arbitratorHbox.AddChild(_scaleFactionFill);
 
             _lblFairness = new Label { Text = "DEAL IS FAIR" };
             _lblFairness.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeH3);
@@ -308,6 +370,8 @@ namespace AtomicWar.GodotApp.Economy
         private void BuildBioTradeRows()
         {
             _bioTradeRows.Clear();
+            _bioCountLabels.Clear();
+            _bioStepperButtons.Clear();
             var bioItems = new[]
             {
                 (BiologicalTradeItem.PintOfBlood, "Pint of Blood", "icon_bio_blood.png"),
@@ -364,6 +428,9 @@ namespace AtomicWar.GodotApp.Economy
 
                 _bioTradeContainer.AddChild(row);
                 _bioTradeRows.Add(row);
+                _bioCountLabels[bioKind] = countLbl;
+                _bioStepperButtons.Add(btnMinus);
+                _bioStepperButtons.Add(btnPlus);
             }
         }
 
@@ -371,6 +438,31 @@ namespace AtomicWar.GodotApp.Economy
 
         private IFactionRadioProvider _radioProvider;
         private ISeededRng _rng;
+
+        /// <summary>
+        /// Skin-track / convergence binding: paint the staged table from the
+        /// Act 0 seam. When bound, this takes priority over the session binding
+        /// and the panel never touches simulation types.
+        /// </summary>
+        public void BindViewModel(ITradeScreenViewModel viewModel, ITradeIntentSink intentSink)
+        {
+            if (_viewModel != null)
+            {
+                _viewModel.Changed -= OnViewModelChanged;
+            }
+            _viewModel = viewModel;
+            _intentSink = intentSink;
+            if (_viewModel != null)
+            {
+                _viewModel.Changed += OnViewModelChanged;
+            }
+            OnViewModelChanged();
+        }
+
+        private void OnViewModelChanged()
+        {
+            RefreshView();
+        }
 
         public void BindSession(
             EconomyHostSession session,
@@ -384,6 +476,13 @@ namespace AtomicWar.GodotApp.Economy
             _priceShockProvider = priceShockProvider;
             _radioProvider = radioProvider;
             _rng = rng ?? new SeededRng(2026);
+
+            if (_viewModel != null)
+            {
+                _viewModel.Changed -= OnViewModelChanged;
+                _viewModel = null;
+                _intentSink = null;
+            }
 
             if (_session != null)
             {
@@ -415,7 +514,15 @@ namespace AtomicWar.GodotApp.Economy
 
         public void RefreshView()
         {
+            if (_viewModel != null)
+            {
+                RefreshFromViewModel();
+                return;
+            }
             if (_session == null) return;
+
+            // The tell plate is seam-driven; clear it in session mode.
+            if (_lblTellPlate != null) _lblTellPlate.Text = "";
 
             // 1. Update Header Fields
             _lblFactionName.Text = $"FACTION: {_activeFactionId.ToUpper().Replace('_', ' ')}";
@@ -443,25 +550,15 @@ namespace AtomicWar.GodotApp.Economy
             if (_priceShockProvider != null)
             {
                 var kinds = new[] { PriceShockKind.PlumePassing, PriceShockKind.ConvoyAmbush, PriceShockKind.FactionWar, PriceShockKind.WinterDeepens };
+                var activeBadges = new List<ShockBadgeData>();
                 foreach (var k in kinds)
                 {
                     if (_priceShockProvider.TryGetPriceShock(k, day, out var rule))
                     {
-                        var shockBadge = new HBoxContainer();
-                        var icon = new TextureRect
-                        {
-                            CustomMinimumSize = new Vector2(16, 16),
-                            StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
-                            Texture = LoadTexture(GetShockIconPath(k))
-                        };
-                        shockBadge.AddChild(icon);
-                        var lbl = new Label { Text = $"{rule.Kind} (x{rule.Multiplier:0.0})" };
-                        lbl.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
-                        lbl.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Warm));
-                        shockBadge.AddChild(lbl);
-                        _shocksContainer.AddChild(shockBadge);
+                        activeBadges.Add(new ShockBadgeData(rule.Kind, rule.Multiplier, rule.Trigger));
                     }
                 }
+                RebuildShockBadges(activeBadges);
             }
 
             // 3. Populate Stock Lists
@@ -475,6 +572,158 @@ namespace AtomicWar.GodotApp.Economy
             {
                 var intercept = _radioProvider.GetFactionEvent(_activeFactionId, RadioEventKind.InterceptChatter, day, _rng);
                 _lblRadioTicker.Text = $"RADIO: [{intercept.Callsign}] {intercept.Message}";
+            }
+        }
+
+        /// <summary>
+        /// Paints the staged table purely from the Act 0 seam. Reads only;
+        /// zero simulation types touched.
+        /// </summary>
+        private void RefreshFromViewModel()
+        {
+            var vm = _viewModel;
+
+            // 1. Header — the trader's presence
+            _lblFactionName.Text = vm.FactionName.Length > 0
+                ? $"FACTION: {vm.FactionName.ToUpperInvariant()}"
+                : "FACTION: —";
+            _textureFactionEmblem.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{vm.FactionId}.png");
+            _lblLeader.Text = $"Leader: {vm.LeaderName} (gen {vm.SuccessionGeneration})";
+            _badgeStance.Text = vm.StanceBadgeText;
+            _badgeStance.AddThemeColorOverride("font_color", GetStanceColor(vm.Stance));
+
+            // 2. Tell plate — posture readable from the plate alone
+            _lblTellPlate.Text = vm.StanceTellLine;
+
+            // 3. Ledger-edge meters
+            _lblTrust.Text = $"Trust: {vm.Trust:+0;-0;0}";
+            _lblAggression.Text = $"Aggression: {vm.Aggression:0.00}";
+            _lblRepels.Text = $"Holds: x{vm.ConsecutiveRepels}";
+            _lblParleyStatus.Text = vm.HasSurrendered
+                ? "[S] SURRENDERED"
+                : (vm.CanDemandParley ? "[P] PARLEY READY" : "");
+
+            // 4. News from Outside strip
+            _lblPhaseDay.Text = $"Phase: {vm.WorldPhaseLabel} · Day {vm.WorldDay}";
+            RebuildShockBadges(vm.ShockBadges);
+            if (vm.ScarcityMultipliers.Count > 0)
+            {
+                var parts = new List<string>();
+                foreach (var band in vm.ScarcityMultipliers)
+                {
+                    parts.Add($"{band.DisplayName} x{band.Multiplier:0.0}");
+                }
+                _lblScarcitySummary.Text = $"Scarcity: {string.Join(", ", parts)}";
+            }
+            else
+            {
+                _lblScarcitySummary.Text = "Scarcity: Normal";
+            }
+
+            // 5. Table edges — what you push across vs what they guard
+            ClearList(_playerOfferList);
+            ClearList(_factionStockList);
+            foreach (var line in vm.PlayerOffers)
+            {
+                _playerOfferList.AddChild(MakeTableLineLabel($"{line.Quantity}x {line.DisplayName} — {line.WorthLabel}"));
+            }
+            foreach (var line in vm.FactionDemands)
+            {
+                _factionStockList.AddChild(MakeTableLineLabel($"{line.Quantity}x {line.DisplayName} — {line.WorthLabel}"));
+            }
+            if (vm.PlayerOffers.Count == 0 && vm.BiologicalOffers.Count == 0)
+            {
+                _playerOfferList.AddChild(MakeTableLineLabel("— your edge of the table is bare —", dimmed: true));
+            }
+            if (vm.FactionDemands.Count == 0)
+            {
+                _factionStockList.AddChild(MakeTableLineLabel("— their edge of the table is bare —", dimmed: true));
+            }
+
+            int bioCount = 0;
+            foreach (var pair in vm.BiologicalOffers) bioCount += pair.Value;
+            _lblPlayerWorth.Text = $"Offer Worth: {global::Ashfall.Core.Economy.TradeWorthLabels.Format(vm.PlayerOfferValue)} ({vm.PlayerOffers.Count} items, {bioCount} bio)";
+            _lblFactionAskWorth.Text = $"Demand Worth: {global::Ashfall.Core.Economy.TradeWorthLabels.Format(vm.FactionAskValue)} ({vm.FactionDemands.Count} items)";
+
+            // 6. Grim drawer — counts shown, steppers are session-mode controls
+            foreach (var pair in _bioCountLabels)
+            {
+                pair.Value.Text = vm.BiologicalOffers.TryGetValue(pair.Key, out int count) ? count.ToString() : "0";
+            }
+            bool steppersVisible = _session != null;
+            foreach (var stepper in _bioStepperButtons)
+            {
+                stepper.Visible = steppersVisible;
+            }
+
+            // 7. Arbitrator — diegetic scale + explicit label (gates check the label)
+            _lblFairness.Text = vm.FairnessLabel;
+            _lblFairness.AddThemeColorOverride("font_color", GetFairnessColor(vm.Fairness));
+            _btnConfirmTrade.Disabled = !vm.CanConfirm;
+            _btnDemandParley.Visible = vm.CanDemandParley;
+            UpdateArbitratorScale(vm.PlayerOfferValue, vm.FactionAskValue);
+
+            // 8. Radio — the room's radio, unchanged position
+            _lblRadioTicker.Text = vm.RadioTickerLine;
+        }
+
+        private void RebuildShockBadges(IReadOnlyList<ShockBadgeData> badges)
+        {
+            foreach (Node child in _shocksContainer.GetChildren())
+                child.QueueFree();
+
+            if (badges == null) return;
+            foreach (var badge in badges)
+            {
+                var shockBadge = new HBoxContainer();
+                var icon = new TextureRect
+                {
+                    CustomMinimumSize = new Vector2(16, 16),
+                    StretchMode = TextureRect.StretchModeEnum.KeepAspectCentered,
+                    Texture = LoadTexture(GetShockIconPath(badge.Kind))
+                };
+                shockBadge.AddChild(icon);
+                var lbl = new Label { Text = $"{badge.Kind} (x{badge.Multiplier:0.0})" };
+                lbl.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeLabel);
+                lbl.AddThemeColorOverride("font_color", ToGodotColor(global::Ashfall.Core.UI.Theme.Warm));
+                shockBadge.AddChild(lbl);
+                _shocksContainer.AddChild(shockBadge);
+            }
+        }
+
+        private static void ClearList(VBoxContainer list)
+        {
+            foreach (Node child in list.GetChildren())
+                child.QueueFree();
+        }
+
+        private Label MakeTableLineLabel(string text, bool dimmed = false)
+        {
+            var lbl = new Label { Text = text };
+            lbl.AddThemeFontSizeOverride("font_size", global::Ashfall.Core.UI.Theme.FontSizeSmall);
+            lbl.AddThemeColorOverride("font_color", ToGodotColor(dimmed ? global::Ashfall.Core.UI.Theme.Dim : global::Ashfall.Core.UI.Theme.Pale));
+            return lbl;
+        }
+
+        private void UpdateArbitratorScale(float playerVal, float factionVal)
+        {
+            float total = playerVal + factionVal;
+            float ratio = total > 0f ? playerVal / total : 0.5f;
+            const float width = 140f;
+            _scalePlayerFill.CustomMinimumSize = new Vector2(Mathf.Max(6f, width * ratio), 8);
+            _scaleFactionFill.CustomMinimumSize = new Vector2(Mathf.Max(6f, width * (1f - ratio)), 8);
+        }
+
+        private static Color GetFairnessColor(TradeFairness fairness)
+        {
+            switch (fairness)
+            {
+                case TradeFairness.Fair:
+                    return ToGodotColor(global::Ashfall.Core.UI.Theme.Hot);
+                case TradeFairness.Short:
+                    return ToGodotColor(global::Ashfall.Core.UI.Theme.Critical);
+                default:
+                    return ToGodotColor(global::Ashfall.Core.UI.Theme.Dim);
             }
         }
 
@@ -553,7 +802,7 @@ namespace AtomicWar.GodotApp.Economy
             }
             foreach (var (bio, count) in _bioOfferCounts)
             {
-                playerVal += ((int)bio + 1) * 25f * count;
+                playerVal += global::Ashfall.Core.Economy.TradePricing.BioUnitValue(bio) * count;
             }
 
             float factionVal = 0f;
@@ -579,6 +828,8 @@ namespace AtomicWar.GodotApp.Economy
                 _lblFairness.AddThemeColorOverride("font_color", isFair ? ToGodotColor(global::Ashfall.Core.UI.Theme.Hot) : ToGodotColor(global::Ashfall.Core.UI.Theme.Critical));
             }
 
+            UpdateArbitratorScale(playerVal, factionVal);
+
             var stance = _stanceProvider?.GetStance(_activeFactionId) ?? TradeStance.Trade;
             bool willTrade = stance == TradeStance.Trade || stance == TradeStance.ShareIntel;
             if (_btnConfirmTrade != null)
@@ -589,6 +840,13 @@ namespace AtomicWar.GodotApp.Economy
 
         private void ExecuteTrade()
         {
+            if (_intentSink != null)
+            {
+                _intentSink.TryConfirmTrade();
+                RefreshView();
+                return;
+            }
+
             if (_lblRadioTicker != null)
             {
                 if (_radioProvider != null)
@@ -609,6 +867,12 @@ namespace AtomicWar.GodotApp.Economy
 
         private void DemandParley()
         {
+            if (_intentSink != null)
+            {
+                _intentSink.TryDemandParley();
+                return;
+            }
+
             if (_lblRadioTicker != null)
             {
                 if (_radioProvider != null)
@@ -661,11 +925,8 @@ namespace AtomicWar.GodotApp.Economy
 
         private static string FormatWorthLabel(float value)
         {
-            if (value <= 0f) return "None";
-            if (value < 20f) return "Sparse";
-            if (value < 60f) return "Modest";
-            if (value < 150f) return "Substantial";
-            return "Generous";
+            // One source of truth: the core owns the qualitative thresholds.
+            return global::Ashfall.Core.Economy.TradeWorthLabels.Format(value);
         }
 
         private static Texture2D LoadTexture(string path)

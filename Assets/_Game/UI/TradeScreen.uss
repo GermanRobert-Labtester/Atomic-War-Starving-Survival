@@ -93,6 +93,36 @@
     border-color: var(--critical);
 }
 
+/* ── Header sub-layout ─────────────────────────────────────────────── */
+
+.trade-header-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.trade-leader-name {
+    -unity-font-definition: var(--font-mono);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+}
+
+.trade-status-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.trade-meta-label {
+    -unity-font-definition: var(--font-mono);
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    margin-left: 8px;
+}
+
 /* ── Barter columns ───────────────────────────────────────────────────── */
 
 .trade-barter-area {
@@ -331,5 +361,23 @@
 }
 
 .trade-parley-msg.hidden {
+    display: none;
+}
+
+/* ── Radio ticker ──────────────────────────────────────────────────── */
+
+.trade-radio-ticker {
+    -unity-font-definition: var(--font-mono);
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    white-space: normal;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+}
+
+.trade-radio-ticker.hidden {
     display: none;
 }

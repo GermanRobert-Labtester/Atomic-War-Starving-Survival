@@ -115,19 +115,22 @@
   "faction_id": "faction_rebuilders",
   "display_name": "The Rebuilders",
   "ideology": "Municipal continuity. Public works, minuted decisions, and plans longer than the people making them",
-  "origin_story": "Three surviving employees of a district public works department walked out to the floodplain allotments in the first winter because it was the only good soil left in Sector 4, and began farming it in plot order off the pre-war waiting list. They call themselves the Works. The Rebuilders is what the Toll called them, and it was not meant kindly. The soil is good because the ground floods, and everything that floods there is contaminated, so they can grow food and cannot drink; two hundred people now live seventy days from thirst on the best farmland in the sector. They hold the only still and the only working autoclave for forty kilometres, which makes a caretaker's hut the sector's clinic. Their standing purchase order is brass -- door handles, nameplates, lamp bases -- because you cannot cast a valve seat out of scrap steel and every joint in a water system is brass or it is a leak with a schedule.",
+  "origin_story": "Three surviving employees of a district public works department walked out to the floodplain allotments in the first winter because it was the only good soil left in Sector 4, and began farming it in plot order off the pre-war waiting list. They call themselves the Works. The Rebuilders is what the Toll called them, and it was not meant kindly. The soil is good because the ground floods, and everything that floods there is contaminated, so they can grow food and cannot drink; two hundred people now live seventy days from thirst on the best farmland in the sector. They hold the only still and the only working autoclave for forty kilometres, which makes a caretaker's hut the sector's clinic. Their standing purchase order is brass -- door handles, nameplates, lamp bases -- because you cannot cast a valve seat out of scrap steel and every joint in a water system is brass or it is a leak with a schedule. Years on, the Works' most visible face in the district is no longer the allotments but the grain exchange it came to run at the old leaning silo: a market floor with its own scales, its own roster, and its own rope keeping weapons off the trading floor. Adaeze Okonkwo runs that floor the way the Works has always run everything — by name, by shift, by minute — and most traders who deal with the Rebuilders daily have never once seen the floodplain that started it.",
   "key_beliefs": [
    "Write it down or it did not happen and cannot be handed over",
    "The waiting list is the waiting list; plot 114 is still plot 114",
    "A thing worth building takes longer than the person building it",
    "There is no one left in this sector who can do water, and that was chosen, not accidental",
-   "We do not ask where the brass came from"
+   "We do not ask where the brass came from",
+   "Fair scales or broken fingers, and the fingers get broken by consensus"
   ],
   "dialogue_style": "Minutes of a meeting. Carried, noted, deferred. Asks you to sign things and means it",
   "signature_quote": "Motion: that we plant the north strip anyway. Carried, four to one. The one was me.",
   "relationships": {
    "iron_garrison": "suspicious",
+   "central_garrison": "hostile-open",
    "ash_militia": "neutral",
+   "ash_sign": "wary",
    "cult_of_ash_sign": "hostile",
    "warlords_sector_4": "hostile"
   },
@@ -170,22 +173,57 @@
   "faction_id": "faction_central_garrison",
   "display_name": "The Central Garrison",
   "ideology": "Martial continuity, ration discipline, the office as the only legitimate authority",
-  "origin_story": "The garrison remnant that held the sector capital through the exchange. Colonel-level officers run it as a standing command post: inventories, rosters, courts-martial, and a door policy that treats every civilian as a resource to be scheduled.",
+  "origin_story": "The garrison remnant that held the sector capital through the exchange. Colonel-level officers run it as a standing command post: inventories, rosters, courts-martial, and a door policy that treats every civilian as a resource to be scheduled. It was the Iron Garrison until Day 238, when Colonel Voss did not report for the regular Sigma-7 briefing and was never seen again. Lieutenant Colonel Harven read the Continuity Reclamation Decree into the record before noon, and the checkpoints never missed a shift change. The Garrison renamed itself within the year, not to hide from what it had been, Harven said, but to stop answering for a man who was no longer giving orders. The old chain of command is still framed on the wall at Checkpoint Gamma. Nobody has taken it down.",
   "key_beliefs": [
    "The office is the state; the state is supply",
    "Desertion is the only capital crime",
-   "Records are the first line of defence"
+   "Records are the first line of defence",
+   "The decree is the man now, not the man behind the decree",
+   "A command post that keeps its shift schedule has not fallen"
+  ],
+  "dialogue_style": "Formal, decree-numbered, refuses first person singular from officers on duty",
+  "signature_quote": "Reclamation is not repudiation.",
+  "relationships": {
+   "rebuilders": "hostile-open",
+   "ash_sign": "suspicious",
+   "warlords_sector_4": "transactional"
+  },
+  "tribute_demands": [
+   "grain_quota",
+   "conscript_labor"
+  ],
+  "tech_offerings": [
+   "checkpoint_patrol_escort",
+   "ration_priority_stamp"
   ]
  },
  {
   "faction_id": "faction_ash_sign",
   "display_name": "The Ash Sign",
   "ideology": "Redemptive catastrophe, ash as judgement, conversion through survival",
-  "origin_story": "The cult of the Ash Sign preaches that the exchange was a cleansing and the survivors are the chosen remnant. Their charity is real and their prices are theological. They recruit by hunger and by grief, and their judgement falls on those who refuse the sign.",
+  "origin_story": "The cult of the Ash Sign preaches that the exchange was a cleansing and the survivors are the chosen remnant. Their charity is real and their prices are theological. They recruit by hunger and by grief, and their judgement falls on those who refuse the sign. What began as small groups reading meaning into dosimeter numbers at the old survey cairn has, in the years since, become an organized presence with its own switchback trail up to a built shrine and its own shrine-keepers to read it. The public sermon is judgement and the chosen remnant; the shrine-keepers' actual daily discipline is narrower and stranger than that — reading the pattern of what the ash burns and what it spares as a text, and in the last year, making predictions that land with a precision the pilgrims find holy and a few outsiders find worth investigating.",
   "key_beliefs": [
    "The ash is the proof",
    "The chosen survive; the rest are seed",
-   "Charity is owed, not given"
+   "Charity is owed, not given",
+   "The ash spares nothing by accident",
+   "What the fire chooses to leave standing is the only map worth trusting"
+  ],
+  "dialogue_style": "Liturgical, cadenced, quotes numbers like scripture, avoids the word luck",
+  "signature_quote": "The ash does not warn. It measures.",
+  "relationships": {
+   "central_garrison": "suspicious",
+   "rebuilders": "wary",
+   "warlords_sector_4": "neutral"
+  },
+  "tribute_demands": [
+   "ritual_participation_in_hot_zones",
+   "pilgrim_offerings"
+  ],
+  "tech_offerings": [
+   "rad_resistant_herbal_remedy",
+   "fallout_zone_navigation",
+   "blessed_ground_passage"
   ]
  },
  {
@@ -296,6 +334,34 @@
    "Take what moves",
    "The road belongs to the ambush",
    "Mercy is a loaded word"
+  ]
+ },
+ {
+  "faction_id": "faction_forward_roster",
+  "display_name": "The Forward Roster",
+  "ideology": "The scale needs a fence, and somebody has to be the fence",
+  "origin_story": "Twelve people walked out of a Rebuilders roster meeting on Day 552 with their coats and their share of the small guard detail Adaeze Okonkwo had approved against her own instinct, and they have not walked back. They still call themselves Rebuilders when it's convenient and something else when it isn't, because nobody has agreed on a name yet and the arguing over one feels beside the point with a Garrison checkpoint sitting close enough to watch their fire at night. They keep the Works' habit of writing everything down. What they write down now is mostly who's on watch and who owes a shift, not minutes of a vote, because they have stopped pretending every decision here gets one.",
+  "key_beliefs": [
+   "A fed block still needs someone standing at the edge of it",
+   "We didn't leave the roster, we became its perimeter",
+   "Adaeze kept the ledger. We kept the argument that made the ledger necessary",
+   "Nobody elected us. Nobody un-elects a fence either"
+  ],
+  "dialogue_style": "Clipped, half military and half market — shift schedules and watch orders spoken in the same breath as trade terms",
+  "signature_quote": "We're not the Garrison. We just stand where the Garrison would, before the Garrison gets there.",
+  "relationships": {
+   "rebuilders": "estranged",
+   "central_garrison": "wary-truce",
+   "ash_sign": "neutral",
+   "warlords_sector_4": "transactional"
+  },
+  "tribute_demands": [
+   "watch_shifts",
+   "ammunition"
+  ],
+  "tech_offerings": [
+   "checkpoint_watch",
+   "escort_to_the_exchange"
   ]
  }
 ]

@@ -261,33 +261,12 @@ namespace AtomicWar._Game.UI
             return _economy.GetBarterUnitValue(item, ActiveFactionId, playerSelling: fromPlayerOffer);
         }
 
-        // ── Theme & Design Token Presentation Helpers ─────────────────
-
-        public Color GetStanceBadgeColor()
+        /// <summary>Current effective trust for the active faction (0 when no faction open).</summary>
+        public float GetTrust()
         {
-            switch (Stance)
-            {
-                case TradeStance.ShareIntel:
-                case TradeStance.Trade:
-                    return Theme.Colors.TextSuccess;
-                case TradeStance.Refuse:
-                    return Theme.Colors.TextSecondary;
-                case TradeStance.Rob:
-                    return Theme.Colors.TextAccent;
-                case TradeStance.HostileRaid:
-                default:
-                    return Theme.Colors.TextDanger;
-            }
-        }
-
-        public Color GetFairnessStatusColor()
-        {
-            return IsFair ? Theme.Colors.TextSuccess : Theme.Colors.TextDanger;
-        }
-
-        public string GetFairnessStatusLabel()
-        {
-            return IsFair ? "DEAL IS FAIR" : "OFFER SHORT";
+            if (!IsOpen || string.IsNullOrEmpty(ActiveFactionId)) return 0f;
+            return _stanceProvider != null ? _stanceProvider.GetEffectiveTrust(ActiveFactionId)
+                 : _economy != null ? _economy.GetEffectiveTrust(ActiveFactionId) : 0f;
         }
 
         public string GetActivePriceShockSummary(int currentDay)

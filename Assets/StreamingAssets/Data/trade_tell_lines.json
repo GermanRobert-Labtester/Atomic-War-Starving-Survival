@@ -1,0 +1,123 @@
+{
+  "$schema": "./schema/trade_tell_lines.schema.json",
+  "version": 1,
+  "description": "Negotiation Table tell corpus. One terse, data-defined posture line per stance x trust band. The player reads the trader the way the trader reads the offer. Rotation is seed-deterministic via ISeededRng. Tone: cold, exhausted, human, restrained. No modern slang, no anachronisms, no fourth-wall breaks.",
+  "trust_bands": [
+    { "id": "hostile", "min": -100, "max": -40 },
+    { "id": "wary", "min": -39, "max": 0 },
+    { "id": "neutral", "min": 1, "max": 40 },
+    { "id": "warm", "min": 41, "max": 100 }
+  ],
+  "tells": {
+    "hostile_raid": {
+      "hostile": [
+        "The table is a formality. Their hands never leave the rifle slings.",
+        "They have already decided what they are taking. The barter is theater.",
+        "Nobody sits on your side of the table anymore."
+      ],
+      "wary": [
+        "They count your people before they count your goods.",
+        "The sentries shift when you reach for your pack.",
+        "Every answer comes through gritted teeth."
+      ],
+      "neutral": [
+        "They talk trade, but the perimeter crews keep drilling.",
+        "The ledger is open and the knives are not put away.",
+        "A raid is being priced somewhere behind those eyes."
+      ],
+      "warm": [
+        "Old debts keep the peace, barely. The ledger stays open.",
+        "They still trade like a friend, and watch you like weather.",
+        "The greeting is warm. The exit stays covered."
+      ]
+    },
+    "rob": {
+      "hostile": [
+        "Whatever you set down, they intend to keep. All of it.",
+        "They weigh your pack, not your offer.",
+        "The quartermaster's fingers drum the counter like a countdown."
+      ],
+      "wary": [
+        "Their eyes do the arithmetic on everything you carry.",
+        "Goods change hands here. Fairness was never on the table.",
+        "They ask what else is in the shelter, twice."
+      ],
+      "neutral": [
+        "The stall is open, but the scale is loaded.",
+        "They nod along to your terms while repositioning the guard.",
+        "Whatever you agree to, expect less back."
+      ],
+      "warm": [
+        "Habit, not hunger, keeps their hands moving toward your goods.",
+        "They short you gently, almost apologetically.",
+        "Old affection buys you a smaller theft than most."
+      ]
+    },
+    "refuse": {
+      "hostile": [
+        "The stall shutter is down. It does not open for you.",
+        "They fold their arms and wait for you to understand.",
+        "Nothing you carry is worth the conversation."
+      ],
+      "wary": [
+        "The quartermaster barely glances at your offer.",
+        "They wave you off before you finish unpacking.",
+        "Come back with more than noise, they say, and mean never."
+      ],
+      "neutral": [
+        "The shutter is half-open. Not today, they say. Not to you.",
+        "They listen to the whole offer, then shake their heads once.",
+        "The door stays closed, but they let you finish your sentence."
+      ],
+      "warm": [
+        "They refuse softly, saving you the humiliation of arguing.",
+        "Not the goods, they say. The timing. Come back after the thaw.",
+        "They pour you something warm and trade nothing at all."
+      ]
+    },
+    "trade": {
+      "hostile": [
+        "The deal is real. The hands holding it are not steady.",
+        "They trade like men settling an estate nobody wanted.",
+        "Business is done quickly, and nobody turns their back."
+      ],
+      "wary": [
+        "Every item is counted twice, once out loud for your benefit.",
+        "They keep one hand on the ledger and one near the door.",
+        "The terms are fair and the tone is not."
+      ],
+      "neutral": [
+        "The quartermaster works down the list without hurry.",
+        "They weigh the goods, then weigh you, then decide.",
+        "A plain deal at a plain table. Nothing wasted, nothing given."
+      ],
+      "warm": [
+        "They push the good items toward your side of the table first.",
+        "The count runs in your favor and nobody corrects it.",
+        "Coffee appears, black and thin, before the haggling starts."
+      ]
+    },
+    "share_intel": {
+      "hostile": [
+        "They trade, they talk, and none of it can be trusted twice.",
+        "The intel comes fast and cheap, like they want you gone.",
+        "Every warning they share is also a test of what you fear."
+      ],
+      "wary": [
+        "The goods are fair. The information arrives in pieces.",
+        "They tell you just enough to learn what you already know.",
+        "Advice is free here. Acting on it is not."
+      ],
+      "neutral": [
+        "Between items, they mention which roads are closed.",
+        "The ledger closes and the real conversation begins.",
+        "They mark the fallout drift on your map without being asked."
+      ],
+      "warm": [
+        "They set the ledger aside and speak to you like kin.",
+        "You get the news before the radio does, some nights.",
+        "They warn you about the crossing two days before the convoy burns."
+      ]
+    }
+  }
+}

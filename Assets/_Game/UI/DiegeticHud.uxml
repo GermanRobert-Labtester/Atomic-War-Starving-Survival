@@ -559,9 +559,17 @@
             <ui:VisualElement name="trade-panel" class="trade-panel">
                 <!-- Header -->
                 <ui:VisualElement name="trade-header" class="trade-header">
-                    <ui:Label name="trade-faction-name" class="trade-faction-name" text="" />
+                    <ui:VisualElement name="trade-header-top" class="trade-header-top">
+                        <ui:Label name="trade-faction-name" class="trade-faction-name" text="" />
+                        <ui:Label name="trade-leader-name" class="trade-leader-name" text="" />
+                    </ui:VisualElement>
                     <ui:Label name="trade-faction-strip" class="trade-faction-strip" text="" />
-                    <ui:Label name="trade-stance-badge" class="trade-stance-badge" text="" />
+                    <ui:VisualElement name="trade-status-row" class="trade-status-row">
+                        <ui:Label name="trade-stance-badge" class="trade-stance-badge" text="" />
+                        <ui:Label name="trade-trust" class="trade-meta-label" text="" />
+                        <ui:Label name="trade-aggression" class="trade-meta-label" text="" />
+                        <ui:Label name="trade-repels" class="trade-meta-label" text="" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
 
                 <!-- Dual-column barter area -->
@@ -606,6 +614,7 @@
                         </ui:VisualElement>
                     </ui:VisualElement>
                     <ui:Label name="trade-parley-msg" class="trade-parley-msg hidden" text="" />
+                    <ui:Label name="trade-radio-ticker" class="trade-radio-ticker hidden" text="" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>

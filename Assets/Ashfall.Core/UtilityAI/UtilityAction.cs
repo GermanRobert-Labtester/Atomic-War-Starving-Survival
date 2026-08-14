@@ -21,7 +21,17 @@ namespace Ashfall.Core.UtilityAI
 
         public ResponseCurve(CurvePoint[] points)
         {
-            _points = points;
+            if (points == null || points.Length == 0)
+            {
+                _points = points;
+                return;
+            }
+            // Normalize: interpolation assumes ascending x. A malformed catalog
+            // must not silently mis-evaluate (debug-loop defect); sort a copy.
+            _points = new CurvePoint[points.Length];
+            for (int i = 0; i < points.Length; i++)
+                _points[i] = new CurvePoint { x = points[i].x, y = points[i].y };
+            System.Array.Sort(_points, (a, b) => a.x.CompareTo(b.x));
         }
 
         public static readonly ResponseCurve Identity = new ResponseCurve(new[]
