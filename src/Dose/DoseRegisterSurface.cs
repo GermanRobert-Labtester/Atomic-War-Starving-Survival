@@ -91,9 +91,23 @@ namespace AtomicWar.GodotApp.Dose
 
         public void BindSession(DoseLedgerHostSession session)
         {
+            UnbindSession();
             _session = session;
             if (_session != null)
                 _session.StateChanged += RefreshView;
+        }
+
+        private void UnbindSession()
+        {
+            if (_session == null) return;
+            _session.StateChanged -= RefreshView;
+            _session = null;
+        }
+
+        public override void _ExitTree()
+        {
+            UnbindSession();
+            base._ExitTree();
         }
 
         public void RefreshView()

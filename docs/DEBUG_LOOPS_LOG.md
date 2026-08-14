@@ -159,6 +159,23 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 405/405, dose selftest + uitest PASS x2, expansions
   236/236, all 19 selftests PASS, gate 0 errors / 319 info across 59 catalogs.
 
+## LOOP 7 — COLD REBUILD + 4 sweeps (1 fix, verified green)
+- Cold rebuild: rm -rf .godot/mono/temp + Ashfall.Core bin/obj -> build 0 errors,
+  tests 405/405, expansions 236/236 GREEN.
+- Sweep A (exhaustive CaptureState audit, 31 systems): zero live-state returns and
+  zero live mutations on capture; 1 determinism find — KnowledgeBase.CaptureState
+  emitted HashSet order into the save array -> ordinal-sorted (checksum stability).
+- Sweep B (event hygiene): DoseRegisterSurface.BindSession unbinds before bind,
+  _ExitTree unsubscribes; Muster widgets never subscribe; Main subscriptions are
+  single-shot via setup guards. Clean.
+- Sweep C (gate triage): all 319 warnings are the single benign cross-catalog id
+  reuse category; 0 unresolved/missing references.
+- Sweep D (smoke determinism): muster + dose uitests PASS 5/5 consecutive; no
+  stray user:// saves left (muster cleans its own).
+- Verify: build 0 warnings, tests 405/405, all 18 selftests PASS, uitests x5,
+  gate 0 errors.
+
+
 
 
 

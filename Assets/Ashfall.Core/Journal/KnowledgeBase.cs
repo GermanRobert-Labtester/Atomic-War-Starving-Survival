@@ -99,10 +99,11 @@ namespace Ashfall.Core.Journal
 
         public KnowledgeBaseSave CaptureState()
         {
+            // Ordinal-sorted: HashSet enumeration order is not a cross-host
+            // guarantee, and the checksum walks this array.
             var keys = new string[_discovered.Count];
-            int i = 0;
-            foreach (var k in _discovered)
-                keys[i++] = k;
+            _discovered.CopyTo(keys, 0);
+            System.Array.Sort(keys, System.StringComparer.Ordinal);
             return new KnowledgeBaseSave { DiscoveredKeys = keys };
         }
 
