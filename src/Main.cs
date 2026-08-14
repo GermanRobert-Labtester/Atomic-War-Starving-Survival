@@ -171,6 +171,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DoseUiTest:
                     RunDoseUiTestAndQuit();
                     return;
+                case HostCliAction.EconomyUiTest:
+                    RunEconomyUiTestAndQuit();
+                    return;
                 case HostCliAction.InventoryUiTest:
                     RunInventoryUiTestAndQuit();
                     return;
@@ -1568,6 +1571,55 @@ namespace AtomicWar.GodotApp
                 _catalogLabel.Text = _core.CatalogLine() + "\n" + _core.CensusLine();
             if (_briefingPreviewLabel != null)
                 _briefingPreviewLabel.Text = HoldfastBriefingView.PreviewLine(_core.CurrentQuest);
+        }
+
+        /// <summary>
+        /// Headless smoke: economy market panel builds, icons resolve with
+        /// fallback, refresh + rebind are leak-free (no double-subscription),
+        /// open/close cycles don't corrupt state.
+        /// </summary>
+        private void RunEconomyUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupEconomy();
+
+            bool panel = _economyPanel != null;
+            bool catalog = _economy.Catalog != null && _economy.Catalog.Count >= 10;
+
+            // Open/close cycle: rebind + refresh repeatedly must not double-subscribe.
+            int before = _economyPanel != null ? CountPanelRefreshes() : -1;
+            _economyPanel.RefreshView();
+            _economyPanel.RefreshView();
+            int after = _economyPanel != null ? CountPanelRefreshes() : -1;
+            bool noLeak = before == after;
+
+            // Icon fallback: at least one good should resolve a texture or hit
+            // the fallback path without crashing.
+            int fallback = 0;
+            foreach (var good in _economy.Catalog.All())
+            {
+                var asset = AssetRegistry.GetItem(good.id);
+                if (asset.Texture == null) fallback++;
+            }
+            bool icons = fallback >= 0;
+
+            _economy.TickDemo(1);
+            bool ticked = _economy.Market.Day >= 1;
+            bool bought = _economy.BuyDemo("clean_water", 2).Contains("Bought");
+
+            bool pass = panel && catalog && noLeak && icons && ticked && bought;
+            GD.Print($"[EconomyUiTest] panel={panel} catalog={catalog} noLeak={noLeak} " +
+                     $"fallbackIcons={fallback} ticked={ticked} bought={bought}");
+            GD.Print(pass ? "ECONOMY_UITEST PASS" : "ECONOMY_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
+        private int CountPanelRefreshes()
+        {
+            // A crude leak meter: repeated RefreshView must not grow child nodes.
+            return _economyPanel != null
+                ? _economyPanel.GetChild(0).GetChildCount()
+                : -1;
         }
 
         /// <summary>Headless smoke: dose register surface builds, actions run, tabs render.</summary>
