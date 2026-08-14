@@ -46,5 +46,113 @@
     "region": "the_stack",
     "overlay_on_unlock": false,
     "recast_always": false
+  },
+  {
+    "id": "loc_stack_clinic_alcove",
+    "displayName": "Clinic Alcove",
+    "inspect": "Iodine, cloth, a bolt of string. Not a hospital. A rag that is damp when he is gone.",
+    "description": "A curtain on a wire. Behind it: iodine in a brown bottle with a Continuity lot number, a bolt of boiled cloth, string, a basin that was a mixing bowl. Arithmetic, if Ianov has visited, is a paper on the crate with numbers that were not rounded toward ease. If Hadi Morrow is north, the rag on the hook is still damp and nobody boils it. If he is dead, the rag is dry and still nobody throws it. A child's drawing of a bunk, labelled with a number that is not on the sleeping-stack stencil. You can take the iodine. The next dressing will be water and hope that is not called hope. You can take the rag. The hook will still look like a hook.",
+    "dangerLevel": 2.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 2.0,
+    "region": "the_stack",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_approach_hatch",
+    "displayName": "Outer Hatch",
+    "inspect": "Standby cycle held it unlocked once. Everything since has been a decision.",
+    "description": "The outer hatch. Wheel, gasket, intercom grille with a button cracked to show the spring. Temperature is a number Tamsin will say if you ask, and a fact if you do not. Frost on the inner rim in winter; salt-rime if a column has come from the Cut. Scratches on the wheel from hands that did not know the direction. A laminated card in a freezer bag has been here, or will be, or a triplicate form, or a ticket from a driving-licence bureau. You can open. You can keep shut. The game will give you the temperature and then stop talking. You can steal the cracked button. The next visitor will knock on metal.",
+    "dangerLevel": 3.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 2.0,
+    "region": "the_approach",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_approach_apron",
+    "displayName": "Ash Apron",
+    "inspect": "Tracks. A rectangle of earth the crows already know.",
+    "description": "Ash packed by feet into a fan. Folding-stool marks, three metres out, a triangle that has been pulled and sunk and pulled. If a burial was done outside, the rectangle is a different grey and the flock has a schedule. A peg for a lantern that is not always lit; Tamsin lights it for whoever is walking, which is not Ivy's rule and must not be asked to be. You can scuff the stool marks. They will come back if the person does. You can leave a cup. It will fill with grit.",
+    "dangerLevel": 3.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 3.0,
+    "region": "the_approach",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_approach_stool",
+    "displayName": "The Waiting Stool",
+    "inspect": "He does not knock. The waiting is the procedure.",
+    "description": "A folding stool, municipal, one rivet replaced with wire. Three metres from the hatch, which is the distance Edor Vale will name if you ask why he does not come closer. The feet have sunk. A square of cardboard under one foot is dated in pencil, a week ago, or a month. There is no cup unless you bring one. If you carry tea out, he will wash the cup in the ash and there will be grit in the seam when you get it back. If levy is refused, the stool is here for forty days. If the column was hidden, the stool may be empty because there is nothing to wait for, or still occupied because he does not know. You can fold the stool and bring it in. He will stand. Standing is also in the procedure.",
+    "dangerLevel": 3.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 2.0,
+    "region": "the_approach",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_approach_decon",
+    "displayName": "Decon Alcove",
+    "inspect": "A bucket. A rag. The magnitudes are already written.",
+    "description": "A niche with a grate. Bucket, cold water, a rag that has been boiled and has not. A painted line on the floor that means strip. Force-decon spills; the alcove ticks at ten. Let-in ticks at fifty, and the tick walks inside. Deny does not tick. Deny is a number on everyone else's face in the mess. A nail holds spare string for tying sleeves. You can take the rag. The next returnee will use a shirt. You should not retune the numbers. They were expensive.",
+    "dangerLevel": 4.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 6.0,
+    "region": "the_approach",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_overflow_alloc_11",
+    "displayName": "Allocation 11",
+    "inspect": "The authenticator is on. The chart is blank on purpose.",
+    "description": "A hatch that still believes in a number. Inside: the same print of duty roster, fourteen rows, wiped. A disc with no number hangs on a nail by the wheel. Four people sleep here. Their names are not on the wall. Nila Brant will trade a hiding place for a filter and will not say please. If you write one of their living names in ink, or on a census, or on 12-C, this hatch will still look like a hatch. It will not open. You can take the disc. It authenticates nothing. That is the point. You can write a name as a kindness. Kindness is how a pool is made.",
+    "dangerLevel": 4.0,
+    "travelHours": 1.5,
+    "baseRadsPerHour": 22.0,
+    "region": "the_overflow",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_overflow_alloc_13",
+    "displayName": "Allocation 13",
+    "inspect": "Authenticator lit. Dust. One name erased to a scar in the paper.",
+    "description": "Empty. The light is a waste. A chart with a rectangle of thinner fibre where a name was, graphite ground out with a wet thumb. The scar is still a shape if you hold it to the lamp. Nila wants it to stay a scar. Copying it for Sole is completeness. Completeness opens 13 to a file and closes 11 to you. A bunk frame with no mattress. A kettle with mineral rings, dry. You can rewrite the name. You can leave the scar. You can pocket a rubbing. The authenticator will not care. Nila will.",
+    "dangerLevel": 5.0,
+    "travelHours": 2.0,
+    "baseRadsPerHour": 28.0,
+    "region": "the_overflow",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_overflow_pump_hatch",
+    "displayName": "Pump Hatch",
+    "inspect": "A hatch on a riser. It authenticates for nobody.",
+    "description": "Service architecture, a lid on a pipe the city used to deny floods with. The authenticator plate is blank — not wiped, never numbered. Blank Rows leave filters here, and a pencil jar, and a note that says `DO NOT WRITE THE LIVING` in a hand that is not Nila's. The air smells of wet rust. You can take a filter. Someone in 11 will breathe worse. You can write a joke. They will not laugh. They will move the cache.",
+    "dangerLevel": 6.0,
+    "travelHours": 2.5,
+    "baseRadsPerHour": 36.0,
+    "region": "the_overflow",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_overflow_blank_cellar",
+    "displayName": "The Blank Cellar",
+    "inspect": "Pencils in a jar. The rule is the only decoration.",
+    "description": "A cellar under a Grid stair that still has a civil-defence stripe. Chairs that do not match. A jar of pencils, points kept, erasers worn to metal. The rule is painted, not paper: `DO NOT WRITE THE LIVING`. A second line, smaller, in graphite: *the dead can take it.* They argue about the second line. You can steal a pencil. Kess's string will not match. You can add a third line. They will paint over it.",
+    "dangerLevel": 5.0,
+    "travelHours": 2.0,
+    "baseRadsPerHour": 24.0,
+    "region": "the_overflow",
+    "overlay_on_unlock": false,
+    "recast_always": false
   }
 ]

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core;
+using CrossingQuestEntry = AtomicWar._Game.Data.CrossingQuestEntry;
 
 namespace AtomicWar._Game.Core
 {
@@ -17,12 +19,14 @@ namespace AtomicWar._Game.Core
     {
         public VouchAccessSystem Vouch { get; private set; }
         public CrossingArbitrationSystem Arbitration { get; private set; }
+        /// <summary>The single engine-agnostic ledger (§5.3) — Ashfall.Core, not a host twin.</summary>
         public LedgerDebtSystem Ledger { get; private set; }
         public NPC_OsranKell NPCOsranKell { get; private set; }
         public NPC_MattisCray NPCMattisCray { get; private set; }
         public NPC_DessaVane NPCDessaVane { get; private set; }
         public NPC_PerrinAshby NPCPerrinAshby { get; private set; }
         public NPC_IvoFenn NPCIvoFenn { get; private set; }
+        public NPC_WynSabler NPCWynSabler { get; private set; }
 
         private void BootNobodyCharter()
         {
@@ -34,6 +38,7 @@ namespace AtomicWar._Game.Core
             NPCDessaVane = new NPC_DessaVane();
             NPCPerrinAshby = new NPC_PerrinAshby();
             NPCIvoFenn = new NPC_IvoFenn();
+            NPCWynSabler = new NPC_WynSabler();
 
             var osran = CharactersCatalogLoader.GetById(CrossingIds.Npcs.OsranKell);
             NPCOsranKell.Initialise(osran != null ? osran.display_name : "Osran Kell");
@@ -45,6 +50,8 @@ namespace AtomicWar._Game.Core
             NPCPerrinAshby.Initialise(perrin != null ? perrin.display_name : "Perrin Ashby");
             var ivo = CharactersCatalogLoader.GetById(CrossingIds.Npcs.IvoFenn);
             NPCIvoFenn.Initialise(ivo != null ? ivo.display_name : "Ivo Fenn");
+            var wyn = CharactersCatalogLoader.GetById(CrossingIds.Npcs.WynSabler);
+            NPCWynSabler.Initialise(wyn != null ? wyn.display_name : "Wyn Sabler");
 
             InitialiseBackerPool();
             MergeCrossingLocations();
@@ -68,13 +75,14 @@ namespace AtomicWar._Game.Core
             _registry.RegisterEventDriven("npc_dessa_vane");
             _registry.RegisterEventDriven("npc_perrin_ashby");
             _registry.RegisterEventDriven("npc_ivo_fenn");
+            _registry.RegisterEventDriven("npc_wyn_sabler");
 
             // The Ostrowski rumour is the pack's front door: it sets
             // exp_nobodys_charter_unlocked on the vouch card's min_day —
             // never at boot.
             _registry.RegisterDaily("nobody_charter_rumour", MaybeStartNobodyCharterRumour);
 
-            GameLog.Log("[GameBootstrap] Nobody's Charter booted: VouchAccess, Arbitration, Ledger, Scale, Scalehouse Row, Osran, Mattis, Dessa, Perrin, Ivo.");
+            GameLog.Log("[GameBootstrap] Nobody's Charter booted: VouchAccess, Arbitration, Ledger, Scale, Scalehouse Row, Osran, Mattis, Dessa, Perrin, Ivo, Wyn.");
         }
 
         private void MergeCrossingLocations()
@@ -105,16 +113,16 @@ namespace AtomicWar._Game.Core
         private void LoadCrossingQuests()
         {
             var cards = CrossingQuestCatalogLoader.Load();
-            CrossingQuests = cards != null ? cards : new List<CrossingQuestEntry>();
+            CrossingQuests = cards != null ? cards : new List<AtomicWar._Game.Data.CrossingQuestEntry>();
             if (CrossingQuests.Count > 0)
                 GameLog.Log("[GameBootstrap] Crossing quests registered: " + CrossingQuests.Count);
         }
 
         /// <summary>Cached quest cards from crossing_quests.json (see CrossingQuestCatalogLoader).</summary>
-        public List<CrossingQuestEntry> CrossingQuests { get; private set; }
+        public List<AtomicWar._Game.Data.CrossingQuestEntry> CrossingQuests { get; private set; }
 
         /// <summary>Look up a registered Crossing quest card by id (null-safe).</summary>
-        public CrossingQuestEntry GetCrossingQuest(string questId)
+        public AtomicWar._Game.Data.CrossingQuestEntry GetCrossingQuest(string questId)
         {
             if (CrossingQuests == null || string.IsNullOrEmpty(questId)) return null;
             for (int i = 0; i < CrossingQuests.Count; i++)
@@ -197,16 +205,18 @@ namespace AtomicWar._Game.Core
             if (Ledger != null)
             {
                 Ledger.OnContractSigned += contract =>
-                    GameLog.Log("[Nobody's Charter] Contract signed: " + contract.contractId
+                    GameLog.Log("[Nobody's Charter] Contract signed: " + contract.debtorId
                         + " (principal: " + contract.principal + ", forfeit: " + contract.forfeit + ")");
                 Ledger.OnContractPaid += contract =>
-                    GameLog.Log("[Nobody's Charter] Contract paid: " + contract.contractId);
+                    GameLog.Log("[Nobody's Charter] Contract paid: " + contract.debtorId);
+                Ledger.OnContractRenegotiated += contract =>
+                    GameLog.Log("[Nobody's Charter] Contract renegotiated: " + contract.debtorId
+                        + " (term " + contract.termDays + " days, forfeit: " + contract.forfeit + ")");
                 Ledger.OnForfeitTriggered += contract =>
-                    GameLog.Log("[Nobody's Charter] Forfeit triggered: " + contract.forfeit
-                        + " (contract " + contract.contractId + ")");
-                Ledger.OnLedgerTampered += contractId =>
-                    GameLog.Log("[Nobody's Charter] Ledger tamper attempt on " + contractId
-                        + ". Ivo's records do not lie.");
+                    GameLog.Log("[Nobody's Charter] Forfeit due: " + contract.forfeit
+                        + " (debtor " + contract.debtorId + ")");
+                Ledger.OnLedgerTampered += () =>
+                    GameLog.Log("[Nobody's Charter] Ledger tamper attempt. Ivo's records do not lie.");
             }
 
             if (NPCMattisCray != null)
@@ -289,27 +299,41 @@ namespace AtomicWar._Game.Core
         public bool IsCrossingRulingOverturned(string topic)
             => Arbitration?.IsRulingOverturned(topic) ?? false;
 
-        // ── Ledger / Debt host API ─────────────────────────────────────
+        // ── Ledger / Debt host API (§5.3, Ashfall.Core single source) ───
 
-        /// <summary>Sign a debt contract at the Underwrite Hall.</summary>
-        public bool SignCrossingContract(DebtContract contract, int currentDay)
-            => Ledger?.SignContract(contract, currentDay) ?? false;
+        /// <summary>One reading of a contract at the Underwrite Hall. Creates/updates the draft.</summary>
+        public bool PresentCrossingContract(string debtorId, float principal, int termDays, float rate, string forfeit)
+            => Ledger?.PresentContract(debtorId, principal, termDays, rate, forfeit) ?? false;
 
-        /// <summary>Pay off a contract in full.</summary>
-        public bool PayCrossingContract(string contractId)
-            => Ledger?.PayContract(contractId) ?? false;
+        /// <summary>Sign. Requires the contract to have been read twice (§5.3).</summary>
+        public bool SignCrossingContract(string debtorId, int currentDay)
+            => Ledger?.SignContract(debtorId, currentDay) ?? false;
 
-        /// <summary>Renegotiate contract terms (extend term, reduce principal).</summary>
-        public bool RenegotiateCrossingContract(string contractId, int newTermDays, string newPrincipal)
-            => Ledger?.RenegotiateContract(contractId, newTermDays, newPrincipal) ?? false;
+        /// <summary>Pay off a contract in full (also the honoured path after a forfeit is due).</summary>
+        public bool PayCrossingContract(string debtorId, int currentDay)
+            => Ledger?.PayContract(debtorId, currentDay) ?? false;
 
-        /// <summary>Daily tick for debt contracts — checks for expired terms and triggers forfeits.</summary>
+        /// <summary>
+        /// Renegotiate terms. On signed ink this is only allowed at term end.
+        /// A contested renegotiation requires a fresh Standing ruling on the
+        /// given topic to stick (bible §5.3: "requires a fresh Standing if
+        /// contested").
+        /// </summary>
+        public bool RenegotiateCrossingContract(string debtorId, float newPrincipal, int newTermDays,
+            float newRate, string newForfeit, bool contested = false, string standingTopic = null)
+        {
+            if (contested && !(Arbitration?.IsRulingHeld(standingTopic) ?? false))
+                return false;
+            return Ledger?.RenegotiateContract(debtorId, newPrincipal, newTermDays, newRate, newForfeit) ?? false;
+        }
+
+        /// <summary>Daily tick — terms run down; forfeits come due at zero.</summary>
         public void TickCrossingLedger(int currentDay)
-            => Ledger?.Tick(currentDay);
+            => Ledger?.TickDaily(currentDay);
 
-        /// <summary>Attempt to tamper with the ledger. Always fails. Ivo's records do not lie.</summary>
-        public bool TamperCrossingLedger(string contractId)
-            => Ledger?.AttemptTamper(contractId) ?? false;
+        /// <summary>One strike on the ledger per playthrough. Ivo's records do not lie.</summary>
+        public bool TamperCrossingLedger()
+            => Ledger?.TamperLedger() ?? false;
 
         // ── Sprint 0: the rumour + the vouch reward ───────────────────────
 

@@ -345,6 +345,26 @@
     "signature_quote": "I vouch for you, not the Crossing. Keep them separate and we stay friends."
   },
   {
+    "id": "npc_wyn_sabler",
+    "display_name": "Wyn Sabler",
+    "profession": "Farmer",
+    "bio": "Second bad season. Her granary pledge is due and she can count exactly what is owed without looking at the paper. She will not ask anyone to break the terms for her; she read them twice, same as everyone. She will accept it if someone breaks them anyway.",
+    "faction": "none",
+    "region": "region_crossing",
+    "first_day": 40,
+    "location_id": "loc_crossing_the_annex",
+    "wants": [
+      "keep_the_granary"
+    ],
+    "offers": [
+      "grain_pledge"
+    ],
+    "will_not": [
+      "ask_anyone_to_break_the_terms"
+    ],
+    "signature_quote": "I signed. I'd sign again. I'm telling you what's owed and what happens if it isn't."
+  },
+  {
     "id": "npc_dessa_vane",
     "display_name": "Dessa Vane",
     "profession": "Underwrite Keeper",

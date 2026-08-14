@@ -22,11 +22,13 @@ namespace AtomicWar.GodotApp
         };
 
         private int _weatherIndex;
+        private bool _outfallShifted;
 
         public IceRoadSystem IceRoad { get; }
         public SimClock Clock { get; }
         public HoldfastCatalog Catalog { get; }
         public CensusClaimSystem Census { get; }
+        public BrineWaterSystem Brine { get; }
         public LocationLayoutSystem Layouts { get; }
         public WeatherKind Weather { get; private set; }
         public float OutdoorCelsius { get; private set; }
@@ -36,6 +38,8 @@ namespace AtomicWar.GodotApp
         public int LocationCount => Catalog.Locations.Count;
         public int QuestCount => Catalog.Quests.Count;
 
+        public bool OutfallShifted => _outfallShifted;
+
         public HoldfastQuestEntry? CurrentQuest =>
             Catalog.Quests.Count == 0 ? null : Catalog.Quests[QuestIndex];
 
@@ -44,12 +48,14 @@ namespace AtomicWar.GodotApp
             SimClock clock,
             HoldfastCatalog catalog,
             CensusClaimSystem census,
+            BrineWaterSystem brine,
             LocationLayoutSystem layouts)
         {
             IceRoad = iceRoad;
             Clock = clock;
             Catalog = catalog;
             Census = census;
+            Brine = brine;
             Layouts = layouts;
             Weather = WeatherKind.Blizzard;
             OutdoorCelsius = TempFor(Weather);
@@ -59,6 +65,7 @@ namespace AtomicWar.GodotApp
             IceRoad.OnBeaconDark += loc => LastEvent = "beacon dark: " + loc;
             IceRoad.OnAccidentLogged += () => LastEvent = "accident logged";
             Census.OnLevyResolved += flag => LastEvent = "levy: " + flag;
+            Brine.OnSteamTrip += () => LastEvent = "STEAM TRIP";
         }
 
         public static CoreDemoSession Create(string dataDirectory, ILog? log = null)
@@ -72,9 +79,10 @@ namespace AtomicWar.GodotApp
             var ice = new IceRoadSystem(DefaultSeed);
             var clock = new SimClock(DefaultStartDay);
             var census = new CensusClaimSystem();
+            var brine = new BrineWaterSystem();
             var layouts = new LocationLayoutSystem(files, json, log);
             layouts.Load(dataDirectory);
-            return new CoreDemoSession(ice, clock, catalog, census, layouts);
+            return new CoreDemoSession(ice, clock, catalog, census, brine, layouts);
         }
 
         public void UnlockAndClerk()
@@ -85,6 +93,13 @@ namespace AtomicWar.GodotApp
                 IceRoad.NotifyClerkStarted();
         }
 
+        /// <summary>Cross-host save envelope. Shape and checksum owned by HoldfastSaveCodec.</summary>
+        public HoldfastSave CaptureSave() =>
+            HoldfastSaveCodec.Capture(IceRoad, Census, Brine, Clock);
+
+        public void RestoreSave(HoldfastSave save) =>
+            HoldfastSaveCodec.Restore(save, IceRoad, Census, Brine, Clock);
+
         public string TickDay()
         {
             UnlockAndClerk();
@@ -93,12 +108,19 @@ namespace AtomicWar.GodotApp
             Clock.AdvanceDays(1);
             IceRoad.TickDaily(Clock.Day, Weather, OutdoorCelsius);
             Census.TickDaily(Clock.Day);
+            Brine.TickDaily(Clock.Day, Weather, OutdoorCelsius, _outfallShifted);
             if (!string.IsNullOrEmpty(LastEvent))
                 return LastEvent;
             return IceRoad.IsOpen == wasOpen
                 ? (IceRoad.IsOpen ? "window holds" : "still closed")
                 : (IceRoad.IsOpen ? "WINDOW OPENED" : "WINDOW CLOSED");
         }
+
+        public void UnlockPlant() => Brine.UnlockSaltTrade();
+
+        public void ToggleOutfallShift() => _outfallShifted = !_outfallShifted;
+
+        public bool RepairMembrane(int drums) => Brine.RepairWithResin(drums);
 
         public void CycleWeather()
         {
@@ -127,6 +149,18 @@ namespace AtomicWar.GodotApp
                 $"window {IceRoad.WindowDaysRemaining}d · day {Clock.Day} · " +
                 $"{Weather} {OutdoorCelsius:0}°C · {blocked} · " +
                 $"locs {LocationCount} quests {QuestCount}";
+        }
+
+        public string BrineLine()
+        {
+            string steam = Brine.SteamTripped
+                ? "TRIPPED " + Brine.State.hoursSinceTrip + "h"
+                : "on";
+            string plant = Brine.Unlocked ? "unlocked" : "dormant";
+            return
+                $"Brine: {plant} · membrane {Brine.MembraneIntegrity:0.0}% · steam {steam} · " +
+                $"cluster {Brine.ClusterIndoorC:0.0}°C · outfall {(OutfallShifted ? "shifted" : "normal")} · " +
+                $"salt trade {(Brine.State.saltTradeUnlocked ? "open" : "closed")}";
         }
 
         public string HonourDemoLevy()

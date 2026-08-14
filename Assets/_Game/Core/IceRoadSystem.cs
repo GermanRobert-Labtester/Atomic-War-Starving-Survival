@@ -93,6 +93,9 @@ namespace AtomicWar._Game.Core
         public void Initialise(int seedSalt) => _core.Initialise(seedSalt);
         public void Unlock(int day) => _core.Unlock(day);
         public void NotifyClerkStarted() => _core.NotifyClerkStarted();
+        public void ShortenWindowLength(int minDays, int maxDays, int seedSalt) =>
+            _core.ShortenWindowLength(minDays, maxDays, seedSalt);
+        public void ClearWindowLengthOverride() => _core.ClearWindowLengthOverride();
 
         public void TickDaily(int day, WeatherKind weather, float outdoorCelsius)
         {

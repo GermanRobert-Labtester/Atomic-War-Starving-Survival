@@ -18,7 +18,7 @@ namespace Ashfall.Core
     /// ink-freeze, term expiry into a named forfeit, the honoured path (pay
     /// after due), replacement-not-amendment renegotiation, one-shot tamper,
     /// and a JSON roundtrip through the port. Debtor ids are master-list ids
-    /// from characters.json (Wyn = npc_wren, Ivo = npc_ivor_lasko).
+    /// from characters.json (Wyn = npc_wyn_sabler, Ivo = npc_ivo_fenn).
     /// Invoked by `dotnet test`; host CLI wiring mirrors --census-selftest.
     /// </summary>
     public static class LedgerDebtHeadlessDemo
@@ -53,8 +53,8 @@ namespace Ashfall.Core
             ledger.OnContractRenegotiated += _ => report.RenegotiatedCount++;
             ledger.OnLedgerTampered += () => report.TamperedCount++;
 
-            const string wyn = "npc_wren";
-            const string ivo = "npc_ivor_lasko";
+            const string wyn = "npc_wyn_sabler";
+            const string ivo = "npc_ivo_fenn";
 
             Check(ledger.PresentContract(wyn, 12f, 30, 0.2f, "the pledged grain"), "first reading");
             Check(!ledger.SignContract(wyn, 40), "one reading is not ink");

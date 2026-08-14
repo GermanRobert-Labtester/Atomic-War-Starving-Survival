@@ -167,6 +167,17 @@ namespace AtomicWar._Game.Survivors
             public const string HoldfastTheMembrane = "quest_holdfast_the_membrane";
             public const string HoldfastTheSecondList = "quest_holdfast_the_second_list";
             public const string HoldfastTheHatch = "quest_holdfast_the_hatch";
+            // ASHFALL: THE DUTY ROSTER — main questline
+            public const string DutyRosterTheChart = "quest_roster_the_chart";
+            public const string DutyRosterWhoEats = "quest_roster_who_eats";
+            public const string DutyRosterFourteenth = "quest_roster_fourteenth";
+            public const string DutyRosterCaretaker = "quest_roster_caretaker";
+            public const string DutyRosterTheColumn = "quest_roster_the_column";
+            public const string DutyRosterTheTin = "quest_roster_the_tin";
+            public const string DutyRosterSole = "quest_roster_sole";
+            public const string DutyRosterWindow = "quest_roster_window";
+            public const string DutyRosterInk = "quest_roster_ink";
+
             // ASHFALL: NOBODY'S CHARTER — live quest cards (crossing_quests.json)
             public const string CrossingTheVouch = "quest_crossing_the_vouch";
             public const string CrossingFirstWeigh = "quest_crossing_first_weigh";

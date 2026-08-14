@@ -82,5 +82,77 @@
     "description": "Ledgers, claims, and every reading the Deck Scale has reported, filed by someone who believes a paper trail is the only enforcement a town without a guard can afford. What is filed here has outlived every argument filed about it. Ask, and Ivo Fenn will find the page — given the hour and a reason he accepts.",
     "overlay_on_unlock": false,
     "recast_always": false
+  },
+  {
+    "id": "loc_crossing_the_lockup",
+    "displayName": "The Lockup",
+    "dangerLevel": 3.8,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 24.0,
+    "region": "region_crossing",
+    "inspect": "Collateral storage. Tools, livestock, once — the story goes — a set of teeth in a jar, never explained, never asked about twice.",
+    "description": "The Underwrite's collateral storage: tools, livestock, pledged goods waiting out their terms. The closest thing to a threat the Underwrite owns, and it is a threat made of paperwork more than muscle.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_granary_pledge",
+    "displayName": "The Pledged Granary",
+    "dangerLevel": 3.2,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 22.0,
+    "region": "region_crossing",
+    "inspect": "Wyn Sabler's grain, mortgaged against a debt that's coming due. Visible, countable, exactly as much as it looks like.",
+    "description": "Wyn Sabler's grain, pledged against a debt that is coming due. Everyone at the Crossing can see exactly how much is in it, and most of them can tell you exactly how much is owed. The padlock is mostly theatre.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_nightfire",
+    "displayName": "The Nightfire",
+    "dangerLevel": 3.6,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 22.0,
+    "region": "region_crossing",
+    "inspect": "Where deals actually happen, after the Scalehouse closes. No one has ever formally claimed it belongs to the Underwrite. Nobody else sits there either.",
+    "description": "A fire that never quite goes out, and the place where deals actually get made after the Scalehouse closes. No one has ever formally claimed it belongs to the Underwrite. Nobody else sits there either.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_petition_tent",
+    "displayName": "The Petition Tent",
+    "dangerLevel": 3.0,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 18.0,
+    "region": "region_crossing",
+    "inspect": "Perrin's drafting table. A charter in progress, rewritten enough times the margins are a second document.",
+    "description": "The Compact's canvas-and-scavenge camp, trying hard to look permanent before it is. Perrin Ashby's drafting table holds a charter rewritten enough times that the margins are a second document.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_founders_marker",
+    "displayName": "The Founders' Marker",
+    "dangerLevel": 3.2,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 22.0,
+    "region": "region_crossing",
+    "inspect": "A plaque, pre-war, corroded past the third line. What it's believed to say and what it says are already two different things before you even find the real document.",
+    "description": "A pre-war bronze plaque corroded past the third line. Everyone in the Crossing tells a different story about what was written below the names, and none of them has actually read it.",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
+    "id": "loc_crossing_the_annex",
+    "displayName": "The Annex",
+    "dangerLevel": 3.0,
+    "travelHours": 0.5,
+    "baseRadsPerHour": 20.0,
+    "region": "region_crossing",
+    "inspect": "Refugee housing the Compact runs on favours and Wyn's grain. Warmest room at The Crossing in every sense but temperature.",
+    "description": "Refugee housing the Compact runs on favours and Wyn's grain. Warmest room at the Crossing in every sense but temperature. Wyn Sabler lives here; her pledge sits at the granary.",
+    "overlay_on_unlock": false,
+    "recast_always": false
   }
 ]

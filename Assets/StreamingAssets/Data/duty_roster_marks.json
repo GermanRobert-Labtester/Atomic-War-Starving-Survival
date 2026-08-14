@@ -88,5 +88,135 @@
     "id": "mmc_who_hatch",
     "situation": "Expedition returning, glowing. Tamsin on intercom.",
     "later": "A rag that still ticks, or a stool with two people. Magnitudes already written: fifty, ten, twenty."
+  },
+  {
+    "id": "mark_fourteenth_claimed",
+    "situation": "The fourteenth bunk was claimed with a paper tag.",
+    "later": "Sleeping stack: a paper tag on a footboard that was not stencilled."
+  },
+  {
+    "id": "mark_fourteenth_denied",
+    "situation": "The fourteenth was denied. They died in the ash.",
+    "later": "Forty days. A bag. The flock knows the rectangle."
+  },
+  {
+    "id": "mark_hatch_let_in",
+    "situation": "A visitor was let in. The tick walked inside.",
+    "later": "Fifty in the stack. A rag that still ticks."
+  },
+  {
+    "id": "mark_hatch_decon",
+    "situation": "A visitor was force-deconned in the alcove.",
+    "later": "Ten in the alcove. The painted line. No jokes."
+  },
+  {
+    "id": "mark_hatch_deny",
+    "situation": "A visitor was denied entry.",
+    "later": "Twenty off everyone who did not go out. The mess is quieter."
+  },
+  {
+    "id": "mark_tamsin_watch_short",
+    "situation": "The night slate has the same name three times.",
+    "later": "Her intercom is slower. You will think the button is more cracked."
+  },
+  {
+    "id": "mark_edor_stool",
+    "situation": "Edor waits on the stool. Kettle inside.",
+    "later": "He will mention the cup in the return, or the silence."
+  },
+  {
+    "id": "mark_len_knock",
+    "situation": "Two knocks at the hatch. The House wants a name and a sentence.",
+    "later": "A tag with your sentence. The back room is not shown."
+  },
+  {
+    "id": "mark_hadi_listed",
+    "situation": "Hadi was listed. Kess wrote veterinary assistant, observed.",
+    "later": "The strip can come down. Levy can find him. Morning row, not remarks."
+  },
+  {
+    "id": "mark_hadi_hidden",
+    "situation": "Hadi was hidden. A blank where a trade was.",
+    "later": "Edor stays wrong by one. The blank is kept. The alcove stays."
+  },
+  {
+    "id": "mark_hadi_sent",
+    "situation": "Hadi was sent north.",
+    "later": "Curtain on a wire. Thirty dressings undone. He boils the rag himself if he returns."
+  },
+  {
+    "id": "mark_hadi_never_back",
+    "situation": "Hadi did not return. The rag is dry.",
+    "later": "Nobody boils it. Kess has not written MISSING. Remarks were for the dead."
+  },
+  {
+    "id": "mark_three_away",
+    "situation": "Three rows status levy. Extra food. Sock on a board.",
+    "later": "The mess is quieter. Two bowls wait under cloth."
+  },
+  {
+    "id": "mark_column_voss",
+    "situation": "Voss took the column.",
+    "later": "Gate has Garrison. Edor waits for people who are in the Grid."
+  },
+  {
+    "id": "mark_column_hidden",
+    "situation": "The column was hidden at 11.",
+    "later": "Stool empty because nothing to wait for, or occupied because he does not know."
+  },
+  {
+    "id": "mark_brass_kept",
+    "situation": "The tin was put back.",
+    "later": "Hands know the way. Rectangles still unfaded."
+  },
+  {
+    "id": "mark_plate_on_wall",
+    "situation": "One plate was screwed under a living name.",
+    "later": "A name that catches lamp-light. Nobody mentions the tin."
+  },
+  {
+    "id": "mark_schedule_living",
+    "situation": "Living names were filed with Sole, corroborated.",
+    "later": "A check-mark that is not a score. Ormund's drawer can show occupancy that is current."
+  },
+  {
+    "id": "mark_uncorroborated",
+    "situation": "One testimony only. Names not entered.",
+    "later": "The rule is the point of the rule. The unlisted remain a rounding."
+  },
+  {
+    "id": "mark_home_held",
+    "situation": "The house held through a window.",
+    "later": "Night slate matches returns. Notches you can count."
+  },
+  {
+    "id": "mark_house_thinned",
+    "situation": "The house thinned. A name missing.",
+    "later": "A name missing. Repeatable watches lock for a window."
+  },
+  {
+    "id": "mark_second_winter",
+    "situation": "Second Winter fell. The road thinned, the house thickened.",
+    "later": "The window was short. The stove was not. Names on the slate matched the people who came back."
+  },
+  {
+    "id": "mark_roster_ink",
+    "situation": "The wall was inked.",
+    "later": "Names that do not come off in the morning. Edor's return current. 11 dark if their living is on it."
+  },
+  {
+    "id": "mark_roster_pencil",
+    "situation": "Pencil was kept.",
+    "later": "Audit risk. Nila still talks. Ice still wants a column."
+  },
+  {
+    "id": "mark_roster_blank",
+    "situation": "Everything was erased.",
+    "later": "Scars. Incomplete file. Sole cannot complete what isn't written."
+  },
+  {
+    "id": "mark_roster_burned",
+    "situation": "The chart was burned.",
+    "later": "A charred header. Sole cannot complete what isn't written. A child asks where the wall writing went."
   }
 ]

@@ -1,0 +1,164 @@
+[
+  {
+    "id": "radio_garrison_decree_180",
+    "callSign": "GARRISON LOGISTICS CONTROL",
+    "frequency": "88.400 MHz",
+    "minDay": 180,
+    "maxDay": 240,
+    "bodyText": "All regional shelters in Sector 4 are advised: under General Order 14, ambient surface temperatures have reached minus thirty-eight degrees Celsius. The central garrison declares Priority Allocation status on all civilian heating distillate. Refusal to permit inspection constitutes immediate forfeiture of territorial protection.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_the_works_allotment_call_210",
+    "callSign": "THE WORKS (ALLOTMENTS COMMITTEE)",
+    "frequency": "104.200 MHz",
+    "minDay": 200,
+    "maxDay": 260,
+    "bodyText": "This is Ottilie Frayne broadcasting on behalf of the public works committee at Plot 1. The autoclave is running and sterile saline is available for trade against machined brass fittings — specifically half-inch gate valves and union collars. Do not bring iron or lead. We cannot hold pressure with scrap iron.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_d9_automated_carrier_250",
+    "callSign": "DETACHMENT D/9 (AUTOMATED)",
+    "frequency": "142.850 MHz",
+    "minDay": 240,
+    "maxDay": 300,
+    "bodyText": "Carrier check: station 9-Alpha listening. Standing tasking remains unamended. Authentication key sequence: Echo-Seven-Niner-Tango. Obstacle array along the Sector 4 railway cut remains armed and marked under Annex Bravo. No movement without clearance token.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_hydro_baron_tithe_notice_280",
+    "callSign": "SECTOR 8 WATER AUTHORITY",
+    "frequency": "96.100 MHz",
+    "minDay": 270,
+    "maxDay": 330,
+    "bodyText": "To all sub-surface facilities drawing from the central aquifer: monthly tithe meters are due for inspection by the 15th. Facilities with unpaid balances will experience automated manifold throttling. We do not extend credit on municipal water.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_continental_maritime_beacon_340",
+    "callSign": "NORTHERN MARITIME EVACUATION AUTHORITY",
+    "frequency": "142.850 MHz",
+    "minDay": 330,
+    "maxDay": 360,
+    "bodyText": "This is an automated continuous loop from icebreaker vessel Aurora Borealis, anchored at Grid Point North-Seven. Continental evacuation channels are open for registered civilian manifests. The winter pack ice is fracturing. Final departure window: Day 360 at 0600 hours local time.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_the_cold_count_bulletin_350",
+    "callSign": "LOW-BACKGROUND LAB (KM 40)",
+    "frequency": "112.500 MHz",
+    "minDay": 340,
+    "maxDay": 360,
+    "bodyText": "Public report from the salt chamber spectrometry group: isotopic decay analysis of fallout stratum four confirms the initial strike warheads were manufactured in pre-war automated arsenals belonging to neither active regional faction. The war is over. The dust belongs to machines.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_meteorological_inversion_alert_190",
+    "callSign": "GRANITE PASS METEOROLOGICAL",
+    "frequency": "101.500 MHz",
+    "minDay": 185,
+    "maxDay": 230,
+    "bodyText": "Severe atmospheric inversion warning: high-altitude volcanic and radioactive particulate is subsiding into valley floors. Ground-level dosimeters will register 400% elevation over baseline for the next seventy-two hours. Secure all air intakes.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_ash_sign_liturgy_220",
+    "callSign": "CATHEDRAL CRATER TRANSMISSION",
+    "frequency": "76.300 MHz",
+    "minDay": 210,
+    "maxDay": 270,
+    "bodyText": "Blessed is the grey sky that conceals the vanity of mankind. Lay aside the steel; lay aside the fuel. Those who embrace the ash shall suffer no cold in the second kingdom. Hear the word of the sign.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_geothermal_well_pressure_advisory_235",
+    "callSign": "GEOTHERMAL ENGINEERING TEAM",
+    "frequency": "104.200 MHz",
+    "minDay": 220,
+    "maxDay": 260,
+    "bodyText": "Well Alpha manifold pressure is surging due to frozen condensate return lines. Technicians at the Allotments advise reducing turbine demand by 15% to avoid hydraulic hammer in the district steam loops.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_garrison_curfew_enforcement_260",
+    "callSign": "SECTOR 4 PROVOST MARSHAL",
+    "frequency": "88.400 MHz",
+    "minDay": 250,
+    "maxDay": 295,
+    "bodyText": "All surface movement between 1700 and 0700 hours is prohibited under martial decree. Unregistered vehicles approaching garrison roadblocks will be engaged with heavy kinetic ordnance without challenge.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_civilian_distress_call_bunker_19_275",
+    "callSign": "BUNKER 19 DISTRESS",
+    "frequency": "121.500 MHz",
+    "minDay": 260,
+    "maxDay": 310,
+    "bodyText": "Mayday, mayday. Bunker Nineteen ventilation seized. Forty-one occupants including fourteen children. Ambient temperature inside dormitory minus twelve. Diesel exhausted. If anyone has half-inch copper pipe or heating distillate, please respond.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_d9_stand_down_interrogation_295",
+    "callSign": "DETACHMENT D/9 (SIGNALS)",
+    "frequency": "142.850 MHz",
+    "minDay": 280,
+    "maxDay": 330,
+    "bodyText": "Station 9-Alpha calling any surviving regional command element. Challenge phrase: November-Tango-Four. Repeat: November-Tango-Four. Acknowledge with counter-phrase or the Sector 4 rail viaduct will be dropped at midnight.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_black_thaw_radon_bulletin_310",
+    "callSign": "REGIONAL CIVIL DEFENSE ARCHIVE",
+    "frequency": "101.500 MHz",
+    "minDay": 305,
+    "maxDay": 350,
+    "bodyText": "Advisory on spring thaw hazards: melting permafrost is releasing stored Radon-222 gas into basements, cellars, and shelters. Baseline ventilation scrubbers must be operated at double velocity. Monitor survivor respiratory rates for radon distress.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_the_works_seed_distribution_325",
+    "callSign": "THE WORKS (AGRONOMY DESK)",
+    "frequency": "104.200 MHz",
+    "minDay": 320,
+    "maxDay": 360,
+    "bodyText": "Tomas Lind speaking: the cryo-preserved perennial wheat rhizomes have adapted to low-light greenhouse soil. We are distributing starter packets to any shelter that signs the Mutual Non-Aggression Concord. Come to Plot 1 at dawn.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_hydro_baron_emergency_sluice_open_335",
+    "callSign": "SECTOR 8 SLUICE CONTROL",
+    "frequency": "96.100 MHz",
+    "minDay": 330,
+    "maxDay": 360,
+    "bodyText": "Warning to downstream settlements: emergency flood sluices at Dam 4 will be opened at 0800 hours to release black meltwater pressure. Lowland culverts will be submerged. Evacuate all riverside bunkers.",
+    "isEmergency": true
+  },
+  {
+    "id": "radio_convoy_route_reconnaissance_345",
+    "callSign": "AURORA BOREALIS ADVANCE SCOUT",
+    "frequency": "142.850 MHz",
+    "minDay": 340,
+    "maxDay": 360,
+    "bodyText": "Scout team Miller to all registered manifests: the Highway 12 ice bridge is stable for vehicles up to eight tons. Fuel depot at Mile 40 is stocked with arctic distillate. Convoy departure remains fixed for Day 360.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_garrison_dissolution_plaintext_355",
+    "callSign": "GARRISON HEADQUARTERS (UNENCRYPTED)",
+    "frequency": "88.400 MHz",
+    "minDay": 352,
+    "maxDay": 360,
+    "bodyText": "To all personnel: central command is standing down. General Order 14 is rescinded. Armories are unlocked. Conscripts are released from oath. Return to your families.",
+    "isEmergency": false
+  },
+  {
+    "id": "radio_final_dawn_broadcast_360",
+    "callSign": "MERIDIAN VOICE WORLD SERVICE",
+    "frequency": "142.850 MHz",
+    "minDay": 360,
+    "maxDay": 360,
+    "bodyText": "This is the Meridian Voice. The calendar marks Day 360 since the Exchange. The northern horizon is clear. The sun has risen above the ash deck. To everyone still listening in the deep shelters: you have survived the Year of Ash.",
+    "isEmergency": false
+  }
+]

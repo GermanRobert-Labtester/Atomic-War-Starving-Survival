@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Ashfall.Core; // HoldfastLocationEntry — single definition shared with the Godot host
 
 namespace AtomicWar._Game.Data
 {
@@ -10,20 +11,6 @@ namespace AtomicWar._Game.Data
     /// overlay_on_unlock = existing Sector 4 ids whose copy changes when the expansion unlocks.
     /// </summary>
     [Serializable]
-    public class HoldfastLocationEntry
-    {
-        public string id;
-        public string displayName;
-        public string inspect;
-        public string description;
-        public float dangerLevel;
-        public float travelHours;
-        public float baseRadsPerHour;
-        public string region;
-        public bool overlay_on_unlock;
-        public bool recast_always;
-    }
-
     public static class HoldfastLocationsCatalogLoader
     {
         [Serializable]

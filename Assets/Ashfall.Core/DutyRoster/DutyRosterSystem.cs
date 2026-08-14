@@ -67,6 +67,8 @@ namespace Ashfall.Core
         public bool mutationRosterStillBlank;
         public bool mutationRosterBurned;
         public bool mutationRationProtocol;
+        public string endingId;
+        public bool secondWinterActive;
         public int seedSalt = DutyRosterSystem.SeedUtilityOffset;
         public int lastMorningDay = -1;
         public int daysLeftBlank;
@@ -125,6 +127,19 @@ namespace Ashfall.Core
         public const string MutationRationProtocol = "mutation_ration_protocol";
         public const string MutationRosterBurned = "mutation_roster_burned";
         public const string FlagWaitInk = "flag_wait_ink";
+
+        // Endings (spec §3 Endings — the game does not rank them)
+        public const string EndingInk = "ending_roster_ink";
+        public const string EndingPencil = "ending_roster_pencil";
+        public const string EndingBlank = "ending_roster_blank";
+        public const string EndingBurned = "ending_roster_burned";
+        public const string EndingSecondWinter = "ending_roster_second_winter";
+
+        // Second Winter (spec §5.4 — data profile, not a 4th simulation class)
+        public const string SeasonSecondWinter = "season_second_winter";
+        public const int SecondWinterWindowMinDays = 8;
+        public const int SecondWinterWindowMaxDays = 12;
+        public const float SecondWinterEncounterWeight = 1.6f;
 
         /// <summary>Printed manifest cap. Over-occupancy is the fourteenth-bunk quest, not a UI cheat.</summary>
         public const int ManifestCap = 14;
@@ -385,6 +400,39 @@ namespace Ashfall.Core
 
             return false;
         }
+
+        /// <summary>
+        /// Ink ending resolution (spec §3 Endings + §4.1 quest_roster_ink).
+        /// The wall has names that do not come off in the morning. Edor's return
+        /// is current. 11 goes dark if their living is on it. The hatch reversed
+        /// reads your list.
+        /// </summary>
+        public bool ResolveInkEnding(int day)
+        {
+            if (!_state.expansionUnlocked) return false;
+            if (_state.mutationRosterBurned) return false;
+            if (_state.chartScript == ScriptBurned) return false;
+
+            _state.chartScript = ScriptInk;
+            _state.mutationRosterInUse = true;
+            _state.mutationRosterStillBlank = false;
+            _state.daysLeftBlank = 0;
+            _state.kessPencilAllowed = false;
+            _state.waitInk = false;
+            _state.endingId = EndingInk;
+            RaiseUpdated();
+            return true;
+        }
+
+        /// <summary>Second Winter season profile active (data, not a 4th sim class).</summary>
+        public void SetSecondWinterActive(bool active)
+        {
+            if (_state.secondWinterActive == active) return;
+            _state.secondWinterActive = active;
+            RaiseChanged();
+        }
+
+        public bool IsSecondWinterActive => _state.secondWinterActive;
 
         public bool SetStatus(string survivorId, string status)
         {
@@ -697,6 +745,8 @@ namespace Ashfall.Core
             to.mutationRosterStillBlank = from.mutationRosterStillBlank;
             to.mutationRosterBurned = from.mutationRosterBurned;
             to.mutationRationProtocol = from.mutationRationProtocol;
+            to.endingId = from.endingId;
+            to.secondWinterActive = from.secondWinterActive;
             to.seedSalt = from.seedSalt;
             to.lastMorningDay = from.lastMorningDay;
             to.daysLeftBlank = from.daysLeftBlank;

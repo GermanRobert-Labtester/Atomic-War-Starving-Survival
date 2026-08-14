@@ -151,7 +151,25 @@ namespace Ashfall.Core
 
         public void RestoreState(BrineWaterSystemState saved)
         {
-            _state = saved ?? new BrineWaterSystemState();
+            // Deep-copy: the deserialized DTO must not become the live state.
+            // Otherwise the caller's save object and the running system alias
+            // the same fields and a later mutation corrupts the envelope.
+            _state = new BrineWaterSystemState();
+            if (saved != null)
+            {
+                _state.systemId = saved.systemId;
+                _state.unlocked = saved.unlocked;
+                _state.membraneIntegrity = saved.membraneIntegrity;
+                _state.processWaterBarrels = saved.processWaterBarrels;
+                _state.clusterIndoorC = saved.clusterIndoorC;
+                _state.steamTripped = saved.steamTripped;
+                _state.steamTripDay = saved.steamTripDay;
+                _state.hoursSinceTrip = saved.hoursSinceTrip;
+                _state.saltTradeUnlocked = saved.saltTradeUnlocked;
+                _state.membraneSaved = saved.membraneSaved;
+                _state.membraneLetDrop = saved.membraneLetDrop;
+                _state.membraneSector4Strip = saved.membraneSector4Strip;
+            }
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             if (_state.saltTradeUnlocked) _state.unlocked = true;
             RaiseChanged();

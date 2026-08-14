@@ -44,6 +44,11 @@ namespace Ashfall.Core
 
             var wall = catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
             Check(wall != null, "loc_stack_roster_wall present in catalog");
+            Check(catalog.GetLocation("loc_overflow_alloc_11") != null, "loc_overflow_alloc_11 present in catalog");
+            Check(catalog.GetLocation("loc_overflow_pump_hatch") != null, "loc_overflow_pump_hatch present in catalog");
+            Check(catalog.GetQuest("quest_roster_caretaker") != null, "quest_roster_caretaker present in catalog");
+            Check(catalog.GetQuest("quest_roster_the_tin") != null, "quest_roster_the_tin present in catalog");
+            Check(catalog.GetQuest("quest_roster_sole") != null, "quest_roster_sole present in catalog");
 
             var mark = catalog.GetMark("mark_ration_protocol");
             Check(mark != null, "mark_ration_protocol present in catalog");
@@ -86,6 +91,51 @@ namespace Ashfall.Core
             roster.BurnChart(10);
             Check(roster.State.chartScript == DutyRosterSystem.ScriptBurned, "chart script is burned after BurnChart");
             Check(roster.State.rows.Count == 0, "rows cleared after BurnChart");
+
+            // Shelter encounter system
+            var encounters = new ShelterEncounterSystem();
+            encounters.Unlock(1);
+            Check(encounters.IsUnlocked, "shelter encounters unlocked");
+            Check(encounters.StartEncounter("se_night_slate", ShelterEncounterSystem.KindNightSlate, 1),
+                "night slate encounter starts");
+            Check(!encounters.StartEncounter("se_meal_short", ShelterEncounterSystem.KindMealShort, 1),
+                "second encounter same night blocked");
+            Check(encounters.StartEncounter("se_meal_short", ShelterEncounterSystem.KindMealShort, 2),
+                "next night encounter allowed");
+            Check(encounters.QueueVisitor(ShelterEncounterSystem.VisitorEdor, 2),
+                "Edor queued on stool");
+            Check(encounters.PeekVisitor() == ShelterEncounterSystem.VisitorEdor,
+                "Edor is first in visitor queue");
+            Check(encounters.ResolveEncounter("se_night_slate", 2),
+                "night slate resolved");
+            string encBlob = json.Serialize(encounters.CaptureState());
+            var encRestored = new ShelterEncounterSystem();
+            encRestored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(encBlob));
+            Check(encRestored.IsResolved("se_night_slate"), "encounter save roundtrip preserved resolution");
+            Check(encRestored.PeekVisitor() == ShelterEncounterSystem.VisitorEdor, "visitor queue survived save roundtrip");
+
+            // Second Winter season profile (data, not a class)
+            var season = catalog.GetSeason(DutyRosterSystem.SeasonSecondWinter);
+            Check(season != null, "season_second_winter profile present in catalog");
+            if (season != null)
+            {
+                Check(season.windowMinDays == DutyRosterSystem.SecondWinterWindowMinDays,
+                    "second winter window min matches");
+                Check(season.windowMaxDays == DutyRosterSystem.SecondWinterWindowMaxDays,
+                    "second winter window max matches");
+                Check(System.Math.Abs(season.encounterWeight - DutyRosterSystem.SecondWinterEncounterWeight) < 0.001f,
+                    "second winter encounter weight matches");
+            }
+            Check(catalog.GetQuest("quest_roster_window") != null, "quest_roster_window present");
+            Check(catalog.GetQuest("quest_roster_ink") != null, "quest_roster_ink present");
+
+            // Endings on a fresh (unburned) roster
+            var endingRoster = new DutyRosterSystem();
+            endingRoster.Unlock(1);
+            endingRoster.SetSecondWinterActive(true);
+            Check(endingRoster.IsSecondWinterActive, "second winter activates");
+            Check(endingRoster.ResolveInkEnding(90), "ink ending resolves");
+            Check(endingRoster.State.endingId == DutyRosterSystem.EndingInk, "ink ending id set");
 
             report.Passed = report.FailedCount == 0;
             var sb = new StringBuilder();

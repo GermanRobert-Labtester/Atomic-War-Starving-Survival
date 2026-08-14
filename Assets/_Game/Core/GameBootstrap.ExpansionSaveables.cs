@@ -83,6 +83,8 @@ namespace AtomicWar._Game.Core
                 SaveSystem.Register(new PerrinAshbySaveable(NPCPerrinAshby));
             if (NPCIvoFenn != null)
                 SaveSystem.Register(new IvoFennSaveable(NPCIvoFenn));
+            if (NPCWynSabler != null)
+                SaveSystem.Register(new WynSablerSaveable(NPCWynSabler));
 
             // VehicleMaintenanceSystem — vehicle condition/fuel/cargo/mods
             if (VehicleMaintenance != null)
@@ -108,6 +110,26 @@ namespace AtomicWar._Game.Core
             // implements ISaveable directly (plots + wheat unlock + harvests).
             if (Greenhouse != null)
                 SaveSystem.Register(Greenhouse);
+
+            // ASHFALL: THE DUTY ROSTER — roster, marks, Kess, Ansel.
+            if (DutyRosterSystem != null)
+                SaveSystem.Register(new DutyRosterSaveable(DutyRosterSystem));
+            if (MoraleMarkSystem != null)
+                SaveSystem.Register(new MoraleMarkSaveable(MoraleMarkSystem));
+            if (ShelterEncounterSystem != null)
+                SaveSystem.Register(new ShelterEncounterSaveable(ShelterEncounterSystem));
+            if (NPCKessAdler != null)
+                SaveSystem.Register(new KessAdlerSaveable(NPCKessAdler));
+            if (NPCAnselDuth != null)
+                SaveSystem.Register(new AnselDuthSaveable(NPCAnselDuth));
+            if (NPCTamsinRook != null)
+                SaveSystem.Register(new TamsinRookSaveable(NPCTamsinRook));
+            if (NPCLenQuill != null)
+                SaveSystem.Register(new LenQuillSaveable(NPCLenQuill));
+            if (NPCHadiMorrow != null)
+                SaveSystem.Register(new HadiMorrowSaveable(NPCHadiMorrow));
+            if (NPCNilaBrant != null)
+                SaveSystem.Register(new NilaBrantSaveable(NPCNilaBrant));
         }
     }
 
@@ -451,11 +473,22 @@ namespace AtomicWar._Game.Core
 
     internal class LedgerDebtSaveable : ISaveable
     {
+        // Ashfall.Core single source (§5.3) — the Unity host consumes the
+        // engine-agnostic system directly, no host twin.
         private readonly LedgerDebtSystem _system;
         public string SaveId => LedgerDebtSystem.SystemId;
         public LedgerDebtSaveable(LedgerDebtSystem system) => _system = system;
         public object CaptureState() => _system.CaptureState();
-        public void RestoreState(object state) => _system.RestoreState(state as LedgerDebtState);
+        public void RestoreState(object state) => _system.RestoreState(state as LedgerDebtSystemState);
+    }
+
+    internal class WynSablerSaveable : ISaveable
+    {
+        private readonly NPC_WynSabler _npc;
+        public string SaveId => "npc_wyn_sabler";
+        public WynSablerSaveable(NPC_WynSabler npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_WynSablerState);
     }
 
     internal class PerrinAshbySaveable : ISaveable
@@ -474,5 +507,90 @@ namespace AtomicWar._Game.Core
         public IvoFennSaveable(NPC_IvoFenn npc) => _npc = npc;
         public object CaptureState() => _npc.CaptureState();
         public void RestoreState(object state) => _npc.RestoreState(state as NPC_IvoFennState);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // ASHFALL: THE DUTY ROSTER — saveable adapters
+    // ═══════════════════════════════════════════════════════════════════
+
+    internal class DutyRosterSaveable : ISaveable
+    {
+        private readonly DutyRosterSystem _system;
+        public string SaveId => DutyRosterSystem.SystemId;
+        public DutyRosterSaveable(DutyRosterSystem system) => _system = system;
+        public object CaptureState() => _system.CaptureState();
+        public void RestoreState(object state) => _system.RestoreState(state as DutyRosterSystemState);
+    }
+
+    internal class MoraleMarkSaveable : ISaveable
+    {
+        private readonly MoraleMarkSystem _system;
+        public string SaveId => MoraleMarkSystem.SystemId;
+        public MoraleMarkSaveable(MoraleMarkSystem system) => _system = system;
+        public object CaptureState() => _system.CaptureState();
+        public void RestoreState(object state) => _system.RestoreState(state as MoraleMarkSystemState);
+    }
+
+    internal class KessAdlerSaveable : ISaveable
+    {
+        private readonly NPC_KessAdler _npc;
+        public string SaveId => "npc_kess_adler";
+        public KessAdlerSaveable(NPC_KessAdler npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_KessAdlerState);
+    }
+
+    internal class AnselDuthSaveable : ISaveable
+    {
+        private readonly NPC_AnselDuth _npc;
+        public string SaveId => "npc_ansel_duth";
+        public AnselDuthSaveable(NPC_AnselDuth npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_AnselDuthState);
+    }
+
+    internal class ShelterEncounterSaveable : ISaveable
+    {
+        private readonly ShelterEncounterSystem _system;
+        public string SaveId => ShelterEncounterSystem.SystemId;
+        public ShelterEncounterSaveable(ShelterEncounterSystem system) => _system = system;
+        public object CaptureState() => _system.CaptureState();
+        public void RestoreState(object state) => _system.RestoreState(state as ShelterEncounterSystemState);
+    }
+
+    internal class TamsinRookSaveable : ISaveable
+    {
+        private readonly NPC_TamsinRook _npc;
+        public string SaveId => "npc_tamsin_rook";
+        public TamsinRookSaveable(NPC_TamsinRook npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_TamsinRookState);
+    }
+
+    internal class LenQuillSaveable : ISaveable
+    {
+        private readonly NPC_LenQuill _npc;
+        public string SaveId => "npc_len_quill";
+        public LenQuillSaveable(NPC_LenQuill npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_LenQuillState);
+    }
+
+    internal class HadiMorrowSaveable : ISaveable
+    {
+        private readonly NPC_HadiMorrow _npc;
+        public string SaveId => "npc_hadi_morrow";
+        public HadiMorrowSaveable(NPC_HadiMorrow npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_HadiMorrowState);
+    }
+
+    internal class NilaBrantSaveable : ISaveable
+    {
+        private readonly NPC_NilaBrant _npc;
+        public string SaveId => "npc_nila_brant";
+        public NilaBrantSaveable(NPC_NilaBrant npc) => _npc = npc;
+        public object CaptureState() => _npc.CaptureState();
+        public void RestoreState(object state) => _npc.RestoreState(state as NPC_NilaBrantState);
     }
 }

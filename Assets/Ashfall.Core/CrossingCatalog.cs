@@ -257,6 +257,8 @@ namespace Ashfall.Core
         public const string Weighbridge = "loc_crossing_weighbridge";
         public const string NpcMattis = "npc_mattis_cray";
         public const string NpcOsran = "npc_osran_kell";
+        public const string NpcWyn = "npc_wyn_sabler";
+        public const string NpcIvo = "npc_ivo_fenn";
         public const string FactionScale = "faction_the_scale";
         public const string FactionUnderwrite = "faction_the_underwrite";
         public const string FactionCompact = "faction_the_compact";

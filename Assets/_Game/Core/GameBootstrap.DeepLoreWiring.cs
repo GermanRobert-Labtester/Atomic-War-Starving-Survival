@@ -55,6 +55,8 @@ namespace AtomicWar._Game.Core
             BootCurrents();
             // ASHFALL: THE HOLDFAST — Ice Road, census, brine, waystation.
             BootHoldfast();
+            // ASHFALL: THE DUTY ROSTER — wall chart, marks, Kess, Ansel.
+            BootDutyRoster();
             // ASHFALL: NOBODY'S CHARTER — the Crossing's social gate.
             BootNobodyCharter();
             // ASHFALL: THE GLASS ORCHARD (Expansion XI) — bunker greenhouse.

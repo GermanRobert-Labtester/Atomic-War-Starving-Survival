@@ -55,11 +55,25 @@ namespace Ashfall.Core
         public string situation;
     }
 
+    /// <summary>
+    /// Second Winter season profile (spec §5.4 — data, not a 4th simulation class).
+    /// Consumed by IceRoadSystem + ShelterEncounterSystem + heater/filter ticks.
+    /// </summary>
+    public class DutyRosterSeasonEntry
+    {
+        public string id = DutyRosterSystem.SeasonSecondWinter;
+        public int windowMinDays = DutyRosterSystem.SecondWinterWindowMinDays;
+        public int windowMaxDays = DutyRosterSystem.SecondWinterWindowMaxDays;
+        public float encounterWeight = DutyRosterSystem.SecondWinterEncounterWeight;
+        public float steamTripChanceBoost;
+    }
+
     public sealed class DutyRosterCatalog
     {
         public List<DutyRosterLocationEntry> Locations { get; } = new List<DutyRosterLocationEntry>();
         public List<DutyRosterQuestEntry> Quests { get; } = new List<DutyRosterQuestEntry>();
         public List<DutyRosterMarkEntry> Marks { get; } = new List<DutyRosterMarkEntry>();
+        public List<DutyRosterSeasonEntry> Seasons { get; } = new List<DutyRosterSeasonEntry>();
 
         public DutyRosterLocationEntry GetLocation(string id)
         {
@@ -87,6 +101,15 @@ namespace Ashfall.Core
                     return Marks[i];
             return null;
         }
+
+        public DutyRosterSeasonEntry GetSeason(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return null;
+            for (int i = 0; i < Seasons.Count; i++)
+                if (Seasons[i] != null && Seasons[i].id == id)
+                    return Seasons[i];
+            return null;
+        }
     }
 
     /// <summary>
@@ -99,6 +122,7 @@ namespace Ashfall.Core
         public const string LocationsFile = "duty_roster_locations.json";
         public const string QuestsFile = "duty_roster_quests.json";
         public const string MarksFile = "duty_roster_marks.json";
+        public const string SeasonsFile = "duty_roster_seasons.json";
 
         private readonly IFileIO _files;
         private readonly IJsonSerializer _json;
@@ -123,6 +147,7 @@ namespace Ashfall.Core
             LoadList(_files.Combine(dataDirectory, LocationsFile), catalog.Locations, "locations");
             LoadList(_files.Combine(dataDirectory, QuestsFile), catalog.Quests, "quests");
             LoadList(_files.Combine(dataDirectory, MarksFile), catalog.Marks, "marks");
+            LoadList(_files.Combine(dataDirectory, SeasonsFile), catalog.Seasons, "seasons");
             return catalog;
         }
 

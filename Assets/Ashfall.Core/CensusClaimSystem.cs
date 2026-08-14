@@ -85,7 +85,7 @@ namespace Ashfall.Core
                 _state.ledger.Add(row);
             }
             row.displayName = displayName ?? "";
-            row.occupationGuess = occupationGuess ?? "";
+            row.occupationGuess = occupationGuess;
             row.listed = listed;
             OnCensusUpdated?.Invoke();
             RaiseChanged();

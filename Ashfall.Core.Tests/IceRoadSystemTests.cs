@@ -130,5 +130,53 @@ namespace Ashfall.Core.Tests
             Assert.Equal(a.WindowDaysRemaining, b.WindowDaysRemaining);
             Assert.Equal(a.IceThicknessM, b.IceThicknessM, 5);
         }
+
+        [Fact]
+        public void SecondWinterShortensWindow()
+        {
+            var ice = Sys(808);
+            ice.Unlock(1);
+            ice.NotifyClerkStarted();
+            ice.ShortenWindowLength(8, 12, 1208);
+            int openDay = -1, len = -1;
+            for (int d = 1; d <= 80; d++)
+            {
+                ice.TickDaily(d, WeatherKind.IceStorm, -24f);
+                if (ice.IsOpen && openDay < 0)
+                {
+                    openDay = d;
+                    len = ice.WindowDaysRemaining;
+                }
+            }
+            Assert.True(openDay > 0, "window should open");
+            Assert.True(len >= 8 && len <= 12, "window length " + len + " should be within 8..12");
+        }
+
+        [Fact]
+        public void ClearOverrideRestoresNormalWindow()
+        {
+            var ice = Sys(808);
+            ice.Unlock(1);
+            ice.NotifyClerkStarted();
+            ice.ShortenWindowLength(8, 8, 1208);
+            int shortLen = -1;
+            for (int d = 1; d <= 80; d++)
+            {
+                ice.TickDaily(d, WeatherKind.IceStorm, -24f);
+                if (ice.IsOpen && shortLen < 0) shortLen = ice.WindowDaysRemaining;
+            }
+            Assert.Equal(8, shortLen);
+
+            ice.ClearWindowLengthOverride();
+            int normalLen = -1;
+            for (int d = 81; d <= 300; d++)
+            {
+                bool prevOpen = ice.IsOpen;
+                ice.TickDaily(d, WeatherKind.IceStorm, -24f);
+                if (!prevOpen && ice.IsOpen && normalLen < 0) normalLen = ice.WindowDaysRemaining;
+            }
+            Assert.True(normalLen >= IceRoadSystem.MinWindowDays,
+                "normal length " + normalLen + " should be >= " + IceRoadSystem.MinWindowDays);
+        }
     }
 }

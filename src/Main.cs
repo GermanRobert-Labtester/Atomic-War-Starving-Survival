@@ -6,6 +6,8 @@ using System.Linq;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Journal;
+using Ashfall.Core.YearOfAsh;
+using AtomicWar.GodotApp.YearOfAsh;
 
 namespace AtomicWar.GodotApp
 {
@@ -19,6 +21,11 @@ namespace AtomicWar.GodotApp
         private Label _briefingPreviewLabel = null!;
         private VBoxContainer _menuContainer = null!;
         private TextEdit _codexViewer = null!;
+
+        // Year of Ash (Days 180-360)
+        private YearOfAshHostSession _yearOfAsh = null!;
+        private DoorEncounterModal _doorModal = null!;
+        private int _doorEncounterIndex = 0;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -41,6 +48,10 @@ namespace AtomicWar.GodotApp
 
         // Phase 0 core slice: ice-road seasonal gate + Holdfast catalogs
         private CoreDemoSession _core = null!;
+        // Holdfast S1 save coalescing (same pattern as the journal): any state
+        // change in IceRoad or Census marks the save dirty; the diagnostics tick
+        // flushes it. Quit and the explicit menu button flush immediately.
+        private bool _holdfastDirty;
 
         public override void _Ready()
         {
@@ -92,6 +103,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.IceRoadTickDemo:
                     GetTree().Quit(HostCli.RunIceRoadTickDemo(_dataDir));
                     return;
+                case HostCliAction.HoldfastSaveSelfTest:
+                    GetTree().Quit(HostCli.RunHoldfastSaveSelfTest(_dataDir));
+                    return;
                 case HostCliAction.JournalSelfTest:
                     RunSelfTestAndQuit();
                     return;
@@ -129,6 +143,8 @@ namespace AtomicWar.GodotApp
 
             // Flush any journal writes that were coalesced since the last tick.
             FlushJournalIfDirty();
+            // Flush the Holdfast S1 save the same way — one write per burst, not per event.
+            FlushHoldfastIfDirty();
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
@@ -161,6 +177,7 @@ namespace AtomicWar.GodotApp
             if (what == NotificationWMCloseRequest)
             {
                 SaveJournal();
+                SaveHoldfast();
                 // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
                 Ashfall.Bridge.BridgeRuntime.Shutdown();
                 GetTree().Quit();
@@ -243,9 +260,15 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Cycle weather", OnCycleWeatherClicked);
             AddMenuButton("Show quest briefing", OnShowBriefingClicked);
             AddMenuButton("Census honour levy", OnCensusLevyClicked);
+            AddMenuButton("Unlock plant (salt trade)", OnUnlockPlantClicked);
+            AddMenuButton("Repair membrane (resin)", OnRepairMembraneClicked);
+            AddMenuButton("Toggle outfall shift", OnToggleOutfallClicked);
+            AddMenuButton("Save holdfast state", OnSaveHoldfastClicked);
+            AddMenuButton("Hatch Encounter (Year of Ash)", OnDoorEncounterClicked);
+            AddMenuButton("Tick Year of Ash (+10 Days)", OnTickYearOfAshClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -315,6 +338,11 @@ namespace AtomicWar.GodotApp
             _diagnosticsLabel.AddThemeFontSizeOverride("font_size", 12);
             _diagnosticsLabel.AddThemeColorOverride("font_color", new Color(0.45f, 0.55f, 0.5f));
             rootColumn.AddChild(_diagnosticsLabel);
+
+            // Year of Ash Door Encounter Modal
+            _doorModal = new DoorEncounterModal();
+            AddChild(_doorModal);
+            _doorModal.OnChoiceClicked += OnDoorEncounterChoiceClicked;
         }
 
         private void AddMenuButton(string text, Action callback)
@@ -431,16 +459,46 @@ namespace AtomicWar.GodotApp
         {
             if (_core != null) return;
             _core = CoreDemoSession.Create(_dataDir);
-            _core.IceRoad.OnStateChanged += _ => RefreshIceRoadLabel();
+            _core.IceRoad.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
+            _core.Census.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
+            _core.Brine.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
+
+            // Cross-host roundtrip: a save written here (or by the Unity host) restores
+            // the S1 gate instead of starting dark again. Codec validates the checksum.
+            var save = HoldfastSaveStore.TryLoad();
+            if (save != null)
+            {
+                _core.RestoreSave(save);
+                _simDay = _core.Clock.Day;
+                _holdfastDirty = false; // restore just raised state-change events
+                GD.Print($"[Ashfall Godot] Holdfast S1 state restored (day {_core.Clock.Day}).");
+            }
+
             RefreshIceRoadLabel();
             GD.Print($"[Ashfall Godot] Ice road ready. {_core.CatalogLine()}");
+        }
+
+        private void SaveHoldfast()
+        {
+            if (_core == null) return;
+            if (HoldfastSaveStore.TrySave(_core.CaptureSave()))
+            {
+                _holdfastDirty = false;
+                GD.Print($"[Ashfall Godot] Holdfast S1 save written (day {_core.Clock.Day}).");
+            }
+        }
+
+        /// <summary>Writes the S1 save only when a system changed since the last flush.</summary>
+        private void FlushHoldfastIfDirty()
+        {
+            if (_holdfastDirty) SaveHoldfast();
         }
 
         private void RefreshIceRoadLabel()
         {
             if (_core == null) return;
             if (_iceRoadLabel != null)
-                _iceRoadLabel.Text = _core.StatusLine();
+                _iceRoadLabel.Text = _core.StatusLine() + "\n" + _core.BrineLine();
             if (_catalogLabel != null)
                 _catalogLabel.Text = _core.CatalogLine() + "\n" + _core.CensusLine();
             if (_briefingPreviewLabel != null)
@@ -584,6 +642,59 @@ namespace AtomicWar.GodotApp
             RefreshIceRoadLabel();
         }
 
+        private void OnSaveHoldfastClicked()
+        {
+            SetupIceRoad();
+            SaveHoldfast();
+            _statusLabel.Text =
+                $"Holdfast S1 state saved (day {_core.Clock.Day}) → {HoldfastSaveStore.FileName}\n" +
+                _core.StatusLine();
+        }
+
+        private void OnUnlockPlantClicked()
+        {
+            SetupIceRoad();
+            bool wasUnlocked = _core.Brine.Unlocked;
+            _core.UnlockPlant();
+            _statusLabel.Text = wasUnlocked
+                ? "Plant already unlocked. Salt trade is open."
+                : "Plant unlocked. Steam rises from Membrane Hall. The Office has noticed the water.";
+            _codexViewer.Text =
+                "=== BRINE WATER (Ashfall.Core) ===\n" +
+                _core.BrineLine() + "\n" +
+                "Sector 4 dies of thirst; District 8 drowns in brine. Potability needs resin, iodine, heat.\n" +
+                "Tick days to watch the membrane degrade.\n";
+            RefreshIceRoadLabel();
+        }
+
+        private void OnRepairMembraneClicked()
+        {
+            SetupIceRoad();
+            bool repaired = _core.RepairMembrane(4);
+            _statusLabel.Text = repaired
+                ? "Four resin drums rolled into the hall. " + _core.BrineLine()
+                : "Repair rejected (resin drums must be positive).";
+            _codexViewer.Text =
+                "=== MEMBRANE CRISIS ===\n" +
+                _core.BrineLine() + "\n" +
+                "Resin above 40% restores steam; the Cluster rewarms to 14°C.\n";
+            RefreshIceRoadLabel();
+        }
+
+        private void OnToggleOutfallClicked()
+        {
+            SetupIceRoad();
+            _core.ToggleOutfallShift();
+            _statusLabel.Text = _core.OutfallShifted
+                ? "Outfall shift on — brine load cut to 55%."
+                : "Outfall shift off — full brine load resumes.";
+            _codexViewer.Text =
+                "=== OUTFALL SHIFT ===\n" +
+                _core.BrineLine() + "\n" +
+                "Shifting the outfall costs bodies on the yard. It halves what the membrane eats.\n";
+            RefreshIceRoadLabel();
+        }
+
         private void OnViewCodexClicked()
         {
             // One surface: the bunker ledger is the lore archive.
@@ -623,12 +734,73 @@ namespace AtomicWar.GodotApp
                 diag.AppendLine($"Gate blocked: {_core.GateBlocked}  Clerk: {_core.IceRoad.State.clerkStarted}");
                 diag.AppendLine(_core.CatalogLine());
                 diag.AppendLine(_core.CensusLine());
+                diag.AppendLine(_core.BrineLine());
                 diag.AppendLine($"Data: {_dataDir}");
+                diag.AppendLine($"S1 save: {(HoldfastSaveStore.Exists ? HoldfastSaveStore.SavePath : "none")} · dirty: {_holdfastDirty}");
                 diag.AppendLine();
                 diag.AppendLine("=== HOLDFAST BRIEFING ===");
                 diag.AppendLine(HoldfastBriefingView.FormatQuest(_core.CurrentQuest, _core.Catalog));
             }
+            if (_yearOfAsh != null)
+            {
+                diag.AppendLine();
+                diag.AppendLine("=== YEAR OF ASH (Ashfall.Core) ===");
+                diag.AppendLine(_yearOfAsh.GetStatusSummary());
+            }
             _codexViewer.Text = diag.ToString();
+        }
+
+        // -----------------------------------------------------------------
+        // Year of Ash (Days 180-360) Wiring
+        // -----------------------------------------------------------------
+
+        private void SetupYearOfAsh()
+        {
+            if (_yearOfAsh != null) return;
+            _yearOfAsh = YearOfAshHostSession.Create(_dataDir);
+        }
+
+        private void OnDoorEncounterClicked()
+        {
+            SetupYearOfAsh();
+            if (_yearOfAsh.Encounters.Catalog.Count == 0)
+            {
+                _statusLabel.Text = "No door encounters found in catalog.";
+                return;
+            }
+
+            var enc = _yearOfAsh.Encounters.Catalog[_doorEncounterIndex % _yearOfAsh.Encounters.Catalog.Count];
+            _doorEncounterIndex++;
+            _doorModal.DisplayEncounter(enc, _yearOfAsh.DemoRoster);
+            _statusLabel.Text = $"Shelter door visitor arrived: {enc.visitorName}.";
+        }
+
+        private void OnDoorEncounterChoiceClicked(DoorEncounterEntry encounter, EncounterChoice choice)
+        {
+            if (_yearOfAsh == null) return;
+            var result = _yearOfAsh.Encounters.ResolveChoice(encounter, choice, _yearOfAsh.DemoRoster);
+            _doorModal.DisplayResolution(result);
+            _statusLabel.Text = $"Encounter resolved: {encounter.visitorName}. Morale: {result.netMoraleDelta:+#;-#;0}, Guilt: {result.netGuiltDelta:+#;-#;0}";
+            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+        }
+
+        private void OnTickYearOfAshClicked()
+        {
+            SetupYearOfAsh();
+            int targetDay = Math.Min(360, _yearOfAsh.Timeline.CurrentDay + 10);
+            _yearOfAsh.TickDay(targetDay);
+            _statusLabel.Text = _yearOfAsh.GetStatusSummary();
+            if (_codexViewer != null)
+            {
+                _codexViewer.Text = $"=== YEAR OF ASH (DAYS 180-360) ===\n{_yearOfAsh.GetStatusSummary()}\n\n" +
+                                   $"Phase: {_yearOfAsh.Timeline.CurrentPhase}\n" +
+                                   $"Ambient Temp: {_yearOfAsh.Timeline.AmbientTemperatureCelsius:F1}°C\n" +
+                                   $"Caloric Multiplier: {_yearOfAsh.Timeline.CalculateCaloricMultiplier():F2}x\n" +
+                                   $"Radon Infiltration: {_yearOfAsh.Timeline.RadonInfiltrationRate * 100:F1}%\n" +
+                                   $"War Tension: {_yearOfAsh.FactionWar.WarTension}/100\n" +
+                                   $"Dominant Faction: {_yearOfAsh.FactionWar.DominantFactionId}\n" +
+                                   $"Encounters Available: {_yearOfAsh.Encounters.Catalog.Count}\n";
+            }
         }
     }
 }

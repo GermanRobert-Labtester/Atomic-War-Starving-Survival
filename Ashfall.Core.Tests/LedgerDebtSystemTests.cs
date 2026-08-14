@@ -13,8 +13,8 @@ namespace Ashfall.Core.Tests
     /// </summary>
     public class LedgerDebtSystemTests
     {
-        private const string Wyn = "npc_wren";
-        private const string Ivo = "npc_ivor_lasko";
+        private const string Wyn = "npc_wyn_sabler";
+        private const string Ivo = "npc_ivo_fenn";
 
         private static LedgerDebtSystem Fixture()
         {
@@ -197,6 +197,36 @@ namespace Ashfall.Core.Tests
             Assert.True(ReadTwice(ledger, Wyn, 100f, 30, 0.25f, "the pledged grain"));
             Assert.True(ledger.SignContract(Wyn, 10));
             Assert.Equal(125.0, (double)ledger.TotalOwed(Wyn), 2);
+        }
+
+        [Fact]
+        public void TermEndRenegotiationExtendsSignedInk()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 12f, 3, 0.2f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 10));
+
+            // Mid-term: no silent amendment of live ink.
+            Assert.False(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain"));
+
+            // Run to the last day of the term.
+            ledger.TickDaily(11);
+            ledger.TickDaily(12); // daysRemaining == 1
+            Assert.Equal(1, ledger.GetContract(Wyn).daysRemaining);
+
+            // Term-end renegotiation extends the ink, stays signed, forfeit named.
+            Assert.True(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain"));
+            var c = ledger.GetContract(Wyn);
+            Assert.True(c.signed);
+            Assert.Equal(10, c.termDays);
+            Assert.Equal(10, c.daysRemaining);
+            Assert.Equal("the pledged grain", c.forfeit);
+
+            // The extended term runs down before the forfeit comes due.
+            for (int d = 0; d < 9; d++) ledger.TickDaily(13 + d);
+            Assert.False(c.forfeited);
+            ledger.TickDaily(22);
+            Assert.True(c.forfeited);
         }
 
         [Fact]

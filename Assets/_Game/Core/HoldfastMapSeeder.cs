@@ -6,7 +6,7 @@ using Ashfall.Core;
 // HoldfastLocationEntry exists in BOTH Ashfall.Core and AtomicWar._Game.Data.
 // Pinned to the Data type to preserve this seeder's existing behaviour; the two
 // should be unified next (see ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md).
-using HoldfastLocationEntry = AtomicWar._Game.Data.HoldfastLocationEntry;
+using HoldfastLocationEntry = Ashfall.Core.HoldfastLocationEntry;
 
 namespace AtomicWar._Game.Core
 {

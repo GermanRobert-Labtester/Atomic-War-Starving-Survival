@@ -37,6 +37,11 @@ namespace AtomicWar._Game.Core
             public const string Underwrite   = "loc_crossing_underwrite_hall";
             public const string RecordsRoom  = "loc_crossing_records_room";
             public const string Nightfire    = "loc_crossing_nightfire";
+            public const string TheLockup    = "loc_crossing_the_lockup";
+            public const string GranaryPledge = "loc_crossing_granary_pledge";
+            public const string PetitionTent = "loc_crossing_petition_tent";
+            public const string FoundersMarker = "loc_crossing_founders_marker";
+            public const string TheAnnex     = "loc_crossing_the_annex";
         }
 
         /// <summary>Canonical item ids (bible §7).</summary>
@@ -79,6 +84,7 @@ namespace AtomicWar._Game.Core
             public const string DessaVane = "npc_dessa_vane";
             public const string PerrinAshby = "npc_perrin_ashby";
             public const string IvoFenn = "npc_ivo_fenn";
+            public const string WynSabler = "npc_wyn_sabler";
         }
 
         /// <summary>Knowledge keys granted by quest completion.</summary>

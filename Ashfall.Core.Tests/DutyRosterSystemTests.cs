@@ -220,6 +220,43 @@ namespace Ashfall.Core.Tests
             roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
             Assert.False(roster.WriteName("npc_on_stool", "Edor Vale", "census_clerk", DutyRosterSystem.ScriptPencil, 60, false));
         }
+
+        [Fact]
+        public void InkEndingResolves()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.ResolveChartChoice(DutyRosterSystem.ChoiceWritePencil, 60);
+            roster.WriteName(DutyRosterSystem.NpcKessAdler, "Kess Adler", "records_clerk", DutyRosterSystem.ScriptPencil, 60, true);
+            Assert.True(roster.ResolveInkEnding(80));
+            Assert.Equal(DutyRosterSystem.ScriptInk, roster.ChartScript);
+            Assert.Equal(DutyRosterSystem.EndingInk, roster.State.endingId);
+            Assert.False(roster.State.kessPencilAllowed);
+        }
+
+        [Fact]
+        public void SecondWinterFlagSurvivesSave()
+        {
+            var json = new SystemTextJsonSerializer();
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.SetSecondWinterActive(true);
+            Assert.True(roster.IsSecondWinterActive);
+            string blob = json.Serialize(roster.CaptureState());
+            var restored = new DutyRosterSystem(1);
+            restored.RestoreState(json.Deserialize<DutyRosterSystemState>(blob));
+            Assert.True(restored.IsSecondWinterActive);
+        }
+
+        [Fact]
+        public void BurnBlocksInkEnding()
+        {
+            var roster = Sys();
+            roster.Unlock(60);
+            roster.BurnChart(80);
+            Assert.False(roster.ResolveInkEnding(81));
+            Assert.Equal(DutyRosterSystem.ScriptBurned, roster.ChartScript);
+        }
     }
 
     public class MoraleMarkSystemTests
@@ -286,17 +323,28 @@ namespace Ashfall.Core.Tests
         {
             var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
             var catalog = loader.Load(DataDir());
-            Assert.True(catalog.Locations.Count >= 4);
+            Assert.True(catalog.Locations.Count >= 8);
             var set = new HashSet<string>();
+            int overflowCount = 0;
             for (int i = 0; i < catalog.Locations.Count; i++)
             {
                 var e = catalog.Locations[i];
                 Assert.False(string.IsNullOrEmpty(e.id));
                 Assert.True(set.Add(e.id), "duplicate " + e.id);
                 Assert.Equal(e.id, e.id.ToLowerInvariant());
-                Assert.Equal(0f, e.travelHours);
-                Assert.Equal("the_stack", e.region);
+                if (e.region == "the_stack" || e.region == "the_approach")
+                {
+                    Assert.Equal(0f, e.travelHours);
+                }
+                else
+                {
+                    Assert.True(e.travelHours >= 1.5f, e.id + " overflow should cost travel");
+                    Assert.Equal("the_overflow", e.region);
+                    overflowCount++;
+                }
+                Assert.True(e.region == "the_stack" || e.region == "the_approach" || e.region == "the_overflow", "region " + e.region);
             }
+            Assert.Equal(4, overflowCount);
 
             var wall = catalog.GetLocation(DutyRosterSystem.LocStackRosterWall);
             Assert.NotNull(wall);
@@ -305,6 +353,15 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackMess));
             Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackSleeping));
             Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackFiltration));
+            Assert.NotNull(catalog.GetLocation("loc_stack_clinic_alcove"));
+            Assert.NotNull(catalog.GetLocation("loc_approach_hatch"));
+            Assert.NotNull(catalog.GetLocation("loc_approach_apron"));
+            Assert.NotNull(catalog.GetLocation("loc_approach_stool"));
+            Assert.NotNull(catalog.GetLocation("loc_approach_decon"));
+            Assert.NotNull(catalog.GetLocation("loc_overflow_alloc_11"));
+            Assert.NotNull(catalog.GetLocation("loc_overflow_alloc_13"));
+            Assert.NotNull(catalog.GetLocation("loc_overflow_pump_hatch"));
+            Assert.NotNull(catalog.GetLocation("loc_overflow_blank_cellar"));
         }
 
         [Fact]
@@ -325,6 +382,61 @@ namespace Ashfall.Core.Tests
             Assert.Equal(DutyRosterSystem.QuestTheChart, ladle.prereq_quest_id);
             Assert.Equal(DutyRosterSystem.LocStackMess, ladle.target_location_id);
             Assert.Contains(ladle.choices, c => c.id == DutyRosterSystem.ChoiceLadleProtocol);
+
+            var fourteenth = catalog.GetQuest("quest_roster_fourteenth");
+            Assert.NotNull(fourteenth);
+            Assert.Equal("shelter", fourteenth.type);
+            Assert.Equal("loc_approach_hatch", fourteenth.target_location_id);
+            Assert.Contains(fourteenth.choices, c => c.id == "roster_fourteenth_let_in");
+            Assert.Contains(fourteenth.choices, c => c.id == "roster_fourteenth_deny");
+
+            var caretaker = catalog.GetQuest("quest_roster_caretaker");
+            Assert.NotNull(caretaker);
+            Assert.Equal("faction", caretaker.type);
+            Assert.Equal("loc_stack_clinic_alcove", caretaker.target_location_id);
+            Assert.Contains(caretaker.choices, c => c.id == "roster_hadi_list");
+            Assert.Contains(caretaker.choices, c => c.id == "roster_hadi_hide");
+            Assert.Contains(caretaker.choices, c => c.id == "roster_hadi_send");
+
+            var column = catalog.GetQuest("quest_roster_the_column");
+            Assert.NotNull(column);
+            Assert.Contains(column.choices, c => c.id == "roster_column_honour");
+            Assert.Contains(column.choices, c => c.id == "roster_column_hide");
+
+            var tin = catalog.GetQuest("quest_roster_the_tin");
+            Assert.NotNull(tin);
+            Assert.Equal("loc_stack_filtration", tin.target_location_id);
+            Assert.Contains(tin.choices, c => c.id == "roster_tin_plate");
+
+            var sole = catalog.GetQuest("quest_roster_sole");
+            Assert.NotNull(sole);
+            Assert.Contains(sole.choices, c => c.id == "roster_sole_two_witnesses");
+            Assert.Contains(sole.choices, c => c.id == "roster_sole_one_witness");
+
+            var window = catalog.GetQuest("quest_roster_window");
+            Assert.NotNull(window);
+            Assert.Equal("shelter", window.type);
+            Assert.Contains(window.choices, c => c.id == "roster_window_held");
+
+            var ink = catalog.GetQuest("quest_roster_ink");
+            Assert.NotNull(ink);
+            Assert.Equal("shelter", ink.type);
+            Assert.Contains(ink.choices, c => c.id == "roster_ink");
+            Assert.Contains(ink.choices, c => c.id == "roster_burn_chart");
+            Assert.Contains(ink.choices, c => c.id == "roster_erase_all");
+            Assert.Contains(ink.choices, c => c.id == "roster_keep_pencil");
+        }
+
+        [Fact]
+        public void SecondWinterSeasonLoaded()
+        {
+            var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            var season = catalog.GetSeason(DutyRosterSystem.SeasonSecondWinter);
+            Assert.NotNull(season);
+            Assert.Equal(DutyRosterSystem.SecondWinterWindowMinDays, season.windowMinDays);
+            Assert.Equal(DutyRosterSystem.SecondWinterWindowMaxDays, season.windowMaxDays);
+            Assert.Equal(DutyRosterSystem.SecondWinterEncounterWeight, season.encounterWeight, 3);
         }
 
         [Fact]
@@ -335,6 +447,83 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(catalog.GetMark("mark_bowl_cold"));
             Assert.Contains("enamel", catalog.GetMark("mark_bowl_cold").later);
             Assert.NotNull(catalog.GetMark("mark_ladle_default"));
+        }
+    }
+
+    public class ShelterEncounterSystemTests
+    {
+        private static ShelterEncounterSystem Sys(int seed = 1208) => new ShelterEncounterSystem(seed);
+
+        [Fact]
+        public void LockedUntilUnlock()
+        {
+            var enc = Sys();
+            Assert.False(enc.IsUnlocked);
+            Assert.False(enc.StartEncounter("se_night_slate", ShelterEncounterSystem.KindNightSlate, 60));
+            Assert.False(enc.QueueVisitor(ShelterEncounterSystem.VisitorEdor, 60));
+        }
+
+        [Fact]
+        public void OneEncounterPerNight()
+        {
+            var enc = Sys();
+            enc.Unlock(60);
+            Assert.True(enc.StartEncounter("se_night_slate", ShelterEncounterSystem.KindNightSlate, 60));
+            Assert.False(enc.StartEncounter("se_meal_short", ShelterEncounterSystem.KindMealShort, 60));
+            Assert.True(enc.StartEncounter("se_meal_short", ShelterEncounterSystem.KindMealShort, 61));
+            Assert.Equal(1, enc.EncountersThisNight);
+        }
+
+        [Fact]
+        public void CrisisAllowsMultiple()
+        {
+            var enc = Sys();
+            enc.Unlock(60);
+            Assert.True(enc.StartEncounterCrisis("se_night_slate", ShelterEncounterSystem.KindNightSlate, 60));
+            Assert.True(enc.StartEncounterCrisis("se_meal_short", ShelterEncounterSystem.KindMealShort, 60));
+            Assert.Equal(2, enc.EncountersThisNight);
+        }
+
+        [Fact]
+        public void VisitorQueueOneAtATime()
+        {
+            var enc = Sys();
+            enc.Unlock(60);
+            Assert.True(enc.QueueVisitor(ShelterEncounterSystem.VisitorEdor, 60));
+            Assert.False(enc.QueueVisitor(ShelterEncounterSystem.VisitorEdor, 60));
+            Assert.True(enc.QueueVisitor(ShelterEncounterSystem.VisitorLen, 60));
+            Assert.Equal(ShelterEncounterSystem.VisitorEdor, enc.PeekVisitor());
+            Assert.True(enc.ResolveVisitor(ShelterEncounterSystem.VisitorEdor));
+            Assert.Equal(ShelterEncounterSystem.VisitorLen, enc.PeekVisitor());
+        }
+
+        [Fact]
+        public void ResolveOnceOnly()
+        {
+            var enc = Sys();
+            enc.Unlock(60);
+            Assert.True(enc.StartEncounter("se_hatch_return", ShelterEncounterSystem.KindHatchReturn, 60));
+            Assert.True(enc.ResolveEncounter("se_hatch_return", 60));
+            Assert.False(enc.ResolveEncounter("se_hatch_return", 61));
+            Assert.True(enc.IsResolved("se_hatch_return"));
+        }
+
+        [Fact]
+        public void SaveRoundtrip()
+        {
+            var json = new SystemTextJsonSerializer();
+            var enc = Sys(1208);
+            enc.Unlock(60);
+            enc.QueueVisitor(ShelterEncounterSystem.VisitorLen, 60);
+            enc.StartEncounter("se_edor_stool", ShelterEncounterSystem.KindEdorStool, 60, ShelterEncounterSystem.VisitorEdor);
+            enc.ResolveEncounter("se_edor_stool", 60);
+            string blob = json.Serialize(enc.CaptureState());
+            var restored = new ShelterEncounterSystem(1);
+            restored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(blob));
+            Assert.True(restored.IsUnlocked);
+            Assert.Equal(ShelterEncounterSystem.VisitorLen, restored.PeekVisitor());
+            Assert.True(restored.IsResolved("se_edor_stool"));
+            Assert.Equal(1208, restored.State.seedSalt);
         }
     }
 }

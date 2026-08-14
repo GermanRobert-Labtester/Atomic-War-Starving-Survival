@@ -1,5 +1,7 @@
 using Godot;
 using Ashfall.Core;
+using System;
+using System.IO;
 
 namespace AtomicWar.GodotApp
 {
@@ -13,6 +15,8 @@ namespace AtomicWar.GodotApp
         CoreSelfTest,
         HoldfastBriefing,
         IceRoadTickDemo,
+        HoldfastSaveSelfTest,
+        BrineSelfTest,
         JournalSelfTest,
         JournalUiTest,
         BridgeSelfTest,
@@ -64,6 +68,10 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.HoldfastBriefing;
             if (Has(args, "--ice-road-tick-demo"))
                 return HostCliAction.IceRoadTickDemo;
+            if (Has(args, "--holdfast-save-selftest"))
+                return HostCliAction.HoldfastSaveSelfTest;
+            if (Has(args, "--brine-selftest") || Has(args, "--salt-steam-selftest"))
+                return HostCliAction.BrineSelfTest;
             if (Has(args, "--journal-selftest"))
                 return HostCliAction.JournalSelfTest;
             if (Has(args, "--journal-uitest"))
@@ -87,6 +95,8 @@ namespace AtomicWar.GodotApp
             GD.Print("  --census-selftest        CensusHeadlessDemo");
             GD.Print("  --core-selftest          Ice road + census headless demos");
             GD.Print("  --ice-road-tick-demo     Unlock, clerk, 30 day ticks, print catalog + briefing");
+            GD.Print("  --holdfast-save-selftest S1 save write → reload → restore → checksum/tamper checks");
+            GD.Print("  --brine-selftest         BrineWaterHeadlessDemo (S2 salt & steam)");
             GD.Print("  --holdfast-briefing      Print location count and every Holdfast quest briefing");
             GD.Print("  --journal-selftest       Journal domain + save roundtrip");
             GD.Print("  --journal-uitest         Build ledger UI, cycle tabs, quit");
@@ -164,6 +174,13 @@ namespace AtomicWar.GodotApp
             return report.ExitCode;
         }
 
+        public static int RunBrineSelfTest()
+        {
+            var report = BrineWaterHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
         public static int RunCoreSelfTest(string dataDirectory)
         {
             int ice = RunIceRoadSelfTest(dataDirectory);
@@ -220,6 +237,94 @@ namespace AtomicWar.GodotApp
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Sprint 1 save gate: write through HoldfastSaveCodec, reload into a fresh
+        /// session, restore, and verify the gate reproduces. Then tamper the file and
+        /// verify the checksum refuses it. Uses a temp path so the real user:// save
+        /// is never touched by the test.
+        /// </summary>
+        public static int RunHoldfastSaveSelfTest(string dataDirectory)
+        {
+            CatalogLocator.UseInvariantCulture();
+            string tmpPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_holdfast_s1_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+
+            int failures = 0;
+            void Check(bool condition, string name)
+            {
+                if (condition) GD.Print("[PASS] " + name);
+                else
+                {
+                    GD.Print("[FAIL] " + name);
+                    failures++;
+                }
+            }
+
+            try
+            {
+                var session = CoreDemoSession.Create(dataDirectory);
+                session.UnlockAndClerk();
+                for (int i = 0; i < 12; i++)
+                    session.TickDay();
+                session.HonourDemoLevy();
+
+                var save = session.CaptureSave();
+                Check(!string.IsNullOrEmpty(save.Checksum), "capture stamps checksum");
+                Check(save.saveVersion == HoldfastSave.CurrentSaveVersion, "saveVersion current");
+                Check(save.iceRoad.clerkStarted && save.iceRoad.expansionUnlocked,
+                    "envelope carries ice road unlock + clerk");
+
+                Check(HoldfastSaveStore.TrySave(save, tmpPath), "save written via codec");
+
+                var fresh = CoreDemoSession.Create(dataDirectory);
+                var loaded = HoldfastSaveStore.TryLoad(tmpPath);
+                Check(loaded != null, "save loads back");
+                if (loaded != null)
+                {
+                    fresh.RestoreSave(loaded);
+                    Check(fresh.Clock.Day == session.Clock.Day, "sim day restored");
+                    Check(fresh.StatusLine() == session.StatusLine(), "status line identical after roundtrip");
+                    Check(fresh.CensusLine() == session.CensusLine(), "census line identical after roundtrip");
+                }
+
+                // Tamper: flip clerkStarted in the raw text. Checksum must refuse it.
+                string raw = File.ReadAllText(tmpPath);
+                string tampered = raw.Replace("\"clerkStarted\":true", "\"clerkStarted\":false");
+                Check(tampered != raw, "tamper actually changed the payload");
+                if (tampered != raw)
+                {
+                    File.WriteAllText(tmpPath, tampered);
+                    Check(HoldfastSaveStore.TryLoad(tmpPath) == null, "tampered save rejected (checksum)");
+                }
+
+                // Stripped checksum: deleting the field must not bypass validation.
+                var codecJson = new SystemTextJsonSerializer();
+                var stripped = codecJson.Deserialize<HoldfastSave>(raw);
+                stripped.Checksum = "";
+                File.WriteAllText(tmpPath, codecJson.Serialize(stripped));
+                Check(HoldfastSaveStore.TryLoad(tmpPath) == null, "checksumless save rejected");
+            }
+            catch (Exception e)
+            {
+                Check(false, "selftest threw: " + e.Message);
+            }
+            finally
+            {
+                try
+                {
+                    if (File.Exists(tmpPath)) File.Delete(tmpPath);
+                }
+                catch (Exception)
+                {
+                }
+            }
+
+            GD.Print(failures == 0
+                ? "HOLDFAST_SAVE_SELFTEST PASS"
+                : "HOLDFAST_SAVE_SELFTEST FAIL (" + failures + ")");
+            return failures == 0 ? 0 : 1;
         }
     }
 }

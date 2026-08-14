@@ -8,10 +8,10 @@ Supersedes the status table in `ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md`.
 | Area | Size |
 |---|---|
 | Unity `_Game` | 228,605 LOC / 1,309 files |
-| Godot host `src/` | 4,649 LOC / 24 files |
-| — of which `src/Bridge/` shim | **1,721 LOC / 6 files** |
-| `Ashfall.Core` (`Assets/Ashfall.Core/`) | 4,515 LOC / 24 files |
-| Core test suite | 14 files / **109 tests** |
+| Godot host `src/` | 5,087 LOC / 23 files |
+| — of which `src/Bridge/` shim | **2,686 LOC / 10 files** |
+| `Ashfall.Core` (`Assets/Ashfall.Core/`) | 6,873 LOC / 37 files |
+| Core test suite | 18 files / **166 tests** |
 | `Ashfall.dll` | 5.1 MB |
 
 ## Verified healthy
@@ -19,11 +19,12 @@ Supersedes the status table in `ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md`.
 | Check | Result |
 |---|---|
 | `dotnet build Ashfall.csproj` | **0 errors** |
-| `dotnet test` | **109/109 pass** |
+| `dotnet test` | **166/166 pass** |
 | `--journal-selftest` | **20/20 PASS** |
 | `--ice-road-selftest` | **PASS 21/21** |
-| `--bridge-selftest` | **18/18 PASS** (added during H3 remediation) |
+| `--bridge-selftest` | **41/41 PASS** (added during H3; extended for H1/H2/M1/M2) |
 | `WeatherKind` definitions | **1** (unification held) |
+| Duplicated types | **8 of 9 unified** — only `JournalCodex` remains (C3) |
 | `Ashfall.Core` consumption | Real — Godot host + 6 Unity asmdefs + tests |
 | Core purity | Compiler-enforced via `noEngineReferences: true` |
 | Bridge `JsonUtility` | **Genuinely implemented** (System.Text.Json), not a stub |
@@ -113,7 +114,59 @@ detection, delimiter forgery, and a reference-cycle guard.
 **Caveat:** these prove the *algorithm*. The full `SaveSystem` round trip is still unexercised for
 the same reason as everything else in `_Game` — see C1, nothing there is instantiated.
 
-### C3 — Eight duplicated types now compile into one assembly
+### C3 — Eight duplicated types now compile into one assembly — **eight of nine resolved**
+
+The count was wrong: there were **nine**. `RiskBiasTrait` was duplicated too, and it was the one
+that mattered most — see the divergence note below.
+
+| Type | Before | Now |
+|---|---|---|
+| `RiskBiasTrait` | `_Game/Survivors` + `src/Journal` | **1** in `Ashfall.Core.Journal` |
+| `KnowledgeBase` / `KnowledgeKeys` / `KnowledgeBaseSave` | `_Game/Events` + `src/Journal` | **1** in Core |
+| `JournalEntry` | `_Game/Events` + `src/Journal` | **1** in Core |
+| `JournalVoice` | `_Game/Events` + `src/Journal` | **1** in Core |
+| `JournalSystem` / `JournalSave` | `_Game/Events` + `src/Journal` | **1** domain in Core + thin Unity subclass |
+| `ISurvivorAuthor` | `src/Journal` only | **1** in Core, implemented by `Survivor` |
+| `HoldfastLocationEntry` | `Ashfall.Core` + `_Game/Data` | **1** in Core |
+| `IceRoadSystem` | 522-line fork | **delegating adapter**, zero duplicated logic |
+| `JournalCodex` | `_Game/UI` + `src/Journal` | **still forked** — see below |
+
+#### The divergence this was hiding
+
+`RiskBiasTrait` had **8 members in Unity and 6 in the Godot port**. The Godot copy stopped at
+`Fatalist`, omitting `Empath` and `Sociopath`. The enum is persisted by ordinal in saves, and
+`MercyKillActionSO` branches on exactly those two missing members — so a survivor saved as
+`Sociopath` would have deserialized in the Godot host as a value it had no case for. This is
+precisely the "silent behavioural divergence" C3 warned about, and nothing could have caught it:
+same name, different namespace, no compile error possible. Core now carries all 8 with an
+append-only note.
+
+#### How the two "remaining" 2-definition types are not forks
+
+- `IceRoadSystem` — `_Game/Core` is now a pure delegating adapter over
+  `Ashfall.Core.IceRoadSystem`: constant forwarders, event re-raising, state DTO mapping. No
+  duplicated logic remains.
+- `JournalSystem` — the whole domain (entries, dedupe, tabs, unread tracking, save capture/restore)
+  is in Core. `_Game`'s subclass keeps only the 3 fields and 4 methods that genuinely need Unity
+  gameplay types (`PersonalQuestSystem`, `NeedsSystem`, `Survivor`): the Lorekeeper morale passive
+  and the News Anchor perk. It keeps the original class name and namespace, so every existing call
+  site compiles unchanged while inheriting shared behaviour.
+
+`Survivor` gained an **explicit** `ISurvivorAuthor` implementation, deliberately explicit so
+`Id`/`DisplayName`/`RiskBias` stay plain fields — JsonUtility does not serialize properties, so
+converting them would have broken save/load.
+
+#### Still forked: `JournalCodex`
+
+Not merged, and not for lack of trying — the two copies genuinely differ in output. The Unity copy
+renders live survivor status (`deceased`, `rad-sick`, `working`, `resting`, `incapacitated`,
+`chronic illness`, `out scavenging`) read from runtime `Survivor` state; the Godot copy emits the
+single literal `"survivor"`. They also consume different catalog shapes: 4 `ScriptableObject`
+catalogs versus JSON-loaded `JournalCatalogs` DTOs.
+
+Unifying it means porting the survivor *status* vocabulary into Core, not just extracting a helper
+— that is a slice of the survivor domain migration, not a de-duplication. Merging it as-is would
+have silently downgraded Unity's journal text to `"survivor"`. Left forked deliberately.
 
 | Type | Copies | Drift |
 |---|---|---|
@@ -133,7 +186,23 @@ drifted 522 lines.
 
 ## HIGH
 
-### H1 — `MonoBehaviour` has no lifecycle pump; coroutines never execute
+### H1 — `MonoBehaviour` has no lifecycle pump; coroutines never execute — **fixed**
+
+`src/Bridge/BridgeRuntime.cs` is now a real pump: `Awake` -> `OnEnable` -> `Start` -> `Update` ->
+coroutines -> `LateUpdate`, plus `OnDisable`/`OnDestroy` on teardown and an opt-in `FixedTick`.
+Dispatch is by **reflection**, cached per type, because Unity magic methods are not virtual —
+gameplay code declares `private void Update()`, so a base class with virtual methods would have
+silently never fired for any of the 158 MonoBehaviours. `src/Bridge/CoroutineRunner.cs` actually
+drives the iterator, honouring `null`, `WaitForSeconds` (scaled time), `WaitForEndOfFrame`, nested
+`Coroutine`, and inline nested `IEnumerator`. `Main._Process` calls `Tick`; `_Notification` calls
+`Shutdown`.
+
+Hook exceptions are logged once per (type, hook) and the call keeps happening, matching Unity's
+log-and-continue rather than killing the frame — but without emitting 60 identical stack traces a
+second in a headless run.
+
+Original finding follows.
+
 
 The bridge's `MonoBehaviour` is `enabled` plus two no-ops. There is **no** `Awake`, `Start`,
 `Update`, `FixedUpdate`, `LateUpdate`, `OnEnable` or `OnDestroy` dispatch.
@@ -158,7 +227,14 @@ architecture is genuinely followed, but non-zero:
 | `Start` | 1 |
 | `StartCoroutine` call sites | 3 |
 
-### H2 — Bridge RNG is unseeded and cannot be seeded
+### H2 — Bridge RNG is unseeded and cannot be seeded — **fixed**
+
+`Random.InitState(int)` now exists and reseeds the generator; `Random.state` round-trips the seed.
+The determinism invariant is satisfiable for the shim's own sequence. Core systems should still
+prefer `Ashfall.Core`'s `ISeededRng`, which is shared with the Unity host.
+
+Original finding follows.
+
 
 ```csharp
 private static readonly System.Random _rng = new System.Random();  // clock-seeded
@@ -222,8 +298,8 @@ This exists so a later "cleanup" cannot quietly restore a plausible default.
 
 | # | Finding |
 |---|---|
-| M1 | `Time.deltaTime` is **hardcoded `0.016666f`** — a constant, not real frame time (9 uses in `_Game`). Any accumulator advances at a fictional fixed rate. |
-| M2 | `Time.timeScale` is a settable property **nothing reads** (2 uses). Pausing/slow-mo silently does nothing. |
+| M1 | **Fixed.** `Time` is now driven by `BridgeRuntime.Tick`; `deltaTime` is the real frame delta scaled by `timeScale`, `unscaledDeltaTime` the raw delta. Was: `Time.deltaTime` **hardcoded `0.016666f`** — a constant, not real frame time (9 uses in `_Game`). Any accumulator advances at a fictional fixed rate. |
+| M2 | **Fixed.** `timeScale` is applied in `Time.AdvanceFrame`, so pause (0) and slow-mo work; verified by `--bridge-selftest`. Was: `Time.timeScale` a settable property **nothing reads** (2 uses). Pausing/slow-mo silently does nothing. |
 | M3 | **304 CS0649** warnings — JSON DTO fields never assigned in code. Correct today (the deserializer populates them), but this is precisely the signature a catalog-loading regression would hide behind. Worth one guard test asserting a non-empty catalog load. |
 | M4 | `<NoWarn>` in `Ashfall.csproj` masks CS8618/CS8602/CS8603/CS8604 and 8 more. Nullability problems are suppressed, not resolved; 171 warnings remain even with the mask on. |
 | M5 | `Camera.main => null` unconditionally. Any `Camera.main.X` is a guaranteed NRE the moment it runs. |
@@ -237,8 +313,8 @@ This exists so a later "cleanup" cannot quietly restore a plausible default.
 3. ~~**Make bridge gaps loud** (H3)~~ — **done for the runtime files**; see H3. The remaining work
    is `MonoBehaviour` lifecycle (H1) and `Random.InitState` (H2), which now fail loudly rather than
    silently but are still unimplemented.
-4. **Resolve the 8 duplicate types** (C3), `IceRoadSystem` first — it is the worst-drifted at 522
-   lines and has already survived one deletion.
+4. ~~**Resolve the 8 duplicate types** (C3)~~ — **8 of 9 done** (there were nine); only
+   `JournalCodex` remains, deliberately. See C3.
 5. Then wire one real `_Game` system end to end under Godot. That is the only thing that converts
    this from a type-check into a port.
 

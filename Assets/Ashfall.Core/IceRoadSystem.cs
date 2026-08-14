@@ -84,6 +84,7 @@ namespace Ashfall.Core
         private readonly HashSet<string> _cutNodes = new HashSet<string>(CutNodeIds);
         private readonly HashSet<string> _holdfastNodes = new HashSet<string>();
         private readonly HashSet<string> _darkBeacons = new HashSet<string>();
+        private int _windowLengthOverride;
 
         public event Action OnIceRoadOpened;
         public event Action OnIceRoadClosed;
@@ -126,6 +127,25 @@ namespace Ashfall.Core
         public void NotifyClerkStarted()
         {
             _state.clerkStarted = true;
+            RaiseChanged();
+        }
+
+        /// <summary>
+        /// Second Winter (Duty Roster §5.4): cap future Ice Road windows to
+        /// [minDays..maxDays]. 0 clears the override. Not a new weather sim.
+        /// </summary>
+        public void ShortenWindowLength(int minDays, int maxDays, int seedSalt)
+        {
+            int span = Math.Max(1, maxDays - minDays + 1);
+            int n = seedSalt < 0 ? -seedSalt : seedSalt;
+            _windowLengthOverride = minDays + (n % span);
+            RaiseChanged();
+        }
+
+        public void ClearWindowLengthOverride()
+        {
+            if (_windowLengthOverride == 0) return;
+            _windowLengthOverride = 0;
             RaiseChanged();
         }
 
@@ -276,7 +296,11 @@ namespace Ashfall.Core
 
         public void RestoreState(IceRoadSystemState saved)
         {
-            _state = saved ?? new IceRoadSystemState();
+            // Deep-copy: the deserialized DTO must not become the live state.
+            // Otherwise the caller's save object and the running system alias
+            // the same fields and a later mutation corrupts the envelope.
+            _state = new IceRoadSystemState();
+            if (saved != null) CopyState(saved, _state);
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             _darkBeacons.Clear();
             if (!_state.southBeaconLit) _darkBeacons.Add(LocSouthBeacon);
@@ -289,6 +313,8 @@ namespace Ashfall.Core
             int len = SeededWindowLength(day);
             if (_state.windowsCompleted > 0 && !_state.cuttersAccess)
                 len = MinWindowDays; // betrayed Cutters: shorter, not gone
+            if (_windowLengthOverride > 0)
+                len = Math.Min(len, _windowLengthOverride);
             _state.isOpen = true;
             _state.windowLengthDays = len;
             _state.windowDaysRemaining = len;

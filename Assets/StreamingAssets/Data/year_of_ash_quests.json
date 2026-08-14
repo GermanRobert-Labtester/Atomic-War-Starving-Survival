@@ -1,0 +1,452 @@
+[
+  {
+    "questlineId": "quest_garrison_blood_debt",
+    "title": "The Garrison Blood Debt",
+    "synopsis": "Colonel Harven demands the summary surrender of Ola Vask, a former garrison conscript sheltered in your bunker, threatening total diesel embargo.",
+    "factionTag": "faction_central_garrison",
+    "firstStageId": "stage_blood_debt_demand",
+    "minDay": 185,
+    "maxDay": 260,
+    "stages": [
+      {
+        "stageId": "stage_blood_debt_demand",
+        "title": "The Colonel's Notice",
+        "narrativePrompt": "A garrison courier delivers a wax-sealed notice: Ola Vask is wanted for desertion. She's been in your bunker sixty-two days.",
+        "unlockOnDay": 185,
+        "isTerminal": false,
+        "terminalOutcome": 1,
+        "choices": [
+          {
+            "choiceId": "choice_confront_ola",
+            "text": "Confront Ola privately before answering the garrison.",
+            "nextStageId": "stage_blood_debt_ola_testimony",
+            "moraleDelta": 0,
+            "guiltDelta": 0,
+            "outcomeNarrative": "Ola confesses she fled after refusing an order to execute a civilian camp."
+          },
+          {
+            "choiceId": "choice_comply_immediately",
+            "text": "Surrender Ola to the garrison courier.",
+            "nextStageId": "",
+            "moraleDelta": -30,
+            "guiltDelta": 40,
+            "targetFactionId": "faction_central_garrison",
+            "factionStandingDelta": 25,
+            "outcomeNarrative": "Ola is marched away in irons. The bunker descends into silent hostility."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_blood_debt_ola_testimony",
+        "title": "What She Saw",
+        "narrativePrompt": "Ola explains the civilian camp incident. 'I know what the math looks like. Do what you need to do.'",
+        "unlockOnDay": 187,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_forge_tribunal_rebuttal",
+            "text": "Forge medical exemption papers certifying her as essential.",
+            "nextStageId": "",
+            "moraleDelta": 10,
+            "guiltDelta": 5,
+            "targetFactionId": "faction_central_garrison",
+            "factionStandingDelta": -10,
+            "grantItemId": "item_falsified_clearance",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The forged papers hold up under inspection, buying permanent safety."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_rebuilder_seed_vault",
+    "title": "The Living Seed Vault",
+    "synopsis": "The Works request assistance securing pre-war non-hybrid seed stock from the frozen agricultural research cellar in Sector 4.",
+    "factionTag": "faction_rebuilders",
+    "firstStageId": "stage_seed_vault_scout",
+    "minDay": 195,
+    "maxDay": 270,
+    "stages": [
+      {
+        "stageId": "stage_seed_vault_scout",
+        "title": "The Agronomist's Map",
+        "narrativePrompt": "Tomas Lind arrives with blueprints to the agricultural basement. The liquid nitrogen tanks are venting.",
+        "unlockOnDay": 195,
+        "isTerminal": false,
+        "terminalOutcome": 1,
+        "choices": [
+          {
+            "choiceId": "choice_dispatch_expedition",
+            "text": "Send a two-person team with heavy insulation to recover the cryo-flasks.",
+            "nextStageId": "stage_seed_vault_recovery",
+            "moraleDelta": 5,
+            "guiltDelta": 0,
+            "outcomeNarrative": "The team breaches the frozen vault doors."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_seed_vault_recovery",
+        "title": "Securing the Roots",
+        "narrativePrompt": "The cryo-flasks are located intact under three feet of hoarfrost.",
+        "unlockOnDay": 200,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_deliver_to_allotments",
+            "text": "Deliver the seed flasks to Ottilie Frayne at The Works.",
+            "nextStageId": "",
+            "moraleDelta": 25,
+            "guiltDelta": 0,
+            "targetFactionId": "faction_rebuilders",
+            "factionStandingDelta": 35,
+            "grantItemId": "item_cryo_flask_rhizome",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The Works celebrate the recovery. The future of Sector 4 agriculture is guaranteed."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_continental_convoy_gate",
+    "title": "The Northern Icebreaker Gate",
+    "synopsis": "Coordinate the Day 360 maritime evacuation across long-wave frequency 142.850 MHz before the coastal pack ice locks the sound.",
+    "factionTag": "faction_scavengers",
+    "firstStageId": "stage_convoy_signal_lock",
+    "minDay": 320,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_convoy_signal_lock",
+        "title": "The Carrier Wave",
+        "narrativePrompt": "Radio telemetry confirms the icebreaker fleet has dropped anchor in the northern sound. Coordinates require crystal resonator calibration.",
+        "unlockOnDay": 320,
+        "isTerminal": false,
+        "terminalOutcome": 1,
+        "choices": [
+          {
+            "choiceId": "choice_tune_resonator",
+            "text": "Install the quartz resonator and lock onto the naval transponder.",
+            "nextStageId": "stage_convoy_rendezvous_ready",
+            "moraleDelta": 15,
+            "guiltDelta": 0,
+            "grantItemId": "item_continental_maritime_transponder",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The transponder handshakes successfully. Evacuation waypoints are decoded."
+          }
+        ]
+      },
+      {
+        "stageId": "stage_convoy_rendezvous_ready",
+        "title": "Day 360 Evacuation Gate",
+        "narrativePrompt": "The convoy trucks are idling at the tree-line. Sector 4's year of ash concludes.",
+        "unlockOnDay": 360,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_board_northern_convoy",
+            "text": "Evacuate all shelter occupants to the maritime icebreaker.",
+            "nextStageId": "",
+            "moraleDelta": 30,
+            "guiltDelta": 0,
+            "grantItemId": "item_evacuation_manifest_scroll",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "Your survivors board the convoy vehicles. The bunker is left behind."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_ash_sign_pyre_apostasy",
+    "title": "The Penitent's Shroud",
+    "synopsis": "Sister Martha flees the Cathedral Crater with an urn of unrefined radium salt, begging for refuge from cult inquisitors.",
+    "factionTag": "faction_ash_sign",
+    "firstStageId": "stage_martha_arrival",
+    "minDay": 210,
+    "maxDay": 275,
+    "stages": [
+      {
+        "stageId": "stage_martha_arrival",
+        "title": "Apostate at the Airlock",
+        "narrativePrompt": "Sister Martha knocks with frostbitten knuckles, holding a lead urn away from her chest.",
+        "unlockOnDay": 210,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_harbor_martha",
+            "text": "Admit Sister Martha and isolate the lead urn in the sump.",
+            "nextStageId": "",
+            "moraleDelta": 15,
+            "guiltDelta": 0,
+            "targetFactionId": "faction_ash_sign",
+            "factionStandingDelta": -30,
+            "grantItemId": "item_sealed_lead_pig",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "Martha joins your medical roster. The cult marks your blast door with ash."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_hydro_baron_aqueduct_sabotage",
+    "title": "The Brine Monopoly",
+    "synopsis": "Collector Kaelen demands double water tithes under threat of shutting down Aqueduct Station 3.",
+    "factionTag": "faction_hydro_barons",
+    "firstStageId": "stage_tithe_ultimatum",
+    "minDay": 265,
+    "maxDay": 315,
+    "stages": [
+      {
+        "stageId": "stage_tithe_ultimatum",
+        "title": "The Meter Seal",
+        "narrativePrompt": "Hydro-Baron wardens attach a hydraulic lock to your fresh water intake valve.",
+        "unlockOnDay": 265,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_bypass_sluice_manifold",
+            "text": "Use machined brass fittings to fabricate a clandestine bypass around their meter.",
+            "nextStageId": "",
+            "moraleDelta": 10,
+            "guiltDelta": 5,
+            "targetFactionId": "faction_hydro_barons",
+            "factionStandingDelta": -20,
+            "grantItemId": "item_brass_valve_fitting",
+            "grantItemQuantity": 2,
+            "outcomeNarrative": "Water flows unmetered. The Hydro-Barons suspect nothing."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_d9_null_stand_down",
+    "title": "Protocol Null Stand-Down",
+    "synopsis": "Sergeant Anneke Ruhl requires an authenticated pre-war counter-cipher to disarm the bridge demolition array.",
+    "factionTag": "faction_black_ops",
+    "firstStageId": "stage_d9_authenticator_search",
+    "minDay": 275,
+    "maxDay": 330,
+    "stages": [
+      {
+        "stageId": "stage_d9_authenticator_search",
+        "title": "The Unbroken Cipher",
+        "narrativePrompt": "Ruhl holds the detonator handle. 'Provide the authorization code or the railway cut falls.'",
+        "unlockOnDay": 275,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_deliver_cipher_pad",
+            "text": "Present the D/9 one-time cryptographic pad recovered from the command bunker.",
+            "nextStageId": "",
+            "moraleDelta": 20,
+            "guiltDelta": 0,
+            "targetFactionId": "faction_black_ops",
+            "factionStandingDelta": 40,
+            "grantItemId": "item_denial_detonator_spool",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "Ruhl verifies the cipher, disconnects the magneto, and stands down the detachment."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_deep_freeze_heating_crisis",
+    "title": "The Freezing Core",
+    "synopsis": "Sub-zero temperatures threaten to freeze the bunker intake manifold at -38°C.",
+    "factionTag": "none",
+    "firstStageId": "stage_freeze_intake_alarm",
+    "minDay": 182,
+    "maxDay": 235,
+    "stages": [
+      {
+        "stageId": "stage_freeze_intake_alarm",
+        "title": "Ice in the Shafts",
+        "narrativePrompt": "The primary air blower is groaning against four inches of intake hoarfrost.",
+        "unlockOnDay": 182,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_install_ceramic_elements",
+            "text": "Install PTC ceramic heating elements and thermal lagging in the intake cowl.",
+            "nextStageId": "",
+            "moraleDelta": 15,
+            "guiltDelta": 0,
+            "grantItemId": "item_ceramic_heating_element",
+            "grantItemQuantity": 2,
+            "outcomeNarrative": "The intake thaws cleanly, restoring steady airflow to the living stacks."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_low_background_provenance",
+    "title": "The Cold Count",
+    "synopsis": "Dr. Lydia Hart requires clean spectrometer tubes to prove the automated nature of the strike salvo.",
+    "factionTag": "none",
+    "firstStageId": "stage_spectrometer_calibration",
+    "minDay": 335,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_spectrometer_calibration",
+        "title": "The Provenance Run",
+        "narrativePrompt": "The salt chamber mass spectrometer is ready for its final isotopic burn.",
+        "unlockOnDay": 335,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_publish_provenance_truth",
+            "text": "Broadcast the isotopic proof across all civilian frequencies.",
+            "nextStageId": "",
+            "moraleDelta": 25,
+            "guiltDelta": 0,
+            "grantItemId": "item_calibrated_mass_spectrometer_tube",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The truth that no living nation ordered the war destroys the legitimacy of all regional warlords."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_allotment_brass_treaty",
+    "title": "The Valve Seat Concord",
+    "synopsis": "The Works propose a perpetual medical-agricultural exchange in return for machined brass valve fittings.",
+    "factionTag": "faction_rebuilders",
+    "firstStageId": "stage_brass_treaty_meeting",
+    "minDay": 220,
+    "maxDay": 280,
+    "stages": [
+      {
+        "stageId": "stage_brass_treaty_meeting",
+        "title": "Ottilie's Ledger",
+        "narrativePrompt": "Ottilie Frayne lays out the Allotments agreement: clean penicillin for brass pipe unions.",
+        "unlockOnDay": 220,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_ratify_brass_concord",
+            "text": "Sign the Allotments Concord and supply twelve brass valve fittings.",
+            "nextStageId": "",
+            "moraleDelta": 20,
+            "guiltDelta": 0,
+            "targetFactionId": "faction_rebuilders",
+            "factionStandingDelta": 30,
+            "grantItemId": "item_antibiotic_saline_infusion",
+            "grantItemQuantity": 4,
+            "outcomeNarrative": "The treaty is sealed with a handshake. The Allotments clinic guarantees your medical needs."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_black_thaw_drainage_rescue",
+    "title": "Silt in the Sumps",
+    "synopsis": "Spring thaw black mud threatens to drown the lower ventilation shafts of Bunker 19.",
+    "factionTag": "none",
+    "firstStageId": "stage_sump_mud_breach",
+    "minDay": 302,
+    "maxDay": 340,
+    "stages": [
+      {
+        "stageId": "stage_sump_mud_breach",
+        "title": "Rising Sludge",
+        "narrativePrompt": "Radioactive silt rises through the drainage sumps, threatening the emergency generator.",
+        "unlockOnDay": 302,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_deploy_heavy_air_scrubber",
+            "text": "Install the heavy radon air scrubber and shoring props in the lower sump.",
+            "nextStageId": "",
+            "moraleDelta": 15,
+            "guiltDelta": 0,
+            "grantItemId": "item_air_filter_heavy",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The mud is contained and the radon gas vented safely to the surface."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_radio_142_carrier_lock",
+    "title": "The Day 340 Signal",
+    "synopsis": "Signalman Miller needs help aligning the high granite crystal oscillator to establish the global carrier wave.",
+    "factionTag": "none",
+    "firstStageId": "stage_oscillator_climb",
+    "minDay": 330,
+    "maxDay": 355,
+    "stages": [
+      {
+        "stageId": "stage_oscillator_climb",
+        "title": "The Alpine Transmitter",
+        "narrativePrompt": "Miller reaches the transmission dome in a blizzard, quartz crystal in hand.",
+        "unlockOnDay": 330,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_solder_crystal_resonator",
+            "text": "Solder the 142.850 MHz crystal into the transmitter oscillator circuit.",
+            "nextStageId": "",
+            "moraleDelta": 25,
+            "guiltDelta": 0,
+            "grantItemId": "item_quartz_crystal_resonator",
+            "grantItemQuantity": 1,
+            "outcomeNarrative": "The transmitter bursts to life. Across three hundred miles, voices respond in the static."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "questlineId": "quest_final_manifest_muster",
+    "title": "The Aurora Departure",
+    "synopsis": "Day 360 arrives. Captain Alder sounds the final departure horn on the northern sound.",
+    "factionTag": "none",
+    "firstStageId": "stage_final_manifest_muster",
+    "minDay": 358,
+    "maxDay": 360,
+    "stages": [
+      {
+        "stageId": "stage_final_manifest_muster",
+        "title": "The Dawn of Year Two",
+        "narrativePrompt": "The convoy trucks are lined up along the ice road. The sun rises over the thinned ash clouds.",
+        "unlockOnDay": 358,
+        "isTerminal": true,
+        "terminalOutcome": 2,
+        "choices": [
+          {
+            "choiceId": "choice_embark_and_complete_year_one",
+            "text": "Present the completed muster manifest and lead your survivors aboard the icebreaker.",
+            "nextStageId": "",
+            "moraleDelta": 50,
+            "guiltDelta": 0,
+            "grantItemId": "item_icebreaker_rendezvous_flare_rocket",
+            "grantItemQuantity": 2,
+            "outcomeNarrative": "The icebreaker's engines roar. You look back at the grey valley one last time. The Year of Ash is over."
+          }
+        ]
+      }
+    ]
+  }
+]

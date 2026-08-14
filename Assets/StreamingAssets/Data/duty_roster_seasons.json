@@ -1,0 +1,9 @@
+[
+  {
+    "id": "season_second_winter",
+    "windowMinDays": 8,
+    "windowMaxDays": 12,
+    "encounterWeight": 1.6,
+    "steamTripChanceBoost": 0.08
+  }
+]

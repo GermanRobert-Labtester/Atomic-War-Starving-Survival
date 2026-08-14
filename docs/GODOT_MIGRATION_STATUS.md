@@ -12,9 +12,9 @@ Baseline measured 2026-08-14. Re-measure with the commands at the bottom; do not
 
 | Metric | Value |
 |---|---|
-| Unity gameplay code (`Assets/_Game`) | 228,489 LOC / 1,307 `.cs` files |
-| Godot host code (`src/`, `scripts/`) | 2,118 LOC / 13 `.cs` files |
-| Godot share of total C# | **~0.9%** |
+| Unity gameplay code (`Assets/_Game`) | 231,683 LOC / 1,307 `.cs` files |
+| Godot host code (`src/`, `scripts/`) | 5,628 LOC / 27 `.cs` files |
+| Godot share of total C# | **~2.4%** |
 | Unity files that are already engine-agnostic | **244 / 1307 (18.7%, strict)** |
 | Subsystems with a Godot host | **1 of 24** (Journal) |
 | Subsystems consuming `Ashfall.Core` | **0 — Core is orphaned** |
@@ -33,6 +33,8 @@ asset here — that code needs no porting at all, only a host.
 
 - `dotnet build Ashfall.csproj` → **0 errors**, 56 nullability warnings.
 - `godot --headless --path . --quit-after 2` → boots, prints the Ashfall init banner.
+- `godot --headless --path . -- --holdfast-save-selftest` → S1 save write → reload →
+  restore → checksum/tamper checks, all PASS.
 - Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
   forked per engine, which is what makes the incremental migration viable.
 
@@ -69,6 +71,10 @@ closer to portable. Sorted by how cheap the port is.
 | Journal | — | — | **✅ ported** (`src/Journal/`) |
 
 Notes:
+- **Holdfast S1 (Ice & paper)** now persists from the Godot host: `Ashfall.Core.HoldfastSaveCodec`
+  (checksummed cross-host envelope) + `src/Host/HoldfastSaveStore.cs` (user:// JSON). The host
+  restores on boot, autosaves on state change, and ships a headless selftest gate. Unity side:
+  the shape is port-based, so the same file loads in either host once Unity adopts the codec.
 - **UI (5/165, 3%)** is the hardest wall and the largest single subsystem after Core. Expect this
   to be rewritten against Godot Control nodes rather than ported. Plan for it explicitly.
 - **Editor (0/19)** is Unity authoring tooling. It does not need to migrate.

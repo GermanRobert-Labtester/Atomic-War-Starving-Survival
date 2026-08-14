@@ -69,10 +69,16 @@ The bible's Appendix C Sprint 1. Establishes the region's identity and the **soc
   - Host wiring: `GameBootstrap.TryBribeCrossingBacker`, `OnBribeRefused` log; headless demo + core tests + EditMode tests extended (bribe cap, re-Standing, overturn validation, snapshot isolation, round-trip of new fields).
 - **Gate:** cross-tool QA (vouch × backers coupling) — reviewer (different tool) returned FAIL with 7 findings; 6 addressed in this change-set (deep-copy snapshot, refusal dedup/record, overturn "different set" validation, Honest/Rigged + IsRulingActive docs, §5.1 header, fixture-id check = false alarm — all ids are in `characters.json`); finding 1 (dual-copy `_Game`/`Ashfall.Core` fork) is a pre-existing architecture debt of the whole expansion suite — tracked as a follow-up de-fork task, not Phase 3 scope. `dotnet test` green + Godot build clean (worktree-isolated).
 
-### Phase 4 — Underwrite + Compact blocs + LedgerDebtSystem
+### Phase 4 — Underwrite + Compact blocs + LedgerDebtSystem  ← *implemented in this change-set*
 - `LedgerDebtSystem` §5.3 (`DebtContract{debtorId,principal,termDays,rate,forfeit}`), contract-shown-twice, forfeit named up front, `OnContractSigned/Paid/Renegotiated/OnForfeitTriggered/OnLedgerTampered`. Save/load.
-- `quest_crossing_the_terms`, `quest_crossing_the_petition`, `quest_crossing_the_forfeit`, `quest_crossing_the_vote_that_isnt`.
-- Dessa + Perrin + Wyn + Ivo NPCs. Gate: **cross-tool QA** (debt × vouch × backers).
+- ✱ **De-forked:** the divergent `_Game/Core/LedgerDebtSystem.cs` host twin is deleted; the Unity host now consumes the single engine-agnostic `Ashfall.Core.LedgerDebtSystem` (bootstrap, `LedgerDebtSaveable`, EditMode tests updated to the core API — read-twice `PresentContract`, `SignContract(debtorId, day)`, `PayContract`, `TickDaily` forfeit, one-shot `TamperLedger`, `TotalOwed`).
+- ✱ **Term-end renegotiation** (§5.3 "on term end: … renegotiated"): signed ink can be renegotiated only on the last day of its term (extends term, adjusts rate, forfeit stays named); no silent amendment mid-term. Contested renegotiation is gated at the host layer by a fresh Standing (`GameBootstrap.RenegotiateCrossingContract(..., contested, standingTopic)` → requires `Arbitration.IsRulingHeld`).
+- ✱ **Bloc POIs added** to `crossing_locations.json`: `loc_crossing_the_lockup`, `loc_crossing_granary_pledge`, `loc_crossing_nightfire` (Underwrite), `loc_crossing_petition_tent`, `loc_crossing_founders_marker`, `loc_crossing_the_annex` (Compact) — resolves the dangling `petition_tent` quest target; ids registered in `CrossingIds.Locations`.
+- ✱ **Wyn Sabler**: `npc_wyn_sabler` added to `characters.json` (was missing); `NPC_WynSabler.cs` (terms-recital / flee-with-grain / honoured paths, events, save); `CrossingIds.Npcs.WynSabler`; bootstrap wiring + `WynSablerSaveable` + event-driven registration.
+- ✱ Core test/demo debtor ids fixed from wrong stand-ins (`npc_wren`, `npc_ivor_lasko`) to the canonical `npc_wyn_sabler` / `npc_ivo_fenn`.
+- `quest_crossing_the_terms`, `quest_crossing_the_petition`, `quest_crossing_the_forfeit`, `quest_crossing_the_vote_that_isnt` — cards already registered in `crossing_quests.json` (✱ verified).
+- Dessa + Perrin + Ivo NPCs ✱ already present; Wyn added above.
+- **Gate:** cross-tool QA (debt × vouch × backers) — see register.
 
 ### Phase 5 — The Charter mystery
 - `quest_crossing_the_marker`, `quest_crossing_three_dry_pages`; `item_charter_three_pages`; records-room truth; `mutation_crossing_charter_revealed`. Gate: compile + tests.

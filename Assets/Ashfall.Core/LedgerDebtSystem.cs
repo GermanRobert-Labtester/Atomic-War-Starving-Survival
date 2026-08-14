@@ -152,9 +152,12 @@ namespace Ashfall.Core
         }
 
         /// <summary>
-        /// Tear the draft up and write it again. The new terms must be read
-        /// twice before they can be signed — the old ink is not amended, it is
-        /// replaced, and only while nothing is owed and no forfeit is pending.
+        /// Renegotiate. On an unsigned draft this tears it up and rewrites it
+        /// (the new terms must be read twice again). On signed ink it is only
+        /// allowed at term end — the terms extend, the rate adjusts, the forfeit
+        /// stays named up front, and the ink stays ink (bible §5.3: "on term
+        /// end: … renegotiated"). A contested renegotiation is gated at the host
+        /// layer by a fresh Standing.
         /// </summary>
         public bool RenegotiateContract(string debtorId, float newPrincipal, int newTermDays, float newRate, string newForfeit)
         {
@@ -164,17 +167,33 @@ namespace Ashfall.Core
 
             var contract = GetContract(debtorId);
             if (contract == null) return false;
-            if (contract.signed && (contract.paid || contract.forfeited)) return false;
-            if (contract.signed && contract.daysRemaining > 0) return false; // no silent amendment of live ink
+            if (contract.paid || contract.forfeited) return false;
 
-            contract.principal = newPrincipal;
-            contract.termDays = newTermDays;
-            contract.rate = newRate;
-            contract.forfeit = newForfeit;
-            contract.readCount = 0;
-            contract.signed = false;
-            contract.signedDay = -1;
-            contract.daysRemaining = 0;
+            if (contract.signed)
+            {
+                // Term-end renegotiation only — no silent amendment of live ink
+                // mid-term. The forfeit is still named up front.
+                if (contract.daysRemaining > 1) return false;
+                contract.principal = newPrincipal;
+                contract.termDays = newTermDays;
+                contract.rate = newRate;
+                contract.forfeit = newForfeit;
+                contract.daysRemaining = newTermDays;
+            }
+            else
+            {
+                // Draft: tear up and write it again. The new terms must be read
+                // twice before they can be signed.
+                contract.principal = newPrincipal;
+                contract.termDays = newTermDays;
+                contract.rate = newRate;
+                contract.forfeit = newForfeit;
+                contract.readCount = 0;
+                contract.signed = false;
+                contract.signedDay = -1;
+                contract.daysRemaining = 0;
+            }
+
             OnContractRenegotiated?.Invoke(contract);
             RaiseChanged();
             return true;
