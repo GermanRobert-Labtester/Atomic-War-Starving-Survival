@@ -14,15 +14,20 @@ namespace AtomicWar.GodotApp
     public sealed class MusterHostSession
     {
         public MusterSystem Engine { get; }
+        public CoalitionCampSystem Camp { get; }
         public List<CurrentDefinition> Roster { get; }
 
         public string LastEvent { get; private set; } = string.Empty;
 
         public event Action StateChanged;
 
-        public MusterHostSession(MusterSystem engine = null, List<CurrentDefinition> roster = null)
+        public MusterHostSession(
+            MusterSystem engine = null,
+            CoalitionCampSystem camp = null,
+            List<CurrentDefinition> roster = null)
         {
             Engine = engine ?? new MusterSystem();
+            Camp = camp ?? new CoalitionCampSystem();
             Roster = roster ?? new List<CurrentDefinition>();
             Engine.OnQuestlineResolved += record =>
             {
@@ -30,6 +35,7 @@ namespace AtomicWar.GodotApp
                 StateChanged?.Invoke();
             };
             Engine.OnStateChanged += _ => StateChanged?.Invoke();
+            Camp.OnStateChanged += _ => StateChanged?.Invoke();
         }
 
         public static MusterHostSession Create(string dataDir)
@@ -54,13 +60,38 @@ namespace AtomicWar.GodotApp
 
         // ── Day escalation ─────────────────────────────────────────────
 
-        /// <summary>Feed the sector clock. The Muster triggers at Day 260+.</summary>
+        /// <summary>Feed the sector clock. The Muster triggers at Day 260+,
+        /// and with it the Coalition's holding ground forms.</summary>
         public string Escalate(int day)
         {
             Engine.SetEscalationDay(day);
+            if (Engine.MusterTriggered && !Camp.Formed)
+                Camp.Form(day);
             LastEvent = Engine.MusterTriggered
-                ? $"Day {day}: the Muster is open."
+                ? $"Day {day}: the Muster is open. Coalition camp holds {Camp.MembersRallied}."
                 : $"Day {day}: escalation tracked (Muster opens Day {MusterSystem.MusterOpeningDay}).";
+            StateChanged?.Invoke();
+            return LastEvent;
+        }
+
+        // ── Coalition camp ─────────────────────────────────────────────
+
+        public string RallyDeserter()
+        {
+            bool ok = Camp.RallyDeserter();
+            LastEvent = ok
+                ? $"A deserter has walked in. Camp holds {Camp.MembersRallied}."
+                : "No holding ground yet — the Muster has not opened.";
+            StateChanged?.Invoke();
+            return LastEvent;
+        }
+
+        public string SetStrategy(QuestApproach strategy)
+        {
+            bool ok = Camp.SetStrategy(strategy);
+            LastEvent = ok
+                ? $"Strategy {strategy} chosen. Lockout risk {Camp.GarrisonLockoutRisk}%."
+                : "Strategy rejected: not formed, or already chosen.";
             StateChanged?.Invoke();
             return LastEvent;
         }
@@ -79,7 +110,17 @@ namespace AtomicWar.GodotApp
 
         // ── Save / Load ────────────────────────────────────────────────
 
-        public MusterState CaptureSave() => Engine.CaptureState();
-        public void RestoreSave(MusterState state) => Engine.RestoreState(state);
+        public MusterHostSave CaptureSave() => new MusterHostSave
+        {
+            Muster = Engine.CaptureState(),
+            Camp = Camp.CaptureState()
+        };
+
+        public void RestoreSave(MusterHostSave save)
+        {
+            if (save == null) return;
+            Engine.RestoreState(save.Muster);
+            Camp.RestoreState(save.Camp);
+        }
     }
 }

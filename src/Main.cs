@@ -44,6 +44,7 @@ namespace AtomicWar.GodotApp
         private MusterHostSession _muster = null!;
         private CurrentsRosterWidget _currentsRoster = null!;
         private ApproachSelectionModal _approachModal = null!;
+        private DeserterCoalitionCampWidget _campWidget = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -384,6 +385,9 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Muster: escalate to Day 260", OnMusterEscalateClicked);
             AddMenuButton("Muster: show currents (15)", OnMusterRosterClicked);
             AddMenuButton("Muster: Rate Card War approaches", OnMusterRateCardClicked);
+            AddMenuButton("Muster: rally a deserter", OnMusterRallyClicked);
+            AddMenuButton("Muster: strategy B (Standing Ground)", OnMusterStrategyBClicked);
+            AddMenuButton("Muster: strategy D (Blood Price)", OnMusterStrategyDClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
             AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); GetTree().Quit(); });
@@ -1100,11 +1104,23 @@ namespace AtomicWar.GodotApp
             _currentsRoster.Bind(_muster.Roster, _muster.Engine);
             _currentsRoster.RefreshView();
 
+            if (_campWidget == null)
+            {
+                _campWidget = new DeserterCoalitionCampWidget();
+                _rightColumn.AddChild(_campWidget);
+            }
+            _campWidget.Bind(_muster.Camp);
+            _campWidget.RefreshView();
+
             if (_approachModal == null)
             {
                 _approachModal = new ApproachSelectionModal();
                 _approachModal.OnApproachChosen += OnMusterApproachChosen;
-                _approachModal.OnModalClosed += () => _approachModal.QueueFree();
+                _approachModal.OnModalClosed += () =>
+                {
+                    _approachModal.QueueFree();
+                    _approachModal = null;
+                };
                 AddChild(_approachModal);
             }
 
@@ -1120,6 +1136,28 @@ namespace AtomicWar.GodotApp
             int target = Math.Min(360, _yearOfAsh != null ? _yearOfAsh.Timeline.CurrentDay + 10 : _simDay + 10);
             _statusLabel.Text = _muster.Escalate(target);
             _currentsRoster.RefreshView();
+            _campWidget.RefreshView();
+        }
+
+        private void OnMusterRallyClicked()
+        {
+            SetupMuster();
+            _statusLabel.Text = _muster.RallyDeserter();
+            _campWidget.RefreshView();
+        }
+
+        private void OnMusterStrategyBClicked()
+        {
+            SetupMuster();
+            _statusLabel.Text = _muster.SetStrategy(QuestApproach.B);
+            _campWidget.RefreshView();
+        }
+
+        private void OnMusterStrategyDClicked()
+        {
+            SetupMuster();
+            _statusLabel.Text = _muster.SetStrategy(QuestApproach.D);
+            _campWidget.RefreshView();
         }
 
         private void OnMusterRosterClicked()
@@ -1148,6 +1186,16 @@ namespace AtomicWar.GodotApp
             _currentsRoster.RefreshView();
         }
 
+        /// <summary>Auto-escalate the Muster from the Year-of-Ash clock.</summary>
+        private void AutoEscalateMuster()
+        {
+            if (_yearOfAsh == null) return;
+            SetupMuster();
+            _muster.Escalate(_yearOfAsh.Timeline.CurrentDay);
+            _currentsRoster.RefreshView();
+            _campWidget.RefreshView();
+        }
+
         private void SaveMuster()
         {
             if (_muster == null) return;
@@ -1174,14 +1222,18 @@ namespace AtomicWar.GodotApp
             SetupMuster();
 
             bool roster = _currentsRoster != null && _muster.Roster.Count >= 15;
+            bool camp = _campWidget != null;
             bool modal = _approachModal != null;
             bool escalate = _muster.Escalate(300).Contains("Muster is open");
+            bool campFormed = _muster.Camp.Formed && _muster.Camp.MembersRallied == CoalitionCampSystem.BaseMembers;
+            bool strategy = _muster.SetStrategy(QuestApproach.B).Contains("Strategy B");
             bool resolved = _muster.SelectApproach("quest_the_rate_card_war", QuestApproach.A)
                 .Contains("selected");
             bool ending = _muster.Engine.EndingKeyFor("quest_the_rate_card_war") == "the_rate_card_revised";
 
-            bool pass = roster && modal && escalate && resolved && ending;
-            GD.Print($"[MusterUiTest] roster={roster} modal={modal} escalate={escalate} select={resolved} ending={ending}");
+            bool pass = roster && camp && modal && escalate && campFormed && strategy && resolved && ending;
+            GD.Print($"[MusterUiTest] roster={roster} camp={camp} modal={modal} escalate={escalate} " +
+                     $"campFormed={campFormed} strategy={strategy} select={resolved} ending={ending}");
             GD.Print(pass ? "MUSTER_UITEST PASS" : "MUSTER_UITEST FAIL");
             if (System.IO.File.Exists(MusterSaveStore.SavePath))
                 System.IO.File.Delete(MusterSaveStore.SavePath);
@@ -1692,6 +1744,7 @@ namespace AtomicWar.GodotApp
             // Persist after the day advance too, so a quit between ticks doesn't
             // lose the timeline (encounter resolutions already save on their own).
             YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            AutoEscalateMuster();
             if (_radioTerminal != null)
                 _radioTerminal.RefreshView(_yearOfAsh.Timeline.CurrentDay);
             _statusLabel.Text = _yearOfAsh.GetStatusSummary();

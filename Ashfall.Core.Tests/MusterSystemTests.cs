@@ -10,13 +10,18 @@ namespace Ashfall.Core.Tests
         private static MusterSystem NewSystem() => new MusterSystem();
 
         [Fact]
-        public void FoundingCatalog_RegistersThreeQuestlines()
+        public void FoundingCatalog_RegistersEightQuestlines()
         {
             var sys = NewSystem();
             Assert.NotNull(sys.FindDefinition("quest_the_muster_uprising"));
             Assert.NotNull(sys.FindDefinition("quest_the_rate_card_war"));
             Assert.NotNull(sys.FindDefinition("quest_the_unsigned_order"));
-            Assert.Equal(3, sys.Catalog.Count);
+            Assert.NotNull(sys.FindDefinition("quest_four_names_on_the_roster"));
+            Assert.NotNull(sys.FindDefinition("quest_the_second_winter"));
+            Assert.NotNull(sys.FindDefinition("quest_the_eleven_month_circuit"));
+            Assert.NotNull(sys.FindDefinition("quest_the_second_color_ledger"));
+            Assert.NotNull(sys.FindDefinition("quest_nothing_to_offer"));
+            Assert.Equal(8, sys.Catalog.Count);
         }
 
         [Fact]
@@ -110,7 +115,7 @@ namespace Ashfall.Core.Tests
             sys.RegisterQuestline(new MusterQuestlineDefinition());
             var dup = new MusterQuestlineDefinition { questlineId = "quest_the_unsigned_order" };
             sys.RegisterQuestline(dup);
-            Assert.Equal(3, sys.Catalog.Count);
+            Assert.Equal(8, sys.Catalog.Count);
             Assert.Null(sys.FindDefinition("quest_missing"));
         }
 

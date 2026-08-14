@@ -38,7 +38,7 @@ namespace Ashfall.Core.Muster
             log.Info("[MusterHeadlessDemo] begin");
 
             var sys = new MusterSystem();
-            Check(sys.Catalog.Count == 3, "founding catalog registers 3 questlines");
+            Check(sys.Catalog.Count == 8, "founding catalog registers 8 questlines");
 
             var muster = sys.FindDefinition("quest_the_muster_uprising");
             Check(muster != null && muster.approaches.Count == 4, "Muster questline offers all 4 strategies");
@@ -49,6 +49,10 @@ namespace Ashfall.Core.Muster
             Check(sys.MusterTriggered, "muster triggers at Day 260");
             Check(sys.EscalationDay == 260, "escalation day recorded");
 
+            Check(sys.IsCurrentWired("faction_cold_count"), "cold count wired by its questline");
+            Check(sys.IsCurrentWired("faction_scavenger_guild"), "scavenger guild wired by its questline");
+            Check(sys.IsCurrentWired("faction_hydro_barons"), "hydro-barons wired by the rate card war questline");
+
             Check(sys.SelectApproach(QuestApproach.C), "approach C accepted (Nobody Stays)");
             Check(!sys.SelectApproach(QuestApproach.A), "second selection rejected after resolution");
             Check(sys.ResolveEndingKey() == "the_corridor", "ending key resolves to the corridor");
@@ -56,6 +60,17 @@ namespace Ashfall.Core.Muster
             Check(!sys.SelectApproachFor("quest_the_unsigned_order", QuestApproach.B), "unsigned order rejects all approaches (no fork)");
             Check(sys.SelectApproachFor("quest_the_rate_card_war", QuestApproach.C), "rate card war accepts approach C (Seize)");
             Check(sys.EndingKeyFor("quest_the_rate_card_war") == "the_administrator", "rate card war ending key resolves");
+
+            // Coalition holding ground (Section VI.2/VI.4).
+            var camp = new CoalitionCampSystem();
+            Check(!camp.Form(259), "camp cannot form before the muster opens");
+            Check(camp.Form(260) && camp.MembersRallied == CoalitionCampSystem.BaseMembers, "camp forms at Day 260 with the base muster");
+            Check(!camp.Form(261), "camp forms only once");
+            Check(camp.RallyDeserter() && camp.MembersRallied == CoalitionCampSystem.BaseMembers + 1, "rally adds a member");
+            Check(camp.SetStrategy(QuestApproach.D), "informant strategy accepted");
+            Check(camp.GarrisonLockoutRisk == 0 && camp.MembersRallied == 0 && !camp.VaskWithCamp,
+                "informant price: lockout zeroed, members lost, Vask gone");
+            Check(!camp.SetStrategy(QuestApproach.B), "strategy locked once chosen");
 
             // Save/load round-trip through the checksum (cross-host stability).
             string before = SaveChecksum.Compute(sys.CaptureState());

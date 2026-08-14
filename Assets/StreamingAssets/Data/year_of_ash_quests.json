@@ -665,6 +665,76 @@
           "isCompleted": false
         }
       ]
+    },
+    {
+      "id": "quest_four_names_on_the_roster",
+      "title": "Four Names on the Roster",
+      "faction": "faction_cold_count",
+      "minDay": 180,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 4 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "id": "quest_the_second_winter",
+      "title": "The Second Winter",
+      "faction": "faction_the_provisioned",
+      "minDay": 190,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 4 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "id": "quest_the_eleven_month_circuit",
+      "title": "The Eleven-Month Circuit",
+      "faction": "faction_long_walk",
+      "minDay": 185,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 4 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "id": "quest_the_second_color_ledger",
+      "title": "The Second Color Ledger",
+      "faction": "faction_scavenger_guild",
+      "minDay": 190,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 4 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "id": "quest_nothing_to_offer",
+      "title": "Nothing to Offer",
+      "faction": "faction_iron_raiders",
+      "minDay": 200,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 4 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
     }
   ]
 }

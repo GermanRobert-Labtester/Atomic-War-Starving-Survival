@@ -289,6 +289,97 @@ namespace Ashfall.Core.Muster
                 factionId = "faction_the_tally",
                 windowStartDay = 185
             });
+
+            // Section V — the six silent currents, wired with their questlines
+            // and approach forks (or deliberate forklessness).
+            var coldCount = new MusterQuestlineDefinition
+            {
+                questlineId = "quest_four_names_on_the_roster",
+                factionId = "faction_cold_count",
+                windowStartDay = 180
+            };
+            coldCount.approaches.Add(new ApproachOption
+            {
+                approach = QuestApproach.A,
+                label = "Sustain Them",
+                description = "Supply power and shielding on a regular schedule; the only path that lets the provenance run complete before Day 300.",
+                endingKey = "the_measured_truth"
+            });
+            coldCount.approaches.Add(new ApproachOption
+            {
+                approach = QuestApproach.B,
+                label = "Extract and Leave",
+                description = "Trade up front for a partial reading, then stop supplying. The broadcast fires caveated and Garrison hears it as far less credible.",
+                endingKey = "the_measured_truth_contested"
+            });
+            RegisterQuestline(coldCount);
+
+            RegisterQuestline(new MusterQuestlineDefinition
+            {
+                questlineId = "quest_the_second_winter",
+                factionId = "faction_the_provisioned",
+                windowStartDay = 190
+            });
+
+            var longWalk = new MusterQuestlineDefinition
+            {
+                questlineId = "quest_the_eleven_month_circuit",
+                factionId = "faction_long_walk",
+                windowStartDay = 185
+            };
+            longWalk.approaches.Add(new ApproachOption
+            {
+                approach = QuestApproach.A,
+                label = "Escort",
+                description = "Guard a leg of the circuit through the dangerous stretch. No payment; fresher intelligence on the next pass.",
+                endingKey = string.Empty
+            });
+            longWalk.approaches.Add(new ApproachOption
+            {
+                approach = QuestApproach.B,
+                label = "Resupply Only",
+                description = "Trade water and footwear for goods and a report. Sustainable, permanently at arm's length.",
+                endingKey = string.Empty
+            });
+            RegisterQuestline(longWalk);
+
+            var scavengerGuild = new MusterQuestlineDefinition
+            {
+                questlineId = "quest_the_second_color_ledger",
+                factionId = "faction_scavenger_guild",
+                windowStartDay = 190
+            };
+            scavengerGuild.approaches.Add(new ApproachOption
+            {
+                approach = QuestApproach.A,
+                label = "Apprentice",
+                description = "Take the Guild's training for claimed-site routing. Richest salvage first, in exchange for a hard yield cap.",
+                endingKey = string.Empty
+            });
+            scavengerGuild.approaches.Add(new ApproachOption
+            {
+                approach = QuestApproach.B,
+                label = "Freelance",
+                description = "Salvage wherever you want. One over-stripped claimed site blacklists the shelter permanently.",
+                endingKey = string.Empty
+            });
+            RegisterQuestline(scavengerGuild);
+
+            RegisterQuestline(new MusterQuestlineDefinition
+            {
+                questlineId = "quest_nothing_to_offer",
+                factionId = "faction_iron_raiders",
+                windowStartDay = 200
+            });
+        }
+
+        /// <summary>True when a current's Section V questline is wired in the
+        /// catalog (the data-side is_active flip may then stand).</summary>
+        public bool IsCurrentWired(string factionId)
+        {
+            for (int i = 0; i < _catalog.Count; i++)
+                if (_catalog[i].factionId == factionId) return true;
+            return false;
         }
 
         private MusterRecord GetOrCreateRecord(MusterQuestlineDefinition def)

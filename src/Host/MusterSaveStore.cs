@@ -6,6 +6,13 @@ using Ashfall.Core.Muster;
 
 namespace AtomicWar.GodotApp
 {
+    /// <summary>Combined Muster envelope: escalation state + coalition camp.</summary>
+    public class MusterHostSave
+    {
+        public MusterState Muster;
+        public CoalitionCampState Camp;
+    }
+
     /// <summary>
     /// Muster (Expansion 06) save persistence — thin pattern sibling of
     /// PhantomMemorySaveStore: user:// path, try/catch, codec serialization.
@@ -22,16 +29,16 @@ namespace AtomicWar.GodotApp
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(MusterState state)
+        public static bool TrySave(MusterHostSave save)
         {
             try
             {
-                if (state == null) return false;
+                if (save == null) return false;
                 string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(state));
+                System.IO.File.WriteAllText(path, s_json.Serialize(save));
                 return true;
             }
             catch (Exception e)
@@ -41,7 +48,7 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MusterState TryLoad()
+        public static MusterHostSave TryLoad()
         {
             try
             {
@@ -49,7 +56,7 @@ namespace AtomicWar.GodotApp
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
-                return s_json.Deserialize<MusterState>(raw);
+                return s_json.Deserialize<MusterHostSave>(raw);
             }
             catch (Exception e)
             {

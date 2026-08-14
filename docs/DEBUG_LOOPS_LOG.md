@@ -96,6 +96,26 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 350/350, muster 13/13, uitest PASS x2 (deterministic),
   gate 0 errors, expansions 236/236 GREEN.
 
+## EXPANSION 06 SPRINT — Phase 3 (auto-escalation, Section V activation, camp widget)
+- Core: MusterSystem founding catalog grows 3 -> 8 questlines (six Section V currents:
+  cold count A/B, provisioned forkless, long walk A/B, scavenger guild A/B, iron raiders
+  forkless; cold count ending keys feed the measured-truth matrix pair). IsCurrentWired()
+  added. CoalitionCampSystem (Section VI.2/VI.4): forms only at Day 260+, rally, single
+  strategy with per-approach effects (B +15 lockout, C -10 +3 dispersed, D zeroes
+  lockout/members and loses Vask), clamped save/load, snapshot isolation.
+- Data: six Section V currents flipped is_active (now 9 active / 6 dormant; hydro-barons
+  stays false per Section II template); 5 quest ids registered (year_of_ash_quests.json
+  now 32).
+- Host: MusterHostSession gains Camp + combined MusterHostSave envelope; tick path
+  auto-escalates (OnTickYearOfAshClicked -> AutoEscalateMuster); 2 strategy buttons +
+  rally button; DeserterCoalitionCampWidget (members/strategy/lockout/Vask panel).
+- Debug pass (post-implementation): fixed camp Form missing the Day-260 gate; fixed
+  stale dormant-count test; fixed wrong demo assertion (hydro-barons IS wired — dormancy
+  is data-side only); extended uitest to cover camp+strategy.
+- Verify: build 0 warnings, tests 360/360, muster 23/23, uitest PASS x2, expansions
+  236/236, journal + bridge + all 15 demos PASS, gate 0 errors.
+
+
 
 
 

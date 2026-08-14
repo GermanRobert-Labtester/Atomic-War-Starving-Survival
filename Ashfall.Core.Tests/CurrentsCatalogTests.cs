@@ -52,7 +52,7 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void LoadCurrents_TenOfFifteenDormant()
+        public void LoadCurrents_NineActiveSixDormant()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
@@ -62,8 +62,8 @@ namespace Ashfall.Core.Tests
             int active = 0;
             foreach (var c in roster)
                 if (c.isActive) active++;
-            Assert.True(active >= 3, $"Expected at least 3 active currents, got {active}");
-            Assert.True(roster.Count - active >= 10, "At least 10 currents stay dormant until wired.");
+            Assert.Equal(9, active);
+            Assert.Equal(6, roster.Count - active);
         }
 
         [Fact]

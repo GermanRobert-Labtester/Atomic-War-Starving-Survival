@@ -155,7 +155,7 @@
     "display_name": "The Cold Count",
     "alignment": "peaceful",
     "home_region": "the_spine",
-    "is_active": false,
+    "is_active": true,
     "trust": 0,
     "wants": [
       "power",
@@ -175,7 +175,7 @@
     "display_name": "The Deserter Coalition",
     "alignment": "conditional",
     "home_region": "the_verge",
-    "is_active": false,
+    "is_active": true,
     "trust": 0,
     "wants": [
       "silence",
@@ -196,7 +196,7 @@
     "display_name": "The Provisioned",
     "alignment": "conditional",
     "home_region": "the_grid",
-    "is_active": false,
+    "is_active": true,
     "trust": 0,
     "wants": [
       "almost_nothing"
@@ -214,7 +214,7 @@
     "display_name": "The Long Walk",
     "alignment": "peaceful",
     "home_region": "all_regions",
-    "is_active": false,
+    "is_active": true,
     "trust": 0,
     "wants": [
       "water",
@@ -234,7 +234,7 @@
     "display_name": "The Scavenger Guild",
     "alignment": "conditional",
     "home_region": "the_grid",
-    "is_active": false,
+    "is_active": true,
     "trust": 0,
     "wants": [
       "claim_respect",
@@ -253,7 +253,7 @@
     "display_name": "The Iron Raiders",
     "alignment": "dangerous",
     "home_region": "the_toll",
-    "is_active": false,
+    "is_active": true,
     "trust": 0,
     "wants": [
       "what_you_have"
