@@ -1,0 +1,112 @@
+{
+  "$schema": "https://figma.com/schemas/code-connect/v1.json",
+  "name": "Ashfall Figma Code Connect Map",
+  "version": "1.0.0",
+  "designSystem": "Ashfall 2D Survival UI",
+  "components": [
+    {
+      "figmaNodeId": "101:2",
+      "figmaComponentName": "TradeScreen/RootPanel",
+      "codeSymbol": "AtomicWar.GodotApp.Economy.TradeScreenGodotPanel",
+      "unityCodeSymbol": "AtomicWar.UI.TradeScreenUI",
+      "sourceFile": "src/Economy/TradeScreenGodotPanel.cs",
+      "unitySourceFile": "Assets/_Game/UI/TradeScreenUI.cs",
+      "properties": {
+        "minWidth": "Theme.TradePanelMinWidth (560px)",
+        "maxHeight": "Theme.TradePanelMaxHeight (600px)",
+        "backgroundStyle": "panel_bg_9slice.png"
+      }
+    },
+    {
+      "figmaNodeId": "101:15",
+      "figmaComponentName": "TradeScreen/HeaderBar",
+      "codeSymbol": "TradeScreenGodotPanel.BuildLayout.headerContainer",
+      "unityCodeSymbol": "TradeScreenUI.headerBar",
+      "properties": {
+        "height": "48px",
+        "backgroundStyle": "header_bar_9slice.png",
+        "padding": "12px 8px 12px 8px"
+      }
+    },
+    {
+      "figmaNodeId": "102:4",
+      "figmaComponentName": "Faction/Emblem",
+      "codeSymbol": "TradeScreenGodotPanel._textureFactionEmblem",
+      "unityCodeSymbol": "TradeScreenUI.factionEmblemImage",
+      "properties": {
+        "size": "40x40",
+        "assetPath": "res://Assets/UI/Icons/faction_icon_{factionId}.png"
+      }
+    },
+    {
+      "figmaNodeId": "102:20",
+      "figmaComponentName": "Faction/StanceBadge",
+      "codeSymbol": "TradeScreenGodotPanel._badgeStance",
+      "unityCodeSymbol": "TradeScreenUI.stanceBadgeText",
+      "properties": {
+        "typography": "Theme.FontSizeBody (14px)",
+        "colorTokens": {
+          "Trade": "Theme.Hot (#F4C875)",
+          "ShareIntel": "Theme.Hot (#F4C875)",
+          "Refuse": "Theme.Muted (#938F84)",
+          "Rob": "Theme.Entropy (#C97B3A)",
+          "HostileRaid": "Theme.Critical (#E63333)"
+        }
+      }
+    },
+    {
+      "figmaNodeId": "103:10",
+      "figmaComponentName": "Economy/PriceShockAlert",
+      "codeSymbol": "TradeScreenGodotPanel._shocksContainer",
+      "unityCodeSymbol": "TradeScreenUI.priceShockBanner",
+      "properties": {
+        "iconSize": "16x16",
+        "typography": "Theme.FontSizeLabel (10px)",
+        "color": "Theme.Warm (#D3AA62)"
+      }
+    },
+    {
+      "figmaNodeId": "104:1",
+      "figmaComponentName": "Inventory/BiologicalOfferRow",
+      "codeSymbol": "TradeScreenGodotPanel._bioTradeRows",
+      "unityCodeSymbol": "TradeScreenUI.biologicalOfferContainer",
+      "properties": {
+        "iconSize": "20x20",
+        "typography": "Theme.FontSizeLabel (10px)",
+        "color": "Theme.Pale (#E6E0D2)",
+        "kinds": ["PintOfBlood", "BoneMarrow", "Plasma", "Organ"]
+      }
+    },
+    {
+      "figmaNodeId": "105:5",
+      "figmaComponentName": "Economy/ScarcityBadge",
+      "codeSymbol": "TradeScreenGodotPanel.StockRow.badge",
+      "unityCodeSymbol": "TradeScreenUI.scarcityBadgeImage",
+      "properties": {
+        "iconSize": "24x24",
+        "tiers": ["Critical", "High", "Moderate", "Low"]
+      }
+    },
+    {
+      "figmaNodeId": "106:12",
+      "figmaComponentName": "TradeScreen/DealFairnessIndicator",
+      "codeSymbol": "TradeScreenGodotPanel._lblFairness",
+      "unityCodeSymbol": "TradeScreenUI.fairnessStatusText",
+      "properties": {
+        "typography": "Theme.FontSizeH3 (18px)",
+        "fairColor": "Theme.Hot (#F4C875)",
+        "shortColor": "Theme.Critical (#E63333)"
+      }
+    },
+    {
+      "figmaNodeId": "107:8",
+      "figmaComponentName": "Radio/WiretapTicker",
+      "codeSymbol": "TradeScreenGodotPanel._lblRadioTicker",
+      "unityCodeSymbol": "TradeScreenUI.radioTickerText",
+      "properties": {
+        "typography": "Theme.FontSizeLabel (10px)",
+        "color": "Theme.Dim (#66675F)"
+      }
+    }
+  ]
+}

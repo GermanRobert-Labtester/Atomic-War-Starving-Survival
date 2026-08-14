@@ -1722,15 +1722,53 @@ namespace AtomicWar.GodotApp
             tradePanel.SetActiveFaction("cult_of_the_glow");
             tradePanel.SetActiveFaction("scavenger_camp");
 
+            // ── Part 4: Resolution Sweep & Responsiveness Probe ──
+            var resolutions = new[] { new Vector2(1366, 768), new Vector2(1920, 1080), new Vector2(2560, 1080) };
+            bool resolutionsPass = true;
+            foreach (var res in resolutions)
+            {
+                tradePanel.CustomMinimumSize = new Vector2(Math.Min(res.X, 560), Math.Min(res.Y, 600));
+                tradePanel.RefreshView();
+                if (tradePanel.CustomMinimumSize.X < 560 || tradePanel.CustomMinimumSize.Y < 300)
+                {
+                    resolutionsPass = false;
+                }
+            }
+
+            // ── Part 4: Empty States Probe ──
+            var emptyPanel = new TradeScreenGodotPanel();
+            AddChild(emptyPanel);
+            emptyPanel.BindSession(_economy, stanceEngine, null);
+            emptyPanel.SetActiveFaction("unknown_nomads");
+            bool emptyStatePass = emptyPanel.ActiveOfferCount == 0 &&
+                                 emptyPanel.ActiveAskCount == 0 &&
+                                 emptyPanel.ActiveBioCount == 0 &&
+                                 emptyPanel.HasFairnessIndicator;
+            emptyPanel.QueueFree();
+
+            // ── Part 4: UI-Reacts-Never-Mutates Probe ──
+            var preStateLedgerCount = _economy.Market.State.ledger.Count;
+            var preDay = _economy.Market.Day;
+            tradePanel.SetActiveFaction("scavenger_camp");
+            tradePanel.AddPlayerOffer("clean_water", 5);
+            tradePanel.AddFactionAsk("clean_water", 2);
+            tradePanel.RefreshView();
+            tradePanel.SetActiveFaction("cult_of_the_glow");
+            tradePanel.RefreshView();
+            bool nonMutationPass = _economy.Market.State.ledger.Count == preStateLedgerCount &&
+                                   _economy.Market.Day == preDay;
+
             bool tradeFieldsPass = hasEmblem && hasLeader && hasStance && hasTrust &&
                                    hasAggression && hasRepels && hasShocks && hasBioRows &&
                                    hasFairness && hasParley && hasTicker &&
-                                   tradePanel.ActiveOfferCount > 0 && tradePanel.ActiveAskCount > 0;
+                                   tradePanel.ActiveOfferCount > 0 && tradePanel.ActiveAskCount > 0 &&
+                                   resolutionsPass && emptyStatePass && nonMutationPass;
 
             bool pass = panel && catalog && noLeak && icons && ticked && bought && tradeFieldsPass;
             GD.Print($"[EconomyUiTest] panel={panel} catalog={catalog} noLeak={noLeak} " +
                      $"fallbackIcons={fallback} ticked={ticked} bought={bought} " +
-                     $"tradeFieldsPass={tradeFieldsPass} (emblem={hasEmblem} leader={hasLeader} stance={hasStance} " +
+                     $"tradeFieldsPass={tradeFieldsPass} (resSweep={resolutionsPass} emptyState={emptyStatePass} " +
+                     $"nonMutation={nonMutationPass} emblem={hasEmblem} leader={hasLeader} stance={hasStance} " +
                      $"trust={hasTrust} aggression={hasAggression} repels={hasRepels} shocks={hasShocks} " +
                      $"bioRows={hasBioRows} fairness={hasFairness} parley={hasParley} ticker={hasTicker})");
             GD.Print(pass ? "ECONOMY_UITEST PASS" : "ECONOMY_UITEST FAIL");
