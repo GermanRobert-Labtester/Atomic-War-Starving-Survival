@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ashfall.Core.Economy;
 using System.IO;
 using NUnit.Framework;
 using UnityEngine;

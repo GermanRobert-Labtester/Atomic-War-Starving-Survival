@@ -405,3 +405,113 @@ namespace Ashfall.Core.Tests
         }
     }
 }
+
+// ── HardcoreEconomyTuning tests ──────────────────────────────────────
+public class HardcoreEconomyTuningTests
+{
+    private const string MinimalValidJson = @"{
+        ""version"": 1,
+        ""scarcity_tiers"": [
+            {""tier"": ""Critical"", ""multiplier"": 2.5, ""day_range_label"": ""Days 1-15"", ""affected_item_ids"": [""water""], ""rationale"": ""test""}
+        ],
+        ""faction_preferences"": [
+            {""faction_id"": ""fac_a"", ""buys_at_premium"": [""ammo""], ""refuses"": [""junk""], ""trade_currency"": ""food""}
+        ],
+        ""price_shock_rules"": [
+            {""kind"": ""PlumePassing"", ""multiplier"": 1.8, ""duration_days"": 3, ""affected_item_ids"": [""*""], ""trigger"": ""test""}
+        ]
+    }";
+
+    [Fact]
+    public void Load_ValidJson_ReturnsSuccess()
+    {
+        var result = HardcoreEconomyTuningLoader.Load(MinimalValidJson);
+        Assert.True(result.IsValid);
+        Assert.Empty(result.Errors);
+        Assert.NotNull(result.Bundle);
+        Assert.Single(result.Bundle.ScarcityTiers);
+        Assert.Single(result.Bundle.FactionPreferences);
+        Assert.Single(result.Bundle.PriceShockRules);
+    }
+
+    [Fact]
+    public void Load_EmptyJson_ReturnsFailure()
+    {
+        var result = HardcoreEconomyTuningLoader.Load("");
+        Assert.False(result.IsValid);
+        Assert.NotEmpty(result.Errors);
+        Assert.Null(result.Bundle);
+    }
+
+    [Fact]
+    public void Load_MalformedJson_ReturnsFailure()
+    {
+        var result = HardcoreEconomyTuningLoader.Load("{bad json!");
+        Assert.False(result.IsValid);
+        Assert.NotEmpty(result.Errors);
+    }
+
+    [Fact]
+    public void Overlay_Default_ReturnsUnityParity()
+    {
+        var overlay = new HardcoreEconomyTuning();
+        Assert.False(overlay.IsActive);
+        Assert.Equal(1.0f, overlay.GetScarcityMultiplier(1, "water"));
+        Assert.False(overlay.TryGetFactionPreference("any", out _));
+        Assert.False(overlay.TryGetPriceShock(PriceShockKind.PlumePassing, 0, out _));
+    }
+
+    [Fact]
+    public void Overlay_AppliedBundle_ReturnsScarcityMultiplier()
+    {
+        var result = HardcoreEconomyTuningLoader.Load(MinimalValidJson);
+        Assert.True(result.IsValid);
+
+        var overlay = new HardcoreEconomyTuning();
+        overlay.Apply(result.Bundle!);
+        Assert.True(overlay.IsActive);
+
+        // Day 5 is in "Days 1-15" range, water is affected.
+        Assert.Equal(2.5f, overlay.GetScarcityMultiplier(5, "water"));
+        // Day 20 is outside the range.
+        Assert.Equal(1.0f, overlay.GetScarcityMultiplier(20, "water"));
+        // Food is not in the affected list.
+        Assert.Equal(1.0f, overlay.GetScarcityMultiplier(5, "food"));
+    }
+
+    [Fact]
+    public void Overlay_AppliedBundle_FactionPreferenceFound()
+    {
+        var result = HardcoreEconomyTuningLoader.Load(MinimalValidJson);
+        Assert.True(result.IsValid);
+
+        var overlay = new HardcoreEconomyTuning();
+        overlay.Apply(result.Bundle!);
+        Assert.True(overlay.TryGetFactionPreference("fac_a", out var pref));
+        Assert.Equal("fac_a", pref.FactionId);
+        Assert.Equal("food", pref.TradeCurrency);
+        Assert.Single(pref.BuysAtPremium);
+        Assert.Single(pref.Refuses);
+    }
+
+    [Fact]
+    public void Overlay_AppliedBundle_PriceShockFoundWithinDuration()
+    {
+        var result = HardcoreEconomyTuningLoader.Load(MinimalValidJson);
+        Assert.True(result.IsValid);
+
+        var overlay = new HardcoreEconomyTuning();
+        overlay.Apply(result.Bundle!);
+
+        Assert.True(overlay.TryGetPriceShock(PriceShockKind.PlumePassing, 0, out var rule));
+        Assert.Equal(1.8f, rule.Multiplier);
+        Assert.Equal(3, rule.DurationDays);
+
+        // Day offset 2 is within duration.
+        Assert.True(overlay.TryGetPriceShock(PriceShockKind.PlumePassing, 2, out rule));
+        // Day offset 3 is past duration.
+        Assert.False(overlay.TryGetPriceShock(PriceShockKind.PlumePassing, 3, out _));
+    }
+}
+
+

@@ -1,4 +1,4 @@
-namespace AtomicWar._Game.Economy
+namespace Ashfall.Core.Economy
 {
     /// <summary>How a faction currently treats the player given TrustLevel.</summary>
     public enum TradeStance
