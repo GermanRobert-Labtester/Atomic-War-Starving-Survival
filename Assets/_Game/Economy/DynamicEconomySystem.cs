@@ -76,8 +76,8 @@ namespace AtomicWar._Game.Economy
         public const float DefaultTrustInversionIrradiatedWaterMult = 12f;
 
         /// <summary>Supply pressure clamp: demand mult stays in [min, max].</summary>
-        public const float MinDemandMult = 0.25f;
-        public const float MaxDemandMult = 4f;
+        public const float MinDemandMult = MarketSystem.MinDemandMult;
+        public const float MaxDemandMult = MarketSystem.MaxDemandMult;
 
         /// <summary>#292 Auditor: trade values skewed in the player's favour.</summary>
         public const float AuditorTradeDiscount = 0.55f;
@@ -90,8 +90,12 @@ namespace AtomicWar._Game.Economy
 
         private readonly Dictionary<string, FactionSO> _factions = new Dictionary<string, FactionSO>();
         private readonly Dictionary<string, float> _trust = new Dictionary<string, float>();
-        /// <summary>Per item-id demand pressure. 1 = neutral; &gt;1 scarce; &lt;1 surplus.</summary>
-        private readonly Dictionary<string, float> _demand = new Dictionary<string, float>();
+        /// <summary>
+        /// Demand state now lives in the engine-agnostic core MarketSystem
+        /// (adoption: this class delegates; the core is the single source of
+        /// truth). Bound via BindCoreMarket; auto-created otherwise.
+        /// </summary>
+        private MarketSystem _coreMarket = new MarketSystem();
         /// <summary>Runtime aggression override (0..1). Absent = use FactionSO.raidAggression.</summary>
         private readonly Dictionary<string, float> _aggressionOverride = new Dictionary<string, float>();
         private readonly Dictionary<string, int> _successionGeneration = new Dictionary<string, int>();
@@ -724,39 +728,38 @@ namespace AtomicWar._Game.Economy
         // Pricing
         // -----------------------------------------------------------------
 
+        /// <summary>
+        /// Bind the core MarketSystem this class delegates to (GameBootstrap
+        /// wires the shared instance). Null restores the auto-created one.
+        /// </summary>
+        public void BindCoreMarket(MarketSystem market)
+        {
+            _coreMarket = market ?? new MarketSystem();
+        }
+
+        public MarketSystem CoreMarket => _coreMarket;
+
         public float GetDemandMultiplier(string itemId)
         {
             if (string.IsNullOrEmpty(itemId)) return 1f;
-            return _demand.TryGetValue(itemId, out float d) ? Mathf.Clamp(d, MinDemandMult, MaxDemandMult) : 1f;
+            return _coreMarket.GetDemandMultiplier(itemId);
         }
 
         /// <summary>Nudge global demand (scarcity). Positive = more scarce / valuable.</summary>
         public void AdjustDemand(string itemId, float delta)
         {
-            if (string.IsNullOrEmpty(itemId) || Mathf.Approximately(delta, 0f)) return;
-            float cur = GetDemandMultiplier(itemId);
-            _demand[itemId] = Mathf.Clamp(cur + delta, MinDemandMult, MaxDemandMult);
+            if (string.IsNullOrEmpty(itemId)) return;
+            if (Mathf.Approximately(delta, 0f)) return;
+            _coreMarket.AdjustDemand(itemId, delta);
             OnEconomyChanged?.Invoke();
         }
 
         /// <summary>
         /// True when average demand pressure is elevated — food/meds/guns spike via
         /// <see cref="Item_TradeValues.ShortageMultiplier"/>; gems soften.
+        /// Delegates to the core MarketSystem (same 1.35 threshold).
         /// </summary>
-        public bool IsSuppliesShort()
-        {
-            if (_demand == null || _demand.Count == 0) return false;
-            float sum = 0f;
-            int n = 0;
-            foreach (var kv in _demand)
-            {
-                sum += kv.Value;
-                n++;
-            }
-            if (n == 0) return false;
-            // Neutral demand is 1.0; sustained pressure above ~1.35 means shortage.
-            return (sum / n) >= 1.35f;
-        }
+        public bool IsSuppliesShort() => _coreMarket.IsSuppliesShort();
 
         /// <summary>
         /// Effective trade value for an item under current WorldPhase + supply/demand
@@ -1642,9 +1645,14 @@ namespace AtomicWar._Game.Economy
             save.Trust = trustRows.ToArray();
 
             var demandRows = new List<DemandSave>();
-            foreach (var kv in _demand)
+            var demandSnapshot = _coreMarket.CaptureState().demand;
+            for (int i = 0; i < demandSnapshot.Count; i++)
             {
-                demandRows.Add(new DemandSave { ItemId = kv.Key, Multiplier = kv.Value });
+                demandRows.Add(new DemandSave
+                {
+                    ItemId = demandSnapshot[i].itemId,
+                    Multiplier = demandSnapshot[i].multiplier
+                });
             }
             save.Demand = demandRows.ToArray();
 
@@ -1680,16 +1688,21 @@ namespace AtomicWar._Game.Economy
                     _hasSurrendered[row.FactionId] = row.HasSurrendered;
                 }
             }
-            _demand.Clear();
+            var restoredDemand = new System.Collections.Generic.List<Ashfall.Core.Economy.DemandEntry>();
             if (save.Demand != null)
             {
                 for (int i = 0; i < save.Demand.Length; i++)
                 {
                     var row = save.Demand[i];
                     if (row == null || string.IsNullOrEmpty(row.ItemId)) continue;
-                    _demand[row.ItemId] = Mathf.Clamp(row.Multiplier, MinDemandMult, MaxDemandMult);
+                    restoredDemand.Add(new Ashfall.Core.Economy.DemandEntry
+                    {
+                        itemId = row.ItemId,
+                        multiplier = Mathf.Clamp(row.Multiplier, MinDemandMult, MaxDemandMult)
+                    });
                 }
             }
+            _coreMarket.RestoreState(new MarketState { version = MarketState.Version, demand = restoredDemand });
             _barterOnlyMode = save.BarterOnlyMode;
             _barterOnlyAcceptedItemIds.Clear();
             if (save.BarterOnlyAccepted != null)

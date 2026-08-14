@@ -738,6 +738,35 @@ namespace AtomicWar.GodotApp
                 if (File.Exists(legacyPath)) File.Delete(legacyPath);
             }
 
+            // Adapter probe (Candidate A): the Unity-coupled DynamicEconomySystem
+            // must delegate demand to the core MarketSystem, and its save/restore
+            // must round-trip through the core (single source of truth).
+            try
+            {
+                var dse = new AtomicWar._Game.Economy.DynamicEconomySystem();
+                var coreMarket = new MarketSystem();
+                dse.BindCoreMarket(coreMarket);
+                dse.AdjustDemand("probe_water", 0.5f);
+                bool delegated = dse.GetDemandMultiplier("probe_water") == 1.5f
+                    && coreMarket.GetDemandMultiplier("probe_water") == 1.5f
+                    && dse.IsSuppliesShort();
+                GD.Print(delegated
+                    ? "[PASS] DSE demand delegates to core MarketSystem"
+                    : "[FAIL] DSE demand delegation broken");
+
+                var save = dse.CaptureState();
+                var freshDse = new AtomicWar._Game.Economy.DynamicEconomySystem();
+                freshDse.RestoreState(save);
+                bool roundtrip = freshDse.GetDemandMultiplier("probe_water") == 1.5f;
+                GD.Print(roundtrip
+                    ? "[PASS] DSE save/restore round-trips through core demand"
+                    : "[FAIL] DSE save/restore lost demand");
+            }
+            catch (System.Exception e)
+            {
+                GD.Print("[FAIL] DSE adapter probe threw: " + e.Message);
+            }
+
             // Reload-continuity probe: mid-sequence save via the REAL store slot,
             // reload, continue — the resumed trajectory must match an
             // uninterrupted run hash-for-hash.
