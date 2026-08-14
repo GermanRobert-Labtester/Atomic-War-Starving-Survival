@@ -1,0 +1,43 @@
+{
+  "id": "default_winter",
+  "displayName": "The Long Winter",
+  "weatherCheckIntervalHours": 6.0,
+  "seasons": [
+    {
+      "id": "window_early",
+      "displayName": "First Thaw",
+      "startDay": 0,
+      "clearWeight": 1.0,
+      "rainWeight": 1.2,
+      "overcastWeight": 1.0,
+      "ashfallWeight": 0.6,
+      "falloutStormWeight": 0.2,
+      "blizzardWeight": 0.3,
+      "blackRainWeight": 0.1
+    },
+    {
+      "id": "window_cold",
+      "displayName": "The Deep Freeze",
+      "startDay": 60,
+      "clearWeight": 0.8,
+      "rainWeight": 0.6,
+      "overcastWeight": 1.2,
+      "ashfallWeight": 1.0,
+      "falloutStormWeight": 0.4,
+      "blizzardWeight": 1.8,
+      "blackRainWeight": 0.2
+    },
+    {
+      "id": "window_long_winter",
+      "displayName": "The Long Winter",
+      "startDay": 240,
+      "clearWeight": 0.5,
+      "rainWeight": 0.4,
+      "overcastWeight": 1.0,
+      "ashfallWeight": 1.4,
+      "falloutStormWeight": 0.8,
+      "blizzardWeight": 2.4,
+      "blackRainWeight": 0.5
+    }
+  ]
+}
