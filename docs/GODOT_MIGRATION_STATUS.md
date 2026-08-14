@@ -4,7 +4,8 @@
 **Strategy:** Strangler — shrink the Unity-coupled surface by moving logic into engine-agnostic
 plain C#, then add a thin Godot host. No big-bang rewrite.
 
-Baseline measured 2026-08-14. Re-measure with the commands at the bottom; do not hand-edit numbers.
+Baseline measured 2026-08-14; headline updated 2026-08-14 (closing pass, Loop 7).
+Re-measure with the commands at the bottom; do not hand-edit numbers.
 
 ---
 
@@ -12,12 +13,12 @@ Baseline measured 2026-08-14. Re-measure with the commands at the bottom; do not
 
 | Metric | Value |
 |---|---|
-| Unity gameplay code (`Assets/_Game`) | 231,683 LOC / 1,307 `.cs` files |
-| Godot host code (`src/`, `scripts/`) | 5,628 LOC / 27 `.cs` files |
-| Godot share of total C# | **~2.4%** |
-| Unity files that are already engine-agnostic | **244 / 1307 (18.7%, strict)** |
-| Subsystems with a Godot host | **1 of 24** (Journal) |
-| Subsystems consuming `Ashfall.Core` | **0 — Core is orphaned** |
+| Unity gameplay code (`Assets/_Game`) | 232,602 LOC / 1,337 `.cs` files |
+| Godot host code (`src/`) | 10,151 LOC / 47 `.cs` files |
+| Engine-agnostic core (`Assets/Ashfall.Core`) | 16,065 LOC / 75 `.cs` files (shared single source of truth) |
+| Godot host share of total C# | **~4.0%** (host only; +6.2% engine-agnostic core both engines share) |
+| Host files consuming `Ashfall.Core` | **36** (was 0 — Core is no longer orphaned) |
+| Subsystems with a Godot host | **12** — Journal, Duty Roster, Standing Record, Crossing/Arbitration, Holdfast (ice road, census, brine, cluster, endings), Year of Ash, Muster, Dose, Phantom Memory |
 
 > The per-subsystem table below uses a `using`-line scan, which reports 19.5% and is **optimistic**:
 > 11 files hide fully-qualified `UnityEngine.` references with no `using` (e.g.
@@ -25,25 +26,23 @@ Baseline measured 2026-08-14. Re-measure with the commands at the bottom; do not
 > catches `MonoBehaviour` / `ScriptableObject` / `[SerializeField]`. See
 > `ASHFALL_DEEP_CODE_AUDIT_2026-08-14.md`.
 
-**Read this honestly:** the port is a beachhead, not a migration in progress. One subsystem
-(Journal) runs under Godot. The other 23 are Unity-only. The 19.5% agnostic figure is the real
-asset here — that code needs no porting at all, only a host.
+**Read this honestly:** the port is a beachhead with a working loop, not a full migration. The
+Unity-coupled surface still dominates presentation, but the simulation surface is now shared:
+every expansion since the baseline runs its logic from `Ashfall.Core` under a thin Godot host,
+with headless verification for all of it. The 18-selftest Godot battery is the regression gate.
 
 ## Verified working
 
-- `dotnet build Ashfall.csproj` → **0 errors**, 56 nullability warnings.
-- `godot --headless --path . --quit-after 2` → boots, prints the Ashfall init banner.
-- `godot --headless --path . -- --holdfast-save-selftest` → S1 save write → reload →
-  restore → checksum/tamper checks, all PASS.
-- `godot --headless --path . -- --brine-selftest` → S2 BrineWaterHeadlessDemo
-  (dormant-gate, daily load, outfall shift, 48h steam-trip clock, resin repair,
-  haul loss, state roundtrip) → 21/21 PASS.
-- `godot --headless --path . -- --cluster-selftest` → S3 Cluster12CHeadlessDemo
-  (12-C dormant → refuse-levy activation, Second List gate, v3 envelope with
-  quest snapshot roundtrip) → 19/19 PASS.
-- `godot --headless --path . -- --endings-selftest` → S4 EndingsHeadlessDemo
-  (five master-list endings arm, second overwrites the first, unknown ids refused,
-  ending survives the v3 roundtrip) → 11/11 PASS.
+- Cold rebuild (`rm -rf .godot/mono/temp Ashfall.Core/bin Ashfall.Core/obj` + `dotnet build
+  Ashfall.csproj`) → **0 errors, 0 warnings**; `dotnet test` → **408 passed / 0 failed**.
+- `godot --headless --path . -- --data-integrity-selftest` → catalog cross-reference gate,
+  **0 errors** across 59 JSON catalogs.
+- `godot --headless --path . -- --expansions-selftest` → **236/236 GREEN**.
+- 18-selftest battery (bridge, duty-roster, standing-record, crossing, arbitration,
+  ledger-debt, greenhouse, ice-road, census, brine, cluster, endings, holdfast, caravan,
+  journal, dose-ledger, muster + data gate) — all PASS.
+- UI smokes: `--muster-uitest` (roster/approaches/coalition camp/witnesses/epilogue matrix)
+  and `--dose-uitest` (4-tab Dose Register surface) — PASS, deterministic across runs.
 - Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
   forked per engine, which is what makes the incremental migration viable.
 
