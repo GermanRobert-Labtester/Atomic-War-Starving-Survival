@@ -214,6 +214,30 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 411/411, all selftests + uitests PASS, gate 0
   errors / 275 info across 59 catalogs.
 
+## MIGRATION SPRINT — ENCOUNTERS PORT (expedition core into Ashfall.Core)
+- Ported the Unity ExpeditionSystem's travel/looting/inbound mechanics 1:1 into
+  Assets/Ashfall.Core/Expeditions/ExpeditionSystem.cs: phases Outbound->Looting->
+  Inbound->Completed/Failed, stances (Speed 1.5x per Mathf.RoundToInt parity),
+  push-luck extension + auto-retreat at 3 looting ticks, loot chance
+  0.5+danger*0.05 with capacity cap, stamina drain + encumbrance penalty with
+  collapse failure, encounter rolls on EVERY leg, unique expeditionId,
+  ISeededRng per tick (no RNG in save), fresh-copy ordinal CaptureState,
+  clamped deep-copy RestoreState, events on every mutation.
+- Host: ExpeditionHostSession (demo defs + tick/push/retreat actions),
+  ExpeditionSaveStore (user://), --expedition-selftest (10/10).
+- Cross-tool review required fixes: B1 encounter rolls on outbound/inbound too
+  (Unity parity), B2 unique expeditionId (was == locationId), B3 Retreat must
+  raise OnStateChanged; all fixed with 3 regression tests.
+- Debug pass: test expectation bugs vs Unity rounding (RoundToInt(1.5)=2),
+  registry-driven stamina drain, snapshot index-order artifact, demo rng
+  fragility (danger 10 -> guaranteed loot).
+- Documented deviations (migration doc): night-scavenge +0.1, bicycle +0.5,
+  stamina-0 immediate fail, flashlight stored-unread, save shape differs from
+  Unity (adoption step pending).
+- Verify: build 0 warnings, tests 428/428, expedition 10/10, all 19 selftests +
+  both uitests PASS, gate 0 errors / 275 info.
+
+
 
 
 

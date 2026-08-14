@@ -1,5 +1,6 @@
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.Expeditions;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -39,6 +40,7 @@ namespace AtomicWar.GodotApp
         DutyRosterSaveSelfTest,
         ExpansionHubSaveSelfTest,
         DoseLedgerSelfTest,
+        ExpeditionSelfTest,
         DataIntegritySelfTest,
         CaravanSelfTest
     }
@@ -110,6 +112,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExpansionHubSaveSelfTest;
             if (Has(args, "--dose-ledger-selftest"))
                 return HostCliAction.DoseLedgerSelfTest;
+            if (Has(args, "--expedition-selftest"))
+                return HostCliAction.ExpeditionSelfTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -577,6 +581,13 @@ namespace AtomicWar.GodotApp
         /// and verify each register reproduces. Then tamper and verify the checksum
         /// refuses it.
         /// </summary>
+        public static int RunExpeditionSelfTest()
+        {
+            var report = ExpeditionHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
         public static int RunDoseLedgerSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();

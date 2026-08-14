@@ -33,3 +33,9 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 textures/canvas_textures/default_texture_filter=1
 textures/vram_compression/import_etc2_astc=false
+
+[gui]
+
+theme/custom_font="res://assets/fonts/BarlowCondensed-Regular.ttf"
+theme/custom_font_size=14
+theme/custom_font_mono="res://assets/fonts/ShareTechMono-Regular.ttf"

@@ -174,6 +174,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DoseLedgerSelfTest:
                     GetTree().Quit(HostCli.RunDoseLedgerSelfTest(_dataDir));
                     return;
+                case HostCliAction.ExpeditionSelfTest:
+                    GetTree().Quit(HostCli.RunExpeditionSelfTest());
+                    return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
                     return;

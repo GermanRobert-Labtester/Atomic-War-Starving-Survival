@@ -49,6 +49,14 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
   rendering blank broadcasts (dead fields + a wrong-typed `signalStrength` that zeroed
   all 37 entries), dose_registers snake_case fields unbound. Binding-assertion regression
   gates added across every loaded catalog. All loaders now match their files.
+- Encounters port (2026-08-14): expedition travel/looting/inbound core moved into
+  `Ashfall.Core/Expeditions` (tick machine, stances, push-luck, capacity, stamina collapse,
+  encounter rolls on every leg, save/load safe) with a thin Godot host session + save store
+  + `--expedition-selftest` (10/10) + 17 unit tests. Documented deviations from the Unity
+  host: night-scavenge +0.1 loot and bicycle +0.5 inbound are port additions; stamina-0 is
+  an immediate fail (Unity drops loot + health instead); `hasFlashlight` stored but not yet
+  read; save shape (List<ExpeditionState>) differs from Unity's — a Unity-side adoption
+  step is still pending for cross-host save parity of this system.
 - Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
   forked per engine, which is what makes the incremental migration viable.
 
