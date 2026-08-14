@@ -186,13 +186,15 @@ namespace AtomicWar.GodotApp
             public string breakdown_text;
         }
 
+        /// <summary>A11: ISeededRng adapter now delegates to the core SeededRng
+        /// (deterministic xorshift64) — no System.Random in decision paths.</summary>
         private sealed class SystemSeededRng : ISeededRng
         {
-            private readonly System.Random _rng;
+            private readonly SeededRng _rng;
             public int Seed { get; }
-            public SystemSeededRng(int seed) { Seed = seed; _rng = new System.Random(seed); }
+            public SystemSeededRng(int seed) { Seed = seed; _rng = new SeededRng(seed); }
             public int Next(int min, int max) => _rng.Next(min, max);
-            public float NextFloat() => (float)_rng.NextDouble();
+            public float NextFloat() => _rng.NextFloat();
             public double NextDouble() => _rng.NextDouble();
         }
     }

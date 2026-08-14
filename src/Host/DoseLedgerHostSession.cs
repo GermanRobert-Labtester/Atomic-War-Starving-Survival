@@ -21,7 +21,7 @@ namespace AtomicWar.GodotApp
         public VoluntaryRegisterSystem Voluntary { get; }
         public DoseRegistersCatalog Registers { get; }
 
-        private readonly System.Random _rng;
+        private readonly SeededRng _rng;
 
         /// <summary>Raised when any register changes (coalesced save dirty flag).</summary>
         public event Action StateChanged;
@@ -38,7 +38,7 @@ namespace AtomicWar.GodotApp
             Cohort = cohort ?? new CohortSystem();
             Voluntary = voluntary ?? new VoluntaryRegisterSystem();
             Registers = registers ?? new DoseRegistersCatalog();
-            _rng = new System.Random(DemoSeed);
+            _rng = new SeededRng(DemoSeed);
 
             // Persistence: any register mutation marks the save dirty.
             Ledger.OnStateChanged += _ => StateChanged?.Invoke();
@@ -81,7 +81,7 @@ namespace AtomicWar.GodotApp
         /// <summary>Book a nominal reading against the veteran; returns the band label.</summary>
         public string ScribeReading(float nominalMsv, bool highEnergy)
         {
-            var rng = new CoreSeededRng(_rng.Next());
+            var rng = new CoreSeededRng(_rng.Next(0, int.MaxValue));
             var outcome = Ledger.BookReading(
                 "survivor_gunner_mikhail", 40, nominalMsv, "demo_scan",
                 highEnergy, antiRadBefore: false, antiRadAfter: false, rng);
@@ -142,14 +142,15 @@ namespace AtomicWar.GodotApp
         }
     }
 
-    /// <summary>ISeededRng backed by a local Random for host demo determinism.</summary>
+    /// <summary>A11: ISeededRng adapter delegates to the core SeededRng
+    /// (deterministic xorshift64) — no System.Random in decision paths.</summary>
     internal sealed class CoreSeededRng : ISeededRng
     {
-        private readonly Random _rng;
+        private readonly SeededRng _rng;
         public int Seed { get; }
-        public CoreSeededRng(int seed) { Seed = seed; _rng = new Random(seed); }
+        public CoreSeededRng(int seed) { Seed = seed; _rng = new SeededRng(seed); }
         public int Next(int min, int max) => _rng.Next(min, max);
-        public float NextFloat() => (float)_rng.NextDouble();
+        public float NextFloat() => _rng.NextFloat();
         public double NextDouble() => _rng.NextDouble();
     }
 }

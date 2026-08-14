@@ -32,6 +32,8 @@ namespace Ashfall.Core
         public List<GreenhousePlotState> plots = new List<GreenhousePlotState>();
         public bool preWarWheatUnlocked;
         public int totalHarvests;
+        /// <summary>A11: deterministic blight-roll count (reseed pattern).</summary>
+        public long blightRollCount;
     }
 
     public struct GreenhouseHarvest
@@ -59,12 +61,12 @@ namespace Ashfall.Core
         public const float ResidualContaminationAfterHarvest = 0.5f;
 
         private readonly GreenhouseState _state;
-        private readonly System.Random _rng;
+        private readonly int _seed;
 
         public GreenhouseSystem(int seed = 1)
         {
             _state = new GreenhouseState();
-            _rng = new System.Random(seed);
+            _seed = seed;
         }
 
         public string SaveId => _state.saveId;
@@ -91,6 +93,7 @@ namespace Ashfall.Core
             if (src == null) return;
             dst.preWarWheatUnlocked = src.preWarWheatUnlocked;
             dst.totalHarvests = src.totalHarvests;
+            dst.blightRollCount = Math.Max(0L, src.blightRollCount);
             dst.plots = new List<GreenhousePlotState>(src.plots != null ? src.plots.Count : 0);
             if (src.plots == null) return;
             for (int i = 0; i < src.plots.Count; i++)
@@ -288,7 +291,11 @@ namespace Ashfall.Core
                            * (1f - def.BlightResistance)
                            * contamFactor
                            * droughtFactor;
-            if (_rng.NextDouble() < chance)
+            // A11: deterministic reseed-per-roll (seed + roll count); the count
+            // is persisted so restored saves continue, not replay, the stream.
+            var blightRng = new SeededRng(unchecked(_seed * 397 + (int)(_state.blightRollCount & 0x7FFFFFFF)));
+            _state.blightRollCount++;
+            if (blightRng.NextDouble() < chance)
                 ApplyBlight(i, p, OutbreakBlightStep);
         }
 
