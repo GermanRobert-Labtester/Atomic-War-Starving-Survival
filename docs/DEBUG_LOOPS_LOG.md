@@ -357,3 +357,26 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
   cross-process hash efb2fbd6 identical across runs.
 - Defects found: 2 (cycle 02 checksum envelope, cycle 08 legacy migration);
   both fixed with regression coverage. Deferred: none.
+
+## UTILITY AI DEBUG LOOP (Phase F)
+- Cycle 01 — Probe: unsorted curve points. Defect: YES (core). Repro:
+  curvePoints declared 1.0/0.0/0.5 -> Evaluate interpolates wrong.
+  Root cause: ResponseCurve assumed x-sorted input; nothing enforced it.
+  Fix: sort a copy at construction (no balance change). Regression:
+  Probe_UnsortedCurvePoints. GREEN; 29/29 utility-ai tests.
+- Cycle 02 — Probes: noise-on-clamped-score (never NaN, deterministic per
+  seed), missing catalog file -> empty, ScoreAll null scorer defaults.
+  Defect: NO. Unity-parity noise-after-clamp documented + tested.
+- Cycle 03 — Probe: cross-process determinism + UI leak. Defect: NO.
+  Selftest hash f58c6a54 identical across processes; uitest 5/5.
+- Cycle 04 — Probe: full battery surfaced HardcoreEconomyTuning WIP (5 red).
+  Defect: YES (WIP loader). Root cause: field-based snake_case DTOs without
+  IncludeFields in JsonSerializerOptions -> all lists bind empty.
+  Fix: IncludeFields = true. Regression: 5 red -> green.
+- Cycle 05 — Probe: remaining HardcoreEconomyTuning red (NRE).
+  Defect: YES (WIP). Root cause: parameterless HardcoreEconomyTuningBundle
+  ctor left the three lists null; IsActive NREs.
+  Fix: default ctor initializes Array.Empty. Regression: 7/7.
+- Final: build 0/0, tests 601/601, utility-ai selftest 7/7 + uitest,
+  economy selftest 11/11 + uitest, expansions 236/236 GREEN, data gate
+  0 errors / 64 catalogs, cross-process hash f58c6a54 stable.
