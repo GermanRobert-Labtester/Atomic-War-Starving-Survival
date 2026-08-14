@@ -43,6 +43,12 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
   journal, dose-ledger, muster + data gate) — all PASS.
 - UI smokes: `--muster-uitest` (roster/approaches/coalition camp/witnesses/epilogue matrix)
   and `--dose-uitest` (4-tab Dose Register surface) — PASS, deterministic across runs.
+- Parity audit (2026-08-14): Unity's JsonUtility binds snake_case JSON to snake_case DTOs;
+  Godot's SystemTextJsonSerializer is case-insensitive only. Three live divergences found
+  and fixed — YOA loader DTOs rewritten to the real file schema, radio terminal was
+  rendering blank broadcasts (dead fields + a wrong-typed `signalStrength` that zeroed
+  all 37 entries), dose_registers snake_case fields unbound. Binding-assertion regression
+  gates added across every loaded catalog. All loaders now match their files.
 - Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
   forked per engine, which is what makes the incremental migration viable.
 
