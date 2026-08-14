@@ -8,6 +8,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.UI;
 using Ashfall.Core.Journal;
+using JournalSystem = AtomicWar._Game.Events.JournalSystem;
 
 namespace AtomicWar.Tests.EditMode
 {

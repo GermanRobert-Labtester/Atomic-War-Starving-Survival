@@ -108,6 +108,8 @@ namespace Ashfall.Core
             _rng.Next(minInclusive, maxExclusive);
 
         public float NextFloat() => (float)_rng.NextDouble();
+
+        public double NextDouble() => _rng.NextDouble();
     }
 
     /// <summary>

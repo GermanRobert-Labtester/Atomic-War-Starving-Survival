@@ -10,8 +10,9 @@ config/name="ASHFALL: Atomic War - Starving Survival"
 config/description="Post-nuclear survival strategy RPG"
 config/version="1.0.0"
 run/main_scene="res://scenes/Main.tscn"
-config/features=PackedStringArray("4.7", "C#", "Forward Plus")
+config/features=PackedStringArray("4.7", "C#", "Compatibility")
 config/icon="res://icon.svg"
+run/max_fps=60
 
 [display]
 
@@ -28,5 +29,7 @@ project/assembly_name="Ashfall"
 
 [rendering]
 
-renderer/rendering_method="forward_plus"
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
 textures/canvas_textures/default_texture_filter=1
+textures/vram_compression/import_etc2_astc=false

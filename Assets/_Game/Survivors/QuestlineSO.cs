@@ -177,6 +177,37 @@ namespace AtomicWar._Game.Survivors
             public const string DutyRosterSole = "quest_roster_sole";
             public const string DutyRosterWindow = "quest_roster_window";
             public const string DutyRosterInk = "quest_roster_ink";
+            public const string DutyRosterQuiet = "quest_roster_quiet";
+            // Side quests (18)
+            public const string DutyRosterPellNumbers = "quest_roster_pell_numbers";
+            public const string DutyRosterFrayneMinutes = "quest_roster_frayne_minutes";
+            public const string DutyRosterGrangeVote = "quest_roster_grange_vote";
+            public const string DutyRosterIvyOil = "quest_roster_ivy_oil";
+            public const string DutyRosterBlankAccess = "quest_roster_blank_access";
+            public const string DutyRosterMissingStrip = "quest_roster_missing_strip";
+            public const string DutyRosterKessPencil = "quest_roster_kess_pencil";
+            public const string DutyRosterHadiShift = "quest_roster_hadi_shift";
+            public const string DutyRosterTamsinWatch = "quest_roster_tamsin_watch";
+            public const string DutyRosterAnselTruth = "quest_roster_ansel_truth";
+            public const string DutyRosterLenTag = "quest_roster_len_tag";
+            public const string DutyRosterNilaEleven = "quest_roster_nila_eleven";
+            public const string DutyRosterChair = "quest_roster_chair";
+            public const string DutyRoster12bKit = "quest_roster_12b_kit";
+            public const string DutyRosterBrigid = "quest_roster_brigid";
+            public const string DutyRosterBootCrate = "quest_roster_boot_crate";
+            public const string DutyRosterRepNightSlate = "quest_rep_night_slate";
+            public const string DutyRosterRepMealRow = "quest_rep_meal_row";
+            // ASHFALL: THE STANDING RECORD — main questline
+            public const string RecordThePlate = "quest_record_the_plate";
+            public const string RecordGreasePencil = "quest_record_grease_pencil";
+            public const string RecordWrongStacks = "quest_record_wrong_stacks";
+            public const string RecordTheBook = "quest_record_the_book";
+            public const string RecordMassOrLot = "quest_record_mass_or_lot";
+            public const string RecordHands = "quest_record_hands";
+            public const string RecordFriendlyObstacle = "quest_record_friendly_obstacle";
+            public const string RecordTheFailure = "quest_record_the_failure";
+            public const string RecordFallback = "quest_record_fallback";
+            public const string RecordWhichGazetteer = "quest_record_which_gazetteer";
 
             // ASHFALL: NOBODY'S CHARTER — live quest cards (crossing_quests.json)
             public const string CrossingTheVouch = "quest_crossing_the_vouch";

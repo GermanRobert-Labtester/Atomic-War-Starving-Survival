@@ -440,6 +440,75 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void FullExpansionCatalogComplete()
+        {
+            var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+
+            // All 10 main quests registered (plan §4.1).
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestTheChart));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestWhoEats));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestFourteenth));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestCaretaker));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestTheColumn));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestTheTin));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestQuiet));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestSole));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestWindow));
+            Assert.NotNull(catalog.GetQuest(DutyRosterSystem.QuestInk));
+
+            // Side quests registered (plan §4.2) — spot-check each family.
+            Assert.NotNull(catalog.GetQuest("quest_roster_pell_numbers"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_frayne_minutes"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_grange_vote"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_ivy_oil"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_blank_access"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_missing_strip"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_kess_pencil"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_hadi_shift"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_tamsin_watch"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_ansel_truth"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_len_tag"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_nila_eleven"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_chair"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_12b_kit"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_brigid"));
+            Assert.NotNull(catalog.GetQuest("quest_roster_boot_crate"));
+            Assert.NotNull(catalog.GetQuest("quest_rep_night_slate"));
+            Assert.NotNull(catalog.GetQuest("quest_rep_meal_row"));
+            Assert.True(catalog.Quests.Count >= 28);
+
+            // All Stack wings incl. airlock + clinic (plan §2.1).
+            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackAirlock));
+            Assert.NotNull(catalog.GetLocation(DutyRosterSystem.LocStackClinicAlcove));
+            Assert.True(catalog.Locations.Count >= 14);
+        }
+
+        [Fact]
+        public void RosterNpcsPresentInCharactersCatalog()
+        {
+            string path = System.IO.Path.Combine(DataDir(), "characters.json");
+            Assert.True(System.IO.File.Exists(path));
+            var json = new SystemTextJsonSerializer();
+            var chars = json.Deserialize<System.Collections.Generic.List<DutyRosterCharacterProbe>>(
+                System.IO.File.ReadAllText(path));
+            var ids = new System.Collections.Generic.HashSet<string>();
+            for (int i = 0; i < chars.Count; i++)
+                ids.Add(chars[i].id);
+            Assert.Contains(DutyRosterSystem.NpcKessAdler, ids);
+            Assert.Contains(DutyRosterSystem.NpcAnselDuth, ids);
+            Assert.Contains("npc_tamsin_rook", ids);
+            Assert.Contains("npc_len_quill", ids);
+            Assert.Contains("npc_hadi_morrow", ids);
+            Assert.Contains("npc_nila_brant", ids);
+        }
+
+        private sealed class DutyRosterCharacterProbe
+        {
+            public string id;
+        }
+
+        [Fact]
         public void MarksHaveLaterProse()
         {
             var loader = new DutyRosterCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());

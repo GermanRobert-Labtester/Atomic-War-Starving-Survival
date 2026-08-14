@@ -5,6 +5,7 @@ using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
 using NUnit.Framework;
 using UnityEngine;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -383,7 +384,7 @@ namespace AtomicWar.Tests.EditMode
             water.SetPurifierHoursPerUnitMultiplierProvider(
                 () => shifts.GetEffectsSnapshot().PurifierHoursPerUnitMultiplier);
             var storage = new WaterStorage { DirtyWater = 2f };
-            water.Tick(1.5f, AtomicWar._Game.Environment.WeatherKind.Clear, 1, shelter, storage);
+            water.Tick(1.5f, WeatherKind.Clear, 1, shelter, storage);
             Assert.That(storage.CleanWater, Is.EqualTo(1f).Within(0.001f),
                 "A staffed purifier should complete its 2-hour conversion in 1.5 hours.");
 

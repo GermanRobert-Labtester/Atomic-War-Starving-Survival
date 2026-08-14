@@ -341,6 +341,53 @@
     ]
   },
   {
+    "id": "quest_roster_quiet",
+    "display_name": "Make It Quiet",
+    "type": "shelter",
+    "briefing": "Someone in the stack is not recovering. Dosimeter, or fever, or a wound Ianov would not round. Two knocks on the hatch. Tamsin: 'That's the House. They want a name and a sentence. I don't supply either.' Len, apron, three metres, not Edor's three metres. Different wait.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "lore_dr_quiet",
+    "target_location_id": "loc_approach_apron",
+    "complete_mutation": "mutation_quieter_room",
+    "fail_mutation": "mutation_quiet_on_apron",
+    "stages": [
+      {
+        "id": "stage_knock",
+        "text": "Two knocks. That's the House. They want a name and a sentence. Len: 'We make it quiet. I need the name. I need one true thing. I will write it the way you say it.'"
+      },
+      {
+        "id": "stage_name",
+        "text": "The name they answer to. Legal, used, plate-name from the tin, or refuse. He copies. He does not catch lies. The game does not go to the back room."
+      },
+      {
+        "id": "stage_true_thing",
+        "text": "The true thing. Run-true options: they kept the kettle. They took the last bowl. They went to the hatch when asked. They refused the hatch. A lie from the short list. Or refuse the sentence."
+      },
+      {
+        "id": "stage_where",
+        "text": "House terms, at the airlock. Die in the bunk with a curtain. Or refuse entirely; he goes. If they die on the apron, the flock has a rectangle."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_quiet_house",
+        "text": "House terms. As far as the airlock. Blanket question. Tag will return. Personal effects returned later, tagged.",
+        "set_flag": "mutation_quieter_room"
+      },
+      {
+        "id": "roster_die_in_bunk",
+        "text": "Die in the bunk. Curtain. Mess is a mess beside a curtain.",
+        "set_flag": "mutation_death_in_stack"
+      },
+      {
+        "id": "roster_quiet_refuse",
+        "text": "Refuse entirely. He goes. If they die on the apron, the flock has a rectangle.",
+        "set_flag": "mutation_quiet_on_apron"
+      }
+    ]
+  },
+  {
     "id": "quest_roster_window",
     "display_name": "While the Road Is Open",
     "type": "shelter",
@@ -436,6 +483,623 @@
         "id": "roster_burn_chart",
         "text": "Burn. Kettle, or honesty. Header charred. Child asks. Fire in the kettle, or we did it, or silence.",
         "set_flag": "mutation_roster_burned"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_pell_numbers",
+    "display_name": "His Quota",
+    "type": "faction",
+    "briefing": "Sergeant Pell. Office, or the ash with a ticket machine. 'I need three. Service is the fastest route to rations. That is true. If you ask what happens to the ones who decline, I will answer. I would rather you asked.'",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_conscription_office",
+    "complete_mutation": "mark_pell_honest",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_number",
+        "text": "Take a number. The machine still works. People still take a number."
+      },
+      {
+        "id": "stage_ask",
+        "text": "Hear what happens to decliners. He answers without looking away."
+      },
+      {
+        "id": "stage_quota",
+        "text": "Meet quota with volunteers, refuse, or send substitutes. IRREGULAR is a word he shares with Edor without liking him."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_pell_volunteers",
+        "text": "Take volunteers. Not the names on the wall.",
+        "set_flag": "mark_pell_honest"
+      },
+      {
+        "id": "roster_pell_refuse",
+        "text": "Refuse both him and the Office. Intercept more likely.",
+        "set_flag": "mutation_column_voss"
+      },
+      {
+        "id": "roster_pell_break",
+        "text": "Break the gear. 'Then I will come with a worse machine.'",
+        "set_flag": "mark_pell_honest"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_frayne_minutes",
+    "display_name": "Eight Fittings",
+    "type": "faction",
+    "briefing": "Ottilie Frayne. Allotments hut. Minutes open. 'Eight fittings. Door handles, nameplates, lamp bases. I have not asked where they come from. I will not ask today.'",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_the_allotments",
+    "complete_mutation": "mutation_brass_frayne",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_fittings",
+        "text": "Deliver eight brass fittings, or none."
+      },
+      {
+        "id": "stage_committee",
+        "text": "Sit the committee. If someone says fair, Frayne's pencil writes: visitor spoke."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_frayne_deliver",
+        "text": "Deliver eight. Water clock eases. Leva still short.",
+        "set_flag": "mutation_brass_frayne"
+      },
+      {
+        "id": "roster_frayne_none",
+        "text": "Deliver none. A leak is scheduled in the minutes.",
+        "set_flag": "mutation_brass_frayne"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_grange_vote",
+    "display_name": "A Show of Hands",
+    "type": "faction",
+    "briefing": "Delacroix. Grange Hall. Hands already half up. 'We count. We don't do it in a hole. If you have a hole, you still have a hand.' Your hand will be visible. That is the encounter.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_grange_hall",
+    "complete_mutation": "mark_hand_visible",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_attend",
+        "text": "Attend. The room smells of wet wool and seed."
+      },
+      {
+        "id": "stage_vote",
+        "text": "Hand up shelter, hand up return, or keep the hand down. The room saw the keep."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_vote_shelter",
+        "text": "Hand up shelter.",
+        "set_flag": "mark_hand_visible"
+      },
+      {
+        "id": "roster_vote_return",
+        "text": "Hand up return. Ansel does the dishes.",
+        "set_flag": "mark_hand_visible"
+      },
+      {
+        "id": "roster_vote_keep_down",
+        "text": "Keep the hand down. Counted as down.",
+        "set_flag": "mark_hand_visible"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_ivy_oil",
+    "display_name": "The Last Cup",
+    "type": "expedition",
+    "briefing": "Ivy Corrigan at Kilometre 19, or the can at the base of a home lamp. The last cup. Three mouths: the mess lamp, her post, Yara's measuring-stick. Ivy will not go dark for you.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_cut_kilometre_19",
+    "complete_mutation": "mmc_lamp_oil_cup",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_cup",
+        "text": "The last cup of oil. Choose who drinks it in light."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_oil_home",
+        "text": "Home. The mess stays lit.",
+        "set_flag": "mmc_lamp_oil_cup"
+      },
+      {
+        "id": "roster_oil_ivy",
+        "text": "Ivy. Her post stays lit.",
+        "set_flag": "mmc_lamp_oil_cup"
+      },
+      {
+        "id": "roster_oil_yara",
+        "text": "Yara. The Cut stays measured.",
+        "set_flag": "mmc_lamp_oil_cup"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_blank_access",
+    "display_name": "A Filter for a Hiding Place",
+    "type": "faction",
+    "briefing": "Nila Brant. Allocation 11. Authenticator on. Chart wiped. 'I need a filter. You can sleep here if you are not a pool. I will hide one person whose name is not already on a stool-form. Not three. Three is a column.'",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_overflow_alloc_11",
+    "complete_mutation": "faction_blank_rows_access",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_filter",
+        "text": "Trade a filter or refuse. Nila does not say please."
+      },
+      {
+        "id": "stage_rule",
+        "text": "Hear the rule. If it isn't written, it isn't a pool."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_give_filter",
+        "text": "Give the filter. Access granted.",
+        "set_flag": "faction_blank_rows_access"
+      },
+      {
+        "id": "roster_refuse_filter",
+        "text": "Refuse. The hatch stays a hatch.",
+        "set_flag": "faction_blank_rows_access"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_missing_strip",
+    "display_name": "The Hanging Trade",
+    "type": "faction",
+    "briefing": "A carbon Kess made of a Quad strip, or the Quad noticeboard. The trade is living. It may be Hadi. It may be a clerk. It may be a name you wrote in pencil and then erased.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_cluster_quad",
+    "complete_mutation": "mark_three_away",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_match",
+        "text": "Match the living name to the strip."
+      },
+      {
+        "id": "stage_tell",
+        "text": "Tell them, or don't. If you tell them, they file retrieval. If you don't, the strip hangs. Hanging is also a kind of filing."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_strip_tell",
+        "text": "Tell them. Retrieval file.",
+        "set_flag": "mutation_hadi_status"
+      },
+      {
+        "id": "roster_strip_hang",
+        "text": "Don't tell. The strip hangs.",
+        "set_flag": "mark_three_away"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_kess_pencil",
+    "display_name": "Two Dates",
+    "type": "personal",
+    "briefing": "Kess. A municipal clerk-book, wet-swollen, salvaged. Her date of birth is written twice, once correctly. The other year is a digit that would have made her a dependent in someone else's household. Convoy 12 grammar. Not Edor's allocated return.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_stack_roster_wall",
+    "complete_mutation": "mark_ration_protocol",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_compare",
+        "text": "Compare the two dates. Do not joke."
+      },
+      {
+        "id": "stage_choose",
+        "text": "Correct it, leave it, or silence."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_kess_correct",
+        "text": "Correct it. Once, correctly.",
+        "set_flag": "mark_ration_protocol"
+      },
+      {
+        "id": "roster_kess_leave",
+        "text": "Leave it. She will owe you one erase on a levy name. She will hate the owing.",
+        "set_flag": "flag_wait_ink"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_hadi_shift",
+    "display_name": "Which Morning",
+    "type": "personal",
+    "briefing": "Hadi. Curtain. One morning on the slate. Ianov's paper, if you have it, has a number that was not rounded toward ease. Leva's whistle has a time. The alcove has a child who is hot, or does not.",
+    "prereq_quest_id": "quest_roster_caretaker",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_stack_clinic_alcove",
+    "complete_mutation": "mutation_hadi_status",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_morning",
+        "text": "'I cannot do both in the same morning. You have to write which morning it is.'"
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_hadi_alcove",
+        "text": "Alcove. The waiting surgery happens or waits.",
+        "set_flag": "mutation_hadi_status"
+      },
+      {
+        "id": "roster_hadi_outfall",
+        "text": "Outfall. Membrane labour exists.",
+        "set_flag": "flag_hadi_sent"
+      },
+      {
+        "id": "roster_hadi_split",
+        "text": "Split the morning. He will say no. Splitting is how dressings fail.",
+        "set_flag": "mutation_hadi_status"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_tamsin_watch",
+    "display_name": "The Same Name Three Times",
+    "type": "personal",
+    "briefing": "Tamsin. Slate. Charcoal. 'Same name three times is not a rotation. It's a person falling over at four. Write someone else or I write the airlock pad.'",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_approach_hatch",
+    "complete_mutation": "mark_tamsin_watch_short",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_slate",
+        "text": "Rotate, make her, pad, or send to waystation with a named replacement."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_watch_rotate",
+        "text": "Rotate someone else.",
+        "set_flag": "mark_tamsin_double"
+      },
+      {
+        "id": "roster_watch_make",
+        "text": "Make her. Her intercom will be slower.",
+        "set_flag": "mark_tamsin_watch_short"
+      },
+      {
+        "id": "roster_watch_waystation",
+        "text": "Send her to A1. Teach someone the wheel.",
+        "set_flag": "flag_tamsin_waystation"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_ansel_truth",
+    "display_name": "The Boots",
+    "type": "personal",
+    "briefing": "Ansel. Mess, after boots or levy packing. The child asks what the boots were for, or where the three packs are going. Wren, if she is at the table, hears a version. It will be the only version she ever hears.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_stack_mess",
+    "complete_mutation": "mark_child_truth",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_ask",
+        "text": "'Say north and forms, or say work, or send them to the pads. Don't mix the three. They can tell mixing.'"
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_truth_north",
+        "text": "Truth. North and forms.",
+        "set_flag": "mark_child_truth"
+      },
+      {
+        "id": "roster_truth_soft",
+        "text": "A softer sentence. Ansel does not sleep. He does not correct you.",
+        "set_flag": "mark_child_truth"
+      },
+      {
+        "id": "roster_truth_send",
+        "text": "Send them to the pads with a crust.",
+        "set_flag": "mark_child_truth"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_len_tag",
+    "display_name": "The Tag",
+    "type": "personal",
+    "briefing": "Len. Airlock. A satchel. A tag. The true thing is written the way you said it. If you lied, the lie is the sentence. He does not catch lies.",
+    "prereq_quest_id": "quest_roster_quiet",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_approach_apron",
+    "complete_mutation": "mark_len_knock",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_tag",
+        "text": "Leave it on the hook, burn it, give it to the person who knew them, or hide it in the tin."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_tag_hook",
+        "text": "Leave it on the hook.",
+        "set_flag": "mark_len_knock"
+      },
+      {
+        "id": "roster_tag_burn",
+        "text": "Burn it. Burning does not unwrite the night we had it.",
+        "set_flag": "mark_len_knock"
+      },
+      {
+        "id": "roster_tag_person",
+        "text": "Give it to the person who knew them.",
+        "set_flag": "mark_len_knock"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_nila_eleven",
+    "display_name": "The Scar",
+    "type": "personal",
+    "briefing": "Nila. She walks you to 13 if access holds. 'Leave it. If you copy it for the Drown, that's a name. Completeness is a kind of ink. Rewrite is kindness. Kindness is how a pool is made.'",
+    "prereq_quest_id": "quest_roster_blank_access",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_overflow_alloc_13",
+    "complete_mutation": "mutation_schedule_refused",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_scar",
+        "text": "Leave the scar, rewrite the name, or pocket a rubbing for Sole."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_scar_leave",
+        "text": "Leave it. Access holds.",
+        "set_flag": "mutation_schedule_refused"
+      },
+      {
+        "id": "roster_scar_rewrite",
+        "text": "Rewrite. Kindness. The hatch will not open.",
+        "set_flag": "mutation_roster_blank"
+      },
+      {
+        "id": "roster_scar_rubbing",
+        "text": "Copy it for Sole. Completeness opens 13 to a file and closes 11 to you.",
+        "set_flag": "mutation_schedule_living"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_chair",
+    "display_name": "The Fourth Chair",
+    "type": "expedition",
+    "briefing": "Dentists' Row. The fourth practice is missing a chair. Yours is bolted in the airlock. Confirm the bolts. Return the chair or leave the hole.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_dentists_row",
+    "complete_mutation": "mutation_chair_returned",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_bolts",
+        "text": "Confirm the bolts. Layer 1 dental chair in the airlock."
+      },
+      {
+        "id": "stage_return",
+        "text": "Return the chair or leave the square of cleaner floor."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_chair_return",
+        "text": "Return it. The square is occupied.",
+        "set_flag": "mutation_chair_returned"
+      },
+      {
+        "id": "roster_chair_keep",
+        "text": "Leave it. The square is a measurement.",
+        "set_flag": "mutation_chair_returned"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_12b_kit",
+    "display_name": "Halvard's Kit",
+    "type": "expedition",
+    "briefing": "Allocation 12-B. Halvard's improvised potable. Sela: engineering, not salvage. Copy the notes. Leave the working kit or take it.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_alloc_12b",
+    "complete_mutation": "mutation_brass_kept",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_notes",
+        "text": "Copy the notes. A kit that still works if you left it."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_kit_leave",
+        "text": "Leave the working kit. 12-B water still works.",
+        "set_flag": "mutation_brass_kept"
+      },
+      {
+        "id": "roster_kit_take",
+        "text": "Take it. Feeds item_halvard_kit_notes.",
+        "set_flag": "mutation_brass_north"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_brigid",
+    "display_name": "Charts Filled to a Date",
+    "type": "expedition",
+    "briefing": "St Brigid's. Charts filled to a date, then not. Quiet House overlay. Walk the ward. Do not enter the back room. Leave blankets or don't.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_st_brigids_almshouse",
+    "complete_mutation": "flag_wait_ink",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_ward",
+        "text": "Walk the ward. Blankets on a chair. Len's satchel."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_blankets_leave",
+        "text": "Leave blankets. Len's trust.",
+        "set_flag": "mark_len_knock"
+      },
+      {
+        "id": "roster_blankets_none",
+        "text": "Keep them. The ward is cold.",
+        "set_flag": "mark_len_knock"
+      }
+    ]
+  },
+  {
+    "id": "quest_roster_boot_crate",
+    "display_name": "Sizes 1 Through 4",
+    "type": "shelter",
+    "briefing": "Crate of boots, sizes 1-4, never opened. A child can wear a pair. They were not packed for them. Open or leave sealed.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_stack_airlock",
+    "complete_mutation": "mutation_boots_opened",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_crate",
+        "text": "Open or leave sealed. Tape uncut unless you cut it."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_boots_open",
+        "text": "Open. Fit a child. They sleep in them.",
+        "set_flag": "mutation_boots_opened"
+      },
+      {
+        "id": "roster_boots_north",
+        "text": "Send them north to the Cluster school.",
+        "set_flag": "mutation_boots_opened"
+      },
+      {
+        "id": "roster_boots_sealed",
+        "text": "Leave sealed. The crate will still be a crate in forty days.",
+        "set_flag": "mutation_boots_opened"
+      }
+    ]
+  },
+  {
+    "id": "quest_rep_night_slate",
+    "display_name": "Night Slate",
+    "type": "repeatable",
+    "briefing": "Each night Tamsin posts a slate. Assign 1 watch or Utility AI defaults. Same name three times is not a rotation.",
+    "prereq_quest_id": "quest_roster_the_chart",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_approach_hatch",
+    "complete_mutation": "mark_tamsin_double",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_watch",
+        "text": "Assign the watch. Encounter check follows."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_slate_assign",
+        "text": "Assign.",
+        "set_flag": "mark_tamsin_double"
+      },
+      {
+        "id": "roster_slate_default",
+        "text": "Let Utility AI default. Defaults are loud.",
+        "set_flag": "mark_tamsin_watch_short"
+      }
+    ]
+  },
+  {
+    "id": "quest_rep_meal_row",
+    "display_name": "Meal Row",
+    "type": "repeatable",
+    "briefing": "Kess copies the ladle protocol. Confirm portions. Exception for sick, child, or levy-return.",
+    "prereq_quest_id": "quest_roster_who_eats",
+    "min_day": 60,
+    "knowledge_key": "",
+    "target_location_id": "loc_stack_mess",
+    "complete_mutation": "mutation_ration_protocol",
+    "fail_mutation": "",
+    "stages": [
+      {
+        "id": "stage_portions",
+        "text": "Confirm portions. An order on the mess wall, not the duty chart. Different paper. Different crime."
+      }
+    ],
+    "choices": [
+      {
+        "id": "roster_meal_confirm",
+        "text": "Confirm. Protocol reinforced.",
+        "set_flag": "mutation_ration_protocol"
+      },
+      {
+        "id": "roster_meal_exception",
+        "text": "Make an exception for the sick or the child.",
+        "set_flag": "mark_bowl_cold"
       }
     ]
   }

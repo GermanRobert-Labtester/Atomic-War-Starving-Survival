@@ -69,7 +69,16 @@ namespace Ashfall.Core
 
         public string SaveId => _state.saveId;
 
-        public GreenhouseState CaptureState() => _state;
+        /// <summary>
+        /// Deep copy: the live plots must never alias the save envelope, or a
+        /// later tick mutates the snapshot that is still on its way to disk.
+        /// </summary>
+        public GreenhouseState CaptureState()
+        {
+            var copy = new GreenhouseState();
+            CopyInto(copy, _state);
+            return copy;
+        }
 
         public void RestoreState(GreenhouseState gs)
         {

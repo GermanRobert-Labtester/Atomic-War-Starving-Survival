@@ -106,5 +106,36 @@ namespace Ashfall.Core.YearOfAsh
             }
             return false;
         }
+
+        /// <summary>
+        /// Snapshot for the save envelope. Returns a copy so later ticks cannot mutate
+        /// a capture that is still on its way to disk.
+        /// </summary>
+        public YearOfAshRadonState CaptureState()
+        {
+            return new YearOfAshRadonState
+            {
+                indoorRadonBqm3 = _state.indoorRadonBqm3,
+                scrubberFilterHealthPercent = _state.scrubberFilterHealthPercent,
+                activeFoundationFissures = _state.activeFoundationFissures,
+                totalAlphaDoseLogged = _state.totalAlphaDoseLogged,
+                isScrubberAlarmActive = _state.isScrubberAlarmActive
+            };
+        }
+
+        /// <summary>
+        /// Rebuilds live state from a snapshot. Tolerates a null section so a save
+        /// written before this section existed restores as "fresh scrubber".
+        /// </summary>
+        public void RestoreState(YearOfAshRadonState state)
+        {
+            if (state == null) return;
+            _state.indoorRadonBqm3 = state.indoorRadonBqm3;
+            _state.scrubberFilterHealthPercent = state.scrubberFilterHealthPercent;
+            _state.activeFoundationFissures = state.activeFoundationFissures;
+            _state.totalAlphaDoseLogged = state.totalAlphaDoseLogged;
+            _state.isScrubberAlarmActive = state.isScrubberAlarmActive;
+            OnRadonLevelChanged?.Invoke(_state.indoorRadonBqm3);
+        }
     }
 }

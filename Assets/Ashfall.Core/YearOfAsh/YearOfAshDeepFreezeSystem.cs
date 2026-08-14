@@ -92,5 +92,38 @@ namespace Ashfall.Core.YearOfAsh
         {
             _state.thermalInsulationQuality = Math.Min(1.0f, _state.thermalInsulationQuality + boost);
         }
+
+        /// <summary>
+        /// Snapshot for the save envelope. Returns a copy so later ticks cannot mutate
+        /// a capture that is still on its way to disk.
+        /// </summary>
+        public YearOfAshDeepFreezeState CaptureState()
+        {
+            return new YearOfAshDeepFreezeState
+            {
+                indoorTemperatureCelsius = _state.indoorTemperatureCelsius,
+                thermalInsulationQuality = _state.thermalInsulationQuality,
+                geothermalFlowRatePercent = _state.geothermalFlowRatePercent,
+                intakeIceThicknessMm = _state.intakeIceThicknessMm,
+                isIntakeBlocked = _state.isIntakeBlocked,
+                daysFrozenPipelinesExperienced = _state.daysFrozenPipelinesExperienced
+            };
+        }
+
+        /// <summary>
+        /// Rebuilds live state from a snapshot. Tolerates a null section so a save
+        /// written before this section existed restores at the thermal defaults.
+        /// </summary>
+        public void RestoreState(YearOfAshDeepFreezeState state)
+        {
+            if (state == null) return;
+            _state.indoorTemperatureCelsius = state.indoorTemperatureCelsius;
+            _state.thermalInsulationQuality = state.thermalInsulationQuality;
+            _state.geothermalFlowRatePercent = state.geothermalFlowRatePercent;
+            _state.intakeIceThicknessMm = state.intakeIceThicknessMm;
+            _state.isIntakeBlocked = state.isIntakeBlocked;
+            _state.daysFrozenPipelinesExperienced = state.daysFrozenPipelinesExperienced;
+            OnTemperatureChanged?.Invoke(_state.indoorTemperatureCelsius);
+        }
     }
 }

@@ -114,7 +114,24 @@ namespace Ashfall.Core
 
         public void RestoreState(WaystationSystemState saved)
         {
-            _state = saved ?? new WaystationSystemState();
+            if (saved == null) _state = new WaystationSystemState();
+            else
+            {
+                // Deep-copy: the live system must never alias the envelope's array.
+                _state = new WaystationSystemState
+                {
+                    systemId = saved.systemId,
+                    unlocked = saved.unlocked,
+                    stoveLit = saved.stoveLit,
+                    filterHealth = saved.filterHealth,
+                    bunksOccupied = saved.bunksOccupied,
+                    winteringClosedWindow = saved.winteringClosedWindow,
+                    daysSinceResupply = saved.daysSinceResupply,
+                    watchSurvivorIds = saved.watchSurvivorIds != null
+                        ? (string[])saved.watchSurvivorIds.Clone()
+                        : Array.Empty<string>()
+                };
+            }
             if (_state.watchSurvivorIds == null) _state.watchSurvivorIds = Array.Empty<string>();
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             RaiseChanged();

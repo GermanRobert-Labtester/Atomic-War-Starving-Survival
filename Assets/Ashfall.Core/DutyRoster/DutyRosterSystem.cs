@@ -89,9 +89,19 @@ namespace Ashfall.Core
         public const string LocStackSleeping = "loc_stack_sleeping";
         public const string LocStackMess = "loc_stack_mess";
         public const string LocStackFiltration = "loc_stack_filtration";
+        public const string LocStackAirlock = "loc_stack_airlock";
+        public const string LocStackClinicAlcove = "loc_stack_clinic_alcove";
 
         public const string QuestTheChart = "quest_roster_the_chart";
         public const string QuestWhoEats = "quest_roster_who_eats";
+        public const string QuestFourteenth = "quest_roster_fourteenth";
+        public const string QuestCaretaker = "quest_roster_caretaker";
+        public const string QuestTheColumn = "quest_roster_the_column";
+        public const string QuestTheTin = "quest_roster_the_tin";
+        public const string QuestQuiet = "quest_roster_quiet";
+        public const string QuestSole = "quest_roster_sole";
+        public const string QuestWindow = "quest_roster_window";
+        public const string QuestInk = "quest_roster_ink";
 
         public const string NpcKessAdler = "npc_kess_adler";
         public const string NpcAnselDuth = "npc_ansel_duth";
@@ -150,7 +160,7 @@ namespace Ashfall.Core
 
         public static readonly string[] StackWingIds =
         {
-            LocStackRosterWall, LocStackSleeping, LocStackMess, LocStackFiltration
+            LocStackRosterWall, LocStackSleeping, LocStackMess, LocStackFiltration, LocStackAirlock, LocStackClinicAlcove
         };
 
         public static readonly string[] AssignmentRoles =
@@ -590,7 +600,15 @@ namespace Ashfall.Core
 
         public void RestoreState(DutyRosterSystemState saved)
         {
-            _state = saved ?? new DutyRosterSystemState();
+            // Deep-copy: the deserialized DTO must not become the live state.
+            // Otherwise the caller's save object and the running system alias
+            // the same lists and a later mutation corrupts the envelope.
+            if (saved == null) _state = new DutyRosterSystemState();
+            else
+            {
+                _state = new DutyRosterSystemState();
+                CopyState(saved, _state);
+            }
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             EnsureLists();
             RebuildIndexes();
@@ -671,13 +689,18 @@ namespace Ashfall.Core
 
         private void SyncAssignmentList()
         {
+            // Emit in ordinal role order: dictionary iteration order is not a
+            // cross-host guarantee, and the assignments list is part of the save.
             _state.assignments.Clear();
-            foreach (var kv in _assignmentByRole)
+            var roles = new List<string>(_assignmentByRole.Count);
+            foreach (var kv in _assignmentByRole) roles.Add(kv.Key);
+            roles.Sort(string.CompareOrdinal);
+            for (int i = 0; i < roles.Count; i++)
             {
                 _state.assignments.Add(new DutyRosterAssignmentEntry
                 {
-                    role = kv.Key,
-                    survivorId = kv.Value
+                    role = roles[i],
+                    survivorId = _assignmentByRole[roles[i]]
                 });
             }
         }

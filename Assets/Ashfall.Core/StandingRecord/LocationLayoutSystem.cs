@@ -304,15 +304,22 @@ namespace Ashfall.Core
             copy.expansionUnlocked = _state.expansionUnlocked;
             copy.currentParentId = _state.currentParentId;
             copy.parents = new List<LocationLayoutParentSave>();
-            foreach (var pair in _runtime)
+            // Ordinal-ordered emission: dictionary iteration order is not a
+            // cross-host guarantee, and the parents list is part of the save.
+            var parentIds = new List<string>(_runtime.Count);
+            foreach (var pair in _runtime) parentIds.Add(pair.Key);
+            parentIds.Sort(string.CompareOrdinal);
+            for (int pi = 0; pi < parentIds.Count; pi++)
             {
+                string parentId = parentIds[pi];
+                ParentRuntime rt = _runtime[parentId];
                 var save = new LocationLayoutParentSave();
-                save.parentLocationId = pair.Key;
-                CopySetToList(pair.Value.Unlocked, save.unlockedRoomIds);
-                CopySetToList(pair.Value.Entered, save.enteredRoomIds);
-                CopySetToList(pair.Value.Inspected, save.inspectedRoomIds);
-                for (int i = 0; i < pair.Value.Flags.Count; i++)
-                    save.flags.Add(pair.Value.Flags[i]);
+                save.parentLocationId = parentId;
+                CopySetToList(rt.Unlocked, save.unlockedRoomIds);
+                CopySetToList(rt.Entered, save.enteredRoomIds);
+                CopySetToList(rt.Inspected, save.inspectedRoomIds);
+                for (int i = 0; i < rt.Flags.Count; i++)
+                    save.flags.Add(rt.Flags[i]);
                 copy.parents.Add(save);
             }
             return copy;
@@ -320,7 +327,43 @@ namespace Ashfall.Core
 
         public void RestoreState(LocationLayoutState saved)
         {
-            _state = saved ?? new LocationLayoutState();
+            if (saved == null) _state = new LocationLayoutState();
+            else
+            {
+                // Deep-copy: the live system must never alias the envelope's lists.
+                var fresh = new LocationLayoutState
+                {
+                    systemId = saved.systemId,
+                    expansionUnlocked = saved.expansionUnlocked,
+                    currentParentId = saved.currentParentId,
+                    parents = new List<LocationLayoutParentSave>()
+                };
+                if (saved.parents != null)
+                {
+                    for (int i = 0; i < saved.parents.Count; i++)
+                    {
+                        LocationLayoutParentSave row = saved.parents[i];
+                        if (row == null || string.IsNullOrEmpty(row.parentLocationId)) continue;
+                        fresh.parents.Add(new LocationLayoutParentSave
+                        {
+                            parentLocationId = row.parentLocationId,
+                            unlockedRoomIds = row.unlockedRoomIds != null
+                                ? new List<string>(row.unlockedRoomIds)
+                                : new List<string>(),
+                            enteredRoomIds = row.enteredRoomIds != null
+                                ? new List<string>(row.enteredRoomIds)
+                                : new List<string>(),
+                            inspectedRoomIds = row.inspectedRoomIds != null
+                                ? new List<string>(row.inspectedRoomIds)
+                                : new List<string>(),
+                            flags = row.flags != null
+                                ? new List<string>(row.flags)
+                                : new List<string>()
+                        });
+                    }
+                }
+                _state = fresh;
+            }
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             if (_state.parents == null) _state.parents = new List<LocationLayoutParentSave>();
             _runtime.Clear();
@@ -444,6 +487,9 @@ namespace Ashfall.Core
             dest.Clear();
             foreach (string id in set)
                 dest.Add(id);
+            // HashSet iteration order is not a cross-host guarantee; the room
+            // id lists are part of the save envelope, so emit ordinal-ordered.
+            dest.Sort(string.CompareOrdinal);
         }
 
         private static void FillSet(HashSet<string> dest, List<string> src)

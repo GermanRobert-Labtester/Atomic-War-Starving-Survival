@@ -6,6 +6,7 @@ using AtomicWar._Game.Core;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.UI;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.PlayMode
 {

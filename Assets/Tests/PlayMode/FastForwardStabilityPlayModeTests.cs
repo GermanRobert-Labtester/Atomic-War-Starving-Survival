@@ -11,6 +11,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.UI;
 using AtomicWar._Game.Utilities;
 using Ashfall.Core.Journal;
+using JournalSystem = Ashfall.Core.Journal.JournalSystem;
 
 namespace AtomicWar.Tests.PlayMode
 {

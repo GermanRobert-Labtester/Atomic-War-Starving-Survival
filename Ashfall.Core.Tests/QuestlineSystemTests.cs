@@ -144,6 +144,12 @@ namespace Ashfall.Core.Tests
             var sys = new QuestlineSystem();
             // Must not throw
             sys.RegisterQuestline(null);
+            sys.RegisterQuestline(null);
+            Assert.Empty(sys.GetAvailableQuestlines(1));
+            var def = new QuestlineDefinition { questlineId = "ql_test" };
+            sys.RegisterQuestline(def);
+            Assert.Same(def, sys.FindDefinition("ql_test"));
+            Assert.Null(sys.FindDefinition("ql_missing"));
         }
 
         // ─── Built-in catalog ──────────────────────────────────────────────────────

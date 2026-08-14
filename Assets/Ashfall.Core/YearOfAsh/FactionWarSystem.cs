@@ -43,6 +43,8 @@ namespace Ashfall.Core.YearOfAsh
         public FactionWarSystem(FactionWarSystemState state = null)
         {
             _state = state ?? new FactionWarSystemState();
+            if (_state.enactedDecrees == null) _state.enactedDecrees = new List<string>();
+            if (_state.factions == null) _state.factions = new List<FactionStandingRecord>();
             EnsureDefaultFactions();
         }
 
@@ -83,7 +85,7 @@ namespace Ashfall.Core.YearOfAsh
 
         public void SimulateDailyFriction(int day)
         {
-            if (day < 240) return; // Full war kicks off in Phase 5
+            if (day <= 240) return; // Full war kicks off in Phase 5 (day 241+)
 
             _state.activeWarTension = Math.Min(100, _state.activeWarTension + 1);
 
@@ -137,23 +139,63 @@ namespace Ashfall.Core.YearOfAsh
                 activeWarTension = _state.activeWarTension,
                 dominantFactionId = _state.dominantFactionId,
                 totalArtilleryStrikesLogged = _state.totalArtilleryStrikesLogged,
-                enactedDecrees = new List<string>(_state.enactedDecrees),
+                enactedDecrees = _state.enactedDecrees != null
+                    ? new List<string>(_state.enactedDecrees)
+                    : new List<string>(),
                 factions = new List<FactionStandingRecord>()
             };
 
-            foreach (var f in _state.factions)
+            if (_state.factions != null)
             {
-                copy.factions.Add(new FactionStandingRecord
+                foreach (var f in _state.factions)
                 {
-                    factionId = f.factionId,
-                    standing = f.standing,
-                    territorialControlPercent = f.territorialControlPercent,
-                    isHostile = f.isHostile,
-                    isAllied = f.isAllied
-                });
+                    if (f == null) continue;
+                    copy.factions.Add(new FactionStandingRecord
+                    {
+                        factionId = f.factionId,
+                        standing = f.standing,
+                        territorialControlPercent = f.territorialControlPercent,
+                        isHostile = f.isHostile,
+                        isAllied = f.isAllied
+                    });
+                }
             }
 
             return copy;
+        }
+
+        /// <summary>
+        /// Restores a captured faction-war snapshot into the live state, then
+        /// re-applies the default faction rows so a roster added after the save
+        /// was written still has a record. A null state is a no-op.
+        /// </summary>
+        public void RestoreState(FactionWarSystemState state)
+        {
+            if (state == null) return;
+            _state.activeWarTension = state.activeWarTension;
+            _state.dominantFactionId = state.dominantFactionId ?? "faction_central_garrison";
+            _state.totalArtilleryStrikesLogged = state.totalArtilleryStrikesLogged;
+            _state.enactedDecrees = state.enactedDecrees != null
+                ? new List<string>(state.enactedDecrees)
+                : new List<string>();
+
+            _state.factions.Clear();
+            if (state.factions != null)
+            {
+                foreach (var f in state.factions)
+                {
+                    if (f == null || string.IsNullOrEmpty(f.factionId)) continue;
+                    _state.factions.Add(new FactionStandingRecord
+                    {
+                        factionId = f.factionId,
+                        standing = f.standing,
+                        territorialControlPercent = f.territorialControlPercent,
+                        isHostile = f.isHostile,
+                        isAllied = f.isAllied
+                    });
+                }
+            }
+            EnsureDefaultFactions();
         }
     }
 }

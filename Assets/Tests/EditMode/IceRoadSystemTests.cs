@@ -2,6 +2,9 @@ using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Environment;
+using Ashfall.Core;
+using IceRoadSystem = AtomicWar._Game.Core.IceRoadSystem;
+using IceRoadSystemState = AtomicWar._Game.Core.IceRoadSystemState;
 
 namespace AtomicWar.Tests.EditMode
 {

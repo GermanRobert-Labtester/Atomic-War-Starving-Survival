@@ -8,6 +8,7 @@ using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
 using ShelterClass = AtomicWar._Game.Shelter.Shelter;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {

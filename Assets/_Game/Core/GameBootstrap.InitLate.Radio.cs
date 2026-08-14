@@ -95,6 +95,7 @@ namespace AtomicWar._Game.Core
                 getSurvivors: () => Survivors,
                 getDay: () => TimeSystem != null ? TimeSystem.CurrentDay : 0);
             EventBus.Subscribe<FlashpointEmptiedDevices>(OnFlashpointEmp_UnlockGhosts);
+            _subscriptions.Track(() => EventBus.Unsubscribe<FlashpointEmptiedDevices>(OnFlashpointEmp_UnlockGhosts));
             SaveSystem.SetGhostStationSystem(GhostStationSystem);
         }
 

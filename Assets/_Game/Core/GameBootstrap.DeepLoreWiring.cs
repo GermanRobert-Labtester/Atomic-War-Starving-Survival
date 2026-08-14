@@ -57,6 +57,8 @@ namespace AtomicWar._Game.Core
             BootHoldfast();
             // ASHFALL: THE DUTY ROSTER — wall chart, marks, Kess, Ansel.
             BootDutyRoster();
+            // ASHFALL: THE STANDING RECORD — room layouts, memory strata, site encounters.
+            BootStandingRecord();
             // ASHFALL: NOBODY'S CHARTER — the Crossing's social gate.
             BootNobodyCharter();
             // ASHFALL: THE GLASS ORCHARD (Expansion XI) — bunker greenhouse.

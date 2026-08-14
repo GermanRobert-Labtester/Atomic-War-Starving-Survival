@@ -78,7 +78,14 @@ The bible's Appendix C Sprint 1. Establishes the region's identity and the **soc
 - ✱ Core test/demo debtor ids fixed from wrong stand-ins (`npc_wren`, `npc_ivor_lasko`) to the canonical `npc_wyn_sabler` / `npc_ivo_fenn`.
 - `quest_crossing_the_terms`, `quest_crossing_the_petition`, `quest_crossing_the_forfeit`, `quest_crossing_the_vote_that_isnt` — cards already registered in `crossing_quests.json` (✱ verified).
 - Dessa + Perrin + Ivo NPCs ✱ already present; Wyn added above.
-- **Gate:** cross-tool QA (debt × vouch × backers) — see register.
+- **Gate:** cross-tool QA (debt × vouch × backers × forfeit) — reviewer (fresh sub-agent, diff + spec §5.3 only) returned **FAIL with 8 findings; 6 fixed in this change-set**:
+  1. *(blocker)* Contested-renegotiation Standing gate lived in an optional host wrapper (`contested` opt-in, bypassable by direct core calls, no freshness check) → gate moved INTO `LedgerDebtSystem.RenegotiateContract(contested, freshStanding)`; host composes the callback (`IsCrossingStandingFresh`: held honestly AND `dayCalled` within new `LedgerDebtSystem.StandingFreshDays = 3`; no day supplied → no pass).
+  2. *(major)* `TotalOwed` ignored `paid` → settled debt now owes 0.
+  3. *(major)* Paid contract locked the debtor out forever and could be silently overwritten by `PresentContract` → settled ink is **archived** (`closedContracts`, never rewritten; round-trips through save); unresolved forfeit also blocks a new draft.
+  4. *(minor)* `NPC_WynSabler.CaptureState` aliased live state → deep copy both directions (ledger `RestoreState` now also takes a defensive copy).
+  5. *(minor)* Dead `CrossingQuestEntry` using-alias removed; stray trailing newline in EditMode tests.
+  - NOT fixed here (tracked): the `_Game/Core` twins of `CrossingArbitrationSystem`/`VouchAccessSystem` (pre-existing suite-wide de-fork follow-up from Phase 3; the Phase 4 seam itself no longer depends on them via the callback gate); Duty Roster saveable ids with no characters.json rows belong to the parallel Duty Roster stream, not this change-set.
+  - Core tests +7 (paid-total, archive/no-overwrite, forfeit blocks draft, contested gate ×3, closed-contract round-trip); EditMode +2.
 
 ### Phase 5 — The Charter mystery
 - `quest_crossing_the_marker`, `quest_crossing_three_dry_pages`; `item_charter_three_pages`; records-room truth; `mutation_crossing_charter_revealed`. Gate: compile + tests.
@@ -102,4 +109,4 @@ The bible's Appendix C Sprint 1. Establishes the region's identity and the **soc
 |---|---|---|---|
 | `VouchAccessSystem` (P1) | vouch state × future Standing backers × future debt terms | must review diff only | — |
 | `CrossingArbitrationSystem` (P3) | ruling backers × vouch × Standing repeats | different tool (sub-agent) | FAIL → findings addressed in change-set (see Phase 3 gate notes); re-verify in Phase 4 gate |
-| `LedgerDebtSystem` (P4) | contract × vouch × backers × forfeit | must review diff only | — |
+| `LedgerDebtSystem` (P4) | contract × vouch × backers × forfeit | different tool (sub-agent, diff + spec §5.3 only) | FAIL (8 findings) → 6 fixed in change-set (see Phase 4 gate notes); 2 deferred as tracked debt (Arbitration/Vouch twin de-fork; Duty Roster stream ids) |

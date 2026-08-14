@@ -299,7 +299,7 @@ namespace AtomicWar._Game.Survivors
                     break;
                 }
             }
-            if (bereavedId == null) return;
+            if (bereavedId == null || !deadKey.HasValue) return;
 
             _lovers.Remove(deadKey.Value);
             // The bereaved is expected in `survivors`; we raise the event and let

@@ -44,5 +44,6 @@ namespace Ashfall.Core
         int Seed { get; }
         int Next(int minInclusive, int maxExclusive);
         float NextFloat();
+        double NextDouble();
     }
 }

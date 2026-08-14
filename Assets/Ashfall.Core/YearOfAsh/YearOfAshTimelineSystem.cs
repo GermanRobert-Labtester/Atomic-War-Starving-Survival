@@ -157,5 +157,28 @@ namespace Ashfall.Core.YearOfAsh
                 finalBroadcastsActive = _state.finalBroadcastsActive
             };
         }
+
+        /// <summary>
+        /// Restores a captured timeline snapshot into the live state. Recomputes
+        /// the derived environmental parameters afterwards so the restored day
+        /// and phase always agree with the reported temperature/radon values.
+        /// A null state is treated as "nothing to restore" (v1 saves carry no
+        /// separate timeline section only if truncated; the host guards first).
+        /// </summary>
+        public void RestoreState(YearOfAshTimelineState state)
+        {
+            if (state == null) return;
+            _state.currentDay = Math.Max(StartDay, Math.Min(EndDay, state.currentDay));
+            _state.phase = state.phase;
+            _state.ambientTemperatureCelsius = state.ambientTemperatureCelsius;
+            _state.ashCloudOpacity = state.ashCloudOpacity;
+            _state.radonInfiltrationRate = state.radonInfiltrationRate;
+            _state.thermalStressLevel = state.thermalStressLevel;
+            _state.blackBlizzardsExperienced = state.blackBlizzardsExperienced;
+            _state.artilleryBarragesExperienced = state.artilleryBarragesExperienced;
+            _state.continuityDecreeActive = state.continuityDecreeActive;
+            _state.finalBroadcastsActive = state.finalBroadcastsActive;
+            RecalculateEnvironmentalParameters();
+        }
     }
 }

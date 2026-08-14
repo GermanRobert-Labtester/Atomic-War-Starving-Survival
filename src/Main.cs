@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
 using Ashfall.Core.Journal;
@@ -25,7 +26,17 @@ namespace AtomicWar.GodotApp
         // Year of Ash (Days 180-360)
         private YearOfAshHostSession _yearOfAsh = null!;
         private DoorEncounterModal _doorModal = null!;
+        private QuestlineModal _questlineModal = null!;
         private int _doorEncounterIndex = 0;
+        private FactionWarMapWidget _factionWarMap = null!;
+        private RadioBroadcastTerminal _radioTerminal = null!;
+        private GeothermalHeatingWidget _geothermalWidget = null!;
+        private RadonVentilationWidget _radonWidget = null!;
+        private VBoxContainer _yearOfAshPanel = null!;
+        private VBoxContainer _rightColumn = null!;
+        private PhantomMemoryHostSession _phantomMemory = null!;
+        private DoseLedgerHostSession _doseLedger = null!;
+        private bool _doseLedgerDirty;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -40,6 +51,7 @@ namespace AtomicWar.GodotApp
         private static readonly string s_engineVersion =
             Engine.GetVersionInfo()["string"].AsString();
         private double _diagnosticsAccum;
+        private double _diagnosticsLogAccum;
 
         // Journal save coalescing. Saving on every entry rewrote the whole file once
         // per seeded entry; entries are marked dirty and flushed on the diagnostics tick,
@@ -48,10 +60,16 @@ namespace AtomicWar.GodotApp
 
         // Phase 0 core slice: ice-road seasonal gate + Holdfast catalogs
         private CoreDemoSession _core = null!;
+        // ASHFALL: THE DUTY ROSTER (Exp 02) — chart, marks, encounters
+        private DutyRosterHostSession _dutyRoster = null!;
+        private ExpansionHostSession _expansions = null!;
         // Holdfast S1 save coalescing (same pattern as the journal): any state
         // change in IceRoad or Census marks the save dirty; the diagnostics tick
         // flushes it. Quit and the explicit menu button flush immediately.
         private bool _holdfastDirty;
+        // Duty Roster (Exp 02) and Expansion Hub save coalescing — same pattern.
+        private bool _dutyRosterDirty;
+        private bool _expansionHubDirty;
 
         public override void _Ready()
         {
@@ -109,6 +127,15 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.BrineSelfTest:
                     GetTree().Quit(HostCli.RunBrineSelfTest());
                     return;
+                case HostCliAction.MusterSelfTest:
+                    GetTree().Quit(HostCli.RunMusterSelfTest());
+                    return;
+                case HostCliAction.ClusterSelfTest:
+                    GetTree().Quit(HostCli.RunClusterSelfTest(_dataDir));
+                    return;
+                case HostCliAction.EndingsSelfTest:
+                    GetTree().Quit(HostCli.RunEndingsSelfTest());
+                    return;
                 case HostCliAction.JournalSelfTest:
                     RunSelfTestAndQuit();
                     return;
@@ -118,11 +145,34 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
                     return;
+                case HostCliAction.YearOfAshSaveSelfTest:
+                    GetTree().Quit(HostCli.RunYearOfAshSaveSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DutyRosterSaveSelfTest:
+                    GetTree().Quit(HostCli.RunDutyRosterSaveSelfTest(_dataDir));
+                    return;
+                case HostCliAction.ExpansionHubSaveSelfTest:
+                    GetTree().Quit(HostCli.RunExpansionHubSaveSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DoseLedgerSelfTest:
+                    GetTree().Quit(HostCli.RunDoseLedgerSelfTest(_dataDir));
+                    return;
+                case HostCliAction.DataIntegritySelfTest:
+                    GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
+                    return;
+                case HostCliAction.CaravanSelfTest:
+                    GetTree().Quit(HostCli.RunCaravanSelfTest());
+                    return;
             }
 
             BuildUserInterface();
             SetupJournal();
             SetupIceRoad();
+            SetupDutyRoster();
+            SetupExpansions();
+            // Year of Ash used to initialise lazily on first button press, so its save
+            // was not restored at boot and it was the only subsystem with no banner line.
+            SetupYearOfAsh();
         }
 
         public override void _Process(double delta)
@@ -137,6 +187,7 @@ namespace AtomicWar.GodotApp
             // a second for a version that never changes. Cache the version, refresh ~4x/sec.
             _diagnosticsAccum += delta;
             if (_diagnosticsAccum < DiagnosticsRefreshSeconds) return;
+            double elapsed = _diagnosticsAccum;
             _diagnosticsAccum = 0.0;
 
             if (_diagnosticsLabel == null) return;
@@ -144,10 +195,19 @@ namespace AtomicWar.GodotApp
             double memMb = (long)OS.GetStaticMemoryUsage() / (1024.0 * 1024.0);
             _diagnosticsLabel.Text = $"FPS: {fps:F0} | Static Mem: {memMb:F1} MB | Godot {s_engineVersion}";
 
+            _diagnosticsLogAccum += elapsed;
+            if (_diagnosticsLogAccum >= 1.0)
+            {
+                _diagnosticsLogAccum = 0.0;
+                GD.Print($"[DevUI Diagnostics] FPS: {fps:F0} | Static Mem: {memMb:F1} MB | Godot {s_engineVersion}");
+            }
+
             // Flush any journal writes that were coalesced since the last tick.
             FlushJournalIfDirty();
             // Flush the Holdfast S1 save the same way — one write per burst, not per event.
             FlushHoldfastIfDirty();
+            FlushDutyRosterIfDirty();
+            FlushExpansionHubIfDirty();
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
@@ -181,6 +241,10 @@ namespace AtomicWar.GodotApp
             {
                 SaveJournal();
                 SaveHoldfast();
+                SaveDutyRoster();
+                SaveExpansionHub();
+                SavePhantomMemory();
+                SaveDoseLedger();
                 // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
                 Ashfall.Bridge.BridgeRuntime.Shutdown();
                 GetTree().Quit();
@@ -263,15 +327,51 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Cycle weather", OnCycleWeatherClicked);
             AddMenuButton("Show quest briefing", OnShowBriefingClicked);
             AddMenuButton("Census honour levy", OnCensusLevyClicked);
+            AddMenuButton("Order 12-C (office acts)", OnOrder12CClicked);
             AddMenuButton("Unlock plant (salt trade)", OnUnlockPlantClicked);
             AddMenuButton("Repair membrane (resin)", OnRepairMembraneClicked);
             AddMenuButton("Toggle outfall shift", OnToggleOutfallClicked);
             AddMenuButton("Save holdfast state", OnSaveHoldfastClicked);
+            AddMenuButton("Cycle ending (S4)", OnCycleEndingClicked);
+            // ── ASHFALL: THE DUTY ROSTER (Exp 02) ──────────────────────
+            AddMenuButton("Roster: inspect the Chart", OnRosterInspectWallClicked);
+            AddMenuButton("Roster: morning row (pencil)", OnRosterPencilClicked);
+            AddMenuButton("Roster: ink the wall (ending)", OnRosterInkClicked);
+            AddMenuButton("Roster: burn the chart", OnRosterBurnClicked);
+            AddMenuButton("Roster: tick a night (encounters)", OnRosterTickNightClicked);
+            AddMenuButton("Roster: queue a visitor (hatch)", OnRosterVisitorClicked);
+            AddMenuButton("Duty Roster: Second Winter", OnRosterSecondWinterClicked);
+            // ── Waystation · Standing Record · Crossing · Greenhouse ──────
+            AddMenuButton("Waystation: unlock + tick", OnWaystationTickClicked);
+            AddMenuButton("Waystation: assign watch", OnWaystationWatchClicked);
+            AddMenuButton("Standing Record: inspect", OnStandingRecordClicked);
+            AddMenuButton("Standing Record: walk Km 19", OnRecordWalkKm19Clicked);
+            AddMenuButton("Crossing: grant vouch (Osran)", OnCrossingVouchClicked);
+            AddMenuButton("Crossing: burn vouch", OnCrossingBurnClicked);
+            AddMenuButton("Arbitration: load backers", OnArbitrationLoadBackersClicked);
+            AddMenuButton("Arbitration: call Standing", OnArbitrationCallStandingClicked);
+            AddMenuButton("Arbitration: bribe a backer", OnArbitrationBribeClicked);
+            AddMenuButton("Arbitration: overturn ruling", OnArbitrationOverturnClicked);
+            AddMenuButton("Ledger: present + sign contract", OnLedgerSignClicked);
+            AddMenuButton("Ledger: tick day", OnLedgerTickClicked);
+            AddMenuButton("Ledger: pay contract", OnLedgerPayClicked);
+            AddMenuButton("Greenhouse: plant + water", OnGreenhousePlantClicked);
+            AddMenuButton("Greenhouse: tick + harvest", OnGreenhouseTickClicked);
             AddMenuButton("Hatch Encounter (Year of Ash)", OnDoorEncounterClicked);
             AddMenuButton("Tick Year of Ash (+10 Days)", OnTickYearOfAshClicked);
+            AddMenuButton("Year of Ash: questlines", OnQuestlinesClicked);
+            // ── Phantom Memory (Antigravity #41) ─────────────────────────
+            AddMenuButton("Phantom Memory: scavenge item", OnPhantomScavengeClicked);
+            AddMenuButton("Phantom Memory: tick hour", OnPhantomTickClicked);
+            // ── THE DOSE (Exp 07) ───────────────────────────────────────
+            AddMenuButton("Dose: seal dosimeters", OnDoseSealClicked);
+            AddMenuButton("Dose: book a reading", OnDoseScribeClicked);
+            AddMenuButton("Dose: name to Sick List", OnDoseDiagnoseClicked);
+            AddMenuButton("Dose: book a Cohort child", OnDoseCohortClicked);
+            AddMenuButton("Dose: sign a volunteer", OnDoseVolunteerClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -313,6 +413,7 @@ namespace AtomicWar.GodotApp
             var rightBox = new VBoxContainer();
             rightBox.AddThemeConstantOverride("separation", 10);
             hSplit.AddChild(rightBox);
+            _rightColumn = rightBox;
 
             var codexHeader = new Label
             {
@@ -343,6 +444,11 @@ namespace AtomicWar.GodotApp
             rootColumn.AddChild(_diagnosticsLabel);
 
             // Year of Ash Door Encounter Modal
+            _questlineModal = new QuestlineModal();
+            AddChild(_questlineModal);
+            _questlineModal.OnQuestlineChosen += OnQuestlineChosen;
+            _questlineModal.OnChoiceTaken += OnQuestlineChoiceTaken;
+
             _doorModal = new DoorEncounterModal();
             AddChild(_doorModal);
             _doorModal.OnChoiceClicked += OnDoorEncounterChoiceClicked;
@@ -465,6 +571,7 @@ namespace AtomicWar.GodotApp
             _core.IceRoad.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
             _core.Census.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
             _core.Brine.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
+            _core.Quests.OnStateChanged += _ => { _holdfastDirty = true; RefreshIceRoadLabel(); };
 
             // Cross-host roundtrip: a save written here (or by the Unity host) restores
             // the S1 gate instead of starting dark again. Codec validates the checksum.
@@ -479,6 +586,325 @@ namespace AtomicWar.GodotApp
 
             RefreshIceRoadLabel();
             GD.Print($"[Ashfall Godot] Ice road ready. {_core.CatalogLine()}");
+        }
+
+        private void SetupDutyRoster()
+        {
+            if (_dutyRoster != null) return;
+            _dutyRoster = DutyRosterHostSession.Create(_dataDir);
+            _dutyRoster.StateChanged += () => _dutyRosterDirty = true;
+
+            // Cross-host roundtrip: a save written here (or by the Unity host) restores
+            // the chart, marks, and encounter counters instead of starting blank.
+            var save = DutyRosterSaveStore.TryLoad();
+            if (save != null)
+            {
+                _dutyRoster.RestoreSave(save);
+                _dutyRosterDirty = false; // restore just raised state-change events
+                GD.Print($"[Ashfall Godot] Duty Roster state restored (day {_dutyRoster.Clock.Day}).");
+            }
+
+            _dutyRoster.Unlock(_simDay);
+            RefreshRosterStatus();
+            GD.Print($"[Ashfall Godot] Duty Roster ready. {_dutyRoster.CatalogLine()}");
+        }
+
+        private void RefreshRosterStatus()
+        {
+            if (_dutyRoster == null || _statusLabel == null) return;
+            _statusLabel.Text =
+                $"——— DUTY ROSTER ———\n" +
+                _dutyRoster.WallLine() + "\n" +
+                _dutyRoster.EncountersLine() + "\n" +
+                _dutyRoster.MarksLine() + "\n" +
+                $"Day {_simDay} · catalog: {_dutyRoster.CatalogLine()}";
+        }
+
+        private void SetupExpansions()
+        {
+            if (_expansions != null) return;
+            _expansions = ExpansionHostSession.Create(_dataDir);
+            _expansions.StateChanged += () => _expansionHubDirty = true;
+
+            // Cross-host roundtrip for waystation, standing record, crossing vouch,
+            // and greenhouse plots.
+            var save = ExpansionHubSaveStore.TryLoad();
+            if (save != null)
+            {
+                _expansions.RestoreSave(save);
+                _expansionHubDirty = false; // restore just raised state-change events
+                GD.Print($"[Ashfall Godot] Expansion hub state restored (day {save.simDay}).");
+            }
+
+            _expansions.EnsureGreenhousePlots(3);
+            RefreshExpansionsStatus();
+            GD.Print("[Ashfall Godot] Expansion hub ready: waystation · standing record · crossing · greenhouse");
+        }
+
+        private void RefreshExpansionsStatus()
+        {
+            if (_expansions == null || _statusLabel == null) return;
+            _statusLabel.Text =
+                $"——— EXPANSION HUB (Standing Record · Crossing · Greenhouse) ———\n" +
+                _expansions.StandingRecordLine() + "\n" +
+                _expansions.CrossingLine() + "\n" +
+                _expansions.GreenhouseLine() + "\n" +
+                _expansions.WaystationLine() + "\n" +
+                _expansions.ArbitrationLine() + "\n" +
+                _expansions.LedgerLine();
+        }
+
+        private void OnRosterInspectWallClicked()
+        {
+            SetupDutyRoster();
+            _statusLabel.Text = _dutyRoster.InspectWall();
+        }
+
+        private void OnRosterPencilClicked()
+        {
+            SetupDutyRoster();
+            _statusLabel.Text = _dutyRoster.ResolveChart(DutyRosterSystem.ChoiceWritePencil)
+                + "\n" + _dutyRoster.TickDay();
+            RefreshRosterStatus();
+        }
+
+        private void OnRosterInkClicked()
+        {
+            SetupDutyRoster();
+            _statusLabel.Text = _dutyRoster.ResolveInk();
+            RefreshRosterStatus();
+        }
+
+        private void OnRosterBurnClicked()
+        {
+            SetupDutyRoster();
+            _statusLabel.Text = _dutyRoster.BurnChart();
+            RefreshRosterStatus();
+        }
+
+        private void OnRosterTickNightClicked()
+        {
+            SetupDutyRoster();
+            _simDay++;
+            _dutyRoster.Clock.AdvanceDays(1);
+            _statusLabel.Text = _dutyRoster.StartEncounter(ShelterEncounterSystem.KindNightSlate);
+            RefreshRosterStatus();
+        }
+
+        private void OnRosterVisitorClicked()
+        {
+            SetupDutyRoster();
+            _statusLabel.Text = _dutyRoster.QueueVisitor(ShelterEncounterSystem.VisitorLen);
+            RefreshRosterStatus();
+        }
+
+        private void OnRosterSecondWinterClicked()
+        {
+            SetupDutyRoster();
+            _statusLabel.Text = _dutyRoster.ActivateSecondWinter();
+            RefreshRosterStatus();
+        }
+
+        private void OnWaystationTickClicked()
+        {
+            SetupExpansions();
+            _expansions.UnlockWaystation();
+            // The wintering filter burn depends on the real ice-road state, not a
+            // host literal: an open window is the only way the bunks trade.
+            bool roadOpen = _core != null && _core.IceRoad.IsOpen;
+            _expansions.TickWaystation(roadOpen);
+            _statusLabel.Text = "Waystation: " + _expansions.WaystationLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnWaystationWatchClicked()
+        {
+            SetupExpansions();
+            _expansions.UnlockWaystation();
+            _expansions.AssignWaystationWatch(new[] { "elena_vasquez", "marcus_olejnik", "suki_tanaka" });
+            _expansions.SetWaystationWintering(true);
+            _statusLabel.Text = "Watch assigned (Vasquez, Olejnik, Tanaka). Wintering mode on — stove lit, filter degrades faster.";
+            RefreshExpansionsStatus();
+        }
+
+        private void OnStandingRecordClicked()
+        {
+            SetupExpansions();
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine("=== STANDING RECORD (Exp 03) ===");
+            sb.AppendLine(_expansions.StandingRecordLine());
+            sb.AppendLine(_expansions.RecordQuestLine());
+            sb.AppendLine("Walk the route: Km 19 → Transit → Archive → Ministry → Weighbridge → Grange → Bridge → Lock → 12-B → Vault.");
+            _codexViewer.Text = sb.ToString().TrimEnd();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnRecordWalkKm19Clicked()
+        {
+            SetupExpansions();
+            var sb = new System.Text.StringBuilder();
+            _expansions.UnlockRecord();
+            _expansions.ArriveAtSite("loc_cut_kilometre_19");
+            _expansions.EnterSiteRoom("room_km19_post");
+            _expansions.InspectSiteRoom("room_km19_post");
+            _expansions.EnterSiteRoom("room_km19_seam");
+            sb.AppendLine(_expansions.RoomLine("loc_cut_kilometre_19", "room_km19_post"));
+            sb.AppendLine();
+            sb.AppendLine(_expansions.RoomLine("loc_cut_kilometre_19", "room_km19_seam"));
+            _statusLabel.Text = sb.ToString().TrimEnd();
+        }
+
+        private void OnCrossingVouchClicked()
+        {
+            SetupExpansions();
+            bool granted = _expansions.GrantVouch("npc_osran_kell");
+            _statusLabel.Text = granted
+                ? "Vouch granted by Osran Kell. The Crossing gate is open."
+                : "Vouch refused (already granted, burned, or last resort spent).";
+            RefreshExpansionsStatus();
+        }
+
+        private void OnCrossingBurnClicked()
+        {
+            SetupExpansions();
+            bool burned = _expansions.BurnVouch();
+            _statusLabel.Text = burned
+                ? "Vouch burned. The gate is closed again — last resort remains available."
+                : "Nothing to burn: no active vouch.";
+            RefreshExpansionsStatus();
+        }
+
+        private void OnGreenhousePlantClicked()
+        {
+            SetupExpansions();
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            _expansions.PlantGreenhouse(0, "item_seed_tuber", day);
+            _expansions.WaterGreenhouse(0, 60f);
+            _statusLabel.Text = "Plot 0 planted (seed_tuber) and watered on day " + day + ". The glass holds its heat.";
+            RefreshExpansionsStatus();
+        }
+
+        private void OnGreenhouseTickClicked()
+        {
+            SetupExpansions();
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            _expansions.TickGreenhouse(day);
+            _statusLabel.Text = "Greenhouse day ticked (day " + day + "). " + _expansions.GreenhouseLine();
+            RefreshExpansionsStatus();
+        }
+
+        // ── Nobody's Charter: Crossing Arbitration & Ledger ─────────────────
+
+        private void OnArbitrationLoadBackersClicked()
+        {
+            SetupExpansions();
+            _expansions.LoadDefaultBackerPool();
+            _statusLabel.Text = "Backer pool loaded: Osran Kell (principled), Mattis Cray (principled), Halden Mire, Bram Ostrowski, Leva Quist, Dessa Penn.";
+            _codexViewer.Text = _expansions.ArbitrationLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnArbitrationCallStandingClicked()
+        {
+            SetupExpansions();
+            if (_expansions.Arbitration.BackerPool.Count == 0)
+            {
+                _expansions.LoadDefaultBackerPool();
+                _statusLabel.Text = "No backer pool — loaded defaults first.";
+            }
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            string topic = "quest_crossing_the_terms";
+            bool called = _expansions.Arbitration.CallStanding(topic, day);
+            _expansions.Arbitration.DeclareBacker(topic, CrossingIds.NpcOsran);
+            _expansions.Arbitration.DeclareBacker(topic, CrossingIds.NpcMattis);
+            _expansions.Arbitration.DeclareBacker(topic, "npc_halden_mire");
+            _statusLabel.Text = called
+                ? $"Standing called on '{topic}' with 3 backers (Osran, Mattis, Halden). Ruling: {_expansions.Arbitration.GetRuling(topic)?.shape}"
+                : "Standing already held — overturn first or call a different topic.";
+            _codexViewer.Text = _expansions.ArbitrationLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnArbitrationBribeClicked()
+        {
+            SetupExpansions();
+            if (_expansions.Arbitration.BackerPool.Count == 0)
+            {
+                _expansions.LoadDefaultBackerPool();
+                _statusLabel.Text = "No backer pool — loaded defaults first.";
+            }
+            // Set up a fresh ruling on a new topic
+            string topic = CrossingIds.ScaleIntegrity;
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            _expansions.Arbitration.CallStanding(topic, day);
+            _expansions.Arbitration.DeclareBacker(topic, CrossingIds.NpcOsran);
+            // Try bribing a principled backer (refused) and an unprincipled one (accepted)
+            var resultPrincipled = _expansions.Arbitration.TryBribeBacker(topic, CrossingIds.NpcMattis);
+            var resultBought = _expansions.Arbitration.TryBribeBacker(topic, "npc_bram_ostrowski");
+            _expansions.Arbitration.DeclareBacker(topic, "npc_leva_quist");
+            _statusLabel.Text = $"Bribe results: Mattis={resultPrincipled}, Bram={resultBought}. Ruling: {_expansions.Arbitration.GetRuling(topic)?.shape}";
+            _codexViewer.Text = _expansions.ArbitrationLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnArbitrationOverturnClicked()
+        {
+            SetupExpansions();
+            if (_expansions.Arbitration.BackerPool.Count == 0)
+            {
+                _expansions.LoadDefaultBackerPool();
+            }
+            string topic = "quest_crossing_the_terms";
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            // Ensure a ruling exists to overturn
+            if (!_expansions.Arbitration.IsRulingActive(topic))
+            {
+                _expansions.Arbitration.CallStanding(topic, day);
+                _expansions.Arbitration.DeclareBacker(topic, CrossingIds.NpcOsran);
+                _expansions.Arbitration.DeclareBacker(topic, CrossingIds.NpcMattis);
+                _expansions.Arbitration.DeclareBacker(topic, "npc_halden_mire");
+            }
+            bool overturned = _expansions.Arbitration.OverturnRuling(topic,
+                new List<string> { "npc_bram_ostrowski", "npc_leva_quist", "npc_halden_mire" });
+            _statusLabel.Text = overturned
+                ? "Ruling overturned! Counter-backers (Bram, Leva, Halden) hold the Crossing now."
+                : "Overturn failed — need 3+ different, living backers.";
+            _codexViewer.Text = _expansions.ArbitrationLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnLedgerSignClicked()
+        {
+            SetupExpansions();
+            string debtor = CrossingIds.NpcWyn;
+            bool firstRead = _expansions.Ledger.PresentContract(debtor, 12f, 30, 0.2f, "the pledged grain");
+            bool secondRead = _expansions.Ledger.PresentContract(debtor, 12f, 30, 0.2f, "the pledged grain");
+            bool signed = _expansions.Ledger.SignContract(debtor, _core != null ? _core.Clock.Day : _simDay);
+            _statusLabel.Text = $"Contract for {debtor}: first reading={firstRead}, second reading={secondRead}, signed={signed}.";
+            _codexViewer.Text = _expansions.LedgerLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnLedgerTickClicked()
+        {
+            SetupExpansions();
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            _expansions.Ledger.TickDaily(day);
+            _statusLabel.Text = "Ledger day ticked. " + _expansions.LedgerLine();
+            _codexViewer.Text = _expansions.LedgerLine();
+            RefreshExpansionsStatus();
+        }
+
+        private void OnLedgerPayClicked()
+        {
+            SetupExpansions();
+            string debtor = CrossingIds.NpcWyn;
+            bool paid = _expansions.Ledger.PayContract(debtor, _core != null ? _core.Clock.Day : _simDay);
+            _statusLabel.Text = paid
+                ? $"Contract for {debtor} paid in full. The ink is history."
+                : "Payment failed — no signed contract or already paid.";
+            _codexViewer.Text = _expansions.LedgerLine();
+            RefreshExpansionsStatus();
         }
 
         private void SaveHoldfast()
@@ -497,11 +923,158 @@ namespace AtomicWar.GodotApp
             if (_holdfastDirty) SaveHoldfast();
         }
 
+        private void SaveDutyRoster()
+        {
+            if (_dutyRoster == null) return;
+            if (DutyRosterSaveStore.TrySave(_dutyRoster.CaptureSave()))
+            {
+                _dutyRosterDirty = false;
+                GD.Print($"[Ashfall Godot] Duty Roster save written (day {_dutyRoster.Clock.Day}).");
+            }
+        }
+
+        private void FlushDutyRosterIfDirty()
+        {
+            if (_dutyRosterDirty) SaveDutyRoster();
+        }
+
+        private void SaveExpansionHub()
+        {
+            if (_expansions == null) return;
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            if (ExpansionHubSaveStore.TrySave(_expansions.CaptureSave(day)))
+            {
+                _expansionHubDirty = false;
+                GD.Print($"[Ashfall Godot] Expansion hub save written (day {day}).");
+            }
+        }
+
+        private void FlushExpansionHubIfDirty()
+        {
+            if (_expansionHubDirty) SaveExpansionHub();
+        }
+
+        // -----------------------------------------------------------------
+        // Phantom Memory (Antigravity #41)
+        // -----------------------------------------------------------------
+
+        private void SetupPhantom()
+        {
+            if (_phantomMemory != null) return;
+            _phantomMemory = PhantomMemoryHostSession.Create(_dataDir);
+            _phantomMemory.StateChanged += () => SavePhantomMemory();
+
+            var save = PhantomMemorySaveStore.TryLoad();
+            if (save != null)
+            {
+                _phantomMemory.RestoreSave(save);
+                GD.Print("[Ashfall Godot] Phantom Memory state restored.");
+            }
+        }
+
+        private void OnPhantomScavengeClicked()
+        {
+            SetupPhantom();
+            _statusLabel.Text = _phantomMemory.ScavengeItem("survivor_gunner_mikhail", "armour_heavy_military");
+        }
+
+        private void OnPhantomTickClicked()
+        {
+            SetupPhantom();
+            _statusLabel.Text = _phantomMemory.TickDemo();
+        }
+
+        private void SavePhantomMemory()
+        {
+            if (_phantomMemory == null) return;
+            if (PhantomMemorySaveStore.TrySave(_phantomMemory.CaptureSave()))
+                GD.Print("[Ashfall Godot] Phantom Memory save written.");
+        }
+
+        // ── THE DOSE (Exp 07) host wiring ───────────────────────────────
+
+        private void SetupDoseLedger()
+        {
+            if (_doseLedger != null) return;
+            _doseLedger = DoseLedgerHostSession.Create(_dataDir);
+            _doseLedger.StateChanged += () => _doseLedgerDirty = true;
+
+            var save = DoseLedgerSaveStore.TryLoad();
+            if (save != null)
+            {
+                _doseLedger.RestoreSave(save);
+                _doseLedgerDirty = false; // restore just raised state-change events
+                GD.Print("[Ashfall Godot] Dose Ledger state restored.");
+            }
+        }
+
+        private void OnDoseSealClicked()
+        {
+            SetupDoseLedger();
+            _doseLedger.SealDemoSurvivors();
+            _statusLabel.Text = "Dosimeters sealed: Gunner Mikhail (tag_1), Elena Vasquez (tag_2).";
+            _codexViewer.Text = _doseLedger.DoseStatusLine();
+            FlushDoseLedgerIfDirty();
+        }
+
+        private void OnDoseScribeClicked()
+        {
+            SetupDoseLedger();
+            string result = _doseLedger.ScribeReading(180f, highEnergy: false);
+            _statusLabel.Text = result;
+            _codexViewer.Text = _doseLedger.DoseStatusLine();
+            FlushDoseLedgerIfDirty();
+        }
+
+        private void OnDoseDiagnoseClicked()
+        {
+            SetupDoseLedger();
+            string result = _doseLedger.DiagnoseDemo(DoseLedgerSystem.BandRed);
+            _statusLabel.Text = result;
+            _codexViewer.Text = _doseLedger.DoseStatusLine();
+            FlushDoseLedgerIfDirty();
+        }
+
+        private void OnDoseCohortClicked()
+        {
+            SetupDoseLedger();
+            string result = _doseLedger.BookDemoChild();
+            _statusLabel.Text = result;
+            _codexViewer.Text = _doseLedger.DoseStatusLine();
+            FlushDoseLedgerIfDirty();
+        }
+
+        private void OnDoseVolunteerClicked()
+        {
+            SetupDoseLedger();
+            string result = _doseLedger.SignDemoVolunteer();
+            _statusLabel.Text = result;
+            _codexViewer.Text = _doseLedger.DoseStatusLine();
+            FlushDoseLedgerIfDirty();
+        }
+
+        private void SaveDoseLedger()
+        {
+            if (_doseLedger == null) return;
+            int day = _core != null ? _core.Clock.Day : _simDay;
+            if (DoseLedgerSaveStore.TrySave(_doseLedger.CaptureSave(day)))
+            {
+                _doseLedgerDirty = false;
+                GD.Print($"[Ashfall Godot] Dose Ledger save written (day {day}).");
+            }
+        }
+
+        private void FlushDoseLedgerIfDirty()
+        {
+            if (_doseLedgerDirty) SaveDoseLedger();
+        }
+
         private void RefreshIceRoadLabel()
         {
             if (_core == null) return;
             if (_iceRoadLabel != null)
-                _iceRoadLabel.Text = _core.StatusLine() + "\n" + _core.BrineLine();
+                _iceRoadLabel.Text = _core.StatusLine() + "\n" + _core.BrineLine() + "\n" +
+                    _core.QuestLine() + "\n" + _core.EndingLine();
             if (_catalogLabel != null)
                 _catalogLabel.Text = _core.CatalogLine() + "\n" + _core.CensusLine();
             if (_briefingPreviewLabel != null)
@@ -645,6 +1218,57 @@ namespace AtomicWar.GodotApp
             RefreshIceRoadLabel();
         }
 
+        private void OnOrder12CClicked()
+        {
+            SetupIceRoad();
+            bool wasActive = _core.Census.Order12CActive;
+            _core.Activate12C();
+            _statusLabel.Text = wasActive
+                ? "Order 12-C already published. The unlisted are a reserve. The office will come south when the ice allows."
+                : "Order 12-C published. Unlisted occupants of Allocation 12 are a labour reserve.";
+            _codexViewer.Text =
+                "=== ORDER 12-C (Ashfall.Core) ===\n" +
+                _core.QuestLine() + "\n" +
+                "\"You are living in a facility that authenticated for fourteen. " +
+                "The fourteen did not arrive. I am not collecting you. I am scheduling you.\"\n" +
+                "The Second List quest gates on the refuse branch or the membrane resolution.\n";
+            RefreshIceRoadLabel();
+        }
+
+        private void OnCycleEndingClicked()
+        {
+            SetupIceRoad();
+            string current = _core.Quests.State.endingId;
+            // Cycle: none → schedule → reserve → dark road → tender → white → none.
+            int index = -1;
+            if (!string.IsNullOrEmpty(current))
+                for (int i = 0; i < HoldfastEndings.All.Length; i++)
+                    if (HoldfastEndings.All[i] == current) { index = i; break; }
+            string next = index >= 0 && index + 1 < HoldfastEndings.All.Length
+                ? HoldfastEndings.All[index + 1]
+                : HoldfastEndings.None;
+
+            if (string.IsNullOrEmpty(next))
+            {
+                _core.Quests.SetEnding(HoldfastEndings.None);
+                _statusLabel.Text = "Ending disarmed. No ending armed — the road stays open.";
+            }
+            else
+            {
+                bool armed = _core.SetEnding(next);
+                _statusLabel.Text = armed
+                    ? $"Ending armed: {HoldfastEndings.DisplayName(next)} [{next}]. " +
+                      "Arming a second ending overwrites the first — endings are exclusive."
+                    : "Ending rejected: id not in the master list.";
+            }
+            _codexViewer.Text =
+                "=== ENDINGS (Sprint 4) ===\n" +
+                _core.EndingLine() + "\n" +
+                "Five endings, mutually exclusive. The ice takes a column south and a column north.\n" +
+                "Receipts in triplicate. Nobody is shot.\n";
+            RefreshIceRoadLabel();
+        }
+
         private void OnSaveHoldfastClicked()
         {
             SetupIceRoad();
@@ -738,6 +1362,8 @@ namespace AtomicWar.GodotApp
                 diag.AppendLine(_core.CatalogLine());
                 diag.AppendLine(_core.CensusLine());
                 diag.AppendLine(_core.BrineLine());
+                diag.AppendLine(_core.QuestLine());
+                diag.AppendLine(_core.EndingLine());
                 diag.AppendLine($"Data: {_dataDir}");
                 diag.AppendLine($"S1 save: {(HoldfastSaveStore.Exists ? HoldfastSaveStore.SavePath : "none")} · dirty: {_holdfastDirty}");
                 diag.AppendLine();
@@ -750,6 +1376,30 @@ namespace AtomicWar.GodotApp
                 diag.AppendLine("=== YEAR OF ASH (Ashfall.Core) ===");
                 diag.AppendLine(_yearOfAsh.GetStatusSummary());
             }
+            if (_dutyRoster != null)
+            {
+                diag.AppendLine();
+                diag.AppendLine("=== DUTY ROSTER (Ashfall.Core) ===");
+                diag.AppendLine(_dutyRoster.WallLine());
+                diag.AppendLine(_dutyRoster.EncountersLine());
+                diag.AppendLine("Save: " + (DutyRosterSaveStore.Exists ? DutyRosterSaveStore.SavePath : "none")
+                    + " · dirty: " + _dutyRosterDirty);
+            }
+            if (_expansions != null)
+            {
+                diag.AppendLine();
+                diag.AppendLine("=== EXPANSION HUB (Ashfall.Core) ===");
+                diag.AppendLine("Save: " + (ExpansionHubSaveStore.Exists ? ExpansionHubSaveStore.SavePath : "none")
+                    + " · dirty: " + _expansionHubDirty);
+            }
+            if (_doseLedger != null)
+            {
+                diag.AppendLine();
+                diag.AppendLine("=== THE DOSE (Ashfall.Core) ===");
+                diag.AppendLine(_doseLedger.DoseStatusLine());
+                diag.AppendLine("Save: " + (DoseLedgerSaveStore.Exists ? DoseLedgerSaveStore.SavePath : "none")
+                    + " · dirty: " + _doseLedgerDirty);
+            }
             _codexViewer.Text = diag.ToString();
         }
 
@@ -761,6 +1411,61 @@ namespace AtomicWar.GodotApp
         {
             if (_yearOfAsh != null) return;
             _yearOfAsh = YearOfAshHostSession.Create(_dataDir);
+            BuildYearOfAshPanel();
+
+            // Questline progress rides the same save as the rest of Year of Ash, so any
+            // resolution marks it dirty exactly like an encounter does.
+            _yearOfAsh.Quests.OnQuestlineStarted += def =>
+                GD.Print($"[Ashfall Godot] Questline started: {def.questlineId}");
+            _yearOfAsh.Quests.OnQuestlineResolved += (id, status) =>
+                GD.Print($"[Ashfall Godot] Questline {id} → {status}");
+
+            int playable = _yearOfAsh.Quests.GetPlayableQuestlines(_yearOfAsh.Timeline.CurrentDay).Count;
+            int withheld = _yearOfAsh.Quests.WithheldQuestlineCount(_yearOfAsh.Timeline.CurrentDay);
+            GD.Print($"[Ashfall Godot] Year of Ash ready. Day {_yearOfAsh.Timeline.CurrentDay} · " +
+                     $"questlines: {playable} playable, {withheld} withheld (no authored choices)");
+        }
+
+        /// <summary>
+        /// Wires the four Year-of-Ash presentation widgets (faction war map, radio
+        /// terminal, geothermal heating, radon ventilation) into the right column.
+        /// They were authored but never instantiated — dead presentation code.
+        /// Widgets are added to the tree before BindSession so their _Ready has run
+        /// and the labels exist when the first RefreshView fires.
+        /// </summary>
+        private void BuildYearOfAshPanel()
+        {
+            if (_yearOfAshPanel != null || _rightColumn == null || _yearOfAsh == null) return;
+
+            _yearOfAshPanel = new VBoxContainer();
+            _yearOfAshPanel.AddThemeConstantOverride("separation", 8);
+
+            var header = new Label
+            {
+                Text = "YEAR OF ASH — SYSTEMS (DAYS 180–360)"
+            };
+            header.AddThemeFontSizeOverride("font_size", 15);
+            header.AddThemeColorOverride("font_color", new Color(0.4f, 0.8f, 0.9f));
+            _yearOfAshPanel.AddChild(header);
+
+            _factionWarMap = new FactionWarMapWidget();
+            _geothermalWidget = new GeothermalHeatingWidget();
+            _radonWidget = new RadonVentilationWidget();
+            _radioTerminal = new RadioBroadcastTerminal();
+
+            _yearOfAshPanel.AddChild(_factionWarMap);
+            _yearOfAshPanel.AddChild(_geothermalWidget);
+            _yearOfAshPanel.AddChild(_radonWidget);
+            _yearOfAshPanel.AddChild(_radioTerminal);
+
+            // Enter the tree first so each widget's _Ready has built its labels.
+            _rightColumn.AddChild(_yearOfAshPanel);
+
+            _factionWarMap.BindSession(_yearOfAsh);
+            _geothermalWidget.BindSession(_yearOfAsh);
+            _radonWidget.BindSession(_yearOfAsh);
+            _radioTerminal.LoadBroadcasts(_dataDir);
+            _radioTerminal.RefreshView(_yearOfAsh.Timeline.CurrentDay);
         }
 
         private void OnDoorEncounterClicked()
@@ -787,11 +1492,101 @@ namespace AtomicWar.GodotApp
             YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
         }
 
+        /// <summary>
+        /// Opens the questline ledger. Resumes the first active questline if one is in
+        /// flight, otherwise offers what can be started today.
+        /// </summary>
+        private void OnQuestlinesClicked()
+        {
+            SetupYearOfAsh();
+            int day = _yearOfAsh.Timeline.CurrentDay;
+
+            var active = _yearOfAsh.Quests.State.active
+                .Find(a => a.status == QuestlineStatus.Active);
+            if (active != null && ShowQuestlineStage(active.questlineId, day))
+            {
+                _statusLabel.Text = $"Questline in progress: {active.questlineId} (day {day}).";
+                return;
+            }
+
+            var offers = _yearOfAsh.Quests.GetPlayableQuestlines(day);
+            int withheld = _yearOfAsh.Quests.WithheldQuestlineCount(day);
+            _questlineModal.DisplayOffers(offers, day, withheld);
+            _statusLabel.Text = withheld > 0
+                ? $"{offers.Count} questlines open on day {day}. {withheld} withheld — no authored choices."
+                : $"{offers.Count} questlines open on day {day}.";
+        }
+
+        /// <summary>Renders the current stage of an active questline. False if it cannot.</summary>
+        private bool ShowQuestlineStage(string questlineId, int day)
+        {
+            var record = _yearOfAsh.Quests.GetActiveRecord(questlineId);
+            var def = _yearOfAsh.Quests.FindDefinition(questlineId);
+            if (record == null || def == null) return false;
+
+            var stage = def.FindStage(record.currentStageId);
+            if (stage == null || stage.choices.Count == 0) return false;
+
+            _questlineModal.DisplayStage(def, stage, day);
+            return true;
+        }
+
+        private void OnQuestlineChosen(QuestlineDefinition def)
+        {
+            if (_yearOfAsh == null || def == null) return;
+            int day = _yearOfAsh.Timeline.CurrentDay;
+
+            if (!_yearOfAsh.Quests.StartQuestline(def.questlineId, day))
+            {
+                _statusLabel.Text = $"Could not start {def.questlineId} — already active or unknown.";
+                return;
+            }
+
+            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            ShowQuestlineStage(def.questlineId, day);
+            _statusLabel.Text = $"Questline begun: {def.title} (day {day}).";
+        }
+
+        private void OnQuestlineChoiceTaken(string questlineId, string choiceId)
+        {
+            if (_yearOfAsh == null) return;
+            int day = _yearOfAsh.Timeline.CurrentDay;
+
+            var result = _yearOfAsh.Quests.TakeChoice(questlineId, choiceId, day);
+            if (result == null)
+            {
+                _statusLabel.Text = $"Choice {choiceId} was refused by {questlineId}.";
+                return;
+            }
+
+            // A choice that moves a faction moves the actual war model, not just text.
+            if (!string.IsNullOrEmpty(result.factionId) && result.factionDelta != 0)
+                _yearOfAsh.FactionWar.ModifyStanding(result.factionId, result.factionDelta);
+
+            bool ended = result.newQuestStatus != QuestlineStatus.Active;
+            _questlineModal.DisplayResolution(result, ended);
+
+            // Persist immediately: questline progress is the one Year of Ash surface a
+            // player would most obviously expect to survive a quit.
+            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+
+            _statusLabel.Text = ended
+                ? $"{questlineId} → {result.newQuestStatus}. Morale {result.moraleDelta:+#;-#;0}, guilt {result.guiltDelta:+#;-#;0}."
+                : $"{questlineId} advanced to {result.nextStageId}.";
+
+            if (!ended) ShowQuestlineStage(questlineId, day);
+        }
+
         private void OnTickYearOfAshClicked()
         {
             SetupYearOfAsh();
             int targetDay = Math.Min(360, _yearOfAsh.Timeline.CurrentDay + 10);
             _yearOfAsh.TickDay(targetDay);
+            // Persist after the day advance too, so a quit between ticks doesn't
+            // lose the timeline (encounter resolutions already save on their own).
+            YearOfAshSaveStore.TrySave(_yearOfAsh.CaptureSave());
+            if (_radioTerminal != null)
+                _radioTerminal.RefreshView(_yearOfAsh.Timeline.CurrentDay);
             _statusLabel.Text = _yearOfAsh.GetStatusSummary();
             if (_codexViewer != null)
             {
@@ -803,7 +1598,7 @@ namespace AtomicWar.GodotApp
                                    $"War Tension: {_yearOfAsh.FactionWar.WarTension}/100\n" +
                                    $"Dominant Faction: {_yearOfAsh.FactionWar.DominantFactionId}\n" +
                                    $"Encounters Available: {_yearOfAsh.Encounters.Catalog.Count}\n";
-            }
         }
     }
+}
 }

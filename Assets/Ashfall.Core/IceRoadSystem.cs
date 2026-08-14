@@ -29,6 +29,8 @@ namespace Ashfall.Core
         public bool clerkStarted;
         public bool yaraWithdrewPermanently;
         public int seedSalt;
+        /// <summary>Second Winter cap (Duty Roster). 0 = no override.</summary>
+        public int windowLengthOverride;
     }
 
     public class IceRoadSystem
@@ -84,7 +86,7 @@ namespace Ashfall.Core
         private readonly HashSet<string> _cutNodes = new HashSet<string>(CutNodeIds);
         private readonly HashSet<string> _holdfastNodes = new HashSet<string>();
         private readonly HashSet<string> _darkBeacons = new HashSet<string>();
-        private int _windowLengthOverride;
+
 
         public event Action OnIceRoadOpened;
         public event Action OnIceRoadClosed;
@@ -138,14 +140,14 @@ namespace Ashfall.Core
         {
             int span = Math.Max(1, maxDays - minDays + 1);
             int n = seedSalt < 0 ? -seedSalt : seedSalt;
-            _windowLengthOverride = minDays + (n % span);
+            _state.windowLengthOverride = minDays + (n % span);
             RaiseChanged();
         }
 
         public void ClearWindowLengthOverride()
         {
-            if (_windowLengthOverride == 0) return;
-            _windowLengthOverride = 0;
+            if (_state.windowLengthOverride == 0) return;
+            _state.windowLengthOverride = 0;
             RaiseChanged();
         }
 
@@ -313,8 +315,8 @@ namespace Ashfall.Core
             int len = SeededWindowLength(day);
             if (_state.windowsCompleted > 0 && !_state.cuttersAccess)
                 len = MinWindowDays; // betrayed Cutters: shorter, not gone
-            if (_windowLengthOverride > 0)
-                len = Math.Min(len, _windowLengthOverride);
+            if (_state.windowLengthOverride > 0)
+                len = Math.Min(len, _state.windowLengthOverride);
             _state.isOpen = true;
             _state.windowLengthDays = len;
             _state.windowDaysRemaining = len;
@@ -447,6 +449,7 @@ namespace Ashfall.Core
             to.clerkStarted = from.clerkStarted;
             to.yaraWithdrewPermanently = from.yaraWithdrewPermanently;
             to.seedSalt = from.seedSalt;
+            to.windowLengthOverride = from.windowLengthOverride;
         }
     }
 }

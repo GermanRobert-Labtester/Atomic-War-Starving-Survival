@@ -285,6 +285,123 @@ namespace Ashfall.Core.Tests
             ledger.TamperLedger();
             Assert.True(changed >= 5);
         }
+
+        // ── Cross-tool QA fixes: paid-total, settled-archive, contested gate ──
+
+        [Fact]
+        public void TotalOwedDropsToZeroOncePaid()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 100f, 30, 0.25f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 10));
+            Assert.True(ledger.TotalOwed(Wyn) > 0f);
+
+            Assert.True(ledger.PayContract(Wyn, 11));
+            Assert.True(ledger.TotalOwed(Wyn) == 0f, "settled debt owes nothing");
+        }
+
+        [Fact]
+        public void SettledContractIsArchivedNotOverwritten()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 12f, 30, 0.2f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 40));
+            Assert.True(ledger.PayContract(Wyn, 41));
+
+            // A second bad season: a fresh draft is allowed over settled ink…
+            Assert.True(ledger.PresentContract(Wyn, 8f, 20, 0.1f, "two weeks at the Lockup"));
+            Assert.NotNull(ledger.GetContract(Wyn));
+            Assert.False(ledger.GetContract(Wyn).signed, "the new debt starts as a draft");
+            Assert.Equal(1, ledger.GetContract(Wyn).readCount);
+
+            // …and the settled record is preserved, never rewritten.
+            Assert.Single(ledger.ClosedContracts);
+            var closed = ledger.ClosedContracts[0];
+            Assert.Equal(Wyn, closed.debtorId);
+            Assert.True(closed.paid);
+            Assert.Equal(12f, closed.principal);
+            Assert.Equal("the pledged grain", closed.forfeit);
+
+            // The fresh draft runs the full read-twice cycle again.
+            Assert.True(ledger.PresentContract(Wyn, 8f, 20, 0.1f, "two weeks at the Lockup"));
+            Assert.True(ledger.SignContract(Wyn, 60));
+            Assert.True(ledger.GetContract(Wyn).signed);
+            Assert.Single(ledger.ClosedContracts);
+        }
+
+        [Fact]
+        public void UnresolvedForfeitBlocksNewDraft()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 10f, 1, 0.1f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 10));
+            ledger.TickDaily(11);
+            Assert.True(ledger.GetContract(Wyn).forfeited);
+
+            Assert.False(ledger.PresentContract(Wyn, 5f, 10, 0f, "anything"),
+                "the named good is still owed — no new draft over an unresolved forfeit");
+        }
+
+        [Fact]
+        public void ContestedRenegotiationRequiresAFreshStanding()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 12f, 3, 0.2f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 10));
+            ledger.TickDaily(11);
+            ledger.TickDaily(12); // last day of the term — renegotiation window
+
+            // Contested with no Standing composed at all: refused.
+            Assert.False(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain", contested: true),
+                "contested ink is not amended without a Standing");
+
+            // Contested with a Standing that is not fresh (gate returns false): refused.
+            Assert.False(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain",
+                contested: true, freshStanding: () => false),
+                "a stale or rigged Standing authorises nothing");
+
+            // Contested with a fresh Standing: the amendment sticks.
+            Assert.True(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain",
+                contested: true, freshStanding: () => true));
+            Assert.Equal(10, ledger.GetContract(Wyn).daysRemaining);
+        }
+
+        [Fact]
+        public void UncontestedRenegotiationIgnoresTheStandingGate()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 12f, 3, 0.2f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 10));
+            ledger.TickDaily(11);
+            ledger.TickDaily(12); // last day of the term
+
+            // Uncontested term-end renegotiation is between the two signatories;
+            // even a failing gate callback must not block it.
+            Assert.True(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain",
+                contested: false, freshStanding: () => false));
+        }
+
+        [Fact]
+        public void SaveRoundTripPreservesClosedContracts()
+        {
+            var ledger = Fixture();
+            Assert.True(ReadTwice(ledger, Wyn, 12f, 30, 0.2f, "the pledged grain"));
+            Assert.True(ledger.SignContract(Wyn, 40));
+            Assert.True(ledger.PayContract(Wyn, 41));
+            // A new draft for Wyn archives the settled ink; Ivo opens his own.
+            Assert.True(ledger.PresentContract(Wyn, 8f, 20, 0.1f, "two weeks at the Lockup"));
+            Assert.True(ledger.PresentContract(Ivo, 5f, 10, 0.1f, "one day's labour"));
+
+            var json = new SystemTextJsonSerializer();
+            var restored = new LedgerDebtSystem();
+            restored.RestoreState(json.Deserialize<LedgerDebtSystemState>(json.Serialize(ledger.CaptureState())));
+
+            Assert.Single(restored.ClosedContracts);
+            Assert.True(restored.ClosedContracts[0].paid);
+            Assert.Equal(Wyn, restored.ClosedContracts[0].debtorId);
+            Assert.True(restored.Contracts.Count == 2, "Wyn's fresh draft + Ivo's draft both live");
+            Assert.NotNull(restored.GetContract(Ivo));
+        }
     }
 
     public class LedgerDebtHeadlessDemoTests

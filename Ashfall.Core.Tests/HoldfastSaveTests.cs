@@ -101,6 +101,38 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void RoundtripPreservesQuestProgress()
+        {
+            // v3: the quest snapshot (started/stage/branch) must survive the roundtrip.
+            var ice = new IceRoadSystem(808);
+            var census = new CensusClaimSystem();
+            var brine = new BrineWaterSystem();
+            var quests = new HoldfastQuestSystem();
+            quests.BindCatalog(new[]
+            {
+                new HoldfastQuestEntry { id = "quest_holdfast_the_levy", display_name = "Levy" }
+            });
+            quests.State.drawerRead = true; // S3 story gate: the Office has shown the drawer
+            Assert.True(quests.TryStart("quest_holdfast_the_levy", 100));
+            Assert.True(quests.ChooseBranch("quest_holdfast_the_levy", CensusClaimSystem.FlagLevyRefuse));
+            census.Activate12C();
+            var clock = new SimClock(101);
+
+            var save = HoldfastSaveCodec.Capture(ice, census, brine, quests, clock);
+            var loaded = HoldfastSaveCodec.Decode(HoldfastSaveCodec.Encode(save, Json), Json);
+            Assert.True(loaded.quests.quests.Count == 1);
+            Assert.True(loaded.quests.quests[0].started);
+            Assert.Equal(CensusClaimSystem.FlagLevyRefuse, loaded.quests.quests[0].branchId);
+
+            var fresh = new HoldfastQuestSystem();
+            var freshCensus = new CensusClaimSystem();
+            HoldfastSaveCodec.Restore(loaded, new IceRoadSystem(808), freshCensus, new BrineWaterSystem(), fresh, new SimClock(1));
+            Assert.True(fresh.IsStarted("quest_holdfast_the_levy"));
+            Assert.True(fresh.HasRefuseBranch());
+            Assert.True(freshCensus.Order12CActive);
+        }
+
+        [Fact]
         public void TamperedSaveRejectedByChecksum()
         {
             var save = MakeSave();
@@ -238,16 +270,16 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void V1SaveMigratesToV2()
+        public void V1SaveMigratesToCurrent()
         {
             // The frozen v1 envelope shape (Sprint 1, no brineWater). A checksum
-            // over the v1 field set must validate, then the save migrates to v2
-            // with a fresh default brine system.
+            // over the v1 field set must validate, then the save migrates forward
+            // with fresh default brine + quest systems.
             var v1 = new HoldfastSaveV1 { saveVersion = 1, simDay = 104 };
             var ice = new IceRoadSystem(808);
             ice.Unlock(90);
             ice.NotifyClerkStarted();
-            v1.iceRoad = ice.CaptureState();
+            v1.iceRoad = IceRoadSystemStateV1toV3.From(ice.CaptureState());
             var census = new CensusClaimSystem();
             census.IssueLevy(new[] { "elena_vasquez", "marcus_olejnik", "suki_tanaka" }, 100);
             census.HonourLevy();
@@ -261,10 +293,13 @@ namespace Ashfall.Core.Tests
             Assert.NotNull(loaded.brineWater);
             Assert.False(loaded.brineWater.unlocked, "migrated save starts brine fresh");
             Assert.Equal(72f, loaded.brineWater.membraneIntegrity);
+            Assert.NotNull(loaded.quests);
+            Assert.False(loaded.quests.sheetObtained, "migrated save starts quests fresh");
+            Assert.Empty(loaded.quests.quests);
             Assert.True(loaded.iceRoad.clerkStarted);
             Assert.True(loaded.census.levyHonour);
 
-            // The migrated envelope is itself valid v2: re-encode and re-decode.
+            // The migrated envelope is itself valid: re-encode and re-decode.
             var again = HoldfastSaveCodec.Decode(HoldfastSaveCodec.Encode(loaded, Json), Json);
             Assert.Equal(loaded.Checksum, again.Checksum);
         }
@@ -276,6 +311,177 @@ namespace Ashfall.Core.Tests
             v1.Checksum = "deadbeef";
             string text = Json.Serialize(v1);
             Assert.Throws<InvalidOperationException>(() => HoldfastSaveCodec.Decode(text, Json));
+        }
+
+        [Fact]
+        public void V2SaveMigratesToCurrent()
+        {
+            // The frozen v2 envelope shape (Sprints 1-2, no quest snapshot).
+            var v2 = new HoldfastSaveV2 { saveVersion = 2, simDay = 112 };
+            var ice = new IceRoadSystem(808);
+            ice.Unlock(90);
+            ice.NotifyClerkStarted();
+            v2.iceRoad = IceRoadSystemStateV1toV3.From(ice.CaptureState());
+            var census = new CensusClaimSystem();
+            census.Activate12C();
+            v2.census = census.CaptureState();
+            var brine = new BrineWaterSystem();
+            brine.UnlockSaltTrade();
+            v2.brineWater = brine.CaptureState();
+            v2.Checksum = SaveChecksum.Compute(v2);
+            string text = Json.Serialize(v2);
+
+            var loaded = HoldfastSaveCodec.Decode(text, Json);
+            Assert.Equal(HoldfastSave.CurrentSaveVersion, loaded.saveVersion);
+            Assert.Equal(112, loaded.simDay);
+            Assert.NotNull(loaded.quests);
+            Assert.Empty(loaded.quests.quests);
+            Assert.True(loaded.brineWater.saltTradeUnlocked, "v2 brine state kept");
+            Assert.True(loaded.census.order12cActive, "v2 census state kept");
+
+            var again = HoldfastSaveCodec.Decode(HoldfastSaveCodec.Encode(loaded, Json), Json);
+            Assert.Equal(loaded.Checksum, again.Checksum);
+        }
+
+        [Fact]
+        public void V2SaveWithTamperedChecksumRejected()
+        {
+            var v2 = new HoldfastSaveV2 { simDay = 90 };
+            v2.Checksum = "deadbeef";
+            string text = Json.Serialize(v2);
+            Assert.Throws<InvalidOperationException>(() => HoldfastSaveCodec.Decode(text, Json));
+        }
+
+        [Fact]
+        public void V3SaveMigratesToCurrent()
+        {
+            // Frozen v3 shape (Sprints 1-3): quest snapshot present, ending id rides
+            // inside it. v4 shares the JSON keys, so the version field discriminates.
+            var v3 = new HoldfastSaveV3 { saveVersion = 3, simDay = 200 };
+            var ice = new IceRoadSystem(808);
+            ice.Unlock(90);
+            ice.NotifyClerkStarted();
+            v3.iceRoad = IceRoadSystemStateV1toV3.From(ice.CaptureState());
+            var census = new CensusClaimSystem();
+            census.Activate12C();
+            v3.census = census.CaptureState();
+            var brine = new BrineWaterSystem();
+            brine.UnlockSaltTrade();
+            v3.brineWater = brine.CaptureState();
+            var quests = new HoldfastQuestSystem();
+            quests.SetEnding(HoldfastEndings.White);
+            v3.quests = quests.CaptureState();
+            v3.Checksum = SaveChecksum.Compute(v3);
+            string text = Json.Serialize(v3);
+
+            var loaded = HoldfastSaveCodec.Decode(text, Json);
+            Assert.Equal(HoldfastSave.CurrentSaveVersion, loaded.saveVersion);
+            Assert.Equal(200, loaded.simDay);
+            Assert.True(loaded.quests.endingId == HoldfastEndings.White, "ending survives v3 migration");
+            Assert.True(loaded.census.order12cActive);
+
+            var again = HoldfastSaveCodec.Decode(HoldfastSaveCodec.Encode(loaded, Json), Json);
+            Assert.Equal(loaded.Checksum, again.Checksum);
+        }
+
+        [Fact]
+        public void V3SaveWithTamperedChecksumRejected()
+        {
+            var v3 = new HoldfastSaveV3 { simDay = 90 };
+            v3.Checksum = "deadbeef";
+            string text = Json.Serialize(v3);
+            Assert.Throws<InvalidOperationException>(() => HoldfastSaveCodec.Decode(text, Json));
+        }
+
+        [Fact]
+        public void LegacySaveWithInjectedSystemStateDropsTheInjection()
+        {
+            // QA finding: a v1 file with an injected brineWater (a field the declared
+            // version never had) must NOT be blessed by the migration. The codec
+            // deserializes into the frozen v1 shape, which drops the extra key.
+            var v1 = new HoldfastSaveV1 { saveVersion = 1, simDay = 90 };
+            var ice = new IceRoadSystem(808);
+            ice.Unlock(90);
+            v1.iceRoad = IceRoadSystemStateV1toV3.From(ice.CaptureState());
+            v1.Checksum = SaveChecksum.Compute(v1);
+            string text = Json.Serialize(v1);
+
+            // Inject a fully-populated brineWater node that v1 never had.
+            var injected = new BrineWaterSystem();
+            injected.Unlock();
+            for (int d = 0; d < 20; d++)
+                injected.TickDaily(d, WeatherKind.Blizzard, -20f, outfallShifted: false);
+            string injectedJson = Json.Serialize(injected.CaptureState());
+            text = text.Replace("\"census\":", "\"brineWater\":" + injectedJson + ",\"census\":");
+
+            var loaded = HoldfastSaveCodec.Decode(text, Json);
+            Assert.Equal(HoldfastSave.CurrentSaveVersion, loaded.saveVersion);
+            Assert.False(loaded.brineWater.unlocked, "injected brine state must not survive migration");
+            Assert.True(System.Math.Abs(loaded.brineWater.membraneIntegrity - 72f) < 0.01f, "brine stays at fresh defaults");
+            Assert.True(loaded.iceRoad.expansionUnlocked, "legitimate v1 fields still migrate");
+        }
+
+        [Fact]
+        public void WindowLengthOverrideSurvivesRoundtrip()
+        {
+            // QA finding: Second Winter's window cap is runtime state and was lost
+            // on load. Now part of IceRoadSystemState.
+            var ice = new IceRoadSystem(808);
+            ice.ShortenWindowLength(5, 8, 42);
+            Assert.True(ice.State.windowLengthOverride > 0, "override set on live state");
+
+            var save = HoldfastSaveCodec.Capture(ice, new CensusClaimSystem(),
+                new BrineWaterSystem(), new HoldfastQuestSystem(), new SimClock(1));
+            var loaded = HoldfastSaveCodec.Decode(HoldfastSaveCodec.Encode(save, Json), Json);
+            Assert.Equal(ice.State.windowLengthOverride, loaded.iceRoad.windowLengthOverride);
+
+            var fresh = new IceRoadSystem(808);
+            HoldfastSaveCodec.Restore(loaded, fresh, new CensusClaimSystem(),
+                new BrineWaterSystem(), new HoldfastQuestSystem(), new SimClock(1));
+            Assert.True(ice.State.windowLengthOverride == fresh.State.windowLengthOverride,
+                "override restored onto the system");
+        }
+
+        [Fact]
+        public void CensusRestoreDoesNotAliasTheEnvelope()
+        {
+            // QA finding: CensusClaimSystem.RestoreState shared the ledger list with
+            // the decoded envelope. A mutation after restore must not corrupt the save.
+            var save = MakeSave();
+            var loaded = HoldfastSaveCodec.Decode(HoldfastSaveCodec.Encode(save, Json), Json);
+            var census = new CensusClaimSystem();
+            HoldfastSaveCodec.Restore(loaded, new IceRoadSystem(808), census,
+                new BrineWaterSystem(), new HoldfastQuestSystem(), new SimClock(1));
+
+            Assert.False(ReferenceEquals(loaded.census.ledger, census.State.ledger),
+                "live ledger must not alias the envelope");
+
+            census.UpsertLedger("sv_new_row", "New", "scrounger", false);
+            Assert.DoesNotContain(loaded.census.ledger,
+                entry => entry != null && entry.survivorId == "sv_new_row");
+        }
+
+        [Fact]
+        public void FrozenV1ShapeChecksumIsGolden()
+        {
+            // QA finding: migration tests are self-consistent — they compute the
+            // checksum with today's code, so drift in the frozen v1 shape would
+            // silently change what "valid v1" means. Pin the canonical bytes:
+            // any change to IceRoadSystemStateV1toV3 / HoldfastSaveV1 field set
+            // or SaveChecksum formatting must fail here, forcing a deliberate
+            // migration decision instead of a silent one.
+            var v1 = new HoldfastSaveV1 { saveVersion = 1, simDay = 104 };
+            var ice = new IceRoadSystem(808);
+            ice.Unlock(90);
+            ice.NotifyClerkStarted();
+            v1.iceRoad = IceRoadSystemStateV1toV3.From(ice.CaptureState());
+            var census = new CensusClaimSystem();
+            census.IssueLevy(new[] { "elena_vasquez", "marcus_olejnik", "suki_tanaka" }, 100);
+            census.HonourLevy();
+            v1.census = census.CaptureState();
+
+            string golden = SaveChecksum.Compute(v1);
+            Assert.Equal("801fd7ffbcde3dc4ff7eb29c2d4764455637b5c17efcfdab2de219b8c8aa844d", golden);
         }
     }
 }

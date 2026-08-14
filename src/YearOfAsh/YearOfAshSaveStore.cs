@@ -15,18 +15,18 @@ namespace AtomicWar.GodotApp.YearOfAsh
         public const string FileName = "year_of_ash_save.json";
 
         public static string SavePath =>
-            Path.Combine(OS.GetUserDataDir(), FileName);
+            Path.Combine(ProjectSettings.GlobalizePath("user://"), FileName);
 
         public static bool Exists => File.Exists(SavePath);
 
-        public static bool TrySave(YearOfAshSave save)
+        public static bool TrySave(YearOfAshSave save, string pathOverride = null)
         {
             if (save == null) return false;
             try
             {
                 var serializer = new SystemTextJsonSerializer();
                 string json = YearOfAshSaveCodec.Encode(save, serializer);
-                File.WriteAllText(SavePath, json);
+                File.WriteAllText(pathOverride ?? SavePath, json);
                 return true;
             }
             catch (Exception ex)
@@ -36,13 +36,14 @@ namespace AtomicWar.GodotApp.YearOfAsh
             }
         }
 
-        public static YearOfAshSave TryLoad()
+        public static YearOfAshSave TryLoad(string pathOverride = null)
         {
-            if (!Exists) return null;
+            string path = pathOverride ?? SavePath;
+            if (!File.Exists(path)) return null;
             try
             {
                 var serializer = new SystemTextJsonSerializer();
-                string json = File.ReadAllText(SavePath);
+                string json = File.ReadAllText(path);
                 return YearOfAshSaveCodec.Decode(json, serializer);
             }
             catch (Exception ex)

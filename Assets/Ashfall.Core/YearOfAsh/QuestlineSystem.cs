@@ -78,7 +78,7 @@ namespace Ashfall.Core.YearOfAsh
 
         public List<QuestStage> stages = new List<QuestStage>();
 
-        public QuestStage? FindStage(string id)
+        public QuestStage FindStage(string id)
         {
             foreach (var s in stages)
                 if (s.stageId == id) return s;
@@ -153,6 +153,9 @@ namespace Ashfall.Core.YearOfAsh
         public QuestlineSystem(QuestlineSystemState state = null)
         {
             _state = state ?? new QuestlineSystemState();
+            if (_state.active == null) _state.active = new List<ActiveQuestlineRecord>();
+            if (_state.completedQuestlineIds == null) _state.completedQuestlineIds = new List<string>();
+            if (_state.failedQuestlineIds == null) _state.failedQuestlineIds = new List<string>();
             PopulateBuiltInCatalog();
         }
 
@@ -164,7 +167,7 @@ namespace Ashfall.Core.YearOfAsh
                 _catalog.Add(def);
         }
 
-        public QuestlineDefinition? FindDefinition(string questlineId)
+        public QuestlineDefinition FindDefinition(string questlineId)
         {
             foreach (var q in _catalog)
                 if (q.questlineId == questlineId) return q;
@@ -193,6 +196,47 @@ namespace Ashfall.Core.YearOfAsh
             return result;
         }
 
+        /// <summary>
+        /// True when a questline can actually be traversed: its first stage exists and
+        /// offers at least one choice. A definition that fails this can be started but
+        /// never advanced — <see cref="TakeChoice"/> finds no matching choice and returns
+        /// null, stranding the record in <see cref="QuestlineStatus.Active"/> forever.
+        /// The JSON catalog shape (stageIndex/objective/requiredItemId) carries no
+        /// choices, so every questline loaded from it fails this until choices are
+        /// authored. Hosts offer <see cref="GetPlayableQuestlines"/>, not the raw list.
+        /// </summary>
+        public bool IsPlayable(QuestlineDefinition def)
+        {
+            if (def == null) return false;
+            var first = def.FindStage(def.firstStageId);
+            return first != null && first.choices.Count > 0;
+        }
+
+        /// <summary>
+        /// <see cref="GetAvailableQuestlines"/> minus the ones that cannot be advanced.
+        /// This is what a host should offer the player.
+        /// </summary>
+        public List<QuestlineDefinition> GetPlayableQuestlines(int currentDay)
+        {
+            var result = new List<QuestlineDefinition>();
+            foreach (var def in GetAvailableQuestlines(currentDay))
+                if (IsPlayable(def)) result.Add(def);
+            return result;
+        }
+
+        /// <summary>
+        /// How many otherwise-available questlines were withheld for having no authored
+        /// choices. Hosts surface this so the content gap stays visible instead of the
+        /// catalog silently looking smaller than it is.
+        /// </summary>
+        public int WithheldQuestlineCount(int currentDay)
+        {
+            int withheld = 0;
+            foreach (var def in GetAvailableQuestlines(currentDay))
+                if (!IsPlayable(def)) withheld++;
+            return withheld;
+        }
+
         /// <summary>Starts a questline on <paramref name="day"/>. No-op if already active.</summary>
         public bool StartQuestline(string questlineId, int day)
         {
@@ -216,7 +260,7 @@ namespace Ashfall.Core.YearOfAsh
         /// Player picks a choice in the current stage of an active questline.
         /// Returns null if questline not found or choice invalid.
         /// </summary>
-        public QuestChoiceResult? TakeChoice(string questlineId, string choiceId, int day)
+        public QuestChoiceResult TakeChoice(string questlineId, string choiceId, int day)
         {
             var record = _state.active.Find(a => a.questlineId == questlineId);
             if (record == null || record.status != QuestlineStatus.Active) return null;
@@ -227,7 +271,7 @@ namespace Ashfall.Core.YearOfAsh
             var stage = def.FindStage(record.currentStageId);
             if (stage == null) return null;
 
-            QuestChoice? choice = null;
+            QuestChoice choice = null;
             foreach (var c in stage.choices)
                 if (c.choiceId == choiceId) { choice = c; break; }
             if (choice == null) return null;
@@ -283,7 +327,7 @@ namespace Ashfall.Core.YearOfAsh
             return result;
         }
 
-        public ActiveQuestlineRecord? GetActiveRecord(string questlineId)
+        public ActiveQuestlineRecord GetActiveRecord(string questlineId)
         {
             return _state.active.Find(a => a.questlineId == questlineId);
         }
@@ -313,6 +357,47 @@ namespace Ashfall.Core.YearOfAsh
                 });
             }
             return copy;
+        }
+
+        /// <summary>
+        /// Rebuilds live questline progress from a snapshot. Deep-copies like its
+        /// siblings so the restored system never aliases the save object, and
+        /// tolerates a null section (a save written before quests were persisted).
+        /// </summary>
+        public void RestoreState(QuestlineSystemState state)
+        {
+            if (state == null) return;
+
+            _state.totalMoraleDeltaFromQuests = state.totalMoraleDeltaFromQuests;
+            _state.totalGuiltDeltaFromQuests  = state.totalGuiltDeltaFromQuests;
+
+            _state.completedQuestlineIds.Clear();
+            if (state.completedQuestlineIds != null)
+                _state.completedQuestlineIds.AddRange(state.completedQuestlineIds);
+
+            _state.failedQuestlineIds.Clear();
+            if (state.failedQuestlineIds != null)
+                _state.failedQuestlineIds.AddRange(state.failedQuestlineIds);
+
+            _state.active.Clear();
+            if (state.active != null)
+            {
+                foreach (var r in state.active)
+                {
+                    if (r == null || string.IsNullOrEmpty(r.questlineId)) continue;
+                    _state.active.Add(new ActiveQuestlineRecord
+                    {
+                        questlineId    = r.questlineId,
+                        currentStageId = r.currentStageId,
+                        status         = r.status,
+                        dayStarted     = r.dayStarted,
+                        dayResolved    = r.dayResolved,
+                        choiceHistory  = r.choiceHistory != null
+                            ? new List<string>(r.choiceHistory)
+                            : new List<string>()
+                    });
+                }
+            }
         }
 
         // ── Private ─────────────────────────────────────────────────────────────

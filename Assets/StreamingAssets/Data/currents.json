@@ -12,7 +12,7 @@
       "item_vinyl_collection"
     ],
     "offers": [
-      "item_encrypted_drive",
+      "encrypted_drive",
       "morale_blessing"
     ],
     "signature_quote": "Say the name aloud while you write it. If you don't say it, you're only copying.",
@@ -106,8 +106,8 @@
       "exiled_survivors"
     ],
     "offers": [
-      "item_copper_wire",
-      "item_scrap_metal"
+      "copper_wire_10m_of_10m",
+      "scrap_metal"
     ],
     "signature_quote": "",
     "access_rule": "A chute, and a bell, and a wait. The metal comes back clean. They do not negotiate verbally.",
@@ -262,5 +262,27 @@
     "signature_quote": "",
     "access_rule": "No code, no contract, no ideology. The only faction in this document with no offers, and that absence is the design.",
     "badge_asset_id": "faction_badge_iron_raiders"
+  },
+  {
+    "id": "faction_hydro_barons",
+    "display_name": "The Coastal Hydro-Barons",
+    "alignment": "conditional",
+    "home_region": "the_coast",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "clean_water",
+      "item_hydro_baron_queue_chit",
+      "desalination_access"
+    ],
+    "notes": "The fifteenth current (Expansion 06). Wired to the Rate Card War questline.",
+    "offers": [
+      "potable_water_quota",
+      "brine_byproduct_salt",
+      "desalination_access"
+    ],
+    "signature_quote": "We didn't poison the water. We just decided who drinks it first.",
+    "access_rule": "Three desalination plants and one aqueduct manifold, inherited intact from a pre-Exchange utility contractor and never nationalised. They do not sell water. They sell a place in the queue.",
+    "badge_asset_id": "faction_badge_hydro_barons"
   }
 ]

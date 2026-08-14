@@ -1,8 +1,0 @@
-ASHFALL 100-campaign balance sweep
-harness=SurvivalSmokeTest (artificial rad/thirst drain; not production phantom/trauma/branch knobs)
-campaigns=100 survivors_per=3 sim_days=30
-records=300 nan=0 exceptions=0
-deaths=300 chronic=100 ars=200
-mean_days_survived=2.53
-cause radiation_overdose=200
-cause dehydration=100

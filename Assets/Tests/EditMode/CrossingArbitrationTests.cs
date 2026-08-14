@@ -313,7 +313,9 @@ namespace AtomicWar.Tests.EditMode
             // live system after capture must not leak into the captured state.
             sys.DeclareBacker("dispute_2", "b4");
             sys.DeclareBacker("dispute_2", "b6");
-            Assert.That(captured.GetRuling("dispute_2").backers.Count, Is.EqualTo(1),
+            var capturedSys = new CrossingArbitrationSystem();
+            capturedSys.RestoreState(captured);
+            Assert.That(capturedSys.GetRuling("dispute_2").backers.Count, Is.EqualTo(1),
                 "captured state is a snapshot, not an alias");
             Assert.That(restored.GetRuling("dispute_2").backers.Count, Is.EqualTo(1));
         }

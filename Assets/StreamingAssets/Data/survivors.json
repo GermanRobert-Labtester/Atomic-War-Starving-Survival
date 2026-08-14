@@ -1,1038 +1,1052 @@
 [
-  {
-    "id": "elena_vasquez",
-    "displayName": "Elena Vasquez",
-    "profession": "Paramedic",
-    "bio": "Former field medic who ran triage in the first hours after the exchange. She does not talk about what she saw; her hands never shake, which is how the bunker knows she is listening. She keeps a folded trauma sheet in her jacket, washed thin, and counts the clean bandages before she sleeps. When a scavenger comes back bleeding she is the calmest person in the room. She refuses the top bunk and the double ration. Asked why, she says the floor is closer to her patients.",
-    "baseHealth": 100
-  },
-  {
-    "id": "marcus_olejnik",
-    "displayName": "Marcus Olejnik",
-    "profession": "Mechanical Engineer",
-    "bio": "Kept the municipal water plant running for three weeks after the grid fell, alone on rotating shifts while the chlorine ran out and the filters clogged. Came to the bunker the night the last pipe froze and the plant went silent. He still carries the valve wrench, a twelve-inch steel thing he oils every Sunday. He can trace any leak in the bunker by sound and smell. He has not once mentioned the operator who stayed behind to drain the reservoir so the city would not flood, but he keeps the man's hard hat on his shelf.",
-    "baseHealth": 90
-  },
-  {
-    "id": "suki_tanaka",
-    "displayName": "Suki Tanaka",
-    "profession": "Farmer",
-    "bio": "Her family's greenhouse stood two kilometers from the blast line and survived with most of its glass. She knows which soil still grows and which poisons the roots, learned the way the old farmers did, by testing with her tongue and watching the color of the leaves. She talks to the seedlings the way her grandmother did. She keeps the last packet of tomato seeds from her grandfather in a tin under her cot. She has not opened it. She says opening it would mean the end of the world already happened.",
-    "baseHealth": 95
-  },
-  {
-    "id": "the_surgeon",
-    "displayName": "The Surgeon",
-    "profession": "Surgeon",
-    "bio": "Haunted by a patient lost on Day 1, a child brought in with a chest wound who was gone before the anesthesia settled. Their hands still remember the cut they could not finish; some nights they wake mid-motion, fingers hooked like they are still holding the clamp. They keep the scalpel from that morning in a rolled cloth. They operate by headlamp when the power fails and do not ask anyone to hold the light for them. They have sewn up every survivor who has come back bleeding. The scars are tidy. That is how the bunker knows it was them.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_miracle_worker",
-    "activeQuestlineId": "quest_the_shaking_hand"
-  },
-  {
-    "id": "the_pharmacist",
-    "displayName": "The Pharmacist",
-    "profession": "Pharmacist",
-    "bio": "Empty bottles line their pockets, rattling softly when they walk, each one labeled in their own hand with a date and a dose that is long gone. They can tell you what every shelf of the old drugstore held and what is left of it now. The logbook is still under the counter where they left it, and they talk about going back for it the way other people talk about going home. They ration painkillers by the half-tablet and write the count on the wall in pencil. No one has ever seen them take a full dose themselves.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_alchemist",
-    "activeQuestlineId": "quest_the_empty_bottles"
-  },
-  {
-    "id": "the_vet",
-    "displayName": "The Vet",
-    "profession": "Veterinarian",
-    "bio": "They treated dogs before the war, mostly the ones that came in with thorns and broken legs and old age. Now the dogs come in with burns and blood in their mouths from the fallout, and they still want to heal them, the way they always did, with clean hands and patience and no questions about where the animal came from. They keep a leather muzzle from the old clinic and use it on the ones that panic. They are the only one in the bunker who will sit with a dying animal until it stops breathing. No one has asked them to stop.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_zoonotic_expert",
-    "activeQuestlineId": "quest_the_rabid_pack"
-  },
-  {
-    "id": "the_therapist",
-    "displayName": "The Therapist",
-    "profession": "Therapist",
-    "bio": "They used to sit across from people and wait, the way the training said, letting the silence do the work. The bunker still needs someone who can listen when the walls start talking, and they do not flinch at what comes out. They keep a notebook with no names in it, only dates and weather. They take the night watch rotation after the bad shifts because that is when people talk. They have not once said the word hope. They have also never stopped making tea for whoever sits down across from them, even when the pot is empty.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_anchor",
-    "activeQuestlineId": "quest_the_broken_mind"
-  },
-  {
-    "id": "the_undertaker",
-    "displayName": "The Undertaker",
-    "profession": "Undertaker",
-    "bio": "They buried the first dead after the exchange, twelve bodies in a trench behind the fuel depot, each one wrapped in what could be spared. They believe closure is a trench and a shovel and the quiet that follows, and they do it without ceremony and without haste. They keep a box of clean white cloth for the work and will not use it for anything else. They write the names on scrap wood and plant it at the head of each grave, even the ones nobody can read. When someone asks who they were, they answer the names. They remember all of them.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_death_blind",
-    "activeQuestlineId": "quest_the_mass_grave"
-  },
-  {
-    "id": "the_veteran",
-    "displayName": "The Veteran",
-    "profession": "Soldier",
-    "bio": "Day 1 never ended for them. They still key the radio on the old squad frequency every night at the same hour, calling the roll in the same order, and once in a while a carrier wave answers back that is not them, and they sit with it until dawn. They keep their boots by the cot, laced, ready. They taught the hatch watch to check the seal twice. They do not talk about what they did before the exchange. The scars on their hands are old and pale, and they know exactly which knot each one came from.",
-    "baseHealth": 110,
-    "latentExpertTrait": "trait_warlord",
-    "activeQuestlineId": "quest_ghosts_of_day_1"
-  },
-  {
-    "id": "the_cop",
-    "displayName": "The Cop",
-    "profession": "Police Officer",
-    "bio": "They still wear the badge under the coat, pinned to the inside of the left breast so it does not catch the light. The precinct lockbox is still there, three streets past the barricade, holding the sidearms and the paperwork nobody wants back. They have not gone for it. They say the streets will decide. They keep the whistle from the academy on a cord around their neck and use it to signal the hatch when the dust is too thick to see. They write incident reports on the back of ration lists. The ink is almost out. They keep the pen anyway.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_peacekeeper",
-    "activeQuestlineId": "quest_the_precinct"
-  },
-  {
-    "id": "the_bouncer",
-    "displayName": "The Bouncer",
-    "profession": "Bouncer",
-    "bio": "Door security before the war, eleven years of the same club door, the same coat-check girl, the same three stairs. Now the only door that matters is the hatch, and they still stand it alone, arms folded, weight on the balls of the feet, watching hands before faces. They read people the way they always did: a person tells you everything in the first four seconds. They keep the club key on the same ring as the hatch key, and they will not say why. They have not missed a shift since the bunker opened.",
-    "baseHealth": 120,
-    "latentExpertTrait": "trait_juggernaut",
-    "activeQuestlineId": "quest_the_holdout"
-  },
-  {
-    "id": "the_hunter",
-    "displayName": "The Hunter",
-    "profession": "Hunter",
-    "bio": "They tracked game before the blast, deer mostly, on foot, the slow way. Something white still moves out at the edge of the fields, too far to make out clearly, and they have not gone to look. They say a bow feels honest in a way a rifle stopped being. They keep the old compound bow oiled and the string waxed, and they sharpen every broadhead by hand, one pass at a time. They bring back rabbits and crows when the ash thins. They will not take a shot at anything that does not need to be eaten. That is not a rule they explain.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_apex_predator",
-    "activeQuestlineId": "quest_the_white_elk"
-  },
-  {
-    "id": "the_prisoner",
-    "displayName": "The Prisoner",
-    "profession": "Convict",
-    "bio": "Left to die when the walls of the Penitentiary opened and everyone who could walk went out into the ash. They stayed behind for the food and found the Warden's keys still hanging from a belt on the desk, and they have kept the image of that belt to themselves. They know every blind spot in every corridor of that building and will not draw the map. They are quiet, useful, and always watch the exits. They take their meals with their back to a wall. The Warden's keys still hang in the Penitentiary. No one else wants them.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_survivalist",
-    "activeQuestlineId": "quest_the_wardens_key"
-  },
-  {
-    "id": "the_plumber",
-    "displayName": "The Plumber",
-    "profession": "Plumber",
-    "bio": "They know every main under the city the way other people know their own hallways: which valve leaks in cold weather, which junction was patched in the seventies with the wrong pipe. When the walls scream water they still answer, wading in with a bag of fittings and a flashlight taped to their wrist. They keep a roll of thread tape in their coat pocket and have given half of it away. They were the first one to find the bunker's grey-water leak and fixed it in the dark with their bare hands. They do not charge for the work. Nobody does, anymore.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_hydraulic_master",
-    "activeQuestlineId": "quest_the_city_mains"
-  },
-  {
-    "id": "the_electrician",
-    "displayName": "The Electrician",
-    "profession": "Electrician",
-    "bio": "The grid is a ghost, but they walk its bones anyway, coil of wire over the shoulder, rubber gloves in the belt, tracing the dead mains block by block. They can read a burned-out substation like a witness statement: which phase went first, what the surge took, who tried to get the lights back on before giving up. They keep a roll of black tape and a length of copper in their kit at all times. They have restrung half the bunker's lighting with salvaged wire and refuse to let it be called a miracle. It is just patience and a meter.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_grid_walker",
-    "activeQuestlineId": "quest_the_substation_ghost"
-  },
-  {
-    "id": "the_architect",
-    "displayName": "The Architect",
-    "profession": "Architect",
-    "bio": "The firm is a tomb of paper now, blueprints and permits and a coffee cup that still sits on the desk where they left it. But the city's underbelly is still drawn somewhere, in their head mostly, every service tunnel and maintenance stair and boiler room they surveyed in the last twenty years. They sketch on ration paper from memory and the sketches are exact. They have walked the bunker twice, top to bottom, and made a list of load-bearing walls and hidden voids. They keep the list in their shoe. They say a building is a promise. They mean it.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_vault_builder",
-    "activeQuestlineId": "quest_the_blueprints"
-  },
-  {
-    "id": "the_mechanic",
-    "displayName": "The Mechanic",
-    "profession": "Mechanic",
-    "bio": "Engines are honest, they say; they never lie about being out of oil or past their last bearing. The highway pileup still has one heart left in it, a flatbed with a diesel that turns over if they can drag it home, and they have walked out there twice to check on it the way other people check on family. They keep a nine-sixteenths socket in their pocket, the one that fits the fuel pump bolts, and they will not lend it out. They have rebuilt the bunker's generator twice from scrap. The second time, nobody had to ask.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_grease_monkey",
-    "activeQuestlineId": "quest_the_motorpool"
-  },
-  {
-    "id": "the_chemist",
-    "displayName": "The Chemist",
-    "profession": "Chemist",
-    "bio": "Chlorine does not negotiate, and someone has to put their body on the valve when the water treatment rig clogs, because there is no one else with the gloves and the nerve. They worked industrial chemistry before the exchange, mostly water and waste, the unglamorous end. They keep a molarity chart folded into their coat and a pocket scale that still works. They can smell a bad batch of bleach from the stairwell. They test the bunker's water every morning and write the result on the wall in chalk. The number has not moved in eleven months. They check anyway.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_synthesizer",
-    "activeQuestlineId": "quest_the_lab_ruin"
-  },
-  {
-    "id": "the_botanist",
-    "displayName": "The Botanist",
-    "profession": "Botanist",
-    "bio": "Green is a religion now, and they are the only believer with a watering can. Fourteen perfect days is all the soil asks, they say, fourteen days of the right light and the right wet, and the seeds will do the rest. They keep a pocket lens from the old university herbarium and use it on every leaf that looks wrong. They have grown potatoes in a crate, beans up a string, and a single stubborn tomato plant they call the Mayor. They will not eat the first fruit of anything. They say the first fruit belongs to the ground. Nobody argues with the soil.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_gaia",
-    "activeQuestlineId": "quest_the_seed_vault"
-  },
-  {
-    "id": "the_courier",
-    "displayName": "The Courier",
-    "profession": "Courier",
-    "bio": "Routes over roads, that was the trade, and they still walk them, a loop of six waypoints between the bunker and the outposts, carrying medicine one way and messages the other. Five clean drops and the map still believes in them, they say, and they mark each one with a pencil tick on the inside of their jacket. They keep their feet wrapped and dry and their boots resoled with tire rubber. They walk before dawn when the ash is settled. They have not lost a package in two years. They will not say what the package is until it is delivered.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_wasteland_runner",
-    "activeQuestlineId": "quest_the_lost_route"
-  },
-  {
-    "id": "the_burglar",
-    "displayName": "The Burglar",
-    "profession": "Burglar",
-    "bio": "Vaults remember hands, they say, the way a lock remembers the weight and angle of the fingers that worked it. The ruined bank still has a safe that wants them, a combination model they cracked once in a practice run before the war, and they have been back twice for the canned food and the cash nobody wants. They keep a pick set rolled in a cloth with the initials of every job scratched on the handle. They open supply crates for the bunker when the keys go missing, and they do it fast, and they do not make a show of it. Some doors are easier open than shut.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_ghost",
-    "activeQuestlineId": "quest_the_bank_heist"
-  },
-  {
-    "id": "the_meteorologist",
-    "displayName": "The Meteorologist",
-    "profession": "Meteorologist",
-    "bio": "The sky still talks if you climb high enough, past the low roof of ash to where the wind has a shape and the clouds keep their old discipline. They spent the war reading radar for a regional station; now they read the color of the dusk and the way the ash drifts at ground level. They keep a barometer in their pack, cracked but true, and a notebook of daily observations in waterproof ink. They predicted the last fallout storm three days out and the bunker had time to seal. They said it the way they say the weather: no drama, just the facts.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_stormcaller",
-    "activeQuestlineId": "quest_the_radar_station"
-  },
-  {
-    "id": "the_hazmat_tech",
-    "displayName": "The Hazmat Tech",
-    "profession": "Hazmat Technician",
-    "bio": "Ground Zero keeps a black box, a dosimeter array planted by their old unit, and the readings on it are the difference between a safe scavenge and a bad one. They know because they used to read that array from a van with air conditioning. Now the suit and the iodine have to be perfect every time, because there is no decon team left and no second chance. They check their own seals three times before any run. They keep a piece of the old van's steering wheel on their keyring. It smells of burnt wiring and they will not let anyone wash it.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_rad_walker",
-    "activeQuestlineId": "quest_ground_zero"
-  },
-  {
-    "id": "the_teacher",
-    "displayName": "The Teacher",
-    "profession": "Teacher",
-    "bio": "The school still has a list of names, all two hundred and eleven of them, and someone has to write them down somewhere so they are not just a number in the ash. They keep the list in a ledger, marking a date next to each name when word comes, leaving the rest blank. They run a class in the bunker for the children, arithmetic in the morning and reading in the afternoon, using books that survived because they were on the shelf behind the door. They do not call it school. They call it the afternoon. The children know what it is. So does everyone else.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_polymath",
-    "activeQuestlineId": "quest_the_abandoned_school"
-  },
-  {
-    "id": "the_politician",
-    "displayName": "The Politician",
-    "profession": "Politician",
-    "bio": "Words still move people, and they know it, which is why they stand on the crate by the hatch and address the bunker every evening, whether there is news or not. They were a council member before the exchange, good with budgets and better with crowds. They keep a typed copy of the old municipal charter in their coat, water-stained but complete, and they read from it when the disputes get loud. Some say the hatch is just a podium with a wheel. They say nothing. They simply open it, and close it, and open it again the next morning.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_demagogue",
-    "activeQuestlineId": "quest_the_rally"
-  },
-  {
-    "id": "the_priest",
-    "displayName": "The Priest",
-    "profession": "Priest",
-    "bio": "Faith cracks under zero morale, and they have seen it happen three times now, three people who came to the edge and stood there. Someone has to talk them down, and they do, mostly by sitting with them and saying nothing at all until the words come. They keep a small brass cross in their pocket, worn smooth, and a folding chair they carry to whoever needs company. They do not sermonize about the exchange. They say the work is not explaining it. The work is staying in the room. They have stayed in a lot of rooms. They are still there, every night, until the person sleeps.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_shepherd",
-    "activeQuestlineId": "quest_crisis_of_faith"
-  },
-  {
-    "id": "the_reporter",
-    "displayName": "The Reporter",
-    "profession": "Reporter",
-    "bio": "Five military fragments still name who fired first, bits of sealed orders and radio transcripts they collected before the archives burned, and they keep them in an oilcloth pouch under their bunk. Truth is a kind of food, they say, and the bunker has been hungry for a long time. They file a report every week, handwritten, carbon copy to the radio host and the archivist. They cover the scavenges, the deaths, the arguments, the harvests, the way they used to cover city council. They never write what they cannot source. That habit has cost them three stories. It has cost them nothing else.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_muckraker",
-    "activeQuestlineId": "quest_truth_of_day_30"
-  },
-  {
-    "id": "the_radio_host",
-    "displayName": "The Radio Host",
-    "profession": "Radio Host",
-    "bio": "Forty-eight hours of dead air would kill the allies, they say, so they keep talking through the storm, playing the last of the records and reading the news from the reporter's sheet. Their voice is the reason several outposts still answer the daily roll call. They keep the old station's microphone on a stand in the radio room, the one with the dented grille, and they tap it twice before every broadcast the way they did before the war. They do not know who is listening anymore. They assume everyone is. That is what keeps the tone steady.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_voice_of_the_wastes",
-    "activeQuestlineId": "quest_dead_air"
-  },
-  {
-    "id": "the_chef",
-    "displayName": "The Chef",
-    "profession": "Chef",
-    "bio": "One of every food left in the world, that was the plan: a tin of this, a jar of that, the last sack of rice, and then twenty-four hours to make the last supper out of it. They were a kitchen chef before the exchange, the kind who tasted every plate and screamed quietly at the line cooks. Now they cook for the bunker out of whatever comes back in the packs, and they make it taste like a plan. They keep a single bottle of vinegar, half full, and use it like it is the last one. It might be.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_iron_chef",
-    "activeQuestlineId": "quest_the_final_harvest"
-  },
-  {
-    "id": "the_athlete",
-    "displayName": "The Athlete",
-    "profession": "Athlete",
-    "bio": "Fifteen nodes out and back on foot before the clock hits forty-eight hours, that is the route they run twice a week, carrying messages and light salvage between the bunker and the far outposts. They were a long-distance runner before the exchange, sponsored, photographed, the whole thing, none of which matters out here except the legs and the lungs. They keep their old racing singlet folded in the bottom of their pack and take it out on bad days. They do not wear it. They just look at it, then put the pack back on and start the run.",
-    "baseHealth": 110,
-    "latentExpertTrait": "trait_tireless",
-    "activeQuestlineId": "quest_the_marathon"
-  },
-  {
-    "id": "the_firefighter",
-    "displayName": "The Firefighter",
-    "profession": "Firefighter",
-    "bio": "The generator room burns and there is no suit left that fits, just hands and the will not to run. They were a firefighter before the exchange, sixteen years on the truck, and the burns on their forearms prove they learned the lesson twice. They keep the old department axe, the one from their locker, leaning by their cot, and they sharpen it themselves. They have pulled two people out of the vents since the bunker opened and does not talk about either one. The bunker keeps a coat hook by the hatch for their jacket. It is always there when they come back.",
-    "baseHealth": 105,
-    "latentExpertTrait": "trait_asbestos",
-    "activeQuestlineId": "quest_the_inferno"
-  },
-  {
-    "id": "the_tailor",
-    "displayName": "The Tailor",
-    "profession": "Tailor",
-    "bio": "Ten ragged skins of salvaged leather and waxed cloth become something that can stop a bullet and a rad, which is a promise they have made good on six times. They were a tailor before the exchange, suits and wedding dresses, and they still cut with the same hand, careful, one pass, no waste. They keep a set of needles in a cork, the good ones, and a spool of thread that has outlived the store it came from. They measure everyone in the bunker once a season and remember every number. The coats fit. That is the whole job, they say. The coats fit and the hands are warm.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_armorer",
-    "activeQuestlineId": "quest_the_kevlar_loom"
-  },
-  {
-    "id": "the_watchmaker",
-    "displayName": "The Watchmaker",
-    "profession": "Watchmaker",
-    "bio": "The EMP killed an heirloom, a pocket watch from their grandfather that they had kept running for thirty years, and they still have it, glass cracked, hands stopped at the exact minute the surge came. They collect fifty scraps of electronics for one tick, they say, and they have built a working clock from a blender motor, a car gauge, and a jar of gears that makes the whole bunker feel less lost. They keep a jeweler's loupe on a cord around their neck. The bunker sets its shifts by their clock. Nobody calls it a miracle. Everybody checks it twice.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_tinkerer",
-    "activeQuestlineId": "quest_broken_chronometer"
-  },
-  {
-    "id": "the_historian",
-    "displayName": "The Historian",
-    "profession": "Historian",
-    "bio": "The museum is on fire in their memory, every room they ever catalogued gone to ash and water, and the charter document they spent a career studying is still inside, or was, under a case of cracked glass. They keep a catalog card from the collection in their pocket, the handwriting from 1974, and they read it when the dark gets long. They have started a new archive in the bunker: ration forms, radio logs, the labels off cans, the names of the dead. They say a civilization is what it writes down. The bunker writes a lot now.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_lorekeeper",
-    "activeQuestlineId": "quest_museum_archive"
-  },
-  {
-    "id": "the_defector",
-    "displayName": "The Defector",
-    "profession": "Cult Defector",
-    "bio": "The Cult of the Glow remembers them, and they know it, because the cult's marks are painted on the wall by the east vent, the same symbol they wore for two years before they walked away. Only the leader's death ends the raid, that is what they tell the watch, and they do not say it with any hope. They keep a piece of the old robe, the grey one, in a bag at the bottom of their pack. They have not shown it to anyone. They have also not stopped sleeping with a blade under the pillow.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_zealots_bane",
-    "activeQuestlineId": "quest_the_cleansing"
-  },
-  {
-    "id": "the_addict",
-    "displayName": "The Addict",
-    "profession": "Addict",
-    "bio": "Fourteen clean days, and they count every one of them on a scrap of paper pinned above their cot, fourteen little marks in pencil. The morphine is still in the cupboard, two vials, kept for the bunker's emergencies, and they are the one who checks the seal on the box, because everyone else would rather not think about it. Their hands stay empty now. They hold a cup of tea instead, or a rag, or a book, anything that gives the fingers a job. The marks go up one a day. Nobody adds them up for them. They know the number exactly.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_chem_resistant",
-    "activeQuestlineId": "quest_the_last_stash"
-  },
-  {
-    "id": "the_parent",
-    "displayName": "The Parent",
-    "profession": "Parent",
-    "bio": "The radio said the child is gone, and they heard it in the clear, no static, the way it always happens in the worst moments. They have not thrown away the small coat, the one that hangs by their cot, and no one has asked them to. If they live through the mourning, the bunker is family, they said once, and they said it without looking at anyone. They take the children's meal shift twice a week now, ladling the same portion for every bowl. The hands do not shake. The bowl is always full. The children call them by name. That is new.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_protector",
-    "activeQuestlineId": "quest_the_locket"
-  },
-  {
-    "id": "the_fierce_mother",
-    "displayName": "The Fierce Mother",
-    "profession": "Mother",
-    "bio": "She will cancel her own meal if a child is hungry, and she has, eleven times this winter, each time handing the tray over without a word and waiting until the child is done before she eats the crust that is left. The daycare still has the toy, a stuffed rabbit with one ear, on the shelf where the littlest ones can see it. She runs the bunker's childcare with a schedule and a set of rules and a softness that surprises everyone the first time they see it. Her own children are not here. She does not talk about where they are. The rabbit stays on the shelf.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_matriarch",
-    "activeQuestlineId": "quest_the_empty_crib",
-    "baseTraits": [
-      "trait_selfless"
-    ]
-  },
-  {
-    "id": "the_exhausted_father",
-    "displayName": "The Exhausted Father",
-    "profession": "Father",
-    "bio": "He works until he collapses, that is the pattern, and the bunker has learned to watch for the hour when his head drops because he will not stop on his own. Five tier-three modules before day fifty was the promise he made to himself, and he is on schedule, and the schedule is eating him. He keeps a photograph in his coat, folded so the crease runs down the middle, of a house with a garden and three people on the steps. He looks at it at the end of every shift. He has never once explained what the modules are for. He does not need to.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_pillar_of_atlas",
-    "activeQuestlineId": "quest_the_broken_promise",
-    "baseTraits": [
-      "trait_workaholic"
-    ]
-  },
-  {
-    "id": "the_naive_son",
-    "displayName": "The Naive Son",
-    "profession": "Child",
-    "bio": "He wanders the bunker playing, a boy with a stick and a ball of twine and an imagination that has not learned the shape of the world yet. Adults feel hope just looking at him, which is a heavy thing to put on a child. He asks questions that make the adults pause: why the water tastes funny, why the lights stay on when the sun is out, where the birds went. He draws on the wall with chalk, suns and houses and a dog with four legs, which is how the bunker knows what it is missing. He is the reason some people still say good morning.",
-    "baseHealth": 70,
-    "latentExpertTrait": "trait_wasteland_scout",
-    "activeQuestlineId": "quest_growing_up_fast",
-    "baseTraits": [
-      "trait_dependent",
-      "trait_pollyanna"
-    ],
-    "isChild": true
-  },
-  {
-    "id": "the_hardened_daughter",
-    "displayName": "The Hardened Daughter",
-    "profession": "Child",
-    "bio": "She will not play and she will not be comforted, and she eats her meals standing up, facing the door, the way she watched someone do a long time ago. The adults stopped trying to reach her months back, all except the one who sits beside her at the hatch watch without speaking. First blood at the hatch will change her, that is what the older ones say quietly. She keeps a piece of broken glass in her pocket, wrapped in cloth, that she found on a scavenge. She has never shown it to anyone. She has also never put it down.",
-    "baseHealth": 75,
-    "latentExpertTrait": "trait_child_of_the_ash",
-    "activeQuestlineId": "quest_first_blood",
-    "baseTraits": [
-      "trait_traumatized"
-    ],
-    "isChild": true
-  },
-  {
-    "id": "the_psychopath",
-    "displayName": "The Psychopath",
-    "profession": "Outsider",
-    "bio": "Death does not move them, which is the first thing the intake notes said and the only line anyone has ever agreed on. They refuse other hands for their own care, doing their own stitching and their own cooking, and they work alone, always, on the tasks nobody else wants. Empty rooms make them sharp; they are at their best after everyone has gone to sleep. They keep a clean notebook and write in it every night, small precise letters. No one has ever seen the pages. The watch does not leave the hatch unguarded when they are awake. That is not a policy. It is a reflex.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_cold_calculus",
-    "activeQuestlineId": "quest_the_perfect_equation",
-    "baseTraits": [
-      "trait_sociopath",
-      "trait_arrogant"
-    ]
-  },
-  {
-    "id": "the_serial_killer",
-    "displayName": "The Serial Killer",
-    "profession": "Neighbor",
-    "bio": "Kind, that is what the bunker says. Charismatic, generous with the rations and quick with a joke, the sort of neighbor everyone wants in the next cot. Something under the smile keeps score, though, and the careful ones have noticed: they remember every favor, every slight, every meal that was not offered, in exact order. They keep a jar of buttons on their shelf, sorted by size, and count them when they think no one is watching. Nothing in the intake file explains any of it. The file is thin. The jar is full. The bunker has not decided which of those is the problem.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_butcher_of_day_30",
-    "activeQuestlineId": "quest_the_mask_slips",
-    "baseTraits": [
-      "trait_kind",
-      "trait_charismatic"
-    ]
-  },
-  {
-    "id": "the_liar",
-    "displayName": "The Liar",
-    "profession": "Storyteller",
-    "bio": "The intake form says they are fine, and the radio log says their hidden stash is real, and neither of those things is true, They are a storyteller by trade and by habit, and the stories are not malicious, mostly; they are just better than the facts. They keep a kit of small objects, a lighter that does not work, a compass that spins, a key to no door, and they spin a tale for each one. The bunker keeps them because the tales are warm. The careful ones have started checking what they say against the stock room. The accounts do not match. The stories do.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_master_manipulator",
-    "activeQuestlineId": "quest_the_boy_who_cried_wolf",
-    "baseTraits": [
-      "trait_deceptive"
-    ]
-  },
-  {
-    "id": "the_hoarder",
-    "displayName": "The Hoarder",
-    "profession": "Collector",
-    "bio": "Double rations or the mood sours, that is the arrangement, and the bunker pays it because the alternative is worse. They collect: cans by year, batteries by brand, bottle caps by color, each sorted into a storage shed that has become a private vault with its own lock and its own logbook. They keep a tape measure in their pocket and check the stack heights every morning. Nothing has ever been taken, they say, and they say it like a warning. The shelves are perfect. The counting never ends. The vault door stays shut. Some nights you can hear the lock turning from three rooms away.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_dragons_hoard",
-    "activeQuestlineId": "quest_the_weight_of_gold",
-    "baseTraits": [
-      "trait_selfish"
-    ]
-  },
-  {
-    "id": "the_general",
-    "displayName": "The General",
-    "profession": "Military",
-    "bio": "Day-1 command died with the first court-martial, and they still carry the papers in a sealed envelope, reading them once a year on the anniversary. Every remnant uniform is a death sentence now, they say, which is why they wear the civilian coat over everything and never salute, even out of habit. He still draws the map: supply routes, choke points, the positions of every outpost, updated in pencil every morning. The map is kept in a tube by the hatch, and he will hand it to anyone who asks, no questions. He does not ask about the courts-martial of others. He knows better than anyone what the envelope weighs.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_art_of_war",
-    "activeQuestlineId": "quest_court_martial",
-    "baseTraits": [
-      "trait_tactician",
-      "trait_hated"
-    ]
-  },
-  {
-    "id": "the_saboteur",
-    "displayName": "The Saboteur",
-    "profession": "Rebel",
-    "bio": "Orders taste like ash, they say, and they have refused the last three formal assignments they were given, choosing their own work instead: the vent runs, the wall checks, the work nobody sees. Traps open for them without a word, because they built half of them and took the other half apart to learn. The checkpoint still stands, the one their old cell was ordered to blow and did not, and they walk past it every supply run and do not look at it. They keep a bolt from the charge they never set, polished smooth, in their pocket. It is the one thing they will not explain.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_demolitions_expert",
-    "activeQuestlineId": "quest_the_final_payload",
-    "baseTraits": [
-      "trait_anti_authority"
-    ]
-  },
-  {
-    "id": "the_deserter",
-    "displayName": "The Deserter",
-    "profession": "Sniper",
-    "bio": "Ran once, a night raid that went wrong, and they have carried the run with them since, the way a man carries a stone in his boot. They still flinch at hammers and generators, the two sounds of that night, and they take the far end of the room so no one sees it happen. The hatch will ask if they can stay, they say. They keep a scope in a padded case under their cot, glass intact, and oil the threads every week. The rifle itself has not been fired in a year. The scope has not left the case.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_ghost_shooter",
-    "activeQuestlineId": "quest_holding_the_line",
-    "baseTraits": [
-      "trait_coward"
-    ]
-  },
-  {
-    "id": "the_quartermaster",
-    "displayName": "The Quartermaster",
-    "profession": "Logistics",
-    "bio": "Counts beans like lives, and means it exactly that way: every can, every bolt, every vial of iodine, tallied in a ledger with no erasures, signed and dated. A messy shelf is a personal insult and they have re-stacked the pantry four times this month, muttering the whole while. One hundred of everything, that is the rule they argue for at every council meeting, one hundred days of reserve for the bunker's size, and they will not let the scavengers spend it down below ninety. They keep a single ration bar in their own pocket, untouched, for the day the ledger runs out. They have never eaten it.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_supply_chain_master",
-    "activeQuestlineId": "quest_inventory_audit",
-    "baseTraits": [
-      "trait_strict"
-    ]
-  },
-  {
-    "id": "the_child_soldier",
-    "displayName": "The Child Soldier",
-    "profession": "Child",
-    "bio": "Adult hands on a child's frame, that is the first thing everyone notices, and the second is that the hands are never far from the rifle. Science and medicine will not stick; the wounds heal around the stitches and the infections come back, the way a body that learned to survive wrong keeps on being wrong. The rifle will not leave. It was carried out of the last fight by a child who was told it was the only thing that kept them alive, and they believe it. They eat with the weapon on the cot beside them. They sleep the way soldiers do: light, and ready.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_reclaimed_youth",
-    "activeQuestlineId": "quest_dropping_the_rifle",
-    "baseTraits": [
-      "trait_stunted"
-    ],
-    "isChild": true
-  },
-  {
-    "id": "the_empath",
-    "displayName": "The Empath",
-    "profession": "Counselor",
-    "bio": "Feels every room they walk into, and they have learned to brace before the hatch opens because the load is heavy. Comfort before food, that is their order of work, and they feed the panics first and eat what is left. Three broken minds have leaned on them this season, and their own body pays, the headaches and the sleep that will not come and the hands that shake when the bunker is quiet. They keep a basin of cold water by their cot and put their hands in it when the load gets too high. The bunker knows. The bunker pretends not to see.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_soul_weaver",
-    "activeQuestlineId": "quest_the_sponge",
-    "baseTraits": [
-      "trait_hyper_empathetic"
-    ]
-  },
-  {
-    "id": "the_misanthrope",
-    "displayName": "The Misanthrope",
-    "profession": "Hermit",
-    "bio": "Shared air is an injury, they say, and they mean it literally: they breathe shallow in the mess hall and full only alone, in the vent tunnel they have claimed as their own. They are fast on their own, the fastest runner in the bunker over rough ground, and the scavenge teams learned to stop asking and just follow the gap. Fifteen days of no one, that is their record, and they came back with a full pack and two words of report. They keep a corner of the storage room with a stool and a blanket. Nobody else sits there. Nobody needs to be told.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_lone_wolf",
-    "activeQuestlineId": "quest_hell_is_other_people",
-    "baseTraits": [
-      "trait_rude"
-    ]
-  },
-  {
-    "id": "the_pollyanna",
-    "displayName": "The Pollyanna",
-    "profession": "Optimist",
-    "bio": "The meter never shows fear, they say, tapping the dosimeter case the way other people tap a lucky coin. Fallout rain is weather, in their telling, and ash is just snow with a different color, and they will stand in the hatchway during a storm and describe the way the light bends. Denial ends only when the body fails, and theirs has failed twice now, and twice it lived, and both times they read the hospital bed as a second chance. They keep a jar of river stones they call the good ones and hand one out when someone is low. The jar is almost empty. The telling is not.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_grounded_optimist",
-    "activeQuestlineId": "quest_shattered_glass",
-    "baseTraits": [
-      "trait_denialist"
-    ]
-  },
-  {
-    "id": "the_martyr",
-    "displayName": "The Martyr",
-    "profession": "Caregiver",
-    "bio": "Steps into the breach for strangers, that is the pattern, and the intake file has a list: the vent repair, the generator fire, the night a raider pushed the hatch and they stood in the gap. Food leaves their tray without a word, passed to the child on the left or the old man on the right, and they are thinner than the records say they should be. Someone has to pay, they say, and they do not mean money. They keep a worn book of poetry in their coat and read one line before bed. They will not say which. The pages are soft at the corners.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_living_saint",
-    "activeQuestlineId": "quest_the_ultimate_price",
-    "baseTraits": [
-      "trait_sacrificial"
-    ]
-  },
-  {
-    "id": "the_arrogant_surgeon",
-    "displayName": "The Arrogant Surgeon",
-    "profession": "Surgeon",
-    "bio": "Gods do not mop floors, they told the council once, and the council still repeats it, not kindly. Patients leave smaller under their hands, the wounds closed fast and the beds turned over quickly, and the results are usually good, which is the problem: they work, and they know it. One failed cut, a ten-day dark after, when they would not leave their bunk and would not explain. They keep a framed certificate from the old hospital, the one with the gold seal, hung where they can see it from the cot. The seal has not faded. The memory of the cut has not either.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_humbled_healer",
-    "activeQuestlineId": "quest_the_botched_job",
-    "baseTraits": [
-      "trait_god_complex"
-    ]
-  },
-  {
-    "id": "the_relapsing_addict",
-    "displayName": "The Relapsing Addict",
-    "profession": "Addict",
-    "bio": "The hands shake for amphetamines, they admit it openly, which is the honest part of a story with few honest parts. Below forty morale the locks mean nothing, they say, and they say it to the supply keeper so the supply keeper watches them. Twenty-one clean days or the chemistry wins, that is the bargain they have made with themselves, and they keep the count in a line of tally marks on their forearm, visible, unapologetic. They take the night shifts no one wants and finish them with the shakes. The marks go up one a day. The cupboard key lives with the supply keeper. It stays there.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_clean_and_sober",
-    "activeQuestlineId": "quest_cold_turkey",
-    "baseTraits": [
-      "addicted"
-    ]
-  },
-  {
-    "id": "the_insomniac",
-    "displayName": "The Insomniac",
-    "profession": "Night Watch",
-    "bio": "Sleep is a rumor, they say, and they have the eyes to prove it. Beds return almost nothing to them, so they stopped trying and took the hatch watch instead, where the hours have a use. Five nights alone on the hatch, that is the record they hold, and they came off it with a plan of the approach routes and a list of sounds, no complaints. They keep a tin of loose tea and brew it one cup at a time, slowly, in the dark, no light. The pacing stops when the watch starts. That is the whole medicine.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_the_watcher",
-    "activeQuestlineId": "quest_the_long_night",
-    "baseTraits": [
-      "trait_restless"
-    ]
-  },
-  {
-    "id": "the_hypochondriac",
-    "displayName": "The Hypochondriac",
-    "profession": "Patient",
-    "bio": "Every cough is a death sentence until the placebo, and the bunker medic keeps a jar of sugar pills for exactly this purpose, labeled vitamin, and the label has worked nine times. They keep a thermometer in their pocket and take their temperature at the same hour every day, writing the result in a little book. Real sepsis is the only diagnosis that sticks, and they had it, and it nearly took them, and the strange part is that they never once complained during it. They keep the discharge paper from the old clinic folded in the book. They have read it enough times to know it by heart.",
-    "baseHealth": 85,
-    "latentExpertTrait": "trait_hyper_aware",
-    "activeQuestlineId": "quest_the_real_illness",
-    "baseTraits": [
-      "trait_paranoid_health"
-    ]
-  },
-  {
-    "id": "the_pyromaniac",
-    "displayName": "The Pyromaniac",
-    "profession": "Arsonist",
-    "bio": "Heaters are churches, they say, and they tend the bunker's three stoves with a devotion that makes people uneasy and warm. Low morale smells like smoke to them, they claim, and they are the first one at the door when a fire starts anywhere in the tunnels, carrying the bucket before the shout finishes. Five fires put out, that is the count they keep, each one noted in a little ledger with the cause and the time. They have never started one, the ledger says. The ledger is neat. The bunker keeps a fire watch rotation anyway. It is for fires that have not happened yet.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_fire_breather",
-    "activeQuestlineId": "quest_trial_by_fire",
-    "baseTraits": [
-      "trait_fascination"
-    ]
-  },
-  {
-    "id": "the_blind_preacher",
-    "displayName": "The Blind Preacher",
-    "profession": "Preacher",
-    "bio": "No expeditions and no guns, that is the rule they set for themselves the day they arrived, and they have kept it. Only sound, they say: the voices, the footsteps, the way a room changes when someone lies in it. Three conversions from despair, and each one was done by listening, not by arguing. The walls speak first, they insist, and the bunker has stopped laughing at that because the walls have been right about the pipes twice. They keep a worn book with raised pages and read it with their fingers in the evening, aloud, for whoever sits nearby. Nobody has ever asked them to stop.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_sonar",
-    "activeQuestlineId": "quest_a_voice_in_the_dark",
-    "baseTraits": [
-      "trait_blind"
-    ]
-  },
-  {
-    "id": "the_prepper",
-    "displayName": "The Prepper",
-    "profession": "Prepper",
-    "bio": "Paranoid before the sirens; it is the one time paranoia paid a dividend. They brought their own MREs, two cases, labeled by date, and they eat their own stock before touching the bunker's, a rule they will not break. They have a habit of counting the exit routes at every meal and checking the seals on the hatch before they sleep. Survive the day the hatch is gone, that is the goal they state plainly, and they train for it with a pack kept packed and tested every full moon. The pack has its own shelf. The shelf has its own label. The label says no one.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_improvised_engineering",
-    "activeQuestlineId": "quest_the_bunker_breached",
-    "baseTraits": [
-      "trait_paranoid"
-    ]
-  },
-  {
-    "id": "the_outcast",
-    "displayName": "The Outcast",
-    "profession": "Mutant",
-    "bio": "Eight hundred millisieverts and counting, according to their dosimeter, which they wear openly like a badge nobody asked to see. Meals alone, that is the arrangement, and they eat at the far table with their back to the room, and no one joins them, and no one is asked to. One thousand without dying is the only home left, they say, and they say it without drama. They keep a single photograph, a group of people in front of a building, and they will not say who is in it. The glass is cracked. The picture is clear.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_radiotrophic",
-    "activeQuestlineId": "quest_embracing_the_glow",
-    "baseTraits": []
-  },
-  {
-    "id": "the_feral_orphan",
-    "displayName": "The Feral Orphan",
-    "profession": "Child",
-    "bio": "No words, that is the first thing, and the second is the raw meat: they will not eat food that has been cooked, or touched, or handed over, only what they take themselves. They sleep on concrete, on the flat stone by the generator where the warm air comes up. Thirty days under the Vet or the Fierce Mother, that is the plan on the council sheet, and the two of them keep a rotating watch that has not been written down. Progress is slow and small: a word, a bowl set down nearby, a blanket left folded on the stone. It stays folded. It is still there.",
-    "baseHealth": 75,
-    "latentExpertTrait": "trait_apex_scavenger",
-    "activeQuestlineId": "quest_the_pack",
-    "baseTraits": [
-      "trait_animalistic"
-    ],
-    "isChild": true
-  },
-  {
-    "id": "the_pacifist",
-    "displayName": "The Pacifist",
-    "profession": "Monk",
-    "bio": "No weapons, ever, and they have walked through two raids without one. Always flees, that is their doctrine, and they are fast at it, and they pull whoever they can with them. A needless kill and the hunger strike begins, they have told the council, and the council believes them, because they held one once over a wounded animal, nine days, until the water was forced on them. They keep a begging bowl, dented, and eat only what is given freely. Level five, zero damage, the intake notes read, and the notes are the only place that sounds like a joke.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_zen_state",
-    "activeQuestlineId": "quest_the_ultimate_test",
-    "baseTraits": [
-      "trait_vow_of_nonviolence"
-    ]
-  },
-  {
-    "id": "the_widow",
-    "displayName": "The Widow",
-    "profession": "Botanist",
-    "bio": "Grief steals the work, they say, and they mean the days when the hydroponics trays go unattended because the hands will not lift. They garden before sleep, always, a fixed hour after the lights dim, working the trays in the dark by feel, checking the water level the way other people check the door is locked. One pre-war rose, that is the story the bunker tells softly: a single cutting carried out of a dead greenhouse, kept alive through two winters. The rose is a promise, they say. The cutting lives in a jar by their cot. The jar gets the first water of the day.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_master_geneticist",
-    "activeQuestlineId": "quest_the_last_seed",
-    "baseTraits": [
-      "trait_grieving"
-    ]
-  },
-  {
-    "id": "the_ex_con",
-    "displayName": "The Ex-Con",
-    "profession": "Laborer",
-    "bio": "Stashes lock when the door opens, that is the habit, and it is not about the current door: it is about the cell door, and the yard door, and every door that ever closed on them. No orders from cops or generals, they say plainly; they will take requests. They work the heaviest jobs, the concrete pours and the hauling, and they work them silently. Drag one dying body home, that is the measure they use for a good week, and they have done it twice. They keep a smooth river stone in their pocket, worn by a thumb. It has been there longer than the bunker.",
-    "baseHealth": 110,
-    "latentExpertTrait": "trait_the_enforcer",
-    "activeQuestlineId": "quest_redemption_arc",
-    "baseTraits": [
-      "trait_distrusted"
-    ]
-  },
-  {
-    "id": "the_sheriff",
-    "displayName": "The Sheriff",
-    "profession": "Lawman",
-    "bio": "Morale for the room, that is what they take responsibility for, the tone of the mess hall and the temper of the disputes, and they have broken up four fights this month without raising a hand. The heart is failing, the medic's notes say, and the sheriff refuses to stop. Guard duty when no one else stands, that is the pattern, the third watch, the one nobody wants. One raider boss, that is the only boast they allow themselves: one named man, one clean arrest, before the exchange, done by the book. They keep the old star in a cloth, polished weekly. The book is gone. The arrest is not.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_legend_of_the_wastes",
-    "activeQuestlineId": "quest_the_last_ride",
-    "baseTraits": [
-      "trait_moral_compass",
-      "trait_failing_heart"
-    ]
-  },
-  {
-    "id": "the_former_politician",
-    "displayName": "The Former Politician",
-    "profession": "Politician",
-    "bio": "Charisma maxed and labor skill zero, the intake form reads, and the two lines are equally true. They can calm a room in three sentences and have, twice, but they cannot hang a shelf straight and their hands blister in an hour of hauling. Fourteen dirty days in a row, that is the bet they made with the work crew, and they lost it on day three, and they went back on day four anyway. They keep an empty fountain pen in the breast pocket of the jacket they will not throw away. The jacket does not fit. The pen has no ink. They wear it to every council meeting.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_the_statesman",
-    "activeQuestlineId": "quest_a_real_leader",
-    "baseTraits": [
-      "trait_silver_tongue"
-    ]
-  },
-  {
-    "id": "the_tech_bro",
-    "displayName": "The Tech Bro",
-    "profession": "Engineer",
-    "bio": "The old world is coming back, they say, and they say it every time they salvage a circuit board or a coil of wire, holding it up like evidence. The tablet still powers on and wastes the bunker's scarce battery on games they will not stop playing. The EMP took the chips, and then a purifier from scrap came out of their bench, a working water unit built from a car radiator, a pump, and faith. They keep a drawer of capacitors sorted by size, labeled in their own hand. The labels are wrong half the time. The purifier works anyway. That is the mystery the bunker lives with.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_cybernetics",
-    "activeQuestlineId": "quest_the_hard_reboot",
-    "baseTraits": [
-      "trait_delusional",
-      "trait_arrogant"
-    ]
-  },
-  {
-    "id": "the_news_anchor",
-    "displayName": "The News Anchor",
-    "profession": "Anchor",
-    "bio": "Hygiene is a career, they say, and they maintain it with a washcloth and a folded mirror, the last two professional tools they kept. The journal never stops, a page a day, dateline and weather and the names of everyone who ate in the mess, in the same clear hand that once opened the evening broadcast. One true broadcast from the tower, that is the goal they hold onto, one clean transmission that tells the outposts the truth of the week, and they rehearse it standing straight in the radio room. The tape deck is dead. They practice with a pencil as the microphone. The posture is still perfect.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_beacon_of_truth",
-    "activeQuestlineId": "quest_the_final_broadcast",
-    "baseTraits": [
-      "trait_photogenic"
-    ]
-  },
-  {
-    "id": "the_nomad",
-    "displayName": "The Nomad",
-    "profession": "Scavenger",
-    "bio": "Walls are a cage, they say, and they have said it every day since the intake desk wrote it down on day one. Five days inside and the hatch opens alone, that is the record; they came back on day nine last time, which the bunker counts as a victory. Build a bed worth staying for, that is the offer they made and the bunker is still working on it: a cot with a real mattress, a shelf, a hook for the pack. They keep a coil of rope and a folding saw. The rope is worn soft at the middle. The bed is not ready yet.",
-    "baseHealth": 100,
-    "latentExpertTrait": "trait_master_pathologist",
-    "activeQuestlineId": "quest_putting_down_roots",
-    "baseTraits": [
-      "trait_agoraphile"
-    ]
-  },
-  {
-    "id": "the_exec",
-    "displayName": "The Exec",
-    "profession": "Executive",
-    "bio": "Modules work harder and die faster, that is their management theory, and they apply it to the bunker's machinery and crew with the same cheerless logic. In fire, inventory first, they have said, and they have never had to prove it, and the bunker hopes they never do. Ten thousand in trade value, that is the fortune they track in a ledger with columns they invented, a private scoreboard of what the bunker owns. They keep a silk tie, the last one, in a drawer and take it out on anniversaries. They do not wear it. They hold it up to the light and put it back.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_monopolist",
-    "activeQuestlineId": "quest_the_golden_parachute",
-    "baseTraits": [
-      "trait_ruthless"
-    ]
-  },
-  {
-    "id": "survivor_cryo_tech",
-    "displayName": "The Cryo-Tech",
-    "profession": "HVAC Specialist",
-    "bio": "They kept the server farms cool before the war, vast rooms of humming racks that paid them to never let the temperature drift a degree. Now they keep the bunker from becoming an oven or a tomb, balancing the same numbers with scrap ducting and a coil of salvaged refrigerant line. They keep a thermograph from the old plant and tape each day's readings over the cot. They can tell you the temperature of any room by walking into it and closing their eyes. The bunker trusts that more than the gauges. The gauges drift. The hands remember what the numbers should say.",
-    "baseHealth": 90.0
-  },
-  {
-    "id": "survivor_bunker_archivist",
-    "displayName": "The Archivist",
-    "profession": "Bureaucrat",
-    "bio": "They know the blueprint of every sub-pen built in 1982, every chamber and hatch and emergency store, because the plans were their job to file and keep. They also know which ones were sealed with people inside, a list that does not exist in any index, only in their head and their habit of walking past certain grates without stopping. They keep the original plan key in a sleeve, rolled and rubber-banded, and they will unroll it for anyone who asks. They have never once drawn the sealed chambers on the copy they lend out. The original has their thumbprints on it. ",
-    "baseHealth": 75.0
-  },
-  {
-    "id": "survivor_ice_walker",
-    "displayName": "The Ice-Walker",
-    "profession": "Nomad",
-    "bio": "They do not speak much; on the ice, talk carries, and silence is the loudest discipline. They navigate by the sound of the wind over the black ice, the way a sailor reads a hull, and they have crossed the frozen flats in whiteout when every compass said wrong. They keep a set of crampons, hand-filed, and a waxed hide coat that reaches the knees. They sleep outside the bunker in a snow trench when the season allows, and say it is warmer than the vents. The cook leaves a bowl at the hatch for them. It is usually eaten.",
-    "baseHealth": 100.0
-  },
-  {
-    "id": "survivor_defrosted_aristocrat",
-    "displayName": "The Thawed VIP",
-    "profession": "Politician",
-    "bio": "Woke up in a silk suit that is still in good shape, a fact they mention more often than the exchange itself, because the suit survived and the world did not. Demands a private room, has been offered the partition, and has not stopped asking for the full wall. Knows the bank codes, or says so, a string of numbers they recite to anyone who will listen, and no one has ever dared to test them. They have never held a shovel, they admit it freely. They keep the suit pressed with a hot tin can. The seamstress laughs. The suit stays sharp.",
-    "baseHealth": 60.0
-  },
-  {
-    "id": "survivor_thawed_medic",
-    "displayName": "The Thawed Surgeon",
-    "profession": "Cryo-Medic",
-    "bio": "Put to sleep in 2024 with a sealed contract and a room key, and woke to a nightmare they were not trained for. Their medical knowledge is pre-war, whole textbooks in the head, and it is mostly still right: anatomy has not changed, only the world around it. The mind is fragile, the intake notes say, and they do not argue. They keep the cryo tag from the wrist, the one with the date, in a pocket, and they run their thumb over the embossed letters when the walls close in. They have not asked to be refrozen. They have also not stopped wearing the tag.",
-    "baseHealth": 85.0
-  },
-  {
-    "id": "survivor_ash_diver",
-    "displayName": "The Ash-Diver",
-    "profession": "Scavenger",
-    "bio": "They dive into the radioactive ash-drifts to pull scrap from buried cars, working by feel in the grey, tethered to a rope. The cars are tombs and storehouses both: batteries, copper, the last working radios, all of it under a meter of fallout. Their lungs are already failing, the cough is in the record, and they have been told twice to stop, and they have gone back both times. They keep a brass gear from a buried sedan on a cord around the neck, the first thing they ever pulled out. They say the ash pays. They do not say what it costs.",
-    "baseHealth": 110.0
-  },
-  {
-    "id": "survivor_speleologist",
-    "displayName": "The Speleologist",
-    "profession": "Cave Mapper",
-    "bio": "They mapped the limestone networks before the war, hundreds of kilometers of cave, and they remember the good chambers like old rooms. They know where the bedrock is solid and where it is hollow, which is why the bunker asks before it digs anywhere. The dark is their oldest friend, they say, and they mean it without poetry: they sleep without light and walk the tunnels without a torch, one hand on the wall. They keep a survey pencil and a folding ruler in the pocket of a vest that has more pockets than use. The maps they draw are exact. The bunker trusts them over any instrument.",
-    "baseHealth": 90,
-    "traits": [
-      "trait_dark_acclimated"
-    ]
-  },
-  {
-    "id": "survivor_sump_diver",
-    "displayName": "The Sump-Diver",
-    "profession": "Scuba Scavenger",
-    "bio": "They dive into the black water to pull copper from the drowned grid, the transformer yards and cable runs that went under when the river took the low city. The water is cold and dark and full of things that moved in with the current. Their skin is perpetually damp and pale, the record notes, and they never quite dry out between dives. The water does not scare them anymore, they say. They keep the old dive knife in a leg sheath, the one with the chipped tip, and a suit patched so many times the patches have patches. The copper pays for the light.",
-    "baseHealth": 105,
-    "traits": [
-      "trait_thalassophobia_resist"
-    ]
-  },
-  {
-    "id": "survivor_mycologist",
-    "displayName": "The Mycologist",
-    "profession": "Fungus Farmer",
-    "bio": "They study the Ash-Blight, the grey bloom that covers what the fire did not take. They know which molds will kill you and which ones will numb the pain of dying, and they keep the two lists in the same book with the same ink. Their hands are stained blue-green, a color that does not wash off, and the stains move up the wrist each season. They grow the safe ones on racks in the damp room and eat them. They keep a pressed spore print of the first Ash-Blight they ever found, labeled, on the shelf like a trophy or a warning. No one is sure which.",
-    "baseHealth": 80,
-    "traits": [
-      "trait_rot_immunity"
-    ]
-  },
-  {
-    "id": "survivor_hydro_engineer",
-    "displayName": "The Hydro-Engineer",
-    "profession": "Pump Specialist",
-    "bio": "They understand fluid dynamics and pressure valves, and they have rebuilt the bunker's pump rig three times, each time from worse parts. They can hear a water main cracking three rooms away, a tick in the wall that nobody else can place, and they are usually right by the time the floor is wet. The Black Aquifer does not surprise them: they tested it before the exchange and knew its levels and its taste. They keep a pressure gauge, cracked face, working needle, in a leather case, and tap it before every pump start. The habit is older than the war.",
-    "baseHealth": 95,
-    "traits": [
-      "trait_dark_acclimated"
-    ]
-  },
-  {
-    "id": "survivor_mole",
-    "displayName": "The Mole",
-    "profession": "Tunnel Rat",
-    "bio": "Small, quiet, and entirely comfortable in the dark, which is why the bunker stopped being surprised when they found them asleep in the crawlspace under the storage room on day three. They fit through the ventilation shafts when the doors jam, and they have unjammed the main hatch twice from the inside. Tight spaces are where they sleep best, and their cot is wedged into a corner the size of a coffin. They keep a ball of twine and a pencil stub in a chest pocket, marking the routes they take with small ticks in the dust. The dust remembers better than any map.",
-    "baseHealth": 85,
-    "traits": [
-      "trait_dark_acclimated"
-    ]
-  },
-  {
-    "id": "survivor_rot_farmer",
-    "displayName": "The Rot Farmer",
-    "profession": "Composter",
-    "bio": "They smell of ammonia and wet earth, and they have long since stopped apologizing for it. They do not mind the maggots; they consider them protein, and they have made the case at the mess table so plainly that half the bunker now eats around the new dish and the other half pretends not to watch the pot. The Ash-Blight is just another crop to them, a grey harvest that breaks down into good soil given time and air. They keep a pitchfork with a hand-carved handle and a ledger of each compost row. The rows are numbered. The ledger is exact. The smell does not lie.",
-    "baseHealth": 90,
-    "traits": [
-      "trait_rot_immunity"
-    ]
-  },
-  {
-    "id": "survivor_sapper",
-    "displayName": "The Sapper",
-    "profession": "EOD Tech",
-    "bio": "They spent the war clearing minefields and came through with all the fingers, which is not luck. Now they clear the peace: the unexploded ordnance the exchange left in the fields, the shells and the little canisters that still promise. They walk softly and never, ever rush, and the scavenge teams learned to match their pace or stay home. The ground remembers their footsteps, they say, and they read it like a page. They keep a spool of red marking tape and a brass probe with a wooden handle. They have not had to use the tape in a year. They carry it anyway.",
-    "baseHealth": 95,
-    "traits": [
-      "trait_uxo_instinct"
-    ]
-  },
-  {
-    "id": "survivor_lineman",
-    "displayName": "The Lineman",
-    "profession": "Telecomm Tech",
-    "bio": "They strung the copper that tied the country together, miles of line on poles and through conduits. Now they strip it from the walls to keep the lights on, walking the dead networks with a reel of salvage, pulling the good wire out of the buildings nobody enters anymore. Every wire tells a story, they say: the house that was on the line last, the offices that went quiet first. They keep a lineman's knife in a worn sheath and a pair of cutters that have outlived two companies. The coil they carry grows and shrinks. The stories do not change.",
-    "baseHealth": 85,
-    "traits": [
-      "trait_faraday_paranoia"
-    ]
-  },
-  {
-    "id": "survivor_drone_op",
-    "displayName": "The Drone Op",
-    "profession": "UAV Pilot",
-    "bio": "They used to fly the big ones from an air-conditioned trailer, screens and sticks and a thermos on the desk. Now they fly a duct-taped quadcopter with a mirror on a stick, held together with wire and patience, low and careful over the fields, looking for smoke, water, and anyone walking with purpose. The screen is smaller, they say, but the work is the same: watching from a height so other people do not have to. They keep the old joystick from the trailer, broken trim wheel and all, on a shelf above the cot. It does not plug into anything.",
-    "baseHealth": 80,
-    "traits": [
-      "trait_tinnitus"
-    ]
-  },
-  {
-    "id": "survivor_acoustic_tech",
-    "displayName": "The Acoustic Tech",
-    "profession": "Sonar Operator",
-    "bio": "Deaf in one ear, the left, and they have stopped explaining it and started using it: they turn the good ear to the wall and listen the way they used to listen to the water. They can hear the click of a pressure plate under three feet of ash, and they have flagged two of them this season on the south routes. The machines cannot hide from them, they say, and the machines are the only things they trust. They keep an old hydrophone handset, cable cut, and press it to surfaces the way other people press an ear to a door. It is dead. It works anyway.",
-    "baseHealth": 90,
-    "traits": [
-      "trait_tinnitus"
-    ]
-  },
-  {
-    "id": "survivor_machinist",
-    "displayName": "The Machinist",
-    "profession": "CNC Operator",
-    "bio": "They do not trust computers; the list of reasons starts with the EMP and does not end. They trust lathes, calipers, and cold-rolled steel, the tools that do not need power to be true. The EMP took the code, but the metal remembers its shape, they say, and they have proof: the replacement shaft for the water pump, the gear for the winch, each one cut by hand from scrap. They keep a set of calipers in a felt roll and check every part they make twice. They work by feel and by the old prints they carry in a binder. The binder is more reliable than the grid.",
-    "baseHealth": 100,
-    "traits": [
-      "trait_magnetism_phobia"
-    ]
-  },
-  {
-    "id": "survivor_logistician",
-    "displayName": "The Logistician",
-    "profession": "Supply Chain Mgr",
-    "bio": "They know exactly how many rounds of 5.45mm are in a standard Crate B, and the number is written in three places: the ledger, the wall chart, and their head. They weep when you waste ammo, and it is not a figure of speech: they have mourned a dropped magazine the way other people mourn a death. Every bullet has a spreadsheet, they say, and they have never once missed the count. They keep a pocket abacus, worn smooth, and use it at the mess table when the inventory talk gets loud. The beads click. The totals come out right. They always come out right.",
-    "baseHealth": 85,
-    "traits": [
-      "trait_uxo_instinct"
-    ]
-  },
-  {
-    "id": "survivor_bunker_born",
-    "displayName": "The Bunker-Born",
-    "profession": "Scavenger/Scrap",
-    "bio": "Born in the dark, in a service level of a structure that did not have a name, and the first light they ever saw was the inside of a flashlight in someone's fist. They navigate by air pressure and hum, a generator note that changes pitch in a long corridor. They can walk the bunker blind and have, once. The surface is a terrifying myth to them, a place with an open sky and no ceiling, and they have stood at the hatch twice and gone back both times. They keep a coil of wire and a blue glass marble, the two things they have always owned.",
-    "baseHealth": 85,
-    "traits": [
-      "trait_bunker_born",
-      "trait_agoraphobia_severe",
-      "trait_artifact_reverence"
-    ]
-  },
-  {
-    "id": "survivor_the_waking",
-    "displayName": "The Waking",
-    "profession": "Patient",
-    "bio": "The amnestics wore off, and the memories came back in order: the flash, the heat, the shadows burned into the walls of the room they were standing in. They scream when the heater clicks, because the click is the same as the one the light made, and the whole bunker knows this and warns new arrivals. They keep a lamp lit through the dark hours, the one small concession they allow themselves, and they check the shadow cast by the doorframe every night before sleep. They are not afraid of the dark. They are afraid of what it showed them once, and what it might show them again.",
-    "baseHealth": 70,
-    "traits": [
-      "trait_hyperthymesia"
-    ]
-  },
-  {
-    "id": "survivor_osteophage",
-    "displayName": "The Osteophage",
-    "profession": "Scrapper",
-    "bio": "Heavy metal poisoning, the intake notes read, in a way that is hard to call a choice. They chew on copper wire to stop the tremors, a habit that started as a joke and became medicine; the wire is kept clean in a tin they carry everywhere. They are immune to the tetanus that scares every other scrapper, the record says, the one good card they were dealt. They keep the tin of wire on a belt loop, and when the hands shake, they take a length out and work it between the fingers. The shaking stops. The tin empties. The scrap yards still have wire.",
-    "baseHealth": 90,
-    "traits": [
-      "trait_rot_immunity"
-    ]
-  },
-  {
-    "id": "survivor_archivist",
-    "displayName": "The Archivist",
-    "profession": "Monk/Historian",
-    "bio": "They guard the vinyl collection with a shotgun, after the night the heater crew reached for the record player and the wrong shelf. They believe the pre-war world was a pantheon of gods, every artist and singer and band a minor deity with a following, and they can tell you the theology of a record store the way a priest can tell you the calendar. The albums are kept in sleeves, alphabetical, dusted weekly, in a cabinet with a lock they own. They play one record a week for the bunker, on the evenings the mood needs it. The needle is nearly gone. The collection is not.",
-    "baseHealth": 75,
-    "traits": [
-      "trait_artifact_reverence"
-    ]
-  },
-  {
-    "id": "survivor_concrete_boss",
-    "displayName": "The Concrete Boss",
-    "profession": "Foreman",
-    "bio": "They can hear the rebar rusting, they claim, a whisper inside the wall, and they have been right about it twice, which is twice more than the instruments. They smell carbonation, the slow chemical breath of old concrete going soft. They are the only thing keeping the ceiling from crushing you, they say, and it is not entirely a joke: the bunker's structure is their list, their daily walk, their worry. They keep a sounding hammer and a set of shims in the belt and tap the walls at the same hour every morning. The tap has to answer. So far, it always answers.",
-    "baseHealth": 110,
-    "traits": [
-      "trait_concrete_boss",
-      "trait_concrete_lung"
-    ]
-  },
-  {
-    "id": "survivor_uv_penitent",
-    "displayName": "The UV Penitent",
-    "profession": "Cultist",
-    "bio": "They survived the Ozone Scourge by hiding under a corpse for two days, and they will tell you the story plainly, without shame, because they believe the burns that saved them are the mark of being chosen. Now they worship the burns, and they have the patterned skin to preach with: the mottling on the forearms and the neck. The bunker has rules about them now: no children in the room alone, no saying the word chosen. They keep the scrap of fabric they hid under, preserved in a tin, and will not let anyone touch it. The burns are the proof. The tin is the altar.",
-    "baseHealth": 80,
-    "traits": [
-      "trait_sun_blindness"
-    ]
-  },
-  {
-    "id": "aris_thorne",
-    "displayName": "Dr. Aris Thorne",
-    "profession": "Chief Structural Engineer",
-    "bio": "Designed the civilian shelter network before the war, the very lines and load paths the bunker now sleeps inside, and he has walked every beam of this one with the same pencil in his hand. He watched his wife and daughter die when an unreinforced hatch failed under an ash slide. Every crack in the concrete feels personal to him, because it is: he knows which decisions made it, whose signature approved the cheaper steel. He keeps the flagged page from the old report in his breast pocket and reads it once a week. The pencil in his hand is the same one he used in the hearings.",
-    "baseHealth": 95,
-    "latentExpertTrait": "trait_resilient_builder",
-    "activeQuestlineId": "quest_the_cracked_floor",
-    "baseTraits": [
-      "trait_methodical",
-      "trait_insomniac",
-      "trait_guilt_ridden"
-    ]
-  },
-  {
-    "id": "maya_lin",
-    "displayName": "Maya Lin",
-    "profession": "Radio Signal Technician",
-    "bio": "Spent three years locked in a radio room scanning static for her brother's unit, running the same frequency band in the same pattern until the room's clock was the only calendar she had. She speaks in calm, measured cadences over the airwaves, but she flinches at loud noises, at bangs and the crack of a dropped crate. The cold reality of life underground still costs her something every morning: the lights, the recycled air, the walls. She keeps her brother's last transmission, a few seconds of carrier and noise, on a battered tape. She has not played it since she found it. She will not part with it.",
-    "baseHealth": 80,
-    "latentExpertTrait": "trait_voice_of_hope",
-    "activeQuestlineId": "quest_the_dying_signal",
-    "baseTraits": [
-      "trait_keen_hearing",
-      "trait_denial",
-      "trait_fragile_health"
-    ]
-  },
-  {
-    "id": "victor_vance",
-    "displayName": "Captain Victor Vance",
-    "profession": "Garrison Tactical Commander",
-    "bio": "Deserted the Iron Garrison after refusing an order to execute civilians who failed a food tribute quota, and the refusal cost him everything the Garrison could take: rank and name. He views survival through a strict tactical lens, reading every problem as position, supply, and will, and the lens has been right often enough that the council keeps him at the map. His presence unnerves the civilian survivors, who see only the uniform, and he knows it. He keeps the written order he refused, sealed in a tube, and has never shown it to anyone. It is not the reason he left. It is the proof.",
-    "baseHealth": 110,
-    "latentExpertTrait": "trait_guardian_captain",
-    "activeQuestlineId": "quest_the_refugee_mass_influx",
-    "baseTraits": [
-      "trait_martial_discipline",
-      "trait_unforgiving",
-      "trait_tactical_mind"
-    ]
-  },
-  {
-    "id": "elena_rostov",
-    "displayName": "Dr. Elena Rostov",
-    "profession": "Trauma Surgeon",
-    "bio": "Treated shrapnel wounds in frontline triage tents for years before the exchange, working through nights lit by a generator, with the stretchers coming in a steady stream. She speaks in flat, clinical terms, calling patients complex biological machines, and it is the only way she knows to keep working: the language keeps the distance, and the distance keeps the hands steady. The bunker has learned that flatness is not coldness. She keeps the clamp from her first night in the tents, in a cloth roll, cleaned every week. The cloth carries one small stain. She will not say whose it is.",
-    "baseHealth": 90,
-    "latentExpertTrait": "trait_healers_soul",
-    "activeQuestlineId": "quest_the_ars_crisis",
-    "baseTraits": [
-      "trait_clinical_detachment",
-      "trait_surgical_precision",
-      "trait_chronic_cough"
-    ]
-  }
+ {
+  "id": "elena_vasquez",
+  "displayName": "Elena Vasquez",
+  "profession": "Paramedic",
+  "bio": "Former field medic who ran triage in the first hours after the exchange. She does not talk about what she saw; her hands never shake, which is how the bunker knows she is listening. She keeps a folded trauma sheet in her jacket, washed thin, and counts the clean bandages before she sleeps. When a scavenger comes back bleeding she is the calmest person in the room. She refuses the top bunk and the double ration. Asked why, she says the floor is closer to her patients.",
+  "baseHealth": 100
+ },
+ {
+  "id": "marcus_olejnik",
+  "displayName": "Marcus Olejnik",
+  "profession": "Mechanical Engineer",
+  "bio": "Kept the municipal water plant running for three weeks after the grid fell, alone on rotating shifts while the chlorine ran out and the filters clogged. Came to the bunker the night the last pipe froze and the plant went silent. He still carries the valve wrench, a twelve-inch steel thing he oils every Sunday. He can trace any leak in the bunker by sound and smell. He has not once mentioned the operator who stayed behind to drain the reservoir so the city would not flood, but he keeps the man's hard hat on his shelf.",
+  "baseHealth": 90
+ },
+ {
+  "id": "suki_tanaka",
+  "displayName": "Suki Tanaka",
+  "profession": "Farmer",
+  "bio": "Her family's greenhouse stood two kilometers from the blast line and survived with most of its glass. She knows which soil still grows and which poisons the roots, learned the way the old farmers did, by testing with her tongue and watching the color of the leaves. She talks to the seedlings the way her grandmother did. She keeps the last packet of tomato seeds from her grandfather in a tin under her cot. She has not opened it. She says opening it would mean the end of the world already happened.",
+  "baseHealth": 95
+ },
+ {
+  "id": "the_surgeon",
+  "displayName": "The Surgeon",
+  "profession": "Surgeon",
+  "bio": "Haunted by a patient lost on Day 1, a child brought in with a chest wound who was gone before the anesthesia settled. Their hands still remember the cut they could not finish; some nights they wake mid-motion, fingers hooked like they are still holding the clamp. They keep the scalpel from that morning in a rolled cloth. They operate by headlamp when the power fails and do not ask anyone to hold the light for them. They have sewn up every survivor who has come back bleeding. The scars are tidy. That is how the bunker knows it was them.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_miracle_worker",
+  "activeQuestlineId": "quest_the_shaking_hand"
+ },
+ {
+  "id": "the_pharmacist",
+  "displayName": "The Pharmacist",
+  "profession": "Pharmacist",
+  "bio": "Empty bottles line their pockets, rattling softly when they walk, each one labeled in their own hand with a date and a dose that is long gone. They can tell you what every shelf of the old drugstore held and what is left of it now. The logbook is still under the counter where they left it, and they talk about going back for it the way other people talk about going home. They ration painkillers by the half-tablet and write the count on the wall in pencil. No one has ever seen them take a full dose themselves.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_alchemist",
+  "activeQuestlineId": "quest_the_empty_bottles"
+ },
+ {
+  "id": "the_vet",
+  "displayName": "The Vet",
+  "profession": "Veterinarian",
+  "bio": "They treated dogs before the war, mostly the ones that came in with thorns and broken legs and old age. Now the dogs come in with burns and blood in their mouths from the fallout, and they still want to heal them, the way they always did, with clean hands and patience and no questions about where the animal came from. They keep a leather muzzle from the old clinic and use it on the ones that panic. They are the only one in the bunker who will sit with a dying animal until it stops breathing. No one has asked them to stop.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_zoonotic_expert",
+  "activeQuestlineId": "quest_the_rabid_pack"
+ },
+ {
+  "id": "the_therapist",
+  "displayName": "The Therapist",
+  "profession": "Therapist",
+  "bio": "They used to sit across from people and wait, the way the training said, letting the silence do the work. The bunker still needs someone who can listen when the walls start talking, and they do not flinch at what comes out. They keep a notebook with no names in it, only dates and weather. They take the night watch rotation after the bad shifts because that is when people talk. They have not once said the word hope. They have also never stopped making tea for whoever sits down across from them, even when the pot is empty.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_anchor",
+  "activeQuestlineId": "quest_the_broken_mind"
+ },
+ {
+  "id": "the_undertaker",
+  "displayName": "The Undertaker",
+  "profession": "Undertaker",
+  "bio": "They buried the first dead after the exchange, twelve bodies in a trench behind the fuel depot, each one wrapped in what could be spared. They believe closure is a trench and a shovel and the quiet that follows, and they do it without ceremony and without haste. They keep a box of clean white cloth for the work and will not use it for anything else. They write the names on scrap wood and plant it at the head of each grave, even the ones nobody can read. When someone asks who they were, they answer the names. They remember all of them.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_death_blind",
+  "activeQuestlineId": "quest_the_mass_grave"
+ },
+ {
+  "id": "the_veteran",
+  "displayName": "The Veteran",
+  "profession": "Soldier",
+  "bio": "Day 1 never ended for them. They still key the radio on the old squad frequency every night at the same hour, calling the roll in the same order, and once in a while a carrier wave answers back that is not them, and they sit with it until dawn. They keep their boots by the cot, laced, ready. They taught the hatch watch to check the seal twice. They do not talk about what they did before the exchange. The scars on their hands are old and pale, and they know exactly which knot each one came from.",
+  "baseHealth": 110,
+  "latentExpertTrait": "trait_warlord",
+  "activeQuestlineId": "quest_ghosts_of_day_1"
+ },
+ {
+  "id": "the_cop",
+  "displayName": "The Cop",
+  "profession": "Police Officer",
+  "bio": "They still wear the badge under the coat, pinned to the inside of the left breast so it does not catch the light. The precinct lockbox is still there, three streets past the barricade, holding the sidearms and the paperwork nobody wants back. They have not gone for it. They say the streets will decide. They keep the whistle from the academy on a cord around their neck and use it to signal the hatch when the dust is too thick to see. They write incident reports on the back of ration lists. The ink is almost out. They keep the pen anyway.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_peacekeeper",
+  "activeQuestlineId": "quest_the_precinct"
+ },
+ {
+  "id": "the_bouncer",
+  "displayName": "The Bouncer",
+  "profession": "Bouncer",
+  "bio": "Door security before the war, eleven years of the same club door, the same coat-check girl, the same three stairs. Now the only door that matters is the hatch, and they still stand it alone, arms folded, weight on the balls of the feet, watching hands before faces. They read people the way they always did: a person tells you everything in the first four seconds. They keep the club key on the same ring as the hatch key, and they will not say why. They have not missed a shift since the bunker opened.",
+  "baseHealth": 120,
+  "latentExpertTrait": "trait_juggernaut",
+  "activeQuestlineId": "quest_the_holdout"
+ },
+ {
+  "id": "the_hunter",
+  "displayName": "The Hunter",
+  "profession": "Hunter",
+  "bio": "They tracked game before the blast, deer mostly, on foot, the slow way. Something white still moves out at the edge of the fields, too far to make out clearly, and they have not gone to look. They say a bow feels honest in a way a rifle stopped being. They keep the old compound bow oiled and the string waxed, and they sharpen every broadhead by hand, one pass at a time. They bring back rabbits and crows when the ash thins. They will not take a shot at anything that does not need to be eaten. That is not a rule they explain.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_apex_predator",
+  "activeQuestlineId": "quest_the_white_elk"
+ },
+ {
+  "id": "the_prisoner",
+  "displayName": "The Prisoner",
+  "profession": "Convict",
+  "bio": "Left to die when the walls of the Penitentiary opened and everyone who could walk went out into the ash. They stayed behind for the food and found the Warden's keys still hanging from a belt on the desk, and they have kept the image of that belt to themselves. They know every blind spot in every corridor of that building and will not draw the map. They are quiet, useful, and always watch the exits. They take their meals with their back to a wall. The Warden's keys still hang in the Penitentiary. No one else wants them.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_survivalist",
+  "activeQuestlineId": "quest_the_wardens_key"
+ },
+ {
+  "id": "the_plumber",
+  "displayName": "The Plumber",
+  "profession": "Plumber",
+  "bio": "They know every main under the city the way other people know their own hallways: which valve leaks in cold weather, which junction was patched in the seventies with the wrong pipe. When the walls scream water they still answer, wading in with a bag of fittings and a flashlight taped to their wrist. They keep a roll of thread tape in their coat pocket and have given half of it away. They were the first one to find the bunker's grey-water leak and fixed it in the dark with their bare hands. They do not charge for the work. Nobody does, anymore.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_hydraulic_master",
+  "activeQuestlineId": "quest_the_city_mains"
+ },
+ {
+  "id": "the_electrician",
+  "displayName": "The Electrician",
+  "profession": "Electrician",
+  "bio": "The grid is a ghost, but they walk its bones anyway, coil of wire over the shoulder, rubber gloves in the belt, tracing the dead mains block by block. They can read a burned-out substation like a witness statement: which phase went first, what the surge took, who tried to get the lights back on before giving up. They keep a roll of black tape and a length of copper in their kit at all times. They have restrung half the bunker's lighting with salvaged wire and refuse to let it be called a miracle. It is just patience and a meter.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_grid_walker",
+  "activeQuestlineId": "quest_the_substation_ghost"
+ },
+ {
+  "id": "the_architect",
+  "displayName": "The Architect",
+  "profession": "Architect",
+  "bio": "The firm is a tomb of paper now, blueprints and permits and a coffee cup that still sits on the desk where they left it. But the city's underbelly is still drawn somewhere, in their head mostly, every service tunnel and maintenance stair and boiler room they surveyed in the last twenty years. They sketch on ration paper from memory and the sketches are exact. They have walked the bunker twice, top to bottom, and made a list of load-bearing walls and hidden voids. They keep the list in their shoe. They say a building is a promise. They mean it.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_vault_builder",
+  "activeQuestlineId": "quest_the_blueprints"
+ },
+ {
+  "id": "the_mechanic",
+  "displayName": "The Mechanic",
+  "profession": "Mechanic",
+  "bio": "Engines are honest, they say; they never lie about being out of oil or past their last bearing. The highway pileup still has one heart left in it, a flatbed with a diesel that turns over if they can drag it home, and they have walked out there twice to check on it the way other people check on family. They keep a nine-sixteenths socket in their pocket, the one that fits the fuel pump bolts, and they will not lend it out. They have rebuilt the bunker's generator twice from scrap. The second time, nobody had to ask.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_grease_monkey",
+  "activeQuestlineId": "quest_the_motorpool"
+ },
+ {
+  "id": "the_chemist",
+  "displayName": "The Chemist",
+  "profession": "Chemist",
+  "bio": "Chlorine does not negotiate, and someone has to put their body on the valve when the water treatment rig clogs, because there is no one else with the gloves and the nerve. They worked industrial chemistry before the exchange, mostly water and waste, the unglamorous end. They keep a molarity chart folded into their coat and a pocket scale that still works. They can smell a bad batch of bleach from the stairwell. They test the bunker's water every morning and write the result on the wall in chalk. The number has not moved in eleven months. They check anyway.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_synthesizer",
+  "activeQuestlineId": "quest_the_lab_ruin"
+ },
+ {
+  "id": "the_botanist",
+  "displayName": "The Botanist",
+  "profession": "Botanist",
+  "bio": "Green is a religion now, and they are the only believer with a watering can. Fourteen perfect days is all the soil asks, they say, fourteen days of the right light and the right wet, and the seeds will do the rest. They keep a pocket lens from the old university herbarium and use it on every leaf that looks wrong. They have grown potatoes in a crate, beans up a string, and a single stubborn tomato plant they call the Mayor. They will not eat the first fruit of anything. They say the first fruit belongs to the ground. Nobody argues with the soil.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_gaia",
+  "activeQuestlineId": "quest_the_seed_vault"
+ },
+ {
+  "id": "the_courier",
+  "displayName": "The Courier",
+  "profession": "Courier",
+  "bio": "Routes over roads, that was the trade, and they still walk them, a loop of six waypoints between the bunker and the outposts, carrying medicine one way and messages the other. Five clean drops and the map still believes in them, they say, and they mark each one with a pencil tick on the inside of their jacket. They keep their feet wrapped and dry and their boots resoled with tire rubber. They walk before dawn when the ash is settled. They have not lost a package in two years. They will not say what the package is until it is delivered.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_wasteland_runner",
+  "activeQuestlineId": "quest_the_lost_route"
+ },
+ {
+  "id": "the_burglar",
+  "displayName": "The Burglar",
+  "profession": "Burglar",
+  "bio": "Vaults remember hands, they say, the way a lock remembers the weight and angle of the fingers that worked it. The ruined bank still has a safe that wants them, a combination model they cracked once in a practice run before the war, and they have been back twice for the canned food and the cash nobody wants. They keep a pick set rolled in a cloth with the initials of every job scratched on the handle. They open supply crates for the bunker when the keys go missing, and they do it fast, and they do not make a show of it. Some doors are easier open than shut.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_ghost",
+  "activeQuestlineId": "quest_the_bank_heist"
+ },
+ {
+  "id": "the_meteorologist",
+  "displayName": "The Meteorologist",
+  "profession": "Meteorologist",
+  "bio": "The sky still talks if you climb high enough, past the low roof of ash to where the wind has a shape and the clouds keep their old discipline. They spent the war reading radar for a regional station; now they read the color of the dusk and the way the ash drifts at ground level. They keep a barometer in their pack, cracked but true, and a notebook of daily observations in waterproof ink. They predicted the last fallout storm three days out and the bunker had time to seal. They said it the way they say the weather: no drama, just the facts.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_stormcaller",
+  "activeQuestlineId": "quest_the_radar_station"
+ },
+ {
+  "id": "the_hazmat_tech",
+  "displayName": "The Hazmat Tech",
+  "profession": "Hazmat Technician",
+  "bio": "Ground Zero keeps a black box, a dosimeter array planted by their old unit, and the readings on it are the difference between a safe scavenge and a bad one. They know because they used to read that array from a van with air conditioning. Now the suit and the iodine have to be perfect every time, because there is no decon team left and no second chance. They check their own seals three times before any run. They keep a piece of the old van's steering wheel on their keyring. It smells of burnt wiring and they will not let anyone wash it.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_rad_walker",
+  "activeQuestlineId": "quest_ground_zero"
+ },
+ {
+  "id": "the_teacher",
+  "displayName": "The Teacher",
+  "profession": "Teacher",
+  "bio": "The school still has a list of names, all two hundred and eleven of them, and someone has to write them down somewhere so they are not just a number in the ash. They keep the list in a ledger, marking a date next to each name when word comes, leaving the rest blank. They run a class in the bunker for the children, arithmetic in the morning and reading in the afternoon, using books that survived because they were on the shelf behind the door. They do not call it school. They call it the afternoon. The children know what it is. So does everyone else.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_polymath",
+  "activeQuestlineId": "quest_the_abandoned_school"
+ },
+ {
+  "id": "the_politician",
+  "displayName": "The Politician",
+  "profession": "Politician",
+  "bio": "Words still move people, and they know it, which is why they stand on the crate by the hatch and address the bunker every evening, whether there is news or not. They were a council member before the exchange, good with budgets and better with crowds. They keep a typed copy of the old municipal charter in their coat, water-stained but complete, and they read from it when the disputes get loud. Some say the hatch is just a podium with a wheel. They say nothing. They simply open it, and close it, and open it again the next morning.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_demagogue",
+  "activeQuestlineId": "quest_the_rally"
+ },
+ {
+  "id": "the_priest",
+  "displayName": "The Priest",
+  "profession": "Priest",
+  "bio": "Faith cracks under zero morale, and they have seen it happen three times now, three people who came to the edge and stood there. Someone has to talk them down, and they do, mostly by sitting with them and saying nothing at all until the words come. They keep a small brass cross in their pocket, worn smooth, and a folding chair they carry to whoever needs company. They do not sermonize about the exchange. They say the work is not explaining it. The work is staying in the room. They have stayed in a lot of rooms. They are still there, every night, until the person sleeps.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_shepherd",
+  "activeQuestlineId": "quest_crisis_of_faith"
+ },
+ {
+  "id": "the_reporter",
+  "displayName": "The Reporter",
+  "profession": "Reporter",
+  "bio": "Five military fragments still name who fired first, bits of sealed orders and radio transcripts they collected before the archives burned, and they keep them in an oilcloth pouch under their bunk. Truth is a kind of food, they say, and the bunker has been hungry for a long time. They file a report every week, handwritten, carbon copy to the radio host and the archivist. They cover the scavenges, the deaths, the arguments, the harvests, the way they used to cover city council. They never write what they cannot source. That habit has cost them three stories. It has cost them nothing else.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_muckraker",
+  "activeQuestlineId": "quest_truth_of_day_30"
+ },
+ {
+  "id": "the_radio_host",
+  "displayName": "The Radio Host",
+  "profession": "Radio Host",
+  "bio": "Forty-eight hours of dead air would kill the allies, they say, so they keep talking through the storm, playing the last of the records and reading the news from the reporter's sheet. Their voice is the reason several outposts still answer the daily roll call. They keep the old station's microphone on a stand in the radio room, the one with the dented grille, and they tap it twice before every broadcast the way they did before the war. They do not know who is listening anymore. They assume everyone is. That is what keeps the tone steady.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_voice_of_the_wastes",
+  "activeQuestlineId": "quest_dead_air"
+ },
+ {
+  "id": "the_chef",
+  "displayName": "The Chef",
+  "profession": "Chef",
+  "bio": "One of every food left in the world, that was the plan: a tin of this, a jar of that, the last sack of rice, and then twenty-four hours to make the last supper out of it. They were a kitchen chef before the exchange, the kind who tasted every plate and screamed quietly at the line cooks. Now they cook for the bunker out of whatever comes back in the packs, and they make it taste like a plan. They keep a single bottle of vinegar, half full, and use it like it is the last one. It might be.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_iron_chef",
+  "activeQuestlineId": "quest_the_final_harvest"
+ },
+ {
+  "id": "the_athlete",
+  "displayName": "The Athlete",
+  "profession": "Athlete",
+  "bio": "Fifteen nodes out and back on foot before the clock hits forty-eight hours, that is the route they run twice a week, carrying messages and light salvage between the bunker and the far outposts. They were a long-distance runner before the exchange, sponsored, photographed, the whole thing, none of which matters out here except the legs and the lungs. They keep their old racing singlet folded in the bottom of their pack and take it out on bad days. They do not wear it. They just look at it, then put the pack back on and start the run.",
+  "baseHealth": 110,
+  "latentExpertTrait": "trait_tireless",
+  "activeQuestlineId": "quest_the_marathon"
+ },
+ {
+  "id": "the_firefighter",
+  "displayName": "The Firefighter",
+  "profession": "Firefighter",
+  "bio": "The generator room burns and there is no suit left that fits, just hands and the will not to run. They were a firefighter before the exchange, sixteen years on the truck, and the burns on their forearms prove they learned the lesson twice. They keep the old department axe, the one from their locker, leaning by their cot, and they sharpen it themselves. They have pulled two people out of the vents since the bunker opened and does not talk about either one. The bunker keeps a coat hook by the hatch for their jacket. It is always there when they come back.",
+  "baseHealth": 105,
+  "latentExpertTrait": "trait_asbestos",
+  "activeQuestlineId": "quest_the_inferno"
+ },
+ {
+  "id": "the_tailor",
+  "displayName": "The Tailor",
+  "profession": "Tailor",
+  "bio": "Ten ragged skins of salvaged leather and waxed cloth become something that can stop a bullet and a rad, which is a promise they have made good on six times. They were a tailor before the exchange, suits and wedding dresses, and they still cut with the same hand, careful, one pass, no waste. They keep a set of needles in a cork, the good ones, and a spool of thread that has outlived the store it came from. They measure everyone in the bunker once a season and remember every number. The coats fit. That is the whole job, they say. The coats fit and the hands are warm.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_armorer",
+  "activeQuestlineId": "quest_the_kevlar_loom"
+ },
+ {
+  "id": "the_watchmaker",
+  "displayName": "The Watchmaker",
+  "profession": "Watchmaker",
+  "bio": "The EMP killed an heirloom, a pocket watch from their grandfather that they had kept running for thirty years, and they still have it, glass cracked, hands stopped at the exact minute the surge came. They collect fifty scraps of electronics for one tick, they say, and they have built a working clock from a blender motor, a car gauge, and a jar of gears that makes the whole bunker feel less lost. They keep a jeweler's loupe on a cord around their neck. The bunker sets its shifts by their clock. Nobody calls it a miracle. Everybody checks it twice.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_tinkerer",
+  "activeQuestlineId": "quest_broken_chronometer"
+ },
+ {
+  "id": "the_historian",
+  "displayName": "The Historian",
+  "profession": "Historian",
+  "bio": "The museum is on fire in their memory, every room they ever catalogued gone to ash and water, and the charter document they spent a career studying is still inside, or was, under a case of cracked glass. They keep a catalog card from the collection in their pocket, the handwriting from 1974, and they read it when the dark gets long. They have started a new archive in the bunker: ration forms, radio logs, the labels off cans, the names of the dead. They say a civilization is what it writes down. The bunker writes a lot now.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_lorekeeper",
+  "activeQuestlineId": "quest_museum_archive"
+ },
+ {
+  "id": "the_defector",
+  "displayName": "The Defector",
+  "profession": "Cult Defector",
+  "bio": "The Cult of the Glow remembers them, and they know it, because the cult's marks are painted on the wall by the east vent, the same symbol they wore for two years before they walked away. Only the leader's death ends the raid, that is what they tell the watch, and they do not say it with any hope. They keep a piece of the old robe, the grey one, in a bag at the bottom of their pack. They have not shown it to anyone. They have also not stopped sleeping with a blade under the pillow.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_zealots_bane",
+  "activeQuestlineId": "quest_the_cleansing"
+ },
+ {
+  "id": "the_addict",
+  "displayName": "The Addict",
+  "profession": "Addict",
+  "bio": "Fourteen clean days, and they count every one of them on a scrap of paper pinned above their cot, fourteen little marks in pencil. The morphine is still in the cupboard, two vials, kept for the bunker's emergencies, and they are the one who checks the seal on the box, because everyone else would rather not think about it. Their hands stay empty now. They hold a cup of tea instead, or a rag, or a book, anything that gives the fingers a job. The marks go up one a day. Nobody adds them up for them. They know the number exactly.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_chem_resistant",
+  "activeQuestlineId": "quest_the_last_stash"
+ },
+ {
+  "id": "the_parent",
+  "displayName": "The Parent",
+  "profession": "Parent",
+  "bio": "The radio said the child is gone, and they heard it in the clear, no static, the way it always happens in the worst moments. They have not thrown away the small coat, the one that hangs by their cot, and no one has asked them to. If they live through the mourning, the bunker is family, they said once, and they said it without looking at anyone. They take the children's meal shift twice a week now, ladling the same portion for every bowl. The hands do not shake. The bowl is always full. The children call them by name. That is new.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_protector",
+  "activeQuestlineId": "quest_the_locket"
+ },
+ {
+  "id": "the_fierce_mother",
+  "displayName": "The Fierce Mother",
+  "profession": "Mother",
+  "bio": "She will cancel her own meal if a child is hungry, and she has, eleven times this winter, each time handing the tray over without a word and waiting until the child is done before she eats the crust that is left. The daycare still has the toy, a stuffed rabbit with one ear, on the shelf where the littlest ones can see it. She runs the bunker's childcare with a schedule and a set of rules and a softness that surprises everyone the first time they see it. Her own children are not here. She does not talk about where they are. The rabbit stays on the shelf.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_matriarch",
+  "activeQuestlineId": "quest_the_empty_crib",
+  "baseTraits": [
+   "trait_selfless"
+  ]
+ },
+ {
+  "id": "the_exhausted_father",
+  "displayName": "The Exhausted Father",
+  "profession": "Father",
+  "bio": "He works until he collapses, that is the pattern, and the bunker has learned to watch for the hour when his head drops because he will not stop on his own. Five tier-three modules before day fifty was the promise he made to himself, and he is on schedule, and the schedule is eating him. He keeps a photograph in his coat, folded so the crease runs down the middle, of a house with a garden and three people on the steps. He looks at it at the end of every shift. He has never once explained what the modules are for. He does not need to.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_pillar_of_atlas",
+  "activeQuestlineId": "quest_the_broken_promise",
+  "baseTraits": [
+   "trait_workaholic"
+  ]
+ },
+ {
+  "id": "the_naive_son",
+  "displayName": "The Naive Son",
+  "profession": "Child",
+  "bio": "He wanders the bunker playing, a boy with a stick and a ball of twine and an imagination that has not learned the shape of the world yet. Adults feel hope just looking at him, which is a heavy thing to put on a child. He asks questions that make the adults pause: why the water tastes funny, why the lights stay on when the sun is out, where the birds went. He draws on the wall with chalk, suns and houses and a dog with four legs, which is how the bunker knows what it is missing. He is the reason some people still say good morning.",
+  "baseHealth": 70,
+  "latentExpertTrait": "trait_wasteland_scout",
+  "activeQuestlineId": "quest_growing_up_fast",
+  "baseTraits": [
+   "trait_dependent",
+   "trait_pollyanna"
+  ],
+  "isChild": true
+ },
+ {
+  "id": "the_hardened_daughter",
+  "displayName": "The Hardened Daughter",
+  "profession": "Child",
+  "bio": "She will not play and she will not be comforted, and she eats her meals standing up, facing the door, the way she watched someone do a long time ago. The adults stopped trying to reach her months back, all except the one who sits beside her at the hatch watch without speaking. First blood at the hatch will change her, that is what the older ones say quietly. She keeps a piece of broken glass in her pocket, wrapped in cloth, that she found on a scavenge. She has never shown it to anyone. She has also never put it down.",
+  "baseHealth": 75,
+  "latentExpertTrait": "trait_child_of_the_ash",
+  "activeQuestlineId": "quest_first_blood",
+  "baseTraits": [
+   "trait_traumatized"
+  ],
+  "isChild": true
+ },
+ {
+  "id": "the_psychopath",
+  "displayName": "The Psychopath",
+  "profession": "Outsider",
+  "bio": "Death does not move them, which is the first thing the intake notes said and the only line anyone has ever agreed on. They refuse other hands for their own care, doing their own stitching and their own cooking, and they work alone, always, on the tasks nobody else wants. Empty rooms make them sharp; they are at their best after everyone has gone to sleep. They keep a clean notebook and write in it every night, small precise letters. No one has ever seen the pages. The watch does not leave the hatch unguarded when they are awake. That is not a policy. It is a reflex.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_cold_calculus",
+  "activeQuestlineId": "quest_the_perfect_equation",
+  "baseTraits": [
+   "trait_sociopath",
+   "trait_arrogant"
+  ]
+ },
+ {
+  "id": "the_serial_killer",
+  "displayName": "The Serial Killer",
+  "profession": "Neighbor",
+  "bio": "Kind, that is what the bunker says. Charismatic, generous with the rations and quick with a joke, the sort of neighbor everyone wants in the next cot. Something under the smile keeps score, though, and the careful ones have noticed: they remember every favor, every slight, every meal that was not offered, in exact order. They keep a jar of buttons on their shelf, sorted by size, and count them when they think no one is watching. Nothing in the intake file explains any of it. The file is thin. The jar is full. The bunker has not decided which of those is the problem.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_butcher_of_day_30",
+  "activeQuestlineId": "quest_the_mask_slips",
+  "baseTraits": [
+   "trait_kind",
+   "trait_charismatic"
+  ]
+ },
+ {
+  "id": "the_liar",
+  "displayName": "The Liar",
+  "profession": "Storyteller",
+  "bio": "The intake form says they are fine, and the radio log says their hidden stash is real, and neither of those things is true, They are a storyteller by trade and by habit, and the stories are not malicious, mostly; they are just better than the facts. They keep a kit of small objects, a lighter that does not work, a compass that spins, a key to no door, and they spin a tale for each one. The bunker keeps them because the tales are warm. The careful ones have started checking what they say against the stock room. The accounts do not match. The stories do.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_master_manipulator",
+  "activeQuestlineId": "quest_the_boy_who_cried_wolf",
+  "baseTraits": [
+   "trait_deceptive"
+  ]
+ },
+ {
+  "id": "the_hoarder",
+  "displayName": "The Hoarder",
+  "profession": "Collector",
+  "bio": "Double rations or the mood sours, that is the arrangement, and the bunker pays it because the alternative is worse. They collect: cans by year, batteries by brand, bottle caps by color, each sorted into a storage shed that has become a private vault with its own lock and its own logbook. They keep a tape measure in their pocket and check the stack heights every morning. Nothing has ever been taken, they say, and they say it like a warning. The shelves are perfect. The counting never ends. The vault door stays shut. Some nights you can hear the lock turning from three rooms away.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_dragons_hoard",
+  "activeQuestlineId": "quest_the_weight_of_gold",
+  "baseTraits": [
+   "trait_selfish"
+  ]
+ },
+ {
+  "id": "the_general",
+  "displayName": "The General",
+  "profession": "Military",
+  "bio": "Day-1 command died with the first court-martial, and they still carry the papers in a sealed envelope, reading them once a year on the anniversary. Every remnant uniform is a death sentence now, they say, which is why they wear the civilian coat over everything and never salute, even out of habit. He still draws the map: supply routes, choke points, the positions of every outpost, updated in pencil every morning. The map is kept in a tube by the hatch, and he will hand it to anyone who asks, no questions. He does not ask about the courts-martial of others. He knows better than anyone what the envelope weighs.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_art_of_war",
+  "activeQuestlineId": "quest_court_martial",
+  "baseTraits": [
+   "trait_tactician",
+   "trait_hated"
+  ]
+ },
+ {
+  "id": "the_saboteur",
+  "displayName": "The Saboteur",
+  "profession": "Rebel",
+  "bio": "Orders taste like ash, they say, and they have refused the last three formal assignments they were given, choosing their own work instead: the vent runs, the wall checks, the work nobody sees. Traps open for them without a word, because they built half of them and took the other half apart to learn. The checkpoint still stands, the one their old cell was ordered to blow and did not, and they walk past it every supply run and do not look at it. They keep a bolt from the charge they never set, polished smooth, in their pocket. It is the one thing they will not explain.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_demolitions_expert",
+  "activeQuestlineId": "quest_the_final_payload",
+  "baseTraits": [
+   "trait_anti_authority"
+  ]
+ },
+ {
+  "id": "the_deserter",
+  "displayName": "The Deserter",
+  "profession": "Sniper",
+  "bio": "Ran once, a night raid that went wrong, and they have carried the run with them since, the way a man carries a stone in his boot. They still flinch at hammers and generators, the two sounds of that night, and they take the far end of the room so no one sees it happen. The hatch will ask if they can stay, they say. They keep a scope in a padded case under their cot, glass intact, and oil the threads every week. The rifle itself has not been fired in a year. The scope has not left the case.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_ghost_shooter",
+  "activeQuestlineId": "quest_holding_the_line",
+  "baseTraits": [
+   "trait_coward"
+  ]
+ },
+ {
+  "id": "the_quartermaster",
+  "displayName": "The Quartermaster",
+  "profession": "Logistics",
+  "bio": "Counts beans like lives, and means it exactly that way: every can, every bolt, every vial of iodine, tallied in a ledger with no erasures, signed and dated. A messy shelf is a personal insult and they have re-stacked the pantry four times this month, muttering the whole while. One hundred of everything, that is the rule they argue for at every council meeting, one hundred days of reserve for the bunker's size, and they will not let the scavengers spend it down below ninety. They keep a single ration bar in their own pocket, untouched, for the day the ledger runs out. They have never eaten it.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_supply_chain_master",
+  "activeQuestlineId": "quest_inventory_audit",
+  "baseTraits": [
+   "trait_strict"
+  ]
+ },
+ {
+  "id": "the_child_soldier",
+  "displayName": "The Child Soldier",
+  "profession": "Child",
+  "bio": "Adult hands on a child's frame, that is the first thing everyone notices, and the second is that the hands are never far from the rifle. Science and medicine will not stick; the wounds heal around the stitches and the infections come back, the way a body that learned to survive wrong keeps on being wrong. The rifle will not leave. It was carried out of the last fight by a child who was told it was the only thing that kept them alive, and they believe it. They eat with the weapon on the cot beside them. They sleep the way soldiers do: light, and ready.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_reclaimed_youth",
+  "activeQuestlineId": "quest_dropping_the_rifle",
+  "baseTraits": [
+   "trait_stunted"
+  ],
+  "isChild": true
+ },
+ {
+  "id": "the_empath",
+  "displayName": "The Empath",
+  "profession": "Counselor",
+  "bio": "Feels every room they walk into, and they have learned to brace before the hatch opens because the load is heavy. Comfort before food, that is their order of work, and they feed the panics first and eat what is left. Three broken minds have leaned on them this season, and their own body pays, the headaches and the sleep that will not come and the hands that shake when the bunker is quiet. They keep a basin of cold water by their cot and put their hands in it when the load gets too high. The bunker knows. The bunker pretends not to see.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_soul_weaver",
+  "activeQuestlineId": "quest_the_sponge",
+  "baseTraits": [
+   "trait_hyper_empathetic"
+  ]
+ },
+ {
+  "id": "the_misanthrope",
+  "displayName": "The Misanthrope",
+  "profession": "Hermit",
+  "bio": "Shared air is an injury, they say, and they mean it literally: they breathe shallow in the mess hall and full only alone, in the vent tunnel they have claimed as their own. They are fast on their own, the fastest runner in the bunker over rough ground, and the scavenge teams learned to stop asking and just follow the gap. Fifteen days of no one, that is their record, and they came back with a full pack and two words of report. They keep a corner of the storage room with a stool and a blanket. Nobody else sits there. Nobody needs to be told.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_lone_wolf",
+  "activeQuestlineId": "quest_hell_is_other_people",
+  "baseTraits": [
+   "trait_rude"
+  ]
+ },
+ {
+  "id": "the_pollyanna",
+  "displayName": "The Pollyanna",
+  "profession": "Optimist",
+  "bio": "The meter never shows fear, they say, tapping the dosimeter case the way other people tap a lucky coin. Fallout rain is weather, in their telling, and ash is just snow with a different color, and they will stand in the hatchway during a storm and describe the way the light bends. Denial ends only when the body fails, and theirs has failed twice now, and twice it lived, and both times they read the hospital bed as a second chance. They keep a jar of river stones they call the good ones and hand one out when someone is low. The jar is almost empty. The telling is not.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_grounded_optimist",
+  "activeQuestlineId": "quest_shattered_glass",
+  "baseTraits": [
+   "trait_denialist"
+  ]
+ },
+ {
+  "id": "the_martyr",
+  "displayName": "The Martyr",
+  "profession": "Caregiver",
+  "bio": "Steps into the breach for strangers, that is the pattern, and the intake file has a list: the vent repair, the generator fire, the night a raider pushed the hatch and they stood in the gap. Food leaves their tray without a word, passed to the child on the left or the old man on the right, and they are thinner than the records say they should be. Someone has to pay, they say, and they do not mean money. They keep a worn book of poetry in their coat and read one line before bed. They will not say which. The pages are soft at the corners.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_living_saint",
+  "activeQuestlineId": "quest_the_ultimate_price",
+  "baseTraits": [
+   "trait_sacrificial"
+  ]
+ },
+ {
+  "id": "the_arrogant_surgeon",
+  "displayName": "The Arrogant Surgeon",
+  "profession": "Surgeon",
+  "bio": "Gods do not mop floors, they told the council once, and the council still repeats it, not kindly. Patients leave smaller under their hands, the wounds closed fast and the beds turned over quickly, and the results are usually good, which is the problem: they work, and they know it. One failed cut, a ten-day dark after, when they would not leave their bunk and would not explain. They keep a framed certificate from the old hospital, the one with the gold seal, hung where they can see it from the cot. The seal has not faded. The memory of the cut has not either.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_humbled_healer",
+  "activeQuestlineId": "quest_the_botched_job",
+  "baseTraits": [
+   "trait_god_complex"
+  ]
+ },
+ {
+  "id": "the_relapsing_addict",
+  "displayName": "The Relapsing Addict",
+  "profession": "Addict",
+  "bio": "The hands shake for amphetamines, they admit it openly, which is the honest part of a story with few honest parts. Below forty morale the locks mean nothing, they say, and they say it to the supply keeper so the supply keeper watches them. Twenty-one clean days or the chemistry wins, that is the bargain they have made with themselves, and they keep the count in a line of tally marks on their forearm, visible, unapologetic. They take the night shifts no one wants and finish them with the shakes. The marks go up one a day. The cupboard key lives with the supply keeper. It stays there.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_clean_and_sober",
+  "activeQuestlineId": "quest_cold_turkey",
+  "baseTraits": [
+   "addicted"
+  ]
+ },
+ {
+  "id": "the_insomniac",
+  "displayName": "The Insomniac",
+  "profession": "Night Watch",
+  "bio": "Sleep is a rumor, they say, and they have the eyes to prove it. Beds return almost nothing to them, so they stopped trying and took the hatch watch instead, where the hours have a use. Five nights alone on the hatch, that is the record they hold, and they came off it with a plan of the approach routes and a list of sounds, no complaints. They keep a tin of loose tea and brew it one cup at a time, slowly, in the dark, no light. The pacing stops when the watch starts. That is the whole medicine.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_the_watcher",
+  "activeQuestlineId": "quest_the_long_night",
+  "baseTraits": [
+   "trait_restless"
+  ]
+ },
+ {
+  "id": "the_hypochondriac",
+  "displayName": "The Hypochondriac",
+  "profession": "Patient",
+  "bio": "Every cough is a death sentence until the placebo, and the bunker medic keeps a jar of sugar pills for exactly this purpose, labeled vitamin, and the label has worked nine times. They keep a thermometer in their pocket and take their temperature at the same hour every day, writing the result in a little book. Real sepsis is the only diagnosis that sticks, and they had it, and it nearly took them, and the strange part is that they never once complained during it. They keep the discharge paper from the old clinic folded in the book. They have read it enough times to know it by heart.",
+  "baseHealth": 85,
+  "latentExpertTrait": "trait_hyper_aware",
+  "activeQuestlineId": "quest_the_real_illness",
+  "baseTraits": [
+   "trait_paranoid_health"
+  ]
+ },
+ {
+  "id": "the_pyromaniac",
+  "displayName": "The Pyromaniac",
+  "profession": "Arsonist",
+  "bio": "Heaters are churches, they say, and they tend the bunker's three stoves with a devotion that makes people uneasy and warm. Low morale smells like smoke to them, they claim, and they are the first one at the door when a fire starts anywhere in the tunnels, carrying the bucket before the shout finishes. Five fires put out, that is the count they keep, each one noted in a little ledger with the cause and the time. They have never started one, the ledger says. The ledger is neat. The bunker keeps a fire watch rotation anyway. It is for fires that have not happened yet.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_fire_breather",
+  "activeQuestlineId": "quest_trial_by_fire",
+  "baseTraits": [
+   "trait_fascination"
+  ]
+ },
+ {
+  "id": "the_blind_preacher",
+  "displayName": "The Blind Preacher",
+  "profession": "Preacher",
+  "bio": "No expeditions and no guns, that is the rule they set for themselves the day they arrived, and they have kept it. Only sound, they say: the voices, the footsteps, the way a room changes when someone lies in it. Three conversions from despair, and each one was done by listening, not by arguing. The walls speak first, they insist, and the bunker has stopped laughing at that because the walls have been right about the pipes twice. They keep a worn book with raised pages and read it with their fingers in the evening, aloud, for whoever sits nearby. Nobody has ever asked them to stop.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_sonar",
+  "activeQuestlineId": "quest_a_voice_in_the_dark",
+  "baseTraits": [
+   "trait_blind"
+  ]
+ },
+ {
+  "id": "the_prepper",
+  "displayName": "The Prepper",
+  "profession": "Prepper",
+  "bio": "Paranoid before the sirens; it is the one time paranoia paid a dividend. They brought their own MREs, two cases, labeled by date, and they eat their own stock before touching the bunker's, a rule they will not break. They have a habit of counting the exit routes at every meal and checking the seals on the hatch before they sleep. Survive the day the hatch is gone, that is the goal they state plainly, and they train for it with a pack kept packed and tested every full moon. The pack has its own shelf. The shelf has its own label. The label says no one.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_improvised_engineering",
+  "activeQuestlineId": "quest_the_bunker_breached",
+  "baseTraits": [
+   "trait_paranoid"
+  ]
+ },
+ {
+  "id": "the_outcast",
+  "displayName": "The Outcast",
+  "profession": "Mutant",
+  "bio": "Eight hundred millisieverts and counting, according to their dosimeter, which they wear openly like a badge nobody asked to see. Meals alone, that is the arrangement, and they eat at the far table with their back to the room, and no one joins them, and no one is asked to. One thousand without dying is the only home left, they say, and they say it without drama. They keep a single photograph, a group of people in front of a building, and they will not say who is in it. The glass is cracked. The picture is clear.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_radiotrophic",
+  "activeQuestlineId": "quest_embracing_the_glow",
+  "baseTraits": []
+ },
+ {
+  "id": "the_feral_orphan",
+  "displayName": "The Feral Orphan",
+  "profession": "Child",
+  "bio": "No words, that is the first thing, and the second is the raw meat: they will not eat food that has been cooked, or touched, or handed over, only what they take themselves. They sleep on concrete, on the flat stone by the generator where the warm air comes up. Thirty days under the Vet or the Fierce Mother, that is the plan on the council sheet, and the two of them keep a rotating watch that has not been written down. Progress is slow and small: a word, a bowl set down nearby, a blanket left folded on the stone. It stays folded. It is still there.",
+  "baseHealth": 75,
+  "latentExpertTrait": "trait_apex_scavenger",
+  "activeQuestlineId": "quest_the_pack",
+  "baseTraits": [
+   "trait_animalistic"
+  ],
+  "isChild": true
+ },
+ {
+  "id": "the_pacifist",
+  "displayName": "The Pacifist",
+  "profession": "Monk",
+  "bio": "No weapons, ever, and they have walked through two raids without one. Always flees, that is their doctrine, and they are fast at it, and they pull whoever they can with them. A needless kill and the hunger strike begins, they have told the council, and the council believes them, because they held one once over a wounded animal, nine days, until the water was forced on them. They keep a begging bowl, dented, and eat only what is given freely. Level five, zero damage, the intake notes read, and the notes are the only place that sounds like a joke.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_zen_state",
+  "activeQuestlineId": "quest_the_ultimate_test",
+  "baseTraits": [
+   "trait_vow_of_nonviolence"
+  ]
+ },
+ {
+  "id": "the_widow",
+  "displayName": "The Widow",
+  "profession": "Botanist",
+  "bio": "Grief steals the work, they say, and they mean the days when the hydroponics trays go unattended because the hands will not lift. They garden before sleep, always, a fixed hour after the lights dim, working the trays in the dark by feel, checking the water level the way other people check the door is locked. One pre-war rose, that is the story the bunker tells softly: a single cutting carried out of a dead greenhouse, kept alive through two winters. The rose is a promise, they say. The cutting lives in a jar by their cot. The jar gets the first water of the day.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_master_geneticist",
+  "activeQuestlineId": "quest_the_last_seed",
+  "baseTraits": [
+   "trait_grieving"
+  ]
+ },
+ {
+  "id": "the_ex_con",
+  "displayName": "The Ex-Con",
+  "profession": "Laborer",
+  "bio": "Stashes lock when the door opens, that is the habit, and it is not about the current door: it is about the cell door, and the yard door, and every door that ever closed on them. No orders from cops or generals, they say plainly; they will take requests. They work the heaviest jobs, the concrete pours and the hauling, and they work them silently. Drag one dying body home, that is the measure they use for a good week, and they have done it twice. They keep a smooth river stone in their pocket, worn by a thumb. It has been there longer than the bunker.",
+  "baseHealth": 110,
+  "latentExpertTrait": "trait_the_enforcer",
+  "activeQuestlineId": "quest_redemption_arc",
+  "baseTraits": [
+   "trait_distrusted"
+  ]
+ },
+ {
+  "id": "the_sheriff",
+  "displayName": "The Sheriff",
+  "profession": "Lawman",
+  "bio": "Morale for the room, that is what they take responsibility for, the tone of the mess hall and the temper of the disputes, and they have broken up four fights this month without raising a hand. The heart is failing, the medic's notes say, and the sheriff refuses to stop. Guard duty when no one else stands, that is the pattern, the third watch, the one nobody wants. One raider boss, that is the only boast they allow themselves: one named man, one clean arrest, before the exchange, done by the book. They keep the old star in a cloth, polished weekly. The book is gone. The arrest is not.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_legend_of_the_wastes",
+  "activeQuestlineId": "quest_the_last_ride",
+  "baseTraits": [
+   "trait_moral_compass",
+   "trait_failing_heart"
+  ]
+ },
+ {
+  "id": "the_former_politician",
+  "displayName": "The Former Politician",
+  "profession": "Politician",
+  "bio": "Charisma maxed and labor skill zero, the intake form reads, and the two lines are equally true. They can calm a room in three sentences and have, twice, but they cannot hang a shelf straight and their hands blister in an hour of hauling. Fourteen dirty days in a row, that is the bet they made with the work crew, and they lost it on day three, and they went back on day four anyway. They keep an empty fountain pen in the breast pocket of the jacket they will not throw away. The jacket does not fit. The pen has no ink. They wear it to every council meeting.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_the_statesman",
+  "activeQuestlineId": "quest_a_real_leader",
+  "baseTraits": [
+   "trait_silver_tongue"
+  ]
+ },
+ {
+  "id": "the_tech_bro",
+  "displayName": "The Tech Bro",
+  "profession": "Engineer",
+  "bio": "The old world is coming back, they say, and they say it every time they salvage a circuit board or a coil of wire, holding it up like evidence. The tablet still powers on and wastes the bunker's scarce battery on games they will not stop playing. The EMP took the chips, and then a purifier from scrap came out of their bench, a working water unit built from a car radiator, a pump, and faith. They keep a drawer of capacitors sorted by size, labeled in their own hand. The labels are wrong half the time. The purifier works anyway. That is the mystery the bunker lives with.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_cybernetics",
+  "activeQuestlineId": "quest_the_hard_reboot",
+  "baseTraits": [
+   "trait_delusional",
+   "trait_arrogant"
+  ]
+ },
+ {
+  "id": "the_news_anchor",
+  "displayName": "The News Anchor",
+  "profession": "Anchor",
+  "bio": "Hygiene is a career, they say, and they maintain it with a washcloth and a folded mirror, the last two professional tools they kept. The journal never stops, a page a day, dateline and weather and the names of everyone who ate in the mess, in the same clear hand that once opened the evening broadcast. One true broadcast from the tower, that is the goal they hold onto, one clean transmission that tells the outposts the truth of the week, and they rehearse it standing straight in the radio room. The tape deck is dead. They practice with a pencil as the microphone. The posture is still perfect.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_beacon_of_truth",
+  "activeQuestlineId": "quest_the_final_broadcast",
+  "baseTraits": [
+   "trait_photogenic"
+  ]
+ },
+ {
+  "id": "the_nomad",
+  "displayName": "The Nomad",
+  "profession": "Scavenger",
+  "bio": "Walls are a cage, they say, and they have said it every day since the intake desk wrote it down on day one. Five days inside and the hatch opens alone, that is the record; they came back on day nine last time, which the bunker counts as a victory. Build a bed worth staying for, that is the offer they made and the bunker is still working on it: a cot with a real mattress, a shelf, a hook for the pack. They keep a coil of rope and a folding saw. The rope is worn soft at the middle. The bed is not ready yet.",
+  "baseHealth": 100,
+  "latentExpertTrait": "trait_master_pathologist",
+  "activeQuestlineId": "quest_putting_down_roots",
+  "baseTraits": [
+   "trait_agoraphile"
+  ]
+ },
+ {
+  "id": "the_exec",
+  "displayName": "The Exec",
+  "profession": "Executive",
+  "bio": "Modules work harder and die faster, that is their management theory, and they apply it to the bunker's machinery and crew with the same cheerless logic. In fire, inventory first, they have said, and they have never had to prove it, and the bunker hopes they never do. Ten thousand in trade value, that is the fortune they track in a ledger with columns they invented, a private scoreboard of what the bunker owns. They keep a silk tie, the last one, in a drawer and take it out on anniversaries. They do not wear it. They hold it up to the light and put it back.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_monopolist",
+  "activeQuestlineId": "quest_the_golden_parachute",
+  "baseTraits": [
+   "trait_ruthless"
+  ]
+ },
+ {
+  "id": "survivor_cryo_tech",
+  "displayName": "The Cryo-Tech",
+  "profession": "HVAC Specialist",
+  "bio": "They kept the server farms cool before the war, vast rooms of humming racks that paid them to never let the temperature drift a degree. Now they keep the bunker from becoming an oven or a tomb, balancing the same numbers with scrap ducting and a coil of salvaged refrigerant line. They keep a thermograph from the old plant and tape each day's readings over the cot. They can tell you the temperature of any room by walking into it and closing their eyes. The bunker trusts that more than the gauges. The gauges drift. The hands remember what the numbers should say.",
+  "baseHealth": 90.0
+ },
+ {
+  "id": "survivor_bunker_archivist",
+  "displayName": "The Archivist",
+  "profession": "Bureaucrat",
+  "bio": "They know the blueprint of every sub-pen built in 1982, every chamber and hatch and emergency store, because the plans were their job to file and keep. They also know which ones were sealed with people inside, a list that does not exist in any index, only in their head and their habit of walking past certain grates without stopping. They keep the original plan key in a sleeve, rolled and rubber-banded, and they will unroll it for anyone who asks. They have never once drawn the sealed chambers on the copy they lend out. The original has their thumbprints on it. ",
+  "baseHealth": 75.0
+ },
+ {
+  "id": "survivor_ice_walker",
+  "displayName": "The Ice-Walker",
+  "profession": "Nomad",
+  "bio": "They do not speak much; on the ice, talk carries, and silence is the loudest discipline. They navigate by the sound of the wind over the black ice, the way a sailor reads a hull, and they have crossed the frozen flats in whiteout when every compass said wrong. They keep a set of crampons, hand-filed, and a waxed hide coat that reaches the knees. They sleep outside the bunker in a snow trench when the season allows, and say it is warmer than the vents. The cook leaves a bowl at the hatch for them. It is usually eaten.",
+  "baseHealth": 100.0
+ },
+ {
+  "id": "survivor_defrosted_aristocrat",
+  "displayName": "The Thawed VIP",
+  "profession": "Politician",
+  "bio": "Woke up in a silk suit that is still in good shape, a fact they mention more often than the exchange itself, because the suit survived and the world did not. Demands a private room, has been offered the partition, and has not stopped asking for the full wall. Knows the bank codes, or says so, a string of numbers they recite to anyone who will listen, and no one has ever dared to test them. They have never held a shovel, they admit it freely. They keep the suit pressed with a hot tin can. The seamstress laughs. The suit stays sharp.",
+  "baseHealth": 60.0
+ },
+ {
+  "id": "survivor_thawed_medic",
+  "displayName": "The Thawed Surgeon",
+  "profession": "Cryo-Medic",
+  "bio": "Put to sleep in 2024 with a sealed contract and a room key, and woke to a nightmare they were not trained for. Their medical knowledge is pre-war, whole textbooks in the head, and it is mostly still right: anatomy has not changed, only the world around it. The mind is fragile, the intake notes say, and they do not argue. They keep the cryo tag from the wrist, the one with the date, in a pocket, and they run their thumb over the embossed letters when the walls close in. They have not asked to be refrozen. They have also not stopped wearing the tag.",
+  "baseHealth": 85.0
+ },
+ {
+  "id": "survivor_ash_diver",
+  "displayName": "The Ash-Diver",
+  "profession": "Scavenger",
+  "bio": "They dive into the radioactive ash-drifts to pull scrap from buried cars, working by feel in the grey, tethered to a rope. The cars are tombs and storehouses both: batteries, copper, the last working radios, all of it under a meter of fallout. Their lungs are already failing, the cough is in the record, and they have been told twice to stop, and they have gone back both times. They keep a brass gear from a buried sedan on a cord around the neck, the first thing they ever pulled out. They say the ash pays. They do not say what it costs.",
+  "baseHealth": 110.0
+ },
+ {
+  "id": "survivor_speleologist",
+  "displayName": "The Speleologist",
+  "profession": "Cave Mapper",
+  "bio": "They mapped the limestone networks before the war, hundreds of kilometers of cave, and they remember the good chambers like old rooms. They know where the bedrock is solid and where it is hollow, which is why the bunker asks before it digs anywhere. The dark is their oldest friend, they say, and they mean it without poetry: they sleep without light and walk the tunnels without a torch, one hand on the wall. They keep a survey pencil and a folding ruler in the pocket of a vest that has more pockets than use. The maps they draw are exact. The bunker trusts them over any instrument.",
+  "baseHealth": 90,
+  "traits": [
+   "trait_dark_acclimated"
+  ]
+ },
+ {
+  "id": "survivor_sump_diver",
+  "displayName": "The Sump-Diver",
+  "profession": "Scuba Scavenger",
+  "bio": "They dive into the black water to pull copper from the drowned grid, the transformer yards and cable runs that went under when the river took the low city. The water is cold and dark and full of things that moved in with the current. Their skin is perpetually damp and pale, the record notes, and they never quite dry out between dives. The water does not scare them anymore, they say. They keep the old dive knife in a leg sheath, the one with the chipped tip, and a suit patched so many times the patches have patches. The copper pays for the light.",
+  "baseHealth": 105,
+  "traits": [
+   "trait_thalassophobia_resist"
+  ]
+ },
+ {
+  "id": "survivor_mycologist",
+  "displayName": "The Mycologist",
+  "profession": "Fungus Farmer",
+  "bio": "They study the Ash-Blight, the grey bloom that covers what the fire did not take. They know which molds will kill you and which ones will numb the pain of dying, and they keep the two lists in the same book with the same ink. Their hands are stained blue-green, a color that does not wash off, and the stains move up the wrist each season. They grow the safe ones on racks in the damp room and eat them. They keep a pressed spore print of the first Ash-Blight they ever found, labeled, on the shelf like a trophy or a warning. No one is sure which.",
+  "baseHealth": 80,
+  "traits": [
+   "trait_rot_immunity"
+  ]
+ },
+ {
+  "id": "survivor_hydro_engineer",
+  "displayName": "The Hydro-Engineer",
+  "profession": "Pump Specialist",
+  "bio": "They understand fluid dynamics and pressure valves, and they have rebuilt the bunker's pump rig three times, each time from worse parts. They can hear a water main cracking three rooms away, a tick in the wall that nobody else can place, and they are usually right by the time the floor is wet. The Black Aquifer does not surprise them: they tested it before the exchange and knew its levels and its taste. They keep a pressure gauge, cracked face, working needle, in a leather case, and tap it before every pump start. The habit is older than the war.",
+  "baseHealth": 95,
+  "traits": [
+   "trait_dark_acclimated"
+  ]
+ },
+ {
+  "id": "survivor_mole",
+  "displayName": "The Mole",
+  "profession": "Tunnel Rat",
+  "bio": "Small, quiet, and entirely comfortable in the dark, which is why the bunker stopped being surprised when they found them asleep in the crawlspace under the storage room on day three. They fit through the ventilation shafts when the doors jam, and they have unjammed the main hatch twice from the inside. Tight spaces are where they sleep best, and their cot is wedged into a corner the size of a coffin. They keep a ball of twine and a pencil stub in a chest pocket, marking the routes they take with small ticks in the dust. The dust remembers better than any map.",
+  "baseHealth": 85,
+  "traits": [
+   "trait_dark_acclimated"
+  ]
+ },
+ {
+  "id": "survivor_rot_farmer",
+  "displayName": "The Rot Farmer",
+  "profession": "Composter",
+  "bio": "They smell of ammonia and wet earth, and they have long since stopped apologizing for it. They do not mind the maggots; they consider them protein, and they have made the case at the mess table so plainly that half the bunker now eats around the new dish and the other half pretends not to watch the pot. The Ash-Blight is just another crop to them, a grey harvest that breaks down into good soil given time and air. They keep a pitchfork with a hand-carved handle and a ledger of each compost row. The rows are numbered. The ledger is exact. The smell does not lie.",
+  "baseHealth": 90,
+  "traits": [
+   "trait_rot_immunity"
+  ]
+ },
+ {
+  "id": "survivor_sapper",
+  "displayName": "The Sapper",
+  "profession": "EOD Tech",
+  "bio": "They spent the war clearing minefields and came through with all the fingers, which is not luck. Now they clear the peace: the unexploded ordnance the exchange left in the fields, the shells and the little canisters that still promise. They walk softly and never, ever rush, and the scavenge teams learned to match their pace or stay home. The ground remembers their footsteps, they say, and they read it like a page. They keep a spool of red marking tape and a brass probe with a wooden handle. They have not had to use the tape in a year. They carry it anyway.",
+  "baseHealth": 95,
+  "traits": [
+   "trait_uxo_instinct"
+  ]
+ },
+ {
+  "id": "survivor_lineman",
+  "displayName": "The Lineman",
+  "profession": "Telecomm Tech",
+  "bio": "They strung the copper that tied the country together, miles of line on poles and through conduits. Now they strip it from the walls to keep the lights on, walking the dead networks with a reel of salvage, pulling the good wire out of the buildings nobody enters anymore. Every wire tells a story, they say: the house that was on the line last, the offices that went quiet first. They keep a lineman's knife in a worn sheath and a pair of cutters that have outlived two companies. The coil they carry grows and shrinks. The stories do not change.",
+  "baseHealth": 85,
+  "traits": [
+   "trait_faraday_paranoia"
+  ]
+ },
+ {
+  "id": "survivor_drone_op",
+  "displayName": "The Drone Op",
+  "profession": "UAV Pilot",
+  "bio": "They used to fly the big ones from an air-conditioned trailer, screens and sticks and a thermos on the desk. Now they fly a duct-taped quadcopter with a mirror on a stick, held together with wire and patience, low and careful over the fields, looking for smoke, water, and anyone walking with purpose. The screen is smaller, they say, but the work is the same: watching from a height so other people do not have to. They keep the old joystick from the trailer, broken trim wheel and all, on a shelf above the cot. It does not plug into anything.",
+  "baseHealth": 80,
+  "traits": [
+   "trait_tinnitus"
+  ]
+ },
+ {
+  "id": "survivor_acoustic_tech",
+  "displayName": "The Acoustic Tech",
+  "profession": "Sonar Operator",
+  "bio": "Deaf in one ear, the left, and they have stopped explaining it and started using it: they turn the good ear to the wall and listen the way they used to listen to the water. They can hear the click of a pressure plate under three feet of ash, and they have flagged two of them this season on the south routes. The machines cannot hide from them, they say, and the machines are the only things they trust. They keep an old hydrophone handset, cable cut, and press it to surfaces the way other people press an ear to a door. It is dead. It works anyway.",
+  "baseHealth": 90,
+  "traits": [
+   "trait_tinnitus"
+  ]
+ },
+ {
+  "id": "survivor_machinist",
+  "displayName": "The Machinist",
+  "profession": "CNC Operator",
+  "bio": "They do not trust computers; the list of reasons starts with the EMP and does not end. They trust lathes, calipers, and cold-rolled steel, the tools that do not need power to be true. The EMP took the code, but the metal remembers its shape, they say, and they have proof: the replacement shaft for the water pump, the gear for the winch, each one cut by hand from scrap. They keep a set of calipers in a felt roll and check every part they make twice. They work by feel and by the old prints they carry in a binder. The binder is more reliable than the grid.",
+  "baseHealth": 100,
+  "traits": [
+   "trait_magnetism_phobia"
+  ]
+ },
+ {
+  "id": "survivor_logistician",
+  "displayName": "The Logistician",
+  "profession": "Supply Chain Mgr",
+  "bio": "They know exactly how many rounds of 5.45mm are in a standard Crate B, and the number is written in three places: the ledger, the wall chart, and their head. They weep when you waste ammo, and it is not a figure of speech: they have mourned a dropped magazine the way other people mourn a death. Every bullet has a spreadsheet, they say, and they have never once missed the count. They keep a pocket abacus, worn smooth, and use it at the mess table when the inventory talk gets loud. The beads click. The totals come out right. They always come out right.",
+  "baseHealth": 85,
+  "traits": [
+   "trait_uxo_instinct"
+  ]
+ },
+ {
+  "id": "survivor_bunker_born",
+  "displayName": "The Bunker-Born",
+  "profession": "Scavenger/Scrap",
+  "bio": "Born in the dark, in a service level of a structure that did not have a name, and the first light they ever saw was the inside of a flashlight in someone's fist. They navigate by air pressure and hum, a generator note that changes pitch in a long corridor. They can walk the bunker blind and have, once. The surface is a terrifying myth to them, a place with an open sky and no ceiling, and they have stood at the hatch twice and gone back both times. They keep a coil of wire and a blue glass marble, the two things they have always owned.",
+  "baseHealth": 85,
+  "traits": [
+   "trait_bunker_born",
+   "trait_agoraphobia_severe",
+   "trait_artifact_reverence"
+  ]
+ },
+ {
+  "id": "survivor_the_waking",
+  "displayName": "The Waking",
+  "profession": "Patient",
+  "bio": "The amnestics wore off, and the memories came back in order: the flash, the heat, the shadows burned into the walls of the room they were standing in. They scream when the heater clicks, because the click is the same as the one the light made, and the whole bunker knows this and warns new arrivals. They keep a lamp lit through the dark hours, the one small concession they allow themselves, and they check the shadow cast by the doorframe every night before sleep. They are not afraid of the dark. They are afraid of what it showed them once, and what it might show them again.",
+  "baseHealth": 70,
+  "traits": [
+   "trait_hyperthymesia"
+  ]
+ },
+ {
+  "id": "survivor_osteophage",
+  "displayName": "The Osteophage",
+  "profession": "Scrapper",
+  "bio": "Heavy metal poisoning, the intake notes read, in a way that is hard to call a choice. They chew on copper wire to stop the tremors, a habit that started as a joke and became medicine; the wire is kept clean in a tin they carry everywhere. They are immune to the tetanus that scares every other scrapper, the record says, the one good card they were dealt. They keep the tin of wire on a belt loop, and when the hands shake, they take a length out and work it between the fingers. The shaking stops. The tin empties. The scrap yards still have wire.",
+  "baseHealth": 90,
+  "traits": [
+   "trait_rot_immunity"
+  ]
+ },
+ {
+  "id": "survivor_archivist",
+  "displayName": "The Archivist",
+  "profession": "Monk/Historian",
+  "bio": "They guard the vinyl collection with a shotgun, after the night the heater crew reached for the record player and the wrong shelf. They believe the pre-war world was a pantheon of gods, every artist and singer and band a minor deity with a following, and they can tell you the theology of a record store the way a priest can tell you the calendar. The albums are kept in sleeves, alphabetical, dusted weekly, in a cabinet with a lock they own. They play one record a week for the bunker, on the evenings the mood needs it. The needle is nearly gone. The collection is not.",
+  "baseHealth": 75,
+  "traits": [
+   "trait_artifact_reverence"
+  ]
+ },
+ {
+  "id": "survivor_concrete_boss",
+  "displayName": "The Concrete Boss",
+  "profession": "Foreman",
+  "bio": "They can hear the rebar rusting, they claim, a whisper inside the wall, and they have been right about it twice, which is twice more than the instruments. They smell carbonation, the slow chemical breath of old concrete going soft. They are the only thing keeping the ceiling from crushing you, they say, and it is not entirely a joke: the bunker's structure is their list, their daily walk, their worry. They keep a sounding hammer and a set of shims in the belt and tap the walls at the same hour every morning. The tap has to answer. So far, it always answers.",
+  "baseHealth": 110,
+  "traits": [
+   "trait_concrete_boss",
+   "trait_concrete_lung"
+  ]
+ },
+ {
+  "id": "survivor_uv_penitent",
+  "displayName": "The UV Penitent",
+  "profession": "Cultist",
+  "bio": "They survived the Ozone Scourge by hiding under a corpse for two days, and they will tell you the story plainly, without shame, because they believe the burns that saved them are the mark of being chosen. Now they worship the burns, and they have the patterned skin to preach with: the mottling on the forearms and the neck. The bunker has rules about them now: no children in the room alone, no saying the word chosen. They keep the scrap of fabric they hid under, preserved in a tin, and will not let anyone touch it. The burns are the proof. The tin is the altar.",
+  "baseHealth": 80,
+  "traits": [
+   "trait_sun_blindness"
+  ]
+ },
+ {
+  "id": "aris_thorne",
+  "displayName": "Dr. Aris Thorne",
+  "profession": "Chief Structural Engineer",
+  "bio": "Designed the civilian shelter network before the war, the very lines and load paths the bunker now sleeps inside, and he has walked every beam of this one with the same pencil in his hand. He watched his wife and daughter die when an unreinforced hatch failed under an ash slide. Every crack in the concrete feels personal to him, because it is: he knows which decisions made it, whose signature approved the cheaper steel. He keeps the flagged page from the old report in his breast pocket and reads it once a week. The pencil in his hand is the same one he used in the hearings.",
+  "baseHealth": 95,
+  "latentExpertTrait": "trait_resilient_builder",
+  "activeQuestlineId": "quest_the_cracked_floor",
+  "baseTraits": [
+   "trait_methodical",
+   "trait_insomniac",
+   "trait_guilt_ridden"
+  ]
+ },
+ {
+  "id": "maya_lin",
+  "displayName": "Maya Lin",
+  "profession": "Radio Signal Technician",
+  "bio": "Spent three years locked in a radio room scanning static for her brother's unit, running the same frequency band in the same pattern until the room's clock was the only calendar she had. She speaks in calm, measured cadences over the airwaves, but she flinches at loud noises, at bangs and the crack of a dropped crate. The cold reality of life underground still costs her something every morning: the lights, the recycled air, the walls. She keeps her brother's last transmission, a few seconds of carrier and noise, on a battered tape. She has not played it since she found it. She will not part with it.",
+  "baseHealth": 80,
+  "latentExpertTrait": "trait_voice_of_hope",
+  "activeQuestlineId": "quest_the_dying_signal",
+  "baseTraits": [
+   "trait_keen_hearing",
+   "trait_denial",
+   "trait_fragile_health"
+  ]
+ },
+ {
+  "id": "victor_vance",
+  "displayName": "Captain Victor Vance",
+  "profession": "Garrison Tactical Commander",
+  "bio": "Deserted the Iron Garrison after refusing an order to execute civilians who failed a food tribute quota, and the refusal cost him everything the Garrison could take: rank and name. He views survival through a strict tactical lens, reading every problem as position, supply, and will, and the lens has been right often enough that the council keeps him at the map. His presence unnerves the civilian survivors, who see only the uniform, and he knows it. He keeps the written order he refused, sealed in a tube, and has never shown it to anyone. It is not the reason he left. It is the proof.",
+  "baseHealth": 110,
+  "latentExpertTrait": "trait_guardian_captain",
+  "activeQuestlineId": "quest_the_refugee_mass_influx",
+  "baseTraits": [
+   "trait_martial_discipline",
+   "trait_unforgiving",
+   "trait_tactical_mind"
+  ]
+ },
+ {
+  "id": "elena_rostov",
+  "displayName": "Dr. Elena Rostov",
+  "profession": "Trauma Surgeon",
+  "bio": "Treated shrapnel wounds in frontline triage tents for years before the exchange, working through nights lit by a generator, with the stretchers coming in a steady stream. She speaks in flat, clinical terms, calling patients complex biological machines, and it is the only way she knows to keep working: the language keeps the distance, and the distance keeps the hands steady. The bunker has learned that flatness is not coldness. She keeps the clamp from her first night in the tents, in a cloth roll, cleaned every week. The cloth carries one small stain. She will not say whose it is.",
+  "baseHealth": 90,
+  "latentExpertTrait": "trait_healers_soul",
+  "activeQuestlineId": "quest_the_ars_crisis",
+  "baseTraits": [
+   "trait_clinical_detachment",
+   "trait_surgical_precision",
+   "trait_chronic_cough"
+  ]
+ },
+ {
+  "id": "survivor_family_adult",
+  "displayName": "Family Survivor (Adult)",
+  "profession": "Parent",
+  "bio": "One of the family rescued from the basement shelter. They do not speak much about the months underground; they answer with the work they do, the way people who have survived by waiting learn to answer.",
+  "baseHealth": 85
+ },
+ {
+  "id": "survivor_family_child",
+  "displayName": "Family Survivor (Child)",
+  "profession": "Child",
+  "bio": "The child of the rescued family. They have stopped asking when they can go outside. They keep a small stone in their pocket and turn it over and over, and they learn the bunker's rules faster than the adults.",
+  "baseHealth": 70
+ }
 ]

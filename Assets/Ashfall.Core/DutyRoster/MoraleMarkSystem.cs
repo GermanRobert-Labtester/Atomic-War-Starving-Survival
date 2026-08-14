@@ -129,7 +129,27 @@ namespace Ashfall.Core
 
         public void RestoreState(MoraleMarkSystemState saved)
         {
-            _state = saved ?? new MoraleMarkSystemState();
+            if (saved == null) _state = new MoraleMarkSystemState();
+            else
+            {
+                // Deep-copy: the live system must never alias the envelope's list.
+                _state = new MoraleMarkSystemState { systemId = saved.systemId };
+                _state.marks = new List<MoraleMarkRecord>();
+                if (saved.marks != null)
+                {
+                    for (int i = 0; i < saved.marks.Count; i++)
+                    {
+                        MoraleMarkRecord m = saved.marks[i];
+                        if (m == null) continue;
+                        _state.marks.Add(new MoraleMarkRecord
+                        {
+                            id = m.id,
+                            payload = m.payload,
+                            daySet = m.daySet
+                        });
+                    }
+                }
+            }
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             EnsureList();
             _byId.Clear();

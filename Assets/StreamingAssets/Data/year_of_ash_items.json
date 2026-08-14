@@ -1,388 +1,394 @@
-{
-  "items": [
-    {
-      "id": "item_military_filter_crate",
-      "name": "Military Charcoal Filter Crate (FP-200)",
-      "weightKg": 18.5,
-      "tradeValue": 85,
-      "category": "survival_gear",
-      "description": "Sealed olive-drab crate containing four activated-carbon particulate canisters for NBC intake air filtration. Stamped 3rd Corps Munitions Depot."
-    },
-    {
-      "id": "item_perennial_wheat_strain_7",
-      "name": "Strain-7 Cold-Hardened Rye Rhizomes",
-      "weightKg": 4.2,
-      "tradeValue": 120,
-      "category": "survival_gear",
-      "description": "Hermetic jar of irradiated root cuttings preserved by The Works agronomists. Capable of germination at -4°C in mineral-poor peat beds."
-    },
-    {
-      "id": "item_insulated_parka",
-      "name": "Arctic Fiber-Fill Sentry Parka",
-      "weightKg": 3.8,
-      "tradeValue": 45,
-      "category": "thermal_clothing",
-      "description": "Heavy quilted jacket with wolf-fur ruff and lead-glass eye shield. Prevents frostbite down to -35°C during surface lookout shifts."
-    },
-    {
-      "id": "item_sski_iodine_bulk_canister",
-      "name": "Saturated Potassium Iodide (SSKI) Bulk Canister",
-      "weightKg": 6.0,
-      "tradeValue": 70,
-      "category": "medical_reagents",
-      "description": "Five-litre amber carboy of 1.0 g/mL potassium iodide solution. Protects thyroid tissue against radioactive Iodine-131 during black fallout rains."
-    },
-    {
-      "id": "item_falsified_clearance",
-      "name": "Forged Garrison Schedule 14 Transit Pass",
-      "weightKg": 0.1,
-      "tradeValue": 95,
-      "category": "quest_items",
-      "description": "Heavy cotton rag-paper manifest with authentic 3rd Corps rubber stamps and counterfeit Provost signature. Permits passage through Checkpoint Gamma."
-    },
-    {
-      "id": "item_thermal_lining",
-      "name": "Reflective Aerogel Insulation Blanket",
-      "weightKg": 2.5,
-      "tradeValue": 50,
-      "category": "engineering_supplies",
-      "description": "Salvaged aerospace silica-aerogel quilt. Provides Tier-3 thermal resistance to prevent bunker conduit frost cracking."
-    },
-    {
-      "id": "item_cryo_flask_rhizome",
-      "name": "Vacuum-Dewar Cryogenic Seed Core",
-      "weightKg": 8.0,
-      "tradeValue": 150,
-      "category": "quest_items",
-      "description": "Liquid-nitrogen cooled cylinder holding pre-Exchange heirloom brassica seeds from the Agronomy Vault. Pristine genetic stock."
-    },
-    {
-      "id": "item_air_filter_heavy",
-      "name": "Heavy Subterranean Radon Scrubber Cartridge",
-      "weightKg": 12.0,
-      "tradeValue": 65,
-      "category": "survival_gear",
-      "description": "Dense impregnated activated charcoal canister designed to trap radon daughter isotopes in sub-level ventilation plenums."
-    },
-    {
-      "id": "item_quartz_crystal_resonator",
-      "name": "142.850 MHz Quartz Crystal Resonator",
-      "weightKg": 0.3,
-      "tradeValue": 110,
-      "category": "tools_scientific",
-      "description": "Precision vacuum-mounted quartz crystal cut for the Continental Maritime rescue broadcast frequency. Required to lock receiver carrier."
-    },
-    {
-      "id": "item_brass_valve_fitting",
-      "name": "Heavy Brass 3-Inch Flanged Valve Seat",
-      "weightKg": 5.4,
-      "tradeValue": 40,
-      "category": "engineering_supplies",
-      "description": "Turned brass plumbing valve for steam loop maintenance. Immune to sulfur embrittlement in geothermal wells."
-    },
-    {
-      "id": "item_continuity_ration_biscuit_tin",
-      "name": "Military Hardtack Biscuit Tin (50,000 kcal)",
-      "weightKg": 14.0,
-      "tradeValue": 60,
-      "category": "survival_gear",
-      "description": "Soldered tin holding fortified oat-tallow biscuits. Resistant to humidity, mold, and freezing."
-    },
-    {
-      "id": "item_continental_maritime_transponder",
-      "name": "Aurora Borealis Marine Radar Transponder (SART)",
-      "weightKg": 4.5,
-      "tradeValue": 200,
-      "category": "quest_items",
-      "description": "9 GHz search and rescue transponder with lithium battery. Required to verify shelter manifest coordinates to the icebreaker."
-    },
-    {
-      "id": "item_boron_shielding_tile",
-      "name": "Sintered Boron Carbide Shielding Tile",
-      "weightKg": 7.5,
-      "tradeValue": 80,
-      "category": "engineering_supplies",
-      "description": "High-density thermal neutron absorber plate. Used to reinforce hatch cladding against intense fallout."
-    },
-    {
-      "id": "item_radon_detector_electret",
-      "name": "Electret Ion Chamber Radon Monitor",
-      "weightKg": 1.2,
-      "tradeValue": 90,
-      "category": "tools_scientific",
-      "description": "Electrostatic voltage drop gauge calibrated in Bq/m³. Detects hazardous radon gas seepage through foundation bedrock cracks."
-    },
-    {
-      "id": "item_calibrated_mass_spectrometer_tube",
-      "name": "High-Vacuum Spectrometer Drift Tube",
-      "weightKg": 9.0,
-      "tradeValue": 175,
-      "category": "quest_items",
-      "description": "Precision stainless steel drift tube recovered from the salt laboratory. Key component for isotopic warhead analysis."
-    },
-    {
-      "id": "item_prussian_blue_chelating_pellets",
-      "name": "Insoluble Prussian Blue (Ferric Ferrocyanide) Pellets",
-      "weightKg": 2.0,
-      "tradeValue": 105,
-      "category": "medical_reagents",
-      "description": "Oral ion-exchange binder that traps radioactive Cesium-137 and Thallium in the gastrointestinal tract, preventing lethal internalization."
-    },
-    {
-      "id": "item_liquid_nitrogen_dewar",
-      "name": "10L Pressurized Liquid Nitrogen Dewar",
-      "weightKg": 16.0,
-      "tradeValue": 115,
-      "category": "tools_scientific",
-      "description": "Cryogenic vacuum vessel for transporting biological samples and flash-freezing fractured water line breaches."
-    },
-    {
-      "id": "item_plastic_explosive_block",
-      "name": "Comp-B Demolition Block (1.25 kg)",
-      "weightKg": 1.25,
-      "tradeValue": 130,
-      "category": "engineering_supplies",
-      "description": "Military RDX/TNT demolition charge stamped with D/9 ordnance serials. Used for tunnel clearing or structural denial."
-    },
-    {
-      "id": "item_one_time_cipher_pad_d9",
-      "name": "D/9 Special Directorate One-Time Cipher Pad",
-      "weightKg": 0.2,
-      "tradeValue": 140,
-      "category": "quest_items",
-      "description": "Perforated rice-paper book of 5-digit cryptographic keys. Enables authorized decryption of automated Protocol Null broadcasts."
-    },
-    {
-      "id": "item_heavy_rubberized_pressure_suit",
-      "name": "Model 58 Chemical & Pressure Suit",
-      "weightKg": 11.0,
-      "tradeValue": 135,
-      "category": "thermal_clothing",
-      "description": "Full-body vulcanized rubber suit with integrated diaphragm respirator. Impermeable to toxic black mud and acid runoff."
-    },
-    {
-      "id": "item_strontium_90_thermoelectric_pellet",
-      "name": "Encapsulated Strontium-90 RTG Heat Capsule",
-      "weightKg": 15.0,
-      "tradeValue": 250,
-      "category": "tools_scientific",
-      "description": "Ceramic pellet generating 120 Watts of continuous thermal decay heat. Provides emergency heating but requires lead shielding."
-    },
-    {
-      "id": "item_winter_cleats_crampons",
-      "name": "Forged Steel Mountain Crampons",
-      "weightKg": 1.8,
-      "tradeValue": 35,
-      "category": "thermal_clothing",
-      "description": "Twelve-point tempered steel ice crampons with webbed harness straps. Prevents fatal falls on frozen spillways."
-    },
-    {
-      "id": "item_insulated_snowmobile_battery",
-      "name": "Heated 24V Gel-Cell Starter Battery",
-      "weightKg": 13.5,
-      "tradeValue": 95,
-      "category": "engineering_supplies",
-      "description": "Industrial sealed lead-calcium battery with integral resistive heating blanket for sub-zero vehicle starts."
-    },
-    {
-      "id": "item_evacuation_manifest_scroll",
-      "name": "Signed Continental Evacuation Manifest",
-      "weightKg": 0.5,
-      "tradeValue": 300,
-      "category": "quest_items",
-      "description": "Vellum manifest stamped by Sector 4 Civil Authority and the Master of the Aurora Borealis guaranteeing passage for named occupants."
-    },
-    {
-      "id": "item_glycol_antifreeze_canister",
-      "name": "Inhibited Ethylene Glycol Concentrate (20L)",
-      "weightKg": 22.0,
-      "tradeValue": 60,
-      "category": "engineering_supplies",
-      "description": "Corrosion-inhibited coolant required to prime subterranean geothermal heat loops down to -45°C."
-    },
-    {
-      "id": "item_hermetic_hatch_silicone_gasket",
-      "name": "Silicone Hollow-Core Blast Door Gasket",
-      "weightKg": 3.2,
-      "tradeValue": 55,
-      "category": "engineering_supplies",
-      "description": "Low-temperature vulcanized elastomer seal that prevents radioactive black silt and radon gas from entering door jambs."
-    },
-    {
-      "id": "item_geiger_counter_pancake_probe",
-      "name": "Alpha/Beta Pancake Probe Geiger Counter",
-      "weightKg": 2.1,
-      "tradeValue": 125,
-      "category": "tools_scientific",
-      "description": "Mica-window pancake detector sensitive to alpha particulate contamination on boots and clothing."
-    },
-    {
-      "id": "item_antibiotic_saline_infusion",
-      "name": "Ceftriaxone & Saline IV Infusion Packs",
-      "weightKg": 3.5,
-      "tradeValue": 80,
-      "category": "medical_reagents",
-      "description": "Broad-spectrum cephalosporin IV bags for treating septic black mud wound infections and aspiration pneumonia."
-    },
-    {
-      "id": "item_denial_detonator_spool",
-      "name": "Electric Blasting Cap & Lead Wire Spool",
-      "weightKg": 4.0,
-      "tradeValue": 75,
-      "category": "engineering_supplies",
-      "description": "500 meters of rubber-insulated firing cable with twenty instantaneous bridge-wire detonators."
-    },
-    {
-      "id": "item_lead_shielded_sample_cask",
-      "name": "Lead Transport Cask (Type B)",
-      "weightKg": 28.0,
-      "tradeValue": 160,
-      "category": "tools_scientific",
-      "description": "Cylindrical pig with 50mm lead walls and locking bayonet lugs. Safely stores highly active fallout specimens."
-    },
-    {
-      "id": "item_sealed_lead_pig",
-      "name": "Sealed Isotope Lead Pig",
-      "weightKg": 14.0,
-      "tradeValue": 90,
-      "category": "tools_scientific",
-      "description": "Benchtop lead container for storing radioactive reference sources without contaminating living quarters."
-    },
-    {
-      "id": "item_ceramic_heating_element",
-      "name": "High-Output PTC Ceramic Heating Element",
-      "weightKg": 1.5,
-      "tradeValue": 50,
-      "category": "engineering_supplies",
-      "description": "Positive temperature coefficient heating bar used to prevent air intake louvers from choking with rime ice."
-    },
-    {
-      "id": "item_high_tensile_steel_culvert_brace",
-      "name": "Telescoping Steel Hydraulic Trench Jack",
-      "weightKg": 19.0,
-      "tradeValue": 70,
-      "category": "engineering_supplies",
-      "description": "Heavy screw jack for shoring up cracked bunker roof beams under heavy spring mud surcharge."
-    },
-    {
-      "id": "item_surgical_bone_chisel",
-      "name": "Tempered Surgical Osteotome & Mallet",
-      "weightKg": 0.8,
-      "tradeValue": 65,
-      "category": "tools_scientific",
-      "description": "Stainless steel orthopedic chisel for amputating necrotic frostbitten extremities in bunker surgeries."
-    },
-    {
-      "id": "item_corrosion_inhibitor_drum",
-      "name": "Sodium Nitrite Boiler Water Inhibitor",
-      "weightKg": 25.0,
-      "tradeValue": 85,
-      "category": "engineering_supplies",
-      "description": "Dry chemical compound that halts galvanic pitting in geothermal heat exchangers and steel boilers."
-    },
-    {
-      "id": "item_icebreaker_rendezvous_flare_rocket",
-      "name": "Magnesium Parachute Distress Rocket (Red)",
-      "weightKg": 1.1,
-      "tradeValue": 40,
-      "category": "tools_scientific",
-      "description": "High-altitude signal flare that illuminates sea fog for 60 seconds. Visible to northern coastal lookouts up to 15 miles."
-    },
-    {
-      "id": "item_artillery_fuze_wrench",
-      "name": "Cast Steel Artillery Fuze Wrench",
-      "weightKg": 2.2,
-      "tradeValue": 45,
-      "category": "tools_scientific",
-      "description": "Universal spanner for setting delay fuzes on 152mm howitzer shells. Required to disarm unexploded ordnance."
-    },
-    {
-      "id": "item_brass_stamping_die",
-      "name": "Tool-Steel Cartridge Stamping Die (7.62mm)",
-      "weightKg": 4.8,
-      "tradeValue": 140,
-      "category": "engineering_supplies",
-      "description": "Hardened die from the High Granite Arsenal. Enables mechanical pressing of brass cases for small arms ammunition."
-    },
-    {
-      "id": "item_ammonium_nitrate_sack",
-      "name": "Technical Grade Ammonium Nitrate (50 kg)",
-      "weightKg": 50.0,
-      "tradeValue": 90,
-      "category": "engineering_supplies",
-      "description": "Heavy paper sack of prilled fertilizer. Can be synthesized into high explosives or applied to greenhouse loam."
-    },
-    {
-      "id": "item_railroad_hydraulic_spike_puller",
-      "name": "Manual Hydraulic Track Spike Puller",
-      "weightKg": 15.5,
-      "tradeValue": 65,
-      "category": "engineering_supplies",
-      "description": "Specialized railway tool used to dismantle track sections for defensive barricades or switch repair."
-    },
-    {
-      "id": "item_telegraph_sounder_relay",
-      "name": "Brass Telegraph Sounder & Armature Relay",
-      "weightKg": 1.4,
-      "tradeValue": 85,
-      "category": "tools_scientific",
-      "description": "Hardwired loop telegraph terminal used by the Shattered Rail Union to transmit pulses along unsevered signal wires."
-    },
-    {
-      "id": "item_periscope_optics_prism",
-      "name": "Quartz Anti-Reflection Periscope Prism",
-      "weightKg": 2.8,
-      "tradeValue": 115,
-      "category": "tools_scientific",
-      "description": "Heavy optical glass replacement for cracked bunker surface periscopes, immune to radiation browning."
-    },
-    {
-      "id": "item_cyanide_antidote_kit",
-      "name": "Amyl Nitrite & Hydroxocobalamin Antidote Kit",
-      "weightKg": 0.9,
-      "tradeValue": 95,
-      "category": "medical_reagents",
-      "description": "Emergency intravenous injectable kit for acute cyanide gas poisoning resulting from combustion of synthetic bunker foam."
-    },
-    {
-      "id": "item_mercury_barometer_station",
-      "name": "Fortin Type Precision Mercury Barometer",
-      "weightKg": 5.2,
-      "tradeValue": 75,
-      "category": "tools_scientific",
-      "description": "Brass-cased atmospheric pressure column used to predict fallout storm arrivals and deep freeze inversions."
-    },
-    {
-      "id": "item_tungsten_carbide_drill_bit",
-      "name": "Tungsten Carbide Core-Drill Bit (100mm)",
-      "weightKg": 6.7,
-      "tradeValue": 130,
-      "category": "engineering_supplies",
-      "description": "Diamond-faced rotary bit capable of boring drainage weeping holes through reinforced bunker slabs."
-    },
-    {
-      "id": "item_paraffin_wax_neutron_shield",
-      "name": "Borated Paraffin Wax Shield Block",
-      "weightKg": 8.5,
-      "tradeValue": 55,
-      "category": "engineering_supplies",
-      "description": "Hydrogen-rich block for moderating fast neutrons around active radioactive sample vaults."
-    },
-    {
-      "id": "item_zinc_bromide_shielding_window",
-      "name": "Zinc Bromide Liquid Radiation Window Pan",
-      "weightKg": 32.0,
-      "tradeValue": 190,
-      "category": "engineering_supplies",
-      "description": "High-density optical fluid viewing pane providing gamma shielding equivalent to thick lead."
-    },
-    {
-      "id": "item_potassium_permanganate_crystals",
-      "name": "Technical Potassium Permanganate (5 kg)",
-      "weightKg": 5.0,
-      "tradeValue": 50,
-      "category": "medical_reagents",
-      "description": "Potent oxidizer used to disinfect swamp water and scrub hydrogen sulfide gas from septic air lines."
-    }
-  ]
-}
+[
+  {
+    "id": "item_military_filter_crate",
+    "name": "Military Charcoal Filter Crate (FP-200)",
+    "weightKg": 18.5,
+    "tradeValue": 85,
+    "category": "survival_gear",
+    "description": "Sealed olive-drab crate containing four activated-carbon particulate canisters for NBC intake air filtration. Stamped 3rd Corps Munitions Depot."
+  },
+  {
+    "id": "item_perennial_wheat_strain_7",
+    "name": "Strain-7 Cold-Hardened Rye Rhizomes",
+    "weightKg": 4.2,
+    "tradeValue": 120,
+    "category": "survival_gear",
+    "description": "Hermetic jar of irradiated root cuttings preserved by The Works agronomists. Capable of germination at -4°C in mineral-poor peat beds."
+  },
+  {
+    "id": "item_insulated_parka",
+    "name": "Arctic Fiber-Fill Sentry Parka",
+    "weightKg": 3.8,
+    "tradeValue": 45,
+    "category": "thermal_clothing",
+    "description": "Heavy quilted jacket with wolf-fur ruff and lead-glass eye shield. Prevents frostbite down to -35°C during surface lookout shifts."
+  },
+  {
+    "id": "item_sski_iodine_bulk_canister",
+    "name": "Saturated Potassium Iodide (SSKI) Bulk Canister",
+    "weightKg": 6.0,
+    "tradeValue": 70,
+    "category": "medical_reagents",
+    "description": "Five-litre amber carboy of 1.0 g/mL potassium iodide solution. Protects thyroid tissue against radioactive Iodine-131 during black fallout rains."
+  },
+  {
+    "id": "item_falsified_clearance",
+    "name": "Forged Garrison Schedule 14 Transit Pass",
+    "weightKg": 0.1,
+    "tradeValue": 95,
+    "category": "quest_items",
+    "description": "Heavy cotton rag-paper manifest with authentic 3rd Corps rubber stamps and counterfeit Provost signature. Permits passage through Checkpoint Gamma."
+  },
+  {
+    "id": "item_thermal_lining",
+    "name": "Reflective Aerogel Insulation Blanket",
+    "weightKg": 2.5,
+    "tradeValue": 50,
+    "category": "engineering_supplies",
+    "description": "Salvaged aerospace silica-aerogel quilt. Provides Tier-3 thermal resistance to prevent bunker conduit frost cracking."
+  },
+  {
+    "id": "item_cryo_flask_rhizome",
+    "name": "Vacuum-Dewar Cryogenic Seed Core",
+    "weightKg": 8.0,
+    "tradeValue": 150,
+    "category": "quest_items",
+    "description": "Liquid-nitrogen cooled cylinder holding pre-Exchange heirloom brassica seeds from the Agronomy Vault. Pristine genetic stock."
+  },
+  {
+    "id": "item_air_filter_heavy",
+    "name": "Heavy Subterranean Radon Scrubber Cartridge",
+    "weightKg": 12.0,
+    "tradeValue": 65,
+    "category": "survival_gear",
+    "description": "Dense impregnated activated charcoal canister designed to trap radon daughter isotopes in sub-level ventilation plenums."
+  },
+  {
+    "id": "item_quartz_crystal_resonator",
+    "name": "142.850 MHz Quartz Crystal Resonator",
+    "weightKg": 0.3,
+    "tradeValue": 110,
+    "category": "tools_scientific",
+    "description": "Precision vacuum-mounted quartz crystal cut for the Continental Maritime rescue broadcast frequency. Required to lock receiver carrier."
+  },
+  {
+    "id": "item_brass_valve_fitting",
+    "name": "Heavy Brass 3-Inch Flanged Valve Seat",
+    "weightKg": 5.4,
+    "tradeValue": 40,
+    "category": "engineering_supplies",
+    "description": "Turned brass plumbing valve for steam loop maintenance. Immune to sulfur embrittlement in geothermal wells."
+  },
+  {
+    "id": "item_continuity_ration_biscuit_tin",
+    "name": "Military Hardtack Biscuit Tin (50,000 kcal)",
+    "weightKg": 14.0,
+    "tradeValue": 60,
+    "category": "survival_gear",
+    "description": "Soldered tin holding fortified oat-tallow biscuits. Resistant to humidity, mold, and freezing."
+  },
+  {
+    "id": "item_continental_maritime_transponder",
+    "name": "Aurora Borealis Marine Radar Transponder (SART)",
+    "weightKg": 4.5,
+    "tradeValue": 200,
+    "category": "quest_items",
+    "description": "9 GHz search and rescue transponder with lithium battery. Required to verify shelter manifest coordinates to the icebreaker."
+  },
+  {
+    "id": "item_boron_shielding_tile",
+    "name": "Sintered Boron Carbide Shielding Tile",
+    "weightKg": 7.5,
+    "tradeValue": 80,
+    "category": "engineering_supplies",
+    "description": "High-density thermal neutron absorber plate. Used to reinforce hatch cladding against intense fallout."
+  },
+  {
+    "id": "item_radon_detector_electret",
+    "name": "Electret Ion Chamber Radon Monitor",
+    "weightKg": 1.2,
+    "tradeValue": 90,
+    "category": "tools_scientific",
+    "description": "Electrostatic voltage drop gauge calibrated in Bq/m³. Detects hazardous radon gas seepage through foundation bedrock cracks."
+  },
+  {
+    "id": "item_calibrated_mass_spectrometer_tube",
+    "name": "High-Vacuum Spectrometer Drift Tube",
+    "weightKg": 9.0,
+    "tradeValue": 175,
+    "category": "quest_items",
+    "description": "Precision stainless steel drift tube recovered from the salt laboratory. Key component for isotopic warhead analysis."
+  },
+  {
+    "id": "item_prussian_blue_chelating_pellets",
+    "name": "Insoluble Prussian Blue (Ferric Ferrocyanide) Pellets",
+    "weightKg": 2.0,
+    "tradeValue": 105,
+    "category": "medical_reagents",
+    "description": "Oral ion-exchange binder that traps radioactive Cesium-137 and Thallium in the gastrointestinal tract, preventing lethal internalization."
+  },
+  {
+    "id": "item_liquid_nitrogen_dewar",
+    "name": "10L Pressurized Liquid Nitrogen Dewar",
+    "weightKg": 16.0,
+    "tradeValue": 115,
+    "category": "tools_scientific",
+    "description": "Cryogenic vacuum vessel for transporting biological samples and flash-freezing fractured water line breaches."
+  },
+  {
+    "id": "item_plastic_explosive_block",
+    "name": "Comp-B Demolition Block (1.25 kg)",
+    "weightKg": 1.25,
+    "tradeValue": 130,
+    "category": "engineering_supplies",
+    "description": "Military RDX/TNT demolition charge stamped with D/9 ordnance serials. Used for tunnel clearing or structural denial."
+  },
+  {
+    "id": "item_one_time_cipher_pad_d9",
+    "name": "D/9 Special Directorate One-Time Cipher Pad",
+    "weightKg": 0.2,
+    "tradeValue": 140,
+    "category": "quest_items",
+    "description": "Perforated rice-paper book of 5-digit cryptographic keys. Enables authorized decryption of automated Protocol Null broadcasts."
+  },
+  {
+    "id": "item_heavy_rubberized_pressure_suit",
+    "name": "Model 58 Chemical & Pressure Suit",
+    "weightKg": 11.0,
+    "tradeValue": 135,
+    "category": "thermal_clothing",
+    "description": "Full-body vulcanized rubber suit with integrated diaphragm respirator. Impermeable to toxic black mud and acid runoff."
+  },
+  {
+    "id": "item_strontium_90_thermoelectric_pellet",
+    "name": "Encapsulated Strontium-90 RTG Heat Capsule",
+    "weightKg": 15.0,
+    "tradeValue": 250,
+    "category": "tools_scientific",
+    "description": "Ceramic pellet generating 120 Watts of continuous thermal decay heat. Provides emergency heating but requires lead shielding."
+  },
+  {
+    "id": "item_winter_cleats_crampons",
+    "name": "Forged Steel Mountain Crampons",
+    "weightKg": 1.8,
+    "tradeValue": 35,
+    "category": "thermal_clothing",
+    "description": "Twelve-point tempered steel ice crampons with webbed harness straps. Prevents fatal falls on frozen spillways."
+  },
+  {
+    "id": "item_insulated_snowmobile_battery",
+    "name": "Heated 24V Gel-Cell Starter Battery",
+    "weightKg": 13.5,
+    "tradeValue": 95,
+    "category": "engineering_supplies",
+    "description": "Industrial sealed lead-calcium battery with integral resistive heating blanket for sub-zero vehicle starts."
+  },
+  {
+    "id": "item_evacuation_manifest_scroll",
+    "name": "Signed Continental Evacuation Manifest",
+    "weightKg": 0.5,
+    "tradeValue": 300,
+    "category": "quest_items",
+    "description": "Vellum manifest stamped by Sector 4 Civil Authority and the Master of the Aurora Borealis guaranteeing passage for named occupants."
+  },
+  {
+    "id": "item_glycol_antifreeze_canister",
+    "name": "Inhibited Ethylene Glycol Concentrate (20L)",
+    "weightKg": 22.0,
+    "tradeValue": 60,
+    "category": "engineering_supplies",
+    "description": "Corrosion-inhibited coolant required to prime subterranean geothermal heat loops down to -45°C."
+  },
+  {
+    "id": "item_hermetic_hatch_silicone_gasket",
+    "name": "Silicone Hollow-Core Blast Door Gasket",
+    "weightKg": 3.2,
+    "tradeValue": 55,
+    "category": "engineering_supplies",
+    "description": "Low-temperature vulcanized elastomer seal that prevents radioactive black silt and radon gas from entering door jambs."
+  },
+  {
+    "id": "item_geiger_counter_pancake_probe",
+    "name": "Alpha/Beta Pancake Probe Geiger Counter",
+    "weightKg": 2.1,
+    "tradeValue": 125,
+    "category": "tools_scientific",
+    "description": "Mica-window pancake detector sensitive to alpha particulate contamination on boots and clothing."
+  },
+  {
+    "id": "item_antibiotic_saline_infusion",
+    "name": "Ceftriaxone & Saline IV Infusion Packs",
+    "weightKg": 3.5,
+    "tradeValue": 80,
+    "category": "medical_reagents",
+    "description": "Broad-spectrum cephalosporin IV bags for treating septic black mud wound infections and aspiration pneumonia."
+  },
+  {
+    "id": "item_denial_detonator_spool",
+    "name": "Electric Blasting Cap & Lead Wire Spool",
+    "weightKg": 4.0,
+    "tradeValue": 75,
+    "category": "engineering_supplies",
+    "description": "500 meters of rubber-insulated firing cable with twenty instantaneous bridge-wire detonators."
+  },
+  {
+    "id": "item_lead_shielded_sample_cask",
+    "name": "Lead Transport Cask (Type B)",
+    "weightKg": 28.0,
+    "tradeValue": 160,
+    "category": "tools_scientific",
+    "description": "Cylindrical pig with 50mm lead walls and locking bayonet lugs. Safely stores highly active fallout specimens."
+  },
+  {
+    "id": "item_sealed_lead_pig",
+    "name": "Sealed Isotope Lead Pig",
+    "weightKg": 14.0,
+    "tradeValue": 90,
+    "category": "tools_scientific",
+    "description": "Benchtop lead container for storing radioactive reference sources without contaminating living quarters."
+  },
+  {
+    "id": "item_ceramic_heating_element",
+    "name": "High-Output PTC Ceramic Heating Element",
+    "weightKg": 1.5,
+    "tradeValue": 50,
+    "category": "engineering_supplies",
+    "description": "Positive temperature coefficient heating bar used to prevent air intake louvers from choking with rime ice."
+  },
+  {
+    "id": "item_high_tensile_steel_culvert_brace",
+    "name": "Telescoping Steel Hydraulic Trench Jack",
+    "weightKg": 19.0,
+    "tradeValue": 70,
+    "category": "engineering_supplies",
+    "description": "Heavy screw jack for shoring up cracked bunker roof beams under heavy spring mud surcharge."
+  },
+  {
+    "id": "item_surgical_bone_chisel",
+    "name": "Tempered Surgical Osteotome & Mallet",
+    "weightKg": 0.8,
+    "tradeValue": 65,
+    "category": "tools_scientific",
+    "description": "Stainless steel orthopedic chisel for amputating necrotic frostbitten extremities in bunker surgeries."
+  },
+  {
+    "id": "item_corrosion_inhibitor_drum",
+    "name": "Sodium Nitrite Boiler Water Inhibitor",
+    "weightKg": 25.0,
+    "tradeValue": 85,
+    "category": "engineering_supplies",
+    "description": "Dry chemical compound that halts galvanic pitting in geothermal heat exchangers and steel boilers."
+  },
+  {
+    "id": "item_icebreaker_rendezvous_flare_rocket",
+    "name": "Magnesium Parachute Distress Rocket (Red)",
+    "weightKg": 1.1,
+    "tradeValue": 40,
+    "category": "tools_scientific",
+    "description": "High-altitude signal flare that illuminates sea fog for 60 seconds. Visible to northern coastal lookouts up to 15 miles."
+  },
+  {
+    "id": "item_artillery_fuze_wrench",
+    "name": "Cast Steel Artillery Fuze Wrench",
+    "weightKg": 2.2,
+    "tradeValue": 45,
+    "category": "tools_scientific",
+    "description": "Universal spanner for setting delay fuzes on 152mm howitzer shells. Required to disarm unexploded ordnance."
+  },
+  {
+    "id": "item_brass_stamping_die",
+    "name": "Tool-Steel Cartridge Stamping Die (7.62mm)",
+    "weightKg": 4.8,
+    "tradeValue": 140,
+    "category": "engineering_supplies",
+    "description": "Hardened die from the High Granite Arsenal. Enables mechanical pressing of brass cases for small arms ammunition."
+  },
+  {
+    "id": "item_ammonium_nitrate_sack",
+    "name": "Technical Grade Ammonium Nitrate (50 kg)",
+    "weightKg": 50.0,
+    "tradeValue": 90,
+    "category": "engineering_supplies",
+    "description": "Heavy paper sack of prilled fertilizer. Can be synthesized into high explosives or applied to greenhouse loam."
+  },
+  {
+    "id": "item_railroad_hydraulic_spike_puller",
+    "name": "Manual Hydraulic Track Spike Puller",
+    "weightKg": 15.5,
+    "tradeValue": 65,
+    "category": "engineering_supplies",
+    "description": "Specialized railway tool used to dismantle track sections for defensive barricades or switch repair."
+  },
+  {
+    "id": "item_telegraph_sounder_relay",
+    "name": "Brass Telegraph Sounder & Armature Relay",
+    "weightKg": 1.4,
+    "tradeValue": 85,
+    "category": "tools_scientific",
+    "description": "Hardwired loop telegraph terminal used by the Shattered Rail Union to transmit pulses along unsevered signal wires."
+  },
+  {
+    "id": "item_periscope_optics_prism",
+    "name": "Quartz Anti-Reflection Periscope Prism",
+    "weightKg": 2.8,
+    "tradeValue": 115,
+    "category": "tools_scientific",
+    "description": "Heavy optical glass replacement for cracked bunker surface periscopes, immune to radiation browning."
+  },
+  {
+    "id": "item_cyanide_antidote_kit",
+    "name": "Amyl Nitrite & Hydroxocobalamin Antidote Kit",
+    "weightKg": 0.9,
+    "tradeValue": 95,
+    "category": "medical_reagents",
+    "description": "Emergency intravenous injectable kit for acute cyanide gas poisoning resulting from combustion of synthetic bunker foam."
+  },
+  {
+    "id": "item_mercury_barometer_station",
+    "name": "Fortin Type Precision Mercury Barometer",
+    "weightKg": 5.2,
+    "tradeValue": 75,
+    "category": "tools_scientific",
+    "description": "Brass-cased atmospheric pressure column used to predict fallout storm arrivals and deep freeze inversions."
+  },
+  {
+    "id": "item_tungsten_carbide_drill_bit",
+    "name": "Tungsten Carbide Core-Drill Bit (100mm)",
+    "weightKg": 6.7,
+    "tradeValue": 130,
+    "category": "engineering_supplies",
+    "description": "Diamond-faced rotary bit capable of boring drainage weeping holes through reinforced bunker slabs."
+  },
+  {
+    "id": "item_paraffin_wax_neutron_shield",
+    "name": "Borated Paraffin Wax Shield Block",
+    "weightKg": 8.5,
+    "tradeValue": 55,
+    "category": "engineering_supplies",
+    "description": "Hydrogen-rich block for moderating fast neutrons around active radioactive sample vaults."
+  },
+  {
+    "id": "item_zinc_bromide_shielding_window",
+    "name": "Zinc Bromide Liquid Radiation Window Pan",
+    "weightKg": 32.0,
+    "tradeValue": 190,
+    "category": "engineering_supplies",
+    "description": "High-density optical fluid viewing pane providing gamma shielding equivalent to thick lead."
+  },
+  {
+    "id": "item_potassium_permanganate_crystals",
+    "name": "Technical Potassium Permanganate (5 kg)",
+    "weightKg": 5.0,
+    "tradeValue": 50,
+    "category": "medical_reagents",
+    "description": "Potent oxidizer used to disinfect swamp water and scrub hydrogen sulfide gas from septic air lines."
+  },
+  {
+    "id": "item_hydro_baron_queue_chit",
+    "name": "Hydro-Baron Queue Chit",
+    "weightKg": 0.1,
+    "tradeValue": 30,
+    "category": "currency",
+    "description": "A stamped brass token proving a place in the desalination queue. Relic or live currency depending on how the Rate Card War resolves."
+  }
+]

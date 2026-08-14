@@ -623,6 +623,48 @@
           "isCompleted": false
         }
       ]
+    },
+    {
+      "id": "quest_the_muster_uprising",
+      "title": "The Muster",
+      "faction": "faction_deserter_coalition",
+      "minDay": 260,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 2 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "id": "quest_the_rate_card_war",
+      "title": "The Rate Card War",
+      "faction": "faction_hydro_barons",
+      "minDay": 180,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 2 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
+    },
+    {
+      "id": "quest_the_unsigned_order",
+      "title": "The Unsigned Order",
+      "faction": "faction_the_tally",
+      "minDay": 185,
+      "stages": [
+        {
+          "stageIndex": 1,
+          "objective": "Approach selection pending Phase 2 content wiring.",
+          "requiredItemId": null,
+          "isCompleted": false
+        }
+      ]
     }
   ]
 }

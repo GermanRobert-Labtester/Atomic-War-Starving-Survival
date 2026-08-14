@@ -38,6 +38,12 @@ asset here — that code needs no porting at all, only a host.
 - `godot --headless --path . -- --brine-selftest` → S2 BrineWaterHeadlessDemo
   (dormant-gate, daily load, outfall shift, 48h steam-trip clock, resin repair,
   haul loss, state roundtrip) → 21/21 PASS.
+- `godot --headless --path . -- --cluster-selftest` → S3 Cluster12CHeadlessDemo
+  (12-C dormant → refuse-levy activation, Second List gate, v3 envelope with
+  quest snapshot roundtrip) → 19/19 PASS.
+- `godot --headless --path . -- --endings-selftest` → S4 EndingsHeadlessDemo
+  (five master-list endings arm, second overwrites the first, unknown ids refused,
+  ending survives the v3 roundtrip) → 11/11 PASS.
 - Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
   forked per engine, which is what makes the incremental migration viable.
 
@@ -82,6 +88,20 @@ Notes:
   (plant unlock, membrane repair, outfall shift, brine status line). The save envelope is now
   **v2** (adds brineWater) with a v1→v2 migration: a Sprint 1 save validates against the frozen
   v1 shape and upgrades in place, brine starting fresh.
+- **Holdfast S3 (Cluster & claim)**: Order 12-C is host-wired (menu button, questline status
+  line). The save envelope is now **v3** (adds the HoldfastQuestSystem snapshot) with a chain
+  migration v1→v2→v3; HoldfastQuestSystem.RestoreState deep-copies like its siblings.
+- **Holdfast S4 (Shelf & endings)**: `Ashfall.Core.HoldfastEndings` is the master id list
+  (five endings, mutually exclusive). The Godot host guards SetEnding with IsKnown and shows
+  the armed ending in the status line; `--endings-selftest` proves exclusivity + roundtrip.
+- **Year of Ash (Days 180-360)**: the save envelope is now **v2**. v1 persisted only timeline,
+  encounters and factionWar while `YearOfAshHostSession` ticked six systems, so deep-freeze
+  thermal state, radon (scrubber wear + cumulative alpha dose) and questline progress silently
+  reset on every reload — a save-scum path out of a radon crisis. v2 adds those three sections
+  with a v1→v2 migration validated against the frozen v1 shape, exactly like `HoldfastSave`.
+  `YearOfAshDeepFreezeSystem` and `YearOfAshRadonSystem` gained `CaptureState`/`RestoreState`;
+  `QuestlineSystem` had `CaptureState` but no `RestoreState`. `--year-of-ash-save-selftest`
+  now asserts all six systems (12 → 19 checks).
 - **UI (5/165, 3%)** is the hardest wall and the largest single subsystem after Core. Expect this
   to be rewritten against Godot Control nodes rather than ported. Plan for it explicitly.
 - **Editor (0/19)** is Unity authoring tooling. It does not need to migrate.

@@ -78,12 +78,58 @@ namespace Ashfall.Core
             Check(restored.ArriveAtParent(LocationLayoutSystem.LocKilometre19), "arrive at parent after restore");
             Check(restored.CanEnter(LocationLayoutSystem.RoomKm19Seam), "save roundtrip preserved unlocked room state");
 
+            // LocationMemorySystem — strata recasts
+            var memory = new LocationMemorySystem(files, json, log);
+            memory.Load(dataDirectory);
+            memory.Unlock();
+            Check(memory.StratumCount >= 30, "standing record memory strata loaded (>=30)");
+            Check(memory.GetStratumText("loc_cut_kilometre_19", "pre") != null, "km19 pre stratum present");
+            memory.ApplyMutation(LocationMemorySystem.MutationKm19Plated);
+            Check(memory.GetActiveRecast("loc_cut_kilometre_19") != null, "km19 now recast after plated mutation");
+            memory.ApplyMutation(LocationMemorySystem.MutationKm19Scraped);
+            Check(memory.GetActiveRecast("loc_cut_kilometre_19").Contains("short one post"),
+                "scraped recast wins over plated");
+
+            // SiteEncounterSystem — room-keyed, Overlay withdraws after 3 scrapes
+            var site = new SiteEncounterSystem(1808);
+            site.Unlock();
+            Check(site.StartEncounter("enc_site_plate_screwer", "room_km19_post",
+                SiteEncounterSystem.KindPlateScrewer, 75, "mutation_km19_plated"),
+                "site encounter starts");
+            Check(site.ResolveEncounter("enc_site_plate_screwer", 75), "site encounter resolves");
+            for (int s = 0; s < SiteEncounterSystem.OverlayWithdrawPlateCount; s++)
+                site.ScrapePlate(76 + s);
+            Check(!site.OverlayAccess, "three scrapes withdraw Overlay access");
+            Check(site.PlatesScraped == SiteEncounterSystem.OverlayWithdrawPlateCount,
+                "plate count recorded");
+
+            // StandingRecordCatalog — all ten mains with world-change bars
+            var catLoader = new StandingRecordCatalogLoader(files, json, log);
+            var recordCat = catLoader.Load(dataDirectory);
+            Check(recordCat.Quests.Count >= 10, "standing record quests loaded (>=10)");
+            Check(recordCat.GetQuest("quest_record_the_book") != null, "quest_record_the_book present");
+            Check(recordCat.GetQuest("quest_record_which_gazetteer") != null,
+                "quest_record_which_gazetteer present (spine end)");
+            bool allBar = true;
+            for (int i = 0; i < recordCat.Quests.Count; i++)
+            {
+                if (string.IsNullOrEmpty(recordCat.Quests[i].complete_mutation)
+                    || recordCat.Quests[i].StageCount < 3)
+                {
+                    allBar = false;
+                    break;
+                }
+            }
+            Check(allBar, "every record main quest names a mutation and has 3+ objectives");
+
             report.Passed = report.FailedCount == 0;
             var sb = new StringBuilder();
             sb.Append("StandingRecordHeadlessDemo ");
             sb.Append(report.Passed ? "PASS" : "FAIL");
             sb.Append(" ").Append(report.PassedCount).Append("/").Append(report.PassedCount + report.FailedCount);
-            sb.Append(" layouts=").Append(report.LocationCount);
+            sb.Append(" layouts=").Append(report.LocationCount)
+                .Append(" quests=").Append(recordCat.Quests.Count)
+                .Append(" strata=").Append(memory.StratumCount);
             report.Summary = sb.ToString();
             log.Info(report.Summary);
             return report;

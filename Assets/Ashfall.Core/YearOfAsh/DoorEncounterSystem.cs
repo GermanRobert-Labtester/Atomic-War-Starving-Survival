@@ -104,9 +104,11 @@ namespace Ashfall.Core.YearOfAsh
 
         public void RegisterEncounter(DoorEncounterEntry entry)
         {
-            if (entry != null && !_catalog.Exists(e => e.encounterId == entry.encounterId))
+            if (entry != null && !string.IsNullOrEmpty(entry.encounterId)
+                && !_catalog.Exists(e => e.encounterId == entry.encounterId))
             {
                 _catalog.Add(entry);
+                OnEncounterArrived?.Invoke(entry);
             }
         }
 
@@ -163,8 +165,12 @@ namespace Ashfall.Core.YearOfAsh
                 guiltDelta = 0
             };
 
-            bool isRuthlessChoice = choice.baseGuiltDelta > 0 || choice.choiceId.Contains("extort") || choice.choiceId.Contains("repel") || choice.choiceId.Contains("strip");
-            bool isCompassionateChoice = choice.choiceId.Contains("admit") || choice.choiceId.Contains("treat") || choice.choiceId.Contains("shelter");
+            string choiceId = choice.choiceId ?? string.Empty;
+            string requiredItemId = choice.requiredItemId ?? string.Empty;
+            bool isRuthlessChoice = choice.baseGuiltDelta > 0
+                || choiceId.Contains("extort") || choiceId.Contains("repel") || choiceId.Contains("strip");
+            bool isCompassionateChoice = choiceId.Contains("admit")
+                || choiceId.Contains("treat") || choiceId.Contains("shelter");
 
             // 1. Moral Branching Modifier
             if (survivor.moralBranch == "humanist")
@@ -197,22 +203,26 @@ namespace Ashfall.Core.YearOfAsh
             }
 
             // 2. Specific Traits
-            if (survivor.traits.Contains("trait_medic") && isCompassionateChoice)
+            if (survivor.traits != null)
             {
-                rx.moraleDelta += 5;
-            }
-            if (survivor.traits.Contains("trait_paranoid") && isCompassionateChoice)
-            {
-                rx.moraleDelta -= 10;
-                rx.dialogueReaction = "They could be carrying fallout spores or acting as recon for raiders.";
-            }
-            if (survivor.traits.Contains("trait_veteran") && choice.targetFaction == "faction_central_garrison")
-            {
-                rx.moraleDelta += 6;
+                if (survivor.traits.Contains("trait_medic") && isCompassionateChoice)
+                {
+                    rx.moraleDelta += 5;
+                }
+                if (survivor.traits.Contains("trait_paranoid") && isCompassionateChoice)
+                {
+                    rx.moraleDelta -= 10;
+                    rx.dialogueReaction = "They could be carrying fallout spores or acting as recon for raiders.";
+                }
+                if (survivor.traits.Contains("trait_veteran") && choice.targetFaction == "faction_central_garrison")
+                {
+                    rx.moraleDelta += 6;
+                }
             }
 
             // 3. Medical Afflictions
-            if (survivor.hasRespiratoryDegeneration && isCompassionateChoice && choice.requiredItemId.Contains("filter"))
+            if (survivor.hasRespiratoryDegeneration && isCompassionateChoice
+                && requiredItemId.Contains("filter"))
             {
                 rx.moraleDelta += 10;
                 rx.dialogueReaction = "The fresh air filters give my lungs another month.";
@@ -317,6 +327,22 @@ namespace Ashfall.Core.YearOfAsh
                 cumulativeMoraleDelta = _state.cumulativeMoraleDelta,
                 cumulativeGuiltDelta = _state.cumulativeGuiltDelta
             };
+        }
+
+        /// <summary>
+        /// Restores a captured encounter snapshot into the live state. The catalog
+        /// is static (built-in + JSON) and is not part of the save, so only the
+        /// resolved counters/history are restored. A null state is a no-op.
+        /// </summary>
+        public void RestoreState(DoorEncounterSystemState state)
+        {
+            if (state == null) return;
+            _state.totalEncountersResolved = state.totalEncountersResolved;
+            _state.resolvedEncounterIds = state.resolvedEncounterIds != null
+                ? new List<string>(state.resolvedEncounterIds)
+                : new List<string>();
+            _state.cumulativeMoraleDelta = state.cumulativeMoraleDelta;
+            _state.cumulativeGuiltDelta = state.cumulativeGuiltDelta;
         }
     }
 }

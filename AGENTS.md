@@ -5,12 +5,11 @@ Inspired by the survival-management genre; DO NOT copy any existing game's
 art, names, characters, UI layout, text, or code.
 
 STACK (do not deviate without asking):
-- Godot 4.7+ (.NET/C#) — MIGRATION TARGET and the engine the project is moving to.
-  New host code goes here first. This is where the game is heading.
-- Unity 6 LTS, 2D, URP (2D lights), C# — STILL SUPPORTED and still usable: it currently holds
-  the art pipeline, the authoring tooling, and ~228k LOC of existing gameplay. Unity is NOT
-  banned and NOT frozen — you may build, run, and keep shipping features in it while the
-  migration proceeds. It is being handed over to Godot subsystem by subsystem, not abandoned.
+- Godot 4.7+ (.NET/C#) — MIGRATION TARGET and the active engine for building, running, and testing.
+  New host code goes here first. All testing and execution must use Godot and dotnet.
+- Unity 6 LTS, 2D, URP (2D lights), C# — LEGACY CODEBASE ONLY.
+  *** STRICT RULE FOR ALL AGENTS: NEVER RUN, LAUNCH, OR INVOKE UNITY (batchmode, headless, editor, or playmode) FOR THIS GAME UNLESS EXPLICITLY REQUESTED/SUGGESTED BY THE USER! ***
+  All compilation, unit tests, and runtime verification must be done via `dotnet build Ashfall.csproj`, `dotnet test`, or `godot --headless`.
 - ONE SOURCE OF TRUTH: simulation lives in `Ashfall.Core`, plain C#, ZERO references to
   UnityEngine or Godot namespaces. Both engines are hosts. Never fork or duplicate logic per engine.
 - Data-driven: JSON in StreamingAssets is the authority + editor importers; ScriptableObjects are a
@@ -44,8 +43,9 @@ GLOBAL RULES:
 - No magic, no fantasy, no real countries/wars/people, no glorified violence
 - Tone: cold, exhausted, human, restrained. Show, don't preach.
 - After writing code, VERIFY: the `Ashfall.Core` test suite must run WITHOUT Unity (plain
-  `dotnet test`); anything touching Unity host code ALSO needs a Unity batch compile (or playmode
-  test). Report PASS/FAIL before claiming done. If you can't run it, say so explicitly.
+  `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`), and Godot host checks via
+  `dotnet build Ashfall.csproj` or `godot --headless`. NEVER run Unity batch compile or playmode
+  tests unless the user explicitly asks for Unity to be run. Report PASS/FAIL before claiming done.
 - Keep changes small and reviewable. One system per task.
 
 ATOMIC-SURVIVAL DOMAIN (the needs/hazards this game is about):

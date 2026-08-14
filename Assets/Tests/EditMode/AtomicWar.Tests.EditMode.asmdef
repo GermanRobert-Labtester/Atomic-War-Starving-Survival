@@ -26,7 +26,8 @@
         "AtomicWar._Game.Narrative",
         "AtomicWar._Game.Factions",
         "AtomicWar._Game.Quests",
-        "AtomicWar.Ashfall.Core"
+        "AtomicWar.Ashfall.Core",
+        "AtomicWar._Game.Expeditions"
     ],
     "includePlatforms": [
         "Editor"

@@ -257,7 +257,10 @@ namespace Ashfall.Core
 
         public void RestoreState(CensusClaimSystemState saved)
         {
-            _state = saved ?? new CensusClaimSystemState();
+            // Deep-copy: the deserialized DTO must not become the live state.
+            // Otherwise the caller's save object and the running system alias
+            // the same ledger and a later mutation corrupts the envelope.
+            _state = Clone(saved ?? new CensusClaimSystemState());
             if (_state.ledger == null) _state.ledger = new List<CensusLedgerEntry>();
             if (_state.levy == null) _state.levy = new LevyOrder();
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;

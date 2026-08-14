@@ -83,29 +83,42 @@ namespace AtomicWar.GodotApp.YearOfAsh
                    $"Active Quests: {_quests.State.active.Count}";
         }
 
+        /// <summary>
+        /// Snapshots every system the session ticks. Deep-freeze, radon and questline
+        /// were ticked daily but left out of the envelope, so a reload handed the player
+        /// a fresh scrubber, a clear intake and no quest history at whatever day the
+        /// timeline restored to.
+        /// </summary>
         public YearOfAshSave CaptureSave()
         {
             return YearOfAshSaveCodec.Capture(
                 _timeline,
                 _encounters,
                 _factionWar,
-                null);
+                null,
+                _deepFreeze,
+                _radon,
+                _quests);
         }
 
         public void RestoreSave(YearOfAshSave save)
         {
             if (save == null) return;
-            _timeline.AdvanceDay(save.simDay);
+            YearOfAshSaveCodec.Restore(
+                save, _timeline, _encounters, _factionWar,
+                _deepFreeze, _radon, _quests);
         }
 
         private List<SurvivorOccupantSnapshot> CreateDefaultDemoRoster()
         {
             return new List<SurvivorOccupantSnapshot>
             {
+                // Ids come from the year_of_ash_survivors.json master list — never
+                // invented locally (AGENTS.md id rule).
                 new SurvivorOccupantSnapshot
                 {
-                    survivorId = "survivor_elena",
-                    name = "Elena Vance (Medic)",
+                    survivorId = "survivor_dr_sarah_chen",
+                    name = "Dr. Sarah Chen (Trauma Surgeon)",
                     moralBranch = "humanist",
                     guiltLevel = 25,
                     traits = new List<string> { "trait_medic", "trait_altruistic" },
@@ -114,8 +127,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 },
                 new SurvivorOccupantSnapshot
                 {
-                    survivorId = "survivor_kurt",
-                    name = "Kurt Drake (Veteran)",
+                    survivorId = "survivor_gunner_mikhail",
+                    name = "Gunner Mikhail (Heavy Artillery Loader)",
                     moralBranch = "ruthless",
                     guiltLevel = 10,
                     traits = new List<string> { "trait_veteran", "trait_pragmatist" },

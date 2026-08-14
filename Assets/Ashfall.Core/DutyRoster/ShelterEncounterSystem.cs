@@ -301,7 +301,46 @@ namespace Ashfall.Core
 
         public void RestoreState(ShelterEncounterSystemState saved)
         {
-            _state = saved ?? new ShelterEncounterSystemState();
+            if (saved == null) _state = new ShelterEncounterSystemState();
+            else
+            {
+                // Deep-copy: the live system must never alias the envelope's lists.
+                var fresh = new ShelterEncounterSystemState
+                {
+                    systemId = saved.systemId,
+                    expansionUnlocked = saved.expansionUnlocked,
+                    seedSalt = saved.seedSalt,
+                    lastEncounterDay = saved.lastEncounterDay,
+                    encountersThisNight = saved.encountersThisNight,
+                    encounterWeightMultiplier = saved.encounterWeightMultiplier,
+                    secondWinterActiveSince = saved.secondWinterActiveSince
+                };
+                fresh.history = new List<ShelterEncounterRecord>();
+                if (saved.history != null)
+                {
+                    for (int i = 0; i < saved.history.Count; i++)
+                    {
+                        var r = saved.history[i];
+                        if (r == null) continue;
+                        fresh.history.Add(new ShelterEncounterRecord
+                        {
+                            id = r.id,
+                            kind = r.kind,
+                            dayStarted = r.dayStarted,
+                            dayResolved = r.dayResolved,
+                            payload = r.payload,
+                            visitorId = r.visitorId
+                        });
+                    }
+                }
+                fresh.activeVisitorQueue = saved.activeVisitorQueue != null
+                    ? new List<string>(saved.activeVisitorQueue)
+                    : new List<string>();
+                fresh.resolvedIds = saved.resolvedIds != null
+                    ? new List<string>(saved.resolvedIds)
+                    : new List<string>();
+                _state = fresh;
+            }
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             EnsureLists();
             RebuildIndexes();

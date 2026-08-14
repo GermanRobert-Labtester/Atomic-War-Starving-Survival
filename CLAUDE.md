@@ -1,22 +1,18 @@
 # CLAUDE INSTRUCTIONS FOR ASHFALL PROJECT
 
 ## Engine Policy
-- **Migration target / primary going forward**: Godot Engine 4.7+ (.NET / C# Edition).
-  The project is being reworked from Unity to Godot. New host code lands in Godot first.
-- **Unity 6 LTS is still supported and may be used.** It holds the art pipeline, the authoring
-  tooling and most existing gameplay. You may build, run and keep developing in Unity while the
-  migration proceeds. Unity is not banned and not frozen — it is being handed over subsystem by
-  subsystem, not abandoned.
-- Prefer Godot for verification because it is fast and headless-friendly; reach for Unity when the
-  work genuinely touches Unity host code, the art pipeline or the editor tooling.
-- See `docs/GODOT_MIGRATION_STATUS.md` for what has actually been ported. Read it before claiming
-  any subsystem works in Godot.
+- **Primary Engine / Active Target**: Godot Engine 4.7+ (.NET / C# Edition).
+  All new host code, development, testing, and execution must use Godot and dotnet.
+- **STRICT BAN ON RUNNING UNITY**: Never run, launch, or invoke Unity (in batchmode, editor, headless, or playmode) unless the user EXPLICITLY asks or suggests for Unity to be run.
+- Unity codebase in `Assets/_Game/` is legacy reference code undergoing migration to `Ashfall.Core` and Godot.
+- See `docs/GODOT_MIGRATION_STATUS.md` for what has actually been ported.
 
 ## Build & Test Commands
 - Build Godot C# assembly: `dotnet build Ashfall.csproj`
+- Run Unit Tests: `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj`
 - Run Godot Project: `godot --path "/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War"`
 - Headless Verification: `godot --headless --path "/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War" --quit-after 2`
-- Unity EditMode/PlayMode suites remain valid for Unity-side changes.
+- NEVER run Unity commands (`Unity -batchmode`, etc.) unless explicitly instructed by the user.
 
 ## Project Architecture
 - **Godot host**: C# under `src/` and `scripts/`, scenes in `scenes/`, config `project.godot`,

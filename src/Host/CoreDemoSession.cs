@@ -29,6 +29,7 @@ namespace AtomicWar.GodotApp
         public HoldfastCatalog Catalog { get; }
         public CensusClaimSystem Census { get; }
         public BrineWaterSystem Brine { get; }
+        public HoldfastQuestSystem Quests { get; }
         public LocationLayoutSystem Layouts { get; }
         public WeatherKind Weather { get; private set; }
         public float OutdoorCelsius { get; private set; }
@@ -49,6 +50,7 @@ namespace AtomicWar.GodotApp
             HoldfastCatalog catalog,
             CensusClaimSystem census,
             BrineWaterSystem brine,
+            HoldfastQuestSystem quests,
             LocationLayoutSystem layouts)
         {
             IceRoad = iceRoad;
@@ -56,16 +58,20 @@ namespace AtomicWar.GodotApp
             Catalog = catalog;
             Census = census;
             Brine = brine;
+            Quests = quests;
             Layouts = layouts;
             Weather = WeatherKind.Blizzard;
             OutdoorCelsius = TempFor(Weather);
 
+            Quests.BindCatalog(catalog.Quests);
             IceRoad.OnIceRoadOpened += () => LastEvent = "WINDOW OPENED";
             IceRoad.OnIceRoadClosed += () => LastEvent = "WINDOW CLOSED";
             IceRoad.OnBeaconDark += loc => LastEvent = "beacon dark: " + loc;
             IceRoad.OnAccidentLogged += () => LastEvent = "accident logged";
             Census.OnLevyResolved += flag => LastEvent = "levy: " + flag;
             Brine.OnSteamTrip += () => LastEvent = "STEAM TRIP";
+            Quests.OnQuestStarted += id => LastEvent = "quest started: " + id;
+            Quests.OnQuestCompleted += id => LastEvent = "quest complete: " + id;
         }
 
         public static CoreDemoSession Create(string dataDirectory, ILog? log = null)
@@ -80,9 +86,10 @@ namespace AtomicWar.GodotApp
             var clock = new SimClock(DefaultStartDay);
             var census = new CensusClaimSystem();
             var brine = new BrineWaterSystem();
+            var quests = new HoldfastQuestSystem();
             var layouts = new LocationLayoutSystem(files, json, log);
             layouts.Load(dataDirectory);
-            return new CoreDemoSession(ice, clock, catalog, census, brine, layouts);
+            return new CoreDemoSession(ice, clock, catalog, census, brine, quests, layouts);
         }
 
         public void UnlockAndClerk()
@@ -95,10 +102,10 @@ namespace AtomicWar.GodotApp
 
         /// <summary>Cross-host save envelope. Shape and checksum owned by HoldfastSaveCodec.</summary>
         public HoldfastSave CaptureSave() =>
-            HoldfastSaveCodec.Capture(IceRoad, Census, Brine, Clock);
+            HoldfastSaveCodec.Capture(IceRoad, Census, Brine, Quests, Clock);
 
         public void RestoreSave(HoldfastSave save) =>
-            HoldfastSaveCodec.Restore(save, IceRoad, Census, Brine, Clock);
+            HoldfastSaveCodec.Restore(save, IceRoad, Census, Brine, Quests, Clock);
 
         public string TickDay()
         {
@@ -109,6 +116,7 @@ namespace AtomicWar.GodotApp
             IceRoad.TickDaily(Clock.Day, Weather, OutdoorCelsius);
             Census.TickDaily(Clock.Day);
             Brine.TickDaily(Clock.Day, Weather, OutdoorCelsius, _outfallShifted);
+            Quests.TickDaily(Clock.Day, false, false, false);
             if (!string.IsNullOrEmpty(LastEvent))
                 return LastEvent;
             return IceRoad.IsOpen == wasOpen
@@ -121,6 +129,21 @@ namespace AtomicWar.GodotApp
         public void ToggleOutfallShift() => _outfallShifted = !_outfallShifted;
 
         public bool RepairMembrane(int drums) => Brine.RepairWithResin(drums);
+
+        /// <summary>Office acts: Order 12-C names the unlisted as a labour reserve.</summary>
+        public void Activate12C() => Census.Activate12C();
+
+        /// <summary>
+        /// Arms an ending. Guarded by the master list: unknown ids are ignored,
+        /// so the host can never invent an ending id (AGENTS.md id rule).
+        /// Arming a second ending replaces the first — endings are exclusive.
+        /// </summary>
+        public bool SetEnding(string endingId)
+        {
+            if (!HoldfastEndings.IsKnown(endingId)) return false;
+            Quests.SetEnding(endingId);
+            return true;
+        }
 
         public void CycleWeather()
         {
@@ -161,6 +184,35 @@ namespace AtomicWar.GodotApp
                 $"Brine: {plant} · membrane {Brine.MembraneIntegrity:0.0}% · steam {steam} · " +
                 $"cluster {Brine.ClusterIndoorC:0.0}°C · outfall {(OutfallShifted ? "shifted" : "normal")} · " +
                 $"salt trade {(Brine.State.saltTradeUnlocked ? "open" : "closed")}";
+        }
+
+        /// <summary>
+        /// Compact questline status: main quests marked as — (idle), started, or
+        /// done, plus the Order 12-C line. Thin host formatting only.
+        /// </summary>
+        public string QuestLine()
+        {
+            string order12c = Census.Order12CActive ? "ACTIVE" : "dormant";
+            var parts = new System.Collections.Generic.List<string>();
+            for (int i = 0; i < HoldfastQuestSystem.MainQuestIds.Length; i++)
+            {
+                string id = HoldfastQuestSystem.MainQuestIds[i];
+                string mark = Quests.IsCompleted(id)
+                    ? "done"
+                    : Quests.IsStarted(id)
+                        ? "stage " + Quests.GetProgress(id).stage
+                        : "—";
+                parts.Add(id.Replace("quest_holdfast_the_", "") + ":" + mark);
+            }
+            return "12-C " + order12c + " · " + string.Join("  ", parts);
+        }
+
+        public string EndingLine()
+        {
+            string id = Quests.State.endingId;
+            return string.IsNullOrEmpty(id)
+                ? "Ending: none armed"
+                : "Ending: " + HoldfastEndings.DisplayName(id) + " [" + id + "]";
         }
 
         public string HonourDemoLevy()

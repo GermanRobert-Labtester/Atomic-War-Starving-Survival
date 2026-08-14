@@ -404,43 +404,58 @@ namespace Ashfall.Core
 
         public CrossingArbitrationState CaptureState()
         {
+            return CloneState(_state);
+        }
+
+        /// <summary>
+        /// Deep copy: the live system and the serialized envelope must never
+        /// alias the same lists, or a later mutation corrupts the save.
+        /// </summary>
+        private static CrossingArbitrationState CloneState(CrossingArbitrationState from)
+        {
             var copy = new CrossingArbitrationState
             {
-                systemId = _state.systemId,
-                rulingsCalled = _state.rulingsCalled,
-                rulingsOverturned = _state.rulingsOverturned,
-                standingRepeats = _state.standingRepeats,
+                systemId = from.systemId,
+                rulingsCalled = from.rulingsCalled,
+                rulingsOverturned = from.rulingsOverturned,
+                standingRepeats = from.standingRepeats,
                 backerPool = new List<BackerDef>(),
                 rulings = new List<StandingRuling>()
             };
-            for (int i = 0; i < _state.backerPool.Count; i++)
+            if (from.backerPool != null)
             {
-                var b = _state.backerPool[i];
-                if (b == null) continue;
-                copy.backerPool.Add(new BackerDef
+                for (int i = 0; i < from.backerPool.Count; i++)
                 {
-                    id = b.id,
-                    displayName = b.displayName,
-                    wants = b.wants,
-                    willNot = b.willNot,
-                    principled = b.principled,
-                    isAlive = b.isAlive
-                });
+                    var b = from.backerPool[i];
+                    if (b == null) continue;
+                    copy.backerPool.Add(new BackerDef
+                    {
+                        id = b.id,
+                        displayName = b.displayName,
+                        wants = b.wants,
+                        willNot = b.willNot,
+                        principled = b.principled,
+                        isAlive = b.isAlive
+                    });
+                }
             }
-            for (int i = 0; i < _state.rulings.Count; i++)
+            if (from.rulings != null)
             {
-                var r = _state.rulings[i];
-                if (r == null) continue;
-                copy.rulings.Add(new StandingRuling
+                for (int i = 0; i < from.rulings.Count; i++)
                 {
-                    topic = r.topic,
-                    shape = r.shape,
-                    dayCalled = r.dayCalled,
-                    bribeMarks = r.bribeMarks,
-                    backers = r.backers != null ? new List<string>(r.backers) : new List<string>(),
-                    bribedBackers = r.bribedBackers != null ? new List<string>(r.bribedBackers) : new List<string>(),
-                    refusedBribes = r.refusedBribes != null ? new List<string>(r.refusedBribes) : new List<string>()
-                });
+                    var r = from.rulings[i];
+                    if (r == null) continue;
+                    copy.rulings.Add(new StandingRuling
+                    {
+                        topic = r.topic,
+                        shape = r.shape,
+                        dayCalled = r.dayCalled,
+                        bribeMarks = r.bribeMarks,
+                        backers = r.backers != null ? new List<string>(r.backers) : new List<string>(),
+                        bribedBackers = r.bribedBackers != null ? new List<string>(r.bribedBackers) : new List<string>(),
+                        refusedBribes = r.refusedBribes != null ? new List<string>(r.refusedBribes) : new List<string>()
+                    });
+                }
             }
             return copy;
         }
@@ -448,17 +463,8 @@ namespace Ashfall.Core
         public void RestoreState(CrossingArbitrationState saved)
         {
             if (saved == null) return;
-            _state = saved;
+            _state = CloneState(saved);
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
-            if (_state.backerPool == null) _state.backerPool = new List<BackerDef>();
-            if (_state.rulings == null) _state.rulings = new List<StandingRuling>();
-            for (int i = 0; i < _state.rulings.Count; i++)
-            {
-                if (_state.rulings[i] == null) continue;
-                if (_state.rulings[i].backers == null) _state.rulings[i].backers = new List<string>();
-                if (_state.rulings[i].bribedBackers == null) _state.rulings[i].bribedBackers = new List<string>();
-                if (_state.rulings[i].refusedBribes == null) _state.rulings[i].refusedBribes = new List<string>();
-            }
             RaiseChanged();
         }
 

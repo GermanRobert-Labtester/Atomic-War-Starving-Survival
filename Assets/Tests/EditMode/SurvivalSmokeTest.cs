@@ -14,6 +14,7 @@ using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {

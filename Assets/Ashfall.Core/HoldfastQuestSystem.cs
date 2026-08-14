@@ -232,10 +232,45 @@ namespace Ashfall.Core
 
         public void RestoreState(HoldfastQuestSystemState saved)
         {
-            _state = saved ?? new HoldfastQuestSystemState();
+            // Deep-copy: the deserialized DTO must not become the live state.
+            // Otherwise the caller's save object and the running system alias
+            // the same list and a later mutation corrupts the envelope.
+            _state = saved == null ? new HoldfastQuestSystemState() : CloneState(saved);
             if (_state.quests == null) _state.quests = new List<HoldfastQuestProgress>();
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             RaiseChanged();
+        }
+
+        private static HoldfastQuestSystemState CloneState(HoldfastQuestSystemState src)
+        {
+            var copy = new HoldfastQuestSystemState
+            {
+                systemId = src.systemId,
+                endingId = src.endingId,
+                sheetObtained = src.sheetObtained,
+                plantVisited = src.plantVisited,
+                authenticated = src.authenticated,
+                drawerRead = src.drawerRead,
+                quests = new List<HoldfastQuestProgress>()
+            };
+            if (src.quests != null)
+            {
+                for (int i = 0; i < src.quests.Count; i++)
+                {
+                    var q = src.quests[i];
+                    if (q == null) continue;
+                    copy.quests.Add(new HoldfastQuestProgress
+                    {
+                        questId = q.questId,
+                        stage = q.stage,
+                        started = q.started,
+                        completed = q.completed,
+                        failed = q.failed,
+                        branchId = q.branchId
+                    });
+                }
+            }
+            return copy;
         }
 
         private bool PrereqsMet(string questId, int day)

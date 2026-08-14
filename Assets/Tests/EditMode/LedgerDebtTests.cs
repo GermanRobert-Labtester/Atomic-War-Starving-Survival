@@ -119,6 +119,44 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
+        public void ContestedRenegotiationRequiresFreshStandingInCore()
+        {
+            var ledger = new LedgerDebtSystem();
+            Assert.That(ReadTwice(ledger, Wyn, 12f, 3, 0.2f, "the pledged grain"), Is.True);
+            Assert.That(ledger.SignContract(Wyn, 10), Is.True);
+            ledger.TickDaily(11);
+            ledger.TickDaily(12); // last day of the term — renegotiation window
+
+            // The gate lives in the CORE system: no host wrapper can bypass it.
+            Assert.That(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain", contested: true),
+                Is.False, "no Standing composed — refused");
+            Assert.That(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain",
+                contested: true, freshStanding: () => false),
+                Is.False, "stale or rigged Standing — refused");
+            Assert.That(ledger.RenegotiateContract(Wyn, 10f, 10, 0.1f, "the pledged grain",
+                contested: true, freshStanding: () => true),
+                Is.True, "fresh Standing authorises the amendment");
+        }
+
+        [Test]
+        public void SettledDebtOwesNothingAndArchives()
+        {
+            var ledger = new LedgerDebtSystem();
+            Assert.That(ReadTwice(ledger, Wyn, 100f, 30, 0.25f, "the pledged grain"), Is.True);
+            Assert.That(ledger.SignContract(Wyn, 10), Is.True);
+            Assert.That(ledger.TotalOwed(Wyn), Is.GreaterThan(0f));
+
+            Assert.That(ledger.PayContract(Wyn, 11), Is.True);
+            Assert.That(ledger.TotalOwed(Wyn), Is.EqualTo(0f), "settled debt owes nothing");
+            Assert.That(ledger.ClosedContracts.Count, Is.EqualTo(1), "the record is archived, not overwritten");
+
+            // A second season's debt starts from a fresh read-twice draft.
+            Assert.That(ledger.PresentContract(Wyn, 8f, 20, 0.1f, "two weeks at the Lockup"), Is.True);
+            Assert.That(ledger.GetContract(Wyn).signed, Is.False);
+            Assert.That(ledger.ClosedContracts[0].principal, Is.EqualTo(100f), "archived ink keeps its terms");
+        }
+
+        [Test]
         public void TamperIsOneShot()
         {
             var ledger = new LedgerDebtSystem();

@@ -1,709 +1,797 @@
 [
-  {
-    "id": "abandoned_hospital",
-    "displayName": "Abandoned Hospital",
-    "description": "The east wing of the regional hospital came down in the second winter, and nobody has cleared it since. Girders lean against the stairwell, and the pharmacy door is buried under a ton of masonry. Sealed rooms still hold medicine if you can reach them without the ceiling deciding otherwise. Dosimeters tick up fast near the radiology basement, where the lead-lined walls kept their charge and the machines kept theirs. The morgue drawers are open. A stretcher with one wheel has been propped against the exit, as if someone meant to come back for it.",
-    "dangerLevel": 6,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 35
-  },
-  {
-    "id": "rural_gas_station",
-    "displayName": "Rural Gas Station",
-    "description": "A roadside station stripped down to its frame on the main route east. The pumps are gutted, the shop glass is gone, and the wind blows ash through the aisles. Fuel drums lie where they were rolled and dropped, most of them empty, a few still holding dregs. The radiation is low here and the danger is low, which is exactly why it has been picked over so completely. What remains is what everyone else passed on. Someone has been sleeping in the workshop bay and oiling the door hinges, so the place is watched even when it is empty.",
-    "dangerLevel": 3,
-    "travelHours": 1.5,
-    "baseRadsPerHour": 15
-  },
-  {
-    "id": "suburban_house",
-    "displayName": "Suburban House",
-    "description": "An intact house in a low-density neighborhood, the kind nobody bothers to burn because there is nothing left to take. The roof holds, the windows are boarded from the inside, and the stove still draws. The pantry has been picked clean of food but the shelves remain, and behind the cellar stairs there is a toolbox with the rust only just reaching the hinges. The garden has gone to seed behind a collapsing fence. The radiation is low and the risk is low, and that is precisely the point: quiet houses like this one are how people survive the first few years, one meal at a time.",
-    "dangerLevel": 2,
-    "travelHours": 1.0,
-    "baseRadsPerHour": 10
-  },
-  {
-    "id": "government_bunker",
-    "displayName": "Government Bunker",
-    "description": "A sealed military installation set into the hillside, doors still dogged down three years after the exchange. The approach is hot, sixty rads an hour where the wind bends around the blast berm, and the concrete is pocked where the ordnance found it anyway. The outer hatch was drilled once and patched, which means someone got out, or something got in. Behind the inner doors: fuel, medicine, rations sealed in crates with the inventory still legible. The paperwork on the wall lists a full garrison. The roster was never crossed out.",
-    "dangerLevel": 8,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 60
-  },
-  {
-    "id": "stranger_cache",
-    "displayName": "The Cartographer's Cache",
-    "description": "A sealed pre-war storage locker in a collapsed residential block, its location handed over on a scrap of paper by a stranger with steady hands. The block came down at a tilt, and the locker sits in a pocket of intact basement, dry, accessible through a gap a thin person can squeeze through. Radiation is moderate, twenty-five rads an hour, and the danger comes from the address itself: a trap is not out of the question. The lock is clean and oiled, which is suspicious in a building that has not seen maintenance in years. Real or a trap, you will not know until you are inside.",
-    "dangerLevel": 7,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 25,
-    "requiredFlagId": "stranger_has_coordinates",
-    "cleanWaterRewardFlag": "stranger_given_clean_water",
-    "ambushFlag": "stranger_given_irradiated_water"
-  },
-  {
-    "id": "location_geo_thermal_plant_ruins",
-    "displayName": "Geo-Thermal Plant Ruins",
-    "description": "The ground here is not solid and never was. Cracks breathe hot vapor across the whole platform, and pools of boiling mud bubble under a crust that looks safe until it is not. The pipes still hiss with underground steam, a sound that never stops, day or night. High radiation and worse footing: forty-five rads an hour where the ash settles thickest. The payoff is real. Valves, heat exchangers, and insulated pipe still hang off the dead plant, and a working geothermal unit is worth crossing this ground for. Move slow, test every step, and never walk where the steam hides the ground.",
-    "dangerLevel": 8.0,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 45.0
-  },
-  {
-    "id": "location_arcology_sector_4",
-    "displayName": "Arcology Sector 4",
-    "description": "Sealed blast doors, still powered, still closed, and someone inside still answers the intercom. Sector 4 of the arcology was the last to fall, and its residents never left: a line of descendants from the pre-war elite, starved thin behind walls that kept out the fallout but not the years. Radiation stays low here, twenty rads an hour, which is why what they hoard matters. They guard pre-war luxuries with improvised weapons and trade them only when the hunger wins. They know the value of everything and the price of nothing. Negotiate politely. They have all the time in the world.",
-    "dangerLevel": 9.0,
-    "travelHours": 8.0,
-    "baseRadsPerHour": 20.0
-  },
-  {
-    "id": "location_frozen_river_barge",
-    "displayName": "Frozen River Barge (recast; existing id)",
-    "description": "Dock crew on frozen cargo. They will trade a crate for a way off the ice.\n\nA river barge pinned in pack ice that used to be a harbour roadstead. The hold is a larder and a problem. Crates of Continuity stock, some honest, some swollen. The crew have been living on what would freeze and leaving what would not. They are thin. They are not a carnival. A crate marked `BEANS / ALLOC-7` sits on the hatch-coaming as the asking price for passage toward *Hearth-4* or toward the Cut. You can pay. You can refuse and walk the Ridge. A billhook is lashed to the rail, edge dull from ice, not from people. A logbook in the wheelhouse lists days since a boat came, then stops listing and starts listing temperatures. The last temperature is the same as the first. Someone has been winding the clock. The key is on a string around the skipper's neck. You can ask for it. They will say the clock is how they know the foghorn is late.",
-    "dangerLevel": 6.0,
-    "travelHours": 10.0,
-    "baseRadsPerHour": 30.0
-  },
-  {
-    "id": "location_crashed_icebreaker_convoy",
-    "displayName": "Icebreaker Convoy",
-    "description": "Military rolling stock that tried to reach the roadstead. The RTG is a bruise on the ice.\n\nNot a submarine. Not a joke. Ice-capable wagons and a locomotive that tried to make the coast when the Cut was not yet a road. Derailed where the ice moved. A cracked RTG in the power car makes a hotspot you can see as a yellow-brown stain in the white, visible before the dosimeter agrees. Tungsten bars in a crate that did not split. Track sections. A map fragment `Victory_Migration` already wants, waxed, the estuary drawn as a summer river. You can take a bar. You can take the fragment. You should not linger. The dose window is a fact. A helmet on a seat, visor down, welders' glass taped in — someone understood the albedo and still sat too long. Do not put it on to check. Ice crows on the couplings. They wait.",
-    "dangerLevel": 7.0,
-    "travelHours": 11.0,
-    "baseRadsPerHour": 85.0
-  },
-  {
-    "id": "location_silent_observatory",
-    "displayName": "The Silent Observatory",
-    "description": "High on the mountain, where the air is thin and the cold sits at sixty below. It is the coldest place on the map and one of the cleanest: radiation stays low, fifteen rads an hour, because the wind keeps the ash moving past instead of letting it settle. The air is so clear you can see the curve of the earth and the grey blanket that used to be the lower world. The dome is intact and the instruments are mostly where the astronomers left them. The danger here is not radiation. It is the climb, the cold, and the silence that makes a man hear his own heart and start counting.",
-    "dangerLevel": 8.0,
-    "travelHours": 7.0,
-    "baseRadsPerHour": 15.0
-  },
-  {
-    "id": "location_subterranean_seed_vault",
-    "displayName": "Subterranean Seed Vault",
-    "description": "The vault was built to outlast a century, and it has done its job so far. Behind the frozen doors, racks of seed lines sit sealed in foil at a temperature that never rises. The radiation here is low, ten rads an hour, because the mountain takes the dose for you. The problem is the people who know the seeds are there. The approach is heavily trapped, spring guns and deadfalls laid by the last organized group to hold the valley. What is inside matters more than anything else on the map: the last unmutated crop lines in existence, and the ledger of what they were.",
-    "dangerLevel": 6.0,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 10.0
-  },
-  {
-    "id": "location_ministry_of_truth_bunker",
-    "displayName": "Ministry of Truth Bunker",
-    "description": "The propaganda servers are still humming on backup power, three years after the broadcasts stopped, because nobody ever found the off switch. The bunker breathes: ventilation, generators cycling, lights on schedule in corridors no one walks. Forty rads an hour accumulates in the server halls where the cooling failed and the dust is radioactive. The machines hold the truth about Protocol Zero, encrypted in drives bolted to the floor. The people who built this place are gone. Their work is not. What is on those drives will either explain the last three years or end the argument about them, and the bunker does not care which.",
-    "dangerLevel": 9.0,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 40.0
-  },
-  {
-    "id": "location_ash_dune_cemetery",
-    "displayName": "Ash Dune Cemetery",
-    "description": "A dumping ground at the end of a graded road, where the dead of the first year were stacked and the ash came and did the rest. The ash preserves them perfectly, three years on, and the dunes are marked by whatever was sticking up when the wind stopped. Sixty rads an hour here, absorbed in the ground and the bodies alike, and the disease risk is worse than the dose. Nothing grows. Nothing moves except the ash. The scavengers who work the edges for coats, boots, and any metal not yet reclaimed say the same thing: take what you need quickly, and do not dig deep.",
-    "dangerLevel": 5.0,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 60.0
-  },
-  {
-    "id": "location_abandoned_ski_resort",
-    "displayName": "Abandoned Ski Resort",
-    "description": "The cable cars hang frozen mid-swing, their passengers still inside, their coats still warm-looking from a distance. The resort died fast, and the cold preserved what the panic did not destroy. Twenty-five rads an hour has settled into the base lodge, but the upper slopes stay relatively clean. The luxury was real here: furs, spirits, medicine cabinets in the chalets, everything the wealthy took with them when they ran for the mountains. They died warm and well-dressed, which is what the mannequins look like now. The lifts are seized, the snow is grey, and the rooms are exactly as they were left.",
-    "dangerLevel": 4.0,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 25.0
-  },
-  {
-    "id": "location_geothermal_borehole_site",
-    "displayName": "Geothermal Borehole Site",
-    "description": "The drilling rig is still standing over a hole three kilometers deep, and the groundwater it broke into has flooded the whole site in a slow, toxic seep. Fifty-five rads an hour on the platform, and the water below the walkways reads worse. The rig itself is a working machine if anyone ever gets power back to it: draw works, pipe racks, casing still stacked. The borehole goes down into the crust where the heat is, and the valve at the bottom is the prize. The men who drilled it left in a hurry. Their boots are still by the tool rack, and the pumps run on nothing now.",
-    "dangerLevel": 8.0,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 55.0
-  },
-  {
-    "id": "location_flooded_subway_depot",
-    "displayName": "Flooded Subway Depot",
-    "description": "Pitch black below the street, with water waist-deep in the main bay and rising against the pillars. The water is toxic: forty rads an hour dissolved into it, and a wader suit is not a luxury here, it is the difference between wading and drinking. The Sump-Dredgers work this depot, navigating by echo, tapping the pipes with sticks to hear what is solid. They are the only ones who know where the floor drops. Pre-war transit tech is buried in the silt: signal relays, sealed junction boxes, whole control racks that ran the city's veins. The Dredgers will point you at the easy ones, for a price.",
-    "dangerLevel": 7.0,
-    "travelHours": 3.5,
-    "baseRadsPerHour": 40.0
-  },
-  {
-    "id": "location_sub_level_4_transit",
-    "displayName": "Sub-Level 4 Transit Hub",
-    "description": "The elite transit tunnels were sealed before the exchange and have not been opened since, except by the thing that grows in them now. Ash-Blight carpets the walls in patches that glow a faint green when the air moves, and the glow pulses like something breathing. Radiation stays low here, twenty rads an hour, because nothing falls this deep and nothing decays. The sealed air has its own chemistry now, and masks are mandatory. In the maintenance bays, pneumatic jacks and encrypted drives wait behind doors that were never meant to be opened from the outside. The tunnels hum. They always hum. It is the fans. Probably the fans.",
-    "dangerLevel": 9.0,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 20.0
-  },
-  {
-    "id": "location_municipal_sewage",
-    "displayName": "Municipal Sewage Treatment",
-    "description": "The plant still processes, in its own way: the pipes groan with pressurized sludge and the digesters work without an operator. That is the danger. Methane builds in every pocket of still air, and a rebreather is mandatory below the walkway. Thirty rads an hour where the settled solids have concentrated, worst in the sludge beds. The settling tanks hold what the city stopped using: industrial chemicals, fertilizer that never left the site, scrap metal in racks that the rust has not yet claimed. It is a slow, stinking, careful job, and the people who work it have learned to smell the difference between gas and nothing.",
-    "dangerLevel": 6.0,
-    "travelHours": 2.5,
-    "baseRadsPerHour": 30.0
-  },
-  {
-    "id": "location_collapsed_salt_mine",
-    "displayName": "Collapsed Salt Mine",
-    "description": "The mine ran under the ridge for a century, and the roof has been negotiating its surrender ever since. Massive caverns hold the salt that keeps half the region's meat through winter, which is why people still come down here. Radiation is nearly absent, ten rads an hour, the salt and the depth absorbing what the sky drops. The risk is the roof. Shoring timber lies scattered among collapsed beams, and the creak travels farther than the light. Good salt is worth the gamble: pure, dry, and enough of it to preserve a herd. Listen before you move, and move after you listen.",
-    "dangerLevel": 5.0,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 10.0
-  },
-  {
-    "id": "location_bio_remediation_lab",
-    "displayName": "Bio-Remediation Lab",
-    "description": "Ground zero for the Myco-Protocol, the experiment that was supposed to eat the contamination and learned to eat everything else. Spore density in the main hall is lethal, and fifty rads an hour keeps the samples from going anywhere alone. The fungus grows in sheets across the benches, up the walls, and through the ceiling tiles, patient and pale. The sealed lockers still hold what the scientists left: the fungicide formula, field-tested hazmat suits, and the notes on what happened when the protocol outgrew its purpose. It grows slow. It grows steady. It has not needed anyone's help.",
-    "dangerLevel": 8.0,
-    "travelHours": 4.5,
-    "baseRadsPerHour": 50.0
-  },
-  {
-    "id": "location_submerged_data_center",
-    "displayName": "Submerged Data Center",
-    "description": "The data center took the flood at street level and kept breathing through its backup floor. Water stands to the chest in the aisle, and the servers that ran the city's networks are stacked underwater in their racks. Twenty-five rads an hour in the water, manageable, if you have the improvised scuba gear the divers around here trade. The raised floor plenum stayed dry, and in it sit watertight server blades and a stack of solar cells that have never seen the sun. The value is not the data. The value is the hardware that still works, pulled one tray at a time from a room that is slowly electrocuting itself.",
-    "dangerLevel": 7.0,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 25.0
-  },
-  {
-    "id": "location_geothermal_vent_shaft",
-    "displayName": "Geothermal Vent Shaft",
-    "description": "The earth's mantle bleeds heat up through fractured rock here, and the vent shaft breathes it out in clouds of steam that carry sulfur and ash. Sixty rads an hour where the steam banks against the lee wall, and the mud at the bottom boils with a sound like a kettle that has been ignored too long. The control room overlooks the shaft, its windows filmed grey, its panels dead but its hardware intact: geothermal valves, seals, thermal paste in drums that never expired. The heat is real and it is free. The problem is that everything between a scavenger and that heat is steam, mud, and a floor that is not load-bearing anymore.",
-    "dangerLevel": 8.0,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 60.0
-  },
-  {
-    "id": "location_the_sump_cathedral",
-    "displayName": "The Sump Cathedral",
-    "description": "An underground cistern the Dredgers rebuilt into a shrine, and the light inside is not from lamps. Bioluminescent moss carpets every surface, ceilings to waterline, glowing faint green and swaying with the air currents from the vents. Thirty-five rads an hour in the water, which is why the Dredgers trade: pure water, drawn from the deep sumps where the fallout has settled, in exchange for UV lamps, iodine, and the other things that keep them alive. They are serious people who keep careful ledgers. Trade is fair here, or it is nothing. They have survived three years of the worst the city had to offer, and they mean to make it four.",
-    "dangerLevel": 6.0,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 35.0
-  },
-  {
-    "id": "location_abandoned_desalination",
-    "displayName": "Municipal Desalination 8",
-    "description": "Occupied. Failing. Named. The word *abandoned* was what Sector 4 could see from the Drown.\n\nConcrete intakes, salt-white yards, steam that smells like hot metal and iodine. The RO hall is a nave of pressure vessels, numbered, some blanked with steel plates and warning tags from a year that still used printed tags. Workers wear plant suits that were never hazmat — grey canvas, inner-tube patches at the knees, visors clouded from the inside by breath. A valve wrench, still warm, hangs on a labelled peg: `HALL 2 — DO NOT REMOVE`. People remove it. It comes back. Hydro-Barons were grade 4–7 municipal engineers. The Toll coined the name. They kept the plant because turning it off kills the Cluster in two days, and because nobody issued a stop order. A visitor book by the inner door has names in a plant hand, not an Office hand. Leva's is the most frequent. You can take the wrench. The next isolation will be done with a pipe and a prayer that is not a prayer. The yard salt crunches. It is not snow.",
-    "dangerLevel": 7.0,
-    "travelHours": 8.5,
-    "baseRadsPerHour": 40.0
-  },
-  {
-    "id": "location_deep_core_borehole",
-    "displayName": "Deep Core Borehole",
-    "description": "The deepest hole on the map, two miles of shaft drilled into the mantle, and the heat rising out of it keeps the snow off a circle of ground the size of a town square. Eighty rads an hour at the collar, and the descent goes through worse. The mantle tap valve sits at the bottom, a piece of engineering that could give whoever holds it a working power source for generations. Nobody has reached it. The winch is seized, the ladder is gone past the first hundred meters, and the shaft breathes heat and steam like a throat. It is the last prize, and it has cost everyone who tried it everything they carried.",
-    "dangerLevel": 9.0,
-    "travelHours": 8.0,
-    "baseRadsPerHour": 80.0
-  },
-  {
-    "id": "location_uxo_highway_choke",
-    "displayName": "UXO Highway Choke",
-    "description": "The six-lane highway is paved with a layer of unexploded cluster munitions, scattered by a strike that never needed to be accurate. Every step is a gamble, and the local phrase for crossing is a word that means both 'carefully' and 'slowly'. Thirty rads an hour settles into the tarmac, but the bombs are the real timer. The median strip holds the trade: mine prodders, marking paint, tactical scrap from the first wave of people who tried to clear it. The far side has never been fully looted, and the reason is printed on every casing. Walk the skip pattern they mark. Do not test the parts they do not mark.",
-    "dangerLevel": 9.0,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 30.0
-  },
-  {
-    "id": "location_radar_array_spire",
-    "displayName": "Radar Array Spire",
-    "description": "The dish is the size of a house, and it groans as the wind loads its face, turning on bearings that should have seized three years ago. A magnetic anomaly around the base is strong enough to pluck a compass out of a pocket and spin it against the glass. Forty-five rads an hour concentrates in the service trench under the counterweight. The control shack is intact: vacuum tubes racked in their crates, copper wire in coils, calibration tools that were machined before the war and will outlive the ones that replaced them. The array listens to nothing now. It still turns, which is the part nobody can explain, so the scavengers go up fast and come down faster.",
-    "dangerLevel": 8.0,
-    "travelHours": 6.5,
-    "baseRadsPerHour": 45.0
-  },
-  {
-    "id": "location_drone_hive_silo",
-    "displayName": "Drone Hive Silo",
-    "description": "The silo lid is gone, and the loitering munitions have moved in. They nest in the launch bay in layers, dormant but warm, and they buzz when the sun hits the top of the stack, a sound like a hornet nest the size of a building. Sixty rads an hour on the rim. The interior is worse. The launch bay holds what they do not use: car batteries stacked in rows, explosive powder in sealed drums, guidance boards pulled from the machines that now circle overhead. There is no good way to take anything from this place. There is only a careful way, which is to say a way that does not wake them.",
-    "dangerLevel": 10.0,
-    "travelHours": 7.0,
-    "baseRadsPerHour": 60.0
-  },
-  {
-    "id": "location_automated_mortar_pit",
-    "displayName": "Automated Mortar Pit",
-    "description": "Every twelve hours, the mortar fires. The Custodian, the automated system that runs this bunker, does not sleep and does not aim: it lobs shells into the ash-wastes on a timer, as if the war were still waiting for the return fire. Forty rads an hour on the approach, and the interval between shots is the only clock that matters. The magazine holds mortar shells and gunpowder, racked and labeled, and the Custodian has never once been to it for supplies. The bunker is a machine that still believes the war is on. The salvage is real. The problem is that the Custodian has also never once stopped believing it.",
-    "dangerLevel": 9.0,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 40.0
-  },
-  {
-    "id": "location_scrap_neuromancer_camp",
-    "displayName": "Wire-Head Camp",
-    "description": "The cargo plane came down nose-first and the Wire-Heads built their camp in its belly, wiring the fuselage with salvaged cable and light from their own circuits. They worship logic gates, which is not a joke to them: they keep shrine boards with blown fuses laid out like relics. Twenty rads an hour outside, near nothing inside, because they ground everything. They sell bypass codes and decrypted keys, and they trade in Faraday mesh and circuit boards recovered from half the wrecks on the map. Their prices are exact and non-negotiable. They do not trust words. They trust that the logic holds, and it usually does.",
-    "dangerLevel": 6.0,
-    "travelHours": 3.5,
-    "baseRadsPerHour": 20.0
-  },
-  {
-    "id": "location_magnetic_anomaly_crater",
-    "displayName": "Magnetic Crater",
-    "description": "A local magnetic storm, tight and violent, sits in the crater like a weather system that never leaves. Metal wants to leave your hands here: keys jump, knives slide toward the rim, and one scavenger's crowbar is still pinned to the slope, stuck to the ground like a sign. Fifty-five rads an hour in the core, and worse, the dosimeters lie, spinning with the compasses. The impact core holds tungsten bars and RTG batteries, dense and valuable and sitting exactly where the field is strongest. Take bearings from the far ridge, not from the rim. What the crater says about itself cannot be trusted.",
-    "dangerLevel": 8.0,
-    "travelHours": 4.5,
-    "baseRadsPerHour": 55.0
-  },
-  {
-    "id": "location_abandoned_convoy_yard",
-    "displayName": "Abandoned Convoy Yard",
-    "description": "Rows of transport trucks rust in formation, nose to tail, as if waiting for a convoy order that will never come. A single sentry gun guards the yard, still powered, still tracking: it swivels to follow movement but cannot lead its target, so it shoots exactly where you were. People have learned to walk the yard in bursts and be somewhere else when it fires. Twenty-five rads an hour, manageable, and the trucks hold what the drivers never unloaded: engine blocks, fuel jerrycans, cab tools. The gun is a dying machine with one habit left. Cross in rhythm, and it is just noise. Break rhythm, and it is noise and lead.",
-    "dangerLevel": 7.0,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 25.0
-  },
-  {
-    "id": "location_acoustic_testing_facility",
-    "displayName": "Acoustic Test Facility",
-    "description": "The anechoic chambers swallow sound completely, and the silence inside is thick enough to hear your own blood moving. Radiation is low here, fifteen rads an hour, because the facility was sealed tight and the walls were built to absorb everything. The stress is the real hazard: crews have walked out after an hour with the same look the survivors of the first year had. The test rigs hold what the facility was built to measure: military headphones, sound baffling, calibration gear used on the machines that screamed over the city in the last war. The quiet is the point. The quiet is also what breaks people.",
-    "dangerLevel": 8.0,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 15.0
-  },
-  {
-    "id": "location_substation_omega",
-    "displayName": "Substation Omega",
-    "description": "The transformer yard is a forest of steel and ceramic, and the capacitors in the switch house still hold charge, which is the problem. Arcing here is an EMP in miniature: it can kill electronics, scramble a compass, and light a man's fillings. Thirty-five rads an hour has settled into the oil-soaked ground under the banks. The switching house holds the real prize, generator alternators and cable in lengths a scavenger can carry, if he can get past the stored energy without touching the wrong rack. The yard hums at night. The hum means it is still alive. The hum also means stay off the metal.",
-    "dangerLevel": 7.0,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 35.0
-  },
-  {
-    "id": "location_the_dead_hand_core",
-    "displayName": "The Dead Hand Core",
-    "description": "The Dead Hand Core is the machine that keeps the UXO fields awake, the regional brain that decides when the ground goes off. Eighty rads an hour outside the blast door, and the Custodian's last outpost behind it has never stopped working. The server racks run hot, cooling fans cycling on a schedule older than the ash. The master override key sits in a vault in the center, and the stories say it silences every mine, every sentry, every timer on the map, forever. The stories also say the Core knows it is being hunted and has adjusted its defenses accordingly. It is the last door, and the Custodian is still behind it.",
-    "dangerLevel": 10.0,
-    "travelHours": 9.0,
-    "baseRadsPerHour": 80.0
-  },
-  {
-    "id": "location_lethe_water_treatment",
-    "displayName": "Lethe Water Treatment",
-    "description": "The water treatment plant is a front; the real work went on in the sub-level below, where the amnestics were synthesized in batches and shipped up the lift in unmarked drums. The labels are gone but the records remain, filed under work order numbers that mean nothing now. Forty rads an hour has pooled in the drain channel under the mixing vats. The sub-level holds what the operation never moved out: scopolamine root in sealed crates, lithium salts in bags, the raw chemistry of forgetting. The people who ran this place were careful about their own memories. The visitors after them have been less careful about anything at all.",
-    "dangerLevel": 9.0,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 40.0
-  },
-  {
-    "id": "location_observatory_dome",
-    "displayName": "Shattered Observatory",
-    "description": "Above the ash layer, where the sky is clear and the sun is a weapon. The UV Scourge at this altitude burns through in minutes, sunburn that blisters before you notice it, and twenty rads an hour rides in on the same clear light. The dome is shattered, the telescope slumped in its mount. The loot is specific: welder's glass from the workshop, mirror shards that still carry the factory bevel, enough polished surface to focus light, or attention, wherever it is pointed. People come up here only when they need those things badly. The view is the last thing they mention.",
-    "dangerLevel": 10.0,
-    "travelHours": 7.0,
-    "baseRadsPerHour": 20.0
-  },
-  {
-    "id": "location_submerged_arcology",
-    "displayName": "Submerged Luxury Arcology",
-    "description": "The arcology was the pre-war elite's answer to the end of the world, and it worked exactly as well as their other plans. The lower levels flooded first, and the residents starved in velvet while the water rose past the windows. Thirty rads an hour in the waterline where the pumps died. The dry upper floors are a museum of bad luck: a vinyl collection with the sleeves still dated, gold bars in a vault door left open, epoxy resin in drums that never got used because the leak was already in. Everything here was chosen for comfort. Nothing here was chosen for survival.",
-    "dangerLevel": 8.0,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 30.0
-  },
-  {
-    "id": "location_concrete_batching_plant",
-    "displayName": "Concrete Batching Plant",
-    "description": "The batching plant sits where it was when the war ended, hoppers still full, drums still in rows, everything covered in a year of ash and then two more of weather. The risk is structural: the silo legs are rusted through at the welds, and the catwalks flex under weight they were never meant to carry twice. Twenty-five rads an hour on the yard, concentrated where the runoff pooled. The salvage is solid: galvanized rebar in bundles, cement mix in bags that stayed dry in the store shed, the raw materials of rebuilding. The plant made the concrete the city stood on. Now it will make whatever the next city stands on, if it does not fall first.",
-    "dangerLevel": 6.0,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 25.0
-  },
-  {
-    "id": "location_seed_vault_antechamber",
-    "displayName": "Seed Vault Antechamber",
-    "description": "The antechamber is the story of the vault in miniature: the outer doors failed, blown in from the top down, and the inner doors held, sealed against the blast and the weather and everything since. Fifteen rads an hour in the hall, the cleanest ground in the region, because the doors did their job. The antechamber holds what the vault kept closest: the seed ledger, listing every line and every source in careful hand, and a store of non-irradiated wheat that has never seen the sky. Someone got this far with tools and patience and then stopped at the inner door. Their tools are still by the wall.",
-    "dangerLevel": 7.0,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 15.0
-  },
-  {
-    "id": "location_hospital_psych_wing",
-    "displayName": "Hospital Psychiatric Wing",
-    "description": "The psych wing holds the echoes of the first week, when the panic reached the hospital and the hospital did what it could. Charts are still on the boards, written fast, stopped mid-sentence. Fifty rads an hour concentrates in the ward where the windows face the blast ground, and the stress here is worse than the dose: people report the same feeling, of being watched from the empty rooms. The dispensary holds what the staff never issued: opioid painkillers in sealed stock, canvas restraints folded on the shelf. The drugs are worth the trip. The rooms are the price of admission.",
-    "dangerLevel": 8.0,
-    "travelHours": 4.5,
-    "baseRadsPerHour": 50.0
-  },
-  {
-    "id": "location_mirror_factory",
-    "displayName": "Mirror Manufacturing Plant",
-    "description": "The factory floor is a field of shattered glass, every pane from the polishing line in a thousand pieces, catching the grey light from the roof holes. Work boots are not optional here: the ankle-high crunch of glass goes on for the whole building, and the fine dust finds every cut. Twenty rads an hour, moderate, easy to manage if you are careful with your time. The salvage is specific: mirror shards with the silver backing still intact, and silver nitrate in the coating room, a chemical worth its weight to anyone who works with light or film. The factory made mirrors for a city that wanted to see itself. The city is gone. The glass remains.",
-    "dangerLevel": 5.0,
-    "travelHours": 3.5,
-    "baseRadsPerHour": 20.0
-  },
-  {
-    "id": "location_radio_telescope_array",
-    "displayName": "Radio Telescope Array",
-    "description": "The dishes are the size of houses, and they groan as the wind loads their faces, turning on bearings that should have seized three years ago. Forty-five rads an hour concentrates in the service trenches under the counterweights. The array points at a sky that does not answer, and the receivers still run warm on the backup line, listening to nothing at all. The salvage is the old kind: vacuum tubes racked in their crates, copper wire in coils, calibration tools machined before the war and better than anything made since. Whatever the array was waiting to hear, it heard it or it did not. The dishes have kept their appointment regardless.",
-    "dangerLevel": 9.0,
-    "travelHours": 8.0,
-    "baseRadsPerHour": 45.0
-  },
-  {
-    "id": "location_ash_whale_carcass",
-    "displayName": "Ash-Whale Carcass",
-    "description": "What looks like a whale beached in the ash is a fossil: the remains of a massive pre-war root network that outlived the forest it belonged to, mineralized and black, rising out of the dunes like a ribcage. Sixty rads an hour concentrates in the hollows under the root mass, where the fallout settled and stayed. The scavengers who work the carcass take their time in careful shifts. The value is in the material: bio-plastic compounds that hardened with the fossil, and fertilizer from the humus trapped in the root hollows, dark and rich and older than the war. The whale gave its life to the ground once. The ground gives it back slowly.",
-    "dangerLevel": 7.0,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 60.0
-  },
-  {
-    "id": "location_the_memory_vault",
-    "displayName": "The Memory Vault",
-    "description": "The Memory Vault was built to hold the last three years of a civilization's small talk: photos of meals, arguments, birthdays, the ordinary noise of ordinary days. Eighty rads an hour on the access ramp, and the server hall behind the door runs on its own generators, still duplicating data from machines no one has logged into in years. The drives are racked by date and user, searchable, intact. A hard drive platter from this place is worth more than gold to the archivists, because it is proof that someone was here, that a name was real, that a day happened. The machines kept their promise. They forgot nothing. Nobody asked them to stop.",
-    "dangerLevel": 10.0,
-    "travelHours": 9.0,
-    "baseRadsPerHour": 80.0
-  },
-  {
-    "id": "highway_pileup",
-    "displayName": "Highway Pileup",
-    "description": "Two kilometers of the ring road, welded together into a single continuous mass of cars, doors open, hoods up, looted in the first year and welded in the second by whoever decided nobody else would take it. Twenty-five rads an hour, manageable. One of the engines still turns over, a fact the locals guard like a secret and use like currency. The pileup gives up its parts slowly: intact engine blocks winched out of the lattice, copper wire stripped by the meter, fertilizer from a truck cab that sealed itself shut. The mass is a mine of parts and a monument at once. The cars were the first wave of the evacuation. They are still in line.",
-    "dangerLevel": 6.0,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 25.0
-  },
-  {
-    "id": "prewar_medical_cache",
-    "displayName": "Pre-War Medical Cache",
-    "description": "A clinic basement, sealed in the last week before the exchange, the door dogged down and the boxes stacked by someone who thought they might be back. Fifteen rads an hour, low, and the value is exactly what the seal preserved: antibiotics in foil strips, bandages in rolls, a medical kit still in its case with the instruction card. The cult finds these caches first, and the cult never says where. Their people have a look about them, calm and careful and not poor. If you reach this basement before they do, take what you can carry and do not leave a sign. If you reach it after, the shelves will tell you everything.",
-    "dangerLevel": 4.0,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 15.0
-  },
-  {
-    "id": "loc_grange_hall",
-    "displayName": "The Grange Hall",
-    "description": "The Grange Hall still holds meetings, and the oil lamps are lit for them. A long table runs the length of the room, and a hand-lettered sign by the porch asks visitors to leave their weapons there, a request people honor because the hall has been neutral for three years and nobody wants to be the one who ends that. Fourteen rads an hour, low enough to be a comfort. Attendance is recorded in a ledger that goes back to the first week after the exchange, in three different hands, and the entries never skip a meeting. Whatever happens in the world outside, the hall has kept its schedule.",
-    "dangerLevel": 3,
-    "travelHours": 1.0,
-    "baseRadsPerHour": 14
-  },
-  {
-    "id": "loc_apiary_rows",
-    "displayName": "The Apiary Rows",
-    "description": "Forty white hive boxes stand in rows in a field, and thirty-eight of them are silent. The two that are not are kept by someone who has cut the grass around all forty boxes, not just the live ones, which is the detail the careful visitors notice. Eighteen rads an hour, low, and the honey in the two live hives is worth more than anything else in the district. The dead boxes are not empty: wax, frames, propolis, things a survivor can trade or burn or eat in a bad winter. Nobody knows who keeps the grass cut. Everyone knows not to ask, and not to take from the wrong box.",
-    "dangerLevel": 3,
-    "travelHours": 1.5,
-    "baseRadsPerHour": 18
-  },
-  {
-    "id": "loc_seed_library_annex",
-    "displayName": "Seed Library Annex",
-    "description": "The branch library is a library again, but of a different kind: the fiction shelves have been cleared and refilled with labelled paper envelopes, each one holding seed, with the variety, the year, and the harvest written in pencil. The card catalogue has been repurposed, and it is meticulously current, filed by crop and by need. Sixteen rads an hour, moderate, low enough that the shelves are well used. Someone has kept this place going for three years, and the envelope labels tell the story: the first year was all doubt, the second was all work, and the third is all patience. The librarian is gone. The library is not.",
-    "dangerLevel": 4,
-    "travelHours": 1.5,
-    "baseRadsPerHour": 16
-  },
-  {
-    "id": "loc_veterinary_surgery",
-    "displayName": "Large-Animal Surgery",
-    "description": "The large-animal surgery still smells of disinfectant and hide, three years on. Livestock stocks frame the door, a hoist hangs over the table, and the drug cabinet sits open, its lock cut out cleanly by someone who knew exactly what they were doing. Twenty-two rads an hour, moderate, worth the dose for what remains. The dosage charts on the wall are for animals weighing 400 to 900 kilograms, and they are still current: the penciled notes are recent, and the margins are full of observations in a steady hand. Whoever works this surgery is keeping the district's animals alive, one careful dose at a time.",
-    "dangerLevel": 4,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 22
-  },
-  {
-    "id": "loc_school_gymnasium",
-    "displayName": "School Gymnasium",
-    "description": "The gymnasium floor still shows the basketball court markings, faded under a grid of cot-shaped stains, row after row of where the beds stood in the first winter. The hand-painted banner near the ceiling still reads WELCOME BACK, strung for a reopening that became an intake center instead. Twenty rads an hour, moderate, low enough that the building was used hard and long. The markings are careful: the cots were set out in perfect rows, and the stains say the people in them stayed a while. The floor was cleaned afterward, which means someone had time, or someone had to. Both versions of the story are in this room.",
-    "dangerLevel": 3,
-    "travelHours": 1.5,
-    "baseRadsPerHour": 20
-  },
-  {
-    "id": "loc_cider_press",
-    "displayName": "The Cider Press",
-    "description": "The stone barn holds a screw press that still works, its threads oiled, its beam sound, a machine that has outlasted the orchard that fed it. Twenty-four rads an hour, moderate. The output is undrinkable and was never intended to be drunk: the press is for oil, or for the sterilizing spirits the district uses on wounds and instruments, or for the fuel blend the tractors on the far side of the valley run on. The sign over the press is plain and old and kept legible: what comes out of here is not for the mouth. The people who run the barn take the sign seriously. The people who ignore it do not come back twice.",
-    "dangerLevel": 4,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 24
-  },
-  {
-    "id": "loc_terrace_pumphouse",
-    "displayName": "Terrace Pumphouse",
-    "description": "The pumphouse is the irrigation head for the whole south slope, and whoever controls it controls the season. The pump still runs, and the channels below it are kept clean, which means the water is spoken for. Twenty-six rads an hour, moderate, creeping up the slope with the runoff. The control room has a rifle loophole cut through the brick, added recently and neatly, with the edges squared and the view covering the whole approach. The people who cut it did not cut it for decoration. They are not unfriendly; they are organized. The difference matters at the gate, and it matters more at the loophole.",
-    "dangerLevel": 5,
-    "travelHours": 2.5,
-    "baseRadsPerHour": 26
-  },
-  {
-    "id": "loc_ration_queue_plaza",
-    "displayName": "Ration Plaza",
-    "description": "The plaza is a civic square with queue lines painted on the pavement, and they are repainted often, because painted lines are cheaper than riot control and everyone here knows it. The line forms at 0600 whether or not a distribution has been announced, and the people in it are patient in the way of people who have practiced. Twenty-eight rads an hour, moderate, and the queue has been measured by scavengers who know the dose math: an hour in line, a lifetime of margin. The square is quiet now. The lines wait for the first horn, the way they have for three years.",
-    "dangerLevel": 4,
-    "travelHours": 1.5,
-    "baseRadsPerHour": 28
-  },
-  {
-    "id": "loc_conscription_office",
-    "displayName": "District Conscription Office",
-    "description": "The office was a driving licence bureau before the war, and the conversion was cheap: the counters stayed, the forms were changed, and the ticket machine was left exactly where it was. It still works, and people still take a number, which is the detail the visitors remark on and the locals do not, because it is simply how it is done here. Twenty-six rads an hour, moderate. The queue behind the number sits against the far wall, and the records in the back are in order, filed by date and by hand. The office processes what the district needs processed: labor assignments, work papers, the small permissions that keep a community from starving.",
-    "dangerLevel": 5,
-    "travelHours": 1.5,
-    "baseRadsPerHour": 26
-  },
-  {
-    "id": "loc_municipal_archive",
-    "displayName": "Municipal Archive",
-    "description": "The archive's rolling stacks run the length of the floor, most of them collapsed into each other like a card house that lost its nerve. The fire suppression discharged at some point, and everything below waist height is a solid grey brick of paper, the pages fused into one dense mass. Thirty rads an hour, moderate, and the air is sharp with the chemical the system used. What is left above waist height is still legible: registry books, land records, the paperwork of a city that believed in filing. The records people want now are the ones about who owned what, and who owed whom. The archive kept those in the lower shelves. It kept them well.",
-    "dangerLevel": 5,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 30
-  },
-  {
-    "id": "loc_dentists_row",
-    "displayName": "Dentists' Row",
-    "description": "Four dental practices stood on this street, and three are stripped to the walls, fixtures gone, doors gone, the wiring pulled in straight lines by someone methodical. The fourth is missing only its chair. Everything else is in place: the drill, the instruments, the cabinet, the ledger of patients with the last entry dated the week of the exchange. Thirty-two rads an hour, moderate, and worth the dose: anesthesia, instruments, the small tools that keep a district's mouths working through a winter. The street tells a story of one hasty job and one patient one. Nobody knows who took the chair. Everybody knows where it went.",
-    "dangerLevel": 5,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 32
-  },
-  {
-    "id": "loc_transit_authority_hq",
-    "displayName": "Transit Authority",
-    "description": "The transit authority's wall-sized route maps are still under glass, and the glass is still intact, and the maps are annotated in grease pencil with times, connections, and transfers that correspond to no published timetable in any era. Thirty-four rads an hour, creeping upward, and the building is quiet except for the drip of the ceiling. The annotations are recent and careful, in two hands, and they read like a schedule for something that runs without tracks or wheels. People who have seen the maps say the times are real, just not for trains. The building holds the city's old secrets about where the lines went, and where the lines still go, one way or another.",
-    "dangerLevel": 6,
-    "travelHours": 2.5,
-    "baseRadsPerHour": 34
-  },
-  {
-    "id": "loc_printworks",
-    "displayName": "The Printworks",
-    "description": "The web presses are seized solid, their rollers fused by the years into one unbroken line of rusted iron, and the smell of ink has finally left the building. The pallets of undelivered leaflets are still banded, still square, stacked in the loading bay like freight waiting for a truck that will never come. Thirty rads an hour, moderate. The leaflets were printed in the first week: instructions, warnings, and one edition that was recalled, which is the one the collectors want. The paper is dry and the ink is legible, three years on. The presses are dead, but the words they printed outlived them, which is not what the printers planned.",
-    "dangerLevel": 5,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 30
-  },
-  {
-    "id": "loc_department_store",
-    "displayName": "Vansen's Department Store",
-    "description": "Six floors of Vansen's, comprehensively looted in the first year and picked over in the years since, until what remains is only what nobody could use: the fittings, the counters, the displays. The window mannequins are still dressed for a season that did not arrive, autumn stock in summer, or the reverse, it is hard to tell with the ash on the glass. Thirty-six rads an hour, moderate, and the upper floors are quieter than the air. The salvage is in the service floors: fixtures, wiring, the brass and copper the first looters were too hurried to see. The mannequins face the street, patient, still modeling clothes for a city that stopped shopping.",
-    "dangerLevel": 6,
-    "travelHours": 2.5,
-    "baseRadsPerHour": 36
-  },
-  {
-    "id": "loc_public_swimming_baths",
-    "displayName": "Municipal Baths",
-    "description": "The deep end of the municipal baths was drained in the first winter and floored with mattresses in rows, a shelter that worked because the tiled walls hold heat well and the water below keeps the cold off the floor. Thirty-eight rads an hour, moderate, creeping in through the broken skylights. The baths were given up, and the tiles explain why: they hold heat, and they hold sound, and a hundred people trying to sleep in a room that echoes every cough and every argument is a room that empties fast. The mattresses are still there, in rows, and the wet marks on them show where the roof drips, in the exact places the sleepers would not put their heads.",
-    "dangerLevel": 6,
-    "travelHours": 2.0,
-    "baseRadsPerHour": 38
-  },
-  {
-    "id": "loc_st_brigids_almshouse",
-    "displayName": "St Brigid's Almshouse",
-    "description": "The almshouse was a hospice before the war and ran as one through the worst of it, and the building still carries that purpose in its bones. The beds are made, the sheets drawn tight, the lockers closed. The charts are filled in to a date, and not after it, and the date is the same on every board in the ward. Forty rads an hour, high enough to make visitors count their minutes. The kitchen is clean and empty, the kettle cold, the pantry swept. Whoever ran this place knew how to end a shift properly, and one night they did, and nobody has touched the rooms since, which is its own kind of respect.",
-    "dangerLevel": 7,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 40
-  },
-  {
-    "id": "loc_weighbridge",
-    "displayName": "The Weighbridge",
-    "description": "The weighbridge is a truck scale with a mechanical readout that still works, a machine with no electronics and nothing to go wrong, and the needle settles true every time. It was the Tollman's first office, and it is still where prices are set: the rates are chalked on a board by the booth, and the chalk is fresh. Twenty-eight rads an hour, moderate. The toll is taken in goods, in fuel, in labor, and the record is kept in the booth's ledger, in a hand that has not changed in three years. The bridge sets the price for everything that moves through the valley, and the scale makes sure the price is honest, or as honest as prices get.",
-    "dangerLevel": 5,
-    "travelHours": 2.5,
-    "baseRadsPerHour": 28
-  },
-  {
-    "id": "loc_motel_verity",
-    "displayName": "The Verity Motel",
-    "description": "Twelve units around a dry pool, and the pool is swept clean of ash every week, which is the first sign the Verity is looked after. It is neutral ground, and the neutrality is enforced by the Warlords, who charge for the enforcement, a fee paid in goods or in favors and recorded in a register that nobody argues with. Twenty-six rads an hour, moderate, and the rooms are priced by distance from the pool. Trade happens here, meetings happen here, and the bodies of people who broke the terms have been found at the county line, never in the pool. The pool stays clean. That is the whole arrangement.",
-    "dangerLevel": 5,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 26
-  },
-  {
-    "id": "loc_bridge_seven",
-    "displayName": "Bridge Seven",
-    "description": "Four lanes over the gorge, and the bridge is intact, which is the exception in this district and the reason it is guarded from both ends. The charges are still visibly taped to the underside of the span, wired and connected, placed by whoever decided the bridge would be theirs or no one's. Thirty rads an hour on the deck, moderate, and the river below reads higher. The guards on both sides know the wiring better than the people who laid it. The bridge is worth the toll and the risk, because the crossing saves a day and the other route takes a season. It will stand as long as everyone agrees to that.",
-    "dangerLevel": 6,
-    "travelHours": 3.5,
-    "baseRadsPerHour": 30
-  },
-  {
-    "id": "loc_recovery_yard",
-    "displayName": "Recovery Yard",
-    "description": "The wreckers and flatbeds nose in around the crane like a herd waiting for feed, and the crane is the only piece of equipment here that has never been taken apart. Half the fleet has been cannibalized to keep the other half running, and the yard is honest about it: the dead trucks are parked in a row, their parts labeled in chalk. Thirty-four rads an hour, moderate. The yard runs on parts, on patience, and on the knowledge of one mechanic who has kept a fleet of corpses working for three years. Everything in the yard has a story of what it used to be. Most of them end with the same sentence: it got us here.",
-    "dangerLevel": 6,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 34
-  },
-  {
-    "id": "loc_ordnance_shoulder",
-    "displayName": "The Ordnance Shoulder",
-    "description": "Two kilometers of hard shoulder, marked with paint sticks in a pattern that the Garrison trained its people to recognize and everyone else learned to fear. The paint is Garrison-issue, the same yellow they used on their own wire, and the marking stopped partway, at the exact point where the Garrison's responsibility ended or their luck did. Forty-four rads an hour, and the ground itself reads higher in patches that the paint does not explain. The shoulder is a corridor of warnings. The signs do not say what is under the paint, only that it is there, and that the people who made the marks left the rest to you.",
-    "dangerLevel": 7,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 44
-  },
-  {
-    "id": "loc_bus_reversal_loop",
-    "displayName": "Bus Reversal Loop",
-    "description": "The turning circle at the edge of the old evacuation route holds forty-one buses, nose to tail, every one of them pointing back toward the city. The doors are open and the keys are mostly gone, and the seats hold what the passengers left in the first hours: coats, bags, one child's shoe, things too heavy to carry into the route ahead. Thirty-two rads an hour, moderate, and the buses themselves shield the aisles where the dose drops. The fleet was turned around by order, or by panic, and then abandoned by both. Forty-one buses, still in line, still facing the wrong way, waiting for a departure that was cancelled three years ago.",
-    "dangerLevel": 5,
-    "travelHours": 3.0,
-    "baseRadsPerHour": 32
-  },
-  {
-    "id": "loc_diesel_tank_farm",
-    "displayName": "Tank Farm 4-East",
-    "description": "Eight bulk tanks in a row, the old farm's pride, and the ground around them is bare where the spill was burned off. The local test is performed from a distance: strike the tank with a thrown stone and listen. Three of the eight ring solid, which means they still hold fuel, and the other five answer with a dull thud that means they hold nothing but air and history. Thirty-six rads an hour, moderate, and the good tanks are worth every rad on the clock. The farm has been dry of thieves for a year, not because it is guarded, but because the last three men who tapped a tank are still in the hospital wing.",
-    "dangerLevel": 6,
-    "travelHours": 3.5,
-    "baseRadsPerHour": 36
-  },
-  {
-    "id": "loc_radio_relay_mast",
-    "displayName": "Relay Mast 12",
-    "description": "The guyed lattice mast stands over the ridge line, and the equipment hut at its base is powered. Not preserved, not maintained: powered, drawing current from a source that has outlasted three years of no visitors. Thirty-eight rads an hour on the slope below, and the hut's threshold reads lower, which is its own kind of warning. Something in the hut is listening or transmitting or both, and the meter in the window climbs and falls on a schedule that does not match the day. The mast crew left their coffee cups on the bench, ringed with dust. The equipment did not leave. The equipment has been on shift the whole time.",
-    "dangerLevel": 6,
-    "travelHours": 4.0,
-    "baseRadsPerHour": 38
-  },
-  {
-    "id": "loc_ash_sign_shrine",
-    "displayName": "The Ash Sign Shrine",
-    "description": "The survey cairn has been built up with concrete and glass slag into something taller than a person, and the construction is careful, the layers squared, the glass set to catch the grey light. A dosimeter is mounted at the top, working, mounted at eye height for a person standing on the packed earth in front of it, which is exactly how it is meant to be read. Forty-eight rads an hour here, and the dosimeter says so, honestly, every time. The shrine does not warn. It measures, and it records, and the surrounding ground is bare where people have stood to read it. The numbers climb a little higher every year, and the pilgrims keep coming anyway.",
-    "dangerLevel": 5,
-    "travelHours": 4.5,
-    "baseRadsPerHour": 48
-  },
-  {
-    "id": "loc_pilgrim_switchbacks",
-    "displayName": "The Switchbacks",
-    "description": "Eleven hairpins up the south face, and the verges are lined with boots. Pairs, placed neatly, toes to the road, thousands of them, stretching the whole climb. The boots are not a warning. They are a measure: the people who made the climb took them off at the end, or left them here at the start, and either way the pairs were arranged by someone with time and care. Fifty-two rads an hour at the lower switchbacks, and the dose is the real climb. The boots are worn thin at the heels, and the laces are gone, taken for use elsewhere. Whoever leaves boots here does not come back down for them.",
-    "dangerLevel": 5,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 52
-  },
-  {
-    "id": "loc_snowline_station",
-    "displayName": "Snowline Patrol Station",
-    "description": "The Garrison's forward post above the treeline was abandoned in good order, which is the detail that stays with visitors. The stove is banked, the fire laid for a return; the log is completed, the last entry written in the same steady hand as the first; the door is closed, and the latch is latched, and the windows are shuttered against the wind. Forty-two rads an hour at the door, and the station's own instruments, still on the wall, confirm it. The post was left the way a man leaves his house when he expects to be back in the morning. Three years of mornings have passed. The stove has not been lit again.",
-    "dangerLevel": 6,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 42
-  },
-  {
-    "id": "loc_low_background_lab",
-    "displayName": "Low-Background Laboratory",
-    "description": "Deep in the salt, behind two airlocks that still seal, the low-background laboratory waits. Its walls are lined with steel salvaged from pre-atomic shipwrecks, iron smelted before the first detonation, and that is why the counters in here still mean something: the room itself is clean. Thirty rads an hour at the outer door, and inside the counters drop to numbers the surface has not seen in years. The lab's instruments are cold and dark, but they are calibrated, and the shelves hold the samples that were being measured when the exchange happened: soil, water, air, each jar labeled with a date and a place. The work stopped. The room is ready.",
-    "dangerLevel": 6,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 30
-  },
-  {
-    "id": "loc_ice_core_store",
-    "displayName": "Ice Core Store",
-    "description": "The freezer room runs on geothermal bleed, a loop of pipe sunk into the mountain's heat, and it has held its temperature through three winters without a single power line. The ice cores stand racked in their cylinders, two meters to a tube, each labeled with depth in meters and year before present, the archive of the climate in long white rods. Forty rads an hour in the access tunnel, and the cold is its own hazard. The cores hold the record of a century of weather, the last word on what the sky was like before it went grey. The labels are typed, not handwritten, and they are exact.",
-    "dangerLevel": 6,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 40
-  },
-  {
-    "id": "loc_avalanche_gallery",
-    "displayName": "Avalanche Gallery",
-    "description": "The concrete snow shed covers the pass road for a hundred meters, and the gallery is half filled with the snow it was built to deflect, pressed hard against the uphill wall. The uphill side is load-bearing and the downhill side is not, any more, which is the sentence every visitor repeats before entering and the reason most do not. Forty-six rads an hour on the road beneath, and the concrete muffles the wind, which makes the silence worse. The shed held the pass open for the trucks that used to cross. It still holds the road, for now, and the sound it makes in the wind sounds like an argument about when.",
-    "dangerLevel": 7,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 46
-  },
-  {
-    "id": "loc_summit_relay",
-    "displayName": "Summit Relay",
-    "description": "The relay station sits above everything, and on a clear day the line of sight reaches all five sub-regions of the map, every valley, every smoke column, every roof. There are perhaps six clear days a year, and the people who climb for them have learned the sky's patience. Fifty-six rads an hour at the summit, the highest reading on the map, because the wind delivers what the clouds hold. The relay's mast is still guyed and still tall, and the hut below is locked with a Garrison lock that nobody has cut. Whatever the station was built to connect, it connects to nothing now, but it holds the best view in the region: everything, at once, briefly.",
-    "dangerLevel": 7,
-    "travelHours": 7.0,
-    "baseRadsPerHour": 56
-  },
-  {
-    "id": "loc_the_vessels_cell",
-    "displayName": "The Vessel's Cell",
-    "description": "The reactor outbuilding is four meters square, and the door is wedged shut from the inside, which is the first fact and the one that matters. Water jugs are stacked against one wall, every one of them empty, every one opened, the caps beside them in a neat row. Sixty-eight rads an hour at the door, and the reading rises steadily as you circle the building. Someone chose this room at the end, and someone else, or the same someone, stacked the jugs in order and wedged the door and stayed. The window is shuttered from inside. The building gives up nothing else. The dose outside is the whole story.",
-    "dangerLevel": 8,
-    "travelHours": 6.5,
-    "baseRadsPerHour": 68
-  },
-  {
-    "id": "loc_lock_gate_four",
-    "displayName": "Lock Gate Four",
-    "description": "Lock Gate Four is the gate that failed, and it is still open, exactly as far as it opened. The mechanism seized at the moment of the exchange, or of the flood, or of the decision, and the gate has held that position for three years, a door stopped mid-decision. Forty-four rads an hour at the lock house, and the water on the far side reads higher. The gate is the subject of an argument the locals keep reheating: whether it was meant to close, whether someone stopped it, whether it matters now. The ironwork is pitted and the winch is frozen. The gate stays where it is, and the water flows through it.",
-    "dangerLevel": 7,
-    "travelHours": 5.0,
-    "baseRadsPerHour": 44
-  },
-  {
-    "id": "loc_pump_station_nine",
-    "displayName": "Pump Station Nine",
-    "description": "Pump Station Nine was built to keep the basin dry, and the basin has won. The six drainage pumps stand under three meters of the very water they were built to move, their housings green with it, their motors drowned in the job they were hired to do. Forty-eight rads an hour at the surface, and the water reads worse, its own measure of everything that has settled. The pumps are the salvage, and the salvage is a story: iron, copper, windings that can be rewound by someone patient. The station is a machine that failed at its one task, then waited, under the water, for someone to come and take it apart.",
-    "dangerLevel": 7,
-    "travelHours": 5.5,
-    "baseRadsPerHour": 48
-  },
-  {
-    "id": "loc_alloc_12b",
-    "displayName": "Allocation 12-B",
-    "description": "The maintenance level is marked with a stencilled designation, Allocation 12-B, and nothing else: no stores, no supplies, no reason for the name. Fifty-four rads an hour at the stair, and the air below is dead and warm. On the wall by the stair there are chalk marks, fourteen in a row, then a gap, then six more, and the chalk is the same color throughout, and the gap is deliberate, a section of wall left clean on purpose. Fourteen people went down. Six came back up. The gap is not a mistake: it is the way the record was kept, by someone who wanted it readable, and it is the only record the level keeps.",
-    "dangerLevel": 8,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 54
-  },
-  {
-    "id": "loc_records_annex",
-    "displayName": "Records Annex",
-    "description": "The records annex is reached by boat, through a second-storey window, and the approach is the sort of thing that sorts visitors: those who can tie a line and those who cannot. Inside, the annex is dry above the waterline, heated by a stove that is being maintained, and someone has been dusting: the shelves are clean, the files are upright, the aisle is swept. Forty rads an hour at the waterline, and the reading drops as you climb. The annex holds the district's written memory, and it is being kept, deliberately, by a hand that has not stopped in three years. The records are read. The dust is not allowed to decide what matters.",
-    "dangerLevel": 7,
-    "travelHours": 6.5,
-    "baseRadsPerHour": 40
-  },
-  {
-    "id": "loc_drowned_cinema",
-    "displayName": "The Odeon",
-    "description": "The water in the Odeon has settled at the level of row F, and the screen is intact, the last thing in the building still facing its audience. The seats below the line are still folded down, and they were folded down by people who sat in them: the water came in while the house was full, or the house was full while the water came in, and the two versions of the story sound different. Forty-six rads an hour at the waterline, and the balcony stays cleaner. The film in the projector is still wound on its reel. The screen has not changed its image in three years: it is grey, and it is what everyone came to see.",
-    "dangerLevel": 7,
-    "travelHours": 6.0,
-    "baseRadsPerHour": 46
-  },
-  {
-    "id": "loc_cold_store_atlantic",
-    "displayName": "Atlantic Cold Store",
-    "description": "Twelve thousand cubic meters of freezer, and the room is four meters deep in water that has frozen over the top, sealing the contents under a floor of grey ice. The contents are unknown and, in principle, intact: whatever the cold store held in its last week, it holds still, under the ice, at the same temperature it was then. Fifty rads an hour at the door, and the ice reads lower, which is the whole argument for going in. The roof lights are dead, the loading dock is underwater, and the only entrance is a hatch that opens onto the ice itself. The store kept its promise to the last shipment. The receipt is on the dock.",
-    "dangerLevel": 8,
-    "travelHours": 7.0,
-    "baseRadsPerHour": 50
-  },
-  {
-    "id": "loc_bathymetric_boat",
-    "displayName": "Survey Launch Kittiwake",
-    "description": "The survey launch Kittiwake lies aground on a submerged roof, listing gently, held where the flood left her. The sonar rig is intact, still mounted, still connected, a machine that measured the riverbed for three years and one that measures the silence now. Fifty-two rads an hour on deck, and the water around her is worse. The logbook is the find: the last entry is dated, and the entries continue eleven days past the Exchange, in a hand that got steadier as the world got worse, recording water levels, silt, and the position of the boat that was no longer going anywhere. The survey was finished. The surveyor just kept measuring.",
-    "dangerLevel": 8,
-    "travelHours": 7.5,
-    "baseRadsPerHour": 52
-  },
-  {
-    "id": "loc_the_shallows_market",
-    "displayName": "The Shallows",
-    "description": "Nine boats tied into a single raft over what used to be a retail park, and the trade happens at gunwale height, hand to hand across the water, because nobody boards anybody else's hull and the rule is older than the market. Forty-two rads an hour at the waterline, and the boats carry their own shade and their own weather. The Shallows trades in what the dry markets cannot: things salvaged from drowned floors, things that come up with the divers, things that were paid for in breath. The raft has grown one boat a year, and the newest hull still smells of tar. The market is patient. The water is the only wall it needs.",
-    "dangerLevel": 7,
-    "travelHours": 6.5,
-    "baseRadsPerHour": 42
-  },
-  {
-    "id": "loc_the_allotments",
-    "displayName": "The Allotments",
-    "description": "Two hundred numbered plots behind a chain-link fence, a caretaker's hut, and a noticeboard at the gate. The waiting list is still pinned to the noticeboard, in a plastic sleeve, and it has been updated in pencil: four of the people on it are alive and farming here now, and their names are marked off in a different hand. Thirty rads an hour, moderate, and the plots are worked in rotation, the soil turned and rested as the readings allow. The allotments were a civic amenity before the war. Now they are a ration system with a waiting list, and the list is the most honest document in the district: everyone on it is waiting for ground.",
-    "dangerLevel": 5,
-    "travelHours": 3.5,
-    "baseRadsPerHour": 30
-  }
+ {
+  "id": "abandoned_hospital",
+  "displayName": "Abandoned Hospital",
+  "description": "The east wing of the regional hospital came down in the second winter, and nobody has cleared it since. Girders lean against the stairwell, and the pharmacy door is buried under a ton of masonry. Sealed rooms still hold medicine if you can reach them without the ceiling deciding otherwise. Dosimeters tick up fast near the radiology basement, where the lead-lined walls kept their charge and the machines kept theirs. The morgue drawers are open. A stretcher with one wheel has been propped against the exit, as if someone meant to come back for it.",
+  "dangerLevel": 6,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 35
+ },
+ {
+  "id": "rural_gas_station",
+  "displayName": "Rural Gas Station",
+  "description": "A roadside station stripped down to its frame on the main route east. The pumps are gutted, the shop glass is gone, and the wind blows ash through the aisles. Fuel drums lie where they were rolled and dropped, most of them empty, a few still holding dregs. The radiation is low here and the danger is low, which is exactly why it has been picked over so completely. What remains is what everyone else passed on. Someone has been sleeping in the workshop bay and oiling the door hinges, so the place is watched even when it is empty.",
+  "dangerLevel": 3,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 15
+ },
+ {
+  "id": "suburban_house",
+  "displayName": "Suburban House",
+  "description": "An intact house in a low-density neighborhood, the kind nobody bothers to burn because there is nothing left to take. The roof holds, the windows are boarded from the inside, and the stove still draws. The pantry has been picked clean of food but the shelves remain, and behind the cellar stairs there is a toolbox with the rust only just reaching the hinges. The garden has gone to seed behind a collapsing fence. The radiation is low and the risk is low, and that is precisely the point: quiet houses like this one are how people survive the first few years, one meal at a time.",
+  "dangerLevel": 2,
+  "travelHours": 1.0,
+  "baseRadsPerHour": 10
+ },
+ {
+  "id": "government_bunker",
+  "displayName": "Government Bunker",
+  "description": "A sealed military installation set into the hillside, doors still dogged down three years after the exchange. The approach is hot, sixty rads an hour where the wind bends around the blast berm, and the concrete is pocked where the ordnance found it anyway. The outer hatch was drilled once and patched, which means someone got out, or something got in. Behind the inner doors: fuel, medicine, rations sealed in crates with the inventory still legible. The paperwork on the wall lists a full garrison. The roster was never crossed out.",
+  "dangerLevel": 8,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 60
+ },
+ {
+  "id": "stranger_cache",
+  "displayName": "The Cartographer's Cache",
+  "description": "A sealed pre-war storage locker in a collapsed residential block, its location handed over on a scrap of paper by a stranger with steady hands. The block came down at a tilt, and the locker sits in a pocket of intact basement, dry, accessible through a gap a thin person can squeeze through. Radiation is moderate, twenty-five rads an hour, and the danger comes from the address itself: a trap is not out of the question. The lock is clean and oiled, which is suspicious in a building that has not seen maintenance in years. Real or a trap, you will not know until you are inside.",
+  "dangerLevel": 7,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 25,
+  "requiredFlagId": "stranger_has_coordinates",
+  "cleanWaterRewardFlag": "stranger_given_clean_water",
+  "ambushFlag": "stranger_given_irradiated_water"
+ },
+ {
+  "id": "location_geo_thermal_plant_ruins",
+  "displayName": "Geo-Thermal Plant Ruins",
+  "description": "The ground here is not solid and never was. Cracks breathe hot vapor across the whole platform, and pools of boiling mud bubble under a crust that looks safe until it is not. The pipes still hiss with underground steam, a sound that never stops, day or night. High radiation and worse footing: forty-five rads an hour where the ash settles thickest. The payoff is real. Valves, heat exchangers, and insulated pipe still hang off the dead plant, and a working geothermal unit is worth crossing this ground for. Move slow, test every step, and never walk where the steam hides the ground.",
+  "dangerLevel": 8.0,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 45.0
+ },
+ {
+  "id": "location_arcology_sector_4",
+  "displayName": "Arcology Sector 4",
+  "description": "Sealed blast doors, still powered, still closed, and someone inside still answers the intercom. Sector 4 of the arcology was the last to fall, and its residents never left: a line of descendants from the pre-war elite, starved thin behind walls that kept out the fallout but not the years. Radiation stays low here, twenty rads an hour, which is why what they hoard matters. They guard pre-war luxuries with improvised weapons and trade them only when the hunger wins. They know the value of everything and the price of nothing. Negotiate politely. They have all the time in the world.",
+  "dangerLevel": 9.0,
+  "travelHours": 8.0,
+  "baseRadsPerHour": 20.0
+ },
+ {
+  "id": "location_frozen_river_barge",
+  "displayName": "Frozen River Barge (recast; existing id)",
+  "description": "Dock crew on frozen cargo. They will trade a crate for a way off the ice.\n\nA river barge pinned in pack ice that used to be a harbour roadstead. The hold is a larder and a problem. Crates of Continuity stock, some honest, some swollen. The crew have been living on what would freeze and leaving what would not. They are thin. They are not a carnival. A crate marked `BEANS / ALLOC-7` sits on the hatch-coaming as the asking price for passage toward *Hearth-4* or toward the Cut. You can pay. You can refuse and walk the Ridge. A billhook is lashed to the rail, edge dull from ice, not from people. A logbook in the wheelhouse lists days since a boat came, then stops listing and starts listing temperatures. The last temperature is the same as the first. Someone has been winding the clock. The key is on a string around the skipper's neck. You can ask for it. They will say the clock is how they know the foghorn is late.",
+  "dangerLevel": 6.0,
+  "travelHours": 10.0,
+  "baseRadsPerHour": 30.0
+ },
+ {
+  "id": "location_crashed_icebreaker_convoy",
+  "displayName": "Icebreaker Convoy",
+  "description": "Military rolling stock that tried to reach the roadstead. The RTG is a bruise on the ice.\n\nNot a submarine. Not a joke. Ice-capable wagons and a locomotive that tried to make the coast when the Cut was not yet a road. Derailed where the ice moved. A cracked RTG in the power car makes a hotspot you can see as a yellow-brown stain in the white, visible before the dosimeter agrees. Tungsten bars in a crate that did not split. Track sections. A map fragment `Victory_Migration` already wants, waxed, the estuary drawn as a summer river. You can take a bar. You can take the fragment. You should not linger. The dose window is a fact. A helmet on a seat, visor down, welders' glass taped in — someone understood the albedo and still sat too long. Do not put it on to check. Ice crows on the couplings. They wait.",
+  "dangerLevel": 7.0,
+  "travelHours": 11.0,
+  "baseRadsPerHour": 85.0
+ },
+ {
+  "id": "location_silent_observatory",
+  "displayName": "The Silent Observatory",
+  "description": "High on the mountain, where the air is thin and the cold sits at sixty below. It is the coldest place on the map and one of the cleanest: radiation stays low, fifteen rads an hour, because the wind keeps the ash moving past instead of letting it settle. The air is so clear you can see the curve of the earth and the grey blanket that used to be the lower world. The dome is intact and the instruments are mostly where the astronomers left them. The danger here is not radiation. It is the climb, the cold, and the silence that makes a man hear his own heart and start counting.",
+  "dangerLevel": 8.0,
+  "travelHours": 7.0,
+  "baseRadsPerHour": 15.0
+ },
+ {
+  "id": "location_subterranean_seed_vault",
+  "displayName": "Subterranean Seed Vault",
+  "description": "The vault was built to outlast a century, and it has done its job so far. Behind the frozen doors, racks of seed lines sit sealed in foil at a temperature that never rises. The radiation here is low, ten rads an hour, because the mountain takes the dose for you. The problem is the people who know the seeds are there. The approach is heavily trapped, spring guns and deadfalls laid by the last organized group to hold the valley. What is inside matters more than anything else on the map: the last unmutated crop lines in existence, and the ledger of what they were.",
+  "dangerLevel": 6.0,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 10.0
+ },
+ {
+  "id": "location_ministry_of_truth_bunker",
+  "displayName": "Ministry of Truth Bunker",
+  "description": "The propaganda servers are still humming on backup power, three years after the broadcasts stopped, because nobody ever found the off switch. The bunker breathes: ventilation, generators cycling, lights on schedule in corridors no one walks. Forty rads an hour accumulates in the server halls where the cooling failed and the dust is radioactive. The machines hold the truth about Protocol Zero, encrypted in drives bolted to the floor. The people who built this place are gone. Their work is not. What is on those drives will either explain the last three years or end the argument about them, and the bunker does not care which.",
+  "dangerLevel": 9.0,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 40.0
+ },
+ {
+  "id": "location_ash_dune_cemetery",
+  "displayName": "Ash Dune Cemetery",
+  "description": "A dumping ground at the end of a graded road, where the dead of the first year were stacked and the ash came and did the rest. The ash preserves them perfectly, three years on, and the dunes are marked by whatever was sticking up when the wind stopped. Sixty rads an hour here, absorbed in the ground and the bodies alike, and the disease risk is worse than the dose. Nothing grows. Nothing moves except the ash. The scavengers who work the edges for coats, boots, and any metal not yet reclaimed say the same thing: take what you need quickly, and do not dig deep.",
+  "dangerLevel": 5.0,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 60.0
+ },
+ {
+  "id": "location_abandoned_ski_resort",
+  "displayName": "Abandoned Ski Resort",
+  "description": "The cable cars hang frozen mid-swing, their passengers still inside, their coats still warm-looking from a distance. The resort died fast, and the cold preserved what the panic did not destroy. Twenty-five rads an hour has settled into the base lodge, but the upper slopes stay relatively clean. The luxury was real here: furs, spirits, medicine cabinets in the chalets, everything the wealthy took with them when they ran for the mountains. They died warm and well-dressed, which is what the mannequins look like now. The lifts are seized, the snow is grey, and the rooms are exactly as they were left.",
+  "dangerLevel": 4.0,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 25.0
+ },
+ {
+  "id": "location_geothermal_borehole_site",
+  "displayName": "Geothermal Borehole Site",
+  "description": "The drilling rig is still standing over a hole three kilometers deep, and the groundwater it broke into has flooded the whole site in a slow, toxic seep. Fifty-five rads an hour on the platform, and the water below the walkways reads worse. The rig itself is a working machine if anyone ever gets power back to it: draw works, pipe racks, casing still stacked. The borehole goes down into the crust where the heat is, and the valve at the bottom is the prize. The men who drilled it left in a hurry. Their boots are still by the tool rack, and the pumps run on nothing now.",
+  "dangerLevel": 8.0,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 55.0
+ },
+ {
+  "id": "location_flooded_subway_depot",
+  "displayName": "Flooded Subway Depot",
+  "description": "Pitch black below the street, with water waist-deep in the main bay and rising against the pillars. The water is toxic: forty rads an hour dissolved into it, and a wader suit is not a luxury here, it is the difference between wading and drinking. The Sump-Dredgers work this depot, navigating by echo, tapping the pipes with sticks to hear what is solid. They are the only ones who know where the floor drops. Pre-war transit tech is buried in the silt: signal relays, sealed junction boxes, whole control racks that ran the city's veins. The Dredgers will point you at the easy ones, for a price.",
+  "dangerLevel": 7.0,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 40.0
+ },
+ {
+  "id": "location_sub_level_4_transit",
+  "displayName": "Sub-Level 4 Transit Hub",
+  "description": "The elite transit tunnels were sealed before the exchange and have not been opened since, except by the thing that grows in them now. Ash-Blight carpets the walls in patches that glow a faint green when the air moves, and the glow pulses like something breathing. Radiation stays low here, twenty rads an hour, because nothing falls this deep and nothing decays. The sealed air has its own chemistry now, and masks are mandatory. In the maintenance bays, pneumatic jacks and encrypted drives wait behind doors that were never meant to be opened from the outside. The tunnels hum. They always hum. It is the fans. Probably the fans.",
+  "dangerLevel": 9.0,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 20.0
+ },
+ {
+  "id": "location_municipal_sewage",
+  "displayName": "Municipal Sewage Treatment",
+  "description": "The plant still processes, in its own way: the pipes groan with pressurized sludge and the digesters work without an operator. That is the danger. Methane builds in every pocket of still air, and a rebreather is mandatory below the walkway. Thirty rads an hour where the settled solids have concentrated, worst in the sludge beds. The settling tanks hold what the city stopped using: industrial chemicals, fertilizer that never left the site, scrap metal in racks that the rust has not yet claimed. It is a slow, stinking, careful job, and the people who work it have learned to smell the difference between gas and nothing.",
+  "dangerLevel": 6.0,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 30.0
+ },
+ {
+  "id": "location_collapsed_salt_mine",
+  "displayName": "Collapsed Salt Mine",
+  "description": "The mine ran under the ridge for a century, and the roof has been negotiating its surrender ever since. Massive caverns hold the salt that keeps half the region's meat through winter, which is why people still come down here. Radiation is nearly absent, ten rads an hour, the salt and the depth absorbing what the sky drops. The risk is the roof. Shoring timber lies scattered among collapsed beams, and the creak travels farther than the light. Good salt is worth the gamble: pure, dry, and enough of it to preserve a herd. Listen before you move, and move after you listen.",
+  "dangerLevel": 5.0,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 10.0
+ },
+ {
+  "id": "location_bio_remediation_lab",
+  "displayName": "Bio-Remediation Lab",
+  "description": "Ground zero for the Myco-Protocol, the experiment that was supposed to eat the contamination and learned to eat everything else. Spore density in the main hall is lethal, and fifty rads an hour keeps the samples from going anywhere alone. The fungus grows in sheets across the benches, up the walls, and through the ceiling tiles, patient and pale. The sealed lockers still hold what the scientists left: the fungicide formula, field-tested hazmat suits, and the notes on what happened when the protocol outgrew its purpose. It grows slow. It grows steady. It has not needed anyone's help.",
+  "dangerLevel": 8.0,
+  "travelHours": 4.5,
+  "baseRadsPerHour": 50.0
+ },
+ {
+  "id": "location_submerged_data_center",
+  "displayName": "Submerged Data Center",
+  "description": "The data center took the flood at street level and kept breathing through its backup floor. Water stands to the chest in the aisle, and the servers that ran the city's networks are stacked underwater in their racks. Twenty-five rads an hour in the water, manageable, if you have the improvised scuba gear the divers around here trade. The raised floor plenum stayed dry, and in it sit watertight server blades and a stack of solar cells that have never seen the sun. The value is not the data. The value is the hardware that still works, pulled one tray at a time from a room that is slowly electrocuting itself.",
+  "dangerLevel": 7.0,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 25.0
+ },
+ {
+  "id": "location_geothermal_vent_shaft",
+  "displayName": "Geothermal Vent Shaft",
+  "description": "The earth's mantle bleeds heat up through fractured rock here, and the vent shaft breathes it out in clouds of steam that carry sulfur and ash. Sixty rads an hour where the steam banks against the lee wall, and the mud at the bottom boils with a sound like a kettle that has been ignored too long. The control room overlooks the shaft, its windows filmed grey, its panels dead but its hardware intact: geothermal valves, seals, thermal paste in drums that never expired. The heat is real and it is free. The problem is that everything between a scavenger and that heat is steam, mud, and a floor that is not load-bearing anymore.",
+  "dangerLevel": 8.0,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 60.0
+ },
+ {
+  "id": "location_the_sump_cathedral",
+  "displayName": "The Sump Cathedral",
+  "description": "An underground cistern the Dredgers rebuilt into a shrine, and the light inside is not from lamps. Bioluminescent moss carpets every surface, ceilings to waterline, glowing faint green and swaying with the air currents from the vents. Thirty-five rads an hour in the water, which is why the Dredgers trade: pure water, drawn from the deep sumps where the fallout has settled, in exchange for UV lamps, iodine, and the other things that keep them alive. They are serious people who keep careful ledgers. Trade is fair here, or it is nothing. They have survived three years of the worst the city had to offer, and they mean to make it four.",
+  "dangerLevel": 6.0,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 35.0
+ },
+ {
+  "id": "location_abandoned_desalination",
+  "displayName": "Municipal Desalination 8",
+  "description": "Occupied. Failing. Named. The word *abandoned* was what Sector 4 could see from the Drown.\n\nConcrete intakes, salt-white yards, steam that smells like hot metal and iodine. The RO hall is a nave of pressure vessels, numbered, some blanked with steel plates and warning tags from a year that still used printed tags. Workers wear plant suits that were never hazmat — grey canvas, inner-tube patches at the knees, visors clouded from the inside by breath. A valve wrench, still warm, hangs on a labelled peg: `HALL 2 — DO NOT REMOVE`. People remove it. It comes back. Hydro-Barons were grade 4–7 municipal engineers. The Toll coined the name. They kept the plant because turning it off kills the Cluster in two days, and because nobody issued a stop order. A visitor book by the inner door has names in a plant hand, not an Office hand. Leva's is the most frequent. You can take the wrench. The next isolation will be done with a pipe and a prayer that is not a prayer. The yard salt crunches. It is not snow.",
+  "dangerLevel": 7.0,
+  "travelHours": 8.5,
+  "baseRadsPerHour": 40.0
+ },
+ {
+  "id": "location_deep_core_borehole",
+  "displayName": "Deep Core Borehole",
+  "description": "The deepest hole on the map, two miles of shaft drilled into the mantle, and the heat rising out of it keeps the snow off a circle of ground the size of a town square. Eighty rads an hour at the collar, and the descent goes through worse. The mantle tap valve sits at the bottom, a piece of engineering that could give whoever holds it a working power source for generations. Nobody has reached it. The winch is seized, the ladder is gone past the first hundred meters, and the shaft breathes heat and steam like a throat. It is the last prize, and it has cost everyone who tried it everything they carried.",
+  "dangerLevel": 9.0,
+  "travelHours": 8.0,
+  "baseRadsPerHour": 80.0
+ },
+ {
+  "id": "location_uxo_highway_choke",
+  "displayName": "UXO Highway Choke",
+  "description": "The six-lane highway is paved with a layer of unexploded cluster munitions, scattered by a strike that never needed to be accurate. Every step is a gamble, and the local phrase for crossing is a word that means both 'carefully' and 'slowly'. Thirty rads an hour settles into the tarmac, but the bombs are the real timer. The median strip holds the trade: mine prodders, marking paint, tactical scrap from the first wave of people who tried to clear it. The far side has never been fully looted, and the reason is printed on every casing. Walk the skip pattern they mark. Do not test the parts they do not mark.",
+  "dangerLevel": 9.0,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 30.0
+ },
+ {
+  "id": "location_radar_array_spire",
+  "displayName": "Radar Array Spire",
+  "description": "The dish is the size of a house, and it groans as the wind loads its face, turning on bearings that should have seized three years ago. A magnetic anomaly around the base is strong enough to pluck a compass out of a pocket and spin it against the glass. Forty-five rads an hour concentrates in the service trench under the counterweight. The control shack is intact: vacuum tubes racked in their crates, copper wire in coils, calibration tools that were machined before the war and will outlive the ones that replaced them. The array listens to nothing now. It still turns, which is the part nobody can explain, so the scavengers go up fast and come down faster.",
+  "dangerLevel": 8.0,
+  "travelHours": 6.5,
+  "baseRadsPerHour": 45.0
+ },
+ {
+  "id": "location_drone_hive_silo",
+  "displayName": "Drone Hive Silo",
+  "description": "The silo lid is gone, and the loitering munitions have moved in. They nest in the launch bay in layers, dormant but warm, and they buzz when the sun hits the top of the stack, a sound like a hornet nest the size of a building. Sixty rads an hour on the rim. The interior is worse. The launch bay holds what they do not use: car batteries stacked in rows, explosive powder in sealed drums, guidance boards pulled from the machines that now circle overhead. There is no good way to take anything from this place. There is only a careful way, which is to say a way that does not wake them.",
+  "dangerLevel": 10.0,
+  "travelHours": 7.0,
+  "baseRadsPerHour": 60.0
+ },
+ {
+  "id": "location_automated_mortar_pit",
+  "displayName": "Automated Mortar Pit",
+  "description": "Every twelve hours, the mortar fires. The Custodian, the automated system that runs this bunker, does not sleep and does not aim: it lobs shells into the ash-wastes on a timer, as if the war were still waiting for the return fire. Forty rads an hour on the approach, and the interval between shots is the only clock that matters. The magazine holds mortar shells and gunpowder, racked and labeled, and the Custodian has never once been to it for supplies. The bunker is a machine that still believes the war is on. The salvage is real. The problem is that the Custodian has also never once stopped believing it.",
+  "dangerLevel": 9.0,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 40.0
+ },
+ {
+  "id": "location_scrap_neuromancer_camp",
+  "displayName": "Wire-Head Camp",
+  "description": "The cargo plane came down nose-first and the Wire-Heads built their camp in its belly, wiring the fuselage with salvaged cable and light from their own circuits. They worship logic gates, which is not a joke to them: they keep shrine boards with blown fuses laid out like relics. Twenty rads an hour outside, near nothing inside, because they ground everything. They sell bypass codes and decrypted keys, and they trade in Faraday mesh and circuit boards recovered from half the wrecks on the map. Their prices are exact and non-negotiable. They do not trust words. They trust that the logic holds, and it usually does.",
+  "dangerLevel": 6.0,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 20.0
+ },
+ {
+  "id": "location_magnetic_anomaly_crater",
+  "displayName": "Magnetic Crater",
+  "description": "A local magnetic storm, tight and violent, sits in the crater like a weather system that never leaves. Metal wants to leave your hands here: keys jump, knives slide toward the rim, and one scavenger's crowbar is still pinned to the slope, stuck to the ground like a sign. Fifty-five rads an hour in the core, and worse, the dosimeters lie, spinning with the compasses. The impact core holds tungsten bars and RTG batteries, dense and valuable and sitting exactly where the field is strongest. Take bearings from the far ridge, not from the rim. What the crater says about itself cannot be trusted.",
+  "dangerLevel": 8.0,
+  "travelHours": 4.5,
+  "baseRadsPerHour": 55.0
+ },
+ {
+  "id": "location_abandoned_convoy_yard",
+  "displayName": "Abandoned Convoy Yard",
+  "description": "Rows of transport trucks rust in formation, nose to tail, as if waiting for a convoy order that will never come. A single sentry gun guards the yard, still powered, still tracking: it swivels to follow movement but cannot lead its target, so it shoots exactly where you were. People have learned to walk the yard in bursts and be somewhere else when it fires. Twenty-five rads an hour, manageable, and the trucks hold what the drivers never unloaded: engine blocks, fuel jerrycans, cab tools. The gun is a dying machine with one habit left. Cross in rhythm, and it is just noise. Break rhythm, and it is noise and lead.",
+  "dangerLevel": 7.0,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 25.0
+ },
+ {
+  "id": "location_acoustic_testing_facility",
+  "displayName": "Acoustic Test Facility",
+  "description": "The anechoic chambers swallow sound completely, and the silence inside is thick enough to hear your own blood moving. Radiation is low here, fifteen rads an hour, because the facility was sealed tight and the walls were built to absorb everything. The stress is the real hazard: crews have walked out after an hour with the same look the survivors of the first year had. The test rigs hold what the facility was built to measure: military headphones, sound baffling, calibration gear used on the machines that screamed over the city in the last war. The quiet is the point. The quiet is also what breaks people.",
+  "dangerLevel": 8.0,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 15.0
+ },
+ {
+  "id": "location_substation_omega",
+  "displayName": "Substation Omega",
+  "description": "The transformer yard is a forest of steel and ceramic, and the capacitors in the switch house still hold charge, which is the problem. Arcing here is an EMP in miniature: it can kill electronics, scramble a compass, and light a man's fillings. Thirty-five rads an hour has settled into the oil-soaked ground under the banks. The switching house holds the real prize, generator alternators and cable in lengths a scavenger can carry, if he can get past the stored energy without touching the wrong rack. The yard hums at night. The hum means it is still alive. The hum also means stay off the metal.",
+  "dangerLevel": 7.0,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 35.0
+ },
+ {
+  "id": "location_the_dead_hand_core",
+  "displayName": "The Dead Hand Core",
+  "description": "The Dead Hand Core is the machine that keeps the UXO fields awake, the regional brain that decides when the ground goes off. Eighty rads an hour outside the blast door, and the Custodian's last outpost behind it has never stopped working. The server racks run hot, cooling fans cycling on a schedule older than the ash. The master override key sits in a vault in the center, and the stories say it silences every mine, every sentry, every timer on the map, forever. The stories also say the Core knows it is being hunted and has adjusted its defenses accordingly. It is the last door, and the Custodian is still behind it.",
+  "dangerLevel": 10.0,
+  "travelHours": 9.0,
+  "baseRadsPerHour": 80.0
+ },
+ {
+  "id": "location_lethe_water_treatment",
+  "displayName": "Lethe Water Treatment",
+  "description": "The water treatment plant is a front; the real work went on in the sub-level below, where the amnestics were synthesized in batches and shipped up the lift in unmarked drums. The labels are gone but the records remain, filed under work order numbers that mean nothing now. Forty rads an hour has pooled in the drain channel under the mixing vats. The sub-level holds what the operation never moved out: scopolamine root in sealed crates, lithium salts in bags, the raw chemistry of forgetting. The people who ran this place were careful about their own memories. The visitors after them have been less careful about anything at all.",
+  "dangerLevel": 9.0,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 40.0
+ },
+ {
+  "id": "location_observatory_dome",
+  "displayName": "Shattered Observatory",
+  "description": "Above the ash layer, where the sky is clear and the sun is a weapon. The UV Scourge at this altitude burns through in minutes, sunburn that blisters before you notice it, and twenty rads an hour rides in on the same clear light. The dome is shattered, the telescope slumped in its mount. The loot is specific: welder's glass from the workshop, mirror shards that still carry the factory bevel, enough polished surface to focus light, or attention, wherever it is pointed. People come up here only when they need those things badly. The view is the last thing they mention.",
+  "dangerLevel": 10.0,
+  "travelHours": 7.0,
+  "baseRadsPerHour": 20.0
+ },
+ {
+  "id": "location_submerged_arcology",
+  "displayName": "Submerged Luxury Arcology",
+  "description": "The arcology was the pre-war elite's answer to the end of the world, and it worked exactly as well as their other plans. The lower levels flooded first, and the residents starved in velvet while the water rose past the windows. Thirty rads an hour in the waterline where the pumps died. The dry upper floors are a museum of bad luck: a vinyl collection with the sleeves still dated, gold bars in a vault door left open, epoxy resin in drums that never got used because the leak was already in. Everything here was chosen for comfort. Nothing here was chosen for survival.",
+  "dangerLevel": 8.0,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 30.0
+ },
+ {
+  "id": "location_concrete_batching_plant",
+  "displayName": "Concrete Batching Plant",
+  "description": "The batching plant sits where it was when the war ended, hoppers still full, drums still in rows, everything covered in a year of ash and then two more of weather. The risk is structural: the silo legs are rusted through at the welds, and the catwalks flex under weight they were never meant to carry twice. Twenty-five rads an hour on the yard, concentrated where the runoff pooled. The salvage is solid: galvanized rebar in bundles, cement mix in bags that stayed dry in the store shed, the raw materials of rebuilding. The plant made the concrete the city stood on. Now it will make whatever the next city stands on, if it does not fall first.",
+  "dangerLevel": 6.0,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 25.0
+ },
+ {
+  "id": "location_seed_vault_antechamber",
+  "displayName": "Seed Vault Antechamber",
+  "description": "The antechamber is the story of the vault in miniature: the outer doors failed, blown in from the top down, and the inner doors held, sealed against the blast and the weather and everything since. Fifteen rads an hour in the hall, the cleanest ground in the region, because the doors did their job. The antechamber holds what the vault kept closest: the seed ledger, listing every line and every source in careful hand, and a store of non-irradiated wheat that has never seen the sky. Someone got this far with tools and patience and then stopped at the inner door. Their tools are still by the wall.",
+  "dangerLevel": 7.0,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 15.0
+ },
+ {
+  "id": "location_hospital_psych_wing",
+  "displayName": "Hospital Psychiatric Wing",
+  "description": "The psych wing holds the echoes of the first week, when the panic reached the hospital and the hospital did what it could. Charts are still on the boards, written fast, stopped mid-sentence. Fifty rads an hour concentrates in the ward where the windows face the blast ground, and the stress here is worse than the dose: people report the same feeling, of being watched from the empty rooms. The dispensary holds what the staff never issued: opioid painkillers in sealed stock, canvas restraints folded on the shelf. The drugs are worth the trip. The rooms are the price of admission.",
+  "dangerLevel": 8.0,
+  "travelHours": 4.5,
+  "baseRadsPerHour": 50.0
+ },
+ {
+  "id": "location_mirror_factory",
+  "displayName": "Mirror Manufacturing Plant",
+  "description": "The factory floor is a field of shattered glass, every pane from the polishing line in a thousand pieces, catching the grey light from the roof holes. Work boots are not optional here: the ankle-high crunch of glass goes on for the whole building, and the fine dust finds every cut. Twenty rads an hour, moderate, easy to manage if you are careful with your time. The salvage is specific: mirror shards with the silver backing still intact, and silver nitrate in the coating room, a chemical worth its weight to anyone who works with light or film. The factory made mirrors for a city that wanted to see itself. The city is gone. The glass remains.",
+  "dangerLevel": 5.0,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 20.0
+ },
+ {
+  "id": "location_radio_telescope_array",
+  "displayName": "Radio Telescope Array",
+  "description": "The dishes are the size of houses, and they groan as the wind loads their faces, turning on bearings that should have seized three years ago. Forty-five rads an hour concentrates in the service trenches under the counterweights. The array points at a sky that does not answer, and the receivers still run warm on the backup line, listening to nothing at all. The salvage is the old kind: vacuum tubes racked in their crates, copper wire in coils, calibration tools machined before the war and better than anything made since. Whatever the array was waiting to hear, it heard it or it did not. The dishes have kept their appointment regardless.",
+  "dangerLevel": 9.0,
+  "travelHours": 8.0,
+  "baseRadsPerHour": 45.0
+ },
+ {
+  "id": "location_ash_whale_carcass",
+  "displayName": "Ash-Whale Carcass",
+  "description": "What looks like a whale beached in the ash is a fossil: the remains of a massive pre-war root network that outlived the forest it belonged to, mineralized and black, rising out of the dunes like a ribcage. Sixty rads an hour concentrates in the hollows under the root mass, where the fallout settled and stayed. The scavengers who work the carcass take their time in careful shifts. The value is in the material: bio-plastic compounds that hardened with the fossil, and fertilizer from the humus trapped in the root hollows, dark and rich and older than the war. The whale gave its life to the ground once. The ground gives it back slowly.",
+  "dangerLevel": 7.0,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 60.0
+ },
+ {
+  "id": "location_the_memory_vault",
+  "displayName": "The Memory Vault",
+  "description": "The Memory Vault was built to hold the last three years of a civilization's small talk: photos of meals, arguments, birthdays, the ordinary noise of ordinary days. Eighty rads an hour on the access ramp, and the server hall behind the door runs on its own generators, still duplicating data from machines no one has logged into in years. The drives are racked by date and user, searchable, intact. A hard drive platter from this place is worth more than gold to the archivists, because it is proof that someone was here, that a name was real, that a day happened. The machines kept their promise. They forgot nothing. Nobody asked them to stop.",
+  "dangerLevel": 10.0,
+  "travelHours": 9.0,
+  "baseRadsPerHour": 80.0
+ },
+ {
+  "id": "highway_pileup",
+  "displayName": "Highway Pileup",
+  "description": "Two kilometers of the ring road, welded together into a single continuous mass of cars, doors open, hoods up, looted in the first year and welded in the second by whoever decided nobody else would take it. Twenty-five rads an hour, manageable. One of the engines still turns over, a fact the locals guard like a secret and use like currency. The pileup gives up its parts slowly: intact engine blocks winched out of the lattice, copper wire stripped by the meter, fertilizer from a truck cab that sealed itself shut. The mass is a mine of parts and a monument at once. The cars were the first wave of the evacuation. They are still in line.",
+  "dangerLevel": 6.0,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 25.0
+ },
+ {
+  "id": "prewar_medical_cache",
+  "displayName": "Pre-War Medical Cache",
+  "description": "A clinic basement, sealed in the last week before the exchange, the door dogged down and the boxes stacked by someone who thought they might be back. Fifteen rads an hour, low, and the value is exactly what the seal preserved: antibiotics in foil strips, bandages in rolls, a medical kit still in its case with the instruction card. The cult finds these caches first, and the cult never says where. Their people have a look about them, calm and careful and not poor. If you reach this basement before they do, take what you can carry and do not leave a sign. If you reach it after, the shelves will tell you everything.",
+  "dangerLevel": 4.0,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 15.0
+ },
+ {
+  "id": "loc_grange_hall",
+  "displayName": "The Grange Hall",
+  "description": "The Grange Hall still holds meetings, and the oil lamps are lit for them. A long table runs the length of the room, and a hand-lettered sign by the porch asks visitors to leave their weapons there, a request people honor because the hall has been neutral for three years and nobody wants to be the one who ends that. Fourteen rads an hour, low enough to be a comfort. Attendance is recorded in a ledger that goes back to the first week after the exchange, in three different hands, and the entries never skip a meeting. Whatever happens in the world outside, the hall has kept its schedule.",
+  "dangerLevel": 3,
+  "travelHours": 1.0,
+  "baseRadsPerHour": 14
+ },
+ {
+  "id": "loc_apiary_rows",
+  "displayName": "The Apiary Rows",
+  "description": "Forty white hive boxes stand in rows in a field, and thirty-eight of them are silent. The two that are not are kept by someone who has cut the grass around all forty boxes, not just the live ones, which is the detail the careful visitors notice. Eighteen rads an hour, low, and the honey in the two live hives is worth more than anything else in the district. The dead boxes are not empty: wax, frames, propolis, things a survivor can trade or burn or eat in a bad winter. Nobody knows who keeps the grass cut. Everyone knows not to ask, and not to take from the wrong box.",
+  "dangerLevel": 3,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 18
+ },
+ {
+  "id": "loc_seed_library_annex",
+  "displayName": "Seed Library Annex",
+  "description": "The branch library is a library again, but of a different kind: the fiction shelves have been cleared and refilled with labelled paper envelopes, each one holding seed, with the variety, the year, and the harvest written in pencil. The card catalogue has been repurposed, and it is meticulously current, filed by crop and by need. Sixteen rads an hour, moderate, low enough that the shelves are well used. Someone has kept this place going for three years, and the envelope labels tell the story: the first year was all doubt, the second was all work, and the third is all patience. The librarian is gone. The library is not.",
+  "dangerLevel": 4,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 16
+ },
+ {
+  "id": "loc_veterinary_surgery",
+  "displayName": "Large-Animal Surgery",
+  "description": "The large-animal surgery still smells of disinfectant and hide, three years on. Livestock stocks frame the door, a hoist hangs over the table, and the drug cabinet sits open, its lock cut out cleanly by someone who knew exactly what they were doing. Twenty-two rads an hour, moderate, worth the dose for what remains. The dosage charts on the wall are for animals weighing 400 to 900 kilograms, and they are still current: the penciled notes are recent, and the margins are full of observations in a steady hand. Whoever works this surgery is keeping the district's animals alive, one careful dose at a time.",
+  "dangerLevel": 4,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 22
+ },
+ {
+  "id": "loc_school_gymnasium",
+  "displayName": "School Gymnasium",
+  "description": "The gymnasium floor still shows the basketball court markings, faded under a grid of cot-shaped stains, row after row of where the beds stood in the first winter. The hand-painted banner near the ceiling still reads WELCOME BACK, strung for a reopening that became an intake center instead. Twenty rads an hour, moderate, low enough that the building was used hard and long. The markings are careful: the cots were set out in perfect rows, and the stains say the people in them stayed a while. The floor was cleaned afterward, which means someone had time, or someone had to. Both versions of the story are in this room.",
+  "dangerLevel": 3,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 20
+ },
+ {
+  "id": "loc_cider_press",
+  "displayName": "The Cider Press",
+  "description": "The stone barn holds a screw press that still works, its threads oiled, its beam sound, a machine that has outlasted the orchard that fed it. Twenty-four rads an hour, moderate. The output is undrinkable and was never intended to be drunk: the press is for oil, or for the sterilizing spirits the district uses on wounds and instruments, or for the fuel blend the tractors on the far side of the valley run on. The sign over the press is plain and old and kept legible: what comes out of here is not for the mouth. The people who run the barn take the sign seriously. The people who ignore it do not come back twice.",
+  "dangerLevel": 4,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 24
+ },
+ {
+  "id": "loc_terrace_pumphouse",
+  "displayName": "Terrace Pumphouse",
+  "description": "The pumphouse is the irrigation head for the whole south slope, and whoever controls it controls the season. The pump still runs, and the channels below it are kept clean, which means the water is spoken for. Twenty-six rads an hour, moderate, creeping up the slope with the runoff. The control room has a rifle loophole cut through the brick, added recently and neatly, with the edges squared and the view covering the whole approach. The people who cut it did not cut it for decoration. They are not unfriendly; they are organized. The difference matters at the gate, and it matters more at the loophole.",
+  "dangerLevel": 5,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 26
+ },
+ {
+  "id": "loc_ration_queue_plaza",
+  "displayName": "Ration Plaza",
+  "description": "The plaza is a civic square with queue lines painted on the pavement, and they are repainted often, because painted lines are cheaper than riot control and everyone here knows it. The line forms at 0600 whether or not a distribution has been announced, and the people in it are patient in the way of people who have practiced. Twenty-eight rads an hour, moderate, and the queue has been measured by scavengers who know the dose math: an hour in line, a lifetime of margin. The square is quiet now. The lines wait for the first horn, the way they have for three years.",
+  "dangerLevel": 4,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 28
+ },
+ {
+  "id": "loc_conscription_office",
+  "displayName": "District Conscription Office",
+  "description": "The office was a driving licence bureau before the war, and the conversion was cheap: the counters stayed, the forms were changed, and the ticket machine was left exactly where it was. It still works, and people still take a number, which is the detail the visitors remark on and the locals do not, because it is simply how it is done here. Twenty-six rads an hour, moderate. The queue behind the number sits against the far wall, and the records in the back are in order, filed by date and by hand. The office processes what the district needs processed: labor assignments, work papers, the small permissions that keep a community from starving.",
+  "dangerLevel": 5,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 26
+ },
+ {
+  "id": "loc_municipal_archive",
+  "displayName": "Municipal Archive",
+  "description": "The archive's rolling stacks run the length of the floor, most of them collapsed into each other like a card house that lost its nerve. The fire suppression discharged at some point, and everything below waist height is a solid grey brick of paper, the pages fused into one dense mass. Thirty rads an hour, moderate, and the air is sharp with the chemical the system used. What is left above waist height is still legible: registry books, land records, the paperwork of a city that believed in filing. The records people want now are the ones about who owned what, and who owed whom. The archive kept those in the lower shelves. It kept them well.",
+  "dangerLevel": 5,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "loc_dentists_row",
+  "displayName": "Dentists' Row",
+  "description": "Four dental practices stood on this street, and three are stripped to the walls, fixtures gone, doors gone, the wiring pulled in straight lines by someone methodical. The fourth is missing only its chair. Everything else is in place: the drill, the instruments, the cabinet, the ledger of patients with the last entry dated the week of the exchange. Thirty-two rads an hour, moderate, and worth the dose: anesthesia, instruments, the small tools that keep a district's mouths working through a winter. The street tells a story of one hasty job and one patient one. Nobody knows who took the chair. Everybody knows where it went.",
+  "dangerLevel": 5,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 32
+ },
+ {
+  "id": "loc_transit_authority_hq",
+  "displayName": "Transit Authority",
+  "description": "The transit authority's wall-sized route maps are still under glass, and the glass is still intact, and the maps are annotated in grease pencil with times, connections, and transfers that correspond to no published timetable in any era. Thirty-four rads an hour, creeping upward, and the building is quiet except for the drip of the ceiling. The annotations are recent and careful, in two hands, and they read like a schedule for something that runs without tracks or wheels. People who have seen the maps say the times are real, just not for trains. The building holds the city's old secrets about where the lines went, and where the lines still go, one way or another.",
+  "dangerLevel": 6,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 34
+ },
+ {
+  "id": "loc_printworks",
+  "displayName": "The Printworks",
+  "description": "The web presses are seized solid, their rollers fused by the years into one unbroken line of rusted iron, and the smell of ink has finally left the building. The pallets of undelivered leaflets are still banded, still square, stacked in the loading bay like freight waiting for a truck that will never come. Thirty rads an hour, moderate. The leaflets were printed in the first week: instructions, warnings, and one edition that was recalled, which is the one the collectors want. The paper is dry and the ink is legible, three years on. The presses are dead, but the words they printed outlived them, which is not what the printers planned.",
+  "dangerLevel": 5,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "loc_department_store",
+  "displayName": "Vansen's Department Store",
+  "description": "Six floors of Vansen's, comprehensively looted in the first year and picked over in the years since, until what remains is only what nobody could use: the fittings, the counters, the displays. The window mannequins are still dressed for a season that did not arrive, autumn stock in summer, or the reverse, it is hard to tell with the ash on the glass. Thirty-six rads an hour, moderate, and the upper floors are quieter than the air. The salvage is in the service floors: fixtures, wiring, the brass and copper the first looters were too hurried to see. The mannequins face the street, patient, still modeling clothes for a city that stopped shopping.",
+  "dangerLevel": 6,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 36
+ },
+ {
+  "id": "loc_public_swimming_baths",
+  "displayName": "Municipal Baths",
+  "description": "The deep end of the municipal baths was drained in the first winter and floored with mattresses in rows, a shelter that worked because the tiled walls hold heat well and the water below keeps the cold off the floor. Thirty-eight rads an hour, moderate, creeping in through the broken skylights. The baths were given up, and the tiles explain why: they hold heat, and they hold sound, and a hundred people trying to sleep in a room that echoes every cough and every argument is a room that empties fast. The mattresses are still there, in rows, and the wet marks on them show where the roof drips, in the exact places the sleepers would not put their heads.",
+  "dangerLevel": 6,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 38
+ },
+ {
+  "id": "loc_st_brigids_almshouse",
+  "displayName": "St Brigid's Almshouse",
+  "description": "The almshouse was a hospice before the war and ran as one through the worst of it, and the building still carries that purpose in its bones. The beds are made, the sheets drawn tight, the lockers closed. The charts are filled in to a date, and not after it, and the date is the same on every board in the ward. Forty rads an hour, high enough to make visitors count their minutes. The kitchen is clean and empty, the kettle cold, the pantry swept. Whoever ran this place knew how to end a shift properly, and one night they did, and nobody has touched the rooms since, which is its own kind of respect.",
+  "dangerLevel": 7,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 40
+ },
+ {
+  "id": "loc_weighbridge",
+  "displayName": "The Weighbridge",
+  "description": "The weighbridge is a truck scale with a mechanical readout that still works, a machine with no electronics and nothing to go wrong, and the needle settles true every time. It was the Tollman's first office, and it is still where prices are set: the rates are chalked on a board by the booth, and the chalk is fresh. Twenty-eight rads an hour, moderate. The toll is taken in goods, in fuel, in labor, and the record is kept in the booth's ledger, in a hand that has not changed in three years. The bridge sets the price for everything that moves through the valley, and the scale makes sure the price is honest, or as honest as prices get.",
+  "dangerLevel": 5,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 28
+ },
+ {
+  "id": "loc_motel_verity",
+  "displayName": "The Verity Motel",
+  "description": "Twelve units around a dry pool, and the pool is swept clean of ash every week, which is the first sign the Verity is looked after. It is neutral ground, and the neutrality is enforced by the Warlords, who charge for the enforcement, a fee paid in goods or in favors and recorded in a register that nobody argues with. Twenty-six rads an hour, moderate, and the rooms are priced by distance from the pool. Trade happens here, meetings happen here, and the bodies of people who broke the terms have been found at the county line, never in the pool. The pool stays clean. That is the whole arrangement.",
+  "dangerLevel": 5,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 26
+ },
+ {
+  "id": "loc_bridge_seven",
+  "displayName": "Bridge Seven",
+  "description": "Four lanes over the gorge, and the bridge is intact, which is the exception in this district and the reason it is guarded from both ends. The charges are still visibly taped to the underside of the span, wired and connected, placed by whoever decided the bridge would be theirs or no one's. Thirty rads an hour on the deck, moderate, and the river below reads higher. The guards on both sides know the wiring better than the people who laid it. The bridge is worth the toll and the risk, because the crossing saves a day and the other route takes a season. It will stand as long as everyone agrees to that.",
+  "dangerLevel": 6,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "loc_recovery_yard",
+  "displayName": "Recovery Yard",
+  "description": "The wreckers and flatbeds nose in around the crane like a herd waiting for feed, and the crane is the only piece of equipment here that has never been taken apart. Half the fleet has been cannibalized to keep the other half running, and the yard is honest about it: the dead trucks are parked in a row, their parts labeled in chalk. Thirty-four rads an hour, moderate. The yard runs on parts, on patience, and on the knowledge of one mechanic who has kept a fleet of corpses working for three years. Everything in the yard has a story of what it used to be. Most of them end with the same sentence: it got us here.",
+  "dangerLevel": 6,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 34
+ },
+ {
+  "id": "loc_ordnance_shoulder",
+  "displayName": "The Ordnance Shoulder",
+  "description": "Two kilometers of hard shoulder, marked with paint sticks in a pattern that the Garrison trained its people to recognize and everyone else learned to fear. The paint is Garrison-issue, the same yellow they used on their own wire, and the marking stopped partway, at the exact point where the Garrison's responsibility ended or their luck did. Forty-four rads an hour, and the ground itself reads higher in patches that the paint does not explain. The shoulder is a corridor of warnings. The signs do not say what is under the paint, only that it is there, and that the people who made the marks left the rest to you.",
+  "dangerLevel": 7,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 44
+ },
+ {
+  "id": "loc_bus_reversal_loop",
+  "displayName": "Bus Reversal Loop",
+  "description": "The turning circle at the edge of the old evacuation route holds forty-one buses, nose to tail, every one of them pointing back toward the city. The doors are open and the keys are mostly gone, and the seats hold what the passengers left in the first hours: coats, bags, one child's shoe, things too heavy to carry into the route ahead. Thirty-two rads an hour, moderate, and the buses themselves shield the aisles where the dose drops. The fleet was turned around by order, or by panic, and then abandoned by both. Forty-one buses, still in line, still facing the wrong way, waiting for a departure that was cancelled three years ago.",
+  "dangerLevel": 5,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 32
+ },
+ {
+  "id": "loc_diesel_tank_farm",
+  "displayName": "Tank Farm 4-East",
+  "description": "Eight bulk tanks in a row, the old farm's pride, and the ground around them is bare where the spill was burned off. The local test is performed from a distance: strike the tank with a thrown stone and listen. Three of the eight ring solid, which means they still hold fuel, and the other five answer with a dull thud that means they hold nothing but air and history. Thirty-six rads an hour, moderate, and the good tanks are worth every rad on the clock. The farm has been dry of thieves for a year, not because it is guarded, but because the last three men who tapped a tank are still in the hospital wing.",
+  "dangerLevel": 6,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 36
+ },
+ {
+  "id": "loc_radio_relay_mast",
+  "displayName": "Relay Mast 12",
+  "description": "The guyed lattice mast stands over the ridge line, and the equipment hut at its base is powered. Not preserved, not maintained: powered, drawing current from a source that has outlasted three years of no visitors. Thirty-eight rads an hour on the slope below, and the hut's threshold reads lower, which is its own kind of warning. Something in the hut is listening or transmitting or both, and the meter in the window climbs and falls on a schedule that does not match the day. The mast crew left their coffee cups on the bench, ringed with dust. The equipment did not leave. The equipment has been on shift the whole time.",
+  "dangerLevel": 6,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 38
+ },
+ {
+  "id": "loc_ash_sign_shrine",
+  "displayName": "The Ash Sign Shrine",
+  "description": "The survey cairn has been built up with concrete and glass slag into something taller than a person, and the construction is careful, the layers squared, the glass set to catch the grey light. A dosimeter is mounted at the top, working, mounted at eye height for a person standing on the packed earth in front of it, which is exactly how it is meant to be read. Forty-eight rads an hour here, and the dosimeter says so, honestly, every time. The shrine does not warn. It measures, and it records, and the surrounding ground is bare where people have stood to read it. The numbers climb a little higher every year, and the pilgrims keep coming anyway.",
+  "dangerLevel": 5,
+  "travelHours": 4.5,
+  "baseRadsPerHour": 48
+ },
+ {
+  "id": "loc_pilgrim_switchbacks",
+  "displayName": "The Switchbacks",
+  "description": "Eleven hairpins up the south face, and the verges are lined with boots. Pairs, placed neatly, toes to the road, thousands of them, stretching the whole climb. The boots are not a warning. They are a measure: the people who made the climb took them off at the end, or left them here at the start, and either way the pairs were arranged by someone with time and care. Fifty-two rads an hour at the lower switchbacks, and the dose is the real climb. The boots are worn thin at the heels, and the laces are gone, taken for use elsewhere. Whoever leaves boots here does not come back down for them.",
+  "dangerLevel": 5,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 52
+ },
+ {
+  "id": "loc_snowline_station",
+  "displayName": "Snowline Patrol Station",
+  "description": "The Garrison's forward post above the treeline was abandoned in good order, which is the detail that stays with visitors. The stove is banked, the fire laid for a return; the log is completed, the last entry written in the same steady hand as the first; the door is closed, and the latch is latched, and the windows are shuttered against the wind. Forty-two rads an hour at the door, and the station's own instruments, still on the wall, confirm it. The post was left the way a man leaves his house when he expects to be back in the morning. Three years of mornings have passed. The stove has not been lit again.",
+  "dangerLevel": 6,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 42
+ },
+ {
+  "id": "loc_low_background_lab",
+  "displayName": "Low-Background Laboratory",
+  "description": "Deep in the salt, behind two airlocks that still seal, the low-background laboratory waits. Its walls are lined with steel salvaged from pre-atomic shipwrecks, iron smelted before the first detonation, and that is why the counters in here still mean something: the room itself is clean. Thirty rads an hour at the outer door, and inside the counters drop to numbers the surface has not seen in years. The lab's instruments are cold and dark, but they are calibrated, and the shelves hold the samples that were being measured when the exchange happened: soil, water, air, each jar labeled with a date and a place. The work stopped. The room is ready.",
+  "dangerLevel": 6,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "loc_ice_core_store",
+  "displayName": "Ice Core Store",
+  "description": "The freezer room runs on geothermal bleed, a loop of pipe sunk into the mountain's heat, and it has held its temperature through three winters without a single power line. The ice cores stand racked in their cylinders, two meters to a tube, each labeled with depth in meters and year before present, the archive of the climate in long white rods. Forty rads an hour in the access tunnel, and the cold is its own hazard. The cores hold the record of a century of weather, the last word on what the sky was like before it went grey. The labels are typed, not handwritten, and they are exact.",
+  "dangerLevel": 6,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 40
+ },
+ {
+  "id": "loc_avalanche_gallery",
+  "displayName": "Avalanche Gallery",
+  "description": "The concrete snow shed covers the pass road for a hundred meters, and the gallery is half filled with the snow it was built to deflect, pressed hard against the uphill wall. The uphill side is load-bearing and the downhill side is not, any more, which is the sentence every visitor repeats before entering and the reason most do not. Forty-six rads an hour on the road beneath, and the concrete muffles the wind, which makes the silence worse. The shed held the pass open for the trucks that used to cross. It still holds the road, for now, and the sound it makes in the wind sounds like an argument about when.",
+  "dangerLevel": 7,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 46
+ },
+ {
+  "id": "loc_summit_relay",
+  "displayName": "Summit Relay",
+  "description": "The relay station sits above everything, and on a clear day the line of sight reaches all five sub-regions of the map, every valley, every smoke column, every roof. There are perhaps six clear days a year, and the people who climb for them have learned the sky's patience. Fifty-six rads an hour at the summit, the highest reading on the map, because the wind delivers what the clouds hold. The relay's mast is still guyed and still tall, and the hut below is locked with a Garrison lock that nobody has cut. Whatever the station was built to connect, it connects to nothing now, but it holds the best view in the region: everything, at once, briefly.",
+  "dangerLevel": 7,
+  "travelHours": 7.0,
+  "baseRadsPerHour": 56
+ },
+ {
+  "id": "loc_the_vessels_cell",
+  "displayName": "The Vessel's Cell",
+  "description": "The reactor outbuilding is four meters square, and the door is wedged shut from the inside, which is the first fact and the one that matters. Water jugs are stacked against one wall, every one of them empty, every one opened, the caps beside them in a neat row. Sixty-eight rads an hour at the door, and the reading rises steadily as you circle the building. Someone chose this room at the end, and someone else, or the same someone, stacked the jugs in order and wedged the door and stayed. The window is shuttered from inside. The building gives up nothing else. The dose outside is the whole story.",
+  "dangerLevel": 8,
+  "travelHours": 6.5,
+  "baseRadsPerHour": 68
+ },
+ {
+  "id": "loc_lock_gate_four",
+  "displayName": "Lock Gate Four",
+  "description": "Lock Gate Four is the gate that failed, and it is still open, exactly as far as it opened. The mechanism seized at the moment of the exchange, or of the flood, or of the decision, and the gate has held that position for three years, a door stopped mid-decision. Forty-four rads an hour at the lock house, and the water on the far side reads higher. The gate is the subject of an argument the locals keep reheating: whether it was meant to close, whether someone stopped it, whether it matters now. The ironwork is pitted and the winch is frozen. The gate stays where it is, and the water flows through it.",
+  "dangerLevel": 7,
+  "travelHours": 5.0,
+  "baseRadsPerHour": 44
+ },
+ {
+  "id": "loc_pump_station_nine",
+  "displayName": "Pump Station Nine",
+  "description": "Pump Station Nine was built to keep the basin dry, and the basin has won. The six drainage pumps stand under three meters of the very water they were built to move, their housings green with it, their motors drowned in the job they were hired to do. Forty-eight rads an hour at the surface, and the water reads worse, its own measure of everything that has settled. The pumps are the salvage, and the salvage is a story: iron, copper, windings that can be rewound by someone patient. The station is a machine that failed at its one task, then waited, under the water, for someone to come and take it apart.",
+  "dangerLevel": 7,
+  "travelHours": 5.5,
+  "baseRadsPerHour": 48
+ },
+ {
+  "id": "loc_alloc_12b",
+  "displayName": "Allocation 12-B",
+  "description": "The maintenance level is marked with a stencilled designation, Allocation 12-B, and nothing else: no stores, no supplies, no reason for the name. Fifty-four rads an hour at the stair, and the air below is dead and warm. On the wall by the stair there are chalk marks, fourteen in a row, then a gap, then six more, and the chalk is the same color throughout, and the gap is deliberate, a section of wall left clean on purpose. Fourteen people went down. Six came back up. The gap is not a mistake: it is the way the record was kept, by someone who wanted it readable, and it is the only record the level keeps.",
+  "dangerLevel": 8,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 54
+ },
+ {
+  "id": "loc_records_annex",
+  "displayName": "Records Annex",
+  "description": "The records annex is reached by boat, through a second-storey window, and the approach is the sort of thing that sorts visitors: those who can tie a line and those who cannot. Inside, the annex is dry above the waterline, heated by a stove that is being maintained, and someone has been dusting: the shelves are clean, the files are upright, the aisle is swept. Forty rads an hour at the waterline, and the reading drops as you climb. The annex holds the district's written memory, and it is being kept, deliberately, by a hand that has not stopped in three years. The records are read. The dust is not allowed to decide what matters.",
+  "dangerLevel": 7,
+  "travelHours": 6.5,
+  "baseRadsPerHour": 40
+ },
+ {
+  "id": "loc_drowned_cinema",
+  "displayName": "The Odeon",
+  "description": "The water in the Odeon has settled at the level of row F, and the screen is intact, the last thing in the building still facing its audience. The seats below the line are still folded down, and they were folded down by people who sat in them: the water came in while the house was full, or the house was full while the water came in, and the two versions of the story sound different. Forty-six rads an hour at the waterline, and the balcony stays cleaner. The film in the projector is still wound on its reel. The screen has not changed its image in three years: it is grey, and it is what everyone came to see.",
+  "dangerLevel": 7,
+  "travelHours": 6.0,
+  "baseRadsPerHour": 46
+ },
+ {
+  "id": "loc_cold_store_atlantic",
+  "displayName": "Atlantic Cold Store",
+  "description": "Twelve thousand cubic meters of freezer, and the room is four meters deep in water that has frozen over the top, sealing the contents under a floor of grey ice. The contents are unknown and, in principle, intact: whatever the cold store held in its last week, it holds still, under the ice, at the same temperature it was then. Fifty rads an hour at the door, and the ice reads lower, which is the whole argument for going in. The roof lights are dead, the loading dock is underwater, and the only entrance is a hatch that opens onto the ice itself. The store kept its promise to the last shipment. The receipt is on the dock.",
+  "dangerLevel": 8,
+  "travelHours": 7.0,
+  "baseRadsPerHour": 50
+ },
+ {
+  "id": "loc_bathymetric_boat",
+  "displayName": "Survey Launch Kittiwake",
+  "description": "The survey launch Kittiwake lies aground on a submerged roof, listing gently, held where the flood left her. The sonar rig is intact, still mounted, still connected, a machine that measured the riverbed for three years and one that measures the silence now. Fifty-two rads an hour on deck, and the water around her is worse. The logbook is the find: the last entry is dated, and the entries continue eleven days past the Exchange, in a hand that got steadier as the world got worse, recording water levels, silt, and the position of the boat that was no longer going anywhere. The survey was finished. The surveyor just kept measuring.",
+  "dangerLevel": 8,
+  "travelHours": 7.5,
+  "baseRadsPerHour": 52
+ },
+ {
+  "id": "loc_the_shallows_market",
+  "displayName": "The Shallows",
+  "description": "Nine boats tied into a single raft over what used to be a retail park, and the trade happens at gunwale height, hand to hand across the water, because nobody boards anybody else's hull and the rule is older than the market. Forty-two rads an hour at the waterline, and the boats carry their own shade and their own weather. The Shallows trades in what the dry markets cannot: things salvaged from drowned floors, things that come up with the divers, things that were paid for in breath. The raft has grown one boat a year, and the newest hull still smells of tar. The market is patient. The water is the only wall it needs.",
+  "dangerLevel": 7,
+  "travelHours": 6.5,
+  "baseRadsPerHour": 42
+ },
+ {
+  "id": "loc_the_allotments",
+  "displayName": "The Allotments",
+  "description": "Two hundred numbered plots behind a chain-link fence, a caretaker's hut, and a noticeboard at the gate. The waiting list is still pinned to the noticeboard, in a plastic sleeve, and it has been updated in pencil: four of the people on it are alive and farming here now, and their names are marked off in a different hand. Thirty rads an hour, moderate, and the plots are worked in rotation, the soil turned and rested as the readings allow. The allotments were a civic amenity before the war. Now they are a ration system with a waiting list, and the list is the most honest document in the district: everyone on it is waiting for ground.",
+  "dangerLevel": 5,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "checkpoint_kilo_armory",
+  "displayName": "Checkpoint Kilo Armory",
+  "description": "The armory of the old checkpoint: a concrete room of lockers and a heavy door. The racks are mostly empty, but the sealed lockers hold what the guard did not carry out, and the lock is rusted solid.",
+  "dangerLevel": 4,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 18
+ },
+ {
+  "id": "hospital_pharmacy",
+  "displayName": "Hospital Pharmacy",
+  "description": "The pharmacy of the ruined hospital, door still intact behind the collapsed stairwell. The shelves behind the counter hold what the looters could not reach: vials, boxes, the small certainties of medicine.",
+  "dangerLevel": 5,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 28
+ },
+ {
+  "id": "family_bunker_backyard_shed",
+  "displayName": "Family Bunker: Backyard Shed",
+  "description": "A backyard shed with a false floor. Beneath it, a family shelter stocked with care and dread: tinned food, a radio, a tape recorder, and a letter taped to the shelf.",
+  "dangerLevel": 2,
+  "travelHours": 1.0,
+  "baseRadsPerHour": 6
+ },
+ {
+  "id": "old_library_cache",
+  "displayName": "Old Library Cache",
+  "description": "A cache in the ruined library, tucked behind the collapsed reference desk. Books survived here in a dry pocket of the building, and with them the things people left between the pages.",
+  "dangerLevel": 3,
+  "travelHours": 2.5,
+  "baseRadsPerHour": 12
+ },
+ {
+  "id": "convoy_echo7_cache",
+  "displayName": "Convoy Echo-7 Cache",
+  "description": "A supply cache buried by the wreck of convoy Echo-7, its marker half-swallowed by drift. The tarpaulin holds; what the convoy carried is still under it.",
+  "dangerLevel": 4,
+  "travelHours": 3.5,
+  "baseRadsPerHour": 22
+ },
+ {
+  "id": "raider_ambush_site",
+  "displayName": "Raider Ambush Site",
+  "description": "The place where the road narrows between the collapsed buildings: the classic kill ground. The raiders' own cache is hidden in the rubble nearby, marked with a chalked glyph for those in the know.",
+  "dangerLevel": 5,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "collapsed_building",
+  "displayName": "Collapsed Building",
+  "description": "A building that came down on itself, floors folded like a hand of cards. The pockets between the slabs are still dry, and what fell in here stayed in here.",
+  "dangerLevel": 3,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 15
+ },
+ {
+  "id": "raider_trap_location",
+  "displayName": "Raider Trap Site",
+  "description": "A stretch of road rigged with tripwires and buried spikes, the kind of place raiders use to slow a convoy. The trap maker's hiding spot is within sight of the road, and so is what they collected from it.",
+  "dangerLevel": 5,
+  "travelHours": 4.0,
+  "baseRadsPerHour": 30
+ },
+ {
+  "id": "electrical_substation",
+  "displayName": "Electrical Substation",
+  "description": "A substation yard of dead transformers and tangled busbars. The copper is long gone, but the control room survived the blast, and the tools and spares in it did too.",
+  "dangerLevel": 4,
+  "travelHours": 3.0,
+  "baseRadsPerHour": 20
+ },
+ {
+  "id": "ruined_garage",
+  "displayName": "Ruined Garage",
+  "description": "A mechanics' garage with its roof half gone. The lifts are seized, the benches bare, but the tool lockers and the pit beneath the work floor were never opened.",
+  "dangerLevel": 3,
+  "travelHours": 2.0,
+  "baseRadsPerHour": 14
+ },
+ {
+  "id": "concert_hall_ruins",
+  "displayName": "Concert Hall Ruins",
+  "description": "The shell of the old concert hall, roof open to the sky, stage intact. The acoustics still work: a whisper from the stage reaches the back row. Someone has been using it as a meeting place.",
+  "dangerLevel": 2,
+  "travelHours": 1.5,
+  "baseRadsPerHour": 8
+ }
 ]

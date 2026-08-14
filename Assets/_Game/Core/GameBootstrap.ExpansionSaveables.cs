@@ -130,6 +130,14 @@ namespace AtomicWar._Game.Core
                 SaveSystem.Register(new HadiMorrowSaveable(NPCHadiMorrow));
             if (NPCNilaBrant != null)
                 SaveSystem.Register(new NilaBrantSaveable(NPCNilaBrant));
+
+            // ASHFALL: THE STANDING RECORD — layouts, memory, site encounters.
+            if (LocationLayoutSystem != null)
+                SaveSystem.Register(new LocationLayoutSaveable(LocationLayoutSystem));
+            if (LocationMemorySystem != null)
+                SaveSystem.Register(new LocationMemorySaveable(LocationMemorySystem));
+            if (SiteEncounterSystem != null)
+                SaveSystem.Register(new SiteEncounterSaveable(SiteEncounterSystem));
         }
     }
 
@@ -592,5 +600,36 @@ namespace AtomicWar._Game.Core
         public NilaBrantSaveable(NPC_NilaBrant npc) => _npc = npc;
         public object CaptureState() => _npc.CaptureState();
         public void RestoreState(object state) => _npc.RestoreState(state as NPC_NilaBrantState);
+    }
+
+    // ═══════════════════════════════════════════════════════════════════
+    // ASHFALL: THE STANDING RECORD — saveable adapters
+    // ═══════════════════════════════════════════════════════════════════
+
+    internal class LocationLayoutSaveable : ISaveable
+    {
+        private readonly LocationLayoutSystem _system;
+        public string SaveId => LocationLayoutSystem.SystemId;
+        public LocationLayoutSaveable(LocationLayoutSystem system) => _system = system;
+        public object CaptureState() => _system.CaptureState();
+        public void RestoreState(object state) => _system.RestoreState(state as LocationLayoutState);
+    }
+
+    internal class LocationMemorySaveable : ISaveable
+    {
+        private readonly LocationMemorySystem _system;
+        public string SaveId => LocationMemorySystem.SystemId;
+        public LocationMemorySaveable(LocationMemorySystem system) => _system = system;
+        public object CaptureState() => _system.CaptureState();
+        public void RestoreState(object state) => _system.RestoreState(state as LocationMemoryState);
+    }
+
+    internal class SiteEncounterSaveable : ISaveable
+    {
+        private readonly SiteEncounterSystem _system;
+        public string SaveId => SiteEncounterSystem.SystemId;
+        public SiteEncounterSaveable(SiteEncounterSystem system) => _system = system;
+        public object CaptureState() => _system.CaptureState();
+        public void RestoreState(object state) => _system.RestoreState(state as SiteEncounterState);
     }
 }
