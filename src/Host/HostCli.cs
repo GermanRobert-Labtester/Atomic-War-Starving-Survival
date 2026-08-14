@@ -2,6 +2,7 @@ using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Medical;
+using Ashfall.Core.Narrative;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -30,6 +31,7 @@ namespace AtomicWar.GodotApp
         MusterUiTest,
         DoseUiTest,
         InventoryUiTest,
+        SurvivorsUiTest,
         BridgeSelfTest,
         DutyRosterSelfTest,
         StandingRecordSelfTest,
@@ -44,6 +46,7 @@ namespace AtomicWar.GodotApp
         DoseLedgerSelfTest,
         ExpeditionSelfTest,
         MedicalSelfTest,
+        NarrativeSelfTest,
         DataIntegritySelfTest,
         CaravanSelfTest
     }
@@ -105,6 +108,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MusterUiTest;
             if (Has(args, "--inventory-uitest") || Has(args, "--inventory-selftest"))
                 return HostCliAction.InventoryUiTest;
+            if (Has(args, "--survivors-uitest") || Has(args, "--survivors-selftest"))
+                return HostCliAction.SurvivorsUiTest;
             if (Has(args, "--dose-uitest"))
                 return HostCliAction.DoseUiTest;
             if (Has(args, "--bridge-selftest"))
@@ -121,6 +126,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.ExpeditionSelfTest;
             if (Has(args, "--medical-selftest"))
                 return HostCliAction.MedicalSelfTest;
+            if (Has(args, "--narrative-selftest"))
+                return HostCliAction.NarrativeSelfTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -598,6 +605,13 @@ namespace AtomicWar.GodotApp
         public static int RunMedicalSelfTest()
         {
             var report = MedicalHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunNarrativeSelfTest()
+        {
+            var report = NarrativeHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }

@@ -54,6 +54,9 @@ namespace AtomicWar.GodotApp
         private InventoryHostSession _inventory = null!;
         private AtomicWar.GodotApp.Inventory.InventoryPanel _inventoryPanel = null!;
 
+        // Survivors (needs + radiation, ported from Unity Survivors/Radiation)
+        private SurvivorsHostSession _survivors = null!;
+
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
         private JournalCodex _journalCodex = null!;
@@ -167,6 +170,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.InventoryUiTest:
                     RunInventoryUiTestAndQuit();
                     return;
+                case HostCliAction.SurvivorsUiTest:
+                    RunSurvivorsUiTestAndQuit();
+                    return;
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
                     return;
@@ -187,6 +193,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.MedicalSelfTest:
                     GetTree().Quit(HostCli.RunMedicalSelfTest());
+                    return;
+                case HostCliAction.NarrativeSelfTest:
+                    GetTree().Quit(HostCli.RunNarrativeSelfTest());
                     return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
@@ -278,6 +287,7 @@ namespace AtomicWar.GodotApp
                 SaveDoseLedger();
                 SaveMuster();
                 SaveInventory();
+                SaveSurvivors();
                 // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
                 Ashfall.Bridge.BridgeRuntime.Shutdown();
                 GetTree().Quit();
@@ -420,9 +430,15 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Inventory: add geiger counter", () => OnInventoryAddClicked("geiger_counter", 1));
             AddMenuButton("Inventory: add gas mask", () => OnInventoryAddClicked("gas_mask", 1));
             AddMenuButton("Inventory: item check", OnInventoryCheckClicked);
+            // ── SURVIVORS (needs + radiation, from Unity) ──────────────
+            AddMenuButton("Survivors: open panel", OnSurvivorsOpenClicked);
+            AddMenuButton("Survivors: tick 6 hours", OnSurvivorsTickClicked);
+            AddMenuButton("Survivors: expose Mikhail to 60 mSv/hr", () => OnSurvivorsExposeClicked("survivor_gunner_mikhail", 60f));
+            AddMenuButton("Survivors: iodine for Mikhail", () => OnSurvivorsIodineClicked("survivor_gunner_mikhail"));
+            AddMenuButton("Survivors: anti-rad for Mikhail", () => OnSurvivorsAntiRadClicked("survivor_gunner_mikhail", 30f));
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1210,6 +1226,63 @@ namespace AtomicWar.GodotApp
                 GD.Print("[Ashfall Godot] Inventory save written.");
         }
 
+        // ── SURVIVORS (needs + radiation) host wiring ──────────────────
+
+        private void SetupSurvivors()
+        {
+            if (_survivors != null) return;
+            _survivors = new SurvivorsHostSession();
+            _survivors.SeedDemoRoster();
+            _survivors.StateChanged += () => SaveSurvivors();
+
+            var save = SurvivorsSaveStore.TryLoad();
+            if (save != null && save.survivors.Count > 0)
+                _survivors.RestoreSave(save);
+        }
+
+        private void OnSurvivorsOpenClicked()
+        {
+            SetupSurvivors();
+            _statusLabel.Text = "Survivors panel open. Needs and radiation are simulated.";
+            _codexViewer.Text = _survivors.StatusLine();
+        }
+
+        private void OnSurvivorsTickClicked()
+        {
+            SetupSurvivors();
+            _survivors.TickHour(6f);
+            _statusLabel.Text = _survivors.LastEvent;
+            _codexViewer.Text = _survivors.StatusLine();
+        }
+
+        private void OnSurvivorsExposeClicked(string id, float rads)
+        {
+            SetupSurvivors();
+            _statusLabel.Text = _survivors.ExposeToZone(id, rads);
+            _codexViewer.Text = _survivors.StatusLine();
+        }
+
+        private void OnSurvivorsIodineClicked(string id)
+        {
+            SetupSurvivors();
+            _statusLabel.Text = _survivors.AdministerIodine(id);
+            _codexViewer.Text = _survivors.StatusLine();
+        }
+
+        private void OnSurvivorsAntiRadClicked(string id, float rads)
+        {
+            SetupSurvivors();
+            _statusLabel.Text = _survivors.AdministerAntiRad(id, rads);
+            _codexViewer.Text = _survivors.StatusLine();
+        }
+
+        private void SaveSurvivors()
+        {
+            if (_survivors == null) return;
+            if (SurvivorsSaveStore.TrySave(_survivors.CaptureSave()))
+                GD.Print("[Ashfall Godot] Survivors save written.");
+        }
+
         // ── THE MUSTER (Exp 06) host wiring ─────────────────────────────
 
         private void SetupMuster()
@@ -1467,6 +1540,43 @@ namespace AtomicWar.GodotApp
             GD.Print(pass ? "INVENTORY_UITEST PASS" : "INVENTORY_UITEST FAIL");
             if (System.IO.File.Exists(InventorySaveStore.SavePath))
                 System.IO.File.Delete(InventorySaveStore.SavePath);
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
+        /// <summary>Headless smoke: survivors rosters build, needs tick, rad exposure, iodine/anti-rad, save roundtrip.</summary>
+        private void RunSurvivorsUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupSurvivors();
+
+            bool roster = _survivors.Roster.Count == 3;
+            _survivors.TickHour(6f);
+            bool needsMoved = _survivors.Roster[0].Hunger > 0f;
+
+            string exposed = _survivors.ExposeToZone("survivor_gunner_mikhail", 60f);
+            bool doseClimbed = _survivors.Radiation.GetDosimeter("survivor_gunner_mikhail").LifetimeDose > 0f;
+
+            string iodine = _survivors.AdministerIodine("survivor_gunner_mikhail");
+            bool resistance = _survivors.Radiation.GetDosimeter("survivor_gunner_mikhail") != null
+                && System.Linq.Enumerable.Any(_survivors.Roster, s => s.Id == "survivor_gunner_mikhail");
+
+            string antiRad = _survivors.AdministerAntiRad("survivor_gunner_mikhail", 30f);
+            bool antiRadApplied = antiRad.Contains("cleared");
+
+            // Save → restore roundtrip.
+            var save = _survivors.CaptureSave();
+            var fresh = new SurvivorsHostSession();
+            fresh.RestoreSave(save);
+            bool roundtrip = fresh.Roster.Count == 3;
+            var restoredRad = fresh.Radiation.GetDosimeter("survivor_gunner_mikhail");
+            bool radRestored = restoredRad != null;
+
+            bool pass = roster && needsMoved && doseClimbed && resistance && antiRadApplied && roundtrip && radRestored;
+            GD.Print($"[SurvivorsUiTest] roster={roster} needs={needsMoved} dose={doseClimbed} " +
+                     $"iodine={resistance} antiRad={antiRadApplied} roundtrip={roundtrip} rad={radRestored}");
+            GD.Print(pass ? "SURVIVORS_UITEST PASS" : "SURVIVORS_UITEST FAIL");
+            if (System.IO.File.Exists(SurvivorsSaveStore.SavePath))
+                System.IO.File.Delete(SurvivorsSaveStore.SavePath);
             GetTree().Quit(pass ? 0 : 1);
         }
 

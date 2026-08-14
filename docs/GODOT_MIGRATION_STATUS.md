@@ -150,3 +150,40 @@ for d in Assets/_Game/*/; do n=$(basename "$d"); t=$(find "$d" -name '*.cs' | wc
   c=$(grep -LE "^using (UnityEngine|UnityEditor|TMPro|Unity\.)" $(find "$d" -name '*.cs') | wc -l);
   printf "%-14s %3s/%-4s\n" "$n" "$c" "$t"; done
 ```
+
+## 2026-08-14 late pass — Survival-loop core ports
+
+Additional Unity subsystems migrated this session into `Ashfall.Core` (engine-agnostic,
+0 Unity/Godot imports) with Godot host wiring:
+
+- **Inventory** (`Assets/Ashfall.Core/Inventory/`) — full port of `_Game/Inventory`:
+  `Inventory.cs` (stack/weight/capacity, all-or-nothing Add, transfer w/ rollback,
+  equip/unequip/swap, worn-gear protection, device battery/calibration, consume,
+  deep-copy save state), `ItemDefinitions.cs` (ItemDefinition + EquipSlots canonical/
+  alias parser), `DeviceState.cs`/`InstrumentDevice.cs`, `ProceduralItemInstance.cs`,
+  `ItemCatalog`. Godot host: `src/Host/InventoryHostSession.cs` + checksummed
+  `InventorySaveStore` + `src/Inventory/InventoryPanel.cs`; menu wired in `Main.cs`.
+- **Survivors needs** (`Assets/Ashfall.Core/Survivors/NeedsSystem.cs`) — port of
+  `_Game/Survivors/NeedsSystem` (hunger/thirst/fatigue/warmth/morale/health/hygiene,
+  critical thresholds, cold/hunger/thirst health loss, death evaluation with defer
+  gate). Host: `src/Host/SurvivorsHostSession.cs` (demo roster) + `SurvivorsSaveStore`.
+- **Radiation** (`Assets/Ashfall.Core/Radiation/RadiationSystem.cs`) — port of
+  `_Game/Radiation/RadiationSystem` (exposure model zone−gear−shielding, iodine
+  resistance windows, anti-rad, acute/chronic thresholds, dosimeters, worn-gear
+  degrade, radiotrophic hook). Operates on engine-agnostic `SurvivorRadState`.
+- **Shelter shielding** (`Assets/Ashfall.Core/Shelter/MaterialShieldingSystem.cs`) —
+  port of `_Game/Shelter/MaterialShieldingSystem` (#127 ceilings: Wood/Dirt/Concrete/
+  Lead attenuation; weakest-roof governs bleed) and wired into the survivors host's
+  exposure context.
+- Shared `MathfCompat` (`Assets/Ashfall.Core/MathfCompat.cs`) replaces
+  `UnityEngine.Mathf` everywhere the ports need clamp/max/min/lerp.
+
+Verification: 488/488 core tests (incl. new InventorySystemTests 12, NeedsRadiation
+16, MaterialShielding 6), `--inventory-uitest` PASS, `--survivors-uitest` PASS,
+expansions 236/236, muster/dose/muster-uitest PASS, build 0 warnings/errors.
+
+Remaining Unity-coupled surfaces (future ports): AI, Crafting/Workbench, Economy/Trade,
+Narrative, Events, Endgame, Encounters, Medical afflictions, Factions, Shelter full
+(hatch defense, degradation), World map, Settings. The stranglehold continues —
+simulation surface now covers the core survival loop (inventory ↔ needs ↔ radiation ↔
+shelter shielding) end to end.
