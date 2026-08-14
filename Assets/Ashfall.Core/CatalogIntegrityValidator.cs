@@ -351,7 +351,7 @@ namespace Ashfall.Core
                 if (sameFile && key == "id")
                     ctx.Report.Error("duplicate id '" + value + "' defined at " + path
                         + " (first: " + firstPath + ")");
-                else if (ctx.CrossFileWarned.Add(value))
+                else if (!sameFile && ctx.CrossFileWarned.Add(value))
                     ctx.Report.Warn("id '" + value + "' defined in multiple files: "
                         + firstFile + " and " + path);
             }

@@ -664,5 +664,50 @@
     "discovery_location_id": "loc_d9_cache_bunker_delta",
     "discovery_trigger": "third_ledger_page_collected",
     "knowledge_key": "history_the_ledger_nobody_signed"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 320",
+    "title": "The Folding Chair",
+    "body": "The scale is still honest. Osran still says he doesn't run the place. Fewer people believe him than used to.",
+    "discovery_location_id": "loc_crossing_records_room",
+    "discovery_trigger": "ending_reached",
+    "knowledge_key": "ending_crossing_scale"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 320",
+    "title": "Paid in Full",
+    "body": "Everyone eats. Everyone owes. The Nightfire is warmer than it has any right to be, and nobody asks why the light costs what it costs.",
+    "discovery_location_id": "loc_crossing_weighbridge",
+    "discovery_trigger": "ending_reached",
+    "knowledge_key": "ending_crossing_underwrite"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 320",
+    "title": "Draft Four, Signed",
+    "body": "There is a document now. People argue with it instead of with each other, which Perrin considers a victory and does not examine too closely.",
+    "discovery_location_id": "loc_crossing_records_room",
+    "discovery_trigger": "ending_reached",
+    "knowledge_key": "ending_crossing_compact"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 320",
+    "title": "No One's",
+    "body": "The viaduct is still there. The market isn't. Word travels that a place with no charter now has no scale either, and the kind of people that word attracts do not ask to be vouched in.",
+    "discovery_location_id": "loc_crossing_weighbridge",
+    "discovery_trigger": "ending_reached",
+    "knowledge_key": "ending_crossing_none"
+  },
+  {
+    "era": "post_exchange",
+    "year_month": "Day 320",
+    "title": "Just Passing Through",
+    "body": "The Crossing continues exactly as uneasily as it always has. The shelter got what it came for. Nobody there will remember the player's name in a year, which several people there would say is the whole point of the place.",
+    "discovery_location_id": "loc_crossing_records_room",
+    "discovery_trigger": "ending_reached",
+    "knowledge_key": "ending_crossing_walked"
   }
 ]

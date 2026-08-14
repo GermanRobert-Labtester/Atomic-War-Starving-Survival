@@ -175,6 +175,23 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 405/405, all 18 selftests PASS, uitests x5,
   gate 0 errors.
 
+## NOBODY'S CHARTER — Phase 6 closing slice (world-history second paragraphs)
+- Audit vs pipeline: Phases 1-5 ids/data all present (charter quests, item, mutation,
+  10 enc_nc_ encounters, 5 crises in crossing_encounters.json + CrossingCatalog);
+  Phase 6's "world_history second paragraph at records_room/weighbridge" was MISSING.
+- Data: 5 ending entries added to world_history.json (79 total) — ending_crossing_scale
+  / _underwrite / _compact / _none / _walked with the bible's house-voice prose,
+  discoverable at loc_crossing_records_room or loc_crossing_weighbridge,
+  discovery_trigger ending_reached.
+- Tests: CrossingEndingsWorldHistoryTests (master-list parity, discovery locations,
+  prose match, trigger).
+- Hardening: docs/CI.md gains the Godot cold-build trust-signal section (commands +
+  current counts) per Phase 7.
+- Gate improved: 275 findings (was 319) — 0 errors, all warnings benign.
+- Verify: build 0 warnings, tests 408/408, crossing 33/33, arbitration 58/58,
+  endings 11/11, expansions 236/236, muster 25/25, dose PASS, gate 0 errors.
+
+
 
 
 

@@ -190,3 +190,23 @@ a working tree that already has a populated `Library/` does not.
 > stale: roughly 250 tests had been added since that run, and the suite was actually **red** (2
 > failures) while this line still read green. A stale pass count is worse than no pass count — it is
 > a false trust signal. Re-run the full command above and update this line whenever you rely on it.
+
+## Godot host (active engine) — cold-build trust signal
+
+Unity is the legacy codebase (see AGENTS.md); the active verification surface is
+Godot + dotnet. Run from a cold state so the check proves a fresh checkout builds:
+
+```bash
+rm -rf .godot/mono/temp Ashfall.Core/bin Ashfall.Core/obj
+dotnet build Ashfall.csproj                 # expect: 0 errors, 0 warnings
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # expect: 408 passed / 0 failed
+godot --headless --path . -- --data-integrity-selftest     # expect: PASS, 0 errors
+godot --headless --path . -- --expansions-selftest         # expect: 236/236 GREEN
+godot --headless --path . -- --muster-selftest             # expect: PASS 25/25
+godot --headless --path . -- --dose-ledger-selftest        # expect: PASS
+godot --headless --path . -- --muster-uitest --dose-uitest # expect: both PASS (run separately)
+```
+
+Last local cold-build run: build 0 errors / 0 warnings, **408 passed / 0 failed**,
+data gate 0 errors across 59 catalogs, expansions 236/236, all 18 selftests PASS
+(2026-08-14, Loop 7 + Nobody's Charter Phase 6 closing slice).
