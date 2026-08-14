@@ -5,6 +5,7 @@ using Ashfall.Core.Medical;
 using Ashfall.Core.Narrative;
 using Ashfall.Core.Survivors;
 using Ashfall.Core.World;
+using Ashfall.Core.Economy;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -51,8 +52,10 @@ namespace AtomicWar.GodotApp
         NarrativeSelfTest,
         SurvivorsSelfTest,
         WorldSelfTest,
+        EconomySelfTest,
         DataIntegritySelfTest,
-        CaravanSelfTest
+        CaravanSelfTest,
+        AssetRegistrySelfTest
     }
 
     /// <summary>
@@ -136,10 +139,14 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.SurvivorsSelfTest;
             if (Has(args, "--world-selftest"))
                 return HostCliAction.WorldSelfTest;
+            if (Has(args, "--economy-selftest"))
+                return HostCliAction.EconomySelfTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
                 return HostCliAction.CaravanSelfTest;
+            if (Has(args, "--asset-registry-selftest"))
+                return HostCliAction.AssetRegistrySelfTest;
             return HostCliAction.Interactive;
         }
 
@@ -171,6 +178,7 @@ namespace AtomicWar.GodotApp
             GD.Print("  --expansion-hub-save-selftest Expansion hub save write → reload → restore → checksum/tamper checks");
             GD.Print("  --dose-ledger-selftest       Dose Ledger save write → reload → restore → checksum/tamper checks");
             GD.Print("  --data-integrity-selftest  Cross-reference every id in the 55 StreamingAssets catalogs (recipe→item, quest→location, events, door encounters, survivors, factions, ranges, duplicates)");
+            GD.Print("  --asset-registry-selftest  Verify that catalog IDs (items/survivors/locations) resolve to actual texture assets under assets/");
             GD.Print("  --host-help              This list");
         }
 
@@ -638,6 +646,13 @@ namespace AtomicWar.GodotApp
             return report.ExitCode;
         }
 
+        public static int RunEconomySelfTest(string dataDirectory)
+        {
+            var report = EconomyHeadlessDemo.Run(dataDirectory, new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
         public static int RunDoseLedgerSelfTest(string dataDirectory)
         {
             CatalogLocator.UseInvariantCulture();
@@ -864,6 +879,13 @@ namespace AtomicWar.GodotApp
         public static int RunCaravanSelfTest()
         {
             return TravelingCaravanHeadlessDemo.Run();
+        }
+
+        public static int RunAssetRegistrySelfTest(string dataDirectory)
+        {
+            var report = AssetRegistrySelfTest.Run(dataDirectory, topCount: 50);
+            GD.Print(report.Summary);
+            return report.Clean ? 0 : 1;
         }
     }
 }

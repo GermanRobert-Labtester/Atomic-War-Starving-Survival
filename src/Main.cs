@@ -203,11 +203,17 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.WorldSelfTest:
                     GetTree().Quit(HostCli.RunWorldSelfTest());
                     return;
+                case HostCliAction.EconomySelfTest:
+                    GetTree().Quit(HostCli.RunEconomySelfTest(_dataDir));
+                    return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
                     return;
                 case HostCliAction.CaravanSelfTest:
                     GetTree().Quit(HostCli.RunCaravanSelfTest());
+                    return;
+                case HostCliAction.AssetRegistrySelfTest:
+                    GetTree().Quit(HostCli.RunAssetRegistrySelfTest(_dataDir));
                     return;
             }
 
