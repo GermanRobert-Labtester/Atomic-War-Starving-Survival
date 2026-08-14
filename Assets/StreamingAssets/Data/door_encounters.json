@@ -1603,6 +1603,706 @@
           "outcomeDescription": "Thorne nods grimly, salutes the periscope lens, and wades back toward the coastal ice road."
         }
       ]
+    },
+    {
+      "encounterId": "door_encounter_arsenal_brass_trader",
+      "visitorName": "Chief Assayer Markov",
+      "visitorFaction": "faction_ordnance_foundry",
+      "description": "A soot-stained metallurgist from the High Granite Arsenal pushes an iron wheelbarrow laden with fifty spent 152mm artillery casings. He needs dried rations and sulfur ointment for his foundry workers in exchange for raw brass.",
+      "minDay": 230,
+      "maxDay": 290,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_trade_rations_for_brass_casings",
+          "text": "Trade 6 dried ration packs for the wheelbarrow of spent brass casings.",
+          "requiredTrait": "",
+          "requiredItemId": "item_dried_rations",
+          "requiredItemQuantity": 6,
+          "baseMoraleDelta": 5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_ordnance_foundry",
+          "factionStandingDelta": 15,
+          "outcomeDescription": "Markov tips the brass onto the vestibule concrete and pockets the ration tins with a satisfied nod."
+        },
+        {
+          "choiceId": "choice_refuse_arsenal_brass",
+          "text": "Refuse the trade. Shell casings cannot be eaten.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_ordnance_foundry",
+          "factionStandingDelta": -5,
+          "outcomeDescription": "Markov spits in the snow and hauls his heavy cart toward the Works Allotments."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_railway_guild_handcar_crew",
+      "visitorName": "Elena Vasquez & Switchmen",
+      "visitorFaction": "faction_railway_guild",
+      "description": "Three rail workers in grease-soaked wool coats stand on the surface tracks beside an armored steam handcar. They offer salvaged signal cable and telegraph sounders if you help them bypass a Garrison checkpoint.",
+      "minDay": 240,
+      "maxDay": 310,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_shelter_rail_crew",
+          "text": "Allow the crew to shelter their handcar inside the outer blast vestibule overnight.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_railway_guild",
+          "factionStandingDelta": 20,
+          "outcomeDescription": "The crew repairs your exterior telegraph link and leaves three spools of copper wire."
+        },
+        {
+          "choiceId": "choice_report_handcar_to_garrison",
+          "text": "Transmit their location to Garrison Checkpoint Gamma for a flour bounty.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -15,
+          "baseGuiltDelta": 20,
+          "targetFaction": "faction_central_garrison",
+          "factionStandingDelta": 25,
+          "outcomeDescription": "Garrison half-tracks intercept the handcar at the switch; the rail union marks your shelter as hostile."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_penal_pioneer_runaways",
+      "visitorName": "Sapper Vance & Escaped Convicts",
+      "visitorFaction": "faction_penal_battalion",
+      "description": "Four escaped penal sappers in mud-caked rags and burlap foot-wraps knock with an iron pry-bar. They are suffering from severe radiation sickness and need Prussian blue pellets and iodine.",
+      "minDay": 260,
+      "maxDay": 320,
+      "threatLevel": 3,
+      "choices": [
+        {
+          "choiceId": "choice_treat_penal_runaways",
+          "text": "Administer Prussian blue pellets and grant emergency cellar quarantine.",
+          "requiredTrait": "trait_medic",
+          "requiredItemId": "item_prussian_blue_chelating_pellets",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 15,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_penal_battalion",
+          "factionStandingDelta": 25,
+          "outcomeDescription": "Vance gives you an unexploded demolition charge and vows the sappers will dig your drainage ditches."
+        },
+        {
+          "choiceId": "choice_drive_off_penal_convicts",
+          "text": "Fire warning shots through the gunport to drive them away.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -10,
+          "baseGuiltDelta": 15,
+          "targetFaction": "faction_penal_battalion",
+          "factionStandingDelta": -10,
+          "outcomeDescription": "The sappers curse your name and limp into the freezing black mud."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_salt_freeholders_hospital_convoy",
+      "visitorName": "Dr. Dahl's Salt Cavern Orderlies",
+      "visitorFaction": "faction_salt_freeholders",
+      "description": "Two orderlies in white linen coats pulling a sledge with three amputees request permission to rest in your warm exhaust plume on their way to the 400m salt hospital.",
+      "minDay": 270,
+      "maxDay": 330,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_provide_hot_tea_and_warmth",
+          "text": "Provide hot tea, boiled water, and shelter in the vestibule for two hours.",
+          "requiredTrait": "",
+          "requiredItemId": "item_clean_water",
+          "requiredItemQuantity": 2,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_salt_freeholders",
+          "factionStandingDelta": 20,
+          "outcomeDescription": "The orderlies thank you and hand over a box of sterile surgical scalpel blades."
+        },
+        {
+          "choiceId": "choice_refuse_exhaust_shelter",
+          "text": "Keep the hatch locked to conserve interior warmth.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -5,
+          "baseGuiltDelta": 10,
+          "targetFaction": "faction_salt_freeholders",
+          "factionStandingDelta": -5,
+          "outcomeDescription": "The sledge creaks onward into the fog toward the salt hoist."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_supply_corps_breakthrough_patrol",
+      "visitorName": "Captain Alder (Highway 12)",
+      "visitorFaction": "faction_supply_corps",
+      "description": "An armored half-track idles outside in the blizzard. Captain Alder stomps his boots on the mat, asking for two cans of glycol antifreeze to keep his convoy radiator from cracking in -38°C cold.",
+      "minDay": 210,
+      "maxDay": 270,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_give_glycol_to_alder",
+          "text": "Provide 1 canister of glycol antifreeze to the convoy.",
+          "requiredTrait": "",
+          "requiredItemId": "item_glycol_antifreeze_canister",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_supply_corps",
+          "factionStandingDelta": 25,
+          "outcomeDescription": "Alder pours the glycol directly into the half-track expansion tank and leaves a crated battery."
+        },
+        {
+          "choiceId": "choice_refuse_alder_glycol",
+          "text": "Refuse. The bunker needs every drop of antifreeze for its own heating loop.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_supply_corps",
+          "factionStandingDelta": -15,
+          "outcomeDescription": "Alder curses the cold and orders his gunner to tow the stalled vehicle down the pass."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_ash_militia_deadfall_liaison",
+      "visitorName": "Commander Talia (Ash Militia)",
+      "visitorFaction": "faction_ash_militia",
+      "description": "Commander Talia arrives on skis with two scouts. She reports Garrison armored sweeps are probing the lower road and offers a supply of dried smoked turnips if your lookouts report convoy movements.",
+      "minDay": 220,
+      "maxDay": 290,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_agree_to_spotting_pact",
+          "text": "Agree to transmit Garrison road coordinates via telegraph.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_ash_militia",
+          "factionStandingDelta": 20,
+          "outcomeDescription": "Talia unslings a sack of smoked turnips and leaves a frequency code for the upland redoubt."
+        },
+        {
+          "choiceId": "choice_remain_strictly_neutral",
+          "text": "Decline the pact. Your bunker takes no part in regional brush wars.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_ash_militia",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "Talia nods coldly and glides away across the snowdrifts."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_shelled_silo_scavengers",
+      "visitorName": "Starving Grain Millers",
+      "visitorFaction": "faction_rebuilders",
+      "description": "Four millers from the shelled concrete silo arrive with blackened sacks of smoke-tainted wheat flour. They offer fifty kilograms of flour for two rolls of silicone door gasket to seal their cellar.",
+      "minDay": 250,
+      "maxDay": 310,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_trade_silicone_for_flour",
+          "text": "Trade 1 silicone hatch gasket for the sack of grain.",
+          "requiredTrait": "",
+          "requiredItemId": "item_hermetic_hatch_silicone_gasket",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_rebuilders",
+          "factionStandingDelta": 15,
+          "outcomeDescription": "Your bakers sift the smoke-tainted flour; your shelter gains two weeks of bread rations."
+        },
+        {
+          "choiceId": "choice_decline_smoky_flour",
+          "text": "Decline. The flour may be contaminated with toxic ash particulate.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 5,
+          "targetFaction": "faction_rebuilders",
+          "factionStandingDelta": -5,
+          "outcomeDescription": "The millers shoulder their heavy sacks and trudge toward the Allotments."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_vitrified_crater_glass_trader",
+      "visitorName": "Crater Ascetic",
+      "visitorFaction": "faction_ash_sign",
+      "description": "A scarred ascetic carrying a lead-lined wicker basket offers green vitrified crater glass specimens, claiming they emit soothing warmth. Your Geiger counter clicks erratically at 15 µSv/h.",
+      "minDay": 260,
+      "maxDay": 320,
+      "threatLevel": 3,
+      "choices": [
+        {
+          "choiceId": "choice_confiscate_and_store_in_lead_pig",
+          "text": "Seize the radioactive glass and seal it inside a lead storage pig.",
+          "requiredTrait": "trait_scientist",
+          "requiredItemId": "item_sealed_lead_pig",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_ash_sign",
+          "factionStandingDelta": -10,
+          "outcomeDescription": "You secure the sample for mass spectrometry while sending the ascetic to Dr. Chen."
+        },
+        {
+          "choiceId": "choice_slam_hatch_on_cultist",
+          "text": "Slam the blast hatch and lock the dog-bolts against radiation hazard.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_ash_sign",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "The cultist leaves the glowing glass on the doorstep and wanders into the ash mist."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_mustard_gas_burn_victims",
+      "visitorName": "Swale Marsh Refugees",
+      "visitorFaction": "faction_unaligned",
+      "description": "Three refugees with yellow chemical blisters and swollen eyelids beg for clean water and saline eye wash through the intercom. They stumbled into a breached pre-war chemical dump in the thaw mud.",
+      "minDay": 305,
+      "maxDay": 345,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_decontaminate_and_flush_eyes",
+          "text": "Flush their eyes with saline and administer potassium permanganate wash.",
+          "requiredTrait": "trait_medic",
+          "requiredItemId": "item_clean_water",
+          "requiredItemQuantity": 3,
+          "baseMoraleDelta": 15,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 10,
+          "outcomeDescription": "The refugees' eyesight is saved; they gift you an antique mercury barometer."
+        },
+        {
+          "choiceId": "choice_refuse_chemical_casualties",
+          "text": "Refuse entry to prevent toxic chemical vapor contamination inside the air ducts.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -15,
+          "baseGuiltDelta": 20,
+          "targetFaction": "",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "Their screams fade as they stumble back toward the flooded swale."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_d9_wiretap_surveyor",
+      "visitorName": "Agent Ross (STD-9)",
+      "visitorFaction": "faction_black_ops",
+      "description": "A silent figure in a white winter smock is discovered tapping into your exterior telephone line. When challenged, he shows an STD-9 credential and offers an unencrypted cipher pad for two battery cells.",
+      "minDay": 235,
+      "maxDay": 295,
+      "threatLevel": 3,
+      "choices": [
+        {
+          "choiceId": "choice_trade_batteries_for_cipher_pad",
+          "text": "Trade 2 charged batteries for the D/9 one-time cipher pad.",
+          "requiredTrait": "",
+          "requiredItemId": "item_insulated_snowmobile_battery",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_black_ops",
+          "factionStandingDelta": 20,
+          "outcomeDescription": "Ross disconnects his tap, hands over the cipher pad, and vanishes into the tree line."
+        },
+        {
+          "choiceId": "choice_cut_telephone_wire",
+          "text": "Sever the exterior wire from inside to disable the wiretap.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_black_ops",
+          "factionStandingDelta": -10,
+          "outcomeDescription": "The wire goes dead; your shelter loses long-distance telegraph communications."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_hydro_baron_submerged_diver",
+      "visitorName": "Diver Kroll (Sluice Association)",
+      "visitorFaction": "faction_hydro_barons",
+      "description": "A diver in a heavy canvas drysuit with a brass diving helmet emerges from the flooded aqueduct. He needs four liters of pure ethanol to clean frozen valve seals in the submerged pump cavern.",
+      "minDay": 255,
+      "maxDay": 315,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_give_ethanol_for_water_pressure",
+          "text": "Provide 2 units of pure alcohol to clear the frozen pump manifold.",
+          "requiredTrait": "",
+          "requiredItemId": "item_spirits",
+          "requiredItemQuantity": 2,
+          "baseMoraleDelta": 5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_hydro_barons",
+          "factionStandingDelta": 25,
+          "outcomeDescription": "Kroll clears the intake; water pressure in your bunker taps increases by 50%."
+        },
+        {
+          "choiceId": "choice_refuse_diver_alcohol",
+          "text": "Refuse. Spirits are needed for medical sterilization.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_hydro_barons",
+          "factionStandingDelta": -10,
+          "outcomeDescription": "The diver sighs inside his copper helmet and climbs back into the flooded sluice."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_garrison_mortar_observer",
+      "visitorName": "Garrison Spotter Team",
+      "visitorFaction": "faction_central_garrison",
+      "description": "Two artillery spotters with field binoculars set up on your bunker's surface mound. They demand access to your electrical power to charge their radio battery.",
+      "minDay": 245,
+      "maxDay": 295,
+      "threatLevel": 3,
+      "choices": [
+        {
+          "choiceId": "choice_charge_mortar_radio",
+          "text": "Run an extension cable through the gunport to charge their battery.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -5,
+          "baseGuiltDelta": 10,
+          "targetFaction": "faction_central_garrison",
+          "factionStandingDelta": 15,
+          "outcomeDescription": "The spotters salute, charge their set, and leave a box of 7.62mm rifle ammunition."
+        },
+        {
+          "choiceId": "choice_refuse_spotters_power",
+          "text": "Refuse to power military targeting equipment.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_central_garrison",
+          "factionStandingDelta": -20,
+          "outcomeDescription": "The spotters pack their optics and report your shelter as uncooperative."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_salt_miner_dynamite_trader",
+      "visitorName": "Gregor the Salt Miner",
+      "visitorFaction": "faction_salt_freeholders",
+      "description": "A salt miner carrying a wooden crate of Comp-B demolition blocks offers explosives in exchange for two bags of technical ammonium nitrate fertilizer for his mushroom beds.",
+      "minDay": 265,
+      "maxDay": 325,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_trade_fertilizer_for_dynamite",
+          "text": "Trade 1 sack of ammonium nitrate for 2 blocks of Comp-B explosive.",
+          "requiredTrait": "",
+          "requiredItemId": "item_ammonium_nitrate_sack",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_salt_freeholders",
+          "factionStandingDelta": 20,
+          "outcomeDescription": "Gregor heaves the fertilizer into his pack and hands over the fused demolition blocks."
+        },
+        {
+          "choiceId": "choice_refuse_explosives_trade",
+          "text": "Refuse. High explosives are too dangerous to store in living quarters.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_salt_freeholders",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "Gregor shoulders his dynamite and climbs back down the salt shaft."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_smoldering_peat_refugees",
+      "visitorName": "Peat Bog Families",
+      "visitorFaction": "faction_rebuilders",
+      "description": "Sixteen peat cutters and children whose smoldering kiln collapsed in the frost stand outside in blowing ash. They offer fifty dry peat fuel bricks for shelter on the garage floor.",
+      "minDay": 225,
+      "maxDay": 275,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_admit_peat_cutters",
+          "text": "Admit the families into the vehicle bay in exchange for peat fuel bricks.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 15,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_rebuilders",
+          "factionStandingDelta": 25,
+          "outcomeDescription": "The vehicle bay smells of wood smoke; your heating fuel reserve gains +30% capacity."
+        },
+        {
+          "choiceId": "choice_turn_away_peat_families",
+          "text": "Turn them away. You do not have enough water or space for sixteen people.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -20,
+          "baseGuiltDelta": 25,
+          "targetFaction": "faction_rebuilders",
+          "factionStandingDelta": -15,
+          "outcomeDescription": "The crying of the children is drowned out by the howling winter wind."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_icebreaker_scout_team",
+      "visitorName": "1st Officer Lindqvist & Sailors",
+      "visitorFaction": "faction_unaligned",
+      "description": "Two armed sailors from the Aurora Borealis arrive on an airboat across the ice. They need to verify that your shelter possesses calibrated radon detectors and viable seed stock before signing the manifest.",
+      "minDay": 340,
+      "maxDay": 358,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_present_radon_monitor_and_seeds",
+          "text": "Show your electret radon monitor and Strain-7 rye rhizomes to the officer.",
+          "requiredTrait": "",
+          "requiredItemId": "item_radon_detector_electret",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 25,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 30,
+          "outcomeDescription": "Lindqvist stamps your shelter manifest with the official maritime seal of passage."
+        },
+        {
+          "choiceId": "choice_fail_icebreaker_inspection",
+          "text": "You do not have the required scientific instruments or seed stock ready.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -10,
+          "baseGuiltDelta": 10,
+          "targetFaction": "",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "Lindqvist shakes his head and warns that uncertified evacuees will not be boarded."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_frostbite_amputation_emergency",
+      "visitorName": "Dr. Sarah Chen with Patient",
+      "visitorFaction": "faction_unaligned",
+      "description": "Dr. Chen bangs frantically on the hatch with a snowmobile driver whose lower legs are completely blackened from third-degree frostbite. She needs clean boiling water and a surgical bone chisel immediately.",
+      "minDay": 200,
+      "maxDay": 250,
+      "threatLevel": 2,
+      "choices": [
+        {
+          "choiceId": "choice_assist_with_amputation",
+          "text": "Provide surgical bone chisel and clean boiling water for the operation.",
+          "requiredTrait": "trait_medic",
+          "requiredItemId": "item_surgical_bone_chisel",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 15,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 15,
+          "outcomeDescription": "The surgery is successful in the quarantine airlock; the driver survives and joins your roster."
+        },
+        {
+          "choiceId": "choice_refuse_amputation_entry",
+          "text": "Refuse to open the hatch. Surgical blood will attract contamination.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -20,
+          "baseGuiltDelta": 30,
+          "targetFaction": "",
+          "factionStandingDelta": -10,
+          "outcomeDescription": "Dr. Chen's bitter curses echo through the intercom as the driver expires in the snow."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_permafrost_foundation_surveyor",
+      "visitorName": "Geotechnical Surveyor",
+      "visitorFaction": "faction_unaligned",
+      "description": "An engineer with a dial-gauge micrometer inspects the concrete exterior collar of your air intake. He warns that spring thaw subsidence will shear your foundation unless braced with steel hydraulic jacks.",
+      "minDay": 310,
+      "maxDay": 350,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_hire_surveyor_to_brace_foundation",
+          "text": "Provide hydraulic trench jack and 2 rations for emergency shoring.",
+          "requiredTrait": "",
+          "requiredItemId": "item_high_tensile_steel_culvert_brace",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 10,
+          "outcomeDescription": "The surveyor reinforces the bedrock fissures, completely halting radon gas leaks."
+        },
+        {
+          "choiceId": "choice_ignore_foundation_warning",
+          "text": "Ignore the warning. Concrete does not shear easily.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "Three days later, a loud crack echoes through the basement as a fissure opens."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_strontium_core_smuggler",
+      "visitorName": "Scavenger with Glowing Sled",
+      "visitorFaction": "faction_scavengers",
+      "description": "A scavenger covered in lead-lined blankets pulls a heavy iron sledge that melts a steaming channel in the snow. Inside is an intact 120W Strontium-90 thermal generator, but the scavenger has severe radiation burns.",
+      "minDay": 230,
+      "maxDay": 290,
+      "threatLevel": 4,
+      "choices": [
+        {
+          "choiceId": "choice_buy_strontium_capsule",
+          "text": "Trade 5 medical rations for the Strontium-90 capsule and store it in lead shielding.",
+          "requiredTrait": "trait_scientist",
+          "requiredItemId": "item_lead_shielded_sample_cask",
+          "requiredItemQuantity": 1,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_scavengers",
+          "factionStandingDelta": 20,
+          "outcomeDescription": "You install the thermal generator into your heating loop, securing permanent heat."
+        },
+        {
+          "choiceId": "choice_turn_away_radioactive_sled",
+          "text": "Drive the scavenger away with warning shots. The radiation is lethal.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": -5,
+          "baseGuiltDelta": 10,
+          "targetFaction": "faction_scavengers",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "The glowing sledge is pulled away into the whiteout."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_railway_linesman_splicers",
+      "visitorName": "Telegraph Linesman Team",
+      "visitorFaction": "faction_railway_guild",
+      "description": "Two linesmen with climbing spurs and brass wire-splicing pliers request permission to tap into your exterior junction box to test telegraph continuity to the High Granite Arsenal.",
+      "minDay": 250,
+      "maxDay": 310,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_permit_telegraph_testing",
+          "text": "Permit access to junction box and supply 1 spool of solder.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 5,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_railway_guild",
+          "factionStandingDelta": 15,
+          "outcomeDescription": "The linesmen restore regional telegraph continuity and teach your operator Morse codes."
+        },
+        {
+          "choiceId": "choice_deny_telegraph_access",
+          "text": "Refuse access to protect bunker wire privacy.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 0,
+          "baseGuiltDelta": 0,
+          "targetFaction": "faction_railway_guild",
+          "factionStandingDelta": -5,
+          "outcomeDescription": "The linesmen pack their climbing gear and move down the line."
+        }
+      ]
+    },
+    {
+      "encounterId": "door_encounter_day_360_dawn_witnesses",
+      "visitorName": "Valley Reconstruction Delegation",
+      "visitorFaction": "faction_rebuilders",
+      "description": "On the 360th morning, a joint delegation of Works agronomists, rail switchmen, salt miners, and former Garrison soldiers stands before your hatch in the bright morning sunlight. They invite you to unbolt the door and join the first civil reconstruction council.",
+      "minDay": 360,
+      "maxDay": 360,
+      "threatLevel": 1,
+      "choices": [
+        {
+          "choiceId": "choice_unbolt_hatch_and_rebuild",
+          "text": "Unbolt the blast hatch, step into the sunlight, and sign the reconstruction charter.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 50,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 50,
+          "outcomeDescription": "The heavy steel door swings open. The long winter has concluded, and human life begins anew in Sector 4."
+        },
+        {
+          "choiceId": "choice_remain_in_sealed_isolation",
+          "text": "Keep the hatch locked. The world above is not yet safe.",
+          "requiredTrait": "",
+          "requiredItemId": "",
+          "requiredItemQuantity": 0,
+          "baseMoraleDelta": 10,
+          "baseGuiltDelta": 0,
+          "targetFaction": "",
+          "factionStandingDelta": 0,
+          "outcomeDescription": "The delegation salutes your periscope and departs to build the town without you."
+        }
+      ]
     }
   ]
 }

@@ -36,6 +36,8 @@ namespace Ashfall.Core
     {
         public string systemId = LedgerDebtSystem.SystemId;
         public List<DebtContract> contracts = new List<DebtContract>();
+        /// <summary>Settled contracts (paid in full). The record is never overwritten.</summary>
+        public List<DebtContract> closedContracts = new List<DebtContract>();
         public bool ledgerTampered;
     }
 
@@ -44,6 +46,12 @@ namespace Ashfall.Core
         public const string SystemId = "ledger_debt_system";
         /// <summary>The contract must be read aloud twice before ink.</summary>
         public const int ReadsRequired = 2;
+        /// <summary>
+        /// §5.3 "requires a FRESH Standing if contested": a Standing ruling only
+        /// authorises a contested renegotiation while it is younger than this
+        /// many days. Composed with CrossingArbitrationSystem at the host layer.
+        /// </summary>
+        public const int StandingFreshDays = 3;
 
         private LedgerDebtSystemState _state = new LedgerDebtSystemState();
 
@@ -56,6 +64,8 @@ namespace Ashfall.Core
 
         public LedgerDebtSystemState State => _state;
         public IReadOnlyList<DebtContract> Contracts => _state.contracts;
+        /// <summary>Settled (paid-in-full) contracts. The ink is history; it is never rewritten.</summary>
+        public IReadOnlyList<DebtContract> ClosedContracts => _state.closedContracts;
         public bool LedgerTampered => _state.ledgerTampered;
 
         public DebtContract GetContract(string debtorId)
@@ -83,6 +93,17 @@ namespace Ashfall.Core
             var contract = GetContract(debtorId);
             if (contract != null && contract.signed && !contract.paid)
                 return false; // ink is ink — no new draft over an open debt
+            if (contract != null && contract.forfeited && !contract.paid)
+                return false; // unresolved forfeit — the named good is still owed
+
+            if (contract != null && contract.paid)
+            {
+                // Settled ink is archived, never overwritten — a second season's
+                // debt starts from a fresh draft (read twice, same as everyone).
+                _state.contracts.Remove(contract);
+                _state.closedContracts.Add(contract);
+                contract = null;
+            }
 
             if (contract == null)
             {
@@ -156,10 +177,15 @@ namespace Ashfall.Core
         /// (the new terms must be read twice again). On signed ink it is only
         /// allowed at term end — the terms extend, the rate adjusts, the forfeit
         /// stays named up front, and the ink stays ink (bible §5.3: "on term
-        /// end: … renegotiated"). A contested renegotiation is gated at the host
-        /// layer by a fresh Standing.
+        /// end: … renegotiated"). A CONTESTED renegotiation of signed ink
+        /// additionally requires a fresh Standing: the caller supplies a
+        /// <paramref name="freshStanding"/> callback (composed with
+        /// CrossingArbitrationSystem at the host layer) and the amendment is
+        /// refused unless it returns true. The gate lives HERE, in the core —
+        /// not in an optional host wrapper, so no host can bypass it.
         /// </summary>
-        public bool RenegotiateContract(string debtorId, float newPrincipal, int newTermDays, float newRate, string newForfeit)
+        public bool RenegotiateContract(string debtorId, float newPrincipal, int newTermDays, float newRate, string newForfeit,
+            bool contested = false, Func<bool> freshStanding = null)
         {
             if (string.IsNullOrEmpty(debtorId)) return false;
             if (newPrincipal <= 0f || newTermDays <= 0) return false;
@@ -174,6 +200,8 @@ namespace Ashfall.Core
                 // Term-end renegotiation only — no silent amendment of live ink
                 // mid-term. The forfeit is still named up front.
                 if (contract.daysRemaining > 1) return false;
+                // Contested ink is amended only under a fresh Standing (§5.3).
+                if (contested && (freshStanding == null || !freshStanding())) return false;
                 contract.principal = newPrincipal;
                 contract.termDays = newTermDays;
                 contract.rate = newRate;
@@ -209,50 +237,62 @@ namespace Ashfall.Core
             return true;
         }
 
-        /// <summary>Flat rate, never compounded: principal × (1 + rate).</summary>
+        /// <summary>Flat rate, never compounded: principal × (1 + rate). Settled debt owes nothing.</summary>
         public float TotalOwed(string debtorId)
         {
             var c = GetContract(debtorId);
-            if (c == null || !c.signed) return 0f;
+            if (c == null || !c.signed || c.paid) return 0f;
             return c.principal * (1f + c.rate);
         }
 
-        public LedgerDebtSystemState CaptureState()
-        {
-            var copy = new LedgerDebtSystemState
-            {
-                systemId = _state.systemId,
-                ledgerTampered = _state.ledgerTampered,
-                contracts = new List<DebtContract>()
-            };
-            for (int i = 0; i < _state.contracts.Count; i++)
-            {
-                var c = _state.contracts[i];
-                if (c == null) continue;
-                copy.contracts.Add(new DebtContract
-                {
-                    debtorId = c.debtorId,
-                    principal = c.principal,
-                    termDays = c.termDays,
-                    rate = c.rate,
-                    forfeit = c.forfeit,
-                    readCount = c.readCount,
-                    signed = c.signed,
-                    signedDay = c.signedDay,
-                    daysRemaining = c.daysRemaining,
-                    paid = c.paid,
-                    forfeited = c.forfeited
-                });
-            }
-            return copy;
-        }
+        public LedgerDebtSystemState CaptureState() => CopyState(_state);
 
         public void RestoreState(LedgerDebtSystemState saved)
         {
-            _state = saved ?? new LedgerDebtSystemState();
+            // Defensive copy: the restored state must not alias the object the
+            // save system handed us (it may be reused or mutated elsewhere).
+            _state = CopyState(saved ?? new LedgerDebtSystemState());
             if (string.IsNullOrEmpty(_state.systemId)) _state.systemId = SystemId;
             if (_state.contracts == null) _state.contracts = new List<DebtContract>();
+            if (_state.closedContracts == null) _state.closedContracts = new List<DebtContract>();
             RaiseChanged();
+        }
+
+        private static DebtContract CopyContract(DebtContract c) => new DebtContract
+        {
+            debtorId = c.debtorId,
+            principal = c.principal,
+            termDays = c.termDays,
+            rate = c.rate,
+            forfeit = c.forfeit,
+            readCount = c.readCount,
+            signed = c.signed,
+            signedDay = c.signedDay,
+            daysRemaining = c.daysRemaining,
+            paid = c.paid,
+            forfeited = c.forfeited
+        };
+
+        private static LedgerDebtSystemState CopyState(LedgerDebtSystemState source)
+        {
+            var copy = new LedgerDebtSystemState
+            {
+                systemId = source.systemId,
+                ledgerTampered = source.ledgerTampered,
+                contracts = new List<DebtContract>(),
+                closedContracts = new List<DebtContract>()
+            };
+            for (int i = 0; i < source.contracts.Count; i++)
+            {
+                var c = source.contracts[i];
+                if (c != null) copy.contracts.Add(CopyContract(c));
+            }
+            for (int i = 0; i < source.closedContracts.Count; i++)
+            {
+                var c = source.closedContracts[i];
+                if (c != null) copy.closedContracts.Add(CopyContract(c));
+            }
+            return copy;
         }
 
         private void RaiseChanged() => OnStateChanged?.Invoke(_state);

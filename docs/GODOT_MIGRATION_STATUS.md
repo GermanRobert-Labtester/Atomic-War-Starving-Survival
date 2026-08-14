@@ -35,6 +35,9 @@ asset here — that code needs no porting at all, only a host.
 - `godot --headless --path . --quit-after 2` → boots, prints the Ashfall init banner.
 - `godot --headless --path . -- --holdfast-save-selftest` → S1 save write → reload →
   restore → checksum/tamper checks, all PASS.
+- `godot --headless --path . -- --brine-selftest` → S2 BrineWaterHeadlessDemo
+  (dormant-gate, daily load, outfall shift, 48h steam-trip clock, resin repair,
+  haul loss, state roundtrip) → 21/21 PASS.
 - Godot reads the shared JSON catalogs from `res://Assets/StreamingAssets/Data` — data is NOT
   forked per engine, which is what makes the incremental migration viable.
 
@@ -75,6 +78,10 @@ Notes:
   (checksummed cross-host envelope) + `src/Host/HoldfastSaveStore.cs` (user:// JSON). The host
   restores on boot, autosaves on state change, and ships a headless selftest gate. Unity side:
   the shape is port-based, so the same file loads in either host once Unity adopts the codec.
+- **Holdfast S2 (Salt & steam)**: BrineWaterSystem is hosted in the Godot dev session
+  (plant unlock, membrane repair, outfall shift, brine status line). The save envelope is now
+  **v2** (adds brineWater) with a v1→v2 migration: a Sprint 1 save validates against the frozen
+  v1 shape and upgrades in place, brine starting fresh.
 - **UI (5/165, 3%)** is the hardest wall and the largest single subsystem after Core. Expect this
   to be rewritten against Godot Control nodes rather than ported. Plan for it explicitly.
 - **Editor (0/19)** is Unity authoring tooling. It does not need to migrate.

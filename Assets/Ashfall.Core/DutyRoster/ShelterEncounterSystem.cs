@@ -32,6 +32,8 @@ namespace Ashfall.Core
         public int seedSalt = ShelterEncounterSystem.SeedOffset;
         public int lastEncounterDay = -1;
         public int encountersThisNight;
+        public float encounterWeightMultiplier = 1f;
+        public int secondWinterActiveSince = -1;
         public List<ShelterEncounterRecord> history = new List<ShelterEncounterRecord>();
         public List<string> activeVisitorQueue = new List<string>();
         public List<string> resolvedIds = new List<string>();
@@ -88,6 +90,24 @@ namespace Ashfall.Core
                 _state.encountersThisNight = 0;
                 RaiseChanged();
             }
+        }
+
+        public float EncounterWeightMultiplier => _state.encounterWeightMultiplier;
+        public bool IsSecondWinterActive => _state.secondWinterActiveSince >= 0;
+
+        /// <summary>Second Winter profile: shelter encounters more likely (×1.6).</summary>
+        public void SetSecondWinter(float multiplier, int day)
+        {
+            _state.encounterWeightMultiplier = multiplier <= 0f ? 1f : multiplier;
+            _state.secondWinterActiveSince = day;
+            RaiseChanged();
+        }
+
+        public void ClearSecondWinter()
+        {
+            _state.encounterWeightMultiplier = 1f;
+            _state.secondWinterActiveSince = -1;
+            RaiseChanged();
         }
 
         public ShelterEncounterSystem() : this(SeedOffset)
@@ -248,7 +268,9 @@ namespace Ashfall.Core
                 expansionUnlocked = _state.expansionUnlocked,
                 seedSalt = _state.seedSalt,
                 lastEncounterDay = _state.lastEncounterDay,
-                encountersThisNight = _state.encountersThisNight
+                encountersThisNight = _state.encountersThisNight,
+                encounterWeightMultiplier = _state.encounterWeightMultiplier,
+                secondWinterActiveSince = _state.secondWinterActiveSince
             };
             copy.history = new List<ShelterEncounterRecord>();
             if (_state.history != null)

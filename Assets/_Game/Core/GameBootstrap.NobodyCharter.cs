@@ -4,7 +4,6 @@ using AtomicWar._Game.Data;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Utilities;
 using Ashfall.Core;
-using CrossingQuestEntry = AtomicWar._Game.Data.CrossingQuestEntry;
 
 namespace AtomicWar._Game.Core
 {
@@ -315,16 +314,33 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Renegotiate terms. On signed ink this is only allowed at term end.
-        /// A contested renegotiation requires a fresh Standing ruling on the
-        /// given topic to stick (bible §5.3: "requires a fresh Standing if
-        /// contested").
+        /// A contested renegotiation requires a FRESH Standing on the given
+        /// topic — held honestly AND called within
+        /// LedgerDebtSystem.StandingFreshDays of the current day (bible §5.3:
+        /// "requires a fresh Standing if contested"). The gate itself is
+        /// enforced inside the core LedgerDebtSystem; this wrapper only
+        /// composes it with the arbitration board.
         /// </summary>
         public bool RenegotiateCrossingContract(string debtorId, float newPrincipal, int newTermDays,
-            float newRate, string newForfeit, bool contested = false, string standingTopic = null)
+            float newRate, string newForfeit, bool contested = false, string standingTopic = null, int currentDay = -1)
         {
-            if (contested && !(Arbitration?.IsRulingHeld(standingTopic) ?? false))
-                return false;
-            return Ledger?.RenegotiateContract(debtorId, newPrincipal, newTermDays, newRate, newForfeit) ?? false;
+            return Ledger?.RenegotiateContract(debtorId, newPrincipal, newTermDays, newRate, newForfeit,
+                contested, contested ? () => IsCrossingStandingFresh(standingTopic, currentDay) : null) ?? false;
+        }
+
+        /// <summary>
+        /// Fresh Standing check composed for the core ledger gate: the topic's
+        /// ruling is held honestly and was called within StandingFreshDays of
+        /// currentDay. A stale or rigged Standing authorises nothing.
+        /// </summary>
+        private bool IsCrossingStandingFresh(string topic, int currentDay)
+        {
+            if (Arbitration == null || string.IsNullOrEmpty(topic)) return false;
+            if (!Arbitration.IsRulingHeld(topic)) return false;
+            var ruling = Arbitration.GetRuling(topic);
+            if (ruling == null) return false;
+            if (currentDay < 0) return false; // freshness needs the day — no day, no gate pass
+            return currentDay - ruling.dayCalled <= LedgerDebtSystem.StandingFreshDays;
         }
 
         /// <summary>Daily tick — terms run down; forfeits come due at zero.</summary>

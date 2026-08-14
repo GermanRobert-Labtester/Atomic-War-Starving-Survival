@@ -72,6 +72,56 @@ namespace Ashfall.Core.YearOfAsh
         public string favoredFaction = string.Empty;
     }
 
+    [Serializable]
+    public class YearOfAshItemContainer { public List<YearOfAshItemEntry> items = new List<YearOfAshItemEntry>(); }
+
+    [Serializable]
+    public class YearOfAshEventContainer { public List<YearOfAshEventEntry> events = new List<YearOfAshEventEntry>(); }
+
+    [Serializable]
+    public class YearOfAshLocationContainer { public List<YearOfAshLocationEntry> locations = new List<YearOfAshLocationEntry>(); }
+
+    [Serializable]
+    public class YearOfAshRadioContainer { public List<YearOfAshRadioEntry> broadcasts = new List<YearOfAshRadioEntry>(); }
+
+    [Serializable]
+    public class YearOfAshSurvivorContainer { public List<YearOfAshSurvivorEntry> survivors = new List<YearOfAshSurvivorEntry>(); }
+
+    [Serializable]
+    public class YearOfAshQuestContainer { public List<QuestlineDefinition> quests = new List<QuestlineDefinition>(); }
+
+    [Serializable]
+    public class RawQuestEntry
+    {
+        public string id = string.Empty;
+        public string questlineId = string.Empty;
+        public string title = string.Empty;
+        public string synopsis = string.Empty;
+        public string faction = string.Empty;
+        public string factionTag = string.Empty;
+        public int minDay = 180;
+        public int maxDay = 360;
+        public List<RawQuestStage> stages = new List<RawQuestStage>();
+    }
+
+    [Serializable]
+    public class RawQuestStage
+    {
+        public string stageId = string.Empty;
+        public int stageIndex = 0;
+        public string objective = string.Empty;
+        public string title = string.Empty;
+        public string narrativePrompt = string.Empty;
+        public string requiredItemId = string.Empty;
+        public bool isCompleted = false;
+    }
+
+    [Serializable]
+    public class RawQuestContainer
+    {
+        public List<RawQuestEntry> quests = new List<RawQuestEntry>();
+    }
+
     /// <summary>
     /// Engine-agnostic catalog loader for Year of Ash items, events, locations, radio broadcasts, and survivors.
     /// Uses IFileIO and IJsonSerializer ports. Zero engine namespaces.
@@ -98,7 +148,22 @@ namespace Ashfall.Core.YearOfAsh
             if (string.IsNullOrWhiteSpace(raw))
                 return new List<YearOfAshItemEntry>();
 
-            return json.Deserialize<List<YearOfAshItemEntry>>(raw) ?? new List<YearOfAshItemEntry>();
+            try
+            {
+                var container = json.Deserialize<YearOfAshItemContainer>(raw);
+                if (container != null && container.items != null && container.items.Count > 0)
+                    return container.items;
+            }
+            catch { }
+
+            try
+            {
+                return json.Deserialize<List<YearOfAshItemEntry>>(raw) ?? new List<YearOfAshItemEntry>();
+            }
+            catch
+            {
+                return new List<YearOfAshItemEntry>();
+            }
         }
 
         public static List<YearOfAshEventEntry> LoadEvents(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -114,7 +179,22 @@ namespace Ashfall.Core.YearOfAsh
             if (string.IsNullOrWhiteSpace(raw))
                 return new List<YearOfAshEventEntry>();
 
-            return json.Deserialize<List<YearOfAshEventEntry>>(raw) ?? new List<YearOfAshEventEntry>();
+            try
+            {
+                var container = json.Deserialize<YearOfAshEventContainer>(raw);
+                if (container != null && container.events != null && container.events.Count > 0)
+                    return container.events;
+            }
+            catch { }
+
+            try
+            {
+                return json.Deserialize<List<YearOfAshEventEntry>>(raw) ?? new List<YearOfAshEventEntry>();
+            }
+            catch
+            {
+                return new List<YearOfAshEventEntry>();
+            }
         }
 
         public static List<QuestlineDefinition> LoadQuests(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -130,7 +210,57 @@ namespace Ashfall.Core.YearOfAsh
             if (string.IsNullOrWhiteSpace(raw))
                 return new List<QuestlineDefinition>();
 
-            return json.Deserialize<List<QuestlineDefinition>>(raw) ?? new List<QuestlineDefinition>();
+            try
+            {
+                var rawContainer = json.Deserialize<RawQuestContainer>(raw);
+                if (rawContainer != null && rawContainer.quests != null && rawContainer.quests.Count > 0)
+                {
+                    var result = new List<QuestlineDefinition>();
+                    foreach (var rq in rawContainer.quests)
+                    {
+                        var def = new QuestlineDefinition
+                        {
+                            questlineId = !string.IsNullOrEmpty(rq.questlineId) ? rq.questlineId : rq.id,
+                            title = rq.title,
+                            synopsis = rq.synopsis,
+                            factionTag = !string.IsNullOrEmpty(rq.factionTag) ? rq.factionTag : rq.faction,
+                            minDay = rq.minDay,
+                            maxDay = rq.maxDay
+                        };
+                        foreach (var rs in rq.stages)
+                        {
+                            def.stages.Add(new QuestStage
+                            {
+                                stageId = !string.IsNullOrEmpty(rs.stageId) ? rs.stageId : $"stage_{rs.stageIndex}",
+                                title = !string.IsNullOrEmpty(rs.title) ? rs.title : rs.objective,
+                                narrativePrompt = !string.IsNullOrEmpty(rs.narrativePrompt) ? rs.narrativePrompt : rs.objective
+                            });
+                        }
+                        if (def.stages.Count > 0)
+                            def.firstStageId = def.stages[0].stageId;
+                        result.Add(def);
+                    }
+                    return result;
+                }
+            }
+            catch { }
+
+            try
+            {
+                var container = json.Deserialize<YearOfAshQuestContainer>(raw);
+                if (container != null && container.quests != null && container.quests.Count > 0)
+                    return container.quests;
+            }
+            catch { }
+
+            try
+            {
+                return json.Deserialize<List<QuestlineDefinition>>(raw) ?? new List<QuestlineDefinition>();
+            }
+            catch
+            {
+                return new List<QuestlineDefinition>();
+            }
         }
 
         public static List<YearOfAshLocationEntry> LoadLocations(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -146,7 +276,22 @@ namespace Ashfall.Core.YearOfAsh
             if (string.IsNullOrWhiteSpace(raw))
                 return new List<YearOfAshLocationEntry>();
 
-            return json.Deserialize<List<YearOfAshLocationEntry>>(raw) ?? new List<YearOfAshLocationEntry>();
+            try
+            {
+                var container = json.Deserialize<YearOfAshLocationContainer>(raw);
+                if (container != null && container.locations != null && container.locations.Count > 0)
+                    return container.locations;
+            }
+            catch { }
+
+            try
+            {
+                return json.Deserialize<List<YearOfAshLocationEntry>>(raw) ?? new List<YearOfAshLocationEntry>();
+            }
+            catch
+            {
+                return new List<YearOfAshLocationEntry>();
+            }
         }
 
         public static List<YearOfAshRadioEntry> LoadRadioBroadcasts(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -162,7 +307,22 @@ namespace Ashfall.Core.YearOfAsh
             if (string.IsNullOrWhiteSpace(raw))
                 return new List<YearOfAshRadioEntry>();
 
-            return json.Deserialize<List<YearOfAshRadioEntry>>(raw) ?? new List<YearOfAshRadioEntry>();
+            try
+            {
+                var container = json.Deserialize<YearOfAshRadioContainer>(raw);
+                if (container != null && container.broadcasts != null && container.broadcasts.Count > 0)
+                    return container.broadcasts;
+            }
+            catch { }
+
+            try
+            {
+                return json.Deserialize<List<YearOfAshRadioEntry>>(raw) ?? new List<YearOfAshRadioEntry>();
+            }
+            catch
+            {
+                return new List<YearOfAshRadioEntry>();
+            }
         }
 
         public static List<YearOfAshSurvivorEntry> LoadSurvivors(string dataDir, IFileIO fileIO, IJsonSerializer json)
@@ -178,7 +338,22 @@ namespace Ashfall.Core.YearOfAsh
             if (string.IsNullOrWhiteSpace(raw))
                 return new List<YearOfAshSurvivorEntry>();
 
-            return json.Deserialize<List<YearOfAshSurvivorEntry>>(raw) ?? new List<YearOfAshSurvivorEntry>();
+            try
+            {
+                var container = json.Deserialize<YearOfAshSurvivorContainer>(raw);
+                if (container != null && container.survivors != null && container.survivors.Count > 0)
+                    return container.survivors;
+            }
+            catch { }
+
+            try
+            {
+                return json.Deserialize<List<YearOfAshSurvivorEntry>>(raw) ?? new List<YearOfAshSurvivorEntry>();
+            }
+            catch
+            {
+                return new List<YearOfAshSurvivorEntry>();
+            }
         }
 
         public static int LoadAndRegisterQuests(QuestlineSystem system, string dataDir, IFileIO fileIO, IJsonSerializer json)

@@ -332,4 +332,3 @@ namespace AtomicWar.Tests.EditMode
         }
     }
 }
-

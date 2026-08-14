@@ -430,5 +430,149 @@
       "summarise_the_charter"
     ],
     "signature_quote": "I file things. That is the whole job. If you want a summary, ask someone who thinks paper is negotiable."
+  },
+  {
+    "id": "npc_kess_adler",
+    "display_name": "Kess Adler",
+    "profession": "Records Clerk",
+    "bio": "Municipal records clerk, Reconstruction Utility Rating 9. Unlisted. Keeps the duty chart true in the morning. Pencil, not ink, until someone orders otherwise. Erases dust from blank rows every day.",
+    "faction": "none",
+    "region": "the_stack",
+    "first_day": 60,
+    "location_id": "loc_stack_roster_wall",
+    "wants": [
+      "roster_pencil_allowed",
+      "wall_true_in_morning"
+    ],
+    "offers": [
+      "morning_row",
+      "levy_names_correct"
+    ],
+    "will_not": [
+      "write_unslept_name",
+      "falsify_dob",
+      "choose_ink"
+    ],
+    "signature_quote": "The wall was left blank because the names it wanted did not arrive. If I write yours, that is not the same as being them. It is only the same as being here."
+  },
+  {
+    "id": "npc_ansel_duth",
+    "display_name": "Ansel Duth",
+    "profession": "Parent",
+    "bio": "Unlisted parent. Dependent count that would have helped a score, in a household that was not allocated. One child in the stack. Short questions that are not rhetorical.",
+    "faction": "none",
+    "region": "the_stack",
+    "first_day": 60,
+    "location_id": "loc_stack_mess",
+    "wants": [
+      "child_not_line_item",
+      "food_without_speech"
+    ],
+    "offers": [
+      "table_truth",
+      "ladle_witness"
+    ],
+    "will_not": [
+      "ask_twice",
+      "threaten_to_leave",
+      "call_office_evil"
+    ],
+    "signature_quote": "If you tell them the boots were for someone else, they will still put them on. They will just know."
+  },
+  {
+    "id": "npc_tamsin_rook",
+    "display_name": "Tamsin Rook",
+    "profession": "Harbour Night-Clerk",
+    "bio": "Harbour night-clerk, unlisted. Score would have been in the thirties if anyone had scored a person who worked when others slept. The hatch intercom. Will not lie about who is outside.",
+    "faction": "none",
+    "region": "the_approach",
+    "first_day": 60,
+    "location_id": "loc_approach_hatch",
+    "wants": [
+      "rotating_watch",
+      "truth_on_grille"
+    ],
+    "offers": [
+      "hatch_account",
+      "apron_facts"
+    ],
+    "will_not": [
+      "lie_on_intercom",
+      "sleep_same_bunk_twice",
+      "call_edor_coward"
+    ],
+    "signature_quote": "There's a stool in the ash. There's a person on it. I'm not opening until you say. I'm also not pretending the stool isn't there."
+  },
+  {
+    "id": "npc_len_quill",
+    "display_name": "Len Quill",
+    "profession": "Quiet House Runner",
+    "bio": "Quiet House runner. Not a medic. Two knocks. Name, and one true thing. The back room is not shown. Writes the sentence exactly as given.",
+    "faction": "faction_quiet_house",
+    "region": "the_approach",
+    "first_day": 60,
+    "location_id": "loc_approach_apron",
+    "wants": [
+      "deceased_name",
+      "one_true_thing"
+    ],
+    "offers": [
+      "quiet_transport",
+      "tag_truth"
+    ],
+    "will_not": [
+      "enter_uninvited",
+      "adjudicate_back_room",
+      "take_body_without_name"
+    ],
+    "signature_quote": "We make it quiet. I need the name. I need one true thing. I will write it the way you say it."
+  },
+  {
+    "id": "npc_hadi_morrow",
+    "display_name": "Hadi Morrow",
+    "profession": "Veterinary Assistant",
+    "bio": "Veterinary assistant. The trade the rubric scored cheap and District 8 cannot desalinate a child without. Will not call himself a doctor. Doses out loud, counts rags, names the morning.",
+    "faction": "none",
+    "region": "the_stack",
+    "first_day": 60,
+    "location_id": "loc_stack_clinic_alcove",
+    "wants": [
+      "finish_stack_people",
+      "clean_rag"
+    ],
+    "offers": [
+      "clinic_alcove",
+      "outfall_whistle"
+    ],
+    "will_not": [
+      "call_himself_doctor",
+      "leave_septic_child",
+      "hate_the_office"
+    ],
+    "signature_quote": "I can do this here with iodine and a clean rag. I can do the outfall with a whistle. I cannot do both in the same morning. You have to write which morning it is."
+  },
+  {
+    "id": "npc_nila_brant",
+    "display_name": "Nila Brant",
+    "profession": "Lamp-Oil Clerk",
+    "bio": "Lamp-oil clerk, unlisted. Occupies Allocation 11 with three others. Keeps their chart blank on purpose. A hiding place, not a pool. Will withdraw if you write her living in ink.",
+    "faction": "none",
+    "region": "the_overflow",
+    "first_day": 60,
+    "location_id": "loc_overflow_alloc_11",
+    "wants": [
+      "filters_without_lecture",
+      "silence"
+    ],
+    "offers": [
+      "hiding_place",
+      "overflow_shelter"
+    ],
+    "will_not": [
+      "hide_listed_name",
+      "explain_twice",
+      "say_please"
+    ],
+    "signature_quote": "You can sleep here if you are not a pool. The minute you are a pool, this hatch is a wall. I will not explain it twice."
   }
 ]

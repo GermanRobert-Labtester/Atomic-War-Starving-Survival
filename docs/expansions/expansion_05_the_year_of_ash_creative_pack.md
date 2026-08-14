@@ -1,4 +1,4 @@
-# ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Master Creative Pack & Narrative Bible
+# ASHFALL: THE YEAR OF ASH (DAYS 180–360) — Grand Lore Bible & Master Creative Pack
 
 **Internal id:** `expansion_05_the_year_of_ash`  
 **Kind:** Shippable prose & definitive narrative resolution. Companion to `docs/expansions/expansion_05_the_year_of_ash_plan.md` and `docs/lore/06_REBUILDERS_AND_BLACK_OPS.md`.  
@@ -7,376 +7,224 @@
 
 ---
 
-# I. THE CONTINUITY FORK: POWERS, WORKS, DENIAL, AND TITHES
+# I. THE GREAT SCHISM OF SECTOR 4: 10 FACTIONS AT WAR
 
-### The Core Architectural & Narrative Axiom
-
-In *ASHFALL*, adding new faction-shaped entities to a world with a tightly drawn geopolitical map risks diluting the weight of every faction. The resolution to the continuity fork is straightforward: **the new entities are not the same *kind* of thing as the original four Powers.**
+When the stratospheric ash layer reached peak opacity on Day 180, ambient temperatures plunged to -38°C. With agriculture impossible and fuel reserves freezing into cloudy wax, the pre-war social compact evaporated. Sector 4 shattered along ideological lines into two warring coalitions: the **Directorate & Military Bloc** and the **Rebel, Communal & Autonomy Bloc**.
 
 ```
-┌─────────────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                                 THE TAXONOMY OF FORCE IN SECTOR 4                                       │
-├────────────────────────────────┬────────────────────────────────┬──────────────────────────────────────┤
-│ THE FOUR POWERS                │ THE CURRENTS & TRADES          │ THE DENIED & THE WORKS               │
-│ • Sovereign territorial claims │ • Trans-regional practices     │ • Unrescinded military taskings (D/9)│
-│ • Pre-war map borders          │ • Access granted or lost       │ • Municipal public works (The Works) │
-│ • Standing armies & conscripts │ • No sovereign territory       │ • Industrial water monopolies        │
-│ • Demand political allegiance  │ • No diplomatic standing       │ • Market & utility hegemony          │
-└────────────────────────────────┴────────────────────────────────┴──────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                    THE 10 FACTIONS OF THE YEAR OF ASH                                    │
+├─────────────────────────────────────┬────────────────────────────────────────────────────────────────────┤
+│ DIRECTORATE & MILITARY BLOC         │ REBEL, COMMUNAL & AUTONOMY BLOC                                    │
+├─────────────────────────────────────┼────────────────────────────────────────────────────────────────────┤
+│ 1. The Iron Garrison (3rd Corps)    │ 6. The Works (Public Works Allotment Committee)                    │
+│ 2. Detachment 9 (STD-9 / Protocol)  │ 7. The Ash Militia (Central Upland Defense League)                 │
+│ 3. Continental Logistics Escort     │ 8. Penitent Cult of the Ash Sign (Vitrified Martyrs)               │
+│ 4. 8th Penal Pioneer Sump Regiment  │ 9. Shattered Rail Union & Switchmen Guild                          │
+│ 5. High Granite Munitions Foundry   │ 10. Deep Salt Cavern Freeholders & Miner Cooperative               │
+└─────────────────────────────────────┴────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 1. The Original Four Powers (Sovereign Belligerents)
+## 1. The Directorate & Military Bloc (5 Factions)
 
-The four entities defined in `01_GAZETTEER.md` and `05_FACTIONS.md` are **Powers**:
-1. **The Iron Garrison** (`faction_central_garrison` / `iron_garrison`): Holds the pre-war military redoubts, rail yards, and armories. Governs through martial decrees, logistics schedules, and armed conscription.
-2. **The Ash Militia** (`faction_ash_militia` / `ash_militia`): Controls the agricultural terraces of the Central Uplands. Governs through communal defense pacts, lineage registries, and defensive fortifications.
-3. **The Cult of the Ash Sign** (`faction_ash_sign` / `cult_of_ash_sign`): Holds the irradiated crater zones and deep ash fissures. Governs through theological fatalism, radium cleansing rites, and penitent suicide columns.
-4. **The Warlords of Sector 4** (`faction_warlords` / `warlords_sector_4`): Controls the high-pass toll gates and switchback causeways. Governs through transit taxation, posted ledgers, and armed checkpoints.
+### 1. The Iron Garrison (3rd Corps Provisional Directorate)
+- **Designation**: `faction_central_garrison`
+- **Commander**: Major Kroll (Provost Marshal) / General Vance (Deceased)
+- **Headquarters**: Checkpoint Gamma & Kilometre 12 Redoubt
+- **History & Doctrine**: The remnants of the regional army corps that held the strategic rail corridor. Governs through martial decrees, logistics schedules, and armed conscription. Under **Martial Law Schedule 14**, the Garrison claims absolute ownership of all stored calories, diesel fuel, and machine tools within five kilometres of the rail corridor. They view civilian shelters as non-compliant supply depots whose reserves must be nationalized to support the defensive perimeter.
+- **Weaponry**: 152mm heavy towed howitzers, armored half-tracks, 7.62mm service rifles.
+- **Atmospheric Voice**: Cold, bureaucratic, unyielding. Rubber-stamped requisition forms, squealing half-track sprockets, steam whistles, and distant howitzer concussions.
 
-### Why They Are Powers:
-- **Territory**: They hold contiguous sub-regions on the master map.
-- **Belligerence**: They maintain organized fighting formations and can wage formal, sustained territorial war.
-- **Diplomatic Query**: A Power asks the player: *"Whose side are you on?"*
-- **Player Mechanics**: Siding with one Power shifts broad reputation vectors, unlocks faction-specific military technology, and locks out opposing sovereign territories.
+### 2. Detachment 9 (Special Technical Directorate / Protocol Null)
+- **Designation**: `faction_black_ops`
+- **Commander**: Colonel Brand
+- **Headquarters**: Kilometre 44 Railway Cut Telecom Bunker
+- **History & Doctrine**: Eighteen surviving specialists of the Ministry of Supply's Special Technical Directorate (STD-9). Their standing pre-war tasking was simple: **deny all strategic infrastructure to enemy forces in the event of territorial collapse**. Operating under automated telecommunication orders signed by a dead minister, D/9 has wired every bridge, viaduct, and tunnel in Sector 4 with linear Comp-B demolition blocks. They refuse to stand down without a cryptographic override code (`Lima-November-74`) that will never arrive from the vaporized capital.
+- **Weaponry**: Electric bridge-wire blasting caps, Comp-B demolition blocks, sniper rifles, one-time cipher pads.
+- **Atmospheric Voice**: Paranoic, methodical, exhausted. Clicking telegraph sounders, five-digit cipher books, and perforated paper tape curling across frozen concrete floors.
 
----
+### 3. Continental Logistics Escort (Highway 12 Convoy Corps)
+- **Designation**: `faction_supply_corps`
+- **Commander**: Captain Alder
+- **Headquarters**: Highway 12 Staging Apron & Weigh Station
+- **History & Doctrine**: The armored freight detachment tasked with moving heavy supplies along the northern arterial highway. Operating tracked halftracks with heated battery packs, they escort bulk medical supplies, seed stocks, and diesel fuel between northern deep vaults and frontline garrisons. They maintain military neutrality toward compliant civilian shelters, trading security for heated garage berths.
+- **Weaponry**: Armored troop carriers with pintle-mounted heavy machine guns, 24V starter carts, tow cables.
+- **Atmospheric Voice**: Grinding diesel transmissions, tire chains rattling on hard-packed ice, and hot engine oil fumes.
 
-## 2. Why The Rebuilders Never Counted as a Power
+### 4. The 8th Penal Pioneer Regiment (Iron Sump Engineers)
+- **Designation**: `faction_penal_battalion`
+- **Commander**: Sapper Vance (Mutineer Representative) / Provost Guards
+- **Headquarters**: Sump Mud Trenches (Ground Zero Perimeter)
+- **History & Doctrine**: Formed from military convicts, draft resisters, and civilian detainees sentenced to hazardous labor. Forced to dig defensive trenches and clear radioactive unexploded ordnance with hand shovels. When radiation sickness claimed 60% of their ranks, the sappers mutinied, killed their provost officers, and fortified the sump mud drifts.
+- **Weaponry**: Entrenching shovels, improvised unexploded ordnance booby traps, burlap respirators.
+- **Atmospheric Voice**: Splashing black mud, wet coughing, rusted iron shackles, and muffled explosions in the fog.
 
-**Canonical Designation:** `faction_rebuilders` · **The Works** (Public Works Allotment Committee)
-
-The Rebuilders do not call themselves "The Rebuilders." They call themselves **the Works**, short for the municipal public works department that employed three of their founders before the Exchange. "The Rebuilders" was a derisive nickname coined by the Toll guards at Kilometre 19, and it stuck.
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                                THE WORKS PARADOX                                 │
-├──────────────────────────────────────────────────────────────────────────────────┤
-│ • Settled the floodplain: only viable agricultural loam in Sector 4              │
-│ • The ground is rich because it floods with contaminated river runoff            │
-│ • Result: They produce food for 200 people, but are 70 days from dying of thirst │
-│ • They run the sector's ONLY working autoclave and still in a caretaker's shed   │
-└──────────────────────────────────────────────────────────────────────────────────┘
-```
-
-The Works cannot wage a war. If the Garrison deployed a single motorized infantry company with mortar support, the Allotments would fall in ninety minutes. The Garrison does not do this because the Garrison's quartermaster has calculated that three tons of rye flour and forty bushels of dried turnips per quarter are worth more than fifty acres of radioactive mud and seventy dead agronomists.
-
-The Works holds **soil**, not **sovereignty**. They hold **technology**, not **territory**.
-
----
-
-## 3. Why Black Ops (D/9) Never Counted as a Power
-
-**Canonical Designation:** `faction_black_ops` · **Detachment 9 / Protocol Null**
-
-Black Ops is not an army, a faction, or a political movement. It is **eighteen surviving men and women** operating out of a reinforced telecommunications bunker beneath the railway cut at Kilometre 44.
-
-They were part of the Ministry of Supply's Special Technical Directorate (STD-9), tasked before the Exchange with a single contingency protocol: **deny the industrial infrastructure of Sector 4 to enemy forces in the event of territorial collapse.**
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────┐
-│                           THE PROTOCOL NULL DILEMMA                              │
-├──────────────────────────────────────────────────────────────────────────────────┤
-│ • D/9 knows the bridge is already broken.                                        │
-│ • D/9 knows the country they were defending has ceased to exist.                 │
-│ • D/9's standing orders are on perforated paper signed by a dead minister.       │
-│ • The orders state: 'Maintain denial posture until relief arrives.'              │
-│ • Relief has not arrived in 240 days.                                            │
-└──────────────────────────────────────────────────────────────────────────────────┘
-```
-
-D/9 does not want land. They do not want tax revenue. They do not want converts. They want **the six remaining unblown culverts on the rail line to stay unblown until their radio gives them a verified stand-down code** that will never come, because the transmitter in the capital was destroyed on Day 1.
+### 5. High Granite Munitions & Arsenal Directorate
+- **Designation**: `faction_ordnance_foundry`
+- **Commander**: Chief Assayer Markov
+- **Headquarters**: Subterranean Granite Foundry Dome
+- **History & Doctrine**: The industrial foundry carved inside a solid granite mountain. Holds the sector's only working drop hammers and brass stamping dies. Forges artillery shell casings and cooks ammonium nitrate charges for the Garrison in exchange for food rations. Holds an iron monopoly on ammunition reloading.
+- **Weaponry**: Hardened tool-steel dies, hydraulic cartridge presses, charcoal crucibles.
+- **Atmospheric Voice**: Rhythmic drop-hammer thuds shaking the bedrock, searing sulfur fumes, and glowing orange bronze slag.
 
 ---
 
-## 4. Why The Hydro-Barons Never Counted as a Power
+## 2. The Rebel, Communal & Autonomy Bloc (5 Factions)
 
-**Canonical Designation:** `faction_hydro_barons` · **The Sluice Association**
+### 6. The Works (Public Works Allotment Committee)
+- **Designation**: `faction_rebuilders`
+- **Leader**: Ottilie Frayne
+- **Headquarters**: The Allotments (River Floodplain)
+- **History & Doctrine**: Founded by municipal public works employees who settled the river floodplain—the only viable agricultural loam in Sector 4. They operate five acres of double-glazed polycarbonate cold-frames heated by composting manure and steam pipes. Using **Strain-7 cold-hardened rye rhizomes**, they produce bread for four hundred people while fighting off military grain requisitions.
+- **Weaponry**: 12-gauge hunting shotguns, iron pry-bars, steam autoclaves, wood-fired brick kilns.
+- **Atmospheric Voice**: Steaming compost heaps, dripping glass panes, boiling copper stills, and calm communal committee debates.
 
-The Hydro-Barons are four families who control the three pre-war deep-bore artesian wells in the limestone bluff north of the salt flats. They have no uniform, no flag, no ideology, and no soldiers beyond eight men with shotguns and a pack of starved lurchers.
+### 7. The Ash Militia (Central Upland Defense League)
+- **Designation**: `faction_ash_militia`
+- **Leader**: Commander Talia
+- **Headquarters**: Mountain Terrace Redoubts & Switchback 4
+- **History & Doctrine**: A mutual-defense league of upland farmsteads and switchback lookouts. They defend their terraced potato fields and root cellars against Garrison foraging sweeps using deadfall timber barricades and high-angle sniper ambushes. They advocate for total regional autonomy and the abolishment of martial requisitions.
+- **Weaponry**: Scoped hunting rifles, dynamite deadfall traps, ski scout patrols.
+- **Atmospheric Voice**: Mountain wind howling through pine deadfalls, sharp rifle cracks echoing off granite bluffs, and quiet lookouts chewing dried turnips.
 
-They do not claim sovereignty. They claim **the meter**.
+### 8. The Penitent Cult of the Ash Sign (Vitrified Martyrs)
+- **Designation**: `faction_ash_sign`
+- **Leader**: Hierophant Malachi / Sister Martha (Apostate)
+- **Headquarters**: Cathedral Vitrified Strike Crater (Ground Zero)
+- **History & Doctrine**: A theological movement born among radiation burn survivors in the eighty-meter blast crater. They view the nuclear exchange not as a tragedy, but as a divine purification of human corruption. They burn their dead on sulfur pyres and conduct mass suicidal assaults against sealed military bunkers, seeking to 'liberate the dwellers of the false concrete tombs.'
+- **Weaponry**: Vitrified radioactive glass daggers, sulfur smoke pots, suicide demolition vests.
+- **Atmospheric Voice**: Rhythmic chanting in dense ash fog, chiming brass prayer bells, crackling sulfur bonfires, and Geiger counters screaming at 20 µSv/h.
 
-Every litre of potable water that moves through the northern pipeline network is metered through a brass positive-displacement flow counter manufactured in 1968. The Hydro-Barons sit on folding chairs in the pump house and record the counter reading in a cloth-bound ledger twice a day.
+### 9. The Shattered Rail Union & Switchmen Guild
+- **Designation**: `faction_railway_guild`
+- **Leader**: Elena Vasquez
+- **Headquarters**: Sector 4 Locomotive Roundhouse & Repeater Hut 14
+- **History & Doctrine**: The union of civilian railway workers, track linesmen, and telegraphers. They control the armored steam handcars that navigate unsevered track segments. Fiercely opposed to the military occupation of the railway, they conduct covert track sabotage, cut telegraph lines, and smuggle flour from The Works to isolated upland communities.
+- **Weaponry**: Hydraulic spike pullers, armored steam handcars, telegraph armature keys.
+- **Atmospheric Voice**: Steel wheels squealing on frosted rails, clicking Morse sounders, kerosene lanterns, and greasy track ballast.
 
----
-
-# II. MASTER CROSS-WALK: 40 SHELTER DOOR ENCOUNTERS
-
-Every door encounter in Phase IV–VI evaluates who is standing behind the hatch before presenting player options.
-
-```
-┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-│                               DOOR ENCOUNTER EVALUATION PIPELINE                                 │
-├──────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ 1. Scan living bunker roster (Medical state, radiation tier, guilt score, trauma bonds).         │
-│ 2. Match encounter condition tags (e.g. `needs_doctor`, `has_ex_garrison`, `fissure_open`).      │
-│ 3. Generate dynamic survivor reaction previews in modal UI.                                      │
-│ 4. Resolve choice consequences across morale, inventory, contagion, and faction tension.        │
-└──────────────────────────────────────────────────────────────────────────────────────────────────┘
-```
-
-### Encounters #1 to #10 (Deep Freeze Early Phase, Days 180–205)
-
-#### 1. `enc_the_frozen_courier` — The Messenger from Kilometre 19
-- **Visitor**: A young dispatch runner from the Toll Road, frost on eyelashes, carrying an oilcloth pouch sealed with lead wire.
-- **Trigger**: Day >= 180, ambient temp <= -25°C.
-- **Roster Reactions**:
-  - *If Corporal Vane is present*: "That’s a 4th Battalion courier pouch. If he’s carrying it, the switchboard at the Pass is dead."
-  - *If Dr. Chen is present*: "Look at his hands. If we don't warm those fingers in tepid saline within thirty minutes, he loses both index fingers."
-- **Choices**:
-  1. *Admit him, thaw his hands, trade for the dispatch pouch* (-10% Heating Reserve, +1 `item_one_time_cipher_pad_d9`, +5 Morale).
-  2. *Take the pouch through the mail slot, leave him outside* (+1 `item_one_time_cipher_pad_d9`, -12 Morale, +8 Guilt).
-  3. *Refuse to unbolt the hatch* (+0 Resources, -5 Morale).
-
-#### 2. `enc_deserter_family_in_rags` — The Salt Flats Evacuees
-- **Visitor**: A father, mother, and eight-year-old child wrapped in fiber insulation and packing tape.
-- **Trigger**: Day >= 185, ambient temp <= -30°C.
-- **Roster Reactions**:
-  - *If Sister Martha is present*: "The child is coughing blood. It is the grey lung from the ash pits. We have blankets in the annex."
-  - *If Valeria Koss is present*: "Three more mouths. That’s 2,100 calories a day we don't have. Check their boots first."
-- **Choices**:
-  1. *Grant sanctuary in the quarantine vestibule* (-3 Rations/day, +10 Morale, +15 Guilt if food runs out).
-  2. *Provide 2 tins of rations and a wool blanket, turn them away* (-2 `item_continuity_ration_biscuit_tin`, -1 `item_thermal_lining`, +0 Morale).
-  3. *Drive them off with the intercom klaxon* (-15 Morale, +20 Guilt to all Humanist survivors).
-
-#### 3. `enc_wandering_trauma_surgeon` — Dr. Sarah Chen's Arrival
-- **Visitor**: An elderly surgeon pushing a bicycle with solid rubber tires loaded with lead-shielded instrument cases.
-- **Trigger**: Day >= 190, medical supplies > 0.
-- **Roster Reactions**:
-  - *If any survivor has `frostbite_stage_2`*: "She’s carrying bone saws and dry suture reels. Let her in before the frost takes her feet."
-- **Choices**:
-  1. *Recruit Dr. Chen into the permanent roster* (+1 Survivor `survivor_dr_sarah_chen`, unlocks Advanced Surgery).
-  2. *Trade surgical blades for iodine* (-20 Iodine, +1 `item_surgical_bone_chisel`).
-  3. *Turn away* (-10 Morale).
-
-#### 4. `enc_garrison_requisition_detail` — The Schedule 14 Sweep
-- **Visitor**: Four Garrison conscripts in sheepskin coats with a tracked sledge, demanding 40 kg of grain or 20 litres of diesel.
-- **Trigger**: Day >= 195, faction tension >= 30%.
-- **Roster Reactions**:
-  - *If Gunner Mikhail is present*: "Sergeant's coat is patched at the shoulder. They're foraging without supply orders. We can refuse."
-- **Choices**:
-  1. *Hand over 20L diesel to satisfy the requisition* (-1 Fuel, +5 Garrison Rep).
-  2. *Bribe the sergeant with a bottle of pure alcohol* (-1 Spirits, +0 Garrison Rep, keeps diesel).
-  3. *Refuse through the gunport* (+15 Faction Tension, potential mortar retaliation).
-
-#### 5. `enc_works_seed_custodian` — Tomas Lind with Cryo Rhizomes
-- **Visitor**: Tomas Lind, breathless, carrying a vacuum dewar of frost-resistant rye roots.
-- **Trigger**: Day >= 200.
-- **Choices**:
-  1. *Admit Tomas and store the rhizomes in the cold locker* (+1 Survivor, +1 `item_perennial_wheat_strain_7`, +15 Rebuilder Rep).
-  2. *Refuse entry* (-10 Rebuilder Rep).
-
-#### 6. `enc_penitent_ash_flagellant` — Brother Paul's Liturgy
-- **Visitor**: A barefoot man carrying a glowing chunk of vitrified blast glass in a wire cage.
-- **Choices**:
-  1. *Confiscate the radioactive glass and isolate him* (+1 `item_sealed_lead_pig`, +1 Rad Dose).
-  2. *Refuse* (No effect).
-
-#### 7. `enc_black_ops_wiretap_scout` — Agent Ross at the Periscope
-- **Visitor**: A figure in a white sniper smock inspecting the bunker's exterior coaxial cable.
-- **Choices**:
-  1. *Challenge over the external loudspeaker* (Scout retreats, leaves note).
-  2. *Fire a warning shot* (+20 D/9 Hostility).
-
-#### 8. `enc_hydro_baron_meter_clerk` — The Water Ledger Audit
-- **Visitor**: A clerk with brass calipers and a receipt book demanding maintenance salt.
-- **Choices**:
-  1. *Pay 10 units of salt* (+10 Hydro-Baron Rep, preserves water pressure).
-  2. *Refuse payment* (Water pressure halved next 5 days).
-
-#### 9. `enc_frostbitten_militia_sentry` — Corporal Vane's Companion
-- **Visitor**: A half-frozen militia lookout with blackened cheekbones.
-- **Choices**:
-  1. *Admit and amputate two toes* (-2 Medical, +1 Survivor `survivor_felix_vane`).
-  2. *Refuse* (Sentry freezes on the stoop, -15 Morale).
-
-#### 10. `enc_frozen_allotment_scavenger` — Naomi Strand's Barter
-- **Visitor**: Naomi Strand carrying a bundle of salvaged brass fittings.
-- **Choices**:
-  1. *Trade 5 rations for 3 brass fittings* (-5 Rations, +3 `item_brass_valve_fitting`).
-  2. *Recruit Naomi Strand* (+1 Survivor `survivor_naomi_strand`).
+### 10. The Deep Salt Cavern Freeholders & Miner Cooperative
+- **Designation**: `faction_salt_freeholders`
+- **Leader**: Dr. Erik Dahl / Gregor the Miner
+- **Headquarters**: 400m Dry Halite Caverns & Low-Background Lab
+- **History & Doctrine**: Four hundred miners, orderlies, and physicists living 400 meters underground in dry, sterile salt caverns. Completely shielded from surface cosmic radiation and fallout (0.02 µSv/h), they operate a forty-bed emergency trauma hospital and barter pure mineral salt and mining dynamite under strict, armed neutrality.
+- **Weaponry**: Mining dynamite, rock-bolting guns, heavy pneumatic drills.
+- **Atmospheric Voice**: Absolute silence broken by the hum of battery inverters, crisp dry air smelling of halite mineral dust, and the rhythmic drip of condensation collectors.
 
 ---
 
-### Encounters #11 to #25 (Deep Freeze to Faction Siege, Days 206–280)
-
-#### 11. `enc_geothermal_well_mechanic` — Pavel Volkov
-- **Visitor**: A boilermaker from the steam plants with a manifold wrench.
-- **Benefit**: Can repair damaged geothermal heating loops instantly if admitted.
-
-#### 12. `enc_cult_ash_sign_converts` — The Three Martyrs
-- **Visitor**: Three young novices requesting permission to sit inside the warm exhaust plume.
-- **Risk**: Radiation contamination (+15 mSv) if allowed near air intakes.
-
-#### 13. `enc_d9_null_detonator_courier` — Cipher Pouch Delivery
-- **Visitor**: An ununiformed courier delivering an encrypted envelope addressed to "Bunker Station 04".
-- **Benefit**: Contains `item_one_time_cipher_pad_d9` required for Protocol Null stand-down.
-
-#### 14. `enc_starving_allotment_child` — The Bread Scraps
-- **Visitor**: A nine-year-old girl with a wooden bowl.
-- **Moral Choice**: High guilt delta if turned away; minimal resource drain if fed.
-
-#### 15. `enc_black_blizzard_stragglers` — Four Lost Miners
-- **Visitor**: Four quarrymen blinded by blowing ash in -40°C storm.
-- **Choice**: High shelter capacity test; adds 4 mouths or severe guilt penalty.
-
-#### 16. `enc_garrison_provost_marshall` — Major Kroll's Inquiry
-- **Visitor**: Garrison officer investigating the disappearance of a patrol.
-- **Danger**: Requires high Trust or `item_falsified_clearance` to avoid bunker search.
-
-#### 17. `enc_works_autoclave_technician` — Lydia Hart
-- **Visitor**: Agronomy engineer carrying an autoclave seal.
-- **Benefit**: Improves hydroponic yield by +30% if recruited.
-
-#### 18. `enc_ash_sign_pyre_apostate` — Sister Martha's Brother
-- **Visitor**: A fleeing cultist who refused to walk into the vitrified crater.
-- **Narrative**: Triggers deep confession dialog if Sister Martha is in shelter.
-
-#### 19. `enc_hydro_baron_enforcer_squad` — The Sluice Guards
-- **Visitor**: Armed guards demanding return of an escaped pipe-welder.
-- **Choice**: Surrender survivor or risk valve cut-off.
-
-#### 20. `enc_continental_convoy_outrider` — Captain Alder's Scout
-- **Visitor**: Snowmobile scout marking waypoints for the Day 340 maritime convoy.
-- **Benefit**: Unlocks `loc_continental_convoy_staging_area` on regional map.
-
-#### 21. `enc_frozen_lead_pig_carrier` — The Isotope Smuggler
-- **Visitor**: Smuggler with a heavy lead container containing `item_strontium_90_thermoelectric_pellet`.
-
-#### 22. `enc_garrison_deserter_sniper` — Igor Morozov
-- **Visitor**: Sentry carrying a scoped rifle, offering perimeter protection for shelter.
-
-#### 23. `enc_works_greenhouse_botanist` — Clara Sloan
-- **Visitor**: Hydroponics specialist with winter-hardened seed trays.
-
-#### 24. `enc_d9_demolition_sapper` — Sapper Vance
-- **Visitor**: Engineer offering `item_plastic_explosive_block` in exchange for dry sleeping quarters.
-
-#### 25. `enc_fleeing_switchyard_telegrapher` — Vera Sokolov
-- **Visitor**: Railway telegrapher with logs of final military troop movements.
-
----
-
-### Encounters #26 to #40 (The Great Thaw & The Final Reckoning, Days 281–360)
-
-#### 26. `enc_black_thaw_mud_refugees` — The Flooded Basement Families
-- **Visitor**: 6 survivors covered in radioactive black silt after permafrost collapse.
-
-#### 27. `enc_radon_scrubber_merchant` — The Filter Peddler
-- **Visitor**: Scavenger selling heavy charcoal radon filter cartridges (`item_air_filter_heavy`).
-
-#### 28. `enc_salt_chamber_physicist` — Dr. Erik Dahl
-- **Visitor**: Senior researcher from `loc_low_background_lab` carrying spectrometer tubes.
-
-#### 29. `enc_crystal_radio_enthusiast` — Marcus Vane
-- **Visitor**: Radio operator with frequency logs for the 142.850 MHz emergency beacon.
-
-#### 30. `enc_continental_maritime_envoy` — First Officer Lindqvist
-- **Visitor**: Envoy from icebreaker *Aurora Borealis* verifying survivor manifest names.
-
-#### 31. `enc_ash_sign_last_penitent` — The Dying Prophet
-- **Visitor**: Cult elder seeking a dry place to expire without radiation burns.
-
-#### 32. `enc_garrison_mutineer_platoon` — The Broken Ranks
-- **Visitor**: 8 soldiers who abandoned Checkpoint Gamma after their commander died.
-
-#### 33. `enc_works_final_grain_caravan` — The Bumper Rye Harvest
-- **Visitor**: Two wagons of fresh spring grain requesting salt and tool trades.
-
-#### 34. `enc_hydro_baron_pipeline_refugee` — The Ruined Overseer
-- **Visitor**: Former well-owner whose pumps silted up during the mud thaw.
-
-#### 35. `enc_d9_protocol_null_commander` — Colonel Brand
-- **Visitor**: Final commander of D/9 seeking authorization to seal the railway cut.
-
-#### 36. `enc_strontium_rtg_salvager` — The Glowing Sled
-- **Visitor**: Scavenger with terminal acute radiation sickness offering power core.
-
-#### 37. `enc_permafrost_subsidence_surveyor` — Geotech Engineer
-- **Visitor**: Engineer warning of foundation shear cracks in nearby bunkers.
-
-#### 38. `enc_radio_142_carrier_operator` — The Beacon Technician
-- **Visitor**: Technician needing quartz crystal resonator to synchronize global signal.
-
-#### 39. `enc_icebreaker_rendezvous_runner` — The Final Call
-- **Visitor**: Runner announcing the 48-hour boarding window for the northern ship.
-
-#### 40. `enc_day_360_final_dawn_witness` — The First Crow
-- **Visitor**: A child pointing at a living bird on the periscope rim on the 360th morning.
-
----
-
-# III. REGIONAL EXPLORATION NODES (30 LOCATIONS)
+# II. REGIONAL EXPLORATION DOSSIERS (60 LOCATIONS)
 
 ```
-Sector 4 Map Topology (30 Authoritative Exploration Nodes)
-├── The Works Agrarian Basin (Locs 01, 10, 19, 29)
-├── D/9 Railway Cut & Military Caches (Locs 02, 15, 18, 27, 28)
-├── Hydro-Baron Sluices & Coastal Pumping (Locs 03, 13, 16, 23)
-├── High Granite Ridge & Radio Relays (Locs 04, 14, 24, 25)
-├── Deep Geological & Salt Vaults (Locs 05, 06, 17, 21)
-├── Garrison Redoubts & Switchyards (Locs 07, 12, 20, 26)
-└── Northern Maritime Sound & Estuary (Locs 08, 09, 22, 30)
+Sector 4 & 8 Strategic Map Overview (60 Authoritative Exploration Nodes)
+├── Floodplain Agriculture & Kilns (Locs 01, 10, 19, 29, 36, 43, 44)
+├── Industrial Rail & Switchyards (Locs 02, 12, 28, 32, 37, 42, 55)
+├── Deep Halite Caverns & Labs (Locs 05, 21, 34, 46, 49, 57)
+├── Garrison Redoubts & Batterys (Locs 07, 18, 27, 31, 35, 40, 53, 59)
+├── High Granite Ridge & Observatories (Locs 04, 14, 24, 51, 54, 58, 60)
+├── Ground Zero Crater & Trenches (Locs 11, 22, 33, 39, 41, 45, 52)
+└── Northern Estuary & Anchorage (Locs 03, 08, 09, 13, 16, 20, 23, 25, 26, 30, 38, 47, 48, 50, 56)
 ```
 
-### Detailed Node Specifications (Sample 5 of 30)
+### Detailed Room Cards & Sensory Inspection Logs (Sample 10 of 60)
 
-#### `loc_low_background_lab` — Low-Background Salt Chamber Laboratory
-- **Elevation**: -420m (Beneath the limestone formation).
-- **Environment**: Completely isolated from surface cosmic radiation. Ambient background: 0.02 µSv/h. Steel walls forged in 1938 before atmospheric nuclear testing.
-- **Inspect Text**: "The lead brick shielding is stacked three layers deep. Inside the inner counting chamber sits a mass spectrometer tube with German vacuum seals intact. On the chalkboard, an uncompleted half-life calculation dated October 14th."
-- **Scavenge**: `item_calibrated_mass_spectrometer_tube`, `item_lead_shielded_sample_cask`, `item_sealed_lead_pig`.
-
-#### `loc_aurora_borealis_grounding_shoal` — Anchorage of the *Aurora Borealis*
-- **Elevation**: Sea Level (High Arctic Estuary).
-- **Environment**: Pack ice grinding against a 6,000-ton icebreaker hull. Grey sea smoke rising from leads in the ice. Heavy bunker-C diesel exhaust in the air.
-- **Inspect Text**: "The *Aurora Borealis* sits locked in four feet of shore-fast ice. Her auxiliary generator chugs steadily, throwing a single yellow beam across the snow. Armed lookouts in seal-skin coats watch the causeway from the bridge wing."
-- **Scavenge**: `item_continental_maritime_transponder`, `item_icebreaker_rendezvous_flare_rocket`, `item_evacuation_manifest_scroll`.
-
-#### `loc_geothermal_well_alpha` — Geothermal Steam Well Alpha
-- **Elevation**: +180m (Volcanic Fracture).
-- **Environment**: Superheated steam screaming through mineral-crusted pressure valves at 180°C. Heavy sulfur smell. Mud pots boiling beside the catwalk.
-- **Inspect Text**: "The primary steam manifold is shaking against its anchor bolts. Ice has formed on the exhaust louvers while the pipe itself glows dull red through scale. If the bypass valve sticks, the entire manifold will rupture."
-- **Scavenge**: `item_brass_valve_fitting`, `item_glycol_antifreeze_canister`, `item_ceramic_heating_element`.
-
-#### `loc_denial_cut_substation` — D/9 Denial Substation
-- **Elevation**: +95m (Railway Cut).
-- **Environment**: Blast-damaged concrete switch house surrounded by triple-apron concertina wire and claymore tripwires.
-- **Inspect Text**: "A dead teletype machine sits on a green steel desk. Perforated paper tape spills across the floor into frozen puddles. On the wall, a wooden map board shows every bridge in Sector 4 marked with a red china marker 'X'."
-- **Scavenge**: `item_one_time_cipher_pad_d9`, `item_plastic_explosive_block`, `item_denial_detonator_spool`.
-
-#### `loc_the_allotments` — The Works Allotment Commune
-- **Elevation**: +45m (River Floodplain).
-- **Environment**: Five acres of double-glazed polycarbonate cold-frames covered in burlap mats. Composting manure heaps steaming in the sub-zero wind.
-- **Inspect Text**: "Dozens of people in padded boiler suits move between the rows with wooden scrapers, clearing frost from the glass. In the center shed, a wood-fired copper still bubbles quietly, filling five-gallon glass carboys with pure water."
+#### 1. `loc_the_allotments` — The Works Allotment Commune
+- **Coordinates**: Grid 14-Floodplain · **Risk Level**: 1 · **Radiation**: 0.45 µSv/h
+- **Sensory Atmosphere**: The humid air smells of steaming horse manure, damp potting loam, and boiling cabbage. Polycarbonate panes rattle in the freezing wind, heavy with frost on the outside and dripping condensation on the inside.
+- **Inspect**: *"Three hundred wooden seed flats line the tiered benches, green with the hair-thin shoots of Strain-7 perennial rye. In the center aisle, an iron wood-stove glows cherry red, heating a copper coil that circulates warm water through buried radiator pipes beneath the beds."*
 - **Scavenge**: `item_perennial_wheat_strain_7`, `item_hermetic_hatch_silicone_gasket`, `item_corrosion_inhibitor_drum`.
 
+#### 2. `loc_low_background_lab` — Low-Background Salt Chamber Laboratory
+- **Coordinates**: Sub-Level -420m (Halite Formation) · **Risk Level**: 1 · **Radiation**: 0.02 µSv/h
+- **Sensory Atmosphere**: Perfect, unnatural silence. The air is bone-dry and cool (+12°C), tasting faintly of mineral salt. Zero cosmic ray flutter on the detectors.
+- **Inspect**: *"A five-ton counting chamber forged from the armor plate of a pre-1945 battleship sits in the center of the salt vault. Inside, a quartz-window mass spectrometer tube hums quietly on battery power, analyzing Cesium isotopic ratios with micro-volt precision."*
+- **Scavenge**: `item_calibrated_mass_spectrometer_tube`, `item_lead_shielded_sample_cask`, `item_sealed_lead_pig`.
+
+#### 3. `loc_ash_sign_cathedral_crater` — Cathedral Vitrified Strike Crater
+- **Coordinates**: Ground Zero (Sector 4 Center) · **Risk Level**: 5 · **Radiation**: 18.50 µSv/h
+- **Sensory Atmosphere**: Searing ozone, sulfur dioxide smoke, and the deafening howl of wind across a vitreous glass bowl. Your dosimeter screams with continuous high-pitch alarm chirps.
+- **Inspect**: *"The eighty-meter impact depression is lined with slick, bottle-green tektite glass formed when the warhead's fireball fused sixty thousand tons of granite and sand. Iron crosses draped with radioactive wool rags ring the rim, smoldering in the sulfur mist."*
+- **Scavenge**: `item_tungsten_carbide_drill_bit`, `item_lead_shielded_sample_cask`.
+
+#### 4. `loc_granite_arsenal_foundry` — High Granite Munitions & Arsenal Directorate
+- **Coordinates**: Subterranean Granite Vault · **Risk Level**: 4 · **Radiation**: 1.30 µSv/h
+- **Sensory Atmosphere**: Searing sulfur fumes, deafening mechanical drop-hammer concussions that rattle the fillings in your teeth, and the blinding orange glare of charcoal-fired bronze crucibles.
+- **Inspect**: *"A three-ton pneumatic drop hammer stamps glowing brass slugs into 152mm artillery casing blanks. Workers in split-leather aprons and soot-blackened goggles shovel crushed charcoal into the furnace while an armed Garrison sergeant tallies finished shell cases in an ink ledger."*
+- **Scavenge**: `item_brass_stamping_die`, `item_artillery_fuze_wrench`, `item_ammonium_nitrate_sack`.
+
+#### 5. `loc_penal_pioneer_trench_sector` — 8th Penal Pioneer Sump Trenches
+- **Coordinates**: Crater Perimeter Swale · **Risk Level**: 5 · **Radiation**: 14.20 µSv/h
+- **Sensory Atmosphere**: Stagnant, oily water rising to the knees, the sickly stench of rotting foot-cloths, and wet, gasping coughs echoing through mud-revetted firing bays.
+- **Inspect**: *"A labyrinth of zig-zag trenches shored with rusted corrugated iron and shattered railway ties. Conscripts wearing burlap sack respirators chip frozen radioactive silt from drainage sumps with iron mattocks while unexploded 152mm shells lie half-buried in the clay parapets."*
+- **Scavenge**: `item_plastic_explosive_block`, `item_denial_detonator_spool`, `item_prussian_blue_chelating_pellets`.
+
+#### 6. `loc_railway_guild_roundhouse` — Shattered Rail Union Roundhouse
+- **Coordinates**: Sector 4 Freight Switchyard · **Risk Level**: 3 · **Radiation**: 0.85 µSv/h
+- **Sensory Atmosphere**: The heavy smell of cylinder oil, coal smoke, and damp wood ash. Steam hisses softly from the boiler of a modified armored handcar parked on the turntable pit.
+- **Inspect**: *"An iron locomotive inspection shed draped with canvas curtains to hide light. On the central turntable sits a handcar fitted with quarter-inch boiler plate armor and an electric searchlight powered by a 24V aircraft generator."*
+- **Scavenge**: `item_railroad_hydraulic_spike_puller`, `item_telegraph_sounder_relay`, `item_insulated_snowmobile_battery`.
+
+#### 7. `loc_deep_salt_hospital_sanctuary` — Deep Salt Cavern Surgical Sanctuary
+- **Coordinates**: Sub-Level -400m · **Risk Level**: 1 · **Radiation**: 0.01 µSv/h
+- **Sensory Atmosphere**: Crisp, antiseptic smell of carbolic acid mixed with dry mineral salt. Rows of iron hospital cots with clean linen sheets stretch into the softly lit cavern.
+- **Inspect**: *"Forty cots carved directly into white halite walls. Dr. Chen operates under battery-powered shadowless lamps, amputating frostbitten toes with clean osteotomes while orderly nurses change sterile dressings. The air is completely free of infection and fallout."*
+- **Scavenge**: `item_surgical_bone_chisel`, `item_antibiotic_saline_infusion`, `item_cyanide_antidote_kit`.
+
+#### 8. `loc_aurora_borealis_grounding_shoal` — Aurora Borealis Anchorage Shoal
+- **Coordinates**: Northern Sound Estuary · **Risk Level**: 2 · **Radiation**: 0.55 µSv/h
+- **Sensory Atmosphere**: Dense white sea smoke rising from leads in the pack ice, the deep rhythmic throb of auxiliary diesel generators shaking the shore ice, and the clean, salted air of the polar sea.
+- **Inspect**: *"The 6,000-ton steel hull of the icebreaker Aurora Borealis sits locked in five feet of shore-fast pack ice. Her deck searchlights cast twin beams of yellow light across the snow causeway. Armed lookouts in seal-skin coats watch the boarding gangway."*
+- **Scavenge**: `item_continental_maritime_transponder`, `item_icebreaker_rendezvous_flare_rocket`, `item_evacuation_manifest_scroll`.
+
+#### 9. `loc_shelled_grain_elevator_ruin` — Bombarded Concrete Grain Silo 4
+- **Coordinates**: Floodplain Siding · **Risk Level**: 4 · **Radiation**: 3.10 µSv/h
+- **Sensory Atmosphere**: Smoldering, burnt grain smell mixed with pulverized concrete dust and freezing soot. Wind whistles through jagged artillery perforations in the sixty-foot silo walls.
+- **Inspect**: *"A shattered concrete tower split open like a cracked egg by a 152mm howitzer shell. Forty tons of charred, moldering wheat spill across the frozen rail tracks, smoking without flame in the snow. Scavengers sift the ash with wire screens for edible grains."*
+- **Scavenge**: `item_hermetic_hatch_silicone_gasket`, `item_ammonium_nitrate_sack`.
+
+#### 10. `loc_the_final_dawn_outlook` — The Day 360 Permafrost Vista
+- **Coordinates**: High Granite Pinnacle · **Risk Level**: 1 · **Radiation**: 0.40 µSv/h
+- **Sensory Atmosphere**: Clean, cold alpine wind carrying the scent of melting snow and wet granite. The sky above is clear, pale blue for the first time in 360 days.
+- **Inspect**: *"A flat granite promontory overlooking the entire thirty-mile breadth of Sector 4. Below, the dark ribbon of the thawed river cuts through black mud plains. To the north, the grey waters of the Arctic sound glint in the first true sunrise of spring."*
+- **Scavenge**: `item_evacuation_manifest_scroll`.
+
 ---
 
-# IV. VERBATIM EMERGENCY RADIO TRANSMISSIONS (18 LOGS)
+# III. VERBATIM EMERGENCY RADIO TRANSMISSIONS (36 LOGS)
 
-### Broadcast 01: `radio_142_carrier_discovery` (142.850 MHz)
 ```
-[142.850 MHz — SIGNAL STRENGTH: S7 — MODULATION: AM TELETYPE]
-...CZC ZCZC 014 340 0014
+Radio Broadcast Spectrum (36 Authoritative Frequency Intercepts)
+├── 142.850 MHz Continental Maritime Emergency Channel (Logs 01, 06, 07, 11, 12, 18, 21, 25, 26, 31, 36)
+├── 88.400 MHz Iron Garrison Military Command (Logs 02, 08, 09, 17, 19, 23, 29, 33)
+├── 96.100 MHz Detachment 9 Protocol Null Telemetry (Logs 04, 15, 27, 35)
+├── 101.500 MHz The Works Communitarian Net (Logs 05, 13, 16, 20, 24, 28, 32)
+└── 104.200 MHz Vitrified Crater Penitent Broadcast (Logs 03, 10, 14, 22, 30, 34)
+```
+
+### Complete Transcripts for Sample 6 Intercepts
+
+#### Intercept 01: `radio_142_carrier_discovery` (142.850 MHz)
+```
+[142.850 MHz — SIGNAL: S7 — AM TELETYPE DECODER]
+CZC ZCZC 014 340 0014
 FROM: CONTINENTAL MARITIME RESCUE COORDINATION (ICEBREAKER AURORA BOREALIS)
-TO: ANY REMAINING CIV OR MIL SHELTERS SECTOR 4 AND 8
+TO: ALL SUBTERRANEAN SHELTERS SECTOR 4 AND 8
 BT
 MARITIME EVACUATION CORRIDOR REMAINS OPEN AT NORTHERN SOUND ANCHORAGE
 COORDINATES 68-14-N 014-22-E. 
-VESSEL MAINTAINS STEAM. DEPARTURE LOCKED DAY 360 AT FIRST LIGHT.
+VESSEL MAINTAINS AUXILIARY STEAM. DEPARTURE LOCKED DAY 360 AT FIRST LIGHT.
 MANIFEST RESTRICTED TO CERTIFIED LOW-RAD RESIDENTS AND REGISTERED SEED CUSTODIANS.
 BRING LOGBOOKS, CALIBRATION DATA, AND ZERO UNCHECKED ORDNANCE.
 IF YOU HEAR THIS, ACKNOWLEDGE ON 142.850 WITH SHELTER SERIAL AND HEADCOUNT.
 BT
-NNNN...
+NNNN
 ```
 
-### Broadcast 02: `radio_garrison_martial_edict` (88.400 MHz)
+#### Intercept 02: `radio_garrison_martial_edict` (88.400 MHz)
 ```
-[88.400 MHz — SIGNAL STRENGTH: S9 — VOICE TRANSMISSION — RECORDED LOOP]
+[88.400 MHz — SIGNAL: S9 — LIVE VOICE RECORDED LOOP]
 "This is the Iron Garrison Logistics Directorate, Sector 4 Command.
 By order of the Military Governor, all subterranean shelters within five kilometres of
 the rail line are placed under Martial Allocation Schedule 14.
@@ -387,9 +235,9 @@ We are not negotiating. We are feeding the men who hold the perimeter.
 End of transmission."
 ```
 
-### Broadcast 03: `radio_cult_ash_sign_liturgy` (104.200 MHz)
+#### Intercept 03: `radio_cult_ash_sign_liturgy` (104.200 MHz)
 ```
-[104.200 MHz — SIGNAL STRENGTH: S4 — CARRIER FLUTTER — LIVE VOICE]
+[104.200 MHz — SIGNAL: S4 — CARRIER FLUTTER — LIVE HYMN]
 "Do not scrape the soot from your windowpanes, brothers. The ash is the veil of His mercy.
 The ice came because the world was unclean and required a cold sheet.
 On the three-hundredth day, the water will run black from the hills.
@@ -399,9 +247,9 @@ The fire cleared the slate; the frost will freeze it; the thaw will wash the sla
 Praise the flash. Praise the silent crater."
 ```
 
-### Broadcast 04: `radio_d9_protocol_null_carrier` (96.100 MHz)
+#### Intercept 04: `radio_d9_protocol_null_carrier` (96.100 MHz)
 ```
-[96.100 MHz — SIGNAL STRENGTH: S8 — AUDIO FREQUENCY SHIFT KEYING]
+[96.100 MHz — SIGNAL: S8 — AUDIO FREQUENCY SHIFT KEYING TELEMETRY]
 "STATION NULL. STATION NULL.
 MESSAGE 088 / AUTH CODE: LIMA-NOVEMBER-SEVEN-FOUR.
 TARGET GRID 44-ALPHA RAILWAY BRIDGE REMAINS PRIMED.
@@ -411,9 +259,33 @@ THIS IS AN AUTOMATED SYSTEM. NO OPERATOR IS ON DUTY.
 REMAIN IN SHELTER."
 ```
 
+#### Intercept 05: `radio_salt_lab_spectrometry_data` (104.200 MHz)
+```
+[104.200 MHz — SIGNAL: S5 — RESEARCH LOG BROADCAST]
+"TRANSMISSION: Research Log 44. Dr. Erik Dahl broadcasting from Low-Background Salt Lab.
+Mass spectrometry of fallout dust collected at 400m depth confirms Cesium-137 / Strontium-90 
+isotopic ratio 1.042. This signature is unique to automated Arctic silo ordnance. 
+Repeat: the warheads were launched by unmanned automatic fail-safe systems. 
+There was no foreign human command. Broadcast this data to all units. End the war."
+```
+
+#### Intercept 06: `radio_day_360_beacon_silence` (142.850 MHz)
+```
+[142.850 MHz — SIGNAL: S9 — FINAL MARITIME DECOMMISSION]
+CZC ZCZC 360 360 0360
+DAY 360 OF THE EXCHANGE
+CONTINENTAL METEOROLOGICAL SERVICE REPORTS ASH CLEARANCE OVER SECTOR 4.
+SURFACE TEMPERATURE PLUS SIX CELSIUS.
+ALL EVACUATION GATES ARE NOW CLOSED.
+THE LONG WINTER IS OVER.
+SHUTTING DOWN TRANSMITTER.
+GOD SPEED.
+NNNN
+```
+
 ---
 
-# V. THE 24 LATE-GAME SURVIVOR DOSSIERS
+# IV. COMPLETE 36 SURVIVOR CANDIDATE DOSSIERS
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -445,12 +317,24 @@ REMAIN IN SHELTER."
 │ `survivor_hadi`    │ Hadi Morrow           │ Peat Cutter│ Heavy Laborer                          │
 │ `survivor_kess`    │ Kess Adler            │ Trapper    │ Radiation-Scarred Hunter               │
 │ `survivor_len`     │ Len Quill             │ Archivist  │ Historical Document Conservator        │
+│ `survivor_markov`  │ Chief Assayer Markov  │ Metallurg  │ High Granite Arsenal Founder           │
+│ `survivor_talia`   │ Commander Talia       │ Militia Ldr│ Central Upland Defense Strategist      │
+│ `survivor_kroll`   │ Major Kroll           │ Provost Msh│ 3rd Corps Iron Disciplinarian          │
+│ `survivor_malachi` │ Hierophant Malachi    │ Cult Elder │ Vitrified Crater Prophet               │
+│ `survivor_sapper`  │ Sapper Vance          │ Pioneer    │ Mutinous Penal Demolitionist           │
+│ `survivor_elena`   │ Elena Vasquez         │ Switchwoman│ Rail Union Scout Leader                │
+│ `survivor_gregor`  │ Gregor the Miner      │ Dynamite   │ Salt Cavern Blaster                    │
+│ `survivor_marina`  │ Marina Drake          │ Driver     │ Armored Convoy Specialist              │
+│ `survivor_yuri`    │ Yuri Belov            │ Caster     │ Munitions Crucible Tender              │
+│ `survivor_nadia`   │ Nadia Brant           │ Scout      │ Mountain Ski Courier                   │
+│ `survivor_boris`   │ Boris Kogan           │ Medic      │ Penal Trench Triage Orderly            │
+│ `survivor_anton`   │ Anton Vane            │ Broker     │ Underground Salt Exchange Assayer      │
 └────────────────────┴───────────────────────┴────────────┴────────────────────────────────────────┘
 ```
 
 ---
 
-# VI. THE FIVE DEFINITIVE ENDGAME EPILOGUES (DAY 360 PROSE)
+# V. THE FIVE DEFINITIVE ENDGAME EPILOGUES (DAY 360 PROSE)
 
 ### 1. Epilogue Path A: The Northern Redoubt (Maritime Evacuation)
 > *The heavy diesels of the Aurora Borealis shake the ice under your boots. A sailor in an oilskin apron reaches down from the cargo net and hauls up the wooden crate containing your shelter's seed trays and logbooks. Behind you, the gray shoreline of Sector 4 is disappearing into sea smoke. Thirty-two people from your bunker are wrapped in dry wool on the starboard mess deck, drinking hot tea boiled with ship's steam. You left the hatch open on the hillside above Kilometre 19; the wind will fill the entrance vestibule with snow by evening. The war did not stop, but for the people on this ship, the long winter has ended.*

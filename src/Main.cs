@@ -106,6 +106,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.HoldfastSaveSelfTest:
                     GetTree().Quit(HostCli.RunHoldfastSaveSelfTest(_dataDir));
                     return;
+                case HostCliAction.BrineSelfTest:
+                    GetTree().Quit(HostCli.RunBrineSelfTest());
+                    return;
                 case HostCliAction.JournalSelfTest:
                     RunSelfTestAndQuit();
                     return;

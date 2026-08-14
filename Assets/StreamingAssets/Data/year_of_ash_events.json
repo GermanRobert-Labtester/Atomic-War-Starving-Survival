@@ -1,326 +1,436 @@
-[
-  {
-    "id": "event_black_blizzard_inversion",
-    "title": "The Stratospheric Black Blizzard",
-    "bodyText": "At -38°C, the stratospheric ash layer plunges to ground level in an atmospheric inversion. Pitch black at 11:00 AM. Sub-micron radioactive soot packs into intake cowling grilles. The blower motor temperature spikes into red as the air filters load with volcanic ash.",
-    "weight": 3.5,
-    "minDay": 180,
-    "maxDay": 240,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_geothermal_conduit_brittle_fracture",
-    "title": "Conduit Brittle Fracture",
-    "bodyText": "A sharp metallic report echoes from the sump floor: the secondary water return pipe has suffered a brittle fracture under -32°C ground freeze. Pressurized meltwater spurts into the battery trench, threatening to short out the emergency DC busbar.",
-    "weight": 2.8,
-    "minDay": 190,
-    "maxDay": 235,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_perimeter_frostbite_alarm",
-    "title": "Frostbite Sentry Collapse",
-    "bodyText": "The exterior sentry on periscope watch reports loss of sensation in all ten fingers after clearing hoarfrost from the optical turret for forty minutes without insulated mitts. The skin has gone pale wax and blisters are swelling rapidly.",
-    "weight": 2.5,
-    "minDay": 185,
-    "maxDay": 245,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_allotment_seed_spoilage_alarm",
-    "title": "Allotment Cold-Frame Failure",
-    "bodyText": "A messenger from The Works arrives on snowshoes: their primary seedling glasshouse collapsed under four feet of dense ash-snow. If they cannot secure auxiliary thermal coils within twenty-four hours, the spring carrot and legume crop is dead in the soil.",
-    "weight": 2.0,
-    "minDay": 200,
-    "maxDay": 255,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_diesel_fuel_cloud_gelling",
-    "title": "Diesel Fuel Cloud Gelling",
-    "bodyText": "Paraffin wax crystals separate in the external fuel day-tank as diesel drops below -28°C. Fuel lines starve the auxiliary generator, causing the bunker lights to dim and cycle rapidly as the governor fights the thick sludge.",
-    "weight": 3.0,
-    "minDay": 182,
-    "maxDay": 230,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_exhaust_flue_rime_choke",
-    "title": "Exhaust Chimney Rime Choke",
-    "bodyText": "Moisture from the heating stove freezes into a solid ring of rime ice around the exhaust flue orifice. Carbon monoxide levels in the dormitory stack creep up to 45 PPM before the mechanical alarm sounds.",
-    "weight": 2.6,
-    "minDay": 188,
-    "maxDay": 240,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_hoarfrost_periscope_blindness",
-    "title": "Hoarfrost Periscope Blindness",
-    "bodyText": "Dense ice crystals bridge the outer periscope prism. External surveillance is entirely blind until an engineer crawls through the crawlway with an alcohol spray bottle to de-ice the optics under 15 mSv/hr surface exposure.",
-    "weight": 2.2,
-    "minDay": 195,
-    "maxDay": 240,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_battery_electrolyte_slush",
-    "title": "Lead-Acid Electrolyte Slush",
-    "bodyText": "Discharged backup batteries begin to freeze solid in the unheated battery vault. If the acid freezes into slush, the battery cases will split and ruin half of your emergency storage capacity permanently.",
-    "weight": 2.4,
-    "minDay": 205,
-    "maxDay": 240,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_hydraulic_door_jack_lock",
-    "title": "Hydraulic Blast Seal Freezing",
-    "bodyText": "The hydraulic fluid in the inner airlock door rams turns viscous like cold molasses. The airlock takes four minutes to cycle instead of forty seconds, leaving entering scouts exposed in the decontamination chamber.",
-    "weight": 2.1,
-    "minDay": 210,
-    "maxDay": 240,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_sub_zero_cabin_fever_clash",
-    "title": "Sub-Zero Stasis Frustration",
-    "bodyText": "Seventy consecutive days inside 150 square meters with zero daylight creates explosive friction. Two scavengers come to blows over an unwashed coffee mug, shattering an irreplaceable ceramic plate.",
-    "weight": 3.2,
-    "minDay": 215,
-    "maxDay": 240,
-    "phase": "Phase4_DeepFreeze"
-  },
-  {
-    "id": "event_garrison_mortar_reconnaissance",
-    "title": "Garrison Registration Sweep",
-    "bodyText": "A four-track armored personnel carrier halts at the ridge above your bunker. Garrison logistics officers set up an optical rangefinder and log your intake coordinates into the Sector 4 Martial Allocation grid, demanding written declaration of diesel stores.",
-    "weight": 3.0,
-    "minDay": 240,
-    "maxDay": 280,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_stray_howitzer_concussion",
-    "title": "Howitzer Shrapnel Concussion",
-    "bodyText": "A stray 152mm high-explosive shell detonates 45 meters from your blast door, sending a seismic shockwave through the reinforced concrete foundation. Exterior periscope prisms shatter, and plaster dust rains down into the food storage alcoves.",
-    "weight": 2.2,
-    "minDay": 250,
-    "maxDay": 295,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_ash_sign_pyre_column",
-    "title": "Ash Sign Penitent Siege",
-    "bodyText": "Chanting echoes down the ventilation chimney: twenty cultists in lead-lined ritual robes have gathered on your outer apron, setting a bonfire of sulfur and contaminated diesel to 'purify the unrepentant hole-dwellers.'",
-    "weight": 2.5,
-    "minDay": 260,
-    "maxDay": 300,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_hydro_baron_pressure_cutoff",
-    "title": "Hydro-Baron Pipeline Throttling",
-    "bodyText": "Municipal water pressure in the main conduit drops to zero without warning. A radio transmission on the civil band announces that Sector 4 shelters have failed their extraction quota, and all downstream municipal supply is diverted to the refinery sluices.",
-    "weight": 2.8,
-    "minDay": 270,
-    "maxDay": 315,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_d9_marked_culvert_trip",
-    "title": "D/9 Culvert Detonation",
-    "bodyText": "A distant subterranean rumble shakes the floor as a Denial Detachment shaped charge destroys the Sector 4 railway culvert. The highway is severed; supply caravans are forced into the deep switchbacks.",
-    "weight": 2.0,
-    "minDay": 280,
-    "maxDay": 320,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_continuity_decree_enactment",
-    "title": "Continuity Decree Promulgation",
-    "bodyText": "Teletypes across the sector print the Continuity Allocation Order: all private food inventories exceeding 30 days per capita are declared martial reserve property, subject to immediate requisition by garrison flying columns.",
-    "weight": 3.0,
-    "minDay": 245,
-    "maxDay": 290,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_warlord_caravan_toll_raid",
-    "title": "Sector 4 Warlord Toll Ambush",
-    "bodyText": "Armed technicals mount a barricade at the bridge approach. Gunfire crackles for twenty minutes as an independent medicine caravan is ransacked within two kilometers of your shelter perimeter.",
-    "weight": 2.7,
-    "minDay": 255,
-    "maxDay": 295,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_rebuilder_plumbing_boycott",
-    "title": "Allotments Brass Embargo",
-    "bodyText": "The Works announce a total halt on outbound clinic supplies to any facility that trades weapons to the Iron Garrison. Ottilie Frayne broadcasts: 'You cannot treat bullet wounds with bullets.'",
-    "weight": 2.3,
-    "minDay": 265,
-    "maxDay": 300,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_shrapnel_intake_perforation",
-    "title": "Shrapnel Damaged Intake Cowl",
-    "bodyText": "Steel fragments from an anti-aircraft engagement puncture the mushroom cowl of the fresh-air intake. High-activity dust bypasses the coarse screen, threatening the primary HEPA stage.",
-    "weight": 2.4,
-    "minDay": 275,
-    "maxDay": 300,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_garrison_deserter_firing_squad",
-    "title": "Garrison Summary Execution Squad",
-    "bodyText": "A firing squad volley echoes across the frozen valley at dawn. Three conscripts who abandoned their posts at the coal depot are shot against the railway embankment.",
-    "weight": 2.2,
-    "minDay": 285,
-    "maxDay": 300,
-    "phase": "Phase5_FactionSiege"
-  },
-  {
-    "id": "event_black_mud_inundation",
-    "title": "The Black Mud Thaw",
-    "bodyText": "Temperatures cross above +2°C for the first time in ten months. Ten billion tons of radioactive ash and snow liquefy into a toxic black mud slurry, inundating drainage swales and filling external periscope wells with radioactive silt.",
-    "weight": 3.8,
-    "minDay": 300,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_radon_foundation_fissure",
-    "title": "Radon Fissure Venting",
-    "bodyText": "Thawing permafrost opens microscopic fissures in the bedrock beneath your living quarters. Radon gas concentrations jump by 400%. The air scrubber core must be replaced before respiratory poisoning sets in across the sleeping stacks.",
-    "weight": 3.0,
-    "minDay": 310,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_continental_carrier_burst",
-    "title": "142.850 MHz Carrier Signal",
-    "bodyText": "The radio receiver catches a steady crystal carrier wave on 142.850 MHz. Between bursts of static, an automated synthesized voice repeats an eight-digit geographic grid and a date: Day 360, Northern Convoy departure.",
-    "weight": 2.5,
-    "minDay": 330,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_sump_pump_overrun",
-    "title": "Black Thaw Sump Inundation",
-    "bodyText": "Thaw runoff overwhelms the lower drainage sumps. Irradiated silt and black meltwater rise three inches an hour, threatening the generator flywheel unless the backup 2-inch submersible pump is powered immediately.",
-    "weight": 3.4,
-    "minDay": 305,
-    "maxDay": 345,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_spring_mold_outbreak",
-    "title": "Humid Spore Proliferation",
-    "bodyText": "As internal humidity rises to 90% during the thaw, toxic black mold blooms across canvas cots and grain sacks. Three survivors develop severe respiratory wheezing within forty-eight hours.",
-    "weight": 2.9,
-    "minDay": 315,
-    "maxDay": 350,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_surface_corpse_exposure",
-    "title": "Thawing Snowpack Discovery",
-    "bodyText": "The receding snow line exposes dozens of casualties from the early winter migration. Scavengers and wild dogs gather along the ridge, creating acute biohazard and morale distress.",
-    "weight": 2.6,
-    "minDay": 320,
-    "maxDay": 355,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_aquifer_recharge_salinity",
-    "title": "Aquifer Salt Shock",
-    "bodyText": "Surface thaw water carrying dissolved calcium chloride and road salts breaches the shallow aquifer. Well water salinity jumps, requiring triple reverse-osmosis passes to remain potable.",
-    "weight": 2.5,
-    "minDay": 325,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_coastal_ice_breakup_boom",
-    "title": "Sound Pack Ice Calving",
-    "bodyText": "Deep seismic booms reverberate through the ground as the northern sound pack ice fractures in the sunlight. The maritime channel is opening; the evacuation window approaches.",
-    "weight": 2.8,
-    "minDay": 335,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_maritime_rendezvous_teletype",
-    "title": "Aurora Borealis Manifest Call",
-    "bodyText": "Teletype rolls churn out the final muster schedule: 'Vessel Aurora Borealis. Draft cleared. Final manifest deadline Day 358 at 1800 Zulu. Bring individual decontamination clearance certificates.'",
-    "weight": 3.0,
-    "minDay": 345,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_spectrometer_warhead_revelation",
-    "title": "Cold Count Provenance Publication",
-    "bodyText": "The Low-Background Salt Lab releases its definitive findings: 'Analysis of strike signatures across all four sectors confirms zero human commanding authority existed when the final salvo launched.'",
-    "weight": 2.7,
-    "minDay": 350,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_foundation_bedrock_shift",
-    "title": "Permafrost Melt Subsidence",
-    "bodyText": "The thaw of sub-surface permafrost lenses causes the north retaining wall to settle three centimeters, cracking the plaster in the pantry and pinching the fresh-air bypass damper.",
-    "weight": 2.4,
-    "minDay": 312,
-    "maxDay": 348,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_geothermal_pressure_spike",
-    "title": "Meltwater Geothermal Flashing",
-    "bodyText": "Cold surface thaw water drains into the deep geothermal fissure, creating an explosive subterranean steam flash that shakes the bunker pipes and pops safety blow-off valves.",
-    "weight": 2.3,
-    "minDay": 318,
-    "maxDay": 352,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_allotment_first_sprout",
-    "title": "The First Green Shoots",
-    "bodyText": "A radio dispatch from Tomas Lind at Plot 12: the perennial rye and winter vetch have sprouted through the black silt. 'The soil lives. We do not need the ships.'",
-    "weight": 2.5,
-    "minDay": 340,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_d9_detonation_silence",
-    "title": "D/9 Radio Carrier Stand-Down",
-    "bodyText": "The carrier pulse on 142.850 MHz ceases abruptly. Signals Sergeant Ruhl transmits one final plaintext: 'Detachment 9 tasking complete. Detonator spools destroyed. Stand down.'",
-    "weight": 2.6,
-    "minDay": 348,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_garrison_command_collapse",
-    "title": "Garrison Headquarters Abandonment",
-    "bodyText": "Smoke rises from the Garrison command compound as officers burn archives and load convoys. The conscript ranks have dissolved into civilian neighborhoods.",
-    "weight": 2.9,
-    "minDay": 352,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  },
-  {
-    "id": "event_final_dawn_year_one",
-    "title": "Dawn of Day 360",
-    "bodyText": "A cold, pale sun breaks through the thinned stratospheric haze for the first time in one full year. The Geiger needle settles into the yellow. The first year of ash is survived.",
-    "weight": 5.0,
-    "minDay": 360,
-    "maxDay": 360,
-    "phase": "Phase6_TheGreatThaw"
-  }
-]
+{
+  "events": [
+    {
+      "id": "event_deep_freeze_onset",
+      "day": 180,
+      "phase": "phase_4_deep_freeze",
+      "title": "Stratospheric Ash Layer Peaks (-35°C)",
+      "description": "Dense high-altitude particulate blankets the sun. Ambient surface temperatures fall to -35°C. Unheated surface pipes freeze solid across the valley.",
+      "temperatureDeltaC": -18.0,
+      "hazardType": "extreme_cold"
+    },
+    {
+      "id": "event_conduit_brittle_fracture",
+      "day": 192,
+      "phase": "phase_4_deep_freeze",
+      "title": "Electrical Conduit Thermal Contraction",
+      "description": "Sub-zero cold creeping down intake shafts causes lead-sheathed power cables to shear. Workshop machinery loses primary power until spliced.",
+      "temperatureDeltaC": -2.0,
+      "hazardType": "mechanical_failure"
+    },
+    {
+      "id": "event_sentry_frostbite_wave",
+      "day": 205,
+      "phase": "phase_4_deep_freeze",
+      "title": "The Black Blizzard of Day 205",
+      "description": "A 50-knot gale blows pulverized radioactive snow from the strike crater. Exterior periscopes are scoured opaque by blown grit.",
+      "temperatureDeltaC": -8.0,
+      "hazardType": "black_blizzard"
+    },
+    {
+      "id": "event_allotment_cold_frame_collapse",
+      "day": 218,
+      "phase": "phase_4_deep_freeze",
+      "title": "The Works Polycarbonate Frame Failure",
+      "description": "Heavy frozen ash crushes three cold-frame roofs at The Allotments. Agronomists send runners pleading for glass and thermal insulation.",
+      "temperatureDeltaC": -1.0,
+      "hazardType": "communal_crisis"
+    },
+    {
+      "id": "event_diesel_fuel_gelling",
+      "day": 224,
+      "phase": "phase_4_deep_freeze",
+      "title": "Diesel Wax Crystallization",
+      "description": "Uncut summer diesel in the surface reserve tank gels into cloudy paraffin wax. Generators sputter and die unless cut with kerosene or glycol.",
+      "temperatureDeltaC": -3.0,
+      "hazardType": "fuel_crisis"
+    },
+    {
+      "id": "event_exhaust_flue_rime_choke",
+      "day": 228,
+      "phase": "phase_4_deep_freeze",
+      "title": "Exhaust Chimney Rime Ice Choke",
+      "description": "Moist generator exhaust freezes instantly upon hitting -38°C outside air, building an ice collar that restricts exhaust backpressure.",
+      "temperatureDeltaC": -2.0,
+      "hazardType": "ventilation_choke"
+    },
+    {
+      "id": "event_periscope_hoarfrost_blindness",
+      "day": 232,
+      "phase": "phase_4_deep_freeze",
+      "title": "Periscope Optical Hoarfrost Blindness",
+      "description": "Heavy condensation freezes across the exterior periscope prisms. Sentry vision is reduced to zero until heated wash fluid is pumped.",
+      "temperatureDeltaC": -1.0,
+      "hazardType": "optical_blindness"
+    },
+    {
+      "id": "event_lead_acid_electrolyte_slush",
+      "day": 236,
+      "phase": "phase_4_deep_freeze",
+      "title": "Sub-Zero Battery Electrolyte Slush",
+      "description": "Discharged backup battery cells reach their freezing point at -22°C. Battery cases bulge and crack unless insulated immediately.",
+      "temperatureDeltaC": -4.0,
+      "hazardType": "electrical_hazard"
+    },
+    {
+      "id": "event_hydraulic_blast_seal_freeze",
+      "day": 238,
+      "phase": "phase_4_deep_freeze",
+      "title": "Blast Hatch Hydraulic Fluid Lock",
+      "description": "Mineral oil in the outer blast door locking rams congeals into molasses. Opening the hatch takes four times normal manual leverage.",
+      "temperatureDeltaC": -2.0,
+      "hazardType": "mechanical_jam"
+    },
+    {
+      "id": "event_deep_freeze_stasis_cabin_fever",
+      "day": 239,
+      "phase": "phase_4_deep_freeze",
+      "title": "The Deep Stasis Despair",
+      "description": "Sixty consecutive days confined in subterranean dampness with artificial lighting triggers severe insomnia and violent verbal arguments.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "psychological_crisis"
+    },
+    {
+      "id": "event_garrison_registration_sweep",
+      "day": 240,
+      "phase": "phase_5_faction_siege",
+      "title": "Promulgation of Martial Schedule 14",
+      "description": "Garrison provost teams establish fortified roadblocks. Any shelter refusing grain and battery tithes is designated an enemy supply depot.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "martial_law"
+    },
+    {
+      "id": "event_howitzer_shrapnel_concussion",
+      "day": 252,
+      "phase": "phase_5_faction_siege",
+      "title": "Artillery Barrage on Kilometre 19",
+      "description": "Garrison 152mm howitzers fire three hundred high-explosive rounds into the Toll Warlord fortifications. Shockwaves rattle bunker light fixtures.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "artillery_strike"
+    },
+    {
+      "id": "event_ash_sign_penitent_siege",
+      "day": 265,
+      "phase": "phase_5_faction_siege",
+      "title": "The Ash Sign Penitent Pyres",
+      "description": "Hundreds of cultists light sulfur flares and build bonfires against the blast doors of Sector 4 bunkers, demanding entry into 'the clean tombs.'",
+      "temperatureDeltaC": 3.0,
+      "hazardType": "cult_siege"
+    },
+    {
+      "id": "event_hydro_baron_pipeline_throttling",
+      "day": 274,
+      "phase": "phase_5_faction_siege",
+      "title": "Sluice Association Water Meter Closure",
+      "description": "The Hydro-Barons throttle the main limestone aqueduct to 20% pressure, citing uncollected salt debts and unpaid security levies.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "resource_embargo"
+    },
+    {
+      "id": "event_d9_culvert_demolition",
+      "day": 281,
+      "phase": "phase_5_faction_siege",
+      "title": "Protocol Null Railway Cut Blast",
+      "description": "Detachment 9 detonates eighty linear charges under the Kilometre 44 rail viaduct, collapsing twelve thousand tons of granite into the pass.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "rail_severance"
+    },
+    {
+      "id": "event_continuity_decree_promulgation",
+      "day": 286,
+      "phase": "phase_5_faction_siege",
+      "title": "Garrison Total Mobilization Order",
+      "description": "Major Kroll issues an edict demanding all male and female occupants aged 16–50 report to Checkpoint Gamma for trench-digging labor details.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "forced_conscription"
+    },
+    {
+      "id": "event_warlord_toll_ambush",
+      "day": 289,
+      "phase": "phase_5_faction_siege",
+      "title": "Switchback Ambush on Convoy 4",
+      "description": "Sector 4 Warlords hit an armed Garrison fuel convoy with RPGs. Burning diesel blackens the snow for three square miles.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "convoy_ambush"
+    },
+    {
+      "id": "event_allotment_brass_embargo",
+      "day": 292,
+      "phase": "phase_5_faction_siege",
+      "title": "The Works Tool Embargo",
+      "description": "The Works council halts all flour deliveries to the Garrison until three requisitioned lathe chucks and four brass valves are returned.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "economic_strike"
+    },
+    {
+      "id": "event_shrapnel_intake_perforation",
+      "day": 295,
+      "phase": "phase_5_faction_siege",
+      "title": "Mortar Fragment Air Line Breach",
+      "description": "A stray 82mm mortar casing splinters the intake mushroom hood. Raw surface fallout bypasses the coarse pre-filter until repaired.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "structural_breach"
+    },
+    {
+      "id": "event_garrison_firing_squad",
+      "day": 298,
+      "phase": "phase_5_faction_siege",
+      "title": "The Kilometre 12 Executions",
+      "description": "Sixteen Garrison conscripts who refused to advance into the contaminated crater are shot against the railway embankment.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "morale_trauma"
+    },
+    {
+      "id": "event_black_mud_thaw_inundation",
+      "day": 300,
+      "phase": "phase_6_the_great_thaw",
+      "title": "The Great Thaw Begins (+4°C)",
+      "description": "A sudden warm maritime front sweeps the valley. Ten months of radioactive snow melts into toxic black mud, swamping shelter sumps.",
+      "temperatureDeltaC": 12.0,
+      "hazardType": "radioactive_flood"
+    },
+    {
+      "id": "event_radon_gas_fissure_breach",
+      "day": 312,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Foundation Bedrock Radon Seepage",
+      "description": "Thawing subsoil permafrost causes bedrock settling. Radon-222 gas vents through foundation micro-fissures at 850 Bq/m³.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "radon_hazard"
+    },
+    {
+      "id": "event_radio_142_carrier_intercept",
+      "day": 320,
+      "phase": "phase_6_the_great_thaw",
+      "title": "142.850 MHz Continental Transponder Lock",
+      "description": "A rhythmic carrier wave tone crackles across the emergency frequency. The icebreaker *Aurora Borealis* is broadcasting teletype manifests.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "radio_transmission"
+    },
+    {
+      "id": "event_sump_pump_overrun",
+      "day": 325,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Sub-Level Sump Pump Overrun",
+      "description": "Mud laden with coarse quartz grit jams the impeller of primary sump pump 1. Oily, radioactive water rises four inches across the battery room.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "flood_failure"
+    },
+    {
+      "id": "event_humid_spore_outbreak",
+      "day": 328,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Subterranean Toxic Mold Bloom",
+      "description": "Sudden 95% relative humidity combined with warmth triggers rapid growth of Stachybotrys mold in bunkroom mattresses and cloth storage.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "biological_hazard"
+    },
+    {
+      "id": "event_thawing_snowpack_corpse_discoveries",
+      "day": 331,
+      "phase": "phase_6_the_great_thaw",
+      "title": "The Thawing Dead of Sector 4",
+      "description": "Receding snowdrifts reveal dozens of frozen refugees and deserters along the highway ditches. Severe psychological shock among surface parties.",
+      "temperatureDeltaC": 3.0,
+      "hazardType": "morale_trauma"
+    },
+    {
+      "id": "event_aquifer_salt_shock",
+      "day": 334,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Groundwater Saline Inversion",
+      "description": "Massive surface runoff drives salt brine from ancient evaporate beds into the shallow drinking wells. Salinity triples overnight.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "water_contamination"
+    },
+    {
+      "id": "event_coastal_pack_ice_calving_booms",
+      "day": 337,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Coastal Icebreaker Lead Opening",
+      "description": "Distant explosive booms echo from the northern sound as tidal pressure fractures the shore-fast ice pack, opening the shipping channel.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "environmental_shift"
+    },
+    {
+      "id": "event_aurora_borealis_manifest_call",
+      "day": 340,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Aurora Borealis Final Manifest Muster",
+      "description": "Radio transmission: the icebreaker will open its gangway at northern anchorage in 48 hours for verified shelter manifests only.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "evacuation_deadline"
+    },
+    {
+      "id": "event_mass_spectrometer_warhead_revelations",
+      "day": 343,
+      "phase": "phase_6_the_great_thaw",
+      "title": "The Cold Count Isotopic Verification",
+      "description": "Dr. Dahl's team completes the mass spectrometer run on salt chamber samples: the strike warheads were launched by unmanned automatic error.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "lore_revelation"
+    },
+    {
+      "id": "event_permafrost_subsidence_shifts",
+      "day": 347,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Permafrost Slumping Shear Stress",
+      "description": "Deep mudslides on the western ridge tilt the radio mast three degrees and compress the secondary escape tunnel.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "geological_collapse"
+    },
+    {
+      "id": "event_geothermal_meltwater_flashing",
+      "day": 350,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Geothermal Well Superheated Flash",
+      "description": "Cold surface meltwater drains directly into the volcanic fracture at Well Alpha, creating violent steam hammer in district heat mains.",
+      "temperatureDeltaC": 3.0,
+      "hazardType": "steam_hammer"
+    },
+    {
+      "id": "event_first_green_sprout_sightings",
+      "day": 353,
+      "phase": "phase_6_the_great_thaw",
+      "title": "The First Rye Shoots in Black Silt",
+      "description": "The Works agronomists discover green shoots of perennial rye pushing through the irradiated alluvial mud. Morale rises across the valley.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "communal_hope"
+    },
+    {
+      "id": "event_d9_carrier_stand_down",
+      "day": 356,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Protocol Null Manual Override Code Broadcast",
+      "description": "Colonel Brand transmits the final disarmament cypher on 96.100 MHz. Detonators across the rail cut safe themselves automatically.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "ceasefire"
+    },
+    {
+      "id": "event_garrison_headquarters_abandonment",
+      "day": 358,
+      "phase": "phase_6_the_great_thaw",
+      "title": "The Iron Garrison Disbandment",
+      "description": "Officers burn logistics logs in steel drums at Checkpoint Gamma and lead thirty trucks toward the coast. The road is open.",
+      "temperatureDeltaC": 2.0,
+      "hazardType": "political_collapse"
+    },
+    {
+      "id": "event_final_dawn_year_one",
+      "day": 360,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Day 360 — The End of the Year of Ash",
+      "description": "The sun rises clear above the granite ridge for the first time in 360 days. The bunker hatch is unbolted. The long winter has concluded.",
+      "temperatureDeltaC": 4.0,
+      "hazardType": "endgame_conclusion"
+    },
+    {
+      "id": "event_granite_arsenal_foundry_explosion",
+      "day": 260,
+      "phase": "phase_5_faction_siege",
+      "title": "Granite Arsenal Munitions Cook-Off",
+      "description": "A boiler rupture in the High Granite shell-casting hall detonates 4 tons of ammonium nitrate. Ground vibrations trigger seismic alarms across the sector.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "industrial_explosion"
+    },
+    {
+      "id": "event_railway_guild_handcar_strike",
+      "day": 268,
+      "phase": "phase_5_faction_siege",
+      "title": "The Shattered Rail Union Handcar Coup",
+      "description": "Switchmen guild scouts derail a Garrison munitions flatcar at Junction 4, distributing twelve crates of 7.62mm cartridges to upland farm militias.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "rebel_sabotage"
+    },
+    {
+      "id": "event_penal_battalion_mutiny_trench",
+      "day": 272,
+      "phase": "phase_5_faction_siege",
+      "title": "8th Penal Pioneer Sump Mutiny",
+      "description": "Conscript sappers forced to dig trenches through hot fallout turn their entrenching tools on their provost guards, fleeing into abandoned mine drifts.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "penal_mutiny"
+    },
+    {
+      "id": "event_salt_freeholders_dynamite_blasting",
+      "day": 278,
+      "phase": "phase_5_faction_siege",
+      "title": "Salt Cavern Blast Barrier Sealed",
+      "description": "The Deep Salt Freeholders fire twenty charges of blasting gelatin, collapsing the southern approach tunnel to protect their subterranean hospital.",
+      "temperatureDeltaC": -1.0,
+      "hazardType": "tunnel_demolition"
+    },
+    {
+      "id": "event_supply_corps_armored_breakout",
+      "day": 284,
+      "phase": "phase_5_faction_siege",
+      "title": "Continental Logistics Convoy Breakout",
+      "description": "Captain Alder's armored half-tracks force the mountain toll gate at High Pass under heavy machine gun fire, carrying medical serums north.",
+      "temperatureDeltaC": -2.0,
+      "hazardType": "convoy_breakout"
+    },
+    {
+      "id": "event_cyanide_insulation_fire",
+      "day": 245,
+      "phase": "phase_4_deep_freeze",
+      "title": "Subterranean Insulation Smolder",
+      "description": "An overloaded heating coil ignites polyurethane pipe insulation in the lower ducting, releasing dense hydrogen cyanide and carbon monoxide.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "toxic_combustion"
+    },
+    {
+      "id": "event_mustard_gas_pocket_release",
+      "day": 305,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Pre-Exchange Chemical Munition Leak",
+      "description": "Meltwater eroding an old civil defense dump exposes corroded drums of sulfur mustard gas. Heavy yellow mist clings to low-lying drainage ditches.",
+      "temperatureDeltaC": 3.0,
+      "hazardType": "chemical_hazard"
+    },
+    {
+      "id": "event_ash_militia_terrace_fortification",
+      "day": 250,
+      "phase": "phase_5_faction_siege",
+      "title": "Ash Militia Upland Redoubt Construction",
+      "description": "Upland farm cooperatives construct dry-stone sniper revetments and deadfall timber barricades along every mountain switchback approach.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "defensive_fortification"
+    },
+    {
+      "id": "event_mercury_barometer_extreme_drop",
+      "day": 210,
+      "phase": "phase_4_deep_freeze",
+      "title": "Barometric Plunge to 940 hPa",
+      "description": "The mercury column in the command post drops thirty millimeters in two hours, presaging the most violent stratospheric ash tempest of the winter.",
+      "temperatureDeltaC": -6.0,
+      "hazardType": "meteorological_warning"
+    },
+    {
+      "id": "event_telegraph_wire_snipping_spree",
+      "day": 262,
+      "phase": "phase_5_faction_siege",
+      "title": "Sector-Wide Wire-Cutting Campaign",
+      "description": "Railway Union guerillas cut twelve miles of copper telegraph wire along the Garrison main line, completely blinding central headquarters.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "communications_severance"
+    },
+    {
+      "id": "event_potassium_permanganate_water_panic",
+      "day": 315,
+      "phase": "phase_6_the_great_thaw",
+      "title": "Emergency Well Decontamination Shock",
+      "description": "A volunteer dumps excessive permanganate into the central cistern, turning the tap water purple and sparking frantic rumors of deliberate poisoning.",
+      "temperatureDeltaC": 1.0,
+      "hazardType": "communal_panic"
+    },
+    {
+      "id": "event_heavy_howitzer_bunker_direct_hit",
+      "day": 290,
+      "phase": "phase_5_faction_siege",
+      "title": "Direct Concussion on Auxiliary Shaft 2",
+      "description": "A 152mm artillery round detonates on the concrete apron of the auxiliary escape hatch, cracking the blast header and raining spalled concrete.",
+      "temperatureDeltaC": 0.0,
+      "hazardType": "direct_shelling"
+    }
+  ]
+}

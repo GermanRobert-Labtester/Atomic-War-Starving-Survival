@@ -209,6 +209,8 @@ namespace AtomicWar._Game.Core
                 if (!DutyRosterSystem.IsSecondWinterActive)
                 {
                     DutyRosterSystem.SetSecondWinterActive(true);
+                    ShelterEncounterSystem?.SetSecondWinter(
+                        DutyRosterSystem.SecondWinterEncounterWeight, day);
                     if (MoraleMarkSystem != null)
                         MoraleMarkSystem.SetMark("mark_second_winter", null, day);
                     if (IceRoadSystem != null)

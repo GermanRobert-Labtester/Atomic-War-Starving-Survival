@@ -12,6 +12,18 @@
     "recast_always": false
   },
   {
+    "id": "loc_stack_airlock",
+    "displayName": "Inner Airlock",
+    "inspect": "A crate of boots, sizes 1 through 4, the tape still factory. A chair bolted to the wrong profession.",
+    "description": "The last room before the hatch scene. A dental chair, bolted, no instruments. A crate stencilled `ALLOC-12 / NOT FOR GENERAL ISSUE`, children's winter boots, sizes 1-4, tape uncut unless you cut it. Decon is a bucket and a rag on a nail. The rag ticks if someone came in glowing. Boots sit in pairs even in the crate, as if pairing were a kind of care. You can open the crate. A child can wear a pair. They were not packed for them. You can leave the tape. The crate will still be a crate in forty days. You can unbolt the chair. Dentists' Row is missing exactly this.",
+    "dangerLevel": 3.0,
+    "travelHours": 0.0,
+    "baseRadsPerHour": 3.0,
+    "region": "the_stack",
+    "overlay_on_unlock": false,
+    "recast_always": false
+  },
+  {
     "id": "loc_stack_sleeping",
     "displayName": "The Sleeping Stack",
     "inspect": "Eleven bolted footboards. Three pads. One extra blanket folded as if it were a person.",

@@ -71,7 +71,21 @@ namespace AtomicWar._Game.Factions
             return true;
         }
 
-        public NPC_WynSablerState CaptureState() => _state;
-        public void RestoreState(NPC_WynSablerState saved) { _state = saved ?? new NPC_WynSablerState(); }
+        public NPC_WynSablerState CaptureState() => CopyState(_state);
+
+        public void RestoreState(NPC_WynSablerState saved)
+            => _state = CopyState(saved ?? new NPC_WynSablerState());
+
+        /// <summary>Snapshot semantics: a captured/restored state never aliases live state.</summary>
+        private static NPC_WynSablerState CopyState(NPC_WynSablerState s) => new NPC_WynSablerState
+        {
+            id = s.id,
+            displayName = s.displayName,
+            isActive = s.isActive,
+            termsRecited = s.termsRecited,
+            grainPledged = s.grainPledged,
+            fledWithGrain = s.fledWithGrain,
+            debtHonoured = s.debtHonoured
+        };
     }
 }

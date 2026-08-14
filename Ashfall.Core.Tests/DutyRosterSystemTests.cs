@@ -517,13 +517,31 @@ namespace Ashfall.Core.Tests
             enc.QueueVisitor(ShelterEncounterSystem.VisitorLen, 60);
             enc.StartEncounter("se_edor_stool", ShelterEncounterSystem.KindEdorStool, 60, ShelterEncounterSystem.VisitorEdor);
             enc.ResolveEncounter("se_edor_stool", 60);
+            enc.SetSecondWinter(1.6f, 400);
             string blob = json.Serialize(enc.CaptureState());
             var restored = new ShelterEncounterSystem(1);
             restored.RestoreState(json.Deserialize<ShelterEncounterSystemState>(blob));
             Assert.True(restored.IsUnlocked);
             Assert.Equal(ShelterEncounterSystem.VisitorLen, restored.PeekVisitor());
             Assert.True(restored.IsResolved("se_edor_stool"));
+            Assert.Equal(1.6f, restored.EncounterWeightMultiplier, 3);
+            Assert.True(restored.IsSecondWinterActive);
             Assert.Equal(1208, restored.State.seedSalt);
+        }
+
+        [Fact]
+        public void SecondWinterMultiplierApplies()
+        {
+            var enc = Sys();
+            enc.Unlock(60);
+            Assert.False(enc.IsSecondWinterActive);
+            Assert.Equal(1f, enc.EncounterWeightMultiplier, 3);
+            enc.SetSecondWinter(1.6f, 400);
+            Assert.True(enc.IsSecondWinterActive);
+            Assert.Equal(1.6f, enc.EncounterWeightMultiplier, 3);
+            enc.ClearSecondWinter();
+            Assert.False(enc.IsSecondWinterActive);
+            Assert.Equal(1f, enc.EncounterWeightMultiplier, 3);
         }
     }
 }

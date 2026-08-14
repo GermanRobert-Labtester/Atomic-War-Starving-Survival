@@ -164,11 +164,11 @@ namespace Ashfall.Core.Tests
             }
 
             int loaded = DoorEncounterCatalogLoader.LoadAndRegister(system, dataDir, fileIO, json);
-            Assert.True(loaded >= 40, $"Expected >= 40 loaded encounters, got {loaded}");
+            Assert.True(loaded >= 60, $"Expected >= 60 loaded encounters, got {loaded}");
             Assert.Contains(system.Catalog, e => e.encounterId == "door_encounter_garrison_deserter_family");
             Assert.Contains(system.Catalog, e => e.encounterId == "door_encounter_wandering_trauma_surgeon");
-            Assert.Contains(system.Catalog, e => e.encounterId == "door_encounter_continuity_broadcast_courier");
-            Assert.Contains(system.Catalog, e => e.encounterId == "door_encounter_continental_evacuation_liaison");
+            Assert.Contains(system.Catalog, e => e.encounterId == "door_encounter_arsenal_brass_trader");
+            Assert.Contains(system.Catalog, e => e.encounterId == "door_encounter_day_360_dawn_witnesses");
         }
 
         [Fact]
@@ -191,25 +191,28 @@ namespace Ashfall.Core.Tests
             if (string.IsNullOrEmpty(dataDir)) return;
 
             var items = YearOfAshCatalogLoader.LoadItems(dataDir, fileIO, json);
-            Assert.True(items.Count >= 36, $"Expected >= 36 items, got {items.Count}");
+            Assert.True(items.Count >= 48, $"Expected >= 48 items, got {items.Count}");
             Assert.Contains(items, item => item.id == "item_military_filter_crate");
             Assert.Contains(items, item => item.id == "item_continental_maritime_transponder");
             Assert.Contains(items, item => item.id == "item_boron_shielding_tile");
+            Assert.Contains(items, item => item.id == "item_brass_stamping_die");
             Assert.Contains(items, item => item.id == "item_evacuation_manifest_scroll");
 
             var events = YearOfAshCatalogLoader.LoadEvents(dataDir, fileIO, json);
-            Assert.True(events.Count >= 36, $"Expected >= 36 events, got {events.Count}");
-            Assert.Contains(events, ev => ev.id == "event_black_blizzard_inversion");
-            Assert.Contains(events, ev => ev.id == "event_black_mud_inundation");
+            Assert.True(events.Count >= 48, $"Expected >= 48 events, got {events.Count}");
+            Assert.Contains(events, ev => ev.id == "event_deep_freeze_onset");
+            Assert.Contains(events, ev => ev.id == "event_black_mud_thaw_inundation");
+            Assert.Contains(events, ev => ev.id == "event_granite_arsenal_foundry_explosion");
             Assert.Contains(events, ev => ev.id == "event_final_dawn_year_one");
 
             var questSystem = new QuestlineSystem();
             int initialQuests = questSystem.Catalog.Count;
             int loadedQuests = YearOfAshCatalogLoader.LoadAndRegisterQuests(questSystem, dataDir, fileIO, json);
-            Assert.True(loadedQuests >= 12, $"Expected >= 12 external quests, got {loadedQuests}");
+            Assert.True(loadedQuests >= 24, $"Expected >= 24 external quests, got {loadedQuests}");
             Assert.True(questSystem.Catalog.Count >= initialQuests);
             Assert.NotNull(questSystem.FindDefinition("quest_continental_convoy_gate"));
-            Assert.NotNull(questSystem.FindDefinition("quest_final_manifest_muster"));
+            Assert.NotNull(questSystem.FindDefinition("quest_granite_foundry_brass_smuggling"));
+            Assert.NotNull(questSystem.FindDefinition("quest_day_360_final_reckoning"));
         }
 
         [Fact]
@@ -251,25 +254,27 @@ namespace Ashfall.Core.Tests
             if (string.IsNullOrEmpty(dataDir)) return;
 
             var locations = YearOfAshCatalogLoader.LoadLocations(dataDir, fileIO, json);
-            Assert.True(locations.Count >= 30, $"Expected >= 30 locations, got {locations.Count}");
+            Assert.True(locations.Count >= 60, $"Expected >= 60 locations, got {locations.Count}");
             Assert.Contains(locations, l => l.id == "loc_the_allotments");
             Assert.Contains(locations, l => l.id == "loc_denial_cut_substation");
             Assert.Contains(locations, l => l.id == "loc_brine_pumping_sluice");
-            Assert.Contains(locations, l => l.id == "loc_continental_radio_beacon");
-            Assert.Contains(locations, l => l.id == "loc_aurora_borealis_grounding_shoal");
+            Assert.Contains(locations, l => l.id == "loc_granite_arsenal_foundry");
+            Assert.Contains(locations, l => l.id == "loc_the_final_dawn_outlook");
 
             var radio = YearOfAshCatalogLoader.LoadRadioBroadcasts(dataDir, fileIO, json);
-            Assert.True(radio.Count >= 18, $"Expected >= 18 radio broadcasts, got {radio.Count}");
-            Assert.Contains(radio, r => r.id == "radio_garrison_decree_180");
-            Assert.Contains(radio, r => r.id == "radio_continental_maritime_beacon_340");
-            Assert.Contains(radio, r => r.id == "radio_final_dawn_broadcast_360");
+            Assert.True(radio.Count >= 36, $"Expected >= 36 radio broadcasts, got {radio.Count}");
+            Assert.Contains(radio, r => r.id == "radio_142_carrier_discovery");
+            Assert.Contains(radio, r => r.id == "radio_garrison_martial_edict");
+            Assert.Contains(radio, r => r.id == "radio_granite_arsenal_mobilization_broadcast");
+            Assert.Contains(radio, r => r.id == "radio_day_360_beacon_silence");
 
             var survivors = YearOfAshCatalogLoader.LoadSurvivors(dataDir, fileIO, json);
-            Assert.True(survivors.Count >= 24, $"Expected >= 24 survivors, got {survivors.Count}");
+            Assert.True(survivors.Count >= 36, $"Expected >= 36 survivors, got {survivors.Count}");
             Assert.Contains(survivors, s => s.id == "survivor_ottilie_frayne");
             Assert.Contains(survivors, s => s.id == "survivor_anneke_ruhl");
-            Assert.Contains(survivors, s => s.id == "survivor_dr_sarah_chen");
-            Assert.Contains(survivors, s => s.id == "survivor_erik_dahl");
+            Assert.Contains(survivors, s => s.id == "survivor_markov_arsenal_assayer");
+            Assert.Contains(survivors, s => s.id == "survivor_talia_upland_commander");
+            Assert.Contains(survivors, s => s.id == "survivor_anton_salt_trader");
         }
 
         [Fact]
