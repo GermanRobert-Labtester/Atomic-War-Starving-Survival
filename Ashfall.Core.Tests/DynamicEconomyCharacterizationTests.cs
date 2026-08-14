@@ -172,3 +172,161 @@ namespace Ashfall.Core.Tests
         }
     }
 }
+
+// ── FactionStanceEngine tests ──────────────────────────────────────
+public class FactionStanceEngineTests
+{
+    [Fact]
+    public void GetStance_DefaultThresholds_ReturnsExpectedStance()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "test_fac",
+            RaidThreshold = -50f,
+            RobThreshold = -30f,
+            MinTrustToTrade = -20f,
+            IntelShareThreshold = 40f
+        });
+
+        Assert.Equal(TradeStance.Trade, engine.GetStance("test_fac"));
+    }
+
+    [Fact]
+    public void GetStance_VariousTrustLevels()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "test_fac",
+            RaidThreshold = -50f,
+            RobThreshold = -30f,
+            MinTrustToTrade = -20f,
+            IntelShareThreshold = 40f
+        });
+
+        engine.SetTrust("test_fac", -55f);
+        Assert.Equal(TradeStance.HostileRaid, engine.GetStance("test_fac"));
+
+        engine.SetTrust("test_fac", -30f);
+        Assert.Equal(TradeStance.Rob, engine.GetStance("test_fac"));
+
+        engine.SetTrust("test_fac", -25f);
+        Assert.Equal(TradeStance.Refuse, engine.GetStance("test_fac"));
+
+        engine.SetTrust("test_fac", -20f);
+        Assert.Equal(TradeStance.Trade, engine.GetStance("test_fac"));
+
+        engine.SetTrust("test_fac", 40f);
+        Assert.Equal(TradeStance.ShareIntel, engine.GetStance("test_fac"));
+    }
+
+    [Fact]
+    public void WillTrade_MatchesStance()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "test_fac",
+            RaidThreshold = -50f,
+            RobThreshold = -30f,
+            MinTrustToTrade = -20f,
+            IntelShareThreshold = 40f
+        });
+
+        engine.SetTrust("test_fac", -25f);
+        Assert.False(engine.WillTrade("test_fac"));
+
+        engine.SetTrust("test_fac", -10f);
+        Assert.True(engine.WillTrade("test_fac"));
+    }
+
+    [Fact]
+    public void ModifyTrust_AccumulatesAndClamps()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "test_fac",
+            RaidThreshold = -50f,
+            RobThreshold = -30f,
+            MinTrustToTrade = -20f,
+            IntelShareThreshold = 40f
+        });
+
+        engine.SetTrust("test_fac", 0f);
+        Assert.Equal(50f, engine.ModifyTrust("test_fac", 50f));
+        Assert.Equal(100f, engine.ModifyTrust("test_fac", 100f)); // clamped
+        Assert.Equal(-100f, engine.ModifyTrust("test_fac", -200f)); // clamped
+    }
+
+    [Fact]
+    public void TrustInversion_HealthyWithHazmat_FloorsToMinTrust()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "cult",
+            RaidThreshold = -50f,
+            RobThreshold = -20f,
+            MinTrustToTrade = -40f,
+            IntelShareThreshold = 40f,
+            TrustInversion = true,
+            HealthyRadiationCeiling = 20f,
+            HighRadiationFloor = 60f
+        });
+
+        engine.SetTrust("cult", 80f); // high stored trust
+        engine.DayProvider = () => 30;
+        engine.PartyRadiationProvider = () => 10f; // healthy
+        engine.PartyIntactHazmatProvider = () => true;
+
+        Assert.Equal(-100f, engine.GetEffectiveTrust("cult"));
+        Assert.Equal(TradeStance.HostileRaid, engine.GetStance("cult"));
+    }
+
+    [Fact]
+    public void TrustInversion_ARS_ReverenceReturnsMaxTrust()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "cult",
+            RaidThreshold = -50f,
+            RobThreshold = -20f,
+            MinTrustToTrade = -40f,
+            IntelShareThreshold = 40f,
+            TrustInversion = true,
+            HealthyRadiationCeiling = 20f,
+            HighRadiationFloor = 60f
+        });
+
+        engine.SetTrust("cult", -100f);
+        engine.DayProvider = () => 30;
+        engine.PartyHasArsProvider = () => true;
+
+        Assert.Equal(100f, engine.GetEffectiveTrust("cult"));
+        Assert.Equal(TradeStance.ShareIntel, engine.GetStance("cult"));
+    }
+
+    [Fact]
+    public void InactiveFaction_ReturnsRefuse()
+    {
+        var engine = new FactionStanceEngine();
+        engine.RegisterFaction(new FactionThresholds
+        {
+            FactionId = "cult",
+            RaidThreshold = -50f,
+            RobThreshold = -20f,
+            MinTrustToTrade = -40f,
+            IntelShareThreshold = 40f,
+            TrustInversion = true
+        });
+
+        engine.SetTrust("cult", 50f);
+        engine.DayProvider = () => 10; // before activation day
+
+        Assert.False(engine.IsFactionActive("cult"));
+        Assert.Equal(TradeStance.Refuse, engine.GetStance("cult"));
+    }
+}

@@ -17,7 +17,7 @@ namespace AtomicWar._Game.Economy
     /// (-100..100) gates trade / rob / intel / hatch raids. EventRunner choices
     /// with FactionId + TrustDelta (or RelationshipDelta) mutate trust.
     /// </summary>
-    public class DynamicEconomySystem
+    public class DynamicEconomySystem : IFactionStanceProvider, IPriceShockProvider, ITradeEvents
     {
         private PersonalQuestSystem _personalQuests;
         private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
@@ -25,6 +25,7 @@ namespace AtomicWar._Game.Economy
         // [Prompts #326-330] Scarcity override (The Ash Gets Deeper)
         private ScarcityOverride _scarcityOverride;
         private Ashfall.Core.Economy.HardcoreEconomyTuning _coreTuning;
+        private readonly FactionStanceEngine _stanceEngine = new FactionStanceEngine();
         public void SetScarcityOverride(ScarcityOverride o) => _scarcityOverride = o;
         public ScarcityOverride GetScarcityOverride() => _scarcityOverride;
 
@@ -36,6 +37,25 @@ namespace AtomicWar._Game.Economy
         public void BindCoreTuning(Ashfall.Core.Economy.HardcoreEconomyTuning tuning)
         {
             _coreTuning = tuning;
+        }
+
+        public bool TryGetPriceShock(PriceShockKind kind, int dayOffsetFromShockStart, out PriceShockRule rule)
+        {
+            if (_coreTuning != null && _coreTuning.IsActive)
+            {
+                return _coreTuning.TryGetPriceShock(kind, dayOffsetFromShockStart, out rule);
+            }
+            rule = default;
+            return false;
+        }
+
+        public float GetScarcityMultiplier(int day, string itemId)
+        {
+            if (_coreTuning != null && _coreTuning.IsActive)
+            {
+                return _coreTuning.GetScarcityMultiplier(day, itemId);
+            }
+            return 1.0f;
         }
 
         /// <summary>Prompt #236 — Demagogue: FactionTrust floor 0 + tribute drops.</summary>
@@ -127,7 +147,8 @@ namespace AtomicWar._Game.Economy
 
         private Func<WorldPhase> _getPhase;
         private Shelter.Shelter _shelter;
-        private System.Random _rng;
+        private int _decisionSeed = 7;
+        private long _rngRollCount;
         private HatchDefenseSystem _hatchDefense;
         private Func<int> _getDay;
         /// <summary>
@@ -175,12 +196,15 @@ namespace AtomicWar._Game.Economy
         public DynamicEconomySystem(
             Func<WorldPhase> getPhase = null,
             Shelter.Shelter shelter = null,
-            System.Random rng = null)
+            int decisionSeed = 7)
         {
             _getPhase = getPhase ?? (() => WorldPhase.CivilWar);
             _shelter = shelter;
-            _rng = rng ?? new System.Random(7);
+            _decisionSeed = decisionSeed;
         }
+
+        /// <summary>Rebind the deterministic decision seed (A11: no System.Random).</summary>
+        public void SetDecisionSeed(int seed) => _decisionSeed = seed;
 
         public void SetPhaseProvider(Func<WorldPhase> getPhase)
         {
@@ -280,6 +304,20 @@ namespace AtomicWar._Game.Economy
             _factions[faction.id] = faction;
             if (!_trust.ContainsKey(faction.id))
                 _trust[faction.id] = Mathf.Clamp(faction.startingTrust, MinTrust, MaxTrust);
+
+            // Mirror into the engine-agnostic stance engine.
+            _stanceEngine.RegisterFaction(new FactionThresholds
+            {
+                FactionId = faction.id,
+                RaidThreshold = faction.raidThreshold,
+                RobThreshold = faction.robThreshold,
+                MinTrustToTrade = faction.minTrustToTrade,
+                IntelShareThreshold = faction.intelShareThreshold,
+                RaidAggression = faction.raidAggression,
+                TrustInversion = faction.trustInversion,
+                HealthyRadiationCeiling = faction.healthyRadiationCeiling,
+                HighRadiationFloor = faction.highRadiationFloor
+            });
             if (!_successionGeneration.ContainsKey(faction.id))
                 _successionGeneration[faction.id] = 0;
             if (!_leaderName.ContainsKey(faction.id) || string.IsNullOrEmpty(_leaderName[faction.id]))
@@ -302,23 +340,7 @@ namespace AtomicWar._Game.Economy
 
         public float GetTrust(string factionId)
         {
-            if (string.IsNullOrEmpty(factionId)) return 0f;
-            float t = _trust.TryGetValue(factionId, out float stored) ? stored : 0f;
-            // #257 Hated: stored military trust floors at −100 while a Hated survivor lives.
-            if (_personalQuests != null && _getSurvivors != null && IsMilitaryFaction(factionId))
-            {
-                var list = _getSurvivors();
-                if (list != null)
-                {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i] != null && list[i].IsAlive
-                            && _personalQuests.IsShotOnSightByMilitary(list[i]))
-                            return Mathf.Min(t, PersonalQuestSystem.HatedMilitaryTrust);
-                    }
-                }
-            }
-            return t;
+            return _stanceEngine.GetTrust(factionId);
         }
 
         /// <summary>Military remnant factions that Hated Generals are shot on sight by.</summary>
@@ -366,11 +388,7 @@ namespace AtomicWar._Game.Economy
         /// </summary>
         public bool IsFactionActive(string factionId)
         {
-            var fac = GetFaction(factionId);
-            if (fac == null) return false;
-            if (!fac.trustInversion) return true;
-            if (_getDay == null) return true;
-            return _getDay() >= CultActivationDay;
+            return _stanceEngine.IsFactionActive(factionId);
         }
 
         /// <summary>
@@ -445,6 +463,10 @@ namespace AtomicWar._Game.Economy
             if (_personalQuests != null && _getSurvivors != null)
                 next = _personalQuests.ClampFactionTrust(next, _getSurvivors());
             _trust[factionId] = next;
+            // Mirror into the engine-agnostic stance engine: GetTrust/GetStance
+            // read from it, so writes must route through it (wiring hardening —
+            // the refactor forked trust state).
+            _stanceEngine.SetTrust(factionId, next);
             OnTrustChanged?.Invoke(factionId, old, next);
             OnEconomyChanged?.Invoke();
 
@@ -471,6 +493,8 @@ namespace AtomicWar._Game.Economy
             if (_personalQuests != null && _getSurvivors != null)
                 next = _personalQuests.ClampFactionTrust(next, _getSurvivors());
             _trust[factionId] = next;
+            // Mirror into the engine-agnostic stance engine (GetTrust reads it).
+            _stanceEngine.SetTrust(factionId, next);
             if (!Mathf.Approximately(old, next))
             {
                 OnTrustChanged?.Invoke(factionId, old, next);
@@ -480,31 +504,15 @@ namespace AtomicWar._Game.Economy
 
         public TradeStance GetStance(string factionId)
         {
-            // Pre-activation (Cult Day gate): refuse without raid pressure.
-            if (!IsFactionActive(factionId))
-                return TradeStance.Refuse;
-
-            float trust = GetEffectiveTrust(factionId);
-            var fac = GetFaction(factionId);
-            float raidAt = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
-            float robAt = fac != null ? fac.robThreshold : -20f;
-            float tradeAt = fac != null ? fac.minTrustToTrade : -40f;
-            float intelAt = fac != null ? fac.intelShareThreshold : 40f;
-
-            if (trust <= raidAt) return TradeStance.HostileRaid;
-            if (trust <= robAt) return TradeStance.Rob;
-            if (trust < tradeAt) return TradeStance.Refuse;
-            if (trust >= intelAt) return TradeStance.ShareIntel;
-            return TradeStance.Trade;
+            return _stanceEngine.GetStance(factionId);
         }
 
         public bool WillTrade(string factionId)
         {
-            var s = GetStance(factionId);
-            return s == TradeStance.Trade || s == TradeStance.ShareIntel;
+            return _stanceEngine.WillTrade(factionId);
         }
 
-        public bool WillShareIntel(string factionId) => GetStance(factionId) == TradeStance.ShareIntel;
+        public bool WillShareIntel(string factionId) => _stanceEngine.WillShareIntel(factionId);
 
         // -----------------------------------------------------------------
         // Aggression / succession / surrender
@@ -516,8 +524,7 @@ namespace AtomicWar._Game.Economy
             if (string.IsNullOrEmpty(factionId)) return 0.5f;
             if (_aggressionOverride.TryGetValue(factionId, out float ovr))
                 return Mathf.Clamp01(ovr);
-            var fac = GetFaction(factionId);
-            return fac != null ? Mathf.Clamp01(fac.raidAggression) : 0.5f;
+            return Mathf.Clamp01(_stanceEngine.GetRaidAggression(factionId));
         }
 
         public void SetRaidAggression(string factionId, float aggression01)
@@ -1250,7 +1257,12 @@ namespace AtomicWar._Game.Economy
                 // Legacy fallback when hatch defense not wired
                 result.Launched = true;
                 float integrity = Mathf.Clamp01(shieldLevel * 0.25f);
-                result.Repelled = integrity >= 0.5f && _rng.NextDouble() < integrity;
+                // A11: deterministic reseed-per-roll (seed + roll count); the
+                // count is persisted so a restored save CONTINUES the stream
+                // instead of replaying it (previously System.Random, unpersisted).
+                var decisionRng = new SeededRng(unchecked(_decisionSeed * 397 + (int)(_rngRollCount & 0x7FFFFFFF)));
+                _rngRollCount++;
+                result.Repelled = integrity >= 0.5f && decisionRng.NextDouble() < integrity;
                 if (result.Repelled)
                 {
                     result.HatchDamage = 5f + 10f * aggression * (1f - integrity);
@@ -1671,6 +1683,7 @@ namespace AtomicWar._Game.Economy
             save.BarterOnlyMode = _barterOnlyMode;
             save.BarterOnlyAccepted = _barterOnlyAcceptedItemIds.ToArray();
             save.LastRepelledFactionId = LastRepelledFactionId ?? string.Empty;
+            save.RngRollCount = Math.Max(0L, _rngRollCount);
             return save;
         }
 
@@ -1684,13 +1697,18 @@ namespace AtomicWar._Game.Economy
             _consecutiveRepels.Clear();
             _hasSurrendered.Clear();
             LastRepelledFactionId = string.Empty;
+            // A11 sentinel: negative/corrupt roll counts clamp to 0 (restart
+            // the deterministic stream from the seed rather than throw).
+            _rngRollCount = Math.Max(0L, save.RngRollCount);
             if (save.Trust != null)
             {
                 for (int i = 0; i < save.Trust.Length; i++)
                 {
                     var row = save.Trust[i];
                     if (row == null || string.IsNullOrEmpty(row.FactionId)) continue;
-                    _trust[row.FactionId] = Mathf.Clamp(row.Trust, MinTrust, MaxTrust);
+                    float restoredTrust = Mathf.Clamp(row.Trust, MinTrust, MaxTrust);
+                    _trust[row.FactionId] = restoredTrust;
+                    _stanceEngine.SetTrust(row.FactionId, restoredTrust);
                     if (row.AggressionOverride >= 0f)
                         _aggressionOverride[row.FactionId] = Mathf.Clamp01(row.AggressionOverride);
                     _successionGeneration[row.FactionId] = Mathf.Max(0, row.SuccessionGeneration);
@@ -1744,53 +1762,6 @@ namespace AtomicWar._Game.Economy
     }
 
     [Serializable]
-    public class FactionRaidResult
-    {
-        public string FactionId;
-        public bool Launched;
-        public bool Repelled;
-        public bool Breached;
-        public float HatchDamage;
-        public int ShieldingLevel;
-        public float RaidStrength;
-        public float DefenseScore;
-        public float ShelterSecurity;
-        public int StolenItemCount;
-        public float Aggression;
-        public bool SurrenderedAfter;
-        public string Message;
-    }
-
-    [Serializable]
-    public class FactionSuccessionResult
-    {
-        public string FactionId;
-        public bool Applied;
-        public string PreviousLeader;
-        public string NewLeader;
-        public int Generation;
-        public float OldTrust;
-        public float NewTrust;
-        public float OldAggression;
-        public float NewAggression;
-        public string Message;
-    }
-
-    [Serializable]
-    public class FactionSurrenderResult
-    {
-        public string FactionId;
-        public bool Applied;
-        public bool Auto;
-        public float OldTrust;
-        public float NewTrust;
-        public float OldAggression;
-        public float NewAggression;
-        public TradeStance NewStance;
-        public string Message;
-    }
-
-    [Serializable]
     public class FactionTrustSave
     {
         public string FactionId;
@@ -1810,23 +1781,6 @@ namespace AtomicWar._Game.Economy
         public float Multiplier;
     }
 
-    /// <summary>
-    /// [Prompts #326-330] Hardcore economy tuning overlay set by
-    /// GameBootstrap.AshGetsDeeper.ApplyHardcoreEconomyTuningIfEnabled()
-    /// at boot when the player is in Expert mode (or the inspector
-    /// override _forceHardcoreEconomy is on). While <see cref="IsHardcore"/>
-    /// is true, GetTradeValue applies
-    /// <see cref="HardcoreEconomyTuning.GetScarcityMultiplierForDay"/>
-    /// (re-evaluated against the real current day on every call, so each
-    /// tier's day-range window is honoured) to the resolved market value.
-    /// </summary>
-    [Serializable]
-    public class ScarcityOverride
-    {
-        public string Source;
-        public bool IsHardcore;
-    }
-
     [Serializable]
     public class DynamicEconomySave
     {
@@ -1838,5 +1792,7 @@ namespace AtomicWar._Game.Economy
         public string[] BarterOnlyAccepted;
         /// <summary>Last faction successfully repelled at the hatch (trade strip / parley).</summary>
         public string LastRepelledFactionId;
+        /// <summary>A11: deterministic decision-roll count (reseed pattern).</summary>
+        public long RngRollCount;
     }
 }

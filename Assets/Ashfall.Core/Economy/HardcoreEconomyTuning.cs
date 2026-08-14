@@ -108,7 +108,7 @@ namespace Ashfall.Core.Economy
     /// tuning bundle. The host passes itself in so the overlay can query day/item
     /// context without owning game logic.
     /// </summary>
-    public sealed class HardcoreEconomyTuning
+    public sealed class HardcoreEconomyTuning : IPriceShockProvider
     {
         private HardcoreEconomyTuningBundle _bundle = new();
 
