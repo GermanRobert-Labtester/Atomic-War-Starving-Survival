@@ -197,6 +197,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.NarrativeSelfTest:
                     GetTree().Quit(HostCli.RunNarrativeSelfTest());
                     return;
+                case HostCliAction.SurvivorsSelfTest:
+                    GetTree().Quit(HostCli.RunSurvivorsSelfTest());
+                    return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
                     return;
@@ -1232,6 +1235,7 @@ namespace AtomicWar.GodotApp
         {
             if (_survivors != null) return;
             _survivors = new SurvivorsHostSession();
+            _survivors.LoadCatalog(_dataDir);
             _survivors.SeedDemoRoster();
             _survivors.StateChanged += () => SaveSurvivors();
 
@@ -1549,16 +1553,16 @@ namespace AtomicWar.GodotApp
             BuildUserInterface();
             SetupSurvivors();
 
-            bool roster = _survivors.Roster.Count == 3;
+            bool roster = _survivors.RosterState.Count == 3;
             _survivors.TickHour(6f);
-            bool needsMoved = _survivors.Roster[0].Hunger > 0f;
+            bool needsMoved = _survivors.RosterState[0].Hunger > 0f;
 
             string exposed = _survivors.ExposeToZone("survivor_gunner_mikhail", 60f);
             bool doseClimbed = _survivors.Radiation.GetDosimeter("survivor_gunner_mikhail").LifetimeDose > 0f;
 
             string iodine = _survivors.AdministerIodine("survivor_gunner_mikhail");
             bool resistance = _survivors.Radiation.GetDosimeter("survivor_gunner_mikhail") != null
-                && System.Linq.Enumerable.Any(_survivors.Roster, s => s.Id == "survivor_gunner_mikhail");
+                && System.Linq.Enumerable.Any(_survivors.RosterState, s => s.Id == "survivor_gunner_mikhail");
 
             string antiRad = _survivors.AdministerAntiRad("survivor_gunner_mikhail", 30f);
             bool antiRadApplied = antiRad.Contains("cleared");
@@ -1567,7 +1571,7 @@ namespace AtomicWar.GodotApp
             var save = _survivors.CaptureSave();
             var fresh = new SurvivorsHostSession();
             fresh.RestoreSave(save);
-            bool roundtrip = fresh.Roster.Count == 3;
+            bool roundtrip = fresh.RosterState.Count == 3;
             var restoredRad = fresh.Radiation.GetDosimeter("survivor_gunner_mikhail");
             bool radRestored = restoredRad != null;
 

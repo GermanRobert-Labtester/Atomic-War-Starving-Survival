@@ -3,6 +3,7 @@ using Ashfall.Core;
 using Ashfall.Core.Expeditions;
 using Ashfall.Core.Medical;
 using Ashfall.Core.Narrative;
+using Ashfall.Core.Survivors;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -47,6 +48,7 @@ namespace AtomicWar.GodotApp
         ExpeditionSelfTest,
         MedicalSelfTest,
         NarrativeSelfTest,
+        SurvivorsSelfTest,
         DataIntegritySelfTest,
         CaravanSelfTest
     }
@@ -108,7 +110,7 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MusterUiTest;
             if (Has(args, "--inventory-uitest") || Has(args, "--inventory-selftest"))
                 return HostCliAction.InventoryUiTest;
-            if (Has(args, "--survivors-uitest") || Has(args, "--survivors-selftest"))
+            if (Has(args, "--survivors-uitest"))
                 return HostCliAction.SurvivorsUiTest;
             if (Has(args, "--dose-uitest"))
                 return HostCliAction.DoseUiTest;
@@ -128,6 +130,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.MedicalSelfTest;
             if (Has(args, "--narrative-selftest"))
                 return HostCliAction.NarrativeSelfTest;
+            if (Has(args, "--survivors-selftest"))
+                return HostCliAction.SurvivorsSelfTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -612,6 +616,13 @@ namespace AtomicWar.GodotApp
         public static int RunNarrativeSelfTest()
         {
             var report = NarrativeHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunSurvivorsSelfTest()
+        {
+            var report = SurvivorsHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }

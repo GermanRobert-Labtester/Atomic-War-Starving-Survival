@@ -273,3 +273,33 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 
 
 
+## MIGRATION SPRINT — NARRATIVE PORT (encounter core + catalog)
+- Core (Assets/Ashfall.Core/Narrative): EncounterDefinition/EncounterChoice +
+  NarrativeEncounterSystem — Unity EncounterSO selection math 1:1 (stance
+  multipliers stealth x0.5 / speed x1.5, danger/location filters), weighted
+  selection via ISeededRng, resolution history with morale/guilt, fresh-copy
+  ordinal CaptureState, deep RestoreState; loader for narrative_encounters.json
+  (the three Unity factories as data).
+- Host: NarrativeHostSession + NarrativeSaveStore (user://) +
+  --narrative-selftest (10/10).
+- Also committed pre-existing engine-agnostic WIP (verified): Radiation core +
+  tests, Shelter/MaterialShieldingSystem, Survivors/NeedsSystem, MathfCompat.
+- Verify: build 0 warnings, tests 488/488 x4, all 21 selftests + uitests PASS,
+  gate 0 errors / 276 info across 60 catalogs.
+
+## MIGRATION SPRINT — SURVIVORS PORT (roster core + catalog)
+- Core (Assets/Ashfall.Core/Survivors/SurvivorCatalog.cs): SurvivorDefinition +
+  SurvivorRosterSystem — catalog-driven joins, death with reasons, events,
+  fresh-copy ordinal CaptureState, deep RestoreState; SurvivorCatalogLoader
+  reads survivors.json (102 entries, binding-verified).
+- Host: SurvivorsHostSession extended — Roster system wired into AddSurvivor,
+  LoadCatalog(dataDir); --survivors-selftest (14/14) routed correctly after
+  removing a pre-existing alias that shadowed it; --survivors-uitest PASS.
+- Debug + hardening: fixed CS0136 shadowing in the newly-appeared Crafting WIP;
+  intermittent full-suite failures under parallel class execution (Crafting/
+  Radiation WIP tests pass isolated) eliminated via
+  [assembly: CollectionBehavior(DisableTestParallelization = true)] —
+  suite 509/509 x5 deterministic.
+- Tests: 12 roster tests + catalog binding/parity.
+- Verify: build 0 warnings, tests 509/509 x5, survivors 14/14 + uitest PASS,
+  all 21 selftests + uitests PASS, gate 0 errors / 276 info across 60 catalogs.

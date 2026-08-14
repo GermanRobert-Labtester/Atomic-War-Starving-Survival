@@ -42,7 +42,7 @@ namespace AtomicWar.GodotApp
         public NeedsSystem Needs { get; }
         public RadiationSystem Radiation { get; }
         public MaterialShieldingSystem Shelter { get; } = new MaterialShieldingSystem();
-        public System.Collections.Generic.List<SurvivorNeedsState> Roster { get; } =
+        public System.Collections.Generic.List<SurvivorNeedsState> RosterState { get; } =
             new System.Collections.Generic.List<SurvivorNeedsState>();
 
         /// <summary>Demo geiger exposure context: one survivor outside, rest sheltered.</summary>
@@ -74,20 +74,38 @@ namespace AtomicWar.GodotApp
             };
         }
 
+        public SurvivorRosterSystem Roster { get; } = new SurvivorRosterSystem();
+
         /// <summary>Seed the demo roster with canonical survivor ids from the master list.</summary>
         public void SeedDemoRoster()
         {
-            if (Roster.Count > 0) return;
+            if (RosterState.Count > 0) return;
             AddSurvivor("survivor_dr_sarah_chen", "Dr. Sarah Chen (Trauma Surgeon)");
             AddSurvivor("survivor_gunner_mikhail", "Gunner Mikhail (Heavy Artillery Loader)");
             AddSurvivor("elena_vasquez", "Elena Vasquez (Aridoculture Engineer)");
         }
 
+        /// <summary>Load the survivors.json catalog into the roster system (the authority).</summary>
+        public void LoadCatalog(string dataDir)
+        {
+            if (string.IsNullOrEmpty(dataDir)) return;
+            var fileIO = new FileSystemIO();
+            var serializer = new SystemTextJsonSerializer();
+            Roster.RegisterRange(SurvivorCatalogLoader.Load(dataDir, fileIO, serializer));
+        }
+
         public void AddSurvivor(string id, string displayName)
         {
             if (Find(id) != null) return;
+            Roster.RegisterDefinition(new SurvivorDefinition
+            {
+                id = id,
+                displayName = displayName,
+                baseHealth = 100f
+            });
+            Roster.Join(id, 0);
             var state = new SurvivorNeedsState { Id = id };
-            Roster.Add(state);
+            RosterState.Add(state);
             Needs.Register(state);
             var rad = new RadSurvivorWrapper { Id = id };
             _radStates[id] = rad;
@@ -96,8 +114,8 @@ namespace AtomicWar.GodotApp
 
         public SurvivorNeedsState Find(string id)
         {
-            for (int i = 0; i < Roster.Count; i++)
-                if (Roster[i] != null && Roster[i].Id == id) return Roster[i];
+            for (int i = 0; i < RosterState.Count; i++)
+                if (RosterState[i] != null && RosterState[i].Id == id) return RosterState[i];
             return null;
         }
 
@@ -172,9 +190,9 @@ namespace AtomicWar.GodotApp
         {
             var sb = new System.Text.StringBuilder();
             sb.Append("SURVIVORS — NEEDS & RADIATION\n");
-            for (int i = 0; i < Roster.Count; i++)
+            for (int i = 0; i < RosterState.Count; i++)
             {
-                var s = Roster[i];
+                var s = RosterState[i];
                 if (s == null) continue;
                 var rad = RadStateFor(s.Id);
                 sb.Append(s.Id).Append(": H ").Append(s.Hunger.ToString("F0"))
@@ -201,9 +219,9 @@ namespace AtomicWar.GodotApp
         public SurvivorsSaveState CaptureSave()
         {
             var save = new SurvivorsSaveState();
-            for (int i = 0; i < Roster.Count; i++)
+            for (int i = 0; i < RosterState.Count; i++)
             {
-                var s = Roster[i];
+                var s = RosterState[i];
                 if (s == null) continue;
                 var slice = new SurvivorSliceState
                 {
@@ -235,7 +253,7 @@ namespace AtomicWar.GodotApp
         public void RestoreSave(SurvivorsSaveState save)
         {
             if (save == null || save.survivors == null) return;
-            Roster.Clear();
+            RosterState.Clear();
             _radStates.Clear();
             foreach (var slice in save.survivors)
             {
@@ -253,7 +271,7 @@ namespace AtomicWar.GodotApp
                     IsAlive = slice.isAlive,
                     IsDead = !slice.isAlive
                 };
-                Roster.Add(s);
+                RosterState.Add(s);
                 Needs.Register(s);
                 var rad = new RadSurvivorWrapper
                 {
