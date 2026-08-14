@@ -4,6 +4,7 @@
 // integration, optional Hardcore economy overlay.
 using System.Collections.Generic;
 using UnityEngine;
+using Ashfall.Core.Economy;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;

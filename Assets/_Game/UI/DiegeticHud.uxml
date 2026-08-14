@@ -3,6 +3,8 @@
     <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
     <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
     <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <Style src="project://database/Assets/_Game/UI/TradeScreen.uss" />
+    <Style src="project://database/Assets/_Game/UI/EconomyHud.uss" />
     <ui:VisualElement name="diegetic-root" class="diegetic-root" picking-mode="Ignore">
         <ui:VisualElement name="vitals-panel" class="diegetic-panel vitals-panel">
             <ui:Label name="vitals-clock" class="diegetic-title" text="DAY 1   00:00" />
@@ -523,6 +525,90 @@
 
         <ui:Template src="project://database/Assets/_Game/UI/CharacterArcProgressPanel.uxml" name="CharacterArcProgressPanelTemplate" />
         <ui:Instance template="CharacterArcProgressPanelTemplate" />
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             ECONOMY HUD — persistent mini-strip + toggleable detail panel
+             ═══════════════════════════════════════════════════════════════ -->
+
+        <ui:VisualElement name="economy-strip" class="economy-strip">
+            <ui:Label name="economy-strip-day" class="economy-strip-day" text="DAY 0" />
+            <ui:VisualElement name="economy-strip-div" class="economy-strip-divider" />
+            <ui:Label name="economy-strip-supply" class="economy-strip-supply economy-strip-supply--normal" text="NOMINAL" />
+            <ui:Label name="economy-strip-price" class="economy-strip-price" text="" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="economy-panel" class="diegetic-panel economy-panel hidden">
+            <ui:VisualElement name="economy-panel-header" class="economy-panel-header">
+                <ui:Label name="economy-panel-title" class="diegetic-title" text="MARKET" />
+                <ui:Label name="economy-panel-summary" class="economy-panel-summary" text="" />
+            </ui:VisualElement>
+            <ui:VisualElement name="economy-goods-scroll" class="economy-goods-scroll">
+                <ui:VisualElement name="economy-goods-list" class="economy-goods-list" />
+            </ui:VisualElement>
+            <ui:Label name="economy-shock-row" class="economy-shock-row hidden">
+            </ui:Label>
+            <ui:Label name="economy-empty" class="economy-empty" text="No market data." />
+            <ui:Label name="economy-hint" class="economy-hint" text="[M] close  ·  prices shift daily with supply and demand" />
+        </ui:VisualElement>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             TRADE SCREEN — centered modal for faction barter
+             ═══════════════════════════════════════════════════════════════ -->
+
+        <ui:VisualElement name="trade-backdrop" class="trade-backdrop hidden">
+            <ui:VisualElement name="trade-panel" class="trade-panel">
+                <!-- Header -->
+                <ui:VisualElement name="trade-header" class="trade-header">
+                    <ui:Label name="trade-faction-name" class="trade-faction-name" text="" />
+                    <ui:Label name="trade-faction-strip" class="trade-faction-strip" text="" />
+                    <ui:Label name="trade-stance-badge" class="trade-stance-badge" text="" />
+                </ui:VisualElement>
+
+                <!-- Dual-column barter area -->
+                <ui:VisualElement name="trade-barter-area" class="trade-barter-area">
+                    <!-- Player offers -->
+                    <ui:VisualElement name="trade-player-column" class="trade-column trade-column--player">
+                        <ui:Label name="trade-player-title" class="trade-column-title" text="YOU OFFER" />
+                        <ui:VisualElement name="trade-player-lines" class="trade-line-list" />
+                        <ui:Label name="trade-player-empty" class="trade-empty" text="Nothing offered." />
+                        <ui:VisualElement name="trade-player-total" class="trade-column-total">
+                            <ui:Label name="trade-player-total-label" class="trade-column-total-label" text="TOTAL" />
+                            <ui:Label name="trade-player-total-value" class="trade-column-total-value" text="0" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+
+                    <!-- Faction asks -->
+                    <ui:VisualElement name="trade-faction-column" class="trade-column">
+                        <ui:Label name="trade-faction-title" class="trade-column-title" text="THEY ASK" />
+                        <ui:VisualElement name="trade-faction-lines" class="trade-line-list" />
+                        <ui:Label name="trade-faction-empty" class="trade-empty" text="Nothing requested." />
+                        <ui:VisualElement name="trade-faction-total" class="trade-column-total">
+                            <ui:Label name="trade-faction-total-label" class="trade-column-total-label" text="TOTAL" />
+                            <ui:Label name="trade-faction-total-value" class="trade-column-total-value" text="0" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                </ui:VisualElement>
+
+                <!-- Summary + actions -->
+                <ui:VisualElement name="trade-summary" class="trade-summary">
+                    <ui:VisualElement name="trade-balance-row" class="trade-balance-row">
+                        <ui:Label name="trade-balance-label" class="trade-balance-label" text="Offer vs Ask" />
+                        <ui:Label name="trade-fair-indicator" class="trade-fair-indicator trade-fair-indicator--short" text="DEAL SHORT" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="trade-actions" class="trade-actions">
+                        <ui:VisualElement name="trade-actions-left" class="trade-actions-left">
+                            <ui:Button name="trade-parley-btn" class="trade-btn trade-btn--parley trade-btn--disabled" text="PARLEY [P]" />
+                        </ui:VisualElement>
+                        <ui:VisualElement name="trade-actions-right" class="trade-actions-right">
+                            <ui:Button name="trade-clear-btn" class="trade-btn" text="CLEAR" />
+                            <ui:Button name="trade-confirm-btn" class="trade-btn trade-btn--confirm" text="CONFIRM" />
+                            <ui:Button name="trade-close-btn" class="trade-btn trade-btn--close" text="CLOSE [×]" />
+                        </ui:VisualElement>
+                    </ui:VisualElement>
+                    <ui:Label name="trade-parley-msg" class="trade-parley-msg hidden" text="" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
 
     </ui:VisualElement>
 </ui:UXML>

@@ -150,7 +150,7 @@ namespace AtomicWar._Game.Core
             EconomySystem = new DynamicEconomySystem(
                 getPhase: () => WorldPhaseSystem.CurrentPhase,
                 shelter: Shelter,
-                rng: new System.Random(_worldSeed + 91));
+                decisionSeed: _worldSeed + 91);
             foreach (var fac in DynamicEconomySystem.CreateDefaultFactions())
                 EconomySystem.RegisterFaction(fac);
             EconomySystem.SetHatchDefense(HatchDefenseSystem);

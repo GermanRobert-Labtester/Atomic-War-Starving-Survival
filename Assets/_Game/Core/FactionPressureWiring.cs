@@ -4,6 +4,7 @@
 // and FactionRadioInterceptSystem. Static class with Func<>/Action<>
 // injection so GameBootstrap can stay decoupled from the systems.
 using System;
+using Ashfall.Core.Economy;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Quests;
 using UnityEngine;

@@ -5,6 +5,7 @@
 // from a day-gated registry tick ("quest_registry").
 using System;
 using UnityEngine;
+using Ashfall.Core.Economy;
 using AtomicWar._Game.Crafting;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
