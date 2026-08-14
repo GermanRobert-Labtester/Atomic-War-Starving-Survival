@@ -237,6 +237,30 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Verify: build 0 warnings, tests 428/428, expedition 10/10, all 19 selftests +
   both uitests PASS, gate 0 errors / 275 info.
 
+## MIGRATION SPRINT — MEDICAL PORT (Chemical Dependency into Ashfall.Core)
+- Ported the Unity ChemicalDependencySystem 1:1 (constants, severity map,
+  consumption threshold parity, managed detox 96h success threshold, cold
+  turkey 72h, tremor/morale penalties as host-effect EVENTS on survivor ids).
+- Fixed a latent UNITY BUG while porting: Unity used detoxProgressHours < 0 as
+  the cold-turkey sentinel, so withdrawal fell out of the cold-turkey branch
+  after one tick and the 72h completion could never fire. The port adds an
+  explicit inColdTurkey flag (with legacy progress<0 conversion on Restore)
+  and the 72h withdrawal actually completes; documented in migration notes.
+- Host: MedicalHostSession (applies effect events as host totals) +
+  MedicalSaveStore (user://) + --medical-selftest (15/15).
+- Cross-tool review: found BeginManagedDetox never cleared inColdTurkey (a
+  survivor switching cold-turkey -> managed stayed in cold-turkey forever);
+  fixed + program-switch regression test.
+- Tests: 14 (consumption parity, threshold refusal, detox completion, cold
+  turkey penalties + 72h completion, decay, severity scaling, program switch,
+  snapshot isolation, ordinal order, round-trip, checksum).
+- Also committed the leftover engine-agnostic
+  Assets/Ashfall.Core/Inventory/ProceduralItemInstance.cs (verified 1:1 vs
+  the Unity original, zero engine refs).
+- Verify: build 0 warnings, tests 454/454, medical 15/15, all 20 selftests +
+  both uitests PASS, gate 0 errors / 275 info across 59 catalogs.
+
+
 
 
 

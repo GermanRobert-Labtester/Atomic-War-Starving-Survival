@@ -6,6 +6,7 @@ using System.Linq;
 using System.Collections.Generic;
 using AtomicWar.Journal;
 using Ashfall.Core;
+using Ashfall.Core.Inventory;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
@@ -48,6 +49,10 @@ namespace AtomicWar.GodotApp
         private ApproachSelectionModal _approachModal = null!;
         private DeserterCoalitionCampWidget _campWidget = null!;
         private JournalWitnessPanel _witnessPanel = null!;
+
+        // Inventory (ported from Unity _Game/Inventory)
+        private InventoryHostSession _inventory = null!;
+        private AtomicWar.GodotApp.Inventory.InventoryPanel _inventoryPanel = null!;
 
         // Journal (docs/ui/JOURNAL_UI_PLAN.md)
         private JournalSystem _journal = null!;
@@ -159,6 +164,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.DoseUiTest:
                     RunDoseUiTestAndQuit();
                     return;
+                case HostCliAction.InventoryUiTest:
+                    RunInventoryUiTestAndQuit();
+                    return;
                 case HostCliAction.BridgeSelfTest:
                     GetTree().Quit(Ashfall.Bridge.BridgeSelfTest.Run());
                     return;
@@ -176,6 +184,9 @@ namespace AtomicWar.GodotApp
                     return;
                 case HostCliAction.ExpeditionSelfTest:
                     GetTree().Quit(HostCli.RunExpeditionSelfTest());
+                    return;
+                case HostCliAction.MedicalSelfTest:
+                    GetTree().Quit(HostCli.RunMedicalSelfTest());
                     return;
                 case HostCliAction.DataIntegritySelfTest:
                     GetTree().Quit(HostCli.RunDataIntegritySelfTest(_dataDir));
@@ -266,6 +277,7 @@ namespace AtomicWar.GodotApp
                 SavePhantomMemory();
                 SaveDoseLedger();
                 SaveMuster();
+                SaveInventory();
                 // Give any live Unity behaviours their OnDisable/OnDestroy before the tree goes.
                 Ashfall.Bridge.BridgeRuntime.Shutdown();
                 GetTree().Quit();
@@ -401,9 +413,16 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Muster: three witnesses (Harven)", OnMusterWitnessesClicked);
             AddMenuButton("Muster: witness author bias", OnMusterAuthorBiasClicked);
             AddMenuButton("Muster: epilogue matrix", OnMusterEpiloguesClicked);
+            // ── INVENTORY (ported from Unity _Game/Inventory) ───────────
+            AddMenuButton("Inventory: open the panel", OnInventoryOpenClicked);
+            AddMenuButton("Inventory: add canned food ×6", () => OnInventoryAddClicked("canned_food", 6));
+            AddMenuButton("Inventory: add clean water ×4", () => OnInventoryAddClicked("clean_water", 4));
+            AddMenuButton("Inventory: add geiger counter", () => OnInventoryAddClicked("geiger_counter", 1));
+            AddMenuButton("Inventory: add gas mask", () => OnInventoryAddClicked("gas_mask", 1));
+            AddMenuButton("Inventory: item check", OnInventoryCheckClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1118,6 +1137,79 @@ namespace AtomicWar.GodotApp
             if (_doseLedgerDirty) SaveDoseLedger();
         }
 
+        // ── INVENTORY (ported from Unity _Game/Inventory) host wiring ───
+
+        private void SetupInventory()
+        {
+            if (_inventory != null) return;
+            _inventory = InventoryHostSession.Create(_dataDir);
+            _inventory.StateChanged += () => SaveInventory();
+
+            if (_inventoryPanel == null && _rightColumn != null)
+            {
+                _inventoryPanel = new AtomicWar.GodotApp.Inventory.InventoryPanel();
+                _rightColumn.AddChild(_inventoryPanel);
+            }
+            if (_inventoryPanel != null)
+            {
+                _inventoryPanel.Bind(_inventory);
+                _inventoryPanel.RefreshView();
+            }
+        }
+
+        private void OnInventoryOpenClicked()
+        {
+            SetupInventory();
+            _statusLabel.Text = "Inventory open. Storage and gear are listed in the right panel.";
+            _codexViewer.Text = _inventory.InventoryLine() + "\n\n" + _inventory.EquipLine();
+        }
+
+        private void OnInventoryAddClicked(string itemId, int amount)
+        {
+            SetupInventory();
+            _statusLabel.Text = _inventory.Add(itemId, amount);
+            _inventoryPanel.RefreshView();
+            _codexViewer.Text = _inventory.InventoryLine() + "\n\n" + _inventory.EquipLine();
+        }
+
+        private void OnInventoryRemoveClicked(string itemId, int amount)
+        {
+            SetupInventory();
+            _statusLabel.Text = _inventory.Remove(itemId, amount);
+            _inventoryPanel.RefreshView();
+        }
+
+        private void OnInventoryConsumeClicked(string itemId)
+        {
+            SetupInventory();
+            _statusLabel.Text = _inventory.Consume(itemId);
+            _inventoryPanel.RefreshView();
+        }
+
+        private void OnInventoryCheckClicked()
+        {
+            SetupInventory();
+            var inv = _inventory.Inventory;
+            var sb = new System.Text.StringBuilder();
+            sb.AppendLine("=== ITEM CHECK ===");
+            sb.AppendLine($"Canned food: {inv.CountById("canned_food")} on hand (trip need 3)");
+            sb.AppendLine($"Clean water: {inv.CountById("clean_water")} on hand (trip need 2)");
+            sb.AppendLine($"Iodine pills: {inv.CountById("iodine_pills")}");
+            sb.AppendLine($"Battery: {inv.CountById("battery")}");
+            sb.AppendLine($"Gas mask: {inv.CountById("gas_mask")}");
+            sb.AppendLine($"Geiger: {(inv.HasWorkingGeiger() ? "WORKING" : "NONE/WORKING")}");
+            sb.AppendLine($"Equipped protection: {inv.GetEquippedProtection():F2}");
+            _codexViewer.Text = sb.ToString();
+            _statusLabel.Text = "Item check complete. See the codex viewer.";
+        }
+
+        private void SaveInventory()
+        {
+            if (_inventory == null) return;
+            if (InventorySaveStore.TrySave(_inventory.CaptureSave()))
+                GD.Print("[Ashfall Godot] Inventory save written.");
+        }
+
         // ── THE MUSTER (Exp 06) host wiring ─────────────────────────────
 
         private void SetupMuster()
@@ -1332,6 +1424,49 @@ namespace AtomicWar.GodotApp
             GD.Print($"[DoseUiTest] surface={surface} npcs={npcs} book={book} diagnose={diagnose} " +
                      $"palliative={palliative} cohort={cohort} volunteer={volunteer} rendered={rendered}");
             GD.Print(pass ? "DOSE_UITEST PASS" : "DOSE_UITEST FAIL");
+            GetTree().Quit(pass ? 0 : 1);
+        }
+
+        /// <summary>Headless smoke: inventory panel builds, add/equip/check flow, save roundtrip.</summary>
+        private void RunInventoryUiTestAndQuit()
+        {
+            BuildUserInterface();
+            SetupInventory();
+
+            bool panel = _inventoryPanel != null;
+            bool catalog = _inventory.Catalog.Count == 15;
+
+            string added = _inventory.Add("canned_food", 6);
+            bool addOk = added.Contains("Added");
+            string geiger = _inventory.Add("geiger_counter", 1);
+            bool geigerOk = geiger.Contains("Added");
+            string mask = _inventory.Add("gas_mask", 1);
+            bool maskOk = mask.Contains("Added");
+            string equip = _inventory.Equip("gas_mask");
+            bool equipOk = equip.Contains("Equipped");
+            bool working = _inventory.Inventory.HasWorkingGeiger();
+            string water = _inventory.Add("clean_water", 4);
+            bool waterOk = water.Contains("Added");
+
+            int canned = _inventory.Inventory.CountById("canned_food");
+            bool itemCheckCount = canned == 6;
+            bool protection = _inventory.Inventory.GetEquippedProtection() > 0f;
+
+            // Save → restore roundtrip.
+            var save = _inventory.CaptureSave();
+            var fresh = new InventoryHostSession();
+            fresh.RestoreSave(save);
+            bool roundtrip = fresh.Inventory.CountById("canned_food") == 6
+                && fresh.Inventory.GetEquipped(EquipSlot.Face) != null;
+
+            bool pass = panel && catalog && addOk && geigerOk && maskOk && equipOk
+                && working && waterOk && itemCheckCount && protection && roundtrip;
+            GD.Print($"[InventoryUiTest] panel={panel} catalog={catalog} add={addOk} geiger={geigerOk} " +
+                     $"mask={maskOk} equip={equipOk} working={working} water={waterOk} " +
+                     $"canned={itemCheckCount} protection={protection} roundtrip={roundtrip}");
+            GD.Print(pass ? "INVENTORY_UITEST PASS" : "INVENTORY_UITEST FAIL");
+            if (System.IO.File.Exists(InventorySaveStore.SavePath))
+                System.IO.File.Delete(InventorySaveStore.SavePath);
             GetTree().Quit(pass ? 0 : 1);
         }
 

@@ -1,6 +1,7 @@
 using Godot;
 using Ashfall.Core;
 using Ashfall.Core.Expeditions;
+using Ashfall.Core.Medical;
 using Ashfall.Core.Muster;
 using Ashfall.Core.YearOfAsh;
 using AtomicWar.GodotApp.YearOfAsh;
@@ -28,6 +29,7 @@ namespace AtomicWar.GodotApp
         JournalUiTest,
         MusterUiTest,
         DoseUiTest,
+        InventoryUiTest,
         BridgeSelfTest,
         DutyRosterSelfTest,
         StandingRecordSelfTest,
@@ -41,6 +43,7 @@ namespace AtomicWar.GodotApp
         ExpansionHubSaveSelfTest,
         DoseLedgerSelfTest,
         ExpeditionSelfTest,
+        MedicalSelfTest,
         DataIntegritySelfTest,
         CaravanSelfTest
     }
@@ -100,6 +103,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.JournalUiTest;
             if (Has(args, "--muster-uitest"))
                 return HostCliAction.MusterUiTest;
+            if (Has(args, "--inventory-uitest") || Has(args, "--inventory-selftest"))
+                return HostCliAction.InventoryUiTest;
             if (Has(args, "--dose-uitest"))
                 return HostCliAction.DoseUiTest;
             if (Has(args, "--bridge-selftest"))
@@ -114,6 +119,8 @@ namespace AtomicWar.GodotApp
                 return HostCliAction.DoseLedgerSelfTest;
             if (Has(args, "--expedition-selftest"))
                 return HostCliAction.ExpeditionSelfTest;
+            if (Has(args, "--medical-selftest"))
+                return HostCliAction.MedicalSelfTest;
             if (Has(args, "--data-integrity-selftest"))
                 return HostCliAction.DataIntegritySelfTest;
             if (Has(args, "--caravan-selftest") || Has(args, "--traveling-caravan-selftest"))
@@ -584,6 +591,13 @@ namespace AtomicWar.GodotApp
         public static int RunExpeditionSelfTest()
         {
             var report = ExpeditionHeadlessDemo.Run(new GodotLog());
+            GD.Print(report.Summary);
+            return report.ExitCode;
+        }
+
+        public static int RunMedicalSelfTest()
+        {
+            var report = MedicalHeadlessDemo.Run(new GodotLog());
             GD.Print(report.Summary);
             return report.ExitCode;
         }
