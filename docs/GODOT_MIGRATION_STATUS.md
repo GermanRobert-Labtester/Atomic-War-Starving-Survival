@@ -49,6 +49,14 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
   rendering blank broadcasts (dead fields + a wrong-typed `signalStrength` that zeroed
   all 37 entries), dose_registers snake_case fields unbound. Binding-assertion regression
   gates added across every loaded catalog. All loaders now match their files.
+- A11 correction (2026-08-15): DSE raid/parley decision RNG ported from
+  System.Random to the deterministic reseed-per-roll pattern (decisionSeed +
+  persisted roll count) — post-restore streams continue, never replay; trust
+  state un-forked into the stance engine (SetTrust/ModifyTrust/RestoreState
+  mirror); Greenhouse blight rolls reseeded with persisted count; host
+  ISeededRng adapters delegate to the core SeededRng. Zero System.Random in
+  adopted decision paths. RNG_WIRING_SELFTEST PASS (characterization +
+  continuation + distribution pins).
 - Economy adoption (2026-08-15, Candidate A): the Unity-coupled
   DynamicEconomySystem now delegates ALL demand state to the core
   MarketSystem (BindCoreMarket; `_demand` dict removed; save/restore map

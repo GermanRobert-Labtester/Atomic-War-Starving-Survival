@@ -396,3 +396,30 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Cycle 05 — Probe: full battery + gates. Defect: NO. 608/608, all 31
   selftests/uitests PASS, data gate 0 errors / 64 catalogs.
 - Defects found: 0 (adapter built against the already-hardened core).
+
+## A11 DEBUG LOOP (RNG architecture correction)
+- Cycle 01 — Probe: trust-mirroring wiring (headless DSE + SetTrust).
+  Defect: YES (HIGH, wiring). Repro: SetTrust(-60) never reached
+  GetEffectiveTrust (trust=0); raids never launched. Root cause: the
+  stance-engine refactor forked trust state — writes to the legacy dict,
+  reads from the stance engine. Fix: SetTrust/ModifyTrust/RestoreState
+  mirror into the stance engine. Regression: rng selftest A/B/C.
+- Cycle 02 — Probe: repel distribution characterization. Defect: NO (probe
+  design). Fresh instances replayed the same micro-sequence; fixed by
+  varying construction seeds (283/572 ~49.5% pinned).
+- Cycle 03 — Probe: restart-vs-continuation discrimination. Defect: NO
+  (probe design). Capture-before-raid made restart==continuation;
+  rewritten to capture-after-raid; continuation now proven.
+- Cycle 04 — Probe: post-restore continuation after the port.
+  Defect: NO. Restored stream continues the original sequence; hash
+  f8b1a70a identical cross-process.
+- Cycle 05 — Probe: distribution sanity post-port. Defect: NO. 335/706
+  ~47.5% vs pinned 49.5% (both ~50%; SeededRng sequence differs from
+  Random by design — distributions unchanged per parity standard).
+- Cycle 06 — Probe: full battery + scan. Defect: NO. 653/653, all 31
+  selftests/uitests PASS, gate 0 errors / 64 catalogs.
+- Defects found: 1 (trust fork, HIGH) + 0 RNG defects after the port.
+- System.Random scan: actual usages in decision paths — ZERO (DSE,
+  Greenhouse, host adapters ported; WeatherSystem's reseed is
+  stateless-deterministic and documented; the shim's UnityEngine.Random
+  is the legacy compat bridge; 285 _Game legacy files logged, out of scope).

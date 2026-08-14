@@ -42,3 +42,13 @@ Low (A4, A5, A7): preserved + tested.
 | A12 | Correctness | MED | Scarcity consulted the legacy static `HardcoreEconomyTuning` (hardcoded data) | Adapter: `BindCoreTuning` routes to the core JSON overlay; legacy static kept only as unbound fallback |
 | A13 | Correctness | LOW | GameBootstrap hardcoded the legacy overlay in Expert mode | Wired to load hardcore_economy_tuning.json via the core loader; legacy fallback when JSON absent |
 | A14 | Integrity | MED | Sentinel: zero/negative demand rows must clamp on restore (adapter maps through Mathf.Clamp + core re-clamps) | Probe-tested (Probe_Sentinel_ZeroAndNegativeClamped) |
+
+## A11 audit continuation (RNG architecture correction, 2026-08-15)
+
+| # | Layer | Severity | Finding | Disposition |
+|---|---|---|---|---|
+| A15 | Determinism | HIGH | DSE raid repel roll used System.Random (hidden state, unpersisted — post-restore replay) | Ported to reseed-per-roll (seed + persisted roll count); continuation proven |
+| A16 | Wiring | HIGH | Stance-engine refactor forked trust: SetTrust/ModifyTrust/RestoreState wrote the legacy dict, GetTrust read the stance engine | All three mirror into the stance engine; regression-probed |
+| A17 | Determinism | MED | Greenhouse blight roll used System.Random(seed) with no state in the save | Reseed-per-roll with persisted blightRollCount + continuation probes |
+| A18 | Determinism | MED | Host ISeededRng adapters (Phantom/Dose) wrapped System.Random | Delegates to core SeededRng (xorshift64) |
+| A19 | Parity | LOW | WeatherSystem reseed uses System.Random internally (stateless, seed+count) | Intentionally kept: deterministic-by-construction, save-proven, hash-verified; documented |
