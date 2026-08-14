@@ -7,8 +7,18 @@ using Ashfall.Core.Economy;
 namespace AtomicWar.GodotApp
 {
     /// <summary>
+    /// Host-side integrity envelope: the sim contract (MarketState) stays core
+    /// versioned state; the checksum lives here so tampered saves are refused.
+    /// </summary>
+    public class EconomySaveEnvelope
+    {
+        public string Checksum = string.Empty;
+        public MarketState State;
+    }
+
+    /// <summary>
     /// Economy (market port) save persistence — thin pattern sibling of the
-    /// other host stores: user:// path, try/catch, codec.
+    /// other host stores: user:// path, try/catch, codec, checksum envelope.
     /// </summary>
     public static class EconomySaveStore
     {
@@ -22,16 +32,22 @@ namespace AtomicWar.GodotApp
 
         public static bool Exists => s_files.FileExists(SavePath);
 
-        public static bool TrySave(MarketState state)
+        public static bool TrySave(MarketState state) => TrySave(state, SavePath);
+
+        public static bool TrySave(MarketState state, string path)
         {
             try
             {
                 if (state == null) return false;
-                string path = SavePath;
                 string dir = Path.GetDirectoryName(path);
                 if (!string.IsNullOrEmpty(dir) && !System.IO.Directory.Exists(dir))
                     System.IO.Directory.CreateDirectory(dir);
-                System.IO.File.WriteAllText(path, s_json.Serialize(state));
+                var envelope = new EconomySaveEnvelope
+                {
+                    Checksum = SaveChecksum.Compute(state),
+                    State = state
+                };
+                System.IO.File.WriteAllText(path, s_json.Serialize(envelope));
                 return true;
             }
             catch (Exception e)
@@ -41,15 +57,23 @@ namespace AtomicWar.GodotApp
             }
         }
 
-        public static MarketState TryLoad()
+        public static MarketState TryLoad() => TryLoad(SavePath);
+
+        public static MarketState TryLoad(string path)
         {
             try
             {
-                string path = SavePath;
                 if (!s_files.FileExists(path)) return null;
                 string raw = s_files.ReadAllText(path);
                 if (string.IsNullOrWhiteSpace(raw)) return null;
-                return s_json.Deserialize<MarketState>(raw);
+                var envelope = s_json.Deserialize<EconomySaveEnvelope>(raw);
+                if (envelope == null || envelope.State == null) return null;
+                if (string.IsNullOrEmpty(envelope.Checksum)) return null;
+                // Tamper gate: recompute over the state; mismatch refuses the save.
+                if (!string.Equals(SaveChecksum.Compute(envelope.State), envelope.Checksum,
+                        StringComparison.Ordinal))
+                    return null;
+                return envelope.State;
             }
             catch (Exception e)
             {

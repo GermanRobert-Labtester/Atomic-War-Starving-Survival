@@ -650,6 +650,49 @@ namespace AtomicWar.GodotApp
         public static int RunEconomySelfTest(string dataDirectory)
         {
             var report = EconomyHeadlessDemo.Run(dataDirectory, new GodotLog());
+            // Save-integrity probe: tampered saves must be refused (checksum).
+            string tmpPath = Path.Combine(
+                Path.GetTempPath(), "ashfall_economy_selftest_" + Guid.NewGuid().ToString("N") + ".json");
+            try
+            {
+                var session = new EconomyHostSession();
+                var catalogResult = new GoodsCatalogLoadResult();
+                catalogResult.Goods.Add(new GoodDefinition
+                {
+                    id = "probe_good", displayName = "Probe", category = "misc",
+                    basePrice = 5f, volatility = 0.1f, elasticity = 1f
+                });
+                var probeCatalog = GoodsCatalogLoader.ToCatalog(catalogResult);
+                session.Market.BindCatalog(probeCatalog);
+                session.Market.TickDay(3, new SeededRng(9));
+                if (EconomySaveStore.TrySave(session.CaptureSave(), tmpPath))
+                    GD.Print("[PASS] economy save written to temp slot");
+                else
+                    GD.Print("[FAIL] economy save write failed");
+
+                string raw = File.ReadAllText(tmpPath);
+                // Flip the tick count in the payload, whatever its current value.
+                string tampered = System.Text.RegularExpressions.Regex.Replace(
+                    raw, "\"tickCount\":\\d+", "\"tickCount\":999");
+                bool changed = tampered != raw;
+                GD.Print(changed ? "[PASS] tamper changed the payload" : "[FAIL] tamper produced no change");
+                if (changed)
+                {
+                    File.WriteAllText(tmpPath, tampered);
+                    var loaded = EconomySaveStore.TryLoad(tmpPath);
+                    GD.Print(loaded == null
+                        ? "[PASS] tampered save refused (checksum)"
+                        : "[FAIL] tampered save accepted (no checksum)");
+                }
+            }
+            catch (Exception e)
+            {
+                GD.Print("[FAIL] save-integrity probe threw: " + e.Message);
+            }
+            finally
+            {
+                if (File.Exists(tmpPath)) File.Delete(tmpPath);
+            }
             GD.Print(report.Summary);
             return report.ExitCode;
         }

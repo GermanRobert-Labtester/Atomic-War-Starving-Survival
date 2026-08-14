@@ -303,3 +303,24 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
 - Tests: 12 roster tests + catalog binding/parity.
 - Verify: build 0 warnings, tests 509/509 x5, survivors 14/14 + uitest PASS,
   all 21 selftests + uitests PASS, gate 0 errors / 276 info across 60 catalogs.
+
+## ECONOMY DEBUG LOOP (Phase 4) — protocol cycles
+- Baseline hash (cross-process): ed4927fb84140b73b2c45c7a16dd2db0 (economy selftest
+  output, pre-loop). Hash CHANGES to bca960f47d9f7646391e708cc1149bef after cycle 2
+  because the selftest gained save-integrity PASS lines — simulation untouched;
+  justified surface growth, noted per protocol.
+- Cycle 01 — Probe: truncated save payload. Defect: NO (probe expectation wrong).
+  Repro: Deserialize("{\"version\":1,\"demand\":[{\"itemId\":\"g") throws JsonException.
+  Root cause: established serializer contract = throw-on-malformed, callers catch
+  (host store already returns null). Fix: probe corrected to assert the actual
+  contract. Files: Ashfall.Core.Tests/EconomyProbeTests.cs. Gates: 11/11 probes,
+  selftest 11/11.
+- Cycle 02 — Probe: checksum mismatch (probe list). Defect: YES (host store).
+  Repro: tamper tickCount in economy_save.json -> loads silently.
+  Root cause: EconomySaveStore serialized the bare MarketState with no integrity
+  envelope (sibling stores verify checksums).
+  Fix: host-side EconomySaveEnvelope { Checksum, State }; TryLoad recomputes and
+  refuses mismatches; path-overloads added for slot testing.
+  Regression: selftest save-integrity block (write -> tamper -> refuse).
+  Files: src/Host/EconomySaveStore.cs, src/Host/HostCli.cs.
+  Gates: 558/558 tests, economy selftest 11/11 + integrity PASS, hash bca960f4 (both runs).
