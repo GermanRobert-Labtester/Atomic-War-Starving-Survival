@@ -49,6 +49,15 @@ with headless verification for all of it. The 18-selftest Godot battery is the r
   rendering blank broadcasts (dead fields + a wrong-typed `signalStrength` that zeroed
   all 37 entries), dose_registers snake_case fields unbound. Binding-assertion regression
   gates added across every loaded catalog. All loaders now match their files.
+- Economy port (2026-08-14): market/pricing core in Ashfall.Core/Economy
+  (GoodsCatalog + validation, MarketSystem with Unity-parity demand clamps,
+  deterministic ISeededRng walk, versioned MarketState, whole-unit barter
+  with explicit remainder); economy_goods.json (12 goods); host slice wired
+  to the main menu + EconomyMarketPanel with AssetRegistry icons; save slot
+  has a checksum envelope with legacy bare-save migration; debug-loop
+  hardened (2 defects fixed: tamper acceptance, legacy drop); 27 unit tests
+  + 14 adversarial probes + 11-check selftest + uitest; cross-process
+  determinism hash efb2fbd6.
 - Encounters port (2026-08-14): expedition travel/looting/inbound core moved into
   `Ashfall.Core/Expeditions` (tick machine, stances, push-luck, capacity, stamina collapse,
   encounter rolls on every leg, save/load safe) with a thin Godot host session + save store

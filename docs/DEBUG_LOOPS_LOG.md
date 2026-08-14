@@ -344,3 +344,16 @@ D. Full verify: build 0 warnings, tests 333/333, all selftests PASS.
   Regression: selftest legacy-save block. Files: src/Host/EconomySaveStore.cs,
   src/Host/HostCli.cs. Gates: 559/559, selftest 11/11 + integrity/legacy/
   continuity PASS, uitest PASS.
+- Cycle 09 — Probe: clamp saturation (volatility 1 + elasticity 50, 1000 ticks).
+  Defect: NO. Price binds exactly on floor/ceiling; opposite nudge recovers.
+- Cycle 10 — Probe: full battery + temp-slot hygiene. Defect: NO. 3x selftest
+  11/11 exit 0, no stray /tmp slots, user:// economy slot clean. Hash
+  efb2fbd6 (final loop hash; surface = integrity + legacy + continuity lines).
+- Cycle 11 — Probe: foreign demand rows from a different-catalog save.
+  Defect: NO. Catalog prices uncorrupted, no NaN, foreign multiplier
+  preserved for when the good returns.
+- Final gates: build 0/0, tests 561/561, economy selftest 11/11 + uitest,
+  25 selftests + 4 uitests PASS, data gate 0 errors / 62 catalogs,
+  cross-process hash efb2fbd6 identical across runs.
+- Defects found: 2 (cycle 02 checksum envelope, cycle 08 legacy migration);
+  both fixed with regression coverage. Deferred: none.

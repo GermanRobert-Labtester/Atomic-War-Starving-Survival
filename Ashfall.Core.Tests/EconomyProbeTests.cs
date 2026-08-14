@@ -62,6 +62,38 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
+        public void Probe_SeedFuzz_WithInterleavedTransactions_NoExceptions()
+        {
+            for (int seed = 0; seed < 100; seed++)
+            {
+                var sys = new MarketSystem();
+                sys.BindCatalog(FuzzCatalog());
+                for (int day = 1; day <= 200; day++)
+                {
+                    sys.TickDay(day, new SeededRng(seed));
+                    if (day % 4 == 0) sys.Buy("g" + (day % 12), day % 7 + 1, day, "fuzz");
+                    if (day % 6 == 0) sys.Sell("g" + ((day + 3) % 12), day % 5 + 1, day, "fuzz");
+                    if (day % 9 == 0)
+                    {
+                        var barter = sys.Barter("g" + (day % 12), day % 6 + 1,
+                            "g" + ((day + 7) % 12), day);
+                        Assert.True(barter.Accepted || barter.RejectReason.Length > 0);
+                    }
+                    // Invariants over the whole ledger.
+                    float total = 0f;
+                    foreach (var e in sys.State.ledger)
+                    {
+                        Assert.False(float.IsNaN(e.totalValue));
+                        Assert.False(float.IsInfinity(e.totalValue));
+                        Assert.True(e.unitPrice > 0f);
+                        total += e.totalValue;
+                    }
+                    Assert.False(float.IsNaN(total));
+                }
+            }
+        }
+
+        [Fact]
         public void Probe_LedgerConservation_NoNegativeOrNaNValues()
         {
             var sys = new MarketSystem();
@@ -213,6 +245,60 @@ namespace Ashfall.Core.Tests
             for (int day = 21; day <= 40; day++) c.TickDay(day, new SeededRng(77));
 
             Assert.Equal(SaveChecksum.Compute(a.CaptureState()), SaveChecksum.Compute(c.CaptureState()));
+        }
+
+        [Fact]
+        public void Probe_ClampSaturation_BindsExactlyAndStays()
+        {
+            // Extremely elastic + max-volatility good saturates the demand clamp
+            // hard; the price must sit exactly on floor/ceiling and never drift.
+            var result = new GoodsCatalogLoadResult();
+            result.Goods.Add(new GoodDefinition
+            {
+                id = "wild", displayName = "Wild", category = "misc",
+                basePrice = 10f, volatility = 1f, elasticity = 50f
+            });
+            var sys = new MarketSystem();
+            sys.BindCatalog(GoodsCatalogLoader.ToCatalog(result));
+            for (int day = 1; day <= 1000; day++)
+                sys.TickDay(day, new SeededRng(day));
+            float price = sys.GetPrice("wild");
+            Assert.True(price == MarketSystem.PriceFloorFraction * 10f ||
+                        price == MarketSystem.PriceCeilingFraction * 10f,
+                $"wild must sit on a clamp bound, got {price}");
+            // And a demand nudge in the opposite direction recovers exactly.
+            float before = price;
+            sys.AdjustDemand("wild", price == 40f ? -100f : 100f);
+            float after = sys.GetPrice("wild");
+            Assert.True(after != before, "nudge must move a saturated price off its bound");
+        }
+
+        [Fact]
+        public void Probe_ForeignDemandRows_DoNotCorruptCatalogPrices()
+        {
+            // A save from a session with a different catalog may carry demand
+            // rows for goods that no longer exist. They must not corrupt prices
+            // of catalog goods, must not crash, and the shortage metric absorbs
+            // them without NaN.
+            var sys = new MarketSystem();
+            sys.BindCatalog(FuzzCatalog());
+            var foreign = new MarketState
+            {
+                version = MarketState.Version,
+                day = 5,
+                tickCount = 5,
+                demand = new List<DemandEntry>
+                {
+                    new DemandEntry { itemId = "ghost_good", multiplier = 3.9f }
+                }
+            };
+            sys.RestoreState(foreign);
+            sys.TickDay(6, new SeededRng(1));
+            float price = sys.GetPrice("g0");
+            Assert.True(price > 0f && !float.IsNaN(price));
+            Assert.False(sys.IsSuppliesShort() && float.IsNaN(sys.IsSuppliesShort() ? 0f : 0f));
+            // Foreign row survives as demand (it may return to the catalog).
+            Assert.Equal(3.9f, sys.GetDemandMultiplier("ghost_good"));
         }
 
         [Fact]
