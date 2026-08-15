@@ -963,6 +963,21 @@ namespace AtomicWar.GodotApp
 
             TickVerdict(day, LivingDwellerCountEstimate());
 
+            // Year of Ash (Days 180–360): advance the timeline + faction war +
+            // deep-freeze + radon when the sim is inside the expansion window.
+            if (day >= 180 && day <= 360)
+            {
+                SetupYearOfAsh();
+                _yearOfAsh.TickDay(day);
+            }
+
+            // Muster (Exp 06) opens Day 260; escalate idempotently each day past it.
+            if (day >= 260)
+            {
+                SetupMuster();
+                _muster.Escalate(day);
+            }
+
             SetupExpansions();
             if (_expansions.Greenhouse.PlotCount > 0)
                 _expansions.TickGreenhouse(day);
