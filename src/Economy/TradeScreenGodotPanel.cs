@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Radio;
@@ -891,7 +892,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private static Color ToGodotColor((float r, float g, float b, float a) token)
         {
-            return new Color(token.r, token.g, token.b, token.a);
+            return ToColor(token);
         }
 
         private static Color GetStanceColor(TradeStance stance)
@@ -931,22 +932,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private static Texture2D LoadTexture(string path)
         {
-            if (ResourceLoader.Exists(path))
-            {
-                var tex = ResourceLoader.Load<Texture2D>(path);
-                if (tex != null) return tex;
-            }
-
-            string osPath = ProjectSettings.GlobalizePath(path);
-            if (System.IO.File.Exists(osPath))
-            {
-                var img = Godot.Image.LoadFromFile(osPath);
-                if (img != null)
-                {
-                    return ImageTexture.CreateFromImage(img);
-                }
-            }
-            return null;
+            return TryLoadTexture(path);
         }
     }
 }

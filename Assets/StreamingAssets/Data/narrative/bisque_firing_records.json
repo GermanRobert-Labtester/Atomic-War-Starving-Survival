@@ -1,0 +1,58 @@
+[
+  {
+    "id": "bisque_firing_001",
+    "kiln_chamber_id": "kc_updraft_01",
+    "peak_temp_celsius": 850.0,
+    "firing_duration_hours": 6.5,
+    "log_text": "First firing in the updraft kiln — salvaged brick, clay mortar, a grate of iron rods. Loaded twelve pieces: coil pots and pinch bowls. Climbed temperature slowly for two hours, full fire for three, cooled with the door cracked. Two pieces cracked on heat-up. Ten survived. Eight-fifty peak."
+  },
+  {
+    "id": "bisque_firing_002",
+    "kiln_chamber_id": "kc_updraft_01",
+    "peak_temp_celsius": 780.0,
+    "firing_duration_hours": 5.0,
+    "log_text": "Second firing, lighter load — eight pieces. Ran it cooler, five hours total. The colour tells you it was low: buff rather than orange. Softer bisque, more porous. That is actually useful for water-cooling vessels — the porosity lets surface evaporation work."
+  },
+  {
+    "id": "bisque_firing_003",
+    "kiln_chamber_id": "kc_updraft_01",
+    "peak_temp_celsius": 920.0,
+    "firing_duration_hours": 8.0,
+    "log_text": "Pushed to nine-twenty — the hottest we have reached. The kiln wall glowed a dull orange at the top. Fired for eight hours total. The clay vitrified slightly at the surface: harder, less porous. Three pieces warped from thermal stress. The others are excellent quality."
+  },
+  {
+    "id": "bisque_firing_004",
+    "kiln_chamber_id": "kc_updraft_01",
+    "peak_temp_celsius": 860.0,
+    "firing_duration_hours": 7.0,
+    "log_text": "Full load — twenty pieces. Stacked the smaller forms inside the larger ones to use the chamber efficiently. Seven hours, eight-sixty peak. One large jar exploded mid-firing — moisture in the clay wall. The shards damaged two adjacent pieces. Lesson: dry longer before loading."
+  },
+  {
+    "id": "bisque_firing_005",
+    "kiln_chamber_id": "kc_pit_02",
+    "peak_temp_celsius": 700.0,
+    "firing_duration_hours": 4.0,
+    "log_text": "Pit firing — dug a metre-deep pit, lined with brick. Lower peak temperature than the updraft kiln but uses less fuel. Six oil lamp blanks and two small bowls. The low temperature leaves the clay soft; the pieces need careful handling. Acceptable for low-stress objects."
+  },
+  {
+    "id": "bisque_firing_006",
+    "kiln_chamber_id": "kc_updraft_01",
+    "peak_temp_celsius": 890.0,
+    "firing_duration_hours": 7.5,
+    "log_text": "Firing the slab-built canteen body — four interlocking panels that were joined with slip before loading. Fired joined rather than separate to reduce assembly warping. Eight-ninety peak, seven and a half hours. The joins held. The body is one piece. Fitting the neck next."
+  },
+  {
+    "id": "bisque_firing_007",
+    "kiln_chamber_id": "kc_updraft_01",
+    "peak_temp_celsius": 840.0,
+    "firing_duration_hours": 6.0,
+    "log_text": "Mould-pressed bowl batch — six pieces, identical shapes. Eight-forty, six hours. All survived. The uniformity of the forms meant they stacked well in the kiln and heated evenly. One small crack at the base of piece three — hairline, does not penetrate. Will monitor."
+  },
+  {
+    "id": "bisque_firing_008",
+    "kiln_chamber_id": "kc_pit_02",
+    "peak_temp_celsius": 660.0,
+    "firing_duration_hours": 3.5,
+    "log_text": "Experimental firing with wood shavings rather than split logs — faster heat-up but harder to sustain. Peak was six-sixty, lower than planned. The clay came out light-coloured and fragile. Not ideal but the oil lamps fired in this batch still function. Low temperature for low-stress use."
+  }
+]

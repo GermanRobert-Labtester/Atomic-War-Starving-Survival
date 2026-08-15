@@ -1,0 +1,51 @@
+[
+  {
+    "id": "fulling_trough_001",
+    "fulling_trough_id": "ft_stone_basin_01",
+    "cloth_substrate_type": "hemp_plain_weave",
+    "nap_raising_tool": "teasel_head",
+    "log_text": "Stone basin, knee-deep. Water heated with two bricks pulled from the kiln floor. Hemp cloth worked for an hour — the fibres shrunk laterally and the weave closed up. Nap raised with a dried teasel head. Dense and dull, which is what we wanted."
+  },
+  {
+    "id": "fulling_trough_002",
+    "fulling_trough_id": "ft_stone_basin_01",
+    "cloth_substrate_type": "nettle_twill",
+    "nap_raising_tool": "wire_card",
+    "log_text": "Nettle twill fulled lighter than the hemp — four minutes less trampling. Wire card raised a short nap that softened the hand considerably. Still scratches against bare skin but is workable with a shirt underneath."
+  },
+  {
+    "id": "fulling_trough_003",
+    "fulling_trough_id": "ft_timber_trough_02",
+    "cloth_substrate_type": "dog_fur_scrim",
+    "nap_raising_tool": "teasel_head",
+    "log_text": "Dog-fur scrim fulled fast — ten minutes before the fibres locked. Had to stop early to prevent felting solid. Nap raised gently. Result is a soft, dense panel. Used as a sleeping mat overlay. The others took notice."
+  },
+  {
+    "id": "fulling_trough_004",
+    "fulling_trough_id": "ft_timber_trough_02",
+    "cloth_substrate_type": "linen_plain_weave",
+    "nap_raising_tool": "none",
+    "log_text": "Linen does not full in the same way. After twenty minutes in hot water the cloth is firmer and the weave is set, but no nap forms — linen fibres do not migrate. Useful for stiffening; left it flat-pressed between boards to dry square."
+  },
+  {
+    "id": "fulling_trough_005",
+    "fulling_trough_id": "ft_stone_basin_01",
+    "cloth_substrate_type": "hemp_twill",
+    "nap_raising_tool": "teasel_head",
+    "log_text": "Twill structure fulls more evenly than the plain weave — the diagonal float allows the fibres to migrate uniformly. Teasel raised a longer nap on this one. Cut into two halves: one as a water-pouch sleeve, one stored against winter."
+  },
+  {
+    "id": "fulling_trough_006",
+    "fulling_trough_id": "ft_timber_trough_02",
+    "cloth_substrate_type": "mixed_hemp_nettle",
+    "nap_raising_tool": "wire_card",
+    "log_text": "Mixed warp cloth: half hemp, half nettle. The two fibres full at different rates — nettle locks faster, causing a slight warp across the panel width. Blocked and dried under weight. Still usable as a door baffle, which does not require flat."
+  },
+  {
+    "id": "fulling_trough_007",
+    "fulling_trough_id": "ft_stone_basin_01",
+    "cloth_substrate_type": "hemp_honeycomb",
+    "nap_raising_tool": "teasel_head",
+    "log_text": "Honeycomb weave fulled carefully — the raised cell structure would collapse if overworked. Fifteen minutes, minimal trampling, warm rather than hot water. Cells held their relief. Nap raised only at the surface. The air-trapping effect is preserved. First genuinely insulating cloth we have fulled."
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "skills": [
+    {
+      "name": "ashfall-agents",
+      "path": "ashfall-agents/SKILL.md",
+      "description": "Generate or update the project AGENTS.md with comprehensive architecture, conventions, and known issues.",
+      "whenToUse": "When AGENTS.md needs to be refreshed, when a new developer joins, or when the project architecture has evolved significantly."
+    }
+  ]
+}

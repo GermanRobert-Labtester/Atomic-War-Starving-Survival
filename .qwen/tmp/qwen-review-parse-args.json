@@ -1,0 +1,19 @@
+{
+  "target": {
+    "type": "file",
+    "path": "src/Host/HoldfastRuntimeSession.cs"
+  },
+  "effort": "medium",
+  "effortSource": "default",
+  "comment": {
+    "requested": false,
+    "effective": false
+  },
+  "fix": {
+    "requested": false,
+    "effective": false
+  },
+  "extraTokens": [],
+  "unknownFlags": [],
+  "warnings": []
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "screw_press_couching_wool_felt_interleaving",
+    "press_station_id": "COMMISSARY_COUCHING_BENCH_01",
+    "post_sheet_count": 125.0,
+    "pressing_force_kilonewtons": 350.0,
+    "moisture_removed_pct": 58.5,
+    "timestamp_relative": "YEAR_03_PRESS_01",
+    "tags": ["paper_making", "screw_press", "couching", "wool_felt", "post_building"],
+    "prose": "The coucher rolled each freshly formed sheet off the wire mould onto a heavy, damp woven wool felt. Alternating single sheets with woolen felts built a 125-sheet 'post' ready for maximum mechanical water extraction."
+  },
+  {
+    "id": "screw_press_massive_oak_capstan_compression",
+    "press_station_id": "MAIN_SCREW_PRESS_STATION_02",
+    "post_sheet_count": 250.0,
+    "pressing_force_kilonewtons": 450.0,
+    "moisture_removed_pct": 62.0,
+    "timestamp_relative": "YEAR_05_PRESS_03",
+    "tags": ["paper_making", "screw_press", "oak_capstan", "compression_force", "water_squeeze"],
+    "prose": "Four operators leaning into six-foot oak capstan bars turned the 150mm forged screw. Squeezing down with 450 kN of force expelled a continuous waterfall of water from the wool post, reducing sheet moisture below 40%."
+  },
+  {
+    "id": "screw_press_parting_post_delamination_tear",
+    "press_station_id": "PARTING_TABLE_BAY_03",
+    "post_sheet_count": 100.0,
+    "pressing_force_kilonewtons": 300.0,
+    "moisture_removed_pct": 55.0,
+    "timestamp_relative": "YEAR_08_PRESS_02",
+    "tags": ["paper_making", "screw_press", "parting_sheet", "delamination", "handling"],
+    "prose": "The laystool operator peeled each damp, consolidated paper sheet from its woolen felt with steady fingertips. Balanced fiber hydration prevented the damp paper web from sticking to the wool nap or tearing along edges."
+  },
+  {
+    "id": "screw_press_re_pressing_without_felts_glaze",
+    "press_station_id": "PACK_PRESSING_PLATEN_04",
+    "post_sheet_count": 500.0,
+    "pressing_force_kilonewtons": 520.0,
+    "moisture_removed_pct": 12.0,
+    "timestamp_relative": "YEAR_11_PRESS_04",
+    "tags": ["paper_making", "screw_press", "pack_press", "surface_glaze", "felt_mark_removal"],
+    "prose": "Re-assembling 500 parted damp sheets into a solid 'pack' without felts and subjecting it to 520 kN pressure for twelve hours smoothed out coarse wool hair impressions and eliminated surface cockling."
+  },
+  {
+    "id": "screw_press_wool_felt_washing_fulling_soap",
+    "press_station_id": "FELT_MAINTENANCE_BAY_05",
+    "post_sheet_count": 0.0,
+    "pressing_force_kilonewtons": 0.0,
+    "moisture_removed_pct": 0.0,
+    "timestamp_relative": "YEAR_14_PRESS_01",
+    "tags": ["paper_making", "screw_press", "felt_washing", "fulling_stocks", "nap_restoration"],
+    "prose": "Accumulated fine cellulose slime clogged the woolen felt pores after fifty pressings. Washing the felts in 40°C tallow soap liquor inside wooden fulling stocks scoured out the fibers, restoring plush resilience and drainage porosity."
+  },
+  {
+    "id": "screw_press_drying_loft_horsehair_rope_spur",
+    "press_station_id": "WARM_AIR_DRYING_LOFT_06",
+    "post_sheet_count": 200.0,
+    "pressing_force_kilonewtons": 0.0,
+    "moisture_removed_pct": 32.0,
+    "timestamp_relative": "YEAR_17_PRESS_03",
+    "tags": ["paper_making", "screw_press", "drying_loft", "horsehair_ropes", "spur_hanging"],
+    "prose": "Suspending pressed sheets in clusters ('spurs') of four across beeswax-coated horsehair ropes in the warm air-loft prevented rope staining and curling. Humid loft exhaust fans dried the paper to 7% equilibrium moisture in forty-eight hours."
+  },
+  {
+    "id": "screw_press_hydraulic_jack_screw_retrofit",
+    "press_station_id": "HYDRAULIC_RETROFIT_PRESS_07",
+    "post_sheet_count": 300.0,
+    "pressing_force_kilonewtons": 600.0,
+    "moisture_removed_pct": 66.0,
+    "timestamp_relative": "YEAR_20_PRESS_01",
+    "tags": ["paper_making", "screw_press", "hydraulic_retrofit", "bottle_jack", "uniform_pressure"],
+    "prose": "Mounting a fifty-ton hydraulic bottle jack atop the cast-iron platen replaced the cumbersome manual capstan. The hydraulic stroke maintained continuous, uniform 600 kN pressing force as the felt stack compacted."
+  }
+]

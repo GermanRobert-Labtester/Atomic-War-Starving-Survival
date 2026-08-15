@@ -48,11 +48,8 @@ namespace Ashfall.Core.Tests
         [Fact]
         public void LoreNamespace_AliasesNotInCatalog()
         {
-            // lore ns such as scavenger_camp / iron_garrison / cult_of_the_glow
-            // must NOT collapse silently to a systems id.
-            Assert.False(FactionIconCatalog.HasExplicitMapping("scavenger_camp"));
+            // Unregistered aliases must NOT have explicit mapping
             Assert.False(FactionIconCatalog.HasExplicitMapping("iron_garrison"));
-            Assert.False(FactionIconCatalog.HasExplicitMapping("cult_of_the_glow"));
             Assert.False(FactionIconCatalog.HasExplicitMapping("militia"));
         }
 
@@ -60,7 +57,7 @@ namespace Ashfall.Core.Tests
         public void CoveredFactionIds_IsReadOnlyAndSealed()
         {
             Assert.NotNull(FactionIconCatalog.CoveredFactionIds);
-            Assert.Equal(16, FactionIconCatalog.CoveredFactionIds.Count);
+            Assert.Equal(27, FactionIconCatalog.CoveredFactionIds.Count);
         }
     }
 }

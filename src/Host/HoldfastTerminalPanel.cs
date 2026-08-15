@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.UI;
+using AtomicWar.GodotApp.UI;
 
 namespace AtomicWar.GodotApp
 {
@@ -196,6 +198,93 @@ namespace AtomicWar.GodotApp
             return loaded;
         }
 
+        // ── Survival actions ──────────────────────────────────────────
+
+        private void ConsumeFood()
+        {
+            if (_session == null) return;
+            // Try to consume any food item from inventory
+            string[] foodItems = { "canned_food", "ration_pack", "dried_meat", "mre" };
+            foreach (var food in foodItems)
+            {
+                if (_session.ConsumeFood(food))
+                {
+                    _feedback.Text = $"Ate {food}. Hunger reduced. Day {_session.Day}.";
+                    RefreshDispatchLog();
+                    return;
+                }
+            }
+            _feedback.Text = "No food in inventory. The shelves are bare.";
+        }
+
+        private void ConsumeWater()
+        {
+            if (_session == null) return;
+            string[] waterItems = { "clean_water", "water_bottle", "purified_water" };
+            foreach (var water in waterItems)
+            {
+                if (_session.ConsumeWater(water))
+                {
+                    _feedback.Text = $"Drank {water}. Thirst reduced. Day {_session.Day}.";
+                    RefreshDispatchLog();
+                    return;
+                }
+            }
+            _feedback.Text = "No clean water. The taps ran dry.";
+        }
+
+        private void UseAntiRad()
+        {
+            if (_session == null) return;
+            string[] antiRadItems = { "iodine_pills", "anti_rad", "rad_away" };
+            foreach (var item in antiRadItems)
+            {
+                if (_session.UseAntiRad(item))
+                {
+                    _feedback.Text = $"Took {item}. Radiation reduced to {_session.Radiation:F0} mSv.";
+                    RefreshDispatchLog();
+                    return;
+                }
+            }
+            _feedback.Text = "No anti-rad supplies. The glow persists.";
+        }
+
+        private void TickDay()
+        {
+            if (_session == null) return;
+            string result = _session.TickDay();
+            _feedback.Text = result;
+            RefreshDispatchLog();
+        }
+
+        private void VisitLocation()
+        {
+            if (_session == null) return;
+            // Visit the next location in the catalog
+            var locs = _session.Catalog?.Locations;
+            if (locs == null || locs.Count == 0)
+            {
+                _feedback.Text = "No locations in the catalog.";
+                return;
+            }
+            int idx = _selectedLocationIndex % locs.Count;
+            var loc = locs[idx];
+            string locId = loc?.id ?? "location_abandoned_desalination";
+            string result = _session.VisitLocation(locId);
+            _feedback.Text = result;
+            _selectedLocationIndex++;
+            RefreshDispatchLog();
+        }
+
+        private void ShowQuests()
+        {
+            if (_session == null) return;
+            string summary = _session.GetQuestSummary();
+            _feedback.Text = summary;
+        }
+
+        private int _selectedLocationIndex = 0;
+
         public bool PressNewLedger()
         {
             if (_session == null) return false;
@@ -283,49 +372,54 @@ namespace AtomicWar.GodotApp
 
         private void BuildLayout()
         {
-            var margin = new MarginContainer();
+            var margin = AshfallUiHelpers.MakeMargins(Ashfall.Core.UI.Theme.SpacingXl, Ashfall.Core.UI.Theme.SpacingXl, Ashfall.Core.UI.Theme.SpacingXl, Ashfall.Core.UI.Theme.SpacingXl);
             margin.SetAnchorsPreset(LayoutPreset.FullRect);
-            margin.AddThemeConstantOverride("margin_left", 32);
-            margin.AddThemeConstantOverride("margin_top", 24);
-            margin.AddThemeConstantOverride("margin_right", 32);
-            margin.AddThemeConstantOverride("margin_bottom", 24);
             AddChild(margin);
 
-            var root = new VBoxContainer();
-            root.AddThemeConstantOverride("separation", 8);
+            var root = AshfallUiHelpers.MakeVBox(Ashfall.Core.UI.Theme.SpacingSm);
             margin.AddChild(root);
 
             var header = new HBoxContainer();
-            var title = new Label
-            {
-                Text = "THE HOLDFAST · QUARTERMASTER TERMINAL",
-                SizeFlagsHorizontal = SizeFlags.ExpandFill
-            };
-            title.AddThemeFontSizeOverride("font_size", 22);
-            title.AddThemeColorOverride("font_color", new Color(0.95f, 0.65f, 0.25f));
+            var title = AshfallUiHelpers.MakeSectionHeader("THE HOLDFAST · QUARTERMASTER TERMINAL");
+            title.SizeFlagsHorizontal = SizeFlags.ExpandFill;
             header.AddChild(title);
 
-            _newLedgerButton = new Button { Text = "NEW LEDGER" };
-            _newLedgerButton.Pressed += () => PressNewLedger();
+            // ── Survival actions ──
+            var btnEat = AshfallUiHelpers.MakeButton("EAT", () => ConsumeFood());
+            btnEat.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
+            header.AddChild(btnEat);
+
+            var btnDrink = AshfallUiHelpers.MakeButton("DRINK", () => ConsumeWater());
+            btnDrink.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Lethe));
+            header.AddChild(btnDrink);
+
+            var btnAntiRad = AshfallUiHelpers.MakeButton("ANTI-RAD", () => UseAntiRad());
+            btnAntiRad.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Entropy));
+            header.AddChild(btnAntiRad);
+
+            var btnTickDay = AshfallUiHelpers.MakeButton("TICK DAY", () => TickDay());
+            header.AddChild(btnTickDay);
+
+            var btnVisit = AshfallUiHelpers.MakeButton("VISIT", () => VisitLocation());
+            btnVisit.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
+            header.AddChild(btnVisit);
+
+            var btnQuests = AshfallUiHelpers.MakeButton("QUESTS", () => ShowQuests());
+            btnQuests.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
+            header.AddChild(btnQuests);
+
+            _newLedgerButton = AshfallUiHelpers.MakeButton("NEW LEDGER", () => PressNewLedger());
             header.AddChild(_newLedgerButton);
 
-            var save = new Button { Text = "SAVE" };
-            save.Pressed += () => PressSave();
+            var save = AshfallUiHelpers.MakeButton("SAVE", () => PressSave());
             header.AddChild(save);
-            var reload = new Button { Text = "RELOAD" };
-            reload.Pressed += () => PressReload();
+            var reload = AshfallUiHelpers.MakeButton("RELOAD", () => PressReload());
             header.AddChild(reload);
-            var close = new Button { Text = "CLOSE [Esc]" };
-            close.Pressed += CloseTerminal;
+            var close = AshfallUiHelpers.MakeButton("CLOSE [Esc]", () => CloseTerminal());
             header.AddChild(close);
             root.AddChild(header);
 
-            _feedback = new Label
-            {
-                Text = "Select a faction and a catalog item. The terminal reports the live store state.",
-                AutowrapMode = TextServer.AutowrapMode.WordSmart
-            };
-            _feedback.AddThemeColorOverride("font_color", new Color(0.95f, 0.95f, 0.85f));
+            _feedback = AshfallUiHelpers.MakeBody("Select a faction and a catalog item. The terminal reports the live store state.");
             root.AddChild(_feedback);
 
             _tabs = new TabContainer { SizeFlagsVertical = SizeFlags.ExpandFill };
@@ -336,9 +430,7 @@ namespace AtomicWar.GodotApp
             _tabs.AddChild(BuildInventoryPage());
             _tabs.AddChild(BuildTradePage());
 
-            var logLabel = new Label { Text = "DISPATCH LOG" };
-            logLabel.AddThemeFontSizeOverride("font_size", 12);
-            logLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.7f, 0.65f));
+            var logLabel = AshfallUiHelpers.MakeMetadata("DISPATCH LOG");
             root.AddChild(logLabel);
 
             _dispatchLog = new Label
@@ -347,9 +439,10 @@ namespace AtomicWar.GodotApp
                 AutowrapMode = TextServer.AutowrapMode.WordSmart,
                 CustomMinimumSize = new Vector2(0, 80)
             };
-            _dispatchLog.AddThemeFontSizeOverride("font_size", 11);
-            _dispatchLog.AddThemeColorOverride("font_color", new Color(0.75f, 0.85f, 0.78f));
+            _dispatchLog.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            _dispatchLog.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             _dispatchLog.AddThemeColorOverride("font_color_shadow", new Color(0f, 0f, 0f, 0.6f));
+            AshfallUiHelpers.ApplyFont(_dispatchLog, AshfallUiHelpers.FontShareTechMono);
             root.AddChild(_dispatchLog);
         }
 
@@ -357,14 +450,11 @@ namespace AtomicWar.GodotApp
         {
             var page = NewPage("Status");
             _statusText = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _statusText.AddThemeFontSizeOverride("font_size", 13);
-            _statusText.AddThemeColorOverride("font_color", new Color(0.85f, 0.9f, 0.85f));
+            _statusText.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _statusText.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            AshfallUiHelpers.ApplyFont(_statusText, AshfallUiHelpers.FontBarlowRegular);
             page.AddChild(_statusText);
-            page.AddChild(new Label
-            {
-                Text = "The status page is read-only. Use Factions, Supplies, Inventory, and Trade to operate on live state.",
-                AutowrapMode = TextServer.AutowrapMode.WordSmart
-            });
+            page.AddChild(AshfallUiHelpers.MakeBody("The status page is read-only. Use Factions, Supplies, Inventory, and Trade to operate on live state."));
             return page;
         }
 
@@ -380,8 +470,9 @@ namespace AtomicWar.GodotApp
             _factionList.ItemSelected += OnFactionSelected;
             split.AddChild(_factionList);
             _factionDetails = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _factionDetails.AddThemeFontSizeOverride("font_size", 13);
-            _factionDetails.AddThemeColorOverride("font_color", new Color(0.85f, 0.9f, 0.85f));
+            _factionDetails.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _factionDetails.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            AshfallUiHelpers.ApplyFont(_factionDetails, AshfallUiHelpers.FontBarlowRegular);
             split.AddChild(_factionDetails);
             page.AddChild(split);
             return page;
@@ -399,8 +490,9 @@ namespace AtomicWar.GodotApp
             _supplyList.ItemSelected += OnSupplySelected;
             split.AddChild(_supplyList);
             _supplyDetails = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _supplyDetails.AddThemeFontSizeOverride("font_size", 13);
-            _supplyDetails.AddThemeColorOverride("font_color", new Color(0.85f, 0.9f, 0.85f));
+            _supplyDetails.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _supplyDetails.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            AshfallUiHelpers.ApplyFont(_supplyDetails, AshfallUiHelpers.FontBarlowRegular);
             split.AddChild(_supplyDetails);
             page.AddChild(split);
             return page;
@@ -410,11 +502,12 @@ namespace AtomicWar.GodotApp
         {
             var page = NewPage("Inventory");
             _inventorySummary = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _inventorySummary.AddThemeFontSizeOverride("font_size", 13);
-            _inventorySummary.AddThemeColorOverride("font_color", new Color(0.95f, 0.95f, 0.85f));
+            _inventorySummary.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _inventorySummary.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            AshfallUiHelpers.ApplyFont(_inventorySummary, AshfallUiHelpers.FontBarlowRegular);
             page.AddChild(_inventorySummary);
             _inventoryList = new ItemList { SizeFlagsVertical = SizeFlags.ExpandFill };
-            _inventoryList.AddThemeFontSizeOverride("font_size", 13);
+            _inventoryList.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             page.AddChild(_inventoryList);
             return page;
         }
@@ -422,23 +515,20 @@ namespace AtomicWar.GodotApp
         private Control BuildTradePage()
         {
             var page = NewPage("Trade");
-            page.AddChild(new Label
-            {
-                Text = "TRADE · all prices use Holdfast item tradeValue; active factions are valid counterparties.",
-                AutowrapMode = TextServer.AutowrapMode.WordSmart
-            });
+            page.AddChild(AshfallUiHelpers.MakeBody("TRADE · all prices use Holdfast item tradeValue; active factions are valid counterparties."));
 
             _tradeItemSelector = new OptionButton();
             _tradeItemSelector.ItemSelected += OnTradeItemSelected;
             page.AddChild(_tradeItemSelector);
 
             _tradeDetails = new Label { AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _tradeDetails.AddThemeFontSizeOverride("font_size", 13);
-            _tradeDetails.AddThemeColorOverride("font_color", new Color(0.85f, 0.9f, 0.85f));
+            _tradeDetails.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _tradeDetails.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
+            AshfallUiHelpers.ApplyFont(_tradeDetails, AshfallUiHelpers.FontBarlowRegular);
             page.AddChild(_tradeDetails);
 
-            var quantityRow = new HBoxContainer();
-            quantityRow.AddChild(new Label { Text = "Quantity" });
+            var quantityRow = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            quantityRow.AddChild(AshfallUiHelpers.MakeLabel("Quantity"));
             _tradeQuantity = new SpinBox
             {
                 MinValue = 0,
@@ -452,12 +542,10 @@ namespace AtomicWar.GodotApp
             quantityRow.AddChild(_tradeQuantity);
             page.AddChild(quantityRow);
 
-            var actions = new HBoxContainer();
-            _buyButton = new Button { Text = "BUY SELECTED" };
-            _buyButton.Pressed += () => PressBuy();
+            var actions = AshfallUiHelpers.MakeHBox(Ashfall.Core.UI.Theme.SpacingSm);
+            _buyButton = AshfallUiHelpers.MakeButton("BUY SELECTED", () => PressBuy());
             actions.AddChild(_buyButton);
-            _sellButton = new Button { Text = "SELL SELECTED" };
-            _sellButton.Pressed += () => PressSell();
+            _sellButton = AshfallUiHelpers.MakeButton("SELL SELECTED", () => PressSell());
             actions.AddChild(_sellButton);
             page.AddChild(actions);
             return page;

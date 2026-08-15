@@ -71,5 +71,37 @@ namespace Ashfall.Core.Tests
             Assert.True(report.LocationCount >= 11);
             Assert.Equal(10, report.QuestCount);
         }
+
+        [Fact]
+        public void Loader_PopulatesItemsAndFactions()
+        {
+            // Guards against the loader dropping the items/factions loads
+            // (items were empty until items/factions loading was wired in).
+            var data = TestDataDir();
+            // Guards against the loader dropping the items/factions loads
+            // (items were empty until items/factions loading was wired in).
+            var loader = new HoldfastCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(data);
+            Assert.NotNull(catalog.Items);
+            Assert.True(catalog.Items.IsValid, "Holdfast items must load");
+            Assert.Equal(40, catalog.Items.Count);
+            Assert.NotNull(catalog.GetItem("item_triplicate_carbon"));
+            Assert.NotNull(catalog.GetItem("item_fume_rag"));
+
+            Assert.NotNull(catalog.Factions);
+            Assert.True(catalog.Factions.Count > 0, "Holdfast factions must load");
+            Assert.NotNull(catalog.GetFaction("faction_the_office"));
+            Assert.NotNull(catalog.GetFaction("faction_the_cutters"));
+        }
+
+        private static string TestDataDir()
+        {
+            string start = Directory.GetCurrentDirectory();
+            if (CatalogLocator.TryFindDataDirectory(start, out string found))
+                return found;
+            if (CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out found))
+                return found;
+            throw new DirectoryNotFoundException("Assets/StreamingAssets/Data not found from " + start);
+        }
     }
 }

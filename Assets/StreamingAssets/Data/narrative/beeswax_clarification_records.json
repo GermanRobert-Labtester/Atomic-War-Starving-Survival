@@ -1,0 +1,58 @@
+[
+  {
+    "id": "beeswax_clarif_001",
+    "wax_lot_source": "hive_harvest_01",
+    "clarification_method": "hot_water_float",
+    "clarity_grade": "amber_clear",
+    "log_text": "First wax harvest from the langstroth hive. Crude cappings and broken comb. Melted in a water bath — the wax floated, the propolis and debris sank. Poured through a cotton cloth while still liquid. Cooled to a disc: amber-clear, slight honey smell. Better than expected."
+  },
+  {
+    "id": "beeswax_clarif_002",
+    "wax_lot_source": "hive_harvest_01",
+    "clarification_method": "double_water_float",
+    "clarity_grade": "pale_amber",
+    "log_text": "Second clarification pass on the same wax lot — re-melted and floated twice through clean water. The second float removed residual cloudiness. Result is pale amber, nearly transparent in thin section. The smell is cleaner. Stored in a sealed clay cup."
+  },
+  {
+    "id": "beeswax_clarif_003",
+    "wax_lot_source": "hive_harvest_02",
+    "clarification_method": "hot_water_float",
+    "clarity_grade": "dark_amber",
+    "log_text": "Second hive harvest — more propolis contamination than the first. The wax came out dark amber even after one float. Smells strongly of propolis and old honey. Functional but not clean-burning. Blended with rabbit tallow to lower the melting point and extend the volume."
+  },
+  {
+    "id": "beeswax_clarif_004",
+    "wax_lot_source": "hive_harvest_02",
+    "clarification_method": "triple_water_float",
+    "clarity_grade": "amber_clear",
+    "log_text": "Three passes on the dark lot from the second harvest. Each pass lighter than the last. After the third float: amber-clear, acceptable burn quality. The triple process used more heat but the wax improved significantly. Worth doing for candle stock."
+  },
+  {
+    "id": "beeswax_clarif_005",
+    "wax_lot_source": "hive_harvest_01",
+    "clarification_method": "hot_water_float",
+    "clarity_grade": "pale_amber",
+    "log_text": "Old cappings stored for two months before processing. The wax had crystallised partially in the cold storage. Re-melting took longer. Float clarification went cleanly — the stored wax had less propolis than fresh. Pale amber result. Six candle discs stored flat."
+  },
+  {
+    "id": "beeswax_clarif_006",
+    "wax_lot_source": "hive_scraps",
+    "clarification_method": "cloth_press_filter",
+    "clarity_grade": "dark_amber_cloudy",
+    "log_text": "Scrap wax — pieces scraped from the hive frames and floor boards. Too much debris for the float method alone. Pressed through cloth while molten. Still dark and cloudy. Not suitable for clean-burning candles but adequate for waterproofing cloth and sealing leather joints."
+  },
+  {
+    "id": "beeswax_clarif_007",
+    "wax_lot_source": "hive_harvest_01",
+    "clarification_method": "double_water_float",
+    "clarity_grade": "pale_amber",
+    "log_text": "Blended clarified wax with twenty percent rabbit tallow. The blend melts at a lower temperature — better for the shelter climate which runs cold. Burns slightly smokier than pure wax but the soft candles do not need re-dipping as often. A practical compromise."
+  },
+  {
+    "id": "beeswax_clarif_008",
+    "wax_lot_source": "hive_harvest_02",
+    "clarification_method": "hot_water_float",
+    "clarity_grade": "amber_clear",
+    "log_text": "Tested burning a pure clarified beeswax candle against a tallow-blend candle. The pure wax burned longer, cleaner, and brighter. The tallow blend produced more soot but lasted a similar time. Both are useful. Pure wax for when clarity matters; blend for when quantity matters."
+  }
+]

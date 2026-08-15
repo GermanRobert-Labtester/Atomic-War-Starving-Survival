@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.YearOfAsh;
 
 namespace AtomicWar.GodotApp.YearOfAsh
@@ -49,7 +51,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             var backdrop = new ColorRect
             {
-                Color = new Color(0.02f, 0.03f, 0.04f, 0.85f)
+                Color = AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.InkPanel)
             };
             backdrop.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(backdrop);
@@ -73,13 +75,13 @@ namespace AtomicWar.GodotApp.YearOfAsh
             margin.AddChild(rootBox);
 
             _titleLabel = new Label { Text = "QUESTLINES" };
-            _titleLabel.AddThemeFontSizeOverride("font_size", 22);
-            _titleLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.65f, 0.25f));
+            _titleLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH2);
+            _titleLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             rootBox.AddChild(_titleLabel);
 
             _subtitleLabel = new Label { Text = string.Empty };
-            _subtitleLabel.AddThemeFontSizeOverride("font_size", 14);
-            _subtitleLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.75f, 0.7f));
+            _subtitleLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _subtitleLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
             rootBox.AddChild(_subtitleLabel);
 
             rootBox.AddChild(new HSeparator());
@@ -90,7 +92,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 FitContent = true,
                 CustomMinimumSize = new Vector2(0, 120)
             };
-            _bodyText.AddThemeColorOverride("default_color", new Color(0.88f, 0.9f, 0.88f));
+            _bodyText.AddThemeColorOverride("default_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             rootBox.AddChild(_bodyText);
 
             _choicesContainer = new VBoxContainer();
@@ -102,8 +104,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = string.Empty,
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            _withheldLabel.AddThemeFontSizeOverride("font_size", 12);
-            _withheldLabel.AddThemeColorOverride("font_color", new Color(0.55f, 0.5f, 0.42f));
+            _withheldLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            _withheldLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
             rootBox.AddChild(_withheldLabel);
 
             _closeButton = new Button
@@ -154,7 +156,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                         CustomMinimumSize = new Vector2(0, 42),
                         Alignment = HorizontalAlignment.Left
                     };
-                    btn.AddThemeFontSizeOverride("font_size", 13);
+                    btn.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                     btn.Pressed += () => OnQuestlineChosen?.Invoke(captured);
                     _choicesContainer.AddChild(btn);
                 }
@@ -190,7 +192,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                     CustomMinimumSize = new Vector2(0, 42),
                     Alignment = HorizontalAlignment.Left
                 };
-                btn.AddThemeFontSizeOverride("font_size", 13);
+                btn.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                 btn.Pressed += () => OnChoiceTaken?.Invoke(def.questlineId, captured.choiceId);
                 _choicesContainer.AddChild(btn);
             }
@@ -213,7 +215,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                     : result.outcomeNarrative,
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            narrative.AddThemeColorOverride("font_color", new Color(0.88f, 0.9f, 0.88f));
+            narrative.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             _choicesContainer.AddChild(narrative);
 
             var ledger = new Label
@@ -227,8 +229,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                            : $" · {result.grantItemId} ×{result.grantItemQty}"),
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            ledger.AddThemeFontSizeOverride("font_size", 12);
-            ledger.AddThemeColorOverride("font_color", new Color(0.95f, 0.85f, 0.4f));
+            ledger.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            ledger.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
             _choicesContainer.AddChild(ledger);
 
             _subtitleLabel.Text = questEnded

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "rootes_blower_lobed_rotor_timing_gear_backlash",
+    "blower_station_id": "MAIN_EXHAUST_VACUUM_BLOWER_01",
+    "rotor_lobe_configuration": "TWIN_FIGURE_EIGHT_CAST_IRON_LOBES",
+    "vacuum_differential_bar": -0.55,
+    "volumetric_flow_m3_min": 45.0,
+    "timestamp_relative": "YEAR_03_BLOWER_LOG_01",
+    "tags": ["pneumatic", "rootes_blower", "timing_gear", "rotor_clash", "vacuum_power"],
+    "prose": "Wear in the matched steel timing gears increased backlash to 0.45mm. Under heavy vacuum load, the counter-rotating two-lobe cast-iron impellers clashed along their tips, gouging deep metal galling scars across the precision rotor lobes."
+  },
+  {
+    "id": "rootes_blower_suction_vacuum_slip_leakage",
+    "blower_station_id": "SECONDARY_BOOSTER_EXHAUSTER_02",
+    "rotor_lobe_configuration": "THREE_LOBE_HELICAL_LOW_PULSE",
+    "vacuum_differential_bar": -0.32,
+    "volumetric_flow_m3_min": 32.0,
+    "timestamp_relative": "YEAR_05_BLOWER_LOG_03",
+    "tags": ["pneumatic", "rootes_blower", "slip_leakage", "thermal_expansion", "vacuum_loss"],
+    "prose": "Continuous operation heated the exhauster casing to 110°C, expanding radial clearances from 0.12mm to 0.38mm. The increased internal air slip reduced ultimate suction vacuum from -0.58 bar down to -0.32 bar, slowing long-distance tube lines."
+  },
+  {
+    "id": "rootes_blower_water_cooled_jacket_calcification",
+    "blower_station_id": "CENTRAL_HIGH_PRESSURE_COMPRESSOR",
+    "rotor_lobe_configuration": "TWO_LOBE_WATER_COOLED_STATIONARY",
+    "vacuum_differential_bar": 0.85,
+    "volumetric_flow_m3_min": 60.0,
+    "timestamp_relative": "YEAR_08_BLOWER_LOG_02",
+    "tags": ["pneumatic", "water_jacket", "calcification", "head_distortion", "overheating"],
+    "prose": "Calcite scale deposits in the cast-iron cylinder cooling jackets choked coolant flow by 70%. The resulting thermal gradient warped the drive-end headplate, causing severe rotor end-face binding and tripping the 30 kW electric motor."
+  },
+  {
+    "id": "rootes_blower_pressure_relief_weighted_deadweight_valve",
+    "blower_station_id": "EXPEDITION_PORTABLE_BLOWER_SKID",
+    "rotor_lobe_configuration": "COMPACT_ALUMINUM_TWO_LOBE",
+    "vacuum_differential_bar": 0.6,
+    "volumetric_flow_m3_min": 18.0,
+    "timestamp_relative": "YEAR_11_BLOWER_LOG_04",
+    "tags": ["pneumatic", "deadweight_valve", "pressure_relief", "chatter", "pulsation"],
+    "prose": "Pressure pulsations from the two-lobe discharge induced violent harmonic chatter in the bronze deadweight relief valve. The rapid bouncing wore the ground conical seat into an oval shape, bleeding 15% of delivered air volume to atmosphere."
+  },
+  {
+    "id": "rootes_blower_labyrinth_shaft_seal_oil_mist_draw",
+    "blower_station_id": "VAULT_DISPATCH_EXHAUSTER_03",
+    "rotor_lobe_configuration": "TWO_LOBE_PRECISION_CAST_ROTOR",
+    "vacuum_differential_bar": -0.62,
+    "volumetric_flow_m3_min": 38.0,
+    "timestamp_relative": "YEAR_14_BLOWER_LOG_01",
+    "tags": ["pneumatic", "labyrinth_seal", "oil_mist", "paper_contamination", "vacuum_draw"],
+    "prose": "Deep suction vacuum (-0.62 bar) pulled atomized gear oil mist through worn brass labyrinth shaft seals into the main air stream. Oily condensation coated interior brass tube walls, staining paper telegrams and softening felt carrier seals."
+  },
+  {
+    "id": "rootes_blower_belt_drive_multiple_v_belt_slip",
+    "blower_station_id": "HEAVY_DISPATCH_EXHAUSTER_ALPHA",
+    "rotor_lobe_configuration": "HEAVY_DUTY_TWO_LOBE_BLOWER",
+    "vacuum_differential_bar": -0.48,
+    "volumetric_flow_m3_min": 52.0,
+    "timestamp_relative": "YEAR_17_BLOWER_LOG_03",
+    "tags": ["pneumatic", "v_belt", "belt_slip", "blower_speed", "morning_rush"],
+    "prose": "Simultaneous morning dispatch of twelve heavy mail carriers overloaded the vacuum manifold. The sudden torque surge induced 25% belt slip across the four-groove V-belt pulley, emitting loud rubber squeals and dropping blower RPM from 900 to 675."
+  },
+  {
+    "id": "rootes_blower_silencing_muffler_resonator_chamber",
+    "blower_station_id": "PRIMARY_VENTILATION_EXHAUSTER",
+    "rotor_lobe_configuration": "TWO_LOBE_INTERCOOLED_BLOWER",
+    "vacuum_differential_bar": -0.5,
+    "volumetric_flow_m3_min": 70.0,
+    "timestamp_relative": "YEAR_20_BLOWER_LOG_01",
+    "tags": ["pneumatic", "silencer", "resonator", "acoustic_damping", "low_frequency"],
+    "prose": "Installing a dual-chamber reactive expansion silencer tuned to the 120 Hz lobe-passing frequency wiped out destructive acoustic vibrations. The muffler suppressed structural resonance that had previously vibrated overhead bunk frames in barracks sector 4."
+  }
+]

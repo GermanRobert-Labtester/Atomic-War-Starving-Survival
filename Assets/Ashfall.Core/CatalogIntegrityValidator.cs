@@ -103,7 +103,21 @@ namespace Ashfall.Core
             "timber_creosote_", "square_set_", "dry_rot_", "mortise_tenon_",
             "crucible_slag_", "cupola_melting_", "pattern_maker_", "green_sand_",
             "slow_sand_", "ozone_", "chlorine_titration_", "carbon_adsorption_",
-            "pneumatic_carrier_", "pneumatic_diverter_", "rootes_blower_", "pneumatic_cylinder_"
+            "pneumatic_carrier_", "pneumatic_diverter_", "rootes_blower_", "pneumatic_cylinder_",
+            "burr_millstone_", "bolting_silk_", "grain_silo_", "mill_tempering_",
+            "cryo_seed_", "ragdoll_germination_", "silica_seed_", "heirloom_seed_",
+            "sourdough_mother_", "brewers_yeast_", "silage_pit_", "fermentation_crock_",
+            "langstroth_", "apiculture_", "honey_extractor_", "beeswax_",
+            "charcoal_mound_", "retort_", "biochar_", "forge_charcoal_",
+            "wood_ash_lye_", "tallow_saponification_", "cold_process_", "sweet_water_glycerin_",
+            "hollander_beater_", "deckle_mould_", "screw_press_", "tub_sizing_",
+            "drop_spindle_", "flyer_wheel_", "inkle_loom_", "backstrap_loom_",
+            "treadle_loom_", "fulling_trough_",
+            "bark_tanning_", "brain_tanning_", "currying_", "awl_stitch_",
+            "clay_wedging_", "bisque_firing_", "slip_glaze_", "kiln_draw_",
+            "fibre_heckling_", "strand_twisting_", "rope_closing_", "rope_break_",
+            "tallow_rendering_", "beeswax_clarif_", "wick_braiding_", "candle_dip_",
+            "bone_degreasing_", "antler_horn_", "bone_scraping_", "bone_tool_"
         };
 
         /// <summary>
@@ -240,7 +254,50 @@ namespace Ashfall.Core
             "filter_basin_id", "ozonator_unit_id", "dosing_station_id", "hypochlorite_reagent_grade",
             "carbon_filter_vessel_id", "carbon_base_feedstock",
             "capsule_serial_number", "diverter_junction_id", "diverter_mechanism_type",
-            "blower_station_id", "rotor_lobe_configuration", "actuator_cylinder_id", "packing_leather_type"
+            "blower_station_id", "rotor_lobe_configuration", "actuator_cylinder_id", "packing_leather_type",
+            "millstone_pair_id", "stone_material_type", "sifter_reel_id", "silk_gauze_grade",
+            "grain_silo_bin_id", "conditioning_bin_id",
+            "dewar_canister_id", "crop_botanical_species", "germination_tray_id", "crop_cultivar_name",
+            "desiccant_compound_type", "landrace_variety_id",
+            "starter_crock_id", "microbial_consortium_type", "fermentation_tun_id", "yeast_strain_designation",
+            "silage_trench_id", "forage_substrate_crop", "stoneware_crock_id",
+            "hive_assembly_id", "comb_foundation_wax_grade", "chamber_zone_id", "extractor_unit_id",
+            "rendering_vat_id",
+            "coaling_mound_id", "feedstock_timber_species", "retort_vessel_id", "soil_amendment_lot_id",
+            "carbon_assay_batch_id",
+            "leaching_vat_id", "feedstock_ash_source", "boiling_kettle_id", "molding_rack_id",
+            "glycerin_still_id",
+            "beater_tub_id", "rag_feedstock_type", "mould_frame_id", "press_station_id",
+            "sizing_vat_id",
+            "spindle_unit_id", "fibre_stock_type", "draft_ratio_target",
+            "loom_frame_id", "warp_fibre_type", "weft_thread_count",
+            "treadle_unit_id", "heddle_count", "tie_up_pattern",
+            "fulling_trough_id", "cloth_substrate_type", "nap_raising_tool",
+            // Nun — Tanning & Leatherwork
+            "tanning_vat_id", "bark_species", "liquor_strength_baume",
+            "hide_source_animal", "brain_emulsion_batch_id", "smoke_cycle_count",
+            "tanned_hide_lot_id", "fat_liquor_type", "burnishing_tool",
+            "leather_panel_id", "thread_material", "stitch_length_mm",
+            // Samekh — Ceramics & Kiln Work
+            "clay_bed_source", "wedging_cycle_count", "forming_method",
+            "kiln_chamber_id", "peak_temp_celsius", "firing_duration_hours",
+            "base_clay_type", "flux_material", "colorant_source",
+            "draw_trial_piece_type", "surface_result",
+            // Ayin — Rope Making & Cordage
+            "fibre_source_plant", "retting_days", "heckling_comb_id",
+            "fibre_type", "twist_direction", "strand_count_per_yarn",
+            "strand_yarn_id", "rope_diameter_mm", "closing_tool",
+            "rope_lot_id", "test_load_kg", "failure_mode",
+            // Pe — Candle Making & Wax Rendering
+            "fat_source_animal", "rendering_vat_id", "yield_grams",
+            "wax_lot_source", "clarification_method", "clarity_grade",
+            "wick_fibre_type", "braid_ply_count", "priming_wax_type",
+            "candle_method", "wax_blend_type", "burn_duration_hours",
+            // Tsadi — Bone & Horn Carving
+            "bone_source_animal", "degreasing_method", "prep_duration_days",
+            "material_type", "saw_tool_id", "blank_shape_cut",
+            "blank_material", "abrasive_used", "surface_finish",
+            "tool_type", "bone_blank_id", "point_angle_degrees"
         };
 
         /// <summary>

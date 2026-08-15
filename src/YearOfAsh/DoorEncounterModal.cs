@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.YearOfAsh;
 
 namespace AtomicWar.GodotApp.YearOfAsh
@@ -37,7 +39,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
         {
             var backdrop = new ColorRect
             {
-                Color = new Color(0.02f, 0.03f, 0.04f, 0.85f)
+                Color = AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.InkPanel)
             };
             backdrop.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(backdrop);
@@ -65,8 +67,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = "SHELTER DOOR ENCOUNTER",
                 HorizontalAlignment = HorizontalAlignment.Left
             };
-            _titleLabel.AddThemeFontSizeOverride("font_size", 22);
-            _titleLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.65f, 0.25f));
+            _titleLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH2);
+            _titleLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             rootBox.AddChild(_titleLabel);
 
             _factionLabel = new Label
@@ -74,8 +76,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = "Visitor Affiliation: Unknown",
                 HorizontalAlignment = HorizontalAlignment.Left
             };
-            _factionLabel.AddThemeFontSizeOverride("font_size", 14);
-            _factionLabel.AddThemeColorOverride("font_color", new Color(0.6f, 0.75f, 0.7f));
+            _factionLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _factionLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
             rootBox.AddChild(_factionLabel);
 
             rootBox.AddChild(new HSeparator());
@@ -86,15 +88,15 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 FitContent = true,
                 CustomMinimumSize = new Vector2(0, 100)
             };
-            _descriptionText.AddThemeColorOverride("default_color", new Color(0.88f, 0.9f, 0.88f));
+            _descriptionText.AddThemeColorOverride("default_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             rootBox.AddChild(_descriptionText);
 
             var choicesHeader = new Label
             {
                 Text = "AVAILABLE ACTIONS & THRESHOLD PROTOCOLS"
             };
-            choicesHeader.AddThemeFontSizeOverride("font_size", 14);
-            choicesHeader.AddThemeColorOverride("font_color", new Color(0.4f, 0.8f, 0.9f));
+            choicesHeader.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            choicesHeader.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             rootBox.AddChild(choicesHeader);
 
             _choicesContainer = new VBoxContainer();
@@ -141,7 +143,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                     CustomMinimumSize = new Vector2(0, 42),
                     Alignment = HorizontalAlignment.Left
                 };
-                btn.AddThemeFontSizeOverride("font_size", 13);
+                btn.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                 btn.Pressed += () => OnChoiceClicked?.Invoke(encounter, choice);
                 _choicesContainer.AddChild(btn);
             }
@@ -161,7 +163,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = $"RESOLUTION: {result.outcomeText}\nNet Morale Delta: {result.netMoraleDelta:+#;-#;0} | Net Guilt Delta: {result.netGuiltDelta:+#;-#;0}",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            summaryLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.85f, 0.4f));
+            summaryLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
             _choicesContainer.AddChild(summaryLabel);
 
             foreach (var rx in result.survivorReactions)
@@ -171,8 +173,8 @@ namespace AtomicWar.GodotApp.YearOfAsh
                     Text = $" • {rx.survivorName}: \"{rx.dialogueReaction}\" (Morale: {rx.moraleDelta:+#;-#;0}, Guilt: {rx.guiltDelta:+#;-#;0})",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                rxLabel.AddThemeFontSizeOverride("font_size", 12);
-                rxLabel.AddThemeColorOverride("font_color", new Color(0.7f, 0.8f, 0.75f));
+                rxLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+                rxLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
                 _reactionsContainer.AddChild(rxLabel);
             }
         }

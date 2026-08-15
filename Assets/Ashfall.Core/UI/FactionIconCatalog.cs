@@ -28,9 +28,8 @@ namespace Ashfall.Core.UI
         private static readonly Dictionary<string, string> _systemsIdsToIcon =
             new Dictionary<string, string>(System.StringComparer.Ordinal)
             {
-                // canonical hits (already verified on disk pre-this-pass):
+                // ── Systems namespace (currents.json) ──────────────────────
                 { "faction_hydro_barons",        "Assets/UI/Icons/faction_icon_hydro_barons.png" },
-                // post-pass generation queue (see Section 7.B of integration report):
                 { "faction_archivists",          "Assets/UI/Icons/faction_icon_archivists.png" },
                 { "faction_lamplighters",        "Assets/UI/Icons/faction_icon_lamplighters.png" },
                 { "faction_quiet_house",         "Assets/UI/Icons/faction_icon_quiet_house.png" },
@@ -46,6 +45,19 @@ namespace Ashfall.Core.UI
                 { "faction_scavenger_guild",     "Assets/UI/Icons/faction_icon_scavenger_guild.png" },
                 { "faction_iron_raiders",        "Assets/UI/Icons/faction_icon_iron_raiders.png" },
                 { "faction_the_tempest",         "Assets/UI/Icons/faction_icon_the_tempest.png" },
+
+                // ── Lore namespace (Unity voice matrix, Trade, Radio) ─────
+                { "scavenger_camp",              "Assets/UI/Icons/faction_icon_scavenger_camp.png" },
+                { "cult_of_the_glow",            "Assets/UI/Icons/faction_icon_cult_of_the_glow.png" },
+                { "military_remnants",           "Assets/UI/Icons/faction_icon_military_remnants.png" },
+                { "upland_militia",              "Assets/UI/Icons/faction_icon_upland_militia.png" },
+                { "rot_farmers",                 "Assets/UI/Icons/faction_icon_rot_farmers.png" },
+                { "wire_heads",                  "Assets/UI/Icons/faction_icon_wire_heads.png" },
+                { "sump_dredgers",               "Assets/UI/Icons/faction_icon_sump_dredgers.png" },
+                { "custodians",                  "Assets/UI/Icons/faction_icon_custodians.png" },
+                { "doomsday_preppers",           "Assets/UI/Icons/faction_icon_doomsday_preppers.png" },
+                { "echo_bats",                   "Assets/UI/Icons/faction_icon_echo_bats.png" },
+                { "safe_haven_community",        "Assets/UI/Icons/faction_icon_safe_haven_community.png" },
             };
 
         /// <summary>

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "tub_sizing_hide_glue_gelatin_immersion",
+    "sizing_vat_id": "PRIMARY_GELATIN_TUB_01",
+    "gelatin_solution_temp_celsius": 48.5,
+    "alum_additive_pct": 2.2,
+    "cobb_water_absorption_g_per_m2": 22.5,
+    "timestamp_relative": "YEAR_02_SIZING_01",
+    "tags": ["paper_making", "tub_sizing", "gelatin_size", "hide_glue", "ink_holdout"],
+    "prose": "Immersing porous 'waterleaf' linen sheets into a 48.5°C bath of rendered calf-hide gelatin sealed capillary interstices between fibers. The animal protein coating converted absorbent blotting sheets into hard, ink-resistant writing paper."
+  },
+  {
+    "id": "tub_sizing_potassium_alum_gelatin_hardening",
+    "sizing_vat_id": "PRECISION_SIZING_KETTLE_02",
+    "gelatin_solution_temp_celsius": 50.0,
+    "alum_additive_pct": 2.5,
+    "cobb_water_absorption_g_per_m2": 19.0,
+    "timestamp_relative": "YEAR_04_SIZING_03",
+    "tags": ["paper_making", "tub_sizing", "potash_alum", "collagen_crosslink", "preservation"],
+    "prose": "Dosing the warm gelatin broth with 2.5% potassium aluminum sulfate cross-linked the collagen protein chains. The alum hardened the gelatin film into an insoluble barrier while protecting sized paper from insect and fungal attack."
+  },
+  {
+    "id": "tub_sizing_feathering_iron_gall_ink_assay",
+    "sizing_vat_id": "COMMISSARY_ASSAY_BENCH_03",
+    "gelatin_solution_temp_celsius": 45.0,
+    "alum_additive_pct": 2.0,
+    "cobb_water_absorption_g_per_m2": 21.0,
+    "timestamp_relative": "YEAR_07_SIZING_02",
+    "tags": ["paper_making", "tub_sizing", "iron_gall_ink", "feathering_test", "ink_holdout"],
+    "prose": "Drawing 0.2mm razor-sharp test lines using acidic bunker iron-gall ink demonstrated zero capillary feathering or backside strike-through. Scribes could write with steel dip pens on both sides of every ledger leaf without bleed."
+  },
+  {
+    "id": "tub_sizing_calender_flint_stone_burnishing",
+    "sizing_vat_id": "BURNISHING_FINISHING_TABLE_04",
+    "gelatin_solution_temp_celsius": 0.0,
+    "alum_additive_pct": 0.0,
+    "cobb_water_absorption_g_per_m2": 18.2,
+    "timestamp_relative": "YEAR_09_SIZING_04",
+    "tags": ["paper_making", "tub_sizing", "flint_burnishing", "calendering", "surface_glaze"],
+    "prose": "Friction-burnishing dry sized sheets against a zinc plate with a polished agate stone compacted surface fibers. The resulting hard, ivory-smooth gloss prevented pen nibs from catching or scratching during rapid scriptwriting."
+  },
+  {
+    "id": "tub_sizing_bacterial_putrefaction_gelatin_foul",
+    "sizing_vat_id": "CONTAMINATED_SIZING_TANK_05",
+    "gelatin_solution_temp_celsius": 32.0,
+    "alum_additive_pct": 0.5,
+    "cobb_water_absorption_g_per_m2": 45.0,
+    "timestamp_relative": "YEAR_12_SIZING_01",
+    "tags": ["paper_making", "tub_sizing", "putrefaction", "spoilage", "biocide"],
+    "prose": "Allowing the unpreserved gelatin vat to stand at 32°C for thirty-six hours triggered rapid bacterial decomposition. Sizing paper in the putrid broth produced repulsive odors and blotchy ink feathering, solved only by dumping the vat and boiling fresh glue with 0.1% thymol."
+  },
+  {
+    "id": "tub_sizing_cobbs_water_absorption_assay",
+    "sizing_vat_id": "QUALITY_CONTROL_LAB_STAND_06",
+    "gelatin_solution_temp_celsius": 52.0,
+    "alum_additive_pct": 3.0,
+    "cobb_water_absorption_g_per_m2": 16.5,
+    "timestamp_relative": "YEAR_15_SIZING_03",
+    "tags": ["paper_making", "tub_sizing", "cobb_test", "water_absorption", "standardization"],
+    "prose": "Standardized Cobb60 water absorption assays clamped over sized test circles recorded an uptake of only 16.5 g/m² after one minute of water contact. The low Cobb value met international archival specifications for military field manuals."
+  },
+  {
+    "id": "tub_sizing_rosin_alum_engine_sizing_beater",
+    "sizing_vat_id": "INTERNAL_ENGINE_SIZING_07",
+    "gelatin_solution_temp_celsius": 20.0,
+    "alum_additive_pct": 3.5,
+    "cobb_water_absorption_g_per_m2": 28.0,
+    "timestamp_relative": "YEAR_20_SIZING_01",
+    "tags": ["paper_making", "tub_sizing", "engine_sizing", "rosin_size", "internal_sizing"],
+    "prose": "Precipitating saponified pine rosin directly onto pulp fibers in the Hollander beater with alum provided economical internal engine sizing. The process bypassed labor-intensive tub gelatin dipping for packaging wrappers and work orders."
+  }
+]

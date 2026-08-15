@@ -1,0 +1,58 @@
+[
+  {
+    "id": "bark_tanning_001",
+    "tanning_vat_id": "tv_stone_01",
+    "bark_species": "oak",
+    "liquor_strength_baume": 6.2,
+    "log_text": "Crushed oak bark steeped four days in the stone basin. The water turned dark and smelled of earth and rot. First hide went in this morning. Nothing to do now but wait and keep the bark wet."
+  },
+  {
+    "id": "bark_tanning_002",
+    "tanning_vat_id": "tv_stone_01",
+    "bark_species": "oak",
+    "liquor_strength_baume": 8.1,
+    "log_text": "Second steeping, stronger. Pried the bark off a section of the collapsed ceiling beams — they were dry and the tannin was still intact. The hide from the first vat is stiffening along the edges. Needs more time in the middle liquor."
+  },
+  {
+    "id": "bark_tanning_003",
+    "tanning_vat_id": "tv_timber_02",
+    "bark_species": "willow",
+    "liquor_strength_baume": 4.8,
+    "log_text": "Willow bark yields less tannin than oak but we had more of it. Four small hides in the timber trough. The liquor runs pale compared to the oak vat. Still works — just slower. We do not have the option of fast."
+  },
+  {
+    "id": "bark_tanning_004",
+    "tanning_vat_id": "tv_timber_02",
+    "bark_species": "willow",
+    "liquor_strength_baume": 5.5,
+    "log_text": "Refreshed the willow liquor after five days. Pulled the top hide to check — the grain side is taking colour, the flesh side still pale. Returned it flesh-down and pressed it under a flat stone. Ten more days minimum."
+  },
+  {
+    "id": "bark_tanning_005",
+    "tanning_vat_id": "tv_stone_01",
+    "bark_species": "oak",
+    "liquor_strength_baume": 10.4,
+    "log_text": "Strongest liquor yet — boiled the bark scraps down to concentrate before adding to the cold vat. The smell is almost wine-like underneath the rot. The older hide in this vat is firm to the hand and does not spring back. Close to done."
+  },
+  {
+    "id": "bark_tanning_006",
+    "tanning_vat_id": "tv_clay_pot_03",
+    "bark_species": "alder",
+    "liquor_strength_baume": 3.9,
+    "log_text": "Alder bark from the planks stored in the corridor. Lighter tannin than either oak or willow. The clay pot holds only a small hide — using it for glove-weight leather. Patience is the only tool that matters here."
+  },
+  {
+    "id": "bark_tanning_007",
+    "tanning_vat_id": "tv_stone_01",
+    "bark_species": "oak",
+    "liquor_strength_baume": 9.0,
+    "log_text": "First hide pulled from the oak vat after fourteen days. Cut a test section from the edge — the colour runs uniform to the centre. No pale band. Fully tanned. Hung to dry slowly. The shelter smells like an old saddlery. Worse things."
+  },
+  {
+    "id": "bark_tanning_008",
+    "tanning_vat_id": "tv_timber_02",
+    "bark_species": "mixed_oak_willow",
+    "liquor_strength_baume": 7.3,
+    "log_text": "Mixed the bark from both species in the timber trough. The liquor sits between the two in strength. Three hides together — dog, rabbit, and something we could not identify. All going in the same direction. Let them go."
+  }
+]

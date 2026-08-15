@@ -1,0 +1,308 @@
+# ASHFALL PROJECT — Windsurf Rules
+# AUTO-GENERATED from AGENTS.md (canonical source). Run /ashfall-agents to regenerate.
+# Last generated: 2026-08-16
+# PROJECT: ASHFALL (working title) — 2D Atomic-War Survival
+You are a senior gameplay engineer + narrative/systems designer working across Godot and Unity.
+This is an ORIGINAL 2D survival-management game set after a nuclear exchange.
+Inspired by the survival-management genre; DO NOT copy any existing game's
+art, names, characters, UI layout, text, or code.
+
+---
+
+## STACK (do not deviate without asking)
+
+| Layer | Engine | Location | Files | Namespace | Target |
+|-------|--------|----------|-------|-----------|--------|
+| **Core** (one source of truth) | Engine-agnostic C# | `Assets/Ashfall.Core/` | 234 | `Ashfall.Core` | `netstandard2.1` |
+| **Godot host** (active) | Godot 4.7+ (.NET/C#) | `src/` | 84 | `AtomicWar.GodotApp` | `net8.0` |
+| **Unity host** (legacy) | Unity 6 LTS, 2D, URP | `Assets/_Game/` | 1337 | `AtomicWar._Game` | Unity 6 |
+| **Tests** | xUnit | `Ashfall.Core.Tests/` | 143 | `Ashfall.Core.Tests` | `net9.0` |
+| **Data** (authority) | JSON | `Assets/StreamingAssets/Data/` | 280 | — | — |
+| **Godot Bridge** | UnityEngine shim | `src/Bridge/` | 10 (2686 lines) | `UnityEngine.*` | `net8.0` |
+
+**Godot project config:** `project.godot` at root, `gl_compatibility` renderer, 1920×1080, 60 FPS, BarlowCondensed + ShareTechMono fonts.
+
+**STRICT RULE: NEVER run, launch, or invoke Unity** (batchmode, headless, editor, or playmode) unless explicitly requested by the user. All builds, tests, and verification must use `dotnet` and `godot --headless`.
+
+---
+
+## CORE ARCHITECTURE — THE ONE SOURCE OF TRUTH
+
+### Invariant #1: Zero Engine Coupling in Core
+`Assets/Ashfall.Core/` (234 files, `Ashfall.Core` namespace) must contain **ZERO** references to:
+- `UnityEngine` / `UnityEditor`
+- `Godot` / `GodotSharp`
+- `JsonUtility` (Unity-only serializer — banned from core, only appears in comments)
+
+This invariant currently holds: **0 violations across 234 files.** The `.asmdef` has `noEngineReferences: true`.
+
+### Invariant #2: Ports and Adapters (the contract)
+Everything the core needs from a host is an interface in `Assets/Ashfall.Core/Ports.cs`:
+
+| Interface | Purpose | Default BCL impl | Godot adapter | Unity adapter |
+|-----------|---------|-----------------|---------------|---------------|
+| `IJsonSerializer` | JSON serialize/deserialize | `SystemTextJsonSerializer` | Same (core default) | **MISSING** — uses `JsonUtility` directly |
+| `IFileIO` | File/directory access | `FileSystemIO` | Same (core default) | **MISSING** — uses `System.IO` directly |
+| `ILog` | Info/Warn/Error logging | `ConsoleLog`, `NullLog` | `GodotLog` | `GameLogAdapter` (private nested) |
+| `IClock` | Day counter | `SimClock` | Same (core default) | Same (core default) |
+| `ISeededRng` | Deterministic PRNG | `SeededRng` (xorshift64*) | `CoreSeededRng` | **MISSING** — uses `System.Random` |
+| `IEventBus` | String-based pub/sub | `SimpleEventBus` | **NOT USED** | **NOT USED** (Unity has own static bus) |
+
+**Known issue:** `ISimClock` (tick-based) also exists in `Clock/ISimClock.cs`. Both `IClock` and `ISimClock` are active. Consolidation is planned.
+
+### Invariant #3: Cross-Host Save Compatibility
+**A save written by one host MUST load in the other.**
+
+**Current state: VIOLATED for the main game save.** Unity's `SaveSystem` (967+ lines, 10 partial files) uses `JsonUtility.ToJson`/`FromJson` — a Unity-only API. Only the per-subsystem expansion saves (Verdict, Holdfast, Dose, etc.) use the portable `IJsonSerializer` + `SaveChecksum` pattern. Additionally, **28 catalog loaders** in `Assets/_Game/Data/` use `JsonUtility.FromJson` with the array-wrap hack, blocking Godot data loading.
+
+**Fix planned:** Create a Unity `IJsonSerializer` adapter, migrate `SaveSystem` and all 28 catalog loaders off `JsonUtility`.
+
+### Invariant #4: Determinism
+**Same seed => same simulation in both engines.** Use `ISeededRng` (xorshift64*), never `System.Random`.
+
+**Currently violated in 3 core systems:**
+- `FinalWishSystem.cs:66` — `public System.Random Rng;`
+- `CombatTraumaSystem.cs:53` — `public System.Random Rng;`
+- `WeatherSystem.cs:144` — `new Random(unchecked(...))`
+- `ProceduralItemInstance.cs:36` — `Guid.NewGuid()` (non-deterministic)
+
+**Also:** `InMemoryFlagLedger` uses `StringComparer.OrdinalIgnoreCase` — subtle determinism risk if flag case normalization differs between hosts.
+
+### Invariant #5: No Gameplay Logic in Hosts
+Thin MonoBehaviours (Unity) and thin Nodes (Godot) = presentation, input, wiring only. Logic in plain C# systems in `Ashfall.Core`.
+
+**Currently violated:** `PersonalQuestSystem.cs` (4936 lines, 404 methods, 0 core refs), `MedicalSystem.cs` (1287 lines, 0 core refs), `SurvivorWorkShiftSystem.cs` (1291 lines, 0 core refs), `DynamicEconomySystem.cs` (1797 lines, minimal core refs). Also: `HoldfastRuntimeSession` in Godot duplicates core survival mechanics.
+
+### Invariant #6: Data Authority
+**JSON in `StreamingAssets/Data/` is the authority.** ScriptableObjects are a Unity-editor convenience generated from JSON, not the authority. Never fork data per engine.
+
+**Known issues:**
+- 121 ScriptableObject definitions — risk of dual authority
+- 56 narrative JSON files are **untracked in git** — missing on fresh clone
+- JSON property naming mixes `camelCase` and `snake_case` — migrate toward snake_case
+- Only 35 of ~280 JSON files have `schema_version` — add to all core data files
+- `world_history.json:15` contains "China" — replace with fictional name (rule: no real countries)
+
+---
+
+## MIGRATION STRATEGY
+
+**Direction:** Unity 6 → Godot 4.7. **Strategy:** Strangler — shrink the Unity-coupled surface, move logic to `Ashfall.Core`, add thin Godot hosts. No big-bang rewrite.
+
+**Current status:** Godot at ~4% of total C# (10K LOC vs 232K Unity). 12 subsystems with Godot hosts. 236/236 expansion self-tests green. 18-selftest Godot battery. Tracked in `docs/GODOT_MIGRATION_STATUS.md`.
+
+**Migration rule:** Core code that neither engine owns is migration progress. A Godot-only reimplementation of existing logic is a regression (it forks the source of truth). Never fork or duplicate logic per engine.
+
+---
+
+## BRIDGE SHIM RULES (Godot-specific)
+
+The `src/Bridge/` directory (10 files, 2686 lines, 165+ shimmed types) lets Unity `_Game` code compile under Godot by providing a `UnityEngine.*` compatibility layer.
+
+- **BridgeGap.Semantic()**: throws on logic-affecting gaps. Never silence these — they prevent silent bugs.
+- **BridgeGap.Cosmetic()**: logs visual-only gaps. Expected in headless mode.
+- **BridgeSelfTest**: validates shim honesty. Run with `godot --headless --path . -- --bridge-selftest`.
+- **Do NOT add new shim types** without classifying gaps. Every new hollow member must be Semantic, Cosmetic, or genuinely no-op.
+- **The shim is a migration aid, not the end state.** The goal is to shrink the Unity surface, not preserve it.
+
+---
+
+## SAVE/LOAD ARCHITECTURE
+
+### Pattern
+Every system with state must implement:
+```csharp
+public SystemState CaptureState() => new SystemState { ... };
+public void RestoreState(SystemState state) { ... }
+```
+DTOs are `[Serializable]` plain C# classes. Use `IJsonSerializer` (not `JsonUtility`).
+
+### SaveChecksum
+`Assets/Ashfall.Core/SaveChecksum.cs` — reflection-based integrity hash. Normalizes: null=empty, empty collections, float G9 formatting. Culture-invariant. Ordinal name order for deterministic iteration.
+
+### Versioned Migration
+Save codecs support V1→V2→V3 migration. Throw on future versions, migrate old ones. Example: `HoldfastSaveCodec`, `YearOfAshSaveCodec`, `DoseLedgerSaveCodec`.
+
+### Known Gaps
+- 5 Godot save stores have no checksum: `ExpeditionSaveStore`, `MedicalSaveStore`, `NarrativeSaveStore`, `WorldSaveStore`, `JournalSaveStore`
+- `JournalSaveStore` bypasses core `IJsonSerializer` — uses `System.Text.Json` directly
+- Some `ISaveable` adapters have empty `CaptureState()`/`RestoreState()` — silent data loss (`LocationEvolutionSaveable`, `WildlifeSaveable`, `LandmarkSaveable`)
+
+---
+
+## EVENT SYSTEM
+
+**Two parallel buses exist** (known architectural debt, merging planned):
+
+| Bus | Location | Style | Used by |
+|-----|----------|-------|---------|
+| `IEventBus`/`SimpleEventBus` | `Assets/Ashfall.Core/Events/` | String-based, constructor-injected | Defined but **underused** by core systems |
+| `EventBus` static class | `Assets/_Game/Core/EventBus.cs` | Type-safe generics, allocation-free, editor profiling | The real decoupler on Unity side |
+
+**Godot** has no event bus integration — uses direct method calls on host sessions.
+
+**Rule:** Every public system raises C# events on state change (for UI + save). Use whichever bus is wired in the host. Unity's `EventBus.IsSuppressed` flag is used during save/load restore.
+
+---
+
+## DATA INTEGRITY
+
+### CatalogIntegrityValidator
+`Assets/Ashfall.Core/CatalogIntegrityValidator.cs` (603 lines) — 5-tier validation:
+1. **REGISTRY** — collects every definition-position id with file + JSON path
+2. **TIER-1** — any string with a known snake_case prefix (200+ prefixes) must resolve
+3. **TIER-2** — values at known reference keys (`resultItemId`, `requiredItemId`, etc.) must resolve
+4. **RANGES** — `minDay`/`maxDay` pairs must be ordered
+5. **UNIQUENESS** — no duplicate definition ids within one file
+
+**Wired as:** `godot --headless --path . -- --data-integrity-selftest` (59 JSON catalogs, 0 errors)
+
+### ID Rules
+- **snake_case ids everywhere** — never invent an id not in the master list
+- **Known prefixes**: `item_`, `loc_`, `faction_`, `trait_`, `quest_`, `recipe_`, `event_`, `npc_`, `affliction_`, `expansion_`, `encounter_`, `radio_`, `echo_`, `flag_`, `skill_`, `knowledge_`, `ending_`, `article_`, `sector_`, `zone_`, etc.
+- The `CatalogIntegrityValidator` mechanically enforces the "never invent an id" rule
+
+---
+
+## EXPANSION SYSTEM
+
+### Master Orchestrator
+`ExpansionMasterSession` in `Assets/Ashfall.Core/ExpansionMasterSession.cs` coordinates 4 core expansions:
+- Holdfast (Exp 01), Duty Roster (Exp 02), Standing Record (Exp 03), Nobody's Charter/Crossing (Exp 04)
+
+### Standalone Expansions
+Verdict, Year of Ash, Greenhouse, etc. operate independently with own host wiring.
+
+### Implementation Pattern (5 phases)
+1. **Phase 1 (A/B/C):** New system classes in domain-specific namespaces. Each must have `CaptureState`/`RestoreState` with serializable DTO.
+2. **Phase 2 (A-E):** Data — item catalog class, update `items.json`, `locations.json`, `survivors.json`, `recipes.json`.
+3. **Phase 3 (A/B):** New IDs to static classes, trait constants, quest runtime classes.
+4. **Phase 4:** Wire into `GameBootstrap` — properties, construction, event wiring, init, tick registration, save fields.
+5. **Phase 5:** Tests — system tests (behavior, save round-trips), wiring tests (canonical IDs, integration smoke).
+
+### Known Issues
+- Phase 0 expansion callbacks in `GameBootstrap.Phase0Expansion.cs` are no-op placeholders ("wired in Phase 11") — 6 systems are constructed, registered, and ticked but their key effects are stubs
+- `GameBootstrap` is a 1225-line god object across 82 partial files
+- 588 "DEMOTE ghost" markers across 124 Unity files — dead code that still compiles
+
+---
+
+## KNOWN ISSUES & ANTI-PATTERNS
+
+### CRITICAL (must fix before next release)
+| # | Issue | Location |
+|---|-------|----------|
+| C1 | `JsonUtility` in Unity SaveSystem — blocks cross-host saves | `Assets/_Game/Core/SaveSystem.*.cs` (10+ call sites) |
+| C2 | `System.Random` breaks determinism | `FinalWishSystem.cs:66`, `CombatTraumaSystem.cs:53`, `WeatherSystem.cs:144` |
+| C3 | `Guid.NewGuid()` breaks determinism | `ProceduralItemInstance.cs:36` |
+| C4 | 56 narrative JSON files untracked | `Assets/StreamingAssets/Data/narrative/` |
+| C5 | `HoldfastTradeSessionTests.cs` — 10 compile errors, stale API | `Ashfall.Core.Tests/` |
+| C6 | 28 catalog loaders use `JsonUtility` — blocks Godot data loading | `Assets/_Game/Data/*CatalogLoader.cs` |
+
+### HIGH (should fix)
+| # | Issue | Location |
+|---|-------|----------|
+| H1 | `HoldfastRuntimeSession` duplicates core survival mechanics | `src/Host/HoldfastRuntimeSession.cs` |
+| H2 | Duplicate `WornGear` class | `Inventory/Inventory.cs` + `Radiation/RadiationSystem.cs` |
+| H3 | Duplicate `SimClock` (day vs tick-based) | `HostDefaults.cs` + `Clock/ISimClock.cs` |
+| H4 | 13 bare `catch { }` blocks swallow exceptions | `YearOfAshCatalogLoader.cs` (7), `VerdictCatalogLoader.cs` (3), etc. |
+| H5 | Utility AI forked — Unity uses defective version | `Assets/_Game/AI/UtilityAI.cs` vs `Assets/Ashfall.Core/UtilityAI/` |
+| H6 | Unity has no `IFileIO`, `IJsonSerializer`, `IClock` adapters | `Assets/_Game/Core/` |
+| H7 | `Main.cs` (Godot) is ~3000 lines — monolithic | `src/Main.cs` |
+| H8 | `SettingsManager` uses `PlayerPrefs` (Unity-only) | `Assets/_Game/Settings/SettingsManager.cs` |
+| H9 | 124 compiler warnings in tests (nullable refs) | `Ashfall.Core.Tests/` |
+| H10 | NeedsSystem & RadiationSystem lack save/load round-trip tests | `Ashfall.Core.Tests/NeedsRadiationSystemTests.cs` |
+| H11 | JournalSystem has zero tests | `Assets/Ashfall.Core/Journal/` (6 files) |
+| H12 | 121 ScriptableObject definitions — risk of dual data authority | `Assets/_Game/` (various) |
+
+---
+
+## NAMESPACE CONVENTIONS
+
+| Layer | Namespace | Matches directory? |
+|-------|-----------|-------------------|
+| Core | `Ashfall.Core`, `Ashfall.Core.Economy`, `Ashfall.Core.Journal`, etc. | ✅ |
+| Unity | `AtomicWar._Game`, `AtomicWar._Game.Core`, `AtomicWar._Game.AI`, etc. | ✅ |
+| Godot | `AtomicWar.GodotApp`, `AtomicWar.GodotApp.Economy`, etc. | ✅ (isolated `AtomicWar.Journal` exception) |
+| Tests | `Ashfall.Core.Tests` | ✅ (flat) |
+
+---
+
+## VERIFICATION CHECKLIST (per task)
+
+After writing code, verify ALL of the following. Report PASS/FAIL for each before claiming done.
+
+```
+1. dotnet build Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # Must compile (currently broken: HoldfastTradeSessionTests)
+2. dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj     # All tests pass (currently 1514 from cached DLL)
+3. dotnet build Ashfall.csproj                                  # Godot host: 0 errors, 0 warnings
+4. godot --headless --path . -- --data-integrity-selftest       # Catalog integrity: 0 errors
+5. godot --headless --path . -- --bridge-selftest               # Shim honesty
+```
+
+**NEVER run Unity** batch compile or playmode tests unless the user explicitly asks. The `dotnet` and `godot` commands are the canonical verification path.
+
+---
+
+## DOMAIN REFERENCE
+
+### Survival Needs
+hunger, thirst, fatigue, warmth, morale, RADIATION (accumulates), HEALTH, hygiene
+
+### Hazards
+fallout zones, fallout storms, nuclear-winter cold, irradiated water/food, EMP/electronics failure, mutated flora/fauna, chronic illness (long-term rad), respiratory degeneration
+
+### Medical
+affliction pipeline, triage, chemical dependency, respiratory degeneration, combat trauma, somatic flashback, guilt/insomnia, dose ledger, chelation, iodine/anti-rad
+
+### Social Systems
+ideological friction, ration conflict, moral branching, leadership, caregiving, final wishes, trauma bonding, coalition camps, census claims, voluntary registers
+
+### Economy
+dynamic pricing, trade stances/attitudes, ledger debt, brine water, ice roads, cohort system, sick lists, waystations, traveling caravans, holdfast trade sessions
+
+### World
+weather system, seasonal fallout storms, nuclear winter, visibility, outdoor radiation, geological strata, hydro-geology, industrial ruins, wasteland cartography
+
+### Shelter
+bunker with radiation shielding level + air-filtration (degrades), material shielding, sky-layer armor, blast doors, hatch defense, greenhouse, duty roster, survivor work shifts
+
+### Key Items
+dosimeter, geiger counter, iodine pills, rad-away/anti-rad, gas mask, hazmat suit (degrading), water filter, fuel, air filter (shelter), clean water, potassium iodide, chelation agents, improvised cooking stove, basic water boiler, protective rubber gloves, sewing kit, cigarette lighter, car battery
+
+---
+
+## GIT RULES
+
+- Commit after each accepted deliverable
+- Keep changes small and reviewable — **one system per task**
+- Binary assets: **DO NOT add large PNG/AI assets without Git LFS** (currently ~565 MB tracked without LFS)
+- The `unity-assets-archive-2026-08-14.tar.gz` (140 MB) should be removed from git history
+- `.gitignore` is comprehensive — do not track `_verify_*.csproj`, `.mimocode/`, `Builds/`
+- `scripts/` directory is included in .csproj but empty — do not add to it without understanding why
+
+---
+
+## WORKFLOW PER TASK
+
+0. **Check `REPO_REVIEW_REPORT.md`** for known issues in the area you're touching
+1. **Restate goal** in 2 lines
+2. **List files** you'll touch/create
+3. **Implement** — follow invariants above, especially: no engine coupling in core, use `ISeededRng` not `System.Random`, use `IJsonSerializer` not `JsonUtility`, add `CaptureState`/`RestoreState` for any stateful system
+4. **Verify** — run ALL 5 verification steps from the checklist above
+5. **Summarize** + give the exact next prompt to run
+
+---
+
+## CROSS-TOOL QA RULE
+
+Any system that introduces >=2 new coupled variables MUST be implemented by one tool and reviewed/tested by a DIFFERENT tool. The reviewer may NOT see the implementer's reasoning — only the diff + the spec — so it reviews the CODE, not the story the implementer told itself.
+
+---
+
+## TONE & CONTENT RULES
+
+- **No magic, no fantasy, no real countries/wars/people, no glorified violence**
+- **Tone:** cold, exhausted, human, restrained. Show, don't preach.
+- **AI Assets:** All AI-generated images, videos, audio, and 3D assets must be saved in `generated_AIassets/` at the game root
+- **Image generation:** Use `gemini-3-pro-image-preview` (nano banana pro) at 1024×1024. Never use `gemini-2.5-flash-image-preview`. Do NOT request 2048×2048.

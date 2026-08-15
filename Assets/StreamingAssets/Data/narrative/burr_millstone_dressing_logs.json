@@ -1,0 +1,82 @@
+[
+  {
+    "id": "burr_millstone_french_chert_chisel_cracking",
+    "millstone_pair_id": "PRIMARY_BURR_RUNNER_PAIR_01",
+    "stone_material_type": "FRENCH_CELLULAR_QUARTZ_CHERT",
+    "cracks_per_inch_count": 16.0,
+    "runner_rotational_rpm": 115.0,
+    "timestamp_relative": "YEAR_02_MILL_LOG_01",
+    "tags": ["grain_milling", "millstone", "french_burr", "dressing", "chisel_cracking"],
+    "prose": "A master stone-dresser hand-cut 16 parallel cutting cracks per inch across the lands using a tempered diamond-point steel mill bill. The microscopic razor edges on the cellular freshwater quartz sheared whole wheat grains cleanly without pulverizing wheat bran into ash."
+  },
+  {
+    "id": "burr_millstone_runner_stone_rynd_balance_lead",
+    "millstone_pair_id": "RESERVE_GRIST_MILL_RUNNER_02",
+    "stone_material_type": "SECTIONAL_QUARTZ_SEGMENTS",
+    "cracks_per_inch_count": 12.0,
+    "runner_rotational_rpm": 125.0,
+    "timestamp_relative": "YEAR_04_MILL_LOG_03",
+    "tags": ["grain_milling", "millstone", "balance_lead", "gimbal_rynd", "vibration"],
+    "prose": "Spinning the two-ton upper runner stone at 125 RPM revealed dynamic precession wobble on its gimbal mace and rynd. Pouring 1.8 kg of molten lead into the balancing pockets on the light perimeter corrected the center of mass, eliminating stone-face contact."
+  },
+  {
+    "id": "burr_millstone_furrow_lands_feather_edge_wear",
+    "millstone_pair_id": "COMMISSARY_FLOUR_MILL_01",
+    "stone_material_type": "DERBYSHIRE_PEAK_GRITSTONE",
+    "cracks_per_inch_count": 8.0,
+    "runner_rotational_rpm": 110.0,
+    "timestamp_relative": "YEAR_07_MILL_LOG_02",
+    "tags": ["grain_milling", "millstone", "feather_edge", "glazing", "flour_scorching"],
+    "prose": "Milling three hundred tons of hard winter wheat smoothed the draft furrow lands into glass-like flats. Friction heat spiked stone discharge temperature past 65°C, scorching grain enzymes and imparting a bitter toasted odor to the wholemeal flour."
+  },
+  {
+    "id": "burr_millstone_spindle_footstep_bearing_lignum_vitae",
+    "millstone_pair_id": "WATER_DRIVEN_GRIST_MILL_03",
+    "stone_material_type": "FRENCH_BURR_CHERT_BLOCKS",
+    "cracks_per_inch_count": 14.0,
+    "runner_rotational_rpm": 105.0,
+    "timestamp_relative": "YEAR_09_MILL_LOG_04",
+    "tags": ["grain_milling", "spindle", "footstep_bearing", "lignum_vitae", "thrust_bearing"],
+    "prose": "The vertical wrought-iron mill spindle rested on a self-lubricating *Lignum vitae* hardwood footstep bearing block submerged in animal fat. After six years under four tons of downward thrust, bearing gouging measured less than 0.2mm."
+  },
+  {
+    "id": "burr_millstone_bridge_tree_tentering_screw_chatter",
+    "millstone_pair_id": "PRECISION_SEMOLINA_STONE_04",
+    "stone_material_type": "FINE_GRAIN_QUARTZ_BURR",
+    "cracks_per_inch_count": 18.0,
+    "runner_rotational_rpm": 130.0,
+    "timestamp_relative": "YEAR_12_MILL_LOG_01",
+    "tags": ["grain_milling", "tentering_screw", "bridge_tree", "grinding_gap", "backlash"],
+    "prose": "Thread backlash in the cast-iron tentering screw allowed the flexible oak bridge-tree beam to bounce under cyclic torque pulses. The millstone grinding gap fluctuated by 0.15mm, creating an uneven blend of coarse cracked groats and flour dust."
+  },
+  {
+    "id": "burr_millstone_swallow_eye_centrifugal_feed_shoe",
+    "millstone_pair_id": "AUTOMATED_HOPPER_FEED_STONE",
+    "stone_material_type": "COMPOSITE_EMERY_CEMENT_STONE",
+    "cracks_per_inch_count": 10.0,
+    "runner_rotational_rpm": 120.0,
+    "timestamp_relative": "YEAR_15_MILL_LOG_03",
+    "tags": ["grain_milling", "feed_shoe", "damsel", "swallow_eye", "grain_flow"],
+    "prose": "The rotating four-sided iron damsel on the spindle clattered against the wooden feed shoe, metering 180 kg/hr of wheat into the swallow eye. Centrifugal air currents flung the kernels outward between the breast and skirt grinding zones."
+  },
+  {
+    "id": "burr_millstone_flour_hoop_leather_sweeper_brush",
+    "millstone_pair_id": "DUST_FREE_ENCLOSED_MILL_02",
+    "stone_material_type": "FRENCH_BURR_HEAVY_BLOCKS",
+    "cracks_per_inch_count": 14.0,
+    "runner_rotational_rpm": 112.0,
+    "timestamp_relative": "YEAR_17_MILL_LOG_02",
+    "tags": ["grain_milling", "sweeper", "flour_hoop", "chute_discharge", "dust_control"],
+    "prose": "A stiff ox-hide leather sweeper paddle fastened to the rotating runner stone perimeter swept warm wholemeal along the curved flour hoop. The rapid sweep discharged flour directly into the meal elevator chute before starch cakes could cake on the vat wall."
+  },
+  {
+    "id": "burr_millstone_iron_banding_thermal_shrink_fit",
+    "millstone_pair_id": "HEAVY_FOUNDRY_MILL_RUNNER_01",
+    "stone_material_type": "SEGMENTED_BURR_QUARTZ_RING",
+    "cracks_per_inch_count": 16.0,
+    "runner_rotational_rpm": 118.0,
+    "timestamp_relative": "YEAR_20_MILL_LOG_01",
+    "tags": ["grain_milling", "shrink_fit", "wrought_iron_hoop", "stone_containment", "hoop_tension"],
+    "prose": "Assembling nineteen hand-hewn French burr quartz blocks into a solid 1.4-meter grinding disc required dual red-hot wrought iron containment hoops. Quenching the heated rings with cold water shrank them with immense hoop tension, locking the blocks with zero plaster mortar creep."
+  }
+]

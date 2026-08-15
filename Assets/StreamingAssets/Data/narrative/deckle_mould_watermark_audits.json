@@ -1,0 +1,82 @@
+[
+  {
+    "id": "deckle_mould_laid_wire_chain_line_spacing",
+    "mould_frame_id": "IMPERIAL_LAID_MOULD_PAIR_01",
+    "wire_mesh_count_per_inch": 24.0,
+    "sheet_width_mm": 320.0,
+    "sheet_length_mm": 440.0,
+    "timestamp_relative": "YEAR_02_MOULD_01",
+    "tags": ["paper_making", "deckle_mould", "laid_paper", "chain_lines", "wire_cloth"],
+    "prose": "Hand-sewing twenty-four brass laid wires per inch onto tapered spruce ribs created the classic laid texture. Tied off with chain lines spaced exactly twenty-five millimeters apart, the mould drained water rapidly with zero sheet sagging."
+  },
+  {
+    "id": "deckle_mould_watermark_wire_emboss_stitch",
+    "mould_frame_id": "ARCHIVAL_SECURITY_MOULD_02",
+    "wire_mesh_count_per_inch": 28.0,
+    "sheet_width_mm": 210.0,
+    "sheet_length_mm": 297.0,
+    "timestamp_relative": "YEAR_04_MOULD_03",
+    "tags": ["paper_making", "deckle_mould", "watermark", "security_emboss", "wire_stitching"],
+    "prose": "Stitching a shaped phosphor-bronze wire emblem of the bunker gear-and-sprout insignia onto the mould face with 40-gauge copper wire displaced pulp during dipping. The thinner fiber layer yielded a sharp, translucent watermark visible against backlight."
+  },
+  {
+    "id": "deckle_mould_mahogany_frame_rib_taper",
+    "mould_frame_id": "ROYAL_FORMAT_MOULD_03",
+    "wire_mesh_count_per_inch": 32.0,
+    "sheet_width_mm": 480.0,
+    "sheet_length_mm": 620.0,
+    "timestamp_relative": "YEAR_07_MOULD_02",
+    "tags": ["paper_making", "deckle_mould", "frame_ribs", "hydrodynamics", "suction_pulse"],
+    "prose": "Profiling the underside of the mahogany supporting ribs into aerodynamic teardrop wedges enhanced drainage suction as the mould was lifted from the vat. The suction pulse locked the wet fiber mat onto the wire before the shake began."
+  },
+  {
+    "id": "deckle_mould_shake_stroke_cross_fiber_felting",
+    "mould_frame_id": "VATMAN_STANDARD_MOULD_04",
+    "wire_mesh_count_per_inch": 26.0,
+    "sheet_width_mm": 280.0,
+    "sheet_length_mm": 380.0,
+    "timestamp_relative": "YEAR_09_MOULD_04",
+    "tags": ["paper_making", "deckle_mould", "vatman_shake", "fiber_felting", "isotropic_strength"],
+    "prose": "The vatman's skilled double-action shake—a quick forward tilt followed immediately by a lateral tremor—intertwined linen fibers in all directions. The multidirectional felting produced isotropic paper with equal tensile strength across both grain axes."
+  },
+  {
+    "id": "deckle_mould_wove_wire_mesh_uniform_calender",
+    "mould_frame_id": "CARTOGRAPHY_WOVE_MOULD_05",
+    "wire_mesh_count_per_inch": 80.0,
+    "sheet_width_mm": 420.0,
+    "sheet_length_mm": 594.0,
+    "timestamp_relative": "YEAR_12_MOULD_01",
+    "tags": ["paper_making", "deckle_mould", "wove_paper", "fine_mesh", "cartography"],
+    "prose": "Stretching seamless 80-mesh phosphor-bronze twill wire cloth across the frame eliminated all laid ribbing. The resulting wove sheets formed a mirror-smooth surface ideal for fine-line subterranean topographic cartography and drafting."
+  },
+  {
+    "id": "deckle_mould_removable_deckle_edge_feather",
+    "mould_frame_id": "COMMEMORATIVE_DOCUMENT_MOULD",
+    "wire_mesh_count_per_inch": 30.0,
+    "sheet_width_mm": 250.0,
+    "sheet_length_mm": 350.0,
+    "timestamp_relative": "YEAR_15_MOULD_03",
+    "tags": ["paper_making", "deckle_mould", "deckle_edge", "feathered_margin", "removable_frame"],
+    "prose": "The precision-planed mahogany deckle rim fitted snugly over the wire mould, confining wet pulp slurry during formation. Lifting the deckle cleanly left an authentic, delicate feathered margin around every single ration certificate sheet."
+  },
+  {
+    "id": "deckle_mould_wire_corrosion_verdigris_stain",
+    "mould_frame_id": "DEFECTIVE_BRASS_MOULD_07",
+    "wire_mesh_count_per_inch": 24.0,
+    "sheet_width_mm": 300.0,
+    "sheet_length_mm": 400.0,
+    "timestamp_relative": "YEAR_17_MOULD_02",
+    "tags": ["paper_making", "deckle_mould", "verdigris", "wire_corrosion", "pulp_stain"],
+    "prose": "Allowing brass moulds to sit damp in unheated storage caused green copper hydroxycarbonate verdigris to bloom across wire junctions. Wet pulp picked up the green oxide, ruining fifty sheets with irregular turquoise stains."
+  },
+  {
+    "id": "deckle_mould_dual_wire_dandy_roll_continuous",
+    "mould_frame_id": "ROTARY_CYLINDER_DANDY_ROLL_08",
+    "wire_mesh_count_per_inch": 60.0,
+    "sheet_width_mm": 500.0,
+    "sheet_length_mm": 700.0,
+    "timestamp_relative": "YEAR_20_MOULD_01",
+    "tags": ["paper_making", "deckle_mould", "dandy_roll", "cylinder_mould", "continuous_watermark"],
+    "prose": "Riding atop the wet web of the mechanized cylinder mould machine, a hollow wire-gauze dandy roll embossed continuous wire-mark watermarks. The roll consolidated the top surface of the web, ensuring identical wire-side and felt-side smoothness."
+  }
+]

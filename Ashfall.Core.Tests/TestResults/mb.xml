@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="e24fac47-5f01-422e-b809-8e892a4cc529" name="@fedora 2026-08-15 20:46:06" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-08-15T20:46:06.4483555+03:00" queuing="2026-08-15T20:46:06.4483574+03:00" start="2026-08-15T20:46:05.8093152+03:00" finish="2026-08-15T20:46:06.4563272+03:00" />
+  <TestSettings name="default" id="3c31df4e-800a-4188-b6ae-ef93680502ce">
+    <Deployment runDeploymentRoot="_fedora_2026-08-15_20_46_06" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="f25af3cd-814a-487c-90aa-0841060902f7" testId="8b33dfc4-5159-3348-e2cf-4c28f5f42bc3" testName="Ashfall.Core.Tests.MoralBranchingSystemTests.RestoreStateInto_PatchesExistingObjects" computerName="fedora" duration="00:00:00.0063627" startTime="2026-08-15T20:46:06.3434674+03:00" endTime="2026-08-15T20:46:06.3434888+03:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Failed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="f25af3cd-814a-487c-90aa-0841060902f7">
+      <Output>
+        <ErrorInfo>
+          <Message>Assert.Equal() Failure: Values differ
+Expected: BurdenedCompassion
+Actual:   Neutral</Message>
+          <StackTrace>   at Ashfall.Core.Tests.MoralBranchingSystemTests.RestoreStateInto_PatchesExistingObjects() in /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Ashfall.Core.Tests/MoralBranchingSystemTests.cs:line 444
+   at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)</StackTrace>
+        </ErrorInfo>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="Ashfall.Core.Tests.MoralBranchingSystemTests.RestoreStateInto_PatchesExistingObjects" storage="/home/robertsrff/music/atomic_war_straving_survival/atomic war/ashfall.core.tests/bin/debug/net9.0/ashfall.core.tests.dll" id="8b33dfc4-5159-3348-e2cf-4c28f5f42bc3">
+      <Execution id="f25af3cd-814a-487c-90aa-0841060902f7" />
+      <TestMethod codeBase="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Ashfall.Core.Tests/bin/Debug/net9.0/Ashfall.Core.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner2/netcoreapp" className="Ashfall.Core.Tests.MoralBranchingSystemTests" name="RestoreStateInto_PatchesExistingObjects" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="8b33dfc4-5159-3348-e2cf-4c28f5f42bc3" executionId="f25af3cd-814a-487c-90aa-0841060902f7" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Failed">
+    <Counters total="1" executed="1" passed="0" failed="1" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v2.8.2+699d445a1a (64-bit .NET 10.0.10)
+[xUnit.net 00:00:00.06]   Discovering: Ashfall.Core.Tests
+[xUnit.net 00:00:00.15]   Discovered:  Ashfall.Core.Tests
+[xUnit.net 00:00:00.16]   Starting:    Ashfall.Core.Tests
+[xUnit.net 00:00:00.21]       Assert.Equal() Failure: Values differ
+[xUnit.net 00:00:00.21]       Expected: BurdenedCompassion
+[xUnit.net 00:00:00.21]       Actual:   Neutral
+[xUnit.net 00:00:00.21]       Stack Trace:
+[xUnit.net 00:00:00.21]         /home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Ashfall.Core.Tests/MoralBranchingSystemTests.cs(444,0): at Ashfall.Core.Tests.MoralBranchingSystemTests.RestoreStateInto_PatchesExistingObjects()
+[xUnit.net 00:00:00.21]            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+[xUnit.net 00:00:00.21]            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+[xUnit.net 00:00:00.21]   Finished:    Ashfall.Core.Tests
+</StdOut>
+    </Output>
+    <RunInfos>
+      <RunInfo computerName="fedora" outcome="Error" timestamp="2026-08-15T20:46:06.3415175+03:00">
+        <Text>[xUnit.net 00:00:00.20]     Ashfall.Core.Tests.MoralBranchingSystemTests.RestoreStateInto_PatchesExistingObjects [FAIL]</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+</TestRun>

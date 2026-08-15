@@ -109,6 +109,14 @@ namespace AtomicWar.GodotApp
         private bool _dutyRosterDirty;
         private bool _expansionHubDirty;
 
+        // ── Game flow state ───────────────────────────────────────────
+        private MainMenuPanel _mainMenu = null!;
+        private GameOverPanel _gameOver = null!;
+        private GameHudOverlay _hudOverlay = null!;
+        private VBoxContainer _gameUiContainer = null!;
+        private enum GameState { Menu, Playing, GameOver }
+        private GameState _state = GameState.Menu;
+
         public override void _Ready()
         {
             GD.Print("[Ashfall Godot] Initializing ASHFALL: Atomic War - Starving Survival...");
@@ -368,13 +376,26 @@ namespace AtomicWar.GodotApp
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
 
+            // ── Game UI container (hidden initially) ──
+            var gameUiContainer = new VBoxContainer();
+            gameUiContainer.SetAnchorsPreset(LayoutPreset.FullRect);
+            gameUiContainer.Visible = false;
+            AddChild(gameUiContainer);
+            _gameUiContainer = gameUiContainer;
+
+            // ── HUD overlay ──
+            _hudOverlay = new GameHudOverlay();
+            _hudOverlay.OnMenuRequested += ReturnToMenu;
+            gameUiContainer.AddChild(_hudOverlay);
+
+            // ── Game content area ──
             var margin = new MarginContainer();
-            margin.SetAnchorsPreset(LayoutPreset.FullRect);
+            margin.SizeFlagsVertical = SizeFlags.ExpandFill;
             margin.AddThemeConstantOverride("margin_left", 60);
-            margin.AddThemeConstantOverride("margin_top", 50);
+            margin.AddThemeConstantOverride("margin_top", 10);
             margin.AddThemeConstantOverride("margin_right", 60);
             margin.AddThemeConstantOverride("margin_bottom", 50);
-            AddChild(margin);
+            gameUiContainer.AddChild(margin);
 
             // MarginContainer gives EVERY child the same full rect, so it must hold
             // exactly one child. Adding the diagnostics bar as a second child made it
@@ -590,6 +611,26 @@ namespace AtomicWar.GodotApp
             _doorModal = new DoorEncounterModal();
             AddChild(_doorModal);
             _doorModal.OnChoiceClicked += OnDoorEncounterChoiceClicked;
+
+            // ── Main Menu (overlay, shown initially) ──
+            _mainMenu = new MainMenuPanel();
+            _mainMenu.OnNewGame += StartNewGame;
+            _mainMenu.OnContinue += ContinueGame;
+            _mainMenu.OnQuit += () => { SaveAll(); GetTree().Quit(); };
+            AddChild(_mainMenu);
+
+            // ── Game Over (overlay, hidden) ──
+            _gameOver = new GameOverPanel();
+            _gameOver.OnNewGame += StartNewGame;
+            _gameOver.OnReturnToMenu += ReturnToMenu;
+            AddChild(_gameOver);
+
+            // ── Check for existing save ──
+            bool hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath);
+            _mainMenu.EnableContinue(hasSave);
+
+            // ── Start in menu state ──
+            _state = GameState.Menu;
         }
 
         private void AddMenuButton(string text, Action callback)
@@ -735,6 +776,10 @@ namespace AtomicWar.GodotApp
             _holdfastTerminal = new HoldfastTerminalPanel();
             AddChild(_holdfastTerminal);
             _holdfastTerminal.BindSession(_holdfastRuntime);
+
+            // ── Wire death event ──
+            _holdfastRuntime.OnPlayerDied += OnPlayerDied;
+            _holdfastRuntime.OnGameWon += OnGameWon;
         }
 
         private void SetupDutyRoster()
@@ -2082,14 +2127,16 @@ namespace AtomicWar.GodotApp
             bool renderSweep = allItemsRender && allFactionsRender;
 
             // ── Core trade flow ──
+            // Catalog now loads real items (default stock 20/type; fume_rag trade 2).
             _holdfastTerminal.SelectFaction("faction_the_office");
             _holdfastTerminal.SelectItem("item_fume_rag");
             _holdfastTerminal.SetTradeQuantity(2);
             var buy = _holdfastTerminal.PressBuy();
+            GD.Print($"[probe] buy success={buy?.Success} msg={buy?.Message} value={runtime.Trade.PlayerValue} held={runtime.Trade.GetHeld(\"item_fume_rag\")} stock={runtime.Trade.GetStock(\"item_fume_rag\")}");
             bool bought = buy != null && buy.Success
                 && runtime.Trade.PlayerValue == 96
                 && runtime.Trade.GetHeld("item_fume_rag") == 2
-                && runtime.Trade.GetStock("item_fume_rag") == 2;
+                && runtime.Trade.GetStock("item_fume_rag") == 18; // 20 default - 2
 
             long valueBeforeInvalid = runtime.Trade.PlayerValue;
             int heldBeforeInvalid = runtime.Trade.GetHeld("item_fume_rag");
@@ -2522,6 +2569,125 @@ namespace AtomicWar.GodotApp
                 _statusLabel.Text = $"Ready: {jsonCount} JSON Game Catalogs connected.";
             if (_codexViewer != null)
                 _codexViewer.Text = summary.ToString();
+        }
+
+        // -----------------------------------------------------------------
+        // Game flow: Menu → Playing → GameOver
+        // -----------------------------------------------------------------
+
+        private void StartNewGame()
+        {
+            _state = GameState.Playing;
+            _mainMenu.Visible = false;
+            _gameOver.Visible = false;
+            _gameUiContainer.Visible = true;
+
+            // Initialize Holdfast
+            SetupHoldfastRuntime();
+            _holdfastTerminal.PressNewLedger();
+            _holdfastTerminal.OpenTerminal();
+
+            // Update HUD
+            UpdateHud();
+
+            _statusLabel.Text = "New game started. Day 1. The ash is settling.";
+        }
+
+        private void ContinueGame()
+        {
+            _state = GameState.Playing;
+            _mainMenu.Visible = false;
+            _gameOver.Visible = false;
+            _gameUiContainer.Visible = true;
+
+            // Load existing save
+            SetupHoldfastRuntime();
+            _holdfastTerminal.OpenTerminal();
+
+            // Update HUD
+            UpdateHud();
+
+            _statusLabel.Text = "Save loaded. The ledger continues.";
+        }
+
+        private void ReturnToMenu()
+        {
+            _state = GameState.Menu;
+            _gameUiContainer.Visible = false;
+            _gameOver.Visible = false;
+            _mainMenu.Visible = true;
+
+            // Save before returning
+            SaveAll();
+
+            // Check for existing save
+            bool hasSave = System.IO.File.Exists(HoldfastSaveStore.SavePath);
+            _mainMenu.EnableContinue(hasSave);
+        }
+
+        private void ShowGameOver(string cause, string stats)
+        {
+            _state = GameState.GameOver;
+            _gameUiContainer.Visible = false;
+            _mainMenu.Visible = false;
+            _gameOver.ShowGameOver(cause, stats);
+
+            // Save final state
+            SaveAll();
+        }
+
+        private void UpdateHud()
+        {
+            if (_holdfastRuntime == null) return;
+            long value = _holdfastRuntime.Trade.PlayerValue;
+            string faction = _holdfastTerminal?.SelectedFactionId ?? "";
+            _hudOverlay.UpdateState(_holdfastRuntime.Day, value, faction);
+            _hudOverlay.UpdateHealth(_holdfastRuntime.Health, HoldfastRuntimeSession.MaxHealth);
+            _hudOverlay.UpdateRadiation(_holdfastRuntime.Radiation);
+        }
+
+        private void OnPlayerDied(string cause)
+        {
+            string stats = $"Survived {_holdfastRuntime.Day} days. " +
+                           $"Final value: {_holdfastRuntime.Trade.PlayerValue}. " +
+                           $"Radiation: {_holdfastRuntime.Radiation:F0} mSv.";
+            ShowGameOver(cause, stats);
+        }
+
+        private void OnGameWon(string message)
+        {
+            string stats = $"The Holdfast endures. Day {_holdfastRuntime.Day}. " +
+                           $"Final value: {_holdfastRuntime.Trade.PlayerValue}. " +
+                           $"All {HoldfastQuestSystem.MainQuestIds.Length} quests complete.";
+            ShowGameOver(message, stats);
+        }
+
+        private void SaveAll()
+        {
+            SaveJournal();
+            SaveHoldfast();
+            SaveHoldfastRuntime();
+            SaveDutyRoster();
+            SaveExpansionHub();
+            SavePhantomMemory();
+            SaveDoseLedger();
+            SaveMuster();
+            SaveInventory();
+            SaveSurvivors();
+            SaveEconomy();
+            SaveVerdict();
+        }
+
+        public override void _UnhandledInput(InputEvent @event)
+        {
+            if (_state == GameState.Playing && @event is InputEventKey key && key.Pressed)
+            {
+                if (key.Keycode == Key.Escape)
+                {
+                    ReturnToMenu();
+                    GetViewport().SetInputAsHandled();
+                }
+            }
         }
 
         private void OnStartGameClicked()

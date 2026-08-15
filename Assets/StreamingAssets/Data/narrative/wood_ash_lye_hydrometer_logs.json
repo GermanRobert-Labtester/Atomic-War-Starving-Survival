@@ -1,0 +1,82 @@
+[
+  {
+    "id": "wood_ash_lye_leaching_barrel_straw_filter",
+    "leaching_vat_id": "PRIMARY_ASH_LEACHING_VAT_01",
+    "feedstock_ash_source": "HARDWOOD_OAK_MAPLE_ASH",
+    "lye_specific_gravity_baume": 18.5,
+    "potassium_hydroxide_concentration_pct": 12.4,
+    "timestamp_relative": "YEAR_02_LYE_01",
+    "tags": ["saponification", "wood_ash_lye", "leaching_vat", "potash", "straw_filter"],
+    "prose": "Packing a sixty-gallon oak leaching cask with sifted hardwood ashes over a tiered filter bed of rye straw and river pebbles allowed boiling rainwater to percolate slowly. The amber potash liquor drained through the bottom spigot with high potassium carbonate purity."
+  },
+  {
+    "id": "wood_ash_lye_floating_egg_density_test",
+    "leaching_vat_id": "COMMISSARY_TEST_BARREL_02",
+    "feedstock_ash_source": "WHITE_ASH_FURNACE_RESIDUE",
+    "lye_specific_gravity_baume": 20.0,
+    "potassium_hydroxide_concentration_pct": 14.2,
+    "timestamp_relative": "YEAR_04_LYE_03",
+    "tags": ["saponification", "wood_ash_lye", "floating_egg", "density_test", "traditional_assay"],
+    "prose": "Testing lye strength using a fresh poultry egg confirmed optimal concentration when the egg floated buoyantly with a quarter-sized crown exposed above the surface. The traditional buoyancy benchmark indicated a specific gravity of 1.16."
+  },
+  {
+    "id": "wood_ash_lye_slaked_lime_causticizing_potash",
+    "leaching_vat_id": "CAUSTICIZING_REACTOR_TANK_03",
+    "feedstock_ash_source": "SUGAR_MAPLE_BIOCHAR_ASH",
+    "lye_specific_gravity_baume": 22.5,
+    "potassium_hydroxide_concentration_pct": 18.0,
+    "timestamp_relative": "YEAR_07_LYE_02",
+    "tags": ["saponification", "wood_ash_lye", "causticizing", "slaked_lime", "potassium_hydroxide"],
+    "prose": "Stirring fifty kilograms of freshly slaked quicklime into boiling potassium carbonate liquor precipitated insoluble calcium carbonate chalk. The causticizing reaction converted weak carbonate solution into aggressive, clear potassium hydroxide lye."
+  },
+  {
+    "id": "wood_ash_lye_rainwater_demineralization_clarity",
+    "leaching_vat_id": "POLISHING_FILTER_BAY_04",
+    "feedstock_ash_source": "BEECHWOOD_RETORT_ASH",
+    "lye_specific_gravity_baume": 19.2,
+    "potassium_hydroxide_concentration_pct": 13.5,
+    "timestamp_relative": "YEAR_09_LYE_04",
+    "tags": ["saponification", "wood_ash_lye", "felt_filtration", "carbon_removal", "clarification"],
+    "prose": "Passing raw caustic liquor through double-layered pressed wool felt pads stripped out microscopic carbon soot and colloidal clay. The clarified, sparkling straw-colored lye eliminated grey streaks in finished toilet soap batches."
+  },
+  {
+    "id": "wood_ash_lye_caustic_burn_vinegar_neutralize",
+    "leaching_vat_id": "SAFETY_WASH_STATION_ALPHA",
+    "feedstock_ash_source": "HIGH_STRENGTH_CAUSTIC_STOCK",
+    "lye_specific_gravity_baume": 25.0,
+    "potassium_hydroxide_concentration_pct": 21.0,
+    "timestamp_relative": "YEAR_12_LYE_01",
+    "tags": ["saponification", "wood_ash_lye", "caustic_burn", "vinegar_neutralize", "safety_first_aid"],
+    "prose": "A ruptured leaching hose splashed boiling 25° Bé caustic lye across an apprentice's forearm. Emergency dousing with 5% wood vinegar neutralized the slippery alkali within eight seconds, preventing irreversible third-degree chemical burns."
+  },
+  {
+    "id": "wood_ash_lye_specific_gravity_hydrometer_spindle",
+    "leaching_vat_id": "PRECISION_ASSAY_STAND_06",
+    "feedstock_ash_source": "STANDARDIZED_OAK_LEACHATE",
+    "lye_specific_gravity_baume": 24.0,
+    "potassium_hydroxide_concentration_pct": 19.5,
+    "timestamp_relative": "YEAR_15_LYE_03",
+    "tags": ["saponification", "wood_ash_lye", "hydrometer", "baume_spindle", "standardization"],
+    "prose": "A calibrated glass Baumé hydrometer spindle floating in 20°C settled lye registered exactly 24.0° Bé. The verified density guaranteed stoichiometric saponification balance when paired with rendered mutton tallow charges."
+  },
+  {
+    "id": "wood_ash_lye_softwood_ash_silicate_contamination",
+    "leaching_vat_id": "CONTAMINATED_CHARGE_VAT_07",
+    "feedstock_ash_source": "SCRAP_PINE_CONIFER_ASH",
+    "lye_specific_gravity_baume": 15.0,
+    "potassium_hydroxide_concentration_pct": 8.0,
+    "timestamp_relative": "YEAR_17_LYE_02",
+    "tags": ["saponification", "wood_ash_lye", "softwood_ash", "silicate_contamination", "resin_acids"],
+    "prose": "Leaching ashes from boiler scrap pine introduced high concentrations of soluble sodium silicates and sticky abietic resin acids. The resulting lye produced a gummy, cloudy curd that refused to salt out cleanly."
+  },
+  {
+    "id": "wood_ash_lye_iron_kettle_concentration_boil",
+    "leaching_vat_id": "CONCENTRATION_EVAPORATOR_08",
+    "feedstock_ash_source": "MIXED_HARDWOOD_LEACHATE",
+    "lye_specific_gravity_baume": 26.5,
+    "potassium_hydroxide_concentration_pct": 23.0,
+    "timestamp_relative": "YEAR_20_LYE_01",
+    "tags": ["saponification", "wood_ash_lye", "evaporation", "kettle_boil", "high_concentration"],
+    "prose": "Boiling down 600 liters of weak 10° Bé percolate in a massive hemispherical cast-iron kettle evaporated 400 liters of excess water. The concentrated 26.5° Bé heavy lye cut saponification cooking time from twelve hours to ninety minutes."
+  }
+]

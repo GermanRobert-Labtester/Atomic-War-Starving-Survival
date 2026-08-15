@@ -1,0 +1,51 @@
+[
+  {
+    "id": "bone_scraping_001",
+    "blank_material": "dog_long_bone",
+    "abrasive_used": "sandstone_block",
+    "surface_finish": "smooth_matte",
+    "log_text": "Dog femur blank. Scraped flat with a flint edge, then worked through the sandstone block, coarse side then fine. The bone dust is fine and white and gets into everything. Protective cloth over the nose. Smooth matte surface after an hour. The blank is ready for final shaping."
+  },
+  {
+    "id": "bone_scraping_002",
+    "blank_material": "deer_antler_rod",
+    "abrasive_used": "folded_abrasive_cloth",
+    "surface_finish": "semi_gloss",
+    "log_text": "Antler rod blank worked through folded cloth pulled around it while rotating — a simple kind of lathe-turning by hand. The abrasive cloth wraps the form evenly. Surface came up to semi-gloss in twenty minutes of hard work. Much faster than flat stone abrasives for round sections."
+  },
+  {
+    "id": "bone_scraping_003",
+    "blank_material": "rabbit_tibia",
+    "abrasive_used": "sandstone_block",
+    "surface_finish": "smooth_matte",
+    "log_text": "Rabbit tibia for a fine needle blank. The bone is thin enough that working it on the coarse sandstone risks breaking it. Used the fine side only, lightly. Smooth matte surface. The bone is so fine at the working end that it is almost translucent."
+  },
+  {
+    "id": "bone_scraping_004",
+    "blank_material": "goat_horn_plate",
+    "abrasive_used": "sandstone_block",
+    "surface_finish": "high_gloss",
+    "log_text": "Horn plate responds differently from bone — softer, polishes faster. Worked through the sandstone to a fine grit equivalent, then rubbed with a leather scrap charged with ash. High gloss emerged. The horn surface is hard and almost warm to the touch. Beautiful is not a word we use much now."
+  },
+  {
+    "id": "bone_scraping_005",
+    "blank_material": "dog_flat_bone",
+    "abrasive_used": "flint_scraper_then_sandstone",
+    "surface_finish": "smooth_matte",
+    "log_text": "Flat bone scraper blank — scapula section. Flint edge used first to remove the outer periosteum and rough-shape the scraping edge. Then sandstone to smooth the body faces. The working edge left slightly rough from the flint — it works better that way for hide scraping."
+  },
+  {
+    "id": "bone_scraping_006",
+    "blank_material": "cattle_horn_wall",
+    "abrasive_used": "folded_abrasive_cloth",
+    "surface_finish": "high_gloss",
+    "log_text": "Cattle horn cup exterior. Worked with the folded cloth around the curved surface. High gloss in forty minutes. The translucency increases as the surface thins. Stopped before it became too thin at the base. The cup holds water cleanly — no taste or smell transferred."
+  },
+  {
+    "id": "bone_scraping_007",
+    "blank_material": "mixed_offcut_discs",
+    "abrasive_used": "sandstone_block",
+    "surface_finish": "smooth_matte",
+    "log_text": "Toggle disc blanks — varied bone and horn. Each disc worked flat on the sandstone, both faces, then the edge rounded. Small work; done in batches. The discs are smooth and will not snag on thread. One afternoon produced eighteen finished toggles."
+  }
+]

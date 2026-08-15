@@ -1,0 +1,58 @@
+[
+  {
+    "id": "clay_wedging_001",
+    "clay_bed_source": "basement_floor_deposit",
+    "wedging_cycle_count": 80,
+    "forming_method": "coil_building",
+    "log_text": "Dug clay from the cracked floor of the lower basement — it had been wet and dry so many times the texture was almost ready. Screened out gravel through wire mesh. Wedged on the concrete slab for an hour. Eighty cycles before the air pockets stopped showing. Built three coil pots."
+  },
+  {
+    "id": "clay_wedging_002",
+    "clay_bed_source": "basement_floor_deposit",
+    "wedging_cycle_count": 60,
+    "forming_method": "pinch_pot",
+    "log_text": "Smaller batch for pinch pots — cups and bowls. Sixty wedge cycles; the clay is forgiving enough at this scale that fewer are needed. Six pinch pots. Two cracked during shaping. Four survived to dry. That ratio is expected."
+  },
+  {
+    "id": "clay_wedging_003",
+    "clay_bed_source": "collapsed_wall_rubble",
+    "wedging_cycle_count": 120,
+    "forming_method": "slab_building",
+    "log_text": "Clay from crushed wall plaster and brick dust — sandy, needs longer wedging. One hundred and twenty cycles and it still felt gritty. Added a little of the basement clay to bind it. Slab-rolled between boards and cut with a wire. Four flat panels for a square canteen body."
+  },
+  {
+    "id": "clay_wedging_004",
+    "clay_bed_source": "collapsed_wall_rubble",
+    "wedging_cycle_count": 100,
+    "forming_method": "coil_building",
+    "log_text": "Second batch from the wall rubble, mixed half-and-half with basement clay. Better plasticity. One hundred cycles. Coil-built a large storage jar — thirty centimetre height, wide mouth. The coil joins are smoothed inside with a wet finger. It is ugly but it should hold."
+  },
+  {
+    "id": "clay_wedging_005",
+    "clay_bed_source": "old_mortar_scraping",
+    "wedging_cycle_count": 150,
+    "forming_method": "pinch_pot",
+    "log_text": "Old mortar scraped from between the bricks — very fine, silty. Needed the most wedging of any batch. One hundred and fifty cycles. Extremely plastic when worked up. Made small pinch bowls — the fineness of the clay lets you bring the walls very thin."
+  },
+  {
+    "id": "clay_wedging_006",
+    "clay_bed_source": "basement_floor_deposit",
+    "wedging_cycle_count": 75,
+    "forming_method": "slab_building",
+    "log_text": "Slab-built oil lamp forms — flat oval base, short walls, notch for a wick. Simple. Seventy-five wedge cycles. Cut twenty blanks from the slab, pressed into shape over a curved stone former. All survived shaping. The forming only takes minutes once the clay is ready."
+  },
+  {
+    "id": "clay_wedging_007",
+    "clay_bed_source": "mixed_sources",
+    "wedging_cycle_count": 90,
+    "forming_method": "coil_building",
+    "log_text": "Ran out of the good basement clay. Mixed what was left with wall rubble and mortar scrapings. Ninety cycles to homogenise. The clay does not respond the same — stiffer, less forgiving. Coil-built two smaller jars. The walls are thicker to compensate. They will work."
+  },
+  {
+    "id": "clay_wedging_008",
+    "clay_bed_source": "basement_floor_deposit",
+    "wedging_cycle_count": 70,
+    "forming_method": "hand_press_mould",
+    "log_text": "Made a plaster mould from a surviving bowl to press duplicate forms. The clay wedged to seventy cycles pressed cleanly into the mould and released after twenty minutes. Six identical bowls in a morning. Mould-pressing is faster. We should have done this earlier."
+  }
+]

@@ -1,5 +1,7 @@
 using System;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.YearOfAsh;
 
 namespace AtomicWar.GodotApp.YearOfAsh
@@ -23,6 +25,21 @@ namespace AtomicWar.GodotApp.YearOfAsh
             SetAnchorsPreset(LayoutPreset.TopRight);
             CustomMinimumSize = new Vector2(340, 180);
 
+            // Apply standard panel 9-slice
+            var tex = AtomicWar.GodotApp.UI.AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                var sb = new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+                AddThemeStyleboxOverride("panel", sb);
+            }
+
             var rootVbox = new VBoxContainer();
             rootVbox.AddThemeConstantOverride("separation", 6);
             AddChild(rootVbox);
@@ -32,7 +49,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = "GEOTHERMAL HEAT & INTAKE ICING",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            title.AddThemeFontSizeOverride("font_size", 13);
+            title.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             rootVbox.AddChild(title);
 
             _lblIndoorTemp = new Label { Text = "Bunker Temperature: 18.0°C" };

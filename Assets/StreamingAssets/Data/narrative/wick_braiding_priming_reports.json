@@ -1,0 +1,51 @@
+[
+  {
+    "id": "wick_braiding_001",
+    "wick_fibre_type": "cotton_rag_strip",
+    "braid_ply_count": 3,
+    "priming_wax_type": "beeswax_pure",
+    "log_text": "Cotton strips from an old shirt, cut thin and braided three-ply. Primed by drawing through the wax pot at sixty degrees and hanging from a nail to cool straight. The wax soaks into the cotton and stiffens it slightly. The wick lights and burns with almost no soot."
+  },
+  {
+    "id": "wick_braiding_002",
+    "wick_fibre_type": "linen_thread",
+    "braid_ply_count": 3,
+    "priming_wax_type": "beeswax_tallow_blend",
+    "log_text": "Linen thread braided three-ply — finer than the cotton strips. Primed with the tallow blend. The blend does not soak as cleanly as pure wax; the wick looks matte and a little rough. Burn test showed good flame with minimal mushrooming. Better than expected from tallow-primed wick."
+  },
+  {
+    "id": "wick_braiding_003",
+    "wick_fibre_type": "cattail_pith",
+    "braid_ply_count": 1,
+    "priming_wax_type": "tallow_pure",
+    "log_text": "Cattail pith used as a single-strand wick — no braiding needed, the pith is naturally absorbent. Primed by soaking in tallow overnight. Burns slowly and steadily. The flame is smaller than a braided wick. Good for low-consumption oil lamps rather than candles."
+  },
+  {
+    "id": "wick_braiding_004",
+    "wick_fibre_type": "cotton_rag_strip",
+    "braid_ply_count": 5,
+    "priming_wax_type": "beeswax_pure",
+    "log_text": "Five-ply braid for the large tallow candles — thicker flame, more light. Primed twice in pure wax. The thicker wick drinks more fuel: the candle burns brighter but shorter. Two-hour candle becomes a seventy-minute candle with the five-ply wick. Worth it for tasks that need good light."
+  },
+  {
+    "id": "wick_braiding_005",
+    "wick_fibre_type": "nettle_yarn",
+    "braid_ply_count": 3,
+    "priming_wax_type": "beeswax_tallow_blend",
+    "log_text": "Nettle yarn braided and wax-primed. Nettle burns differently from cotton — more ash, a little more soot. Functional but the cotton wick is better. Will use nettle wicks for the lamp oil lights where soot matters less than in the enclosed sleeping spaces."
+  },
+  {
+    "id": "wick_braiding_006",
+    "wick_fibre_type": "hemp_tow_yarn",
+    "braid_ply_count": 3,
+    "priming_wax_type": "tallow_pure",
+    "log_text": "Hemp tow yarn is coarser and hairier than line fibre. The braid sits looser. Primed with tallow — the hairy surface holds the tallow well. Burns with a faint crackle and more smoke than the cotton wick. Acceptable for outdoor or ventilated use where soot disperses."
+  },
+  {
+    "id": "wick_braiding_007",
+    "wick_fibre_type": "linen_thread",
+    "braid_ply_count": 4,
+    "priming_wax_type": "beeswax_pure",
+    "log_text": "Four-ply linen braid, double-primed in pure wax. This became the standard candle wick. Consistent burn, low soot, flame holds steady in still shelter air. Made forty wicks in one session. The repetition is calming in the way that only purely mechanical work can be."
+  }
+]

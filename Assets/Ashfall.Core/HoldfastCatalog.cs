@@ -77,13 +77,55 @@ namespace Ashfall.Core
     }
 
     /// <summary>
-    /// Loads holdfast_locations.json / holdfast_quests.json from the shared
-    /// StreamingAssets/Data directory. No ScriptableObject materialisation.
+    /// JSON DTO for holdfast_items.json. HoldfastItemDefinition is immutable
+    /// (no setters), so deserialise into this DTO and convert in the loader.
+    /// </summary>
+    public sealed class HoldfastItemDto
+    {
+        public string id { get; set; } = string.Empty;
+        public string displayName { get; set; } = string.Empty;
+        public string description { get; set; } = string.Empty;
+        public double tradeValue { get; set; } = 0.0;
+        public double weight { get; set; } = 1.0;
+        public string type { get; set; } = "resource";
+        public int stackMax { get; set; } = 99;
+        public double thirstRestore { get; set; } = 0.0;
+        public double hungerRestore { get; set; } = 0.0;
+        public double moraleEffect { get; set; } = 0.0;
+    }
+
+    /// <summary>
+    /// JSON DTO for holdfast_factions.json. Avoids the alias collision in
+    /// HoldfastFactionEntry (it defines both `id` and `Id`, which fall over
+    /// when PropertyNameCaseInsensitive is on), so deserialise into this DTO
+    /// and convert in the loader.
+    /// </summary>
+    public sealed class HoldfastFactionDto
+    {
+        public string id { get; set; } = string.Empty;
+        public string display_name { get; set; } = string.Empty;
+        public string alignment { get; set; } = string.Empty;
+        public string home_region { get; set; } = string.Empty;
+        public bool is_active { get; set; } = true;
+        public float trust { get; set; } = 0f;
+        public string[] wants { get; set; } = Array.Empty<string>();
+        public string[] offers { get; set; } = Array.Empty<string>();
+        public string signature_quote { get; set; } = string.Empty;
+        public string access_rule { get; set; } = string.Empty;
+        public string badge_asset_id { get; set; } = string.Empty;
+    }
+
+    /// <summary>
+    /// Loads holdfast_locations.json / holdfast_quests.json / holdfast_items.json /
+    /// holdfast_factions.json from the shared StreamingAssets/Data directory.
+    /// No ScriptableObject materialisation.
     /// </summary>
     public sealed class HoldfastCatalogLoader
     {
         public const string LocationsFile = "holdfast_locations.json";
         public const string QuestsFile = "holdfast_quests.json";
+        public const string ItemsFile = "holdfast_items.json";
+        public const string FactionsFile = "holdfast_factions.json";
 
         private readonly IFileIO _files;
         private readonly IJsonSerializer _json;
@@ -111,6 +153,8 @@ namespace Ashfall.Core
 
             LoadLocations(_files.Combine(dataDirectory, LocationsFile), catalog.Locations, expansionUnlocked);
             LoadList(_files.Combine(dataDirectory, QuestsFile), catalog.Quests, "quests");
+            LoadItems(_files.Combine(dataDirectory, ItemsFile), catalog.Items, "items");
+            LoadFactions(_files.Combine(dataDirectory, FactionsFile), catalog.Factions, "factions");
             return catalog;
         }
 
@@ -184,5 +228,80 @@ namespace Ashfall.Core
                 _log.Error("Holdfast " + label + " parse failed: " + e.Message);
             }
         }
+
+        /// <summary>
+        /// Loads items from holdfast_items.json into the item catalog.
+        /// JSON uses camelCase fields (displayName, tradeValue, stackMax, ...).
+        /// </summary>
+        private void LoadItems(string path, HoldfastItemsCatalog dest, string label)
+        {
+            if (!_files.FileExists(path))
+            {
+                _log.Warn("Holdfast " + label + " file missing: " + path);
+                return;
+            }
+
+            try
+            {
+                string json = _files.ReadAllText(path);
+                var dtos = _json.Deserialize<List<HoldfastItemDto>>(json);
+                if (dtos == null) return;
+                for (int i = 0; i < dtos.Count; i++)
+                {
+                    var dto = dtos[i];
+                    if (dto == null || string.IsNullOrEmpty(dto.id)) continue;
+                    dest.Register(new HoldfastItemDefinition(
+                        dto.id,
+                        dto.displayName,
+                        dto.description,
+                        (float)dto.tradeValue,
+                        (float)dto.weight,
+                        dto.type,
+                        dto.stackMax));
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error("Holdfast " + label + " parse failed: " + e.Message);
+            }
+        }
+
+        private void LoadFactions(string path, HoldfastFactionsCatalog dest, string label)
+        {
+            if (!_files.FileExists(path))
+            {
+                _log.Warn("Holdfast " + label + " file missing: " + path);
+                return;
+            }
+
+            try
+            {
+                string json = _files.ReadAllText(path);
+                var dtos = _json.Deserialize<List<HoldfastFactionDto>>(json);
+                if (dtos == null) return;
+                for (int i = 0; i < dtos.Count; i++)
+                {
+                    var dto = dtos[i];
+                    if (dto == null || string.IsNullOrEmpty(dto.id)) continue;
+                    dest.Register(new HoldfastFactionEntry(
+                        dto.id,
+                        dto.display_name,
+                        dto.alignment,
+                        dto.home_region,
+                        dto.is_active,
+                        dto.trust,
+                        dto.wants,
+                        dto.offers,
+                        dto.signature_quote,
+                        dto.access_rule,
+                        dto.badge_asset_id));
+                }
+            }
+            catch (Exception e)
+            {
+                _log.Error("Holdfast " + label + " parse failed: " + e.Message);
+            }
+        }
     }
 }
+
