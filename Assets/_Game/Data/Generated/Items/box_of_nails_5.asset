@@ -15,7 +15,7 @@ MonoBehaviour:
   id: box_of_nails_5
   displayName: Box of Nails (5x)
   description: Five nails boxed.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 2fba73343d3db993d9546cde446dc816, type: 3}
   type: 10
   stackMax: 25
   weight: 0.15

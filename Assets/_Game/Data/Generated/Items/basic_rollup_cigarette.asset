@@ -15,7 +15,7 @@ MonoBehaviour:
   id: basic_rollup_cigarette
   displayName: Basic Rollup Cigarette
   description: Hand-rolled smoke.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ab980c78c2aefed2dbc2c9103c0e3392, type: 3}
   type: 12
   stackMax: 40
   weight: 0.01

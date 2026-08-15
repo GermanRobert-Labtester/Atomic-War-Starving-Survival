@@ -99,6 +99,7 @@ namespace AtomicWar._Game.Core
         private RepairWorkOrderSystem _repairWorkOrderSystem;
         private SurvivorWorkShiftSystem _survivorWorkShiftSystem;
         private SurvivorTaskBoardSystem _survivorTaskBoardSystem;
+        private MoralChronicleBridge _moralChronicleBridge;
         private ExpeditionSystem _expeditionSystem;
         private MedicalSystem _medicalSystem;
         private BloodTransfusionSystem _bloodTransfusion;
@@ -155,6 +156,7 @@ namespace AtomicWar._Game.Core
         private Encounter_WeatherStation _weatherStation;
         private Encounter_Pianist _pianist;
         private LocationQuestSystem _locationQuestSystem;
+        private ExpansionQuestChainsSystem _expansionQuestChainsSystem;
         private ExcavationSystem _excavationSystem;
         private RoomFloodingSystem _floodingSystem;
         private HiddenStorageSystem _hiddenStorageSystem;
@@ -209,6 +211,19 @@ namespace AtomicWar._Game.Core
         private System_EpilogueStats _epilogueStatsSystem;
         private System_Gossip _gossipSystem;
         private System_AdaptiveWarlords _adaptiveWarlordsSystem;
+        // Expansion II — The Weight of Factions
+        private System_GarrisonComplianceLedger _garrisonComplianceLedgerSystem;
+        private System_MilitiaContributionTax _militiaContributionTaxSystem;
+        private System_CultLeash _cultLeashSystem;
+        // Section VII new-content batch
+        private SleepDeprivationSystem _sleepDeprivationSystem;
+        private GriefSystem _griefSystem;
+        private ShelterDegradationSystem _shelterDegradationSystem;
+        private AshAccumulationSystem _ashAccumulationSystem;
+        private DiseaseMutationSystem _diseaseMutationSystem;
+        private NoiseDisciplineSystem _noiseDisciplineSystem;
+        private CalorieAccountingSystem _calorieAccountingSystem;
+        private System_WarlordTribute _warlordTributeSystem;
         private System_BilgePumps _bilgePumpsSystem;
         private System_CarrionBirds _carrionBirdsSystem;
         private System_LogicGates _logicGatesSystem;
@@ -544,6 +559,15 @@ namespace AtomicWar._Game.Core
         private Location_Arcade _locationArcade;
         private Location_SlaveMarket _locationSlaveMarket;
         private Location_StrandedYacht _locationStrandedYacht;
+        // "Into the Ash" expansion locations
+        private Location_DistrictCoordinationOffice _locationDistrictCoordOffice;
+        private Location_CheckpointKiloMemorial _locationCheckpointKilo;
+        private Location_MilitiaGrainExchange _locationMilitiaGrainExchange;
+        private Location_GlowChapel _locationGlowChapel;
+        private Location_TollHouse _locationTollHouse;
+        private Location_StMarenHospitalAnnex _locationStMarenAnnex;
+        private Location_RadioTowerSevenBunker _locationRadioTowerSeven;
+        private Location_MartaFarmhouse _locationMartaFarmhouse;
         private AquiferSystem _mapAquifer;
         private AshDriftSystem _ashDriftSystem;
         private BurnWardSystem _burnWardSystem;
@@ -669,6 +693,23 @@ namespace AtomicWar._Game.Core
         private Siege_SmokeOut _siegeSmokeOutSystem;
         private Siege_VehicleRam _siegeVehicleRamSystem;
         private RiverNodeSystem _riverNodeSystem;
+        // Protocol Zero expansion systems
+        private ThermalGridSystem _thermalGridSystem;
+        private AshTideScheduler _ashTideScheduler;
+        private AtmosphereToxicitySystem _atmosphereToxicitySystem;
+        private ConvoyLogisticsSystem _convoyLogisticsSystem;
+        // Expansion II Addendum: Black Aquifer systems
+        private HydrostaticPressureSystem _hydrostaticPressureSystem;
+        private TunnelingAndStructuralStress _tunnelingStressSystem;
+        private MyceliumNetworkSystem _myceliumNetworkSystem;
+        // Expansion IV: Chronos Decay & Lethe Protocol
+        private StructuralEntropySystem _structuralEntropySystem;
+        private LetheProtocolSystem _letheProtocolSystem;
+        private GenerationalPsychologySystem _generationalPsychologySystem;
+        // Expansion III: Dead Hand systems
+        private UXOFieldSystem _uxoFieldSystem;
+        private Encounters.AutomatedThreatSystem _automatedThreatSystem;
+        private Shelter.ElectromagneticDecaySystem _electromagneticDecaySystem;
         // Choreographer is injected as capture/restore delegates rather than a
         // direct reference so Core stays agnostic of the Flashpoint module.
         private Func<FlashpointChoreographerSave> _captureChoreographer;

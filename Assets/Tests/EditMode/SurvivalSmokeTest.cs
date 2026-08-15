@@ -14,6 +14,7 @@ using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -261,6 +262,81 @@ namespace AtomicWar.Tests.EditMode
                 ModuleLookup = id => null,
                 SavesDir = savesDir
             });
+        }
+
+        [Test]
+        public void Simulate100Campaigns_NoNaN_WritesAggregateReport()
+        {
+            const int campaignCount = 100;
+            int nanTotal = 0;
+            int exceptionTotal = 0;
+            int deathTotal = 0;
+            int chronicTotal = 0;
+            int arsTotal = 0;
+            var causes = new Dictionary<string, int>();
+            float daysSum = 0f;
+            int recordCount = 0;
+
+            for (int seed = 0; seed < campaignCount; seed++)
+            {
+                InitSystems(seed);
+                CreateSurvivors();
+                try
+                {
+                    RunFullSimulation();
+                }
+                catch (Exception ex) when (ex is not AssertionException)
+                {
+                    exceptionTotal++;
+                    Debug.LogWarning($"[BalanceSweep] seed {seed} threw {ex.GetType().Name}: {ex.Message}");
+                }
+
+                foreach (var sv in _survivors)
+                {
+                    if (HasNaNNeeds(sv)) nanTotal++;
+                }
+
+                _tracker.FinalizeAlive(SimDays, _survivors);
+                foreach (var rec in _tracker.Records)
+                {
+                    recordCount++;
+                    daysSum += rec.DaysSurvived;
+                    if (rec.CauseOfDeath != "alive") deathTotal++;
+                    if (rec.DevelopedChronicIllness) chronicTotal++;
+                    if (rec.DevelopedARS) arsTotal++;
+                    if (!causes.ContainsKey(rec.CauseOfDeath))
+                        causes[rec.CauseOfDeath] = 0;
+                    causes[rec.CauseOfDeath]++;
+                }
+
+                if (_actions != null)
+                {
+                    foreach (var a in _actions)
+                        if (a != null) Object.DestroyImmediate(a);
+                    _actions = null;
+                }
+            }
+
+            var lines = new List<string>
+            {
+                "ASHFALL 100-campaign balance sweep",
+                "harness=SurvivalSmokeTest (artificial rad/thirst drain; not production phantom/trauma/branch knobs)",
+                $"campaigns={campaignCount} survivors_per={3} sim_days={SimDays}",
+                $"records={recordCount} nan={nanTotal} exceptions={exceptionTotal}",
+                $"deaths={deathTotal} chronic={chronicTotal} ars={arsTotal}",
+                $"mean_days_survived={(recordCount > 0 ? daysSum / recordCount : 0f):F2}"
+            };
+            foreach (var kv in causes)
+                lines.Add($"cause {kv.Key}={kv.Value}");
+
+            string reportPath = System.IO.Path.Combine(
+                UnityEngine.Application.dataPath, "..", "balance-sweep-report.txt");
+            System.IO.File.WriteAllLines(reportPath, lines);
+            Debug.Log("[BalanceSweep]\n" + string.Join("\n", lines));
+
+            Assert.AreEqual(0, nanTotal, "NaN needs across 100 campaigns");
+            Assert.AreEqual(0, exceptionTotal, "Unhandled exceptions across 100 campaigns");
+            Assert.Greater(deathTotal, 0, "Expected some deaths across 100 campaigns");
         }
 
         [TestCase(1)]

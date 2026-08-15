@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
+    <ui:VisualElement name="craft-queue-root" class="craft-queue-panel hidden" picking-mode="Ignore">
+        <ui:Label text="CRAFTING QUEUE" class="craft-queue-title" />
+        <ui:ScrollView name="craft_queue_scroll" mode="Horizontal" class="craft-queue-scroll">
+            <!-- Slots will be populated dynamically or via template elements -->
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

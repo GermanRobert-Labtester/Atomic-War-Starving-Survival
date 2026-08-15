@@ -15,7 +15,7 @@ MonoBehaviour:
   id: geiger_counter
   displayName: Geiger Counter
   description: Live rate meter.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: d7afd61cd79ecc13d81e7b454601da1c, type: 3}
   type: 14
   stackMax: 1
   weight: 1

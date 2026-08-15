@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_50bmg_exi
   displayName: "12.7\xD799mm NATO EXI"
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: efe8be1f8242a26fc91815f2f06f51c9, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

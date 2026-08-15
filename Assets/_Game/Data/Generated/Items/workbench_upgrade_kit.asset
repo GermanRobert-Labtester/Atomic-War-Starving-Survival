@@ -15,7 +15,7 @@ MonoBehaviour:
   id: workbench_upgrade_kit
   displayName: Workbench Upgrade Kit
   description: Upgrades a workbench one tier.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 149bf6353a4b394eeb96a672602d41f4, type: 3}
   type: 14
   stackMax: 1
   weight: 12

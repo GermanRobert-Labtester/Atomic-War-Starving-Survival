@@ -1,0 +1,530 @@
+[
+  {
+    "id": "loc_the_allotments",
+    "displayName": "The Works Allotment Commune",
+    "sector": "sector_4_floodplain",
+    "riskLevel": 1,
+    "radiationUsv": 0.45,
+    "description": "Five acres of polycarbonate cold-frame glasshouses wrapped in burlap. Steaming compost heaps keep perennial rye seedlings alive in -30°C frost."
+  },
+  {
+    "id": "loc_denial_cut_substation",
+    "displayName": "D/9 Denial Substation & Cut",
+    "sector": "sector_4_railway_cut",
+    "riskLevel": 3,
+    "radiationUsv": 1.85,
+    "description": "Reinforced concrete telephone repeater bunker overlooking the main railway cut. Encircled with concertina wire and claymore firing stakes."
+  },
+  {
+    "id": "loc_brine_pumping_sluice",
+    "displayName": "Sector 8 Industrial Brine Sluice",
+    "sector": "sector_8_estuary",
+    "riskLevel": 2,
+    "radiationUsv": 0.95,
+    "description": "Limestone sluice gates regulating raw saltwater intake from the sound. Massive cast-iron screw pumps caked in white salt crusts."
+  },
+  {
+    "id": "loc_continental_radio_beacon",
+    "displayName": "High Granite Relay Mast (142.850 MHz)",
+    "sector": "high_granite_ridge",
+    "riskLevel": 4,
+    "radiationUsv": 4.2,
+    "description": "A 120-meter steel lattice antenna perched on a wind-scoured granite pinnacle. Feeds the automated continental emergency transponder loop."
+  },
+  {
+    "id": "loc_low_background_lab",
+    "displayName": "Low-Background Salt Chamber Laboratory",
+    "sector": "deep_salt_formation",
+    "riskLevel": 1,
+    "radiationUsv": 0.02,
+    "description": "Four hundred meters deep in dry halite bedrock. Shielded counting chamber forged from pre-1945 armor steel. Contains precision spectrometers."
+  },
+  {
+    "id": "loc_geothermal_well_alpha",
+    "displayName": "Geothermal Steam Well Alpha",
+    "sector": "sector_4_volcanic_fissure",
+    "riskLevel": 3,
+    "radiationUsv": 2.1,
+    "description": "High-pressure volcanic steam well supplying district heat to the valley. Screaming brass pressure relief valves surrounded by boiling sulfur mud."
+  },
+  {
+    "id": "loc_garrison_checkpoint_gamma",
+    "displayName": "Garrison Checkpoint Gamma",
+    "sector": "sector_4_highway_junction",
+    "riskLevel": 4,
+    "radiationUsv": 1.1,
+    "description": "Sandbagged concrete bunker with dual heavy machine-gun embrasures. Enforces martial law Schedule 14 grain and diesel levies."
+  },
+  {
+    "id": "loc_black_thaw_drainage_basin",
+    "displayName": "Black Thaw Radioactive Silt Swale",
+    "sector": "sector_8_lowlands",
+    "riskLevel": 4,
+    "radiationUsv": 6.8,
+    "description": "Toxic alluvial swamp where spring meltwater concentrates months of radioactive soot. Deep black mud that dissolves boot stitching."
+  },
+  {
+    "id": "loc_maritime_icebreaker_dock",
+    "displayName": "Northern Sound Icebreaker Dock",
+    "sector": "high_arctic_estuary",
+    "riskLevel": 2,
+    "radiationUsv": 0.6,
+    "description": "Heavy timber wharf where the research icebreaker Aurora Borealis maintains auxiliary steam. Shoreline ringed with razor wire."
+  },
+  {
+    "id": "loc_rhizome_research_vault",
+    "displayName": "Agronomy Cryogenic Rhizome Vault",
+    "sector": "sector_4_uplands",
+    "riskLevel": 2,
+    "radiationUsv": 0.3,
+    "description": "Underground agricultural research cellar holding dewars of cold-resistant crop roots and heirloom seed flasks."
+  },
+  {
+    "id": "loc_ash_sign_cathedral_crater",
+    "displayName": "Cathedral Vitrified Strike Crater",
+    "sector": "sector_4_ground_zero",
+    "riskLevel": 5,
+    "radiationUsv": 18.5,
+    "description": "An eighty-meter depression of glassy green tektite slag where a ground-burst warhead struck. Ringed with cultist prayer flags and iron stakes."
+  },
+  {
+    "id": "loc_sector_4_rail_switchyard",
+    "displayName": "Sector 4 Freight Switchyard",
+    "sector": "sector_4_railway",
+    "riskLevel": 3,
+    "radiationUsv": 1.4,
+    "description": "Hundreds of rusted hopper cars and boxcars derailed on frost-heaved tracks. Scavengers pick through grain residues and industrial grease."
+  },
+  {
+    "id": "loc_hydro_baron_aqueduct_manifold",
+    "displayName": "Aqueduct Pressure Station 3",
+    "sector": "sector_8_bluffs",
+    "riskLevel": 2,
+    "radiationUsv": 0.5,
+    "description": "Brick pump station housing positive-displacement brass flow meters. Guards in sheepskin coats meter every cubic meter of fresh water."
+  },
+  {
+    "id": "loc_granite_pass_weather_observatory",
+    "displayName": "Granite Pass Meteorological Dome",
+    "sector": "high_granite_ridge",
+    "riskLevel": 3,
+    "radiationUsv": 2.9,
+    "description": "Geodesic observatory perched above the cloud deck. Houses barometric chart recorders and stratospheric particulate sampling filters."
+  },
+  {
+    "id": "loc_d9_cache_bunker_delta",
+    "displayName": "D/9 Denial Armory Cache",
+    "sector": "sector_4_hills",
+    "riskLevel": 4,
+    "radiationUsv": 0.8,
+    "description": "Concealed steel portal beneath a false limestone outcrop. Contains crated demolition blocks, electric detonators, and one-time pads."
+  },
+  {
+    "id": "loc_flooded_quarry_cistern",
+    "displayName": "Limestone Quarry Cistern",
+    "sector": "sector_8_quarries",
+    "riskLevel": 2,
+    "radiationUsv": 0.4,
+    "description": "Deep crystalline water basin in an abandoned quarry pit. The water is cold and clear, filtered through fifty feet of porous limestone."
+  },
+  {
+    "id": "loc_sub_level_maintenance_shaft_9",
+    "displayName": "Sub-Level Maintenance Shaft 9",
+    "sector": "sector_4_infrastructure",
+    "riskLevel": 3,
+    "radiationUsv": 1.2,
+    "description": "Vertical ladder shaft giving access to buried telecom trunk lines and district heating conduits. Air is damp and smells of sulfur."
+  },
+  {
+    "id": "loc_garrison_motor_pool",
+    "displayName": "Garrison Armored Motor Pool",
+    "sector": "sector_4_military",
+    "riskLevel": 3,
+    "radiationUsv": 0.9,
+    "description": "Reinforced vehicle shed holding tracked artillery tractors and armored troop carriers with drained radiators."
+  },
+  {
+    "id": "loc_rebuilder_brickworks_kiln",
+    "displayName": "The Works Brickworks Kiln",
+    "sector": "sector_4_floodplain",
+    "riskLevel": 1,
+    "radiationUsv": 0.25,
+    "description": "Wood-fired downdraft brick kiln producing refractory clay blocks for bunker insulation and greenhouse footing construction."
+  },
+  {
+    "id": "loc_continental_convoy_staging_area",
+    "displayName": "Highway 12 Convoy Apron",
+    "sector": "northern_corridor",
+    "riskLevel": 3,
+    "radiationUsv": 1.7,
+    "description": "Concrete weigh-station parking lot where northern relief trucks assemble under armed escort for the ice run."
+  },
+  {
+    "id": "loc_salt_cavern_medical_depot",
+    "displayName": "Salt Cavern Emergency Reserve",
+    "sector": "deep_salt_formation",
+    "riskLevel": 1,
+    "radiationUsv": 0.05,
+    "description": "Naturally dry salt room holding thousands of ampoules of antibiotics, freeze-dried blood plasma, and surgical instruments."
+  },
+  {
+    "id": "loc_collapsed_valley_viaduct",
+    "displayName": "The Shattered Viaduct",
+    "sector": "sector_4_canyon",
+    "riskLevel": 4,
+    "radiationUsv": 2.4,
+    "description": "Twin concrete arch bridge blown during the early days of the war. A treacherous catwalk of timber and steel cables spans the gap."
+  },
+  {
+    "id": "loc_hydro_baron_desal_plant_4",
+    "displayName": "Coastal Desalination Unit 4",
+    "sector": "sector_8_estuary",
+    "riskLevel": 2,
+    "radiationUsv": 0.7,
+    "description": "Multi-stage flash distillation boiler fueled by coal and peat. Condenses pure drinking water from grey coastal brine."
+  },
+  {
+    "id": "loc_mountain_tunnel_refuge",
+    "displayName": "High Alpine Highway Tunnel",
+    "sector": "high_granite_ridge",
+    "riskLevel": 3,
+    "radiationUsv": 1.5,
+    "description": "Two-mile vehicular tunnel blocked by snowdrifts at both portals. Home to eighty displaced miner families living in derelict buses."
+  },
+  {
+    "id": "loc_radioisotope_power_station",
+    "displayName": "Strontium RTG Lighthouse Tower",
+    "sector": "high_arctic_estuary",
+    "riskLevel": 5,
+    "radiationUsv": 12.0,
+    "description": "Coastal navigation beacon powered by a 90-watt Strontium-90 thermal decay generator. Searing heat keeps the iron roof clear of snow."
+  },
+  {
+    "id": "loc_frozen_river_ferry_crossing",
+    "displayName": "The Ice Road Ferry Crossing",
+    "sector": "sector_4_river",
+    "riskLevel": 2,
+    "radiationUsv": 0.8,
+    "description": "River slipway where the ice sheet is graded with sand and salt to permit passage of heavy four-ton supply sleds."
+  },
+  {
+    "id": "loc_garrison_signal_bunker_echo",
+    "displayName": "Garrison Cryptographic Signal Bunker",
+    "sector": "sector_4_military",
+    "riskLevel": 3,
+    "radiationUsv": 0.5,
+    "description": "Hardened telecommunications center with banks of dead teletype printers and charred cryptographic key barrels."
+  },
+  {
+    "id": "loc_d9_culvert_junction_bravo",
+    "displayName": "D/9 Culvert Junction Bravo",
+    "sector": "sector_4_railway_cut",
+    "riskLevel": 4,
+    "radiationUsv": 1.9,
+    "description": "Masonry culvert beneath the railway embankment wired with eighty kilograms of plastic explosives wired to automated seismic triggers."
+  },
+  {
+    "id": "loc_allotment_glasshouse_complex",
+    "displayName": "Allotment Polycarbonate Glasshouses",
+    "sector": "sector_4_floodplain",
+    "riskLevel": 1,
+    "radiationUsv": 0.35,
+    "description": "Three interconnected heated domes growing leafy greens, turnips, and medicinal poppies using waste heat from the brickworks."
+  },
+  {
+    "id": "loc_aurora_borealis_grounding_shoal",
+    "displayName": "Aurora Borealis Anchorage Shoal",
+    "sector": "high_arctic_estuary",
+    "riskLevel": 2,
+    "radiationUsv": 0.55,
+    "description": "Shore-fast ice lead where the steel bow of the Aurora Borealis is moored. Gangway watchmen inspect health certificates before boarding."
+  },
+  {
+    "id": "loc_granite_arsenal_foundry",
+    "displayName": "High Granite Arsenal & Munitions Foundry",
+    "sector": "high_granite_ridge",
+    "riskLevel": 4,
+    "radiationUsv": 1.3,
+    "description": "Subterranean shell foundry inside a hollowed granite dome. Heavy drop hammers forge brass 152mm casing blanks over charcoal hearths."
+  },
+  {
+    "id": "loc_railway_guild_roundhouse",
+    "displayName": "Shattered Rail Union Roundhouse",
+    "sector": "sector_4_railway",
+    "riskLevel": 3,
+    "radiationUsv": 0.85,
+    "description": "Locomotive turntable repair shed occupied by armed switchmen. Armored steam handcars are rigged with machine gun mounts."
+  },
+  {
+    "id": "loc_penal_pioneer_trench_sector",
+    "displayName": "8th Penal Pioneer Sump Trenches",
+    "sector": "sector_4_ground_zero",
+    "riskLevel": 5,
+    "radiationUsv": 14.2,
+    "description": "A zig-zag system of muddy revetted trenches dug directly through radioactive black soil by conscripts wearing burlap respirators."
+  },
+  {
+    "id": "loc_deep_salt_hospital_sanctuary",
+    "displayName": "Deep Salt Cavern Surgical Sanctuary",
+    "sector": "deep_salt_formation",
+    "riskLevel": 1,
+    "radiationUsv": 0.01,
+    "description": "An underground forty-bed trauma infirmary built in a sterile halite chamber. The air is dry, antiseptic, and completely radiation-free."
+  },
+  {
+    "id": "loc_supply_corps_highway_redoubt",
+    "displayName": "Continental Logistics Highway Redoubt",
+    "sector": "northern_corridor",
+    "riskLevel": 3,
+    "radiationUsv": 0.75,
+    "description": "A fortified toll gate constructed from overturned refrigerated trailers and diesel fuel tanks. Defended by half-track gunners."
+  },
+  {
+    "id": "loc_shelled_grain_elevator_ruin",
+    "displayName": "Bombarded Concrete Grain Silo 4",
+    "sector": "sector_4_floodplain",
+    "riskLevel": 4,
+    "radiationUsv": 3.1,
+    "description": "A shattered sixty-foot concrete silo cracked open by a 152mm howitzer shell. Piles of charred, moldering grain smoke in the snow."
+  },
+  {
+    "id": "loc_vitrified_train_derailment_cut",
+    "displayName": "Vitrified Railway Collision Cut",
+    "sector": "sector_4_railway_cut",
+    "riskLevel": 5,
+    "radiationUsv": 11.5,
+    "description": "Two freight locomotives fused together by intense thermal flash during the Exchange. The surrounding granite ballast is glazed like bottle glass."
+  },
+  {
+    "id": "loc_flooded_hydro_pump_cavern",
+    "displayName": "Submerged Artesian Pump Cavern",
+    "sector": "sector_8_bluffs",
+    "riskLevel": 3,
+    "radiationUsv": 1.6,
+    "description": "Deep limestone vault flooded waist-deep in freezing mineral water. Massive bronze impeller shafts groan under electrical load."
+  },
+  {
+    "id": "loc_poison_gas_culvert_marsh",
+    "displayName": "Mustard Gas Drainage Swale",
+    "sector": "sector_8_lowlands",
+    "riskLevel": 5,
+    "radiationUsv": 5.4,
+    "description": "A stagnant bog of yellow, sulfurous runoff from breached pre-war chemical munitions. Heavy vapors pool in shell craters."
+  },
+  {
+    "id": "loc_garrison_artillery_emplacement_bravo",
+    "displayName": "Howitzer Battery Emplacement Bravo",
+    "sector": "high_granite_ridge",
+    "riskLevel": 4,
+    "radiationUsv": 2.0,
+    "description": "Four 152mm heavy field guns dug into log-and-earth revetments. Piles of spent brass cartridge cases glint beneath blowing snow."
+  },
+  {
+    "id": "loc_ash_sign_pyre_cliff",
+    "displayName": "The Martyrs' Sulfur Ridge",
+    "sector": "sector_4_ground_zero",
+    "riskLevel": 5,
+    "radiationUsv": 16.0,
+    "description": "A jagged basalt bluff where cultists burn their dead on sulfur-soaked pyres to 'return the bone-ash to the glowing sky.'"
+  },
+  {
+    "id": "loc_railway_telegraph_repeater_hut",
+    "displayName": "Telegraph Repeater Hut 14",
+    "sector": "sector_4_railway",
+    "riskLevel": 2,
+    "radiationUsv": 0.65,
+    "description": "A cedar-shingle linesman shed holding banks of wet-cell galvanic batteries and clicking brass telegraph sounders."
+  },
+  {
+    "id": "loc_collapsed_peat_kiln_bunker",
+    "displayName": "Smoldering Peat Brick Vault",
+    "sector": "sector_4_floodplain",
+    "riskLevel": 3,
+    "radiationUsv": 1.8,
+    "description": "An underground peat storage cellar smoldering without flame. Warm, smokey air provides shelter for frostbitten deserters."
+  },
+  {
+    "id": "loc_ammonium_nitrate_fertilizer_shed",
+    "displayName": "The Works Fertilizer Depository",
+    "sector": "sector_4_floodplain",
+    "riskLevel": 2,
+    "radiationUsv": 0.4,
+    "description": "Corrugated iron barn storing fifty tons of ammonium nitrate fertilizer bags. Heavily guarded by Works sentries with shotguns."
+  },
+  {
+    "id": "loc_breached_civil_defense_cache_9",
+    "displayName": "Civil Defense Bunker 09 (Breached)",
+    "sector": "sector_4_hills",
+    "riskLevel": 4,
+    "radiationUsv": 7.2,
+    "description": "A cracked concrete bunker whose blast hatch was blown inward by sappers. Skeletal remains frozen in wool coats lie among looted crates."
+  },
+  {
+    "id": "loc_hydro_baron_ledger_office",
+    "displayName": "The Sluice Association Ledger House",
+    "sector": "sector_8_bluffs",
+    "riskLevel": 2,
+    "radiationUsv": 0.3,
+    "description": "Stone toll house where water clerks enter cubic-meter withdrawals in leather-bound volumes beside an iron potbelly stove."
+  },
+  {
+    "id": "loc_d9_underground_telecom_vault",
+    "displayName": "STD-9 Central Telegraph Vault",
+    "sector": "sector_4_infrastructure",
+    "riskLevel": 3,
+    "radiationUsv": 0.5,
+    "description": "Deep buried communications hub with copper-shielded walls. Unmanned teletype banks continuously print automated relay codes."
+  },
+  {
+    "id": "loc_penal_quarry_crusher_plant",
+    "displayName": "Penal Rock Crusher & Gravel Screener",
+    "sector": "sector_8_quarries",
+    "riskLevel": 4,
+    "radiationUsv": 2.8,
+    "description": "Massive diesel stone crusher used to produce aggregate for bunker concrete. Sledgehammers and iron chains rust in snowdrifts."
+  },
+  {
+    "id": "loc_salt_miners_barter_hall",
+    "displayName": "The Salt Exchange Vault",
+    "sector": "deep_salt_formation",
+    "riskLevel": 1,
+    "radiationUsv": 0.03,
+    "description": "Vast subterranean salt cavern lit by kerosene torches. Scavengers, agronomists, and soldiers trade dried fish and cartridges under neutral truce."
+  },
+  {
+    "id": "loc_arctic_ice_channel_buoy_12",
+    "displayName": "Northern Lead Navigation Buoy 12",
+    "sector": "high_arctic_estuary",
+    "riskLevel": 3,
+    "radiationUsv": 1.1,
+    "description": "A rusted iron sea buoy frozen fifty yards offshore. Its battery-powered red flasher pulses weakly through dense sea smoke."
+  },
+  {
+    "id": "loc_shelled_church_belltower_lookout",
+    "displayName": "Kilometre 14 Belltower Sniper Post",
+    "sector": "sector_4_uplands",
+    "riskLevel": 4,
+    "radiationUsv": 2.2,
+    "description": "A roofless stone belltower offering commanding rifle sightlines over Highway 12. Piles of spent 7.62mm brass litter the spiral stairs."
+  },
+  {
+    "id": "loc_vitrified_crater_spring_pool",
+    "displayName": "Irradiated Thermal Spring Pool",
+    "sector": "sector_4_ground_zero",
+    "riskLevel": 5,
+    "radiationUsv": 22.0,
+    "description": "A steaming pool of scalding volcanic water bubbling up through green impact glass. Emits dense clouds of radon and radioactive steam."
+  },
+  {
+    "id": "loc_garrison_court_martial_cellar",
+    "displayName": "The Provost Detention Cellar",
+    "sector": "sector_4_military",
+    "riskLevel": 3,
+    "radiationUsv": 0.7,
+    "description": "Damp basement under Checkpoint Gamma where deserters and quota defaulters are shackled to iron pipe stanchions."
+  },
+  {
+    "id": "loc_ash_militia_deadfall_barrier",
+    "displayName": "Upland Log-and-Stone Deadfall",
+    "sector": "sector_4_uplands",
+    "riskLevel": 3,
+    "radiationUsv": 0.9,
+    "description": "A massive barricade of felled pine trunks and dry-stone boulders blocking the mountain pass to heavy motor vehicles."
+  },
+  {
+    "id": "loc_sub_level_sewer_interceptor_6",
+    "displayName": "Main Stormwater Interceptor 6",
+    "sector": "sector_4_infrastructure",
+    "riskLevel": 4,
+    "radiationUsv": 4.5,
+    "description": "A nine-foot brick sewer arch draining thaw mud from the upper districts. Rushing black water carries debris and discarded gear."
+  },
+  {
+    "id": "loc_abandoned_half_track_convoy_wreck",
+    "displayName": "Ambushed Convoy Wreckage (Mile 22)",
+    "sector": "northern_corridor",
+    "riskLevel": 3,
+    "radiationUsv": 1.4,
+    "description": "Three burned-out armored halftracks frozen in roadside snowdrifts. Machine-gun holes riddle the steel radiator louvers."
+  },
+  {
+    "id": "loc_salt_cavern_explosives_magazine",
+    "displayName": "Freeholder Blasting Gelatin Magazine",
+    "sector": "deep_salt_formation",
+    "riskLevel": 2,
+    "radiationUsv": 0.04,
+    "description": "Deep locked room holding forty wooden crates of mining dynamite and copper blasting caps behind a six-inch steel vault door."
+  },
+  {
+    "id": "loc_coastal_fog_signal_station",
+    "displayName": "High Bluff Compressed-Air Foghorn",
+    "sector": "high_arctic_estuary",
+    "riskLevel": 3,
+    "radiationUsv": 0.8,
+    "description": "Steam-driven maritime foghorn installation. A diesel air compressor groans every two minutes, sounding a low C-flat across the leads."
+  },
+  {
+    "id": "loc_high_granite_mortar_pit_charlie",
+    "displayName": "Granite Ridge Mortar Redoubt",
+    "sector": "high_granite_ridge",
+    "riskLevel": 4,
+    "radiationUsv": 2.6,
+    "description": "A sandbagged mortar position overlooking the valley switchbacks. Armed with an 82mm tube zeroed on the rail junction."
+  },
+  {
+    "id": "loc_the_final_dawn_outlook",
+    "displayName": "The Day 360 Permafrost Vista",
+    "sector": "high_granite_ridge",
+    "riskLevel": 1,
+    "radiationUsv": 0.4,
+    "description": "A high rocky promontory overlooking the entire thirty-mile valley of Sector 4. The morning sun cuts through clearing stratospheric ash."
+  },
+  {
+    "id": "loc_muster_treeline_camp",
+    "displayName": "The Treeline Camp",
+    "sector": "sector_4_verge",
+    "riskLevel": 3,
+    "radiationUsv": 30.0,
+    "description": "A scatter of lean-tos under dead pine, chosen because the canopy still holds enough ash-snow to break a thermal signature. No fire after dark."
+  },
+  {
+    "id": "loc_second_winter_homestead",
+    "displayName": "The Second Winter Homestead",
+    "sector": "sector_4_hinterlands",
+    "riskLevel": 2,
+    "radiationUsv": 15.0,
+    "description": "A private shelter built into a hillside a decade before the Exchange, its blast door hand-fitted by someone who clearly expected to use it. It has been resupplied every winter since, by nobody the sector can identify."
+  },
+  {
+    "id": "loc_scavenger_guildhall",
+    "displayName": "The Scavenger Guildhall",
+    "sector": "sector_4_railspur",
+    "riskLevel": 3,
+    "radiationUsv": 20.0,
+    "description": "A repurposed freight depot, its walls papered floor to ceiling with hand-drawn claim maps. Every claimed site is inked in one color; every blacklisted shelter's name is inked in a second color and never crossed out."
+  },
+  {
+    "id": "loc_iron_raiders_den",
+    "displayName": "The Cut",
+    "sector": "sector_4_north_bloc",
+    "riskLevel": 5,
+    "radiationUsv": 40.0,
+    "description": "A collapsed rail cutting choked with burned-out freight cars, refitted as a den. There is no gate to knock on and no reason to try."
+  },
+  {
+    "id": "loc_the_tally_hall",
+    "displayName": "The Tally Hall",
+    "sector": "sector_4_market_square",
+    "riskLevel": 2,
+    "radiationUsv": 12.0,
+    "description": "A converted counting house, its walls lined with ledger boxes instead of shelving. Every contract The Tally has ever written is filed here, dated, and enforced on schedule."
+  },
+  {
+    "id": "loc_amnesty_petition_hall",
+    "displayName": "The Amnesty Petition Hall",
+    "sector": "sector_4_verge",
+    "riskLevel": 3,
+    "radiationUsv": 18.0,
+    "description": "A cold former schoolhouse requisitioned for the petition. Testimony taken down in two hands: the petitioner's and the Tally's."
+  }
+]

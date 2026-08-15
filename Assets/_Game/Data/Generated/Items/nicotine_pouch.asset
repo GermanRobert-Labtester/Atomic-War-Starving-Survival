@@ -15,7 +15,7 @@ MonoBehaviour:
   id: nicotine_pouch
   displayName: Nicotine Pouch
   description: Oral pouch.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 9818f9cca89e2c06cbb7c909cb8c70c6, type: 3}
   type: 12
   stackMax: 40
   weight: 0.01

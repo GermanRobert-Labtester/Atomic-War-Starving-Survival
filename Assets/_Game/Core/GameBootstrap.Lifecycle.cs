@@ -18,6 +18,7 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -47,6 +48,7 @@ namespace AtomicWar._Game.Core
             InitializeSystems();
             WireHUD();
             ApplyPendingGameLoad();
+            MaybeStartTutorial();
 
             // Only flip to Running if the restore did not already land us
             // somewhere meaningful. The IsGameOver guard preserves LoadGame's
@@ -56,6 +58,24 @@ namespace AtomicWar._Game.Core
             {
                 GameState.Phase = GamePhase.Running;
             }
+        }
+
+        /// <summary>
+        /// Show the first-run tutorial only on a fresh campaign. Runs after
+        /// ApplyPendingGameLoad so a Continue restore — which lands on a later
+        /// day or already carries the flag — never re-opens it. Ending the
+        /// tutorial (dismissed or day-3 rollover) sets the "tutorial_completed"
+        /// world flag via HandleTutorialEnded, persisted by SaveSystem.
+        /// </summary>
+        private void MaybeStartTutorial()
+        {
+            if (_hud == null) return;
+            var tutorial = _hud.EnsureTutorialOverlay();
+            if (tutorial == null || tutorial.IsActive) return;
+            if (SaveSystem != null && SaveSystem.GetWorldFlag(TutorialCompletedFlag)) return;
+            // A restored campaign past day 1 belongs to a player who has seen this.
+            if (TimeSystem != null && TimeSystem.CurrentDay > 1) return;
+            tutorial.StartTutorial();
         }
 
         /// <summary>
@@ -117,6 +137,7 @@ namespace AtomicWar._Game.Core
             if (_onWorldPhaseChanged != null) WorldPhaseSystem.OnPhaseChanged -= _onWorldPhaseChanged;
             if (_onGameStateChanged != null) GameState.OnPhaseChanged -= _onGameStateChanged;
             if (_onNeedsDied != null) NeedsSystem.OnDied -= _onNeedsDied;
+            if (_onNeedsDied != null) SurvivorNeedWrite.OnKilled -= _onNeedsDied;
             if (_onNeedChanged != null) NeedsSystem.OnNeedChanged -= _onNeedChanged;
             if (_onDayTick_SetGameStateDay != null) TimeSystem.OnDayTick -= _onDayTick_SetGameStateDay;
             if (_onRadiationStatusGained != null) RadiationSystem.OnStatusGained -= _onRadiationStatusGained;
@@ -280,7 +301,7 @@ namespace AtomicWar._Game.Core
             if (_hud != null)
             {
                 string weatherName = GetWeatherDisplayName(WeatherSystem.Current);
-                string seasonName = TemperatureSystem.CurrentSeason?.displayName ?? "Nuclear Winter";
+                string seasonName = GetSeasonDisplayName();
                 _hud.Tick(TimeSystem.CurrentDay, TimeSystem.CurrentHourFloat, weatherName, seasonName, TimeSystem.TimeScale);
                 _hud.OnShelterUpdated(Shelter);
                 // Live radio hardware (signal + tuned label) on the intercept strip.
@@ -292,6 +313,8 @@ namespace AtomicWar._Game.Core
 
         private WeatherKind _cachedWeatherKind;
         private string _cachedWeatherName;
+        private string _cachedSeasonName;
+        private int _cachedSeasonDay = -1;
 
         /// <summary>
         /// Enum-to-label lookup for the HUD's weather strip.
@@ -309,6 +332,21 @@ namespace AtomicWar._Game.Core
                 _cachedWeatherName = kind.ToString();
             }
             return _cachedWeatherName;
+        }
+
+        /// <summary>
+        /// Season display-name cache. Season changes at most once per
+        /// game-day, so caching avoids the null-conditional chain every frame.
+        /// </summary>
+        private string GetSeasonDisplayName()
+        {
+            int day = TimeSystem?.CurrentDay ?? 0;
+            if (_cachedSeasonName == null || _cachedSeasonDay != day)
+            {
+                _cachedSeasonDay = day;
+                _cachedSeasonName = TemperatureSystem?.CurrentSeason?.displayName ?? "Nuclear Winter";
+            }
+            return _cachedSeasonName;
         }
 
         /// <summary>

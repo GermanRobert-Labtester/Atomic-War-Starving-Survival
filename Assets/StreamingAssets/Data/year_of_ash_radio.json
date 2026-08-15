@@ -1,0 +1,335 @@
+{
+  "broadcasts": [
+    {
+      "id": "radio_142_carrier_discovery",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 180,
+      "source": "Continental Maritime Rescue Coordination (Aurora Borealis)",
+      "message": "CZC ZCZC 014 340 0014 FROM: CONTINENTAL MARITIME RESCUE COORDINATION (ICEBREAKER AURORA BOREALIS) TO: ALL SUBTERRANEAN SHELTERS SECTOR 4 AND 8. MARITIME EVACUATION CORRIDOR REMAINS OPEN AT NORTHERN SOUND ANCHORAGE. VESSEL MAINTAINS STEAM. DEPARTURE LOCKED DAY 360 AT FIRST LIGHT. MANIFEST RESTRICTED TO CERTIFIED LOW-RAD RESIDENTS AND REGISTERED SEED CUSTODIANS. ACKNOWLEDGE ON 142.850 WITH SHELTER SERIAL AND HEADCOUNT.",
+      "signalStrength": "S7",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_garrison_martial_edict",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 195,
+      "source": "Iron Garrison Logistics Directorate",
+      "message": "By order of the Military Governor, all subterranean shelters within five kilometres of the rail line are placed under Martial Allocation Schedule 14. Turn out all excess fuel reserves, stored grain exceeding twelve kilograms per occupant, and any functioning machine-tool components at Checkpoint Gamma by Tuesday morning. Shelters failing to comply will be classified as non-compliant supply caches.",
+      "signalStrength": "S9",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_cult_ash_sign_liturgy",
+      "frequency": "104.200 MHz",
+      "dayTrigger": 210,
+      "source": "Voice of the Vitrified Crater",
+      "message": "Do not scrape the soot from your windowpanes, brothers. The ash is the veil of His mercy. The ice came because the world was unclean and required a cold sheet. On the three-hundredth day, the water will run black from the hills. Drink of the black water and be sealed. Those who hide in concrete with brass locks are already dead; their tombs are only warm.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_d9_protocol_null_carrier",
+      "frequency": "96.100 MHz",
+      "dayTrigger": 225,
+      "source": "Detachment 9 Automated Signal Loop",
+      "message": "STATION NULL. STATION NULL. MESSAGE 088 / AUTH CODE: LIMA-NOVEMBER-SEVEN-FOUR. TARGET GRID 44-ALPHA RAILWAY BRIDGE REMAINS PRIMED. STAND-DOWN TIMERS WILL NOT RESET WITHOUT SECTOR GENERAL ORDER 1. ANY ATTEMPT BY CIVILIAN OR MILITIA UNITS TO TRANSIT THE CUT WILL TRIGGER CHARGES. THIS IS AN AUTOMATED SYSTEM. REMAIN IN SHELTER.",
+      "signalStrength": "S8",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_allotment_seed_appeal",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 240,
+      "source": "The Works Public Council (Allotment Station)",
+      "message": "This is Ottilie Frayne at the Allotments. We have thirty kilograms of winter-hardened rye seed ready for germination, but our third glasshouse boiler has fractured its copper manifold. We will trade five bushels of seed potatoes and two gallons of medicinal spirit for three brass valve fittings (3-inch) or twenty liters of glycol antifreeze. Bring terms to the greenhouse door at noon.",
+      "signalStrength": "S6",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_deep_thaw_radon_advisory",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 300,
+      "source": "Civil Meteorological Service",
+      "message": "URGENT RADON INFILTRATION WARNING: Rapid permafrost thaw across Sector 4 and 8 bedrock is releasing high concentrations of Radon-222 gas into sub-level basements and unsealed shelters. Readings exceed 1,200 Bq/m³ in valley bottoms. Run charcoal scrubbers continuously. Seal all floor fissures with hydraulic cement or vulcanized silicone. Evacuate unventilated sumps immediately.",
+      "signalStrength": "S9",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_bunker_19_distress_call",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 215,
+      "source": "Bunker 19 (High Granite)",
+      "message": "MAYDAY MAYDAY. Bunker 19 calling any station on 142.850. Our intake flue is completely iced shut. Indoor temperature is minus sixteen. Generator died four hours ago. We have eighteen women and children in the annex. If anyone has heating elements or a cutting torch, we are at Mile Marker 14 on the old pass road. Please acknowledge...",
+      "signalStrength": "S3",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_hydro_baron_water_schedule",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 248,
+      "source": "Sluice Association Metering Office",
+      "message": "Notice to all registered pipeline tapholders in Sector 8: Artesian well flow is reduced 40% due to limestone aquifer freezing. Pumping schedule will operate on twelve-hour cycles starting tomorrow. Salt tithes for the month of February are overdue. Delinquent taps will be capped at the main manifold without further notice.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_garrison_deserter_bulletin",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 260,
+      "source": "3rd Corps Provost Marshal",
+      "message": "BULLETIN: The following personnel have deserted their posts at Checkpoint Gamma carrying service weapons: Corporal Felix Vane, Gunner Mikhail, Private Solokov. A reward of fifty kilograms of flour and two tins of diesel will be paid for information leading to their apprehension. Harboring military deserters carries the death penalty under martial law.",
+      "signalStrength": "S8",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_salt_lab_spectrometry_data",
+      "frequency": "104.200 MHz",
+      "dayTrigger": 315,
+      "source": "Low-Background Salt Chamber Laboratory",
+      "message": "TRANSMISSION: Research Log 44. Mass spectrometry of fallout dust collected at 400m depth confirms Cesium-137 / Strontium-90 isotopic ratio 1.042. This signature is unique to automated Arctic silo ordnance. Repeat: the warheads were launched by unmanned automatic fail-safe systems. There was no foreign human command. Broadcast this data to all units.",
+      "signalStrength": "S5",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_aurora_manifest_final_call",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 345,
+      "source": "Icebreaker Aurora Borealis Bridge",
+      "message": "FINAL MANIFEST MUSTER: Icebreaker Aurora Borealis to all registered shelters. Channel ice is breaking up. Embarkation commences at 0600 hours Day 358 at Northern Sound Wharf. Only named occupants on signed manifests will be boarded. Leave all heavy weapons and unshielded isotopes on the dock. We sail for the Northern Redoubt on the tide.",
+      "signalStrength": "S9",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_meridian_world_service_teletype",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 330,
+      "source": "Meridian Maritime World Service",
+      "message": "ZCZC 990 012 330 ... CONTINENTAL OBSERVATORY REPORT ... STRATOSPHERIC ASH CONCENTRATION DROPPING 4% WEEKLY ... SURFACE TEMPERATURES IN SOUTHERN LATITUDES RETURNING TO PLUS FIVE CELSIUS ... SEED VAULT NETWORK CONFIRMED INTACT AT SVALBARD AND GREENLAND ... CIVIL RECONSTRUCTION COUNCILS FORMING ... HOLD FAST ... NNNN",
+      "signalStrength": "S6",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_black_blizzard_storm_warning",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 204,
+      "source": "Granite Pass Weather Observatory",
+      "message": "SEVERE STORM WARNING: Barometer reading 938 hPa and falling rapidly. A polar vortex is driving pulverized radioactive soot south at sixty knots. Zero visibility for next seventy-two hours. Surface travel is fatal. Secure all air intakes and switch to internal recirculating filters immediately.",
+      "signalStrength": "S8",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_cult_martyrdom_chant",
+      "frequency": "104.200 MHz",
+      "dayTrigger": 270,
+      "source": "Vitrified Crater Penitent Choir",
+      "message": "...(slow rhythmic chanting with brass chimes)... 'From the fire we came, in the frost we wait, by the black silt we are made clean. Blessed is the lead that shields no sin. Blessed is the bone that glows in the dark.'...(chanting fades into static)...",
+      "signalStrength": "S3",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_d9_null_abort_inquiry",
+      "frequency": "96.100 MHz",
+      "dayTrigger": 285,
+      "source": "STD-9 Operator Station",
+      "message": "STATION NULL TO CENTRAL ARCHIVE: Stand-down code request timed out for the four-hundredth time. We are down to three days of clean drinking water. If Sector Command exists, transmit authorization Lima-November on 96.100. We do not want to blow the railway cut. Answer, someone...",
+      "signalStrength": "S7",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_works_spring_planting_call",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 352,
+      "source": "The Works Council (Allotment Station)",
+      "message": "GENERAL CALL: The floodplain mud is clear of snow. We are beginning open-field planting of Strain-7 rye tomorrow morning. We need twenty able-bodied workers for spade work. Daily compensation: 800 grams of rye bread and clean drinking water. Report to Allotment Gate 1 at dawn.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_garrison_collapse_order",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 357,
+      "source": "Garrison Checkpoint Gamma",
+      "message": "TO ALL 3RD CORPS OUTPOSTS: Checkpoint Gamma is abandoned. Headquarters staff is evacuating north by motor transport. All conscripts are released from service obligations. Destroy all codebooks and spike remaining artillery tubes. May God preserve you.",
+      "signalStrength": "S6",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_day_360_beacon_silence",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 360,
+      "source": "Automated Transponder Tower (High Granite)",
+      "message": "CZC ZCZC 360 360 0360 ... DAY 360 OF THE EXCHANGE ... CONTINENTAL METEOROLOGICAL SERVICE REPORTS ASH CLEARANCE OVER SECTOR 4 ... SURFACE TEMPERATURE PLUS SIX CELSIUS ... ALL EVACUATION GATES ARE NOW CLOSED ... THE LONG WINTER IS OVER ... SHUTTING DOWN TRANSMITTER ... GOD SPEED ... NNNN",
+      "signalStrength": "S9",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_granite_arsenal_mobilization_broadcast",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 255,
+      "source": "High Granite Munitions Directorate",
+      "message": "ORDNANCE DIRECTIVE: The Granite Foundry is operating at maximum capacity. All brass scrap, copper wire, and spent shell casings must be turned in to the Arsenal rail siding. Compensation will be issued in flour scrip at 200 grams per kilogram of brass.",
+      "signalStrength": "S8",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_railway_guild_strike_bulletin",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 266,
+      "source": "Shattered Rail Union Telegraph Station",
+      "message": "TO ALL SWITCHMEN AND LINESMEN: The Garrison has placed armed provosts at Mile Marker 8. Lock all track switches in the siding position. Remove the brass armature relays from repeater huts 12 through 16. Do not let munitions trains pass the canyon.",
+      "signalStrength": "S6",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_penal_battalion_appeal",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 275,
+      "source": "8th Penal Pioneer Sump Outpost",
+      "message": "APPEAL FOR MEDICAL AID: Sump Trench Sector is suffering 60% casualties from acute radiation sickness and trench foot. We have no iodine, no clean bandages, and no rations. Provost guards have locked the gates. If any medical personnel hear this, throw supplies over the south wire.",
+      "signalStrength": "S4",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_salt_freeholders_truce_declaration",
+      "frequency": "104.200 MHz",
+      "dayTrigger": 282,
+      "source": "Deep Salt Freeholders Council",
+      "message": "The Deep Salt Chambers declare absolute territorial neutrality. The hospital cavern is open to wounded soldiers, militia, and refugees alike, provided all firearms are surrendered at the hoist cage. Any unit firing into the shaft will face dynamite sealing.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_supply_corps_convoy_tracking",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 288,
+      "source": "Highway 12 Convoy Control",
+      "message": "CONVOY FOUR UPDATE: Half-track lead is entering High Granite Pass. Heavy sniper fire reported from switchback 4. Transport 03 threw a track in snowdrifts. Sentry escort returning fire. Maintain radio silence until past the viaduct.",
+      "signalStrength": "S7",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_ash_militia_communal_defense_edict",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 245,
+      "source": "Central Upland Defense League",
+      "message": "To all farmsteads on the eastern terraces: Garrison requisition trucks have been spotted near the lower sluice. Roll the deadfall logs across the road. Extinguish all chimney smoke. Send runners to the stone redoubt if armored half-tracks advance.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_cyanide_gas_warning_sector_4",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 246,
+      "source": "Civil Defense Monitoring Network",
+      "message": "HAZARD ADVISORY: Subterranean foam insulation fires in Sector 4 infrastructure shafts are generating lethal concentrations of hydrogen cyanide gas. Do not enter unventilated lower levels without Model 58 respirators or amyl nitrite kits.",
+      "signalStrength": "S8",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_mustard_gas_seepage_alert",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 308,
+      "source": "Sector 8 Environmental Monitoring",
+      "message": "CHEMICAL ALERT: Thawing floodwaters have breached an abandoned chemical weapons cache in the lower swale. Mustard gas vapors are pooling in low-lying craters and basements. Yellow oily film reported on water surfaces. Avoid the marsh road.",
+      "signalStrength": "S8",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_d9_detonator_status_warning",
+      "frequency": "96.100 MHz",
+      "dayTrigger": 290,
+      "source": "STD-9 Automated Telemetry",
+      "message": "TELEMETRY LOG: Railway Bridge 44 seismic sensors registering heavy vehicular vibrations. Automatic 30-minute detonation sequence initiated. To cancel countdown, enter verified five-digit cipher on local substation keypad.",
+      "signalStrength": "S9",
+      "isEmergency": true
+    },
+    {
+      "id": "radio_works_autoclave_sterilization_notice",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 310,
+      "source": "The Works Medical Department",
+      "message": "The Allotment steam autoclave is operating on 24-hour cycle. We can sterilize surgical dressings, bone chisels, and seed containers for neighboring shelters. Bring clean items in sealed tins on Wednesdays.",
+      "signalStrength": "S6",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_provost_martial_execution_roll",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 299,
+      "source": "3rd Corps Provost Marshal",
+      "message": "PROVOST REPORT: Sixteen conscripts from 2nd Sentry Company were executed this morning at Kilometre 12 for mutinous refusal to clear radioactive fallout debris. Discipline in the ranks will be maintained by all available means.",
+      "signalStrength": "S8",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_low_background_salt_vault_invitation",
+      "frequency": "104.200 MHz",
+      "dayTrigger": 335,
+      "source": "Low-Background Salt Chamber Laboratory",
+      "message": "Dr. Dahl to all scientific personnel in Sector 4: The 400m counting chamber is dry and fully powered by emergency battery banks. We have five open berths for physicists, doctors, or precision machinists. Radiation is 0.02 µSv/h. Contact via the salt hoist.",
+      "signalStrength": "S5",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_coastal_foghorn_activation_notice",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 348,
+      "source": "Northern Sound Maritime Navigation",
+      "message": "NOTICE TO MARINERS AND ICE SLED CONVOYS: The compressed-air foghorn at High Bluff is operational on diesel power. Sounding one five-second blast every two minutes on tone C-flat to guide northern evacuees through sea fog.",
+      "signalStrength": "S9",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_potassium_permanganate_water_advisory",
+      "frequency": "101.500 MHz",
+      "dayTrigger": 316,
+      "source": "Works Water Quality Board",
+      "message": "CORRECTION: The purple coloration in central tap water is potassium permanganate disinfectant, not toxic poison. The water is safe to drink after boiling. Do not dump water reserves in panic.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_telegraph_wire_repair_appeal",
+      "frequency": "88.400 MHz",
+      "dayTrigger": 265,
+      "source": "Garrison Signal Corps",
+      "message": "URGENT: Telegraph lines between Checkpoint Gamma and the Arsenal have been cut at six locations. Linemen escorts are requesting volunteer wire-splicers. 100 rounds of 7.62mm ammunition offered per repaired mile.",
+      "signalStrength": "S7",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_ash_sign_prophecy_of_the_thaw",
+      "frequency": "104.200 MHz",
+      "dayTrigger": 295,
+      "source": "Ash Sign Penitent Speaker",
+      "message": "Hear the word of the crater: When the snow turns to grease and the earth smells of rotten sulfur, the great machine will sleep. The iron soldiers will cast off their breastplates and weep in the ditches. Walk out into the rain and receive the mark.",
+      "signalStrength": "S4",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_d9_cipher_standdown_confirmation",
+      "frequency": "96.100 MHz",
+      "dayTrigger": 356,
+      "source": "Detachment 9 Substation",
+      "message": "CONFIRMATION RECEIVED. Cipher Lima-November verified. All bridge detonators locked in safe mode. Protocol Null terminated. Detachment 9 is standing down. May whatever comes next be better than what we defended.",
+      "signalStrength": "S9",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_final_continental_all_clear",
+      "frequency": "142.850 MHz",
+      "dayTrigger": 360,
+      "source": "Continental Maritime Command",
+      "message": "ALL CLEAR. ALL CLEAR. This concludes the emergency transponder loop on 142.850 MHz. Sector 4 transit corridor is declared open under civilian maritime authority. Stand down all combat postures. Begin spring reconstruction.",
+      "signalStrength": "S9",
+      "isEmergency": false
+    },
+    {
+      "id": "radio_harven_succession_decree",
+      "frequency": "106.300 MHz",
+      "dayTrigger": 240,
+      "source": "Sector 4 Garrison Command (Acting)",
+      "message": "TO ALL SHELTERS. BY ORDER OF THE CONTINUITY RECLAMATION DECREE, EFFECTIVE IMMEDIATELY: Colonel Harven assumes command of Sector 4 Garrison. All standing orders issued under the previous command are revoked. Movement permits must be re-issued at Checkpoint Gamma. The previous command's coastal liaison detachments are closed. Reassignment orders dated prior to this broadcast are void. AMENDED: no further announcements will be made on this channel. KEEP THE WIRE CLEAR. CZC."
+    }
+  ]
+}

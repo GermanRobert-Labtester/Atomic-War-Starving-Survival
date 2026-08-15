@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Shelter;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Events
 {
@@ -712,6 +713,603 @@ namespace AtomicWar._Game.Events
                     FactionId = fid,
                     TrustDelta = -45f,
                     SetEventFlags = new List<string> { "faction_dig_out_accepted", "faction_dig_out_debt" }
+                }
+            };
+            return ev;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Allocation 12 — the Day-200 arrival (lore bible 02_THE_LIST)
+        //
+        // Six people at the hatch. One laminated card in a freezer bag.
+        // The game presents the card and the temperature outside, and then
+        // stops talking. No branch is adjudicated — not here, not later.
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string Allocation12ClaimEventId = "alloc12_the_claim";
+        public const string Allocation12BagFoundEventId = "alloc12_the_bag_found";
+        /// <summary>Layer-4 gate: the player has met the Archivists (the Vault holds the Schedule).</summary>
+        public const string Allocation12GateKnowledgeKey = "lore_bs_the_vault_holds";
+        public const string FlagAlloc12Honoured = "alloc12_honoured";
+        public const string FlagAlloc12LetterOnly = "alloc12_letter_only";
+        public const string FlagAlloc12Refused = "alloc12_refused";
+        public const string FlagAlloc12Terms = "alloc12_terms";
+        public const string FlagAlloc12BagFound = "alloc12_bag_found";
+        public const int Allocation12BagFoundDelayDays = 40;
+
+        /// <summary>
+        /// Day 200+ (Layer-4 knowledge required): the allocated party arrives.
+        /// Frostbitten, escorted, carrying the paperwork. Not raiders. Polite,
+        /// and by the law of a country that no longer exists, correct.
+        /// </summary>
+        public static GameEvent CreateAllocation12ClaimEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = Allocation12ClaimEventId;
+            ev.title = "The Claim";
+            ev.bodyText =
+                "Six people at the outer hatch. They do not attempt entry. They have been " +
+                "walking for eleven days, they know exactly which hatch this is, and one of " +
+                "them — thirteen, frostbitten — is carrying a laminated card in a freezer bag. " +
+                "The card names this shelter. It names it for fourteen people who are not here.\n\n" +
+                "The girl says the five adults kept her alive to get her this far. She does not " +
+                "say what she has worked out about what the card is worth.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 200,
+                RequiredKnowledgeKey = Allocation12GateKnowledgeKey
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "honour_in_full",
+                    Text = "Open the hatch. All six of them.",
+                    MoraleDelta = -6f,
+                    SetEventFlags = new List<string> { FlagAlloc12Honoured },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagAlloc12Honoured, WorldFlagValue = true }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "honour_the_letter",
+                    Text = "Honour the letter. The girl only.",
+                    MoraleDelta = -14f,
+                    SetEventFlags = new List<string> { FlagAlloc12LetterOnly },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagAlloc12LetterOnly, WorldFlagValue = true }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "refuse",
+                    Text = "Close it. There is no list any more.",
+                    MoraleDelta = -4f,
+                    SetEventFlags = new List<string> { FlagAlloc12Refused },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagAlloc12Refused, WorldFlagValue = true },
+                        new EventEffect
+                        {
+                            ScheduleEventId = Allocation12BagFoundEventId,
+                            ScheduleDelayDays = Allocation12BagFoundDelayDays
+                        }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "labour_terms",
+                    Text = "Admit them on labour terms.",
+                    MoraleDelta = -10f,
+                    FactionId = "military_remnants",
+                    TrustDelta = 15f,
+                    SetEventFlags = new List<string> { FlagAlloc12Terms },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagAlloc12Terms, WorldFlagValue = true }
+                    }
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// Refusal aftermath (~40 days later): a scavenging party finds the freezer
+        /// bag. The card is still in it. Nothing happens. Nobody retaliates.
+        /// </summary>
+        public static GameEvent CreateAllocation12BagFoundEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = Allocation12BagFoundEventId;
+            ev.title = "A Card in a Bag";
+            ev.bodyText =
+                "A scavenging party finds the freezer bag in the ash. The bag is intact. " +
+                "The card is still in it: a child's name, an allocation number, a date of " +
+                "birth recorded twice, once correctly.\n\n" +
+                "They bring it back. Nobody touches it for a long time.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredFlagId = FlagAlloc12Refused
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "bury_it",
+                    Text = "Bury it where you found it.",
+                    MoraleDelta = -5f,
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagAlloc12BagFound, WorldFlagValue = true }
+                    }
+                }
+            };
+            return ev;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Lore bible 04_ENCOUNTERS — trust-reactive scenes (II-a)
+        //
+        // The scene does not change. The temperature does. When trust drops
+        // below the threshold the threateningBodyText replaces the body;
+        // nothing mechanical differs. Faction ids use the ECONOMY namespace
+        // (FactionSO.Ids) because ResolveBodyText reads trust from
+        // DynamicEconomySystem — the lore-namespace ids have no trust data.
+        // ─────────────────────────────────────────────────────────────────
+
+        /// <summary>Trust-reactive checkpoint / Grange / toll / shrine scenes.</summary>
+        public static List<GameEvent> CreateTrustReactiveScenes()
+        {
+            return new List<GameEvent>
+            {
+                CreateTrustScene(
+                    id: "event_checkpoint_papers",
+                    title: "The Checkpoint",
+                    factionId: "military_remnants",
+                    trustBelow: 30f,
+                    minDay: 12,
+                    body:
+                        "The corporal at the barrier checks the manifest against the crate count, " +
+                        "finds them equal, and waves you through without looking up. Behind him " +
+                        "somebody is frying something in a mess tin and arguing about it.",
+                    threateningBody:
+                        "The corporal at the barrier checks the manifest against the crate count, " +
+                        "finds them equal, and does not move. He reads it again. Behind him the " +
+                        "frying has stopped. He asks you to state your shelter designation, which " +
+                        "is printed on the manifest, in his hand."),
+                CreateTrustScene(
+                    id: "event_grange_welcome",
+                    title: "The Grange",
+                    factionId: "upland_militia",
+                    trustBelow: 35f,
+                    minDay: 20,
+                    body:
+                        "Somebody takes your coat. Somebody else is already pouring. Three people ask " +
+                        "after your survivors by name and one of them gets a name wrong and is " +
+                        "corrected by the other two.",
+                    threateningBody:
+                        "Somebody takes your coat and hangs it by the door rather than the stove. " +
+                        "The conversation does not stop when you enter, which you notice, because " +
+                        "it did not use to continue."),
+                CreateTrustScene(
+                    id: "event_toll_price",
+                    title: "The Toll",
+                    factionId: "scavenger_camp",
+                    trustBelow: 25f,
+                    minDay: 18,
+                    body:
+                        "The Tollman's man quotes the posted rate, takes it, writes a receipt, and " +
+                        "gives you the receipt. The transaction is complete and slightly friendly.",
+                    threateningBody:
+                        "The Tollman's man quotes the posted rate. Then he quotes it again, with a " +
+                        "figure attached that is not on the board, and explains - without threat " +
+                        "and without apology - that the board is for people whose passage is routine."),
+                CreateTrustScene(
+                    id: "event_shrine_reading",
+                    title: "The Shrine",
+                    factionId: "cult_of_the_glow",
+                    trustBelow: 30f,
+                    minDay: 45,
+                    body:
+                        "The reading is taken at eye height and spoken aloud. Someone offers you " +
+                        "water. It is the same water they are drinking.",
+                    threateningBody:
+                        "The reading is taken at eye height and spoken aloud. Someone offers you " +
+                        "water. It is not from the same jug, and the person who hands it to you " +
+                        "watches you hold it.")
+            };
+        }
+
+        private static GameEvent CreateTrustScene(
+            string id, string title, string factionId, float trustBelow, int minDay,
+            string body, string threateningBody)
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = id;
+            ev.title = title;
+            ev.bodyText = body;
+            ev.threateningBodyText = threateningBody;
+            ev.threateningFactionId = factionId;
+            ev.threateningTrustBelow = trustBelow;
+            ev.weight = 1f;
+            ev.conditions = new EventConditions { MinDay = minDay };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "move_on",
+                    Text = "Move on.",
+                    MoraleDelta = 0f
+                }
+            };
+            return ev;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Lore bible 04_ENCOUNTERS — hazard / pressure events (II-c)
+        // Short, mechanical, no moral content. Location references are in
+        // the prose; day gates are author-chosen (bible gives none except
+        // the standby cycle's ~Day 190).
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string FlagStandbyCycleSeen = "standby_cycle_seen";
+
+        /// <summary>Eight short pressure events bound to dangerous places.</summary>
+        public static List<GameEvent> CreateHazardEvents()
+        {
+            return new List<GameEvent>
+            {
+                CreateHazard("event_gallery_settle", "The Shed Groans", 40,
+                    "The snow shed over the pass road groans, low and long. The uphill side is " +
+                    "load-bearing and the downhill side is not, any more.",
+                    "Keep going. It has held this long.", 0f,
+                    "Lose the day. Go around.", -3f),
+                CreateHazard("event_paint_stick_gap", "The Marking Stops", 35,
+                    "Two kilometres of hard shoulder marked with paint sticks, and then the " +
+                    "marking stops, partway. Beyond it is unsurveyed and looks identical.",
+                    "Proceed. Ground looks the same.", 0f,
+                    "Turn back. Nobody marks without reason.", -4f),
+                CreateHazard("event_hull_knock", "Under the Boat", 90,
+                    "Something under the boat. Almost certainly debris. Almost.",
+                    "Look over the side.", 0f,
+                    "Keep rowing. Debris is debris.", -2f),
+                CreateHazard("event_ice_creak", "The Roof Creaks", 90,
+                    "You are standing on the roof of the thing you came to open. The ice under " +
+                    "you creaks once, and then is quiet, which is worse.",
+                    "Back up, slowly.", 0f,
+                    "Hold still. Wait it out.", -3f),
+                CreateHazard("event_relay_current", "The Hut Is Warm", 40,
+                    "The equipment hut at the base of Relay Mast 12 is drawing power. The door " +
+                    "is not locked. It was not locked yesterday either, which is worth thinking about.",
+                    "Open it.", 0f,
+                    "Leave it. Powered things have owners.", -2f),
+                CreateHazard("event_pump_prime", "One Pump Turns Over", 60,
+                    "One pump turns over. Then stops. It can be done. That is all the evidence " +
+                    "in the world, and it is enough.",
+                    "Sound the note. It can be done.", 0f,
+                    "Say nothing. Another day.", -2f),
+                CreateHazard("event_low_background_null", "The Counter Reads Clean", 60,
+                    "The counter reads clean. It has never read clean. Check the sample or " +
+                    "check the instrument.",
+                    "Check the sample.", 0f,
+                    "Check the instrument.", 0f),
+                CreateStandbyCycleEvent()
+            };
+        }
+
+        private static GameEvent CreateHazard(
+            string id, string title, int minDay, string body,
+            string choiceAText, float choiceADelta, string choiceBText, float choiceBDelta)
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = id;
+            ev.title = title;
+            ev.bodyText = body;
+            ev.weight = 0.8f;
+            ev.conditions = new EventConditions { MinDay = minDay };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice { ChoiceId = "choice_a", Text = choiceAText, MoraleDelta = choiceADelta },
+                new EventChoice { ChoiceId = "choice_b", Text = choiceBText, MoraleDelta = choiceBDelta }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// The spine's alarm clock (lore bible II-c): the outer hatch reports
+        /// standby, briefly, for the first time in five years, around Day 190.
+        /// Fires once — BlockedFlagId suppresses re-fires after the choice
+        /// sets standby_cycle_seen.
+        /// </summary>
+        private static GameEvent CreateStandbyCycleEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = "event_standby_cycle";
+            ev.title = "Standby";
+            ev.bodyText =
+                "The outer hatch reports standby, briefly, for the first time in five years. " +
+                "It is the hatch doing exactly what it did on the afternoon everyone walked in.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 190,
+                BlockedFlagId = FlagStandbyCycleSeen
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "log_it",
+                    Text = "Log it.",
+                    MoraleDelta = 0f,
+                    SetEventFlags = new List<string> { FlagStandbyCycleSeen },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagStandbyCycleSeen, WorldFlagValue = true }
+                    }
+                }
+            };
+            return ev;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Lore bible 04_ENCOUNTERS Part I — Ivor Lasko, the deserter vote
+        //
+        // Not a dialogue choice: an actual show of hands at the Grange Hall,
+        // counted, with the player's hand visible to everyone in the room.
+        // Branches per the bible: returned / sheltered / abstained.
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string LaskoVoteEventId = "event_lasko_vote";
+        public const string LaskoAftermathEventId = "event_lasko_aftermath";
+        public const string FlagLaskoReturned = "lasko_returned";
+        public const string FlagLaskoSheltered = "lasko_sheltered";
+        public const string FlagLaskoAbstained = "lasko_abstained";
+        public const string FlagLaskoVoteCast = "lasko_vote_cast";
+        public const int LaskoAftermathDelayDays = 11;
+
+        /// <summary>Day 40+ one-shot chain: the Militia votes on returning a deserter.</summary>
+        public static GameEvent CreateLaskoVoteEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = LaskoVoteEventId;
+            ev.title = "The Vote";
+            ev.bodyText =
+                "The Grange Hall is full. At the front stands a Garrison deserter named Lasko, " +
+                "hands loose at his sides. The Militia is holding a vote on whether to return him, " +
+                "and Voss's standing order is unambiguous and publicly posted.\n\n" +
+                "As a resident, you get a vote. It is a show of hands, counted, and your hand " +
+                "will be visible to everyone in the room.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 40,
+                BlockedFlagId = FlagLaskoVoteCast
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "returned",
+                    Text = "Raise your hand for returning him.",
+                    MoraleDelta = -6f,
+                    FactionId = "military_remnants",
+                    TrustDelta = 15f,
+                    SetEventFlags = new List<string> { FlagLaskoReturned, FlagLaskoVoteCast },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagLaskoReturned, WorldFlagValue = true },
+                        new EventEffect { FactionId = "upland_militia", TrustDelta = -15f },
+                        new EventEffect
+                        {
+                            ScheduleEventId = LaskoAftermathEventId,
+                            ScheduleDelayDays = LaskoAftermathDelayDays
+                        }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "sheltered",
+                    Text = "Raise your hand for sheltering him.",
+                    MoraleDelta = -4f,
+                    FactionId = "military_remnants",
+                    TrustDelta = -15f,
+                    SetEventFlags = new List<string> { FlagLaskoSheltered, FlagLaskoVoteCast },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagLaskoSheltered, WorldFlagValue = true },
+                        new EventEffect { FactionId = "upland_militia", TrustDelta = 15f }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "abstained",
+                    Text = "Keep your hand down.",
+                    MoraleDelta = -8f,
+                    FactionId = "military_remnants",
+                    TrustDelta = -6f,
+                    SetEventFlags = new List<string> { FlagLaskoAbstained, FlagLaskoVoteCast },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagLaskoAbstained, WorldFlagValue = true },
+                        new EventEffect { FactionId = "upland_militia", TrustDelta = -6f }
+                    }
+                }
+            };
+            return ev;
+        }
+
+        /// <summary>
+        /// Returned branch aftermath (eleven days later). Very short.
+        /// The bible specifies only the shape; the game does not comment.
+        /// </summary>
+        public static GameEvent CreateLaskoAftermathEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = LaskoAftermathEventId;
+            ev.title = "Eleven Days";
+            ev.bodyText =
+                "They came for Lasko on the eleventh day. He did not run.\n\n" +
+                "The report is one line long.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredFlagId = FlagLaskoReturned
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "file_it",
+                    Text = "File it.",
+                    MoraleDelta = -3f
+                }
+            };
+            return ev;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Lore bible 05_FACTIONS §8 — the Kittiwake chart (Undertow interlock)
+        //
+        // The survey launch's logbook holds the only accurate chart of the
+        // Drown. Copy it and distribute it and the whole late game opens —
+        // and the Undertow's business model ends, which they notice
+        // immediately. They do not attack. They have never attacked anyone.
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string KittiwakeChartEventId = "event_kittiwake_chart";
+        public const string FlagKittiwakeChartFound = "kittiwake_chart_found";
+        public const string FlagKittiwakeChartResolved = "kittiwake_chart_resolved";
+        public const string FlagKittiwakeChartDistributed = "kittiwake_chart_distributed";
+        public const string FlagKittiwakeChartKept = "kittiwake_chart_kept";
+        public const string FlagColdStoreOpen = "loc_cold_store_atlantic_open";
+        public const string FlagRecordsAnnexOpen = "loc_records_annex_open";
+
+        /// <summary>Fires after arrival at loc_bathymetric_boat sets kittiwake_chart_found.</summary>
+        public static GameEvent CreateKittiwakeChartEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = KittiwakeChartEventId;
+            ev.title = "The Kittiwake Chart";
+            ev.bodyText =
+                "The survey launch's logbook holds the only accurate chart of the Drown: eleven " +
+                "days of soundings, in metres, with timestamps, kept as the flooding happened. " +
+                "It is the reason any of the Drown can be navigated at all.\n\n" +
+                "Copied and distributed, it would make the Drown navigable for everyone. " +
+                "The cold store would open. The Archivists would stop being isolated. " +
+                "And somebody whose business is accidents would notice the moment the " +
+                "first copy circulates.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 1,
+                RequiredFlagId = FlagKittiwakeChartFound,
+                BlockedFlagId = FlagKittiwakeChartResolved
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "distribute",
+                    Text = "Copy the chart. Give it to everyone.",
+                    MoraleDelta = 0f,
+                    SetEventFlags = new List<string> { FlagKittiwakeChartDistributed, FlagKittiwakeChartResolved },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagKittiwakeChartDistributed, WorldFlagValue = true },
+                        new EventEffect { SetWorldFlag = FlagKittiwakeChartResolved, WorldFlagValue = true }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "keep_it",
+                    Text = "Keep the chart. The Drown stays ours.",
+                    MoraleDelta = 0f,
+                    SetEventFlags = new List<string> { FlagKittiwakeChartKept, FlagKittiwakeChartResolved },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagKittiwakeChartKept, WorldFlagValue = true },
+                        new EventEffect { SetWorldFlag = FlagKittiwakeChartResolved, WorldFlagValue = true }
+                    }
+                }
+            };
+            return ev;
+        }
+
+        // ─────────────────────────────────────────────────────────────────
+        // Lore bible 05_FACTIONS interlocks — the two ends a dying survivor
+        // can be sent to. The Quiet House and the Osteophages both accept
+        // them, and the contrast between the two is the argument. The game
+        // presents both and does not adjudicate.
+        // ─────────────────────────────────────────────────────────────────
+
+        public const string TwoEndsEventId = "event_two_ends";
+        public const string FlagSentToQuietHouse = "sent_to_quiet_house";
+        public const string FlagSentToOsteophages = "sent_to_osteophages";
+        public const string FlagKeptAtHome = "two_ends_kept_home";
+        public const string FlagTwoEndsResolved = "two_ends_resolved";
+
+        public static GameEvent CreateTwoEndsEvent()
+        {
+            var ev = ScriptableObject.CreateInstance<GameEvent>();
+            ev.id = TwoEndsEventId;
+            ev.title = "The Two Ends";
+            ev.bodyText =
+                "One of your people is past treatment. Not in pain, or not saying so, but past " +
+                "treatment, and everyone in the shelter knows it.\n\n" +
+                "There is a house in the Grid that takes the dying. It asks for a name and one " +
+                "true thing about them, and nothing else.\n\n" +
+                "There is also a chute in the Drown, and a bell, and a wait.";
+            ev.weight = 1f;
+            ev.conditions = new EventConditions
+            {
+                MinDay = 30,
+                BlockedFlagId = FlagTwoEndsResolved
+            };
+            ev.choices = new List<EventChoice>
+            {
+                new EventChoice
+                {
+                    ChoiceId = "quiet_house",
+                    Text = "Take them to the Quiet House.",
+                    MoraleDelta = -6f,
+                    SetEventFlags = new List<string> { FlagSentToQuietHouse, FlagTwoEndsResolved },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagSentToQuietHouse, WorldFlagValue = true },
+                        new EventEffect { SetWorldFlag = FlagTwoEndsResolved, WorldFlagValue = true }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "osteophages",
+                    Text = "Take them to the airlock.",
+                    MoraleDelta = -12f,
+                    SetEventFlags = new List<string> { FlagSentToOsteophages, FlagTwoEndsResolved },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagSentToOsteophages, WorldFlagValue = true },
+                        new EventEffect { SetWorldFlag = FlagTwoEndsResolved, WorldFlagValue = true }
+                    }
+                },
+                new EventChoice
+                {
+                    ChoiceId = "keep_home",
+                    Text = "Keep them home.",
+                    MoraleDelta = -4f,
+                    SetEventFlags = new List<string> { FlagKeptAtHome, FlagTwoEndsResolved },
+                    Effects = new List<EventEffect>
+                    {
+                        new EventEffect { SetWorldFlag = FlagKeptAtHome, WorldFlagValue = true },
+                        new EventEffect { SetWorldFlag = FlagTwoEndsResolved, WorldFlagValue = true }
+                    }
                 }
             };
             return ev;

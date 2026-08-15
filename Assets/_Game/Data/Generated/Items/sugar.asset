@@ -15,7 +15,7 @@ MonoBehaviour:
   id: sugar
   displayName: Sugar
   description: White crystals. Cooking and bad morale swaps.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a42fdb9ba6994ac928d674aaa9646486, type: 3}
   type: 10
   stackMax: 25
   weight: 0.3

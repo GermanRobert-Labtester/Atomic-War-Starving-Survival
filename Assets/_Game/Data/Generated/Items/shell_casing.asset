@@ -15,7 +15,7 @@ MonoBehaviour:
   id: shell_casing
   displayName: Shell Casing
   description: Empty hull. Scrap or reload feedstock.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f8461788cbf3b12f6a9b3d0a9f0a784c, type: 3}
   type: 10
   stackMax: 50
   weight: 0.01

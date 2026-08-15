@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <RootNamespace>Ashfall.Core</RootNamespace>
+    <AssemblyName>Ashfall.Core</AssemblyName>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <!--
+    The core SOURCE lives at ../Assets/Ashfall.Core/ because Unity only compiles C#
+    under Assets/. Keeping one copy there and globbing it from here means Unity (via
+    AtomicWar.Ashfall.Core.asmdef), Godot (via Ashfall.csproj) and these xunit tests
+    all compile the exact same files. Do not copy core sources back into this folder.
+  -->
+  <PropertyGroup>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="../Assets/Ashfall.Core/**/*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+</Project>

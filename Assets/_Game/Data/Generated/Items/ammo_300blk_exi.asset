@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_300blk_exi
   displayName: .300 Blackout EXI
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5a7860e85dbc4c35695dea2d64c424b8, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

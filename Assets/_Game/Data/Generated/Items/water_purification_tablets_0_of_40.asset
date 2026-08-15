@@ -15,7 +15,7 @@ MonoBehaviour:
   id: water_purification_tablets_0_of_40
   displayName: Water Purification Tablets 0/40 (Empty)
   description: Empty bottle. Refill elsewhere.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ebf0b26935abff4a6a5bf3a5445a2941, type: 3}
   type: 10
   stackMax: 5
   weight: 0.04

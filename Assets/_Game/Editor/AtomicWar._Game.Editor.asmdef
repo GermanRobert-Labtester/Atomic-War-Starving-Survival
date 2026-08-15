@@ -14,7 +14,8 @@
         "AtomicWar._Game.Crafting",
         "AtomicWar._Game.Data",
         "AtomicWar._Game.Economy",
-        "AtomicWar._Game.Utilities"
+        "AtomicWar._Game.Utilities",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [
         "Editor"

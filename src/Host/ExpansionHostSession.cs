@@ -1,0 +1,270 @@
+using System;
+using System.Text;
+using System.Collections.Generic;
+using Ashfall.Core;
+
+namespace AtomicWar.GodotApp
+{
+    /// <summary>
+    /// Thin Godot-host wrapper for the expansion surfaces that were selftest-only:
+    /// Waystation (Holdfast S2 vitals), Standing Record (Exp 03 layouts),
+    /// Crossing gate (Exp 04 vouch), and Greenhouse (Exp 05 plots).
+    /// No gameplay rules here — everything delegates to Ashfall.Core.
+    /// </summary>
+    public sealed class ExpansionHostSession
+    {
+        public const int DefaultSeed = 1117; // greenhouse + vouch demo seed
+
+        public WaystationSystem Waystation { get; }
+        public LocationLayoutSystem Layouts { get; }
+        public LocationMemorySystem Memory { get; }
+        public SiteEncounterSystem SiteEncounters { get; }
+        public StandingRecordCatalog RecordQuests { get; }
+        public VouchAccessSystem Vouch { get; }
+        public GreenhouseSystem Greenhouse { get; }
+        public CrossingArbitrationSystem Arbitration { get; }
+        public LedgerDebtSystem Ledger { get; }
+
+        public ExpansionHostSession(
+            WaystationSystem waystation,
+            LocationLayoutSystem layouts,
+            LocationMemorySystem memory,
+            SiteEncounterSystem siteEncounters,
+            StandingRecordCatalog recordQuests,
+            VouchAccessSystem vouch,
+            GreenhouseSystem greenhouse)
+        {
+            Waystation = waystation ?? new WaystationSystem();
+            Layouts = layouts ?? new LocationLayoutSystem(
+                new FileSystemIO(), new SystemTextJsonSerializer(), NullLog.Instance);
+            Memory = memory ?? new LocationMemorySystem(
+                new FileSystemIO(), new SystemTextJsonSerializer(), NullLog.Instance);
+            SiteEncounters = siteEncounters ?? new SiteEncounterSystem();
+            RecordQuests = recordQuests ?? new StandingRecordCatalog();
+            Vouch = vouch ?? new VouchAccessSystem();
+            Greenhouse = greenhouse ?? new GreenhouseSystem(DefaultSeed);
+            Arbitration = new CrossingArbitrationSystem();
+            Ledger = new LedgerDebtSystem();
+
+            // Persistence: any hub-system state change marks the save dirty.
+            Waystation.OnStateChanged += _ => StateChanged?.Invoke();
+            Layouts.OnStateChanged += _ => StateChanged?.Invoke();
+            Memory.OnStateChanged += _ => StateChanged?.Invoke();
+            SiteEncounters.OnStateChanged += _ => StateChanged?.Invoke();
+            Vouch.OnStateChanged += _ => StateChanged?.Invoke();
+            Greenhouse.OnCropPlanted += (_, _, _) => StateChanged?.Invoke();
+            Greenhouse.OnCropMatured += (_, _) => StateChanged?.Invoke();
+            Greenhouse.OnCropHarvested += _ => StateChanged?.Invoke();
+            Greenhouse.OnBlightOutbreak += _ => StateChanged?.Invoke();
+            Greenhouse.OnPlotDriedOut += _ => StateChanged?.Invoke();
+            Greenhouse.OnCropFailed += _ => StateChanged?.Invoke();
+            Arbitration.OnStateChanged += _ => StateChanged?.Invoke();
+            Ledger.OnStateChanged += _ => StateChanged?.Invoke();
+        }
+
+        /// <summary>Raised when any hub-system state changes (save dirty flag).</summary>
+        public event Action StateChanged;
+
+        public static ExpansionHostSession Create(string dataDirectory, ILog log = null)
+        {
+            CatalogLocator.UseInvariantCulture();
+            log = log ?? new GodotLog();
+            var files = new FileSystemIO();
+            var json = new SystemTextJsonSerializer();
+
+            var layouts = new LocationLayoutSystem(files, json, log);
+            layouts.Load(dataDirectory);
+            var memory = new LocationMemorySystem(files, json, log);
+            memory.Load(dataDirectory);
+            var quests = new StandingRecordCatalogLoader(files, json, log).Load(dataDirectory);
+
+            return new ExpansionHostSession(
+                new WaystationSystem(),
+                layouts,
+                memory,
+                new SiteEncounterSystem(DefaultSeed),
+                quests,
+                new VouchAccessSystem(),
+                new GreenhouseSystem(DefaultSeed));
+        }
+
+        // ---- Cross-host save ----
+
+        /// <summary>Cross-host save envelope. Shape and checksum owned by ExpansionHubSaveCodec.</summary>
+        public ExpansionHubSave CaptureSave(int simDay) =>
+            ExpansionHubSaveCodec.Capture(simDay, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
+                Arbitration, Ledger);
+
+        public void RestoreSave(ExpansionHubSave save) =>
+            ExpansionHubSaveCodec.Restore(save, Waystation, Layouts, Memory, SiteEncounters, Vouch, Greenhouse,
+                Arbitration, Ledger);
+
+        // ---- Nobody's Charter: Crossing Arbitration (Exp 04) ----
+
+        /// <summary>Loads the standard backer pool used by the headless demo and dev UI.</summary>
+        public void LoadDefaultBackerPool()
+        {
+            Arbitration.LoadBackerPool(new List<BackerDef>
+            {
+                new BackerDef { id = CrossingIds.NpcOsran, displayName = "Osran Kell", wants = "a sealed contract", willNot = "forge a signature", principled = true },
+                new BackerDef { id = CrossingIds.NpcMattis, displayName = "Mattis Cray", wants = "a public record", willNot = "sign a false statement", principled = true },
+                new BackerDef { id = "npc_halden_mire", displayName = "Halden Mire", wants = "grain futures", willNot = "lend to a ghost", principled = true },
+                new BackerDef { id = "npc_bram_ostrowski", displayName = "Bram Ostrowski", wants = "brass scrap", willNot = "deal with the Garrison directly", principled = false },
+                new BackerDef { id = "npc_leva_quist", displayName = "Leva Quist", wants = "information", willNot = "be seen at the Lockup", principled = false }
+            });
+        }
+
+        public string ArbitrationLine()
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append("Arbitration: ").Append(Arbitration.State.rulingsCalled).Append(" called · ")
+                .Append(Arbitration.State.rulingsOverturned).Append(" overturned · ")
+                .Append(Arbitration.State.standingRepeats).Append(" re-Stood");
+            for (int i = 0; i < Arbitration.Rulings.Count; i++)
+            {
+                var r = Arbitration.Rulings[i];
+                if (r == null) continue;
+                sb.Append("\n  ").Append(r.topic).Append(": ").Append(r.shape)
+                    .Append(" (").Append(r.backers.Count).Append(" backers)");
+            }
+            return sb.ToString();
+        }
+
+        public string LedgerLine()
+        {
+            var sb = new System.Text.StringBuilder();
+            sb.Append("Ledger: ").Append(Ledger.Contracts.Count).Append(" open · ")
+                .Append(Ledger.ClosedContracts.Count).Append(" closed · ")
+                .Append(Ledger.LedgerTampered ? "TAMPERED" : "clean");
+            for (int i = 0; i < Ledger.Contracts.Count; i++)
+            {
+                var c = Ledger.Contracts[i];
+                if (c == null) continue;
+                sb.Append("\n  ").Append(c.debtorId).Append(": ").Append(c.principal).Append(" (").Append(c.daysRemaining).Append("d, ")
+                    .Append(c.signed ? "signed" : "draft").Append(")");
+            }
+            return sb.ToString();
+        }
+
+        public void UnlockWaystation() => Waystation.Unlock();
+        public void SetWaystationWintering(bool wintering) => Waystation.SetWintering(wintering);
+        public bool AssignWaystationWatch(string[] ids) => Waystation.AssignWatch(ids);
+        public void ResupplyWaystation() => Waystation.Resupply();
+        public void TickWaystation(bool iceRoadOpen) => Waystation.TickDaily(iceRoadOpen);
+
+        public string WaystationLine()
+        {
+            if (!Waystation.Unlocked) return "Waystation: sealed (unlock to open bunks)";
+            return
+                $"Waystation: stove {(Waystation.StoveLit ? "lit" : "cold")} · " +
+                $"bunks {Waystation.State.bunksOccupied}/{WaystationSystem.MaxBunks} · " +
+                $"filter {Waystation.State.filterHealth:0}% · " +
+                $"resupply {Waystation.State.daysSinceResupply}d ago · " +
+                $"wintering {(Waystation.State.winteringClosedWindow ? "closed-window" : "normal")}";
+        }
+
+        // ---- Standing Record (Exp 03) ----
+
+        public void UnlockRecord()
+        {
+            Layouts.Unlock();
+            Memory.Unlock();
+            SiteEncounters.Unlock();
+        }
+
+        public bool ArriveAtSite(string parentId) => Layouts.ArriveAtParent(parentId);
+
+        public bool EnterSiteRoom(string roomId) => Layouts.EnterRoom(roomId);
+
+        public bool InspectSiteRoom(string roomId) => Layouts.InspectRoom(roomId);
+
+        public string RoomLine(string parentId, string roomId)
+        {
+            var def = Layouts.GetLayout(parentId);
+            if (def == null) return "no layout for " + parentId;
+            var room = def.GetRoom(roomId);
+            if (room == null) return "no room " + roomId;
+            string dark = Layouts.IsRoomDark(parentId, roomId) ? " [dark]" : "";
+            string recast = Memory.GetActiveRecast(parentId);
+            var sb = new StringBuilder(room.displayName).Append(dark).Append("\n");
+            sb.Append(room.inspect).Append('\n');
+            if (!string.IsNullOrEmpty(recast) && !Layouts.IsRoomDark(parentId, roomId))
+                sb.Append("NOW: ").Append(recast).Append('\n');
+            return sb.ToString().TrimEnd();
+        }
+
+        public string StandingRecordLine()
+        {
+            var sb = new StringBuilder();
+            sb.Append("Standing Record: ").Append(Layouts.LayoutCount).Append(" layouts · ")
+                .Append(Memory.StratumCount).Append(" strata · ")
+                .Append(RecordQuests.Quests.Count).Append(" quests · ");
+            sb.Append("Overlay ").Append(SiteEncounters.OverlayAccess ? "access" : "WITHDRAWN")
+                .Append(" · plates scraped ").Append(SiteEncounters.PlatesScraped);
+            if (Layouts.LayoutCount > 0)
+            {
+                var def = Layouts.Layouts[0];
+                sb.Append(" · first: ").Append(def.parentLocationId)
+                    .Append(" (").Append(def.displayName).Append(", ").Append(def.RoomCount).Append(" rooms)");
+            }
+            return sb.ToString();
+        }
+
+        public string RecordQuestLine()
+        {
+            var sb = new StringBuilder("Record quests:");
+            for (int i = 0; i < RecordQuests.Quests.Count && i < 5; i++)
+            {
+                var q = RecordQuests.Quests[i];
+                sb.Append("\n  ").Append(q.id).Append(" → ").Append(q.target_location_id);
+            }
+            if (RecordQuests.Quests.Count > 5)
+                sb.Append("\n  +").Append(RecordQuests.Quests.Count - 5).Append(" more");
+            return sb.ToString();
+        }
+
+        // ---- Crossing gate (Exp 04) ----
+
+        public bool GrantVouch(string npcId) => Vouch.GrantVouch(npcId, isLastResort: false);
+        public bool BurnVouch() => Vouch.BurnVouch();
+        public bool SoftenAccess() => Vouch.SoftenAccess();
+
+        public string CrossingLine()
+        {
+            string gate = Vouch.HasAccess ? "OPEN" : "CLOSED";
+            return
+                $"Crossing: gate {gate} · " +
+                $"vouch {(string.IsNullOrEmpty(Vouch.VouchedBy) ? "none" : Vouch.VouchedBy)} · " +
+                $"burned {Vouch.VouchBurned} · softened {Vouch.AccessSoftened} · " +
+                $"last resort {(Vouch.LastResortUsed ? "used" : "available")}";
+        }
+
+        // ---- Greenhouse (Exp 05) ----
+
+        public void EnsureGreenhousePlots(int count) => Greenhouse.EnsurePlots(count);
+        public bool PlantGreenhouse(int plotIndex, string seedItemId, int day)
+            => Greenhouse.Plant(plotIndex, seedItemId, day, out _);
+        public void WaterGreenhouse(int plotIndex, float units) => Greenhouse.Water(plotIndex, units, tainted: false);
+        public GreenhouseHarvest HarvestGreenhouse(int plotIndex) => Greenhouse.Harvest(plotIndex);
+        public void TickGreenhouse(int simDay) =>
+            Greenhouse.TickDay(simDay, growLightHours: 6f, ashContaminationRate: 0.02f);
+
+        public string GreenhouseLine()
+        {
+            var sb = new StringBuilder();
+            sb.Append("Greenhouse: ").Append(Greenhouse.PlotCount).Append(" plots · ");
+            sb.Append(Greenhouse.TotalHarvests).Append(" harvests · ");
+            sb.Append(Greenhouse.IsPreWarWheatUnlocked ? "wheat unlocked" : "wheat locked");
+            sb.Append(" · [");
+            for (int i = 0; i < Greenhouse.PlotCount; i++)
+            {
+                if (i > 0) sb.Append(" ");
+                var p = Greenhouse.State.plots[i];
+                string seed = string.IsNullOrEmpty(p.seedItemId) ? "fallow" : p.seedItemId.Replace("item_", "");
+                sb.Append(i).Append(":").Append(seed).Append("/").Append(p.stage);
+            }
+            sb.Append("]");
+            return sb.ToString();
+        }
+    }
+}

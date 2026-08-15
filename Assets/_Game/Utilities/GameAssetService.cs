@@ -80,6 +80,31 @@ namespace AtomicWar._Game.Utilities
             return loaded;
         }
 
+        /// <summary>
+        /// Sprite at <paramref name="path"/>, or <paramref name="fallback"/> when it is
+        /// not authored yet. Used by UI call sites that have a legacy direct reference
+        /// (e.g. <c>ItemDefinition.iconRef</c>) to degrade to while the Resources/Art
+        /// pipeline fills in: new art wins automatically the moment a file lands.
+        /// Deliberately bypasses <see cref="PlaceholderSprite"/> so an explicit
+        /// per-entry fallback is never masked by the global placeholder.
+        /// </summary>
+        public Sprite GetSprite(string path, Sprite fallback)
+        {
+            if (string.IsNullOrEmpty(path)) return fallback;
+            if (_sprites.TryGetValue(path, out var cached)) return cached ?? fallback;
+            if (_knownMissing.Contains(path)) return fallback;
+
+            var loaded = _provider.Load<Sprite>(path);
+            if (loaded == null)
+            {
+                RecordMissing(path);
+                return fallback;
+            }
+
+            _sprites[path] = loaded;
+            return loaded;
+        }
+
         // ------------------------------------------------------------------
         // Audio
         // ------------------------------------------------------------------

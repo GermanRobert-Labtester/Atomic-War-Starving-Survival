@@ -29,6 +29,8 @@ using AtomicWar._Game.World;
 using AtomicWar._Game.Narrative;
 
 using AtomicWar._Game.Factions;
+using Ashfall.Core.Journal;
+using JournalSystem = AtomicWar._Game.Events.JournalSystem;
 
 namespace AtomicWar._Game.Core
 {
@@ -52,6 +54,7 @@ namespace AtomicWar._Game.Core
         [SerializeField] private GameEventCatalogSO _eventCatalog;
         [SerializeField] private LocationCatalogSO _locationCatalog;
         [SerializeField] private RadioCatalogSO _radioCatalog;
+        [SerializeField] private SurvivorCatalogSO _survivorCatalog;
         [SerializeField] private WorldPhaseConfigSO _worldPhaseConfig;
         [SerializeField] private FlashpointSequenceSO _flashpointSequence;
         [SerializeField] private MentalBreakCatalogSO _mentalBreakCatalog;
@@ -59,6 +62,11 @@ namespace AtomicWar._Game.Core
 
         [Header("UI")]
         [SerializeField] private HUD _hud;
+        [Tooltip("Core-side bridge for the post-game moral chronicle. Auto-created " +
+                 "on this GameObject when unassigned.")]
+        [SerializeField] private MoralChronicleBridge _moralChronicleBridge;
+        [Tooltip("Scene loaded when the chronicle's Main Menu button is pressed.")]
+        [SerializeField] private string _mainMenuSceneName = "StartScreen";
 
         [Header("Diagnostics (M-1)")]
         [SerializeField] private DiagnosticsOverlay _diagnosticsOverlay;
@@ -214,6 +222,22 @@ namespace AtomicWar._Game.Core
         public AI.HallucinationSystem HallucinationSystem { get; private set; }
         // Prompt #66 — Skill mentorship action.
         public MentorshipSystem MentorshipSystem { get; private set; }
+
+        // ── Section VII new-content batch ────────────────────────────
+        // Sleep debt bands (Tired → Hallucinating → Microsleep → Collapsed).
+        public SleepDeprivationSystem SleepDeprivation { get; private set; }
+        // Death-of-survivor grief cascade (work refusal, survivor's guilt).
+        public GriefSystem Grief { get; private set; }
+        // Bunker subsystem integrity decay (concrete/hatch seal/wiring/pipes).
+        public ShelterDegradationSystem ShelterDegradation { get; private set; }
+        // Surface ash buildup on intake/panels/hatch; daily clear chore.
+        public AshAccumulationSystem AshAccumulation { get; private set; }
+        // Antibiotic course abandonment → resistance evolution.
+        public DiseaseMutationSystem DiseaseMutation { get; private set; }
+        // Bunker noise source aggregation → raid probability modifier.
+        public NoiseDisciplineSystem NoiseDiscipline { get; private set; }
+        // Per-survivor kcal ledger replacing abstract hunger pressure.
+        public CalorieAccountingSystem CalorieAccounting { get; private set; }
 
         // Prompt #7 — Addiction & Withdrawal pipeline.
         public AddictionSystem Addiction { get; private set; }
@@ -464,6 +488,11 @@ namespace AtomicWar._Game.Core
         public LaborCampSystem LaborCampSystem { get; private set; }
         // Prompt #78 — cult moral disgust.
         public CultMoralDisgustSystem CultMoralSystem { get; private set; }
+        // Expansion II — The Weight of Factions: four faction-pressure systems.
+        public System_GarrisonComplianceLedger GarrisonComplianceLedger { get; private set; }
+        public System_MilitiaContributionTax MilitiaContributionTax { get; private set; }
+        public System_CultLeash CultLeash { get; private set; }
+        public System_WarlordTribute WarlordTributeSystem { get; private set; }
         // Prompt #79 — mutated ecosystem (flora/fauna).
         public MutatedEcosystemSystem EcosystemSystem { get; private set; }
         // Prompt #79–#84 — house-to-bunker transition.
@@ -632,6 +661,13 @@ namespace AtomicWar._Game.Core
         /// of being kept alive by every long-lived system it once subscribed to.
         /// </summary>
         private readonly AtomicWar._Game.Utilities.SubscriptionBag _subscriptions = new AtomicWar._Game.Utilities.SubscriptionBag();
+
+        /// <summary>
+        /// Shared art/audio resolver: Resources/Art paths win when authored, each call
+        /// site supplies its legacy direct-reference fallback (e.g. iconRef).
+        /// </summary>
+        private readonly AtomicWar._Game.Utilities.GameAssetService _gameAssets =
+            new AtomicWar._Game.Utilities.GameAssetService();
 
         // -----------------------------------------------------------------
         // H-2: Cached delegate fields for OnDestroy cleanup.
@@ -837,6 +873,8 @@ namespace AtomicWar._Game.Core
 
         // ── CoreFamilies bulk properties (auto) ─────────────────────────
         public FalloutStormHazardSystem FalloutStormHazard { get; private set; }
+        /// <summary>Process-wide audio event bus shared with flashback/siren wiring.</summary>
+        private AudioEventBus _audioBus;
         public Action_Crawlspace ActionCrawlspace { get; private set; }
         public Action_Play ActionPlay { get; private set; }
         public Action_SlaughterPet ActionSlaughterPet { get; private set; }
@@ -1018,6 +1056,23 @@ namespace AtomicWar._Game.Core
         public VehicleSystem VehicleSystem { get; private set; }
         public VisionLossSystem VisionLossSystem { get; private set; }
         public VisitorRNGSystem VisitorRNGSystem { get; private set; }
+
+        // ── Protocol Zero expansion systems ──────────────────────────
+        public ThermalGridSystem ThermalGrid { get; private set; }
+        public AshTideScheduler AshTideScheduler { get; private set; }
+        public AtmosphereToxicitySystem AtmosphereToxicity { get; private set; }
+        public ConvoyLogisticsSystem ConvoyLogistics { get; private set; }
+
+        // ── Expansion II Addendum: Black Aquifer systems ──────────────
+        public HydrostaticPressureSystem HydrostaticPressure { get; private set; }
+        public TunnelingAndStructuralStress TunnelingStress { get; private set; }
+        public MyceliumNetworkSystem MyceliumNetwork { get; private set; }
+
+        // ── Expansion III: Dead Hand systems ──────────────────────────
+        public UXOFieldSystem UXOField { get; private set; }
+        public Encounters.AutomatedThreatSystem AutomatedThreats { get; private set; }
+        public Shelter.ElectromagneticDecaySystem ElectromagneticDecay { get; private set; }
+
         public NPC_AddictsPassive NPCAddictsPassive { get; private set; }
         public NPC_AggroScavengers NPCAggroScavengers { get; private set; }
         public NPC_AggroTrader NPCAggroTrader { get; private set; }

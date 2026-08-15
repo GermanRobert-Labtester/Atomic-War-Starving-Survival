@@ -10,6 +10,7 @@ using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {

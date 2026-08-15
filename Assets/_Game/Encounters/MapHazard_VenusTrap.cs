@@ -72,7 +72,7 @@ namespace AtomicWar._Game.Encounters
             }
 
             _state.node_id = nodeId ?? string.Empty;
-            var rng = SeededRandom.CreateFixed("venus_trap:" + (_state.node_id ?? "node"));
+            var rng = SeededRandom.Create(SeededRandom.WorldSeed, "venus_trap:" + (_state.node_id ?? "node"));
             _state.traps_active = 2 + rng.Next(3); // 2..4 inclusive
             _state.is_disguised = true;
             _state.triggered_survivors.Clear();

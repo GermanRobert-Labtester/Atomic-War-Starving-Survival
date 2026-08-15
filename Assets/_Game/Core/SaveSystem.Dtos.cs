@@ -14,6 +14,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Events;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -353,6 +354,18 @@ namespace AtomicWar._Game.Core
         public float QuestProgress;
         public int DaysAlive;
         public bool MoraleHitZero;
+
+        // Phase 11 HUD-backed survivor fields (widgets re-paint from these on load).
+        public RadiationSicknessPhase SicknessPhase = RadiationSicknessPhase.Healthy;
+        public float PhaseHoursElapsed;
+        public float HypervigilanceLevel;
+        public MoralBranchDirection BranchDirection = MoralBranchDirection.Neutral;
+        public bool HasTerminalPrognosis;
+        public float TerminalPrognosisDaysRemaining;
+        public string PersonalKeepsakeItemId;
+        public bool HasLostKeepsake;
+        public float KeepsakeGriefLevel;
+        public List<ChemicalDependency> ChemicalDependencies = new List<ChemicalDependency>();
     }
 
     /// <summary>Serializable mirror of Survivors.ConsumptionRecord for save/load.</summary>
@@ -405,5 +418,26 @@ namespace AtomicWar._Game.Core
         /// re-defaults this from the module id when it is &lt;= 0, so an unpersisted
         /// custom value silently reverted to the stock number instead of vanishing.</summary>
         public float SecurityContribution;
+    }
+
+    /// <summary>
+    /// Section VII — per-survivor sleep-debt snapshot. JsonUtility cannot
+    /// serialize a root-level List, so SleepDeprivationSystem's dictionary
+    /// values travel inside this wrapper (same pattern as GraftRejectionSave).
+    /// </summary>
+    [Serializable]
+    public class SleepDeprivationSave
+    {
+        public List<SleepDeprivationSystem.State> Entries = new List<SleepDeprivationSystem.State>();
+    }
+
+    /// <summary>
+    /// Section VII — per-survivor kcal ledger snapshot. Root-level List
+    /// wrapper for the same JsonUtility constraint as SleepDeprivationSave.
+    /// </summary>
+    [Serializable]
+    public class CalorieAccountingSave
+    {
+        public List<CalorieAccountingSystem.State> Entries = new List<CalorieAccountingSystem.State>();
     }
 }

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: canned_fish
   displayName: Canned Fish
   description: Oily protein tin.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a89ca7b0bcf7d94e09fc7d5c4c23c322, type: 3}
   type: 0
   stackMax: 12
   weight: 0.4

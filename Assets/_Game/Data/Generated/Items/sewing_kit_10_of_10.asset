@@ -15,7 +15,7 @@ MonoBehaviour:
   id: sewing_kit_10_of_10
   displayName: Sewing Kit 10/10
   description: 10 stitches/repairs.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 15153a7c03c43dbd7b5069334f401671, type: 3}
   type: 7
   stackMax: 5
   weight: 0.15

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vacuum_tube
   displayName: Vacuum Tube
   description: Glass tube. Old radios and quirks.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 746671936c6f2555792c0e36a45d6eba, type: 3}
   type: 10
   stackMax: 10
   weight: 0.08

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: disposable_vape
   displayName: Disposable Vape
   description: Sealed vape stick.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 24c710c7b655f4dcba7c26a290d446f0, type: 3}
   type: 12
   stackMax: 10
   weight: 0.08

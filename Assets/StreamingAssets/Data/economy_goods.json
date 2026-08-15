@@ -1,0 +1,134 @@
+[
+  {
+    "id": "clean_water",
+    "displayName": "Clean Water",
+    "category": "water",
+    "basePrice": 8.0,
+    "volatility": 0.15,
+    "elasticity": 1.2,
+    "stackSize": 5,
+    "weightKg": 1.0,
+    "barterNote": "The universal measure. Every faction prices its offers against the litre."
+  },
+  {
+    "id": "scrap_metal",
+    "displayName": "Scrap Metal",
+    "category": "materials",
+    "basePrice": 3.0,
+    "volatility": 0.1,
+    "elasticity": 0.8,
+    "stackSize": 20,
+    "weightKg": 2.0,
+    "barterNote": "Tier-zero scrap; the fallback value everything else is compared against."
+  },
+  {
+    "id": "bandages",
+    "displayName": "Bandages",
+    "category": "medical",
+    "basePrice": 15.0,
+    "volatility": 0.2,
+    "elasticity": 1.5,
+    "stackSize": 10,
+    "weightKg": 0.2,
+    "barterNote": "Shortage-spiked when supplies run thin."
+  },
+  {
+    "id": "antibiotics",
+    "displayName": "Antibiotics",
+    "category": "medical",
+    "basePrice": 40.0,
+    "volatility": 0.25,
+    "elasticity": 1.5,
+    "stackSize": 5,
+    "weightKg": 0.2,
+    "barterNote": "The medicine tier anchor; the sick room's price follows it."
+  },
+  {
+    "id": "iodine_pills",
+    "displayName": "Iodine Pills",
+    "category": "medical",
+    "basePrice": 25.0,
+    "volatility": 0.2,
+    "elasticity": 1.3,
+    "stackSize": 10,
+    "weightKg": 0.1,
+    "barterNote": "Rises when the fallout maps update."
+  },
+  {
+    "id": "fuel",
+    "displayName": "Fuel",
+    "category": "fuel",
+    "basePrice": 20.0,
+    "volatility": 0.18,
+    "elasticity": 1.4,
+    "stackSize": 4,
+    "weightKg": 3.0,
+    "barterNote": "The generators drink it; so does the market."
+  },
+  {
+    "id": "9mm_ammo",
+    "displayName": "9mm Ammunition",
+    "category": "ammo",
+    "basePrice": 12.0,
+    "volatility": 0.2,
+    "elasticity": 1.2,
+    "stackSize": 50,
+    "weightKg": 0.5,
+    "barterNote": "Ammo holds value better than most promises."
+  },
+  {
+    "id": "crowbar",
+    "displayName": "Crowbar",
+    "category": "tools",
+    "basePrice": 18.0,
+    "volatility": 0.08,
+    "elasticity": 0.6,
+    "stackSize": 1,
+    "weightKg": 2.5,
+    "barterNote": "Tools are inelastic: scarce on supply, steady on price."
+  },
+  {
+    "id": "gas_mask",
+    "displayName": "Gas Mask",
+    "category": "tools",
+    "basePrice": 60.0,
+    "volatility": 0.15,
+    "elasticity": 1.0,
+    "stackSize": 1,
+    "weightKg": 1.8,
+    "barterNote": "Storm weather moves this faster than any argument."
+  },
+  {
+    "id": "dosimeter",
+    "displayName": "Dosimeter",
+    "category": "tools",
+    "basePrice": 80.0,
+    "volatility": 0.12,
+    "elasticity": 0.9,
+    "stackSize": 1,
+    "weightKg": 0.4,
+    "barterNote": "The registrar's pen; calibration keeps its price honest."
+  },
+  {
+    "id": "canned_food",
+    "displayName": "Canned Food",
+    "category": "food",
+    "basePrice": 14.0,
+    "volatility": 0.18,
+    "elasticity": 1.5,
+    "stackSize": 6,
+    "weightKg": 0.8,
+    "barterNote": "Food spikes hardest in the shortage windows."
+  },
+  {
+    "id": "diamond",
+    "displayName": "Diamond",
+    "category": "luxury",
+    "basePrice": 150.0,
+    "volatility": 0.05,
+    "elasticity": 0.3,
+    "stackSize": 1,
+    "weightKg": 0.01,
+    "barterNote": "Luxury softens when supplies run short — nobody trades shine for thirst."
+  }
+]

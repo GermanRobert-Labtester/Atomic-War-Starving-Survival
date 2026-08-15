@@ -15,7 +15,7 @@ MonoBehaviour:
   id: titanium_bar
   displayName: Titanium Bar
   description: Light strong metal bar.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 275fe0b1c038fb3ce84ebf28fa6aae0f, type: 3}
   type: 10
   stackMax: 5
   weight: 0.9

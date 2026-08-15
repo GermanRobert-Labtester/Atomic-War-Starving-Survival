@@ -156,6 +156,66 @@ namespace AtomicWar._Game.Survivors
             public const string MechanicHighwayHeart = "quest_mechanic_highway_heart";
             public const string ChildSoldierRifle = "quest_child_soldier_rifle";
             public const string DeepWell = "quest_deep_well";
+            // ASHFALL: THE HOLDFAST — main questline
+            public const string HoldfastTheSheet = "quest_holdfast_the_sheet";
+            public const string HoldfastTheClerk = "quest_holdfast_the_clerk";
+            public const string HoldfastTheWindow = "quest_holdfast_the_window";
+            public const string HoldfastThePlant = "quest_holdfast_the_plant";
+            public const string HoldfastAuthentication = "quest_holdfast_authentication";
+            public const string HoldfastTheDrawer = "quest_holdfast_the_drawer";
+            public const string HoldfastTheLevy = "quest_holdfast_the_levy";
+            public const string HoldfastTheMembrane = "quest_holdfast_the_membrane";
+            public const string HoldfastTheSecondList = "quest_holdfast_the_second_list";
+            public const string HoldfastTheHatch = "quest_holdfast_the_hatch";
+            // ASHFALL: THE DUTY ROSTER — main questline
+            public const string DutyRosterTheChart = "quest_roster_the_chart";
+            public const string DutyRosterWhoEats = "quest_roster_who_eats";
+            public const string DutyRosterFourteenth = "quest_roster_fourteenth";
+            public const string DutyRosterCaretaker = "quest_roster_caretaker";
+            public const string DutyRosterTheColumn = "quest_roster_the_column";
+            public const string DutyRosterTheTin = "quest_roster_the_tin";
+            public const string DutyRosterSole = "quest_roster_sole";
+            public const string DutyRosterWindow = "quest_roster_window";
+            public const string DutyRosterInk = "quest_roster_ink";
+            public const string DutyRosterQuiet = "quest_roster_quiet";
+            // Side quests (18)
+            public const string DutyRosterPellNumbers = "quest_roster_pell_numbers";
+            public const string DutyRosterFrayneMinutes = "quest_roster_frayne_minutes";
+            public const string DutyRosterGrangeVote = "quest_roster_grange_vote";
+            public const string DutyRosterIvyOil = "quest_roster_ivy_oil";
+            public const string DutyRosterBlankAccess = "quest_roster_blank_access";
+            public const string DutyRosterMissingStrip = "quest_roster_missing_strip";
+            public const string DutyRosterKessPencil = "quest_roster_kess_pencil";
+            public const string DutyRosterHadiShift = "quest_roster_hadi_shift";
+            public const string DutyRosterTamsinWatch = "quest_roster_tamsin_watch";
+            public const string DutyRosterAnselTruth = "quest_roster_ansel_truth";
+            public const string DutyRosterLenTag = "quest_roster_len_tag";
+            public const string DutyRosterNilaEleven = "quest_roster_nila_eleven";
+            public const string DutyRosterChair = "quest_roster_chair";
+            public const string DutyRoster12bKit = "quest_roster_12b_kit";
+            public const string DutyRosterBrigid = "quest_roster_brigid";
+            public const string DutyRosterBootCrate = "quest_roster_boot_crate";
+            public const string DutyRosterRepNightSlate = "quest_rep_night_slate";
+            public const string DutyRosterRepMealRow = "quest_rep_meal_row";
+            // ASHFALL: THE STANDING RECORD — main questline
+            public const string RecordThePlate = "quest_record_the_plate";
+            public const string RecordGreasePencil = "quest_record_grease_pencil";
+            public const string RecordWrongStacks = "quest_record_wrong_stacks";
+            public const string RecordTheBook = "quest_record_the_book";
+            public const string RecordMassOrLot = "quest_record_mass_or_lot";
+            public const string RecordHands = "quest_record_hands";
+            public const string RecordFriendlyObstacle = "quest_record_friendly_obstacle";
+            public const string RecordTheFailure = "quest_record_the_failure";
+            public const string RecordFallback = "quest_record_fallback";
+            public const string RecordWhichGazetteer = "quest_record_which_gazetteer";
+
+            // ASHFALL: NOBODY'S CHARTER — live quest cards (crossing_quests.json)
+            public const string CrossingTheVouch = "quest_crossing_the_vouch";
+            public const string CrossingFirstWeigh = "quest_crossing_first_weigh";
+            public const string CrossingScaleIntegrity = "quest_crossing_scale_integrity";
+            public const string CrossingTheTerms = "quest_crossing_the_terms";
+            public const string CrossingThePetition = "quest_crossing_the_petition";
+            public const string CrossingTheStanding = "quest_crossing_the_standing";
         }
     }
 }

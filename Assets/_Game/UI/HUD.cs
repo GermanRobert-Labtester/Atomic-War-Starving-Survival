@@ -9,6 +9,7 @@ using AtomicWar._Game.Environment;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Inventory;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.UI
 {
@@ -49,6 +50,54 @@ namespace AtomicWar._Game.UI
         [SerializeField] private InternalHorrorHUD _internalHorrorHud;
         [SerializeField] private ExpeditionEncounterLogHUD _expeditionEncounterLogHud;
         [SerializeField] private DiegeticHudController _diegeticHud;
+        [SerializeField] private MoralChronicleUI _moralChronicleUi;
+        [SerializeField] private TutorialOverlay _tutorialOverlay;
+
+        // ── Batch-20 UI Elements ─────────────────────────────────────────────
+        [Header("Batch 20 UI Elements")]
+        [SerializeField] private RadiationDosimeterWidget _radiationDosimeterWidget;
+        [SerializeField] private GeigerSweepGauge         _geigerSweepGauge;
+        [SerializeField] private AirFilterIntegrityBar    _airFilterIntegrityBar;
+        [SerializeField] private FalloutStormWarningBanner _falloutStormWarningBanner;
+        [SerializeField] private SurvivorPortraitCard     _survivorPortraitCard;
+        [SerializeField] private MoralDecayMeter          _moralDecayMeter;
+        [SerializeField] private RationAllocationDial     _rationAllocationDial;
+        [SerializeField] private WaterPurityGauge         _waterPurityGauge;
+        [SerializeField] private TemperatureReadoutWidget _temperatureReadoutWidget;
+        [SerializeField] private PowerFlowSchematic       _powerFlowSchematic;
+        [SerializeField] private FactionPressureRing      _factionPressureRing;
+        [SerializeField] private ExpeditionCountdownTimer _expeditionCountdownTimer;
+        [SerializeField] private RadioSignalStrengthBar   _radioSignalStrengthBar;
+        [SerializeField] private CraftQueueStrip          _craftQueueStrip;
+        [SerializeField] private AlertToastNotification   _alertToastNotification;
+        [SerializeField] private BunkerFloorMapMiniature  _bunkerFloorMapMiniature;
+        [SerializeField] private DayNightArcClock         _dayNightArcClock;
+        [SerializeField] private BloodTypeIndicator       _bloodTypeIndicator;
+        [SerializeField] private LootHaulTicker           _lootHaulTicker;
+        [SerializeField] private EndgameVictoryPathTracker _endgameVictoryPathTracker;
+
+        [Header("Phase 11 — Expansion UI Elements")]
+        [SerializeField] private RadiationPhaseIndicator _radiationPhaseIndicator;
+        [SerializeField] private PhantomMemoryVignette _phantomMemoryVignette;
+        [SerializeField] private HypervigilanceIndicator _hypervigilanceIndicator;
+        [SerializeField] private MoralBranchDisplay _moralBranchDisplay;
+        [SerializeField] private KeepsakeSlotUI _keepsakeSlotUi;
+        [SerializeField] private MemorialWallUI _memorialWallUi;
+        [SerializeField] private TerminalPrognosisBanner _terminalPrognosisBanner;
+        [SerializeField] private AddictionDetoxIndicator _addictionDetoxIndicator;
+        [Header("Expansions 3 & 4 — UI Elements")]
+        [SerializeField] private LocationDetailPanel _locationDetailPanel;
+        [SerializeField] private ItemConditionBadge _itemConditionBadge;
+        [SerializeField] private QuestlineProgressTracker _questlineProgressTracker;
+        [SerializeField] private SiegeStatusHUD _siegeStatusHud;
+        [SerializeField] private FactionIntelligencePanel _factionIntelligencePanel;
+        [SerializeField] private VehicleStatusPanel _vehicleStatusPanel;
+        [SerializeField] private TacticalCommandBar _tacticalCommandBar;
+        [SerializeField] private QuestlineStageTracker _questlineStageTracker;
+        [Header("Deep Lore — UI Elements")]
+        [SerializeField] private LoreCodexPanel _loreCodexPanel;
+        [SerializeField] private FactionRelationshipMap _factionRelationshipMap;
+        [SerializeField] private CharacterArcProgressPanel _characterArcProgressPanel;
 
         [SerializeField] private KeyCode _debugToggleKey = KeyCode.F2;
         [SerializeField] private bool _debugModeEnabled = false;
@@ -81,6 +130,54 @@ namespace AtomicWar._Game.UI
         public InternalHorrorHUD InternalHorrorHUD { get { EnsureWidgetReferences(); return _internalHorrorHud; } }
         public ExpeditionEncounterLogHUD ExpeditionEncounterLogHUD { get { EnsureWidgetReferences(); return _expeditionEncounterLogHud; } }
         public DiegeticHudController DiegeticHud { get { EnsureWidgetReferences(); return _diegeticHud; } }
+        public MoralChronicleUI MoralChronicleUI { get { EnsureWidgetReferences(); return _moralChronicleUi; } }
+        public TutorialOverlay TutorialOverlay { get { EnsureWidgetReferences(); return _tutorialOverlay; } }
+
+        // ── Batch-20 property accessors ──────────────────────────────────────
+        public RadiationDosimeterWidget RadiationDosimeterWidget { get { EnsureWidgetReferences(); return _radiationDosimeterWidget; } }
+        public GeigerSweepGauge         GeigerSweepGauge         { get { EnsureWidgetReferences(); return _geigerSweepGauge; } }
+        public AirFilterIntegrityBar    AirFilterIntegrityBar    { get { EnsureWidgetReferences(); return _airFilterIntegrityBar; } }
+        public FalloutStormWarningBanner FalloutStormWarningBanner{ get { EnsureWidgetReferences(); return _falloutStormWarningBanner; } }
+        public SurvivorPortraitCard     SurvivorPortraitCard     { get { EnsureWidgetReferences(); return _survivorPortraitCard; } }
+        public MoralDecayMeter          MoralDecayMeter          { get { EnsureWidgetReferences(); return _moralDecayMeter; } }
+        public RationAllocationDial     RationAllocationDial     { get { EnsureWidgetReferences(); return _rationAllocationDial; } }
+        public WaterPurityGauge         WaterPurityGauge         { get { EnsureWidgetReferences(); return _waterPurityGauge; } }
+        public TemperatureReadoutWidget TemperatureReadoutWidget  { get { EnsureWidgetReferences(); return _temperatureReadoutWidget; } }
+        public PowerFlowSchematic       PowerFlowSchematic       { get { EnsureWidgetReferences(); return _powerFlowSchematic; } }
+        public FactionPressureRing      FactionPressureRing      { get { EnsureWidgetReferences(); return _factionPressureRing; } }
+        public ExpeditionCountdownTimer ExpeditionCountdownTimer  { get { EnsureWidgetReferences(); return _expeditionCountdownTimer; } }
+        public RadioSignalStrengthBar   RadioSignalStrengthBar   { get { EnsureWidgetReferences(); return _radioSignalStrengthBar; } }
+        public CraftQueueStrip          CraftQueueStrip          { get { EnsureWidgetReferences(); return _craftQueueStrip; } }
+        public AlertToastNotification   AlertToastNotification   { get { EnsureWidgetReferences(); return _alertToastNotification; } }
+        public BunkerFloorMapMiniature  BunkerFloorMapMiniature  { get { EnsureWidgetReferences(); return _bunkerFloorMapMiniature; } }
+        public DayNightArcClock         DayNightArcClock         { get { EnsureWidgetReferences(); return _dayNightArcClock; } }
+        public BloodTypeIndicator       BloodTypeIndicator       { get { EnsureWidgetReferences(); return _bloodTypeIndicator; } }
+        public LootHaulTicker           LootHaulTicker           { get { EnsureWidgetReferences(); return _lootHaulTicker; } }
+        public EndgameVictoryPathTracker EndgameVictoryPathTracker{ get { EnsureWidgetReferences(); return _endgameVictoryPathTracker; } }
+
+        // ── Phase 11 property accessors ────────────────────────────────────
+        public RadiationPhaseIndicator RadiationPhaseIndicator { get { EnsureWidgetReferences(); return _radiationPhaseIndicator; } }
+        public PhantomMemoryVignette PhantomMemoryVignette { get { EnsureWidgetReferences(); return _phantomMemoryVignette; } }
+        public HypervigilanceIndicator HypervigilanceIndicator { get { EnsureWidgetReferences(); return _hypervigilanceIndicator; } }
+        public MoralBranchDisplay MoralBranchDisplay { get { EnsureWidgetReferences(); return _moralBranchDisplay; } }
+        public KeepsakeSlotUI KeepsakeSlotUi { get { EnsureWidgetReferences(); return _keepsakeSlotUi; } }
+        public MemorialWallUI MemorialWallUi { get { EnsureWidgetReferences(); return _memorialWallUi; } }
+        public TerminalPrognosisBanner TerminalPrognosisBanner { get { EnsureWidgetReferences(); return _terminalPrognosisBanner; } }
+        public AddictionDetoxIndicator AddictionDetoxIndicator { get { EnsureWidgetReferences(); return _addictionDetoxIndicator; } }
+        // ── Expansions 3 & 4 property accessors ─────────────────────
+        public LocationDetailPanel LocationDetailPanel { get { EnsureWidgetReferences(); return _locationDetailPanel; } }
+        public ItemConditionBadge ItemConditionBadge { get { EnsureWidgetReferences(); return _itemConditionBadge; } }
+        public QuestlineProgressTracker QuestlineProgressTracker { get { EnsureWidgetReferences(); return _questlineProgressTracker; } }
+        public SiegeStatusHUD SiegeStatusHud { get { EnsureWidgetReferences(); return _siegeStatusHud; } }
+        public FactionIntelligencePanel FactionIntelligencePanel { get { EnsureWidgetReferences(); return _factionIntelligencePanel; } }
+        public VehicleStatusPanel VehicleStatusPanel { get { EnsureWidgetReferences(); return _vehicleStatusPanel; } }
+        public TacticalCommandBar TacticalCommandBar { get { EnsureWidgetReferences(); return _tacticalCommandBar; } }
+        public QuestlineStageTracker QuestlineStageTracker { get { EnsureWidgetReferences(); return _questlineStageTracker; } }
+        // ── Deep Lore property accessors ────────────────────────────
+        public LoreCodexPanel LoreCodexPanel { get { EnsureWidgetReferences(); return _loreCodexPanel; } }
+        public FactionRelationshipMap FactionRelationshipMap { get { EnsureWidgetReferences(); return _factionRelationshipMap; } }
+        public CharacterArcProgressPanel CharacterArcProgressPanel { get { EnsureWidgetReferences(); return _characterArcProgressPanel; } }
+
         public FactionRadioVoHook FactionRadioVoHook
         {
             get
@@ -110,6 +207,9 @@ namespace AtomicWar._Game.UI
 
         private void EnsureWidgetReferences()
         {
+            // Scene reload / SubscriptionBag dispose can query HUD getters after
+            // Destroy; Unity fake-null still invokes instance methods.
+            if (!this) return;
             EnsureWidget(ref _needsBar);
             EnsureWidget(ref _dosimeterHud);
             EnsureWidget(ref _healthTrajectoryHud);
@@ -138,6 +238,48 @@ namespace AtomicWar._Game.UI
             EnsureWidget(ref _internalHorrorHud);
             EnsureWidget(ref _expeditionEncounterLogHud);
             EnsureWidget(ref _diegeticHud);
+            EnsureWidget(ref _moralChronicleUi);
+            EnsureWidget(ref _tutorialOverlay);
+            // Batch-20 widgets
+            EnsureWidget(ref _radiationDosimeterWidget);
+            EnsureWidget(ref _geigerSweepGauge);
+            EnsureWidget(ref _airFilterIntegrityBar);
+            EnsureWidget(ref _falloutStormWarningBanner);
+            EnsureWidget(ref _survivorPortraitCard);
+            EnsureWidget(ref _moralDecayMeter);
+            EnsureWidget(ref _rationAllocationDial);
+            EnsureWidget(ref _waterPurityGauge);
+            EnsureWidget(ref _temperatureReadoutWidget);
+            EnsureWidget(ref _powerFlowSchematic);
+            EnsureWidget(ref _factionPressureRing);
+            EnsureWidget(ref _expeditionCountdownTimer);
+            EnsureWidget(ref _radioSignalStrengthBar);
+            EnsureWidget(ref _craftQueueStrip);
+            EnsureWidget(ref _alertToastNotification);
+            EnsureWidget(ref _bunkerFloorMapMiniature);
+            EnsureWidget(ref _dayNightArcClock);
+            EnsureWidget(ref _bloodTypeIndicator);
+            EnsureWidget(ref _lootHaulTicker);
+            EnsureWidget(ref _endgameVictoryPathTracker);
+            EnsureWidget(ref _radiationPhaseIndicator);
+            EnsureWidget(ref _phantomMemoryVignette);
+            EnsureWidget(ref _hypervigilanceIndicator);
+            EnsureWidget(ref _moralBranchDisplay);
+            EnsureWidget(ref _keepsakeSlotUi);
+            EnsureWidget(ref _memorialWallUi);
+            EnsureWidget(ref _terminalPrognosisBanner);
+            EnsureWidget(ref _addictionDetoxIndicator);
+            EnsureWidget(ref _locationDetailPanel);
+            EnsureWidget(ref _itemConditionBadge);
+            EnsureWidget(ref _questlineProgressTracker);
+            EnsureWidget(ref _siegeStatusHud);
+            EnsureWidget(ref _factionIntelligencePanel);
+            EnsureWidget(ref _vehicleStatusPanel);
+            EnsureWidget(ref _tacticalCommandBar);
+            EnsureWidget(ref _questlineStageTracker);
+            EnsureWidget(ref _loreCodexPanel);
+            EnsureWidget(ref _factionRelationshipMap);
+            EnsureWidget(ref _characterArcProgressPanel);
             if (_factionRadioVoHook == null)
             {
                 _factionRadioVoHook = GetComponentInChildren<FactionRadioVoHook>();
@@ -154,6 +296,7 @@ namespace AtomicWar._Game.UI
         /// </summary>
         private T EnsureWidget<T>(ref T field) where T : Component
         {
+            if (!this) return field;
             if (field != null) return field;
 
             field = GetComponentInChildren<T>();
@@ -187,6 +330,20 @@ namespace AtomicWar._Game.UI
         {
             EnsureWidgetReferences();
             return _internalHorrorHud;
+        }
+
+        /// <summary>Ensure the post-game moral chronicle screen exists on the HUD.</summary>
+        public MoralChronicleUI EnsureMoralChronicle()
+        {
+            EnsureWidgetReferences();
+            return _moralChronicleUi;
+        }
+
+        /// <summary>Ensure the first-run tutorial overlay exists on the HUD.</summary>
+        public TutorialOverlay EnsureTutorialOverlay()
+        {
+            EnsureWidgetReferences();
+            return _tutorialOverlay;
         }
 
         /// <summary>Push Internal Horror snapshot (corpses, fire, coma, rusted food).</summary>
@@ -712,6 +869,12 @@ namespace AtomicWar._Game.UI
             if (_mapKnowledgeHud == null) return;
             _mapKnowledgeHud.SetViews(views, hasWorkingGeiger);
             _mapKnowledgeHud.SetCalibrationAge(daysSinceCalibration);
+        }
+
+        /// <summary>Push a transient event notification to the HUD (Expansion IV hook).</summary>
+        public void PushEventText(string message)
+        {
+            Debug.Log("[HUD Event] " + message);
         }
     }
 }

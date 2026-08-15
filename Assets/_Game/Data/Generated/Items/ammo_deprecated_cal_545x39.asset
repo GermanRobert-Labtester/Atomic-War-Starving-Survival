@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_545x39
   displayName: Deprecated Bullets (545x39)
   description: "Corroded cal_545x39 rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 875cdf0b87dc7610f87b9b467fc2ce63, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

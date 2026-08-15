@@ -3,6 +3,7 @@ using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
 using UnityEngine;
 using Random = System.Random;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {

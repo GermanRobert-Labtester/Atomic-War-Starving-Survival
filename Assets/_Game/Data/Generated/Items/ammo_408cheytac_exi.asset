@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_408cheytac_exi
   displayName: .408 CheyTac EXI
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 1758ee8f0e01c73a382124be49f36f35, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

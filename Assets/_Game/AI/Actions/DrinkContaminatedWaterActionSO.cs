@@ -1,5 +1,6 @@
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.AI.Actions
 {

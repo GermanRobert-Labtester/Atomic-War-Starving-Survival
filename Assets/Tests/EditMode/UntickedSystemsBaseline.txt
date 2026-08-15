@@ -7,18 +7,28 @@
 # Do not add entries by hand to silence a failure — wire the system instead.
 # Regenerate with the Explicit test UntickedSystemsBaselineTests.RegenerateBaselineFile.
 #
-# entries: 74
+# entries: 99
 
 AdaptiveWarlords
 AndroidNpcs
-CraftingOverflowStash
 AshDriftSystem
 BurnWardSystem
+CheckpointKiloMemorial
 ChemUse
 CognitiveDecaySystem
+CraftingOverflowStash
+CultLeash
 DiseaseExpansion
+DistrictCoordinationOffice
+ExpansionQuests
 ExpeditionEncounterLog
 FalloutStormHazard
+FaunaAshCrows
+FaunaBloatedCattle
+FaunaIrradiatedDogs
+FaunaRatSwarm
+GarrisonComplianceLedger
+GlowChapel
 HazardMimicCrate
 HazardSurgicalBotch
 HazardWeaponBurst
@@ -27,11 +37,21 @@ ItemAmmoTypes
 LightningStrikesSystem
 MapAnomalyDryCoral
 MapAquifer
+MartaFarmhouse
+MilitiaContributionTax
+MilitiaGrainExchange
 MobileCampSystem
 ModLoader
 MoralDilemmaSystem
+NPCAshWidows
+NPCBurnedPatrol
+NPCFeralChildren
+NPCSurgeonsCaravan
+NPCTheCollector
+NPCTheTollman
 NeedleSterilizationSystem
 ProstheticCraftingSystem
+RadioTowerSevenBunker
 ScenarioGen
 SeismicVentsSystem
 SevereFrostbiteSystem
@@ -50,7 +70,11 @@ SkirmishMil_vs_Terror
 SkirmishRebel_vs_Bandit
 SkirmishRebel_vs_Terror
 SpeedrunTimer
+StMarenHospitalAnnex
+SurvivorTaskBoardSystem
+SurvivorWorkShiftSystem
 TetanusAfflictionSystem
+TollHouse
 ToothDecaySystem
 TraderPlagueConvoy
 TrueEnding
@@ -78,6 +102,7 @@ VictoryTheMartian
 VictoryUndergroundCity
 VictoryUnifier
 VisionLossSystem
+WarlordTributeSystem
 WorldEventDeforestation
 WorldEventFinalWinter
 WorldEventFissure

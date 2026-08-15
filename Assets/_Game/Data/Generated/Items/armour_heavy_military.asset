@@ -15,7 +15,7 @@ MonoBehaviour:
   id: armour_heavy_military
   displayName: Heavy Military Grade Armour
   description: Full heavy plate.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b129a30289acecfbcb3bf0367442a444, type: 3}
   type: 6
   stackMax: 1
   weight: 4

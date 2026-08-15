@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
+    <ui:VisualElement name="blood-type-root" class="blood-type-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="blood-badge-top">
+            <ui:Label name="blood_type_code" text="O-" class="blood-type-code" />
+            <ui:Label name="universal_donor_label" text="UNIV DONOR" class="blood-donor-tag" />
+        </ui:VisualElement>
+        <ui:VisualElement class="blood-dots-row">
+            <ui:VisualElement name="dot_comp_0" class="blood-dot active" />
+            <ui:VisualElement name="dot_comp_1" class="blood-dot active" />
+            <ui:VisualElement name="dot_comp_2" class="blood-dot active" />
+            <ui:VisualElement name="dot_comp_3" class="blood-dot active" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

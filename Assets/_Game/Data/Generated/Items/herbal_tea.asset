@@ -15,7 +15,7 @@ MonoBehaviour:
   id: herbal_tea
   displayName: Herbal Tea
   description: Brewed from garden herbs.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b9d67f6b6d8d53afca3ce3f025b691c1, type: 3}
   type: 0
   stackMax: 15
   weight: 0.2

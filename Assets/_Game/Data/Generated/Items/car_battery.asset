@@ -15,7 +15,7 @@ MonoBehaviour:
   id: car_battery
   displayName: Car Battery
   description: Heavy 12V cell.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e8f672477b7543f8c9b2c797c23a56e5, type: 3}
   type: 14
   stackMax: 2
   weight: 12

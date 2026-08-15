@@ -169,9 +169,10 @@ namespace AtomicWar._Game.Core
                     var info = new FileInfo(files[i]);
                     archiveFiles.Add((files[i], info.LastWriteTime));
                 }
-                catch
+                catch (Exception ex)
                 {
                     // Skip unreadable files.
+                    Debug.LogWarning($"[LogRotation] Could not read archive file '{files[i]}': {ex.Message}");
                 }
             }
 
@@ -193,9 +194,10 @@ namespace AtomicWar._Game.Core
                         File.Delete(archiveFiles[i].path);
                         deleted++;
                     }
-                    catch
+                    catch (Exception ex)
                     {
                         // Skip undeletable files.
+                        Debug.LogWarning($"[LogRotation] Could not delete archive '{archiveFiles[i].path}': {ex.Message}");
                     }
                 }
             }

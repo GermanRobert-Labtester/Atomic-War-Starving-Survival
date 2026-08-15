@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
+    <ui:VisualElement name="bunker-map-root" class="bunker-map-panel hidden" picking-mode="Ignore">
+        <ui:Label text="BUNKER FLOOR MAP" class="bunker-map-header" />
+        <ui:VisualElement name="bunker_grid_container" class="bunker-grid">
+            <!-- 12 Room cells created dynamically -->
+        </ui:VisualElement>
+        <ui:VisualElement name="bunker_tooltip_box" class="bunker-tooltip hidden">
+            <ui:Label name="bunker_tooltip_text" text="ROOM: GENERATOR A // INTEGRITY: 90%" class="bunker-tooltip-text" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

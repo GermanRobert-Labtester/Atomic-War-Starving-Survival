@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ejuice_10ml_10mg
   displayName: E-Juice 10ML 10mg Nicotine
   description: Low-nic e-liquid.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e2ba9ad37e9757ffbb4ed409666ba6f6, type: 3}
   type: 10
   stackMax: 15
   weight: 0.05

@@ -3,6 +3,7 @@ using UnityEngine;
 using AtomicWar._Game.Utilities;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.AI.Actions
 {
@@ -55,12 +56,13 @@ namespace AtomicWar._Game.AI.Actions
 
             float score = baseScore;
 
-            // Sociopath: no hesitation.
-            if (context.Survivor.RiskBias == Survivors.RiskBiasTrait.Sociopath)
+            // Sociopath: no hesitation. (Trait, not RiskBias — RiskBias is never
+            // Sociopath; see EmpathSystem for the same correction.)
+            if (context.PersonalQuests != null && context.PersonalQuests.HasSociopath(context.Survivor))
                 score += 0.3f;
 
             // Empath: severe reluctance but may still do it out of compassion.
-            if (context.Survivor.RiskBias == Survivors.RiskBiasTrait.Empath)
+            if (context.PersonalQuests != null && context.PersonalQuests.HasHyperEmpathetic(context.Survivor))
                 score -= 0.2f;
 
             // High morale survivors are less willing to kill.
@@ -99,7 +101,7 @@ namespace AtomicWar._Game.AI.Actions
             var killer = context.Survivor;
             var trait = killer.RiskBias;
 
-            if (trait == Survivors.RiskBiasTrait.Sociopath)
+            if (trait == RiskBiasTrait.Sociopath)
             {
                 // No morale penalty. Other survivors are terrified.
                 for (int i = 0; i < survivors.Count; i++)
@@ -113,7 +115,7 @@ namespace AtomicWar._Game.AI.Actions
                     ApplyAffinityHit?.Invoke(killer, w, -15f);
                 }
             }
-            else if (trait == Survivors.RiskBiasTrait.Empath)
+            else if (trait == RiskBiasTrait.Empath)
             {
                 // Massive mourning: 10-day debuff.
                 if (context.NeedsSystem != null)
@@ -122,7 +124,7 @@ namespace AtomicWar._Game.AI.Actions
                     killer.Needs.Morale = Mathf.Clamp(killer.Needs.Morale - 30f, 0f, 100f);
                 // Mourning duration handled by external system via OnMercyKill event.
             }
-            else if (trait == Survivors.RiskBiasTrait.Paranoid)
+            else if (trait == RiskBiasTrait.Paranoid)
             {
                 // Other survivors lose trust in the killer.
                 for (int i = 0; i < survivors.Count; i++)
@@ -162,8 +164,8 @@ namespace AtomicWar._Game.AI.Actions
             if (sv.HasAcuteRadiationSyndrome && sv.Needs.Health < 20f) return true;
 
             // Terminal OrganFailure.
-            if (sv.ActiveChronicIllness.HasValue
-                && sv.ActiveChronicIllness.Value == Survivors.ChronicIllnessKind.OrganFailure
+            if (sv.HasChronicIllness
+                && sv.ActiveChronicIllness == Survivors.ChronicIllnessKind.OrganFailure
                 && sv.Needs.Health < 15f)
                 return true;
 

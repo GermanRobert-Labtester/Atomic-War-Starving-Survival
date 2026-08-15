@@ -1,0 +1,79 @@
+[
+  {
+    "frequency_id": "freq_distress_217_4",
+    "frequency_mhz": "217.4",
+    "source_name": "Checkpoint Kilo Automated Beacon",
+    "outcome_type": "survivor_community",
+    "days_to_trace": 4,
+    "message_fragments": [
+      { "day": 1, "clarity": 0.25, "text": "...emergency... checkpoint kilo... requesting immediate... *static*..." },
+      { "day": 2, "clarity": 0.45, "text": "...twelve survivors... air filtration failing... running on battery... coordinates: sector..." },
+      { "day": 3, "clarity": 0.70, "text": "...water running low... Corporal Maren is keeping order... if anyone can hear this... sector 7, grid 14..." },
+      { "day": 4, "clarity": 0.95, "text": "...this is the final broadcast of Checkpoint Kilo. To anyone who finds this: we held. For forty-seven days, we held. There are supplies in the armory. Use them well. Kilo out." }
+    ],
+    "revealed_location": "checkpoint_kilo_armory",
+    "revealed_items": ["military_rations", "ammo_556", "field_dressing_kit"],
+    "narrative_id": "narrative_radio_checkpoint_kilo"
+  },
+  {
+    "frequency_id": "freq_distress_148_2",
+    "frequency_mhz": "148.2",
+    "source_name": "Civilian Bunker 4-East",
+    "outcome_type": "bait_trap",
+    "days_to_trace": 3,
+    "message_fragments": [
+      { "day": 1, "clarity": 0.20, "text": "...anyone... please... we have children... bunker 4-east... food and water... *static*..." },
+      { "day": 2, "clarity": 0.50, "text": "...coordinates sent... bring medicine if you have it... we can trade... we have fuel, clean water..." },
+      { "day": 3, "clarity": 0.90, "text": "*The signal pattern shifts. What sounded like desperation now sounds rehearsed. The 'children' in the background are the same recording, looped. This is a raider trap.*" }
+    ],
+    "revealed_location": "raider_ambush_site",
+    "warning_text": "The distress signal was bait. A raider gang has been luring scavengers to this location for weeks. The bodies of the previous 'rescuers' are still there.",
+    "narrative_id": "narrative_radio_bait_trap"
+  },
+  {
+    "frequency_id": "freq_distress_392_7",
+    "frequency_mhz": "392.7",
+    "source_name": "Automated Weather Station Gamma",
+    "outcome_type": "knowledge",
+    "days_to_trace": 5,
+    "message_fragments": [
+      { "day": 1, "clarity": 0.30, "text": "...automated transmission... weather station gamma... radiation plume tracking... update..." },
+      { "day": 2, "clarity": 0.40, "text": "...plume drift: east-northeast at 12 knots... fallout density decreasing in sectors 3 through 7..." },
+      { "day": 3, "clarity": 0.55, "text": "...warning: secondary plume detected from damaged reactor site... estimated arrival in 72 hours..." },
+      { "day": 4, "clarity": 0.75, "text": "...updated fallout map available at the following coordinates... shelter in place if within the projected path..." },
+      { "day": 5, "clarity": 0.95, "text": "...this station's battery is failing. Final plume projection: sectors 4, 5, and 8 will be uninhabitable for 90 days minimum. Sectors 2, 6, and 9 show decreasing contamination. Recommend evacuation corridor through sector 6. End of transmission." }
+    ],
+    "revealed_knowledge": "fallout_map_update",
+    "knowledge_points": 1,
+    "narrative_id": "narrative_radio_weather_station"
+  },
+  {
+    "frequency_id": "freq_distress_55_1",
+    "frequency_mhz": "55.1",
+    "source_name": "The Pianist's Last Broadcast",
+    "outcome_type": "narrative",
+    "days_to_trace": 3,
+    "message_fragments": [
+      { "day": 1, "clarity": 0.35, "text": "*A piano plays through the static. Chopin. Nocturne in E-flat major. The playing is skilled, almost professional.*" },
+      { "day": 2, "clarity": 0.60, "text": "*The music continues for hours. Between pieces, a voice: 'I don't know if anyone can hear this. I've been playing for three days. The radiation is... I can feel it now. But the piano still works.'*" },
+      { "day": 3, "clarity": 0.85, "text": "*The piano falls silent mid-phrase. A long pause. Then, very quietly: 'Thank you for listening.' The signal dies.*" }
+    ],
+    "narrative_id": "narrative_radio_the_pianist",
+    "location_reference": "concert_hall_ruins"
+  },
+  {
+    "frequency_id": "freq_distress_401_9",
+    "frequency_mhz": "401.9",
+    "source_name": "Military Convoy Echo-7",
+    "outcome_type": "supply_cache",
+    "days_to_trace": 3,
+    "message_fragments": [
+      { "day": 1, "clarity": 0.30, "text": "...convoy Echo-7, en route to rally point... hit by second wave... vehicle disabled... *static*..." },
+      { "day": 2, "clarity": 0.55, "text": "...secured cargo at grid reference... medical supplies, water purification tablets, MREs... abandoned vehicle, take what you need..." },
+      { "day": 3, "clarity": 0.80, "text": "...this is Lieutenant Prak's final entry. Convoy Echo-7's supplies are cached at coordinates 41.7 by 12.3, marked with a hazard panel. The crew didn't make it. Make the supplies count. Echo-7 out." }
+    ],
+    "revealed_location": "convoy_echo7_cache",
+    "revealed_items": ["military_mre", "water_purification_tablets", "field_surgical_kit", "ammo_762"],
+    "narrative_id": "narrative_radio_convoy_echo7"
+  }
+]

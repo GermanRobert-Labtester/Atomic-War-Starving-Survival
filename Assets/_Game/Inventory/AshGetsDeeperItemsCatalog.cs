@@ -125,12 +125,42 @@ namespace AtomicWar._Game.Inventory
             AddTech(list);
             AddFood(list);
             AddClothing(list);
+            AddIntoTheAshItems(list);
             return list;
         }
 
+        private static void AddIntoTheAshItems(List<Spec> list)
+        {
+            var rows = IntoTheAshItemsCatalog.SpecRows;
+            if (rows == null) return;
+            int limit = System.Math.Min(15, rows.Count);
+            for (int i = 0; i < limit; i++)
+            {
+                var r = rows[i];
+                ItemType t = ItemType.Quest;
+                if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Weapon) t = ItemType.Weapon;
+                else if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Material) t = ItemType.Material;
+                else if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Tool) t = ItemType.Tool;
+                else if (r.Category == IntoTheAshItemsCatalog.ItemCategory.Comfort || r.Category == IntoTheAshItemsCatalog.ItemCategory.Lore) t = ItemType.Comfort;
+                
+                list.Add(new Spec {
+                    Id = r.Id,
+                    DisplayName = r.DisplayName,
+                    Type = t,
+                    StackMax = r.StackSize,
+                    Weight = r.Weight,
+                    TradeValue = r.TradeValue,
+                    Description = r.Description
+                });
+            }
+        }
+
         // ── Materialise ──────────────────────────────────────────────────
-        public static ItemDefinition Materialise(Spec spec,
-            System.Func<string, ItemDefinition> lookup)
+        // Unlike NewRecipesCatalog (which resolves ingredient/result item
+        // ids through a host-supplied lookup), these Specs define standalone
+        // items with no cross-item references, so Materialise needs no
+        // lookup delegate.
+        public static ItemDefinition Materialise(Spec spec)
         {
             if (spec == null) return null;
             var def = ScriptableObject.CreateInstance<ItemDefinition>();
@@ -146,12 +176,11 @@ namespace AtomicWar._Game.Inventory
             return def;
         }
 
-        public static List<ItemDefinition> MaterialiseAll(
-            System.Func<string, ItemDefinition> lookup)
+        public static List<ItemDefinition> MaterialiseAll()
         {
             var specs = BuildAll();
             var outList = new List<ItemDefinition>(specs.Count);
-            for (int i = 0; i < specs.Count; i++) outList.Add(Materialise(specs[i], lookup));
+            for (int i = 0; i < specs.Count; i++) outList.Add(Materialise(specs[i]));
             return outList;
         }
 

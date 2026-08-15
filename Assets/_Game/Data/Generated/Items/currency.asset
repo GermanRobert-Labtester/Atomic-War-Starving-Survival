@@ -15,7 +15,7 @@ MonoBehaviour:
   id: currency
   displayName: Paper Currency
   description: Pre-exchange notes. Still foldable. Not drinkable.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 3d96ded0ad0bcd39986134b7696fea62, type: 3}
   type: 11
   stackMax: 100
   weight: 0.01

@@ -2,7 +2,8 @@
     "name": "AtomicWar._Game.Survivors",
     "rootNamespace": "AtomicWar._Game.Survivors",
     "references": [
-        "AtomicWar._Game.Utilities"
+        "AtomicWar._Game.Utilities",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

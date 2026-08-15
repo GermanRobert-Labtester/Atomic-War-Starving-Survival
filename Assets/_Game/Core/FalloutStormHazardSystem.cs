@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Shelter;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -31,7 +32,7 @@ namespace AtomicWar._Game.Core
         public const float RadiationFloodPerBreachRadsPerHour = 50f;
 
         private readonly WeatherSystem _weather;
-        private readonly AudioEventBus _audioBus;
+        private AudioEventBus _audioBus;
 
         public event Action<FalloutStormSealBreachedEvent> OnSealBreached;
 
@@ -39,6 +40,16 @@ namespace AtomicWar._Game.Core
         {
             _weather = weather ?? throw new ArgumentNullException(nameof(weather));
             _audioBus = audioBus;
+        }
+
+        /// <summary>
+        /// Late-bind a process-wide AudioEventBus after construction
+        /// (used by GameBootstrap when the bus is created after this system).
+        /// </summary>
+        public void SetAudioBus(AudioEventBus audioBus)
+        {
+            if (audioBus != null && _audioBus == null)
+                _audioBus = audioBus;
         }
 
         /// <summary>

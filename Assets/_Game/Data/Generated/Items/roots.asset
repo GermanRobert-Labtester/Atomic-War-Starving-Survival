@@ -15,7 +15,7 @@ MonoBehaviour:
   id: roots
   displayName: Roots
   description: Low-nutrition forage. Staves off starvation.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e36e7de2765fc7914a42d48be6a8abee, type: 3}
   type: 0
   stackMax: 20
   weight: 0.2

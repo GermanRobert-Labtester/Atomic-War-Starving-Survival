@@ -76,16 +76,6 @@ namespace AtomicWar._Game.Core
         /// <summary>Trigger a Hatch Breach / Raider Boss raid led by a returned banished survivor (#474).</summary>
         public Action<string, int> TriggerBanishedRaid;
 
-        /// <summary>
-        /// DEATH-001 hardened: the death chain that runs when Tribunal.Execution
-        /// kills a survivor via <see cref="SurvivorNeedWrite.SetHealth"/>. The
-        /// bootstrap wires this to its <see cref="NeedsSystem.OnDied"/> handler
-        /// (which fires NotifySurvivorDied, EmpathSystem, ChildSystem, GriefKeepsakes,
-        /// IronMan). Without this, an execution is a silent death — the survivor
-        /// is dead on disk but no other system reacts. Default is a no-op.
-        /// </summary>
-        public System.Action<Survivor> OnKilled;
-
         // -----------------------------------------------------------------
         // Construction
         // -----------------------------------------------------------------
@@ -271,11 +261,11 @@ namespace AtomicWar._Game.Core
                 if (p == BunkerPunishment.Banishment && sv != null) Banish(sv, _currentDay);
                 else if (p == BunkerPunishment.Execution && sv != null)
                 {
-                    // DEATH-001: pass OnKilled so the same death chain
-                    // (NeedsSystem.OnDied + all the bootstrapped hooks) runs
-                    // that a natural death would. Pre-fix the survivor became
-                    // State=Dead but nothing else in the game world knew.
-                    SurvivorNeedWrite.SetHealth(sv, 0f, -1f, OnKilled);
+                    // DEATH-001/006: the centralized SurvivorNeedWrite.OnKilled
+                    // event (wired to the bootstrap death chain) fires automatically,
+                    // so a Tribunal execution produces the same world reactions as
+                    // a natural death.
+                    SurvivorNeedWrite.SetHealth(sv, 0f);
                 }
             });
         }

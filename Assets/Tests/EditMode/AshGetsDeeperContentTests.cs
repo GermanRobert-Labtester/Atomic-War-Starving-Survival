@@ -37,7 +37,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void MaterialiseRoundTrips()
         {
-            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll(id => null);
+            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll();
             Assert.AreEqual(80, defs.Count);
             Assert.AreEqual("morphine_ampoule", defs[0].id);
         }
@@ -207,9 +207,9 @@ namespace AtomicWar.Tests.EditMode
         }
 
         [Test]
-        public void FiveFactionTradePreferences()
+        public void SixFactionTradePreferences()
         {
-            Assert.AreEqual(5, HardcoreEconomyTuning.FactionTradePreferences.Count);
+            Assert.AreEqual(6, HardcoreEconomyTuning.FactionTradePreferences.Count);
         }
 
         [Test]

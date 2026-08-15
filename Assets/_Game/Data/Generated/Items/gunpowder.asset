@@ -15,7 +15,7 @@ MonoBehaviour:
   id: gunpowder
   displayName: Gunpowder
   description: Propellant grains.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: fe9e3809ffb70e6bd8a3b4724f32c52e, type: 3}
   type: 10
   stackMax: 40
   weight: 0.02

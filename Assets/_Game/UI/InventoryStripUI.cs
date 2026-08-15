@@ -34,6 +34,7 @@ namespace AtomicWar._Game.UI
                 icon.IsSelected = false;
                 icon.IsMilitaryExclusive = false;
                 icon.Tooltip = null;
+                icon.IconSprite = null;
             });
 
         /// <summary>Active icons, one per stocked slot (newest-stock order = slot order).</summary>
@@ -70,6 +71,13 @@ namespace AtomicWar._Game.UI
 
         /// <summary>Optional military-exclusive flag (itemId → true).</summary>
         public Func<string, bool> MilitaryExclusiveChecker { get; set; }
+
+        /// <summary>
+        /// Optional sprite resolver (ItemDefinition → Sprite). Core binds this to
+        /// GameAssetService so Resources/Art wins when present and the definition's
+        /// legacy iconRef is the fallback. Unset → icons keep legacy iconRef only.
+        /// </summary>
+        public Func<ItemDefinition, Sprite> SpriteResolver { get; set; }
 
         /// <summary>Tooltip for the currently selected icon, or empty.</summary>
         public string SelectedTooltip
@@ -119,6 +127,9 @@ namespace AtomicWar._Game.UI
                     icon.HasDisposeActions = icon.IsCorpse;
                     icon.IsMilitaryExclusive = MilitaryExclusiveChecker != null
                         && MilitaryExclusiveChecker(slot.Item.id);
+                    icon.IconSprite = SpriteResolver != null
+                        ? SpriteResolver(slot.Item)
+                        : slot.Item.iconRef;
                     string tip = TooltipResolver != null ? TooltipResolver(slot.Item.id) : null;
                     if (string.IsNullOrEmpty(tip))
                     {
@@ -364,5 +375,11 @@ namespace AtomicWar._Game.UI
         public bool IsMilitaryExclusive;
         /// <summary>Hover / focus tooltip (caliber, mod, exclusive badge).</summary>
         public string Tooltip;
+
+        /// <summary>
+        /// Resolved icon sprite for this stack: Resources/Art art when authored,
+        /// otherwise the definition's legacy iconRef (may be null).
+        /// </summary>
+        public Sprite IconSprite;
     }
 }

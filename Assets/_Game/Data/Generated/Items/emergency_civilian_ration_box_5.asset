@@ -15,7 +15,7 @@ MonoBehaviour:
   id: emergency_civilian_ration_box_5
   displayName: Emergency Civilian Ration Box (5x)
   description: Sealed five-pack.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 397222da49ad7be81bf70739061a8c54, type: 3}
   type: 0
   stackMax: 4
   weight: 2

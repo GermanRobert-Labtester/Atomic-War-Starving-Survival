@@ -1,4 +1,6 @@
 using NUnit.Framework;
+using System.Collections.Generic;
+using AtomicWar._Game.Core;
 using AtomicWar._Game.Utilities;
 
 namespace AtomicWar.Tests.EditMode
@@ -89,6 +91,30 @@ namespace AtomicWar.Tests.EditMode
 
             Assert.AreNotEqual(withSeven, withEight,
                 "Two campaigns must not share the fallback sequence.");
+        }
+
+        /// <summary>
+        /// SEED-002: different world seeds must reach a representative gameplay
+        /// system (System_BloodTypes) with a different RNG sequence.
+        /// </summary>
+        [Test]
+        public void WorldSeed_SaltsRepresentativeSystem_BloodTypes()
+        {
+            var a = GetBloodTypeSequence(42);
+            var b = GetBloodTypeSequence(99);
+
+            Assert.AreNotEqual(string.Join(",", a), string.Join(",", b),
+                "Different world seeds should produce different System_BloodTypes RNG sequences.");
+        }
+
+        private static List<string> GetBloodTypeSequence(int seed)
+        {
+            SeededRandom.WorldSeed = seed;
+            var sys = new System_BloodTypes();
+            var seq = new List<string>();
+            for (int i = 0; i < 8; i++)
+                seq.Add(sys.EnsureBloodType($"sv_{i}"));
+            return seq;
         }
     }
 }

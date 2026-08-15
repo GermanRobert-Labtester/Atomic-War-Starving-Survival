@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Medical Kit
   description: Assembled medical supplies. Restores a large amount of health when
     used.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f31d9df75e09da031ad4655b71ae2af6, type: 3}
   type: 3
   stackMax: 5
   weight: 0.5

@@ -307,5 +307,21 @@ namespace AtomicWar._Game.Events
         // Factories — trait/trust-gated branching events
         // -----------------------------------------------------------------
 
+        // -----------------------------------------------------------------
+        // Expansion IV hooks — events raised by plain-C# systems (structural
+        // entropy, Lethe protocol) so the narrative layer can react to them.
+        // -----------------------------------------------------------------
+
+        /// <summary>Placeholder for narrative reaction to concrete spalling.</summary>
+        public void RaiseSpallingOccurred(string roomId)
+        {
+            GameLog.Log($"[EventRunner] Spalling reported in {roomId}.");
+        }
+
+        /// <summary>Placeholder for narrative reaction to Waking Sickness onset.</summary>
+        public void RaiseWakingSicknessStarted(float reservoirLevel, int affectedCount)
+        {
+            GameLog.Log($"[EventRunner] Waking sickness started (reservoir={reservoirLevel:F2}, affected={affectedCount}).");
+        }
     }
 }

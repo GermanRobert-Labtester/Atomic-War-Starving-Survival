@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Hazmat Suit
   description: Full-body protective suit. High radiation protection, degrades with
     use.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 9647c5028ce697ecd9849742a16fc52f, type: 3}
   type: 6
   stackMax: 1
   weight: 5

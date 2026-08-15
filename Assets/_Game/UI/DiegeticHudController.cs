@@ -26,6 +26,33 @@ namespace AtomicWar._Game.UI
 
         public const float DefaultSortingOrder = 50f;
 
+        /// <summary>
+        /// Named roots for the 19 Phase 11 / expansion / deep-lore widgets
+        /// authored into DiegeticHud.uxml (inline or via Template instances).
+        /// </summary>
+        public static readonly string[] ExpansionWidgetRootNames =
+        {
+            "radiation-phase-root",
+            "phantom-memory-vignette-root",
+            "hypervigilance-indicator-root",
+            "moral-branch-root",
+            "keepsake-slot-root",
+            "memorial-wall-root",
+            "terminal-prognosis-root",
+            "addiction-detox-root",
+            "location-detail-panel",
+            "item-condition-badge",
+            "questline-tracker",
+            "siege-status",
+            "faction-intelligence-panel",
+            "vehicle-status-panel",
+            "tactical-command-bar",
+            "questline-stage-tracker",
+            "lore-codex-panel",
+            "faction-relationship-map",
+            "character-arc-panel"
+        };
+
         [SerializeField] private UIDocument _document;
         [SerializeField] private PanelSettings _panelSettings;
         [SerializeField] private VisualTreeAsset _uxml;
@@ -47,6 +74,16 @@ namespace AtomicWar._Game.UI
         private AirHeatManagementHUD _airHeatManagement;
         private BunkerMaintenanceHUD _bunkerMaintenance;
         private SurvivorTaskBoardHUD _survivorTaskBoard;
+        // Expansion II: faction-pressure HUD widget. Painted in PaintFactionPressure().
+        private FactionPressureHUD _factionPressure;
+        // Trade screen + economy HUD views (bound opportunistically from UXML).
+        private TradeScreenView _tradeView;
+        private EconomyHudView _economyView;
+        private TradeScreenUI _tradeSource;
+        private Ashfall.Core.Economy.MarketSystem _marketSource;
+        private Ashfall.Core.Economy.GoodsCatalog _goodsCatalog;
+        private bool _economyPanelOpen;
+        private bool _viewsBound;
         private bool _built;
         private bool _tooltipPinned;
         private bool _preferDetached;
@@ -175,8 +212,17 @@ namespace AtomicWar._Game.UI
                 if (docRoot != null)
                 {
                     // UXML may already define diegetic-root; else build under doc root.
-                    if (!_view.BindExisting(docRoot))
+                    bool boundExisting = _view.BindExisting(docRoot);
+                    if (!boundExisting)
                     {
+                        // Never wipe an authored diegetic-root — Build() cannot recreate
+                        // Phase 11 / expansion Template instances.
+                        if (docRoot.Q(DiegeticHudView.RootName) != null)
+                        {
+                            ApplyStylesheet(docRoot);
+                            _built = true;
+                            return;
+                        }
                         docRoot.Clear();
                         _view.Build(docRoot);
                     }
@@ -219,7 +265,8 @@ namespace AtomicWar._Game.UI
             WaterPurificationHUD waterPurification = null,
             AirHeatManagementHUD airHeatManagement = null,
             BunkerMaintenanceHUD bunkerMaintenance = null,
-            SurvivorTaskBoardHUD survivorTaskBoard = null)
+            SurvivorTaskBoardHUD survivorTaskBoard = null,
+            FactionPressureHUD factionPressure = null)
         {
             // Skip the full UnbindSources + rebind + Paint() when every source
             // is identical. The host only re-calls this when _diegeticHud is
@@ -238,7 +285,8 @@ namespace AtomicWar._Game.UI
                 && ReferenceEquals(_waterPurification, waterPurification)
                 && ReferenceEquals(_airHeatManagement, airHeatManagement)
                 && ReferenceEquals(_bunkerMaintenance, bunkerMaintenance)
-                && ReferenceEquals(_survivorTaskBoard, survivorTaskBoard))
+                && ReferenceEquals(_survivorTaskBoard, survivorTaskBoard)
+                && ReferenceEquals(_factionPressure, factionPressure))
             {
                 return;
             }
@@ -263,6 +311,7 @@ namespace AtomicWar._Game.UI
             _airHeatManagement = airHeatManagement;
             _bunkerMaintenance = bunkerMaintenance;
             _survivorTaskBoard = survivorTaskBoard;
+            _factionPressure = factionPressure;
 
             if (_strip != null)
                 _strip.OnSelectionChanged += OnStripSelectionChanged;
@@ -291,6 +340,8 @@ namespace AtomicWar._Game.UI
                 _bunkerMaintenance.OnBunkerMaintenanceChanged += Paint;
             if (_survivorTaskBoard != null)
                 _survivorTaskBoard.OnSurvivorTaskBoardChanged += Paint;
+            if (_factionPressure != null)
+                _factionPressure.OnFactionPressureChanged += PaintFactionPressure;
 
             if (!_preferDetached)
                 EnsureDocumentMounted();
@@ -327,6 +378,8 @@ namespace AtomicWar._Game.UI
                 _bunkerMaintenance.OnBunkerMaintenanceChanged -= Paint;
             if (_survivorTaskBoard != null)
                 _survivorTaskBoard.OnSurvivorTaskBoardChanged -= Paint;
+            if (_factionPressure != null)
+                _factionPressure.OnFactionPressureChanged -= PaintFactionPressure;
             _hatch = null;
             _strip = null;
             _encounterLog = null;
@@ -341,6 +394,7 @@ namespace AtomicWar._Game.UI
             _airHeatManagement = null;
             _bunkerMaintenance = null;
             _survivorTaskBoard = null;
+            _factionPressure = null;
         }
 
         private void OnHatchOpenChanged(bool _) => Paint();
@@ -407,6 +461,9 @@ namespace AtomicWar._Game.UI
             EnsureBuilt();
             if (_view == null || _view.Root == null) return;
 
+            // Opportunistically bind trade/economy views on first paint.
+            BindOptionalViews();
+
             bool hatchOpen = _hatch != null && _hatch.IsOpen;
             _view.PaintHatch(
                 hatchOpen,
@@ -465,6 +522,21 @@ namespace AtomicWar._Game.UI
                 _survivorTaskBoard != null && _survivorTaskBoard.IsOpen,
                 _survivorTaskBoard?.PanelSummary);
 
+            // Faction-pressure panel — driven by its own widget; we still
+            // push a paint from Paint() so the initial render shows
+            // compliant-state text even before the first OnFactionPressureChanged.
+            if (_factionPressure != null)
+            {
+                _factionPressure.Refresh();
+                _view.PaintFactionPressure(
+                    _factionPressure.IsOpen,
+                    FactionPressureHUD.FormatBody(_factionPressure.Capture()));
+            }
+            else
+            {
+                _view.PaintFactionPressure(false, string.Empty);
+            }
+
             bool showStores = false;
             string summary = string.Empty;
             string tip = string.Empty;
@@ -487,6 +559,13 @@ namespace AtomicWar._Game.UI
                 }
             }
             _view.PaintStoresFocus(showStores, summary, tip, mil);
+
+            // Trade screen + economy HUD paint (no-ops when views/sources unbound).
+            PaintTradeScreen();
+            // Economy strip is always painted; the detail panel is painted when
+            // the player has toggled it open. For now, the panel is driven by
+            // the host calling PaintEconomyHud(true/false) explicitly.
+            PaintEconomyHud(_economyPanelOpen);
         }
 
         /// <summary>Clear stores focus pin (e.g. Esc after strip selection cleared).</summary>
@@ -494,6 +573,199 @@ namespace AtomicWar._Game.UI
         {
             _tooltipPinned = false;
             Paint();
+        }
+
+        /// <summary>
+        /// Paint the faction-pressure terminal. Refreshes the snapshot from
+        /// the bound widget, formats a 4-line body (GARRISON / MILITIA / CULT
+        /// / WARLORD) and pushes it to the view.
+        /// </summary>
+        public void PaintFactionPressure()
+        {
+            if (_factionPressure == null) return;
+            _factionPressure.Refresh();
+            bool open = _factionPressure.IsOpen;
+            string body = FactionPressureHUD.FormatBody(_factionPressure.Capture());
+            _view.PaintFactionPressure(open, body);
+        }
+
+        /// <summary>
+        /// Opportunistically bind the trade screen and economy HUD views from
+        /// the UXML tree. Called once on first Paint(); no-ops after success.
+        /// Elements are optional — missing elements are fine (views stay null,
+        /// paint methods no-op).
+        /// </summary>
+        private void BindOptionalViews()
+        {
+            if (_viewsBound || _view?.Root == null) return;
+            _tradeView = new TradeScreenView();
+            _tradeView.Bind(_view.Root);
+            _tradeView.OnConfirmRequested += HandleTradeConfirm;
+            _tradeView.OnClearRequested += HandleTradeClear;
+            _tradeView.OnParleyRequested += HandleTradeParley;
+            _tradeView.OnCloseRequested += HandleTradeClose;
+            _economyView = new EconomyHudView();
+            _economyView.Bind(_view.Root);
+            _viewsBound = true;
+        }
+
+        /// <summary>Toggle the economy detail panel open/closed.</summary>
+        public void SetEconomyPanelOpen(bool open)
+        {
+            _economyPanelOpen = open;
+            Paint();
+        }
+
+        public bool IsEconomyPanelOpen => _economyPanelOpen;
+
+        private void HandleTradeConfirm()
+        {
+            if (_tradeSource != null) _tradeSource.TryConfirmTrade();
+        }
+
+        private void HandleTradeClear()
+        {
+            if (_tradeSource != null) _tradeSource.ClearOffers();
+        }
+
+        private void HandleTradeParley()
+        {
+            if (_tradeSource != null) _tradeSource.TryDemandParley();
+        }
+
+        private void HandleTradeClose()
+        {
+            if (_tradeSource != null) _tradeSource.Close();
+        }
+
+        /// <summary>
+        /// Bind the trade screen view-model. The view (UXML elements) is bound
+        /// opportunistically in Paint; this wires the data source.
+        /// </summary>
+        public void BindTradeScreen(TradeScreenUI trade)
+        {
+            _tradeSource = trade;
+        }
+
+        /// <summary>
+        /// Bind the economy HUD data sources (core MarketSystem + GoodsCatalog).
+        /// The view is bound opportunistically in EnsureBuilt.
+        /// </summary>
+        public void BindEconomyHud(
+            Ashfall.Core.Economy.MarketSystem market,
+            Ashfall.Core.Economy.GoodsCatalog catalog)
+        {
+            _marketSource = market;
+            _goodsCatalog = catalog;
+        }
+
+        /// <summary>
+        /// Paint the trade screen modal from the bound TradeScreenUI view-model.
+        /// Converts BarterLine data to BarterLineData for the view.
+        /// </summary>
+        public void PaintTradeScreen()
+        {
+            if (_tradeView == null) return;
+
+            bool isOpen = _tradeSource != null && _tradeSource.IsOpen;
+            if (!isOpen)
+            {
+                _tradeView.Paint(false, null, null, null, false, null, 0, null, 0, false, false, null);
+                return;
+            }
+
+            var playerLines = ConvertBarterLines(_tradeSource.PlayerOffers, _tradeSource, selling: true);
+            var factionLines = ConvertBarterLines(_tradeSource.FactionAsks, _tradeSource, selling: false);
+
+            bool isHostile = _tradeSource.Stance == Ashfall.Core.Economy.TradeStance.HostileRaid
+                          || _tradeSource.Stance == Ashfall.Core.Economy.TradeStance.Refuse;
+
+            string stanceLabel = _tradeSource.Stance.ToString().ToUpperInvariant();
+            var faction = _tradeSource.ActiveFactionId != null
+                ? _tradeSource.BuildQuoteSummary()
+                : string.Empty;
+
+            _tradeView.Paint(
+                isOpen: true,
+                factionName: GetFactionDisplayName(),
+                factionStrip: _tradeSource.FactionStatusStrip,
+                stanceLabel: stanceLabel,
+                isHostile: isHostile,
+                playerOffers: playerLines,
+                playerTotal: _tradeSource.PlayerOfferValue,
+                factionAsks: factionLines,
+                factionTotal: _tradeSource.FactionAskValue,
+                isFair: _tradeSource.IsFair,
+                canParley: _tradeSource.CanDemandParley,
+                parleyMessage: _tradeSource.LastParleyMessage,
+                leaderName: _tradeSource.LeaderName,
+                trustText: $"Trust: {_tradeSource.GetTrust():+0;-0;0}",
+                aggressionText: $"Aggr: {_tradeSource.Aggression:0.00}",
+                repelsText: $"Holds: x{_tradeSource.ConsecutiveRepels}");
+        }
+
+        /// <summary>
+        /// Paint the economy HUD strip (persistent) and detail panel (toggleable).
+        /// </summary>
+        public void PaintEconomyHud(bool panelOpen)
+        {
+            if (_economyView == null) return;
+
+            int day = _marketSource != null ? _marketSource.Day : 0;
+            bool short_supply = _marketSource != null && _marketSource.IsSuppliesShort();
+            string anchorPrice = GetAnchorPriceLine();
+
+            _economyView.PaintStrip(day, short_supply, anchorPrice);
+
+            if (_marketSource == null || _goodsCatalog == null)
+            {
+                _economyView.PaintPanel(panelOpen, "Market offline.", null);
+                return;
+            }
+
+            var goods = new System.Collections.Generic.List<GoodRowData>();
+            foreach (var good in _goodsCatalog.All())
+            {
+                float price = _marketSource.GetPrice(good.id);
+                float demand = _marketSource.GetDemandMultiplier(good.id);
+                goods.Add(new GoodRowData(good.id, good.displayName, good.category, price, demand));
+            }
+
+            string summary = $"Day {day} · ledger {_marketSource.State.ledger.Count} lines" +
+                             (short_supply ? " · SUPPLIES SHORT" : "");
+            _economyView.PaintPanel(panelOpen, summary, goods);
+        }
+
+        private string GetFactionDisplayName()
+        {
+            if (_tradeSource == null || string.IsNullOrEmpty(_tradeSource.ActiveFactionId))
+                return string.Empty;
+            return _tradeSource.ActiveFactionId.Replace('_', ' ').ToUpperInvariant();
+        }
+
+        private string GetAnchorPriceLine()
+        {
+            if (_marketSource == null || _goodsCatalog == null) return string.Empty;
+            var water = _goodsCatalog.Find("clean_water");
+            if (water == null) return string.Empty;
+            float price = _marketSource.GetPrice("clean_water");
+            return $"H₂O {price:0.#}";
+        }
+
+        private static System.Collections.Generic.List<BarterLineData> ConvertBarterLines(
+            System.Collections.Generic.IReadOnlyList<AtomicWar._Game.Economy.BarterLine> lines,
+            TradeScreenUI source, bool selling)
+        {
+            var result = new System.Collections.Generic.List<BarterLineData>();
+            if (lines == null) return result;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.Item == null) continue;
+                float unitVal = source.GetDisplayedUnitValue(line.Item, selling);
+                result.Add(new BarterLineData(line.Item.displayName, line.Item.id, line.Amount, unitVal));
+            }
+            return result;
         }
 
         private void ApplyStylesheet(VisualElement root)

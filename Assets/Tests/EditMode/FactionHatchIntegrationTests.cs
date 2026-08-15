@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ashfall.Core.Economy;
 using System.IO;
 using NUnit.Framework;
 using UnityEngine;
@@ -14,6 +15,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Shelter.Modules;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {

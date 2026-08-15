@@ -15,7 +15,7 @@ MonoBehaviour:
   id: handheld_radio
   displayName: Handheld Radio
   description: Portable receiver. Often dead. Still full of boards worth stripping.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8bf40ce1f7d20afef8da48fc1c14dfc3, type: 3}
   type: 14
   stackMax: 1
   weight: 0.8

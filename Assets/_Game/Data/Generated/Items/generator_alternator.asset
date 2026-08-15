@@ -15,7 +15,7 @@ MonoBehaviour:
   id: generator_alternator
   displayName: Generator Alternator
   description: Heavy alternator core.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 25fd3a9f4565ae1a9866033a08d6cd03, type: 3}
   type: 10
   stackMax: 3
   weight: 4

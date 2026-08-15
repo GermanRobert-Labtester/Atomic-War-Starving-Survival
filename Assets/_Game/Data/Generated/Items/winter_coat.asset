@@ -15,7 +15,7 @@ MonoBehaviour:
   id: winter_coat
   displayName: Winter Coat
   description: Heavy coat. Warmth.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 82e2f80ad2e690168aa4ac0abc35380a, type: 3}
   type: 6
   stackMax: 2
   weight: 2.5

@@ -174,7 +174,8 @@ namespace AtomicWar.Tests.EditMode
         public void AbortEvolvesToResistant()
         {
             var sys = new DiseaseMutationSystem();
-            var inf = sys.StartInfection("sv1", "wound", new System.Random(1));
+            var infId = sys.StartInfection("sv1", "wound", new System.Random(1));
+            var inf = sys.Current.Infections.Find(i => i.InfectionId == infId);
             sys.AbortTreatment(inf);
             Assert.AreEqual(DiseaseMutationSystem.Resistance.Resistant, inf.Resistance);
             Assert.AreEqual(4f, inf.PillsRequired);
@@ -184,7 +185,8 @@ namespace AtomicWar.Tests.EditMode
         public void TwoAbortsEvolveToMultiResistant()
         {
             var sys = new DiseaseMutationSystem();
-            var inf = sys.StartInfection("sv1", "lung", new System.Random(1));
+            var infId = sys.StartInfection("sv1", "lung", new System.Random(1));
+            var inf = sys.Current.Infections.Find(i => i.InfectionId == infId);
             sys.AbortTreatment(inf);
             sys.AbortTreatment(inf);
             Assert.AreEqual(DiseaseMutationSystem.Resistance.MultiResistant, inf.Resistance);

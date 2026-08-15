@@ -15,7 +15,7 @@ MonoBehaviour:
   id: workbench_intermediate
   displayName: Workbench (Intermediate)
   description: Expanded craft recipes.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f0c0a3309e403b8768c38f5dc68b01ee, type: 3}
   type: 14
   stackMax: 1
   weight: 12

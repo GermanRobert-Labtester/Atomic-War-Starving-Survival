@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_380acp
   displayName: Deprecated Bullets (380acp)
   description: "Corroded cal_380acp rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: f5d9df424461c32cb87f1bcb131d1ba3, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

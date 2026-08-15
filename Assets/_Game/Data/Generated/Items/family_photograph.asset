@@ -15,7 +15,7 @@ MonoBehaviour:
   id: family_photograph
   displayName: Family Photograph
   description: Paper memory. Morale.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b9081e07f0878a17abf7c9b9d68bfba6, type: 3}
   type: 12
   stackMax: 5
   weight: 0.02

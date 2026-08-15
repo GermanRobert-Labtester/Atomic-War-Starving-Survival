@@ -1,0 +1,475 @@
+[
+  {
+    "id": "quest_crossing_the_vouch",
+    "display_name": "A Name at the Gate",
+    "type": "expedition",
+    "briefing": "Bram Ostrowski names the Crossing and will sell you a rough sketch of the approach. He will not walk there himself. \"I sold them a map once. That was the whole transaction. I'd like it to stay that way.\"",
+    "prereq_quest_id": "",
+    "min_day": 70,
+    "stages": [
+      {
+        "id": "hear_ostrowski",
+        "text": "Hear Ostrowski out and take the sketch of the approach."
+      },
+      {
+        "id": "find_a_name",
+        "text": "Find a name willing to vouch: Ostrowski (reluctant, once), Mattis Cray at the truss, or a sister-pack contact."
+      },
+      {
+        "id": "walk_approach",
+        "text": "Walk the approach road, past the chalked waypoints, toward the viaduct."
+      },
+      {
+        "id": "reach_viaduct",
+        "text": "Reach the Viaduct Gate and present the name to the watch."
+      },
+      {
+        "id": "register_vouch",
+        "text": "Have the vouch entered on the crossing ledger. The gate opens."
+      }
+    ],
+    "choices": [
+      {
+        "id": "vouch_ostrowski_reluctant",
+        "text": "Ostrowski vouches — once, and he would like it to stay that way.",
+        "set_flag": "flag_crossing_vouched_clean"
+      },
+      {
+        "id": "vouch_mattis_at_truss",
+        "text": "Take Mattis Cray's name at the truss and register it on the ledger.",
+        "set_flag": "flag_crossing_vouched_clean"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_vouch",
+    "target_location_id": "loc_crossing_viaduct_gate"
+  },
+  {
+    "id": "quest_crossing_first_weigh",
+    "display_name": "What the Scale Says",
+    "type": "expedition",
+    "briefing": "Osran weighs your goods on the depot scale. The number is real. What people infer from it is not his problem. Present your load, answer his questions about the shelter, and either accept the recorded weight or contest it — honestly, or not.",
+    "prereq_quest_id": "quest_crossing_the_vouch",
+    "min_day": 20,
+    "stages": [
+      {
+        "id": "present_goods",
+        "text": "Present your goods on the depot scale."
+      },
+      {
+        "id": "answer_questions",
+        "text": "Answer Osran's questions about the shelter — occupation-style, not a form. No paperwork changes hands."
+      },
+      {
+        "id": "accept_or_contest",
+        "text": "Accept the recorded weight, or contest a true reading without real cause and let the exchange note it."
+      },
+      {
+        "id": "stallrow_access",
+        "text": "Receive Stallrow trade access, and take the calibration weight as proof that the scale stays honest."
+      }
+    ],
+    "choices": [
+      {
+        "id": "first_weigh_accept_true",
+        "text": "Accept the true weight, even when it is less favourable than hoped.",
+        "set_flag": "mutation_crossing_honest_trader"
+      },
+      {
+        "id": "first_weigh_contest",
+        "text": "Contest the true weight anyway. Access still granted; the exchange notes it.",
+        "set_flag": "mark_crossing_difficult"
+      },
+      {
+        "id": "first_weigh_bribe",
+        "text": "Offer to pay Osran to misweigh. He refuses, on the record, in front of Stallrow.",
+        "set_flag": "mutation_crossing_bribe_attempted"
+      }
+    ],
+    "knowledge_key": "lore_nc_read_again",
+    "target_location_id": "loc_crossing_scalehouse"
+  },
+  {
+    "id": "quest_crossing_scale_integrity",
+    "display_name": "What the Weight Doesn't Move",
+    "type": "side",
+    "briefing": "The scale is honest because it is checked. Help prove that on the record — calibrate against the weight, verify a disputed load, and leave Stallrow able to trust the number without trusting anyone to have set it.",
+    "prereq_quest_id": "quest_crossing_first_weigh",
+    "min_day": 24,
+    "stages": [
+      {
+        "id": "calibrate",
+        "text": "Bring the calibration weight to the depot scale and confirm it reads true."
+      },
+      {
+        "id": "verify_dispute",
+        "text": "Weigh a disputed load in public, once, without favour."
+      },
+      {
+        "id": "record_clean",
+        "text": "Have the clean reading entered in the records room ledger."
+      }
+    ],
+    "choices": [
+      {
+        "id": "scale_integrity_clear",
+        "text": "The scale reads clean. Stallrow keeps trusting the number.",
+        "set_flag": "mutation_crossing_honest_trader"
+      },
+      {
+        "id": "scale_integrity_silent",
+        "text": "Verify honestly but decline to record it. The trust stays, unspoken.",
+        "set_flag": "flag_crossing_scale_verified_silent"
+      }
+    ],
+    "knowledge_key": "lore_nc_three_legends",
+    "target_location_id": "loc_crossing_weighbridge"
+  },
+  {
+    "id": "quest_crossing_the_terms",
+    "display_name": "Read It Again",
+    "type": "faction",
+    "briefing": "Dessa Vane offers seed, a covered loss, or a favour bank against a plainly named forfeit. The contract is read twice before it is signed. After the second reading there is only the ink. What you agree to, you will owe — and the forfeit is named up front, not hidden in a clause.",
+    "prereq_quest_id": "quest_crossing_first_weigh",
+    "min_day": 70,
+    "stages": [
+      {
+        "id": "enter_hall",
+        "text": "Enter the Underwrite Hall. Dessa has a second chair. She always has a second chair."
+      },
+      {
+        "id": "hear_terms",
+        "text": "Hear the terms read aloud. Once. Then twice. The contract does not change between readings."
+      },
+      {
+        "id": "sign_or_decline",
+        "text": "Sign the contract, or decline. If you sign, the forfeit is named in front of you. If you decline, the hall stays open — Dessa does not punish caution."
+      }
+    ],
+    "choices": [
+      {
+        "id": "terms_sign_pay",
+        "text": "Sign and later pay. The Underwrite remembers reliable debtors.",
+        "set_flag": "mutation_crossing_underwrite_reliable"
+      },
+      {
+        "id": "terms_decline",
+        "text": "Decline the contract. The hall stays open. Dessa notes it without judgement.",
+        "set_flag": "flag_crossing_underwrite_untested"
+      },
+      {
+        "id": "terms_sign_dump",
+        "text": "Sign and dump the goods. The Underwrite will collect — at the Lockup, not at your hatch.",
+        "set_flag": "mutation_crossing_underwrite_burned"
+      }
+    ],
+    "knowledge_key": "lore_nc_read_again",
+    "target_location_id": "loc_crossing_underwrite_hall"
+  },
+  {
+    "id": "quest_crossing_the_petition",
+    "display_name": "Draft Four",
+    "type": "faction",
+    "briefing": "Perrin Ashby asks for an early signature on the Compact's draft charter. If you read it, there is a scoring clause — who gets a vote, and how much it weighs. He has not noticed that it resembles a Reconstruction Utility Rating. He will, if you tell him.",
+    "prereq_quest_id": "quest_crossing_first_weigh",
+    "min_day": 70,
+    "stages": [
+      {
+        "id": "visit_tent",
+        "text": "Visit the Petition Tent. Perrin has a draft. He always has a draft."
+      },
+      {
+        "id": "read_clause",
+        "text": "Read the scoring clause. It is precise. It is also familiar — if you have seen a RUR score or a Duty Roster row."
+      },
+      {
+        "id": "sign_or_revise",
+        "text": "Sign the draft as written, suggest a revision, or decline. Perrin will listen to a revision. He will not forgive a leak."
+      }
+    ],
+    "choices": [
+      {
+        "id": "petition_revise",
+        "text": "Suggest a revision pass. The draft improves. Perrin is grateful, quietly.",
+        "set_flag": "mutation_crossing_petition_revised"
+      },
+      {
+        "id": "petition_decline",
+        "text": "Decline to sign. The Compact loses an early supporter. Perrin does not hold it against you.",
+        "set_flag": "flag_crossing_petition_unsigned"
+      },
+      {
+        "id": "petition_leak",
+        "text": "Sign and leak the unrevised clause to Osran or Dessa. The Compact's draft becomes ammunition.",
+        "set_flag": "mutation_crossing_petition_leaked"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_rubric_again",
+    "target_location_id": "loc_crossing_petition_tent"
+  },
+  {
+    "id": "quest_crossing_the_standing",
+    "display_name": "What Holds",
+    "type": "expedition",
+    "briefing": "A dispute at Stallrow needs settling. Three backers must hold the ruling or it is just noise. Learn how the Crossing resolves what no Power will hear: a name spoken in public, by people who have to eat tomorrow, about what is fair today.",
+    "prereq_quest_id": "quest_crossing_first_weigh",
+    "min_day": 70,
+    "stages": [
+      {
+        "id": "witness_dispute",
+        "text": "Witness a live dispute at Stallrow — a stall claim, a debt, or a petition argument."
+      },
+      {
+        "id": "call_standing",
+        "text": "Call the Standing. Three backers must declare or the ruling does not hold."
+      },
+      {
+        "id": "secure_backers",
+        "text": "Secure three backers willing to stake their name on the ruling."
+      },
+      {
+        "id": "ruling_holds",
+        "text": "The ruling holds. The number is on the board. It will stay there until someone overturns it with three names of their own."
+      }
+    ],
+    "choices": [
+      {
+        "id": "standing_back_honest",
+        "text": "Back the side you believe. The ruling will hold honestly.",
+        "set_flag": "flag_crossing_standing_honest"
+      },
+      {
+        "id": "standing_decline",
+        "text": "Decline to back. The ruling may still hold, without your name.",
+        "set_flag": ""
+      },
+      {
+        "id": "standing_bribe",
+        "text": "Promise both sides or bribe a backer. The ruling holds, but it is rigged.",
+        "set_flag": "flag_crossing_standing_rigged"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_standing",
+    "target_location_id": "loc_crossing_stallrow"
+  },
+  {
+    "id": "quest_crossing_the_marker",
+    "display_name": "What the Plaque Doesn't Say",
+    "type": "exploration",
+    "briefing": "The old bronze marker at Nightfire is corroded past the third line. Everyone in the Crossing tells a different story about what was written below the names. Inspect the marker, hear the tellers, and learn where the original paper went.",
+    "prereq_quest_id": "quest_crossing_the_standing",
+    "min_day": 75,
+    "stages": [
+      {
+        "id": "inspect_marker",
+        "text": "Inspect the corroded marker near the old Nightfire abutment."
+      },
+      {
+        "id": "hear_tellers",
+        "text": "Hear the three competing legends from Stallrow tellers."
+      },
+      {
+        "id": "ask_records",
+        "text": "Ask Ivo Fenn in the records room if the original paper survived."
+      }
+    ],
+    "choices": [
+      {
+        "id": "marker_report_contradictions",
+        "text": "Report the contradictions as they are. The mystery remains honest.",
+        "set_flag": "flag_crossing_marker_contradictions_noted"
+      },
+      {
+        "id": "marker_seed_legend",
+        "text": "Seed a tailored legend among the tellers to favor your preferred bloc.",
+        "set_flag": "mutation_crossing_myth_seeded"
+      }
+    ],
+    "knowledge_key": "lore_nc_three_legends",
+    "target_location_id": "loc_crossing_records_room"
+  },
+  {
+    "id": "quest_crossing_the_forfeit",
+    "display_name": "What Wyn Owes",
+    "type": "faction",
+    "briefing": "Wyn Sabler's pledge term has expired. Dessa Vane is coming to collect the exact named forfeit, on the record, in the Underwrite Lockup. Wyn will not ask for help, but she cannot pay alone.",
+    "prereq_quest_id": "quest_crossing_the_terms",
+    "min_day": 85,
+    "stages": [
+      {
+        "id": "witness_demand",
+        "text": "Witness Dessa Vane deliver the collection notice to Wyn at the granary."
+      },
+      {
+        "id": "attend_lockup",
+        "text": "Attend the collection proceeding in the Underwrite Lockup."
+      },
+      {
+        "id": "decide_forfeit",
+        "text": "Help Wyn cover the debt, let the forfeit proceed as written, or help her leave."
+      }
+    ],
+    "choices": [
+      {
+        "id": "forfeit_pay_debt",
+        "text": "Pay the grain principal for Wyn. The Underwrite marks the contract fulfilled.",
+        "set_flag": "mutation_crossing_forfeit_honoured"
+      },
+      {
+        "id": "forfeit_let_proceed",
+        "text": "Let the forfeit proceed. Dessa collects calmly without violence.",
+        "set_flag": "flag_crossing_forfeit_collected"
+      },
+      {
+        "id": "forfeit_help_flee",
+        "text": "Help Wyn smuggle the pledged sacks out. Dessa will not forget the broken ink.",
+        "set_flag": "mutation_crossing_underwrite_burned"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_forfeit",
+    "target_location_id": "loc_crossing_underwrite_hall"
+  },
+  {
+    "id": "quest_crossing_the_vote_that_isnt",
+    "display_name": "Draft Four, Called",
+    "type": "crisis",
+    "briefing": "Perrin Ashby has called a general gathering to ratify Draft Four of the Compact Charter. Dessa Vane plans to stall the vote by calling in a key backer's overdue debt right on the floor.",
+    "prereq_quest_id": "quest_crossing_the_petition",
+    "min_day": 90,
+    "stages": [
+      {
+        "id": "attend_gathering",
+        "text": "Attend the ratification gathering at the Viaduct Gate platform."
+      },
+      {
+        "id": "witness_intervention",
+        "text": "Witness Dessa challenge the backer's standing with an open ledger claim."
+      },
+      {
+        "id": "intervene_or_standby",
+        "text": "Cover the called-in claim, support the delay, or let the gathering break."
+      }
+    ],
+    "choices": [
+      {
+        "id": "vote_cover_debt",
+        "text": "Cover the claim so the vote proceeds cleanly.",
+        "set_flag": "mutation_crossing_vote_clean"
+      },
+      {
+        "id": "vote_sabotage_compact",
+        "text": "Back the Underwrite's challenge and derail the ratification.",
+        "set_flag": "mutation_crossing_vote_sabotaged"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_standing",
+    "target_location_id": "loc_crossing_viaduct_gate"
+  },
+  {
+    "id": "quest_crossing_three_dry_pages",
+    "display_name": "The Charter",
+    "type": "story",
+    "briefing": "Ivo Fenn opens the iron box in the Records Room and presents the actual founding Charter. It is only three dry pages: calibration standards, revenue splits, and signatures from people who survived the first winter.",
+    "prereq_quest_id": "quest_crossing_the_marker",
+    "min_day": 95,
+    "stages": [
+      {
+        "id": "open_iron_box",
+        "text": "Unlock the fireproof iron box with Ivo's records key."
+      },
+      {
+        "id": "read_pages",
+        "text": "Read the three original pages of the Crossing Charter."
+      },
+      {
+        "id": "decide_custody",
+        "text": "Decide the Charter's fate: publish it to all, keep it hidden, or give it to one bloc."
+      }
+    ],
+    "choices": [
+      {
+        "id": "charter_publish_all",
+        "text": "Publish the three pages openly on the Stallrow board.",
+        "set_flag": "mutation_crossing_charter_revealed"
+      },
+      {
+        "id": "charter_keep_hidden",
+        "text": "Leave the pages locked in the box for history.",
+        "set_flag": "flag_crossing_charter_hidden"
+      }
+    ],
+    "knowledge_key": "lore_nc_three_legends",
+    "target_location_id": "loc_crossing_records_room"
+  },
+  {
+    "id": "quest_crossing_who_holds_the_ledger",
+    "display_name": "Who Holds the Ledger",
+    "type": "story",
+    "briefing": "The final Standing is called across the entire Viaduct. Every trade, debt, and ruling you have touched comes together to determine who speaks for the Crossing.",
+    "prereq_quest_id": "quest_crossing_three_dry_pages",
+    "min_day": 100,
+    "stages": [
+      {
+        "id": "final_assembly",
+        "text": "Gather all three bloc leaders at the Weighbridge."
+      },
+      {
+        "id": "tally_rulings",
+        "text": "Tally the past Standing rulings and registered debts."
+      },
+      {
+        "id": "seal_future",
+        "text": "Declare the future order of the Crossing."
+      }
+    ],
+    "choices": [
+      {
+        "id": "ledger_scale_holds",
+        "text": "The Scale remains sovereign; fair weights govern the viaduct.",
+        "set_flag": "mutation_crossing_honest_trader"
+      },
+      {
+        "id": "ledger_underwrite_holds",
+        "text": "The Underwrite takes custody of all pledges and traffic.",
+        "set_flag": "mutation_crossing_underwrite_reliable"
+      },
+      {
+        "id": "ledger_compact_holds",
+        "text": "The Compact ratifies Draft Four and establishes a council.",
+        "set_flag": "mutation_crossing_vote_clean"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_standing",
+    "target_location_id": "loc_crossing_weighbridge"
+  },
+  {
+    "id": "quest_crossing_companion_mattis",
+    "display_name": "The Name He Gave",
+    "type": "companion",
+    "briefing": "Mattis Cray explains the debt from the first person he ever vouched for who burned him. Paying down that lingering obligation is the only way he can ever offer a second clean vouch.",
+    "prereq_quest_id": "quest_crossing_the_vouch",
+    "min_day": 80,
+    "stages": [
+      {
+        "id": "speak_mattis",
+        "text": "Speak to Mattis alone under the viaduct arch."
+      },
+      {
+        "id": "resolve_old_debt",
+        "text": "Settle the old grain debt with the Underwrite Hall."
+      },
+      {
+        "id": "clear_record",
+        "text": "Have Mattis's name un-blacklisted on the records room slate."
+      }
+    ],
+    "choices": [
+      {
+        "id": "mattis_debt_cleared",
+        "text": "Pay the debt in full and clear Mattis's standing.",
+        "set_flag": "flag_crossing_mattis_redeemed"
+      }
+    ],
+    "knowledge_key": "lore_nc_the_vouch",
+    "target_location_id": "loc_crossing_viaduct_gate"
+  }
+]

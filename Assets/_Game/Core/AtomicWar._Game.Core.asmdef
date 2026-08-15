@@ -20,7 +20,9 @@
         "AtomicWar._Game.Encounters",
         "AtomicWar._Game.World",
         "AtomicWar._Game.Narrative",
-        "AtomicWar._Game.Factions"
+        "AtomicWar._Game.Factions",
+        "AtomicWar._Game.Quests",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: matches
   displayName: Matches
   description: Stove and heater light.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0c61e2665e2c5c9e486feabac516a001, type: 3}
   type: 10
   stackMax: 40
   weight: 0.02

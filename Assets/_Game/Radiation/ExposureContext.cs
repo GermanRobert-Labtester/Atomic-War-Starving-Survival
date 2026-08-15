@@ -33,7 +33,14 @@ namespace AtomicWar._Game.Radiation
                     var method = value.GetType().GetMethod("GetInteriorRadsPerHour", BindingFlags.Public | BindingFlags.Instance);
                     if (method != null)
                     {
-                        ShelterRadQuery = zone => (float)method.Invoke(value, new object[] { zone });
+                        // Invoke can return null when the reflected method returns null
+                        // (or is overridden by a shim); unboxing null throws, so coerce
+                        // defensively instead of trusting the declared return type.
+                        ShelterRadQuery = zone =>
+                        {
+                            object result = method.Invoke(value, new object[] { zone });
+                            return result != null ? Convert.ToSingle(result) : 0f;
+                        };
                     }
                 }
                 else

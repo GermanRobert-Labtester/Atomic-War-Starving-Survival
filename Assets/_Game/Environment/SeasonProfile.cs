@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Environment
 {

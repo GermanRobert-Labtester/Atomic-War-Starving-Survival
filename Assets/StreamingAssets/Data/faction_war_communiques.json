@@ -1,0 +1,157 @@
+{
+ "communiques": [
+  {
+   "id": "comm_d497_garrison_clean_strike",
+   "eventChainId": "evt_d495_the_clean_strike",
+   "factionId": "faction_central_garrison",
+   "day": 497,
+   "title": "On the Unclaimed Impact Near the Rail Span",
+   "body": "The Continuity Office states plainly: no Garrison fire mission was logged against that grid, on that night, or any night this quarter. Speculation attributing the impact to Garrison ordnance is factually unsupported and residents repeating it will be treated as spreading disinformation in a time of active operations."
+  },
+  {
+   "id": "comm_d497_rebuilders_clean_strike",
+   "eventChainId": "evt_d495_the_clean_strike",
+   "factionId": "faction_rebuilders",
+   "day": 497,
+   "title": "We Don't Have Artillery. We Wish We Knew Who Does.",
+   "body": "To be clear, since apparently it needs saying: the Rebuilders have never fielded anything that could put a crater in open ground from range, and everyone who trades with us knows exactly what's in our stores. We're not claiming the Garrison did this either. We're saying somebody did, and neither of the two parties usually shooting at each other in this district seems to know who."
+  },
+  {
+   "id": "comm_d498_ash_sign_clean_strike",
+   "eventChainId": "evt_d495_the_clean_strike",
+   "factionId": "faction_ash_sign",
+   "day": 498,
+   "title": "A Ground Chosen, Not Struck",
+   "body": "Where the ash lands and does not spread is a choice, and the shrine has taught this for years to congregations that mostly nodded politely. Perhaps now the district will hear it differently. We do not know whose hand made this choice. We know it was a hand, and not chance, and that distinction has always been the whole of our teaching."
+  },
+  {
+   "id": "comm_d519_garrison_almshouse",
+   "eventChainId": "evt_d517_almshouse_shelling",
+   "factionId": "faction_central_garrison",
+   "day": 519,
+   "title": "On the Loss of the Former Almshouse",
+   "body": "Preliminary assessment attributes the impact to unsecured insurgent ordnance operating outside the sanctioned command structure of either recognized party. The Continuity Office extends no apology, as none is owed, but notes the structure's loss is regrettable given its long-standing neutral status in the district's collective memory.",
+   "authorNote": "False. Internal Garrison range logs (not player-accessible) show an artillery emplacement near Checkpoint Gamma test-fired that week; the almshouse round was an overshoot the Office chose to bury rather than admit."
+  },
+  {
+   "id": "comm_d520_rebuilders_almshouse",
+   "eventChainId": "evt_d517_almshouse_shelling",
+   "factionId": "faction_rebuilders",
+   "day": 520,
+   "title": "Insurgent Ordnance Doesn't Overshoot From a Garrison Emplacement",
+   "body": "We'd love to know which insurgents the Continuity Office thinks were operating a heavy weapon inside their own checkpoint's sightline. The almshouse sat exactly on the fall line from the new gun position at Checkpoint Gamma. That isn't an accusation. That's geometry, and geometry doesn't care whose bulletin it embarrasses.",
+   "authorNote": "True by accident — the Rebuilders' guess is correct, though they have no proof, only the same geometry any careful observer could work out."
+  },
+  {
+   "id": "comm_d521_ash_sign_almshouse",
+   "eventChainId": "evt_d517_almshouse_shelling",
+   "factionId": "faction_ash_sign",
+   "day": 521,
+   "title": "The Reading Was Given",
+   "body": "A pilgrim carried our warning to that quarter three days before the strike, plainly, without embellishment: the reading had turned, and the ground should be left. We do not claim to know whose ordnance fell. We claim only that the shrine's numbers moved first, and that this district has grown practiced at ignoring numbers it finds inconvenient.",
+   "authorNote": "True and mundane — the shrine's preachers are attentive to real tension patterns (troop movements, emplacement activity) and dress ordinary vigilance in doctrinal language; no supernatural foreknowledge is involved."
+  },
+  {
+   "id": "comm_d537_garrison_exchange_checkpoint",
+   "eventChainId": "evt_d533_garrison_offensive_grain_silo",
+   "factionId": "faction_central_garrison",
+   "day": 537,
+   "title": "Continuity of Distribution, Formally Secured",
+   "body": "The inspection post at the grain exchange ensures fair and continuous access to food resources for all district residents, regardless of faction affiliation, and corrects the documented armed drift the exchange's own roster permitted to develop unchecked. The Continuity Office thanks the exchange for its cooperation, offered or otherwise."
+  },
+  {
+   "id": "comm_d538_rebuilders_exchange_checkpoint",
+   "eventChainId": "evt_d533_garrison_offensive_grain_silo",
+   "factionId": "faction_rebuilders",
+   "day": 538,
+   "title": "Call It What It Is",
+   "body": "There is a squad standing at our own entrance rope inspecting goods that used to move on the scale's word alone, and the Continuity Office wants us to call that fairness. We built this market from rubble crews and an honor rule that held for three years without a single uniform enforcing it. We know an occupation when we're standing inside one."
+  },
+  {
+   "id": "comm_d549_garrison_ration_plaza",
+   "eventChainId": "evt_d545_ration_plaza_strike",
+   "factionId": "faction_central_garrison",
+   "day": 549,
+   "title": "On the Loss at Ration Plaza",
+   "body": "Investigation confirms the impact coincided with an unauthorized Rebuilders supply movement improperly routed through a designated civilian gathering point during a period of active hostilities. The Continuity Office holds the responsible party accountable for a loss that proper coordination with this office would have entirely prevented.",
+   "authorNote": "False. No Rebuilders convoy moved that morning; the claim is fabricated to assign blame."
+  },
+  {
+   "id": "comm_d550_rebuilders_ration_plaza",
+   "eventChainId": "evt_d545_ration_plaza_strike",
+   "factionId": "faction_rebuilders",
+   "day": 550,
+   "title": "There Was No Convoy",
+   "body": "Every trader on our roster can account for their route that morning and none of them go near the plaza. What did stand two streets over, until a month before the strike, was a Garrison inspection post. We are not certain that post was the target. We are certain the Continuity Office's story requires a convoy that does not exist anywhere in our records or anyone else's.",
+   "authorNote": "Also incomplete — the Rebuilders' guess (a missed strike on the inspection post) is a reasonable inference but wrong; the strike was precisely aimed at the plaza itself, not a near miss on anything Garrison."
+  },
+  {
+   "id": "comm_d552_ash_sign_ration_plaza",
+   "eventChainId": "evt_d545_ration_plaza_strike",
+   "factionId": "faction_ash_sign",
+   "day": 552,
+   "title": "A Harder Reading",
+   "body": "We will not pretend this fits the comfortable half of our teaching. The ash does not only spare. It also, plainly and without apparent mercy, chooses to take, and the plaza was taken with the same precision the shrine has always measured elsewhere. We do not have a gentler reading to offer the families waiting on one. We have only the numbers, and the numbers do not soften themselves for us either.",
+   "authorNote": "Closest to true in spirit, though the preachers don't yet know the strike shares an origin with the day-495 clean strike; they read the plaza's precision correctly without understanding its source."
+  },
+  {
+   "id": "comm_d573_forward_roster_checkpoint",
+   "eventChainId": "evt_d570_forward_roster_first_action",
+   "factionId": "faction_forward_roster",
+   "day": 573,
+   "title": "What We Are, Plainly, Since People Keep Asking",
+   "body": "We are not the Garrison, whatever the coats we're wearing might suggest at a distance. We are not raiders, whatever the checkpoint might suggest to anyone who's had to pay it. We are twelve people who became thirty who watched a scale we used to trust get occupied and decided somebody should stand where the occupying starts before it reaches the rest of us. The toll is the price of that standing. We are not apologizing for it."
+  },
+  {
+   "id": "comm_d581_garrison_shrine_strike",
+   "eventChainId": "evt_d578_shrine_strike_anomaly",
+   "factionId": "faction_central_garrison",
+   "day": 581,
+   "title": "On the Reported Impact at the Ash Sign Shrine",
+   "body": "The Continuity Office notes the timing of this reported impact, arriving as it does amid growing pilgrim traffic and declining tribute at the shrine, and declines to rule out that the incident serves the Ash Sign's own narrative interests more than it serves any verifiable military account. No Garrison unit was operating within range of that grid.",
+   "authorNote": "False and cynical — the Garrison's insinuation that the Ash Sign staged the strike for sympathy is baseless; the strike was real and shares the mystery actor's signature with the day-495 and day-545 strikes."
+  },
+  {
+   "id": "comm_d582_rebuilders_shrine_strike",
+   "eventChainId": "evt_d578_shrine_strike_anomaly",
+   "factionId": "faction_rebuilders",
+   "day": 582,
+   "title": "We Don't Know Either, and We're Saying So",
+   "body": "We have no stake in whether the shrine was struck by chance, by someone's decree, or by whatever the shrine itself claims chooses these things. We have traders who go up that switchback every season and none of them wish that ground harm. Whatever this was, it wasn't ours, and for once we're not interested in scoring the point off someone else's loss.",
+   "authorNote": "Honest agnosticism — the Rebuilders genuinely don't know, and unlike their almshouse and plaza statements, make no incorrect factual claim here."
+  },
+  {
+   "id": "comm_d583_ash_sign_shrine_strike",
+   "eventChainId": "evt_d578_shrine_strike_anomaly",
+   "factionId": "faction_ash_sign",
+   "day": 583,
+   "title": "What We No Longer Claim",
+   "body": "For three years we told pilgrims the ash spares its own ground, and yesterday the ground we meant was struck. We will not repaper that claim with a new verse to make it survive the evidence. The shrine still measures. We no longer tell you what the measuring means, because we have learned, at cost, that we did not fully know.",
+   "authorNote": "True and central to the mystery — this is the closest any faction voice comes to correctly intuiting that the sparing was never providence, though the Ash Sign still doesn't know it was a person (the mystery actor's control lapsing, not divine withdrawal)."
+  },
+  {
+   "id": "comm_d591_ash_sign_ceasefire_pause",
+   "eventChainId": "evt_d588_ceasefire_by_exhaustion",
+   "factionId": "faction_ash_sign",
+   "day": 591,
+   "title": "On the Pause, Since Pilgrims Are Asking",
+   "body": "Pilgrims are returning to the cairn and asking what the pause means, and we owe them the same answer we have owed since the strike: we do not fully know. The dosimeter still reads. It no longer tells us who is spared and who is not, and we will not invent a verse to cover that gap simply because the guns have gone quiet enough to make silence feel like an answer. What we can say is smaller than what we used to claim. The reading has calmed. We have not. We are still counting what does not add up."
+  },
+  {
+   "id": "comm_d593_forward_roster_ceasefire_toll",
+   "eventChainId": "evt_d570_forward_roster_first_action",
+   "factionId": "faction_forward_roster",
+   "day": 593,
+   "title": "Nobody Asked Us, So We're Saying It Anyway",
+   "body": "Whatever gets signed, or doesn't, under that silo roof isn't ours to weigh in on and we won't pretend otherwise. The spur road checkpoint went up before anyone called this a war worth pausing and it'll still be standing after somebody decides it's over. Two units standard goods, same as always. We didn't get a vote when the Garrison put a post at the Exchange rope and we're not asking for one now. We're also not taking the toll down because two bigger outfits are tired. Come through clean, pay the rate, keep walking."
+  },
+  {
+   "id": "comm_d607_garrison_forward_roster_recognition",
+   "eventChainId": "evt_d605_post_ceasefire_forward_roster",
+   "factionId": "faction_central_garrison",
+   "day": 607,
+   "title": "On the Unlicensed Checkpoint, Spur Road West",
+   "body": "The Continuity Office is aware of an unlicensed toll operation at the western supply spur and notes, without endorsing, that its conduct to date has not required a punitive response. This should not be read as recognition, tolerance, or precedent. It should be read as the Office having a war's worth of higher priorities than a checkpoint that, so far, has caused this office no measurable inconvenience."
+  }
+ ]
+}

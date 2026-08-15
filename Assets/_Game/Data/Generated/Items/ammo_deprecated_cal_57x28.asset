@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_57x28
   displayName: Deprecated Bullets (57x28)
   description: "Corroded cal_57x28 rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ac9c0c6e9bea6de04bbd6a91b0598b9b, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: coal
   displayName: Coal
   description: Hard coal. Long burn for heaters.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5b5686aacb725286a94b670d5dad707d, type: 3}
   type: 8
   stackMax: 30
   weight: 0.5

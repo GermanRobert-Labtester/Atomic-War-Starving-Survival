@@ -1,4 +1,5 @@
 using UnityEngine;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Survivors
 {

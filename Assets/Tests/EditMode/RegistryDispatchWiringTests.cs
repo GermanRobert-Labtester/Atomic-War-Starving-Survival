@@ -97,6 +97,18 @@ namespace AtomicWar.Tests.EditMode
             });
             int clearedEvents = 0;
             _bootstrap.HazardMethane.OnMethaneCleared += _ => clearedEvents++;
+            var airMod = _bootstrap.Shelter.GetModule("air_filtration");
+            if (airMod == null)
+            {
+                _bootstrap.Shelter.AddModule(new ShelterModuleInstance("air_filtration", 2) { FilterHealth = 100f, IsEnabled = true });
+            }
+            else
+            {
+                airMod.FilterHealth = 100f;
+                airMod.IsEnabled = true;
+                airMod.Level = 2;
+            }
+
             float airQualityBefore = _bootstrap.Shelter.AirQuality;
             Assert.That(airQualityBefore, Is.GreaterThan(MethaneSystem.VentilationClearAirQuality));
 

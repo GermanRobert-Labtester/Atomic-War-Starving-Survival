@@ -15,7 +15,7 @@ MonoBehaviour:
   id: nails
   displayName: Nails
   description: Loose nails. Framing.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a64861f001001f42e90cea685de61177, type: 3}
   type: 10
   stackMax: 80
   weight: 0.02

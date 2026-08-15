@@ -74,7 +74,7 @@ namespace AtomicWar._Game.Quests
             if (d >= DaysRequired)
             {
                 if (GetProgress(RaidGuaranteedKey) < 0.5f) SetProgress(RaidGuaranteedKey, 1f);
-                Advance();
+                Complete();
             }
         }
     }

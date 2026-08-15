@@ -15,7 +15,7 @@ MonoBehaviour:
   id: helmet_heavy_deprecated
   displayName: Deprecated Heavy Helmet
   description: Rusted heavy helmet.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 7d6456b48306b1eed9b0e4eeeb114e65, type: 3}
   type: 6
   stackMax: 1
   weight: 2.5

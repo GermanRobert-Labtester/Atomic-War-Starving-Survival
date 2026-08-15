@@ -24,9 +24,16 @@ namespace AtomicWar._Game.UI
     public class NeedsBar : MonoBehaviour
     {
         [SerializeField] private bool _showRawValues = false;
+#pragma warning disable 0414 // only read inside #if DEVELOPMENT_BUILD || UNITY_EDITOR below
+        [SerializeField] private bool _drawDebugGui = true;
+#pragma warning restore 0414
 
         private readonly Dictionary<string, NeedBarData> _needBars = new Dictionary<string, NeedBarData>();
         private readonly Dictionary<string, float> _pulseTimers = new Dictionary<string, float>();
+        private static readonly string[] DebugDrawOrder =
+        {
+            "hunger", "thirst", "fatigue", "warmth", "morale", "health", "radiation"
+        };
 
         public bool ShowRawValues => _showRawValues;
         public IReadOnlyDictionary<string, NeedBarData> NeedBars => _needBars;
@@ -34,6 +41,36 @@ namespace AtomicWar._Game.UI
         private void Awake()
         {
             EnsureInitialized();
+        }
+
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
+        private void OnGUI()
+        {
+            if (!_drawDebugGui || !Application.isPlaying) return;
+            DrawDebugOverlay();
+        }
+#endif
+
+        private void DrawDebugOverlay()
+        {
+            EnsureInitialized();
+            const float width = 220f;
+            const float lineHeight = 18f;
+            float height = 28f + DebugDrawOrder.Length * lineHeight;
+            var rect = new Rect(10f, 10f, width, height);
+            GUI.Box(rect, GUIContent.none);
+            GUILayout.BeginArea(rect);
+            GUILayout.Label("NEEDS", GUILayout.Height(20f));
+            for (int i = 0; i < DebugDrawOrder.Length; i++)
+            {
+                string id = DebugDrawOrder[i];
+                if (!_needBars.TryGetValue(id, out var data)) continue;
+                string valueText = _showRawValues
+                    ? data.CurrentValue.ToString("0.0")
+                    : Mathf.RoundToInt(data.CurrentValue).ToString() + "%";
+                GUILayout.Label($"{data.DisplayName}: {valueText}", GUILayout.Height(lineHeight));
+            }
+            GUILayout.EndArea();
         }
 
         public void EnsureInitialized()

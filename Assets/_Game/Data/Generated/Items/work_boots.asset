@@ -15,7 +15,7 @@ MonoBehaviour:
   id: work_boots
   displayName: Work Boots
   description: Hard soles.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0e938e5d5945edba59f1bc9d0af6f44a, type: 3}
   type: 6
   stackMax: 2
   weight: 1.5

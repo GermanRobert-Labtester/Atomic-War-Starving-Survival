@@ -15,7 +15,7 @@ MonoBehaviour:
   id: multitool_base
   displayName: Multitool Base
   description: Frame for multitool craft.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 16f851d7ed713fcc991d02a19389468b, type: 3}
   type: 10
   stackMax: 10
   weight: 0.2

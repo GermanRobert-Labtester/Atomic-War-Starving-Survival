@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.3431855">
+  <test-suite type="TestSuite" id="1158" name="Atomic War" fullname="Atomic War" runstate="Runnable" testcasecount="132" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.343186" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1151" name="AtomicWar.Tests.PlayMode.dll" fullname="/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/Library/ScriptAssemblies/AtomicWar.Tests.PlayMode.dll" runstate="Runnable" testcasecount="132" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.317060" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="754005" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1152" name="AtomicWar" fullname="AtomicWar" runstate="Runnable" testcasecount="132" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.307927" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1153" name="Tests" fullname="AtomicWar.Tests" runstate="Runnable" testcasecount="132" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.301950" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1154" name="PlayMode" fullname="AtomicWar.Tests.PlayMode" runstate="Runnable" testcasecount="132" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.294995" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1123" name="Phase11UiTests" fullname="AtomicWar.Tests.PlayMode.Phase11UiTests" classname="AtomicWar.Tests.PlayMode.Phase11UiTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:26Z" duration="11.279509" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1132" name="ExpansionWidgets_ProvokeUpdatesVisibleTree" fullname="AtomicWar.Tests.PlayMode.Phase11UiTests.ExpansionWidgets_ProvokeUpdatesVisibleTree" methodname="ExpansionWidgets_ProvokeUpdatesVisibleTree" classname="AtomicWar.Tests.PlayMode.Phase11UiTests" runstate="Runnable" seed="1345456317" result="Passed" start-time="2026-08-12 19:03:15Z" end-time="2026-08-12 19:03:24Z" duration="8.490031" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[HUD] HealthTrajectoryHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] GeigerAudioHook not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] EnvironmentStatusHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MapKnowledgeHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] TradeScreenUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] PowerGridHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MapScreenUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] WorkbenchUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] HatchDefenseHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] ScavengeDispatchHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] OverflowCrateHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] FieldGearLoadoutHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BunkerRationingHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] WaterPurificationHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] AirHeatManagementHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BunkerMaintenanceHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] SurvivorTaskBoardHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RoomAssignmentHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RadioInterceptHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] JournalBookUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] InventoryStripUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] EndgameSummaryUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] InternalHorrorHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] ExpeditionEncounterLogHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MoralChronicleUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] TutorialOverlay not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RadiationDosimeterWidget not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] GeigerSweepGauge not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] AirFilterIntegrityBar not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] FalloutStormWarningBanner not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] SurvivorPortraitCard not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MoralDecayMeter not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RationAllocationDial not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] WaterPurityGauge not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] TemperatureReadoutWidget not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] PowerFlowSchematic not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] FactionPressureRing not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] ExpeditionCountdownTimer not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RadioSignalStrengthBar not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] CraftQueueStrip not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] AlertToastNotification not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BunkerFloorMapMiniature not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] DayNightArcClock not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BloodTypeIndicator not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] LootHaulTicker not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] EndgameVictoryPathTracker not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[GameBootstrap] JournalSystem is null; skipping Section XIV echoes.
+[SystemRegistry] 132 system(s) constructed but not registered in any tick category (C-1 class bug): HoardingBehaviorSystem, NerveDamageSystem, AshDriftBurialSystem, LocationEvolutionSystem, WildlifeMigrationSystem, LandmarkDegradationSystem, BunkerManifestoSystem, CulturalPreservationSystem, DeepAquiferProjectSystem, PeaceTreatySystem, NPCAshWidows, NPCTheTollman, NPCBurnedPatrol, NPCTheCollector, NPCFeralChildren, NPCSurgeonsCaravan, FaunaIrradiatedDogs, FaunaAshCrows, FaunaBloatedCattle, FaunaRatSwarm, NarrativeArcSystem, ProceduralLoot, DynamicQuestlines, FactionIntel, VehicleMaintenance, ExpansionQuests, DistrictCoordinationOffice, CheckpointKiloMemorial, MilitiaGrainExchange, GlowChapel, TollHouse, StMarenHospitalAnnex, RadioTowerSevenBunker, MartaFarmhouse, RadiationPhaseProgression, PhantomMemorySystem, GuiltInsomniaSystem, CombatTraumaSystem, SomaticFlashbackSystem, MoralBranchingSystem, ChemicalDependencySystem, TradeSpecialtySystem, FinalWishSystem, RespiratoryDegenerationSystem, MemorialWallSystem, PersonalKeepsakeSystem, TraumaBondSystem, IdeologicalFrictionSystem, RationConflictSystem, GarrisonConscription, AshSignCult, ScavengerRefuge, SurvivorWorkShiftSystem, SurvivorTaskBoardSystem, CraftingOverflowStash, ChemUse, AdaptiveWarlords, ModLoader, TwitchAPI, DiseaseExpansion, IronMan, AndroidNpcs, Sheriff, ScenarioGen, SpeedrunTimer, TrueEnding, VictoryAirlift, VictoryAscendancy, VictoryBuriedAlive, VictoryCannibalKing, VictoryDefection, VictoryIcebreaker, VictoryLoneSurvivor, VictoryMAD, VictoryMigration, VictoryTheBroadcast, VictoryTheCure, VictoryTheMartian, VictoryUndergroundCity, VictoryUnifier, MapAnomalyDryCoral, SiegeArtillery, SiegeBiowarfare, SiegeBlockade, SiegeHostageShield, SiegeNightRaid, SiegeSappers, SiegeSmokeOut, SiegeVehicleRam, GarrisonComplianceLedger, MilitiaContributionTax, CultLeash, WarlordTributeSystem, FalloutStormHazard, HazardMimicCrate, HazardSurgicalBotch, HazardWeaponBurst, ItemAmmoTypes, ExpeditionEncounterLog, MapAquifer, AshDriftSystem, BurnWardSystem, CognitiveDecaySystem, LightningStrikesSystem, MobileCampSystem, MoralDilemmaSystem, NeedleSterilizationSystem, ProstheticCraftingSystem, SeismicVentsSystem, SevereFrostbiteSystem, TetanusAfflictionSystem, ToothDecaySystem, VisionLossSystem, SkirmishBandit_vs_Terror, SkirmishMil_vs_Rebel, SkirmishMil_vs_Terror, SkirmishRebel_vs_Bandit, SkirmishRebel_vs_Terror, TraderPlagueConvoy, UIEventBlurredVision, UIEventCorruptionScare, UIEventFalseInventory, UIEventGhostRadio, UIEventHacking, UIEventLowPower, UIEventMapRot, UIEventPhantomBlip, WorldEventDeforestation, WorldEventFinalWinter, WorldEventFissure, WorldEventGreatFamine, WorldEventMegafauna
+[SaveSystem] Saved to slot 'autosave' (atomic write + .bak backup).
+[SaveSystem] Saved to slot 'autosave' (atomic write + .bak backup).
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+]]></output>
+              </test-case>
+              <test-case id="1134" name="SaveLoad_RestoresPhase11HudFromSurvivorState" fullname="AtomicWar.Tests.PlayMode.Phase11UiTests.SaveLoad_RestoresPhase11HudFromSurvivorState" methodname="SaveLoad_RestoresPhase11HudFromSurvivorState" classname="AtomicWar.Tests.PlayMode.Phase11UiTests" runstate="Runnable" seed="972144448" result="Passed" start-time="2026-08-12 19:03:24Z" end-time="2026-08-12 19:03:26Z" duration="2.749344" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[HUD] HealthTrajectoryHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] GeigerAudioHook not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] EnvironmentStatusHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MapKnowledgeHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] TradeScreenUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] PowerGridHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MapScreenUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] WorkbenchUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] HatchDefenseHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] ScavengeDispatchHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] OverflowCrateHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] FieldGearLoadoutHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BunkerRationingHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] WaterPurificationHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] AirHeatManagementHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BunkerMaintenanceHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] SurvivorTaskBoardHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RoomAssignmentHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RadioInterceptHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] JournalBookUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] InventoryStripUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] EndgameSummaryUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] InternalHorrorHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] ExpeditionEncounterLogHUD not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MoralChronicleUI not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] TutorialOverlay not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RadiationDosimeterWidget not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] GeigerSweepGauge not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] AirFilterIntegrityBar not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] FalloutStormWarningBanner not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] SurvivorPortraitCard not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] MoralDecayMeter not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RationAllocationDial not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] WaterPurityGauge not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] TemperatureReadoutWidget not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] PowerFlowSchematic not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] FactionPressureRing not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] ExpeditionCountdownTimer not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] RadioSignalStrengthBar not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] CraftQueueStrip not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] AlertToastNotification not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BunkerFloorMapMiniature not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] DayNightArcClock not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] BloodTypeIndicator not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] LootHaulTicker not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[HUD] EndgameVictoryPathTracker not found via scene wiring — auto-creating with AddComponent(). Wire it explicitly in the HUD prefab/scene instead of relying on this fallback.
+[GameBootstrap] JournalSystem is null; skipping Section XIV echoes.
+[SystemRegistry] 132 system(s) constructed but not registered in any tick category (C-1 class bug): HoardingBehaviorSystem, NerveDamageSystem, AshDriftBurialSystem, LocationEvolutionSystem, WildlifeMigrationSystem, LandmarkDegradationSystem, BunkerManifestoSystem, CulturalPreservationSystem, DeepAquiferProjectSystem, PeaceTreatySystem, NPCAshWidows, NPCTheTollman, NPCBurnedPatrol, NPCTheCollector, NPCFeralChildren, NPCSurgeonsCaravan, FaunaIrradiatedDogs, FaunaAshCrows, FaunaBloatedCattle, FaunaRatSwarm, NarrativeArcSystem, ProceduralLoot, DynamicQuestlines, FactionIntel, VehicleMaintenance, ExpansionQuests, DistrictCoordinationOffice, CheckpointKiloMemorial, MilitiaGrainExchange, GlowChapel, TollHouse, StMarenHospitalAnnex, RadioTowerSevenBunker, MartaFarmhouse, RadiationPhaseProgression, PhantomMemorySystem, GuiltInsomniaSystem, CombatTraumaSystem, SomaticFlashbackSystem, MoralBranchingSystem, ChemicalDependencySystem, TradeSpecialtySystem, FinalWishSystem, RespiratoryDegenerationSystem, MemorialWallSystem, PersonalKeepsakeSystem, TraumaBondSystem, IdeologicalFrictionSystem, RationConflictSystem, GarrisonConscription, AshSignCult, ScavengerRefuge, SurvivorWorkShiftSystem, SurvivorTaskBoardSystem, CraftingOverflowStash, ChemUse, AdaptiveWarlords, ModLoader, TwitchAPI, DiseaseExpansion, IronMan, AndroidNpcs, Sheriff, ScenarioGen, SpeedrunTimer, TrueEnding, VictoryAirlift, VictoryAscendancy, VictoryBuriedAlive, VictoryCannibalKing, VictoryDefection, VictoryIcebreaker, VictoryLoneSurvivor, VictoryMAD, VictoryMigration, VictoryTheBroadcast, VictoryTheCure, VictoryTheMartian, VictoryUndergroundCity, VictoryUnifier, MapAnomalyDryCoral, SiegeArtillery, SiegeBiowarfare, SiegeBlockade, SiegeHostageShield, SiegeNightRaid, SiegeSappers, SiegeSmokeOut, SiegeVehicleRam, GarrisonComplianceLedger, MilitiaContributionTax, CultLeash, WarlordTributeSystem, FalloutStormHazard, HazardMimicCrate, HazardSurgicalBotch, HazardWeaponBurst, ItemAmmoTypes, ExpeditionEncounterLog, MapAquifer, AshDriftSystem, BurnWardSystem, CognitiveDecaySystem, LightningStrikesSystem, MobileCampSystem, MoralDilemmaSystem, NeedleSterilizationSystem, ProstheticCraftingSystem, SeismicVentsSystem, SevereFrostbiteSystem, TetanusAfflictionSystem, ToothDecaySystem, VisionLossSystem, SkirmishBandit_vs_Terror, SkirmishMil_vs_Rebel, SkirmishMil_vs_Terror, SkirmishRebel_vs_Bandit, SkirmishRebel_vs_Terror, TraderPlagueConvoy, UIEventBlurredVision, UIEventCorruptionScare, UIEventFalseInventory, UIEventGhostRadio, UIEventHacking, UIEventLowPower, UIEventMapRot, UIEventPhantomBlip, WorldEventDeforestation, WorldEventFinalWinter, WorldEventFissure, WorldEventGreatFamine, WorldEventMegafauna
+[SaveSystem] Saved to slot 'autosave' (atomic write + .bak backup).
+[SaveSystem] Saved to slot 'autosave' (atomic write + .bak backup).
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+There are no audio listeners in the scene. Please ensure there is always one audio listener in the scene
+[SaveSystem] Saved to slot 'wave_b_hud_roundtrip' (atomic write + .bak backup).
+[SaveSystem] ISaveable.CaptureState returned null for 'location_evolution' (FailFastRestore) — skipping restore.
+[SaveSystem] ISaveable.CaptureState returned null for 'wildlife_migration' (FailFastRestore) — skipping restore.
+[SaveSystem] ISaveable.CaptureState returned null for 'landmark_degradation' (FailFastRestore) — skipping restore.
+[SaveSystem] Loaded slot 'wave_b_hud_roundtrip' (version 3).
+Saving results to: /home/robertsrff/.config/unity3d/DefaultCompany/Atomic War/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

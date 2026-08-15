@@ -15,7 +15,7 @@ MonoBehaviour:
   id: coffee_creamer
   displayName: Coffee Creamer
   description: Powdered creamer.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ec856f79b57b86c7285b15f7b005b705, type: 3}
   type: 10
   stackMax: 20
   weight: 0.1

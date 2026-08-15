@@ -15,7 +15,7 @@ MonoBehaviour:
   id: generator_parts
   displayName: Generator Parts
   description: Spare gen components.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 68d7267d8c9c9c426b5efe406c83c87d, type: 3}
   type: 10
   stackMax: 8
   weight: 1.2

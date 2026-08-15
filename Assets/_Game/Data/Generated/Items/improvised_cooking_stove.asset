@@ -15,7 +15,7 @@ MonoBehaviour:
   id: improvised_cooking_stove
   displayName: Improvised Cooking Stove
   description: Scrap stove. Smoky.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 9165e7ed8906cc6fdbb2d76ef85e2234, type: 3}
   type: 14
   stackMax: 1
   weight: 8

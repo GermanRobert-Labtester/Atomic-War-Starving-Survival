@@ -7,6 +7,8 @@ using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Survivors;
 using AtomicWar._Game.Medical;
+using Ashfall.Core;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

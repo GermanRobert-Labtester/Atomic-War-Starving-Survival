@@ -11,6 +11,7 @@ using AtomicWar._Game.Shelter;
 using AtomicWar._Game.Survivors;
 
 using AtomicWar._Game.Encounters;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -72,6 +73,9 @@ namespace AtomicWar._Game.Core
         private NeedsSystem _needsSystem;
         private BicycleSystem _bicycleSystem;
         private FloodedNodeSystem _floodedNodeSystem;
+        private IceRoadSystem _iceRoadSystem;
+        private CensusClaimSystem _censusClaim;
+        private VouchAccessSystem _vouchAccess;
         private RiverNodeSystem _riverNodeSystem;
         private BloodToxicitySystem _bloodToxicity;
         private Func<string, bool> _hasItem;
@@ -212,8 +216,30 @@ namespace AtomicWar._Game.Core
         /// <summary>Prompt #13 — medical loot discarded after spotting a poisoned cache.</summary>
         public event Action<ExpeditionState, string> OnSabotagedCacheDetected;
 
+        /// <summary>
+        /// Lore bible 05_FACTIONS — Lamplighters interlock: multiplier on outbound
+        /// travel ticks. Lit routes are faster (access granted); after withdrawal
+        /// the unlit routes are slower. Null = 1.
+        /// </summary>
+        public Func<float> RouteTravelMultiplier;
+
+        /// <summary>
+        /// Lore bible 05_FACTIONS — Lamplighters interlock: multiplier on the
+        /// random encounter (ambush) roll. Lit routes are safer; unlit routes
+        /// are worse. Null = 1.
+        /// </summary>
+        public Func<float> RouteEncounterMultiplier;
+
         /// <summary>Prompt #13 — medical loot swapped for poisoned iodine (undetected).</summary>
         public event Action<ExpeditionState> OnSabotagedCachePlanted;
+
+        /// <summary>
+        /// Lore bible — located knowledge. Raised once per expedition when the party
+        /// first arrives at its target location (the location_explore discovery moment).
+        /// Payload is the snake_case location id (matches world_history.json
+        /// discovery_location_id values).
+        /// </summary>
+        public event Action<string> OnFirstArrival;
 
         /// <summary>Prompt #15 — Deserter's Stand narrative beat resolved (no combat).</summary>
         public event Action<ExpeditionState, string> OnDesertersStandResolved;
@@ -327,6 +353,24 @@ namespace AtomicWar._Game.Core
             _floodedNodeSystem = system;
         }
 
+        /// <summary>ASHFALL: THE HOLDFAST — seasonal Cut gate (optional; safe to skip in tests).</summary>
+        public void SetIceRoadSystem(IceRoadSystem system)
+        {
+            _iceRoadSystem = system;
+        }
+
+        /// <summary>ASHFALL: THE HOLDFAST — levy-away survivors cannot leave (optional).</summary>
+        public void SetCensusClaimSystem(CensusClaimSystem system)
+        {
+            _censusClaim = system;
+        }
+
+        /// <summary>ASHFALL: NOBODY'S CHARTER — the viaduct social gate (optional; safe to skip in tests).</summary>
+        public void SetVouchAccessSystem(VouchAccessSystem system)
+        {
+            _vouchAccess = system;
+        }
+
         /// <summary>Inject Prompt #569 river crossings / bridges (optional; safe to skip in tests).</summary>
         public void SetRiverNodeSystem(RiverNodeSystem system)
         {
@@ -360,6 +404,12 @@ namespace AtomicWar._Game.Core
 
         /// <summary>Last river crossing method applied on expedition start (tests / UI).</summary>
         public string LastRiverCrossingMethod { get; private set; }
+
+        /// <summary>
+        /// Diegetic refusal line from the last blocked Crossing departure
+        /// (UI may read it; never a lockout modal). Empty when nothing was refused.
+        /// </summary>
+        public string LastCrossingRefusal { get; private set; }
 
         /// <summary>One-shot rad from last river wade on expedition start.</summary>
         public float LastRiverWadeRad { get; private set; }

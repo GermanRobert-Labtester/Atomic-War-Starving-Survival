@@ -1,29 +1,54 @@
+using System;
+using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using AtomicWar._Game.Shelter;
 
 namespace AtomicWar._Game.UI
 {
+    public class PowerGridRoomSnapshot
+    {
+        public string roomId;
+        public string roomName;
+        public float wattageLoad;
+        public bool isPowered;
+        public bool isEssentialCircuit;
+    }
+
+    public class PowerGridSnapshot
+    {
+        public float totalWattageGenerated;
+        public float totalWattageConsumed;
+        public float generatorFuelLevelPercent; // 0..100
+        public bool isOverloaded;
+        public List<PowerGridRoomSnapshot> rooms = new List<PowerGridRoomSnapshot>();
+    }
+
     /// <summary>
-    /// Power budget panel: generation vs draw, source list, and priority toggles
-    /// for each consumer module. Presentation is data-driven from PowerNetwork.
+    /// Protocol Zero — Main Electrical Power Grid Telemetry HUD view-model.
+    /// Monitors shelter diesel generator output (kW), per-room wattage consumption,
+    /// essential vs non-essential room power toggles, grid overload prevention, and fuel reserves.
     /// </summary>
     public class PowerGridHUD : MonoBehaviour
     {
         public bool IsOpen { get; private set; }
+        public int SelectedRoomIndex { get; private set; } = 0;
+        public string LastOutcome { get; private set; } = string.Empty;
 
-        public float TotalGeneration { get; private set; }
-        public float TotalDraw { get; private set; }
-        public float RequestedDraw { get; private set; }
-        public bool IsBlackout { get; private set; }
-        public bool IsLoadShedding { get; private set; }
-        public float CarbonMonoxidePpm { get; private set; }
-
+        /// <summary>One-line budget status: generation / draw / fuel / overload.</summary>
         public string BudgetSummary { get; private set; } = string.Empty;
+
+        /// <summary>Multi-line source list (diesel generator, bicycle, etc.).</summary>
         public string SourcesSummary { get; private set; } = string.Empty;
+
+        /// <summary>Multi-line consumer list with priority and power state.</summary>
         public string ConsumersSummary { get; private set; } = string.Empty;
 
+        public event Action OnPowerGridChanged;
+        public event Action<string> OnToggleRoomPowerRequested; // (roomId)
+
         private PowerNetwork _network;
+        private Func<PowerGridSnapshot> _getSnapshot;
 
         public void Bind(PowerNetwork network)
         {
@@ -31,21 +56,37 @@ namespace AtomicWar._Game.UI
                 _network.OnPowerStateChanged -= Refresh;
 
             _network = network;
+            _getSnapshot = null;
+
             if (_network != null)
                 _network.OnPowerStateChanged += Refresh;
 
             Refresh();
         }
 
+        public void Bind(Func<PowerGridSnapshot> getSnapshot)
+        {
+            if (_network != null)
+            {
+                _network.OnPowerStateChanged -= Refresh;
+                _network = null;
+            }
+            _getSnapshot = getSnapshot;
+            Refresh();
+        }
+
         public void Open()
         {
+            if (IsOpen) return;
             IsOpen = true;
             Refresh();
         }
 
         public void Close()
         {
+            if (!IsOpen) return;
             IsOpen = false;
+            Refresh();
         }
 
         public void Toggle()
@@ -54,99 +95,221 @@ namespace AtomicWar._Game.UI
             else Open();
         }
 
+        public bool SelectNextRoom()
+        {
+            var snapshot = CurrentSnapshot();
+            int count = snapshot?.rooms?.Count ?? 0;
+            if (!IsOpen || count == 0) return false;
+            SelectedRoomIndex = (SelectedRoomIndex + 1) % count;
+            ReportOutcome("Selected shelter room: " + GetSelectedRoomName(snapshot));
+            return true;
+        }
+
+        public bool SelectPreviousRoom()
+        {
+            var snapshot = CurrentSnapshot();
+            int count = snapshot?.rooms?.Count ?? 0;
+            if (!IsOpen || count == 0) return false;
+            SelectedRoomIndex = (SelectedRoomIndex - 1 + count) % count;
+            ReportOutcome("Selected shelter room: " + GetSelectedRoomName(snapshot));
+            return true;
+        }
+
+        public bool RequestToggleRoomPower()
+        {
+            var snapshot = CurrentSnapshot();
+            int count = snapshot?.rooms?.Count ?? 0;
+            if (!IsOpen || count == 0)
+            {
+                ReportOutcome("No room selected for power toggle.");
+                return false;
+            }
+
+            var room = GetSelectedRoom(snapshot);
+            if (room == null) return false;
+
+            if (OnToggleRoomPowerRequested == null)
+            {
+                ReportOutcome("Power grid breaker panel link offline.");
+                return false;
+            }
+
+            OnToggleRoomPowerRequested.Invoke(room.roomId);
+            ReportOutcome((room.isPowered ? "Cutting" : "Restoring") + " electrical power to " + room.roomName + "...");
+            return true;
+        }
+
+        /// <summary>
+        /// Cycles the priority of a consumer by module id. Returns the new priority.
+        /// </summary>
+        public int CyclePriority(string consumerId)
+        {
+            if (_network == null) return 0;
+            var consumer = _network.GetConsumer(consumerId);
+            if (consumer == null || consumer.PriorityLocked) return 0;
+
+            int next = consumer.Priority >= 5 ? 1 : consumer.Priority + 1;
+            _network.SetPriority(consumerId, next);
+            Refresh();
+            return next;
+        }
+
+        public void ReportOutcome(string message)
+        {
+            LastOutcome = string.IsNullOrEmpty(message) ? "No power grid action logged." : message;
+            Refresh();
+        }
+
         public void Refresh()
         {
-            if (_network == null)
+            RebuildSummaries();
+            OnPowerGridChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Returns the full panel text for tests or manual display. Calls Refresh internally.
+        /// </summary>
+        public string BuildPanelText()
+        {
+            Refresh();
+            var sb = new StringBuilder("MAIN ELECTRICAL POWER GRID & ROOM BREAKER  [P] close  ·  [Tab] cycle  ·  [T] toggle room power");
+            sb.Append("\n").Append(BudgetSummary);
+            if (!string.IsNullOrEmpty(SourcesSummary))
+                sb.Append("\n\n").Append(SourcesSummary);
+            if (!string.IsNullOrEmpty(ConsumersSummary))
+                sb.Append("\n\n").Append(ConsumersSummary);
+            if (!string.IsNullOrEmpty(LastOutcome))
+                sb.Append("\n\nGRID LOG: ").Append(LastOutcome);
+            return sb.ToString();
+        }
+
+        private PowerGridSnapshot CurrentSnapshot()
+        {
+            if (_getSnapshot != null) return _getSnapshot();
+            return BuildSnapshotFromNetwork();
+        }
+
+        private PowerGridSnapshot BuildSnapshotFromNetwork()
+        {
+            var snapshot = new PowerGridSnapshot();
+            if (_network == null) return snapshot;
+
+            snapshot.totalWattageGenerated = _network.TotalGeneration;
+            snapshot.totalWattageConsumed = _network.TotalDraw;
+            snapshot.isOverloaded = _network.IsLoadShedding;
+
+            var sources = _network.Sources;
+            float totalFuel = 0f;
+            float maxFuel = 0f;
+            for (int i = 0; i < sources.Count; i++)
             {
-                TotalGeneration = TotalDraw = RequestedDraw = 0f;
-                IsBlackout = IsLoadShedding = false;
-                CarbonMonoxidePpm = 0f;
-                BudgetSummary = "No power network.";
-                SourcesSummary = string.Empty;
-                ConsumersSummary = string.Empty;
-                return;
-            }
-
-            TotalGeneration = _network.TotalGeneration;
-            TotalDraw = _network.TotalDraw;
-            RequestedDraw = _network.RequestedDraw;
-            IsBlackout = _network.IsBlackout;
-            IsLoadShedding = _network.IsLoadShedding;
-            CarbonMonoxidePpm = _network.CarbonMonoxidePpm;
-
-            var budget = new StringBuilder();
-            budget.Append($"POWER  {TotalDraw:0}/{TotalGeneration:0} W");
-            if (IsBlackout) budget.Append("  [BLACKOUT]");
-            else if (IsLoadShedding) budget.Append("  [LOAD SHED]");
-            else budget.Append("  [OK]");
-            if (CarbonMonoxidePpm > 1f)
-                budget.Append($"  CO {CarbonMonoxidePpm:0.0} ppm");
-            BudgetSummary = budget.ToString();
-
-            var sources = new StringBuilder();
-            sources.AppendLine("Sources:");
-            var srcList = _network.Sources;
-            for (int i = 0; i < srcList.Count; i++)
-            {
-                var s = srcList[i];
+                var s = sources[i];
                 if (s == null) continue;
-                string name = s.Definition != null ? s.Definition.DisplayName : s.SourceId;
-                float watts = s.Definition != null ? s.Definition.OutputWatts : 0f;
-                string state = !s.IsEnabled ? "OFF" : "ON";
                 if (s.Definition != null && s.Definition.Kind == PowerSourceKind.Diesel)
-                    sources.AppendLine($"  {name}: {watts:0}W [{state}] fuel={s.Fuel:0.0}");
-                else if (s.Definition != null && s.Definition.Kind == PowerSourceKind.Bicycle)
                 {
-                    string pedal = s.HasPedaler ? s.PedalingSurvivorId : "idle";
-                    sources.AppendLine($"  {name}: {watts:0}W [{state}] pedal={pedal}");
+                    totalFuel += s.Fuel;
+                    maxFuel += 100f; // default tank capacity for UI percentage
                 }
-                else
-                    sources.AppendLine($"  {name}: {watts:0}W [{state}]");
             }
-            SourcesSummary = sources.ToString().TrimEnd();
+            snapshot.generatorFuelLevelPercent = maxFuel > 0f ? (totalFuel / maxFuel) * 100f : 0f;
 
-            var loads = new StringBuilder();
-            loads.AppendLine("Loads (priority toggle):");
             var consumers = _network.Consumers;
             for (int i = 0; i < consumers.Count; i++)
             {
                 var c = consumers[i];
                 if (c == null) continue;
-                string flag = !c.IsRequested ? "OFF" : c.IsShed ? "SHED" : "ON";
-                loads.AppendLine(
-                    $"  P{c.Priority} {c.DisplayName}: {c.Watts:0}W [{flag}]");
+                snapshot.rooms.Add(new PowerGridRoomSnapshot
+                {
+                    roomId = c.ModuleId,
+                    roomName = c.DisplayName ?? c.ModuleId,
+                    wattageLoad = c.Watts,
+                    isPowered = c.IsPowered,
+                    isEssentialCircuit = c.Priority <= 1
+                });
             }
-            ConsumersSummary = loads.ToString().TrimEnd();
+            return snapshot;
         }
 
-        /// <summary>UI: cycle a module's priority 1→5.</summary>
-        public int CyclePriority(string moduleId)
+        private void RebuildSummaries()
         {
-            if (_network == null) return 0;
-            int p = _network.CyclePriority(moduleId);
-            Refresh();
-            return p;
+            var snapshot = CurrentSnapshot();
+            if (snapshot == null)
+            {
+                BudgetSummary = "Power grid telemetry offline.";
+                SourcesSummary = string.Empty;
+                ConsumersSummary = string.Empty;
+                return;
+            }
+
+            // Budget line
+            var budget = new StringBuilder("POWER GRID TELEMETRY: Output: ")
+                .Append(snapshot.totalWattageGenerated.ToString("0.#")).Append(" W")
+                .Append("  ·  Consumed: ").Append(snapshot.totalWattageConsumed.ToString("0.#")).Append(" W")
+                .Append("  ·  Diesel Generator Fuel: ").Append(snapshot.generatorFuelLevelPercent.ToString("0")).Append("%");
+
+            if (snapshot.isOverloaded)
+                budget.Append("  [CRITICAL OVERLOAD: GRID FUSE FAILURE IMMINENT!]");
+
+            BudgetSummary = budget.ToString();
+
+            // Sources summary
+            var sources = new StringBuilder("POWER SOURCES:");
+            if (_network != null && _network.Sources.Count > 0)
+            {
+                for (int i = 0; i < _network.Sources.Count; i++)
+                {
+                    var s = _network.Sources[i];
+                    if (s == null) continue;
+                    string name = s.Definition != null ? s.Definition.DisplayName : s.SourceId;
+                    sources.Append("\n  ").Append(name)
+                        .Append(" — ").Append(s.IsEnabled ? "ON" : "OFF")
+                        .Append("  fuel=").Append(s.Fuel.ToString("0.0"));
+                }
+            }
+            else
+            {
+                sources.Append("\n  No power sources registered.");
+            }
+            SourcesSummary = sources.ToString();
+
+            // Consumers summary
+            var consumers = new StringBuilder("SHELTER ROOM ELECTRICAL SUBCIRCUITS:");
+            if (snapshot.rooms == null || snapshot.rooms.Count == 0)
+            {
+                consumers.Append("\n  No rooms registered on electrical grid.");
+            }
+            else
+            {
+                for (int i = 0; i < snapshot.rooms.Count; i++)
+                {
+                    var room = snapshot.rooms[i];
+                    if (room == null) continue;
+
+                    bool selected = (i == SelectedRoomIndex);
+                    consumers.Append("\n").Append(selected ? "> " : "  ")
+                        .Append(room.roomName ?? room.roomId)
+                        .Append(" — Load: ").Append(room.wattageLoad.ToString("0.#")).Append(" W");
+
+                    if (room.isPowered) consumers.Append("  ✔ [ENERGIZED]");
+                    else consumers.Append("  ✖ [SHED]");
+
+                    if (room.isEssentialCircuit) consumers.Append("  [ESSENTIAL]");
+                }
+            }
+            ConsumersSummary = consumers.ToString();
         }
 
-        /// <summary>UI: set absolute priority.</summary>
-        public void SetPriority(string moduleId, int priority)
+        private PowerGridRoomSnapshot GetSelectedRoom(PowerGridSnapshot snapshot)
         {
-            _network?.SetPriority(moduleId, priority);
-            Refresh();
+            if (snapshot != null && snapshot.rooms != null && SelectedRoomIndex >= 0 && SelectedRoomIndex < snapshot.rooms.Count)
+                return snapshot.rooms[SelectedRoomIndex];
+            return null;
         }
 
-        /// <summary>UI: request/unrequest a module load.</summary>
-        public void SetRequested(string moduleId, bool requested)
+        private string GetSelectedRoomName(PowerGridSnapshot snapshot)
         {
-            _network?.SetRequested(moduleId, requested);
-            Refresh();
-        }
-
-        /// <summary>Full panel text for debug / OnGUI / tests.</summary>
-        public string BuildPanelText()
-        {
-            Refresh();
-            return BudgetSummary + "\n" + SourcesSummary + "\n" + ConsumersSummary;
+            var r = GetSelectedRoom(snapshot);
+            return r != null ? r.roomName : "None";
         }
 
         private void OnDestroy()

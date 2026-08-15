@@ -15,7 +15,7 @@ MonoBehaviour:
   id: scrap_metal
   displayName: Scrap Metal
   description: Salvaged metal parts. Used to craft filters and gear.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 72fcb960a5615a80ab5485179367bf2f, type: 3}
   type: 10
   stackMax: 20
   weight: 0.5

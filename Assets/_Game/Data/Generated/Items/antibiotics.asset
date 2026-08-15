@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Antibiotics
   description: Broad-spectrum pills. Treat bacterial infections and dysentery before
     they become sepsis.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 97ffbd370232dc920af792d8f6a5e06c, type: 3}
   type: 3
   stackMax: 10
   weight: 0.05

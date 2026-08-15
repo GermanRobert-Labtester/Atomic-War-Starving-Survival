@@ -1,0 +1,383 @@
+/*
+ * Trade screen — centered modal for faction barter.
+ * Tokens: all from DiegeticHud.uss :root (ink, warm, hot, pale, muted, dim, line, etc.).
+ * Layout: wider than standard diegetic panels, dual-column barter area.
+ */
+
+/* ── Backdrop ─────────────────────────────────────────────────────────── */
+
+.trade-backdrop {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(9, 11, 12, 0.72);
+    picking-mode: position;
+}
+
+.trade-backdrop.hidden {
+    display: none;
+}
+
+/* ── Panel ────────────────────────────────────────────────────────────── */
+
+.trade-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    min-width: 560px;
+    max-width: 720px;
+    max-height: 600px;
+    background-color: var(--ink-panel);
+    border-left-width: 2px;
+    border-left-color: var(--warm);
+    border-right-width: 1px;
+    border-right-color: var(--line);
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+    border-bottom-width: 1px;
+    border-bottom-color: var(--line-soft);
+    padding: var(--hud-panel-padding);
+    flex-direction: column;
+}
+
+.trade-panel.hidden {
+    display: none;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────── */
+
+.trade-header {
+    flex-direction: column;
+    margin-bottom: 8px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--line-soft);
+    padding-bottom: 8px;
+}
+
+.trade-faction-name {
+    -unity-font-definition: var(--font-semibold);
+    color: var(--warm);
+    font-size: 16px;
+    letter-spacing: 1.4px;
+    margin-bottom: 2px;
+}
+
+.trade-faction-strip {
+    -unity-font-definition: var(--font-mono);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    white-space: normal;
+}
+
+.trade-stance-badge {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 10px;
+    letter-spacing: 1.0px;
+    color: var(--hot);
+    margin-top: 2px;
+    align-self: flex-start;
+    border-width: 1px;
+    border-color: var(--line-soft);
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+
+.trade-stance-badge--hostile {
+    color: var(--critical);
+    border-color: var(--critical);
+}
+
+/* ── Header sub-layout ─────────────────────────────────────────────── */
+
+.trade-header-top {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 2px;
+}
+
+.trade-leader-name {
+    -unity-font-definition: var(--font-mono);
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+}
+
+.trade-status-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.trade-meta-label {
+    -unity-font-definition: var(--font-mono);
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    margin-left: 8px;
+}
+
+/* ── Barter columns ───────────────────────────────────────────────────── */
+
+.trade-barter-area {
+    flex-direction: row;
+    flex-grow: 1;
+    margin-bottom: 8px;
+    min-height: 180px;
+}
+
+.trade-column {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-width: 240px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.trade-column--player {
+    border-right-width: 1px;
+    border-right-color: var(--line-soft);
+}
+
+.trade-column-title {
+    -unity-font-definition: var(--font-semibold);
+    color: var(--warm);
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    margin-bottom: 6px;
+}
+
+.trade-line-list {
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.trade-line {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.trade-line-name {
+    -unity-font-definition: var(--font-mono);
+    color: var(--pale);
+    font-size: 11px;
+    letter-spacing: 0.3px;
+    flex-grow: 1;
+    white-space: normal;
+}
+
+.trade-line-qty {
+    -unity-font-definition: var(--font-mono);
+    color: var(--muted);
+    font-size: 11px;
+    width: 36px;
+    -unity-text-align: middle-right;
+}
+
+.trade-line-value {
+    -unity-font-definition: var(--font-mono);
+    color: var(--hot);
+    font-size: 11px;
+    width: 52px;
+    -unity-text-align: middle-right;
+}
+
+.trade-column-total {
+    flex-direction: row;
+    justify-content: space-between;
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+    padding-top: 4px;
+    margin-top: 4px;
+}
+
+.trade-column-total-label {
+    -unity-font-definition: var(--font-semibold);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.6px;
+}
+
+.trade-column-total-value {
+    -unity-font-definition: var(--font-mono);
+    color: var(--hot);
+    font-size: 12px;
+}
+
+/* ── Empty state ──────────────────────────────────────────────────────── */
+
+.trade-empty {
+    -unity-font-definition: var(--font-mono);
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    flex-grow: 1;
+    -unity-text-align: middle-center;
+}
+
+/* ── Summary bar ──────────────────────────────────────────────────────── */
+
+.trade-summary {
+    flex-direction: column;
+    border-top-width: 1px;
+    border-top-color: var(--line);
+    padding-top: 8px;
+    margin-bottom: 6px;
+}
+
+.trade-balance-row {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.trade-balance-label {
+    -unity-font-definition: var(--font-mono);
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.4px;
+}
+
+.trade-balance-value {
+    -unity-font-definition: var(--font-mono);
+    font-size: 12px;
+}
+
+.trade-balance-value--fair {
+    color: var(--warm);
+}
+
+.trade-balance-value--short {
+    color: var(--exclusive);
+}
+
+.trade-fair-indicator {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 11px;
+    letter-spacing: 1.2px;
+    align-self: center;
+}
+
+.trade-fair-indicator--fair {
+    color: var(--warm);
+}
+
+.trade-fair-indicator--short {
+    color: var(--exclusive);
+}
+
+/* ── Action row ───────────────────────────────────────────────────────── */
+
+.trade-actions {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trade-actions-left {
+    flex-direction: row;
+}
+
+.trade-actions-right {
+    flex-direction: row;
+}
+
+.trade-btn {
+    background-color: rgba(255, 255, 255, 0.04);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    border-radius: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-right: 6px;
+    -unity-font-definition: var(--font-semibold);
+    color: var(--pale);
+    font-size: 11px;
+    letter-spacing: 0.8px;
+}
+
+.trade-btn:hover {
+    background-color: rgba(211, 170, 98, 0.12);
+    border-color: var(--warm);
+}
+
+.trade-btn--confirm {
+    border-color: var(--warm);
+    color: var(--warm);
+}
+
+.trade-btn--confirm:hover {
+    background-color: rgba(211, 170, 98, 0.22);
+}
+
+.trade-btn--parley {
+    border-color: var(--exclusive);
+    color: var(--exclusive);
+}
+
+.trade-btn--parley:hover {
+    background-color: rgba(196, 120, 90, 0.15);
+}
+
+.trade-btn--close {
+    border-color: var(--line-soft);
+    color: var(--muted);
+}
+
+.trade-btn--close:hover {
+    color: var(--pale);
+    border-color: var(--muted);
+}
+
+.trade-btn--disabled {
+    opacity: 0.35;
+}
+
+/* ── Parley message ───────────────────────────────────────────────────── */
+
+.trade-parley-msg {
+    -unity-font-definition: var(--font-mono);
+    color: var(--exclusive);
+    font-size: 10px;
+    letter-spacing: 0.4px;
+    white-space: normal;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+}
+
+.trade-parley-msg.hidden {
+    display: none;
+}
+
+/* ── Radio ticker ──────────────────────────────────────────────────── */
+
+.trade-radio-ticker {
+    -unity-font-definition: var(--font-mono);
+    color: var(--dim);
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    white-space: normal;
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+}
+
+.trade-radio-ticker.hidden {
+    display: none;
+}

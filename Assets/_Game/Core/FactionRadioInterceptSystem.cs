@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Economy;
 using AtomicWar._Game.Economy;
 
 namespace AtomicWar._Game.Core

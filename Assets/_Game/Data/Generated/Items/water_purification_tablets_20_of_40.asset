@@ -15,7 +15,7 @@ MonoBehaviour:
   id: water_purification_tablets_20_of_40
   displayName: Water Purification Tablets 20/40
   description: Half-full bottle. 2 tablets per use.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 79e0a0ad7aa1e738bab1d4423622475a, type: 3}
   type: 3
   stackMax: 1
   weight: 0.08

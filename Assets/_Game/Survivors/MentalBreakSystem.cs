@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Survivors
 {
@@ -284,6 +285,25 @@ namespace AtomicWar._Game.Survivors
                 // Climb back above threshold — reset the accumulator.
                 if (sv.lowMoraleHours > 0f) sv.lowMoraleHours = 0f;
             }
+        }
+
+        /// <summary>
+        /// Force-apply a specific mental break by id, bypassing morale gates.
+        /// Used by Expansion III systems (e.g. GriefCascade from ChildDevelopmentSystem).
+        /// No-op if the break id is not registered or the survivor is immune.
+        /// </summary>
+        public bool TryApply(Survivor sv, string breakId)
+        {
+            if (sv == null || string.IsNullOrEmpty(breakId)) return false;
+            if (!_breaksById.TryGetValue(breakId, out var br)) return false;
+            if (!string.IsNullOrEmpty(sv.currentMentalBreakId)) return false;
+            if (_personalQuests != null && _personalQuests.IsImmuneToAllMentalBreaks(sv))
+                return false;
+
+            sv.currentMentalBreakId = breakId;
+            sv.mentalBreakCureProgress = 0f;
+            OnBreakStarted?.Invoke(sv, breakId);
+            return true;
         }
 
         /// <summary>Roll a weighted-random MentalBreakSO based on the survivor's

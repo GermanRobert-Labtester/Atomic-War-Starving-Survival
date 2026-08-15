@@ -15,7 +15,7 @@ MonoBehaviour:
   id: workbench_advanced
   displayName: Workbench (Advanced)
   description: Complex assemblies.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0f56cf03685efd96f986968ed5824873, type: 3}
   type: 14
   stackMax: 1
   weight: 14

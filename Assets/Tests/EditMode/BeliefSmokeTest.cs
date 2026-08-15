@@ -5,6 +5,7 @@ using Random = System.Random;
 using Object = UnityEngine.Object;
 using AtomicWar._Game.Radiation;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

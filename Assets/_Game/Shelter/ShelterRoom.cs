@@ -62,6 +62,21 @@ namespace AtomicWar._Game.Shelter
         /// <summary>Room-local CO ppm from fire / fouled air (bunker CO also on PowerNetwork).</summary>
         public float LocalCoPpm { get; set; }
 
+        /// <summary>
+        /// Rebar corrosion float (0.0 to 1.0) from carbonation depth & moisture.
+        /// When it hits 1.0, triggers Event_Spalling.
+        /// </summary>
+        public float RebarCorrosion { get; set; }
+
+        /// <summary>Carbonation depth float (0.0 to 1.0) advancing from CO2 and humidity.</summary>
+        public float CarbonationDepth { get; set; }
+
+        /// <summary>Material shielding value (0.0 to 1.0). Spalling concrete permanently degrades this.</summary>
+        public float MaterialShielding { get; set; } = 1.0f;
+
+        /// <summary>True if concrete spalling has occurred in this room.</summary>
+        public bool IsSpalling { get; set; }
+
         /// <summary>True while a fire is active in this room.</summary>
         public bool IsOnFire { get; set; }
 

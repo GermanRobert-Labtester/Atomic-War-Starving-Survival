@@ -42,9 +42,17 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Wire up the bridge. Call from GameBootstrap after both systems are created.
+        /// Safe to call again (e.g. HUD re-wire after load): previous subscriptions
+        /// are detached first so handlers never stack.
         /// </summary>
         public void Initialise(MoralChronicleUI chronicleUI, IReadOnlyList<Survivor> survivors)
         {
+            if (ChronicleUI != null)
+            {
+                ChronicleUI.OnMainMenuRequested -= HandleMainMenuRequest;
+                ChronicleUI.OnJournalSnapshotRequested -= HandleJournalSnapshotRequest;
+            }
+
             ChronicleUI = chronicleUI;
             _survivors = survivors;
 

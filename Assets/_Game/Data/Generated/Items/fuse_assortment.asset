@@ -15,7 +15,7 @@ MonoBehaviour:
   id: fuse_assortment
   displayName: Fuse Assortment
   description: Mixed fuse set.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 677464cf7d87154a88e8a90a73629460, type: 3}
   type: 10
   stackMax: 10
   weight: 0.15

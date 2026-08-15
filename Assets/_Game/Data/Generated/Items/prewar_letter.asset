@@ -17,7 +17,7 @@ MonoBehaviour:
   description: A sealed envelope, yellowed and brittle. The stamp is from a country
     that no longer exists. Someone wrote this to someone they loved, and it never
     arrived.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 69b6f23646ca8755483873a8677b9251, type: 3}
   type: 12
   stackMax: 5
   weight: 0.05

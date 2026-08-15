@@ -15,7 +15,7 @@ MonoBehaviour:
   id: antiseptic_1l_of_1l
   displayName: Antiseptic 1L/1L
   description: "Drains 0.1L/use or sterilises 2 bandages \u2192 2 sterilised."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8bca08e9bfc0e3249af05a30ec251965, type: 3}
   type: 3
   stackMax: 4
   weight: 1.1

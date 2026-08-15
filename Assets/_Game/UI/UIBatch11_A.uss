@@ -1,0 +1,163 @@
+/*
+ * UIBatch11_A.uss — Phase 11 Expansion HUD widgets 1-4
+ * Tokens aligned with design-tokens.json / Figma Phase 11 spec
+ */
+:root {
+    --phase-healthy: #4CAF50;
+    --phase-prodromal: #FFC107;
+    --phase-latent: #4CAF50;
+    --phase-manifest: #F44336;
+    --phase-fibrosis: #9E9E9E;
+    --phase-recovery: #2196F3;
+    --phantom-sepia: #b98a5e;
+    --phantom-cold: #6ea3a8;
+    --hyper-yellow: #FFC107;
+    --hyper-red: #F44336;
+    --moral-numbed: #9E9E9E;
+    --moral-compassion: #6ea3a8;
+}
+
+.hidden { display: none; }
+
+/* 1 Radiation Phase Indicator */
+.radiation-phase-indicator {
+    flex-direction: row;
+    align-items: center;
+}
+.radiation-phase-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
+    margin-right: 6px;
+    background-color: var(--phase-healthy);
+}
+.radiation-phase-dot--prodromal {
+    background-color: var(--phase-prodromal);
+}
+.radiation-phase-dot--latent {
+    background-color: var(--phase-latent);
+    border-width: 1px;
+    border-color: var(--warm, #d3aa62);
+}
+.radiation-phase-dot--manifest {
+    background-color: var(--phase-manifest);
+}
+.radiation-phase-dot--fibrosis {
+    background-color: var(--phase-fibrosis);
+}
+.radiation-phase-dot--recovery {
+    background-color: var(--phase-recovery);
+}
+.radiation-phase-dot--pulse {
+    opacity: 1;
+}
+.radiation-phase-latent-mark {
+    position: absolute;
+    font-size: 10px;
+    color: var(--pale, #e6e0d2);
+    -unity-text-align: middle-center;
+}
+.radiation-phase-label {
+    font-size: 11px;
+    color: var(--muted, #938f84);
+    letter-spacing: 1px;
+}
+
+/* 2 Phantom Memory Vignette */
+.phase11-overlay-layer {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+}
+.phantom-memory-vignette {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    opacity: 0;
+    justify-content: center;
+    align-items: center;
+}
+.phantom-memory-vignette--motivation {
+    background-color: rgba(185, 138, 94, 0.35);
+}
+.phantom-memory-vignette--breakdown {
+    background-color: rgba(110, 163, 168, 0.40);
+}
+.phantom-memory-vignette--visible {
+    opacity: 1;
+}
+.phantom-memory-text {
+    max-width: 70%;
+    font-size: 14px;
+    color: var(--pale, #e6e0d2);
+    -unity-text-align: middle-center;
+    white-space: normal;
+    padding: 24px;
+    background-color: rgba(9, 11, 12, 0.72);
+    border-width: 1px;
+    border-color: var(--line, rgba(217, 196, 152, 0.27));
+}
+
+/* 3 Hypervigilance Indicator */
+.hypervigilance-indicator {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 16px;
+    height: 16px;
+}
+.hypervigilance-eye {
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    background-color: var(--hyper-yellow);
+    -unity-text-align: middle-center;
+    font-size: 9px;
+    color: var(--ink, #090b0c);
+}
+.hypervigilance-eye--alert {
+    background-color: var(--hyper-red);
+}
+.hypervigilance-eye--shake {
+    /* UI Toolkit lacks CSS keyframes — C# FlashRoutine toggles this class */
+    translate: 2px 0;
+}
+@keyframes ashfall-shake {
+    0% { translate: 0 0; }
+    25% { translate: -2px 0; }
+    75% { translate: 2px 0; }
+    100% { translate: 0 0; }
+}
+.shake {
+    /* Plan-spec class name; hypervigilance uses hypervigilance-eye--shake */
+}
+.hypervigilance-flash {
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-color: rgba(244, 67, 54, 0.35);
+    opacity: 0;
+}
+.hypervigilance-flash--active {
+    opacity: 1;
+}
+
+/* 4 Moral Branch Display */
+.moral-branch-display {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 4px;
+}
+.moral-branch-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 6px;
+    -unity-text-align: middle-center;
+    font-size: 12px;
+    color: var(--moral-numbed);
+}
+.moral-branch-icon--compassion {
+    color: var(--moral-compassion);
+}
+.moral-branch-label {
+    font-size: 11px;
+    color: var(--muted, #938f84);
+    letter-spacing: 0.5px;
+}

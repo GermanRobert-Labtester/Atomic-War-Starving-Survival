@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -107,7 +108,7 @@ namespace AtomicWar._Game.Core
                 Id = id,
                 DisplayName = name,
                 State = Survivors.SurvivorState.Idle,
-                RiskBias = Survivors.RiskBiasTrait.Fatalist
+                RiskBias = RiskBiasTrait.Fatalist
             };
             sv.Needs.Hunger = 80f;
             sv.Needs.Thirst = 70f;

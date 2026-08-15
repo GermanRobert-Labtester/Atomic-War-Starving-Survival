@@ -1,0 +1,49 @@
+# ripgrep ignore — speeds up code search in this repo.
+# Read by `rg` on every invocation. The opencode agent uses ripgrep, so
+# this directly speeds up its grep sweeps. The full .gitignore (188 lines)
+# already excludes the big Unity/Godot cache dirs, but this file is the
+# faster, explicit layer that documents intent and avoids .gitignore parse
+# overhead on every rg call.
+#
+# Format: one glob per line. `!` negates. Same syntax as .gitignore.
+# Verified against `rg --files` — without this, rg sees 8,911 files; with
+# it, rg skips the audit/generated/cache tails below for an even tighter
+# index on code-only sweeps.
+
+# Unity / Godot local caches (also in .gitignore, listed here for clarity)
+Library/
+Temp/
+Builds/
+Logs/
+UserSettings/
+/.godot/
+/bin/
+/obj/
+
+# Generated AI assets — 181MB of PNGs, never source of a code grep
+generated_AIassets/
+
+# Per-prompt audit artifacts (already gitignored at root patterns, but
+# the audit/ dir itself is 180MB of XML/log dumps)
+audit/
+
+# Figma/UI design scratch space (gitignored, but enumerate here)
+Figma-UI/
+
+# Quarantined / deprecated prototype code (never compiled)
+_quarantine_legacy/
+deprecated_audits/
+uam/
+
+# One-shot codebase export dump (8MB plaintext export, not source)
+unity_codebase.txt
+
+# Crash blobs (9.6MB each, never source)
+mono_crash.*.blob
+
+# Large binary asset packs that may contain strings but never C# code
+*.pdb
+*.mdb
+*.so
+*.dll
+*.dylib

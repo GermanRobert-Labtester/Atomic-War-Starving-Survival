@@ -15,7 +15,7 @@ MonoBehaviour:
   id: emergency_civilian_ration_1
   displayName: Emergency Civilian Ration (1x)
   description: Single emergency meal.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5a4c2af8df6b10e2d968ce97d5a4c343, type: 3}
   type: 0
   stackMax: 15
   weight: 0.4

@@ -20,6 +20,7 @@ using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
 
 using AtomicWar._Game.Encounters;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -101,6 +102,11 @@ namespace AtomicWar._Game.Core
             // P1 / AUDIT-004: fail-fast ISaveable restore in Editor + Development
             // (game-ci batchmode) only. Release players keep best-effort restore.
             SaveSystem.FailFastRestore = SaveSystem.DefaultFailFastRestoreForEnvironment();
+            if (WeatherAshLightning != null) SaveSystem.SetWeatherAshLightning(WeatherAshLightning);
+            if (WeatherFogOfParticulate != null) SaveSystem.SetWeatherFogOfParticulate(WeatherFogOfParticulate);
+            if (WeatherThermalInversion != null) SaveSystem.SetWeatherThermalInversion(WeatherThermalInversion);
+            if (WeatherIceStorm != null) SaveSystem.SetWeatherIceStorm(WeatherIceStorm);
+            if (WeatherSilence != null) SaveSystem.SetWeatherSilence(WeatherSilence);
             SaveSystem.SetPhotoPeriodSystem(PhotoperiodSystem);
             SaveSystem.SetKnowledgeMap(KnowledgeMap);
             SaveSystem.SetGeneratedMap(GeneratedMap);
@@ -127,6 +133,18 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetGossipSystem(Gossip);
             SaveSystem.SetAdaptiveWarlordsSystem(AdaptiveWarlords);
             SaveSystem.SetBilgePumpsSystem(BilgePumps);
+            // Section VII new-content batch — all seven carry serializable state.
+            SaveSystem.SetSleepDeprivationSystem(SleepDeprivation);
+            SaveSystem.SetGriefSystem(Grief);
+            SaveSystem.SetShelterDegradationSystem(ShelterDegradation);
+            SaveSystem.SetAshAccumulationSystem(AshAccumulation);
+            SaveSystem.SetDiseaseMutationSystem(DiseaseMutation);
+            SaveSystem.SetNoiseDisciplineSystem(NoiseDiscipline);
+            SaveSystem.SetCalorieAccountingSystem(CalorieAccounting);
+            // EXP4-SAVE: Expansion IV systems with persistent state.
+            SaveSystem.SetStructuralEntropySystem(StructuralEntropySystem);
+            SaveSystem.SetGenerationalPsychologySystem(GenerationalPsychologySystem);
+            SaveSystem.SetLetheProtocolSystem(LetheProtocolSystem);
             SaveSystem.SetCarrionBirdsSystem(CarrionBirds);
             SaveSystem.SetLogicGatesSystem(LogicGates);
             SaveSystem.SetModLoaderSystem(ModLoader);
@@ -160,6 +178,9 @@ namespace AtomicWar._Game.Core
             InitWorldEventAndUtilitySystems();
             WireCraftingAndPerkBindings();
             InitAtmosphereCorpsePantrySystems();
+            // New-content quests (7): construct + wire + save-register. Runs
+            // late so Economy/Medical/Crafting/HatchDefense all exist.
+            BootQuestRegistry();
         }
 
         /// <summary>
@@ -364,6 +385,15 @@ namespace AtomicWar._Game.Core
             // demoted ghost — SetLocationArcade skipped
             // demoted ghost — SetLocationSlaveMarket skipped
             // demoted ghost — SetLocationStrandedYacht skipped
+            // ── "Into the Ash" expansion locations ──
+            SaveSystem.SetLocationDistrictCoordOffice(DistrictCoordinationOffice);
+            SaveSystem.SetLocationCheckpointKilo(CheckpointKiloMemorial);
+            SaveSystem.SetLocationMilitiaGrainExchange(MilitiaGrainExchange);
+            SaveSystem.SetLocationGlowChapel(GlowChapel);
+            SaveSystem.SetLocationTollHouse(TollHouse);
+            SaveSystem.SetLocationStMarenAnnex(StMarenHospitalAnnex);
+            SaveSystem.SetLocationRadioTowerSeven(RadioTowerSevenBunker);
+            SaveSystem.SetLocationMartaFarmhouse(MartaFarmhouse);
             SaveSystem.SetMapAquifer(MapAquifer);
             SaveSystem.SetAshDriftSystem(AshDriftSystem);
             SaveSystem.SetBurnWardSystem(BurnWardSystem);
@@ -575,6 +605,20 @@ namespace AtomicWar._Game.Core
                 });
             ExpeditionSystem.SetGeneratedMap(GeneratedMap);
             ExpeditionSystem.SetNeedsSystem(NeedsSystem);
+            // Lore bible — located knowledge: first arrival at a location
+            // discovers its world_history entries into the journal/Codex.
+            {
+                var exp = ExpeditionSystem;
+                exp.OnFirstArrival += OnExpeditionFirstArrival;
+                _subscriptions.Track(() => exp.OnFirstArrival -= OnExpeditionFirstArrival);
+            }
+            // Lore bible 05_FACTIONS — Lamplighters interlock: lit routes are
+            // faster and safer; after withdrawal the unlit routes are slower
+            // and worse. Delegates read the live access state each call.
+            ExpeditionSystem.RouteTravelMultiplier = () =>
+                NPCLamplighters == null ? 1f : (NPCLamplighters.State.accessGranted ? 0.85f : 1.15f);
+            ExpeditionSystem.RouteEncounterMultiplier = () =>
+                NPCLamplighters == null ? 1f : (NPCLamplighters.State.accessGranted ? 0.6f : 1.4f);
             ExpeditionSystem.SetBicycleSystem(BicycleSystem);
             ExpeditionSystem.SetFloodedNodeSystem(FloodedNodeSystem);
             ExpeditionSystem.SetRiverNodeSystem(RiverNodeSystem);
@@ -612,7 +656,13 @@ namespace AtomicWar._Game.Core
             _subscriptions.Track(() => ExpeditionSystem.OnExpeditionStarted -= onExpeditionStarted);
 
             Action<ExpeditionState, List<ItemDefinition>> onExpeditionCompleted = (state, _) =>
+            {
                 SpatialPsychology?.OnExpeditionEnded(state?.Survivor);
+                // Wire "Into the Ash" quest chains — ExpeditionState already tracks
+                // CollectedLootItemIds (List<string>) alongside CollectedLoot.
+                if (ExpansionQuests != null && state != null)
+                    ExpansionQuests.OnExpeditionReturned(state.TargetLocationId, state.CollectedLootItemIds);
+            };
             ExpeditionSystem.OnExpeditionCompleted += onExpeditionCompleted;
             _subscriptions.Track(() => ExpeditionSystem.OnExpeditionCompleted -= onExpeditionCompleted);
 
@@ -728,6 +778,7 @@ namespace AtomicWar._Game.Core
             SaveSystem.SetEcosystemSystem(EcosystemSystem);
             SaveSystem.SetHouseToBunkerSystem(HouseToBunkerSystem);
             SaveSystem.SetLocationQuestSystem(LocationQuestSystem);
+            SaveSystem.SetExpansionQuestChainsSystem(ExpansionQuests);
             SaveSystem.SetExcavationSystem(ExcavationSystem);
             SaveSystem.SetFloodingSystem(FloodingSystem);
             SaveSystem.SetHiddenStorageSystem(HiddenStorageSystem);
@@ -1095,6 +1146,9 @@ namespace AtomicWar._Game.Core
                 {
                     strip.TooltipResolver = Item_AmmoTypes.FormatItemTooltip;
                     strip.MilitaryExclusiveChecker = Item_AmmoTypes.IsMilitaryExclusiveTooltip;
+                    // Resources/Art wins per item id; legacy iconRef is the fallback.
+                    strip.SpriteResolver = def => _gameAssets.GetSprite(
+                        GameAssetKeys.ItemIcon(def.id), def.iconRef);
                     strip.Sync(Inventory);
                 }
 

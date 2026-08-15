@@ -15,7 +15,7 @@ MonoBehaviour:
   id: protective_goggles
   displayName: Protective Goggles
   description: Eye seal.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 76d1a9272bb85bd898c4390029c4dfee, type: 3}
   type: 6
   stackMax: 5
   weight: 0.15

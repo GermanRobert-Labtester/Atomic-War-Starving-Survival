@@ -31,11 +31,14 @@ namespace AtomicWar._Game.Core
             WeatherIceStorm = new Weather_IceStorm();
             WeatherSilence = new Weather_Silence();
 
-            SaveSystem.SetWeatherAshLightning(WeatherAshLightning);
-            SaveSystem.SetWeatherFogOfParticulate(WeatherFogOfParticulate);
-            SaveSystem.SetWeatherThermalInversion(WeatherThermalInversion);
-            SaveSystem.SetWeatherIceStorm(WeatherIceStorm);
-            SaveSystem.SetWeatherSilence(WeatherSilence);
+            if (SaveSystem != null)
+            {
+                SaveSystem.SetWeatherAshLightning(WeatherAshLightning);
+                SaveSystem.SetWeatherFogOfParticulate(WeatherFogOfParticulate);
+                SaveSystem.SetWeatherThermalInversion(WeatherThermalInversion);
+                SaveSystem.SetWeatherIceStorm(WeatherIceStorm);
+                SaveSystem.SetWeatherSilence(WeatherSilence);
+            }
 
             WireNewWeatherSystems();
             WireNewWeatherEventBridge();

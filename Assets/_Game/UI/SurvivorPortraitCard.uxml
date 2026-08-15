@@ -1,0 +1,48 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_A.uss" />
+    <ui:VisualElement name="survivor-portrait-root" class="survivor-portrait-card hidden" picking-mode="Position">
+        <ui:VisualElement class="survivor-header-row">
+            <ui:Label name="survivor-name" class="survivor-name-text" text="SURVIVOR" />
+            <ui:Label name="role-tag" class="survivor-role-tag" text="CIVILIAN" />
+        </ui:VisualElement>
+
+        <ui:Label name="blood-type-badge" class="survivor-blood-badge" text="O-" />
+
+        <ui:VisualElement class="survivor-stats-container">
+            <ui:VisualElement class="survivor-stat-row">
+                <ui:Label class="survivor-stat-label" text="HEALTH" />
+                <ui:VisualElement class="survivor-stat-track">
+                    <ui:VisualElement name="health-fill" class="survivor-stat-fill" />
+                </ui:VisualElement>
+                <ui:Label name="health-val" class="survivor-stat-val" text="100%" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="survivor-stat-row">
+                <ui:Label class="survivor-stat-label" text="MORALE" />
+                <ui:VisualElement class="survivor-stat-track">
+                    <ui:VisualElement name="morale-fill" class="survivor-stat-fill" />
+                </ui:VisualElement>
+                <ui:Label name="morale-val" class="survivor-stat-val" text="100%" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="survivor-stat-row">
+                <ui:Label class="survivor-stat-label" text="FATIGUE" />
+                <ui:VisualElement class="survivor-stat-track">
+                    <ui:VisualElement name="fatigue-fill" class="survivor-stat-fill" />
+                </ui:VisualElement>
+                <ui:Label name="fatigue-val" class="survivor-stat-val" text="0%" />
+            </ui:VisualElement>
+
+            <ui:VisualElement class="survivor-stat-row">
+                <ui:Label class="survivor-stat-label" text="RAD" />
+                <ui:VisualElement class="survivor-stat-track">
+                    <ui:VisualElement name="radiation-fill" class="survivor-stat-fill fill-rad" />
+                </ui:VisualElement>
+                <ui:Label name="radiation-val" class="survivor-stat-val" text="0%" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:Label name="status-label" class="survivor-status-label" text="HEALTHY" />
+    </ui:VisualElement>
+</ui:UXML>

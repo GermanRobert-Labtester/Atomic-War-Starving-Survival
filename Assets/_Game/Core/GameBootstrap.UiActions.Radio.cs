@@ -18,6 +18,7 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -32,7 +33,10 @@ namespace AtomicWar._Game.Core
             {
                 JournalSystem.HudIsOpen = book.IsOpen;
                 if (book.IsOpen)
+                {
                     JournalSystem.MarkRead();
+                    JournalSystem.MarkTabViewed(JournalSystem.ActiveTab);
+                }
             }
         }
 
@@ -45,6 +49,7 @@ namespace AtomicWar._Game.Core
             {
                 JournalSystem.HudIsOpen = true;
                 JournalSystem.MarkRead();
+                JournalSystem.MarkTabViewed(JournalSystem.ActiveTab);
             }
         }
 
@@ -66,29 +71,29 @@ namespace AtomicWar._Game.Core
         {
             if (sv == null || item == null || !sv.IsAlive) return;
 
-            // Prompt #833 — peek tolerance before recording use / applying effects.
+            // Prompt #833 — peek tolerance effectiveness before applying effects
+            // (scales how much dose/consume-strength Inventory.Consume applies).
             float therapeuticScale = 1f;
-            float durationHours = 0f;
             if (!string.IsNullOrEmpty(item.id) && ChemUseRouter.IsToleranceChem(item.id))
             {
                 therapeuticScale = ChemUse?.PeekEffectiveness(sv, item.id) ?? 1f;
-                durationHours = ChemUse?.PeekDurationHours(sv, item.id) ?? 0f;
             }
 
             if (Inventory == null
                 || !Inventory.Consume(item, sv, RadiationSystem, NeedsSystem, therapeuticScale))
                 return;
 
-            // Anti-rad (and similar): duration tops up temporary rad resistance.
-            if (durationHours > 0f && therapeuticScale > 0f
-                && !string.IsNullOrEmpty(item.id)
-                && ChemUseRouter.IsToleranceChem(item.id)
-                && item.radCleanse > 0f)
-            {
-                float resist = durationHours * therapeuticScale;
-                sv.RadResistanceHoursRemaining = Mathf.Max(sv.RadResistanceHoursRemaining, resist);
-                sv.HasRadResistance = true;
-            }
+            // Temporary rad-resistance is granted ONLY by iodine, via
+            // AdministerIodine (Inventory.Consume routes iodine_pills -> it),
+            // per the radiation contract in RadiationSystem.cs:
+            //   "Iodine grants a timed RadResistance status; anti-rad reduces
+            //    the current dose directly."
+            // A previous block here re-granted RadResistance to ANY tolerance
+            // chem with radCleanse > 0 — in practice only anti_rad (items.json:
+            // radCleanse 50) — for up to 24h, while iodine is NOT a tolerance
+            // chem and never entered this branch (it gets only 6h via
+            // AdministerIodine). That made anti_rad strictly dominate iodine at
+            // iodine's own job, so the block was removed.
 
             // Prompt #13 — poisoned iodine looks clean until swallowed.
             SabotagedCacheSystem?.TryApplyPoisonOnConsume(item, sv, MedicalSystem);
@@ -191,7 +196,8 @@ namespace AtomicWar._Game.Core
             book.ApplyUiState(
                 JournalSystem.HudIsOpen,
                 JournalSystem.HasUnread,
-                JournalSystem.NotificationPing);
+                JournalSystem.NotificationPing,
+                JournalSystem.ActiveTab);
         }
 
         /// <summary>

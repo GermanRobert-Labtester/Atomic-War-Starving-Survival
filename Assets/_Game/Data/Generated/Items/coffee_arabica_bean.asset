@@ -15,7 +15,7 @@ MonoBehaviour:
   id: coffee_arabica_bean
   displayName: Coffee Arabica Bean
   description: Better bean.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: d484bae33e092ff73af234a1ccf8b73f, type: 3}
   type: 10
   stackMax: 25
   weight: 0.05

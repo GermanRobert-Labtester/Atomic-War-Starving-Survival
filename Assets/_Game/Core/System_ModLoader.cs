@@ -125,9 +125,10 @@ namespace AtomicWar._Game.Core
                 if (!Directory.Exists(persistent))
                     Directory.CreateDirectory(persistent);
             }
-            catch
+            catch (Exception ex)
             {
                 // best-effort; Initialize will log if path unusable
+                Debug.LogWarning($"[ModLoader] Could not create mods directory '{persistent}': {ex.Message}");
             }
             return persistent;
         }

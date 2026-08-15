@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_45acp
   displayName: Deprecated Bullets (45acp)
   description: "Corroded cal_45acp rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 6bdcbb0d1d41aa01092728616c5b917c, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

@@ -30,7 +30,8 @@ namespace AtomicWar._Game.Radiation
 
         public AfflictionPipeline(Random rng = null)
         {
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("affliction_pipeline");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "affliction_pipeline");
         }
 
         /// <summary>
@@ -40,7 +41,7 @@ namespace AtomicWar._Game.Radiation
         public bool Evaluate(Survivor survivor, Action<Survivor, SurvivorStatus> grantStatus = null)
         {
             if (survivor == null || !survivor.IsAlive) return false;
-            if (survivor.ActiveChronicIllness.HasValue) return false;
+            if (survivor.HasChronicIllness) return false;
 
             bool triggersPipeline = survivor.LifetimeRadiationExposure >= LifetimeRadThresholdForChronicIllness
                 || survivor.HasAcuteRadiationSyndrome
@@ -87,7 +88,7 @@ namespace AtomicWar._Game.Radiation
         /// </summary>
         public bool ManageIllness(Survivor survivor, string medicalSupplyId, float durationHours = DefaultManagementWindowHours)
         {
-            if (survivor == null || !survivor.IsAlive || !survivor.ActiveChronicIllness.HasValue) return false;
+            if (survivor == null || !survivor.IsAlive || !survivor.HasChronicIllness) return false;
 
             survivor.ChronicIllnessManagedHours = Mathf.Max(survivor.ChronicIllnessManagedHours, durationHours);
             return true;

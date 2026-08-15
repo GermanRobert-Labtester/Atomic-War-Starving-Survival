@@ -1,0 +1,75 @@
+using System.IO;
+using Xunit;
+using Ashfall.Core;
+
+namespace Ashfall.Core.Tests
+{
+    public class HoldfastCatalogTests
+    {
+        private static string DataDir()
+        {
+            string start = Directory.GetCurrentDirectory();
+            if (CatalogLocator.TryFindDataDirectory(start, out string found))
+                return found;
+            if (CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out found))
+                return found;
+            throw new DirectoryNotFoundException("Assets/StreamingAssets/Data not found from " + start);
+        }
+
+        [Fact]
+        public void LocationIdsUniqueSnakeCase()
+        {
+            var loader = new HoldfastCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            Assert.True(catalog.Locations.Count >= 11, "Cut spine plus Salt/Cluster/Shelf cards");
+            var set = new System.Collections.Generic.HashSet<string>();
+            for (int i = 0; i < catalog.Locations.Count; i++)
+            {
+                var e = catalog.Locations[i];
+                Assert.False(string.IsNullOrEmpty(e.id));
+                Assert.True(set.Add(e.id), "duplicate " + e.id);
+                Assert.Equal(e.id, e.id.ToLowerInvariant());
+            }
+            Assert.NotNull(catalog.GetLocation("loc_ice_road_gate"));
+            Assert.NotNull(catalog.GetLocation("loc_cut_kilometre_19"));
+            Assert.NotNull(catalog.GetLocation("loc_cut_waystation_a"));
+        }
+
+        [Fact]
+        public void TenMainQuestsRegistered()
+        {
+            var loader = new HoldfastCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            Assert.Equal(10, catalog.Quests.Count);
+            Assert.NotNull(catalog.GetQuest("quest_holdfast_the_sheet"));
+            Assert.NotNull(catalog.GetQuest("quest_holdfast_the_hatch"));
+        }
+
+        [Fact]
+        public void RecastsAreAlwaysOn()
+        {
+            var loader = new HoldfastCatalogLoader(new FileSystemIO(), new SystemTextJsonSerializer());
+            var catalog = loader.Load(DataDir());
+            var plant = catalog.GetLocation("location_abandoned_desalination");
+            Assert.NotNull(plant);
+            Assert.True(plant.recast_always);
+            Assert.Contains("Occupied", plant.inspect);
+        }
+    }
+
+    public class IceRoadHeadlessDemoTests
+    {
+        [Fact]
+        public void HeadlessDemoPassesWithCatalogs()
+        {
+            string start = Directory.GetCurrentDirectory();
+            Assert.True(
+                CatalogLocator.TryFindDataDirectory(start, out string data)
+                || CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out data));
+            var report = IceRoadHeadlessDemo.Run(data);
+            Assert.True(report.Passed, report.Summary);
+            Assert.True(report.LocationCount >= 11);
+            Assert.Equal(10, report.QuestCount);
+        }
+    }
+}

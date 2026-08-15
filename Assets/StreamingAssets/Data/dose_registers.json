@@ -1,0 +1,62 @@
+{
+  "bands": [
+    { "id": "band_green", "label": "Green", "threshold_msv": 0, "disposition": "No measurable burden. Walk the corridor." },
+    { "id": "band_amber", "label": "Amber", "threshold_msv": 100, "disposition": "The ledger shows a number worth watching." },
+    { "id": "band_red", "label": "Red", "threshold_msv": 300, "disposition": "Named on the sick list. Care is a choice, not a cure." },
+    { "id": "band_black", "label": "Black", "threshold_msv": 600, "disposition": "The band the registrar will not soften. Still on the roster." }
+  ],
+  "plans": [
+    { "id": "plan_morphine_tray", "label": "Morphine tray", "cost": "morphine", "note": "Mercy with a schedule. The tray is refilled on the same day every week." },
+    { "id": "plan_comfort_rounds", "label": "Comfort rounds", "cost": "time", "note": "Someone sits the night. The sick room has a chair for it now." },
+    { "id": "plan_nothing", "label": "Nothing", "cost": "none", "note": "A refusal is a choice the ledger records as silence." }
+  ],
+  "guesses": [
+    { "id": "guess_low", "label": "Low", "pencil": true, "note": "A kinder story, written in pencil." },
+    { "id": "guess_honest", "label": "Honest", "pencil": true, "note": "The truer number as it stands, subject to correction." },
+    { "id": "guess_refused", "label": "Refused", "pencil": true, "note": "No guess at all. The board stays blank until the dial speaks." }
+  ],
+  "calibration": {
+    "key": "dosimeter",
+    "drift_note": "Every figure has a drift. The drift is normal. Piet will not lie about it to make a reading land softer."
+  },
+  "registers": [
+    { "id": "register_ledger", "label": "Ledger", "action": "Book a reading" },
+    { "id": "register_sick", "label": "Sick", "action": "Name to the sick list" },
+    { "id": "register_cohort", "label": "Cohort", "action": "Book a baseline" },
+    { "id": "register_voluntary", "label": "Voluntary", "action": "Sign an hour" }
+  ],
+  "npcs": [
+    {
+      "id": "npc_dr_irina_vel",
+      "name": "Dr. Irina Vel",
+      "register": "register_ledger",
+      "disposition": "Radiation Registrar. Holds a red pencil and will not read a number up to make it easier. Every refused booking is a silent tally she remembers.",
+      "action_label": "Book a reading",
+      "action": "book_reading"
+    },
+    {
+      "id": "npc_wyn_omah",
+      "name": "Wyn Omah",
+      "register": "register_sick",
+      "disposition": "Sick-room Nurse. Presents the bed order and waits. She never shuffles the order so one person's comfort costs another's care.",
+      "action_label": "Name to the sick list",
+      "action": "name_to_sick_list"
+    },
+    {
+      "id": "npc_piet_abar",
+      "name": "Piet Abar",
+      "register": "register_ledger",
+      "disposition": "The Clockmaker. The only honest voice about error: every figure has a drift, the drift is normal, and he will not pretend otherwise.",
+      "action_label": "Calibrate the dial",
+      "action": "calibrate"
+    },
+    {
+      "id": "npc_saria_voss",
+      "name": "Saria Voss",
+      "register": "register_cohort",
+      "disposition": "The Midwife. Keeps the children's board in chalk so it can be erased. She will not book a guess as a truth.",
+      "action_label": "Book a baseline",
+      "action": "book_baseline"
+    }
+  ]
+}

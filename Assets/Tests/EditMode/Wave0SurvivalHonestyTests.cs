@@ -475,5 +475,31 @@ namespace AtomicWar.Tests.EditMode
                 "SetHealth on an already-dead survivor must not fire onKilled.");
         }
 
+        [Test]
+        public void SurvivorNeedWrite_Kill_FiresCentralizedOnKilledEvent()
+        {
+            // DEATH-006 regression: direct State = SurvivorState.Dead writes
+            // bypassed the world's death reaction. Kill() routes through SetHealth
+            // and raises the static OnKilled event so bootstrap wiring can forward
+            // it to NeedsSystem.OnDied.
+            var sv = MakeSurvivor();
+            sv.Needs.Health = 100f;
+            sv.State = SurvivorState.Idle;
+            int killCount = 0;
+            System.Action<Survivor> handler = _ => killCount++;
+            SurvivorNeedWrite.OnKilled += handler;
+            try
+            {
+                SurvivorNeedWrite.Kill(sv);
+                Assert.AreEqual(0f, sv.Needs.Health);
+                Assert.AreEqual(SurvivorState.Dead, sv.State);
+                Assert.AreEqual(1, killCount, "OnKilled static event must fire exactly once.");
+            }
+            finally
+            {
+                SurvivorNeedWrite.OnKilled -= handler;
+            }
+        }
+
     }
 }

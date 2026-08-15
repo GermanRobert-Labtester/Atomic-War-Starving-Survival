@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ashfall.Core.Economy;
 using NUnit.Framework;
 using UnityEngine;
 using AtomicWar._Game.Economy;
@@ -6,6 +7,7 @@ using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

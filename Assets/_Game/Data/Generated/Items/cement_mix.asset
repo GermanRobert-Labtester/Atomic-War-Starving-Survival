@@ -15,7 +15,7 @@ MonoBehaviour:
   id: cement_mix
   displayName: Cement Mix
   description: Dry cement. Needs 1L water for hatch/shelter work.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 195a8e94b198de9de9bd966223977b7d, type: 3}
   type: 10
   stackMax: 10
   weight: 5

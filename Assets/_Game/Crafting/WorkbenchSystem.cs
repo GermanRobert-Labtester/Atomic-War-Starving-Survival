@@ -577,10 +577,15 @@ namespace AtomicWar._Game.Crafting
         public bool RepairWaterPurifier()
         {
             if (!CanRepairWaterPurifier()) return false;
-            var scrap = ResolveMaterial(ScrapMaterialIds.ElectronicScrap);
-            if (!_inventory.Remove(scrap, ElectronicScrapForPurifierRepair)) return false;
+            // Resolve the purifier BEFORE consuming scrap. _getShelter is a live
+            // callback; if it returns null here (e.g. shelter disposed between the
+            // CanRepairWaterPurifier check and now) we must bail without removing
+            // the electronic scrap, otherwise the player loses the material on a
+            // "failed" repair with no effect applied.
             var purifier = _getShelter?.Invoke()?.GetModule("water_purifier");
             if (purifier == null) return false;
+            var scrap = ResolveMaterial(ScrapMaterialIds.ElectronicScrap);
+            if (scrap == null || !_inventory.Remove(scrap, ElectronicScrapForPurifierRepair)) return false;
             purifier.FilterHealth = 100f;
             purifier.IsEnabled = true;
             WearStation();
@@ -765,12 +770,59 @@ namespace AtomicWar._Game.Crafting
             if (costs == null) return true;
             bool canSub = worker != null && _shelterPerks != null
                 && _shelterPerks.CanSubstituteScrap(worker);
+
+            // Simulate consumption against a working pool so costs that share a
+            // substitute pool (#195 Jury-Rigger: mechanical_parts <-> electronic_scrap)
+            // are not double-counted. CountMaterialWithSubstitute folds primary+twin
+            // together PER COST independently; with a recipe that asks for BOTH twins
+            // (e.g. electronic_scrap x2 + mechanical_parts x1) that lets the same
+            // shared stock satisfy two costs, so ConsumeScrapCosts would then fail
+            // partway after already removing materials (silent material loss).
+            // Drawing primary-first-then-twin per cost here mirrors ConsumeScrapCosts,
+            // so when this returns true the consume pass cannot fail mid-way.
+            var pool = new Dictionary<string, int>(System.StringComparer.OrdinalIgnoreCase);
+            int Available(string materialId)
+            {
+                if (string.IsNullOrEmpty(materialId)) return 0;
+                if (!pool.TryGetValue(materialId, out int have))
+                {
+                    var mat = ResolveMaterial(materialId);
+                    have = mat != null ? _inventory.Count(mat) : 0;
+                    pool[materialId] = have;
+                }
+                return have;
+            }
+            void Draw(string materialId, int amount)
+            {
+                if (amount <= 0 || string.IsNullOrEmpty(materialId)) return;
+                pool[materialId] = Mathf.Max(0, Available(materialId) - amount);
+            }
+
             for (int i = 0; i < costs.Count; i++)
             {
                 var c = costs[i];
                 if (c == null || c.amount <= 0) continue;
-                if (CountMaterialWithSubstitute(c.materialId, canSub) < c.amount)
-                    return false;
+                int remaining = c.amount;
+                int fromPrimary = Mathf.Min(Available(c.materialId), remaining);
+                if (fromPrimary > 0)
+                {
+                    Draw(c.materialId, fromPrimary);
+                    remaining -= fromPrimary;
+                }
+                if (remaining > 0 && canSub)
+                {
+                    string twinId = ShelterPerkSystem.GetScrapSubstituteId(c.materialId);
+                    if (!string.IsNullOrEmpty(twinId))
+                    {
+                        int fromTwin = Mathf.Min(Available(twinId), remaining);
+                        if (fromTwin > 0)
+                        {
+                            Draw(twinId, fromTwin);
+                            remaining -= fromTwin;
+                        }
+                    }
+                }
+                if (remaining > 0) return false;
             }
             return true;
         }

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: salt
   displayName: Salt
   description: Preserving and seasoning.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 3b3fa6868fca90c5ab1fd2f5af1e5c62, type: 3}
   type: 10
   stackMax: 25
   weight: 0.3

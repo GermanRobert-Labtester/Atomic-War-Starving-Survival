@@ -36,6 +36,7 @@ namespace AtomicWar._Game.Core
         private GUIStyle _boxStyle;
         private GUIStyle _labelStyle;
         private GUIStyle _warnStyle;
+        private Texture2D _boxBgTex;
         private bool _stylesInitialized;
 
         private void Update()
@@ -56,6 +57,7 @@ namespace AtomicWar._Game.Core
             }
         }
 
+#if DEVELOPMENT_BUILD || UNITY_EDITOR
         private void OnGUI()
         {
             if (!_devOverlayEnabled || !_visible) return;
@@ -92,6 +94,7 @@ namespace AtomicWar._Game.Core
             y = DrawSurvivors(x, y, width, lineHeight);
             DrawSaveables(x, y, width, lineHeight);
         }
+#endif
 
         private float DrawHeader(float x, float y, float width, float lineHeight)
         {
@@ -200,7 +203,7 @@ namespace AtomicWar._Game.Core
             return y;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_AshLightning system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -209,7 +212,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_FogOfParticulate system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -218,7 +221,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_ThermalInversion system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -227,7 +230,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_IceStorm system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -236,7 +239,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
+        private float DrawNewWeatherLine(float x, float y, float width, float lineHeight,
             string label, AtomicWar._Game.Environment.Weather_Silence system)
         {
             DrawWeatherLineImpl(x, y, width, lineHeight, label,
@@ -245,7 +248,7 @@ namespace AtomicWar._Game.Core
             return y + lineHeight;
         }
 
-        private static void DrawWeatherLineImpl(float x, float y, float width, float lineHeight,
+        private void DrawWeatherLineImpl(float x, float y, float width, float lineHeight,
             string label, bool isActive, float durationHours)
         {
             string status = isActive ? "ACTIVE" : "idle  ";
@@ -287,13 +290,36 @@ namespace AtomicWar._Game.Core
             _lastSaveSlot = slotId;
         }
 
+        private void OnDisable()
+        {
+            CleanupStyles();
+        }
+
+        private void OnDestroy()
+        {
+            CleanupStyles();
+        }
+
+        private void CleanupStyles()
+        {
+            if (_boxBgTex != null)
+            {
+                AtomicWar._Game.Utilities.RenderTargetUtility.SafeDestroy(ref _boxBgTex);
+            }
+            _boxStyle = null;
+            _labelStyle = null;
+            _warnStyle = null;
+            _stylesInitialized = false;
+        }
+
         private void InitStyles()
         {
             if (_stylesInitialized) return;
             _stylesInitialized = true;
 
             _boxStyle = new GUIStyle(GUI.skin.box);
-            _boxStyle.normal.background = MakeTex(2, 2, new Color(0f, 0f, 0f, 0.75f));
+            _boxBgTex = MakeTex(2, 2, new Color(0f, 0f, 0f, 0.75f));
+            _boxStyle.normal.background = _boxBgTex;
             _boxStyle.padding = new RectOffset(8, 8, 8, 8);
 
             _labelStyle = new GUIStyle(GUI.skin.label);
@@ -310,7 +336,10 @@ namespace AtomicWar._Game.Core
         {
             var pixels = new Color[width * height];
             for (int i = 0; i < pixels.Length; i++) pixels[i] = color;
-            var tex = new Texture2D(width, height);
+            var tex = new Texture2D(width, height)
+            {
+                hideFlags = HideFlags.DontSave
+            };
             tex.SetPixels(pixels);
             tex.Apply();
             return tex;

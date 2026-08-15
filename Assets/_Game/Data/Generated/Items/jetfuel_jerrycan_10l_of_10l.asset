@@ -15,7 +15,7 @@ MonoBehaviour:
   id: jetfuel_jerrycan_10l_of_10l
   displayName: Jetfuel Jerrycan 10L/10L
   description: Refills kerosene lantern.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 33b94f3c7b712dccc81bbd50ae63ebef, type: 3}
   type: 8
   stackMax: 2
   weight: 9

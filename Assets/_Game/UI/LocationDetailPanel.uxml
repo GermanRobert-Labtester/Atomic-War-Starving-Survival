@@ -1,0 +1,22 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="location-detail-panel" class="location-detail-panel hidden" picking-mode="Position">
+        <ui:Label name="location-name" class="location-name" text="UNKNOWN LOCATION" />
+        <ui:VisualElement class="location-detail-row">
+            <ui:Label class="location-detail-label" text="RADIATION" />
+            <ui:ProgressBar name="radiation-bar" class="location-radiation-bar" low-value="0" high-value="100" value="0" />
+            <ui:Label name="radiation-value" class="radiation-value" text="0.00 Sv/hr" />
+        </ui:VisualElement>
+        <ui:VisualElement class="location-detail-row">
+            <ui:Label class="location-detail-label" text="COLLAPSE RISK" />
+            <ui:ProgressBar name="collapse-bar" class="location-collapse-bar" low-value="0" high-value="100" value="0" />
+        </ui:VisualElement>
+        <ui:VisualElement name="danger-skulls" class="danger-skulls" />
+        <ui:VisualElement class="location-faction-row">
+            <ui:VisualElement name="faction-icon" class="faction-icon" />
+            <ui:Label name="faction-name" class="faction-name" text="Uncontrolled" />
+        </ui:VisualElement>
+        <ui:Label class="loot-preview-title" text="LOOT PREVIEW" />
+        <ui:VisualElement name="loot-preview" class="loot-preview" />
+    </ui:VisualElement>
+</ui:UXML>

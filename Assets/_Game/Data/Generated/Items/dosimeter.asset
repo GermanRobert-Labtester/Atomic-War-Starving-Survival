@@ -15,7 +15,7 @@ MonoBehaviour:
   id: dosimeter
   displayName: Dosimeter
   description: Personal dosimeter. Logs cumulative radiation dose for the UI.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b4387f02b54bfa6ff9bd87232018013d, type: 3}
   type: 14
   stackMax: 1
   weight: 0.5

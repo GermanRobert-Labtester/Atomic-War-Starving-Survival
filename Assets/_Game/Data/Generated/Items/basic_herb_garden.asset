@@ -15,7 +15,7 @@ MonoBehaviour:
   id: basic_herb_garden
   displayName: Basic Herb Garden
   description: Indoor herbs.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 314bafe5d123a7456b3b7ebf0c7f2811, type: 3}
   type: 14
   stackMax: 1
   weight: 10

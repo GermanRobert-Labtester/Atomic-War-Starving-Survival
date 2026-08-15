@@ -1,0 +1,505 @@
+# ASHFALL — Survivor Portraits (100)
+# Model: Flux 2 Pro via Firefly | Aspect: 3:4 | 768×1024
+# Suffix: Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.
+# Negative: text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+
+## elena_vasquez
+Chest-up three-quarter portrait of survivor elena vasquez, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: elena_vasquez.png
+
+## marcus_olejnik
+Chest-up three-quarter portrait of survivor marcus olejnik, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: marcus_olejnik.png
+
+## suki_tanaka
+Chest-up three-quarter portrait of survivor suki tanaka, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: suki_tanaka.png
+
+## the_surgeon
+Chest-up three-quarter portrait of survivor the surgeon, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_surgeon.png
+
+## the_pharmacist
+Chest-up three-quarter portrait of survivor the pharmacist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_pharmacist.png
+
+## the_vet
+Chest-up three-quarter portrait of survivor the vet, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_vet.png
+
+## the_therapist
+Chest-up three-quarter portrait of survivor the therapist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_therapist.png
+
+## the_undertaker
+Chest-up three-quarter portrait of survivor the undertaker, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_undertaker.png
+
+## the_veteran
+Chest-up three-quarter portrait of survivor the veteran, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_veteran.png
+
+## the_cop
+Chest-up three-quarter portrait of survivor the cop, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_cop.png
+
+## the_bouncer
+Chest-up three-quarter portrait of survivor the bouncer, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_bouncer.png
+
+## the_hunter
+Chest-up three-quarter portrait of survivor the hunter, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_hunter.png
+
+## the_prisoner
+Chest-up three-quarter portrait of survivor the prisoner, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_prisoner.png
+
+## the_plumber
+Chest-up three-quarter portrait of survivor the plumber, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_plumber.png
+
+## the_electrician
+Chest-up three-quarter portrait of survivor the electrician, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_electrician.png
+
+## the_architect
+Chest-up three-quarter portrait of survivor the architect, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_architect.png
+
+## the_mechanic
+Chest-up three-quarter portrait of survivor the mechanic, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_mechanic.png
+
+## the_chemist
+Chest-up three-quarter portrait of survivor the chemist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_chemist.png
+
+## the_botanist
+Chest-up three-quarter portrait of survivor the botanist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_botanist.png
+
+## the_courier
+Chest-up three-quarter portrait of survivor the courier, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_courier.png
+
+## the_burglar
+Chest-up three-quarter portrait of survivor the burglar, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_burglar.png
+
+## the_meteorologist
+Chest-up three-quarter portrait of survivor the meteorologist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_meteorologist.png
+
+## the_hazmat_tech
+Chest-up three-quarter portrait of survivor the hazmat tech, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_hazmat_tech.png
+
+## the_teacher
+Chest-up three-quarter portrait of survivor the teacher, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_teacher.png
+
+## the_politician
+Chest-up three-quarter portrait of survivor the politician, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_politician.png
+
+## the_priest
+Chest-up three-quarter portrait of survivor the priest, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_priest.png
+
+## the_reporter
+Chest-up three-quarter portrait of survivor the reporter, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_reporter.png
+
+## the_radio_host
+Chest-up three-quarter portrait of survivor the radio host, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_radio_host.png
+
+## the_chef
+Chest-up three-quarter portrait of survivor the chef, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_chef.png
+
+## the_athlete
+Chest-up three-quarter portrait of survivor the athlete, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_athlete.png
+
+## the_firefighter
+Chest-up three-quarter portrait of survivor the firefighter, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_firefighter.png
+
+## the_tailor
+Chest-up three-quarter portrait of survivor the tailor, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_tailor.png
+
+## the_watchmaker
+Chest-up three-quarter portrait of survivor the watchmaker, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_watchmaker.png
+
+## the_historian
+Chest-up three-quarter portrait of survivor the historian, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_historian.png
+
+## the_defector
+Chest-up three-quarter portrait of survivor the defector, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_defector.png
+
+## the_addict
+Chest-up three-quarter portrait of survivor the addict, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_addict.png
+
+## the_parent
+Chest-up three-quarter portrait of survivor the parent, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_parent.png
+
+## the_fierce_mother
+Chest-up three-quarter portrait of survivor the fierce mother, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_fierce_mother.png
+
+## the_exhausted_father
+Chest-up three-quarter portrait of survivor the exhausted father, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_exhausted_father.png
+
+## the_naive_son
+Chest-up three-quarter portrait of survivor the naive son, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_naive_son.png
+
+## the_hardened_daughter
+Chest-up three-quarter portrait of survivor the hardened daughter, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_hardened_daughter.png
+
+## the_psychopath
+Chest-up three-quarter portrait of survivor the psychopath, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_psychopath.png
+
+## the_serial_killer
+Chest-up three-quarter portrait of survivor the serial killer, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_serial_killer.png
+
+## the_liar
+Chest-up three-quarter portrait of survivor the liar, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_liar.png
+
+## the_hoarder
+Chest-up three-quarter portrait of survivor the hoarder, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_hoarder.png
+
+## the_general
+Chest-up three-quarter portrait of survivor the general, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_general.png
+
+## the_saboteur
+Chest-up three-quarter portrait of survivor the saboteur, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_saboteur.png
+
+## the_deserter
+Chest-up three-quarter portrait of survivor the deserter, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_deserter.png
+
+## the_quartermaster
+Chest-up three-quarter portrait of survivor the quartermaster, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_quartermaster.png
+
+## the_child_soldier
+Chest-up three-quarter portrait of survivor the child soldier, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_child_soldier.png
+
+## the_empath
+Chest-up three-quarter portrait of survivor the empath, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_empath.png
+
+## the_misanthrope
+Chest-up three-quarter portrait of survivor the misanthrope, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_misanthrope.png
+
+## the_pollyanna
+Chest-up three-quarter portrait of survivor the pollyanna, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_pollyanna.png
+
+## the_martyr
+Chest-up three-quarter portrait of survivor the martyr, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_martyr.png
+
+## the_arrogant_surgeon
+Chest-up three-quarter portrait of survivor the arrogant surgeon, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_arrogant_surgeon.png
+
+## the_relapsing_addict
+Chest-up three-quarter portrait of survivor the relapsing addict, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_relapsing_addict.png
+
+## the_insomniac
+Chest-up three-quarter portrait of survivor the insomniac, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_insomniac.png
+
+## the_hypochondriac
+Chest-up three-quarter portrait of survivor the hypochondriac, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_hypochondriac.png
+
+## the_pyromaniac
+Chest-up three-quarter portrait of survivor the pyromaniac, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_pyromaniac.png
+
+## the_blind_preacher
+Chest-up three-quarter portrait of survivor the blind preacher, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_blind_preacher.png
+
+## the_prepper
+Chest-up three-quarter portrait of survivor the prepper, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_prepper.png
+
+## the_outcast
+Chest-up three-quarter portrait of survivor the outcast, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_outcast.png
+
+## the_feral_orphan
+Chest-up three-quarter portrait of survivor the feral orphan, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_feral_orphan.png
+
+## the_pacifist
+Chest-up three-quarter portrait of survivor the pacifist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_pacifist.png
+
+## the_widow
+Chest-up three-quarter portrait of survivor the widow, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_widow.png
+
+## the_ex_con
+Chest-up three-quarter portrait of survivor the ex con, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_ex_con.png
+
+## the_sheriff
+Chest-up three-quarter portrait of survivor the sheriff, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_sheriff.png
+
+## the_former_politician
+Chest-up three-quarter portrait of survivor the former politician, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_former_politician.png
+
+## the_tech_bro
+Chest-up three-quarter portrait of survivor the tech bro, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_tech_bro.png
+
+## the_news_anchor
+Chest-up three-quarter portrait of survivor the news anchor, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_news_anchor.png
+
+## the_nomad
+Chest-up three-quarter portrait of survivor the nomad, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_nomad.png
+
+## the_exec
+Chest-up three-quarter portrait of survivor the exec, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: the_exec.png
+
+## survivor_cryo_tech
+Chest-up three-quarter portrait of survivor survivor cryo tech, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_cryo_tech.png
+
+## survivor_bunker_archivist
+Chest-up three-quarter portrait of survivor survivor bunker archivist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_bunker_archivist.png
+
+## survivor_ice_walker
+Chest-up three-quarter portrait of survivor survivor ice walker, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_ice_walker.png
+
+## survivor_defrosted_aristocrat
+Chest-up three-quarter portrait of survivor survivor defrosted aristocrat, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_defrosted_aristocrat.png
+
+## survivor_thawed_medic
+Chest-up three-quarter portrait of survivor survivor thawed medic, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_thawed_medic.png
+
+## survivor_ash_diver
+Chest-up three-quarter portrait of survivor survivor ash diver, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_ash_diver.png
+
+## survivor_speleologist
+Chest-up three-quarter portrait of survivor survivor speleologist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_speleologist.png
+
+## survivor_sump_diver
+Chest-up three-quarter portrait of survivor survivor sump diver, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_sump_diver.png
+
+## survivor_mycologist
+Chest-up three-quarter portrait of survivor survivor mycologist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_mycologist.png
+
+## survivor_hydro_engineer
+Chest-up three-quarter portrait of survivor survivor hydro engineer, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_hydro_engineer.png
+
+## survivor_mole
+Chest-up three-quarter portrait of survivor survivor mole, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_mole.png
+
+## survivor_rot_farmer
+Chest-up three-quarter portrait of survivor survivor rot farmer, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_rot_farmer.png
+
+## survivor_sapper
+Chest-up three-quarter portrait of survivor survivor sapper, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_sapper.png
+
+## survivor_lineman
+Chest-up three-quarter portrait of survivor survivor lineman, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_lineman.png
+
+## survivor_drone_op
+Chest-up three-quarter portrait of survivor survivor drone op, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_drone_op.png
+
+## survivor_acoustic_tech
+Chest-up three-quarter portrait of survivor survivor acoustic tech, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_acoustic_tech.png
+
+## survivor_machinist
+Chest-up three-quarter portrait of survivor survivor machinist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_machinist.png
+
+## survivor_logistician
+Chest-up three-quarter portrait of survivor survivor logistician, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_logistician.png
+
+## survivor_bunker_born
+Chest-up three-quarter portrait of survivor survivor bunker born, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_bunker_born.png
+
+## survivor_the_waking
+Chest-up three-quarter portrait of survivor survivor the waking, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_the_waking.png
+
+## survivor_osteophage
+Chest-up three-quarter portrait of survivor survivor osteophage, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_osteophage.png
+
+## survivor_archivist
+Chest-up three-quarter portrait of survivor survivor archivist, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_archivist.png
+
+## survivor_concrete_boss
+Chest-up three-quarter portrait of survivor survivor concrete boss, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_concrete_boss.png
+
+## survivor_uv_penitent
+Chest-up three-quarter portrait of survivor survivor uv penitent, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: survivor_uv_penitent.png
+
+## aris_thorne
+Chest-up three-quarter portrait of survivor aris thorne, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: aris_thorne.png
+
+## maya_lin
+Chest-up three-quarter portrait of survivor maya lin, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: maya_lin.png
+
+## victor_vance
+Chest-up three-quarter portrait of survivor victor vance, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: victor_vance.png
+
+## elena_rostov
+Chest-up three-quarter portrait of survivor elena rostov, exhausted restrained expression, worn cold-weather layers. [Original 2D hand-painted survival-management game art, grounded grim realism, charcoal pencil underdrawing and dry gouache texture, cold restrained palette of charcoal, concrete grey, faded blue-grey, rust brown, dirty bone. Chest-up three-quarter view portrait, restrained expression, no text, no logos.]
+--negative text, letters, numbers, watermark, logo, flag, brand, neon cyberpunk, glossy sci-fi, cartoon, anime, photorealism, oversaturated colors, gore, distorted anatomy, duplicated objects
+Output: elena_rostov.png
+

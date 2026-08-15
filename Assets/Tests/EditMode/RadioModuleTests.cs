@@ -4,6 +4,7 @@ using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {

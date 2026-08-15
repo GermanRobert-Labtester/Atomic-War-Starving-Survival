@@ -45,6 +45,10 @@ namespace AtomicWar._Game.Utilities
                 {
                     _unsubscribers[i]?.Invoke();
                 }
+                catch (MissingReferenceException ex)
+                {
+                    Debug.LogWarning($"[SubscriptionBag] Unsubscribe #{i} skipped destroyed object: {ex.Message}");
+                }
                 catch (Exception ex)
                 {
                     Debug.LogError($"[SubscriptionBag] Unsubscribe #{i} threw: {ex}");

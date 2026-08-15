@@ -2,7 +2,10 @@
     "name": "AtomicWar._Game.Factions",
     "rootNamespace": "AtomicWar._Game.Factions",
     "references": [
-        "AtomicWar._Game.Utilities"
+        "AtomicWar._Game.Utilities",
+        "AtomicWar._Game.Environment",
+        "AtomicWar._Game.Survivors",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: sterilised_bandage
   displayName: Sterilised Bandage
   description: Antiseptic-treated bandage.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 785907b8758fef2de8247cc0da59e66b, type: 3}
   type: 3
   stackMax: 20
   weight: 0.06

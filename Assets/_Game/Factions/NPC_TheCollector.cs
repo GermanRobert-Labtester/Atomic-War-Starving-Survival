@@ -1,3 +1,4 @@
+#pragma warning disable CS0067 // Public API event surface; subscribers arrive with feature wiring
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class NPC_TheCollectorState
     {
-        public string id = "npc_thecollector";
+        public string id = "npc_the_collector";
         public string displayName = "TheCollector";
         public bool isActive = false;
         public bool isHostile = false;

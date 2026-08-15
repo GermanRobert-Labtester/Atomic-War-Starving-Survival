@@ -15,7 +15,7 @@ MonoBehaviour:
   id: basic_recycler
   displayName: Basic Recycler
   description: Breaks scrap to parts.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: fc3835a9240ac3f109ed489d79e0ebfd, type: 3}
   type: 14
   stackMax: 1
   weight: 10

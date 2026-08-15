@@ -15,7 +15,7 @@ MonoBehaviour:
   id: wheat_flour
   displayName: Wheat Flour
   description: Milled wheat. Bread and batter.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b18e6e2f70b2f183e8a52d35eb4bce56, type: 3}
   type: 10
   stackMax: 15
   weight: 1

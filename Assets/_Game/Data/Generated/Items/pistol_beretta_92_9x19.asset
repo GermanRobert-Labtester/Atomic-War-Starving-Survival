@@ -15,7 +15,7 @@ MonoBehaviour:
   id: pistol_beretta_92_9x19
   displayName: "Beretta 92 9\xD719mm Pistol"
   description: "Full-size 9\xD719 service pistol."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: a8c259ee04773db08992326795032146, type: 3}
   type: 15
   stackMax: 1
   weight: 1.15

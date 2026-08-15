@@ -82,7 +82,8 @@ namespace AtomicWar._Game.Radiation
             _needsSystem = needsSystem != null ? needsSystem : throw new ArgumentNullException(nameof(needsSystem));
             _exposureContext = exposureContext;
             // MISC-005 — never fall back to wall-clock Random; fixed salt when host omits rng.
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("radiation_system");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "radiation_system");
         }
 
         /// <summary>Register a survivor so bulk Tick(gameHours) advances their dose.</summary>

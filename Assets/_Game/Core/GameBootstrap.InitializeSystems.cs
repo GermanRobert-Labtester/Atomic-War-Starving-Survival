@@ -25,16 +25,51 @@ namespace AtomicWar._Game.Core
     {
         private void InitializeSystems()
         {
-            // Seed the global RNG so every CreateFixed() fallback produces
-            // campaign-specific streams instead of the same sequence every run.
+            // Seed the global RNG so every SeededRandom.Create() fallback uses
+            // the campaign world seed instead of the same sequence every run.
             AtomicWar._Game.Utilities.SeededRandom.WorldSeed = _worldSeed;
 
             InitFoundation();
             InitUtilityAI();
             InitMedicalSystems();
+            InitExpansion4Systems();
             InitEventsAndSurvivors();
             InitSaveAndExpeditions();
             InitRadioAndEndgame();
+
+            // Phase 2 — Wire psychological systems into live gameplay
+            // (EventRunner, HatchDefenseSystem, ExpeditionSystem must exist)
+            InitPhase2Wiring();
+
+            // Phase 3 — Wire flashback, moral branching, chemical dependency
+            InitPhase3Wiring();
+
+            // Phases 4-6 — Trade specialties, final wishes, diegetic artifacts,
+            // ham radio, damaged maps, audio cassettes
+            InitPhases4to6Wiring();
+
+            // Phases 7-8 — Interpersonal dynamics: trauma bonds, friction,
+            // ration conflicts, leadership, caregiving, desertion
+            InitPhases7to8Wiring();
+
+            // Phases 9-10 — Faction arcs (Garrison, Cult, Refugees) +
+            // Endgame branching refinement
+            InitPhases9to10Wiring();
+
+            // Antigravity Expansion — Mechanics #41-80
+            // (Phases 16-19: Physical Quirks, Environmental, Legacy Arcs)
+            InitAntigravitySystems();
+
+            // Expansions 3 & 4 — Procedural Loot, Dynamic Questlines,
+            // Siege Tactics, Faction Intel, Vehicle Systems
+            InitExpansions3to4();
+
+            // Deep Lore — Narrative arcs, world history, faction lore
+            InitDeepLore();
+
+            // Register all expansion systems with internal state into SaveSystem
+            RegisterExpansionSaveables();
+
             FinishSystemRegistration();
         }
 

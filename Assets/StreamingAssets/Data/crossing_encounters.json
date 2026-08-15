@@ -1,0 +1,196 @@
+{
+  "encounters": [
+    {
+      "id": "enc_nc_collector_visit",
+      "name": "Underwrite Collector",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "An Underwrite collector waits by the gate with a bound ledger. Polite, procedural, exactly as threatening as the contract terms say and no more.",
+      "threat_level": "Procedural",
+      "choices": [
+        {
+          "text": "Produce the signed voucher copy and clear the day's interest.",
+          "cost_items": ["item_crossing_pledge_slip"],
+          "result": "The collector crosses the line out in purple ink, gives a low nod, and moves on."
+        },
+        {
+          "text": "Refuse to open the ledger.",
+          "result": "The collector makes a single neat marginal mark and promises a visit to the Lockup."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_backer_pressure",
+      "name": "Backer Pressure",
+      "target_location": "loc_crossing_stallrow",
+      "description": "A veteran stall-holder leans over the counter. She is willing to stand behind your ruling at the next Standing, but she wants a crate of salt first.",
+      "threat_level": "Negotiation",
+      "choices": [
+        {
+          "text": "Hand over the salt to secure her voice.",
+          "cost_items": ["item_crossing_traded_salt"],
+          "result": "She pockets the token and promises her hand will be in the air when the quorum is called."
+        },
+        {
+          "text": "Argue the principle of the matter without paying.",
+          "result": "She shrugs. Principles do not preserve winter meat."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_lockup_muscle",
+      "name": "Collateral Escort",
+      "target_location": "loc_crossing_underwrite_hall",
+      "description": "Two heavies in salt-stained coats stand outside the Lockup gate. They are guarding forfeited goods under an active Underwrite lien.",
+      "threat_level": "Guarded",
+      "choices": [
+        {
+          "text": "Show the formal redemption note.",
+          "cost_items": ["item_wyn_receipt_paid"],
+          "result": "They step aside without a word. The chain rattles loose."
+        },
+        {
+          "text": "Back away slowly.",
+          "result": "No one pursues. The contract holds its ground."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_iron_raiders_scout",
+      "name": "Iron Raiders Scout",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "A scout in hammered sheet steel perches on the viaduct approach, watching the gate with binoculars. They do not cross the survey seam.",
+      "threat_level": "Observation",
+      "choices": [
+        {
+          "text": "Hold ground under the Scale's neutral banner.",
+          "result": "The scout observes the disciplined guard shift, makes a notation, and melts into the dust."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_deserter_passage",
+      "name": "Deserter Coalition Safe Passage",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "A pair of exhausted deserters ask for two days of uninspected passage through the Crossing under Compact escort.",
+      "threat_level": "Diplomatic Risk",
+      "choices": [
+        {
+          "text": "Grant them shelter under the Compact annex rubric.",
+          "result": "Perrin Ashby stamps their transient pass. The Garrison detachment on the ridge takes note."
+        },
+        {
+          "text": "Turn them back to protect Crossing neutrality.",
+          "result": "They leave quietly into the ash. Osran approves of the caution."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_scavenger_dispute",
+      "name": "Scavenger Dispute",
+      "target_location": "loc_crossing_stallrow",
+      "description": "A blacklisted scrap merchant tries to trade uncertified brass at Stallrow. Osran Kell steps up to inspect the mark.",
+      "threat_level": "Commercial",
+      "choices": [
+        {
+          "text": "Back Osran's calibration test with the True Weight.",
+          "cost_items": ["item_calibration_weight"],
+          "result": "The scale drops true. The rogue merchant is escorted out without violence."
+        },
+        {
+          "text": "Let the crowd settle the weight.",
+          "result": "A shouting match erupts, lowering Stallrow trade trust for the week."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_grain_exchange_envoy",
+      "name": "Grain Exchange Envoy",
+      "target_location": "loc_crossing_stallrow",
+      "description": "An envoy from the Central Grain Exchange arrives to ask why the Crossing maintains its own independent weighbridge without sending a delegate to the Board.",
+      "threat_level": "Political",
+      "choices": [
+        {
+          "text": "Quote the charter rubric: 'No Power is in the room.'",
+          "result": "The envoy smiles thinly, records the defiance, and withdraws to report to the board."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_sun_seekers_pass",
+      "name": "Sun-Seekers Caravan Passage",
+      "target_location": "loc_crossing_viaduct_gate",
+      "description": "A small convoy of Sun-Seekers in mirrored goggles passes through during a False Spring window, trading tinted glass for potable water.",
+      "threat_level": "Trade",
+      "choices": [
+        {
+          "text": "Trade clean water for their optical filters.",
+          "result": "The exchange is completed quickly. The convoy rolls westward into the sun."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_forfeit_witness",
+      "name": "The Public Forfeit",
+      "target_location": "loc_crossing_stallrow",
+      "description": "A debtor's granary keys are surrendered at noon in front of the assembled stallholders. Dessa Vane reads the receipt aloud twice.",
+      "threat_level": "Atmospheric",
+      "choices": [
+        {
+          "text": "Stand in the crowd and witness the reading.",
+          "result": "No voice is raised. The procedure is cold, clear, and undisputed."
+        }
+      ]
+    },
+    {
+      "id": "enc_nc_standing_ambush",
+      "name": "Standing Ambush",
+      "target_location": "loc_crossing_stallrow",
+      "description": "A rival faction attempts to flood the Standing with last-minute proxy voters to overturn an arbitration ruling.",
+      "threat_level": "Crisis",
+      "choices": [
+        {
+          "text": "Spend your gathered Favour Tokens to call the honest quorum.",
+          "cost_items": ["item_vouch_token_crossing"],
+          "result": "The authentic backers step forward. The quorum holds firm and the hijack fails."
+        }
+      ]
+    }
+  ],
+  "crises": [
+    {
+      "id": "crisis_the_forfeit",
+      "name": "Wyn's Granary Forfeit",
+      "phases": ["Notice", "Terms Read", "Broker Attempt", "Resolution"],
+      "description": "The Underwrite moves to seize the community granary unless the debt is paid or renegotiated.",
+      "resolution": "Debt honoured or fairly renegotiated through arbitration."
+    },
+    {
+      "id": "crisis_the_vote",
+      "name": "Draft Four Ratification",
+      "phases": ["Call", "Canvas", "Interference", "Count"],
+      "description": "The Compact brings the revised charter rubric to an open assembly vote.",
+      "resolution": "Clean or contested ratification by majority show of hands."
+    },
+    {
+      "id": "crisis_the_standing_contested",
+      "name": "The Contested Standing",
+      "phases": ["Call", "Backer Recruitment", "Rival Recruitment", "Verdict"],
+      "description": "A high-stakes trade arbitration is challenged by a bloc claiming corrupted calibration.",
+      "resolution": "Ruling holds or is honestly overturned through verified weights."
+    },
+    {
+      "id": "crisis_the_charter_found",
+      "name": "Three Dry Pages Discovered",
+      "phases": ["Request", "Read", "Verify", "Decide"],
+      "description": "The original pre-war charter pages are recovered from the Records Room archive.",
+      "resolution": "The truth of the crossing is revealed to all three blocs."
+    },
+    {
+      "id": "crisis_who_holds_the_ledger",
+      "name": "Who Holds the Ledger",
+      "phases": ["Summons", "Final Backing", "Quorum Ruling", "Aftermath"],
+      "description": "The final confrontation determining whether Scale, Underwrite, Compact, or Collapse governs Sector 4.",
+      "resolution": "One of four canonical faction resolutions is established."
+    }
+  ]
+}

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: vegetable_carrot
   displayName: "Vegetable \u2014 Carrot"
   description: "Vegetable \u2014 Carrot"
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: fd88d973f8dadc0e9a2397ee81defc3f, type: 3}
   type: 0
   stackMax: 20
   weight: 0.15

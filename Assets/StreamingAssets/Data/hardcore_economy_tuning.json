@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "scarcity_tiers": [
+    {
+      "tier": "Critical",
+      "multiplier": 2.5,
+      "day_range_label": "Days 1-15",
+      "affected_item_ids": ["clean_water", "iodine_pills", "anti_rad", "air_filter"],
+      "rationale": "Immediate survival. Everyone needs them. Nobody has enough."
+    },
+    {
+      "tier": "High",
+      "multiplier": 2.0,
+      "day_range_label": "Days 15-40",
+      "affected_item_ids": ["antibiotics", "medical_kit", "fuel", "water_filter"],
+      "rationale": "Infections set in. Filters clog. Fuel runs low."
+    }
+  ],
+  "faction_preferences": [
+    {
+      "faction_id": "central_garrison_remnants",
+      "buys_at_premium": ["ammo_*", "body_armour_military", "fuel", "mre_military"],
+      "refuses": ["jewelry", "book", "cigarette"],
+      "trade_currency": "Fuel, ammunition, obedience"
+    }
+  ],
+  "price_shock_rules": [
+    {
+      "kind": "PlumePassing",
+      "multiplier": 1.8,
+      "duration_days": 3,
+      "affected_item_ids": ["*"],
+      "trigger": "fallout storm crosses a trade route"
+    }
+  ]
+}

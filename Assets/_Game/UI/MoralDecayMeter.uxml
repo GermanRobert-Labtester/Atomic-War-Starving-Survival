@@ -1,0 +1,25 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_A.uss" />
+    <ui:VisualElement name="moral-decay-root" class="moral-decay-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="dosimeter-header">
+            <ui:Label name="moral-title" class="ashfall-title" text="MORAL DECAY" />
+            <ui:Label name="morale-pct-val" class="ashfall-mono" text="100%" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="pip-stack" class="moral-decay-pip-stack">
+            <ui:VisualElement name="pip-0" class="moral-decay-pip critical-pip active-pip" />
+            <ui:VisualElement name="pip-1" class="moral-decay-pip critical-pip active-pip" />
+            <ui:VisualElement name="pip-2" class="moral-decay-pip critical-pip active-pip" />
+            <ui:VisualElement name="pip-3" class="moral-decay-pip active-pip" />
+            <ui:VisualElement name="pip-4" class="moral-decay-pip active-pip" />
+            <ui:VisualElement name="pip-5" class="moral-decay-pip active-pip" />
+            <ui:VisualElement name="pip-6" class="moral-decay-pip active-pip" />
+            <ui:VisualElement name="pip-7" class="moral-decay-pip active-pip" />
+            <ui:VisualElement name="pip-8" class="moral-decay-pip active-pip" />
+            <ui:VisualElement name="pip-9" class="moral-decay-pip active-pip" />
+        </ui:VisualElement>
+
+        <ui:Label name="breaking-point-label" class="moral-breaking-label hidden" text="BREAKING POINT" />
+    </ui:VisualElement>
+</ui:UXML>

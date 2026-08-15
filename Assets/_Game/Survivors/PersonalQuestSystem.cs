@@ -3041,7 +3041,7 @@ namespace AtomicWar._Game.Survivors
                 killer.QuestlineActive = false;
                 state.TraitUnlocked = false;
                 killer.LatentTraitUnlocked = false;
-                killer.State = SurvivorState.Dead;
+                SurvivorNeedWrite.SetHealth(killer, 0f);
                 OnQuestlineCompleted?.Invoke(killer, state.QuestlineId);
             }
         }

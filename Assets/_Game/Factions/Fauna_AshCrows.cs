@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class Fauna_AshCrowsState
     {
-        public string id = "fauna_ashcrows";
+        public string id = "fauna_crows_ash";
         public string displayName = "AshCrows";
         public bool isPresent = false;
         public int count = 0;

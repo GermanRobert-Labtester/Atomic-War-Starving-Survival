@@ -15,7 +15,7 @@ MonoBehaviour:
   id: epi_pen
   displayName: Epi-Pen
   description: Emergency adrenaline.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e14eb681a3c39703ca7879f7de1a4d87, type: 3}
   type: 3
   stackMax: 4
   weight: 0.1

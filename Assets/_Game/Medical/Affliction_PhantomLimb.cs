@@ -50,7 +50,8 @@ namespace AtomicWar._Game.Medical
         private float _episodeHoursRemaining;
         private string _roomId;
 
-        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.CreateFixed("affliction_phantomlimb");
+        private readonly System.Random _rng = AtomicWar._Game.Utilities.SeededRandom.Create(
+            AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "affliction_phantomlimb");
 
         // ── Public API ─────────────────────────────────────────────────
 

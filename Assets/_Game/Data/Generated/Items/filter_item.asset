@@ -15,7 +15,7 @@ MonoBehaviour:
   id: filter_item
   displayName: Filter Item
   description: Generic filter cartridge frame.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 195bbcde8e7316a26a8e03b4cd6c970e, type: 3}
   type: 14
   stackMax: 1
   weight: 10

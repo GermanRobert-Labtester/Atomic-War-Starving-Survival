@@ -1,6 +1,9 @@
 using NUnit.Framework;
+using UnityEngine;
 using AtomicWar._Game.Core;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Survivors;
+using AtomicWar._Game.Data;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Factions;
 using AtomicWar._Game.Events;
@@ -55,12 +58,6 @@ namespace AtomicWar.Tests.EditMode
             var ov = new ScarcityOverride
             {
                 Source = "Test",
-                DayRangeStart = 1,
-                DayRangeEnd = 9999,
-                Tier1Critical = 2.5f,
-                Tier2High = 2.0f,
-                Tier3Moderate = 1.5f,
-                Tier4Low = 0.5f,
                 IsHardcore = true
             };
             sys.SetScarcityOverride(ov);
@@ -75,6 +72,49 @@ namespace AtomicWar.Tests.EditMode
             sys.SetScarcityOverride(null);
             Assert.IsNull(sys.GetScarcityOverride());
         }
+
+        [Test]
+        public void ScarcityMultiplierTapersByDayInsteadOfApplyingForever()
+        {
+            // Regression test: GetTradeValue's scarcity overlay must re-derive
+            // the tier from the real current day (via the day provider) on
+            // every call, not bake a fixed multiplier at boot that applies
+            // for the whole campaign.
+            var sys = new DynamicEconomySystem(() => WorldPhase.CivilWar);
+            sys.SetScarcityOverride(new ScarcityOverride { Source = "Test", IsHardcore = true });
+            var jewelry = ScriptableObject.CreateInstance<ItemDefinition>();
+            jewelry.id = "jewelry";
+            jewelry.displayName = "jewelry";
+            jewelry.type = ItemType.Trade;
+            jewelry.tradeValue = 50f;
+
+            sys.SetDayProvider(() => 90);
+            Assert.AreEqual(25f, sys.GetTradeValue(jewelry), 0.001f,
+                "Day 90 is inside the Low tier window (80+); jewelry should be 0.5x");
+
+            sys.SetDayProvider(() => 50);
+            Assert.AreEqual(50f, sys.GetTradeValue(jewelry), 0.001f,
+                "Day 50 falls in the Moderate window, but jewelry is a Low-tier item, not Moderate; no multiplier should apply");
+
+            Object.DestroyImmediate(jewelry);
+        }
+
+        [Test]
+        public void ScarcityMultiplierIsOffWhenNotHardcore()
+        {
+            var sys = new DynamicEconomySystem(() => WorldPhase.CivilWar);
+            sys.SetScarcityOverride(new ScarcityOverride { Source = "Test", IsHardcore = false });
+            sys.SetDayProvider(() => 90);
+            var jewelry = ScriptableObject.CreateInstance<ItemDefinition>();
+            jewelry.id = "jewelry";
+            jewelry.displayName = "jewelry";
+            jewelry.type = ItemType.Trade;
+            jewelry.tradeValue = 50f;
+
+            Assert.AreEqual(50f, sys.GetTradeValue(jewelry), 0.001f);
+
+            Object.DestroyImmediate(jewelry);
+        }
     }
 
     [TestFixture]
@@ -83,14 +123,7 @@ namespace AtomicWar.Tests.EditMode
         [Test]
         public void EightyItemsMaterialiseIntoUniqueIds()
         {
-            var lookup = new System.Func<string, ItemDefinition>(id =>
-            {
-                var def = ScriptableObject.CreateInstance<ItemDefinition>();
-                def.id = id;
-                def.displayName = id;
-                return def;
-            });
-            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll(lookup);
+            var defs = AshGetsDeeperItemsCatalog.MaterialiseAll();
             Assert.AreEqual(80, defs.Count);
             var set = new System.Collections.Generic.HashSet<string>();
             for (int i = 0; i < defs.Count; i++) set.Add(defs[i].id);

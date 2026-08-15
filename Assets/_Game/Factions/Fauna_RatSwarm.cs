@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class Fauna_RatSwarmState
     {
-        public string id = "fauna_ratswarm";
+        public string id = "fauna_rat_swarm";
         public string displayName = "RatSwarm";
         public bool isPresent = false;
         public int count = 0;

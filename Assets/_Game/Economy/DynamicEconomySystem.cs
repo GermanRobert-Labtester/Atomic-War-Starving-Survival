@@ -1,4 +1,6 @@
 using System;
+using Ashfall.Core;
+using Ashfall.Core.Economy;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,15 +18,46 @@ namespace AtomicWar._Game.Economy
     /// (-100..100) gates trade / rob / intel / hatch raids. EventRunner choices
     /// with FactionId + TrustDelta (or RelationshipDelta) mutate trust.
     /// </summary>
-    public class DynamicEconomySystem
+    public class DynamicEconomySystem : IFactionStanceProvider, IPriceShockProvider, ITradeEvents
     {
         private PersonalQuestSystem _personalQuests;
         private System.Func<System.Collections.Generic.IReadOnlyList<Survivor>> _getSurvivors;
 
         // [Prompts #326-330] Scarcity override (The Ash Gets Deeper)
         private ScarcityOverride _scarcityOverride;
+        private Ashfall.Core.Economy.HardcoreEconomyTuning _coreTuning;
+        private readonly FactionStanceEngine _stanceEngine = new FactionStanceEngine();
         public void SetScarcityOverride(ScarcityOverride o) => _scarcityOverride = o;
         public ScarcityOverride GetScarcityOverride() => _scarcityOverride;
+
+        /// <summary>
+        /// Bind the core HardcoreEconomyTuning overlay (JSON-loaded, empty by
+        /// default). When bound, scarcity multipliers come from the core —
+        /// the engine-agnostic single source of truth.
+        /// </summary>
+        public void BindCoreTuning(Ashfall.Core.Economy.HardcoreEconomyTuning tuning)
+        {
+            _coreTuning = tuning;
+        }
+
+        public bool TryGetPriceShock(PriceShockKind kind, int dayOffsetFromShockStart, out PriceShockRule rule)
+        {
+            if (_coreTuning != null && _coreTuning.IsActive)
+            {
+                return _coreTuning.TryGetPriceShock(kind, dayOffsetFromShockStart, out rule);
+            }
+            rule = default;
+            return false;
+        }
+
+        public float GetScarcityMultiplier(int day, string itemId)
+        {
+            if (_coreTuning != null && _coreTuning.IsActive)
+            {
+                return _coreTuning.GetScarcityMultiplier(day, itemId);
+            }
+            return 1.0f;
+        }
 
         /// <summary>Prompt #236 — Demagogue: FactionTrust floor 0 + tribute drops.</summary>
         public void BindPersonalQuests(
@@ -75,8 +108,8 @@ namespace AtomicWar._Game.Economy
         public const float DefaultTrustInversionIrradiatedWaterMult = 12f;
 
         /// <summary>Supply pressure clamp: demand mult stays in [min, max].</summary>
-        public const float MinDemandMult = 0.25f;
-        public const float MaxDemandMult = 4f;
+        public const float MinDemandMult = MarketSystem.MinDemandMult;
+        public const float MaxDemandMult = MarketSystem.MaxDemandMult;
 
         /// <summary>#292 Auditor: trade values skewed in the player's favour.</summary>
         public const float AuditorTradeDiscount = 0.55f;
@@ -89,8 +122,12 @@ namespace AtomicWar._Game.Economy
 
         private readonly Dictionary<string, FactionSO> _factions = new Dictionary<string, FactionSO>();
         private readonly Dictionary<string, float> _trust = new Dictionary<string, float>();
-        /// <summary>Per item-id demand pressure. 1 = neutral; &gt;1 scarce; &lt;1 surplus.</summary>
-        private readonly Dictionary<string, float> _demand = new Dictionary<string, float>();
+        /// <summary>
+        /// Demand state now lives in the engine-agnostic core MarketSystem
+        /// (adoption: this class delegates; the core is the single source of
+        /// truth). Bound via BindCoreMarket; auto-created otherwise.
+        /// </summary>
+        private MarketSystem _coreMarket = new MarketSystem();
         /// <summary>Runtime aggression override (0..1). Absent = use FactionSO.raidAggression.</summary>
         private readonly Dictionary<string, float> _aggressionOverride = new Dictionary<string, float>();
         private readonly Dictionary<string, int> _successionGeneration = new Dictionary<string, int>();
@@ -111,7 +148,8 @@ namespace AtomicWar._Game.Economy
 
         private Func<WorldPhase> _getPhase;
         private Shelter.Shelter _shelter;
-        private System.Random _rng;
+        private int _decisionSeed = 7;
+        private long _rngRollCount;
         private HatchDefenseSystem _hatchDefense;
         private Func<int> _getDay;
         /// <summary>
@@ -159,12 +197,15 @@ namespace AtomicWar._Game.Economy
         public DynamicEconomySystem(
             Func<WorldPhase> getPhase = null,
             Shelter.Shelter shelter = null,
-            System.Random rng = null)
+            int decisionSeed = 7)
         {
             _getPhase = getPhase ?? (() => WorldPhase.CivilWar);
             _shelter = shelter;
-            _rng = rng ?? new System.Random(7);
+            _decisionSeed = decisionSeed;
         }
+
+        /// <summary>Rebind the deterministic decision seed (A11: no System.Random).</summary>
+        public void SetDecisionSeed(int seed) => _decisionSeed = seed;
 
         public void SetPhaseProvider(Func<WorldPhase> getPhase)
         {
@@ -264,6 +305,18 @@ namespace AtomicWar._Game.Economy
             _factions[faction.id] = faction;
             if (!_trust.ContainsKey(faction.id))
                 _trust[faction.id] = Mathf.Clamp(faction.startingTrust, MinTrust, MaxTrust);
+
+            // Mirror into the engine-agnostic stance engine.
+            _stanceEngine.RegisterFaction(new FactionThresholds(
+                faction.id,
+                raidThreshold: faction.raidThreshold,
+                robThreshold: faction.robThreshold,
+                minTrustToTrade: faction.minTrustToTrade,
+                intelShareThreshold: faction.intelShareThreshold,
+                raidAggression: faction.raidAggression,
+                trustInversion: faction.trustInversion,
+                healthyRadiationCeiling: faction.healthyRadiationCeiling,
+                highRadiationFloor: faction.highRadiationFloor));
             if (!_successionGeneration.ContainsKey(faction.id))
                 _successionGeneration[faction.id] = 0;
             if (!_leaderName.ContainsKey(faction.id) || string.IsNullOrEmpty(_leaderName[faction.id]))
@@ -286,23 +339,7 @@ namespace AtomicWar._Game.Economy
 
         public float GetTrust(string factionId)
         {
-            if (string.IsNullOrEmpty(factionId)) return 0f;
-            float t = _trust.TryGetValue(factionId, out float stored) ? stored : 0f;
-            // #257 Hated: stored military trust floors at −100 while a Hated survivor lives.
-            if (_personalQuests != null && _getSurvivors != null && IsMilitaryFaction(factionId))
-            {
-                var list = _getSurvivors();
-                if (list != null)
-                {
-                    for (int i = 0; i < list.Count; i++)
-                    {
-                        if (list[i] != null && list[i].IsAlive
-                            && _personalQuests.IsShotOnSightByMilitary(list[i]))
-                            return Mathf.Min(t, PersonalQuestSystem.HatedMilitaryTrust);
-                    }
-                }
-            }
-            return t;
+            return _stanceEngine.GetTrust(factionId);
         }
 
         /// <summary>Military remnant factions that Hated Generals are shot on sight by.</summary>
@@ -350,11 +387,7 @@ namespace AtomicWar._Game.Economy
         /// </summary>
         public bool IsFactionActive(string factionId)
         {
-            var fac = GetFaction(factionId);
-            if (fac == null) return false;
-            if (!fac.trustInversion) return true;
-            if (_getDay == null) return true;
-            return _getDay() >= CultActivationDay;
+            return _stanceEngine.IsFactionActive(factionId);
         }
 
         /// <summary>
@@ -429,6 +462,10 @@ namespace AtomicWar._Game.Economy
             if (_personalQuests != null && _getSurvivors != null)
                 next = _personalQuests.ClampFactionTrust(next, _getSurvivors());
             _trust[factionId] = next;
+            // Mirror into the engine-agnostic stance engine: GetTrust/GetStance
+            // read from it, so writes must route through it (wiring hardening —
+            // the refactor forked trust state).
+            _stanceEngine.SetTrust(factionId, next);
             OnTrustChanged?.Invoke(factionId, old, next);
             OnEconomyChanged?.Invoke();
 
@@ -455,6 +492,8 @@ namespace AtomicWar._Game.Economy
             if (_personalQuests != null && _getSurvivors != null)
                 next = _personalQuests.ClampFactionTrust(next, _getSurvivors());
             _trust[factionId] = next;
+            // Mirror into the engine-agnostic stance engine (GetTrust reads it).
+            _stanceEngine.SetTrust(factionId, next);
             if (!Mathf.Approximately(old, next))
             {
                 OnTrustChanged?.Invoke(factionId, old, next);
@@ -464,31 +503,15 @@ namespace AtomicWar._Game.Economy
 
         public TradeStance GetStance(string factionId)
         {
-            // Pre-activation (Cult Day gate): refuse without raid pressure.
-            if (!IsFactionActive(factionId))
-                return TradeStance.Refuse;
-
-            float trust = GetEffectiveTrust(factionId);
-            var fac = GetFaction(factionId);
-            float raidAt = fac != null ? fac.raidThreshold : DefaultRaidThreshold;
-            float robAt = fac != null ? fac.robThreshold : -20f;
-            float tradeAt = fac != null ? fac.minTrustToTrade : -40f;
-            float intelAt = fac != null ? fac.intelShareThreshold : 40f;
-
-            if (trust <= raidAt) return TradeStance.HostileRaid;
-            if (trust <= robAt) return TradeStance.Rob;
-            if (trust < tradeAt) return TradeStance.Refuse;
-            if (trust >= intelAt) return TradeStance.ShareIntel;
-            return TradeStance.Trade;
+            return _stanceEngine.GetStance(factionId);
         }
 
         public bool WillTrade(string factionId)
         {
-            var s = GetStance(factionId);
-            return s == TradeStance.Trade || s == TradeStance.ShareIntel;
+            return _stanceEngine.WillTrade(factionId);
         }
 
-        public bool WillShareIntel(string factionId) => GetStance(factionId) == TradeStance.ShareIntel;
+        public bool WillShareIntel(string factionId) => _stanceEngine.WillShareIntel(factionId);
 
         // -----------------------------------------------------------------
         // Aggression / succession / surrender
@@ -500,8 +523,7 @@ namespace AtomicWar._Game.Economy
             if (string.IsNullOrEmpty(factionId)) return 0.5f;
             if (_aggressionOverride.TryGetValue(factionId, out float ovr))
                 return Mathf.Clamp01(ovr);
-            var fac = GetFaction(factionId);
-            return fac != null ? Mathf.Clamp01(fac.raidAggression) : 0.5f;
+            return Mathf.Clamp01(_stanceEngine.GetRaidAggression(factionId));
         }
 
         public void SetRaidAggression(string factionId, float aggression01)
@@ -723,39 +745,38 @@ namespace AtomicWar._Game.Economy
         // Pricing
         // -----------------------------------------------------------------
 
+        /// <summary>
+        /// Bind the core MarketSystem this class delegates to (GameBootstrap
+        /// wires the shared instance). Null restores the auto-created one.
+        /// </summary>
+        public void BindCoreMarket(MarketSystem market)
+        {
+            _coreMarket = market ?? new MarketSystem();
+        }
+
+        public MarketSystem CoreMarket => _coreMarket;
+
         public float GetDemandMultiplier(string itemId)
         {
             if (string.IsNullOrEmpty(itemId)) return 1f;
-            return _demand.TryGetValue(itemId, out float d) ? Mathf.Clamp(d, MinDemandMult, MaxDemandMult) : 1f;
+            return _coreMarket.GetDemandMultiplier(itemId);
         }
 
         /// <summary>Nudge global demand (scarcity). Positive = more scarce / valuable.</summary>
         public void AdjustDemand(string itemId, float delta)
         {
-            if (string.IsNullOrEmpty(itemId) || Mathf.Approximately(delta, 0f)) return;
-            float cur = GetDemandMultiplier(itemId);
-            _demand[itemId] = Mathf.Clamp(cur + delta, MinDemandMult, MaxDemandMult);
+            if (string.IsNullOrEmpty(itemId)) return;
+            if (Mathf.Approximately(delta, 0f)) return;
+            _coreMarket.AdjustDemand(itemId, delta);
             OnEconomyChanged?.Invoke();
         }
 
         /// <summary>
         /// True when average demand pressure is elevated — food/meds/guns spike via
         /// <see cref="Item_TradeValues.ShortageMultiplier"/>; gems soften.
+        /// Delegates to the core MarketSystem (same 1.35 threshold).
         /// </summary>
-        public bool IsSuppliesShort()
-        {
-            if (_demand == null || _demand.Count == 0) return false;
-            float sum = 0f;
-            int n = 0;
-            foreach (var kv in _demand)
-            {
-                sum += kv.Value;
-                n++;
-            }
-            if (n == 0) return false;
-            // Neutral demand is 1.0; sustained pressure above ~1.35 means shortage.
-            return (sum / n) >= 1.35f;
-        }
+        public bool IsSuppliesShort() => _coreMarket.IsSuppliesShort();
 
         /// <summary>
         /// Effective trade value for an item under current WorldPhase + supply/demand
@@ -781,8 +802,11 @@ namespace AtomicWar._Game.Economy
             float demand = GetDemandMultiplier(item.id);
             float marketValue = Item_TradeValues.Resolve(phaseVal, tier, demand, IsSuppliesShort());
 
-            // [Prompts #326-330] Hardcore scarcity overlay.
-            float scarcityMult = GetScarcityMultiplier(CurrentDay, item);
+            // [Prompts #326-330] Hardcore scarcity overlay. Reuses the same
+            // _getDay provider SetDayProvider wires at boot (see TryLaunchRaid
+            // for the same pattern) — DynamicEconomySystem has no standalone
+            // CurrentDay member of its own.
+            float scarcityMult = GetScarcityMultiplier(_getDay != null ? _getDay() : 0, item);
             if (scarcityMult > 0f && !Mathf.Approximately(scarcityMult, 1f))
                 marketValue *= scarcityMult;
 
@@ -791,27 +815,15 @@ namespace AtomicWar._Game.Economy
 
         private float GetScarcityMultiplier(int currentDay, ItemDefinition item)
         {
-            if (_scarcityOverride == null || item == null) return 1.0f;
-            if (currentDay < _scarcityOverride.DayRangeStart) return 1.0f;
-            if (currentDay > _scarcityOverride.DayRangeEnd) return 1.0f;
-            string id = item.id ?? string.Empty;
-            if (IsScarcityBucketHit(id, "clean_water", "iodine_pills", "anti_rad", "air_filter"))
-                return _scarcityOverride.Tier1Critical;
-            if (IsScarcityBucketHit(id, "antibiotics", "medical_kit", "fuel", "water_filter"))
-                return _scarcityOverride.Tier2High;
-            if (IsScarcityBucketHit(id, "bandage", "canned_food", "cloth", "scrap_metal"))
-                return _scarcityOverride.Tier3Moderate;
-            if (IsScarcityBucketHit(id, "jewelry", "currency", "book", "playing_cards_worn"))
-                return _scarcityOverride.Tier4Low;
-            return 1.0f;
-        }
-
-        private static bool IsScarcityBucketHit(string id, params string[] bucket)
-        {
-            if (string.IsNullOrEmpty(id)) return false;
-            for (int i = 0; i < bucket.Length; i++)
-                if (string.Equals(id, bucket[i], StringComparison.OrdinalIgnoreCase)) return true;
-            return false;
+            if (_scarcityOverride == null || !_scarcityOverride.IsHardcore || item == null) return 1.0f;
+            string id = item.id;
+            if (string.IsNullOrEmpty(id)) return 1.0f;
+            // Adopted path: when a core tuning overlay is bound, consult it (the
+            // engine-agnostic source of truth). The legacy Unity static remains
+            // only as an unbound fallback so existing hosts keep their data.
+            if (_coreTuning != null)
+                return _coreTuning.GetScarcityMultiplier(currentDay, id);
+            return HardcoreEconomyTuning.GetScarcityMultiplierForDay(currentDay, id);
         }
 
         /// <summary>
@@ -1116,18 +1128,53 @@ namespace AtomicWar._Game.Economy
             IReadOnlyList<BarterLine> lines)
         {
             if (lines == null) return true;
+            // Atomic all-or-nothing transfer. Without tracking the lines already
+            // moved, a failure on line N leaves lines 1..N-1 stranded in `to`
+            // while the caller treats the trade as failed — silent item loss, and
+            // the ask-side rollback in TryExecuteTrade can then hand the player
+            // free faction-ask items. We accumulate moved lines and reverse them
+            // on any failure so both inventories are restored exactly.
+            var moved = new List<BarterLine>();
             for (int i = 0; i < lines.Count; i++)
             {
                 var line = lines[i];
                 if (line.Item == null || line.Amount <= 0) continue;
-                if (!from.Remove(line.Item, line.Amount)) return false;
+                if (!from.Remove(line.Item, line.Amount))
+                {
+                    ReverseMoved(to, from, moved);
+                    return false;
+                }
                 if (!to.Add(line.Item, line.Amount))
                 {
                     from.Add(line.Item, line.Amount);
+                    ReverseMoved(to, from, moved);
                     return false;
                 }
+                moved.Add(line);
             }
             return true;
+        }
+
+        /// <summary>
+        /// Reverse a partial transfer: move each previously-moved line from its
+        /// current location back to its origin. Best-effort; the items were held
+        /// by the origin immediately before the transfer so the reverse Add is
+        /// expected to succeed.
+        /// </summary>
+        private static void ReverseMoved(
+            Inventory.Inventory currentLocation,
+            Inventory.Inventory originalLocation,
+            List<BarterLine> moved)
+        {
+            if (moved == null) return;
+            for (int j = 0; j < moved.Count; j++)
+            {
+                var m = moved[j];
+                // BarterLine is a struct — no null check on m itself.
+                if (m.Item == null || m.Amount <= 0) continue;
+                if (currentLocation.Remove(m.Item, m.Amount))
+                    originalLocation.Add(m.Item, m.Amount);
+            }
         }
 
         // -----------------------------------------------------------------
@@ -1209,7 +1256,12 @@ namespace AtomicWar._Game.Economy
                 // Legacy fallback when hatch defense not wired
                 result.Launched = true;
                 float integrity = Mathf.Clamp01(shieldLevel * 0.25f);
-                result.Repelled = integrity >= 0.5f && _rng.NextDouble() < integrity;
+                // A11: deterministic reseed-per-roll (seed + roll count); the
+                // count is persisted so a restored save CONTINUES the stream
+                // instead of replaying it (previously System.Random, unpersisted).
+                var decisionRng = new SeededRng(unchecked(_decisionSeed * 397 + (int)(_rngRollCount & 0x7FFFFFFF)));
+                _rngRollCount++;
+                result.Repelled = integrity >= 0.5f && decisionRng.NextDouble() < integrity;
                 if (result.Repelled)
                 {
                     result.HatchDamage = 5f + 10f * aggression * (1f - integrity);
@@ -1616,15 +1668,21 @@ namespace AtomicWar._Game.Economy
             save.Trust = trustRows.ToArray();
 
             var demandRows = new List<DemandSave>();
-            foreach (var kv in _demand)
+            var demandSnapshot = _coreMarket.CaptureState().demand;
+            for (int i = 0; i < demandSnapshot.Count; i++)
             {
-                demandRows.Add(new DemandSave { ItemId = kv.Key, Multiplier = kv.Value });
+                demandRows.Add(new DemandSave
+                {
+                    ItemId = demandSnapshot[i].itemId,
+                    Multiplier = demandSnapshot[i].multiplier
+                });
             }
             save.Demand = demandRows.ToArray();
 
             save.BarterOnlyMode = _barterOnlyMode;
             save.BarterOnlyAccepted = _barterOnlyAcceptedItemIds.ToArray();
             save.LastRepelledFactionId = LastRepelledFactionId ?? string.Empty;
+            save.RngRollCount = Math.Max(0L, _rngRollCount);
             return save;
         }
 
@@ -1638,13 +1696,18 @@ namespace AtomicWar._Game.Economy
             _consecutiveRepels.Clear();
             _hasSurrendered.Clear();
             LastRepelledFactionId = string.Empty;
+            // A11 sentinel: negative/corrupt roll counts clamp to 0 (restart
+            // the deterministic stream from the seed rather than throw).
+            _rngRollCount = Math.Max(0L, save.RngRollCount);
             if (save.Trust != null)
             {
                 for (int i = 0; i < save.Trust.Length; i++)
                 {
                     var row = save.Trust[i];
                     if (row == null || string.IsNullOrEmpty(row.FactionId)) continue;
-                    _trust[row.FactionId] = Mathf.Clamp(row.Trust, MinTrust, MaxTrust);
+                    float restoredTrust = Mathf.Clamp(row.Trust, MinTrust, MaxTrust);
+                    _trust[row.FactionId] = restoredTrust;
+                    _stanceEngine.SetTrust(row.FactionId, restoredTrust);
                     if (row.AggressionOverride >= 0f)
                         _aggressionOverride[row.FactionId] = Mathf.Clamp01(row.AggressionOverride);
                     _successionGeneration[row.FactionId] = Mathf.Max(0, row.SuccessionGeneration);
@@ -1654,16 +1717,21 @@ namespace AtomicWar._Game.Economy
                     _hasSurrendered[row.FactionId] = row.HasSurrendered;
                 }
             }
-            _demand.Clear();
+            var restoredDemand = new System.Collections.Generic.List<Ashfall.Core.Economy.DemandEntry>();
             if (save.Demand != null)
             {
                 for (int i = 0; i < save.Demand.Length; i++)
                 {
                     var row = save.Demand[i];
                     if (row == null || string.IsNullOrEmpty(row.ItemId)) continue;
-                    _demand[row.ItemId] = Mathf.Clamp(row.Multiplier, MinDemandMult, MaxDemandMult);
+                    restoredDemand.Add(new Ashfall.Core.Economy.DemandEntry
+                    {
+                        itemId = row.ItemId,
+                        multiplier = Mathf.Clamp(row.Multiplier, MinDemandMult, MaxDemandMult)
+                    });
                 }
             }
+            _coreMarket.RestoreState(new MarketState { version = MarketState.Version, demand = restoredDemand });
             _barterOnlyMode = save.BarterOnlyMode;
             _barterOnlyAcceptedItemIds.Clear();
             if (save.BarterOnlyAccepted != null)
@@ -1693,53 +1761,6 @@ namespace AtomicWar._Game.Economy
     }
 
     [Serializable]
-    public class FactionRaidResult
-    {
-        public string FactionId;
-        public bool Launched;
-        public bool Repelled;
-        public bool Breached;
-        public float HatchDamage;
-        public int ShieldingLevel;
-        public float RaidStrength;
-        public float DefenseScore;
-        public float ShelterSecurity;
-        public int StolenItemCount;
-        public float Aggression;
-        public bool SurrenderedAfter;
-        public string Message;
-    }
-
-    [Serializable]
-    public class FactionSuccessionResult
-    {
-        public string FactionId;
-        public bool Applied;
-        public string PreviousLeader;
-        public string NewLeader;
-        public int Generation;
-        public float OldTrust;
-        public float NewTrust;
-        public float OldAggression;
-        public float NewAggression;
-        public string Message;
-    }
-
-    [Serializable]
-    public class FactionSurrenderResult
-    {
-        public string FactionId;
-        public bool Applied;
-        public bool Auto;
-        public float OldTrust;
-        public float NewTrust;
-        public float OldAggression;
-        public float NewAggression;
-        public TradeStance NewStance;
-        public string Message;
-    }
-
-    [Serializable]
     public class FactionTrustSave
     {
         public string FactionId;
@@ -1759,27 +1780,6 @@ namespace AtomicWar._Game.Economy
         public float Multiplier;
     }
 
-    /// <summary>
-    /// [Prompts #326-330] Hardcore economy tuning overlay set by
-    /// GameBootstrap.AshGetsDeeper.ApplyHardcoreEconomyTuningIfEnabled()
-    /// at boot when the player is in Expert mode (or the inspector
-    /// override _forceHardcoreEconomy is on). The override is read
-    /// inside GetTradeValue and applied multiplicatively to the resolved
-    /// market value of items whose id matches one of the four tier buckets.
-    /// </summary>
-    [Serializable]
-    public class ScarcityOverride
-    {
-        public string Source;
-        public int DayRangeStart = 1;
-        public int DayRangeEnd = 9999;
-        public float Tier1Critical = 2.5f;
-        public float Tier2High = 2.0f;
-        public float Tier3Moderate = 1.5f;
-        public float Tier4Low = 0.5f;
-        public bool IsHardcore;
-    }
-
     [Serializable]
     public class DynamicEconomySave
     {
@@ -1791,5 +1791,7 @@ namespace AtomicWar._Game.Economy
         public string[] BarterOnlyAccepted;
         /// <summary>Last faction successfully repelled at the hatch (trade strip / parley).</summary>
         public string LastRepelledFactionId;
+        /// <summary>A11: deterministic decision-roll count (reseed pattern).</summary>
+        public long RngRollCount;
     }
 }

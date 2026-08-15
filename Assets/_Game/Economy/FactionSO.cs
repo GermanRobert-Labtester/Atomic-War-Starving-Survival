@@ -72,6 +72,22 @@ namespace AtomicWar._Game.Economy
             public const string UplandMilitia = "upland_militia";
             /// <summary>Safe Haven Communities — civilian collectives attempting to rebuild infrastructure.</summary>
             public const string SafeHavenCommunity = "safe_haven_community";
+
+            // ── Expansion II Addendum: Factions of the Deep ───────────
+            /// <summary>Sump-Dredgers — pale troglophiles in the flooded transit tunnels.</summary>
+            public const string SumpDredgers = "sump_dredgers";
+            /// <summary>Rot Farmers — amoral myco-cultivators who coexist with the Ash-Blight.</summary>
+            public const string RotFarmers = "rot_farmers";
+            /// <summary>Hydro-Barons of Sector 8 — remnants of the municipal water authority.</summary>
+            public const string HydroBarons = "hydro_barons";
+
+            // ── Expansion III: Factions of the Rust ──────────────────
+            /// <summary>Wire-Heads — scrap-neuromancers who negotiate with automated turrets.</summary>
+            public const string WireHeads = "wire_heads";
+            /// <summary>Echo-Bats — acoustic nomads who navigate by vibration and echolocation.</summary>
+            public const string EchoBats = "echo_bats";
+            /// <summary>Custodians — pre-war treaded repair platforms that pave over survivors.</summary>
+            public const string Custodians = "custodians";
         }
     }
 }

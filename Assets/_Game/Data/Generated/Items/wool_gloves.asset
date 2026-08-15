@@ -15,7 +15,7 @@ MonoBehaviour:
   id: wool_gloves
   displayName: Wool Gloves
   description: Warm hands.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e02addbf1854e980e854da3bc3564ee2, type: 3}
   type: 6
   stackMax: 5
   weight: 0.15

@@ -155,6 +155,9 @@ namespace AtomicWar._Game.Core
 
             if (HandleModalNumberKeys()) return;
 
+            // Journal tab keys claim input only after modals declined (modal > journal).
+            if (HandleJournalInput()) return;
+
             HandleConsumableKeys();
 
             // Event choices (when modal open; workbench numbers take priority above)
@@ -217,6 +220,37 @@ namespace AtomicWar._Game.Core
             // Fast-forward toggle: 1x <-> 3x simulation speed
             if (Input.GetKeyDown(_fastForwardKey))
                 _bootstrap.ToggleFastForward();
+        }
+
+        /// <summary>
+        /// Journal tab keys ([1]-[5]) and [Esc] close, only while the book is
+        /// open. Returns true when a key was consumed (claims the frame, like
+        /// the other panel handlers) so modals keep priority over digits.
+        /// </summary>
+        private bool HandleJournalInput()
+        {
+            if (!IsJournalBookOpen()) return false;
+
+            if (Input.GetKeyDown(_closePanelKey))
+            {
+                _bootstrap.ToggleJournalBook();
+                return true;
+            }
+            for (int t = 0; t < AtomicWar._Game.Events.JournalSystem.TabCount; t++)
+            {
+                if (Input.GetKeyDown(KeyCode.Alpha1 + t))
+                {
+                    _bootstrap.SwitchJournalTab(t);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool IsJournalBookOpen()
+        {
+            var hud = GetHud();
+            return hud != null && hud.JournalBookUI != null && hud.JournalBookUI.IsOpen;
         }
 
         /// <summary>

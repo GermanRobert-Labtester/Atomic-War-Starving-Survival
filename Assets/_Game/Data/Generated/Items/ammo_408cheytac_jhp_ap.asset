@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_408cheytac_jhp_ap
   displayName: .408 CheyTac JHP+AP
   description: Military dual-attribute load. Field-only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ee709a9e99ab21298a95d63bc756cd05, type: 3}
   type: 15
   stackMax: 20
   weight: 0.02

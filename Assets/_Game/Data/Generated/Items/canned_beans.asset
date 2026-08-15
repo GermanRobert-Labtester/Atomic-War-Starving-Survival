@@ -15,7 +15,7 @@ MonoBehaviour:
   id: canned_beans
   displayName: Canned Beans
   description: Beans in brine.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 98c70d9419734be4f8fb39cb701d481c, type: 3}
   type: 0
   stackMax: 15
   weight: 0.4

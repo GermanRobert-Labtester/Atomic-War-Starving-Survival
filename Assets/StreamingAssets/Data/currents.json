@@ -1,0 +1,288 @@
+[
+  {
+    "id": "faction_archivists",
+    "display_name": "The Archivists of the Before",
+    "alignment": "peaceful",
+    "home_region": "the_drown",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "item_pre_war_photo_album",
+      "item_cassette_tape",
+      "item_vinyl_collection"
+    ],
+    "offers": [
+      "encrypted_drive",
+      "morale_blessing"
+    ],
+    "signature_quote": "Say the name aloud while you write it. If you don't say it, you're only copying.",
+    "access_rule": "A name enters the Schedule only on corroborated testimony: two living witnesses who knew the dead. The rule is the whole point of the rule.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_lamplighters",
+    "display_name": "The Lamplighters",
+    "alignment": "peaceful",
+    "home_region": "all_regions",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "lamp_oil",
+      "wicks",
+      "reflector_glass",
+      "batteries"
+    ],
+    "offers": [
+      "lit_routes",
+      "route_ledger"
+    ],
+    "signature_quote": "I don't light it for you. I light it.",
+    "access_rule": "A beacon is lit for whoever is walking. Ask twice for the exception and the lamps in your region go out one at a time over eleven days, permanently.",
+    "badge_asset_id": "faction_leader_1"
+  },
+  {
+    "id": "faction_quiet_house",
+    "display_name": "The Quiet House",
+    "alignment": "peaceful",
+    "home_region": "the_grid",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "blankets",
+      "ethanol",
+      "the_name"
+    ],
+    "offers": [
+      "quiet_passing",
+      "catalogued_effects"
+    ],
+    "signature_quote": "We make it quiet.",
+    "access_rule": "The person's name, and one true thing about them. That is the entire price, and the true thing is written on the tag exactly as given.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_grain_exchange",
+    "display_name": "The Grain Exchange",
+    "alignment": "peaceful",
+    "home_region": "the_verge",
+    "is_active": false,
+    "trust": 0,
+    "wants": [],
+    "offers": [
+      "bulk_trade_rates",
+      "seasonal_shortfall_intel"
+    ],
+    "signature_quote": "The board is the board. Argue with the board.",
+    "access_rule": "No guards, no charter, no enforcement. It works for exactly one reason: everybody attending is hungry.",
+    "badge_asset_id": "faction_badge_free_traders"
+  },
+  {
+    "id": "faction_sun_seekers",
+    "display_name": "The Sun-Seekers",
+    "alignment": "conditional",
+    "home_region": "all_regions",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "item_welders_glass",
+      "item_lead_visor"
+    ],
+    "offers": [
+      "solar_technology"
+    ],
+    "signature_quote": "It came back. We told you it comes back.",
+    "access_rule": "They trade only during FalseSpring or SilentSpring. Stockpile UV protection for the window and the raid check is exactly what you trigger.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_osteophages",
+    "display_name": "The Osteophages",
+    "alignment": "dangerous",
+    "home_region": "the_drown",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "toxic_tech_waste",
+      "exiled_survivors"
+    ],
+    "offers": [
+      "copper_wire_10m_of_10m",
+      "scrap_metal"
+    ],
+    "signature_quote": "",
+    "access_rule": "A chute, and a bell, and a wait. The metal comes back clean. They do not negotiate verbally.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_the_tally",
+    "display_name": "The Tally",
+    "alignment": "dangerous",
+    "home_region": "the_toll",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "the_forfeit"
+    ],
+    "offers": [
+      "contract_credit",
+      "debt_recovery"
+    ],
+    "signature_quote": "You've heard it. Do you want it read again? Most people want it read again.",
+    "access_rule": "The contract states the debt, the term, the rate, and the forfeit. It is read back before signing, and read again, in full, before enforcement.",
+    "badge_asset_id": "faction_leader_2"
+  },
+  {
+    "id": "faction_undertow",
+    "display_name": "The Undertow",
+    "alignment": "dangerous",
+    "home_region": "the_drown",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "an_unnavigable_drown"
+    ],
+    "offers": [
+      "rescue",
+      "salvage_recovery",
+      "local_knowledge"
+    ],
+    "signature_quote": "Lucky we were close.",
+    "access_rule": "They present as helpful strangers who arrive very quickly. The price is agreed after you are already in the water.",
+    "badge_asset_id": ""
+  },
+  {
+    "id": "faction_cold_count",
+    "display_name": "The Cold Count",
+    "alignment": "peaceful",
+    "home_region": "the_spine",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "power",
+      "shielding",
+      "deep_samples"
+    ],
+    "offers": [
+      "accurate_rad_readings",
+      "provenance_analysis"
+    ],
+    "signature_quote": "It's not a secret. It's a measurement. Nobody came to collect it.",
+    "access_rule": "Four surviving researchers working the low-background lab. They have the answer and will not falsify it, and they do not understand why they keep being asked to.",
+    "badge_asset_id": "faction_badge_scientific_remnant"
+  },
+  {
+    "id": "faction_deserter_coalition",
+    "display_name": "The Deserter Coalition",
+    "alignment": "conditional",
+    "home_region": "the_verge",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "silence",
+      "civilian_clothing",
+      "papers"
+    ],
+    "offers": [
+      "patrol_schedules",
+      "weapon_maintenance",
+      "disciplined_fighters"
+    ],
+    "signature_quote": "",
+    "access_rule": "Decent people who are wanted for a capital offence, which makes them unpredictable in exactly one way: they cannot ever be seen. Sheltering them is the single fastest route to a Garrison lockout.",
+    "badge_asset_id": "faction_badge_deserter_coalition"
+  },
+  {
+    "id": "faction_the_provisioned",
+    "display_name": "The Provisioned",
+    "alignment": "conditional",
+    "home_region": "the_grid",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "almost_nothing"
+    ],
+    "offers": [
+      "prewar_stock",
+      "working_pre_exchange_technology"
+    ],
+    "signature_quote": "Nobody helped us build it. I notice nobody's asking whether we'd like help now.",
+    "access_rule": "Private shelter owners who were never on the Schedule and did not need to be. They were correct in advance, and they have had five years to develop opinions about the difference.",
+    "badge_asset_id": "faction_badge_doomsday_preppers"
+  },
+  {
+    "id": "faction_long_walk",
+    "display_name": "The Long Walk",
+    "alignment": "peaceful",
+    "home_region": "all_regions",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "water",
+      "footwear",
+      "news"
+    ],
+    "offers": [
+      "unreachable_region_goods",
+      "sector_wide_situation_report"
+    ],
+    "signature_quote": "We'll be back round in about a year. Don't hold anything for us.",
+    "access_rule": "Thirty-odd people moving a continuous circuit of Sector 4 on a route that takes roughly eleven months. They will not stay a second night, for anyone, for any offer.",
+    "badge_asset_id": "faction_badge_outcast_nomads"
+  },
+  {
+    "id": "faction_scavenger_guild",
+    "display_name": "The Scavenger Guild",
+    "alignment": "conditional",
+    "home_region": "the_grid",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "claim_respect",
+      "tools"
+    ],
+    "offers": [
+      "richest_salvage_routes",
+      "apprenticeship"
+    ],
+    "signature_quote": "",
+    "access_rule": "A site cut to the frame yields once. They blacklist a shelter that over-strips a claimed site, and the blacklist is honoured across the whole Guild, permanently.",
+    "badge_asset_id": "faction_badge_scavenger_guild"
+  },
+  {
+    "id": "faction_iron_raiders",
+    "display_name": "The Iron Raiders",
+    "alignment": "dangerous",
+    "home_region": "the_toll",
+    "is_active": true,
+    "trust": 0,
+    "wants": [
+      "what_you_have"
+    ],
+    "offers": [],
+    "signature_quote": "",
+    "access_rule": "No code, no contract, no ideology. The only faction in this document with no offers, and that absence is the design.",
+    "badge_asset_id": "faction_badge_iron_raiders"
+  },
+  {
+    "id": "faction_hydro_barons",
+    "display_name": "The Coastal Hydro-Barons",
+    "alignment": "conditional",
+    "home_region": "the_coast",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "clean_water",
+      "item_hydro_baron_queue_chit",
+      "desalination_access"
+    ],
+    "notes": "The fifteenth current (Expansion 06). Wired to the Rate Card War questline.",
+    "offers": [
+      "potable_water_quota",
+      "brine_byproduct_salt",
+      "desalination_access"
+    ],
+    "signature_quote": "We didn't poison the water. We just decided who drinks it first.",
+    "access_rule": "Three desalination plants and one aqueduct manifold, inherited intact from a pre-Exchange utility contractor and never nationalised. They do not sell water. They sell a place in the queue.",
+    "badge_asset_id": "faction_badge_hydro_barons"
+  }
+]

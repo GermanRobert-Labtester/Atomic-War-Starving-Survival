@@ -15,7 +15,7 @@ MonoBehaviour:
   id: clean_water
   displayName: Clean Water
   description: Safe drinking water. Restores thirst.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8baf577c292b2d9b59f9b2147bbc9efd, type: 3}
   type: 1
   stackMax: 10
   weight: 0.5

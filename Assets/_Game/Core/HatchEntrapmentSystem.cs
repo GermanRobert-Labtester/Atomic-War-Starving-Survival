@@ -3,6 +3,7 @@ using UnityEngine;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Events;
 using AtomicWar._Game.Shelter;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {

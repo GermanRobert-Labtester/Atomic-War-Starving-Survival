@@ -1,0 +1,265 @@
+{
+ "broadcasts": [
+  {
+   "id": "radio_d480_span44_automated_loop",
+   "frequency": "96.100 MHz",
+   "dayTrigger": 480,
+   "source": "Unattended Relay, Railway Span 44-Alpha",
+   "message": "Station null. Target grid primed. Remain in shelter. Station null. Target grid primed. Remain in shelter.",
+   "signalStrength": "S3",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d481_garrison_continuity_bulletin",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 481,
+   "source": "Central Garrison Continuity Office",
+   "message": "Bulletin 481-C. Reports of irregular weighing practices at unregulated exchange points are noted and under continued observation. The Continuity Office reminds all trading concerns that the Garrison's forbearance is a courtesy extended, not a right assumed. Compliance inspections will resume at the Continuity Office's discretion.",
+   "signalStrength": "S8",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d484_exchange_roster_wire_rebuttal",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 484,
+   "source": "Exchange Roster Wire",
+   "message": "To our neighbors on both sides of the rope: the scale at the Exchange has never once favored a uniform, and the ledger is open to anyone who can read it, including the Continuity Office, who we notice has not asked to. Fair scales or broken fingers. The fingers get broken by consensus. Come count them yourselves.",
+   "signalStrength": "S5",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d487_unsigned_supply_figures",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 487,
+   "source": "Unidentified",
+   "message": "Corrected totals for Sector grain movement, week ending the 483rd day: eleven hundred kilos logged by the Continuity Office, fourteen hundred and twenty actually moved. The difference did not go to the Exchange. Ask who it went to before you believe either bulletin on that board.",
+   "signalStrength": "S2",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d488_garrison_grain_rebuttal",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 488,
+   "source": "Central Garrison Continuity Office",
+   "message": "Bulletin 488-B. The Continuity Office rejects unsigned claims of discrepancy in grain tonnage circulated on unlicensed frequencies. Sector logs are reconciled weekly and available for inspection at the Continuity Office by appointment. Residents repeating unverified figures do so at their own standing. The Office will not debate its ledgers with static.",
+   "signalStrength": "S8",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d490_ash_sign_shrine_transmission",
+   "frequency": "142.850 MHz",
+   "dayTrigger": 490,
+   "source": "The Ash Sign, Shrine Transmission",
+   "message": "The ash keeps its own ledger. It does not answer to the Continuity Office and it does not answer to the roster. What it burns, it chooses. What it leaves standing, it chooses. Come read the numbers at the cairn yourself before you trust a bulletin board written by hands that bleed.",
+   "signalStrength": "S4",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d493_toll_syndicate_rate_notice",
+   "frequency": "61.900 MHz",
+   "dayTrigger": 493,
+   "source": "Weighbridge Toll Office",
+   "message": "Rate revision effective immediate. Crossing rate: two units standard goods or equivalent. No exceptions, no faction discount, no credit extended past the booth. The scale is honest. The price isn't negotiable. Come with what you owe or don't come.",
+   "signalStrength": "S6",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d496_understory_clean_strike",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 496,
+   "source": "The Understory, civilian relay",
+   "message": "Something hit empty ground out past the rail span last night and neither uniform in this district will own it. Funny thing, folks — for once the war did less damage doing something than either army manages doing nothing. We'll keep asking. You keep listening. That's the whole arrangement.",
+   "signalStrength": "S3",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d504_garrison_conscription_notice",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 504,
+   "source": "Central Garrison Continuity Office",
+   "message": "Notice 504-A. Labor quota for the coming quarter is revised upward per Continuity Decree Seven. All eligible residents are required to report to the Conscription Office within five days of list posting. Non-report will be classified as desertion in absentia, effective immediately.",
+   "signalStrength": "S8",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d507_exchange_roster_wire_conscription",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 507,
+   "source": "Exchange Roster Wire",
+   "message": "Half our roster's stall-holders got quota notices this week, which means half our roster isn't at their stalls this week, which the Continuity Office apparently didn't factor into a labor decree written by people who've never weighed a sack of anything. The scale stays open regardless, short-handed or not. Come trade. Just don't expect a full counter.",
+   "signalStrength": "S5",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d510_understory_span44_standoff",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 510,
+   "source": "The Understory, civilian relay",
+   "message": "Two patrols stood on the rail span yesterday, rifles slung, staring at each other over a rumor of a train that never came. Nobody fired. We'd like to say that's because cooler heads prevailed. It's actually because the loudspeaker on that bridge has been telling everyone to remain in shelter for three years and somebody finally, briefly, listened.",
+   "signalStrength": "S3",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d516_ash_sign_warning",
+   "frequency": "142.850 MHz",
+   "dayTrigger": 516,
+   "source": "The Ash Sign, Shrine Transmission",
+   "message": "The reading from the almshouse quarter has turned. We do not warn. We measure, and today the measure says: do not linger there. Take this as you take every number we give you — plainly, and without asking us to explain why the ash chooses what it chooses.",
+   "signalStrength": "S4",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d518_garrison_almshouse_bulletin",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 518,
+   "source": "Central Garrison Continuity Office",
+   "message": "The Continuity Office confirms an ordnance impact at the former almshouse site. No Garrison unit logged a fire mission for that grid. Residents are advised the structure was long unoccupied and the loss is material only. Further comment is not warranted at this time.",
+   "signalStrength": "S8",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d522_ash_sign_reading_shift",
+   "frequency": "142.850 MHz",
+   "dayTrigger": 522,
+   "source": "The Ash Sign, Shrine Transmission",
+   "message": "The readings have not settled since the almshouse. We measure daily now instead of weekly, because daily is what the ground is asking for. We will not tell you what that means beyond what the numbers say: more grids are turning than at any point we have logged. Watch where you walk. We are watching too.",
+   "signalStrength": "S4",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d525_exchange_roster_wire_prices",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 525,
+   "source": "Exchange Roster Wire",
+   "message": "To the roster and everyone who trades with us: yes, we've put four people on the door with coats a little heavier than they used to be. It is not what we wanted and it is not permanent, and the scale still answers to consensus, not to whoever's carrying. We'd rather you heard that from us than guessed at it.",
+   "signalStrength": "S5",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d534_garrison_exchange_order",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 534,
+   "source": "Central Garrison Continuity Office",
+   "message": "Order 534. In light of confirmed armed presence at the grain exchange, a Garrison inspection post is established at the entrance effective this bulletin. This measure preserves continuity of distribution for all district residents and is not, and should not be characterized as, an occupation.",
+   "signalStrength": "S9",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d542_understory_something_coming",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 542,
+   "source": "The Understory, civilian relay",
+   "message": "We're not going to say where, because we don't know for certain, and we'd rather be wrong than wrong and specific. But more than one of you has called in the same feeling this week — that something's coming, soon, somewhere you queue. If you've got somewhere else to be for a few days, maybe be there.",
+   "signalStrength": "S3",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d546_garrison_plaza_communique",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 546,
+   "source": "Central Garrison Continuity Office",
+   "message": "The Continuity Office confirms the loss at Ration Plaza was the direct result of a Rebuilders convoy improperly routed through a civilian gathering point during active hostilities. Casualties are regrettable and were entirely avoidable had proper routing protocol been observed by the responsible party.",
+   "signalStrength": "S9",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d547_rebuilders_plaza_communique",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 547,
+   "source": "Exchange Roster Wire",
+   "message": "No convoy of ours has moved through Ration Plaza in a year and every trader on our roster can tell you why: it was never our route. What was two streets over until last month was a Garrison inspection post. We are not saying we know what was actually aimed at. We are saying the Continuity Office's story doesn't hold its own weight.",
+   "signalStrength": "S5",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d559_lima_november_burst",
+   "frequency": "96.100 MHz",
+   "dayTrigger": 559,
+   "source": "Unidentified, LIMA-NOVEMBER-SEVEN-FOUR",
+   "message": "LN74 LN74 grid confirmed hold pattern extend three six repeat three six LN74 out.",
+   "signalStrength": "S1",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d566_toll_syndicate_quiet_line",
+   "frequency": "61.900 MHz",
+   "dayTrigger": 566,
+   "source": "Weighbridge Toll Office",
+   "message": "To whoever's been asking about arrangements at the pumphouse: the Weighbridge doesn't discuss its clients, past, present, or currently owing. Ask your question somewhere else. Or don't ask it at all. Either one keeps the toll the same.",
+   "signalStrength": "S6",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d571_forward_roster_checkpoint_notice",
+   "frequency": "71.500 MHz",
+   "dayTrigger": 571,
+   "source": "Forward Roster Checkpoint Wire",
+   "message": "Spur road, west checkpoint, effective yesterday. Two units standard goods or equivalent, no faction discount, no exceptions logged. We're not the Garrison. We're not raiders either. Come through clean, go through clean. That's the whole notice.",
+   "signalStrength": "S4",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d579_ash_sign_shrine_anomaly",
+   "frequency": "142.850 MHz",
+   "dayTrigger": 579,
+   "source": "The Ash Sign, Shrine Transmission",
+   "message": "The shrine was struck yesterday. We will not pretend otherwise on this frequency, whatever gets said at the cairn itself. For three years the ash spared this ground and yesterday it didn't, and we do not have a verse for that yet. We are still measuring. We are asking you to be patient with us while we work out what the numbers are actually saying.",
+   "signalStrength": "S4",
+   "isEmergency": true
+  },
+  {
+   "id": "radio_d585_understory_spur_road_notice",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 585,
+   "source": "The Understory, civilian relay",
+   "message": "Something's been moving crates out past the old rail spur at night, quiet, organized, gone by dawn. Not looters — looters don't restack. We don't know who. We're not going to go find out. If you value your kneecaps, neither should you.",
+   "signalStrength": "S3",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d589_garrison_ceasefire_notice",
+   "frequency": "88.400 MHz",
+   "dayTrigger": 589,
+   "source": "Central Garrison Continuity Office",
+   "message": "The Continuity Office confirms a stand-down of offensive operations pending further notice. This is not a treaty and should not be reported as one. The inspection post at the grain exchange remains in place. Residents are advised that continuity, not peace, is what has been secured.",
+   "signalStrength": "S8",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d590_rebuilders_ceasefire_notice",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 590,
+   "source": "Exchange Roster Wire",
+   "message": "To everyone asking if it's really over: no. To everyone asking if it's quieter than it was: yes. We'll take quieter. The scale is still on the table, the tables are still standing, and that is more than this district could say with confidence a season ago.",
+   "signalStrength": "S5",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d596_forward_roster_holding_position",
+   "frequency": "71.500 MHz",
+   "dayTrigger": 596,
+   "source": "Forward Roster Checkpoint Wire",
+   "message": "Spur road checkpoint's still up despite what the Garrison's calling a stand-down. Nobody's told us to stand down anything, and until somebody with authority we recognize does, the rate stays the same and so do we. Column traffic's thinned out this week. Fine by us. Quiet tolls are still tolls.",
+   "signalStrength": "S4",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d600_understory_closing",
+   "frequency": "104.200 MHz",
+   "dayTrigger": 600,
+   "source": "The Understory, civilian relay",
+   "message": "Six hundred days, for whoever's counting, and we know some of you are, because you keep calling in to correct our arithmetic. Here's what we've got, plainly, no sermon: something out there has been choosing what burns and what doesn't, on purpose, for a long time, and lately it's been choosing wrong. We don't have a name for it. If you find one, this frequency is always open. It always has been. That's rather the point of us.",
+   "signalStrength": "S3",
+   "isEmergency": false
+  },
+  {
+   "id": "radio_d606_forward_roster_recognition_notice",
+   "frequency": "71.500 MHz",
+   "dayTrigger": 606,
+   "source": "Forward Roster Checkpoint Wire",
+   "message": "To the column that stood down at the spur road yesterday: appreciated. The checkpoint isn't going anywhere. We took a cut before the peace and we'll take one after, same rate, same rules. If that needs a name on a treaty somewhere, that's above our pay. The road stays open either way.",
+   "signalStrength": "S4",
+   "isEmergency": false
+  }
+ ]
+}

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: water_filter
   displayName: Water Filter
   description: Replacement cartridge for purifying contaminated water.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 94f4e8c146093042a8b093a8e7f62eda, type: 3}
   type: 9
   stackMax: 5
   weight: 0.5

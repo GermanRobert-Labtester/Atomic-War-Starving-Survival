@@ -114,6 +114,21 @@ namespace AtomicWar._Game.Shelter
             return true;
         }
 
+        /// <summary>
+        /// Effect-driven hatch seal patch for the repair_gasket recipe: the
+        /// recipe already consumed its own gasket ingredients at craft start
+        /// and produces no item, so its hatch_seal_integrity effect lands here
+        /// without charging the inventory a second time.
+        /// </summary>
+        public bool ApplyHatchSealPatch(float amount)
+        {
+            if (amount <= 0f || _state.HatchSealIntegrity >= 0.99f) return false;
+            _state.HatchSealIntegrity = Mathf.Clamp01(_state.HatchSealIntegrity + amount);
+            OnRepaired?.Invoke(Subsystem.HatchSeal);
+            OnIntegrityChanged?.Invoke(Subsystem.HatchSeal, _state.HatchSealIntegrity);
+            return true;
+        }
+
         public bool RepairPipe()
         {
             if (_state.ActivePipeLeaks <= 0) return false;

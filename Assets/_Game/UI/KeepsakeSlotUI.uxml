@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="keepsake-slot-root" class="keepsake-slot">
+        <ui:VisualElement name="slot-border" class="slot-border" />
+        <ui:Label name="keepsake-slot-icon" class="keepsake-slot-icon item-icon" text="" />
+        <ui:VisualElement name="keepsake-crack-overlay" class="keepsake-crack-overlay cracked-overlay" />
+        <ui:VisualElement name="grief-vignette" class="grief-vignette" />
+    </ui:VisualElement>
+</ui:UXML>

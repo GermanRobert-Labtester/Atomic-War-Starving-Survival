@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="faction-intelligence-panel" class="faction-intelligence-panel hidden" picking-mode="Position">
+        <ui:Label name="faction-name" class="faction-intel-name" text="FACTION" />
+        <ui:ProgressBar name="standing-bar" class="standing-bar" low-value="0" high-value="100" value="50" />
+        <ui:Label name="standing-value" class="standing-value" text="+0" />
+        <ui:Label name="tribute-info" class="tribute-info" text="" />
+        <ui:VisualElement name="intel-section" class="intel-section" />
+        <ui:VisualElement name="agent-section" class="agent-section">
+            <ui:Button name="send-agent-button" class="intel-action-button" text="SEND AGENT" />
+            <ui:Button name="propaganda-button" class="intel-action-button" text="BROADCAST" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

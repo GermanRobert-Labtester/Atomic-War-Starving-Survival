@@ -15,7 +15,7 @@ MonoBehaviour:
   id: crowbar_broken
   displayName: Crowbar Broken
   description: Broken tool. Scrap only.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: ac888ec43cf61d51bab9aacb86f1b450, type: 3}
   type: 10
   stackMax: 5
   weight: 0.5

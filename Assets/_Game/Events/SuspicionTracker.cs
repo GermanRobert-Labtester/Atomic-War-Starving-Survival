@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Events
 {
@@ -418,7 +419,7 @@ namespace AtomicWar._Game.Events
             if (context == null) return;
             var thief = FindSurvivor(context.AllSurvivors, TrueThiefId);
             if (thief != null)
-                thief.State = SurvivorState.Dead;
+                SurvivorNeedWrite.SetHealth(thief, 0f);
 
             ApplyGroupMorale(context, GroupTraumaMorale);
             // Group trauma flag

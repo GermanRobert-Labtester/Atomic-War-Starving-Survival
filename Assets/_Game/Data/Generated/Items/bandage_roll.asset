@@ -15,7 +15,7 @@ MonoBehaviour:
   id: bandage_roll
   displayName: Bandage Roll
   description: Clean cloth roll.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0e5edda904802d7c1b83e2e1b940c7ff, type: 3}
   type: 3
   stackMax: 25
   weight: 0.08

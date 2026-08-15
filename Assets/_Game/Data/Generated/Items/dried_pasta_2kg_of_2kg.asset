@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Dried Pasta 2KG/2KG
   description: 'Drains 0.2KG/use. Alone: 1 quality dinner. +carrot+potato+2 water:
     4 quality dinners.'
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 81500693fddc0595b833270cea2f31f3, type: 3}
   type: 0
   stackMax: 3
   weight: 2.1

@@ -136,7 +136,11 @@ namespace AtomicWar._Game.Survivors
             if (sv == null || !sv.IsAlive) return false;
             var st = Get(sv.Id);
             if (st == null || st.WorkAccidentChance <= 0f) return false;
-            if (rng == null) rng = new System.Random();
+            // Use the seeded stream, not `new System.Random()` — the parameterless
+            // ctor is time-seeded with low resolution (rapid calls share a seed)
+            // and breaks save replayability for a seed-driven game. Matches the
+            // fallback pattern in CombatPerkSystem / BunkerSocialSystems.
+            if (rng == null) rng = AtomicWar._Game.Utilities.SeededRandom.Stream("sleep_work_accident");
             if (rng.NextDouble() < st.WorkAccidentChance)
             {
                 OnWorkAccident?.Invoke(sv, workActionId);
@@ -161,10 +165,11 @@ namespace AtomicWar._Game.Survivors
 
         private float ResolveBedFraction(Survivor sv)
         {
-            string bedId = GetBedTypeIdForSurvivor?.Invoke(sv) ?? "floor";
-            if (string.IsNullOrEmpty(bedId)) bedId = "floor";
+            if (GetBedTypeIdForSurvivor == null) return 1.0f;
+            string bedId = GetBedTypeIdForSurvivor(sv) ?? "bed";
+            if (string.IsNullOrEmpty(bedId)) bedId = "bed";
             if (BedRecoveryFraction.TryGetValue(bedId, out float f)) return f;
-            return 0.40f;
+            return 1.0f;
         }
 
         public float GetSkillAccuracyPenalty(Survivor sv)

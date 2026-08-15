@@ -8,7 +8,9 @@
         "AtomicWar._Game.Radiation",
         "AtomicWar._Game.Environment",
         "AtomicWar._Game.Events",
-        "AtomicWar._Game.Crafting"
+        "AtomicWar._Game.Crafting",
+        "AtomicWar._Game.Quests",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

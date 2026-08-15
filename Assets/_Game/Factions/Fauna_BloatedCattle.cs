@@ -7,7 +7,7 @@ namespace AtomicWar._Game.Factions
     [Serializable]
     public class Fauna_BloatedCattleState
     {
-        public string id = "fauna_bloatedcattle";
+        public string id = "fauna_bloated_cattle";
         public string displayName = "BloatedCattle";
         public bool isPresent = false;
         public int count = 0;

@@ -15,7 +15,7 @@ MonoBehaviour:
   id: book
   displayName: Book
   description: Bound pages. Morale, kindling, or knowledge.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 15af99843c5d49c8d95055a75307d7ad, type: 3}
   type: 12
   stackMax: 10
   weight: 0.4

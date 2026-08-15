@@ -18,7 +18,7 @@ MonoBehaviour:
     stock is on hand and the gun is mounted + oiled. Requires 2 operators to fire
     at full efficiency; jams without oil. Two crew + a stock pile of this weapon
     is the difference between a held hatch and a breached one.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: e9e41f00eae96cefa9000ab662cd9e87, type: 3}
   type: 15
   stackMax: 1
   weight: 45

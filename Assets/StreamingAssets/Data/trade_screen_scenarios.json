@@ -1,0 +1,93 @@
+{
+  "$schema": "./schema/trade_screen_scenarios.schema.json",
+  "version": 1,
+  "description": "Negotiation Table mock scenarios for the skin track and convergence probes. Data-defined, never hardcoded: fair_deal, offer_short, empty_table. The empty table must feel deliberate, not broken.",
+  "scenarios": [
+    {
+      "id": "fair_deal",
+      "faction_id": "scavenger_camp",
+      "faction_name": "Scavenger Camp",
+      "leader_name": "Varek",
+      "succession_generation": 1,
+      "stance": "Trade",
+      "trust": 22,
+      "aggression": 0.35,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 14,
+      "price_shocks": [
+        { "kind": "PlumePassing", "multiplier": 2.5, "note": "rad plume over the crossing" }
+      ],
+      "scarcity": [
+        { "item_id": "clean_water", "display_name": "Clean Water", "multiplier": 2.0 }
+      ],
+      "player_offers": [
+        { "item_id": "canned_food", "display_name": "Canned Food", "quantity": 3, "unit_price": 18 },
+        { "item_id": "duct_tape", "display_name": "Duct Tape", "quantity": 1, "unit_price": 15 }
+      ],
+      "biological_offers": { "PintOfBlood": 1 },
+      "faction_demands": [
+        { "item_id": "clean_water", "display_name": "Clean Water", "quantity": 2, "unit_price": 22 }
+      ],
+      "expected_fairness": "fair",
+      "confirm_succeeds": true,
+      "radio_ticker": "RADIO: [RUSTPILE WATCH] Convoy turned back at the culvert. Nobody asks why anymore."
+    },
+    {
+      "id": "offer_short",
+      "faction_id": "upland_militia",
+      "faction_name": "Upland Militia",
+      "leader_name": "Sergeant Oduya",
+      "succession_generation": 3,
+      "stance": "Trade",
+      "trust": -5,
+      "aggression": 0.6,
+      "consecutive_repels": 2,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "CivilWar",
+      "world_day": 27,
+      "price_shocks": [
+        { "kind": "ConvoyAmbush", "multiplier": 1.8, "note": "fuel convoy burned on the ridge road" }
+      ],
+      "scarcity": [
+        { "item_id": "fuel", "display_name": "Fuel", "multiplier": 1.8 }
+      ],
+      "player_offers": [
+        { "item_id": "canned_food", "display_name": "Canned Food", "quantity": 1, "unit_price": 18 }
+      ],
+      "biological_offers": {},
+      "faction_demands": [
+        { "item_id": "fuel", "display_name": "Fuel", "quantity": 2, "unit_price": 40 }
+      ],
+      "expected_fairness": "short",
+      "confirm_succeeds": false,
+      "radio_ticker": "RADIO: [GRAYLINE] Ridge road closed after the fire. Haul your own weight."
+    },
+    {
+      "id": "empty_table",
+      "faction_id": "rot_farmers",
+      "faction_name": "Rot Farmers",
+      "leader_name": "Mother Ilde",
+      "succession_generation": 2,
+      "stance": "Refuse",
+      "trust": -25,
+      "aggression": 0.2,
+      "consecutive_repels": 0,
+      "has_surrendered": false,
+      "can_demand_parley": false,
+      "world_phase": "LongWinter",
+      "world_day": 41,
+      "price_shocks": [],
+      "scarcity": [],
+      "player_offers": [],
+      "biological_offers": {},
+      "faction_demands": [],
+      "expected_fairness": "empty",
+      "confirm_succeeds": false,
+      "radio_ticker": "RADIO: [DEAD RELAY] Nothing but carrier hum. The table stays bare."
+    }
+  ]
+}

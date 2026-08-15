@@ -6,6 +6,7 @@ using AtomicWar._Game.Survivors;
 using AtomicWar._Game.UI;
 using NUnit.Framework;
 using UnityEngine;
+using Ashfall.Core;
 
 namespace AtomicWar.Tests.EditMode
 {
@@ -60,7 +61,7 @@ namespace AtomicWar.Tests.EditMode
             Assert.That(before.NextOutputLabel, Is.EqualTo("CLEAN"));
             Assert.That(before.UnitsQueued, Is.EqualTo(2));
 
-            economy.Tick(2f, AtomicWar._Game.Environment.WeatherKind.Clear, 1, shelter, storage);
+            economy.Tick(2f, WeatherKind.Clear, 1, shelter, storage);
             Assert.That(storage.CleanWater, Is.EqualTo(1f).Within(0.001f));
             Assert.That(storage.DirtyWater, Is.EqualTo(1f).Within(0.001f));
             Assert.That(storage.IrradiatedWater, Is.EqualTo(1f).Within(0.001f));

@@ -1,0 +1,442 @@
+[
+ {
+  "id": "improvised_refinement_bench",
+  "description": "A workbench built from salvaged steel and plywood, bolted together with mismatched threads. A hand vise, a file, and a grinding stone sit on the top, ready to break scavenged materials down and refine them into usable components. The frame holds at full condition if it is kept. The man who built it expected to be back at a proper shop within the month. That was three years ago."
+ },
+ {
+  "id": "tactical_refinement_bench",
+  "description": "A heavier bench on a proper steel frame, with drawers that hold files, chisels, and cutting oil. It refines raw materials faster and to a higher grade than the improvised build, and the work surface stays flat. Fourteen kilograms of bench that most shelters would trade a week of meals for. It came out of a machine shop that no longer has a roof."
+ },
+ {
+  "id": "advanced_tactical_refinement_workshop",
+  "description": "The full setup: a steel bench, a drill press, a grinder, and trays for chemical baths. Anything salvageable can be broken down here and turned back into something clean and useful, faster than any lesser bench. Sixteen kilograms, bolted to the floor so it does not walk away. It took a year of barter and a working power source to assemble. The shop that owned it first sold it piece by piece."
+ },
+ {
+  "id": "basic_tobacco_leaf",
+  "description": "Dried tobacco leaf, brown and brittle at the edges, packed loose in a cloth bundle. Grown in window boxes and cold frames since the ground got hard, or hoarded from a pre-war shop that no one came back to. It rolls into cigarettes and trades for a little. It tastes of dust and dry paper, and it still does the job."
+ },
+ {
+  "id": "quality_tobacco_leaf",
+  "description": "Dark cured tobacco leaf, kept dry in a cellar and aged until the bitterness left it. It rolls evenly, burns slowly, and fills the shelter with smoke that does not sting the eyes. The leaf weighs nothing in the pack and carries three times the trade of the basic cut. Someone knew how to grow it, and someone else kept the secret."
+ },
+ {
+  "id": "basic_rollup_cigarette",
+  "description": "A hand-rolled cigarette of basic leaf, pinched closed at both ends, a little lumpy. One of them settles a shift worker for a while, a small lift for the morale of whoever has a minute to smoke it. Cheap, light, and easy to trade. The paper comes from an old book when the roll-ups run out."
+ },
+ {
+  "id": "quality_rollup_cigarette",
+  "description": "A cigarette rolled evenly from quality leaf, slow burning and firm to the touch. Smoking one is a small ceremony in most shelters, and it carries twice the lift of the basic rollup. They trade a little higher because of it. The roller keeps the good paper in a tin under her bunk."
+ },
+ {
+  "id": "herbal_cigarette",
+  "description": "A cigarette rolled from dried herbs instead of tobacco, with no nicotine in the smoke. It burns faster and thinner, but the ritual is the point: a minute of quiet, hands busy. It gives a small lift to whoever lights one. Some say the herbs help the throat; the taste of the paper says otherwise."
+ },
+ {
+  "id": "herbs",
+  "description": "Dried leaves and stems tied in bundles, some still green enough to smell of the field. They go into tea, into smokes, into the pot when the cook is short. A bundle weighs nothing and carries a fair trade value, since gardens are small and the season is short. The ash gets into everything anyway."
+ },
+ {
+  "id": "menthol_leaf",
+  "description": "Leaf crushed with a cool, sharp smell that reaches the back of the nose from a meter away. It flavors tea and cigarettes and clears a raw throat after a cold night watch. A small bundle trades well for its weight. It grows in damp corners where the sun barely reaches."
+ },
+ {
+  "id": "menthol_cigarette",
+  "description": "A cigarette with crushed menthol leaf blended into the tobacco, cool on the first drag. It eases a cough and gives a solid lift to the smoker, twice what a plain rollup does. The blend is simple but consistent, and the wrapper is sealed to keep the menthol from fading. Traders pay a little more for the box."
+ },
+ {
+  "id": "disposable_vape",
+  "description": "A sealed vape pen from a pre-war convenience store, battery and coil in one plastic body. It draws clean and quiet and gives a real lift, no flame, no ash, no smoke smell in the bunker. When the battery dies it is a paperweight. The seals are still intact, which is half the value."
+ },
+ {
+  "id": "ejuice_10ml_10mg",
+  "description": "A ten milliliter bottle of e-liquid at ten milligrams of nicotine, clear or pale amber. It refills a vape pen and keeps a smoker calm through a long shift. Nicotine is scarce now, so the bottle trades above its weight. The label is watermarked and peeling."
+ },
+ {
+  "id": "ejuice_10ml_20mg",
+  "description": "A ten milliliter bottle of e-liquid at twenty milligrams of nicotine, twice the strength of the mild cut. It does more with less: a few drops hold a craving off for hours. It is slightly tighter in supply and higher in trade. The dropper cap still seals properly."
+ },
+ {
+  "id": "ejuice_20ml_35mg",
+  "description": "A twenty milliliter bottle of e-liquid at thirty five milligrams of nicotine, the strongest cut on the shelf. Double the volume and a heavy dose per drop, it stretches a long way if it is measured. It trades highest of the e-liquids for that reason. The tamper ring is unbroken."
+ },
+ {
+  "id": "nicotine_pouch",
+  "description": "A small pouch of tobacco and nicotine under the lip, no flame and no smoke needed. It gives a small steady lift that lasts through the work, and it leaves no smell to give a shelter away. Light and dry, it stacks high in the pack. The can says wintergreen; it has tasted of it for three years."
+ },
+ {
+  "id": "quality_tobacco_nicotine_pouch",
+  "description": "A pouch packed with quality leaf, fine cut and evenly moistened. It delivers a stronger, longer lift than the basic pouch, worth holding for the second half of a shift. Sealed in a foil can that keeps it fresh. Traders rate it above the standard can."
+ },
+ {
+  "id": "coffee_arabica_bean",
+  "description": "Arabica coffee beans, smooth and mild, some green and some roasted. A handful ground and boiled makes the morning bearable, and the smell wakes a shelter faster than any alarm. Beans hold their value in trade better than most food because they do not spoil. The sack came from a warehouse that survived the fires."
+ },
+ {
+  "id": "coffee_robusta_bean",
+  "description": "Robusta coffee beans, bitter and strong, cheaper than arabica and easier to grow in poor soil. They brew into a hard cup that stays in the blood longer. The value is lower and the shelf life longer. A bag of these keeps a night crew awake through a fallout storm."
+ },
+ {
+  "id": "instant_coffee",
+  "description": "A sachet of instant coffee, freeze dried and sealed against the damp. Hot water turns it into a cup that restores some thirst and a little hunger, and lifts the drinker for a while. It is the cheapest reliable comfort in most shelters. The jar it came from was rationed out a teaspoon at a time."
+ },
+ {
+  "id": "instant_coffee_10x_container",
+  "description": "A box of ten sealed sachets of instant coffee, the same cut per cup as the single sachet but bought in bulk for less. Each cup restores some thirst and a little hunger and lifts the drinker through the morning. The box keeps the sachets dry on a damp shelf. A full box is worth keeping sealed."
+ },
+ {
+  "id": "coffee_creamer",
+  "description": "Powdered coffee creamer, mostly sugar and fat, white as ash. It rounds the edge off a bitter cup of robusta and makes instant coffee drinkable. It trades in small amounts and never spoils if the seal holds. The jar was one of a case meant for an office break room."
+ },
+ {
+  "id": "box_of_tea_20",
+  "description": "A cardboard box of twenty tea bags, each in its own paper wrapper. One bag brews a cup that restores some thirst and gives the drinker a small lift. It is light, quiet, and easy to ration. The box has a stain on one corner where it got damp once."
+ },
+ {
+  "id": "ice_tea_0_5l_package",
+  "description": "A half liter package of sweetened iced tea, sealed at the factory and still cold from the cellar. It restores thirst well and a little hunger with the sugar in it. The package is thin and can split in a pack, so it travels better in hand than on the back. A taste of what the shelf used to hold."
+ },
+ {
+  "id": "herbal_tea",
+  "description": "Dried herb blend for hot water, wild and slightly bitter. A cup restores thirst and gives a steady small lift; the heat of it matters as much as the taste. The blend is picked fresh each summer. It tastes of meadows that the maps no longer show."
+ },
+ {
+  "id": "package_rolled_oats_1kg_of_1kg",
+  "description": "A one kilogram package of rolled oats, sealed in its original paper. Cooked with water it restores a solid amount of hunger, plain and filling. The oats keep for years if they stay dry. The package is dated before the exchange, and the date is still legible."
+ },
+ {
+  "id": "dry_rice_1kg_of_1kg",
+  "description": "A one kilogram bag of dry rice, poured through and picked clean before it was sealed. Cooked, it restores more hunger per kilo than oats and goes with anything, from beans to broth. Rice keeps for years if it stays dry and trades steadily. The bag is split at the seam and resealed with tape, which is why it was sold rather than kept."
+ },
+ {
+  "id": "dried_pasta_2kg_of_2kg",
+  "description": "A two kilogram block of dried pasta, thick shapes that hold their bite. Cooked it restores the most hunger of the staples and stretches a pot a long way. It keeps for years in dry storage. The shape was pressed by a machine that has not run since the exchange."
+ },
+ {
+  "id": "soy_and_rice_milk_1l_of_1l",
+  "description": "A one liter carton of soy and rice milk, shelf stable and still sealed. It restores hunger and thirst both, a rare combination, and does not need refrigeration until it is opened. The carton is the kind issued for children before the war. The straw slot has never been pierced."
+ },
+ {
+  "id": "emergency_civilian_ration_box_5",
+  "description": "A box of five civilian emergency ration bars, each wrapped in heavy foil with a printed date. One box restores a large amount of hunger, enough to carry a person through a day of work. The bars are dense and dry and keep for years. This box is one of the last in the district."
+ },
+ {
+  "id": "emergency_civilian_ration_1",
+  "description": "A single emergency ration bar in foil, dense and sweet, dated three years ago. It restores a large amount of hunger for its weight and keeps a scavenger moving through a long day. The foil is creased at the corners from being carried. Ration bars are the most trusted paper money there is."
+ },
+ {
+  "id": "canned_fish",
+  "description": "A can of fish in oil, heavy in the hand and sealed tight. It restores a full day's worth of hunger and the oil holds the flavor through the years. Protein is the hardest thing to find in the wasteland, which is why the can trades high. The label is printed in a language no one reads anymore."
+ },
+ {
+  "id": "canned_beans",
+  "description": "A can of beans in thin sauce, plain and heavy. It restores a large amount of hunger and goes further stretched into a pot of rice. The can has no label, just a paper date stamped on the lid. Beans are what most shelters actually live on."
+ },
+ {
+  "id": "jam_preserves",
+  "description": "A jar of jam preserves, dark and thick and heavy with sugar. It restores some hunger and gives a strong lift, the taste of fruit and sweetness together. The jar is a reused pickle jar with a handwritten label. Sugar is remembered in the wasteland better than most things."
+ },
+ {
+  "id": "basic_breakfast_bowl",
+  "description": "A prepared breakfast bowl: porridge or oats, warm and plain, packed for eating on the move. It restores a solid amount of hunger and a little thirst. The bowl is stackable and the lid snaps shut. It tastes of the pot it came from, which is to say it tastes of nothing much."
+ },
+ {
+  "id": "quality_dinner_bowl",
+  "description": "A prepared dinner bowl, hot and heavy with gravy, meat, or what passes for it. It restores the most hunger of the prepared meals and gives a strong lift to the person who eats it. The lid is sealed so it can be carried home. It is the closest thing to a good dinner in the wasteland."
+ },
+ {
+  "id": "high_quality_oat_breakfast",
+  "description": "A prepared oat breakfast with something sweet folded in, dried fruit or honey when the season was good. It restores a large amount of hunger and gives a real lift. The portions are measured and even. It is the breakfast worth getting up for, and people queue for it."
+ },
+ {
+  "id": "ceramic_water_filter",
+  "description": "A ceramic water filter element, the candle type for a gravity filter system. It takes silt, grit, and most of what makes runoff dangerous out of the water, and it holds eighty units of use before the pores clog. A clean candle is worth more than gold in a dry district. This one is still sealed in its wrap."
+ },
+ {
+  "id": "can_opener",
+  "description": "A manual can opener with a turning handle and a gear that walks itself around the rim. It opens every can in the larder and holds full condition if it is dried after use. The handle is worn smooth at the grip. The ones with the gear are the ones people keep."
+ },
+ {
+  "id": "can_breaker",
+  "description": "A crude can opener: a lever and a cutting edge, or a blade ground into a spike. It opens a can roughly, leaving jagged edges that cut fingers when you hurry. It holds only twenty units of use before it dulls, but it is cheap and easy to replace. Every shop has a bucket of them."
+ },
+ {
+  "id": "insulated_flask",
+  "description": "A vacuum flask with a steel shell and a cup that doubles as the lid. It keeps water hot through a night shift or cold through a summer walk, a quiet tool with no moving parts. Half a kilo carried against the chest. The one that never leaked was worth keeping out of any trade."
+ },
+ {
+  "id": "herbal_pills",
+  "description": "Small pressed pills of dried herbs, dark and slightly bitter. They ease a worn body a little, restoring a small amount of health for a person who is run down. They are made by hand in batches and sold by the bottle. The recipe is a trade secret in the district that makes them."
+ },
+ {
+  "id": "herbal_bandage",
+  "description": "A cloth bandage with a poultice of crushed herbs pressed into the pad. It cleans a wound and restores a small amount of health while it is worn. The cloth is boiled before it is rolled. It is the first thing a shelter medic reaches for when the real supplies run out."
+ },
+ {
+  "id": "bandage_roll",
+  "description": "A clean rolled bandage of gauze, tight and white at the center. It dresses a wound and restores a fair amount of health, better than cloth strips, and it keeps if it stays dry. Medical supplies this clean are worth carrying out of any raid, even when the rest of the shelf is picked clean."
+ },
+ {
+  "id": "medkit",
+  "description": "A proper medical kit: bandages, antiseptic, tape, scissors, and a sheet of instructions folded in the lid. It restores a large amount of health in one go and is the single most reliable patch in most shelters. One kit weighs over a kilo and is treated like a family member. It came from a clinic that did not survive."
+ },
+ {
+  "id": "adhesive_bandages_box_6",
+  "description": "A box of six adhesive bandages, each in its own paper sleeve. They cover small cuts and scrapes and restore a small amount of health. The box is thin and fits in a pocket. Children's bandages with cartoons on them are worth more than plain ones, which says something about the wasteland."
+ },
+ {
+  "id": "antiseptic_1l_of_1l",
+  "description": "A one liter bottle of antiseptic solution, clear and sealed. It cleans a wound before dressing, and a wound cleaned first heals better than one that is not. A liter lasts a long time if it is measured out. The bottle is heavy and travels poorly, so it stays in the shelter."
+ },
+ {
+  "id": "sterilised_bandage",
+  "description": "A sealed sterile dressing, vacuum packed, the kind that keeps for years. It restores a good amount of health and does not infect the wound it covers. The pack is crinkled from being carried in a jacket. It is the standard dressing in the medkit and the first thing medics hoard."
+ },
+ {
+  "id": "opioid_painkillers",
+  "description": "Prescription opioid tablets, small and bitter, in a pharmacy bottle. They dull pain and restore a fair amount of health, and they give a dangerous kind of lift on top. People hoard them and watch their own dosage. The bottle is half full, which means someone rationed it carefully."
+ },
+ {
+  "id": "alcohol_wipes_box_10_of_10",
+  "description": "A box of ten sealed alcohol wipes, each in its own foil pouch. They clean skin before an injection or a dressing and take the worst of the dirt off a wound. A full box holds its value because the seal is intact. They smell of the only clean thing left in the world."
+ },
+ {
+  "id": "antibiotics_bottle_20",
+  "description": "A bottle of twenty antibiotic tablets, white and scored down the middle. A course restores a large amount of health, and finishing the course matters as much as starting it. The bottle is worth more than gold to a shelter with a fever in it. The prescription label has a name scratched out."
+ },
+ {
+  "id": "epi_pen",
+  "description": "An auto-injector pen in a plastic case, one dose, one use. It restores a large amount of health fast and can hold a body together until help or a bed arrives. It was meant for allergic shock and is used for everything worse. People who carry one check the case twice a week."
+ },
+ {
+  "id": "thermometer",
+  "description": "A thermometer, glass with a printed scale or digital with a dead screen. It tells a fever from the cold and decides who rests and who works. It weighs nothing and trades small. The glass ones are the ones that still work; the mercury never lies."
+ },
+ {
+  "id": "medical_scissors",
+  "description": "Blunt-tipped surgical scissors with a curve at the jaw. They cut bandages and clothing without touching the skin underneath, which is the whole trick. They hold eighty units of wear before the joint loosens. A medic without a good pair of scissors works with a knife, and it shows."
+ },
+ {
+  "id": "iodine_pills_bottle_10_of_10",
+  "description": "A bottle of ten potassium iodide tablets, sealed in foil and dated. Taken before exposure, they saturate the thyroid so inhaled iodine cannot lodge there. Ten tablets is a ten day course, one a day, and the bottle should be counted out carefully. It is the one tablet that decides who sickens later."
+ },
+ {
+  "id": "personal_dosimeter",
+  "description": "A pencil shaped dosimeter on a spring clip, with a scale marked in the window. It measures the dose already taken, not the dose coming, and that is the useful part. It holds full condition and clips to a collar or a pocket. The scale on this one has been read out loud every night for a month."
+ },
+ {
+  "id": "respirator",
+  "description": "A half face respirator with a rubber seal and a lens, made to take screw-in filters. It adds one point of rad protection while it is worn on the face, and the filters are sold separately. The seal holds eighty units of wear before the rubber hardens. In cold air the lens fogs and you breathe through the gap at the nose."
+ },
+ {
+  "id": "respirator_filter_box_5",
+  "description": "A box of five sealed respirator filter cartridges, each in foil. When the mask starts to taste of metal, one of these goes in. The box keeps them dry and clean. Filters are the difference between a mask that works and a mask that is just a weight."
+ },
+ {
+  "id": "respirator_filter",
+  "description": "A single respirator filter cartridge, sealed in foil with a date on the edge. It slots into the mask and takes the worst of the fallout out of the air a person breathes. One cartridge at a time, carried in a pocket so it stays clean. The foil is intact, which is the whole value."
+ },
+ {
+  "id": "protective_goggles",
+  "description": "Sealed plastic goggles with a foam edge and an adjustable strap. They keep ash out of the eyes on a windy day and dust out of a working face. They hold sixty units of wear before the strap or the seal goes. The lens scratches but the eyes behind it stay clean."
+ },
+ {
+  "id": "protective_rubber_gloves",
+  "description": "Thick rubber gloves that reach past the wrist. They let a person handle contaminated things without the skin taking the dose, and they are the cheapest insurance on the shelf. They hold forty units of wear before the rubber cracks at the cuff. Dry them inside out and they last."
+ },
+ {
+  "id": "decontamination_soap_5_of_5",
+  "description": "A box of five bars of decontamination soap, beige and almost scentless. Washing with it lifts surface contamination off the skin before it turns into dose. One bar lasts a long time if the wash is done properly; order matters, soap first, rinse after. The box is kept near the entry of every careful shelter."
+ },
+ {
+  "id": "plastic_contamination_bag_box_5",
+  "description": "A box of five heavy plastic bags, thicker than a liner bag and printed with a warning. Contaminated clothing, filters, and gloves go in one, sealed, marked, and set aside. It stops the dose from walking through the shelter on a coat. The bags are cheap; the lesson that made them necessary was not."
+ },
+ {
+  "id": "military_grade_shovel",
+  "description": "A folding military shovel with a sharpened edge and a locking hinge. It digs a latrine, a trench, a grave, and cuts roots when the handle is reversed. It holds a hundred and forty units of wear, the most of any digging tool in the shelter. The paint is chipped to bare steel at the blade."
+ },
+ {
+  "id": "military_grade_hatchet",
+  "description": "A short handled hatchet with a leather sheath and a wedge shaped head. It splits kindling, opens a stubborn door, and cuts its way out of a bad situation. It holds a hundred and twenty units of wear before the handle needs binding. The head is stamped with a date and an inspection mark."
+ },
+ {
+  "id": "firefighter_grade_fireaxe",
+  "description": "A full length fire axe with a fiberglass shaft and a red painted head. It was built to break through doors, walls, and roof beams, and it still does all three. It holds a hundred and forty units of wear and weighs nearly three kilos behind the swing. It came off a truck that stopped answering calls."
+ },
+ {
+  "id": "pliers",
+  "description": "Slip joint pliers with a wire cutter at the hinge. They grip, crimp, and pull what fingers cannot, and the cutter handles the thin wire that binds everything. They hold ninety units of wear before the jaws rock. A pair that fits a hand is kept close and loaned out only to friends."
+ },
+ {
+  "id": "sewing_kit_10_of_10",
+  "description": "A tin of ten needles, spools of thread, and a thimble, laid in a paper tray. Clothing and bags outlast the war only if they are mended, and this is what mends them. The kit holds full condition and the needles are oiled against rust. The thimble is dented, which means it was used."
+ },
+ {
+  "id": "flashlight",
+  "description": "A handheld flashlight with an anodized body and a rubber tail switch. It takes AA batteries, sold separately, and throws a clean beam across a room. It holds eighty units of wear before the switch or the lens gives. The batteries come out when it goes on the shelf, so the contacts stay bright."
+ },
+ {
+  "id": "military_grade_flashlight",
+  "description": "A heavier flashlight with a metal bezel and a solid switch, made to be dropped. It takes the same batteries but holds a hundred and twenty units of wear. The beam is wide and steady. Soldiers carried these once; now the ones that still work are worth a small fortune in trade."
+ },
+ {
+  "id": "matches",
+  "description": "A stack of matchboxes, strike anywhere heads, wrapped to keep the damp out. One match lights a stove, a candle, or a smoke, and a box stretches a long way if the strikes are counted. The cardboard is soft from humidity. The flint strip on the side is still good."
+ },
+ {
+  "id": "cigarette_lighter",
+  "description": "A disposable lighter with most of its gas left, the flame low and blue. It lights a stove, a candle, or a smoke and sparks on the first try or the third. It weighs nothing and trades a little. The one that sparks first time is worth keeping in a pocket and out of the wind."
+ },
+ {
+  "id": "car_battery",
+  "description": "A twelve volt lead acid car battery, heavy as a block of the floor. It stores what the solar panels make during the day and pays it back at night, running the radio, the lights, and the workshop. It is not delicate but it is heavy at twelve kilos. Two of them in rotation keep a shelter going."
+ },
+ {
+  "id": "rechargeable_battery",
+  "description": "A rechargeable battery in a standard size, ready to take a charge from a panel or a generator. It cycles again and again while the single use cells run dry. It holds its charge longer if it is not left in the cold. A drawer of these is a small power station."
+ },
+ {
+  "id": "aa_batteries_package_10",
+  "description": "A pack of ten AA batteries, sealed in the original cardboard. They power radios, flashlights, and dosimeters, and they are gone for good once they are used. The pack is dated and still sealed. People count their batteries the way they count their bullets."
+ },
+ {
+  "id": "hand_crank_radio",
+  "description": "An AM and FM radio with a crank handle folded into the side. Thirty seconds of winding buys a few minutes of listening, no batteries, no grid, no argument. It holds full condition and sits in the center of the shelter. The voice on the broadcast is what people gather around."
+ },
+ {
+  "id": "small_solar_panel",
+  "description": "A small folding solar panel with canvas edges and a cable. On a clear day it puts a charge into a battery, enough to keep the essentials alive. It is light enough to carry and tough enough to sit on the roof. The cells are scratched but they still answer to the sun."
+ },
+ {
+  "id": "medium_solar_panel",
+  "description": "A full sized rigid solar panel in a metal frame, meant for a roof. It feeds steady power through the day and keeps a shelter's batteries honest. It weighs six kilos and mounts flat, cleaned of ash every few days. The frame was welded once and has held since."
+ },
+ {
+  "id": "generator",
+  "description": "A petrol generator, twenty five kilos of cast iron, coil, and crank. It runs the workshop, the lights, and the charges through the worst weeks, as long as fuel can be found. It holds full condition and starts on the second pull when it is warm. The sound of it running brings people to the door."
+ },
+ {
+  "id": "kerosene_lantern",
+  "description": "A brass kerosene lantern with a glass chimney and a wick wheel. It gives warm light that does not need batteries or a grid, just oil and a lit match. It holds ninety units of wear before the pump or the chimney goes. It hangs by the door so it is never lost in the dark."
+ },
+ {
+  "id": "jetfuel_jerrycan_10l_of_10l",
+  "description": "A ten liter jerrycan of jet fuel, sealed and stamped with the grade. It burns hot and clean in generators and stoves, better than any pump grade found since. It weighs nine kilos full. The can was tapped from a depot before the pumps ran dry, and the seal has never been broken."
+ },
+ {
+  "id": "winter_coat",
+  "description": "A heavy winter coat, padded and hooded, worn at the cuffs and mended at the elbow. It keeps the nuclear winter off a body working outdoors, and it holds eighty units of wear before the fill packs down. It is the first thing checked out of the common stores when the temperature drops. It was somebody's, once."
+ },
+ {
+  "id": "work_boots",
+  "description": "Steel toe work boots, resoled twice, laces replaced with cord. They hold a hundred units of wear and take the daily weight of walking the ash. The soles are stitched, which is why they still hold. Good boots are the difference between working and watching."
+ },
+ {
+  "id": "wool_blanket",
+  "description": "A thick wool blanket, gray, with a moth hole mended in the corner. It gives a real lift to whoever sleeps under it, and sleep under wool is better than sleep without. It holds its warmth even damp. The blanket outlived its first owner and will outlive its second."
+ },
+ {
+  "id": "improvised_rollup_bed",
+  "description": "A roll of foam with canvas straps, the kind that sleeps one person off the floor. It rolls small and rides on a pack frame. It is not a bed, but it is not the ground either. The foam is dense where it is sat on and still springs back."
+ },
+ {
+  "id": "woolbed",
+  "description": "A bed on a wooden frame, stuffed with wool and covered in a heavy tick. It sleeps one person properly, off the floor, out of the draft. It weighs eight kilos of wood and wool and takes a corner of the shelter. It is the most expensive comfort most people own."
+ },
+ {
+  "id": "advanced_heating_bed",
+  "description": "A bed with a heating element built under the sleeping surface and a plug that reaches the power line. It heats the sleeping space without an open flame in the room, which matters in a wooden shelter. It weighs twelve kilos and trades for the price of a good tool. Cold nights are measured against it."
+ },
+ {
+  "id": "wool_gloves",
+  "description": "Knitted wool gloves, wet and dried stiff once, now shaped to the hands. They hold fifty units of wear and keep fingers working in the cold, which is worth more than they cost. The thumbs are reinforced with leather patches. A person without gloves works half a day before giving up."
+ },
+ {
+  "id": "family_photograph",
+  "description": "A photograph in a cracked frame: three people standing in front of a car, one hand raised to wave. It gives a strong lift to whoever keeps it, a steady five on the morale scale. It trades cheap and is traded rarely. The glass is taped at the corner where it cracked."
+ },
+ {
+  "id": "cassette_tape",
+  "description": "A cassette tape with handwriting on the label: a name, a date, a list of songs. It gives a real lift when a player and batteries can be found. The tape has been rewound so many times the clear leader is worn. It is the only record of a voice that is gone."
+ },
+ {
+  "id": "sealed_government_document",
+  "description": "A sealed envelope with an official stamp and a red string binding. The contents are someone's business and not the holder's. It has no trade value and no use, which means someone wants it and someone else wants it gone. The seal is unbroken. It was entrusted to the wrong person on purpose."
+ },
+ {
+  "id": "diamond",
+  "description": "A cut diamond in a worn velvet box, the clasp loose. It weighs almost nothing and carries the highest trade value of the stones, worth a stack of food to the right trader. It was an engagement stone once, or an inheritance. The box is kept because the stone needs somewhere to live."
+ },
+ {
+  "id": "ruby",
+  "description": "A cut ruby, dark red, in a plain box. It trades high, a little under the diamond, and buys medicine or fuel when the right buyer comes. Stones hold value because they do not spoil and do not need feeding. It came out of a jewelry case that was buried for two years."
+ },
+ {
+  "id": "sapphire",
+  "description": "A cut sapphire, deep blue, the color of old ink. It trades steadily and keeps its value while food rots. The stone weighs nothing and fits in a sealed pocket. It was meant for a ring that was never made. Some traders keep stones for the day the money comes back."
+ },
+ {
+  "id": "amber",
+  "description": "A piece of amber with an insect sealed inside, polished smooth. It trades at a fraction of the gemstones but moves faster, because it looks like nothing else on a counter. It was a pendant once. The insect inside has been dead longer than anyone alive."
+ },
+ {
+  "id": "pistol_cz75_9x19",
+  "description": "A 9x19 service pistol with a steel frame and a double stacked grip, a little over a kilo. It holds a hundred and twenty units of wear and has outlived its maker's company. The caliber is the point: 9x19 is the common round, and a pistol chambered for it is easier to feed than one that is not."
+ },
+ {
+  "id": "pistol_beretta_92_9x19",
+  "description": "A 9x19 service pistol with an open slide and a steel frame, one point one five kilos. It holds a hundred and twenty units of wear. Soldiers carried these once, and the ones that survived the exchange now trade hands in shelters. It shoots flat and feeds the common 9x19 round."
+ },
+ {
+  "id": "pistol_steyr_m9_9x19",
+  "description": "A 9x19 pistol with a polymer frame, light at under a kilo. It holds a hundred and twenty units of wear and carries easy on a belt. The sights are plain and the grip is smooth. It was a modern piece once and is still a good one, chambered for the round everyone has."
+ },
+ {
+  "id": "prewar_letter",
+  "description": "A letter dated before the exchange, folded and unfolded many times along the same creases. It gives a small lift to whoever reads it, a fraction of what a photograph does. It trades for almost nothing and is kept for reasons that have nothing to do with trade. The ink is still sharp."
+ },
+ {
+  "id": "charcoal_sketch",
+  "description": "A charcoal sketch on gray paper: a house with a fence, a tree, a line of washing. It gives a real lift to whoever keeps it and trades for almost nothing, which is how it ended up kept. Someone drew their home from memory. The paper is smudged at the bottom from being handled."
+ },
+ {
+  "id": "snow_goggles",
+  "description": "Leather frame goggles with dark lenses and an elastic strap. They cut the glare off snow and ash both, and they give a small lift while worn, comfort against the white. They hold only thirty units of wear before the strap or the stitching goes. They were made for the mountains, not the ash, but they work."
+ },
+ {
+  "id": "pistol_walther_ppk_380acp",
+  "description": "A compact .380 ACP pistol, light at six tenths of a kilo, small enough for a coat pocket. It holds a hundred units of wear and goes where it is told. The caliber is light but the gun is honest, and a small pistol that works beats a big one that stays home."
+ },
+ {
+  "id": "pistol_grand_power_p380_380acp",
+  "description": "A .380 ACP pistol with a polymer frame, seven tenths of a kilo. It holds a hundred and ten units of wear and is simpler to take apart than most, which matters when the manual is gone. The slide runs smooth. It was a modern police piece once."
+ },
+ {
+  "id": "pistol_cz52_762x25",
+  "description": "A 7.62x25 service pistol with a roller locked action and a steel frame, under a kilo. It holds a hundred and fifteen units of wear. The cartridge is flat shooting and old, and the gun is built heavier than it needs to be. It was made to be used hard and it still accepts it."
+ },
+ {
+  "id": "pistol_norinco_type54_762x25",
+  "description": "A 7.62x25 pistol, stamped steel, just under nine tenths of a kilo. It holds a hundred and ten units of wear. It is a copy of a service design, made in numbers that mean spares can be found. The finish is worn at the edges, which is the honest kind of wear."
+ },
+ {
+  "id": "pistol_zastava_m57_762x25",
+  "description": "A 7.62x25 service pistol, nine tenths of a kilo, with a steel frame and fixed sights. It holds a hundred and fifteen units of wear. It was built in a factory that no longer exists, for a military that no longer exists, and it still feeds and fires. The bluing is rubbed at the holster line."
+ },
+ {
+  "id": "smg_m1928a1_thompson_45acp",
+  "description": "A .45 ACP submachine gun with a wooden stock and heavy steel, four point eight kilos of it. It holds a hundred and forty units of wear. The design is older than everyone alive and still goes to work when the trigger is pulled. It was built for a war that happened before, and it never learned to stop."
+ },
+ {
+  "id": "smg_hk_ump45_45acp",
+  "description": "A .45 ACP submachine gun with a polymer receiver and a folding stock, two point three kilos. It holds a hundred and thirty units of wear. It was a police piece once, clean and modern, and it is easier to carry than anything else in its class. It runs dry and clean and asks little back."
+ },
+ {
+  "id": "smg_kriss_vector_45acp",
+  "description": "A .45 ACP submachine gun with an unusual angled action that keeps the muzzle flat through a burst. It weighs two point seven kilos and holds a hundred and thirty five units of wear. It was an expensive experiment once and is now just a tool that works. The action is odd to take apart, but it feeds the common .45 round."
+ },
+ {
+  "id": "pistol_bt_apc45_mini_45acp",
+  "description": "A compact .45 ACP pistol in a folding package, two point one kilos. It holds a hundred and twenty five units of wear. It is built like a rifle and sized like a pistol, which is why it trades so high. It folds small for the bag and comes out ready when the bag opens."
+ }
+]

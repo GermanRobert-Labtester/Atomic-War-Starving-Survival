@@ -15,7 +15,7 @@ MonoBehaviour:
   id: ammo_deprecated_cal_16ga
   displayName: Deprecated Bullets (16ga)
   description: "Corroded cal_16ga rounds. Scrap only \u2014 not safe to fire."
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 59155b5a73baa710683b57011176bf7a, type: 3}
   type: 10
   stackMax: 60
   weight: 0.015

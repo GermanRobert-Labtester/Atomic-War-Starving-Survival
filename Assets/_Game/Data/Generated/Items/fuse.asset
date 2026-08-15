@@ -15,7 +15,7 @@ MonoBehaviour:
   id: fuse
   displayName: Fuse
   description: Single electrical fuse.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 5f1aca8f64f55b2f8bde6a335a1e8716, type: 3}
   type: 10
   stackMax: 30
   weight: 0.02

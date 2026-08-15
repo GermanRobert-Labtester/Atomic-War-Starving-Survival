@@ -53,10 +53,10 @@ namespace AtomicWar._Game.UI
 
         private void ApplyAudioCadence()
         {
-            if (_audioSource == null || CurrentClickFrequency <= 0f) return;
+            if (_audioSource == null || _clickClip == null || CurrentClickFrequency <= 0f) return;
 
             // Trigger a single click or schedule click interval
-            if (_clickClip != null && _audioSource.enabled)
+            if (_audioSource.enabled)
             {
                 float volume = IsStaticScreamActive ? 1.0f : Mathf.Clamp01(CurrentRate / 50f + 0.1f);
                 _audioSource.PlayOneShot(_clickClip, volume);

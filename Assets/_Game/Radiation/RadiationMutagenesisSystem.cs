@@ -162,20 +162,22 @@ namespace AtomicWar._Game.Radiation
                     break;
                 case 2:
                     // Cataracts reduce scavenging/survey yield.
-                    if (!sv.ActiveChronicIllness.HasValue
-                        || sv.ActiveChronicIllness.Value != Survivors.ChronicIllnessKind.RadiationCataracts)
+                    if (!sv.HasChronicIllness
+                        || sv.ActiveChronicIllness != Survivors.ChronicIllnessKind.RadiationCataracts)
                     {
                         sv.ActiveChronicIllness = Survivors.ChronicIllnessKind.RadiationCataracts;
+                        sv.HasChronicIllness = true;
                     }
                     OnCataracts?.Invoke(sv);
                     break;
                 case 3:
                     // Cellular breakdown: immune collapse.
                     _inflictAffliction?.Invoke(sv, CellularBreakdownAfflictionId);
-                    if (!sv.ActiveChronicIllness.HasValue
-                        || sv.ActiveChronicIllness.Value != Survivors.ChronicIllnessKind.OrganFailure)
+                    if (!sv.HasChronicIllness
+                        || sv.ActiveChronicIllness != Survivors.ChronicIllnessKind.OrganFailure)
                     {
                         sv.ActiveChronicIllness = Survivors.ChronicIllnessKind.OrganFailure;
+                        sv.HasChronicIllness = true;
                     }
                     OnCellularBreakdown?.Invoke(sv);
                     break;

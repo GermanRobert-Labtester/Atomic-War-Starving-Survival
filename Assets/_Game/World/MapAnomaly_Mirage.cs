@@ -41,12 +41,12 @@ namespace AtomicWar._Game.World
 
         public string AnomalyId => _state.anomaly_id;
 
-        public MapAnomaly_Mirage() : this(AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mapanomaly_mirage")) { }
+        public MapAnomaly_Mirage() : this(SeededRandom.Create(SeededRandom.WorldSeed, "mapanomaly_mirage")) { }
 
         public MapAnomaly_Mirage(System.Random rng)
         {
             _state = new MirageState();
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mapanomaly_mirage");
+            _rng = rng ?? SeededRandom.Create(SeededRandom.WorldSeed, "mapanomaly_mirage");
         }
 
         /// <summary>

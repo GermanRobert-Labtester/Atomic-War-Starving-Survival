@@ -15,7 +15,7 @@ MonoBehaviour:
   id: military_grade_sandstone
   displayName: Military Grade Sandstone
   description: Hard cut stone. Fortification.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: b07ab75257c92fee8ab24a1f21c8a67e, type: 3}
   type: 10
   stackMax: 10
   weight: 3

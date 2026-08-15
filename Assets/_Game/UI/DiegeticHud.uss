@@ -18,7 +18,6 @@
     --dim: #66675f;
     /* Military exclusive — copper rust, not bright red (restrained tone). */
     --exclusive: #c4785a;
-    --exclusive-line: rgba(196, 120, 90, 0.45);
     --critical: #e63333;
 
     /* Figma HUD Panel layout contract. */
@@ -27,7 +26,6 @@
 
     --font-body: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Regular_SDF.asset");
     --font-semibold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-SemiBold_SDF.asset");
-    --font-bold: url("project://database/Assets/_Game/UI/MainMenu/Fonts/BarlowCondensed-Bold_SDF.asset");
     --font-mono: url("project://database/Assets/_Game/UI/MainMenu/Fonts/ShareTechMono-Regular_SDF.asset");
 }
 
@@ -48,7 +46,6 @@
 .diegetic-panel {
     position: absolute;
     background-color: var(--ink-panel);
-    border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
     border-bottom-width: 1px;
@@ -322,6 +319,21 @@
     margin-bottom: 0;
 }
 
+/* Faction pressure terminal (Expansion II) — shares the exclusive
+   top-right terminal station with the other opportunistic panels. */
+.faction-pressure-panel {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 400px;
+    max-width: 500px;
+    max-height: 520px;
+}
+
+.faction-pressure-readout {
+    white-space: normal;
+    margin-bottom: 0;
+}
+
 /* Field gear is mutually exclusive with the dispatch and crate terminals. */
 .field-gear-loadout-panel {
     top: var(--hud-edge);
@@ -438,4 +450,944 @@
 .power-grid-readout {
     white-space: normal;
     margin-bottom: 0;
+}
+
+/* ==========================================================================
+   EXPANSION IV — THE CHRONOS DECAY & THE LETHE PROTOCOL
+   Panels: structural-entropy · lethe-drip · ozone-scourge · memory-flash
+           · generational-psychology
+   Token legend: same as above. New tokens:
+     --entropy:   corroded amber  (concrete aging)
+     --lethe:     faded cyan-grey (amnestic reservoir)
+     --ozone:     bleached white  (UV scorch feedback)
+     --ghost:     near-black with warm cast (memory flash)
+   ========================================================================== */
+
+:root {
+    --entropy:    #c97b3a;
+    --lethe:      #6ea3a8;
+    --ozone:      #dde8e8;
+    --ghost:      rgba(9, 11, 12, 0.92);
+    --entropy-glow: rgba(201, 123, 58, 0.18);
+    --lethe-amber: #d4a35a;
+    --lethe-red:   #d94040;
+}
+
+/* ---- STRUCTURAL ENTROPY WIREFRAME PANEL ---------------------------------
+   Bottom-right, below stores. Appears only when a Concrete-Boss/Architect
+   survivor is selected. Left edge accent matches the corrosion palette. */
+.structural-entropy-panel {
+    bottom: calc(var(--hud-edge) + 180px);
+    right: var(--hud-edge);
+    min-width: 300px;
+    max-width: 420px;
+    max-height: 320px;
+    border-left-color: var(--entropy);
+}
+
+.structural-entropy-panel .diegetic-title {
+    color: var(--entropy);
+}
+
+.structural-entropy-panel .diegetic-status {
+    color: var(--entropy);
+    letter-spacing: 0.4px;
+}
+
+/* Rebar grid: a thin flex grid of rebar-cell elements painted by the system */
+.rebar-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    margin-bottom: 4px;
+    width: 100%;
+    max-height: 88px;
+}
+
+.rebar-cell {
+    width: 18px;
+    height: 18px;
+    margin: 2px;
+    border-radius: 2px;
+    background-color: rgba(32, 200, 60, 0.28);
+}
+
+.rebar-cell--rusting {
+    background-color: rgba(200, 100, 20, 0.72);
+}
+
+.rebar-cell--spalling {
+    background-color: rgba(8, 8, 8, 0.95);
+    border-width: 1px;
+    border-color: var(--entropy);
+}
+
+.entropy-integrity-bar {
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.07);
+    margin-top: 4px;
+}
+
+.entropy-integrity-fill {
+    height: 6px;
+    background-color: var(--entropy);
+    transition-property: width;
+    transition-duration: 0.6s;
+}
+
+.entropy-integrity-fill.critical {
+    background-color: var(--critical);
+}
+
+/* ---- LETHE DRIP GAUGE PANEL --------------------------------------------
+   Embedded in the WaterPurification terminal readout (top-right station).
+   Visible whenever the water purifier panel is open. */
+.lethe-drip-panel {
+    top: calc(var(--hud-edge) + 320px);
+    right: var(--hud-edge);
+    min-width: 260px;
+    max-width: 380px;
+    border-left-color: var(--lethe);
+}
+
+.lethe-drip-panel .diegetic-title {
+    color: var(--lethe);
+}
+
+/* Sight-gauge: tall narrow fill column, left-to-right level bar */
+.lethe-sight-gauge-track {
+    height: 12px;
+    background-color: rgba(110, 163, 168, 0.12);
+    margin-top: 6px;
+    margin-bottom: 2px;
+    border-width: 1px;
+    border-color: var(--lethe);
+    border-radius: 2px;
+}
+
+.lethe-sight-gauge-fill {
+    height: 12px;
+    background-color: var(--lethe-amber);
+    transition-property: width;
+    transition-duration: 1.2s;
+}
+
+.lethe-sight-gauge-fill.redline {
+    background-color: var(--lethe-red);
+}
+
+.lethe-drip-status {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--lethe);
+    letter-spacing: 0.6px;
+    margin-bottom: 3px;
+}
+
+.lethe-drip-status.redline {
+    color: var(--lethe-red);
+}
+
+/* Animated droplet dots — three small circles that "drip" via scale animation */
+.lethe-droplets {
+    flex-direction: row;
+    margin-top: 4px;
+}
+
+.lethe-droplet {
+    width: 6px;
+    height: 9px;
+    border-radius: 3px;
+    background-color: var(--lethe);
+    margin-right: 4px;
+    opacity: 0.7;
+}
+
+.lethe-droplet.slow {
+    background-color: var(--lethe-red);
+    opacity: 0.45;
+}
+
+/* ---- OZONE SCOURGE OVERLAY PANEL --------------------------------------
+   Full-screen white flash + diagnostic text. Position: screen top-centre,
+   high z-order. Visible only during Weather_FalseSpring / SilentSpring. */
+.ozone-scourge-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(221, 232, 232, 0.0);
+    picking-mode: ignore;
+    /* Transition driven by C# setting style.backgroundColor directly. */
+    transition-property: background-color;
+    transition-duration: 0.3s;
+}
+
+.ozone-scourge-overlay.active {
+    background-color: rgba(221, 232, 232, 0.88);
+}
+
+.ozone-warning-panel {
+    top: var(--hud-edge);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 380px;
+    max-width: 560px;
+    border-left-color: var(--ozone);
+    background-color: rgba(9, 11, 12, 0.94);
+}
+
+.ozone-warning-panel .diegetic-title {
+    color: var(--ozone);
+    letter-spacing: 2.4px;
+}
+
+.ozone-warning-panel .diegetic-status {
+    color: var(--hot);
+}
+
+.ozone-timer-bar-track {
+    height: 4px;
+    background-color: rgba(221, 232, 232, 0.14);
+    margin-top: 6px;
+}
+
+.ozone-timer-bar-fill {
+    height: 4px;
+    background-color: var(--ozone);
+    transition-property: width;
+    transition-duration: 0.25s;
+}
+
+.ozone-timer-bar-fill.danger {
+    background-color: var(--critical);
+}
+
+/* ---- MEMORY FLASH VIGNETTE ---------------------------------------------
+   Full-screen hard vignette + desaturated centre. Triggered by
+   trait_hyperthymesia survivors; lasts 0.2 s then fades out. */
+.memory-flash-vignette {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    picking-mode: ignore;
+    background-color: rgba(9, 11, 12, 0.0);
+    transition-property: background-color;
+    transition-duration: 0.08s;
+}
+
+.memory-flash-vignette.active {
+    background-color: rgba(230, 224, 210, 0.82);
+}
+
+.memory-flash-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    -unity-font-definition: var(--font-semibold);
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(9, 11, 12, 0.55);
+    -unity-text-align: middle-center;
+}
+
+/* ---- GENERATIONAL PSYCHOLOGY READOUT PANEL ----------------------------
+   Left side, below vitals. Persistent once Bunker-Born come of age.
+   Accent edge in the muted spectrum to signal sociological dread, not
+   physical danger — same register as the encounter log. */
+.generational-psychology-panel {
+    top: calc(var(--hud-edge) + 200px);
+    left: var(--hud-edge);
+    min-width: 320px;
+    max-width: 440px;
+    max-height: 280px;
+    border-left-color: var(--muted);
+}
+
+.generational-psychology-panel .diegetic-title {
+    color: var(--muted);
+    letter-spacing: 1.4px;
+}
+
+.gen-cohort-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3px;
+}
+
+.gen-cohort-label {
+    width: 110px;
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+}
+
+.gen-cohort-bar-track {
+    flex-grow: 1;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.gen-cohort-bar-fill {
+    height: 6px;
+    background-color: var(--muted);
+}
+
+.gen-cohort-bar-fill.born-bunker {
+    background-color: var(--warm);
+}
+
+.gen-cohort-value {
+    width: 36px;
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+    -unity-text-align: middle-right;
+}
+
+.gen-event-text {
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+    white-space: normal;
+    margin-top: 6px;
+    border-top-width: 1px;
+    border-top-color: var(--line-soft);
+    padding-top: 4px;
+}
+
+/* ==========================================================================
+   BATCH 20 UI ELEMENTS — layout anchors and component-level styles
+   All elements use existing design tokens from :root above.
+   ========================================================================== */
+
+/* 01 Radiation Dosimeter Widget — left-side, below vitals */
+.batch20-rad-dosimeter {
+    top: calc(var(--hud-edge) + 200px);
+    left: var(--hud-edge);
+    min-width: 320px;
+    max-width: 420px;
+    border-left-color: var(--lethe);
+}
+.batch20-rad-dosimeter .diegetic-title { color: var(--lethe); }
+
+.rad-arc-segments {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+    margin-bottom: 4px;
+}
+.rad-seg {
+    width: 22px;
+    height: 10px;
+    margin: 2px;
+    border-radius: 2px;
+    background-color: rgba(110, 163, 168, 0.15);
+    border-width: 1px;
+    border-color: var(--lethe);
+}
+.rad-seg--filled        { background-color: rgba(110, 163, 168, 0.70); }
+.rad-seg--filled-critical { background-color: var(--critical); border-color: var(--critical); }
+.rad-status--critical   { color: var(--critical); }
+.rad-status--elevated   { color: var(--hot); }
+
+/* 02 Geiger Sweep Gauge — left-side, below dosimeter */
+.batch20-geiger {
+    top: calc(var(--hud-edge) + 340px);
+    left: var(--hud-edge);
+    min-width: 260px;
+    max-width: 360px;
+    border-left-color: var(--lethe);
+}
+.geiger-bar-row {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    height: 28px;
+}
+.geiger-bar {
+    width: 14px;
+    margin-right: 3px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.07);
+}
+/* Graduated heights for phone-bar look */
+.geiger-bar:nth-child(1) { height: 30%; }
+.geiger-bar:nth-child(2) { height: 50%; }
+.geiger-bar:nth-child(3) { height: 65%; }
+.geiger-bar:nth-child(4) { height: 80%; }
+.geiger-bar:nth-child(5) { height: 100%; }
+
+.geiger-bar--filled   { background-color: var(--lethe); }
+.geiger-bar--critical { background-color: var(--critical); }
+.geiger-status--alert    { color: var(--critical); }
+.geiger-status--elevated { color: var(--hot); }
+
+/* 03 Air Filter Integrity Bar — top-centre */
+.batch20-air-filter {
+    top: var(--hud-edge);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 360px;
+    max-width: 500px;
+    border-left-color: var(--muted);
+}
+.air-filter-track {
+    height: 10px;
+    background-color: rgba(255,255,255,0.07);
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+.air-filter-fill {
+    height: 10px;
+    background-color: rgba(32, 180, 60, 0.85);
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+.air-filter-fill--warning  { background-color: var(--hot); }
+.air-filter-fill--critical { background-color: var(--critical); }
+.air-filter-state--critical { color: var(--critical); }
+.air-filter-state--warning  { color: var(--hot); }
+
+/* 04 Fallout Storm Warning Banner — top-centre, full-width alert */
+.batch20-storm-banner {
+    top: calc(var(--hud-edge) + 48px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 480px;
+    max-width: 700px;
+    border-left-color: var(--exclusive);
+}
+.storm-countdown-track {
+    height: 4px;
+    background-color: rgba(255,255,255,0.08);
+    margin-top: 6px;
+}
+.storm-countdown-fill {
+    height: 4px;
+    background-color: var(--warm);
+    transition-property: width;
+    transition-duration: 0.25s;
+}
+.storm-intensity--critical { color: var(--critical); }
+
+/* 05 Survivor Portrait Card — right-side modal, multi-use */
+.batch20-portrait-card {
+    top: 50%;
+    right: calc(var(--hud-edge) + 440px);
+    translate: 0 -50%;
+    min-width: 180px;
+    max-width: 240px;
+    border-left-color: var(--muted);
+}
+.survivor-stat-rows    { flex-direction: column; margin-top: 4px; }
+.survivor-blood-badge  {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 11px;
+    color: var(--exclusive);
+    border-width: 1px;
+    border-color: var(--exclusive);
+    padding: 1px 4px;
+    margin-bottom: 4px;
+    align-self: flex-start;
+}
+.survivor-status--critical { color: var(--critical); }
+.survivor-status--ill      { color: var(--exclusive); }
+.survivor-status--stressed { color: var(--hot); }
+.survivor-card--critical   { border-left-color: var(--critical); }
+
+/* 06 Moral Decay Meter — left sidebar, below geiger */
+.batch20-moral-decay {
+    top: calc(var(--hud-edge) + 400px);
+    left: var(--hud-edge);
+    min-width: 180px;
+    max-width: 260px;
+    border-left-color: var(--muted);
+}
+.moral-pip-column { flex-direction: column; margin-top: 4px; }
+.moral-pip {
+    height: 12px;
+    margin-bottom: 2px;
+    border-radius: 2px;
+    background-color: rgba(255,255,255,0.06);
+}
+.moral-pip--active   { background-color: var(--muted); }
+.moral-pip--critical { background-color: var(--critical); }
+
+/* 07 Ration Allocation Dial — centre modal */
+.batch20-ration-dial {
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    min-width: 380px;
+    max-width: 520px;
+    border-left-color: var(--warm);
+}
+.ration-slot-btn {
+    background-color: rgba(255,255,255,0.04);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    border-radius: 2px;
+    margin-bottom: 4px;
+    padding: 4px 8px;
+}
+.ration-slot-btn:hover { background-color: rgba(211,170,98,0.12); }
+.ration-slot--selected { border-color: var(--warm); border-width: 1px; }
+.ration-adjust-row {
+    flex-direction: row;
+    align-items: center;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.ration-adj-btn {
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255,255,255,0.06);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    border-radius: 2px;
+    -unity-font-definition: var(--font-semibold);
+    font-size: 16px;
+    color: var(--warm);
+}
+.ration-confirm-btn {
+    background-color: rgba(211,170,98,0.15);
+    border-width: 1px;
+    border-color: var(--warm);
+    border-radius: 2px;
+    padding: 4px 0;
+    margin-top: 4px;
+    color: var(--warm);
+    -unity-font-definition: var(--font-semibold);
+    letter-spacing: 1.6px;
+}
+.ration-confirm-btn:hover { background-color: rgba(211,170,98,0.28); }
+
+/* 08 Water Purity Gauge — right sidebar */
+.batch20-water-purity {
+    top: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 300px;
+    max-width: 420px;
+    border-left-color: var(--lethe);
+}
+.batch20-water-purity .diegetic-title { color: var(--lethe); }
+.water-purity-track {
+    height: 10px;
+    background-color: rgba(110,163,168,0.12);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-radius: 2px;
+    border-width: 1px;
+    border-color: var(--lethe);
+}
+.water-purity-fill {
+    height: 10px;
+    border-radius: 2px;
+    transition-property: width;
+    transition-duration: 0.8s;
+}
+.water-purity-fill--clean    { background-color: var(--lethe); }
+.water-purity-fill--critical { background-color: var(--critical); }
+.water-status--critical      { color: var(--critical); }
+.water-status--filtering     { color: var(--lethe); }
+
+/* 09 Temperature Readout Widget — right-side below water gauge */
+.batch20-temperature {
+    top: calc(var(--hud-edge) + 200px);
+    right: var(--hud-edge);
+    min-width: 260px;
+    max-width: 360px;
+    border-left-color: var(--warm);
+}
+.temp-status--critical { color: var(--critical); }
+.temp-status--freezing { color: var(--lethe); }
+.temp-status--cold     { color: var(--muted); }
+
+/* 10 Power Flow Schematic — top-centre, overlaps air-filter on keypress */
+.batch20-power-flow {
+    top: calc(var(--hud-edge) + 60px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 420px;
+    max-width: 620px;
+    max-height: 480px;
+    border-left-color: var(--warm);
+}
+.power-budget-track {
+    height: 8px;
+    background-color: rgba(255,255,255,0.07);
+    margin-bottom: 3px;
+}
+.power-supply-fill {
+    height: 8px;
+    background-color: rgba(32,200,60,0.65);
+    transition-property: width;
+    transition-duration: 0.4s;
+}
+.power-demand-fill {
+    height: 8px;
+    background-color: var(--warm);
+    transition-property: width;
+    transition-duration: 0.4s;
+}
+.power-demand-fill--overload { background-color: var(--critical); }
+.power-nodes-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+.power-node {
+    width: 120px;
+    margin: 3px;
+    padding: 4px;
+    background-color: rgba(255,255,255,0.04);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    border-radius: 2px;
+}
+.power-node--offline   { opacity: 0.3; }
+.power-node--overloaded { border-color: var(--critical); }
+
+/* 11 Faction Pressure Ring — bottom-right corner */
+.batch20-faction-ring {
+    bottom: calc(var(--hud-edge) + 240px);
+    right: var(--hud-edge);
+    min-width: 260px;
+    max-width: 360px;
+    border-left-color: var(--exclusive);
+}
+.batch20-faction-ring .diegetic-title { color: var(--exclusive); }
+.faction-ring-stack { flex-direction: column; margin-top: 4px; }
+.faction-ring {
+    height: 12px;
+    background-color: rgba(255,255,255,0.06);
+    margin-bottom: 3px;
+    border-radius: 2px;
+}
+.faction-ring-fill {
+    height: 12px;
+    border-radius: 2px;
+    transition-property: width;
+    transition-duration: 0.6s;
+}
+.faction-ring--garrison  .faction-ring-fill { background-color: var(--muted); }
+.faction-ring--militia   .faction-ring-fill { background-color: var(--warm); }
+.faction-ring--cultists  .faction-ring-fill { background-color: var(--entropy); }
+.faction-ring--warlords  .faction-ring-fill { background-color: var(--critical); }
+
+/* 12 Expedition Countdown Timer — bottom-left */
+.batch20-expedition-timer {
+    bottom: calc(var(--hud-edge) + 240px);
+    left: var(--hud-edge);
+    min-width: 280px;
+    max-width: 400px;
+    border-left-color: var(--muted);
+}
+.expedition-danger-track {
+    height: 4px;
+    background-color: rgba(255,255,255,0.07);
+    margin-top: 4px;
+}
+.expedition-danger-fill {
+    height: 4px;
+    background-color: var(--exclusive);
+    transition-property: width;
+    transition-duration: 0.3s;
+}
+
+/* 13 Radio Signal Strength Bar — small in-panel, floats left if radio panel open */
+.batch20-radio-signal {
+    bottom: calc(var(--hud-edge) + 240px);
+    left: calc(var(--hud-edge) + 360px);
+    min-width: 200px;
+    max-width: 300px;
+    border-left-color: var(--lethe);
+}
+.radio-signal-bars {
+    flex-direction: row;
+    align-items: flex-end;
+    margin-top: 4px;
+    height: 24px;
+}
+.radio-bar {
+    width: 12px;
+    margin-right: 2px;
+    border-radius: 1px;
+    background-color: rgba(255,255,255,0.07);
+}
+.radio-bar:nth-child(1) { height: 30%; }
+.radio-bar:nth-child(2) { height: 50%; }
+.radio-bar:nth-child(3) { height: 65%; }
+.radio-bar:nth-child(4) { height: 80%; }
+.radio-bar:nth-child(5) { height: 100%; }
+.radio-bar--filled   { background-color: var(--warm); }
+.radio-bar--noise    { background-color: var(--muted); }
+
+/* 14 Craft Queue Strip — bottom-centre */
+.batch20-craft-queue {
+    bottom: var(--hud-edge);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 460px;
+    max-width: 680px;
+    border-left-color: var(--warm);
+}
+.craft-slot-row {
+    flex-direction: row;
+    margin-top: 4px;
+}
+.craft-slot {
+    flex: 1;
+    margin-right: 6px;
+    padding: 4px;
+    background-color: rgba(255,255,255,0.04);
+    border-width: 1px;
+    border-color: var(--line-soft);
+    border-radius: 2px;
+}
+.craft-cancel-btn {
+    width: 16px;
+    height: 16px;
+    font-size: 9px;
+    background-color: transparent;
+    border-width: 0;
+    color: var(--dim);
+    align-self: flex-end;
+}
+.craft-cancel-btn:hover { color: var(--critical); }
+
+/* 15 Alert Toast Stack — top-centre, transient */
+.batch20-toast-stack {
+    position: absolute;
+    top: calc(var(--hud-edge) + 8px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 360px;
+    max-width: 540px;
+    flex-direction: column;
+    align-items: center;
+}
+.toast-item {
+    background-color: var(--ink-panel);
+    border-left-width: 3px;
+    border-left-color: var(--warm);
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-right-color: var(--line-soft);
+    border-top-color: var(--line-soft);
+    border-bottom-color: var(--line-soft);
+    padding: 6px 12px;
+    margin-bottom: 4px;
+    width: 100%;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+}
+.toast-item--info     { border-left-color: var(--muted); }
+.toast-item--warning  { border-left-color: var(--hot); }
+.toast-item--critical { border-left-color: var(--critical); }
+
+/* 16 Bunker Floor Map Miniature — bottom-right */
+.batch20-bunker-map {
+    bottom: var(--hud-edge);
+    right: var(--hud-edge);
+    min-width: 260px;
+    max-width: 360px;
+    border-left-color: var(--dim);
+}
+.bunker-map-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+.bunker-map-room {
+    width: 48px;
+    height: 32px;
+    margin: 2px;
+    border-radius: 1px;
+    border-width: 1px;
+    border-color: var(--line-soft);
+    background-color: rgba(32,180,60,0.18);
+}
+.bunker-map-room--damaged  { background-color: rgba(244,200,117,0.28); border-color: var(--hot); }
+.bunker-map-room--critical { background-color: rgba(230,51,51,0.35); border-color: var(--critical); }
+.bunker-map-room--offline  { background-color: rgba(9,11,12,0.95); }
+
+/* 17 Day/Night Arc Clock — top-left, replaces or overlays clock in vitals panel */
+.batch20-day-clock {
+    top: var(--hud-edge);
+    left: calc(var(--hud-edge) + 390px);
+    min-width: 200px;
+    max-width: 280px;
+    border-left-color: var(--dim);
+}
+.day-clock-arc-track {
+    height: 8px;
+    background-color: rgba(255,255,255,0.07);
+    margin-top: 4px;
+    border-radius: 2px;
+}
+.day-clock-arc-fill {
+    height: 8px;
+    background-color: var(--warm);
+    border-radius: 2px;
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+
+/* 18 Blood Type Indicator — inline, compact (used inside portrait cards) */
+.blood-type-indicator {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 3px;
+}
+.blood-type-badge {
+    -unity-font-definition: var(--font-semibold);
+    font-size: 12px;
+    color: var(--exclusive);
+    border-width: 1px;
+    border-color: var(--exclusive);
+    border-radius: 2px;
+    padding: 1px 5px;
+    margin-right: 6px;
+    letter-spacing: 1px;
+}
+
+/* 19 Loot Haul Ticker — bottom-centre, transient */
+.batch20-loot-ticker {
+    bottom: calc(var(--hud-edge) + 64px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 280px;
+    max-width: 440px;
+    border-left-color: var(--warm);
+}
+.loot-dismiss-track {
+    height: 3px;
+    background-color: rgba(255,255,255,0.07);
+    margin-top: 4px;
+}
+.loot-dismiss-fill {
+    height: 3px;
+    background-color: var(--warm);
+    transition-property: width;
+    transition-duration: 0.25s;
+}
+
+/* 20 Endgame Victory Path Tracker — centre modal, large */
+.batch20-victory-tracker {
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    min-width: 560px;
+    max-width: 780px;
+    max-height: 640px;
+    border-left-color: var(--warm);
+}
+.victory-path-list { flex-direction: column; margin-top: 6px; }
+.victory-path-row {
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 4px;
+}
+.victory-path-name {
+    width: 200px;
+    -unity-font-definition: var(--font-body);
+    font-size: 11px;
+    color: var(--pale);
+    letter-spacing: 0.5px;
+}
+.victory-path-track {
+    flex-grow: 1;
+    height: 8px;
+    background-color: rgba(255,255,255,0.06);
+    margin-right: 8px;
+}
+.victory-path-fill {
+    height: 8px;
+    background-color: var(--muted);
+    transition-property: width;
+    transition-duration: 0.5s;
+}
+.victory-path-fill--achieved { background-color: rgba(32,200,60,0.75); }
+.victory-path-fill--failed   { background-color: var(--critical); }
+.victory-path-status {
+    width: 92px;
+    -unity-font-definition: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    -unity-text-align: middle-right;
+    letter-spacing: 0.4px;
+}
+.victory-path-status--achieved { color: rgba(32,200,60,0.9); }
+.victory-path-status--failed   { color: var(--critical); }
+.victory-path-status--progress { color: var(--warm); }
+
+/* ==========================================================================
+   BATCH 11 — Phase 11 expansion HUD layout anchors
+   ========================================================================== */
+
+.batch11-rad-phase {
+    top: calc(var(--hud-edge) + 168px);
+    left: var(--hud-edge);
+    min-width: 140px;
+    padding: 6px 10px;
+    border-left-color: var(--lethe);
+}
+
+.batch20-portrait-card {
+    position: relative;
+}
+
+#hypervigilance-indicator-root {
+    position: absolute;
+}
+
+#moral-branch-root {
+    position: absolute;
+}
+
+#keepsake-slot-root {
+    position: absolute;
+}
+
+#terminal-prognosis-root {
+    position: absolute;
+}
+
+#addiction-detox-root {
+    position: absolute;
+}
+
+.batch20-portrait-card #terminal-prognosis-root {
+    top: -28px;
+    left: 0;
+    right: 0;
+}
+
+.batch20-portrait-card #hypervigilance-indicator-root {
+    top: 4px;
+    right: 4px;
+}
+
+.batch20-portrait-card #addiction-detox-root {
+    bottom: 4px;
+    left: 4px;
+}
+
+.batch20-portrait-card #moral-branch-root {
+    top: 36px;
+    left: 8px;
+}
+
+.batch20-portrait-card #keepsake-slot-root {
+    bottom: 8px;
+    right: 8px;
 }

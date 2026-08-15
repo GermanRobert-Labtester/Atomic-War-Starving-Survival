@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Survivors
 {
@@ -45,7 +46,8 @@ namespace AtomicWar._Game.Survivors
         public BeliefSystem(BeliefProfileCatalogSO catalog = null, System.Random rng = null)
         {
             _catalog = catalog;
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("belief_system");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "belief_system");
         }
 
         private BeliefProfileDefaults ProfileFor(RiskBiasTrait trait)

@@ -11,6 +11,7 @@ namespace AtomicWar._Game.Inventory
         Head,
         Face,
         Hands,
-        Tool
+        Tool,
+        Weapon
     }
 }

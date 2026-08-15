@@ -15,7 +15,7 @@ MonoBehaviour:
   id: plastic_material
   displayName: Plastic Material
   description: Salvaged plastic stock.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 85c6e3846e19e9da3bc3e68ee220f353, type: 3}
   type: 10
   stackMax: 40
   weight: 0.15

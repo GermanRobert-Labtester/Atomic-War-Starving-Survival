@@ -1,0 +1,7 @@
+# ASHFALL PROJECT RULES (Cline)
+
+- Game Engine: Godot Engine 4.7+ (.NET / C# Edition).
+- Never invoke or run Unity. All execution and testing must be performed with Godot (`godot --path .` / `dotnet build Ashfall.csproj`).
+- C# scripts are located in `src/` and `scripts/`.
+- Entry scene: `scenes/Main.tscn`.
+- Project configuration: `project.godot`.

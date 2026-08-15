@@ -15,7 +15,7 @@ MonoBehaviour:
   id: advanced_heating_bed
   displayName: Advanced Heating Bed
   description: Heated bunk.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 1cf75c7b64bdef2f0b7a6bda6b73b031, type: 3}
   type: 14
   stackMax: 1
   weight: 12

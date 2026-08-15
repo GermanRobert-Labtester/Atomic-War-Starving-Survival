@@ -29,43 +29,23 @@ namespace AtomicWar.Tests.PlayMode
     public class WeatherEventBridgeIntegrationTests
     {
         private GameBootstrap _bootstrap;
-        private FieldInfo _ashField;
-        private FieldInfo _fogField;
-        private FieldInfo _thermalField;
-        private FieldInfo _iceField;
-        private FieldInfo _silenceField;
 
         [UnitySetUp]
         public IEnumerator SetUp()
         {
             // Build a real GameBootstrap instance. We do NOT call its Awake/Start
-            // (which would require the entire scene); instead we just need the
-            // partial fields to be non-null so the bridge can dispatch to them.
+            // (which would require the entire scene); instead we invoke the
+            // production partial-init method that creates the 5 weather systems
+            // AND wires the FlashpointWeatherEventTriggered bridge to the static
+            // EventBus. This is the missing piece the end-to-end test needs.
             _bootstrap = new GameBootstrap();
 
-            // Construct the 5 systems and assign them via reflection on the
-            // private setter-backed properties the partial exposes.
-            _ashField = typeof(GameBootstrap).GetField(
-                "<WeatherAshLightning>k__BackingField",
+            var bootNewWeatherSystems = typeof(GameBootstrap).GetMethod(
+                "BootNewWeatherSystems",
                 BindingFlags.NonPublic | BindingFlags.Instance);
-            _fogField = typeof(GameBootstrap).GetField(
-                "<WeatherFogOfParticulate>k__BackingField",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            _thermalField = typeof(GameBootstrap).GetField(
-                "<WeatherThermalInversion>k__BackingField",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            _iceField = typeof(GameBootstrap).GetField(
-                "<WeatherIceStorm>k__BackingField",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-            _silenceField = typeof(GameBootstrap).GetField(
-                "<WeatherSilence>k__BackingField",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-
-            _ashField?.SetValue(_bootstrap, new Weather_AshLightning());
-            _fogField?.SetValue(_bootstrap, new Weather_FogOfParticulate());
-            _thermalField?.SetValue(_bootstrap, new Weather_ThermalInversion());
-            _iceField?.SetValue(_bootstrap, new Weather_IceStorm());
-            _silenceField?.SetValue(_bootstrap, new Weather_Silence());
+            Assert.IsNotNull(bootNewWeatherSystems,
+                "BootNewWeatherSystems must exist on GameBootstrap.");
+            bootNewWeatherSystems.Invoke(_bootstrap, null);
 
             yield return null;
         }
@@ -73,6 +53,14 @@ namespace AtomicWar.Tests.PlayMode
         [UnityTearDown]
         public IEnumerator TearDown()
         {
+            // Dispose the bridge subscription so the static EventBus does not
+            // keep this test fixture's bootstrap alive across tests.
+            var subscriptionsField = typeof(GameBootstrap).GetField(
+                "_subscriptions",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            var bag = subscriptionsField?.GetValue(_bootstrap) as AtomicWar._Game.Utilities.SubscriptionBag;
+            bag?.DisposeAll();
+
             _bootstrap = null;
             yield return null;
         }
@@ -144,8 +132,11 @@ namespace AtomicWar.Tests.PlayMode
             };
             sequence.steps.Add(step);
 
-            var choreographer = new FlashpointChoreographer();
-            choreographer.SetSequence(sequence);
+            var choreographer = new FlashpointChoreographer(
+                sequence,
+                () => false,
+                new FlashpointChoreographerSystems(),
+                () => false);
             choreographer.OnNuclearExchange();
             // Step delay is 0 → next Tick(realSeconds > 0) fires the step.
             choreographer.Tick(0.1f);

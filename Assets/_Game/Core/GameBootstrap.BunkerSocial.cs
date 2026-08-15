@@ -23,12 +23,6 @@ namespace AtomicWar._Game.Core
 {
     public partial class GameBootstrap
     {
-        /// <summary>
-        /// MISC-005: seeded stream for the smuggle comfort-item coin flip.
-        /// </summary>
-        private static readonly System.Random SmuggleRng =
-            SeededRandom.CreateFixed("bunkersocial_smuggle");
-
         /// <summary>Prompts #469-#478 interpersonal &amp; leadership systems.</summary>
         public BunkerSocialDirector BunkerSocial { get; private set; }
 
@@ -73,13 +67,16 @@ namespace AtomicWar._Game.Core
             BunkerSocial.YieldBunkerControl = units => units > 0 && RemoveRationsFromInventory(units);
 
             // #478 smuggle drain → comfort item return.
+            // MISC-005: seeded so the smuggled comfort item is the same on every
+            // replay of a save, not a wall-clock coin flip.
+            var smuggleRng = SeededRandom.Create(_worldSeed, "bunkersocial_smuggle");
             BunkerSocial.SmuggleDrain = resourceId =>
             {
                 if (!string.IsNullOrEmpty(resourceId) && Inventory != null && Inventory.RemoveById(resourceId, 1))
                 {
                     // MISC-005: seeded so the smuggled comfort item is the same on
                     // every replay of a save, not a wall-clock coin flip.
-                    string comfort = (SmuggleRng.NextDouble() < 0.5) ? "comfort_alcohol" : "comfort_drugs";
+                    string comfort = (smuggleRng.NextDouble() < 0.5) ? "comfort_alcohol" : "comfort_drugs";
                     BunkerSocialNarrative.Raise("smuggle", null, resourceId, comfort);
                     return comfort;
                 }

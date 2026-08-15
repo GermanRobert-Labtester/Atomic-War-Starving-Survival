@@ -15,7 +15,7 @@ MonoBehaviour:
   id: respirator
   displayName: Respirator
   description: Face seal. Needs filters.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 0a45540ad945502b983c8714c0492ba7, type: 3}
   type: 6
   stackMax: 3
   weight: 0.6

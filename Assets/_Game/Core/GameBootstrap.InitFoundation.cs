@@ -18,6 +18,8 @@ using AtomicWar._Game.UI;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Utilities;
+using Ashfall.Core.Journal;
+using JournalSystem = AtomicWar._Game.Events.JournalSystem;
 
 namespace AtomicWar._Game.Core
 {
@@ -139,6 +141,11 @@ namespace AtomicWar._Game.Core
             // Merges 80 items, 10 locations, 15 encounters, 10 echoes,
             // and 12 NPC/fauna archetypes into the host. Idempotent.
             BootAshGetsDeeperContent();
+
+            // "Into the Ash" expansion (Parts II & III) — 31 items, 8 locations,
+            // 6 multi-stage narrative quest chains. Idempotent.
+            BootIntoTheAshContent();
+
             // Expedition encounters — amalgamation / burrowers / maze / tank / … .
             BootEncounters();
             // Shelter modules with CaptureState (acid trap / autodoc / lathe / …).
@@ -318,6 +325,11 @@ namespace AtomicWar._Game.Core
             CreateSurvivor("sv_marcus", "Marcus Olejnik");
             CreateSurvivor("sv_suki", "Suki Tanaka");
 
+            // Phase 0 — Massive Expansion foundation (40 new systems).
+            // Must run after survivors and core systems exist, but before
+            // InitUtilityAI which references survivor state.
+            InitPhase0Expansion();
+
         }
 
         private void InitUtilityAI()
@@ -434,8 +446,12 @@ namespace AtomicWar._Game.Core
             InitAddictionAndMedicalPrompts();
             InitWorldSideSystems();
             InitShelterTacticalSystems();
+            InitSection7Systems();
             InitNarrativeDependentSystems();
             InitAtmosphereHygieneSystems();
+            InitProtocolZeroSystems();
+            InitBlackAquiferSystems();
+            InitDeadHandSystems();
             InitDiaryAndHatchSystems();
             InitFactionMapSystems();
         }
@@ -449,6 +465,8 @@ namespace AtomicWar._Game.Core
             // (catalog, 6 Ensure* chains, encounter factory) are merged
             // into a single call with built-in duplicate-id detection.
             var eventPool = EventPoolBuilder.Build(_eventCatalog);
+            eventPool.AddRange(NarrativeArcEventCatalogLoader.Load());
+            EventPoolBuilder.ValidateNoDuplicateIds(eventPool);
             EventRunner.SetPool(eventPool);
 
             SuspicionTracker = new SuspicionTracker();
@@ -475,7 +493,7 @@ namespace AtomicWar._Game.Core
                 },
                 // +1: at a full list the new entry is acquired before the
                 // evicted one is released, so steady state needs cap+1 stock.
-                initialCapacity: JournalSystem.MaxEntries + 1);
+                initialCapacity: Ashfall.Core.Journal.JournalSystem.MaxEntries + 1);
             JournalSystem.SetEntryFactory(_journalEntryPool.Acquire, _journalEntryPool.Release);
             Action<JournalEntry> onJournalEntryAdded = entry =>
             {
@@ -597,6 +615,7 @@ namespace AtomicWar._Game.Core
             // ───────────────────────────────────────────────────────────
             EmpathSystem = new EmpathSystem();
             EmpathSystem.SetNeedsSystem(NeedsSystem);
+            EmpathSystem.SetPersonalQuestSystem(PersonalQuests);
             SurvivorDiaries = new SurvivorDiariesSystem();
             InternalLockSystem = new InternalLockSystem();
             SpatialPsychology = new SpatialPsychologySystem();
@@ -617,6 +636,8 @@ namespace AtomicWar._Game.Core
                 EmpathSystem.OnSurvivorDied(deceased, Survivors);
                 ChildSystem?.CheckChildDeath(Survivors);
                 GriefKeepsakes?.OnSurvivorDied(deceased, Survivors, MentalBreakSystem?.Affinity, "item_keepsake_pendant");
+                // Section VII — grief cascade (bond-scaled morale hit, memorial window).
+                Grief?.OnSurvivorDied(deceased, Survivors);
                 // #469 lover-grief mental break + cleanup.
                 BunkerSocial?.NotifySurvivorDied(deceased, null);
                 // Prompt #862 — Iron Man save deletion when last survivor dies.
@@ -624,17 +645,16 @@ namespace AtomicWar._Game.Core
             };
             NeedsSystem.OnDied += _onNeedsDied;
 
+            // DEATH-006 centralized kill wire: SurvivorNeedWrite.SetHealth / Kill
+            // are used by systems that cannot hold a NeedsSystem reference. The
+            // static OnKilled event fires the same death chain as NeedsSystem.OnDied
+            // so direct State=Dead writes no longer produce silent deaths.
+            SurvivorNeedWrite.OnKilled += _onNeedsDied;
+
             // DEATH-001 wire: Tribunal.Execution and ResolveExecute go through
             // SurvivorNeedWrite.SetHealth which bypasses NeedsSystem.OnDied. The
-            // OnKilled / OnLeaderKilled delegates below run the same death chain
-            // so a Tribunal execution or a successful mutiny kills the survivor
-            // the same way a natural death does.
-            if (BunkerSocial != null)
-            {
-                BunkerSocial.OnKilled = _onNeedsDied;
-                if (BunkerSocial.Mutiny != null)
-                    BunkerSocial.Mutiny.OnLeaderKilled = _onNeedsDied;
-            }
+            // centralized OnKilled event above now handles the death chain, so the
+            // per-system callbacks are no longer required.
 
             // ───────────────────────────────────────────────────────────
         }

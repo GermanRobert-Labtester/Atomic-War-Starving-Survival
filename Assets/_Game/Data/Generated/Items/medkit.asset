@@ -15,7 +15,7 @@ MonoBehaviour:
   id: medkit
   displayName: Medkit
   description: Field trauma kit.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: d7b0c7eb4df5fc6ebb417150afd42c44, type: 3}
   type: 3
   stackMax: 4
   weight: 1.2

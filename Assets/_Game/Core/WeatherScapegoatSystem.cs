@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -73,13 +74,13 @@ namespace AtomicWar._Game.Core
         /// <summary>
         /// Tick: track blizzard hours and trigger scapegoating.
         /// </summary>
-        public void Tick(float gameHours, Environment.WeatherKind currentWeather,
+        public void Tick(float gameHours, WeatherKind currentWeather,
             Action<string, int, string> scheduleEvent = null, int currentDay = 1)
         {
             if (gameHours <= 0f) return;
 
             // Track consecutive blizzard hours.
-            if (currentWeather == Environment.WeatherKind.Blizzard)
+            if (currentWeather == WeatherKind.Blizzard)
             {
                 _consecutiveBlizzardHours += gameHours;
             }

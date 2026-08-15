@@ -15,7 +15,7 @@ MonoBehaviour:
   id: bricks
   displayName: Bricks
   description: Fired clay. Shelter upgrades.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 8ee6cebeeb1cc055fa91deebd038e1c9, type: 3}
   type: 10
   stackMax: 20
   weight: 2

@@ -96,7 +96,8 @@ namespace AtomicWar._Game.Core
 
         public MutatedEcosystemSystem(System.Random rng = null)
         {
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("mutated_ecosystem");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "mutated_ecosystem");
         }
 
         public void BindRadiation(RadiationSystem radiation) => _radiation = radiation;

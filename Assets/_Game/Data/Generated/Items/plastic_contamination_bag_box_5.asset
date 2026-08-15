@@ -15,7 +15,7 @@ MonoBehaviour:
   id: plastic_contamination_bag_box_5
   displayName: Plastic Contamination Bag Box (5x)
   description: Five hazmat bags.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 4768841bd324074bab56fb4201421a69, type: 3}
   type: 10
   stackMax: 10
   weight: 0.3

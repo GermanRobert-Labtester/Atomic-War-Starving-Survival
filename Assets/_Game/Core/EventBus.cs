@@ -60,12 +60,21 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
+        /// When true, all Raise calls are silently dropped. Toggled by
+        /// SaveSystem during restore so side effects from RestoreState do
+        /// not cascade into partially-restored systems (audit M-8).
+        /// </summary>
+        public static bool IsSuppressed { get; set; }
+
+        /// <summary>
         /// Publish an event to all current subscribers of its type.
         /// Steady-state allocation-free: the snapshot array is cached and only
         /// rebuilt after the subscriber list changes.
+        /// Silently returns when <see cref="IsSuppressed"/> is true.
         /// </summary>
         public static void Raise<T>(T eventData)
         {
+            if (IsSuppressed) return;
             if (!_subscribers.TryGetValue(typeof(T), out var sub)) return;
             if (sub.Handlers.Count == 0) return;
 

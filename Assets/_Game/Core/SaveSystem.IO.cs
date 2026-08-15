@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
+using Ashfall.Core; // SaveChecksum (host-independent save integrity hash)
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Radiation;
@@ -27,13 +28,20 @@ namespace AtomicWar._Game.Core
             {
                 _preCaptureHook?.Invoke();
                 var snapshot = CaptureSnapshot();
-                snapshot.GameState.Phase = _gameState.Phase;
-                snapshot.GameState.Day = _gameState.Day;
-                snapshot.GameState.IsPaused = _gameState.IsPaused;
+                if (_gameState != null && snapshot.GameState != null)
+                {
+                    snapshot.GameState.Phase = _gameState.Phase;
+                    snapshot.GameState.Day = _gameState.Day;
+                    snapshot.GameState.IsPaused = _gameState.IsPaused;
+                }
 
-                snapshot.Checksum = "";
-                string body = JsonUtility.ToJson(snapshot, true);
-                snapshot.Checksum = ComputeChecksum(body);
+                // C-2: the checksum covers the snapshot's STATE, not its serialized text, so a
+                // save written by the Unity host still verifies under the Godot host and vice
+                // versa. Hashing pretty-printed JSON coupled save validity to indent width and
+                // null-string spelling, which differ between JsonUtility and System.Text.Json.
+                // SaveChecksum skips the root Checksum field itself, so no placeholder dance and
+                // no mutating the snapshot to blank it first.
+                snapshot.Checksum = SaveChecksum.Compute(snapshot);
                 string finalJson = JsonUtility.ToJson(snapshot, true);
 
                 Directory.CreateDirectory(_savesDir);
@@ -157,6 +165,21 @@ namespace AtomicWar._Game.Core
                 }
 
                 RestoreFromSnapshot(data);
+
+                // HARDEN: Post-restore sanity check. A corrupt or incomplete
+                // save could restore with zero survivors or a negative day,
+                // producing a zombie world that the next autosave would
+                // write back over the player's good slot.
+                if (!ValidateAfterRestore(data))
+                {
+                    Debug.LogError(
+                        $"[SaveSystem] Slot '{slotId}' failed post-restore validation. " +
+                        "Refusing to commit the restored state.");
+                    LastLoadSucceeded = false;
+                    SuppressAutoSave = true;
+                    return false;
+                }
+
                 Debug.Log($"[SaveSystem] Loaded slot '{slotId}' (version {data.SaveVersion}).");
                 LastLoadSucceeded = true;
                 // Successful load clears suppress only if host is not holding Continue gate.
@@ -259,14 +282,103 @@ namespace AtomicWar._Game.Core
             return sb.ToString();
         }
 
+        /// <summary>
+        /// C-2: state-based verification, with a fallback to the legacy text-based scheme so saves
+        /// written before this change still load. A legacy save re-verifies only on the host that
+        /// wrote it — that is inherent to the old scheme and is what this change exists to end —
+        /// but nothing that used to load stops loading, and the next Save rewrites the slot with a
+        /// portable checksum.
+        /// </summary>
         private static bool VerifyChecksum(SaveData data, string rawJson)
         {
             string saved = data.Checksum;
-            data.Checksum = "";
-            string body = JsonUtility.ToJson(data, true);
-            string computed = ComputeChecksum(body);
-            data.Checksum = saved;
-            return string.Equals(computed, saved, StringComparison.Ordinal);
+            if (string.IsNullOrEmpty(saved)) return false;
+
+            if (string.Equals(SaveChecksum.Compute(data), saved, StringComparison.Ordinal))
+                return true;
+
+            return VerifyLegacyTextChecksum(data, saved);
+        }
+
+        /// <summary>
+        /// Pre-C-2 scheme: SHA256 over the pretty-printed JSON with the Checksum field blanked.
+        /// Retained for backward compatibility only; do not use for new saves.
+        /// </summary>
+        private static bool VerifyLegacyTextChecksum(SaveData data, string saved)
+        {
+            string original = data.Checksum;
+            try
+            {
+                data.Checksum = "";
+                string computed = ComputeChecksum(JsonUtility.ToJson(data, true));
+                return string.Equals(computed, saved, StringComparison.Ordinal);
+            }
+            finally
+            {
+                // Restore even if serialization throws: the caller's SaveData must not be left
+                // with its checksum blanked.
+                data.Checksum = original;
+            }
+        }
+
+        /// <summary>
+        /// HARDEN: Post-restore sanity check. Verifies that the restored world
+        /// state is coherent enough to continue. Catches corrupt saves where
+        /// individual systems restored successfully but the aggregate world
+        /// doesn't make sense (zero survivors on a non-empty save, negative day,
+        /// etc.). Returns false to signal Load should abort rather than commit
+        /// a broken state that the next autosave would write over the player's
+        /// good slot.
+        /// </summary>
+        private bool ValidateAfterRestore(SaveData data)
+        {
+            if (data == null) return false;
+
+            // Day must not be negative (day < 0 means corrupted state).
+            if (data.GameState != null && data.GameState.Day < 0)
+            {
+                Debug.LogWarning("[SaveSystem] Post-restore validation failed: GameState.Day < 0.");
+                return false;
+            }
+
+            // A save that claims to have survivors must actually have them.
+            if (data.Survivors != null && data.Survivors.Count > 0)
+            {
+                bool anyAlive = false;
+                for (int i = 0; i < data.Survivors.Count; i++)
+                {
+                    if (data.Survivors[i] != null && data.Survivors[i].State != SurvivorState.Dead)
+                    {
+                        anyAlive = true;
+                        break;
+                    }
+                }
+                if (!anyAlive)
+                {
+                    // All survivors dead is valid (Iron Man trigger) — don't block.
+                    // Only block if the save says there are survivors but ALL are null.
+                    bool allNull = true;
+                    for (int i = 0; i < data.Survivors.Count; i++)
+                    {
+                        if (data.Survivors[i] != null) { allNull = false; break; }
+                    }
+                    if (allNull)
+                    {
+                        Debug.LogWarning("[SaveSystem] Post-restore validation failed: all survivor entries are null.");
+                        return false;
+                    }
+                }
+            }
+
+            // SaveVersion must be within supported range.
+            if (data.SaveVersion < 1 || data.SaveVersion > CurrentSaveVersion)
+            {
+                Debug.LogWarning(
+                    $"[SaveSystem] Post-restore validation failed: unsupported SaveVersion {data.SaveVersion}.");
+                return false;
+            }
+
+            return true;
         }
 
         private static void Migrate(SaveData data)

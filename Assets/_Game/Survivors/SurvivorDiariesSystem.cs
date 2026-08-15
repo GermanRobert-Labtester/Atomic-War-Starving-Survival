@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Survivors
 {
@@ -90,6 +91,20 @@ namespace AtomicWar._Game.Survivors
             var entry = new SurvivorDiaryEntry(currentDay, sv.Needs != null ? sv.Needs.Morale : 50f, trait, text);
             entries.Add(entry);
 
+            OnDiaryEntryAdded?.Invoke(sv, entry);
+        }
+
+        /// <summary>Record a specific narrative entry for a survivor (Expansion IV hook).</summary>
+        public void RecordEntry(Survivor sv, string content, int currentDay = 0)
+        {
+            if (sv == null || string.IsNullOrEmpty(content)) return;
+            if (!_diariesBySurvivor.TryGetValue(sv.Id, out var entries))
+            {
+                entries = new List<SurvivorDiaryEntry>();
+                _diariesBySurvivor[sv.Id] = entries;
+            }
+            var entry = new SurvivorDiaryEntry(currentDay, sv.Needs != null ? sv.Needs.Morale : 50f, "event", content);
+            entries.Add(entry);
             OnDiaryEntryAdded?.Invoke(sv, entry);
         }
 

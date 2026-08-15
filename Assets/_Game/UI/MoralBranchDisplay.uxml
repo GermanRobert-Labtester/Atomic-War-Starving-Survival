@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_A.uss" />
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="moral-branch-root" class="moral-branch-display">
+        <ui:Label name="moral-branch-icon" class="moral-branch-icon branch-icon" text="" />
+        <ui:Label name="moral-branch-label" class="moral-branch-label branch-label" text="" />
+    </ui:VisualElement>
+</ui:UXML>

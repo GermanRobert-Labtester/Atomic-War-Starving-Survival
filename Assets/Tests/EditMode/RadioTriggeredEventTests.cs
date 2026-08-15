@@ -7,6 +7,7 @@ using AtomicWar._Game.Events;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Survivors;
 using InventoryModel = AtomicWar._Game.Inventory.Inventory;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar.Tests.EditMode
 {

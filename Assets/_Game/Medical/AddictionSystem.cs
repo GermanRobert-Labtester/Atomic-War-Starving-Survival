@@ -88,7 +88,8 @@ namespace AtomicWar._Game.Medical
 
         public AddictionSystem(System.Random rng = null)
         {
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("addiction_system");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "addiction_system");
         }
 
         /// <summary>
@@ -239,8 +240,12 @@ namespace AtomicWar._Game.Medical
                     OnWithdrawalEnded?.Invoke(sv);
                 }
 
-                // Panic item destruction
-                if (PanicDestroyHandler != null && _rng.NextDouble() < PanicDestroyChancePerHour * gameHours)
+                // Panic item destruction. Clamp the per-hour chance accumulated over
+                // a (possibly multi-hour catch-up) tick — otherwise any tick >= 4h
+                // would guarantee destruction (0.25 * 4 = 1.0), turning a probability
+                // into a certainty. Same bug class as the e061050 deathChance fix.
+                if (PanicDestroyHandler != null
+                    && _rng.NextDouble() < Mathf.Clamp01(PanicDestroyChancePerHour * gameHours))
                 {
                     PanicDestroyHandler(sv, _rng);
                 }

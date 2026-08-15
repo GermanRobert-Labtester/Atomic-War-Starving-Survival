@@ -1,0 +1,56 @@
+[
+  {
+    "set_id": "checkpoint_kilo",
+    "set_title": "The Last Days of Checkpoint Kilo",
+    "total_parts": 4,
+    "parts": [
+      { "part": 1, "item_id": "cassette_checkpoint_kilo_1", "title": "Day 1: The Sealing", "description": "A corporal's voice, steady but strained: 'Checkpoint Kilo sealed at 0600. Twelve personnel. Air filtration nominal. Rations for 30 days. We'll wait it out.'" },
+      { "part": 2, "item_id": "cassette_checkpoint_kilo_2", "title": "Day 12: The First Death", "description": "The corporal's voice is quieter now: 'Private Chen didn't wake up this morning. We don't know why. The dosimeters read safe. But she just... stopped.'" },
+      { "part": 3, "item_id": "cassette_checkpoint_kilo_3", "title": "Day 30: The Ration Split", "description": "Voices arguing in the background. The corporal: 'We're down to half rations. Three more have the cough. I'm not sure the filter is working as well as the gauge says.'" },
+      { "part": 4, "item_id": "cassette_checkpoint_kilo_4", "title": "Day 47: The Final Entry", "description": "Static. Then, barely audible: 'This is Corporal Maren. If you find this — the filter failed. It was lying to us the whole time. Don't trust the gauges. Trust your lungs. Maren out.'" }
+    ],
+    "hidden_cache_location": "checkpoint_kilo_armory",
+    "hidden_cache_items": ["military_mre", "ammo_556", "field_surgical_kit"],
+    "completion_narrative": "narrative_cassette_checkpoint_kilo_complete"
+  },
+  {
+    "set_id": "hospital_saint_maren",
+    "set_title": "The Saint Maren Tapes",
+    "total_parts": 3,
+    "parts": [
+      { "part": 1, "item_id": "cassette_saint_maren_1", "title": "Triage Protocol", "description": "A doctor's voice, clinical: 'St. Maren's Hospital, Day Zero plus six hours. We're implementing triage protocol Omega. Patients are categorized by survival probability. I hate this.'" },
+      { "part": 2, "item_id": "cassette_saint_maren_2", "title": "The Hardest Decision", "description": "The doctor is crying: 'We had to choose. There were too many. We chose the young ones — the ones who might see a future. The others... the others we made comfortable. God forgive us.'" },
+      { "part": 3, "item_id": "cassette_saint_maren_3", "title": "The Pharmacy Key", "description": "A final entry: 'The pharmacy is locked. The key is in my office, behind the diploma. Take everything. Use it for someone who can still be saved. That's what I would have wanted.'" }
+    ],
+    "hidden_cache_location": "hospital_pharmacy",
+    "hidden_cache_items": ["antibiotics", "morphine", "surgical_suture", "iodine_tablets"],
+    "completion_narrative": "narrative_cassette_saint_maren_complete"
+  },
+  {
+    "set_id": "family_bunker",
+    "set_title": "The Martinez Family Recordings",
+    "total_parts": 3,
+    "parts": [
+      { "part": 1, "item_id": "cassette_family_bunker_1", "title": "The First Week", "description": "A father's voice, with children's laughter in the background: 'We're in the basement bunker. Maria is keeping the kids busy with board games. The radio says the worst has passed. We'll give it another week.'" },
+      { "part": 2, "item_id": "cassette_family_bunker_2", "title": "The Cough", "description": "The father, hoarse now: 'Maria has the cough. The little one — Ana — she's running a fever. We're running out of the iodine pills. If anyone finds this... the backyard shed has extra water.'" },
+      { "part": 3, "item_id": "cassette_family_bunker_3", "title": "The Last Game", "description": "Silence, then a child's voice, terribly small: 'Papa can't talk anymore. Mama is sleeping. I finished the board game by myself. I won. I don't know what to do now.'" }
+    ],
+    "hidden_cache_location": "family_bunker_backyard_shed",
+    "hidden_cache_items": ["clean_water_jug", "canned_food", "childrens_books"],
+    "completion_narrative": "narrative_cassette_family_bunker_complete"
+  },
+  {
+    "set_id": "resistance_broadcasts",
+    "set_title": "The Free Radio Tapes",
+    "total_parts": 4,
+    "parts": [
+      { "part": 1, "item_id": "cassette_free_radio_1", "title": "The First Broadcast", "description": "A young woman's voice, crackling with static: 'This is Free Radio. If you can hear this, you're not alone. We're broadcasting from somewhere the ash hasn't reached yet. Stay inside. Stay alive.'" },
+      { "part": 2, "item_id": "cassette_free_radio_2", "title": "The Warning", "description": "The same voice, urgent: 'The patrols have started. They're going door to door, conscripting survivors. If they knock, don't answer. Don't let them see your light. Trust no uniform.'" },
+      { "part": 3, "item_id": "cassette_free_radio_3", "title": "The Coordinates", "description": "Reading coordinates slowly: 'There is a cache at the old library. Medicine, batteries, seeds. It's for anyone who needs it. Take only what you need. Leave the rest for the next survivor.'" },
+      { "part": 4, "item_id": "cassette_free_radio_4", "title": "The Last Transmission", "description": "The voice, barely a whisper: 'They found us. If you're hearing this, we're already gone. But the cache is still there. And there are others like us — other broadcasts, other survivors. Keep listening. Keep hoping. Free Radio, signing off forever.'" }
+    ],
+    "hidden_cache_location": "old_library_cache",
+    "hidden_cache_items": ["antibiotics", "aa_batteries", "seed_packets", "water_filter"],
+    "completion_narrative": "narrative_cassette_free_radio_complete"
+  }
+]

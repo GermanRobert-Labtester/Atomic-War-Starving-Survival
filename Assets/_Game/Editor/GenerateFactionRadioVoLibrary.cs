@@ -1,9 +1,11 @@
 #if UNITY_EDITOR
 using System.IO;
+using System.Text;
 using UnityEditor;
 using UnityEngine;
 using AtomicWar._Game.UI;
 using AtomicWar._Game.Economy;
+using AtomicWar._Game.Data;
 
 namespace AtomicWar._Game.Editor
 {
@@ -38,11 +40,17 @@ namespace AtomicWar._Game.Editor
                 Entry(DynamicEconomySystem.GetParleyChannelTag(FactionSO.Ids.DoomsdayPreppers),
                     "vo_ch11_stockpile.wav")
             };
-            lib.KindClips = new[]
-            {
-                Kind("Parley", "vo_kind_parley.wav"),
-                Kind("HatchRepel", "vo_kind_hatch.wav")
-            };
+            // Expansion II Part II: ensure KindClips is non-null before
+            // appending the four faction-pressure rows. (Idempotent.)
+            lib.KindClips = lib.KindClips ?? new FactionRadioVoLibrarySO.KindEntry[0];
+
+            // Existing kinds + 4 new pressure kinds.
+            lib.KindClips = AppendKind(lib.KindClips, Kind("Parley", "vo_kind_parley.wav"));
+            lib.KindClips = AppendKind(lib.KindClips, Kind("HatchRepel", "vo_kind_hatch.wav"));
+            lib.KindClips = AppendKind(lib.KindClips, Kind("FactionPressure", "vo_kind_faction_pressure.wav"));
+            lib.KindClips = AppendKind(lib.KindClips, Kind("LedgerStrike", "vo_kind_ledger_strike.wav"));
+            lib.KindClips = AppendKind(lib.KindClips, Kind("TaxChange", "vo_kind_tax_change.wav"));
+            lib.KindClips = AppendKind(lib.KindClips, Kind("CultCommunion", "vo_kind_cult_communion.wav"));
 
             EditorUtility.SetDirty(lib);
             AssetDatabase.SaveAssets();
@@ -65,8 +73,65 @@ namespace AtomicWar._Game.Editor
                 assigned++;
             }
 
+            // Print all faction lore lines to the Console so designers
+            // can audit the voice catalog at a glance. (Text only.)
+            foreach (var fid in new[]
+                     {
+                         FactionSO.Ids.MilitaryRemnants,
+                         FactionSO.Ids.UplandMilitia,
+                         FactionSO.Ids.CultOfTheGlow,
+                         FactionSO.Ids.ScavengerCamp
+                     })
+            {
+                AddLoreLinesAsKindComments(fid);
+            }
+
             Debug.Log($"[ASHFALL] FactionRadioVoLibrary ready at {LibraryPath} " +
                       $"(assigned to {assigned} scene components). WAV stubs in {AudioDir}.");
+        }
+
+        private static FactionRadioVoLibrarySO.KindEntry[] AppendKind(
+            FactionRadioVoLibrarySO.KindEntry[] existing,
+            FactionRadioVoLibrarySO.KindEntry next)
+        {
+            if (next == null) return existing;
+            if (existing != null)
+            {
+                for (int i = 0; i < existing.Length; i++)
+                {
+                    var e = existing[i];
+                    if (e != null && string.Equals(e.Kind, next.Kind, System.StringComparison.OrdinalIgnoreCase))
+                        return existing;
+                }
+            }
+            int n = existing != null ? existing.Length : 0;
+            var grown = new FactionRadioVoLibrarySO.KindEntry[n + 1];
+            if (n > 0) System.Array.Copy(existing, grown, n);
+            grown[n] = next;
+            return grown;
+        }
+
+        /// <summary>
+        /// Print the lore lines for a given faction id to the Unity Console.
+        /// Designers use this when auditing the voice catalog; the lines
+        /// don't need to land in the SO.
+        /// </summary>
+        public static void AddLoreLinesAsKindComments(string factionId)
+        {
+            if (string.IsNullOrEmpty(factionId)) return;
+            var lore = FactionLoreVoiceLines.LinesForFaction(factionId);
+            if (lore == null || lore.Count == 0)
+            {
+                Debug.Log($"[FactionLore] No lines catalogued for {factionId}.");
+                return;
+            }
+            var sb = new StringBuilder();
+            sb.Append("[FactionLore] ").Append(factionId).Append(" (").Append(lore.Count).Append(" lines):\n");
+            for (int i = 0; i < lore.Count; i++)
+            {
+                sb.Append("  ").Append(i + 1).Append(". ").Append(lore[i]).Append("\n");
+            }
+            Debug.Log(sb.ToString());
         }
 
         private static FactionRadioVoLibrarySO.ChannelEntry Entry(string tag, string file)

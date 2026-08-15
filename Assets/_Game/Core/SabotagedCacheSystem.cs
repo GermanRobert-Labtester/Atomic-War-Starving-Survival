@@ -1,10 +1,12 @@
 using System;
+using Ashfall.Core.Economy;
 using AtomicWar._Game.Economy;
 using AtomicWar._Game.Inventory;
 using AtomicWar._Game.Medical;
 using AtomicWar._Game.Survivors;
 using UnityEngine;
 using Random = System.Random;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {

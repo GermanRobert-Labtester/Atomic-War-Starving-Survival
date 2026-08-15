@@ -15,7 +15,7 @@ MonoBehaviour:
   id: box_of_tea_20
   displayName: Box of Tea (20x)
   description: Twenty bags.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: cb98a1f97c4d8f878a899c7a32440f0a, type: 3}
   type: 0
   stackMax: 5
   weight: 0.15

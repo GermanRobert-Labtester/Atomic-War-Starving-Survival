@@ -15,7 +15,7 @@ MonoBehaviour:
   id: tactical_scrap
   displayName: Tactical Scrap
   description: Mil-spec offcuts. Rare salvage.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: c7b5c8e69365a6a3298c4a408b4848b5, type: 3}
   type: 10
   stackMax: 20
   weight: 0.4

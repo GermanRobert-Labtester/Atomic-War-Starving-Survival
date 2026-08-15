@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/DiegeticHud.uss" />
+    <Style src="project://database/Assets/_Game/UI/UIBatch20_B.uss" />
+    <ui:VisualElement name="endgame-victory-root" class="endgame-victory-panel hidden" picking-mode="Ignore">
+        <ui:VisualElement class="endgame-header">
+            <ui:Label text="ENDGAME STRATEGIC VICTORY EVALUATION" class="endgame-title" />
+            <ui:Label name="overall_survival_score_label" text="SURVIVAL INDEX: 8450 PTS" class="endgame-score-label" />
+        </ui:VisualElement>
+        <ui:ScrollView name="victory_paths_scroll" class="endgame-paths-scroll">
+            <!-- 8 Victory Paths generated dynamically -->
+        </ui:ScrollView>
+    </ui:VisualElement>
+</ui:UXML>

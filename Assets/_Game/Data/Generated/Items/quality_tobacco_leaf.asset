@@ -15,7 +15,7 @@ MonoBehaviour:
   id: quality_tobacco_leaf
   displayName: Quality Tobacco Leaf
   description: Cured leaf. Smoother.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 393d83c54b73eb6b79c399b711cbdf81, type: 3}
   type: 10
   stackMax: 20
   weight: 0.05

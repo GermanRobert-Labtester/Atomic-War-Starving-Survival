@@ -15,7 +15,7 @@ MonoBehaviour:
   id: circuit_board
   displayName: Circuit Board
   description: Salvaged board. Electronics craft.
-  iconRef: {fileID: 0}
+  iconRef: {fileID: 21300000, guid: 02ca60dbd41e3d1e68b0f5007c83a9f4, type: 3}
   type: 10
   stackMax: 15
   weight: 0.1

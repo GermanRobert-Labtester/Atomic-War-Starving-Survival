@@ -4,7 +4,8 @@
     "references": [
         "AtomicWar._Game.Inventory",
         "AtomicWar._Game.Survivors",
-        "AtomicWar._Game.Utilities"
+        "AtomicWar._Game.Utilities",
+        "AtomicWar.Ashfall.Core"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

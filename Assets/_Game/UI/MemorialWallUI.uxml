@@ -1,0 +1,11 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/_Game/UI/UIBatch11_B.uss" />
+    <Style src="project://database/Assets/_Game/UI/Phase11Widgets.uss" />
+    <ui:VisualElement name="memorial-wall-root" class="memorial-wall">
+        <ui:VisualElement name="wall-background" class="wall-background" />
+        <ui:Label name="memorial-wall-title" class="memorial-wall-title" text="MEMORIAL WALL" />
+        <ui:Label name="memorial-wall-empty" class="memorial-wall-empty empty-state" text="" />
+        <ui:ScrollView name="memorial-entry-list" class="memorial-entry-list entries-scroll" />
+        <ui:Button name="memorial-pay-respects-btn" class="memorial-pay-respects-btn pay-respects-button" text="PAY RESPECTS (1h)" />
+    </ui:VisualElement>
+</ui:UXML>

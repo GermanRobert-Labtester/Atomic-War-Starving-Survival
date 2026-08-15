@@ -4,6 +4,7 @@ using UnityEngine;
 using AtomicWar._Game.Data;
 using AtomicWar._Game.Environment;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core;
 
 namespace AtomicWar._Game.Core
 {
@@ -73,7 +74,8 @@ namespace AtomicWar._Game.Core
         public RadioTunerSystem(System.Random rng = null, Func<int> getDay = null)
         {
             State = new RadioState();
-            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.CreateFixed("radiotunersystem");
+            _rng = rng ?? AtomicWar._Game.Utilities.SeededRandom.Create(
+                AtomicWar._Game.Utilities.SeededRandom.WorldSeed, "radiotunersystem");
             _getDay = getDay ?? (() => 0);
         }
 

@@ -5,20 +5,24 @@ Inspired by the survival-management genre; DO NOT copy any existing game's
 art, names, characters, UI layout, text, or code.
 
 STACK (do not deviate without asking):
-- Unity 6 LTS, 2D, URP (2D lights), C#
+- Godot 4.7+ (.NET/C#) — ACTIVE ENGINE. All new development, execution, and testing must use Godot and dotnet.
+- Unity 6 LTS — LEGACY CODEBASE.
+  *** STRICT RULE: NEVER RUN OR INVOKE UNITY UNLESS EXPLICITLY REQUESTED BY THE USER! ***
+- ONE SOURCE OF TRUTH: Simulation in `Ashfall.Core`, plain C#.
 - Data-driven: ScriptableObjects + JSON in StreamingAssets + editor importers
-- Architecture: thin MonoBehaviours; logic in plain C# systems; event bus
+- Architecture: thin MonoBehaviours / Nodes; logic in plain C# systems; event bus
 - In-game NPC/decision AI = Utility AI (NOT an LLM at runtime)
 - Version control: Git; commit after each accepted deliverable
 
 GLOBAL RULES:
+- AI Assets Directory: All AI-generated images, videos, audio, and 3D assets must be saved in `generated_AIassets/` at the game root (`/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/generated_AIassets`).
 - snake_case ids everywhere; never invent an id that isn't in the master list
 - Every public system raises C# events on state change (for UI + save)
 - Every system must be save/load safe (serializable state)
 - No magic, no fantasy, no real countries/wars/people, no glorified violence
 - Tone: cold, exhausted, human, restrained. Show, don't preach.
-- After writing code, VERIFY: run Unity batch compile (or playmode test) and
-  report PASS/FAIL before claiming done. If you can't run it, say so explicitly.
+- After writing code, VERIFY: run `dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj` and
+  `dotnet build Ashfall.csproj` / `godot --headless`. Never run Unity batch compile unless explicitly asked.
 - Keep changes small and reviewable. One system per task.
 
 ATOMIC-SURVIVAL DOMAIN (the needs/hazards this game is about):

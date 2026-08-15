@@ -99,7 +99,7 @@ namespace AtomicWar._Game.Core
                 CurrentRoomId            = sv.CurrentRoomId ?? string.Empty,
 
                 // Chronic Disease (pre-existing gap)
-                ActiveChronicIllness       = sv.ActiveChronicIllness.HasValue ? sv.ActiveChronicIllness.Value.ToString() : string.Empty,
+                ActiveChronicIllness       = sv.HasChronicIllness ? sv.ActiveChronicIllness.ToString() : string.Empty,
                 ChronicIllnessManagedHours = sv.ChronicIllnessManagedHours,
                 DisabilityIds             = sv.DisabilityIds != null ? new List<string>(sv.DisabilityIds) : new List<string>(),
 
@@ -121,7 +121,20 @@ namespace AtomicWar._Game.Core
                 QuestStage           = sv.QuestStage,
                 QuestProgress        = sv.QuestProgress,
                 DaysAlive            = sv.DaysAlive,
-                MoraleHitZero        = sv.MoraleHitZero
+                MoraleHitZero        = sv.MoraleHitZero,
+
+                SicknessPhase                 = sv.SicknessPhase,
+                PhaseHoursElapsed             = sv.PhaseHoursElapsed,
+                HypervigilanceLevel           = sv.HypervigilanceLevel,
+                BranchDirection               = sv.BranchDirection,
+                HasTerminalPrognosis          = sv.HasTerminalPrognosis,
+                TerminalPrognosisDaysRemaining = sv.TerminalPrognosisDaysRemaining,
+                PersonalKeepsakeItemId        = sv.PersonalKeepsakeItemId ?? string.Empty,
+                HasLostKeepsake               = sv.HasLostKeepsake,
+                KeepsakeGriefLevel            = sv.KeepsakeGriefLevel,
+                ChemicalDependencies          = sv.ChemicalDependencies != null
+                    ? new List<ChemicalDependency>(sv.ChemicalDependencies)
+                    : new List<ChemicalDependency>()
             };
 
             if (_radiationSystem != null && !string.IsNullOrEmpty(sv.Id))
@@ -215,9 +228,14 @@ namespace AtomicWar._Game.Core
 
             // Chronic Disease (pre-existing gap)
             if (!string.IsNullOrEmpty(save.ActiveChronicIllness) && System.Enum.TryParse<Survivors.ChronicIllnessKind>(save.ActiveChronicIllness, out var kind))
+            {
                 sv.ActiveChronicIllness = kind;
+                sv.HasChronicIllness = true;
+            }
             else
-                sv.ActiveChronicIllness = null;
+            {
+                sv.HasChronicIllness = false;
+            }
             sv.ChronicIllnessManagedHours = save.ChronicIllnessManagedHours;
             sv.DisabilityIds              = save.DisabilityIds != null ? new List<string>(save.DisabilityIds) : new List<string>();
 
@@ -241,6 +259,20 @@ namespace AtomicWar._Game.Core
             sv.QuestProgress       = save.QuestProgress;
             sv.DaysAlive           = save.DaysAlive;
             sv.MoraleHitZero       = save.MoraleHitZero;
+
+            sv.SicknessPhase                  = save.SicknessPhase;
+            sv.PhaseHoursElapsed              = save.PhaseHoursElapsed;
+            sv.HypervigilanceLevel            = save.HypervigilanceLevel;
+            sv.BranchDirection                = save.BranchDirection;
+            sv.HasTerminalPrognosis           = save.HasTerminalPrognosis;
+            sv.TerminalPrognosisDaysRemaining = save.TerminalPrognosisDaysRemaining;
+            sv.PersonalKeepsakeItemId         = string.IsNullOrEmpty(save.PersonalKeepsakeItemId)
+                ? null : save.PersonalKeepsakeItemId;
+            sv.HasLostKeepsake                = save.HasLostKeepsake;
+            sv.KeepsakeGriefLevel             = save.KeepsakeGriefLevel;
+            sv.ChemicalDependencies           = save.ChemicalDependencies != null
+                ? new List<ChemicalDependency>(save.ChemicalDependencies)
+                : new List<ChemicalDependency>();
 
             // SAVE-1D: the need fields above are written directly (restored values are
             // authoritative), so no OnNeedChanged fired and every need observer — HUD

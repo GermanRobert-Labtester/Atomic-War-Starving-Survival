@@ -209,6 +209,67 @@ namespace AtomicWar.Tests.EditMode
                 "Crafter must be rebound from CrafterId on restore");
         }
 
+        // CRAFT-003 — completed result rejected by a full inventory must not
+        // silently vanish. Without an overflow stash the ingredients are refunded.
+        [Test]
+        public void CompleteCraft_FullInventory_NoOverflowStash_RefundsIngredients()
+        {
+            // Use weight-based rejection: the heavy bandage result no longer fits
+            // after the inventory is filled, but the light cloth ingredient does.
+            var cloth = NewItem("cloth", weight: 0.1f);
+            var bandage = NewItem("bandage", ItemType.Medical, stackMax: 1, weight: 1.0f);
+            var recipe = NewRecipe("craft_bandage", bandage, 1, 0.5f, "");
+            recipe.ingredients.Add(new Ingredient { item = cloth, amount = 1 });
+
+            var inventory = new Inventory { Capacity = 2, MaxWeight = 1.5f };
+            inventory.Add(cloth, 1);
+            var crafting = new CraftingSystem(inventory);
+
+            Recipe overflowRecipe = null;
+            ItemDefinition overflowItem = null;
+            int overflowAmount = 0;
+            crafting.OnCraftResultOverflow += (r, i, a) => { overflowRecipe = r; overflowItem = i; overflowAmount = a; };
+
+            Assert.That(crafting.StartCraft(recipe), Is.True);
+            // The craft consumed the cloth. Add a filler that leaves room for the
+            // cloth refund (0.1 weight) but not for the heavy bandage (1.0 weight).
+            var filler = NewItem("filler", ItemType.Material, stackMax: 1, weight: 0.6f);
+            inventory.Add(filler, 1);
+
+            crafting.Tick(0.5f);
+
+            Assert.That(overflowRecipe, Is.SameAs(recipe), "OnCraftResultOverflow must fire when the inventory is full.");
+            Assert.That(overflowItem, Is.SameAs(bandage));
+            Assert.That(overflowAmount, Is.EqualTo(1));
+            // Ingredient refunded, result not produced in the main inventory.
+            Assert.That(inventory.Count(cloth), Is.EqualTo(1));
+            Assert.That(inventory.Count(bandage), Is.EqualTo(0));
+        }
+
+        [Test]
+        public void CompleteCraft_FullInventory_WithOverflowStash_PreservesResult()
+        {
+            var cloth = NewItem("cloth");
+            var bandage = NewItem("bandage", ItemType.Medical, stackMax: 1);
+            var recipe = NewRecipe("craft_bandage", bandage, 1, 0.5f, "");
+            recipe.ingredients.Add(new Ingredient { item = cloth, amount = 1 });
+
+            var inventory = new Inventory { Capacity = 2, MaxWeight = 1000f };
+            inventory.Add(cloth, 1);
+            var overflow = new Inventory { Capacity = 10, MaxWeight = 1000f };
+            var crafting = new CraftingSystem(inventory) { OverflowStash = overflow };
+
+            Assert.That(crafting.StartCraft(recipe), Is.True);
+            var filler = NewItem("filler", ItemType.Material, stackMax: 1);
+            inventory.Add(filler, 2);
+
+            crafting.Tick(0.5f);
+
+            Assert.That(inventory.Count(bandage), Is.EqualTo(0), "Main inventory is full; bandage should not be there.");
+            Assert.That(overflow.Count(bandage), Is.EqualTo(1), "Bandage must be preserved in the overflow stash.");
+            Assert.That(inventory.Count(cloth), Is.EqualTo(0), "Ingredients stay consumed when the result is stashed.");
+        }
+
         /// <summary>An unknown or absent crafter id must restore the craft, not drop it.</summary>
         [Test]
         public void RestoreState_KeepsCraft_WhenCrafterCannotBeResolved()

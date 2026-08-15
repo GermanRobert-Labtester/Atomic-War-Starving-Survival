@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using AtomicWar._Game.Survivors;
+using Ashfall.Core.Journal;
 
 namespace AtomicWar._Game.Core
 {
@@ -84,9 +85,12 @@ namespace AtomicWar._Game.Core
                     var sv = survivors[i];
                     if (sv == null || !sv.IsAlive) continue;
 
-                    // Sociopaths and Fatalists don't care.
-                    if (sv.RiskBias == Survivors.RiskBiasTrait.Sociopath
-                        || sv.RiskBias == Survivors.RiskBiasTrait.Fatalist)
+                    // Sociopaths (trait_sociopath) and Fatalists don't care.
+                    // Fatalist is a genuine RiskBias value (assigned by LaborCampSystem);
+                    // Sociopath is a TRAIT, not a RiskBias — the old RiskBias check
+                    // never matched (see EmpathSystem for the same correction).
+                    if (sv.HasTrait(PersonalQuestSystem.SociopathId)
+                        || sv.RiskBias == RiskBiasTrait.Fatalist)
                         continue;
 
                     if (_needsSystem != null)
