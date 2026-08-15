@@ -333,6 +333,14 @@ namespace AtomicWar.GodotApp
             FlushHoldfastIfDirty();
             FlushDutyRosterIfDirty();
             FlushExpansionHubIfDirty();
+            FlushVerdictIfDirty();
+            FlushMaritimeIfDirty();
+            FlushExpeditionIfDirty();
+            FlushNarrativeIfDirty();
+            FlushMedicalIfDirty();
+            FlushWorldIfDirty();
+            FlushCraftingIfDirty();
+            FlushCaravanIfDirty();
         }
 
         public override void _UnhandledKeyInput(InputEvent @event)
@@ -1254,6 +1262,46 @@ namespace AtomicWar.GodotApp
         private void FlushExpansionHubIfDirty()
         {
             if (_expansionHubDirty) SaveExpansionHub();
+        }
+
+        private void FlushVerdictIfDirty()
+        {
+            if (_verdictDirty) SaveVerdict();
+        }
+
+        private void FlushMaritimeIfDirty()
+        {
+            if (_maritimeDirty) SaveMaritime();
+        }
+
+        private void FlushExpeditionIfDirty()
+        {
+            if (_expeditionDirty) SaveExpeditions();
+        }
+
+        private void FlushNarrativeIfDirty()
+        {
+            if (_narrativeDirty) SaveNarrative();
+        }
+
+        private void FlushMedicalIfDirty()
+        {
+            if (_medicalDirty) SaveMedical();
+        }
+
+        private void FlushWorldIfDirty()
+        {
+            if (_worldDirty) SaveWorld();
+        }
+
+        private void FlushCraftingIfDirty()
+        {
+            if (_craftingDirty) SaveCrafting();
+        }
+
+        private void FlushCaravanIfDirty()
+        {
+            if (_caravansDirty) SaveCaravans();
         }
 
         // -----------------------------------------------------------------
