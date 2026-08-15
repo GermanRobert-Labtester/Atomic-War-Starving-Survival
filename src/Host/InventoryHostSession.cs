@@ -117,7 +117,23 @@ namespace AtomicWar.GodotApp
                 MakeDef("fat_rendered", "Rendered Fat", ItemType.Food, stackMax: 10, weight: 0.5f, hunger: 8f, trade: 3f),
                 MakeDef("spoiled_blood_bag", "Spoiled Blood Bag", ItemType.ContaminatedFood, weight: 0.6f, trade: 0f),
                 MakeDef("spoiled_canned_food", "Spoiled Canned Food", ItemType.ContaminatedFood, weight: 0.4f, trade: 0f),
-                MakeDef("spoiled_meat", "Spoiled Meat", ItemType.ContaminatedFood, stackMax: 20, weight: 0.3f, trade: 0f)
+                MakeDef("spoiled_meat", "Spoiled Meat", ItemType.ContaminatedFood, stackMax: 20, weight: 0.3f, trade: 0f),
+
+                // ── ASHFALL: THE GLASS ORCHARD (Expansion 11) — greenhouse items ──
+                MakeDef("item_seed_mushroom", "Spore Capsule", ItemType.Material, stackMax: 20, weight: 0.1f, trade: 4f),
+                MakeDef("item_seed_tuber", "Tuber Cutting", ItemType.Material, stackMax: 10, weight: 0.3f, trade: 6f),
+                MakeDef("item_seed_grain", "Mutated Grain Spike", ItemType.Material, stackMax: 30, weight: 0.05f, trade: 5f),
+                MakeDef("item_seed_wheat", "Pre-War Wheat Seed", ItemType.Quest, stackMax: 5, weight: 0.05f, trade: 80f),
+                MakeDef("item_planter_box", "Planter Box", ItemType.Material, stackMax: 6, weight: 8f, trade: 25f),
+                MakeDef("item_grow_lamp", "Grow Lamp", ItemType.Device, stackMax: 2, weight: 3f, trade: 40f),
+                MakeDef("item_lead_glass_pane", "Lead-Glass Pane", ItemType.Material, stackMax: 4, weight: 5f, trade: 30f),
+                MakeDef("item_blight_treatment", "Blight Treatment", ItemType.Medical, stackMax: 6, weight: 0.2f, trade: 15f),
+                MakeDef("item_grow_medium", "Sterile Grow Medium", ItemType.Material, stackMax: 8, weight: 2f, trade: 8f),
+                MakeDef("crop_mushroom", "Greenhouse Mushroom", ItemType.Food, stackMax: 20, weight: 0.1f, hunger: 6f, morale: 1f, trade: 3f),
+                MakeDef("crop_tuber", "Greenhouse Tuber", ItemType.Food, stackMax: 12, weight: 0.3f, hunger: 12f, thirst: 1f, trade: 5f),
+                MakeDef("crop_grain", "Clean Grain", ItemType.Food, stackMax: 30, weight: 0.1f, hunger: 18f, morale: 2f, trade: 6f),
+                MakeDef("crop_wheat", "Pre-War Wheat", ItemType.Food, stackMax: 20, weight: 0.2f, hunger: 30f, morale: 8f, health: 2f, trade: 30f),
+                MakeDef("tainted_food", "Tainted Rations", ItemType.ContaminatedFood, stackMax: 20, weight: 0.2f, hunger: 14f, morale: -3f, contamination: 0.6f, trade: 1f)
             };
             foreach (var d in defs) catalog.Register(d);
         }
