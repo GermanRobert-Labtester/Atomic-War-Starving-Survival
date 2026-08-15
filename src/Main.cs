@@ -958,12 +958,16 @@ namespace AtomicWar.GodotApp
             if (_maritime.Dive.IsActive)
                 _maritime.TickDiveDemo(60f);
 
+            if (_holdfastRuntime != null && !_holdfastRuntime.IsDead)
+                _holdfastRuntime.TickDay();
+
             TickVerdict(day, LivingDwellerCountEstimate());
 
             SetupExpansions();
             if (_expansions.Greenhouse.PlotCount > 0)
                 _expansions.TickGreenhouse(day);
 
+            UpdateHud();
             SaveAll();
         }
 
@@ -3002,7 +3006,8 @@ namespace AtomicWar.GodotApp
             if (_holdfastRuntime == null) return;
             long value = _holdfastRuntime.Trade.PlayerValue;
             string faction = _holdfastTerminal?.SelectedFactionId ?? "";
-            _hudOverlay.UpdateState(_holdfastRuntime.Day, value, faction);
+            string weather = _world != null ? _world.Weather.Current.ToString() : "";
+            _hudOverlay.UpdateState(_holdfastRuntime.Day, value, faction, weather);
             _hudOverlay.UpdateHealth(_holdfastRuntime.Health, HoldfastRuntimeSession.MaxHealth);
             _hudOverlay.UpdateRadiation(_holdfastRuntime.Radiation);
         }
@@ -3095,11 +3100,10 @@ namespace AtomicWar.GodotApp
             SetupIceRoad();
             string delta = _core.TickDay();
             _simDay = _core.Clock.Day;
+            TickSimDay(_simDay);
             _statusLabel.Text =
                 $"Day {_core.Clock.Day} tick ({_core.Weather}, {_core.OutdoorCelsius:0}°C): {delta}. " +
                 $"{_core.LocationCount} locations.";
-            RefreshIceRoadLabel();
-            UpdateStatus();
         }
 
         private void OnCycleWeatherClicked()

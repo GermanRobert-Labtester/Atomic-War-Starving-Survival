@@ -85,11 +85,13 @@ namespace AtomicWar.GodotApp
         /// <summary>
         /// Update HUD from HoldfastRuntimeSession state.
         /// </summary>
-        public void UpdateState(int day, long value, string factionId = "")
+        public void UpdateState(int day, long value, string factionId = "", string weather = "")
         {
             _lblDay.Text = $"Day {day}";
             _lblValue.Text = $"Value: {value}";
             _lblFaction.Text = string.IsNullOrEmpty(factionId) ? "—" : factionId.Replace("_", " ").ToUpperInvariant();
+            if (!string.IsNullOrEmpty(weather))
+                _lblFaction.Text += $" · {weather}";
         }
 
         public void UpdateHealth(int hp, int maxHp = 100)
