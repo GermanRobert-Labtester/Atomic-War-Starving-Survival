@@ -1,25 +1,23 @@
 using System;
 using System.Collections.Generic;
 
-namespace AtomicWar._Game.Survivors
+namespace Ashfall.Core.Maritime
 {
     /// <summary>
-    /// Expansion IX/X — Psychological Contamination System. Survivors do not just
-    /// carry radiation home; they carry trauma. Visiting mass graves, abattoirs,
-    /// and daycare centers tags survivors with psychological contamination that
-    /// manifests as work refusal, mental breaks, and permanent behavioral changes.
-    /// Save/load safe. Plain C#.
+    /// ASHFALL: THE BLACK FLOTILLA (Expansion 09) — psychological contamination.
+    /// Survivors carry trauma from horrific locations. Contamination manifests
+    /// as work refusal, mental breaks, and behavioral changes. Engine-agnostic,
+    /// deterministic, save/load safe.
     /// </summary>
     public class PsychologicalContaminationSystem
     {
-        // ── Contamination types ───────────────────────────────────────
         public const string Contam_ThousandYardStare = "contam_thousand_yard_stare";
         public const string Contam_DisgustCascade = "contam_disgust_cascade";
         public const string Contam_PhantomSmell = "contam_phantom_smell";
         public const string Contam_ChildCotTrauma = "contam_child_cot_trauma";
 
-        // ── Location contamination profiles ───────────────────────────
-        public static readonly Dictionary<string, string[]> LocationContaminations = new Dictionary<string, string[]>
+        public static readonly Dictionary<string, string[]> LocationContaminations =
+            new Dictionary<string, string[]>(StringComparer.Ordinal)
         {
             { "location_stadium_evacuation_center", new[] { Contam_ThousandYardStare } },
             { "location_automated_abattoir", new[] { Contam_DisgustCascade, Contam_PhantomSmell } },
@@ -28,55 +26,33 @@ namespace AtomicWar._Game.Survivors
             { "location_regional_blood_bank", new[] { Contam_DisgustCascade, Contam_PhantomSmell } }
         };
 
-        // ── Duration constants ────────────────────────────────────────
         public const int StareDurationDays = 3;
         public const int DisgustDurationDays = 2;
         public const int PhantomSmellDurationDays = 5;
         public const int ChildCotDurationDays = 4;
 
-        // ── Work restrictions ─────────────────────────────────────────
         public static readonly string[] StareBlockedActions = { "action_teach_child", "action_tell_stories" };
         public static readonly string[] DisgustBlockedActions = { "action_cook", "action_tend_hydroponics" };
         public static readonly string[] ChildCotBlockedActions = { "action_teach_child", "action_comfort_child" };
 
-        // ── Events ────────────────────────────────────────────────────
         public event Action<string, string> OnContaminationApplied;
         public event Action<string, string> OnContaminationExpired;
         public event Action<string> OnMentalBreakFromContamination;
         public event Action<string, string> OnMoralChronicleEntry;
 
         private readonly Dictionary<string, List<ContaminationEntry>> _bySurvivor =
-            new Dictionary<string, List<ContaminationEntry>>();
+            new Dictionary<string, List<ContaminationEntry>>(StringComparer.Ordinal);
 
-        // ── Application ───────────────────────────────────────────────
-
-        /// <summary>
-        /// Apply psychological contamination from a location visit.
-        /// </summary>
         public void ApplyContamination(string survivorId, string locationId,
             float moraleAtVisit, string survivorArchetype = null)
         {
+            if (string.IsNullOrEmpty(survivorId) || string.IsNullOrEmpty(locationId)) return;
             if (!LocationContaminations.TryGetValue(locationId, out var types)) return;
 
             for (int i = 0; i < types.Length; i++)
             {
                 string type = types[i];
-                int duration = type switch
-                {
-                    Contam_ThousandYardStare => StareDurationDays,
-                    Contam_DisgustCascade => DisgustDurationDays,
-                    Contam_PhantomSmell => PhantomSmellDurationDays,
-                    Contam_ChildCotTrauma => ChildCotDurationDays,
-                    _ => 3
-                };
-
-                var entry = new ContaminationEntry
-                {
-                    Type = type,
-                    LocationId = locationId,
-                    DaysRemaining = duration,
-                    MoraleAtExposure = moraleAtVisit
-                };
+                int duration = GetDuration(type);
 
                 if (!_bySurvivor.TryGetValue(survivorId, out var list))
                 {
@@ -84,34 +60,43 @@ namespace AtomicWar._Game.Survivors
                     _bySurvivor[survivorId] = list;
                 }
 
-                // Don't stack same type
                 bool alreadyHas = false;
                 for (int j = 0; j < list.Count; j++)
                     if (list[j].Type == type) { alreadyHas = true; break; }
                 if (alreadyHas) continue;
 
-                list.Add(entry);
+                list.Add(new ContaminationEntry
+                {
+                    Type = type,
+                    LocationId = locationId,
+                    DaysRemaining = duration,
+                    MoraleAtExposure = moraleAtVisit
+                });
                 OnContaminationApplied?.Invoke(survivorId, type);
 
-                // Moral chronicle entry for specific locations
                 if (locationId == "location_sunshine_daycare" && type == Contam_ChildCotTrauma)
-                {
                     OnMoralChronicleEntry?.Invoke(survivorId,
                         "They came back from the daycare. They haven't spoken. " +
                         "They just sit by the heater, folding and unfolding a child's red coat.");
-                }
                 else if (locationId == "location_stadium_evacuation_center")
-                {
                     OnMoralChronicleEntry?.Invoke(survivorId,
                         "Elena came back from the stadium. She hasn't spoken. " +
                         "We need the cloth. We don't need the coat.");
-                }
             }
         }
 
-        // ── Queries ───────────────────────────────────────────────────
+        private static int GetDuration(string type)
+        {
+            switch (type)
+            {
+                case Contam_ThousandYardStare: return StareDurationDays;
+                case Contam_DisgustCascade: return DisgustDurationDays;
+                case Contam_PhantomSmell: return PhantomSmellDurationDays;
+                case Contam_ChildCotTrauma: return ChildCotDurationDays;
+                default: return 3;
+            }
+        }
 
-        /// <summary>Check if a survivor has a specific contamination.</summary>
         public bool HasContamination(string survivorId, string type)
         {
             if (!_bySurvivor.TryGetValue(survivorId, out var list)) return false;
@@ -120,20 +105,12 @@ namespace AtomicWar._Game.Survivors
             return false;
         }
 
-        /// <summary>Check if a survivor is blocked from a specific action.</summary>
         public bool IsActionBlocked(string survivorId, string actionId)
         {
             if (!_bySurvivor.TryGetValue(survivorId, out var list)) return false;
             for (int i = 0; i < list.Count; i++)
             {
-                var c = list[i];
-                string[] blocked = c.Type switch
-                {
-                    Contam_ThousandYardStare => StareBlockedActions,
-                    Contam_DisgustCascade => DisgustBlockedActions,
-                    Contam_ChildCotTrauma => ChildCotBlockedActions,
-                    _ => null
-                };
+                string[] blocked = GetBlockedActions(list[i].Type);
                 if (blocked != null)
                     for (int j = 0; j < blocked.Length; j++)
                         if (blocked[j] == actionId) return true;
@@ -141,20 +118,21 @@ namespace AtomicWar._Game.Survivors
             return false;
         }
 
-        /// <summary>Get all active contaminations for a survivor.</summary>
-        public IReadOnlyList<ContaminationEntry> GetContaminations(string survivorId)
+        private static string[] GetBlockedActions(string type)
         {
-            return _bySurvivor.TryGetValue(survivorId, out var list) ? list : null;
+            switch (type)
+            {
+                case Contam_ThousandYardStare: return StareBlockedActions;
+                case Contam_DisgustCascade: return DisgustBlockedActions;
+                case Contam_ChildCotTrauma: return ChildCotBlockedActions;
+                default: return null;
+            }
         }
 
-        // ── Tick ──────────────────────────────────────────────────────
+        public IReadOnlyList<ContaminationEntry> GetContaminations(string survivorId)
+            => _bySurvivor.TryGetValue(survivorId, out var list) ? list : null;
 
-        /// <summary>
-        /// Advance contamination timers. Check for mental break triggers
-        /// when contaminations overlap with low morale or bad assignments.
-        /// </summary>
-        public void Tick(float gameDays, string survivorId, float currentMorale,
-            string currentAssignment)
+        public void Tick(float gameDays, string survivorId, float currentMorale, string currentAssignment)
         {
             if (!_bySurvivor.TryGetValue(survivorId, out var list)) return;
 
@@ -170,17 +148,12 @@ namespace AtomicWar._Game.Survivors
                     continue;
                 }
 
-                // Mental break check: contamination + bad assignment
                 if (c.Type == Contam_ThousandYardStare
                     && (currentAssignment == "shelter_module_autopsy"
                         || currentAssignment == "shelter_module_bio_latrine"))
-                {
                     OnMentalBreakFromContamination?.Invoke(survivorId);
-                }
             }
         }
-
-        // ── Save / Load ───────────────────────────────────────────────
 
         public PsychContaminationSave CaptureState()
         {
@@ -229,8 +202,8 @@ namespace AtomicWar._Game.Survivors
 
     public class ContaminationEntry
     {
-        public string Type;
-        public string LocationId;
+        public string Type = string.Empty;
+        public string LocationId = string.Empty;
         public float DaysRemaining;
         public float MoraleAtExposure;
     }
@@ -244,15 +217,15 @@ namespace AtomicWar._Game.Survivors
     [Serializable]
     public class ContaminationSurvivorSave
     {
-        public string SurvivorId;
+        public string SurvivorId = string.Empty;
         public ContaminationEntrySave[] Entries;
     }
 
     [Serializable]
     public class ContaminationEntrySave
     {
-        public string Type;
-        public string LocationId;
+        public string Type = string.Empty;
+        public string LocationId = string.Empty;
         public float DaysRemaining;
         public float MoraleAtExposure;
     }

@@ -222,14 +222,28 @@ namespace Ashfall.Core.YearOfAsh
                             minDay = rq.minDay,
                             maxDay = rq.maxDay
                         };
-                        foreach (var rs in rq.stages)
+                        for (int i = 0; i < rq.stages.Count; i++)
                         {
-                            def.stages.Add(new QuestStage
+                            var rs = rq.stages[i];
+                            bool isLast = i == rq.stages.Count - 1;
+                            string nextId = isLast ? null : (i + 1 < rq.stages.Count ? (!string.IsNullOrEmpty(rq.stages[i + 1].stageId) ? rq.stages[i + 1].stageId : $"stage_{rq.stages[i + 1].stageIndex}") : null);
+                            var stage = new QuestStage
                             {
                                 stageId = !string.IsNullOrEmpty(rs.stageId) ? rs.stageId : $"stage_{rs.stageIndex}",
                                 title = !string.IsNullOrEmpty(rs.title) ? rs.title : rs.objective,
-                                narrativePrompt = !string.IsNullOrEmpty(rs.narrativePrompt) ? rs.narrativePrompt : rs.objective
-                            });
+                                narrativePrompt = !string.IsNullOrEmpty(rs.narrativePrompt) ? rs.narrativePrompt : rs.objective,
+                                isTerminal = isLast
+                            };
+                            if (!isLast)
+                            {
+                                stage.choices.Add(new QuestChoice
+                                {
+                                    choiceId = $"choice_{stage.stageId}_proceed",
+                                    text = "Proceed with objective",
+                                    nextStageId = nextId ?? string.Empty
+                                });
+                            }
+                            def.stages.Add(stage);
                         }
                         if (def.stages.Count > 0)
                             def.firstStageId = def.stages[0].stageId;

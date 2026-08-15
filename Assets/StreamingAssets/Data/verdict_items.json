@@ -1,7 +1,7 @@
 [
   {
     "id": "evidence_geophone_hymn",
-    "name": "The Farm's Seismic Signature",
+    "displayName": "The Farm's Seismic Signature",
     "weightKg": 1.2,
     "tradeValue": 12,
     "category": "story_item",
@@ -14,7 +14,7 @@
   },
   {
     "id": "evidence_twelve_gauge_steel",
-    "name": "The Fired-Plate Ordnance Log",
+    "displayName": "The Fired-Plate Ordnance Log",
     "weightKg": 4.0,
     "tradeValue": 18,
     "category": "story_item",
@@ -27,7 +27,7 @@
   },
   {
     "id": "evidence_fuse_linen",
-    "name": "The Standard's Linen",
+    "displayName": "The Standard's Linen",
     "weightKg": 0.4,
     "tradeValue": 40,
     "category": "story_item",
@@ -40,7 +40,7 @@
   },
   {
     "id": "evidence_census_draft",
-    "name": "The Partial County Ledger",
+    "displayName": "The Partial County Ledger",
     "weightKg": 0.8,
     "tradeValue": 25,
     "category": "story_item",
@@ -53,7 +53,7 @@
   },
   {
     "id": "evidence_mailroom_tape",
-    "name": "Carbon-Copy Censusing Rota",
+    "displayName": "Carbon-Copy Censusing Rota",
     "weightKg": 0.3,
     "tradeValue": 30,
     "category": "story_item",
@@ -66,7 +66,7 @@
   },
   {
     "id": "evidence_uxo_register",
-    "name": "The Hold Register",
+    "displayName": "The Hold Register",
     "weightKg": 1.6,
     "tradeValue": 55,
     "category": "story_item",
@@ -79,7 +79,7 @@
   },
   {
     "id": "evidence_call_calibration",
-    "name": "The Calibration Burst",
+    "displayName": "The Calibration Burst",
     "weightKg": 0.2,
     "tradeValue": 45,
     "category": "story_item",
@@ -92,7 +92,7 @@
   },
   {
     "id": "evidence_call_plain",
-    "name": "The Plain Burst",
+    "displayName": "The Plain Burst",
     "weightKg": 0.2,
     "tradeValue": 50,
     "category": "story_item",
@@ -105,7 +105,7 @@
   },
   {
     "id": "evidence_reels_matter",
-    "name": "The Archive's Own Accounting",
+    "displayName": "The Archive's Own Accounting",
     "weightKg": 2.0,
     "tradeValue": 35,
     "category": "story_item",
@@ -118,7 +118,7 @@
   },
   {
     "id": "evidence_valve_s36",
-    "name": "The Valve, Read Per 36",
+    "displayName": "The Valve, Read Per 36",
     "weightKg": 3.0,
     "tradeValue": 60,
     "category": "story_item",
@@ -131,7 +131,7 @@
   },
   {
     "id": "evidence_eden_log",
-    "name": "Eleven Months of Tube-Bleed",
+    "displayName": "Eleven Months of Tube-Bleed",
     "weightKg": 1.1,
     "tradeValue": 70,
     "category": "story_item",
@@ -144,7 +144,7 @@
   },
   {
     "id": "evidence_veen_your_people",
-    "name": "The Count, Presented",
+    "displayName": "The Count, Presented",
     "weightKg": 0.5,
     "tradeValue": 0,
     "category": "story_item",
@@ -157,7 +157,7 @@
   },
   {
     "id": "item_archive_tape_silo_key",
-    "name": "The Tape-Silo Key",
+    "displayName": "The Tape-Silo Key",
     "weightKg": 0.9,
     "tradeValue": 90,
     "category": "quest_item",
@@ -170,7 +170,7 @@
   },
   {
     "id": "item_fuse_world_shift_charter",
-    "name": "Shift 36's Charter",
+    "displayName": "Shift 36's Charter",
     "weightKg": 1.4,
     "tradeValue": 75,
     "category": "quest_item",
@@ -183,7 +183,7 @@
   },
   {
     "id": "item_verdict_salt_flat_sample",
-    "name": "Salt Flat Sample",
+    "displayName": "Salt Flat Sample",
     "weightKg": 1.0,
     "tradeValue": 8,
     "category": "consumable",

@@ -19,6 +19,7 @@ namespace Ashfall.Core
         public static float Max(float a, float b) => a > b ? a : b;
         public static float Min(float a, float b) => a < b ? a : b;
         public static float Lerp(float a, float b, float t) => a + (b - a) * Clamp01(t);
+        public static int RoundToInt(float v) => (int)Math.Round(v, MidpointRounding.AwayFromZero);
         public static bool Approximately(float a, float b) => Math.Abs(a - b) < Epsilon;
     }
 }

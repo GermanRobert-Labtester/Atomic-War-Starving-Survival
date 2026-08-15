@@ -88,7 +88,36 @@ namespace AtomicWar.GodotApp
                 MakeDef("evidence_veen_your_people", "The Count, Presented", ItemType.Relic, weight: 0.5f, trade: 0f),
                 MakeDef("item_archive_tape_silo_key", "The Tape-Silo Key", ItemType.Quest, weight: 0.9f, trade: 90f),
                 MakeDef("item_fuse_world_shift_charter", "Shift 36's Charter", ItemType.Quest, weight: 1.4f, trade: 75f),
-                MakeDef("item_verdict_salt_flat_sample", "Salt Flat Sample", ItemType.Comfort, weight: 1f, morale: 2f, trade: 8f)
+                MakeDef("item_verdict_salt_flat_sample", "Salt Flat Sample", ItemType.Comfort, weight: 1f, morale: 2f, trade: 8f),
+
+                // ── ASHFALL: THE BLACK FLOTILLA (Expansion 09) — salvage & deep-lore items ──
+                MakeDef("paper_scrap", "Paper Scrap", ItemType.Material, stackMax: 100, weight: 0.01f, trade: 0.1f),
+                MakeDef("item_suitcase_locked", "Locked Suitcase", ItemType.Tool, weight: 4f, trade: 5f),
+                MakeDef("industrial_bleach", "Industrial Bleach (5L)", ItemType.Material, stackMax: 2, weight: 5.5f, trade: 18f),
+                MakeDef("ammonia_tank", "Pressurized Ammonia Tank", ItemType.Material, weight: 12f, trade: 25f),
+                MakeDef("item_anchor_notes", "The Anchor's Final Script", ItemType.Quest, weight: 0.1f, trade: 0f),
+                MakeDef("halon_tank", "Halon Fire Suppressant", ItemType.Material, weight: 15f, trade: 40f),
+                MakeDef("pipe_wrench", "Heavy Pipe Wrench", ItemType.Tool, weight: 3.5f, trade: 14f),
+                MakeDef("crayon", "Crayon", ItemType.Comfort, stackMax: 30, weight: 0.02f, trade: 0.5f),
+                MakeDef("sawdust_block", "Compressed Sawdust Block", ItemType.Fuel, stackMax: 50, weight: 1f, trade: 2f),
+                MakeDef("item_ash_ghillie", "Ash Ghillie Suit", ItemType.Protective, weight: 3f, trade: 20f),
+                MakeDef("item_teddy_bear", "Teddy Bear", ItemType.Comfort, stackMax: 4, weight: 0.3f, morale: 1f, trade: 2f),
+                MakeDef("item_car_keys", "Car Keys", ItemType.Material, stackMax: 5, weight: 0.05f, trade: 1f),
+                MakeDef("item_ice_pick", "Ice Pick", ItemType.Tool, stackMax: 2, weight: 0.8f, trade: 10f),
+                MakeDef("brass_fittings", "Brass Fittings", ItemType.Material, stackMax: 30, weight: 0.3f, trade: 8f),
+
+                // ── ASHFALL: THE BLACK FLOTILLA (Expansion 09) — phantom loot-table items ──
+                // These were referenced in DeepLoreLocationCatalog loot tables but never registered.
+                MakeDef("acoustic_foam_panel", "Acoustic Foam Panel", ItemType.Material, stackMax: 10, weight: 0.5f, trade: 3f),
+                MakeDef("ammo_9x19", "9x19mm Ammunition", ItemType.Material, stackMax: 20, weight: 0.01f, trade: 2f),
+                MakeDef("blood_bag", "Blood Bag (Compatible)", ItemType.Medical, weight: 0.6f, health: 15f, trade: 30f),
+                MakeDef("bone_saw", "Bone Saw", ItemType.Tool, weight: 2.5f, trade: 12f),
+                MakeDef("cardboard_box", "Cardboard Box", ItemType.Material, stackMax: 20, weight: 0.3f, trade: 1f),
+                MakeDef("cigarette_pack_sealed", "Sealed Cigarette Pack", ItemType.Comfort, stackMax: 5, weight: 0.05f, morale: 1f, trade: 8f),
+                MakeDef("fat_rendered", "Rendered Fat", ItemType.Food, stackMax: 10, weight: 0.5f, hunger: 8f, trade: 3f),
+                MakeDef("spoiled_blood_bag", "Spoiled Blood Bag", ItemType.ContaminatedFood, weight: 0.6f, trade: 0f),
+                MakeDef("spoiled_canned_food", "Spoiled Canned Food", ItemType.ContaminatedFood, weight: 0.4f, trade: 0f),
+                MakeDef("spoiled_meat", "Spoiled Meat", ItemType.ContaminatedFood, stackMax: 20, weight: 0.3f, trade: 0f)
             };
             foreach (var d in defs) catalog.Register(d);
         }

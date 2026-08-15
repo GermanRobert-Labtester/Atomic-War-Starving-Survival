@@ -1,0 +1,57 @@
+{
+  "schema_version": 2,
+  "dive_sites": [
+    {
+      "site_id": "site_exp09_ss_sovereign",
+      "name": "S.S. Sovereign Wreck",
+      "oxygen_budget_ticks": 120,
+      "base_noise_floor": 0.50,
+      "keeper_thread_id": "q_keeper_of_logs",
+      "rooms": [
+        { "room_type": "deckhouse", "hazard_level": 1, "search_difficulty": 0.3 },
+        { "room_type": "companionway", "hazard_level": 2, "search_difficulty": 0.5 },
+        { "room_type": "hold_approach", "hazard_level": 3, "search_difficulty": 0.7 },
+        { "room_type": "the_hold", "hazard_level": 4, "search_difficulty": 0.9 }
+      ]
+    },
+    {
+      "site_id": "site_exp09_ferry_terminal",
+      "name": "The Drowned Ferry Terminal",
+      "oxygen_budget_ticks": 90,
+      "base_noise_floor": 0.60,
+      "keeper_thread_id": null,
+      "rooms": [
+        { "room_type": "deckhouse", "hazard_level": 2, "search_difficulty": 0.4 },
+        { "room_type": "companionway", "hazard_level": 3, "search_difficulty": 0.6 },
+        { "room_type": "hold_approach", "hazard_level": 4, "search_difficulty": 0.8 },
+        { "room_type": "the_hold", "hazard_level": 5, "search_difficulty": 1.0 }
+      ]
+    },
+    {
+      "site_id": "site_exp09_barge_flotilla",
+      "name": "The Barge Flotilla (Upstream Mooring)",
+      "oxygen_budget_ticks": 100,
+      "base_noise_floor": 0.40,
+      "keeper_thread_id": null,
+      "rooms": [
+        { "room_type": "deckhouse", "hazard_level": 1, "search_difficulty": 0.2 },
+        { "room_type": "companionway", "hazard_level": 2, "search_difficulty": 0.4 },
+        { "room_type": "hold_approach", "hazard_level": 3, "search_difficulty": 0.6 },
+        { "room_type": "the_hold", "hazard_level": 3, "search_difficulty": 0.7 }
+      ]
+    },
+    {
+      "site_id": "site_exp09_naval_patrol",
+      "name": "The Patrol Craft (Hull-Down, Port Side)",
+      "oxygen_budget_ticks": 80,
+      "base_noise_floor": 0.70,
+      "keeper_thread_id": null,
+      "rooms": [
+        { "room_type": "deckhouse", "hazard_level": 2, "search_difficulty": 0.5 },
+        { "room_type": "companionway", "hazard_level": 3, "search_difficulty": 0.7 },
+        { "room_type": "hold_approach", "hazard_level": 4, "search_difficulty": 0.85 },
+        { "room_type": "the_hold", "hazard_level": 5, "search_difficulty": 1.0 }
+      ]
+    }
+  ]
+}
