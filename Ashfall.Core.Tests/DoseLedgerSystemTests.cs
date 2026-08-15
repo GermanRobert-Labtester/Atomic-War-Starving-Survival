@@ -64,6 +64,51 @@ namespace Ashfall.Core.Tests
 
             Assert.Equal(dl.GetCumulative("sv_x"), dlB.GetCumulative("sv_x"));
         }
+
+        /// <summary>
+        /// Cross-host integrity (Invariant 3) gate: a save whose data is mutated
+        /// after checksumming must be hard-rejected on decode as a checksum
+        /// mismatch — never silently restored into a half-trusted state.
+        /// </summary>
+        [Fact]
+        public void TamperedSave_IsHardRejectedOnDecode()
+        {
+            var json = new SystemTextJsonSerializer();
+            var dl = new DoseLedgerSystem();
+            dl.AssignDosimeter("sv_x", "tag1", 20f);
+            dl.BookReading("sv_x", 1, 200f, "sampling", false, false, true, new SeededRng(1));
+
+            var save = DoseLedgerSaveCodec.Capture(1, dl, new SickListSystem(), new CohortSystem(), new VoluntaryRegisterSystem());
+            string valid = json.Serialize(save);            // trusted payload
+
+            // Round-trip of the unmodified payload must succeed.
+            var decoded = DoseLedgerSaveCodec.Decode(valid, json);
+            Assert.Equal(save.Checksum, decoded.Checksum);
+
+            // Forge: reload, shift a data field, re-serialize WITHOUT recomputing.
+            var altered = json.Deserialize<DoseLedgerSave>(valid);
+            altered.simDay += 7;
+            string forged = json.Serialize(altered);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => DoseLedgerSaveCodec.Decode(forged, json));
+            Assert.Contains("checksum mismatch", ex.Message);
+        }
+
+        /// <summary>A save with no checksum at all is a truncated/foreign file → reject.</summary>
+        [Fact]
+        public void ChecksumlessSave_IsRejectedOnDecode()
+        {
+            var json = new SystemTextJsonSerializer();
+            var dl = new DoseLedgerSystem();
+            dl.AssignDosimeter("sv_x", "tag1", 20f);
+
+            var save = DoseLedgerSaveCodec.Capture(1, dl, new SickListSystem(), new CohortSystem(), new VoluntaryRegisterSystem());
+            save.Checksum = string.Empty;
+            string noChecksum = json.Serialize(save);
+
+            var ex = Assert.Throws<InvalidOperationException>(() => DoseLedgerSaveCodec.Decode(noChecksum, json));
+            Assert.Contains("no checksum", ex.Message);
+        }
     }
 
     public class CohortAndVolunteerTests
