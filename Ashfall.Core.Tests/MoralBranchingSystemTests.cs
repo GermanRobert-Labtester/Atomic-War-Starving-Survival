@@ -427,6 +427,8 @@ namespace Ashfall.Core.Tests
             var sys = new MoralBranchingSystem();
             var sv1 = MakeSurvivor("sv_01");
             var sv2 = MakeSurvivor("sv_02");
+            sys.Register(sv1);
+            sys.Register(sv2);
 
             // Branch sv1
             for (int i = 0; i < MoralBranchingSystem.ChoicesToBranch; i++)
