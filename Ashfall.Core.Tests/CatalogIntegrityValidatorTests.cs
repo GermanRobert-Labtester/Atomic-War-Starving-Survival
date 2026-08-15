@@ -70,5 +70,84 @@ namespace Ashfall.Core.Tests
                 if (File.Exists(path)) File.Delete(path);
             }
         }
+
+        /// <summary>
+        /// An id authored in one catalog and referenced in another (enrichment
+        /// foreign keys, shared stage templates) is legitimate REUSE, not a
+        /// conflict. This gates the majority of the former "duplicate id"
+        /// noise: cross-file reuse must never surface as an error.
+        /// </summary>
+        [Fact]
+        public void CrossFileReuseOfAnAuthoredIdIsNotReported()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "items.json"),
+                    "[{\"id\":\"morphine\",\"category\":\"drug\"}]");
+                // enrichment table: strong by a polymorphic definition-key that
+                // actually references the already-authored canonical item.
+                File.WriteAllText(Path.Combine(scratch, "expansion_tags.json"),
+                    "[{\"item_id\":\"morphine\",\"tags\":[\"addictive_opioid\"]}]");
+            });
+
+            Assert.True(report.Clean,
+                "cross-file reuse of an authored id must not error:\n"
+                + string.Join("\n", report.Errors));
+            Assert.Equal(1, report.AuthoredIds);
+            Assert.True(report.ReuseCount >= 1);
+        }
+
+        /// <summary>
+        /// Two rows of the SAME catalog claiming the same entity-root id is a
+        /// genuine Invariant-6 violation and must still be caught as an error.
+        /// </summary>
+        [Fact]
+        public void SameFileEntityRootDuplicateIdIsAnError()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "quests.json"),
+                    "[{\"id\":\"q_alpha\"},{\"id\":\"q_alpha\"}]");
+            });
+
+            Assert.False(report.Clean,
+                "a genuine same-file entity-root duplicate id must be caught");
+            Assert.Contains(report.Errors, line => line.Contains("duplicate id"));
+        }
+
+        /// <summary>
+        /// Nested template ids (shared stage/choice steps) reused across rows in
+        /// one file are legitimate composition, not conflicting registrations.
+        /// </summary>
+        [Fact]
+        public void NestedSharedTemplateIdsAreNotConflicts()
+        {
+            var report = ValidateScratch((scratch) =>
+            {
+                File.WriteAllText(Path.Combine(scratch, "quests.json"),
+                  "[{\"id\":\"q1\",\"stages\":[{\"id\":\"stage_choose\",\"text\":\"t\"}]},"
+                + " {\"id\":\"q2\",\"stages\":[{\"id\":\"stage_choose\",\"text\":\"u\"}]}]");
+            });
+
+            Assert.True(report.Clean,
+                "shared stage template ids must not be flagged:\n"
+                + string.Join("\n", report.Errors));
+        }
+
+        private static CatalogIntegrityReport ValidateScratch(Action<string> seed)
+        {
+            string scratch = Path.Combine(Path.GetTempPath(), "ashfall_integrity_" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                Directory.CreateDirectory(scratch);
+                seed(scratch);
+                return CatalogIntegrityValidator.Validate(scratch, new FileSystemIO());
+            }
+            finally
+            {
+                if (Directory.Exists(scratch))
+                    Directory.Delete(scratch, true);
+            }
+        }
     }
 }
