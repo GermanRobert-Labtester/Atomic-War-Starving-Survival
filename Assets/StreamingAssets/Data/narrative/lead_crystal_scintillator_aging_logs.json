@@ -1,0 +1,72 @@
+[
+  {
+    "id": "scint_crystal_thallium_iodide_hygroscopic_fogging",
+    "detector_unit_id": "SCINTILLATION_PROBE_MODEL_44_9",
+    "crystal_composition": "THALLIUM_ACTIVATED_SODIUM_IODIDE",
+    "quantum_yield_photons_kev": 38.0,
+    "degradation_mode": "HYGROSCOPIC_HYDRATION_YELLOW_SLURRY",
+    "timestamp_relative": "YEAR_02_SCINTILLATOR_01",
+    "tags": ["optics", "scintillator", "radiation_detector", "sodium_iodide", "hygroscopic"],
+    "prose": "A hairline crack in the hermetic aluminum housing admitted ambient humidity into the NaI(Tl) crystal assembly. The hyper-hygroscopic salt dissolved into a turbid yellow chemical soup, completely extinguishing pulse height resolution for gamma spectroscopy."
+  },
+  {
+    "id": "scint_crystal_cesium_iodide_cracking_thermal_shock",
+    "detector_unit_id": "SURFACE_SURVEY_METER_EXPEDITION_02",
+    "crystal_composition": "CESIUM_IODIDE_THALLIUM_DOPED",
+    "quantum_yield_photons_kev": 54.0,
+    "degradation_mode": "THERMAL_EXPANSION_INTERNAL_CLEAVAGE",
+    "timestamp_relative": "YEAR_05_SCINTILLATOR_03",
+    "tags": ["optics", "scintillator", "cesium_iodide", "thermal_shock", "survey_meter"],
+    "prose": "Bringing the survey probe from a warm bunkhouse into a -28°C surface blizzard cleaved the CsI(Tl) crystal along (100) lattice planes. The internal optical discontinuity trapped 70% of emitted scintillation photons, cutting detector sensitivity to radioactive fallout."
+  },
+  {
+    "id": "scint_crystal_bgo_radiation_damage_afterglow",
+    "detector_unit_id": "GAMMA_SPECTROMETER_STATION_B",
+    "crystal_composition": "BISMUTH_GERMANATE_BI4GE3O12",
+    "quantum_yield_photons_kev": 8.5,
+    "degradation_mode": "PERSISTENT_PHOSPHORESCENT_AFTERGLOW",
+    "timestamp_relative": "YEAR_08_SCINTILLATOR_02",
+    "tags": ["optics", "scintillator", "bgo", "afterglow", "radiation_damage"],
+    "prose": "Prolonged exposure to intense cobalt-60 gamma fields induced severe phosphorescent afterglow in the heavy BGO crystal. The persistent light emission saturated the photomultiplier tube base current, creating a false 500 mR/hr background baseline."
+  },
+  {
+    "id": "scint_crystal_plastic_scintillator_monomer_crazing",
+    "detector_unit_id": "PORTAL_MONITOR_LARGE_AREA_PADDLE",
+    "crystal_composition": "POLYVINYLTOLUENE_PVT_PLASTIC",
+    "quantum_yield_photons_kev": 10.0,
+    "degradation_mode": "SOLVENT_VAPOR_SURFACE_CRAZING",
+    "timestamp_relative": "YEAR_11_SCINTILLATOR_04",
+    "tags": ["optics", "scintillator", "plastic_scintillator", "pvt", "crazing"],
+    "prose": "Cleaning the forty-inch plastic scintillator slab with scavenged rubbing alcohol induced catastrophic solvent crazing. Millions of micro-cracks formed across the surface, turning the crystal opaque like crushed ice and blocking scintillation photons from reaching the light guide."
+  },
+  {
+    "id": "scint_crystal_photomultiplier_photocathode_burnout",
+    "detector_unit_id": "ALPHA_CONTAMINATION_WAND_03",
+    "crystal_composition": "SILVER_ACTIVATED_ZINC_SULFIDE",
+    "quantum_yield_photons_kev": 30.0,
+    "degradation_mode": "BI_ALKALI_PHOTOCATHODE_DEPLETION",
+    "timestamp_relative": "YEAR_14_SCINTILLATOR_01",
+    "tags": ["optics", "scintillator", "pmt", "photocathode", "burnout"],
+    "prose": "Accidental exposure of the energized 1,200V photomultiplier tube to room light stripped the antimony-cesium bi-alkali photocathode layer. Quantum efficiency plummeted from 26% to zero, permanently destroying the alpha detection channel."
+  },
+  {
+    "id": "scint_crystal_optical_grease_desiccation_decoupling",
+    "detector_unit_id": "BOREHOLE_LOGGING_GAMMA_PROBE",
+    "crystal_composition": "LANTHANUM_BROMIDE_LABR3_CE",
+    "quantum_yield_photons_kev": 63.0,
+    "degradation_mode": "SILICONE_COUPLING_GREASE_DRYOUT",
+    "timestamp_relative": "YEAR_17_SCINTILLATOR_03",
+    "tags": ["optics", "scintillator", "optical_grease", "optical_coupling", "dryout"],
+    "prose": "High geothermal heat (65°C) inside the borehole dried the silicone optical coupling grease into a powdery white residue. The refractive index mismatch created a total internal reflection barrier between the LaBr3 crystal and the PMT quartz faceplate."
+  },
+  {
+    "id": "scint_crystal_mu_metal_magnetic_shielding_drift",
+    "detector_unit_id": "AIR_MONITOR_ISOTOPE_IDENTIFIER",
+    "crystal_composition": "CADMIUM_ZINC_TELLURIDE_CZT",
+    "quantum_yield_photons_kev": 45.0,
+    "degradation_mode": "MU_METAL_MAGNETIC_PERMEABILITY_LOSS",
+    "timestamp_relative": "YEAR_20_SCINTILLATOR_01",
+    "tags": ["optics", "scintillator", "mu_metal", "magnetic_shield", "dynode_deflection"],
+    "prose": "A mechanical drop bent the high-permeability nickel-iron mu-metal shield surrounding the PMT. Loss of magnetic shielding allowed Earth's magnetic field to deflect the electron trajectory between dynodes 3 and 4, cutting tube gain by 45%."
+  }
+]

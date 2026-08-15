@@ -1,0 +1,72 @@
+[
+  {
+    "id": "pattern_maker_sugar_pine_shrink_rule_scale",
+    "pattern_shop_job_id": "PUMP_IMPELLER_HOUSING_PATTERN",
+    "timber_pattern_material": "KILN_DRIED_SUGAR_PINE",
+    "shrinkage_allowance_fraction": "1_DIV_96_GRAY_IRON",
+    "draft_angle_degrees": 2.0,
+    "timestamp_relative": "YEAR_03_PATTERN_LOG_01",
+    "tags": ["foundry", "patternmaking", "shrink_rule", "sugar_pine", "casting_allowance"],
+    "prose": "Carving the complex centrifugal pump housing pattern from kiln-dried sugar pine using an oversized 1/8-inch per foot shrink rule accurately anticipated iron contraction. Post-cooling micrometer checks confirmed all critical bearing faces were within 0.5mm of spec."
+  },
+  {
+    "id": "pattern_maker_split_pattern_brass_dowel_alignment",
+    "pattern_shop_job_id": "STEAM_CYLINDER_VALVE_CHEST",
+    "timber_pattern_material": "HONDURAS_MAHOGANY_LAMINATE",
+    "shrinkage_allowance_fraction": "1_DIV_77_CAST_STEEL",
+    "draft_angle_degrees": 1.5,
+    "timestamp_relative": "YEAR_05_PATTERN_LOG_03",
+    "tags": ["foundry", "split_pattern", "brass_dowel", "cope_and_drag", "parting_line"],
+    "prose": "Moisture absorption from green molding sand caused the mahogany pattern halves to warp slightly around their brass alignment dowels. The binding dowels caused parting line mismatch (shift), resulting in an unsightly 3mm step across the cast cylinder body."
+  },
+  {
+    "id": "pattern_maker_core_print_buoyancy_chaplet_shift",
+    "pattern_shop_job_id": "HEAVY_DIESEL_ENGINE_CRANKCASE",
+    "timber_pattern_material": "HARD_MAPLE_CORE_BOX",
+    "shrinkage_allowance_fraction": "1_DIV_96_GRAY_IRON",
+    "draft_angle_degrees": 3.0,
+    "timestamp_relative": "YEAR_08_PATTERN_LOG_02",
+    "tags": ["foundry", "core_print", "buoyancy", "chaplet", "core_float"],
+    "prose": "Hydrostatic upward buoyancy from forty gallons of liquid iron exerted 400 kg of lift against the hollow sand water-jacket core. A thin tin-plated chaplet collapsed prematurely, allowing the core to float upward and thinning the top cylinder deck wall by 4mm."
+  },
+  {
+    "id": "pattern_maker_draft_taper_sand_tear_draw",
+    "pattern_shop_job_id": "BEARING_PEDESTAL_CASTING_04",
+    "timber_pattern_material": "ALASKA_YELLOW_CEDAR",
+    "shrinkage_allowance_fraction": "1_DIV_96_GRAY_IRON",
+    "draft_angle_degrees": 0.5,
+    "timestamp_relative": "YEAR_11_PATTERN_LOG_04",
+    "tags": ["foundry", "draft_angle", "pattern_draw", "sand_tear", "mold_damage"],
+    "prose": "A tight 0.5-degree draft angle on the deep rectangular bearing pockets caused vacuum suction and sand friction during vertical lifting. The sharp sand corners tore away with the wooden pattern, requiring thirty minutes of tedious mending with a molder's slick."
+  },
+  {
+    "id": "pattern_maker_fillet_radius_reentrant_corner_hot_tear",
+    "pattern_shop_job_id": "HIGH_PRESSURE_FLANGED_TEE",
+    "timber_pattern_material": "SUGAR_PINE_WITH_LEES_WAX_FILLETS",
+    "shrinkage_allowance_fraction": "1_DIV_64_BRONZE",
+    "draft_angle_degrees": 2.5,
+    "timestamp_relative": "YEAR_14_PATTERN_LOG_01",
+    "tags": ["foundry", "fillet_radius", "hot_tear", "reentrant_corner", "stress_riser"],
+    "prose": "Omitting a generous radius at the 90-degree junction of the pipe branch created a severe thermal hot spot and sharp stress riser. During cooling, the contracting metal tore open along the re-entrant corner; pressing 15mm wax fillets into the pattern eliminated all tears."
+  },
+  {
+    "id": "pattern_maker_shellac_lacquer_moisture_barrier",
+    "pattern_shop_job_id": "STANDARD_PILLOW_BLOCK_PATTERN",
+    "timber_pattern_material": "CHERRY_WOOD_MASTER_PATTERN",
+    "shrinkage_allowance_fraction": "1_DIV_96_GRAY_IRON",
+    "draft_angle_degrees": 2.0,
+    "timestamp_relative": "YEAR_17_PATTERN_LOG_03",
+    "tags": ["foundry", "shellac", "moisture_seal", "pattern_finish", "grain_raise"],
+    "prose": "Applying four coats of orange button shellac dissolved in grain alcohol sealed the cherry wood grain against water in damp molding sand. The glass-smooth, waterproof finish prevented grain raising, ensuring over five-hundred flawless mold draws without sand adhesion."
+  },
+  {
+    "id": "pattern_maker_matchplate_aluminum_vibrator_draw",
+    "pattern_shop_job_id": "HAND_GRENADE_CASING_MATCHPLATE",
+    "timber_pattern_material": "CAST_ALUMINUM_DOUBLE_MATCHPLATE",
+    "shrinkage_allowance_fraction": "1_DIV_96_MALLEABLE_IRON",
+    "draft_angle_degrees": 1.5,
+    "timestamp_relative": "YEAR_20_PATTERN_LOG_01",
+    "tags": ["foundry", "matchplate", "aluminum_plate", "pneumatic_vibrator", "production"],
+    "prose": "Mounting eight split casing patterns on a double-sided cast aluminum matchplate paired with a high-frequency pneumatic ball vibrator revolutionized production. The smooth mechanical vibration allowed instant, clean draws, boosting output to forty molds per hour."
+  }
+]

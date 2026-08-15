@@ -1,0 +1,82 @@
+[
+  {
+    "id": "apiculture_red_light_wavelength_blindness",
+    "chamber_zone_id": "SUBTERRANEAN_APIARY_FLIGHT_BAY_01",
+    "illumination_wavelength_nm": 660.0,
+    "colony_population_count": 42000.0,
+    "brood_chamber_temperature_celsius": 34.5,
+    "timestamp_relative": "YEAR_02_BEES_01",
+    "tags": ["apiculture", "red_light", "bee_vision", "night_inspection", "hive_management"],
+    "prose": "Illuminating the underground bee chamber exclusively with 660 nm deep red LEDs permitted full visual inspection by bunker keepers. Because honeybee photoreceptors lack red sensitivity, worker bees remained completely calm on brood combs without defensive flight."
+  },
+  {
+    "id": "apiculture_ventilation_carbon_dioxide_fanning_exhaust",
+    "chamber_zone_id": "VENTILATED_BROOD_CHEST_02",
+    "illumination_wavelength_nm": 660.0,
+    "colony_population_count": 38000.0,
+    "brood_chamber_temperature_celsius": 35.0,
+    "timestamp_relative": "YEAR_04_BEES_03",
+    "tags": ["apiculture", "carbon_dioxide", "wing_fanning", "respiration", "hive_exhaust"],
+    "prose": "When ventilation dampers choked, carbon dioxide concentrations rose to 2,800 ppm inside Hive 2. Hundreds of guard bees lined the entrance board in synchronized rows, fanning their wings at 200 Hz to pump stale air through the lower landing board."
+  },
+  {
+    "id": "apiculture_artificial_foraging_flight_cage_uv_polarization",
+    "chamber_zone_id": "CIRCULAR_FLIGHT_ARENA_03",
+    "illumination_wavelength_nm": 365.0,
+    "colony_population_count": 45000.0,
+    "brood_chamber_temperature_celsius": 34.0,
+    "timestamp_relative": "YEAR_07_BEES_02",
+    "tags": ["apiculture", "flight_cage", "uv_polarization", "foraging_navigation", "orientation"],
+    "prose": "Suspended above the fifteen-meter mesh foraging arena, overhead 365 nm UVA LEDs shone through linear polarizing filters. Forager bees used the polarized ultraviolet sky simulation to calculate solar azimuth angles and perform precise waggle dances."
+  },
+  {
+    "id": "apiculture_sugar_syrup_invertase_feeding_stimulant",
+    "chamber_zone_id": "STIMULATIVE_FEEDING_BAY_04",
+    "illumination_wavelength_nm": 660.0,
+    "colony_population_count": 31000.0,
+    "brood_chamber_temperature_celsius": 33.8,
+    "timestamp_relative": "YEAR_09_BEES_04",
+    "tags": ["apiculture", "sugar_syrup", "invertase", "pollen_patty", "brood_stimulation"],
+    "prose": "Boardman entrance feeders delivered a 2:1 sucrose syrup inverted with 0.1% citric acid alongside brewer's yeast protein patties. The stimulative feeding triggered hypopharyngeal gland development in nurse bees, boosting daily egg-laying to 1,500 eggs."
+  },
+  {
+    "id": "apiculture_chalkbrood_ascophaera_humidity_spore",
+    "chamber_zone_id": "HIGH_HUMIDITY_BAY_05",
+    "illumination_wavelength_nm": 660.0,
+    "colony_population_count": 28000.0,
+    "brood_chamber_temperature_celsius": 31.0,
+    "timestamp_relative": "YEAR_12_BEES_01",
+    "tags": ["apiculture", "chalkbrood", "ascophaera", "fungal_mummies", "chilled_brood"],
+    "prose": "Bedrock seepage increased chamber humidity to 88% while temperatures dipped below 32°C. Spores of *Ascosphaera apis* germinated inside gut tracts of chilled larvae, transforming un-capped brood into hard, calcified white and grey chalkbrood mummies."
+  },
+  {
+    "id": "apiculture_queen_rearing_doolittle_grafting_quill",
+    "chamber_zone_id": "QUEEN_BREEDING_LABORATORY_06",
+    "illumination_wavelength_nm": 590.0,
+    "colony_population_count": 50000.0,
+    "brood_chamber_temperature_celsius": 35.2,
+    "timestamp_relative": "YEAR_15_BEES_03",
+    "tags": ["apiculture", "queen_rearing", "doolittle_method", "larva_grafting", "royal_jelly"],
+    "prose": "Using a polished German-silver grafting tool, apiarists transferred 18-hour-old female larvae from worker cells into primed beeswax queen cups. Placed into a queenless cell-builder colony, nurse bees flooded the cups with royal jelly, producing thirty-two viable queen cells."
+  },
+  {
+    "id": "apiculture_oxalic_acid_sublimation_vaporizer_purge",
+    "chamber_zone_id": "SANITATION_TREATMENT_CELL_07",
+    "illumination_wavelength_nm": 660.0,
+    "colony_population_count": 40000.0,
+    "brood_chamber_temperature_celsius": 34.5,
+    "timestamp_relative": "YEAR_17_BEES_02",
+    "tags": ["apiculture", "oxalic_acid", "sublimation", "varroa_purge", "organic_treatment"],
+    "prose": "Heating 2.0 grams of oxalic acid dihydrate crystals to 160°C inside a sealed 12V vaporizer wand dispersed micro-crystalline acid vapor throughout the broodless winter cluster. The vapor crystallized across varroa mite footpads, dropping 1,400 mites within forty-eight hours."
+  },
+  {
+    "id": "apiculture_swarming_impulse_queen_cup_destruction",
+    "chamber_zone_id": "OVERCROWDED_SUPER_BAY_08",
+    "illumination_wavelength_nm": 660.0,
+    "colony_population_count": 58000.0,
+    "brood_chamber_temperature_celsius": 35.5,
+    "timestamp_relative": "YEAR_20_BEES_01",
+    "tags": ["apiculture", "swarming_impulse", "peanut_cells", "colony_split", "population_management"],
+    "prose": "Severe brood congestion triggered the swarming impulse, with workers building nine vertical peanut-shaped swarm cells along frame bottoms. Performing an immediate artificial Pagden split halved colony population, preventing half the bees from escaping into bunker ducting."
+  }
+]

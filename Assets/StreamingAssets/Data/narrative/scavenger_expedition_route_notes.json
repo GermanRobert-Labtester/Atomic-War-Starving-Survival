@@ -1,0 +1,82 @@
+[
+  {
+    "id": "scav_route_bridge_toll_ambush_point",
+    "route_identifier": "EXPEDITION_ROUTE_HIGHWAY_12",
+    "lead_scout_name": "CORMIER_TRAIL_LEAD",
+    "hazard_level": "HOSTILE_SNIPER_CHOKEPOINT",
+    "distance_kilometers": 14.5,
+    "timestamp_relative": "YEAR_03_EXPEDITION_LOG_01",
+    "tags": ["cartography", "scavenger", "route_notes", "ambush", "bridge"],
+    "prose": "The highway overpass is down in the river, leaving only the buckled concrete center pier. A scavenger clan mounted an armored machine-gun nest in the toll booth; passage requires twelve rounds of 7.62mm ammo or taking the five-mile detour through the contaminated marsh."
+  },
+  {
+    "id": "scav_route_frozen_swamp_sledge_run",
+    "route_identifier": "EXPEDITION_ROUTE_MUSKEG_RUN",
+    "lead_scout_name": "VALKA_SLEDGE_MASTER",
+    "hazard_level": "BREAKABLE_ICE_MUD_HAZARD",
+    "distance_kilometers": 22.0,
+    "timestamp_relative": "YEAR_05_EXPEDITION_LOG_03",
+    "tags": ["cartography", "scavenger", "swamp", "sledge", "winter"],
+    "prose": "We hauled the four freight sledges across the black spruce bog between 02:00 and 07:00 when the frost crust held our weight. By 10:00, the surface thawed into black, sulfuric mire that swallowed the runner skis of sledge three."
+  },
+  {
+    "id": "scav_route_collapsed_tunnel_air_draught",
+    "route_identifier": "EXPEDITION_ROUTE_TUNNEL_SEVEN",
+    "lead_scout_name": "ORLOV_VENT_SCOUT",
+    "hazard_level": "HYPOXIC_COLLAPSE_ZONE",
+    "distance_kilometers": 3.2,
+    "timestamp_relative": "YEAR_08_EXPEDITION_LOG_02",
+    "tags": ["cartography", "scavenger", "tunnel", "ventilation", "airflow"],
+    "prose": "We crawled through eight hundred meters of crushed ventilation ducting over the tunnel cave-in. Orlov held a spinning bicycle wheel anemometer to verify a strong outward draught from the north portal, confirming breathable air on the far side."
+  },
+  {
+    "id": "scav_route_grain_elevator_observation_roost",
+    "route_identifier": "EXPEDITION_ROUTE_SILO_OVERLOOK",
+    "lead_scout_name": "HALE_SPOTTER",
+    "hazard_level": "ELEVATED_WIND_EXPOSURE",
+    "distance_kilometers": 8.0,
+    "timestamp_relative": "YEAR_11_EXPEDITION_LOG_04",
+    "tags": ["cartography", "scavenger", "silo", "lookout", "reconnaissance"],
+    "prose": "Climbed forty meters of rusted external iron ladder to the headhouse atop the concrete grain elevator. From the cupola, we maintained a forty-eight-hour telescope watch, mapping three raider salvage convoys moving across the valley floor."
+  },
+  {
+    "id": "scav_route_quarry_truck_wreck_cache",
+    "route_identifier": "EXPEDITION_ROUTE_LIMESTONE_QUARRY",
+    "lead_scout_name": "MORIN_MECHANIC",
+    "hazard_level": "ACID_DRAINAGE_PIT",
+    "distance_kilometers": 11.5,
+    "timestamp_relative": "YEAR_14_EXPEDITION_LOG_01",
+    "tags": ["cartography", "scavenger", "quarry_truck", "salvage", "diesel_oil"],
+    "prose": "Located an overturned Caterpillar 785 quarry haul truck buried under limestone rubble. We drilled the hydraulic tank drain plug and drained forty gallons of clean SAE 10W oil into jerrycans to replenish the bunker machine shop lathe."
+  },
+  {
+    "id": "scav_route_chemical_fertilizer_storage_depot",
+    "route_identifier": "EXPEDITION_ROUTE_AGRO_DEPOT",
+    "lead_scout_name": "KOWALSKI_CHEMIST",
+    "hazard_level": "CHEMICAL_EXPLOSION_HAZARD",
+    "distance_kilometers": 18.0,
+    "timestamp_relative": "YEAR_16_EXPEDITION_LOG_03",
+    "tags": ["cartography", "scavenger", "fertilizer", "ammonium_nitrate", "salvage"],
+    "prose": "The corrugated roof of the agricultural coop collapsed over fifty tons of caked ammonium nitrate fertilizer bags. We used brass picks to avoid sparks, chipping out two hundred pounds of prilled nitrate for greenhouse nitrogen supplementation."
+  },
+  {
+    "id": "scav_route_dead_river_gravel_bar_crossing",
+    "route_identifier": "EXPEDITION_ROUTE_DEAD_RIVER_FORD",
+    "lead_scout_name": "TRENTON_FORD_FINDER",
+    "hazard_level": "IRRADIATED_WATER_IMMERSION",
+    "distance_kilometers": 6.5,
+    "timestamp_relative": "YEAR_18_EXPEDITION_LOG_02",
+    "tags": ["cartography", "scavenger", "river_crossing", "wading", "water_rad"],
+    "prose": "Waded knee-deep across the orange-tinted sulfur ford. The water read 35 uR/hr on our dosimeter; rubber waders held, but we had to boil our canvas boots in lye water and discard two filter cartridges after returning to the airlock."
+  },
+  {
+    "id": "scav_route_abandoned_radar_dome_bivouac",
+    "route_identifier": "EXPEDITION_ROUTE_SUMMIT_DOME",
+    "lead_scout_name": "SELDON_LEAD_SCOUT",
+    "hazard_level": "WIND_SHELTER_BIVOUAC",
+    "distance_kilometers": 26.0,
+    "timestamp_relative": "YEAR_20_EXPEDITION_LOG_01",
+    "tags": ["cartography", "scavenger", "radome", "bivouac", "shelter"],
+    "prose": "Bivouacked six scouts inside the geodesic fiberglass radar dome atop Mount Baldy. The spherical shelter deflected eighty-mile-per-hour blizzard winds; we burned paraffin wax stoves on the concrete pedestal while ash drifted outside."
+  }
+]

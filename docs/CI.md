@@ -199,9 +199,10 @@ Godot + dotnet. Run from a cold state so the check proves a fresh checkout build
 ```bash
 rm -rf .godot/mono/temp Ashfall.Core/bin Ashfall.Core/obj
 dotnet build Ashfall.csproj                 # expect: 0 errors, 0 warnings
-dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # expect: 408 passed / 0 failed
+dotnet test Ashfall.Core.Tests/Ashfall.Core.Tests.csproj   # expect: 732 passed / 0 failed
 godot --headless --path . -- --data-integrity-selftest     # expect: PASS, 0 errors
-godot --headless --path . -- --expansions-selftest         # expect: 236/236 GREEN
+godot --headless --path . -- --expansions-selftest         # expect: 236/236 GREEN (+ verdict chain)
+godot --headless --path . -- --verdict-selftest            # expect: VERDICT_SELFTEST PASS
 godot --headless --path . -- --muster-selftest             # expect: PASS 25/25
 godot --headless --path . -- --dose-ledger-selftest        # expect: PASS
 godot --headless --path . -- --muster-uitest --dose-uitest # expect: both PASS (run separately)

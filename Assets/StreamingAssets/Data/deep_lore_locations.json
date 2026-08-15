@@ -1,0 +1,542 @@
+{
+  "locations": [
+    {
+      "id": "location_municipal_library",
+      "displayName": "The Municipal Library",
+      "radiationUSv": 12.0,
+      "dangerLevel": 4,
+      "travelHours": 1.8,
+      "lootTable": [
+        {
+          "itemId": "book",
+          "minQty": 0,
+          "maxQty": 12,
+          "spawnChance": 0.65,
+          "degradationChance": 0.4,
+          "degradedItemId": "paper_scrap"
+        },
+        {
+          "itemId": "wood_block",
+          "minQty": 2,
+          "maxQty": 18,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "scrap_wood",
+          "minQty": 10,
+          "maxQty": 45,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "cloth",
+          "minQty": 4,
+          "maxQty": 15,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "cigarette_lighter",
+          "minQty": 0,
+          "maxQty": 3,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "family_photograph",
+          "minQty": 0,
+          "maxQty": 6,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "paper_scrap",
+          "minQty": 20,
+          "maxQty": 100,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "sealed_government_document",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.05
+        }
+      ]
+    },
+    {
+      "id": "location_sunshine_daycare",
+      "displayName": "Sunshine Daycare",
+      "radiationUSv": 8.0,
+      "dangerLevel": 3,
+      "travelHours": 1.8,
+      "lootTable": [
+        {
+          "itemId": "water_bottle_0_5l_of_1l",
+          "minQty": 2,
+          "maxQty": 14,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "canned_food",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "bandage",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "item_teddy_bear",
+          "minQty": 0,
+          "maxQty": 4,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "wool_blanket",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "crayon",
+          "minQty": 5,
+          "maxQty": 30,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "pistol_cz75_9x19",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.15
+        },
+        {
+          "itemId": "ammo_9x19",
+          "minQty": 0,
+          "maxQty": 8,
+          "spawnChance": 0.15
+        }
+      ]
+    },
+    {
+      "id": "location_regional_blood_bank",
+      "displayName": "Regional Blood Bank",
+      "radiationUSv": 18.0,
+      "dangerLevel": 6,
+      "travelHours": 2.7,
+      "lootTable": [
+        {
+          "itemId": "antiseptic_1l_of_1l",
+          "minQty": 0,
+          "maxQty": 6,
+          "spawnChance": 0.55
+        },
+        {
+          "itemId": "alcohol_wipes_box_10_of_10",
+          "minQty": 2,
+          "maxQty": 15,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "battery",
+          "minQty": 4,
+          "maxQty": 25,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 5,
+          "maxQty": 20,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "rubber_hose",
+          "minQty": 3,
+          "maxQty": 12,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "blood_bag",
+          "minQty": 0,
+          "maxQty": 3,
+          "spawnChance": 0.1,
+          "degradationChance": 0.9,
+          "degradedItemId": "spoiled_blood_bag"
+        },
+        {
+          "itemId": "clean_water",
+          "minQty": 0,
+          "maxQty": 8,
+          "spawnChance": 0.4
+        }
+      ]
+    },
+    {
+      "id": "location_grand_cinema",
+      "displayName": "Grand Cinema",
+      "radiationUSv": 14.0,
+      "dangerLevel": 5,
+      "travelHours": 2.7,
+      "lootTable": [
+        {
+          "itemId": "fuel_1l",
+          "minQty": 0,
+          "maxQty": 12,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "sugar",
+          "minQty": 5,
+          "maxQty": 40,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "electronic_scrap",
+          "minQty": 4,
+          "maxQty": 22,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "cloth",
+          "minQty": 15,
+          "maxQty": 50,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "vacuum_tube",
+          "minQty": 1,
+          "maxQty": 8,
+          "spawnChance": 0.45
+        },
+        {
+          "itemId": "water_bottle_1l_full",
+          "minQty": 3,
+          "maxQty": 20,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "duct_tape",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.8
+        }
+      ]
+    },
+    {
+      "id": "location_upland_logging_camp",
+      "displayName": "Upland Logging Camp",
+      "radiationUSv": 20.0,
+      "dangerLevel": 7,
+      "travelHours": 4.5,
+      "lootTable": [
+        {
+          "itemId": "wood_block",
+          "minQty": 20,
+          "maxQty": 80,
+          "spawnChance": 1.0
+        },
+        {
+          "itemId": "scrap_wood",
+          "minQty": 30,
+          "maxQty": 100,
+          "spawnChance": 1.0
+        },
+        {
+          "itemId": "sawdust_block",
+          "minQty": 10,
+          "maxQty": 50,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "box_of_nails_10",
+          "minQty": 2,
+          "maxQty": 15,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "fuel_1l",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 5,
+          "maxQty": 20,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "military_grade_hatchet",
+          "minQty": 0,
+          "maxQty": 3,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "item_ash_ghillie",
+          "minQty": 0,
+          "maxQty": 1,
+          "spawnChance": 0.1
+        }
+      ]
+    },
+    {
+      "id": "location_stadium_evacuation_center",
+      "displayName": "Stadium Evacuation Center",
+      "radiationUSv": 18.0,
+      "dangerLevel": 6,
+      "travelHours": 3.6,
+      "lootTable": [
+        {
+          "itemId": "cloth",
+          "minQty": 20,
+          "maxQty": 120,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "family_photograph",
+          "minQty": 5,
+          "maxQty": 40,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "currency",
+          "minQty": 100,
+          "maxQty": 500,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "canned_food",
+          "minQty": 0,
+          "maxQty": 15,
+          "spawnChance": 0.45,
+          "degradationChance": 0.6,
+          "degradedItemId": "spoiled_canned_food"
+        },
+        {
+          "itemId": "jewelry",
+          "minQty": 0,
+          "maxQty": 8,
+          "spawnChance": 0.2
+        },
+        {
+          "itemId": "water_bottle_1l_full",
+          "minQty": 2,
+          "maxQty": 20,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "item_suitcase_locked",
+          "minQty": 0,
+          "maxQty": 5,
+          "spawnChance": 0.3
+        }
+      ]
+    },
+    {
+      "id": "location_automated_abattoir",
+      "displayName": "Automated Abattoir",
+      "radiationUSv": 12.0,
+      "dangerLevel": 7,
+      "travelHours": 3.6,
+      "lootTable": [
+        {
+          "itemId": "raw_meat",
+          "minQty": 30,
+          "maxQty": 150,
+          "spawnChance": 1.0,
+          "degradationChance": 0.5,
+          "degradedItemId": "spoiled_meat"
+        },
+        {
+          "itemId": "fat_rendered",
+          "minQty": 10,
+          "maxQty": 60,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "industrial_bleach",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.7
+        },
+        {
+          "itemId": "bone_saw",
+          "minQty": 0,
+          "maxQty": 4,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 10,
+          "maxQty": 40,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "rubber_hose",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "ammonia_tank",
+          "minQty": 0,
+          "maxQty": 3,
+          "spawnChance": 0.25
+        }
+      ]
+    },
+    {
+      "id": "location_central_postal_hub",
+      "displayName": "Central Postal Hub",
+      "radiationUSv": 14.0,
+      "dangerLevel": 4,
+      "travelHours": 2.7,
+      "lootTable": [
+        {
+          "itemId": "paper_scrap",
+          "minQty": 30,
+          "maxQty": 150,
+          "spawnChance": 1.0
+        },
+        {
+          "itemId": "cardboard_box",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.85,
+          "degradationChance": 0.6,
+          "degradedItemId": "paper_scrap"
+        },
+        {
+          "itemId": "duct_tape",
+          "minQty": 2,
+          "maxQty": 12,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "family_photograph",
+          "minQty": 0,
+          "maxQty": 15,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "book",
+          "minQty": 0,
+          "maxQty": 8,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "sealed_government_document",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.05
+        },
+        {
+          "itemId": "cigarette_pack_sealed",
+          "minQty": 0,
+          "maxQty": 4,
+          "spawnChance": 0.15
+        },
+        {
+          "itemId": "brass_fittings",
+          "minQty": 1,
+          "maxQty": 6,
+          "spawnChance": 0.3
+        }
+      ]
+    },
+    {
+      "id": "location_municipal_water_reservoir",
+      "displayName": "Municipal Water Reservoir",
+      "radiationUSv": 25.0,
+      "dangerLevel": 8,
+      "travelHours": 4.5,
+      "lootTable": [
+        {
+          "itemId": "chemicals",
+          "minQty": 10,
+          "maxQty": 60,
+          "spawnChance": 0.9
+        },
+        {
+          "itemId": "water_purification_tablets_40_of_40",
+          "minQty": 0,
+          "maxQty": 4,
+          "spawnChance": 0.25
+        },
+        {
+          "itemId": "pipe_wrench",
+          "minQty": 0,
+          "maxQty": 2,
+          "spawnChance": 0.4
+        },
+        {
+          "itemId": "mechanical_parts",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.8
+        },
+        {
+          "itemId": "scrap_metal",
+          "minQty": 15,
+          "maxQty": 50,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "ammo_762x54r_jhp_ap",
+          "minQty": 0,
+          "maxQty": 10,
+          "spawnChance": 0.3
+        }
+      ]
+    },
+    {
+      "id": "location_television_studio",
+      "displayName": "Television Studio",
+      "radiationUSv": 15.0,
+      "dangerLevel": 4,
+      "travelHours": 1.8,
+      "lootTable": [
+        {
+          "itemId": "electronic_scrap",
+          "minQty": 15,
+          "maxQty": 80,
+          "spawnChance": 0.95
+        },
+        {
+          "itemId": "vacuum_tube",
+          "minQty": 2,
+          "maxQty": 15,
+          "spawnChance": 0.6
+        },
+        {
+          "itemId": "acoustic_foam_panel",
+          "minQty": 5,
+          "maxQty": 30,
+          "spawnChance": 0.85
+        },
+        {
+          "itemId": "cassette_tape",
+          "minQty": 0,
+          "maxQty": 12,
+          "spawnChance": 0.5
+        },
+        {
+          "itemId": "battery",
+          "minQty": 5,
+          "maxQty": 25,
+          "spawnChance": 0.75
+        },
+        {
+          "itemId": "item_anchor_notes",
+          "minQty": 1,
+          "maxQty": 1,
+          "spawnChance": 1.0
+        },
+        {
+          "itemId": "duct_tape",
+          "minQty": 2,
+          "maxQty": 10,
+          "spawnChance": 0.8
+        }
+      ]
+    }
+  ]
+}

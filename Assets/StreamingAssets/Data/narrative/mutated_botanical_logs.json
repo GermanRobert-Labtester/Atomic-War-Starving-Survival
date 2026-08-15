@@ -1,0 +1,90 @@
+[
+  {
+    "id": "botany_glowing_rad_rye_strain_b",
+    "botanical_name": "SECALE_CEREALE_MUT_GAMMA_7",
+    "cultivation_tray": "HYDROPONIC_TIER_03_BAY_A",
+    "edibility_status": "EDIBLE_PARBOIL_REQUIRED",
+    "radiation_uptake_bq_kg": 420.0,
+    "caloric_density_kcal_kg": 2800,
+    "timestamp_relative": "YEAR_03_HARVEST_04",
+    "tags": ["botany", "hydroponics", "rad_rye", "mutation", "food_production"],
+    "prose": "Stems are pale translucent green with an eerie phosphor glow under dim sodium lighting. The grain heads are twice normal size, producing heavy, oil-rich flour with 18% protein. Requires triple boiling and discarding the rinse water to leach out concentrated cesium isotopes."
+  },
+  {
+    "id": "botany_carnivorous_sump_kelp",
+    "botanical_name": "LAMINARIA_CARNIVORA_SUMP_9",
+    "cultivation_tray": "WASTEWATER_SUMP_CHANNEL_02",
+    "edibility_status": "TOXIC_ORGANIC_FILTER_ONLY",
+    "radiation_uptake_bq_kg": 1800.0,
+    "caloric_density_kcal_kg": 0,
+    "timestamp_relative": "YEAR_05_DAY_140",
+    "tags": ["botany", "sump_kelp", "filtration", "pest_control", "mutation"],
+    "prose": "Thick, gelatinous black fronds growing across the warm greywater drain troughs. Covered in microscopic sticky trichomes that trap cockroaches, silverfish, and sewer flies, dissolving them in acid within six hours. Dwellers call it 'The Black Tongue'."
+  },
+  {
+    "id": "botany_dwarf_lead_potato_tuber",
+    "botanical_name": "SOLANUM_TUBEROSUM_VAR_PLUMBUM",
+    "cultivation_tray": "VERMICULITE_BED_06_SECTOR_4",
+    "edibility_status": "SAFE_IF_PEELED_THICK",
+    "radiation_uptake_bq_kg": 150.0,
+    "caloric_density_kcal_kg": 1400,
+    "timestamp_relative": "YEAR_07_DAY_220",
+    "tags": ["botany", "potato", "heavy_metals", "tuber", "hydroponics"],
+    "prose": "Small, fist-sized tubers with tough, waxy purple skins. The plant bio-accumulates dissolved heavy metals entirely in the outer two millimeters of cork skin, leaving the dense white starch core clean and edible as long as cooks peel the tubers aggressively with a sharp blade."
+  },
+  {
+    "id": "botany_pale_nitrogen_mushroom_shelf",
+    "botanical_name": "PLEUROTUS_SUBTERRANEUS_ALBA",
+    "cultivation_tray": "CARDBOARD_PULP_TROUGH_B",
+    "edibility_status": "FULL_EDIBLE_NO_RADIATION",
+    "radiation_uptake_bq_kg": 35.0,
+    "caloric_density_kcal_kg": 950,
+    "timestamp_relative": "YEAR_09_DAY_015",
+    "tags": ["botany", "fungi", "mushrooms", "recycling", "food_production"],
+    "prose": "Pure white oyster mushroom caps cultivated on shredded, boiled cardboard ration packaging and used cotton filters. Grows from spore to harvest in eight days in total darkness. Tastes mildly of wet paper and yeast, but provides the only dietary vitamin D for Sector 2 dwellers."
+  },
+  {
+    "id": "botany_spore_cough_blind_lichen",
+    "botanical_name": "XANTHORIA_PNEUMO_TOXICA",
+    "cultivation_tray": "INTAKE_DUCT_PLENUM_WALLS",
+    "edibility_status": "HAZARDOUS_AIRBORNE_IRRITANT",
+    "radiation_uptake_bq_kg": 920.0,
+    "caloric_density_kcal_kg": 0,
+    "timestamp_relative": "YEAR_11_DAY_310",
+    "tags": ["botany", "lichen", "airway_hazard", "spores", "bunker_maintenance"],
+    "prose": "Crustose chalky white lichen that thrives on cold condensation conduits. When air velocity in the plenum exceeds four meters per second, it releases billions of microscopic hydrophobic spores that cause severe chronic bronchitis and 'Plenum Cough' across living dormitories."
+  },
+  {
+    "id": "botany_chlorophyll_deficient_albino_kale",
+    "botanical_name": "BRASSICA_OLERACEA_ALBINO_4",
+    "cultivation_tray": "LED_RACK_ALPHA_TRAY_12",
+    "edibility_status": "FULL_EDIBLE_HIGH_CALCIUM",
+    "radiation_uptake_bq_kg": 60.0,
+    "caloric_density_kcal_kg": 650,
+    "timestamp_relative": "YEAR_14_DAY_080",
+    "tags": ["botany", "kale", "albino", "greens", "hydroponics"],
+    "prose": "Ghostly white leaves lacking all green pigmentation, surviving on ultraviolet-A quartz lamps and concentrated sulfate solution. Extremely bitter and fibrous, but packed with absorbable calcium that prevents rickets and bone loss among children born underground."
+  },
+  {
+    "id": "botany_ferro_magnetic_ironweed_root",
+    "botanical_name": "SANGUISORBA_FERRO_METALLICA",
+    "cultivation_tray": "CONDENSER_RUNOFF_SUMP_PIPE",
+    "edibility_status": "INDUSTRIAL_MINERAL_SOURCE",
+    "radiation_uptake_bq_kg": 310.0,
+    "caloric_density_kcal_kg": 0,
+    "timestamp_relative": "YEAR_16_DAY_205",
+    "tags": ["botany", "ironweed", "mineral_mining", "bio_leaching"],
+    "prose": "Fibrous taproots that pull dissolved iron oxide directly from rusty condensation pipes. When the roots are dried and cremated in a crucible, they leave behind 40% pure magnetic iron sponge powder used by machinists for flux and welding rods."
+  },
+  {
+    "id": "botany_sonya_tree_graft_sapling",
+    "botanical_name": "MALUS_DOMESTICA_HEIRLOOM_SONYA",
+    "cultivation_tray": "ISOLATED_QUARTZ_CHAMBER_01",
+    "edibility_status": "PROTECTED_HEIRLOOM_RELIC",
+    "radiation_uptake_bq_kg": 0.0,
+    "caloric_density_kcal_kg": 0,
+    "timestamp_relative": "YEAR_20_SPRING_BUD",
+    "tags": ["botany", "sonya_tree", "apple_tree", "relic", "hope", "century_seed"],
+    "prose": "A fragile thirty-centimeter apple seedling grown from a non-irradiated pre-war seed. Kept behind lead glass in an isolated nitrogen-dosed nursery under continuous full-spectrum lighting. It has five delicate green leaves that smell of fresh cider when gently brushed by the botanist's glove."
+  }
+]

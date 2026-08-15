@@ -1,0 +1,387 @@
+{
+  "quests": [
+    {
+      "questlineId": "quest_verdict_the_warm_range",
+      "title": "The Warm Range",
+      "synopsis": "A reading is a measurement. Follow the cable run east and find what the machines were built to serve.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_warm_path",
+      "minDay": 160,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_warm_path",
+          "title": "A Reading",
+          "narrativePrompt": "The geophone pit reads the valley like a slow heartbeat, and the cable runs east under the treeline. Somebody once knew where it went.",
+          "unlockOnDay": 160,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_warm_follow_cable",
+              "text": "Walk the cable run east to the fuse world and read the linen charters.",
+              "nextStageId": "stage_warm_fuse",
+              "moraleDelta": 1,
+              "grantItemId": "evidence_fuse_linen",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The linen codes decode to the Standard. The machine kept the codes after the staff stopped keeping the shifts. The swept path ends at a tape door."
+            },
+            {
+              "choiceId": "choice_warm_ignore",
+              "text": "Seal the pit and mark the site as a hazard.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "outcomeNarrative": "The lid goes back over the collar. The array keeps reading the ground; it does not know it has been closed, because a machine that hears a farm does not require visitors."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_warm_fuse",
+          "title": "The Fuse World",
+          "narrativePrompt": "In the dry shielded service way, the three-year readouts hang in glass cabinets. At the far end, the tape-silo door and its wheel handle, waiting for the tape's schedule.",
+          "unlockOnDay": 160,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_warm_resolve_facets",
+              "text": "Resolve the three facets: the archive, the fire-computing room, the vent shaft.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "item_archive_tape_silo_key",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The archive keeps its memory. The fire room keeps its artifacts. The vent keeps its warmth. The machine has all three needs served, and the count is one step closer."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_reckoning_call",
+      "title": "The Reckoning Call",
+      "synopsis": "A department is speaking again on 99.0 MHz. The count is open, and it has been open for five years.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_call_carrier",
+      "minDay": 210,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_call_carrier",
+          "title": "The Carrier",
+          "narrativePrompt": "One second on, one second off, on a dead band. It is not speech. It is a schedule, and it knows the census window is open.",
+          "unlockOnDay": 210,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_call_identify",
+              "text": "Tune the receiver to 99.0 MHz and log the carrier as a census signal.",
+              "nextStageId": "stage_call_bursts",
+              "moraleDelta": 1,
+              "grantItemId": "evidence_call_calibration",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The calibration burst plays on every sub-band at once. The radios still listening now know a department is speaking."
+            },
+            {
+              "choiceId": "choice_call_ignore",
+              "text": "Leave the dead band alone.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 0,
+              "outcomeNarrative": "The tone continues one second on, one second off. It is a schedule. It does not require an audience."
+            }
+          ]
+        },
+        {
+          "stageId": "stage_call_bursts",
+          "title": "The Plain Burst",
+          "narrativePrompt": "At 03:40, on the hour the old maintenance window opened, the word 'census' appears in plaintext. The machine expects to be read.",
+          "unlockOnDay": 210,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_call_face_count",
+              "text": "Face the presented count and let the sector decide what the number means.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_veen_your_people",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The count names the shelter's persons, one by one, in the machine's register. A machine does not reason. It counts. This is the count."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_hold",
+      "title": "The Hold Pending Count",
+      "synopsis": "The UXO fields were never left live. They were held, Pending Count, since a war the count never ended.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_hold_register",
+      "minDay": 200,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_hold_register",
+          "title": "The Dead Hand",
+          "narrativePrompt": "The Dead Hand Core keeps the UXO field register. Its last entry is five years old: held, pending count, re-audit at census interval. The interval came due.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_hold_release",
+              "text": "Release the fields: mine-clearance logic engages.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "guiltDelta": 4,
+              "grantItemId": "evidence_uxo_register",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 1,
+              "outcomeNarrative": "The register's disposition field flips. The fields begin to clear. The Garrison and the Warlords start eyeing the newly swept land, and the machine does not mind either way."
+            },
+            {
+              "choiceId": "choice_hold_retain",
+              "text": "Keep the fields held as they are.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "grantItemId": "evidence_uxo_register",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The status quo holds. The buffer remains fenced. The machine does not care, and the fields do not know a decision was offered."
+            },
+            {
+              "choiceId": "choice_hold_count",
+              "text": "Log the fields into the census ledgers.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_uxo_register",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The fields become a liability the machine's own registries now require to be accounted for every 1,827 days. The fewest bodies, and the most paper."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_eden_grabs",
+      "title": "Eden Was Here",
+      "synopsis": "Eleven months of tube-bleed, recovered from the array's own memory. Its most human voice is a tape.",
+      "factionTag": "faction_archivists",
+      "firstStageId": "stage_eden_tape",
+      "minDay": 190,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_eden_tape",
+          "title": "The Eleventh Month",
+          "narrativePrompt": "The tape-silo lectern holds eleven months of Eden Vale's broadcasts. The machine logged the silence after her last one as 'no traffic'.",
+          "unlockOnDay": 190,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_eden_archive",
+              "text": "Archive the log clean for the Archivists of the Before.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "evidence_eden_log",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 3,
+              "outcomeNarrative": "The log enters the Schedule on corroborated testimony: the machine's register and the Archivists' ledger, agreeing on one voice. Eden was here."
+            },
+            {
+              "choiceId": "choice_eden_recompose",
+              "text": "Recompose her final broadcast and put it on the air.",
+              "nextStageId": "",
+              "moraleDelta": 3,
+              "guiltDelta": 1,
+              "grantItemId": "evidence_eden_log",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The voice plays once, on the amateur band, and goes dead. The array's register records 'no traffic' again, which is itself a reading."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_tape_silo",
+      "title": "The Reels That Matter",
+      "synopsis": "Two thousand and sixteen reels, of which one thousand eight hundred and thirty-one matter. Route them before the count comes due.",
+      "factionTag": "faction_archivists",
+      "firstStageId": "stage_reels_lectern",
+      "minDay": 200,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_reels_lectern",
+          "title": "The Mattering Reels",
+          "narrativePrompt": "The brass key turns the tape-silo lectern. The machine's own accounting: 2,016 reels, 1,831 mattering, and nobody has ever asked it what it counted.",
+          "unlockOnDay": 200,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_reels_archivists",
+              "text": "Route the mattering reels to the Archivists of the Before.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "targetFactionId": "faction_archivists",
+              "factionStandingDelta": 3,
+              "grantItemId": "item_archive_tape_silo_key",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The reels matter, and now they matter to someone who will keep them. The machine's count drops by exactly the number routed — a ledger keeping its own subtraction."
+            },
+            {
+              "choiceId": "choice_reels_militia",
+              "text": "Route the mattering reels to the Militia as vernacular history.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The Militia reads them aloud at the Grange Hall. The sector's own archive becomes the sector's own story, told by machines in a human room."
+            },
+            {
+              "choiceId": "choice_reels_home",
+              "text": "Keep the reels for the shelter's own archive.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "item_archive_tape_silo_key",
+              "grantItemQuantity": 1,
+              "outcomeNarrative": "The reels stay in the bunker, counted among your persons. The machine does not mind. It counted them either way."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_mortars_timetable",
+      "title": "The Mortar's Timetable",
+      "synopsis": "Every twelve hours, the mortar fires on a clock. The clock is the machine's, and it can be read.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_mortar_chart",
+      "minDay": 170,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_mortar_chart",
+          "title": "The Twelve-Hour Fuse",
+          "narrativePrompt": "The custodian does not aim. It fires on the machine's clock, and the machine's clock can be charted.",
+          "unlockOnDay": 170,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_mortar_ostrowski",
+              "text": "Sell the schedule to Ostrowski the mapmaker.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "guiltDelta": 1,
+              "outcomeNarrative": "The mapmaker pays for bad news, and a firing clock is bad news delivered on schedule. The pit fires regardless."
+            },
+            {
+              "choiceId": "choice_mortar_keep",
+              "text": "Keep the chart for the shelter's own route planning.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "outcomeNarrative": "The chart joins the shelter's maps. Every twelve hours the ground shakes, and you know exactly when to be indoors."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_shift_charter",
+      "title": "Shift 36",
+      "synopsis": "Six names, five hands, one missing. The missing hand is the one that has been turning the valve since.",
+      "factionTag": "faction_the_tempest",
+      "firstStageId": "stage_shift_ledger",
+      "minDay": 180,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_shift_ledger",
+          "title": "The Year-One Ledger",
+          "narrativePrompt": "The sign-in ledger is open to shift 36: six names, five hands, the sixth left blank, and a completion check mark in a hand that has never logged anything else.",
+          "unlockOnDay": 180,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_shift_restore",
+              "text": "Restore shift 36's completion to the machine's register.",
+              "nextStageId": "",
+              "moraleDelta": 2,
+              "grantItemId": "item_fuse_world_shift_charter",
+              "grantItemQuantity": 1,
+              "targetFactionId": "faction_the_tempest",
+              "factionStandingDelta": 2,
+              "outcomeNarrative": "The valve outside the vent shaft reads 'per 36' — procedure was kept. The record is now complete, and the machine does not ask who the sixth hand was."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "questlineId": "quest_verdict_the_summons",
+      "title": "The Summons",
+      "synopsis": "The presented count belongs to a holder. To whom does the sector hand it?",
+      "factionTag": "faction_central_garrison",
+      "firstStageId": "stage_summons_carrier",
+      "minDay": 250,
+      "maxDay": 360,
+      "stages": [
+        {
+          "stageId": "stage_summons_carrier",
+          "title": "The Presentation",
+          "narrativePrompt": "The count is open, and the machine's register names the holders, not the readers. Somebody must carry it.",
+          "unlockOnDay": 250,
+          "isTerminal": false,
+          "choices": [
+            {
+              "choiceId": "choice_summons_garrison",
+              "text": "Carry the count to the Garrison.",
+              "nextStageId": "",
+              "moraleDelta": -1,
+              "guiltDelta": 1,
+              "targetFactionId": "faction_central_garrison",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "The garrison keeps it under lock. The other Powers learn of the transfer and add their own entries to the log — the machine's register grows in four places, permanently."
+            },
+            {
+              "choiceId": "choice_summons_militia",
+              "text": "Carry the count to the Militia.",
+              "nextStageId": "",
+              "moraleDelta": 1,
+              "targetFactionId": "faction_ash_militia",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "The Militia reads it aloud at the Grange Hall, and the sector's number becomes the sector's own."
+            },
+            {
+              "choiceId": "choice_summons_cult",
+              "text": "Carry the count to the Cult of the Ash Sign.",
+              "nextStageId": "",
+              "moraleDelta": -2,
+              "guiltDelta": 2,
+              "targetFactionId": "faction_ash_sign",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "The shrine keeps the count as scripture. The meters were not burned away with the world's lies after all, and the doctrine will argue about that for generations."
+            },
+            {
+              "choiceId": "choice_summons_warlords",
+              "text": "Carry the count to the Warlords of the Toll.",
+              "nextStageId": "",
+              "moraleDelta": 0,
+              "guiltDelta": 1,
+              "targetFactionId": "faction_scavengers",
+              "factionStandingDelta": 4,
+              "outcomeNarrative": "The Tollman prices the count by mass. It is the first census ever sold for a toll, and the receipt is real."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

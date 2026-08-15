@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Ashfall.Core;
 using AtomicWar._Game.Utilities;
 
 namespace AtomicWar._Game.Core
@@ -32,13 +32,13 @@ namespace AtomicWar._Game.Core
         public event Action<string, string> OnItemDegraded;            // locationId, itemId
         public event Action<string, string> OnContaminationApplied;    // locationId, itemId
 
-        private readonly System.Random _rng;
+        private readonly ISeededRng _rng;
         private int _currentDay;
         private readonly Dictionary<string, int> _locationVisitCounts = new Dictionary<string, int>();
 
-        public ProceduralScavengeSystem(System.Random rng = null)
+        public ProceduralScavengeSystem(ISeededRng rng = null)
         {
-            _rng = rng ?? new System.Random(9999);
+            _rng = rng ?? new SeededRng(9999);
         }
 
         public void SetCurrentDay(int day) => _currentDay = day;
@@ -67,8 +67,8 @@ namespace AtomicWar._Game.Core
                 if (_rng.NextDouble() > node.SpawnChance)
                     continue;
 
-                // Roll quantity using degraded Poisson
-                int qty = RollQuantity(node.MinQty, node.MaxQty, _currentDay);
+                // Roll quantity using degraded Poisson (visit count drives picked-over effect)
+                int qty = RollQuantity(node.MinQty, node.MaxQty, _currentDay, visits);
 
                 if (qty <= 0) continue;
 
@@ -77,7 +77,7 @@ namespace AtomicWar._Game.Core
                 if (node.DegradationChance > 0f && _rng.NextDouble() < node.DegradationChance)
                 {
                     degraded = true;
-                    qty = Mathf.Max(1, qty / 2); // Half yield on degradation
+                    qty = MathfCompat.Max(1, qty / 2); // Half yield on degradation
                     OnItemDegraded?.Invoke(locationId, node.ItemId);
                 }
 
@@ -105,14 +105,18 @@ namespace AtomicWar._Game.Core
         }
 
         /// <summary>
-        /// Roll quantity using Poisson distribution, skewed by world phase.
+        /// Roll quantity using Poisson distribution, skewed by world phase and visit count.
         /// Phase 1: uniform. Phase 2: slight skew toward min. Phase 3: heavy skew.
+        /// Each prior visit to the same location adds a small additional skew (picked-over effect).
         /// </summary>
-        private int RollQuantity(int min, int max, int currentDay)
+        private int RollQuantity(int min, int max, int currentDay, int visitCount)
         {
             if (min >= max) return min;
 
             float skew = GetDegradationSkew(currentDay);
+            // Each prior visit adds 5% skew toward min (picked-over effect), capped at 30%
+            float visitSkew = MathfCompat.Clamp01(visitCount * 0.05f) * 0.30f;
+            skew = MathfCompat.Clamp(skew + visitSkew, 0f, 0.9f);
             float range = max - min;
 
             // Poisson-distributed roll with incremental computation.
@@ -131,13 +135,13 @@ namespace AtomicWar._Game.Core
             }
 
             // Normalize to range
-            float normalized = Mathf.Clamp01((float)rawRoll / Mathf.Max(1, max - min));
+            float normalized = MathfCompat.Clamp01((float)rawRoll / MathfCompat.Max(1, max - min));
 
             // Apply skew (pushes toward min)
             float skewed = normalized * (1f - skew);
 
-            int result = min + Mathf.RoundToInt(skewed * range);
-            return Mathf.Clamp(result, min, max);
+            int result = min + MathfCompat.RoundToInt(skewed * range);
+            return MathfCompat.Clamp(result, min, max);
         }
 
         private float GetDegradationSkew(int day)
@@ -206,13 +210,14 @@ namespace AtomicWar._Game.Core
 
         /// <summary>
         /// Decontaminate items. Returns how many survive the wash.
+        /// Without soap+clean water, decontamination cannot proceed — items remain contaminated.
         /// </summary>
         public int Decontaminate(int itemCount, bool hasSoap, bool hasCleanWater)
         {
-            if (!hasSoap || !hasCleanWater) return itemCount; // Can't wash
+            if (!hasSoap || !hasCleanWater) return 0; // Cannot wash — items lost to contamination
             // 40% loss during decontamination
             float survivalRate = 0.60f;
-            return Mathf.Max(1, Mathf.RoundToInt(itemCount * survivalRate));
+            return MathfCompat.Max(1, MathfCompat.RoundToInt(itemCount * survivalRate));
         }
 
         // ── Save / Load ───────────────────────────────────────────────

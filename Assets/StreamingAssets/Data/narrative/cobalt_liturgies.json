@@ -1,0 +1,82 @@
+[
+  {
+    "id": "liturgy_cobalt_psalm_of_blue_glow",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "CHERENKOV_DEVOTION",
+    "ritual_sacrament": "SPENT_FUEL_POOL_VIGIL",
+    "sacred_rad_threshold_cpm": 45000,
+    "timestamp_relative": "YEAR_06_WINTER_EQUINOX",
+    "tags": ["cult", "cobalt_flame", "cherenkov", "liturgy", "radiation_worship"],
+    "prose": "Recited by acolytes kneeling at the rim of the submerged reactor storage basin. The blue Cherenkov luminescence cast upon their pale faces is revered as the unblinking eye of the New God. 'In the water that does not freeze, the light that casts no shadow burns clean our pre-war sins.'"
+  },
+  {
+    "id": "liturgy_cobalt_rite_of_the_lead_shroud",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "INITIATION_SACRAMENT",
+    "ritual_sacrament": "LEAD_CHASUBLE_INVESTITURE",
+    "sacred_rad_threshold_cpm": 12000,
+    "timestamp_relative": "YEAR_08_DAY_102",
+    "tags": ["cult", "initiation", "lead_shroud", "sacrament", "cobalt_flame"],
+    "prose": "The novice is clothed in a forty-kilogram vestment beaten from recycled x-ray room shielding. The weight crushes the breath from the lungs, symbolizing mortal surrender to the bedrock. The Elder intones: 'Bear the shield until the marrow sings; when the marrow is quiet, you are worthy.'"
+  },
+  {
+    "id": "liturgy_cobalt_scintillation_confessional",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "PENITENTIAL_CONFESSION",
+    "ritual_sacrament": "GEIGER_NEEDLE_JUDGMENT",
+    "sacred_rad_threshold_cpm": 85000,
+    "timestamp_relative": "YEAR_10_DAY_240",
+    "tags": ["cult", "confession", "geiger_counter", "scintillation", "cobalt_flame"],
+    "prose": "The penitent grasps a sealed brass cylinder containing a Cobalt-60 industrial radiography pellet while whispering concealed crimes. A battery-powered ratemeter speaker clicks in rapid, screaming fury beside their ear. Absolution is granted only when the needle pins against the maximum dial stop."
+  },
+  {
+    "id": "liturgy_cobalt_hymn_of_the_half_life",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "CHORAL_CHANT",
+    "ritual_sacrament": "CALENDAR_RATIFICATION",
+    "sacred_rad_threshold_cpm": 5000,
+    "timestamp_relative": "YEAR_12_DAY_001",
+    "tags": ["cult", "half_life", "hymn", "choral", "cobalt_flame"],
+    "prose": "A slow, responsorial dirge measuring planetary time not in seasons or harvests, but in five-point-two-seven year half-life decrements. Thirty cloaked singers harmonize with the low sixty-cycle hum of an ungrounded transformer: 'Five years to cool the iron, five years to soften the stone, fifty years until the dust forgets our flesh.'"
+  },
+  {
+    "id": "liturgy_cobalt_anointing_of_the_crater_ash",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "ANOINTING_RITE",
+    "ritual_sacrament": "VITRIFIED_SOOT_CRUCIFORM",
+    "sacred_rad_threshold_cpm": 28000,
+    "timestamp_relative": "YEAR_14_DAY_310",
+    "tags": ["cult", "anointing", "crater_ash", "sacrament", "cobalt_flame"],
+    "prose": "Black, vitrified silica gathered from the glass dunes of the Ground Zero caldera is mixed with rancid turbine oil. The Priest traces a glowing cruciform mark upon the postulant's forehead. The skin blisters within twenty minutes, leaving a permanent keloid scar shaped like a trefoil."
+  },
+  {
+    "id": "liturgy_cobalt_vow_of_the_unborn_eye",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "ASCETIC_VOW",
+    "ritual_sacrament": "CATARACT_CONSECRATION",
+    "sacred_rad_threshold_cpm": 60000,
+    "timestamp_relative": "YEAR_16_DAY_088",
+    "tags": ["cult", "vow", "cataracts", "ascetic", "cobalt_flame"],
+    "prose": "The elder mystics, blind from radiation-induced posterior subcapsular cataracts, lay cloudy-eyed faces toward the reactor chimney vents. They preach that physical sight is an illusion of the sunlit pre-war deceivers, and only the milky white blindness allows communion with the gamma field."
+  },
+  {
+    "id": "liturgy_cobalt_canopy_of_strontium",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "BENEDICTION",
+    "ritual_sacrament": "AQUIFER_COMMUNION",
+    "sacred_rad_threshold_cpm": 18000,
+    "timestamp_relative": "YEAR_18_DAY_175",
+    "tags": ["cult", "benediction", "strontium", "communion", "cobalt_flame"],
+    "prose": "Irradiated runoff pumped from the bottom of the mine drainage adit is blessed and passed in a dented pewter chalice. 'Drink of the bone-seeker; let the Strontium-90 knit into your ribs and spine, that your skeleton shall shine in the loam long after the mountains crumble.'"
+  },
+  {
+    "id": "liturgy_cobalt_final_radiant_transcendence",
+    "cult_faction": "ORDER_OF_THE_COBALT_FLAME",
+    "liturgy_type": "FUNERARY_EXODUS",
+    "ritual_sacrament": "UNSHELTERED_PILGRIMAGE",
+    "sacred_rad_threshold_cpm": 150000,
+    "timestamp_relative": "YEAR_20_DAY_365",
+    "tags": ["cult", "funeral", "pilgrimage", "transcendence", "cobalt_flame"],
+    "prose": "When an elder feels the mortal weakness of terminal marrow collapse, they disrobe at the airlock threshold and walk north into the glowing fallout blizzard without a respirator. The congregation sings from the blast gate until the rhythmic clicks of their handheld dosimeter merge into a continuous scream."
+  }
+]

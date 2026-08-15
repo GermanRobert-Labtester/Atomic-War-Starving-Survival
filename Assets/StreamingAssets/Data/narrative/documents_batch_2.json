@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "batch_id": "documents_batch_2",
+  "documents": [
+    {
+      "doc_id": "doc_sapper_dam_blueprint",
+      "title": "Annotated Demolition Diagram: Lock 4 Spillway",
+      "origin": "Canal Master's Gatehouse",
+      "material": "Blue cyanotype print with grease pencil annotations",
+      "physical_description": "Water-damaged blueprint with blue borders stained brown from canal mud. Pencil checkmarks at the four primary trunnion pins.",
+      "transcript": "CHARGE PLACEMENT // PIN A: 12kg amatol // PIN B: 12kg amatol // DELAY: 4.2 seconds // IF LOCK 4 REMAINS CLOSED, SILOS 1-9 WILL SUBMERGE IN 38 MINUTES. DROWNING THE LOWER QUARTER PRESERVES 400 TONS OF SEED WHEAT. SIGNED: G. MOROZOV, SAPPER.",
+      "lore_flags": ["flag_lore_sapper_blueprint_found"],
+      "item_id_source": "item_demolition_blueprint"
+    },
+    {
+      "doc_id": "doc_syndicate_promissory_note",
+      "title": "Syndicate High-Brine Promissory Bond #088",
+      "origin": "Harlan's Counting Table",
+      "material": "Vellum scrap bound with red sealing wax",
+      "physical_description": "Stiff calfskin vellum bearing the embossed stamp of the Salt Scales Syndicate. Counter-signed with an ink thumbprint.",
+      "transcript": "PAYABLE ON FIRST HARVEST: Forty (40) liters potable distillate OR twelve (12) standard shifts on the coal intake hoist. In default whereof, the debtor pledges the winter boots of bearer. No grace days permitted in sub-zero frost.",
+      "lore_flags": ["flag_lore_syndicate_bond_found"],
+      "item_id_source": "item_promissory_bond"
+    },
+    {
+      "doc_id": "doc_grange_seed_ledger",
+      "title": "The Grange Winter Germination Register",
+      "origin": "Upper Greenhouse Vault",
+      "material": "Cloth-bound ledger with ruled blue columns",
+      "physical_description": "Handwritten in dark walnut gall ink. Pressed clover flower dried between pages 14 and 15.",
+      "transcript": "CROP: Winter Rye // SEED TIER: Grade 2 (Surface Radon Attenuated) // GERMINATION: 41% // NOTE: Soil in bed 3 is turning sour from the chimney runoff. Sift two buckets of bone ash before sowing the turnip rows.",
+      "lore_flags": ["flag_lore_grange_ledger_found"],
+      "item_id_source": "item_grange_ledger"
+    },
+    {
+      "doc_id": "doc_child_crayon_letter",
+      "title": "Folded Crayon Drawing #07",
+      "origin": "Bunk Room 4 Under-Floor Cache",
+      "material": "Torn brown wrapping paper with wax crayon",
+      "physical_description": "A crude drawing of three people inside a square with a chimney, and a large black sun in the sky. Back carries uneven childish lettering.",
+      "transcript": "FOR DR. VEL // I MADE A NEST FOR THE BLACK BIRD IN THE TALL GRASS BUT IT DID NOT WAKE UP. PLEASE DO NOT LET THEM PUT MY SISTER IN THE COLD ROOM. I HAVE FOUR BUTTONS TO PAY YOU.",
+      "lore_flags": ["flag_lore_child_crayon_found"],
+      "item_id_source": "item_child_drawing"
+    },
+    {
+      "doc_id": "doc_radiology_slide_vel",
+      "title": "Microscope Slide #104 Case Card",
+      "origin": "Clinic Pathology Cabinet",
+      "material": "Manila index card with glass slide pocket",
+      "physical_description": "Typewritten on a manual Underwood typewriter. Slide contains stained lung tissue slice.",
+      "transcript": "PATIENT: Self (Vel, I.) // SAMPLE: Sputum cytology // FINDING: Insoluble hot particle (Pu-239 oxide, approx 1.2 um) lodged in right lower bronchial bifurcation. Local dose rate approx 0.8 Gy/month. Estimated functional time before dyspnea: 180-220 days. Continue triage work.",
+      "lore_flags": ["flag_lore_radiology_slide_found"],
+      "item_id_source": "item_microscope_slide"
+    },
+    {
+      "doc_id": "doc_picket_school_chalk_manifest",
+      "title": "Slate Tablet: Lesson Plan Day 300",
+      "origin": "Picket Schoolroom -10m",
+      "material": "Engraved roof slate with chalk residue",
+      "physical_description": "Dark grey slate with copper wire hanging loop. Words carved lightly with a nail then filled with lime dust.",
+      "transcript": "MORNING: Reading & Fractions (The 12 Rations of Wheat). AFTERNOON: Hand-crank blower maintenance (Lubrication & packing). EVENING: Memory recitation — The names of the ten lakes before the dry year.",
+      "lore_flags": ["flag_lore_picket_slate_found"],
+      "item_id_source": "item_school_slate"
+    },
+    {
+      "doc_id": "doc_mercury_relay_schematic",
+      "title": "Station 0 Mercury Displacer Wiring Diagram",
+      "origin": "Dead Hand Terminal Chamber -80m",
+      "material": "Laminated linen schematic with grease stains",
+      "physical_description": "Folded mechanical drawing detailing the 4,000V busbar disconnect triggers. Copper corrosion on corner brass eyelets.",
+      "transcript": "CIRCUIT 99 // MERCURY DISPLACER RELAY // IF LINE VOLTAGE DROPS BELOW 3,400V FOR >60 SECONDS, CLOCK CYCLE 1 INITIATES AUTOMATIC CARRIER BROADCAST ON 99.0 MHZ. SHUTDOWN CAN ONLY BE ACHIEVED BY UNIFIED DECREE OF 12 SECTOR KEYS.",
+      "lore_flags": ["flag_lore_mercury_schematic_found"],
+      "item_id_source": "item_relay_schematic"
+    },
+    {
+      "doc_id": "doc_flotilla_rower_tally",
+      "title": "Ash-Sea Skiff Watch Tally",
+      "origin": "Drowned Canal Basin Landing",
+      "material": "Driftwood slat with knife notches",
+      "physical_description": "Water-smoothed piece of pine planking. Thirty-eight horizontal notches and four diagonal slash marks.",
+      "transcript": "SLAT #12 // BARGES TOWED: 4 // LORDS BURIED AT SEA: 2 // ACID SQUALLS ENDURED: 7 // LOST AT HARBOR LIGHT: P. Kroll, row-seat 3. Left his wool mittens on the thwart.",
+      "lore_flags": ["flag_lore_rower_tally_found"],
+      "item_id_source": "item_rower_tally"
+    },
+    {
+      "doc_id": "doc_foundry_strike_resolution",
+      "title": "Draft Article 4: Valley Constitution",
+      "origin": "Assembly Chamber Slate Stack",
+      "material": "Quarry slate inscribed with carbide scriber",
+      "physical_description": "Thick slate flagstone with chipped edges. Signatures scratched along the lower margin.",
+      "transcript": "ARTICLE 4 // NO PERSON UNDER THE AGE OF EIGHTEEN SHALL BE ASSIGNED TO THE BLAST CUPOLA, THE SLAG TRENCH, OR THE STEAM EXPULSION MANIFOLD. THE SCHOOL SHALL REMAIN OPEN DURING SHIFT HOURS WITHOUT EXCEPTION.",
+      "lore_flags": ["flag_lore_article_four_found"],
+      "item_id_source": "item_constitution_slate"
+    },
+    {
+      "doc_id": "doc_keeper_final_transmission_tape",
+      "title": "Teletype Ribbon: Station 0 to Valley",
+      "origin": "High-Gain Surface Mast Telemetry Box",
+      "material": "Narrow blue paper punch tape",
+      "physical_description": "Lightly faded teletype text printed by mechanical daisywheel impact.",
+      "transcript": "TO ANY DWELLER LISTENING: HARROW-4 IS DOWN. THE LAST SATELLITE HAS BURNED IN THE UPPER STRATOSPHERE. THE SKY IS EMPTY. FROM THIS DAY FORWARD, WHAT HAPPENS IN THE VALLEY IS YOUR OWN HANDIWORK. WE ARE SIGNING OFF.",
+      "lore_flags": ["flag_lore_keeper_signoff_found"],
+      "item_id_source": "item_teletype_ribbon"
+    }
+  ]
+}

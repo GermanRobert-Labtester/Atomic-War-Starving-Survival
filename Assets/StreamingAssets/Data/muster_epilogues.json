@@ -43,5 +43,20 @@
     "ending_key": "unwritten",
     "title": "Unwritten",
     "prose": "The succession was never investigated, and the Muster never triggered. The bulletin signed Harven stays on the board at Checkpoint Gamma; the rally never forms; the ledger nobody signed stays unopened in its cache. None of it is written down anywhere, which is the only reason it can still be changed."
+  },
+  {
+    "ending_key": "ending_verdict_the_sector_recounts",
+    "title": "The Sector Recounts",
+    "prose": "The count is read aloud at the Grain Exchange weighbridge by a trader who does not look up from the scale. It takes three minutes. The last line is the count, presented, in the machine's hand, followed by the two words the sector will argue about forever: accepted as read."
+  },
+  {
+    "ending_key": "ending_verdict_the_count_is_held",
+    "title": "The Count Is Held",
+    "prose": "Nobody presents the count. The carrier tone continues on the dead band. The radio screen reads, forever after, CENSUS WINDOW: OPEN. The last image is the tone: one second on, one second off, on a band nobody is listening to, keeping a count nobody asked it to keep, keeping it anyway."
+  },
+  {
+    "ending_key": "ending_verdict_the_offer_is_a_lease",
+    "title": "The Offer Is a Lease",
+    "prose": "The count converts into a lease: quarterly maintenance, a reading per season, a census every 1,827 days, enforceable by the machine's own registers. The last image: a quarterly invoice, printed on a machine that stopped printing anything else in Year One, delivered to a door that opens, because the door is counted."
   }
 ]

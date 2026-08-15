@@ -1,0 +1,82 @@
+[
+  {
+    "id": "audit_gate_hydraulic_ram_seal_blowout",
+    "gate_designation": "PRIMARY_BLAST_GATE_01",
+    "mechanical_subsystem": "HYDRAULIC_ACTUATION_CYLINDER",
+    "failure_mode": "NITRILE_O_RING_EXTRUSION",
+    "structural_severity": "CRITICAL_PRESSURE_LOSS",
+    "timestamp_relative": "YEAR_02_QUARTER_1_AUDIT",
+    "tags": ["architecture", "blast_gate", "hydraulics", "maintenance", "engineering"],
+    "prose": "During routine cycling of the 24-ton primary steel gate, the main 250-bar cylinder seal blew out with a gunshot crack, spraying sixty liters of hydraulic fluid across the airlock vestibule. The gate stalled six inches from the floor sill, requiring twelve workers on chain hoists to manually dog the locks."
+  },
+  {
+    "id": "audit_gate_counterweight_cable_fatigue_fray",
+    "gate_designation": "LOWER_CARGO_GATE_03",
+    "mechanical_subsystem": "COUNTERWEIGHT_HOIST_CABLE",
+    "failure_mode": "MULTISTRAND_FATIGUE_FRACTURE",
+    "structural_severity": "HIGH_CATASTROPHIC_DROP_RISK",
+    "timestamp_relative": "YEAR_04_QUARTER_3_AUDIT",
+    "tags": ["architecture", "blast_gate", "cables", "counterweight", "safety"],
+    "prose": "Inspection of the 32mm galvanized steel hoist rope revealed fourteen broken outer wires across a one-meter section where the cable bends over the crown sheave. If the cable snaps, the eighteen-ton lead counterweight will free-fall ninety feet down the auxiliary shaft."
+  },
+  {
+    "id": "audit_gate_inflatable_neoprene_gasket_dryrot",
+    "gate_designation": "OUTER_DECON_AIRLOCK_DOOR",
+    "mechanical_subsystem": "PNEUMATIC_PERIMETER_SEAL",
+    "failure_mode": "OZONE_SULFUR_ELASTOMER_DRYROT",
+    "structural_severity": "MODERATE_GAS_LEAKAGE",
+    "timestamp_relative": "YEAR_06_QUARTER_2_AUDIT",
+    "tags": ["architecture", "airlock", "seals", "dryrot", "gas_tightness"],
+    "prose": "The inflatable tubular neoprene perimeter seal has hardened and developed deep alligator-skin cracking from persistent exposure to atmospheric sulfur dioxide. Pressure decay test showed a loss of 0.8 bar per minute, allowing contaminated outside air to seep past the jamb."
+  },
+  {
+    "id": "audit_gate_manual_hand_crank_gearbox_jam",
+    "gate_designation": "EMERGENCY_EGRESS_HATCH_05",
+    "mechanical_subsystem": "MANUAL_REDUCTION_GEARBOX",
+    "failure_mode": "BRONZE_WORM_GEAR_TOOTH_SHEAR",
+    "structural_severity": "HIGH_TRAP_HAZARD",
+    "timestamp_relative": "YEAR_08_QUARTER_4_AUDIT",
+    "tags": ["architecture", "egress_hatch", "gearbox", "manual_override"],
+    "prose": "During a blackout egress drill, three crew members forced the 60:1 reduction hand crank with a cheater bar, shearing four teeth off the cast-bronze worm wheel. The hatch is now permanently jammed shut; opening it will require oxy-acetylene torch cutting."
+  },
+  {
+    "id": "audit_gate_thermal_expansion_frame_binding",
+    "gate_designation": "SURFACE_PORTAL_GATE_ALPHA",
+    "mechanical_subsystem": "STRUCTURAL_PORTAL_FRAME",
+    "failure_mode": "THERMAL_EXPANSION_JAMMING",
+    "structural_severity": "CRITICAL_SEAL_FAILURE",
+    "timestamp_relative": "YEAR_11_QUARTER_1_AUDIT",
+    "tags": ["architecture", "thermal_shock", "blast_gate", "binding", "warhead"],
+    "prose": "Prompt thermal radiation from a surface detonation heated the exposed outer face of the 400mm armor plate to 380°C while the concrete-embedded frame remained cold. Differential thermal expansion bowed the gate 14mm inward, wedging it solidly against the vertical guide rails."
+  },
+  {
+    "id": "audit_gate_interlock_solenoid_corrosion",
+    "gate_designation": "SECTOR_2_FIRE_CURTAIN_GATE",
+    "mechanical_subsystem": "MAGNETIC_INTERLOCK_DOG",
+    "failure_mode": "GALVANIC_CORROSION_LOCKUP",
+    "structural_severity": "MODERATE_MANUAL_TRIP_REQUIRED",
+    "timestamp_relative": "YEAR_14_QUARTER_2_AUDIT",
+    "tags": ["architecture", "fire_gate", "solenoid", "corrosion", "electrical"],
+    "prose": "Condensation runoff down the electrical conduit caused heavy galvanic corrosion between the steel plunger and its brass sleeve. The solenoid fails to retract when energized, requiring sentries to strike the dog housing with a eight-pound sledgehammer to drop the curtain."
+  },
+  {
+    "id": "audit_gate_sill_trough_gravel_compaction",
+    "gate_designation": "RAIL_TRANSFER_BLAST_PORTAL",
+    "mechanical_subsystem": "FLOOR_SILL_RECESS_TRACK",
+    "failure_mode": "DEBRIS_COMPACTION_BLOCKAGE",
+    "structural_severity": "MODERATE_INCOMPLETE_STROKE",
+    "timestamp_relative": "YEAR_17_QUARTER_3_AUDIT",
+    "tags": ["architecture", "rail_portal", "sill_track", "grit", "maintenance"],
+    "prose": "Crushed shale and coal dust tracked in by mine carts accumulated inside the recessed floor track and compacted into solid mortar under the gate's lower knife-edge. The gate stops two inches short of its bottom micro-switch, preventing the automatic seal inflators from triggering."
+  },
+  {
+    "id": "audit_gate_secondary_anti_rebound_pawl_crack",
+    "gate_designation": "HEAVY_SHIELD_GATE_LEVEL_1",
+    "mechanical_subsystem": "ANTI_REBOUND_SAFETY_RATCHET",
+    "failure_mode": "BRITTLE_SHOCK_MICRO_FRACTURE",
+    "structural_severity": "HIGH_REBOUND_FAILURE_RISK",
+    "timestamp_relative": "YEAR_20_QUARTER_1_AUDIT",
+    "tags": ["architecture", "ratchet_pawl", "blast_shock", "metallurgy", "defense"],
+    "prose": "Magnetic particle inspection of the cast-steel anti-rebound pawl revealed a 40mm transverse crack at the root of the primary tooth. In a severe overpressure event, the pawl would shatter on gate impact, allowing the twenty-ton barrier to bounce open on its hydraulic cushions."
+  }
+]

@@ -13,6 +13,7 @@ namespace AtomicWar.GodotApp
     public sealed class MedicalHostSession
     {
         public ChemicalDependencySystem Engine { get; }
+        public VigilStateMachine Vigil { get; }
 
         public float TotalMoraleDrain { get; private set; }
         public float ActiveCraftingPenalty { get; private set; }
@@ -22,9 +23,10 @@ namespace AtomicWar.GodotApp
 
         public event Action StateChanged;
 
-        public MedicalHostSession(ChemicalDependencySystem engine = null)
+        public MedicalHostSession(ChemicalDependencySystem engine = null, VigilStateMachine vigil = null)
         {
             Engine = engine ?? new ChemicalDependencySystem();
+            Vigil = vigil ?? new VigilStateMachine();
             Engine.OnMoraleDrainRequested += (sv, amount) =>
             {
                 TotalMoraleDrain += amount;
@@ -51,6 +53,10 @@ namespace AtomicWar.GodotApp
                 StateChanged?.Invoke();
             };
             Engine.OnStateChanged += () => StateChanged?.Invoke();
+            Vigil.OnVigilStarted += id => { LastEvent = $"Vigil begun for {id}."; StateChanged?.Invoke(); };
+            Vigil.OnNameRecited += (name, count) => { LastEvent = $"Name recited: {name} ({count})"; StateChanged?.Invoke(); };
+            Vigil.OnPhantomKnock += () => { LastEvent = "Phantom knock heard."; StateChanged?.Invoke(); };
+            Vigil.OnVigilCompleted += skipped => { LastEvent = $"Vigil completed (skipped: {skipped})"; StateChanged?.Invoke(); };
         }
 
         public static MedicalHostSession Create(string dataDir)
@@ -115,5 +121,40 @@ namespace AtomicWar.GodotApp
 
         public ChemicalDependencyLedgerState CaptureSave() => Engine.CaptureState();
         public void RestoreSave(ChemicalDependencyLedgerState state) => Engine.RestoreState(state);
+
+        // ── Vigil (Exp 07) ──────────────────────────────────────────
+
+        public string StartVigilDemo(string dwellerId, string[] names)
+        {
+            Vigil.StartVigil(dwellerId, names);
+            return $"Vigil begun for {dwellerId} ({names.Length} names, {Vigil.DurationSeconds}s).";
+        }
+
+        public string TickVigilDemo(float seconds)
+        {
+            Vigil.Tick(seconds);
+            if (!Vigil.IsActive) return $"Vigil ended. Recited {Vigil.RecitedCount}/{Vigil.Names.Count} names.";
+            return $"Vigil ticking: {Vigil.ElapsedSeconds:F0}/{Vigil.DurationSeconds:F0}s, " +
+                   $"{Vigil.RecitedCount}/{Vigil.Names.Count} names recited.";
+        }
+
+        public string SkipVigilDemo()
+        {
+            if (!Vigil.IsActive) return "No active vigil.";
+            Vigil.Skip();
+            return "Vigil skipped.";
+        }
+
+        public string VigilStatusLine()
+        {
+            if (!Vigil.IsActive && !Vigil.IsCompleted) return "Vigil: idle";
+            if (Vigil.IsCompleted) return $"Vigil: completed (skipped: {Vigil.WasSkipped})";
+            return $"Vigil: {Vigil.DwellerId} · {Vigil.ElapsedSeconds:F0}/{Vigil.DurationSeconds:F0}s · " +
+                   $"{Vigil.RecitedCount}/{Vigil.Names.Count} names" +
+                   (Vigil.PhantomKnockFired ? " · phantom knock" : "");
+        }
+
+        public VigilSaveState CaptureVigilSave() => Vigil.CaptureState();
+        public void RestoreVigilSave(VigilSaveState state) => Vigil.RestoreState(state);
     }
 }

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "steam_well_silica_scaling_choke_orifice",
+    "wellhead_designation": "GEOTHERMAL_BOREHOLE_DEEP_01",
+    "reservoir_enthalpy_kj_kg": 2750.0,
+    "wellhead_pressure_bar": 38.5,
+    "silica_deposition_rate_mm_month": 4.2,
+    "timestamp_relative": "YEAR_02_STEAM_LOG_01",
+    "tags": ["steam_power", "geothermal", "silica_scale", "wellhead", "borehole"],
+    "prose": "Massive amorphous silica supersaturation in the flashing geothermal brine deposited a vitreous glass-like crust inside the 8-inch wellhead choke valve. Steam delivery to Turbine 1 fell 40% before acid descaling could be mobilized."
+  },
+  {
+    "id": "steam_well_non_condensible_gas_hydrogen_sulfide",
+    "wellhead_designation": "SULFUR_SEEP_PRODUCTION_WELL_03",
+    "reservoir_enthalpy_kj_kg": 2400.0,
+    "wellhead_pressure_bar": 22.0,
+    "silica_deposition_rate_mm_month": 1.5,
+    "timestamp_relative": "YEAR_04_STEAM_LOG_03",
+    "tags": ["steam_power", "geothermal", "gas_ejector", "hydrogen_sulfide", "vacuum"],
+    "prose": "A seismic shift doubled non-condensible gas fractions (H2S and CO2) in the raw steam to 4.8% by weight. The gas overloaded steam jet ejectors on the main condenser, causing condenser back-pressure to climb and crippling turbine output."
+  },
+  {
+    "id": "steam_well_casing_thermal_expansion_shear",
+    "wellhead_designation": "THERMAL_TAP_BORE_ALPHA_04",
+    "reservoir_enthalpy_kj_kg": 2820.0,
+    "wellhead_pressure_bar": 45.0,
+    "silica_deposition_rate_mm_month": 0.8,
+    "timestamp_relative": "YEAR_07_STEAM_LOG_02",
+    "tags": ["steam_power", "geothermal", "casing_shear", "thermal_stress", "borehole"],
+    "prose": "Opening the main steam isolation valve too rapidly heated the 800-meter production casing in under two hours. Unconstrained thermal expansion sheared the anchor flange bolts at the cellar floor, lifting the entire 12-ton wellhead tree four inches."
+  },
+  {
+    "id": "steam_well_superheated_steam_enthalpy_surge",
+    "wellhead_designation": "HIGH_TEMPERATURE_DRY_STEAM_02",
+    "reservoir_enthalpy_kj_kg": 2980.0,
+    "wellhead_pressure_bar": 52.0,
+    "silica_deposition_rate_mm_month": 0.2,
+    "timestamp_relative": "YEAR_09_STEAM_LOG_04",
+    "tags": ["steam_power", "superheated_steam", "enthalpy", "cyclone_separator", "energy"],
+    "prose": "Reservoir dryout in the eastern fault zone produced 240°C superheated steam with enthalpy surging to 2,980 kJ/kg. The extreme heat scorched high-pressure Teflon valve stem packings and dry-cycled the cyclone moisture separator."
+  },
+  {
+    "id": "steam_well_calcite_scale_downhole_flashing",
+    "wellhead_designation": "CALCITE_SECTOR_PRODUCTION_05",
+    "reservoir_enthalpy_kj_kg": 2100.0,
+    "wellhead_pressure_bar": 18.0,
+    "silica_deposition_rate_mm_month": 8.5,
+    "timestamp_relative": "YEAR_12_STEAM_LOG_01",
+    "tags": ["steam_power", "geothermal", "calcite_scale", "flashing_depth", "downhole"],
+    "prose": "Flashing of dissolved calcium bicarbonate into carbon dioxide at a depth of 550 meters precipitated heavy calcite scale. The crystalline calcium carbonate plugged casing perforations, choking well productivity down to a negligible trickle."
+  },
+  {
+    "id": "steam_well_wellhead_master_valve_corrosion",
+    "wellhead_designation": "ACID_CHLORIDE_STEAM_TAP_01",
+    "reservoir_enthalpy_kj_kg": 2600.0,
+    "wellhead_pressure_bar": 30.0,
+    "silica_deposition_rate_mm_month": 2.1,
+    "timestamp_relative": "YEAR_15_STEAM_LOG_03",
+    "tags": ["steam_power", "geothermal", "acid_chloride", "valve_corrosion", "pitting"],
+    "prose": "Trace hydrogen chloride vapor carried in high-enthalpy steam formed dilute hydrochloric acid condensate on cold valve bonnet walls. Pitting corrosion perforated the 316-stainless master gate valve, requiring an emergency freeze-plug operation."
+  },
+  {
+    "id": "steam_well_reinjection_well_silica_polymerization",
+    "wellhead_designation": "SPENT_BRINE_REINJECTION_02",
+    "reservoir_enthalpy_kj_kg": 650.0,
+    "wellhead_pressure_bar": 8.0,
+    "silica_deposition_rate_mm_month": 14.0,
+    "timestamp_relative": "YEAR_17_STEAM_LOG_02",
+    "tags": ["steam_power", "reinjection", "silica_gel", "polymerization", "aquifer"],
+    "prose": "Allowing spent geothermal effluent to cool below 80°C prior to reinjection triggered rapid polymerization of monomeric silica. A dense white colloidal silica gelatin formed in the wellbore, completely blocking return permeability into the basement rock."
+  },
+  {
+    "id": "steam_well_acoustic_noise_muffler_baffle_fatigue",
+    "wellhead_designation": "SURFACE_VENT_SILENCER_STACK",
+    "reservoir_enthalpy_kj_kg": 2700.0,
+    "wellhead_pressure_bar": 35.0,
+    "silica_deposition_rate_mm_month": 0.5,
+    "timestamp_relative": "YEAR_20_STEAM_LOG_01",
+    "tags": ["steam_power", "silencer", "acoustic_vibration", "fatigue", "vent_stack"],
+    "prose": "Emergency bypass venting of 50 tons/hour raw steam through the rock-filled expansion silencer generated 134 dB low-frequency vibration. The intense acoustic standing wave cracked reinforced concrete baffle walls, showering gravel down the exhaust throat."
+  }
+]

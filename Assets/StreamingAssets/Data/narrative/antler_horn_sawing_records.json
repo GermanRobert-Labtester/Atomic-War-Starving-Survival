@@ -1,0 +1,58 @@
+[
+  {
+    "id": "antler_horn_001",
+    "material_type": "deer_antler",
+    "saw_tool_id": "st_hacksaw_blade_01",
+    "blank_shape_cut": "tine_section",
+    "log_text": "Antler tine found on the surface — old shed, dry and fully mineralised. Cut four tine sections with the hacksaw blade mounted in a wooden frame. Antler saws slowly but cleanly. The tine section at mid-length is the densest — reserved for an awl blank."
+  },
+  {
+    "id": "antler_horn_002",
+    "material_type": "deer_antler",
+    "saw_tool_id": "st_hacksaw_blade_01",
+    "blank_shape_cut": "beam_slab",
+    "log_text": "Soaked the antler beam in hot water for thirty minutes. It softened enough to straighten a curve under load. Clamped between two boards while still warm. After drying: straight within two millimetres. Cut slabs from the beam with the hacksaw. Dense and workable."
+  },
+  {
+    "id": "antler_horn_003",
+    "material_type": "goat_horn",
+    "saw_tool_id": "st_hacksaw_blade_01",
+    "blank_shape_cut": "horn_tube",
+    "log_text": "Goat horn from the basement stores — dried but intact. The horn core is hollow for most of the length. Sawed the tip section and three tube sections. The tube wall is thick enough for handles and toggle buttons. The horn tip makes a fine awl point without further shaping."
+  },
+  {
+    "id": "antler_horn_004",
+    "material_type": "goat_horn",
+    "saw_tool_id": "st_hacksaw_blade_02",
+    "blank_shape_cut": "flattened_plate",
+    "log_text": "Horn softened in boiling water for twenty minutes, then split longitudinally and pressed flat between boards under heavy weight while still hot. Dried flat. The resulting plate is almost uniform thickness — good for combs and needle cases. Horn plates take carving well."
+  },
+  {
+    "id": "antler_horn_005",
+    "material_type": "deer_antler",
+    "saw_tool_id": "st_hacksaw_blade_01",
+    "blank_shape_cut": "brow_tine_wedge",
+    "log_text": "Brow tine saved for a wedge tool — the natural curve makes it ideal for splitting green wood. Sawed the base flat, left the tine long. No further shaping needed. The antler wedge is harder than most wood and will not split under mallet blows."
+  },
+  {
+    "id": "antler_horn_006",
+    "material_type": "cattle_horn",
+    "saw_tool_id": "st_hacksaw_blade_01",
+    "blank_shape_cut": "horn_cup_blank",
+    "log_text": "Cattle horn — larger than the goat. Boiled, split, and the core hollowed with a screw bit. The outer horn wall left intact forms a cup blank. Sanded the rim even. The horn is translucent when held to the light. The first container that is both lightweight and does not corrode."
+  },
+  {
+    "id": "antler_horn_007",
+    "material_type": "deer_antler",
+    "saw_tool_id": "st_hacksaw_blade_02",
+    "blank_shape_cut": "needle_rod",
+    "log_text": "Thin rod blanks cut from the antler beam outer layer — the densest, hardest section. Four-millimetre square rods, ten centimetres long. Each rod will become at least two needles after grinding. The hacksaw cuts slowly through the hard outer bone. Blade is wearing."
+  },
+  {
+    "id": "antler_horn_008",
+    "material_type": "mixed_offcuts",
+    "saw_tool_id": "st_hacksaw_blade_02",
+    "blank_shape_cut": "toggle_disc",
+    "log_text": "Offcuts from all previous sessions. Too small for long tools. Sawed into disc blanks — toggle buttons and lacing rings. Drilled with the flint point. A morning of small work. Every piece of antler and horn accounted for. Nothing wasted in this shelter."
+  }
+]

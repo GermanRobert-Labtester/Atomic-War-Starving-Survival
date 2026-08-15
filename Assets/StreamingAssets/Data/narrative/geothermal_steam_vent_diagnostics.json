@@ -1,0 +1,72 @@
+[
+  {
+    "id": "steam_vent_superheated_nozzle_erosion",
+    "vent_manifold_id": "PRIMARY_GEOTHERMAL_HEADER_01",
+    "steam_temperature_celsius": 285.0,
+    "line_pressure_bar": 42.0,
+    "failure_diagnostic": "STAINLESS_NOZZLE_THROAT_EROSION",
+    "timestamp_relative": "YEAR_03_STEAM_DIAG_01",
+    "tags": ["hydrogeology", "geothermal", "steam_vent", "nozzle_erosion", "turbine"],
+    "prose": "Supersonic 285°C dry steam carrying micro-fine quartz particulate eroded the 316-stainless throttle nozzle throat from 25mm to 38mm. Turbine governing system hunting wildly between 2,800 and 3,400 RPM; steam consumption increased by 40%."
+  },
+  {
+    "id": "steam_vent_hydrogen_sulfide_stress_cracking",
+    "vent_manifold_id": "BOREHOLE_CASING_FLANGE_SECTOR_6",
+    "steam_temperature_celsius": 210.0,
+    "line_pressure_bar": 35.0,
+    "failure_diagnostic": "SULFIDE_STRESS_CORROSION_CRACKING",
+    "timestamp_relative": "YEAR_06_STEAM_DIAG_03",
+    "tags": ["hydrogeology", "h2s_cracking", "metallurgy", "flange_failure", "steam"],
+    "prose": "High concentrations of dissolved hydrogen sulfide gas (650 ppm) induced hydrogen embrittlement across the Grade B7 high-tensile casing studs. Three bolts sheared with loud metallic snaps during turbine load-shedding, venting scalding sulfur vapor across the adit."
+  },
+  {
+    "id": "steam_vent_condensate_slug_hammer_shock",
+    "vent_manifold_id": "MAIN_TRANSMISSION_RISER_LEVEL_3",
+    "steam_temperature_celsius": 175.0,
+    "line_pressure_bar": 28.0,
+    "failure_diagnostic": "TWO_PHASE_WATER_HAMMER_SHOCK",
+    "timestamp_relative": "YEAR_09_STEAM_DIAG_02",
+    "tags": ["hydrogeology", "water_hammer", "condensate_slug", "steam_pipe", "safety"],
+    "prose": "Failure of the inverted-bucket steam trap allowed a fifty-liter slug of sub-cooled condensate to accumulate in the horizontal run. When the main steam valve opened, the slug slammed into the ninety-degree elbow at sixty miles per hour, shearing four heavy spring pipe hangers."
+  },
+  {
+    "id": "steam_vent_silica_scaling_throttle_constriction",
+    "vent_manifold_id": "FLASH_VESSEL_DISCHARGE_NOZZLE",
+    "steam_temperature_celsius": 140.0,
+    "line_pressure_bar": 12.5,
+    "failure_diagnostic": "AMORPHOUS_SILICA_GLASS_SCALE",
+    "timestamp_relative": "YEAR_12_STEAM_DIAG_04",
+    "tags": ["hydrogeology", "silica_scale", "flash_vessel", "geothermal", "glass"],
+    "prose": "Rapid pressure drop in the cyclone flash separator caused dissolved colloidal silica to precipitate as a rock-hard, glassy vitreous crust. The nozzle ring orifice was constricted by 60%, forcing operators to chisel the deposit away with pneumatic tungsten chisels."
+  },
+  {
+    "id": "steam_vent_geothermal_wellhead_subsidence",
+    "vent_manifold_id": "PRODUCTION_WELL_CLUSTER_B",
+    "steam_temperature_celsius": 240.0,
+    "line_pressure_bar": 38.0,
+    "failure_diagnostic": "SURFACE_WELLHEAD_TILT_SUBSIDENCE",
+    "timestamp_relative": "YEAR_15_STEAM_DIAG_01",
+    "tags": ["hydrogeology", "subsidence", "wellhead_tilt", "geology", "steam"],
+    "prose": "Continuous deep fluid extraction caused fifteen centimeters of vertical ground subsidence around the master wellhead pad. The main steam manifold tilted four degrees off level, creating severe bending stresses on the expansion bellows and binding the main shutoff gate valve."
+  },
+  {
+    "id": "steam_vent_acoustic_jet_screamer_attenuation",
+    "vent_manifold_id": "EMERGENCY_ATMOSPHERIC_BLOWDOWN_D",
+    "steam_temperature_celsius": 260.0,
+    "line_pressure_bar": 45.0,
+    "failure_diagnostic": "ACOUSTIC_JET_OVERPRESSURE_HAZARD",
+    "timestamp_relative": "YEAR_17_STEAM_DIAG_02",
+    "tags": ["hydrogeology", "noise_hazard", "steam_blowdown", "acoustics", "hearing"],
+    "prose": "Atmospheric relief valve lifting at forty-five bar generated a 138-decibel supersonic jet screamer. Maintenance technicians standing seventy yards away suffered immediate ruptured eardrums despite wearing double hearing protection; the sound vibrated loose ceiling bolts in Sector 4."
+  },
+  {
+    "id": "steam_vent_non_condensable_gas_vent_fire",
+    "vent_manifold_id": "VACUUM_EJECTOR_EXHAUST_STACK",
+    "steam_temperature_celsius": 95.0,
+    "line_pressure_bar": 1.2,
+    "failure_diagnostic": "METHANE_HYDROGEN_EXHAUST_DEFLAGRATION",
+    "timestamp_relative": "YEAR_20_STEAM_DIAG_01",
+    "tags": ["hydrogeology", "gas_fire", "vacuum_ejector", "methane", "explosion"],
+    "prose": "Non-condensable geothermal gases (8% methane, 4% hydrogen, 85% CO2) vented from the condenser vacuum ejectors ignited from a static spark on the copper exhaust shroud. A three-meter pale blue flame jet burned continuously atop the vent stack for twelve days."
+  }
+]

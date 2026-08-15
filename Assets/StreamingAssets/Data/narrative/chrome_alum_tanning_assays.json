@@ -1,0 +1,82 @@
+[
+  {
+    "id": "mineral_tan_potassium_alum_white_tawing",
+    "mineral_tan_liquor_id": "WHITE_TAWING_DRUM_UNIT_01",
+    "mineral_tanning_agent": "POTASSIUM_ALUMINUM_SULFATE_ALUM",
+    "liquor_ph_level": 3.4,
+    "hydrothermal_shrink_temp_celsius": 68.0,
+    "timestamp_relative": "YEAR_02_MINERAL_LOG_01",
+    "tags": ["tanning", "tawing", "potassium_alum", "white_leather", "gas_mask_liner"],
+    "prose": "Tawing goat skins in a paste of potassium alum, rock salt, egg yolk, and wheat flour produced velvety, snow-white kidskin. The non-toxic, moisture-absorbing leather was tailored into soft inner facepiece liners for long-duration gas masks."
+  },
+  {
+    "id": "mineral_tan_basic_chromium_sulfate_shrink_temp",
+    "mineral_tan_liquor_id": "CHROME_TAN_REVERSIBLE_DRUM_04",
+    "mineral_tanning_agent": "BASIC_CHROMIUM_SULFATE_CR2_SO4_3",
+    "liquor_ph_level": 3.8,
+    "hydrothermal_shrink_temp_celsius": 105.0,
+    "timestamp_relative": "YEAR_05_MINERAL_LOG_03",
+    "tags": ["tanning", "chrome_tan", "shrink_temperature", "hydrothermal", "work_boot"],
+    "prose": "Cross-linking collagen carboxyl groups with basic chromium sulfate raised hydrothermal shrinkage temperature to an unprecedented 105°C. The resulting blue-grey 'wet blue' hide survives immersion in boiling water without curling or stiffening."
+  },
+  {
+    "id": "mineral_tan_basification_sodium_bicarbonate_drawn_grain",
+    "mineral_tan_liquor_id": "PADDLE_WHEEL_DRUM_CHROME_02",
+    "mineral_tanning_agent": "CHROMIUM_LIQUOR_WITH_BICARB",
+    "liquor_ph_level": 4.6,
+    "hydrothermal_shrink_temp_celsius": 92.0,
+    "timestamp_relative": "YEAR_08_MINERAL_LOG_02",
+    "tags": ["tanning", "basification", "drawn_grain", "bicarbonate", "defect"],
+    "prose": "Dumping dry sodium bicarbonate directly into the chrome drumming bath caused localized pH spikes. Rapid, premature chrome fixation seized the surface grain while the center remained acidic, producing coarse, wrinkled 'drawn grain' reject hides."
+  },
+  {
+    "id": "mineral_tan_iron_vitriol_tanning_brittleness",
+    "mineral_tan_liquor_id": "FERROUS_SULFATE_MUD_PIT",
+    "mineral_tanning_agent": "IRON_VITRIOL_FERROUS_SULFATE",
+    "liquor_ph_level": 2.2,
+    "hydrothermal_shrink_temp_celsius": 62.0,
+    "timestamp_relative": "YEAR_11_MINERAL_LOG_04",
+    "tags": ["tanning", "iron_tan", "vitriol", "brittleness", "acid_rot"],
+    "prose": "Tanning hides in cheap ferrous sulfate vitriol successfully cross-linked fibers, but residual sulfuric acid could not be neutralized. After six months of storage, acid hydrolysis degraded the collagen backbone; belts snapped like stale crackers when flexed."
+  },
+  {
+    "id": "mineral_tan_zirconium_sulfate_snow_white_armor",
+    "mineral_tan_liquor_id": "HEAVY_MINERAL_ARMOR_VAT",
+    "mineral_tanning_agent": "BASIC_ZIRCONIUM_SULFATE",
+    "liquor_ph_level": 1.8,
+    "hydrothermal_shrink_temp_celsius": 98.0,
+    "timestamp_relative": "YEAR_14_MINERAL_LOG_01",
+    "tags": ["tanning", "zirconium", "white_armor", "fire_resistant", "cuirass"],
+    "prose": "Zirconium tanning of heavy five-millimeter bull hides produced solid, bone-white mineral leather of extreme density. Hardened with hot beeswax, the leather formed flame-resistant, shrapnel-stopping chest cuirasses for perimeter sentries."
+  },
+  {
+    "id": "mineral_tan_formaldehyde_synthetic_oil_tannage",
+    "mineral_tan_liquor_id": "CHAMOIS_FULLING_MILL_TROUGH",
+    "mineral_tanning_agent": "COD_LIVER_OIL_AND_FORMALIN",
+    "liquor_ph_level": 5.5,
+    "hydrothermal_shrink_temp_celsius": 74.0,
+    "timestamp_relative": "YEAR_16_MINERAL_LOG_03",
+    "tags": ["tanning", "chamois", "cod_liver_oil", "fuel_filter", "washable"],
+    "prose": "Pounding scavenged cod liver oil and dilute formaldehyde into split sheepskins under wooden fulling mill trip-hammers induced oxidative lipid tanning. The golden chamois leather absorbs water while passing petroleum hydrocarbons, serving as washable aviation fuel filters."
+  },
+  {
+    "id": "mineral_tan_hexavalent_chromium_toxic_rash",
+    "mineral_tan_liquor_id": "REDUCED_DICHROMATE_VAT_BAY",
+    "mineral_tanning_agent": "SODIUM_DICHROMATE_MOLASSES_REDUCTION",
+    "liquor_ph_level": 2.8,
+    "hydrothermal_shrink_temp_celsius": 88.0,
+    "timestamp_relative": "YEAR_18_MINERAL_LOG_02",
+    "tags": ["tanning", "hexavalent_chromium", "toxic_dermatitis", "ulcers", "chemical_burn"],
+    "prose": "Insufficient sugar molasses in the sulfur dioxide reduction mix left 8% unreduced hexavalent chromium (Cr VI) in the tan bath. Tannery workers handling wet hides developed agonizing, non-healing 'chrome hole' skin ulcers on their hands and forearms."
+  },
+  {
+    "id": "mineral_tan_synthetic_syntan_naphthalene_substitute",
+    "mineral_tan_liquor_id": "COAL_TAR_SYNTAN_BLENDING_TANK",
+    "mineral_tanning_agent": "SULFONATED_NAPHTHALENE_FORMALDEHYDE",
+    "liquor_ph_level": 3.6,
+    "hydrothermal_shrink_temp_celsius": 80.0,
+    "timestamp_relative": "YEAR_20_MINERAL_LOG_01",
+    "tags": ["tanning", "syntan", "coal_tar", "vegetable_extender", "tannin_saver"],
+    "prose": "Synthesizing synthetic tannins from coal tar naphthalene and sulfuric acid extended dwindling oak bark reserves by 60%. The synthetic tan accelerated tannin dispersion through thick leather without compromising final tensile strength."
+  }
+]

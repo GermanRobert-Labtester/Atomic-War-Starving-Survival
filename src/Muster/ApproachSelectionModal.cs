@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.Muster;
 
 namespace AtomicWar.GodotApp.Muster
@@ -34,7 +36,7 @@ namespace AtomicWar.GodotApp.Muster
                 Text = "CHOOSE AN APPROACH",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            _lblTitle.AddThemeFontSizeOverride("font_size", 14);
+            _lblTitle.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             rootVbox.AddChild(_lblTitle);
 
             _choicesContainer = new VBoxContainer();

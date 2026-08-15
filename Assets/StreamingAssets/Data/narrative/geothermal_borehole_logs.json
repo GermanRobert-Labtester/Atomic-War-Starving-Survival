@@ -1,0 +1,79 @@
+[
+  {
+    "id": "borehole_magma_boundary_temperature_spike",
+    "borehole_id": "DEEP-WELL-SUMP-08",
+    "depth_meters": 2420,
+    "temperature_celsius": 312.4,
+    "casing_pressure_bar": 285.0,
+    "geological_formation": "METAMORPHIC_GRANODIORITE",
+    "timestamp_relative": "YEAR_05_DAY_114",
+    "tags": ["geothermal", "borehole", "magma_boundary", "heat_source", "sub_surface"],
+    "prose": "Bottom-hole platinum resistance thermometer spiked eighty degrees in four hours. The drill string tapped a fracture conduit connected directly to a shallow magma intrusion. Superheated brine is surging into the lower expansion manifold at 285 bar, threatening to boil the secondary cooling jackets."
+  },
+  {
+    "id": "borehole_sulfur_steam_vent_corrosion",
+    "borehole_id": "DEEP-WELL-SUMP-03",
+    "depth_meters": 1850,
+    "temperature_celsius": 245.0,
+    "casing_pressure_bar": 190.0,
+    "geological_formation": "SULFIDE_BEARING_SCHIST",
+    "timestamp_relative": "YEAR_07_DAY_302",
+    "tags": ["geothermal", "corrosion", "sulfur_steam", "materials", "sub_surface"],
+    "prose": "Steam condensate pH measured at 1.8 with high concentrations of hydrogen sulfide and sulfurous acid. The 12mm Inconel-625 casing liners show severe pitting corrosion. Engineering has dumped forty bags of slaked lime into the injection head to neutralize the acid before it breaches the Level 4 sump."
+  },
+  {
+    "id": "borehole_seismic_fault_hydraulic_pulse",
+    "borehole_id": "DEEP-WELL-SUMP-05",
+    "depth_meters": 2100,
+    "temperature_celsius": 280.5,
+    "casing_pressure_bar": 410.0,
+    "geological_formation": "FAULT_BRECCIA_ZONE",
+    "timestamp_relative": "YEAR_09_DAY_056",
+    "tags": ["geothermal", "hydraulic_shock", "seismic", "blowout", "sub_surface"],
+    "prose": "A sudden micro-seismic shift across the regional thrust fault collapsed the lower borehole cavity, creating a 410-bar hydraulic water hammer. Relief rupture discs in the pump room exploded with the force of artillery shells, drenching the catwalks in scalding black mineral slurry."
+  },
+  {
+    "id": "borehole_heavy_metal_brine_precipitate",
+    "borehole_id": "DEEP-WELL-SUMP-02",
+    "depth_meters": 1600,
+    "temperature_celsius": 195.0,
+    "casing_pressure_bar": 120.0,
+    "geological_formation": "HYDROTHERMAL_QUARTZ_VEIN",
+    "timestamp_relative": "YEAR_12_DAY_210",
+    "tags": ["geothermal", "mineral_brine", "scavenging", "lithium", "sub_surface"],
+    "prose": "Thermal brine returning from the heat exchanger has precipitated six hundred kilograms of dense crystalline crust along the flash tanks. Laboratory assay confirms 14% zinc, 6% lead, and high concentrations of dissolved lithium salts—a vital mineral harvest for dying storage batteries."
+  },
+  {
+    "id": "borehole_downhole_drillstring_seizure",
+    "borehole_id": "DEEP-WELL-SUMP-09",
+    "depth_meters": 2750,
+    "temperature_celsius": 340.0,
+    "casing_pressure_bar": 310.0,
+    "geological_formation": "ULTRAMAFIC_PERIDOTITE",
+    "timestamp_relative": "YEAR_14_DAY_008",
+    "tags": ["geothermal", "drillstring", "mechanical_failure", "deep_rock", "sub_surface"],
+    "prose": "At 2,750 meters depth, ductile thermal deformation caused the borehole walls to squeeze inward, seizing forty joints of heavy drill pipe. The rotary table motor burned out attempting to break torque. The drill string remains stuck in the mantle rock, acting as a direct thermal siphon for bunker heaters."
+  },
+  {
+    "id": "borehole_radon_gas_outgassing_surge",
+    "borehole_id": "DEEP-WELL-SUMP-01",
+    "depth_meters": 1200,
+    "temperature_celsius": 140.0,
+    "casing_pressure_bar": 85.0,
+    "geological_formation": "URANIFEROUS_PEGMATITE",
+    "timestamp_relative": "YEAR_15_DAY_180",
+    "tags": ["geothermal", "radon", "radiation_surge", "alpha_particles", "sub_surface"],
+    "prose": "Radon-222 gas concentration in the steam venting manifold surged to 180,000 Bq/m3 following a deep crustal tremor. Alpha radiation detectors in the turbine hall triggered automated emergency air-vent dampers, isolating the geothermal power generator from the dwelling quarters."
+  },
+  {
+    "id": "borehole_acoustic_resonator_whisper",
+    "borehole_id": "DEEP-WELL-SUMP-06",
+    "depth_meters": 2250,
+    "temperature_celsius": 290.0,
+    "casing_pressure_bar": 215.0,
+    "geological_formation": "BASALT_COLUMNAR_JOINTING",
+    "timestamp_relative": "YEAR_18_DAY_330",
+    "tags": ["geothermal", "acoustics", "resonator", "steam_whistle", "sub_surface"],
+    "prose": "Supersonic steam escaping through sub-millimeter basalt fissures generates an acoustic standing wave in the wellhead casing at 440 Hz (concert pitch A). Sump watchmen report the well sings continuously through the concrete floor, oscillating with every change in planetary atmospheric barometric pressure."
+  }
+]

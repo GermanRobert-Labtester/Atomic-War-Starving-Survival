@@ -1,0 +1,51 @@
+[
+  {
+    "id": "rope_break_001",
+    "rope_lot_id": "rl_nettle_8mm_01",
+    "test_load_kg": 85.0,
+    "failure_mode": "strand_parting",
+    "log_text": "Hung the nettle eight-millimetre rope from the ceiling brace and loaded a stone block. Eighty-five kilograms before a single strand parted at the weakest section — near the middle where the lay was slightly open. The other two strands held for a moment then slipped. Predictable failure."
+  },
+  {
+    "id": "rope_break_002",
+    "rope_lot_id": "rl_hemp_12mm_01",
+    "test_load_kg": 140.0,
+    "failure_mode": "strand_parting",
+    "log_text": "Hemp twelve-millimetre rope. One hundred and forty kilograms before failure. The uneven lay section failed first — a strand parted there, then the others followed within seconds. The consistent sections of this rope would likely hold more. Mark the bad section and cut it out."
+  },
+  {
+    "id": "rope_break_003",
+    "rope_lot_id": "rl_nettle_6mm_lash_01",
+    "test_load_kg": 45.0,
+    "failure_mode": "end_whipping_pullout",
+    "log_text": "Short lashing cord tested in tension. Forty-five kilograms — the whipped end pulled out rather than the rope body parting. The linen whipping thread slipped along the strands. The rope itself was intact. Lesson: back-splice the ends rather than whip-only for load-bearing terminations."
+  },
+  {
+    "id": "rope_break_004",
+    "rope_lot_id": "rl_jute_9mm_01",
+    "test_load_kg": 70.0,
+    "failure_mode": "core_slippage",
+    "log_text": "Jute rope tested wet — dipped in clean water first. The jute swelled and the lay tightened, but the fibres became slippery against each other. Seventy kilograms, failure by core slippage: the inner strand migrated forward through the closing, emerging from the end. New failure mode."
+  },
+  {
+    "id": "rope_break_005",
+    "rope_lot_id": "rl_nettle_15mm_heavy_01",
+    "test_load_kg": 200.0,
+    "failure_mode": "strand_parting",
+    "log_text": "The heavy fifteen-millimetre rope. Two hundred kilograms. Loaded incrementally using the stone block and added salvage iron. At two hundred the splice section failed — where the hand-closed last half-metre joined the hook-closed section. The hook-closed body is intact. Hand-closing is the weak link."
+  },
+  {
+    "id": "rope_break_006",
+    "rope_lot_id": "rl_hemp_tow_10mm_01",
+    "test_load_kg": 60.0,
+    "failure_mode": "strand_parting",
+    "log_text": "Tow rope tested at sixty kilograms. Failure was expected earlier. The tow strand surface grip compensated partially for the lower fibre strength. The rope parted cleanly — no progressive damage, sudden. Tow rope for loads under fifty kilograms is safe. Above that, use line fibre."
+  },
+  {
+    "id": "rope_break_007",
+    "rope_lot_id": "rl_flax_4mm_cord_01",
+    "test_load_kg": 28.0,
+    "failure_mode": "strand_parting",
+    "log_text": "Fine flax cord. Twenty-eight kilograms. For its diameter that is respectable — almost five hundred kilograms per square centimetre cross-section. The parting was clean and sudden. The cord is excellent for its size. We will not test more of it. Every centimetre of flax cord is harder to replace than rope."
+  }
+]

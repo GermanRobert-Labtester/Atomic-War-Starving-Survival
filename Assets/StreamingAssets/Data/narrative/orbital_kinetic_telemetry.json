@@ -1,0 +1,138 @@
+[
+  {
+    "id": "telemetry_olympus_perigee_decay",
+    "callsign": "OLYMPUS-PLATFORM-04",
+    "entry_type": "orbital_decay_log",
+    "orbital_altitude_km": 342.6,
+    "decay_rate_meters_per_day": 145.2,
+    "payload_status": "5_OF_8_TUNGSTEN_HARPOONS_ARMED",
+    "timestamp_relative": "DAY_1842_POST_BURST",
+    "telemetry_channel": "DOWNLINK_BAND_S_2245_MHZ",
+    "mechanics": {
+      "ground_impact_prediction_days": 412,
+      "kinetic_yield_megajoules": 84000,
+      "geological_seismic_risk": 0.35
+    },
+    "tags": ["orbital", "kinetic_weapons", "olympus", "tungsten", "telemetry"],
+    "prose": "Perigee has dropped twenty kilometers since the autumn equinox. Atmospheric drag on the secondary thermal radiators is pulling Platform-04 into the mesosphere. The five remaining solid tungsten darts—each four meters of cold-forged dense metal with graphite ablative noses—are locked on inertial standby, waiting for an uplink authorization code from an air base that ceased burning eighteen years ago."
+  },
+  {
+    "id": "telemetry_olympus_guidance_star_loss",
+    "callsign": "OLYMPUS-PLATFORM-04",
+    "entry_type": "optical_tracker_error",
+    "orbital_altitude_km": 338.1,
+    "decay_rate_meters_per_day": 162.8,
+    "payload_status": "STAR_TRACKER_BLINDED_BY_SOOT",
+    "timestamp_relative": "DAY_2104_POST_BURST",
+    "telemetry_channel": "DOWNLINK_BAND_S_2245_MHZ",
+    "mechanics": {
+      "targeting_error_radius_km": 42.5,
+      "inertial_drift_arcseconds_per_hour": 1.84,
+      "optical_degradation_score": 0.88
+    },
+    "tags": ["orbital", "star_tracker", "guidance_failure", "nuclear_winter"],
+    "prose": "Primary star-tracker telescope CCD sensor reports 94% optical opacity. The stratospheric soot layer produced by continental firestorms has obscured the reference constellation Canopus. Guidance computer has fallen back to solid-state ring laser gyroscopes. Targeting CEP has degraded from twenty meters to forty-two kilometers."
+  },
+  {
+    "id": "telemetry_olympus_harpoon_07_discharge",
+    "callsign": "OLYMPUS-PLATFORM-02",
+    "entry_type": "automated_discharge_record",
+    "orbital_altitude_km": 410.0,
+    "decay_rate_meters_per_day": 85.0,
+    "payload_status": "HARPOON_07_RELEASED_AUTONOMOUS",
+    "timestamp_relative": "DAY_0041_POST_BURST",
+    "telemetry_channel": "HIGH_SPEED_BURST_X_BAND",
+    "mechanics": {
+      "impact_velocity_mach": 8.4,
+      "crater_depth_meters": 35,
+      "bunker_armor_penetration_mm": 1800
+    },
+    "tags": ["orbital", "kinetic_strike", "harpoon", "impact", "discharge"],
+    "prose": "Autonomic firing circuit triggered at 03:14:09 following total loss of heartbeat ping from Ground Station Cheyenne. Solid-propellant deorbit booster fired for 44.2 seconds. Harpoon-07 separated clean and entered the atmosphere over Sector 8 at Mach 8.4. Seismic arrays across four mountain ranges recorded the 84,000-megajoule kinetic shock as a magnitude 4.8 earthquake."
+  },
+  {
+    "id": "telemetry_olympus_inertial_gyro_drift",
+    "callsign": "OLYMPUS-PLATFORM-01",
+    "entry_type": "gyroscope_maintenance_dump",
+    "orbital_altitude_km": 315.4,
+    "decay_rate_meters_per_day": 240.5,
+    "payload_status": "BEARING_SEIZURE_WARNING",
+    "timestamp_relative": "DAY_3650_POST_BURST",
+    "telemetry_channel": "DOWNLINK_BAND_S_2245_MHZ",
+    "mechanics": {
+      "attitude_control_failure_chance": 0.65,
+      "solar_pointing_efficiency": 0.42,
+      "spacecraft_tumbling_rate_deg_per_sec": 0.14
+    },
+    "tags": ["orbital", "gyroscope", "maintenance", "mechanical_wear"],
+    "prose": "Beryllium sphere bearing #3 in the master reaction wheel assembly has lost hydrodynamic gas lubrication. Bearing temperature reads +142C against cold vacuum. The platform is developing a slow, relentless yaw wobble of 0.14 degrees per second. Solar wings catch the sun in intermittent flashes, pulsing across the night sky like a dead lighthouse."
+  },
+  {
+    "id": "telemetry_olympus_ground_station_silence",
+    "callsign": "OLYMPUS-PLATFORM-04",
+    "entry_type": "uplink_carrier_timeout",
+    "orbital_altitude_km": 340.0,
+    "decay_rate_meters_per_day": 150.0,
+    "payload_status": "AWAITING_CHEYENNE_COMMAND_LINK",
+    "timestamp_relative": "DAY_0001_POST_BURST",
+    "telemetry_channel": "UPLINK_CARRIER_SWEEP_7140_MHZ",
+    "mechanics": {
+      "continuous_silence_duration_hours": 72000,
+      "fail_safe_rearm_countdown_active": false,
+      "dead_hand_protocol_state": "STANDBY"
+    },
+    "tags": ["orbital", "cheyenne", "uplink_loss", "radio_silence"],
+    "prose": "Sweep timer has executed 4,192,800 consecutive carrier interrogations across 7.140 GHz without receiving a single synch byte or parity frame. The ground station's parabolic antenna is presumed vaporized or without prime power. In accordance with Directive 84-C, command receiver has switched to open-frequency acoustic sweep mode."
+  },
+  {
+    "id": "telemetry_olympus_sub_armor_impact_calc",
+    "callsign": "OLYMPUS-PLATFORM-03",
+    "entry_type": "ballistic_impact_projection",
+    "orbital_altitude_km": 290.2,
+    "decay_rate_meters_per_day": 310.0,
+    "payload_status": "3_HARPOONS_REMAINING",
+    "timestamp_relative": "DAY_4200_POST_BURST",
+    "telemetry_channel": "DOWNLINK_BAND_S_2245_MHZ",
+    "mechanics": {
+      "predicted_ground_zero_grid": "SECTOR_12_RIDGE",
+      "bedrock_crush_depth_meters": 60,
+      "fallout_generation": "ZERO_KINETIC_ONLY"
+    },
+    "tags": ["orbital", "impact_projection", "tungsten", "ballistics"],
+    "prose": "Terminal trajectory calculations for the three remaining 1,200kg tungsten flechettes indicate inevitable ballistic re-entry over the continental spine within twelve months. Kinetic impact energy exceeds forty tons of TNT per dart with zero radiological byproduct. Any subterranean facility within two kilometers of the strike axis will experience severe concrete spallation and shear fractures."
+  },
+  {
+    "id": "telemetry_olympus_solar_array_spallation",
+    "callsign": "OLYMPUS-PLATFORM-04",
+    "entry_type": "power_bus_degradation_log",
+    "orbital_altitude_km": 335.5,
+    "decay_rate_meters_per_day": 170.0,
+    "payload_status": "BUS_VOLTAGE_21V_UNDER_NOMINAL",
+    "timestamp_relative": "DAY_2800_POST_BURST",
+    "telemetry_channel": "DOWNLINK_BAND_S_2245_MHZ",
+    "mechanics": {
+      "available_power_watts": 340,
+      "battery_depth_of_discharge_percent": 82,
+      "heater_circuit_shedding": true
+    },
+    "tags": ["orbital", "power_systems", "solar_cells", "space_debris"],
+    "prose": "Gallium arsenide photovoltaic panels show 1,400 distinct hypervelocity impact pits from orbital shrapnel and fragmentation belts. Main 28-volt DC power bus has sagged to 21.4 volts. Non-essential subsystem heaters in the kinetic ejector latches have been commanded off, allowing the breech mechanisms to freeze solid at -110C."
+  },
+  {
+    "id": "telemetry_olympus_terminal_deorbit_burn",
+    "callsign": "OLYMPUS-PLATFORM-04",
+    "entry_type": "terminal_flight_profile",
+    "orbital_altitude_km": 185.0,
+    "decay_rate_meters_per_day": 1200.0,
+    "payload_status": "TERMINAL_DESCENT_ARMED",
+    "timestamp_relative": "DAY_5110_POST_BURST",
+    "telemetry_channel": "DOWNLINK_BAND_S_2245_MHZ",
+    "mechanics": {
+      "reentry_blackout_minutes": 14,
+      "atmospheric_breakup_altitude_km": 72,
+      "intact_dart_survival_probability": 0.99
+    },
+    "tags": ["orbital", "deorbit", "reentry", "kinetic_death", "endgame"],
+    "prose": "Atmosphere has captured the main bus. Skin thermocouples read +650C on the leading edge. The platform structure is breaking apart into burning ribbons of titanium foil and magnesium struts, but the dense tungsten darts remain intact, glowing cherry red as they punch through the troposphere like descending iron nails."
+  }
+]

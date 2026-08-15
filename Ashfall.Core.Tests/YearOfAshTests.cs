@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.Verdict;
 using Ashfall.Core.YearOfAsh;
 using Xunit;
 
@@ -592,6 +593,98 @@ namespace Ashfall.Core.Tests
             public int Day => _day;
             public void AdvanceDays(int days) { _day += days; }
             public void SetDay(int day) { _day = day; }
+        }
+
+        [Fact]
+        public void LegacyQuestConverter_ProducesPlayableQuestlines()
+        {
+            string dataDir;
+            if (!CatalogLocator.TryFindDataDirectory(System.IO.Directory.GetCurrentDirectory(), out dataDir))
+                CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out dataDir);
+            if (string.IsNullOrEmpty(dataDir)) return;
+
+            var quests = new QuestlineSystem();
+            int registered = YearOfAshCatalogLoader.LoadAndRegisterQuests(
+                quests, dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+
+            Assert.True(quests.Catalog.Count >= registered);
+
+            foreach (var def in quests.Catalog)
+            {
+                Assert.True(quests.IsPlayable(def), $"quest '{def.questlineId}' registered but not playable");
+                var first = def.FindStage(def.firstStageId);
+                Assert.NotNull(first);
+                Assert.True(first.choices.Count > 0, $"quest '{def.questlineId}' first stage has no choices");
+
+                var last = def.stages[def.stages.Count - 1];
+                Assert.True(last.isTerminal, $"quest '{def.questlineId}' last stage not terminal");
+            }
+        }
+
+        [Fact]
+        public void LegacyQuestConverter_LinearTraversal_ReachesTerminal()
+        {
+            string dataDir;
+            if (!CatalogLocator.TryFindDataDirectory(System.IO.Directory.GetCurrentDirectory(), out dataDir))
+                CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out dataDir);
+            if (string.IsNullOrEmpty(dataDir)) return;
+
+            var quests = new QuestlineSystem();
+            YearOfAshCatalogLoader.LoadAndRegisterQuests(
+                quests, dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+
+            var def = quests.FindDefinition("quest_garrison_blood_debt");
+            Assert.NotNull(def);
+            Assert.True(quests.IsPlayable(def));
+
+            Assert.True(quests.StartQuestline(def.questlineId, 200));
+            var record = quests.State.active.Find(a => a.questlineId == def.questlineId);
+            Assert.NotNull(record);
+            Assert.Equal(def.firstStageId, record.currentStageId);
+
+            var stage = def.FindStage(record.currentStageId);
+            while (!stage.isTerminal && stage.choices.Count > 0)
+            {
+                var choice = stage.choices[0];
+                var result = quests.TakeChoice(def.questlineId, choice.choiceId, 200);
+                Assert.NotNull(result);
+                if (string.IsNullOrEmpty(choice.nextStageId)) break;
+                stage = def.FindStage(record.currentStageId);
+            }
+            Assert.Equal(QuestlineStatus.Completed, record.status);
+        }
+
+        [Fact]
+        public void VerdictLocations_LoadAndAreQueryable()
+        {
+            string dataDir;
+            if (!CatalogLocator.TryFindDataDirectory(System.IO.Directory.GetCurrentDirectory(), out dataDir))
+                CatalogLocator.TryFindDataDirectory(System.AppContext.BaseDirectory, out dataDir);
+            if (string.IsNullOrEmpty(dataDir)) return;
+
+            var io = new FileSystemIO();
+            var json = new SystemTextJsonSerializer();
+            var locations = VerdictCatalogLoader.LoadLocations(dataDir, io, json);
+
+            Assert.True(locations.Count >= 4, $"expected >=4 verdict locations, got {locations.Count}");
+
+            var geophone = locations.Find(l => l.id == "loc_geophone_pit_1");
+            Assert.NotNull(geophone);
+            Assert.Equal("The First Geophone Pit", geophone.displayName);
+            Assert.True(geophone.dangerLevel > 0);
+            Assert.True(geophone.travelHours > 0f);
+
+            var fuseWorld = locations.Find(l => l.id == "loc_network_fuse_bunker");
+            Assert.NotNull(fuseWorld);
+            Assert.Equal("The Fuse World", fuseWorld.displayName);
+
+            var tapeSilo = locations.Find(l => l.id == "loc_archive_tape_silo");
+            Assert.NotNull(tapeSilo);
+            Assert.Equal("The Archive Tape-Silo", tapeSilo.displayName);
+
+            var array = locations.Find(l => l.id == "loc_twelve_gauge_array");
+            Assert.NotNull(array);
+            Assert.Equal("The Twelve-Gauge Array", array.displayName);
         }
     }
 }

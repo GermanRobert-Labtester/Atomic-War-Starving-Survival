@@ -1,0 +1,82 @@
+[
+  {
+    "id": "molerat_study_enamel_hardness_concrete_burrowing",
+    "colony_id": "MOLERAT_COLONY_SHAFT_09",
+    "caste_classification": "HEAVY_EXCAVATOR_WORKER",
+    "incisor_mohs_hardness": 7.5,
+    "burrowing_rate_cm_hr": 18.0,
+    "timestamp_relative": "YEAR_03_MOLERAT_LOG_01",
+    "tags": ["fauna", "molerat", "incisors", "concrete_burrowing", "excavator"],
+    "prose": "The protruding ever-growing incisors have an outer enamel layer heavily mineralized with iron-tannate crystals, reaching a Mohs hardness of 7.5. Two workers chewed an eight-inch breach through a poured cinder-block partition wall in twenty-four hours."
+  },
+  {
+    "id": "molerat_study_eusocial_queen_metabolic_suppression",
+    "colony_id": "MOLERAT_COLONY_BOILER_SUMP",
+    "caste_classification": "BREEDING_QUEEN_MATRIARCH",
+    "incisor_mohs_hardness": 5.0,
+    "burrowing_rate_cm_hr": 0.0,
+    "timestamp_relative": "YEAR_05_MOLERAT_LOG_04",
+    "tags": ["fauna", "molerat", "queen", "metabolism", "hibernation"],
+    "prose": "The breeding matriarch measures sixty centimeters and weighs 4.2 kilograms, nested directly atop the warm steam main. During winter fuel shortages, her metabolic rate drops 95%, her body temperature cools to 12°C, and her heart beats barely five times per minute."
+  },
+  {
+    "id": "molerat_study_sub_harmonic_thumping_network",
+    "colony_id": "MOLERAT_COLONY_BEDROCK_EAST",
+    "caste_classification": "SENTRY_SCOUT_CASTE",
+    "incisor_mohs_hardness": 6.8,
+    "burrowing_rate_cm_hr": 12.0,
+    "timestamp_relative": "YEAR_08_MOLERAT_LOG_02",
+    "tags": ["fauna", "molerat", "seismic_thumping", "communication", "geophone"],
+    "prose": "Sentries drum their heavy flat skulls against tunnel roof rock at 6 Hz. The acoustic vibrations propagate through limestone strata for over eight hundred meters, picked up clearly on geophone monitors as rhythmic Morse-like tapping sequences."
+  },
+  {
+    "id": "molerat_study_hypoxic_lactate_buffering",
+    "colony_id": "MOLERAT_COLONY_GAS_POCKET_04",
+    "caste_classification": "DEEP_COLONIZER_CASTE",
+    "incisor_mohs_hardness": 7.0,
+    "burrowing_rate_cm_hr": 15.0,
+    "timestamp_relative": "YEAR_10_MOLERAT_LOG_03",
+    "tags": ["fauna", "molerat", "hypoxia", "lactate_tolerance", "gas_pockets"],
+    "prose": "Physiological assays reveal that the animals shift to anaerobic fructose metabolism when entering oxygen-depleted firedamp pockets. They survive up to five hours in atmospheres containing 80% CO2 and 0% oxygen without irreversible brain damage."
+  },
+  {
+    "id": "molerat_study_rad_resistance_dna_repair_ligase",
+    "colony_id": "MOLERAT_COLONY_SLAG_PERIMETER",
+    "caste_classification": "RAD_TOLERANT_FORAGER",
+    "incisor_mohs_hardness": 7.2,
+    "burrowing_rate_cm_hr": 20.0,
+    "timestamp_relative": "YEAR_13_MOLERAT_LOG_01",
+    "tags": ["fauna", "molerat", "dna_repair", "rad_resistance", "oncology"],
+    "prose": "Colony lives in high-level radioactive slag trenches (65 R/hr). Blood samples show quadruple levels of DNA ligase IV and homologous recombination enzymes; animals exhibit zero spontaneous tumors and live for over twenty-five years in lethal radiation fields."
+  },
+  {
+    "id": "molerat_study_granite_aggregate_nest_chambers",
+    "colony_id": "MOLERAT_COLONY_SUB_LEVEL_5",
+    "caste_classification": "ARCHITECTURAL_TUNNELER",
+    "incisor_mohs_hardness": 7.4,
+    "burrowing_rate_cm_hr": 25.0,
+    "timestamp_relative": "YEAR_15_MOLERAT_LOG_02",
+    "tags": ["fauna", "molerat", "granite_gravel", "nesting", "structural"],
+    "prose": "The animals excavated three tons of crushed aggregate from beneath the generator slab, piling it into geodesic dome nurseries lined with shredded electrical manuals. The hollowed space caused the diesel engine foundation to settle three inches out of plumb."
+  },
+  {
+    "id": "molerat_study_fungal_farming_excrement_gardens",
+    "colony_id": "MOLERAT_COLONY_LATRINE_SUMP",
+    "caste_classification": "MYCOLOGICAL_FARMER",
+    "incisor_mohs_hardness": 6.0,
+    "burrowing_rate_cm_hr": 8.0,
+    "timestamp_relative": "YEAR_18_MOLERAT_LOG_04",
+    "tags": ["fauna", "molerat", "mushroom_farming", "symbiosis", "coprinus"],
+    "prose": "Workers pack communal fecal pellets and shredded roots into neat hexagonal combs along moist cavern walls, inoculating the substrate with a domesticated strain of black ink-cap mushroom (*Coprinus troglodytes*) that serves as the colony's primary food source."
+  },
+  {
+    "id": "molerat_study_domesticated_draft_sentry_hybrid",
+    "colony_id": "MOLERAT_DOMESTICATION_BAY_01",
+    "caste_classification": "DOMESTICATED_LINE_PULLER",
+    "incisor_mohs_hardness": 6.5,
+    "burrowing_rate_cm_hr": 14.0,
+    "timestamp_relative": "YEAR_20_MOLERAT_LOG_01",
+    "tags": ["fauna", "molerat", "domestication", "cable_puller", "utility"],
+    "prose": "Hand-reared pups trained with dried mushroom treats wear small leather harnesses and pull nylon fish-lines through hundred-meter unmapped four-inch conduit runs, allowing communications technicians to easily string new telephone pairs through collapsed wall sectors."
+  }
+]

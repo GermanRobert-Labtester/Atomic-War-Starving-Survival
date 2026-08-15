@@ -1,0 +1,82 @@
+[
+  {
+    "id": "well_contam_tritium_percolation_spike",
+    "well_identifier": "DEEP_ARTESIAN_WELL_03",
+    "aquifer_stratum": "ST_PETER_SANDSTONE_400M",
+    "contaminant_agent": "TRITIATED_WATER_HTO",
+    "activity_level_bq_l": 4500.0,
+    "timestamp_relative": "YEAR_02_MONTH_09_WELL_LOG",
+    "tags": ["hydrogeology", "artesian_well", "tritium", "percolation", "water_safety"],
+    "prose": "Tritium concentration in Well 3 spiked from background baseline to 4,500 Bq/L following autumn rains. The isotope cannot be removed by standard activated charcoal or mechanical filtration; water must be blended 5:1 with deep paleo-aquifer storage before commissary distribution."
+  },
+  {
+    "id": "well_contam_strontium_90_limestone_leach",
+    "well_identifier": "COMMISSARY_SUPPLY_WELL_01",
+    "aquifer_stratum": "KARST_DOLOMITE_FORMATION",
+    "contaminant_agent": "STRONTIUM_90_CARBONATE",
+    "activity_level_bq_l": 320.0,
+    "timestamp_relative": "YEAR_04_MONTH_11_WELL_LOG",
+    "tags": ["hydrogeology", "strontium", "karst", "bone_seeker", "water"],
+    "prose": "Radioactive strontium-90 migrated through solution channels in the karst limestone. Dwellers consuming unchelated water showed positive whole-body tooth scintillation scans within three weeks. Emergency zeolite cation-exchange softening beds installed."
+  },
+  {
+    "id": "well_contam_ferro_bacterial_iron_slime",
+    "well_identifier": "HYDRO_POWER_RECIRC_WELL_04",
+    "aquifer_stratum": "GLACIAL_OUTWASH_GRAVEL",
+    "contaminant_agent": "LEPTOTHRIX_IRON_BACTERIA_SLIME",
+    "activity_level_bq_l": 15.0,
+    "timestamp_relative": "YEAR_06_MONTH_04_WELL_LOG",
+    "tags": ["hydrogeology", "iron_bacteria", "biofouling", "well_screen", "plumbing"],
+    "prose": "Proliferation of iron-oxidizing filamentous bacteria produced hundreds of pounds of dense, rust-orange slimy biomass. The 80-mesh stainless steel well screen was completely encrusted, reducing artesian flow from 600 GPM to a pathetic trickle of 45 GPM."
+  },
+  {
+    "id": "well_contam_sub_surface_diesel_plume",
+    "well_identifier": "SOUTH_WING_AUXILIARY_WELL_02",
+    "aquifer_stratum": "SHALLOW_ALLUVIAL_GRAVEL_80M",
+    "contaminant_agent": "PETROLEUM_HYDROCARBON_PLUME",
+    "activity_level_bq_l": 0.0,
+    "timestamp_relative": "YEAR_08_MONTH_07_WELL_LOG",
+    "tags": ["hydrogeology", "diesel_leak", "hydrocarbons", "contamination", "water"],
+    "prose": "Corrosion of an underground pre-war diesel storage tank released twelve thousand gallons of light fuel oil into the upper unconfined aquifer. Tap water in Sector 3 emerged with a shimmering rainbow sheen and strong kerosene odor; sparks near open sinks caused vapor pops."
+  },
+  {
+    "id": "well_contam_radium_226_geothermal_upwelling",
+    "well_identifier": "GEOTHERMAL_REINJECTION_WELL_07",
+    "aquifer_stratum": "PRECAMBRIAN_BASAL_GRANITE",
+    "contaminant_agent": "RADIUM_226_CHLORIDE",
+    "activity_level_bq_l": 2960.0,
+    "timestamp_relative": "YEAR_11_MONTH_02_WELL_LOG",
+    "tags": ["hydrogeology", "radium", "geothermal_brine", "granite", "water_safety"],
+    "prose": "Deep tectonic faulting opened a fracture zone into ancient hydrothermal brine, bringing 80 pCi/L of soluble radium-226 into the turbine condenser water. Radon daughter gas degassing from the cooling towers forced the evacuation of Lower Level 5."
+  },
+  {
+    "id": "well_contam_mine_acid_drainage_inrush",
+    "well_identifier": "ABANDONED_DRIFT_MINE_INTAKE",
+    "aquifer_stratum": "PENNSYLVANIAN_COAL_MEASURES",
+    "contaminant_agent": "ACID_MINE_DRAINAGE_PYRITE",
+    "activity_level_bq_l": 85.0,
+    "timestamp_relative": "YEAR_13_MONTH_10_WELL_LOG",
+    "tags": ["hydrogeology", "acid_drainage", "pyrite", "copper", "corrosion"],
+    "prose": "Pyrite oxidation in flooded mine shafts generated sulfuric acid leachate with pH 2.9 and 450 mg/L dissolved heavy copper. The acid water dissolved solder joints on copper supply pipes across the medical wing, releasing bright green verdigris water from patient taps."
+  },
+  {
+    "id": "well_contam_caustic_lye_decon_runoff",
+    "well_identifier": "SURFACE_PORTAL_SUMP_WELL_05",
+    "aquifer_stratum": "FRACTURED_BASALT_CAP_50M",
+    "contaminant_agent": "SODIUM_HYDROXIDE_DECON_SLURRY",
+    "activity_level_bq_l": 1200.0,
+    "timestamp_relative": "YEAR_16_MONTH_05_WELL_LOG",
+    "tags": ["hydrogeology", "caustic_lye", "decon_runoff", "wellhead_leak", "safety"],
+    "prose": "Cracking of the cement grouting around the upper wellhead casing collar allowed spent personnel decontamination wash—concentrated caustic soda and radiocobalt—to cascade sixty meters down the borehole annulus directly into the raw drinking water supply."
+  },
+  {
+    "id": "well_contam_cyanide_heap_leach_plume",
+    "well_identifier": "WEST_RIDGE_DEEP_PRODUCTION_06",
+    "aquifer_stratum": "FRACTURED_QUARTZITE_AQUIFER",
+    "contaminant_agent": "FREE_POTASSIUM_CYANIDE_SOLUTION",
+    "activity_level_bq_l": 0.0,
+    "timestamp_relative": "YEAR_19_MONTH_08_WELL_LOG",
+    "tags": ["hydrogeology", "cyanide", "tailings_pond", "poison", "water_safety"],
+    "prose": "Earthquake breach of a pre-war gold heap-leach tailing dam three miles up-gradient released forty tons of cyanide solution into the regional hydraulic flow. Colorimetric silver-nitrate field tests turned bright yellow; the production well was sealed with sixty feet of bentonite clay plug."
+  }
+]

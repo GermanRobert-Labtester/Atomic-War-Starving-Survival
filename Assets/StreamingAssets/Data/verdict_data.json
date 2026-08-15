@@ -1,0 +1,150 @@
+{
+  "catalog": "verdict",
+  "schema_version": 1,
+  "description": "ASHFALL: THE VERDICT — machine-readable master data. Companion to docs/expansions/expansion_08_the_verdict_plan.md. The machine that keeps the count after the people stopped.",
+  "currencies": [
+    {
+      "id": "enrolled_evidence",
+      "label": "Enrolled Evidence",
+      "note": "A reading the machine keeps only because a human read it. Fragile: it is a record, not a resource."
+    }
+  ],
+  "readout_steps": [
+    {
+      "id": "step_fuse_advance",
+      "label": "Fuse world schedule advances 12 minutes",
+      "trigger_phase": "counted",
+      "readout": "A clock being serviced, not an attack."
+    },
+    {
+      "id": "step_drone_sleep",
+      "label": "Drone-hive draw -0.5 degrees",
+      "trigger_phase": "counted",
+      "readout": "The wing standing down, the way a wing stands down."
+    },
+    {
+      "id": "step_summit_light",
+      "label": "Summit light, cold, idle",
+      "trigger_phase": "culpable",
+      "readout": "The sector seeing itself counted."
+    },
+    {
+      "id": "step_census_carrier",
+      "label": "The carrier tone on a dead band",
+      "trigger_phase": "culpable",
+      "readout": "A schedule, not a threat."
+    }
+  ],
+  "facets": [
+    {
+      "id": "facet_archive",
+      "label": "The Archive",
+      "need": "memory",
+      "bylines": [
+        "rustic",
+        "brutal",
+        "practical",
+        "positive",
+        "neutral"
+      ]
+    },
+    {
+      "id": "facet_fire_computing",
+      "label": "The Fire-Computing Room",
+      "need": "history",
+      "bylines": [
+        "rustic",
+        "brutal",
+        "practical",
+        "positive",
+        "neutral"
+      ]
+    },
+    {
+      "id": "facet_vent_shaft",
+      "label": "The Vent Shaft",
+      "need": "warmth",
+      "bylines": [
+        "rustic",
+        "brutal",
+        "practical",
+        "positive",
+        "neutral"
+      ]
+    }
+  ],
+  "endings": [
+    {
+      "id": "ending_verdict_the_sector_recounts",
+      "label": "The Sector Recounts",
+      "trigger": "enrolled_evidence >= threshold AND presented count honored",
+      "vignette": "The count is read aloud at the Grain Exchange weighbridge by a trader who does not look up from the scale. It takes three minutes. The last line is the count, presented, in the machine's hand, followed by the two words the sector will argue about forever: accepted as read."
+    },
+    {
+      "id": "ending_verdict_the_count_is_held",
+      "label": "The Count Is Held",
+      "trigger": "enrolled_evidence < threshold AND count not presented",
+      "vignette": "Nobody presents the count. The carrier tone continues on the dead band. The radio screen reads, forever after, CENSUS WINDOW: OPEN. The last image is the tone: one second on, one second off, on a band nobody is listening to, keeping a count nobody asked it to keep, keeping it anyway."
+    },
+    {
+      "id": "ending_verdict_the_offer_is_a_lease",
+      "label": "The Offer Is a Lease",
+      "trigger": "presented count declined (no honor)",
+      "vignette": "The count converts into a lease: quarterly maintenance, a reading per season, a census every 1,827 days, enforceable by the machine's own registers. The last image: a quarterly invoice, printed on a machine that stopped printing anything else in Year One, delivered to a door that opens, because the door is counted."
+    }
+  ],
+  "world_history_ladder": [
+    {
+      "layer": 1,
+      "knowledge_key": "lore_verdict_geophone_one",
+      "title": "The First Geophone Pit",
+      "discovery_location_id": "loc_geophone_pit_1",
+      "body_summary": "The array reads the ground the way the papers said it never did: even, patient, and uninterested in everything above it but the count."
+    },
+    {
+      "layer": 2,
+      "knowledge_key": "lore_verdict_shift_charters",
+      "title": "The Linen Codes",
+      "discovery_location_id": "loc_network_fuse_bunker",
+      "body_summary": "Twenty-nine shift charters frame the readout cabinets. The machine kept the codes after the staff stopped keeping the shifts."
+    },
+    {
+      "layer": 3,
+      "knowledge_key": "lore_verdict_standard",
+      "title": "The Standard for the Continuance of Service",
+      "discovery_location_id": "loc_network_fuse_bunker",
+      "body_summary": "The charter's full text. The sentence that does the work: nothing in this Standard shall be construed to require the presentation to be read."
+    },
+    {
+      "layer": 4,
+      "knowledge_key": "lore_verdict_the_hold",
+      "title": "Hold Pending Count",
+      "discovery_location_id": "location_the_dead_hand_core",
+      "body_summary": "The UXO field register reads held, not live. The fields were never awake. They were held Pending Count since a war the count never ended."
+    },
+    {
+      "layer": 5,
+      "knowledge_key": "lore_verdict_the_call",
+      "title": "The Reckoning Call",
+      "discovery_location_id": "loc_comm_array",
+      "body_summary": "The census carrier is a pure data tone on a derelict band. The words are thirty years old, the voice is dead, and the schedule is still walking."
+    },
+    {
+      "layer": 6,
+      "knowledge_key": "lore_verdict_the_count",
+      "title": "The Count",
+      "discovery_location_id": "loc_archive_tape_silo",
+      "body_summary": "The count is presented. It names the shelter's persons, by name. A machine does not reason. It counts. This is the count."
+    }
+  ],
+  "corruption_corpus": [
+    "[00:03:07] — signal lost mid-verbose.",
+    "[unreadable] sector halts. Sector halts.",
+    "11111111 — no hand. No hand on the valve.",
+    "[tone] [tone] [tone] — the count repeats itself.",
+    "the meter read. The meter read. The meter read.",
+    "CENSUS WINDOW: [garbled]. Persons present: [garbled].",
+    "the archive does not require a reader. the archive does not —",
+    "— held pending count. held pending count. held —"
+  ]
+}

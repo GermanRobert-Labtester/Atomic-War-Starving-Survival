@@ -1,0 +1,72 @@
+[
+  {
+    "id": "mortise_tenon_drawbore_pin_shear_green_oak",
+    "framing_assembly_id": "MAIN_ASSEMBLY_HALL_BENT_01",
+    "joint_geometry_type": "DRAWBORING_PEG_MORTISE_AND_TENON",
+    "peg_material_species": "DRIED_HICKORY_OCTAGONAL_TREENAIL",
+    "joint_load_kilonewtons": 85.0,
+    "timestamp_relative": "YEAR_02_MORTISE_LOG_01",
+    "tags": ["carpentry", "mortise_tenon", "drawboring", "treenail", "peg_shear"],
+    "prose": "Differential shrinkage in green oak posts pulled against the 3mm offset drawbore holes. The resulting cross-grain tension sheared two 1-inch octagonal hickory treenails flush with the mortise cheeks, opening a 6mm gap at the post-beam shoulder."
+  },
+  {
+    "id": "mortise_tenon_scarf_joint_under_squint_crush",
+    "framing_assembly_id": "LONG_SPAN_ROOF_GIRDER_03",
+    "joint_geometry_type": "UNDER_SQUINTED_AND_JOGGLED_SCARF",
+    "peg_material_species": "HEARTWOOD_BLACK_LOCUST_WEDGES",
+    "joint_load_kilonewtons": 160.0,
+    "timestamp_relative": "YEAR_05_MORTISE_LOG_03",
+    "tags": ["carpentry", "scarf_joint", "joggle", "squint", "girder_splice"],
+    "prose": "Heavy overburden loading on the 14-meter clear-span roof girder concentrated 160 kN of shear across the under-squinted scarf joint. The crushing force broomed the central keyway, requiring four heavy wrought-iron fishplates and through-bolts to arrest sagging."
+  },
+  {
+    "id": "mortise_tenon_relieved_housing_shoulder_split",
+    "framing_assembly_id": "CENTRAL_STORAGE_MEZZANINE",
+    "joint_geometry_type": "HOUSED_SHOULDER_TENON_CONNECTION",
+    "peg_material_species": "WHITE_OAK_DOWEL_PINS",
+    "joint_load_kilonewtons": 65.0,
+    "timestamp_relative": "YEAR_08_MORTISE_LOG_02",
+    "tags": ["carpentry", "housed_tenon", "shoulder_split", "mezzanine", "shear_failure"],
+    "prose": "Omitting the 12mm relieved housing shoulder on the mezzanine floor joists forced the entire shear load onto the tenon tongues. Under full grain pallet loading, the tenons split horizontally along the neutral axis, dropping the joists 50mm."
+  },
+  {
+    "id": "mortise_tenon_dovetail_lap_tensile_pullout",
+    "framing_assembly_id": "PERIMETER_WALL_TIE_FRAME",
+    "joint_geometry_type": "LAPPED_DOVETAIL_TIE_BEAM_JOINT",
+    "peg_material_species": "ASH_LOCKING_PINS",
+    "joint_load_kilonewtons": 45.0,
+    "timestamp_relative": "YEAR_11_MORTISE_LOG_04",
+    "tags": ["carpentry", "dovetail", "lap_joint", "tensile_pullout", "tie_beam"],
+    "prose": "Transverse bunker floor spread exerted 45 kN of outward tensile force across the wall plate. The angled dovetail tenon slipped and sheared its locking pin, pulling out of the housing pocket by 35mm before auxiliary wire stays were rigged."
+  },
+  {
+    "id": "mortise_tenon_gunstock_post_jowl_shear",
+    "framing_assembly_id": "CORNER_TOWER_PRINCIPAL_BENT",
+    "joint_geometry_type": "JOWLED_GUNSTOCK_POST_HEAD",
+    "peg_material_species": "SEASONED_RED_OAK_TRUNNELS",
+    "joint_load_kilonewtons": 120.0,
+    "timestamp_relative": "YEAR_14_MORTISE_LOG_01",
+    "tags": ["carpentry", "gunstock_post", "jowl", "annual_rings", "grain_shear"],
+    "prose": "Heavy vertical loads from the corner roof hip rafter concentrated stress at the flared jowl of the gunstock post. A continuous shear crack propagated along the curved annual growth rings, cleaving the jowl from the post core."
+  },
+  {
+    "id": "mortise_tenon_wedge_half_dovetail_spline_slacken",
+    "framing_assembly_id": "EXPEDITION_EQUIPMENT_CRADLE",
+    "joint_geometry_type": "THROUGH_TENON_WITH_TWIN_WEDGES",
+    "peg_material_species": "HARD_MAPLE_FOLDING_WEDGES",
+    "joint_load_kilonewtons": 30.0,
+    "timestamp_relative": "YEAR_17_MORTISE_LOG_03",
+    "tags": ["carpentry", "through_tenon", "folding_wedges", "dehumidification", "slacken"],
+    "prose": "Continuous subterranean dehumidification reduced equipment cradle timber moisture from 18% down to 7%. The extreme tangential shrinkage loosened the hard maple folding wedges in the through-tenons, causing the heavy winch cradle to wobble."
+  },
+  {
+    "id": "mortise_tenon_fox_wedged_blind_mortise_split",
+    "framing_assembly_id": "OFFICERS_QUARTERS_PARTITION_WALL",
+    "joint_geometry_type": "FOX_WEDGED_BLIND_MORTISE_TENON",
+    "peg_material_species": "OAK_EXPANSION_FOX_WEDGES",
+    "joint_load_kilonewtons": 20.0,
+    "timestamp_relative": "YEAR_20_MORTISE_LOG_01",
+    "tags": ["carpentry", "fox_wedging", "blind_mortise", "cheek_split", "over_driving"],
+    "prose": "Driving the tenon home over twin internal fox wedges expanded the tenon tip before it fully seated against the bottom of the blind mortise. The internal wedging pressure split the mortise cheek wide open inside the finished column, hiding the structural defect."
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "charcoal_mound_turf_capping_air_throttling",
+    "coaling_mound_id": "SUBTERRANEAN_KILN_MOUND_01",
+    "feedstock_timber_species": "QUERCUS_ALBA_WHITE_OAK",
+    "pyrolysis_peak_temperature_celsius": 460.0,
+    "charcoal_gravimetric_yield_pct": 24.5,
+    "timestamp_relative": "YEAR_02_CHARCOAL_01",
+    "tags": ["pyrolysis", "charcoal_mound", "turf_capping", "air_throttling", "wood_carbonization"],
+    "prose": "Colliers thatched sixty cords of dense white oak billets beneath a dual layer of moist grass turf and damp loam. Restricting draft air through adjustable bottom pegs throttled direct combustion into slow, oxygen-starved coaling across five days."
+  },
+  {
+    "id": "charcoal_mound_exothermic_coaling_front_progression",
+    "coaling_mound_id": "TRADITIONAL_EARTH_KILN_02",
+    "feedstock_timber_species": "FAGUS_GRANDIFOLIA_BEECH",
+    "pyrolysis_peak_temperature_celsius": 485.0,
+    "charcoal_gravimetric_yield_pct": 26.0,
+    "timestamp_relative": "YEAR_04_CHARCOAL_03",
+    "tags": ["pyrolysis", "coaling_front", "exothermic_wave", "pyrometry", "mound_management"],
+    "prose": "Long thermocouple iron spears tracked the downward advance of the 485°C exothermic pyrolysis wave. As radiant heat reached the lower periphery, operators sealed upper vent pegs and opened low draft vents to guide uniform carbonization."
+  },
+  {
+    "id": "charcoal_mound_blue_smoke_transition_completion",
+    "coaling_mound_id": "HARDWOOD_CARBON_PIT_03",
+    "feedstock_timber_species": "ACER_SACCHARUM_SUGAR_MAPLE",
+    "pyrolysis_peak_temperature_celsius": 510.0,
+    "charcoal_gravimetric_yield_pct": 23.8,
+    "timestamp_relative": "YEAR_07_CHARCOAL_02",
+    "tags": ["pyrolysis", "smoke_phase", "blue_smoke", "end_point", "tar_burnoff"],
+    "prose": "The exhaust plume evolved from thick, pungent white steam to heavy acrid yellow wood gas, before transitioning into a thin, shimmering blue haze. The blue smoke confirmed that volatile tars had driven off, leaving only pure incandescent fixed carbon."
+  },
+  {
+    "id": "charcoal_mound_bridging_hollow_cave_in_blast",
+    "coaling_mound_id": "DEEP_FOREST_PIT_MOUND_04",
+    "feedstock_timber_species": "BETULA_ALLEGHANIENSIS_BIRCH",
+    "pyrolysis_peak_temperature_celsius": 680.0,
+    "charcoal_gravimetric_yield_pct": 18.2,
+    "timestamp_relative": "YEAR_09_CHARCOAL_04",
+    "tags": ["pyrolysis", "mound_collapse", "combustion_blowout", "cave_in", "emergency_capping"],
+    "prose": "An internal bridging cavity collapsed the sod mantle, admitting a sudden inrush of oxygen that triggered an open flame blowout. Colliers furiously shoveled twenty wheelbarrows of wet silt across the breach within three minutes to extinguish the flare."
+  },
+  {
+    "id": "charcoal_mound_water_mist_quench_cracking",
+    "coaling_mound_id": "PRECISION_FORGE_CARBON_KILN_05",
+    "feedstock_timber_species": "CARYA_OVATA_SHAGBARK_HICKORY",
+    "pyrolysis_peak_temperature_celsius": 450.0,
+    "charcoal_gravimetric_yield_pct": 27.2,
+    "timestamp_relative": "YEAR_12_CHARCOAL_01",
+    "tags": ["pyrolysis", "mist_quench", "thermal_shock", "lump_integrity", "cooling"],
+    "prose": "Cooling the completed coaling mound with fine atomized water mist through sealed draft holes quenched residual embers without thermal shock cracking. The hickory lump charcoal remained in large, dense fist-sized chunks with ringing metallic resonance."
+  },
+  {
+    "id": "charcoal_mound_hardwood_yield_weight_conversion",
+    "coaling_mound_id": "COMMISSARY_SMELTER_PIT_06",
+    "feedstock_timber_species": "FRAXINUS_AMERICANA_WHITE_ASH",
+    "pyrolysis_peak_temperature_celsius": 475.0,
+    "charcoal_gravimetric_yield_pct": 25.4,
+    "timestamp_relative": "YEAR_15_CHARCOAL_03",
+    "tags": ["pyrolysis", "conversion_yield", "gravimetric_assay", "ash_carbon", "metallurgical_fuel"],
+    "prose": "Pyrolyzing twelve tons of air-dried white ash billets yielded 3.05 tons of high-grade metallurgical charcoal. The lustrous black fracture faces exhibited zero uncharred brown brands and an electrical resistivity below 10 ohms/cm."
+  },
+  {
+    "id": "charcoal_mound_coaling_dust_explosion_hazard",
+    "coaling_mound_id": "UNLOAD_BARRACKS_HANDLING_BAY",
+    "feedstock_timber_species": "MIXED_HARDWOOD_SLABS",
+    "pyrolysis_peak_temperature_celsius": 420.0,
+    "charcoal_gravimetric_yield_pct": 22.0,
+    "timestamp_relative": "YEAR_17_CHARCOAL_02",
+    "tags": ["pyrolysis", "dust_hazard", "deflagration_risk", "slurry_mist", "safety_protocol"],
+    "prose": "Unloading dry charcoal lumps inside the stagnant air of Sub-Level 3 generated suspended clouds of 40-micron charcoal fines. Grounding all sorting screens and misting unloading chutes with 2% clay water eliminated electrostatic deflagration hazards."
+  },
+  {
+    "id": "charcoal_mound_hermetic_sheet_iron_kiln_retrofit",
+    "coaling_mound_id": "CIRCULAR_MODULAR_STEEL_KILN_08",
+    "feedstock_timber_species": "ROBINIA_PSEUDOACACIA_BLACK_LOCUST",
+    "pyrolysis_peak_temperature_celsius": 520.0,
+    "charcoal_gravimetric_yield_pct": 29.5,
+    "timestamp_relative": "YEAR_20_CHARCOAL_01",
+    "tags": ["pyrolysis", "modular_steel_kiln", "sand_seal", "fast_turnaround", "yield_optimization"],
+    "prose": "Replacing earthen mounds with segmented 10-gauge steel cylindrical kilns fitted with perimeter sand-trough seals cut turn-around cycle time from seven days to forty-eight hours. Black locust yields reached an unprecedented 29.5% with near-zero ash loss."
+  }
+]

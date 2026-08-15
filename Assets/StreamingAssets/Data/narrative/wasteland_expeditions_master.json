@@ -1,0 +1,726 @@
+{
+  "schema_version": 1,
+  "collection_id": "the_30_landmark_wasteland_expeditions",
+  "expeditions": [
+    {
+      "expedition_id": "exp_site_01_the_drowned_locomotive",
+      "title": "The Sunken Coal Train of Siding 9",
+      "zone": "Sector 3 - Frozen Canal Marshes",
+      "ambient_prose": "A massive class-E steam locomotive lies tilted on its side in three meters of black swamp water, half-encased in winter rime. The coal tender is intact, protected by an iron hatch that has rusted shut. The smell of sulfur, wet creosote, and cold iron hangs over the reeds.",
+      "threat_description": "Rad Level 0.4 mSv/h; structural collapse hazard if the cab settles into the silt.",
+      "choices": [
+        {
+          "choice_id": "torch_coal_hatch",
+          "label": "Cut the tender hatch with the plasma torch",
+          "skill_required": "Scavenge / Mechanical",
+          "outcome_success": "The hatch falls away with a splash. You shovel out 800 kg of dry bituminous coal. +800 Fuel.",
+          "outcome_risk": "Sparks ignite damp swamp methane; scout suffers minor flash burns (-10 HP)."
+        },
+        {
+          "choice_id": "salvage_cab_gauges",
+          "label": "Pry loose the brass steam gauges and injector valves",
+          "skill_required": "Fingers / Precision",
+          "outcome_success": "Three heavy phosphor-bronze pressure gauges recovered intact. +3 Precision Parts.",
+          "outcome_risk": "Glass shatters in the frost; gloves torn."
+        }
+      ],
+      "tags": ["locomotive", "coal", "canal", "salvage", "fuel"]
+    },
+    {
+      "expedition_id": "exp_site_02_the_deserters_pillbox",
+      "title": "The Concrete Pillbox at Mile 14",
+      "zone": "Sector 1 - North Ridge",
+      "ambient_prose": "A hexagonal reinforced concrete bunker dug into the crest of the hill. A tripwire made of piano wire stretches across the entrance trench, connected to a cluster of stick grenades hanging from a timber beam.",
+      "threat_description": "Booby-trapped entrance; interior contains active carbon monoxide from an unvented kerosene heater.",
+      "choices": [
+        {
+          "choice_id": "disarm_tripwire",
+          "label": "Snip the piano wire and disarm the grenade cluster",
+          "skill_required": "Sapper / Demolitions",
+          "outcome_success": "Wire neutralized cleanly. Inside: 2 military rifles, 40 rounds, and a dried sausage roll. +40 Ammo, +1 Rations.",
+          "outcome_risk": "Detonator sparks; entrance caves in, scout trapped for 4 hours (-25 HP)."
+        },
+        {
+          "choice_id": "flank_through_firing_slit",
+          "label": "Hook a mirror through the narrow machine-gun embrasure",
+          "skill_required": "Stealth / Scout",
+          "outcome_success": "Spot a second safe access hatch in the rear trench. Enter without triggering traps.",
+          "outcome_risk": "Slip on icy parapet, falling three meters into barbed wire (-15 HP)."
+        }
+      ],
+      "tags": ["pillbox", "grenade", "sapper", "weapons", "north_ridge"]
+    },
+    {
+      "expedition_id": "exp_site_03_the_flooded_apothecary",
+      "title": "The Chemist's Basement Vault",
+      "zone": "Sector 4 - Old Town Ruins",
+      "ambient_prose": "The floor of the ruined pharmacy has collapsed into the cellar. Shelves of brown glass apothecary jars remain above the waterline, labeled in faded gold Gothic script: Morphine, Potassium Iodide, Carbolic Acid.",
+      "threat_description": "Toxic chemical vapors; shattered glass floor beneath murky water.",
+      "choices": [
+        {
+          "choice_id": "wade_with_boots",
+          "label": "Wade through the chemical pool wearing heavy rubber waders",
+          "skill_required": "Medical / Chemical",
+          "outcome_success": "Recover 12 vials of sterile morphine and 50 iodine tablets. +12 Medical Supplies, +50 Anti-Rad.",
+          "outcome_risk": "Waders puncture on broken vial; acid burn on leg (-20 HP, +10 Rad)."
+        },
+        {
+          "choice_id": "grapple_top_shelf",
+          "label": "Fish the dry top shelves from the collapsed stairway with a pole",
+          "skill_required": "Precision / Patience",
+          "outcome_success": "Knock three intact amber bottles into a canvas net. +5 Medical Supplies.",
+          "outcome_risk": "A jar of ammonia shatters, filling cellar with choking gas (-10 Morale)."
+        }
+      ],
+      "tags": ["medical", "iodine", "morphine", "ruins", "chemistry"]
+    },
+    {
+      "expedition_id": "exp_site_04_the_frozen_radio_mast",
+      "title": "The Tower on Mount Karkov",
+      "zone": "Sector 2 - Summit Shallows",
+      "ambient_prose": "A seventy-meter steel lattice mast encrusted in three feet of wind-sculpted blue rime. The transmission cable has snapped and dangles thirty meters in the air, humming in the gale like a cello string.",
+      "threat_description": "-38°C windchill; high structural icing collapse risk.",
+      "choices": [
+        {
+          "choice_id": "climb_tower_with_crampons",
+          "label": "Climb the iced steel rungs with crampons to retrieve the vacuum amplifier",
+          "skill_required": "Athletics / Courage",
+          "outcome_success": "Reach the upper deck and unbolt the silver-plated transmission tube. +1 Relic Vacuum Tube, +15 Radio Range.",
+          "outcome_risk": "A gust of wind rips ice axe loose; scout barely catches rung with broken fingers (-20 HP)."
+        },
+        {
+          "choice_id": "salvage_ground_shed",
+          "label": "Crowbar open the emergency generator shack at the tower base",
+          "skill_required": "Mechanical",
+          "outcome_success": "Find 40 liters of clean aviation diesel in a sealed drum. +40 Fuel.",
+          "outcome_risk": "Padlock sparks, freezing wind blows door shut (-5 Morale)."
+        }
+      ],
+      "tags": ["radio_mast", "summit", "frost", "vacuum_tube", "diesel"]
+    },
+    {
+      "expedition_id": "exp_site_05_the_overturned_armored_car",
+      "title": "The Highway 4 Ambush Site",
+      "zone": "Sector 5 - Dead Highway",
+      "ambient_prose": "A four-wheel reconnaissance scout car rests upside down in the roadside ditch, wheels stripped and turret rusted at 45 degrees. The driver's armored hatch is still dogged from the inside.",
+      "threat_description": "Fuel tank leak; unexploded 20mm autocannon ammunition in floor well.",
+      "choices": [
+        {
+          "choice_id": "cut_drivers_hatch",
+          "label": "Pry the escape hatch with a hydraulic jack",
+          "skill_required": "Mechanical / Strength",
+          "outcome_success": "Pop the hatch dogs: recover an intact officer's map case, brass compass, and 80 rounds of 7.62mm. +80 Ammo, +1 Map.",
+          "outcome_risk": "Hydraulic jack slips; crushed wrist (-15 HP)."
+        },
+        {
+          "choice_id": "strip_armor_plates",
+          "label": "Unbolt the ballistic ceramic door panels with an impact wrench",
+          "skill_required": "Scavenge",
+          "outcome_success": "Haul away four 15kg lightweight armor slabs. +4 Composite Armor.",
+          "outcome_risk": "Panel drops into snow, pinning foot for an hour (-10 HP)."
+        }
+      ],
+      "tags": ["armored_car", "highway", "ammo", "maps", "mechanic"]
+    },
+    {
+      "expedition_id": "exp_site_06_the_botanical_institute_greenhouse",
+      "title": "The Broken Glass Dome",
+      "zone": "Sector 6 - Arboretum Flats",
+      "ambient_prose": "A shattered Victorian iron-and-glass palm house. Beneath the drifts of black ash, a thermal steam pipe still leaks subterranean warmth, sustaining a patch of mutant moss and deep-rooted winter carrots.",
+      "threat_description": "Hanging glass shards overhead; soil contains moderate heavy-metal contamination.",
+      "choices": [
+        {
+          "choice_id": "harvest_root_vegetables",
+          "label": "Dig carefully around the thermal pipe to harvest the winter carrots",
+          "skill_required": "Agriculture / Botany",
+          "outcome_success": "Harvest 15 kg of sweet, uncontaminated heirloom root vegetables. +15 Fresh Food, +10 Morale.",
+          "outcome_risk": "Glass pane falls from dome; cuts shoulder (-10 HP)."
+        },
+        {
+          "choice_id": "collect_moss_spores",
+          "label": "Scrape the green bioluminescent moss into specimen jars",
+          "skill_required": "Science / Chemistry",
+          "outcome_success": "Recover active fungal culture for underground air scrubbing. +1 Bio-Scrubber Culture.",
+          "outcome_risk": "Inhale spores; coughing fit (-5 Stamina)."
+        }
+      ],
+      "tags": ["greenhouse", "botany", "carrots", "food", "bio_scrubber"]
+    },
+    {
+      "expedition_id": "exp_site_07_the_collapsed_brewery_cellar",
+      "title": "The Old Malt Vaults",
+      "zone": "Sector 4 - Old Town Ruins",
+      "ambient_prose": "A vaulted brick cellar buried under four meters of rubble. Huge oak casks lie in the shadows, some cracked dry, but three oak barrels remain pressurized and bung-sealed with lead foil.",
+      "threat_description": "Unstable brick ceiling; pitch black interior.",
+      "choices": [
+        {
+          "choice_id": "tap_oak_barrel",
+          "label": "Drill a brass spigot into the central oak cask",
+          "skill_required": "Brewing / Scavenge",
+          "outcome_success": "Tap 50 liters of 12% dark winter porter beer, rich in calories and yeast. +50 Beer, +25 Shelter Morale.",
+          "outcome_risk": "Cask vinegarized into acid; noxious smell fills room (-5 Morale)."
+        },
+        {
+          "choice_id": "shore_brick_arch",
+          "label": "Shore up the ceiling with timber props and search the malt bins",
+          "skill_required": "Carpentry / Sapper",
+          "outcome_success": "Find three 25kg sacks of roasted barley in wax-lined burlap. +75 kg Grain.",
+          "outcome_risk": "Loose brick falls; helmet dented (-10 HP)."
+        }
+      ],
+      "tags": ["brewery", "beer", "malt", "grain", "morale"]
+    },
+    {
+      "expedition_id": "exp_site_08_the_downed_transport_helicopter",
+      "title": "The Rotor Hub in the Sedge",
+      "zone": "Sector 3 - Frozen Canal Marshes",
+      "ambient_prose": "A twin-rotor heavy cargo helicopter broken in two across a frozen hummock. The fuselage is painted with civil defense red crosses. Cargo nets inside hold sealed aluminium transit cases.",
+      "threat_description": "Aircraft lithium battery smoldering; frozen marsh ice is thin near the exhaust.",
+      "choices": [
+        {
+          "choice_id": "haul_transit_cases",
+          "label": "Lay a plank bridge over the thin ice to haul the aluminium cases",
+          "skill_required": "Athletics / Balance",
+          "outcome_success": "Recover two military field surgical suites with autoclaves. +2 Advanced Clinic Kits.",
+          "outcome_risk": "Ice breaks; scout falls into waist-deep slush at -25°C (-30 HP, severe hypothermia)."
+        },
+        {
+          "choice_id": "strip_titanium_rotors",
+          "label": "Unbolt the titanium rotor hub blades with a socket set",
+          "skill_required": "Mechanical",
+          "outcome_success": "Retrieve 40 kg of high-purity titanium alloy bar stock. +40 Rare Metal.",
+          "outcome_risk": "Sharp titanium edge cuts glove (-10 HP)."
+        }
+      ],
+      "tags": ["helicopter", "surgical_kit", "titanium", "ice", "marsh"]
+    },
+    {
+      "expedition_id": "exp_site_09_the_weather_station_vault",
+      "title": "The Barometric Sphere at Station 4",
+      "zone": "Sector 2 - Summit Shallows",
+      "ambient_prose": "A fiberglass observation dome perched on a cliff ledge. The revolving anemometer cups are frozen solid with rime, but the recording drum inside is still ticking with a spring-wound clock.",
+      "threat_description": "Sheer 200-meter drop on north side; high static charge on metal railings.",
+      "choices": [
+        {
+          "choice_id": "retrieve_weather_charts",
+          "label": "Carefully remove the 365-day atmospheric pressure chart drum",
+          "skill_required": "Science / Meteorology",
+          "outcome_success": "Acquire 10 years of historical fallout storm patterns. +1 Weather Forecasting Tech.",
+          "outcome_risk": "Gust of wind rips door off hinges; scout slips toward ledge (-20 HP)."
+        },
+        {
+          "choice_id": "salvage_optical_theodolite",
+          "label": "Unclamp the precision Swiss survey theodolite and tripod",
+          "skill_required": "Precision",
+          "outcome_success": "Gain military-grade artillery sighting optic. +1 Scout Periscope Optic.",
+          "outcome_risk": "Tripod legs frozen into granite; broke clamp."
+        }
+      ],
+      "tags": ["weather_station", "meteorology", "summit", "optics", "charts"]
+    },
+    {
+      "expedition_id": "exp_site_10_the_weavers_mill",
+      "title": "The Industrial Loom Hall",
+      "zone": "Sector 4 - Old Town Ruins",
+      "ambient_prose": "A three-story brick textile mill with a caved-in slate roof. In the dry interior rooms, fifty massive wooden shuttle looms sit covered in oily tarpaulins, with hundred-yard bolts of unbleached wool fabric on the rollers.",
+      "threat_description": "Dry rot in floorboards; mold spore hazard.",
+      "choices": [
+        {
+          "choice_id": "cut_wool_bolts",
+          "label": "Roll and lash six full bolts of heavy winter wool fabric",
+          "skill_required": "Scavenge / Logistics",
+          "outcome_success": "Haul 200 meters of warm wool for bunker blankets and winter coats. +200 Wool, +15 Cold Resistance.",
+          "outcome_risk": "Floor collapses beneath weight; timber crash (-15 HP)."
+        },
+        {
+          "choice_id": "salvage_loom_leather",
+          "label": "Strip the heavy buffalo leather drive belts from the line shafts",
+          "skill_required": "Carpentry / Tools",
+          "outcome_success": "Recover 30 meters of industrial drive leather for boots and seals. +30 Heavy Leather.",
+          "outcome_risk": "Drive belt snaps under tension; strikes hand (-10 HP)."
+        }
+      ],
+      "tags": ["textiles", "wool", "clothing", "leather", "warmth"]
+    },
+    {
+      "expedition_id": "exp_site_11_the_quarry_dynamite_magazine",
+      "title": "The Granite Powder House",
+      "zone": "Sector 7 - Slate Bluffs",
+      "ambient_prose": "A small stone bunker set into solid bedrock with iron blast shutters. Inside, wooden crates of mining dynamite sit stacked. The nitroglycerin has crystallized on the outside of the wax paper cartridges.",
+      "threat_description": "EXTREME VOLATILITY. Any sharp impact or heat will trigger catastrophic explosion.",
+      "choices": [
+        {
+          "choice_id": "disarm_with_paraffin",
+          "label": "Carefully pack five unwept sticks into sawdust-lined wooden boxes",
+          "skill_required": "Demolitions / Sapper Master",
+          "outcome_success": "Safely recover 15 sticks of stabilized mining blasting charges. +15 Heavy Explosives.",
+          "outcome_risk": "A stick cracks; micro-detonation blows off fingertips (-35 HP, loss of sapper tool)."
+        },
+        {
+          "choice_id": "take_only_safety_fuse",
+          "label": "Take only the coils of black powder safety fuse and non-electric detonators",
+          "skill_required": "Caution",
+          "outcome_success": "Recover 100 meters of waterproof fuse and 20 copper blasting caps. +20 Blasting Caps.",
+          "outcome_risk": "Door hinge groans violently (-5 Morale)."
+        }
+      ],
+      "tags": ["explosives", "dynamite", "quarry", "sapper", "danger"]
+    },
+    {
+      "expedition_id": "exp_site_12_the_drowned_church_crypt",
+      "title": "The Vault Beneath the Spire",
+      "zone": "Sector 3 - Frozen Canal Marshes",
+      "ambient_prose": "The wooden roof of the cathedral has collapsed into the water, but the stone bell tower and subterranean crypt remain accessible by boat. Heavy carved limestone sarcophagi sit in knee-deep water.",
+      "threat_description": "Sub-zero black water; unstable choir loft timbers.",
+      "choices": [
+        {
+          "choice_id": "pry_lead_coffin",
+          "label": "Crowbar open the lead-lined vault of the 19th-century bishop",
+          "skill_required": "Strength / Respect",
+          "outcome_success": "Find a solid silver chalice, ceremonial beeswax candles, and a hand-illuminated gospel. +1 Silver Relic, +20 Morale.",
+          "outcome_risk": "Sister Mara hears of tomb desecration; -15 Religious Trust."
+        },
+        {
+          "choice_id": "salvage_cathedral_bell",
+          "label": "Rig a timber tripod to lower the 300kg bronze sanctuary bell onto a sled",
+          "skill_required": "Engineering / Rigging",
+          "outcome_success": "Haul the great bell back to the bunker to serve as the master shift chime. +1 Bronze Bell, +20 Order.",
+          "outcome_risk": "Tripod cable slips; bell crashes through ice (-20 HP)."
+        }
+      ],
+      "tags": ["cathedral", "crypt", "bell", "bronze", "faith"]
+    },
+    {
+      "expedition_id": "exp_site_13_the_grain_elevator_silo",
+      "title": "The Concrete Silo at Siding 4",
+      "zone": "Sector 1 - North Ridge",
+      "ambient_prose": "A forty-meter cylindrical concrete elevator tower. The lower discharge chute is rusted shut, but the inspection port at the top reveals fifty tons of grain sealed under an airtight carbon dioxide blanket.",
+      "threat_description": "Grain dust explosion risk; asphyxiation hazard from CO2 inside the silo.",
+      "choices": [
+        {
+          "choice_id": "enter_with_air_hose",
+          "label": "Lower a scout on a winch wearing a compressed air hose",
+          "skill_required": "Logistics / Breathing Gear",
+          "outcome_success": "Bag and hoist 500 kg of dry, pristine durum wheat. +500 Grain, +30 Food Security.",
+          "outcome_risk": "Air hose snags on ladder; scout blacks out and must be hauled up unconscious (-15 HP)."
+        },
+        {
+          "choice_id": "punch_bottom_slide",
+          "label": "Sledgehammer the lower gravity slide valve from the outside",
+          "skill_required": "Strength",
+          "outcome_success": "Open the flow; 200 kg of wheat pours directly into the sled hopper. +200 Grain.",
+          "outcome_risk": "Grain dust cloud catches lantern spark; small flash explosion (-20 HP)."
+        }
+      ],
+      "tags": ["grain", "silo", "wheat", "food", "logistics"]
+    },
+    {
+      "expedition_id": "exp_site_14_the_military_depot_motorpool",
+      "title": "The Subterranean Tank Bay",
+      "zone": "Sector 5 - Dead Highway",
+      "ambient_prose": "An underground repair bunker accessed via a ramp covered in broken concrete slabs. Inside, two heavy recovery tractors and three utility trucks sit preserved in cosmoline grease.",
+      "threat_description": "Collapsed entrance ramp; pools of toxic leaded fuel on the concrete floor.",
+      "choices": [
+        {
+          "choice_id": "drain_diesel_tanks",
+          "label": "Siphon the sealed fuel tanks of the three utility trucks",
+          "skill_required": "Mechanical",
+          "outcome_success": "Drain 300 liters of pristine red winter diesel fuel. +300 Fuel.",
+          "outcome_risk": "Ingest mouthful of leaded diesel while priming siphon (-15 HP, nausea)."
+        },
+        {
+          "choice_id": "strip_starter_motors",
+          "label": "Unbolt the heavy 24V starter motors and high-output alternators",
+          "skill_required": "Electrical / Precision",
+          "outcome_success": "Recover two 5kW heavy-duty alternators for the bunker grid. +2 High-Output Alternators.",
+          "outcome_risk": "Wrench shorts across battery terminal; arc flash blinds scout for 1 hour (-10 HP)."
+        }
+      ],
+      "tags": ["motorpool", "diesel", "alternator", "mechanic", "fuel"]
+    },
+    {
+      "expedition_id": "exp_site_15_the_optometry_clinic",
+      "title": "The Eye Doctor's Office",
+      "zone": "Sector 4 - Old Town Ruins",
+      "ambient_prose": "A small first-floor office with shattered bay windows. The examination chair is covered in snow, but the velvet-lined mahogany cases of trial lenses and corrective prisms are dry and untouched.",
+      "threat_description": "Weak floor joists over a collapsed cellar.",
+      "choices": [
+        {
+          "choice_id": "salvage_lens_cases",
+          "label": "Carefully pack the complete trial lens set and ophthalmoscope",
+          "skill_required": "Medical / Precision",
+          "outcome_success": "Acquire precision optics to grind corrective spectacles for bunker dwellers. +1 Optometry Kit, +10 Machine Shop Accuracy.",
+          "outcome_risk": "Drop a tray of lenses into the floor cracks (-5 Morale)."
+        },
+        {
+          "choice_id": "salvage_eyeglass_frames",
+          "label": "Collect fifty titanium and acetate spectacle frames from display cases",
+          "skill_required": "Scavenge",
+          "outcome_success": "Gather 50 frame sets for dwellers suffering from eyestrain. +50 Glasses Frames.",
+          "outcome_risk": "Cut finger on display glass (-5 HP)."
+        }
+      ],
+      "tags": ["optometry", "glasses", "medical", "optics", "precision"]
+    },
+    {
+      "expedition_id": "exp_site_16_the_hydroelectric_substation",
+      "title": "The Transformer Yard at Lock 2",
+      "zone": "Sector 3 - Frozen Canal Marshes",
+      "ambient_prose": "A high-voltage transformer bank encased in ice beside the roaring spillway. The copper busbars are as thick as a man's arm, and large porcelain insulator bells hang from the steel gantries.",
+      "threat_description": "High residual capacitor voltage; ice-slick catwalks over the torrent.",
+      "choices": [
+        {
+          "choice_id": "hacksaw_copper_busbars",
+          "label": "Ground the circuit and hacksaw 50kg of pure electrolytic copper busbar",
+          "skill_required": "Electrical / Sapper",
+          "outcome_success": "Haul away 50kg of electrolytic copper for generator wiring. +50 Pure Copper, +10 Grid Efficiency.",
+          "outcome_risk": "Residual charge in capacitor arc-welds hacksaw to gantry; severe electrical shock (-25 HP)."
+        },
+        {
+          "choice_id": "salvage_porcelain_insulators",
+          "label": "Unbolt four heavy 10kV porcelain insulator stacks",
+          "skill_required": "Mechanical",
+          "outcome_success": "Acquire high-voltage insulators for the 4000V busbar upgrade. +4 Heavy Insulators.",
+          "outcome_risk": "Insulator drops into spillway and shatters (-5 Morale)."
+        }
+      ],
+      "tags": ["electrical", "copper", "substation", "high_voltage", "power"]
+    },
+    {
+      "expedition_id": "exp_site_17_the_drowned_cargo_barge",
+      "title": "The Barge 'Volga-6' in the Silt",
+      "zone": "Sector 3 - Frozen Canal Marshes",
+      "ambient_prose": "An eighty-meter flat-deck steel cargo barge sunk in the canal channel. The deck sits just beneath the ice, but the aft crew cabin and engine room rise above the water.",
+      "threat_description": "Ice cracking underfoot; flooded compartments.",
+      "choices": [
+        {
+          "choice_id": "dive_engine_room",
+          "label": "Dive through the flooded engine skylight with a dive mask",
+          "skill_required": "Diving / Cold Endurance",
+          "outcome_success": "Recover the bronze ship propeller and spare injector nozzles. +1 Bronze Propeller, +10 Spare Parts.",
+          "outcome_risk": "Snag suit on jagged metal plate; hypothermia water intake (-25 HP)."
+        },
+        {
+          "choice_id": "torch_cargo_hold",
+          "label": "Cut through the deck hatch from the ice surface",
+          "skill_required": "Mechanical",
+          "outcome_success": "Find three sealed crates of galvanized roofing nails and iron wire. +30 Hardware.",
+          "outcome_risk": "Torch fumes blow back in wind (-10 HP)."
+        }
+      ],
+      "tags": ["barge", "canal", "diving", "hardware", "salvage"]
+    },
+    {
+      "expedition_id": "exp_site_18_the_frozen_beekeeper_cottage",
+      "title": "The Apiary on the South Slope",
+      "zone": "Sector 6 - Arboretum Flats",
+      "ambient_prose": "A wooden cabin surrounded by twenty snow-covered beehives. The bees are dead from the cold, but the hives contain combs of solid amber clover honey and blocks of pure beeswax.",
+      "threat_description": "Wild animal tracks (starving wolves) circling the cottage.",
+      "choices": [
+        {
+          "choice_id": "harvest_honeycombs",
+          "label": "Harvest the sealed honeycombs and render the beeswax",
+          "skill_required": "Agriculture / Culinary",
+          "outcome_success": "Yield 30 kg of pure antibacterial clover honey and 10 kg of candle wax. +30 Honey, +10 Wax, +20 Morale.",
+          "outcome_risk": "Wolves attack from the pine grove; must spend 4 rifle rounds to drive them off (-4 Ammo, -10 HP)."
+        },
+        {
+          "choice_id": "search_cottage_loft",
+          "label": "Climb the loft ladder to search the beekeeper's personal stores",
+          "skill_required": "Scavenge",
+          "outcome_success": "Find three jars of pickled mushrooms and a wool blanket. +3 Rations, +1 Warm Blanket.",
+          "outcome_risk": "Loft rungs crack under boot (-5 HP)."
+        }
+      ],
+      "tags": ["honey", "beeswax", "wolves", "food", "healing"]
+    },
+    {
+      "expedition_id": "exp_site_19_the_collapsed_iron_mine",
+      "title": "Adit #4 at Black Ridge",
+      "zone": "Sector 7 - Slate Bluffs",
+      "ambient_prose": "An old drift mine entrance reinforced with massive oak timbers. The first fifty meters are dry, but the tracks lead into a dark slope where cold air blows from deep within the earth.",
+      "threat_description": "Radon gas pooling in lower drift; loose hanging shale roof.",
+      "choices": [
+        {
+          "choice_id": "mine_high_grade_ore",
+          "label": "Pick out five hundred kilos of 60% hematite iron ore from the face",
+          "skill_required": "Mining / Strength",
+          "outcome_success": "Haul 500 kg of rich iron ore back to the Silent Foundry. +500 Iron Ore, +20 Metalworking.",
+          "outcome_risk": "Shale slab drops from roof; shoulder bruised (-20 HP)."
+        },
+        {
+          "choice_id": "salvage_mine_cart",
+          "label": "Dismantle the steel ore cart and wheel bearings on the rail",
+          "skill_required": "Mechanical",
+          "outcome_success": "Gain heavy-duty cast-iron flanged wheels for bunker transit. +4 Rail Wheels.",
+          "outcome_risk": "Cart rolls over crowbar; pinched foot (-10 HP)."
+        }
+      ],
+      "tags": ["mine", "iron_ore", "hematite", "foundry", "radon"]
+    },
+    {
+      "expedition_id": "exp_site_20_the_downed_recon_drone",
+      "title": "The Wing in the Birch Copse",
+      "zone": "Sector 1 - North Ridge",
+      "ambient_prose": "A carbon-fiber swept-wing reconnaissance drone hanging five meters up in a clump of frozen birch trees. The optical sensor ball under the nose is intact, staring down into the snow.",
+      "threat_description": "Drone contains a pyrotechnic self-destruct thermite charge wired to the avionics.",
+      "choices": [
+        {
+          "choice_id": "defuse_thermite_circuit",
+          "label": "Cut the yellow umbilical wire to disarm the self-destruct charge",
+          "skill_required": "Electronics / Sapper",
+          "outcome_success": "Disarm the charge and remove the high-resolution FLIR infrared camera ball. +1 Thermal Periscope Optic.",
+          "outcome_risk": "Thermite ignites; white-hot fire melts wing and burns scout's coat (-30 HP)."
+        },
+        {
+          "choice_id": "salvage_solar_panels",
+          "label": "Carefully slice the flexible gallium-arsenide solar film from the wings",
+          "skill_required": "Precision",
+          "outcome_success": "Recover 4 square meters of high-efficiency solar cells. +4 High-Yield Solar Film.",
+          "outcome_risk": "Birch branch breaks; scout falls from tree (-15 HP)."
+        }
+      ],
+      "tags": ["drone", "optics", "flir", "solar", "electronics"]
+    },
+    {
+      "expedition_id": "exp_site_21_the_seed_testing_vault",
+      "title": "The Cryogenic Seed Repository",
+      "zone": "Sector 6 - Arboretum Flats",
+      "ambient_prose": "A subterranean bunker beneath the Agricultural College. Stainless steel liquid nitrogen dewars sit in racks. Though the nitrogen has boiled off, the vacuum insulation kept the seed packets bone dry and frozen.",
+      "threat_description": "Stairwell blocked by heavy steel blast door; pitch darkness.",
+      "choices": [
+        {
+          "choice_id": "breach_blast_door",
+          "label": "Torch open the hinge pins on the seed vault door",
+          "skill_required": "Mechanical / Plasma Torch",
+          "outcome_success": "Recover hundreds of sealed packets of pre-war heirloom seeds (tomatoes, barley, squash, winter rye). +1 Master Seed Cache, +50 Agriculture.",
+          "outcome_risk": "Hinge pin drops on foot; toe crushed (-10 HP)."
+        },
+        {
+          "choice_id": "salvage_dewar_flasks",
+          "label": "Take the four pristine stainless steel vacuum insulated dewars",
+          "skill_required": "Logistics",
+          "outcome_success": "Gain cryogenic storage flasks for vaccine and culture preservation. +4 Cryo Flasks.",
+          "outcome_risk": "Dewar seal releases gas hissed into face (-5 HP)."
+        }
+      ],
+      "tags": ["seed_vault", "agriculture", "seeds", "heirloom", "century_seed"]
+    },
+    {
+      "expedition_id": "exp_site_22_the_sunken_tugboat_galley",
+      "title": "The Ice-Locked Tugboat 'Buran'",
+      "zone": "Sector 3 - Frozen Canal Marshes",
+      "ambient_prose": "A steel diesel tugboat listing twenty degrees in the canal ice. The galley above the waterline contains a cast-iron coal range, copper pots, and a locked pantry cupboard.",
+      "threat_description": "Listing deck is coated in slick black ice; chimney soot hazard.",
+      "choices": [
+        {
+          "choice_id": "crowbar_pantry_cupboard",
+          "label": "Crowbar open the ship cook's locked zinc pantry",
+          "skill_required": "Scavenge",
+          "outcome_success": "Find twelve tins of corned beef, four tins of sweetened condensed milk, and sea salt. +12 Canned Meat, +4 Milk, +15 Morale.",
+          "outcome_risk": "Pantry door snaps back; cut knuckles (-5 HP)."
+        },
+        {
+          "choice_id": "dismantle_cast_iron_range",
+          "label": "Unbolt the heavy marine cookstove for the bunker canteen",
+          "skill_required": "Carpentry / Strength",
+          "outcome_success": "Haul away a heavy cast-iron galley range with copper water jacket. +1 Master Cookstove.",
+          "outcome_risk": "Stove slips on ice ramp (-15 HP)."
+        }
+      ],
+      "tags": ["tugboat", "canned_meat", "cookstove", "food", "canal"]
+    },
+    {
+      "expedition_id": "exp_site_23_the_collapsed_printworks",
+      "title": "The Provincial Printing House",
+      "zone": "Sector 4 - Old Town Ruins",
+      "ambient_prose": "A two-story brick printing shop. In the dry basement, a German Heidelberg cylinder press sits beside five tons of lead movable type and reams of heavy cotton rag paper in wax wrap.",
+      "threat_description": "Toxic lead dust hazard; heavy ceiling sag.",
+      "choices": [
+        {
+          "choice_id": "haul_lead_type_and_paper",
+          "label": "Load two boxes of lead type and fifty reams of rag paper onto sleds",
+          "skill_required": "Logistics / Scribe",
+          "outcome_success": "Establish a printing press in the bunker to print pamphlets, schoolbooks, and currency. +1 Printing Press Capability, +20 Literacy.",
+          "outcome_risk": "Inhale lead dust while sorting font drawers; minor poisoning (-10 HP, -5 Stamina)."
+        },
+        {
+          "choice_id": "salvage_printing_ink",
+          "label": "Seal four 10-liter drums of black oil-based printing ink",
+          "skill_required": "Chemical",
+          "outcome_success": "Acquire 40 liters of indelible press ink. +40 Printing Ink.",
+          "outcome_risk": "Ink drum spills on scout's parka (-5 Morale)."
+        }
+      ],
+      "tags": ["printing", "press", "lead_type", "paper", "culture"]
+    },
+    {
+      "expedition_id": "exp_site_24_the_chemical_tanker_derailment",
+      "title": "The Sulfuric Acid Tanker Train",
+      "zone": "Sector 5 - Dead Highway",
+      "ambient_prose": "Three massive pressurized rail tank cars derailed on the embankment. Two have ruptured, dissolving the gravel into yellow crust, but Tanker #3 remains sealed, holding twenty tons of industrial nitric acid.",
+      "threat_description": "EXTREME CHEMICAL CORROSION. Nitric acid fumes can dissolve lungs in minutes.",
+      "choices": [
+        {
+          "choice_id": "sample_nitric_acid",
+          "label": "Don full hazmat suit and draw 50 liters into glass carboys",
+          "skill_required": "Chemistry / Hazmat",
+          "outcome_success": "Safely harvest 50 liters of nitric acid for fertilizer and explosives synthesis. +50 Nitric Acid, +20 Chemistry.",
+          "outcome_risk": "Acid splash melts hazmat boot sole; chemical burn on ankle (-30 HP, hazmat degraded)."
+        },
+        {
+          "choice_id": "salvage_lead_lining",
+          "label": "Strip the heavy 5mm lead shielding sheets from the rupture baffles",
+          "skill_required": "Scavenge",
+          "outcome_success": "Recover 80 kg of pure lead sheet for bunker gamma shielding. +80 Lead Shielding.",
+          "outcome_risk": "Sharp lead sheet cuts forearm (-15 HP)."
+        }
+      ],
+      "tags": ["chemical", "acid", "nitric", "hazmat", "explosives"]
+    },
+    {
+      "expedition_id": "exp_site_25_the_astronomy_observatory",
+      "title": "The Mountain Star Dome",
+      "zone": "Sector 2 - Summit Shallows",
+      "ambient_prose": "A copper dome at the mountain crest. The motorized slit is open to the night sky. The primary 400mm quartz mirror telescope is intact, pointed toward the clear stars above the ash clouds.",
+      "threat_description": "-42°C ambient temperature; zero oxygen generation on summit.",
+      "choices": [
+        {
+          "choice_id": "observe_orbital_harrows",
+          "label": "Use the telescope to plot the decay trajectories of orbital satellites",
+          "skill_required": "Astronomy / Science",
+          "outcome_success": "Chart the orbital decay matrix; gain 7 days early warning on orbital kinetic strikes. +1 Harrow Predictor Data, +30 Defense.",
+          "outcome_risk": "Eye freezes to telescope eyepiece in -42°C cold; corneal burn (-20 HP)."
+        },
+        {
+          "choice_id": "unmount_quartz_mirror",
+          "label": "Carefully unbolt the 400mm optical quartz primary mirror",
+          "skill_required": "Precision / Rigging",
+          "outcome_success": "Acquire a master-grade quartz optical flat for laser and solar research. +1 Master Quartz Mirror.",
+          "outcome_risk": "Mirror mount cracks; quartz chipped (-10 Morale)."
+        }
+      ],
+      "tags": ["observatory", "telescope", "orbital", "harrow", "stars"]
+    },
+    {
+      "expedition_id": "exp_site_26_the_drowned_wine_cellar",
+      "title": "The Count's Stone Vault",
+      "zone": "Sector 4 - Old Town Ruins",
+      "ambient_prose": "An 18th-century stone wine cellar beneath a ruined manor. Bins of vintage red wine bottles lie covered in thick cellar mold, sealed in Spanish cork and red sealing wax.",
+      "threat_description": "Water seepage through stone vault; mold spore cough.",
+      "choices": [
+        {
+          "choice_id": "crate_vintage_wine",
+          "label": "Pack forty bottles of aged vintage wine into sawdust crates",
+          "skill_required": "Scavenge / Trade",
+          "outcome_success": "Acquire luxury trade goods for barter with the Weigher and Syndicate merchants. +40 Vintage Wine, +50 Barter Value.",
+          "outcome_risk": "Crate drops on wet stairs; eight bottles shatter (-5 Morale)."
+        },
+        {
+          "choice_id": "distill_into_alcohol",
+          "label": "Haul the soured barrels to distill into 95% medical antiseptic alcohol",
+          "skill_required": "Chemistry",
+          "outcome_success": "Produce 20 liters of pure medical ethanol. +20 Medical Alcohol.",
+          "outcome_risk": "Distillation vapor catches spark; minor singe (-5 HP)."
+        }
+      ],
+      "tags": ["wine", "alcohol", "barter", "luxury", "antiseptic"]
+    },
+    {
+      "expedition_id": "exp_site_27_the_military_communications_bunker",
+      "title": "Station Omega Telegraph Vault",
+      "zone": "Sector 1 - North Ridge",
+      "ambient_prose": "A reinforced underground communications center buried thirty meters down. The cryptographic rotor machines (cipher boxes) sit bolted to the desks beside racks of intact vacuum tubes.",
+      "threat_description": "Airlock interlock locked in EMERGENCY QUARANTINE mode; must override solenoids.",
+      "choices": [
+        {
+          "choice_id": "override_airlock_solenoids",
+          "label": "Bypass the quarantine interlock with jump leads and a 24V battery",
+          "skill_required": "Electrical / Cryptography",
+          "outcome_success": "Open the vault: recover two military cipher rotor machines and daily codebooks. +1 Cipher Rotor Machine, +25 Decryption Speed.",
+          "outcome_risk": "Short circuit triggers fire suppression halon gas; scout chokes (-20 HP)."
+        },
+        {
+          "choice_id": "salvage_copper_tape_reels",
+          "label": "Collect fifty reels of copper telegraph punch tape",
+          "skill_required": "Scavenge",
+          "outcome_success": "Gain historical transmission records from the 45 minutes of the exchange. +1 Historical Record Doc.",
+          "outcome_risk": "Paper cuts on fingers in cold (-5 HP)."
+        }
+      ],
+      "tags": ["communications", "cipher", "telegraph", "rotor", "station_omega"]
+    },
+    {
+      "expedition_id": "exp_site_28_the_frozen_sawmill",
+      "title": "The Timber Yard at River Fork",
+      "zone": "Sector 6 - Arboretum Flats",
+      "ambient_prose": "A massive steam-powered timber sawmill beside a frozen log pond. Inside the dry storage sheds, hundreds of seasoned dry pine planks, heavy cedar beams, and large circular saw blades sit ready.",
+      "threat_description": "Collapsed snowdrifts blocking shed doors; wolf den in the sawdust pile.",
+      "choices": [
+        {
+          "choice_id": "haul_cured_timber",
+          "label": "Lash twenty 4-meter seasoned pine beams to the heavy timber sled",
+          "skill_required": "Carpentry / Strength",
+          "outcome_success": "Bring back high-grade structural timber for bunker room expansions. +200 Structural Timber, +15 Construction Speed.",
+          "outcome_risk": "Beam rolls off pile, crushing ankle (-20 HP)."
+        },
+        {
+          "choice_id": "unbolt_circular_saws",
+          "label": "Unbolt three 48-inch manganese-steel circular saw blades",
+          "skill_required": "Mechanical",
+          "outcome_success": "Acquire heavy steel saw blades for the sawmill and machine shop. +3 Master Saw Blades.",
+          "outcome_risk": "Blade slips in frost; cuts coat (-5 HP)."
+        }
+      ],
+      "tags": ["sawmill", "timber", "wood", "carpentry", "construction"]
+    },
+    {
+      "expedition_id": "exp_site_29_the_quarantine_checkpoint_hospital",
+      "title": "Field Hospital 102",
+      "zone": "Sector 5 - Dead Highway",
+      "ambient_prose": "A complex of canvas tents and shipping containers erected on the highway during Day 3 of the war. A perimeter of rusted shipping containers surrounds the triage area, containing pallets of sealed intravenous saline and blood bags.",
+      "threat_description": "Biohazard zone; residual chemical decontamination powders in the soil.",
+      "choices": [
+        {
+          "choice_id": "scavenge_saline_pallets",
+          "label": "Break open the shipping container and salvage 100 bags of sterile IV saline",
+          "skill_required": "Medical / Logistics",
+          "outcome_success": "Recover 100 units of sterile normal saline for severe radiation burns and blood loss. +100 IV Saline, +30 Clinic Capacity.",
+          "outcome_risk": "Bag carton collapses, scout's glove rips on rusty nail (-10 HP, infection risk)."
+        },
+        {
+          "choice_id": "salvage_lead_xray_shield",
+          "label": "Unbolt the heavy lead-shielded mobile X-ray unit",
+          "skill_required": "Medical / Mechanics",
+          "outcome_success": "Acquire diagnostic X-ray machine for Dr. Vel's oncology ward. +1 Mobile X-Ray Machine.",
+          "outcome_risk": "Heavy machine tilts on ice; muscle sprain (-15 HP)."
+        }
+      ],
+      "tags": ["hospital", "saline", "xray", "medical", "clinic"]
+    },
+    {
+      "expedition_id": "exp_site_30_the_valley_summit_beacon",
+      "title": "The Tessarat Valley High Sentry Mast",
+      "zone": "Sector 2 - Summit Shallows",
+      "ambient_prose": "The highest geographic point in the province, looking out over the entire expanse of Tessarat from the snow-capped mountain crest. The sun is breaking through the high cirrus clouds for the first time in ten years, illuminating forty chimneys across the valley.",
+      "threat_description": "High altitude; sheer cliff edge; profound emotional weight.",
+      "choices": [
+        {
+          "choice_id": "light_the_century_beacon",
+          "label": "Ignite the master flare basket to signal all twelve districts that the thaw has begun",
+          "skill_required": "Leadership / Hope",
+          "outcome_success": "A column of clean amber fire rises into the dawn sky. Radio stations across 300 km erupt in cheers. +100 Valley Hope, unlocks 'The New Dawn' epilogue state.",
+          "outcome_risk": "None. The wind is calm. The morning is here."
+        },
+        {
+          "choice_id": "carve_the_summit_stone",
+          "label": "Carve the names of the survivors into the summit bedrock with Sonya's chisel",
+          "skill_required": "Sister Mara / Stonework",
+          "outcome_success": "The stone records every soul who endured the dark. +50 Eternal Resolve, +30 Cultural Victory.",
+          "outcome_risk": "None. The chisel is steady."
+        }
+      ],
+      "tags": ["summit", "beacon", "dawn", "finale", "victory", "century_seed"]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+[
+  {
+    "id": "clepsydra_silt_jeweled_orifice_calcite_crust",
+    "clepsydra_station_id": "RESERVOIR_CLEPSYDRA_CLOCK_01",
+    "orifice_material_type": "SYNTHETIC_SAPPHIRE_PRECISION_NOZZLE",
+    "nominal_flow_ml_min": 120.0,
+    "viscosity_error_pct": 35.0,
+    "timestamp_relative": "YEAR_02_CLEPSYDRA_01",
+    "tags": ["horology", "clepsydra", "water_clock", "sapphire_orifice", "calcite_scale"],
+    "prose": "Hard aquifer water precipitated a crust of crystalline calcium carbonate around the calibrated 0.4mm sapphire discharge orifice. Orifice constriction throttled flow from 120 ml/min to 78 ml/min, causing the water clock to lose two hours per day."
+  },
+  {
+    "id": "clepsydra_silt_float_chamber_rack_pinion_friction",
+    "clepsydra_station_id": "CENTRAL_PLAZA_HYDRAULIC_DIAL",
+    "orifice_material_type": "RUBY_LINED_BRONZE_JET",
+    "nominal_flow_ml_min": 250.0,
+    "viscosity_error_pct": 12.0,
+    "timestamp_relative": "YEAR_05_CLEPSYDRA_03",
+    "tags": ["horology", "clepsydra", "float_rod", "algae_slime", "rack_pinion"],
+    "prose": "Bacterial biofilms and green algae growing inside the open float chamber coated the vertical bronze float rod in slippery slime. The brass rack hitched against the pointer pinion, causing the heavy hour hand to freeze in place for forty minutes at a time."
+  },
+  {
+    "id": "clepsydra_silt_overflow_weir_constant_head_surge",
+    "clepsydra_station_id": "SUB_LEVEL_5_EMERGENCY_TIMER",
+    "orifice_material_type": "TUNGSTEN_CARBIDE_METERING_RESTRICTOR",
+    "nominal_flow_ml_min": 85.0,
+    "viscosity_error_pct": 8.0,
+    "timestamp_relative": "YEAR_08_CLEPSYDRA_02",
+    "tags": ["horology", "clepsydra", "constant_head", "overflow_weir", "hydraulic_surge"],
+    "prose": "Turbulent intake ripples in the upstream constant-head supply tank caused surface waves to slosh over the knife-edge weir. The resulting fluctuating pressure head induced hydraulic pulsing through the restrictor nozzle, blurring 15-minute shift markings."
+  },
+  {
+    "id": "clepsydra_silt_parabolic_inflow_vessel_sediment",
+    "clepsydra_station_id": "COMMISSARY_MEAL_TIMER_UNIT",
+    "orifice_material_type": "PRECISION_DRILLED_AGATE_CONE",
+    "nominal_flow_ml_min": 180.0,
+    "viscosity_error_pct": 15.0,
+    "timestamp_relative": "YEAR_11_CLEPSYDRA_04",
+    "tags": ["horology", "clepsydra", "parabolic_vessel", "sediment_buildup", "geometry"],
+    "prose": "Fine glacial rock flour settling into the bottom of the parabolic receiving vessel distorted its mathematical volume profile. As the water level rose, the scale graduations no longer corresponded to linear time, creating a 25-minute error between morning and night."
+  },
+  {
+    "id": "clepsydra_silt_mercury_siphon_intermittent_flush",
+    "clepsydra_station_id": "SECTOR_MIDNIGHT_RESET_SIPHON",
+    "orifice_material_type": "PYREX_GLASS_VENTURI_SIPHON",
+    "nominal_flow_ml_min": 500.0,
+    "viscosity_error_pct": 5.0,
+    "timestamp_relative": "YEAR_14_CLEPSYDRA_01",
+    "tags": ["horology", "clepsydra", "siphon_flush", "midnight_reset", "priming_failure"],
+    "prose": "A bubble of air trapped in the glass siphon bend prevented automatic priming when the tank reached full capacity. Instead of a rapid 60-second midnight discharge flush, the water continuously trickled over the crest, failing to advance the 24-hour calendar gear."
+  },
+  {
+    "id": "clepsydra_silt_temperature_viscosity_rate_error",
+    "clepsydra_station_id": "DEEP_STORAGE_AQUIFER_CLOCK",
+    "orifice_material_type": "PLATINUM_IRIDIUM_CAPILLARY_TUBE",
+    "nominal_flow_ml_min": 60.0,
+    "viscosity_error_pct": 28.0,
+    "timestamp_relative": "YEAR_17_CLEPSYDRA_03",
+    "tags": ["horology", "clepsydra", "viscosity_error", "fluid_dynamics", "temperature"],
+    "prose": "A shift in subterranean ventilation chilled the incoming water supply from 22°C down to 7°C. The temperature drop increased liquid water dynamic viscosity by 28%, choking laminar capillary flow and causing the dial to lose nearly seven hours in a single day."
+  },
+  {
+    "id": "clepsydra_silt_copper_float_pinhole_leak_sink",
+    "clepsydra_station_id": "COMMAND_BUNKER_WATER_CHRONOMETER",
+    "orifice_material_type": "CORUNDUM_JEWELLED_DISCHARGE_ORIFICE",
+    "nominal_flow_ml_min": 150.0,
+    "viscosity_error_pct": 0.0,
+    "timestamp_relative": "YEAR_20_CLEPSYDRA_01",
+    "tags": ["horology", "clepsydra", "copper_float", "pinhole_leak", "float_sink"],
+    "prose": "Pitting corrosion along the soldered equator of the hollow spun-copper float opened a microscopic pinhole leak. Water slowly seeped into the float over forty-eight hours; the ballast overwhelmed buoyancy, sinking the indicator pointer to the bottom of the cylinder."
+  }
+]

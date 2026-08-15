@@ -1,0 +1,72 @@
+[
+  {
+    "id": "crater_lake_meromictic_anoxic_bottom_stratum",
+    "crater_lake_name": "GROUND_ZERO_MEROMICTIC_LAKE",
+    "maximum_depth_meters": 42.0,
+    "bottom_layer_dissolved_h2s_ppm": 240.0,
+    "stratification_type": "PERMANENT_MEROMICTIC_ANOXIA",
+    "timestamp_relative": "YEAR_03_LIMNOLOGY_LOG_01",
+    "tags": ["limnology", "crater_lake", "meromictic", "anoxia", "hydrogen_sulfide"],
+    "prose": "The fifty-meter-deep detonation crater filled with groundwater, forming a permanently stratified meromictic lake. Below fifteen meters, the monimolimnion water is completely anoxic, pitch black, and saturated with 240 ppm dissolved hydrogen sulfide gas that preserves organic matter without rotting."
+  },
+  {
+    "id": "crater_lake_heavy_metal_plumbum_cadmium_settling",
+    "crater_lake_name": "SMELTER_BASIN_CRATER_POND",
+    "maximum_depth_meters": 28.0,
+    "bottom_layer_dissolved_h2s_ppm": 110.0,
+    "stratification_type": "HEAVY_METAL_SAPROPEL_SEDIMENT",
+    "timestamp_relative": "YEAR_06_LIMNOLOGY_LOG_03",
+    "tags": ["limnology", "crater_lake", "heavy_metals", "lead", "cadmium"],
+    "prose": "Sediment cores retrieved from the lake center show a sixty-centimeter layer of jet-black sapropel mud. Heavy metals leached from industrial wreckage (lead, cadmium, arsenic) precipitate as insoluble sulfides, locking toxins in the sediment unless disturbed by dredging."
+  },
+  {
+    "id": "crater_lake_epilimnion_radiotrophic_cyanobacteria",
+    "crater_lake_name": "VALLEY_IMPACT_CRATER_RESERVOIR",
+    "maximum_depth_meters": 35.0,
+    "bottom_layer_dissolved_h2s_ppm": 85.0,
+    "stratification_type": "TOXIC_CYANOBACTERIA_EPILIMNION",
+    "timestamp_relative": "YEAR_09_LIMNOLOGY_LOG_02",
+    "tags": ["limnology", "crater_lake", "cyanobacteria", "algal_bloom", "microcystin"],
+    "prose": "During summer months, the warm epilimnion layer (0-5m) is blanketed by a dense scum of radiotrophic blue-green cyanobacteria (*Microcystis radiata*). The algae produce lethal concentrations of hepatotoxic microcystin; drinking unfiltered lake water causes acute hepatic necrosis within twelve hours."
+  },
+  {
+    "id": "crater_lake_thermocline_strontium_temperature_inversion",
+    "crater_lake_name": "RIDGE_SADDLE_CRATER_BASIN",
+    "maximum_depth_meters": 22.0,
+    "bottom_layer_dissolved_h2s_ppm": 45.0,
+    "stratification_type": "STRONTIUM_CHEMOCLINE_TRAP",
+    "timestamp_relative": "YEAR_12_LIMNOLOGY_LOG_04",
+    "tags": ["limnology", "crater_lake", "thermocline", "strontium", "isotopes"],
+    "prose": "A razor-sharp thermocline at eight meters depth acts as a density barrier. Dissolved strontium-90 washed in from surface fallout is trapped in the cold hypolimnion (4°C), leaving the warm surface water relatively low in radiation but biologically toxic."
+  },
+  {
+    "id": "crater_lake_seasonal_limnic_gas_burp_overturn",
+    "crater_lake_name": "DEEP_SINK_CRATER_TAR_POND",
+    "maximum_depth_meters": 55.0,
+    "bottom_layer_dissolved_h2s_ppm": 320.0,
+    "stratification_type": "LIMNIC_ERUPTION_CO2_OVERTURN",
+    "timestamp_relative": "YEAR_15_LIMNOLOGY_LOG_01",
+    "tags": ["limnology", "crater_lake", "limnic_eruption", "co2_burp", "asphyxiation"],
+    "prose": "An intense autumn cold snap cooled the lake surface to 2°C, causing sudden density overturn of the water column. Over twelve hundred tons of dissolved carbon dioxide and methane erupted as a massive silent gas cloud, asphyxiating wildlife and scouts along the shoreline for two miles."
+  },
+  {
+    "id": "crater_lake_calcium_carbonate_whiting_event",
+    "crater_lake_name": "LIMESTONE_QUARRY_BLAST_BASIN",
+    "maximum_depth_meters": 18.0,
+    "bottom_layer_dissolved_h2s_ppm": 15.0,
+    "stratification_type": "CALCITE_WHITING_TURQUOISE",
+    "timestamp_relative": "YEAR_18_LIMNOLOGY_LOG_03",
+    "tags": ["limnology", "crater_lake", "whiting_event", "calcite", "water_clarity"],
+    "prose": "Alkaline concrete leachate raised lake pH to 9.8, triggering a spontaneous precipitation event of microcrystalline calcium carbonate. The water turned an opaque, milky turquoise for three weeks, neutralizing dissolved heavy metals and settling radioactive dust out of suspension."
+  },
+  {
+    "id": "crater_lake_submerged_bomb_crater_island_roost",
+    "crater_lake_name": "CENTRAL_UPLIFT_CRATER_LAGOON",
+    "maximum_depth_meters": 30.0,
+    "bottom_layer_dissolved_h2s_ppm": 90.0,
+    "stratification_type": "CENTRAL_PEAK_ISLAND_AVIAN_ROOST",
+    "timestamp_relative": "YEAR_20_LIMNOLOGY_LOG_01",
+    "tags": ["limnology", "crater_lake", "central_peak", "island", "bird_roost"],
+    "prose": "The central rebound peak of the nuclear crater forms a steep, conical island rising six meters above the lake surface. Isolated by toxic deep water, the island is covered with hundreds of nests of two-headed cormorants, whose guano forms an acidic phosphorus-rich crust."
+  }
+]

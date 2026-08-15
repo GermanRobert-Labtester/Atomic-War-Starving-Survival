@@ -1,0 +1,58 @@
+[
+  {
+    "id": "bone_degreasing_001",
+    "bone_source_animal": "dog",
+    "degreasing_method": "simmering_water",
+    "prep_duration_days": 3,
+    "log_text": "Dog long bones simmered in the stone pot for three days, water changed daily. The grease floated and was skimmed — added to the tallow stock. The bones emerged pale and slightly translucent at the ends. Dried in filtered shelter air for two more days before use."
+  },
+  {
+    "id": "bone_degreasing_002",
+    "bone_source_animal": "rabbit",
+    "degreasing_method": "simmering_water",
+    "prep_duration_days": 2,
+    "log_text": "Rabbit bones degrease faster — thinner walls, less marrow. Two days simmering. Small bones but the fibula and tibia are long enough for needles. Dried clean and pale. The rabbit gives less material than the dog but what it gives is fine-grained and easy to work."
+  },
+  {
+    "id": "bone_degreasing_003",
+    "bone_source_animal": "dog",
+    "degreasing_method": "cold_soak_ash_lye",
+    "prep_duration_days": 5,
+    "log_text": "Tried degreasing in dilute wood ash lye rather than water. Five days cold soak. The lye draws out the fat more completely than simmering alone — the bones came out drier and lighter. Slightly more brittle at the surface but the interior is dense. Good for tools that need a hard edge."
+  },
+  {
+    "id": "bone_degreasing_004",
+    "bone_source_animal": "rat",
+    "degreasing_method": "simmering_water",
+    "prep_duration_days": 1,
+    "log_text": "Rat bones — tiny. One day simmering is enough. The long bones of the hind legs are barely workable for anything except very fine needles. The rib bones make acceptable awl blanks. Everything collected and dried. Nothing thrown away."
+  },
+  {
+    "id": "bone_degreasing_005",
+    "bone_source_animal": "dog",
+    "degreasing_method": "simmering_water",
+    "prep_duration_days": 4,
+    "log_text": "Flat bones — scapula and pelvis sections. Four days to degrease the broader surfaces. Cut into blanks with the hacksaw after drying. The flat sections are suited for scrapers and spatulas rather than pointed tools. Different bone, different tools."
+  },
+  {
+    "id": "bone_degreasing_006",
+    "bone_source_animal": "cat",
+    "degreasing_method": "simmering_water",
+    "prep_duration_days": 2,
+    "log_text": "Cat bones — between rabbit and dog in scale. The femur is long enough for a mid-size needle. Two days simmering. The bone colour came out more ivory than the dog bones — denser mineral content. Dried cleanly with no residual grease smell."
+  },
+  {
+    "id": "bone_degreasing_007",
+    "bone_source_animal": "mixed_bird",
+    "degreasing_method": "simmering_water",
+    "prep_duration_days": 1,
+    "log_text": "Bird bones from the surface foraging — sparrows, mostly. Hollow shafts. One day simmering. The hollow interior means no marrow to extract. Degrease fast. Thin-walled and light. The shaft sections can be made into tube-shaped beads or small blowpipe lengths. Thin awl blanks from the solid bone near the joints."
+  },
+  {
+    "id": "bone_degreasing_008",
+    "bone_source_animal": "dog",
+    "degreasing_method": "boiling_then_lye_soak",
+    "prep_duration_days": 6,
+    "log_text": "Combined method: one day boiling, then five days in cold lye. The most thorough degreasing we have done. The bone is almost white and extremely dry. Slightly more fragile at the outer surface but the mineral core is very hard. Reserved for the finest tool blanks."
+  }
+]

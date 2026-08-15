@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;
 using Ashfall.Core.Radio;
 using Ashfall.Core.UI;
@@ -297,7 +298,7 @@ namespace AtomicWar.GodotApp.Radio
             // Update Faction Badge & Callsign
             if (!string.IsNullOrEmpty(intercept.FactionId))
             {
-                _textureFactionBadge.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{intercept.FactionId}.png");
+                _textureFactionBadge.Texture = AtomicWar.GodotApp.FactionIconLoader.LoadFor(intercept.FactionId);
                 _lblFactionCallsign.Text = $"{intercept.Callsign}\n{intercept.FactionId.ToUpper().Replace('_', ' ')}";
                 _lblCrtLiveHeader.Text = $"[ LIVE INTERCEPT — {intercept.Callsign} ({_currentFrequency:00.00} MHz) ]";
             }
@@ -377,27 +378,12 @@ namespace AtomicWar.GodotApp.Radio
 
         private static Color ToGodotColor((float r, float g, float b, float a) token)
         {
-            return new Color(token.r, token.g, token.b, token.a);
+            return ToColor(token);
         }
 
         private static Texture2D LoadTexture(string path)
         {
-            if (ResourceLoader.Exists(path))
-            {
-                var tex = ResourceLoader.Load<Texture2D>(path);
-                if (tex != null) return tex;
-            }
-
-            string osPath = ProjectSettings.GlobalizePath(path);
-            if (System.IO.File.Exists(osPath))
-            {
-                var img = Godot.Image.LoadFromFile(osPath);
-                if (img != null)
-                {
-                    return ImageTexture.CreateFromImage(img);
-                }
-            }
-            return null;
+            return TryLoadTexture(path);
         }
     }
 }

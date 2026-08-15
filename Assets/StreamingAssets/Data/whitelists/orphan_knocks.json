@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "orphan_knocks": [
+    {
+      "knock_id": "knock_exp07_vel_vigil",
+      "event_name": "door.knock.practiced",
+      "gating_flag": "flag_exp07_vel_vigil_knock",
+      "mystery_thread_id": "q_vel_last_knock",
+      "resolution_expansion": "exp_12",
+      "canon_note": "Sonya, sleepwalking, planting. Do NOT resolve before exp_12. Validates against mystery web."
+    }
+  ]
+}

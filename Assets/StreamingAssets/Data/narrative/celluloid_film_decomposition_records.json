@@ -1,0 +1,72 @@
+[
+  {
+    "id": "celluloid_decay_nitric_acid_sweat_vinegar_syndrome",
+    "film_archive_reel_id": "CIVIL_DEFENSE_REEL_35MM_104",
+    "polymer_base_chemistry": "CELLULOSE_NITRATE_GUNCOTTON_BASE",
+    "decomposition_stage": "STAGE_THREE_NITRIC_HONEY_EXUDATE",
+    "combustion_temperature_celsius": 45.0,
+    "timestamp_relative": "YEAR_02_CELLULOID_LOG_01",
+    "tags": ["polymer", "film", "celluloid", "nitrate", "vinegar_syndrome"],
+    "prose": "Pre-war 35mm civil defense training reels underwent autocatalytic nitrate breakdown. The film base liquefied into an acidic, amber-colored sticky syrup giving off pungent nitrogen dioxide fumes that dissolved the aluminum storage cans."
+  },
+  {
+    "id": "celluloid_decay_spontaneous_combustion_canister_explosion",
+    "film_archive_reel_id": "MILITARY_TRAINING_REEL_SET_08",
+    "polymer_base_chemistry": "CELLULOSE_DINITRATE_HIGH_NITROGEN",
+    "decomposition_stage": "STAGE_FIVE_AUTOIGNITION_DEFLAGRATION",
+    "combustion_temperature_celsius": 38.0,
+    "timestamp_relative": "YEAR_05_CELLULOID_LOG_03",
+    "tags": ["polymer", "film", "spontaneous_combustion", "explosion", "fire"],
+    "prose": "Exothermic decomposition inside a sealed, unventilated archive locker caused the internal temperature of twelve nitrate film reels to rise above 40°C. The film auto-ignited without an external spark, blowing out the vault door with a searing flash fire that required zero oxygen to burn."
+  },
+  {
+    "id": "celluloid_decay_gelatin_emulsion_silver_bronzing",
+    "film_archive_reel_id": "BUNKER_CONSTRUCTION_DOCUMENTARY_16MM",
+    "polymer_base_chemistry": "CELLULOSE_DIACETATE_SAFETY_BASE",
+    "decomposition_stage": "STAGE_TWO_SILVER_MIRRORING_BRONZING",
+    "combustion_temperature_celsius": 180.0,
+    "timestamp_relative": "YEAR_08_CELLULOID_LOG_02",
+    "tags": ["polymer", "film", "silver_mirroring", "emulsion", "archive"],
+    "prose": "Sulfur gases from nearby battery charging rooms attacked the silver gelatin emulsion on historical 16mm construction reels. The image layer oxidized into a reflective, metallic bronze mirror that completely obscured the filmed engineering blueprints."
+  },
+  {
+    "id": "celluloid_decay_camphor_plasticizer_crystallization_sublimation",
+    "film_archive_reel_id": "PROPAGANDA_NEWSREEL_VAULT_04",
+    "polymer_base_chemistry": "CELLULOID_NITRATE_WITH_CAMPHOR",
+    "decomposition_stage": "STAGE_ONE_CAMPHOR_SUBLIMATION",
+    "combustion_temperature_celsius": 65.0,
+    "timestamp_relative": "YEAR_11_CELLULOID_LOG_04",
+    "tags": ["polymer", "film", "camphor", "plasticizer", "crystals"],
+    "prose": "Loss of camphor plasticizer caused long, needle-like white crystals to grow across the film edges inside the steel canisters. Deprived of plasticizer, the film warped into a tight corkscrew spiral that jammed the projector sprocket teeth."
+  },
+  {
+    "id": "celluloid_decay_acetic_acid_vinegar_gas_inhalation",
+    "film_archive_reel_id": "MEDICAL_MICROFICHE_CABINET_B",
+    "polymer_base_chemistry": "CELLULOSE_TRIACETATE_SAFETY_FILM",
+    "decomposition_stage": "ACETIC_VINEGAR_SYNDROME_PEAK",
+    "combustion_temperature_celsius": 210.0,
+    "timestamp_relative": "YEAR_14_CELLULOID_LOG_01",
+    "tags": ["polymer", "microfiche", "vinegar_syndrome", "acetic_acid", "medical_records"],
+    "prose": "Hundreds of microfiche sheets containing pre-war medical records underwent severe de-acetylation. Opening the steel cabinet released a choking cloud of pure acetic acid vapor (85 ppm) that burned the archivist's eyes and corroded the steel reader lenses."
+  },
+  {
+    "id": "celluloid_decay_projection_gate_flash_ignition",
+    "film_archive_reel_id": "MORALE_CINEMA_FEATURE_REEL_02",
+    "polymer_base_chemistry": "CELLULOSE_NITRATE_ORIGINAL_PRINT",
+    "decomposition_stage": "STAGE_FOUR_BRITTLE_IGNITION_HAZARD",
+    "combustion_temperature_celsius": 50.0,
+    "timestamp_relative": "YEAR_17_CELLULOID_LOG_03",
+    "tags": ["polymer", "cinema", "projector_fire", "nitrate_flash", "morale"],
+    "prose": "A momentary pause in the projector mechanism exposed a single frame of aged nitrate film to the carbon-arc lamp beam. The film ignited instantly, sending flames racing through the upper feed magazine and incinerating the projection booth in under twenty seconds."
+  },
+  {
+    "id": "celluloid_decay_vitrified_amber_block_consolidation",
+    "film_archive_reel_id": "AERIAL_RECON_ROLL_FILM_9INCH",
+    "polymer_base_chemistry": "CELLULOSE_NITRATE_HEAVY_AERO",
+    "decomposition_stage": "STAGE_FIVE_SOLID_AMBER_CONSOLIDATION",
+    "combustion_temperature_celsius": 42.0,
+    "timestamp_relative": "YEAR_20_CELLULOID_LOG_01",
+    "tags": ["polymer", "film", "vitrification", "amber_block", "aerial_film"],
+    "prose": "Five hundred feet of nine-inch wide aerial reconnaissance roll film decomposed and melted together under its own weight. The roll consolidated into a solid, glass-hard brown cylinder resembling natural amber, permanently entombing the pre-war photographic intelligence."
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "id": "rope_closing_001",
+    "strand_yarn_id": "sy_nettle_3ply_01",
+    "rope_diameter_mm": 8.5,
+    "closing_tool": "top_hook_iron",
+    "log_text": "Three nettle three-ply yarn strands closed on the iron top-hook. One person holds the hook and rotates, two hold the strands apart and walk backwards. The strands close naturally behind the hook. Eight and a half millimetres diameter, eight metres long. Consistent lay throughout."
+  },
+  {
+    "id": "rope_closing_002",
+    "strand_yarn_id": "sy_hemp_4ply_01",
+    "rope_diameter_mm": 12.0,
+    "closing_tool": "top_hook_iron",
+    "log_text": "Hemp four-ply strands — heavier and harder to close evenly. The hook had to be turned slower. Twelve millimetre rope, five metres. The lay is slightly uneven in the middle where the tension drifted. Still a serviceable rope. The irregular section is marked and will not be used at a load point."
+  },
+  {
+    "id": "rope_closing_003",
+    "strand_yarn_id": "sy_nettle_3ply_02",
+    "rope_diameter_mm": 6.0,
+    "closing_tool": "finger_twist",
+    "log_text": "Short lengths — two metres each — closed by hand without the hook. Finger-twisted the three strands together while under tension over the knee. Six millimetre diameter. Not as regular as hook-closed rope but the short lengths do not need long consistency. Used as lashing."
+  },
+  {
+    "id": "rope_closing_004",
+    "strand_yarn_id": "sy_jute_3ply_01",
+    "rope_diameter_mm": 9.0,
+    "closing_tool": "top_hook_iron",
+    "log_text": "Jute strands closed on the hook. The jute lay closed tighter than expected — the fibre surface grips well. Nine millimetres, six metres. Whipped both ends with waxed flax thread. The whipping prevents fraying and gives a clean termination for tying."
+  },
+  {
+    "id": "rope_closing_005",
+    "strand_yarn_id": "sy_hemp_tow_3ply_01",
+    "rope_diameter_mm": 10.0,
+    "closing_tool": "top_hook_iron",
+    "log_text": "Hemp tow strands — lumpier than line fibre. The rope surface is hairy and irregular but the core structure is sound. Ten millimetres, four metres. Used for lashing bundles of salvage to the drag sled rather than load-bearing suspension. Adequate for that purpose."
+  },
+  {
+    "id": "rope_closing_006",
+    "strand_yarn_id": "sy_nettle_6ply_core_01",
+    "rope_diameter_mm": 15.0,
+    "closing_tool": "top_hook_iron",
+    "log_text": "Heavy rope using the six-ply nettle strands. Fifteen millimetres diameter. Required two people on the hook and one managing tension from behind. Three metres closed before the hook broke — iron was cold-worked too many times. Spliced and finished the final half-metre by hand. The rope is still sound."
+  },
+  {
+    "id": "rope_closing_007",
+    "strand_yarn_id": "sy_flax_2ply_01",
+    "rope_diameter_mm": 4.5,
+    "closing_tool": "finger_twist",
+    "log_text": "Fine flax two-ply strands closed by hand into a thin cord. Four and a half millimetres. The flax closes cleanly with minimal effort — the natural stiffness of the fibre helps hold the lay. Used as the draw cord for the new canvas bag closure. Light but sufficient."
+  }
+]

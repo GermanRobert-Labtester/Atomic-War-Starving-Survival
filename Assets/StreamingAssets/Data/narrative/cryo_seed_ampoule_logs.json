@@ -1,0 +1,82 @@
+[
+  {
+    "id": "cryo_seed_liquid_nitrogen_embryo_vitrification",
+    "dewar_canister_id": "CRYO_DEWAR_ALPHA_CAN_01",
+    "crop_botanical_species": "TRITICUM_AESTIVUM",
+    "storage_temperature_celsius": -196.0,
+    "seed_moisture_content_pct": 5.5,
+    "timestamp_relative": "YEAR_02_CRYO_LOG_01",
+    "tags": ["seed_banking", "cryopreservation", "liquid_nitrogen", "vitrification", "embryo"],
+    "prose": "Plunging moisture-equilibrated (5.5% moisture) wheat embryo axes directly into liquid nitrogen achieved instantaneous vitrification. Flash-freezing transformed cellular water into amorphous glass without forming jagged intracellular ice crystals."
+  },
+  {
+    "id": "cryo_seed_borosilicate_ampoule_flame_seal",
+    "dewar_canister_id": "HERMETIC_AMPOULE_RACK_03",
+    "crop_botanical_species": "ZEA_MAYS_INDURATA",
+    "storage_temperature_celsius": -196.0,
+    "seed_moisture_content_pct": 4.8,
+    "timestamp_relative": "YEAR_04_CRYO_LOG_03",
+    "tags": ["seed_banking", "borosilicate_ampoule", "flame_seal", "vacuum_evacuation", "maize"],
+    "prose": "Evacuating borosilicate glass cryo-ampoules to -0.8 bar and flame-sealing the necks with a micro-torch hermetically enclosed 200 kernels of eight-row flint corn. The seamless glass barrier prevented all moisture and liquid nitrogen ingress."
+  },
+  {
+    "id": "cryo_seed_dewar_vacuum_loss_boil_off",
+    "dewar_canister_id": "PRIMARY_ALUMINUM_DEWAR_02",
+    "crop_botanical_species": "SOLANUM_TUBEROSUM_SEEDS",
+    "storage_temperature_celsius": -145.0,
+    "seed_moisture_content_pct": 6.0,
+    "timestamp_relative": "YEAR_07_CRYO_LOG_02",
+    "tags": ["seed_banking", "dewar_failure", "boil_off", "vacuum_loss", "thermal_warning"],
+    "prose": "Microporous seal degradation in the outer vacuum jacket caused frost rings to form along the neck of Dewar 2. Liquid nitrogen boil-off surged from 0.4 L/day to 4.2 L/day, warming stored potato botanical seeds to -145°C before transfer."
+  },
+  {
+    "id": "cryo_seed_rapid_rewarming_water_bath_40c",
+    "dewar_canister_id": "GERM_PLASMA_RECOVERY_DECK",
+    "crop_botanical_species": "ORYZA_SATIVA_INDICA",
+    "storage_temperature_celsius": -196.0,
+    "seed_moisture_content_pct": 5.2,
+    "timestamp_relative": "YEAR_09_CRYO_LOG_04",
+    "tags": ["seed_banking", "rewarming", "water_bath", "recrystallization", "thawing"],
+    "prose": "Thawing vitrified rice seeds required rapid immersion into a 40°C precision water bath for exactly ninety seconds. The rapid rewarming rate (over 200°C/min) safely bypassed the critical -40°C to -10°C lethal ice recrystallization zone."
+  },
+  {
+    "id": "cryo_seed_dimethyl_sulfoxide_cryoprotectant_toxicity",
+    "dewar_canister_id": "RECALCITRANT_SEED_CHEST",
+    "crop_botanical_species": "QUERCUS_ROBUR_PLUMULES",
+    "storage_temperature_celsius": -196.0,
+    "seed_moisture_content_pct": 14.0,
+    "timestamp_relative": "YEAR_12_CRYO_LOG_01",
+    "tags": ["seed_banking", "cryoprotectant", "dmso", "toxicity", "recalcitrant_seed"],
+    "prose": "Treating oak acorn plumules with a 10% dimethyl sulfoxide (DMSO) and 15% glycerol cryoprotectant solution enabled deep freeze tolerance. However, failure to wash out DMSO within twelve minutes of thawing caused severe chemical cytotoxicity."
+  },
+  {
+    "id": "cryo_seed_permafrost_passive_backstop_vault",
+    "dewar_canister_id": "SUBTERRANEAN_BEDROCK_SHELF_05",
+    "crop_botanical_species": "HORDEUM_VULGARE",
+    "storage_temperature_celsius": -6.5,
+    "seed_moisture_content_pct": 6.8,
+    "timestamp_relative": "YEAR_15_CRYO_LOG_03",
+    "tags": ["seed_banking", "permafrost", "passive_cooling", "thermal_buffer", "bedrock"],
+    "prose": "Deep bunker rock vaults excavated into sub-zero permafrost strata maintained a stable -6.5°C ambient temperature. The passive thermal mass safeguarded 5,000 baseline barley seed envelopes throughout a three-week bunker electrical grid failure."
+  },
+  {
+    "id": "cryo_seed_liquid_nitrogen_vapor_phase_canister",
+    "dewar_canister_id": "VAPOR_PHASE_CARRIER_UNIT_04",
+    "crop_botanical_species": "BRASSICA_NAPUS",
+    "storage_temperature_celsius": -165.0,
+    "seed_moisture_content_pct": 5.0,
+    "timestamp_relative": "YEAR_17_CRYO_LOG_02",
+    "tags": ["seed_banking", "vapor_phase", "cross_contamination", "canister", "rapeseed"],
+    "prose": "Suspending polypropylene seed straws in the dry nitrogen vapor phase above liquid level sustained -165°C temperatures. Eliminating liquid contact prevented pathogen cross-contamination and stopped explosive ampoule fracturing upon thawing."
+  },
+  {
+    "id": "cryo_seed_platinum_rtd_cryo_telemetry_alarm",
+    "dewar_canister_id": "CONTINUOUS_MONITOR_RIG_01",
+    "crop_botanical_species": "GLYCINE_MAX",
+    "storage_temperature_celsius": -190.0,
+    "seed_moisture_content_pct": 5.8,
+    "timestamp_relative": "YEAR_20_CRYO_LOG_01",
+    "tags": ["seed_banking", "pt100", "rtd_sensor", "telemetry", "alarm_trigger"],
+    "prose": "Four-wire platinum RTD (Pt100) resistance probes measured temperature gradients across every dewar rack. A drift above -150°C instantly triggered pneumatic air-horn klaxons and actuated automatic liquid nitrogen refill valves from the bulk tank."
+  }
+]

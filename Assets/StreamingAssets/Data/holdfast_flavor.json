@@ -1,0 +1,64 @@
+{
+  "factions": {
+    "faction_the_office": {
+      "register": "bureaucratic",
+      "voice": "The Office speaks in stamps, countersignatures, and triplicate. A rejection is a missing seal, not an insult. Every release is logged against your account.",
+      "rejected": "Requisition denied — the authorising stamp is absent or the ledger balance does not cover the line item.",
+      "sold": "Accepted for inventory. The Office records the transfer and adjusts the manifest accordingly."
+    },
+    "faction_the_cutters": {
+      "register": "salvage",
+      "voice": "The Cutters speak in tonnage and debts. Stock running low is weather coming in. Favours are tracked in ledgers, not sentiment.",
+      "rejected": "No stock to release and no credit to draw against. The Cutters do not float empty requisitions.",
+      "sold": "Taken to the pile. The cutter ledger shifts; your credit moves the other way."
+    },
+    "faction_the_fleet": {
+      "register": "maritime",
+      "voice": "The Fleet speaks in manifests, tides, and berths. A completed trade is logged like a vessel cleared to sail. Paper trails matter more than cargo.",
+      "rejected": "The manifest does not clear. Either the berth is closed or the hold cannot accept the transfer.",
+      "sold": "Logged and cleared. The Fleet manifest now shows the item transferred to your custody."
+    }
+  },
+  "items": {
+    "item_map_sheet_ice_road": "The sheet is not a map — it is a promise that the ice will hold long enough to matter.",
+    "item_census_return_blank": "Blanks are cheap until the clerk demands them filled.",
+    "item_order_12c": "Reconstruction Order 12-C: stamped, filed, and quietly ignored until the ice opens.",
+    "item_allocation_tag": "Allocation Tag. What is tagged is owned, and what is owned can be reassigned.",
+    "item_triplicate_carbon": "Triplicate Carbon. One copy for the Office, one for the file, one for the fire.",
+    "item_ice_spike_bar": "Ice Spike Bar. Cold iron for cold work. It dulls faster than steel and lasts longer than hope.",
+    "item_beacon_oil": "Beacon Oil. Burns clean in the lamp but leaves a residue the filters do not catch.",
+    "item_cutter_ledger_blank": "Cutter Ledger (blank). The Cutters do not trust a ledger with writing already on it.",
+    "item_ice_tyre_set": "Ice Tyre Set. The road claims rubber faster than it claims drivers.",
+    "item_plant_suit_patched": "Plant Suit (patched). Every patch is a reminder that the membrane cannot hold forever.",
+    "item_resin_gloves": "Resin Gloves. The resin seals, the gloves chafe, and both are preferable to bare hands on the line.",
+    "item_fume_rag": "Fume Rag. Cheap, replaceable, and the only thing between a man and the resin fumes.",
+    "item_shift_whistle": "Shift Whistle. It does not summon help. It announces that help is expected.",
+    "item_work_ticket": "Work Ticket. Without it, you are just another body in the yard. With it, you are on the roster.",
+    "item_steam_token": "Steam Token. Not money, not scrip — a promise that the plant will turn today.",
+    "item_block_c_key": "Block C Key. It opens one door and signals that the holder has been cleared for what lies beyond.",
+    "item_ro_resin": "RO Resin. The membrane eats it and the plant drinks it. Stock is measured in drums, not grams.",
+    "item_ro_resin_spent": "Spent RO Resin. Heavier than it looks and useless until the chemists find a second pass.",
+    "item_iodine_crystal": "Iodine Crystal. Small enough to hide, strong enough to matter when the plume passes.",
+    "item_process_barrel": "Process Barrel. Sealed, marked, and heavy. What it contains depends on which shift filled it.",
+    "item_schedule_crystal": "Schedule Crystal. The Office keeps time on these. Break one and you buy the next clerk a coffee.",
+    "item_fleet_pad_copy": "Fleet Pad Copy. The Fleet trusts copies more than originals — paper rots, copies multiply.",
+    "item_foghorn_key": "Foghorn Key. Wound once per shift. The sound carries farther than any radio in the valley.",
+    "item_kittiwake_copy": "Kittiwake Copy. A route map that predates the ice. The Fleet keeps it for sentimental reasons.",
+    "item_weigh_receipt_hf": "Weigh Receipt. The bridge does not trust scales; it trusts the stamped receipt from the scales.",
+    "item_schedule_sector4_copy": "The Other Schedule. Sector 4 runs on a different clock. The Office finds this inconvenient.",
+    "item_halvard_kit_notes": "Improvised Potable. Not clean, not safe, and better than nothing when the barrel runs dry.",
+    "item_sole_unsigned": "Filed, Not Signed. The gap between filing and signature is where most corruption lives.",
+    "item_playground_seat": "One Seat. Cold steel, bolted down. The only furniture in the yard that does not get moved.",
+    "item_edor_return_self": "Clerk's Own Return. Edor does not file this. Edor keeps it.",
+    "item_yara_dark_mark": "Dark Mark. Not a brand, not a tattoo — a notation in the clerk's private ledger.",
+    "item_leva_minutes_vol12": "Volume 12. Leva's minutes run to handwriting, not type. The Clerk respects the volume.",
+    "item_hearth4_hatch_log": "Hatch Log. Hearth 4. The hatch that opens onto the ice. The log is supposed to be signed.",
+    "item_alloc7_ration_tin": "ALLOC-7 Tin. The label says ration. The content says starch and regret.",
+    "item_cluster_formulary": "Human Formulary. Written for Cluster 12, applied wherever the medics have paper and light.",
+    "item_foghorn_timer": "Foghorn Escapement. The mechanism that turns air into sound. Precision engineering in a salt world.",
+    "item_tin_fourteenth": "The Fourteenth Plate. The fourteenth allocation that never received its tin. The Office still lists it.",
+    "item_salt_rash_salve": "Salt-Rash Salve. The air here eats skin. The salve slows the eating.",
+    "item_uv_grease": "UV Grease. Applied to gaskets and seals. It smells like chemistry and looks like grey paste.",
+    "item_electrolyte_salts": "Electrolyte Salts. The body demands them; the ration does not supply them."
+  }
+}

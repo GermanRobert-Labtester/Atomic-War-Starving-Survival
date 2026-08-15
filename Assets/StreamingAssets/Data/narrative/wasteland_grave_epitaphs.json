@@ -1,0 +1,72 @@
+[
+  {
+    "id": "epitaph_scav_rusted_license_plate",
+    "grave_site": "HIGHWAY_09_MILE_MARKER_44",
+    "marker_material": "STAMPED_STEEL_LICENSE_PLATE",
+    "deceased_identity": "COURIER_JONAS_VANCE",
+    "cause_of_death": "SNIPER_BALLISTIC_TRAUMA",
+    "timestamp_relative": "YEAR_03_DAY_210",
+    "tags": ["epitaph", "grave", "scavenger", "license_plate", "wasteland"],
+    "prose": "A yellow 1981 vehicle plate wired to a twisted guardrail post. Punched through with three bullet holes and scratched with an awl: 'Here lies Jonas. Carried twenty-four letters across forty miles of winter ash and never dropped the mail bag. Died running. Leave his boots on the mound.'"
+  },
+  {
+    "id": "epitaph_scav_spent_casing_cairn",
+    "grave_site": "RIDGE_OVERLOOK_OUTPOST_BRAVO",
+    "marker_material": "FIELD_STONE_AND_308_BRASS",
+    "deceased_identity": "SENTRY_MARTHA_KLINE",
+    "cause_of_death": "HOSTILE_BREACH_REARGUARD",
+    "timestamp_relative": "YEAR_06_DAY_088",
+    "tags": ["epitaph", "grave", "cairn", "brass_casings", "wasteland"],
+    "prose": "A cone of black river stones with forty-two empty .308 Winchester brass casings pressed primer-up into the mortar cap: 'Martha held the switchback while the nursery convoy descended into Shaft 4. Her rifle barrel melted in her hands. She did not look back.'"
+  },
+  {
+    "id": "epitaph_scav_respirator_filter_mound",
+    "grave_site": "SLAG_BASIN_CRATER_PERIMETER",
+    "marker_material": "RUBBER_GP5_MASK_ON_PINE_POST",
+    "deceased_identity": "TUNNEL_SWEEPER_GAVIN",
+    "cause_of_death": "ACUTE_PULMONARY_RAD_FIBROSIS",
+    "timestamp_relative": "YEAR_08_DAY_312",
+    "tags": ["epitaph", "grave", "gasmask", "fallout", "wasteland"],
+    "prose": "A faded grey Soviet GP-5 rubber respirator mask clamped to a charred pine branch above a shallow ditch. Scratched on the tin filter can: 'Gavin breathed the heavy grey snow so we could salvage the copper pipes. His lungs turned to wet gravel at age twenty-six. Walk softly, the dust still remembers him.'"
+  },
+  {
+    "id": "epitaph_scav_dosimeter_zero_tomb",
+    "grave_site": "INFIRMARY_EXHAUST_TRENCH",
+    "marker_material": "LEAD_BATTERY_PLATE_HEADSTONE",
+    "deceased_identity": "DR_ALEK_SOREN",
+    "cause_of_death": "BONE_MARROW_EXHAUSTION",
+    "timestamp_relative": "YEAR_11_DAY_140",
+    "tags": ["epitaph", "grave", "medic", "sacrifice", "wasteland"],
+    "prose": "A heavy rectangle of lead plate cut from a truck battery, inscribed with a surgical scalpel: 'Dr. Alek Soren. Stood in the triage decon adit for thirty-six days without leaving. Wrapped four children in his own lead aprons while the fallout rain leaked through the ceiling. His dosimeter needle never reset to zero.'"
+  },
+  {
+    "id": "epitaph_scav_shattered_windshield_cross",
+    "grave_site": "VALLEY_OF_THE_DEAD_CONVOY",
+    "marker_material": "REBAR_AND_TEMPERED_GLASS_MOSAIC",
+    "deceased_identity": "WELL_DRILLER_KAREN",
+    "cause_of_death": "SUBTERRANEAN_CAVE_IN",
+    "timestamp_relative": "YEAR_14_DAY_005",
+    "tags": ["epitaph", "grave", "cross", "glass", "memorial", "wasteland"],
+    "prose": "Two lengths of 20mm rebar welded with crude arc-strikes, inset with shards of green tempered bus windshield glass that catch the pale grey daylight: 'Karen drilled the Artesian Well on Level 4. She gave thirty-thousand gallons of sweet water to the living before the casing collapsed upon her.'"
+  },
+  {
+    "id": "epitaph_scav_dry_canteen_memorial",
+    "grave_site": "NORTH_PASS_SUMMIT_CREVICE",
+    "marker_material": "ALUMINUM_ARMY_CANTEEN",
+    "deceased_identity": "SCOUT_PETER_OAK",
+    "cause_of_death": "EXTREME_DEHYDRATION_HYPOTHERMIA",
+    "timestamp_relative": "YEAR_17_DAY_220",
+    "tags": ["epitaph", "grave", "canteen", "mountain_pass", "wasteland"],
+    "prose": "An aluminum M1910 canteen hung from an iron surveying pin driven into the cliff face: 'Found frozen six hundred yards from the pass crest. Inside the canteen was not water, but three dry crackers and a drawing of a peach tree by his daughter. The snow preserves his face as though he is only sleeping.'"
+  },
+  {
+    "id": "epitaph_scav_ash_sign_mass_burial_slate",
+    "grave_site": "COLLAPSED_RAIL_TUNNEL_EAST",
+    "marker_material": "BLACK_SLATE_ROOFING_TILE",
+    "deceased_identity": "TWENTY_EIGHT_UNKNOWN_REFUGEES",
+    "cause_of_death": "HYPOTHERMIA_AND_ASPHYXIATION",
+    "timestamp_relative": "YEAR_20_DAY_090",
+    "tags": ["epitaph", "mass_grave", "slate", "refugees", "wasteland", "tragedy"],
+    "prose": "A slab of black roofing slate propped against a mound of shale gravel: 'Twenty-eight travelers who arrived at the blast gate during the Blizzard of Month 18. The gate was locked by order of the Committee. We buried them together in the spring thaw. May the earth forgive what the concrete could not shelter.'"
+  }
+]

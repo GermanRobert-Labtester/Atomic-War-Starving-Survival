@@ -2,6 +2,8 @@ using System;
 using System.Text;
 using System.Collections.Generic;
 using Ashfall.Core;
+using Ashfall.Core.Endgame;
+using Ashfall.Core.Legacy;
 
 namespace AtomicWar.GodotApp
 {
@@ -24,6 +26,8 @@ namespace AtomicWar.GodotApp
         public GreenhouseSystem Greenhouse { get; }
         public CrossingArbitrationSystem Arbitration { get; }
         public LedgerDebtSystem Ledger { get; }
+        public GenerationalSuccessionEngine Generational { get; }
+        public EpilogueMatrixRuntime Epilogue { get; }
 
         public ExpansionHostSession(
             WaystationSystem waystation,
@@ -45,6 +49,8 @@ namespace AtomicWar.GodotApp
             Greenhouse = greenhouse ?? new GreenhouseSystem(DefaultSeed);
             Arbitration = new CrossingArbitrationSystem();
             Ledger = new LedgerDebtSystem();
+            Generational = new GenerationalSuccessionEngine();
+            Epilogue = new EpilogueMatrixRuntime();
 
             // Persistence: any hub-system state change marks the save dirty.
             Waystation.OnStateChanged += _ => StateChanged?.Invoke();
@@ -60,6 +66,9 @@ namespace AtomicWar.GodotApp
             Greenhouse.OnCropFailed += _ => StateChanged?.Invoke();
             Arbitration.OnStateChanged += _ => StateChanged?.Invoke();
             Ledger.OnStateChanged += _ => StateChanged?.Invoke();
+            Generational.OnDwellerRetired += (_, _) => StateChanged?.Invoke();
+            Generational.OnTraitInherited += (_, _, _) => StateChanged?.Invoke();
+            Generational.OnChapterAdvanced += _ => StateChanged?.Invoke();
         }
 
         /// <summary>Raised when any hub-system state changes (save dirty flag).</summary>
@@ -266,5 +275,59 @@ namespace AtomicWar.GodotApp
             sb.Append("]");
             return sb.ToString();
         }
+
+        // ---- Generational Succession (Exp 12) ----
+
+        public void RegisterGenerationDweller(string dwellerId, int age, int generation = 0)
+            => Generational.RegisterDweller(dwellerId, age, generation);
+
+        public string AdvanceGenerationalTime(int days)
+        {
+            Generational.AdvanceTime(days);
+            return $"Advanced {days}d. Chapter {Generational.CurrentChapterIndex}, " +
+                   $"year {Generational.TotalYearsElapsed}.";
+        }
+
+        public string FormMentorshipDemo(string mentorId, string apprenticeId, string traitId)
+        {
+            return Generational.FormMentorship(mentorId, apprenticeId, traitId)
+                ? $"Mentorship formed: {mentorId} → {apprenticeId} ({traitId})."
+                : "Mentorship refused (invalid or deceased).";
+        }
+
+        public string GenerationalLine()
+        {
+            var save = Generational.CaptureState();
+            return $"Generational: ch {Generational.CurrentChapterIndex} · " +
+                   $"year {Generational.TotalYearsElapsed} · " +
+                   $"{save.generationRecords.Count} dwellers";
+        }
+
+        public GenerationalSuccessionSaveState CaptureGenerationalSave() => Generational.CaptureState();
+        public void RestoreGenerationalSave(GenerationalSuccessionSaveState state) => Generational.RestoreState(state);
+
+        // ---- Epilogue Matrix (Endgame) ----
+
+        public string EvaluateEpilogueDemo(int days, int living, int deaths,
+            bool treaty, bool tempest, bool burned, bool children)
+        {
+            var ctx = new EpilogueEvaluationContext
+            {
+                totalDaysSurvived = days,
+                livingDwellerCount = living,
+                totalDeathsRecorded = deaths,
+                grandTreatySigned = treaty,
+                tempestDecommissioned = tempest,
+                debtLedgersBurned = burned,
+                childrenSurvived = children
+            };
+            var fate = Epilogue.EvaluateRegionalFate(ctx);
+            var demo = Epilogue.EvaluateDemographics(ctx);
+            var moral = Epilogue.EvaluateMoralStanding(ctx);
+            return $"Epilogue: {fate} / {demo} / {moral}";
+        }
+
+        public string GenerateEpilogueNarrativeDemo(EpilogueEvaluationContext ctx)
+            => Epilogue.GenerateEpilogueNarrative(ctx);
     }
 }

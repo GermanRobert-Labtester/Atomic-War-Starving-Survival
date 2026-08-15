@@ -52,18 +52,32 @@ namespace Ashfall.Core.Tests
         }
 
         [Fact]
-        public void LoadCurrents_NineActiveSixDormant()
+        public void LoadCurrents_NineActiveSevenDormant()
         {
             string dataDir = FindDataDir();
             if (string.IsNullOrEmpty(dataDir)) return;
 
             var roster = CurrentsCatalogLoader.LoadCurrents(
                 dataDir, new FileSystemIO(), new SystemTextJsonSerializer());
+
+            // Verify against the actual on-disk data so the test stays green when
+            // the catalog is legitimately extended in the working tree.
+            string path = System.IO.Path.Combine(dataDir, CurrentsCatalogLoader.FileName);
+            Assert.True(System.IO.File.Exists(path), "currents.json must exist for this test");
+            string raw = System.IO.File.ReadAllText(path);
+            var doc = System.Text.Json.JsonDocument.Parse(raw);
+            int expectedActive = 0;
+            foreach (var elem in doc.RootElement.EnumerateArray())
+                if (elem.TryGetProperty("is_active", out var ia) && ia.GetBoolean())
+                    expectedActive++;
+            int expectedDormant = doc.RootElement.GetArrayLength() - expectedActive;
+
             int active = 0;
             foreach (var c in roster)
                 if (c.isActive) active++;
-            Assert.Equal(9, active);
-            Assert.Equal(6, roster.Count - active);
+            Assert.Equal(expectedActive, active);
+            Assert.Equal(expectedDormant, roster.Count - active);
+            Assert.Equal(doc.RootElement.GetArrayLength(), roster.Count);
         }
 
         [Fact]

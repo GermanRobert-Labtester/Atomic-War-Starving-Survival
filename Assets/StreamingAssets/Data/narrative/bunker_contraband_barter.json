@@ -1,0 +1,331 @@
+[
+  {
+    "id": "contraband_copper_condenser_coil",
+    "title": "Twice-Bent Copper Condenser Coil",
+    "category": "distillation",
+    "contraband_tier": 2,
+    "risk_profile": "Ration penalty 30 days and copper confiscation",
+    "market_price_scrip": 45,
+    "hidden_stash_location": "exhaust_air_plenum_baffle_7",
+    "mechanics": {
+      "morale_delta": 6,
+      "trade_value_bonus": 15,
+      "tribunal_suspicion_rate": 0.12,
+      "requires_clean_water_liters": 2
+    },
+    "tags": ["distillation", "copper", "moonshine", "ventilation_stash"],
+    "prose": "Bent around an empty 75mm brass shell casing inside the exhaust air plenum. It reeks of sour mash and charred beet molasses. When clamped to the auxiliary tea boiler at 02:00, it condenses thirty centiliters of sixty-proof 'Turbine Gin' before the night watch sergeant makes his scheduled round."
+  },
+  {
+    "id": "contraband_illicit_triode_tube",
+    "title": "Unmarked RCA-6L6 Glass Triode Tube",
+    "category": "telecom",
+    "contraband_tier": 3,
+    "risk_profile": "Immediate tribunal inquiry and radio log audit",
+    "market_price_scrip": 90,
+    "hidden_stash_location": "battery_room_dead_lead_cell_core",
+    "mechanics": {
+      "morale_delta": 4,
+      "radio_range_boost_km": 18,
+      "tribunal_suspicion_rate": 0.25,
+      "emp_shielded": true
+    },
+    "tags": ["telecom", "vacuum_tube", "radio", "high_treason"],
+    "prose": "Wrapped in oilcloth and tucked into the dry, lead-sulfate cavity of an unserviceable 12-volt battery. Its filament tests perfect on an ohmmeter. In the bunker, transmitting on civilian shortwave bands without an Annex seal is punished by two weeks in the cooler, but on 7.105 MHz someone has been answering."
+  },
+  {
+    "id": "contraband_mimeographed_heresy_pamphlet",
+    "title": "Mimeographed Broadside: 'The Schedule Is A Cage'",
+    "category": "literature",
+    "contraband_tier": 2,
+    "risk_profile": "Solitary confinement and ink confiscation",
+    "market_price_scrip": 20,
+    "hidden_stash_location": "dormitory_bunk_slat_groove_b12",
+    "mechanics": {
+      "morale_delta": 8,
+      "faction_influence_rebuilder": -5,
+      "faction_influence_tempest": 10,
+      "tribunal_suspicion_rate": 0.18
+    },
+    "tags": ["literature", "mimeograph", "subversion", "bunk_stash"],
+    "prose": "Smudged purple spirit-duplicator ink on coarse recycled straw paper. It calculates that the bunker's central grain store holds eleven months more rye than the commissary director claims in his daily muster briefings. The author signs only as 'Piston 4'."
+  },
+  {
+    "id": "contraband_lead_counterfeit_slugs",
+    "title": "Poured Lead Commissary Slugs (Pouch of 30)",
+    "category": "currency",
+    "contraband_tier": 2,
+    "risk_profile": "Commissary strike and double scrip fine",
+    "market_price_scrip": 30,
+    "hidden_stash_location": "latrine_cistern_overhead_float_tank",
+    "mechanics": {
+      "scrip_purchasing_falsification": 30,
+      "vending_machine_jam_chance": 0.08,
+      "tribunal_suspicion_rate": 0.15
+    },
+    "tags": ["currency", "lead", "counterfeit", "commissary"],
+    "prose": "Cast in a hand-carved soapstone mold behind the machine shop boiler. The diameter matches the standard 1978 Annex brass ration token, but the weight is half an ounce heavier and leaves dull gray marks on the dispenser slot. Cashier Martha has gone blind enough in the sodium lights not to notice."
+  },
+  {
+    "id": "contraband_paraffin_candle_hoard",
+    "title": "Smuggled Wax Tallow & Paraffin Stubs (Bundle of 12)",
+    "category": "lighting",
+    "contraband_tier": 1,
+    "risk_profile": "Warning citation and fire hazard reprimand",
+    "market_price_scrip": 18,
+    "hidden_stash_location": "air_filter_housing_discard_bin",
+    "mechanics": {
+      "morale_delta": 5,
+      "blackout_illumination_hours": 36,
+      "tribunal_suspicion_rate": 0.04
+    },
+    "tags": ["lighting", "paraffin", "candles", "insomnia"],
+    "prose": "Melted scrap wax salvaged from maintenance grease drums and re-cast in cardboard syringe tubes with stranded cotton mop strings for wicks. In the total darkness of a ballast inverter brownout, one yellow candle flame is worth three days of dried cabbage."
+  },
+  {
+    "id": "contraband_unrationed_sugar_brick",
+    "title": "Crystallized Beet Sugar Brick (800g)",
+    "category": "luxury_rations",
+    "contraband_tier": 2,
+    "risk_profile": "Sugar tax deduction and commissary loss",
+    "market_price_scrip": 60,
+    "hidden_stash_location": "hydroponics_under_deck_sump_pipe",
+    "mechanics": {
+      "morale_delta": 12,
+      "calorie_surplus_kcal": 3200,
+      "fermentation_accelerator": true,
+      "tribunal_suspicion_rate": 0.09
+    },
+    "tags": ["luxury_rations", "sugar", "baking", "sweetener"],
+    "prose": "Dense as a brick of salt and wrapped in paraffin canvas. Evaporated secretly over forty-eight hours on the steam return riser in Sector 3. Dwellers shave grams of it into chicory tea to remember birthdays, or trade it to the still-operators for three bottles of clear wash."
+  },
+  {
+    "id": "contraband_prison_tattoo_needle_rig",
+    "title": "Motorized Shaver Tattoo Needle Rig",
+    "category": "body_modification",
+    "contraband_tier": 1,
+    "risk_profile": "Medical quarantine review and needle seizure",
+    "market_price_scrip": 25,
+    "hidden_stash_location": "electrical_junction_box_44_false_rear",
+    "mechanics": {
+      "dweller_loyalty_boost": 8,
+      "infection_risk_percentage": 0.05,
+      "tribunal_suspicion_rate": 0.06
+    },
+    "tags": ["body_modification", "ink", "tattoo", "morale"],
+    "prose": "A motorized shaver spindle wired to a guitar string ground sharp on an oilstone, powered by two scavenged D-cell torch batteries. Ink is made by collecting soot from the diesel generator exhaust onto a cold porcelain spoon and suspending it in mineral oil."
+  },
+  {
+    "id": "contraband_siphon_hose_and_bulb",
+    "title": "Reinforced Siphon Hose & Rubber Priming Bulb",
+    "category": "theft_utility",
+    "contraband_tier": 3,
+    "risk_profile": "Fuel theft charge and loss of engineering clearance",
+    "market_price_scrip": 75,
+    "hidden_stash_location": "generator_room_sump_drain_trap",
+    "mechanics": {
+      "diesel_theft_liters_per_use": 5,
+      "fuel_sabotage_potential": 0.2,
+      "tribunal_suspicion_rate": 0.3
+    },
+    "tags": ["theft_utility", "fuel", "diesel", "siphon"],
+    "prose": "Fuel-grade nitrile rubber hose with a spring-check brass bulb. Designed specifically to slip down the sounding tubes of the primary 10,000-liter subterranean fuel vaults without tripping the ultrasonic float switches. Smells permanently of sulfurous #2 summer diesel."
+  },
+  {
+    "id": "contraband_unregistered_geiger_crystal",
+    "title": "Clandestine NaI(Tl) Scintillation Crystal",
+    "category": "detection",
+    "contraband_tier": 3,
+    "risk_profile": "Radiation panic indictment and gear confiscation",
+    "market_price_scrip": 110,
+    "hidden_stash_location": "vent_shaft_intake_grille_strut",
+    "mechanics": {
+      "rad_detection_precision_multiplier": 2.5,
+      "early_storm_warning_minutes": 45,
+      "tribunal_suspicion_rate": 0.22
+    },
+    "tags": ["detection", "geiger", "scintillator", "radiation"],
+    "prose": "Thallium-doped sodium iodide crystal hermetically sealed in a polished aluminum cylinder. Capable of detecting the faint gamma glow of incoming fallout plumes twenty minutes before the shelter's official, desensitized bulkhead ratemeters sound the siren."
+  },
+  {
+    "id": "contraband_bootleg_morphine_ampoules",
+    "title": "Stolen Military Morphine Tartrate (Box of 4)",
+    "category": "narcotics",
+    "contraband_tier": 3,
+    "risk_profile": "Medical tribunal and permanent infirmary ban",
+    "market_price_scrip": 140,
+    "hidden_stash_location": "morgue_cold_drawer_dead_space_6",
+    "mechanics": {
+      "instant_pain_relief_hp": 40,
+      "trauma_suppression_duration_days": 3,
+      "chemical_dependency_risk": 0.35,
+      "tribunal_suspicion_rate": 0.28
+    },
+    "tags": ["narcotics", "medical", "morphine", "infirmary"],
+    "prose": "Amber glass ampoules with unbroken white paper batch seals from 1984. Diverted from Emergency Chest Delta during the chaos of the Month 4 intake panic. The liquid is completely clear; when someone suffers a crushed limb in the hoist shaft, this is the only thing standing between them and shock."
+  },
+  {
+    "id": "contraband_modified_filter_cartridge",
+    "title": "Gutted Respirator Canister with Smuggled Charcoal",
+    "category": "safety_tampering",
+    "contraband_tier": 2,
+    "risk_profile": "Safety equipment violation and inspection fine",
+    "market_price_scrip": 35,
+    "hidden_stash_location": "decon_lock_overcoat_peg_interior",
+    "mechanics": {
+      "rad_resistance_delta": -0.15,
+      "air_flow_ease_factor": 1.4,
+      "tribunal_suspicion_rate": 0.08
+    },
+    "tags": ["safety_tampering", "gasmask", "respirator", "filter"],
+    "prose": "An issued military particulate canister drilled open at the bottom, emptied of its restrictive dense paper pleated accordion, and refilled loosely with crushed hardwood charcoal. It lets the wearer breathe effortlessly during strenuous tunnel scavenging at the cost of half the aerosol retention."
+  },
+  {
+    "id": "contraband_card_deck_pinned_kings",
+    "title": "Marked Poker Deck (Pinned Kings & Shaved Corners)",
+    "category": "gambling",
+    "contraband_tier": 1,
+    "risk_profile": "Gambling ban and bunk inspection",
+    "market_price_scrip": 15,
+    "hidden_stash_location": "recreation_room_accordion_bellows",
+    "mechanics": {
+      "scrip_gambling_win_rate_boost": 0.25,
+      "barter_brawl_chance": 0.1,
+      "morale_delta": 4
+    },
+    "tags": ["gambling", "cards", "recreation", "bunker_night"],
+    "prose": "Pre-war playing cards with corner edge-shaves detectable only by fingertips calloused from machine oil. Pin-pricks through the ornate blue filigree pattern reveal the suit and rank under the dim red emergency exit illumination of Sector B."
+  },
+  {
+    "id": "contraband_smuggled_coffee_grounds",
+    "title": "Vacuum-Sealed Colombian Ground Coffee (250g)",
+    "category": "luxury_rations",
+    "contraband_tier": 2,
+    "risk_profile": "Luxury hoarding penalty",
+    "market_price_scrip": 85,
+    "hidden_stash_location": "vent_duct_inspection_elbow_14",
+    "mechanics": {
+      "morale_delta": 15,
+      "fatigue_reduction_hours": 12,
+      "trade_multiplier": 1.35,
+      "tribunal_suspicion_rate": 0.1
+    },
+    "tags": ["luxury_rations", "coffee", "luxury", "barter"],
+    "prose": "Heavy foil packaging with the valve still intact. Opening the seal releases an aroma so intoxicating and alien to a concrete shelter that dwellers two dormitories away stop speaking and look toward the ceiling vents with wide, hollow eyes."
+  },
+  {
+    "id": "contraband_subverted_keycard_flasher",
+    "title": "Magnetic Stripe Encoder & Glitched Master Key",
+    "category": "security_bypass",
+    "contraband_tier": 3,
+    "risk_profile": "High treason and terminal lock out",
+    "market_price_scrip": 160,
+    "hidden_stash_location": "server_room_cable_tray_blind_spot",
+    "mechanics": {
+      "blast_door_override_success_rate": 0.85,
+      "alarm_trigger_chance": 0.15,
+      "tribunal_suspicion_rate": 0.4
+    },
+    "tags": ["security_bypass", "keycard", "electronics", "treason"],
+    "prose": "Constructed from a cassette deck tape head wired to a 9V battery and a potentiometer. With precise rhythm, it sweeps a burst of electromagnetic white noise across the magnetic readers of Sector C blast doors, corrupting the parity check and forcing the relay to latch open."
+  },
+  {
+    "id": "contraband_uninspected_lard_tin",
+    "title": "Sealed Tin of Rendered Pork Lard (2kg)",
+    "category": "luxury_rations",
+    "contraband_tier": 2,
+    "risk_profile": "Unregistered food hoarding confiscation",
+    "market_price_scrip": 50,
+    "hidden_stash_location": "cold_water_riser_lagging_hollow",
+    "mechanics": {
+      "hunger_restore_value": 45,
+      "calorie_surplus_kcal": 18000,
+      "waterproof_boot_grease_uses": 6,
+      "tribunal_suspicion_rate": 0.07
+    },
+    "tags": ["luxury_rations", "lard", "calories", "cooking"],
+    "prose": "Heavy soldered tin packed with pure white rendered fat from a livestock shelter culled in the second week of the war. Useful for frying dry ration wafers into something edible, waterproofing leather boots for tunnel expeditions, or lubricating sticky blast gate hinges."
+  },
+  {
+    "id": "contraband_hand_wound_dynamo_spool",
+    "title": "Secret Hand-Cranked Induction Phone Charger",
+    "category": "power_harvesting",
+    "contraband_tier": 1,
+    "risk_profile": "Unauthorized power tap reprimand",
+    "market_price_scrip": 40,
+    "hidden_stash_location": "gymnasium_rowing_machine_flywheel_box",
+    "mechanics": {
+      "battery_recharge_slots": 2,
+      "noise_generation_db": 15,
+      "tribunal_suspicion_rate": 0.05
+    },
+    "tags": ["power_harvesting", "dynamo", "battery", "clandestine"],
+    "prose": "Built from the stepper motor of a decommissioned chart plotter and the planetary gears of a hand mixer. Ten minutes of steady cranking produces enough 5-volt DC to charge a personal dosimeter battery or power an illegal LED reading light for two hours."
+  },
+  {
+    "id": "contraband_distillery_hydrometer_glass",
+    "title": "Laboratory Specific Gravity Glass Hydrometer",
+    "category": "distillation",
+    "contraband_tier": 2,
+    "risk_profile": "Chemistry glassware possession citation",
+    "market_price_scrip": 55,
+    "hidden_stash_location": "water_lab_broken_centrifuge_housing",
+    "mechanics": {
+      "alcohol_proof_precision": 0.99,
+      "distillation_yield_bonus": 0.2,
+      "tribunal_suspicion_rate": 0.11
+    },
+    "tags": ["distillation", "glassware", "chemistry", "alcohol"],
+    "prose": "A delicate, mercury-weighted glass float with paper gradations reading 0.800 to 1.000 specific gravity. Lifted from the water testing lab in Year Two. The difference between seventy-proof drinkable spirit and lethal methanol boils down to three millimeters on this stem."
+  },
+  {
+    "id": "contraband_forged_muster_stamp",
+    "title": "Carved Rubber Commissary Shift Stamp ('INSPECTED')",
+    "category": "forgery",
+    "contraband_tier": 3,
+    "risk_profile": "Exile to upper airlock vestibule",
+    "market_price_scrip": 130,
+    "hidden_stash_location": "commissary_scale_counterweight_recess",
+    "mechanics": {
+      "ration_chit_forgery_success_rate": 0.9,
+      "shift_absence_concealment": true,
+      "tribunal_suspicion_rate": 0.35
+    },
+    "tags": ["forgery", "stamp", "muster", "bureaucracy"],
+    "prose": "Carved out of a neoprene machinery vibration pad using a scalpel blade. It replicates the oval seal of the District Commissary Office down to the tiny chip in the capital 'S'. Stamped on a ration slip, it guarantees double broth without standing in the two-hour audit line."
+  },
+  {
+    "id": "contraband_stolen_nickel_cadmium_cell",
+    "title": "Industrial 24V Nickel-Cadmium Aircraft Battery Cell",
+    "category": "power_harvesting",
+    "contraband_tier": 2,
+    "risk_profile": "Hazardous materials and electrical theft citation",
+    "market_price_scrip": 95,
+    "hidden_stash_location": "elevator_shaft_counterweight_guide_bracket",
+    "mechanics": {
+      "emergency_power_storage_kwh": 1.2,
+      "recharge_cycle_durability": 2000,
+      "acid_spill_hazard": 0.03,
+      "tribunal_suspicion_rate": 0.16
+    },
+    "tags": ["power_harvesting", "battery", "nicad", "emergency_power"],
+    "prose": "A steel-cased NiCd wet cell salvaged from an auxiliary power unit in the hangar elevator. Indestructible, tolerant of deep discharge, and capable of holding charge for three hundred days in sub-zero dampness. Powers the black-market infirmary light rig."
+  },
+  {
+    "id": "contraband_century_seed_grain_vial",
+    "title": "Vial of Non-Irradiated Heirloom Wheat Seeds ('Sonya-0')",
+    "category": "contraband_heirloom",
+    "contraband_tier": 3,
+    "risk_profile": "Bio-security tribunal and vault isolation",
+    "market_price_scrip": 200,
+    "hidden_stash_location": "crematory_urn_niche_7B",
+    "mechanics": {
+      "agricultural_yield_multiplier": 2.0,
+      "genetic_integrity_score": 1.0,
+      "century_tree_viability": true,
+      "tribunal_suspicion_rate": 0.45
+    },
+    "tags": ["contraband_heirloom", "seeds", "century_seed", "agriculture", "relic"],
+    "prose": "Fifty grams of golden, unbroken wheat grains inside a borosilicate ampoule sealed with flame-pulled glass. While the shelter's hydroponics crops mutate under gamma leakage and yield bitter, stunted kernels, these seeds were harvested forty hours before the sirens and never felt a single Roentgen."
+  }
+]

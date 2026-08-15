@@ -1,0 +1,72 @@
+[
+  {
+    "id": "honey_extractor_radial_basket_frame_balance",
+    "extractor_unit_id": "COMMISSARY_RADIAL_EXTRACTOR_01",
+    "rotor_speed_rpm": 280.0,
+    "honey_moisture_pct": 17.4,
+    "frame_capacity": 20.0,
+    "timestamp_relative": "YEAR_03_EXTRACT_01",
+    "tags": ["apiculture", "honey_extractor", "radial_basket", "centrifugal_balance", "frame_extraction"],
+    "prose": "Loading twenty uncapped honey frames into the radial cage required paired weight matching. Pairing heavy 2.8 kg frames directly opposite each other prevented dynamic eccentric wobble as the rotor accelerated to 280 RPM."
+  },
+  {
+    "id": "honey_extractor_hot_water_uncapping_plane_knife",
+    "extractor_unit_id": "MANUAL_UNCAPPING_BENCH_02",
+    "rotor_speed_rpm": 0.0,
+    "honey_moisture_pct": 16.8,
+    "frame_capacity": 1.0,
+    "timestamp_relative": "YEAR_05_EXTRACT_03",
+    "tags": ["apiculture", "uncapping_knife", "steam_heat", "cappings_wax", "comb_harvest"],
+    "prose": "Pumping 85°C hot water through the hollow copper uncapping knife allowed the heated blade to glide through wax cappings like butter. Slicing both comb faces cleanly exposed raw honey cells with zero bruising of the underlying foundation."
+  },
+  {
+    "id": "honey_extractor_thixotropic_heather_honey_loosener",
+    "extractor_unit_id": "PIN_LOOSENER_PROCESSING_STATION",
+    "rotor_speed_rpm": 220.0,
+    "honey_moisture_pct": 18.2,
+    "frame_capacity": 12.0,
+    "timestamp_relative": "YEAR_08_EXTRACT_02",
+    "tags": ["apiculture", "thixotropic_honey", "pin_loosener", "heather_honey", "viscosity"],
+    "prose": "Harvesting viscous jelly-like heather honey required a mechanical pin loosener with 400 spring-loaded brass needles. Agitating individual cells broke the thixotropic gel structure, allowing centrifugal force to fling out seventy liters of amber honey."
+  },
+  {
+    "id": "honey_extractor_gate_valve_double_mesh_strainer",
+    "extractor_unit_id": "SETTLING_TANK_STRAINER_BAY_04",
+    "rotor_speed_rpm": 260.0,
+    "honey_moisture_pct": 17.0,
+    "frame_capacity": 24.0,
+    "timestamp_relative": "YEAR_11_EXTRACT_04",
+    "tags": ["apiculture", "honey_gate", "double_strainer", "wax_particle", "clarification"],
+    "prose": "Gravity draining extracted honey through a tiered double-mesh stainless steel sieve (800-micron upper, 200-micron lower) stripped out bee parts and wax specks. The strained honey settled into settling tanks with brilliant optical clarity."
+  },
+  {
+    "id": "honey_extractor_cast_iron_spur_gear_slip_clutch",
+    "extractor_unit_id": "HAND_CRANK_EXTRACTOR_UNIT_05",
+    "rotor_speed_rpm": 310.0,
+    "honey_moisture_pct": 17.5,
+    "frame_capacity": 8.0,
+    "timestamp_relative": "YEAR_14_EXTRACT_01",
+    "tags": ["apiculture", "spur_gear", "slip_clutch", "ratchet_freewheel", "inertia"],
+    "prose": "The manual 1:4 speed-multiplying cast-iron spur gearbox featured a spring-loaded roller freewheel clutch. Operators could release the hand crank during high-speed runs while the heavy loaded rotor spun freely on its ball bearings."
+  },
+  {
+    "id": "honey_extractor_refractometer_moisture_brix_assay",
+    "extractor_unit_id": "QUALITY_CONTROL_OPTICAL_BENCH",
+    "rotor_speed_rpm": 0.0,
+    "honey_moisture_pct": 16.2,
+    "frame_capacity": 0.0,
+    "timestamp_relative": "YEAR_17_EXTRACT_03",
+    "tags": ["apiculture", "refractometer", "brix_assay", "moisture_content", "fermentation_prevention"],
+    "prose": "A drop of golden clover honey placed on the temperature-compensated optical refractometer prism registered 16.2% moisture (83.8° Brix). Moisture levels below 18.0% guaranteed osmotic preservation against osmotolerant wild yeast fermentation."
+  },
+  {
+    "id": "honey_extractor_diastase_hmf_heat_damage_assay",
+    "extractor_unit_id": "SPECTROPHOTOMETER_ANALYSIS_BAY",
+    "rotor_speed_rpm": 0.0,
+    "honey_moisture_pct": 16.9,
+    "frame_capacity": 0.0,
+    "timestamp_relative": "YEAR_20_EXTRACT_01",
+    "tags": ["apiculture", "diastase_activity", "hmf_assay", "unpasteurized", "enzyme_integrity"],
+    "prose": "Spectrophotometric analysis of extracted honey batches confirmed a diastase enzyme index of 14.8 DN and hydroxymethylfurfural (HMF) content under 8.5 mg/kg. The pristine enzyme profile confirmed that raw honey retains full biological medicinal potency."
+  }
+]

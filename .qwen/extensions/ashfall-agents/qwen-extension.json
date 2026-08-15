@@ -1,0 +1,6 @@
+{
+  "name": "ashfall-agents",
+  "displayName": "ASHFALL AGENTS.md Generator",
+  "description": "Custom skill that generates or updates the project AGENTS.md with comprehensive architecture, conventions, known issues, and migration rules. Draws from the deep review report and migration status.",
+  "version": "1.0.0"
+}

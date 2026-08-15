@@ -1,0 +1,51 @@
+[
+  {
+    "id": "treadle_loom_001",
+    "treadle_unit_id": "tl_oak_frame_01",
+    "heddle_count": 4,
+    "tie_up_pattern": "plain_weave",
+    "log_text": "Four-shaft loom reassembled in the lower corridor. Heddle frames are warped wire in a wood rail — crude but the eyes are even enough. Plain weave tie-up first; no time for complexity. Warp of hemp two-ply, sixty centimetres wide."
+  },
+  {
+    "id": "treadle_loom_002",
+    "treadle_unit_id": "tl_oak_frame_01",
+    "heddle_count": 4,
+    "tie_up_pattern": "2_2_twill",
+    "log_text": "Switched to two-two twill on the same threading. Tied treadles three and four together for the advancing diagonal. Cloth came off the loom with a surface sheen the plain weave lacked. Stronger in the warp direction under load."
+  },
+  {
+    "id": "treadle_loom_003",
+    "treadle_unit_id": "tl_oak_frame_01",
+    "heddle_count": 4,
+    "tie_up_pattern": "broken_twill",
+    "log_text": "Broken twill interrupts the diagonal — reversed the sequence at the treadle every eight picks. Surface pattern is less regular but the structure locks in both directions. Useful for anything that needs to resist puncture."
+  },
+  {
+    "id": "treadle_loom_004",
+    "treadle_unit_id": "tl_pine_frame_02",
+    "heddle_count": 8,
+    "tie_up_pattern": "point_twill",
+    "log_text": "Pine frame, eight shafts — the most complex tie-up so far. Point threading means the diagonal reverses at the centre. Threading took most of a morning. First cloth off shows a chevron ridge. We have not made anything this fine before."
+  },
+  {
+    "id": "treadle_loom_005",
+    "treadle_unit_id": "tl_pine_frame_02",
+    "heddle_count": 8,
+    "tie_up_pattern": "honeycomb",
+    "log_text": "Honeycomb block tie-up. Warp floats form a raised cell pattern — the air trapped inside gives real insulating bulk. Slower to weave: five picks per cell, each block eight ends wide. Worth the time for blanket weight."
+  },
+  {
+    "id": "treadle_loom_006",
+    "treadle_unit_id": "tl_oak_frame_01",
+    "heddle_count": 4,
+    "tie_up_pattern": "plain_weave",
+    "log_text": "Second warp, same threading. Linen two-ply at tighter sett: seventy-two ends per ten centimetres. Takes longer to beat down but the resulting cloth is nearly windproof. Cut into panels for the shelter door seal."
+  },
+  {
+    "id": "treadle_loom_007",
+    "treadle_unit_id": "tl_pine_frame_02",
+    "heddle_count": 8,
+    "tie_up_pattern": "satinette",
+    "log_text": "Satinette tie-up — warp-float dominant, seven-shaft cycle. The surface is almost smooth. Very slow; broke two heddle wires in the tighter shafts. The cloth catches light differently. First time anyone has commented on what we made as a thing, not just a thing we needed."
+  }
+]

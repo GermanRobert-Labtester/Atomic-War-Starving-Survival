@@ -68,7 +68,72 @@ namespace AtomicWar.GodotApp
                 MakeDef("geiger_counter", "Geiger Counter", ItemType.Device, stackMax: 1, weight: 0.9f, trade: 25f),
                 MakeDef("scrap_mechanical", "Mechanical Parts", ItemType.Material, stackMax: 50, weight: 0.2f, trade: 2f),
                 MakeDef("scrap_electronic", "Electronic Scrap", ItemType.Material, stackMax: 50, weight: 0.1f, trade: 3f),
-                MakeDef("scrap_chemical", "Chemicals", ItemType.Material, stackMax: 50, weight: 0.3f, trade: 4f)
+                MakeDef("scrap_chemical", "Chemicals", ItemType.Material, stackMax: 50, weight: 0.3f, trade: 4f),
+
+                // ── ASHFALL: THE VERDICT (Expansion 08) — narrative evidence & quest items ──
+                // Evidence is authoritative in the Verdict EvidenceLedger; these ItemDefinitions
+                // make the fragments physically present so the inventory surface and quest
+                // grantItemId references resolve without forking a parallel item system.
+                MakeDef("evidence_geophone_hymn", "The Farm's Seismic Signature", ItemType.Relic, weight: 1.2f, trade: 12f),
+                MakeDef("evidence_twelve_gauge_steel", "The Fired-Plate Ordnance Log", ItemType.Relic, weight: 4f, trade: 18f),
+                MakeDef("evidence_fuse_linen", "The Standard's Linen", ItemType.Relic, weight: 0.4f, trade: 40f),
+                MakeDef("evidence_census_draft", "The Partial County Ledger", ItemType.Relic, weight: 0.8f, trade: 25f),
+                MakeDef("evidence_mailroom_tape", "Carbon-Copy Censusing Rota", ItemType.Relic, weight: 0.3f, trade: 30f),
+                MakeDef("evidence_uxo_register", "The Hold Register", ItemType.Relic, weight: 1.6f, trade: 55f),
+                MakeDef("evidence_call_calibration", "The Calibration Burst", ItemType.Relic, weight: 0.2f, trade: 45f),
+                MakeDef("evidence_call_plain", "The Plain Burst", ItemType.Relic, weight: 0.2f, trade: 50f),
+                MakeDef("evidence_reels_matter", "The Archive's Own Accounting", ItemType.Relic, weight: 2f, trade: 35f),
+                MakeDef("evidence_valve_s36", "The Valve, Read Per 36", ItemType.Relic, weight: 3f, trade: 60f),
+                MakeDef("evidence_eden_log", "Eleven Months of Tube-Bleed", ItemType.Relic, weight: 1.1f, trade: 70f),
+                MakeDef("evidence_veen_your_people", "The Count, Presented", ItemType.Relic, weight: 0.5f, trade: 0f),
+                MakeDef("item_archive_tape_silo_key", "The Tape-Silo Key", ItemType.Quest, weight: 0.9f, trade: 90f),
+                MakeDef("item_fuse_world_shift_charter", "Shift 36's Charter", ItemType.Quest, weight: 1.4f, trade: 75f),
+                MakeDef("item_verdict_salt_flat_sample", "Salt Flat Sample", ItemType.Comfort, weight: 1f, morale: 2f, trade: 8f),
+
+                // ── ASHFALL: THE BLACK FLOTILLA (Expansion 09) — salvage & deep-lore items ──
+                MakeDef("paper_scrap", "Paper Scrap", ItemType.Material, stackMax: 100, weight: 0.01f, trade: 0.1f),
+                MakeDef("item_suitcase_locked", "Locked Suitcase", ItemType.Tool, weight: 4f, trade: 5f),
+                MakeDef("industrial_bleach", "Industrial Bleach (5L)", ItemType.Material, stackMax: 2, weight: 5.5f, trade: 18f),
+                MakeDef("ammonia_tank", "Pressurized Ammonia Tank", ItemType.Material, weight: 12f, trade: 25f),
+                MakeDef("item_anchor_notes", "The Anchor's Final Script", ItemType.Quest, weight: 0.1f, trade: 0f),
+                MakeDef("halon_tank", "Halon Fire Suppressant", ItemType.Material, weight: 15f, trade: 40f),
+                MakeDef("pipe_wrench", "Heavy Pipe Wrench", ItemType.Tool, weight: 3.5f, trade: 14f),
+                MakeDef("crayon", "Crayon", ItemType.Comfort, stackMax: 30, weight: 0.02f, trade: 0.5f),
+                MakeDef("sawdust_block", "Compressed Sawdust Block", ItemType.Fuel, stackMax: 50, weight: 1f, trade: 2f),
+                MakeDef("item_ash_ghillie", "Ash Ghillie Suit", ItemType.Protective, weight: 3f, trade: 20f),
+                MakeDef("item_teddy_bear", "Teddy Bear", ItemType.Comfort, stackMax: 4, weight: 0.3f, morale: 1f, trade: 2f),
+                MakeDef("item_car_keys", "Car Keys", ItemType.Material, stackMax: 5, weight: 0.05f, trade: 1f),
+                MakeDef("item_ice_pick", "Ice Pick", ItemType.Tool, stackMax: 2, weight: 0.8f, trade: 10f),
+                MakeDef("brass_fittings", "Brass Fittings", ItemType.Material, stackMax: 30, weight: 0.3f, trade: 8f),
+
+                // ── ASHFALL: THE BLACK FLOTILLA (Expansion 09) — phantom loot-table items ──
+                // These were referenced in DeepLoreLocationCatalog loot tables but never registered.
+                MakeDef("acoustic_foam_panel", "Acoustic Foam Panel", ItemType.Material, stackMax: 10, weight: 0.5f, trade: 3f),
+                MakeDef("ammo_9x19", "9x19mm Ammunition", ItemType.Material, stackMax: 20, weight: 0.01f, trade: 2f),
+                MakeDef("blood_bag", "Blood Bag (Compatible)", ItemType.Medical, weight: 0.6f, health: 15f, trade: 30f),
+                MakeDef("bone_saw", "Bone Saw", ItemType.Tool, weight: 2.5f, trade: 12f),
+                MakeDef("cardboard_box", "Cardboard Box", ItemType.Material, stackMax: 20, weight: 0.3f, trade: 1f),
+                MakeDef("cigarette_pack_sealed", "Sealed Cigarette Pack", ItemType.Comfort, stackMax: 5, weight: 0.05f, morale: 1f, trade: 8f),
+                MakeDef("fat_rendered", "Rendered Fat", ItemType.Food, stackMax: 10, weight: 0.5f, hunger: 8f, trade: 3f),
+                MakeDef("spoiled_blood_bag", "Spoiled Blood Bag", ItemType.ContaminatedFood, weight: 0.6f, trade: 0f),
+                MakeDef("spoiled_canned_food", "Spoiled Canned Food", ItemType.ContaminatedFood, weight: 0.4f, trade: 0f),
+                MakeDef("spoiled_meat", "Spoiled Meat", ItemType.ContaminatedFood, stackMax: 20, weight: 0.3f, trade: 0f),
+
+                // ── ASHFALL: THE GLASS ORCHARD (Expansion 11) — greenhouse items ──
+                MakeDef("item_seed_mushroom", "Spore Capsule", ItemType.Material, stackMax: 20, weight: 0.1f, trade: 4f),
+                MakeDef("item_seed_tuber", "Tuber Cutting", ItemType.Material, stackMax: 10, weight: 0.3f, trade: 6f),
+                MakeDef("item_seed_grain", "Mutated Grain Spike", ItemType.Material, stackMax: 30, weight: 0.05f, trade: 5f),
+                MakeDef("item_seed_wheat", "Pre-War Wheat Seed", ItemType.Quest, stackMax: 5, weight: 0.05f, trade: 80f),
+                MakeDef("item_planter_box", "Planter Box", ItemType.Material, stackMax: 6, weight: 8f, trade: 25f),
+                MakeDef("item_grow_lamp", "Grow Lamp", ItemType.Device, stackMax: 2, weight: 3f, trade: 40f),
+                MakeDef("item_lead_glass_pane", "Lead-Glass Pane", ItemType.Material, stackMax: 4, weight: 5f, trade: 30f),
+                MakeDef("item_blight_treatment", "Blight Treatment", ItemType.Medical, stackMax: 6, weight: 0.2f, trade: 15f),
+                MakeDef("item_grow_medium", "Sterile Grow Medium", ItemType.Material, stackMax: 8, weight: 2f, trade: 8f),
+                MakeDef("crop_mushroom", "Greenhouse Mushroom", ItemType.Food, stackMax: 20, weight: 0.1f, hunger: 6f, morale: 1f, trade: 3f),
+                MakeDef("crop_tuber", "Greenhouse Tuber", ItemType.Food, stackMax: 12, weight: 0.3f, hunger: 12f, thirst: 1f, trade: 5f),
+                MakeDef("crop_grain", "Clean Grain", ItemType.Food, stackMax: 30, weight: 0.1f, hunger: 18f, morale: 2f, trade: 6f),
+                MakeDef("crop_wheat", "Pre-War Wheat", ItemType.Food, stackMax: 20, weight: 0.2f, hunger: 30f, morale: 8f, health: 2f, trade: 30f),
+                MakeDef("tainted_food", "Tainted Rations", ItemType.ContaminatedFood, stackMax: 20, weight: 0.2f, hunger: 14f, morale: -3f, contamination: 0.6f, trade: 1f)
             };
             foreach (var d in defs) catalog.Register(d);
         }

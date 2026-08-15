@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pneumatic_diverter_rotary_switch_flap_misalignment",
+    "diverter_junction_id": "CENTRAL_HUB_SWITCH_BAY_01",
+    "diverter_mechanism_type": "ROTARY_SOLENOID_FLAP_GATE",
+    "switching_time_milliseconds": 85.0,
+    "tube_internal_diameter_mm": 75.0,
+    "timestamp_relative": "YEAR_02_DIVERTER_LOG_01",
+    "tags": ["pneumatic", "diverter", "rotary_flap", "misalignment", "capsule_collision"],
+    "prose": "Mechanical wear in the bronze hinge bushing allowed the rotary diverter flap to settle 4mm below center. An oncoming 14 m/s carrier struck the proud metal lip, shearing the brass latch and jamming the central sorting carousel."
+  },
+  {
+    "id": "pneumatic_diverter_pneumatic_piston_actuator_stiction",
+    "diverter_junction_id": "SUB_LEVEL_3_JUNCTION_SWITCH",
+    "diverter_mechanism_type": "DOUBLE_ACTING_AIR_CYLINDER",
+    "switching_time_milliseconds": 320.0,
+    "tube_internal_diameter_mm": 110.0,
+    "timestamp_relative": "YEAR_04_DIVERTER_LOG_03",
+    "tags": ["pneumatic", "diverter", "actuator_stiction", "switching_lag", "misrouting"],
+    "prose": "Grease varnish on the switching cylinder rod created 320ms of actuator stiction. The delayed throw failed to clear the track before the capsule arrived, misrouting high-priority munitions orders into the hydroponics greenhouse loop."
+  },
+  {
+    "id": "pneumatic_diverter_vacuum_bypass_air_knife_blowoff",
+    "diverter_junction_id": "INTER_SECTOR_MAIN_BYPASS_04",
+    "diverter_mechanism_type": "AUTOMATIC_VACUUM_RELIEF_VALVE",
+    "switching_time_milliseconds": 45.0,
+    "tube_internal_diameter_mm": 75.0,
+    "timestamp_relative": "YEAR_07_DIVERTER_LOG_02",
+    "tags": ["pneumatic", "vacuum_bypass", "air_knife", "dust_purge", "optical_sensor"],
+    "prose": "Opening a high-velocity air-knife bypass valve during carrier transit blew accumulated paper fibers and dust off the optical gate lenses. The automatic pneumatic purge eliminated false-positive track occupancy triggers."
+  },
+  {
+    "id": "pneumatic_diverter_three_way_y_branch_junction_jam",
+    "diverter_junction_id": "TRI_SECTOR_Y_JUNCTION_EAST",
+    "diverter_mechanism_type": "THREE_WAY_FLEXIBLE_TONGUE_SWITCH",
+    "switching_time_milliseconds": 110.0,
+    "tube_internal_diameter_mm": 75.0,
+    "timestamp_relative": "YEAR_09_DIVERTER_LOG_04",
+    "tags": ["pneumatic", "y_junction", "tongue_switch", "vacuum_deflection", "diverter_jam"],
+    "prose": "Heavy vacuum draw (-0.5 bar) deflected the thin phosphor-bronze tongue blade inward, pinching it against the junction casing. The seized tongue locked the three-way split in the center position, paralyzing all eastward communications."
+  },
+  {
+    "id": "pneumatic_diverter_optical_infrared_beam_trigger_soot",
+    "diverter_junction_id": "GENERATOR_BAY_TUBE_INTERCEPT",
+    "diverter_mechanism_type": "INFRARED_PHOTO_INTERRUPTER_GATE",
+    "switching_time_milliseconds": 15.0,
+    "tube_internal_diameter_mm": 60.0,
+    "timestamp_relative": "YEAR_12_DIVERTER_LOG_01",
+    "tags": ["pneumatic", "infrared_sensor", "soot_fouling", "beam_interrupter", "false_trigger"],
+    "prose": "Soot infiltration from a cracked diesel exhaust manifold coated the quartz optical ports of the IR track sensor. The attenuated beam failed to detect passing carriers, preventing the downstream decelerator trap from closing in time."
+  },
+  {
+    "id": "pneumatic_diverter_interlock_mechanical_toggle_latch",
+    "diverter_junction_id": "MAIN_SECURITY_DISPATCH_MANIFOLD",
+    "diverter_mechanism_type": "MECHANICAL_PREVENTION_INTERLOCK",
+    "switching_time_milliseconds": 60.0,
+    "tube_internal_diameter_mm": 75.0,
+    "timestamp_relative": "YEAR_15_DIVERTER_LOG_03",
+    "tags": ["pneumatic", "interlock", "toggle_latch", "anti_collision", "tube_blockage"],
+    "prose": "A spring-loaded mechanical toggle latch locked the sending airlock shut whenever a carrier was in transit through the single-track tunnel section. The positive interlock prevented mid-pipe carrier head-on collisions."
+  },
+  {
+    "id": "pneumatic_diverter_cushion_air_bleed_dashpot_vent",
+    "diverter_junction_id": "HOSPITAL_TERMINAL_RECEIVER",
+    "diverter_mechanism_type": "PNEUMATIC_DASHPOT_DECELERATOR",
+    "switching_time_milliseconds": 50.0,
+    "tube_internal_diameter_mm": 75.0,
+    "timestamp_relative": "YEAR_17_DIVERTER_LOG_02",
+    "tags": ["pneumatic", "dashpot", "air_bleed", "needle_valve", "soft_docking"],
+    "prose": "Calibrating the micrometer needle valve on the terminal air cushion dashpot trapped a pressurized 0.3 bar air spring ahead of arriving carriers. The controlled bleed compressed smoothly, bringing medical glass vials to a gentle, zero-rebound stop."
+  },
+  {
+    "id": "pneumatic_diverter_soundproof_acoustic_baffle_box",
+    "diverter_junction_id": "RESIDENTIAL_SECTOR_DISPATCH_LINE",
+    "diverter_mechanism_type": "ACOUSTIC_BAFFLE_SILENCING_BOX",
+    "switching_time_milliseconds": 0.0,
+    "tube_internal_diameter_mm": 75.0,
+    "timestamp_relative": "YEAR_20_DIVERTER_LOG_01",
+    "tags": ["pneumatic", "acoustic_baffle", "silencer", "noise_reduction", "living_quarters"],
+    "prose": "Enclosing the high-speed tube junction inside a double-walled lead-and-felt acoustic baffle box attenuated capsule transit rumble from 88 dB down to 34 dB. Night dispatches passed overhead without disturbing sleeping off-duty crew."
+  }
+]

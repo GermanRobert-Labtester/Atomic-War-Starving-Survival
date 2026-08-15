@@ -1,5 +1,7 @@
 using System;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.YearOfAsh;
 
 namespace AtomicWar.GodotApp.YearOfAsh
@@ -23,6 +25,21 @@ namespace AtomicWar.GodotApp.YearOfAsh
             SetAnchorsPreset(LayoutPreset.TopRight);
             CustomMinimumSize = new Vector2(360, 240);
 
+            // Apply standard panel 9-slice
+            var tex = AtomicWar.GodotApp.UI.AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                var sb = new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+                AddThemeStyleboxOverride("panel", sb);
+            }
+
             var rootVbox = new VBoxContainer();
             rootVbox.AddThemeConstantOverride("separation", 6);
             AddChild(rootVbox);
@@ -32,7 +49,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = "YEAR OF ASH: GEOPOLITICAL STATE",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            title.AddThemeFontSizeOverride("font_size", 14);
+            title.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             rootVbox.AddChild(title);
 
             _lblPhase = new Label { Text = "Phase: Phase IV - Deep Freeze" };
@@ -129,7 +146,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                     {
                         Text = $"{f.factionId}: Standing {f.standing} | Control {f.territorialControlPercent}%"
                     };
-                    lbl.AddThemeFontSizeOverride("font_size", 11);
+                    lbl.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
                     _factionsList.AddChild(lbl);
                 }
             }

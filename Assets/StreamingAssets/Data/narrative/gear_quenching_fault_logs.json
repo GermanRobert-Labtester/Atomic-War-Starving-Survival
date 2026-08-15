@@ -1,0 +1,72 @@
+[
+  {
+    "id": "gear_quench_retained_austenite_flank_spalling",
+    "gear_component_id": "MAIN_TRANSMISSION_BULL_GEAR_01",
+    "steel_alloy_grade": "AISI_8620_NICKEL_CHROME_MOLY",
+    "case_hardness_hrc": 52.0,
+    "quenching_medium": "ACCELERATED_MINERAL_OIL_60C",
+    "timestamp_relative": "YEAR_03_HEAT_TREAT_01",
+    "tags": ["metallurgy", "heat_treatment", "gear", "quenching", "retained_austenite"],
+    "prose": "Insufficient cooling rate during oil quench left 28% retained austenite in the carburized case. Under 400 horsepower load in the turbine reduction gearbox, the soft phase transformed into untempered martensite, causing severe surface spalling along the pitch line."
+  },
+  {
+    "id": "gear_quench_carburizing_case_depth_excess",
+    "gear_component_id": "PUMP_DRIVE_PINION_GEAR_04",
+    "steel_alloy_grade": "AISI_5115_CHROMIUM_CARBURIZING",
+    "case_hardness_hrc": 64.0,
+    "quenching_medium": "COLD_BRINE_AGITATED_BATH",
+    "timestamp_relative": "YEAR_05_HEAT_TREAT_03",
+    "tags": ["metallurgy", "heat_treatment", "pinion", "through_hardening", "tooth_snap"],
+    "prose": "Excessive carburizing time (eighteen hours at 930°C) completely through-carburized the narrow 4mm gear teeth. Lacking a ductile, shock-absorbing core, three consecutive gear teeth snapped off at the root fillet during pump startup."
+  },
+  {
+    "id": "gear_quench_quench_oil_water_emulsion_cracking",
+    "gear_component_id": "HOIST_PLANETARY_RING_GEAR_02",
+    "steel_alloy_grade": "AISI_4340_HIGH_TENSILE_STEEL",
+    "case_hardness_hrc": 58.0,
+    "quenching_medium": "WATER_CONTAMINATED_OIL_EMULSION",
+    "timestamp_relative": "YEAR_08_HEAT_TREAT_02",
+    "tags": ["metallurgy", "heat_treatment", "quench_cracking", "water_in_oil", "ring_gear"],
+    "prose": "A leaking water cooling coil introduced 3% water into the sixty-barrel quench oil tank. Water droplets touching the 850°C ring gear caused violent steam cavitation and localized thermal shock, fracturing the 600mm gear ring into three pieces."
+  },
+  {
+    "id": "gear_quench_uneven_agitator_distortion_ovality",
+    "gear_component_id": "TURBINE_BEVEL_DRIVE_PAIR",
+    "steel_alloy_grade": "AISI_4140_CHROME_MOLY_STEEL",
+    "case_hardness_hrc": 55.0,
+    "quenching_medium": "STAGNANT_POLYMER_WATER_SOLUTION",
+    "timestamp_relative": "YEAR_11_HEAT_TREAT_04",
+    "tags": ["metallurgy", "heat_treatment", "warpage", "distortion", "ovality"],
+    "prose": "Failure of the quench tank mechanical agitator impeller created non-uniform vapor blanket cooling across the gear face. The 450mm bevel gear distorted into an oval shape with 3.4mm radial runout, rendering tooth contact pattern un-meshable."
+  },
+  {
+    "id": "gear_quench_decarburization_soft_skin_tooth_wear",
+    "gear_component_id": "FEED_SCREW_HELICAL_SPUR_GEAR",
+    "steel_alloy_grade": "AISI_1045_MEDIUM_CARBON_STEEL",
+    "case_hardness_hrc": 38.0,
+    "quenching_medium": "DIRECT_WATER_SPRAY_MANIFOLD",
+    "timestamp_relative": "YEAR_14_HEAT_TREAT_01",
+    "tags": ["metallurgy", "heat_treatment", "decarburization", "soft_skin", "wear"],
+    "prose": "Furnace door air leak allowed oxidizing flue gases to burn carbon out of the gear surface during the three-hour austenitizing soak. A 0.4mm layer of dead-soft ferrite covered the teeth; gear profile wore out in forty-eight hours of operation."
+  },
+  {
+    "id": "gear_quench_intergranular_oxidation_root_cracking",
+    "gear_component_id": "CRANE_DRIVE_REDUCTION_PINION",
+    "steel_alloy_grade": "AISI_8620_FORGED_BLANK",
+    "case_hardness_hrc": 60.0,
+    "quenching_medium": "HOT_OIL_MARQUENCH_160C",
+    "timestamp_relative": "YEAR_17_HEAT_TREAT_03",
+    "tags": ["metallurgy", "heat_treatment", "intergranular_oxidation", "fatigue", "crane"],
+    "prose": "High dew-point endothermic gas atmosphere produced internal oxidation of chromium and manganese to a depth of 25 microns along prior austenite grain boundaries. Microscopic root notches triggered rapid bending fatigue cracks under crane hoist shock loads."
+  },
+  {
+    "id": "gear_quench_salt_bath_nitriding_white_layer_flaking",
+    "gear_component_id": "TIMING_GEAR_TRAIN_CAMSHAFT",
+    "steel_alloy_grade": "NITRALLOY_135M_ALLOY_STEEL",
+    "case_hardness_hrc": 68.0,
+    "quenching_medium": "MOLTEN_CYANATE_SALT_BATH_570C",
+    "timestamp_relative": "YEAR_20_HEAT_TREAT_01",
+    "tags": ["metallurgy", "heat_treatment", "nitriding", "salt_bath", "white_layer"],
+    "prose": "Excess nitrogen potential in the liquid salt bath produced an overly thick 35-micron epsilon-iron nitride 'compound layer' on the tooth flanks. The brittle glass-like white layer flaked off during engine break-in, contaminating the lube oil with diamond-hard abrasive particles."
+  }
+]

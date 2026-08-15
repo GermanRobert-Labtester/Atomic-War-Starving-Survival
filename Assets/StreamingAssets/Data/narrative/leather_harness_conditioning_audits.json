@@ -1,0 +1,72 @@
+[
+  {
+    "id": "leather_harness_neatsfoot_oil_cold_stuffing",
+    "currying_workshop_id": "HEAVY_HARNESS_CURRYING_BENCH_01",
+    "fatliquor_compound_formula": "RENDERED_NEATSFOOT_OIL_AND_TALLOW",
+    "oil_content_percentage": 14.5,
+    "tensile_strength_psi": 4200.0,
+    "timestamp_relative": "YEAR_02_CURRYING_LOG_01",
+    "tags": ["leatherworking", "neatsfoot_oil", "stuffing", "harness", "draft_gear"],
+    "prose": "Hand-stuffing damp vegetable-tanned steer hide with a warm blend of rendered bovine neatsfoot oil and mutton tallow lubricated the internal collagen fibers. The resulting six-millimeter harness traces resist cold-tunnel stiffening while delivering 4,200 PSI tensile strength."
+  },
+  {
+    "id": "leather_harness_spew_stearic_acid_white_bloom",
+    "currying_workshop_id": "SADDLERY_STORAGE_VAULT_04",
+    "fatliquor_compound_formula": "HIGH_STEARIN_BEEF_SUET_GREASE",
+    "oil_content_percentage": 18.0,
+    "tensile_strength_psi": 3800.0,
+    "timestamp_relative": "YEAR_05_CURRYING_LOG_03",
+    "tags": ["leatherworking", "spew", "fatty_spue", "stearic_acid", "white_bloom"],
+    "prose": "Using unrefined beef tallow rich in high-melting stearin caused fatty spew to migrate to the grain surface in cold storage (6°C). The leather broke out in a heavy white crystalline powder that resembled fungal mold, requiring heat lamp wiping to re-melt."
+  },
+  {
+    "id": "leather_harness_sulfur_gas_red_rot_powdering",
+    "currying_workshop_id": "COAL_MINE_HAULAGE_DEPOT_02",
+    "fatliquor_compound_formula": "VEGETABLE_TANNED_UNSTUFFED_STRAP",
+    "oil_content_percentage": 4.0,
+    "tensile_strength_psi": 850.0,
+    "timestamp_relative": "YEAR_08_CURRYING_LOG_02",
+    "tags": ["leatherworking", "red_rot", "sulfur_dioxide", "acid_hydrolysis", "powdering"],
+    "prose": "Atmospheric sulfur dioxide from coal-fired steam generators reacted with residual moisture in vegetable-tanned mule harness straps. Acid hydrolysis induced advanced 'red rot,' crumbling the leather fibers into brittle reddish-brown powder that snapped during heavy incline hauling."
+  },
+  {
+    "id": "leather_harness_brass_rivet_verdigris_corrosion",
+    "currying_workshop_id": "REPAIR_BENCH_EQUIPMENT_SHED",
+    "fatliquor_compound_formula": "UNNEUTRALIZED_FATTY_ACID_PASTE",
+    "oil_content_percentage": 12.0,
+    "tensile_strength_psi": 2900.0,
+    "timestamp_relative": "YEAR_11_CURRYING_LOG_04",
+    "tags": ["leatherworking", "verdigris", "brass_corrosion", "rivet_rot", "green_wax"],
+    "prose": "Free fatty acids in rancid lard lubricant reacted with brass harness buckles and copper rivets to form thick waxy crusts of toxic green verdigris (copper oleate). The chemical salts rotted the surrounding leather stitch holes, causing harness buckles to tear out."
+  },
+  {
+    "id": "leather_harness_wax_thread_linen_rot_failure",
+    "currying_workshop_id": "STITCHING_AND_AWL_WORKBENCH",
+    "fatliquor_compound_formula": "BEESWAXED_IRISH_LINEN_THREAD",
+    "oil_content_percentage": 10.0,
+    "tensile_strength_psi": 3400.0,
+    "timestamp_relative": "YEAR_14_CURRYING_LOG_01",
+    "tags": ["leatherworking", "linen_thread", "beeswax", "saddle_stitch", "rot"],
+    "prose": "Passing four-ply linen thread through molten pine rosin and beeswax before hand saddle-stitching sealed the flax fibers against underground moisture. Stitches on un-waxed control harnesses rotted within eight months, causing cart traces to separate under draft load."
+  },
+  {
+    "id": "leather_harness_currying_dubbin_waterproofing",
+    "currying_workshop_id": "BOOT_MAKING_FINISHING_BAY",
+    "fatliquor_compound_formula": "DUBBIN_TALLOW_COD_OIL_PITCH",
+    "oil_content_percentage": 22.0,
+    "tensile_strength_psi": 3600.0,
+    "timestamp_relative": "YEAR_17_CURRYING_LOG_03",
+    "tags": ["leatherworking", "dubbin", "waterproofing", "boot_leather", "currying"],
+    "prose": "Vigorously slicking a heavy dubbin paste of 50% mutton tallow, 40% fish oil, and 10% pine pitch into wet curried boot leather filled all dermal pores. Dwellers trudging through acidic geothermal mud ponds reported dry socks after twelve-hour shifts."
+  },
+  {
+    "id": "leather_harness_rawhide_lace_tensile_braiding",
+    "currying_workshop_id": "POWER_TRANSMISSION_BELT_SHOP",
+    "fatliquor_compound_formula": "UN-OILING_DRIED_RAWHIDE_STRIP",
+    "oil_content_percentage": 1.0,
+    "tensile_strength_psi": 7800.0,
+    "timestamp_relative": "YEAR_20_CURRYING_LOG_01",
+    "tags": ["leatherworking", "rawhide", "braided_belt", "winch_band", "high_tensile"],
+    "prose": "Braiding four strands of un-tanned, sun-cured rawhide lace produced drive belts of phenomenal tensile strength (7,800 PSI). While intolerant of moisture, the rawhide belts power the central air-filtration blower pulleys with zero elongation slip."
+  }
+]

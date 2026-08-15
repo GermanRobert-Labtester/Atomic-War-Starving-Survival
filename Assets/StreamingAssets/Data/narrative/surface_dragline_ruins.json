@@ -1,0 +1,82 @@
+[
+  {
+    "id": "dragline_ruin_monighan_walking_goliath",
+    "machine_designation": "BUCYRUS_ERIE_2570W_GOLIATH",
+    "operating_weight_tons": 2600.0,
+    "boom_length_meters": 94.5,
+    "structural_condition": "FROZEN_IN_STRIP_OVERBURDEN",
+    "timestamp_relative": "YEAR_02_RUIN_SURVEY_01",
+    "tags": ["machinery", "dragline", "mining", "excavator", "heavy_industry"],
+    "prose": "A twenty-six-hundred-ton walking dragline stranded in the center of Open Pit Coal Mine 4. The colossal machine stands eight stories tall in the drifting winter ash; its 94-meter tubular boom points toward the overcast sky like a rusted astronomical spire."
+  },
+  {
+    "id": "dragline_ruin_boom_cable_snap_whiplash",
+    "machine_designation": "MARION_8050_IRON_TITAN",
+    "operating_weight_tons": 1950.0,
+    "boom_length_meters": 82.0,
+    "structural_condition": "BOOM_SUSPENSION_CABLE_RUPTURE",
+    "timestamp_relative": "YEAR_04_RUIN_SURVEY_03",
+    "tags": ["machinery", "dragline", "cable_snap", "structural_failure", "ruin"],
+    "prose": "The 64mm main boom pendant cable snapped under explosive shockwave loading, whipping through the glass operator's cab like a steel scythe. The entire lattice boom collapsed across the pit wall, crushing the main swing gearbox beneath twelve hundred tons of twisted pipe."
+  },
+  {
+    "id": "dragline_ruin_bucket_converted_outpost_bunker",
+    "machine_designation": "P_AND_H_757_STRIP_HAULER",
+    "operating_weight_tons": 1800.0,
+    "boom_length_meters": 75.0,
+    "structural_condition": "BUCKET_CONVERTED_FORTIFICATION",
+    "timestamp_relative": "YEAR_06_RUIN_SURVEY_02",
+    "tags": ["machinery", "dragline", "bucket_bunker", "fortification", "scavenger"],
+    "prose": "The excavator's sixty-cubic-meter manganese steel bucket sits inverted upon a limestone ledge, roofed with railway ties and coal bags to form a bombproof five-man observation bunker. Rifle firing slits were cut through the 80mm lip plate with an oxy-gas torch."
+  },
+  {
+    "id": "dragline_ruin_ward_leonard_dc_generator_salvage",
+    "machine_designation": "BUCYRUS_ERIE_1570W_DRAGON",
+    "operating_weight_tons": 1450.0,
+    "boom_length_meters": 68.0,
+    "structural_condition": "COPPER_STRIPPED_ELECTRICAL_VAULT",
+    "timestamp_relative": "YEAR_08_RUIN_SURVEY_04",
+    "tags": ["machinery", "dragline", "copper_theft", "generator", "salvage"],
+    "prose": "Scavenger guilds spent eight months inside the machine house chiseling away the heavy armatures of the Ward-Leonard motor-generator sets. Eight tons of pure insulated copper windings were removed to wind new alternators for shelter power turbines."
+  },
+  {
+    "id": "dragline_ruin_walking_shoe_hydraulic_seizure",
+    "machine_designation": "RANSOMES_RAPIER_W1800",
+    "operating_weight_tons": 1750.0,
+    "boom_length_meters": 72.0,
+    "structural_condition": "WALKING_CAM_HYDRAULIC_FREEZE",
+    "timestamp_relative": "YEAR_11_RUIN_SURVEY_01",
+    "tags": ["machinery", "dragline", "walking_shoe", "hydraulics", "seizure"],
+    "prose": "The fifty-ton port walking shoe was halted midway through its thirty-foot stride when power dropped on Strike Day. The eccentric cam welded to its bronze bushing from lack of lube, leaving the entire machine tilted at an alarming eighteen-degree list."
+  },
+  {
+    "id": "dragline_ruin_revolving_frame_roller_circle_crack",
+    "machine_designation": "MARION_7400_WALKER",
+    "operating_weight_tons": 1200.0,
+    "boom_length_meters": 60.0,
+    "structural_condition": "SWING_ROLLER_RACE_FRACTURE",
+    "timestamp_relative": "YEAR_14_RUIN_SURVEY_02",
+    "tags": ["machinery", "dragline", "bull_gear", "roller_circle", "fatigue"],
+    "prose": "A seismic ground shock cracked the twelve-meter-diameter cast-steel swing circle in three places. Sixty 200mm tapered alloy steel rollers spilled from the cage, jamming the upper revolving frame into an immovable monument facing the prevailing radioactive wind."
+  },
+  {
+    "id": "dragline_ruin_diesel_auxiliary_pony_engine",
+    "machine_designation": "DEMAG_H241_HEAVY_SHOVEL",
+    "operating_weight_tons": 240.0,
+    "boom_length_meters": 22.0,
+    "structural_condition": "CORRODED_STARTING_DIESEL",
+    "timestamp_relative": "YEAR_17_RUIN_SURVEY_03",
+    "tags": ["machinery", "dragline", "diesel", "pony_engine", "corrosion"],
+    "prose": "The 12-cylinder V-type auxiliary starting diesel is welded solid with salt-encrusted aluminum oxide. Acid rain entering the un-flapped exhaust manifold filled six cylinders with corrosive green sulfuric sludge, bending the connecting rods."
+  },
+  {
+    "id": "dragline_ruin_fallout_ash_counterweight_bin",
+    "machine_designation": "BUCYRUS_ERIE_1950B_SHOVEL",
+    "operating_weight_tons": 2100.0,
+    "boom_length_meters": 55.0,
+    "structural_condition": "RADIOACTIVE_BALLAST_SATURATION",
+    "timestamp_relative": "YEAR_20_RUIN_SURVEY_01",
+    "tags": ["machinery", "dragline", "ballast", "fallout_trap", "hot_zone"],
+    "prose": "The hollow 350-ton steel counterweight box in the tail section filled with radioactive volcanic fallout slurry washed down from the machine roof. The box now acts as a high-intensity gamma emitter (12.5 R/hr at twenty paces), creating a deadly perimeter barrier around the cab."
+  }
+]

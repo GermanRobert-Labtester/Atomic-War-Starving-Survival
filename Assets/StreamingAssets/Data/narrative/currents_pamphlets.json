@@ -1,0 +1,134 @@
+{
+  "schema_version": 1,
+  "pamphlets": [
+    {
+      "faction_id": "current_01_the_garrison",
+      "pamphlet_id": "pmp_garrison_standing_order_102",
+      "title": "Garrison Standing Order 102: Emergency Protocol",
+      "doctrine": "Civil Defense Directive 9 takes precedence over township custom. Rations are fuel for the defense infrastructure. A dead soldier cannot hold the intake valve.",
+      "liturgy": "The perimeter is the wall; the wall is the life; outside the wall is the dust.",
+      "ideological_alignment": "Authoritarian Logistics",
+      "key_figure": "Colonel Valeri Voss"
+    },
+    {
+      "faction_id": "current_02_the_grange",
+      "pamphlet_id": "pmp_grange_covenant",
+      "doctrine": "The soil does not recognize military command. What is planted in poisoned dirt yields only poisoned bread. Seed wheat must be protected before human wounded.",
+      "liturgy": "Two inches of clean compost stands between the province and cannibalism.",
+      "ideological_alignment": "Agrarian Preservation",
+      "key_figure": "Elder Yakov"
+    },
+    {
+      "faction_id": "current_03_the_syndicate",
+      "pamphlet_id": "pmp_syndicate_tariff_charter",
+      "doctrine": "Price is the only honest language left in a ruined world. Subsidies breed lazy stokers; charity creates beggars with knives. Calibrated scales prevent war.",
+      "liturgy": "Weigh the silver, weigh the salt, weigh the soul; all three have a price.",
+      "ideological_alignment": "Hardcore Commercial Barter",
+      "key_figure": "Harlan the Weigher"
+    },
+    {
+      "faction_id": "current_04_the_hydro_barons",
+      "pamphlet_id": "pmp_hydro_tariff_charter",
+      "doctrine": "The low marsh belongs to those who maintain the sumps. Clean distillate has a production cost in coal and zinc filters. Pay the tariff or drink the runoff.",
+      "liturgy": "Water is blood; the pump is the heart; the tariff is the breath.",
+      "ideological_alignment": "Monopolistic Resource Control",
+      "key_figure": "Master Cooper Lev"
+    },
+    {
+      "faction_id": "current_05_the_charcoal_order",
+      "pamphlet_id": "pmp_charcoal_liturgy",
+      "doctrine": "The ash outside is our penance. In the dark kiln, wood becomes black carbon that scrubs the air of poison. We burn what was green to protect what is buried.",
+      "liturgy": "From wood to coal, from coal to smoke, from smoke to clean breath.",
+      "ideological_alignment": "Ascetic Purification",
+      "key_figure": "Sister Mara"
+    },
+    {
+      "faction_id": "current_06_the_ash_sea_rowers",
+      "pamphlet_id": "pmp_rowers_shanty_law",
+      "doctrine": "The drowned canals are our streets. The rowers take the risk in the acid squalls; the rowers take the first salvage. No officer commands the oar.",
+      "liturgy": "Pull together or drown together; the brine takes no excuses.",
+      "ideological_alignment": "Maritime Collectivism",
+      "key_figure": "Diver Sonya"
+    },
+    {
+      "faction_id": "current_07_the_picket_school",
+      "pamphlet_id": "pmp_picket_school_mandate",
+      "doctrine": "If the children forget the names of the pre-war cities and the principles of geometry, the survival of this bunker is merely the survival of beasts.",
+      "liturgy": "The slate is our weapon; the chalk is our light.",
+      "ideological_alignment": "Humanist Preservation",
+      "key_figure": "Katya the Schoolmistress"
+    },
+    {
+      "faction_id": "current_08_the_tempest_directorate",
+      "pamphlet_id": "pmp_tempest_census_creed",
+      "doctrine": "The automated apparatus does not sleep, weep, or negotiate. 211,004 were registered; all discrepancies must be reconciled on the ledger.",
+      "liturgy": "Count, record, balance. The machine endures.",
+      "ideological_alignment": "Algorithmic Inevitability",
+      "key_figure": "The Automated Judge (99.0 MHz)"
+    },
+    {
+      "faction_id": "current_09_the_sapper_cadre",
+      "pamphlet_id": "pmp_sapper_arithmetic",
+      "doctrine": "The hardest math is knowing which four hundred people must drown so that four thousand can eat next winter. A sapper does not ask for forgiveness.",
+      "liturgy": "The fuse burns down; the concrete falls; the valley lives.",
+      "ideological_alignment": "Utilitarian Sacrifice",
+      "key_figure": "Grigory Morozov"
+    },
+    {
+      "faction_id": "current_10_the_foundry_union",
+      "pamphlet_id": "pmp_foundry_iron_creed",
+      "doctrine": "Without our heat, the cold takes the valley in forty-eight hours. The furnace floor is the backbone of civilization. Treat the iron master with respect.",
+      "liturgy": "Iron in the vein, coal in the lung, heat in the home.",
+      "ideological_alignment": "Syndicalist Heavy Industry",
+      "key_figure": "Master Smith Oleg"
+    },
+    {
+      "faction_id": "current_11_the_orbital_watchers",
+      "pamphlet_id": "pmp_orbital_watchers_log",
+      "doctrine": "Look to the sky, not for rescue, but for falling iron. The constellations of the old world are decaying. When the sky falls, shield the ground.",
+      "liturgy": "We watch the tracks; we track the dead; we ring the bell.",
+      "ideological_alignment": "Telemetry Fatalism",
+      "key_figure": "The Keeper of Logs"
+    },
+    {
+      "faction_id": "current_12_the_memorial_slate",
+      "pamphlet_id": "pmp_memorial_slate_canon",
+      "doctrine": "Every person who died in the cellar deserves their name carved in stone. A society that forgets the names of its dead loses its claim to the future.",
+      "liturgy": "Chisel deep, cut true; granite does not lie.",
+      "ideological_alignment": "Necropolitical Memory",
+      "key_figure": "Archivist Nadezhda"
+    },
+    {
+      "faction_id": "current_13_the_black_medic",
+      "pamphlet_id": "pmp_black_medic_triage",
+      "doctrine": "Triage is the only law. We give the medicine to the worker who turns the pump, not the elder who sits in the cot. Cold compassion saves lives.",
+      "liturgy": "Hold the key, measure the dose, close the book.",
+      "ideological_alignment": "Radical Medical Pragmatism",
+      "key_figure": "Dr. Irina Vel"
+    },
+    {
+      "faction_id": "current_14_the_canal_marshals",
+      "pamphlet_id": "pmp_canal_marshals_code",
+      "doctrine": "The lock gates are the gates of the valley. Keep the silt dredged, the chains greased, and the contraband under armed watch.",
+      "liturgy": "Clear the lock, hold the gate, guard the water.",
+      "ideological_alignment": "Militarized Infrastructure",
+      "key_figure": "Sgt. Ilya Taras"
+    },
+    {
+      "faction_id": "current_15_the_century_council",
+      "pamphlet_id": "pmp_century_council_proclamation",
+      "doctrine": "The war is ten years behind us. We are no longer survivors hiding in holes; we are the founding citizens of the Tessarat Commonwealth.",
+      "liturgy": "From shelter to town, from fear to law, from ash to green.",
+      "ideological_alignment": "Constitutional Reconstruction",
+      "key_figure": "Councilwoman Sonya (Age 24)"
+    },
+    {
+      "faction_id": "current_16_the_silent_wayfarers",
+      "pamphlet_id": "pmp_wayfarers_manifest",
+      "doctrine": "Travel light, walk by night, keep the dosimeter dry, and never speak the name of your home shelter to a stranger on the ice road.",
+      "liturgy": "Follow the ridge, check the wind, keep moving.",
+      "ideological_alignment": "Nomadic Survivalism",
+      "key_figure": "Scout Polina"
+    }
+  ]
+}

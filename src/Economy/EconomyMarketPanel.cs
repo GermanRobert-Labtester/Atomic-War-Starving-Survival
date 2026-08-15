@@ -1,5 +1,7 @@
 using System;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.Economy;
 
 namespace AtomicWar.GodotApp.Economy
@@ -21,6 +23,21 @@ namespace AtomicWar.GodotApp.Economy
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
             CustomMinimumSize = new Vector2(420, 300);
+
+            // Apply standard panel 9-slice
+            var tex = AtomicWar.GodotApp.UI.AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                var sb = new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+                AddThemeStyleboxOverride("panel", sb);
+            }
 
             var rootVbox = new VBoxContainer();
             rootVbox.AddThemeConstantOverride("separation", 6);

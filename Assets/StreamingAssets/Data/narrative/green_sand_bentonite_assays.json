@@ -1,0 +1,72 @@
+[
+  {
+    "id": "green_sand_western_bentonite_green_strength",
+    "sand_muller_batch_id": "MULLER_STATION_ALPHA_BATCH_01",
+    "clay_binder_type": "SODIUM_WESTERN_BENTONITE_6PCT",
+    "temper_moisture_pct": 3.4,
+    "green_compressive_strength_kpa": 98.0,
+    "timestamp_relative": "YEAR_02_SAND_LOG_01",
+    "tags": ["foundry", "green_sand", "bentonite", "green_strength", "molding_sand"],
+    "prose": "Mulling sub-angular silica sand with 6% high-swelling Western sodium bentonite developed 98 kPa of green compressive strength. Deep mold cavities retained sharp vertical overhangs and intricate parting details without sagging or crumbling under gravity."
+  },
+  {
+    "id": "green_sand_seacoal_volatile_reducing_gas",
+    "sand_muller_batch_id": "FACING_SAND_PREPARATION_BAY",
+    "clay_binder_type": "SOUTHERN_CALCIUM_BENTONITE_BLEND",
+    "temper_moisture_pct": 3.8,
+    "green_compressive_strength_kpa": 82.0,
+    "timestamp_relative": "YEAR_05_SAND_LOG_03",
+    "tags": ["foundry", "seacoal", "lustrous_carbon", "sand_burn_on", "surface_finish"],
+    "prose": "Blending 4.5% finely pulverized bituminous sea coal into the facing sand generated a reducing gas envelope upon contact with 1,400°C molten iron. The pyrolyzed lustrous carbon film prevented iron silicate fusion, peeling away to reveal mirror-smooth castings."
+  },
+  {
+    "id": "green_sand_compactibility_muller_temper_water",
+    "sand_muller_batch_id": "AUTOMATED_MULLING_LINE_02",
+    "clay_binder_type": "SODIUM_BENTONITE_WATER_BOND",
+    "temper_moisture_pct": 4.6,
+    "green_compressive_strength_kpa": 72.0,
+    "timestamp_relative": "YEAR_08_SAND_LOG_02",
+    "tags": ["foundry", "compactibility", "temper_water", "sand_ramming", "rat_tails"],
+    "prose": "Over-watering the sand mix to 4.6% moisture pushed compactibility past 58%, making the sand mushy and prone to ram-aways. High steam generation during pouring created explosive mold gas pressure that produced jagged rat-tail expansion buckles across the casting."
+  },
+  {
+    "id": "green_sand_dextrin_cornflour_edge_toughness",
+    "sand_muller_batch_id": "PRECISION_CORE_FACING_MIX",
+    "clay_binder_type": "BENTONITE_WITH_CORN_DEXTRIN_05PCT",
+    "temper_moisture_pct": 3.2,
+    "green_compressive_strength_kpa": 115.0,
+    "timestamp_relative": "YEAR_11_SAND_LOG_04",
+    "tags": ["foundry", "dextrin", "edge_toughness", "friability", "erosion_resistance"],
+    "prose": "Adding 0.5% yellow cornstarch dextrin increased sand mixture toughness and elevated green compression to 115 kPa. Delicate mold edges and thin sand spires resisted liquid metal washing and abrasive stream erosion in the runner gates."
+  },
+  {
+    "id": "green_sand_expansion_scab_cushion_wood_flour",
+    "sand_muller_batch_id": "HEAVY_PLATE_MOLDING_SAND",
+    "clay_binder_type": "BENTONITE_WITH_1PCT_WOOD_FLOUR",
+    "temper_moisture_pct": 3.5,
+    "green_compressive_strength_kpa": 88.0,
+    "timestamp_relative": "YEAR_14_SAND_LOG_01",
+    "tags": ["foundry", "expansion_scab", "wood_flour", "silica_inversion", "cushion"],
+    "prose": "At 573°C, alpha quartz in the silica sand expanded abruptly by 1.4% due to crystal phase inversion. The pre-mixed 1% wood flour burned out ahead of the metal front, creating micro-voids that cushioned the expansion and eliminated expansive surface scabs."
+  },
+  {
+    "id": "green_sand_core_gas_blowhole_vent_wax",
+    "sand_muller_batch_id": "CYLINDER_HEAD_CORE_BENCH",
+    "clay_binder_type": "LINSEED_OIL_BAKED_CORE_SAND",
+    "temper_moisture_pct": 2.0,
+    "green_compressive_strength_kpa": 140.0,
+    "timestamp_relative": "YEAR_17_SAND_LOG_03",
+    "tags": ["foundry", "vent_wax", "blowhole", "core_gas", "gas_porosity"],
+    "prose": "Embedding flexible 4mm paraffin vent wax cords through the labyrinth passages of oil-sand cores provided a clean escape route for binder outgassing. During oven baking, the wax melted into the sand, leaving hollow conduits that eliminated all blowhole porosity."
+  },
+  {
+    "id": "green_sand_clay_dead_burn_active_bentonite",
+    "sand_muller_batch_id": "SYSTEM_SAND_RECLAMATION_SILO",
+    "clay_binder_type": "RECLAIMED_SYSTEM_SAND_BLEND",
+    "temper_moisture_pct": 3.3,
+    "green_compressive_strength_kpa": 55.0,
+    "timestamp_relative": "YEAR_20_SAND_LOG_01",
+    "tags": ["foundry", "dead_burn", "methylene_blue", "active_clay", "reclamation"],
+    "prose": "Methylene blue titration tests revealed that active bentonite in the returned shakeout sand had fallen to 3.8% due to thermal dehydroxylation (dead burning) near the mold-metal interface. Adding 1.5% fresh Western bentonite restored green strength from 55 kPa to 92 kPa."
+  }
+]

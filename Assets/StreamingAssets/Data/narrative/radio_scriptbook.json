@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "collection_id": "multi_frequency_radio_scriptbook",
+  "broadcasts": [
+    {
+      "broadcast_id": "rad_keeper_01_first_contact",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Acoustically distant human voice, slow deliberate cadence, tape hiss, telemetry tone in background",
+      "day_trigger": 3,
+      "title": "To Whoever is Holding the Tuner",
+      "transcript": "104.7 Megahertz. This is Station Zero, eighty meters below the granite ridge. If you are hearing this through a car radio or an emergency crystal set: do not drink from the surface streams for the next ninety days. The heavy particles from the three southern detonations are bonded to silica dust. It will settle in three weeks, but the runoff will carry cesium into the reservoir until the first hard freeze. We will broadcast orbital updates every Tuesday at 22:00. Keep your batteries wrapped in wool. Station Zero out.",
+      "tags": ["keeper", "warning", "radiation", "first_contact"]
+    },
+    {
+      "broadcast_id": "rad_keeper_02_dead_stations_elegy",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Soft reflective tone, intermittent telemetry ping every 8 seconds",
+      "day_trigger": 45,
+      "title": "Elegy for Sector 3 Relay",
+      "transcript": "104.7 Megahertz. At 18:30 today, the carrier wave from the Sector 3 repeater on Mount Vane dropped to zero. For forty-five days they transmitted their boiler temperature and a seven-note accordion melody every evening. Tonight there was only white noise and the sound of wind on their antenna wire. To the crew at Mount Vane: your signal was recorded. Your log is stored on our magnetic tape. You are entered into the vault register.",
+      "tags": ["keeper", "elegy", "mourning", "loss"]
+    },
+    {
+      "broadcast_id": "rad_keeper_03_orbital_decay_alert",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Urgent technical briefing, rapid teletype sound in background",
+      "day_trigger": 180,
+      "title": "Harrow-4 Perigee Warning",
+      "transcript": "104.7 Megahertz. Emergency telemetry bulletin. Satellite Harrow-4 has entered uncontrolled orbital decay. Perigee has dropped below two hundred and ten kilometers. Its telemetry beacon is transmitting continuous error code 44. Within forty-eight hours, the first kinetic stage will deorbit over the Tessarat corridor. If you have reinforced roof shielding, check your turnbuckles and concrete ties now. Stay below ground during the 04:00 to 06:00 window.",
+      "tags": ["keeper", "orbital", "harrow", "kinetic_threat"]
+    },
+    {
+      "broadcast_id": "rad_keeper_04_aurora_observation",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Awed, gentle whisper, deep bass resonance",
+      "day_trigger": 300,
+      "title": "The Violet Aurora",
+      "transcript": "104.7 Megahertz. If you have sentries standing on the surface airlocks tonight, tell them to look north. The ionization in the upper stratosphere from the high-altitude EMP bursts has met the solar wind. The sky is glowing dark violet and sulfur green. It produces no heat, but the static charge on the barbed wire fences is enough to light a neon bulb. For one night, the ash clouds look like crushed amethyst. It is terrifying and it is beautiful.",
+      "tags": ["keeper", "aurora", "sky", "poetic"]
+    },
+    {
+      "broadcast_id": "rad_keeper_05_final_signoff",
+      "frequency_mhz": 104.7,
+      "station_name": "Station 0 (The Deep Vault)",
+      "voice_profile": "Aging human voice, slow breath, cooling fans powering down",
+      "day_trigger": 3650,
+      "title": "The Last Reel of Station Zero",
+      "transcript": "104.7 Megahertz. This is our final transmission. The mercury batteries in the lower vault have reached their chemical limit. Over ten years, we have logged eighty-four thousand telemetry events, forty-two orbital reentries, and the voices of nineteen shelters that grew into towns. The sky is clear tonight. You do not need our warnings anymore. You have the constitution, you have the foundry, and you have each other. Station Zero is closing the log. Goodnight.",
+      "tags": ["keeper", "finale", "signoff", "hope", "century_seed"]
+    },
+    {
+      "broadcast_id": "rad_tempest_01_baseline_census",
+      "frequency_mhz": 99.0,
+      "station_name": "The Tempest Directorate (Automated Judge)",
+      "voice_profile": "Flat synthesized speech, 1.7s held-breath pause before number, 4-second 1kHz carrier",
+      "day_trigger": 7,
+      "title": "Provincial Census Baseline Verification",
+      "transcript": "[4.0s CARRIER TONE] ... PROVINCIAL CENSUS DIRECTORY. SECTOR 9 REGISTRY VERIFICATION. EXPECTED SOULS IN PROVINCE: TWO HUNDRED ELEVEN THOUSAND AND FOUR. ... [1.7s SILENCE] ... CURRENT ACTIVE DWELLERS DETECTED IN SECTOR 9 GRID: FORTY-EIGHT. DISCREPANCY LOGGED. RECONCILIATION WINDOW OPENS TUESDAY 03:00. DISCREPANCY IS NON-NEGOTIABLE.",
+      "tags": ["tempest", "census", "surveillance", "machine"]
+    },
+    {
+      "broadcast_id": "rad_tempest_02_voltage_fault",
+      "frequency_mhz": 99.0,
+      "station_name": "The Tempest Directorate (Automated Judge)",
+      "voice_profile": "Clipped synthesized monotone, electronic glitch clicking",
+      "day_trigger": 56,
+      "title": "Grid Busbar Deviation Alert",
+      "transcript": "[4.0s CARRIER TONE] ... ATTENTION MUNICIPAL CONSUMERS. MAIN FEEDER BUSBAR VOLTAGE AT SUB-STATION 4 HAS DROPPED TO THREE THOUSAND TWO HUNDRED VOLTS. UNLAWFUL POWER DIVERSION TO HYDROPONIC ARRAYS CONSTITUTES CIVIL SABOTAGE UNDER STATUTE 14. AUTOMATED DISCONNECT RELAY ARMED. TIME TO ISOLATION: TWENTY-FOUR HOURS.",
+      "tags": ["tempest", "power", "threat", "infrastructure"]
+    },
+    {
+      "broadcast_id": "rad_tempest_03_reconciliation_order",
+      "frequency_mhz": 99.0,
+      "station_name": "The Tempest Directorate (Automated Judge)",
+      "voice_profile": "Robotic vocoder tone with harmonic distortion",
+      "day_trigger": 140,
+      "title": "The Sovereign Cargo Manifest Demand",
+      "transcript": "[4.0s CARRIER TONE] ... NOTICE TO HARBOR RECOVERY UNITS. THE CARGO OF VESSEL SOVEREIGN (REGISTRY 88-A) CONTAINS STRATEGIC MEDICAL RESERVES DESIGNATED FOR CENTRAL CIVIL REDISTRIBUTION. ANY LOCAL SEQUESTRATION OR CONSUMPTION OF POTASSIUM IODIDE TABLETS WILL BE LEVIED AS A CAPITAL DEBT AGAINST THE DISTRICT HARVEST QUOTA. COMPLIANCE IS MANDATORY.",
+      "tags": ["tempest", "sovereign", "iodine", "legal_threat"]
+    },
+    {
+      "broadcast_id": "rad_tempest_04_degradation_decay",
+      "frequency_mhz": 99.0,
+      "station_name": "The Tempest Directorate (Automated Judge)",
+      "voice_profile": "Distorted synthesized stutter, losing vowels, heavy crackle",
+      "day_trigger": 360,
+      "title": "Synthesizer Degradation State",
+      "transcript": "[4.0s CARRIER TONE] ... W-W-WINDOW OPEN. SECTOR NINE C-C-COUNT: M-MINUS THIRTY-ONE. RECONCIL... ERR_MEM_CORRUPT. RELAY ROT DETECTED. EXPECTED: 211004. FOUND: DUST. WINDOW CLOSES.",
+      "tags": ["tempest", "decay", "broken_machine", "collapse"]
+    },
+    {
+      "broadcast_id": "rad_tempest_05_terminal_carrier",
+      "frequency_mhz": 99.0,
+      "station_name": "The Tempest Directorate (Automated Judge)",
+      "voice_profile": "Dying oscillator drone, dropping in frequency from 1000Hz to 220Hz, then clicking relay",
+      "day_trigger": 720,
+      "title": "The Last Click of the Displacer",
+      "transcript": "[OSCILLATOR DESCENT: 1000Hz ... 600Hz ... 220Hz] ... [METALLIC CLACK OF MERCURY DISPLACER DROPPING] ... ALL CENSUS RECORDS DEPOSITED IN PERMANENT FERRITE CORE. AUTOMATED GOVERNANCE TERMINATED. POWER DEPLETED.",
+      "tags": ["tempest", "shutdown", "death_of_machine", "milestone"]
+    },
+    {
+      "broadcast_id": "rad_pirate_01_freenet_launch",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Crackling, lively human voice, acoustic guitar chords between sentences, wind chime clinking",
+      "day_trigger": 10,
+      "title": "Welcome to 88.4 Free-Net",
+      "transcript": "Hey out there in the dark. This is Black Runoff Radio, broadcasting from the back of a bakery delivery van on two truck batteries. If you are tired of listening to the government robot count dead people on 99.0, stay right here. Tonight's market quote: one pair of dry felt boot liners is going for six tins of sardines at the south crossroads. Also, someone left an orange tabby cat near Lock 4; she's safe in our flour bin. Don't let the frost get in your bones, friends.",
+      "tags": ["pirate", "community", "barter", "warmth", "hope"]
+    },
+    {
+      "broadcast_id": "rad_pirate_02_blizzard_warning",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Urgent informal broadcast, coffee mug clinking on wooden table",
+      "day_trigger": 35,
+      "title": "The Minus-Forty Squall Alert",
+      "transcript": "88.4 Free-Net. Big weather advisory. The pressure gauge on our dashboard dropped twelve millibars in two hours. That means a black acid squall is rolling down from the northern ridges by midnight. If you've got laundry on the air intake wire or scrap iron laid out to dry, pull it inside now. Grease your door seals with mutton fat. If your chimney starts whistling in D-minor, bank your stove before the backdraft blows soot in the baby's cot.",
+      "tags": ["pirate", "weather", "blizzard", "practical_advice"]
+    },
+    {
+      "broadcast_id": "rad_pirate_03_acoustic_song",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Raspy singing voice accompanied by a worn 6-string acoustic guitar",
+      "day_trigger": 80,
+      "title": "The Song of the Blower Crank",
+      "transcript": "[GUITAR INTRO: Slow minor key picking] ... 'Oh turn the crank and turn the wheel / The soot is on the iron steel / The winter comes with icy feet / But in our hole the bread is sweet... Oh Sonya hold the medicine key / And let the boiler steam run free...'",
+      "tags": ["pirate", "music", "folklore", "shanty", "sonya"]
+    },
+    {
+      "broadcast_id": "rad_pirate_04_foundry_strike_coverage",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Excited field report, crowd cheering faintly in distance",
+      "day_trigger": 500,
+      "title": "Live from the Rail Spur Strike",
+      "transcript": "88.4 Free-Net on the scene! Katya's school class is still sitting on the rail spur outside the blast cupola. Master Oleg came out with hot chicory and an iron ladle and told them nobody is touching a shovel until the assembly votes on Article 4. Even Harlan the Weigher showed up with four loaves of rye bread. If you're near Sector 6, bring firewood down to the track. Solidarity in the frost, people!",
+      "tags": ["pirate", "strike", "news", "community_action"]
+    },
+    {
+      "broadcast_id": "rad_pirate_05_canal_opening_shoutout",
+      "frequency_mhz": 88.4,
+      "station_name": "Pirate Free-Net (The Black Runoff)",
+      "voice_profile": "Triumphant laughter, brass horn toot, cheering crowd",
+      "day_trigger": 3650,
+      "title": "The Water is Flowing!",
+      "transcript": "88.4 Megahertz! Ten years, folks! Lock 4 just opened both gates to the southern barges! The water is running clean, the sun is shining through the clouds for the first time in three months, and Sonya is standing on the lock wall holding Dr. Vel's keys in the air! To everybody who spent ten years in a hole eating sawdust bread: this is your morning! Turn your radios up and dance on the concrete!",
+      "tags": ["pirate", "victory", "celebration", "finale", "ten_years"]
+    }
+  ]
+}

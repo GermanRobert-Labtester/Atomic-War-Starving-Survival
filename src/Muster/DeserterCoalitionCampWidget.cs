@@ -1,4 +1,6 @@
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.Muster;
 
 namespace AtomicWar.GodotApp.Muster
@@ -30,7 +32,7 @@ namespace AtomicWar.GodotApp.Muster
                 Text = "DESERTER COALITION — HOLDING GROUND",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            title.AddThemeFontSizeOverride("font_size", 13);
+            title.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             rootVbox.AddChild(title);
 
             _lblStatus = new Label { Text = "Not formed." };

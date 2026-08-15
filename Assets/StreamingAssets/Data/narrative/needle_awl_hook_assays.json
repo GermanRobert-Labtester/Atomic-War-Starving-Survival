@@ -1,0 +1,51 @@
+[
+  {
+    "id": "bone_tool_001",
+    "tool_type": "needle",
+    "bone_blank_id": "bb_rabbit_tibia_01",
+    "point_angle_degrees": 12.0,
+    "log_text": "Needle ground from rabbit tibia blank. The point was shaped on the sandstone, rotating the blank slowly to keep the taper even. Eye drilled with a flint point — took three attempts to break through without splitting the blank. Threaded with flax singles. It pulls cleanly."
+  },
+  {
+    "id": "bone_tool_002",
+    "tool_type": "needle",
+    "bone_blank_id": "bb_deer_antler_rod_01",
+    "point_angle_degrees": 15.0,
+    "log_text": "Antler needle — larger than the rabbit bone needle, for heavier thread. Eye drilled wider. Point angle at fifteen degrees — less acute than the rabbit needle but the antler is harder and holds the tip longer under repeated use. Tested on three-layer leather. Passed through cleanly."
+  },
+  {
+    "id": "bone_tool_003",
+    "tool_type": "awl",
+    "bone_blank_id": "bb_dog_femur_01",
+    "point_angle_degrees": 20.0,
+    "log_text": "Awl from the dog femur blank. No eye needed. Ground to a round section point, twenty-degree included angle. Handle is a short antler tine — the awl blank set into a drilled socket and secured with pine pitch. Punches through two layers of oak-tanned dog leather with moderate hand pressure."
+  },
+  {
+    "id": "bone_tool_004",
+    "tool_type": "awl",
+    "bone_blank_id": "bb_cat_femur_01",
+    "point_angle_degrees": 18.0,
+    "log_text": "Smaller awl from the cat femur. Finer point, lighter handle — a split twig with the bone set in and wound with waxed thread. For use on the thinner leathers where the dog femur awl makes too large a hole. The cat bone held the fine point through twenty punch tests without degrading."
+  },
+  {
+    "id": "bone_tool_005",
+    "tool_type": "hook",
+    "bone_blank_id": "bb_goat_horn_tip_01",
+    "point_angle_degrees": 35.0,
+    "log_text": "Goat horn tip ground into a hook for the rope-closing work. The natural curve of the tip provided the hook shape; only the working end needed grinding. Thirty-five degrees at the tip — blunt enough not to catch thread but sharp enough to hold the strand under tension."
+  },
+  {
+    "id": "bone_tool_006",
+    "tool_type": "pin",
+    "bone_blank_id": "bb_bird_bone_rod_01",
+    "point_angle_degrees": 22.0,
+    "log_text": "Bird bone pins — thin, lightweight, adequate for pinning cloth layers together during sewing. Ground to a simple point, no eye. Six pins from one bird long bone. The hollow shaft makes them slightly fragile — they bend under side load. For pinning only, not puncturing."
+  },
+  {
+    "id": "bone_tool_007",
+    "tool_type": "needle",
+    "bone_blank_id": "bb_dog_lye_treated_01",
+    "point_angle_degrees": 10.0,
+    "log_text": "Needle from the lye-treated dog bone — the hardest material we have worked. Required more abrasive time but the surface finish is exceptional and the point holds its angle. Ten degrees at the tip. The eye took twice as long to drill but it is clean and smooth. The first needle we are confident in long-term."
+  }
+]

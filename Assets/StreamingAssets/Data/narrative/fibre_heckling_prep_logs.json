@@ -1,0 +1,58 @@
+[
+  {
+    "id": "fibre_heckling_001",
+    "fibre_source_plant": "nettle",
+    "retting_days": 8,
+    "heckling_comb_id": "hc_iron_01",
+    "log_text": "Nettle stalks retted in the concrete floor puddle for eight days. The pith loosened and the bast separated from the core when bent. Hackled through the iron comb — nails set into a board — twice in each direction. The tow fell away in clumps. The line fibre aligned and pale."
+  },
+  {
+    "id": "fibre_heckling_002",
+    "fibre_source_plant": "nettle",
+    "retting_days": 6,
+    "heckling_comb_id": "hc_iron_01",
+    "log_text": "Six days only — pulled early because we needed the water container. The pith had not fully softened; the bast tore rather than separated cleanly. More tow than line in this batch. Still usable for coarser rope. The line fibre that came through is strong."
+  },
+  {
+    "id": "fibre_heckling_003",
+    "fibre_source_plant": "hemp",
+    "retting_days": 10,
+    "heckling_comb_id": "hc_iron_01",
+    "log_text": "Hemp stalks needed ten days — thicker stems than nettle. The retting smell was worse. Hackled three passes. Hemp line is longer and coarser than nettle but the yield per stalk is higher. Itching is worse too. Wore the glove panels on both hands."
+  },
+  {
+    "id": "fibre_heckling_004",
+    "fibre_source_plant": "hemp",
+    "retting_days": 12,
+    "heckling_comb_id": "hc_bone_comb_02",
+    "log_text": "Twelve days in a deeper puddle — full pith dissolution. The bone comb catches less than the iron one but pulls fewer fibres. Slower but more line, less tow. The extra two days were worth it. Bone combs need replacement teeth more often but they are easier to make."
+  },
+  {
+    "id": "fibre_heckling_005",
+    "fibre_source_plant": "flax",
+    "retting_days": 7,
+    "heckling_comb_id": "hc_iron_01",
+    "log_text": "Flax from the old mat scraps — already partially processed. Only seven days of re-retting needed to loosen what had re-bonded. Hackled twice. The flax line fibre is finer than hemp or nettle — takes more delicate handling. Good for thinner cordage and wicking."
+  },
+  {
+    "id": "fibre_heckling_006",
+    "fibre_source_plant": "nettle",
+    "retting_days": 9,
+    "heckling_comb_id": "hc_iron_01",
+    "log_text": "Largest nettle batch so far — two full armloads of stalks. Nine days retting. The volume meant not all stalks were equally submerged; the ones near the surface were under-retted. Sorted at the comb — under-retted stalks hackled separately into tow. No waste."
+  },
+  {
+    "id": "fibre_heckling_007",
+    "fibre_source_plant": "cattail_leaf",
+    "retting_days": 4,
+    "heckling_comb_id": "hc_bone_comb_02",
+    "log_text": "Cattail leaf strips — do not need long retting; the leaf structure softens quickly. Four days, then hackled with the bone comb. Short fibres, not suited to spinning long yarns. Good for braided cordage where length does not need to be continuous. Stiff and surprisingly strong."
+  },
+  {
+    "id": "fibre_heckling_008",
+    "fibre_source_plant": "jute_sacking",
+    "retting_days": 2,
+    "heckling_comb_id": "hc_iron_01",
+    "log_text": "Found three metres of old jute sacking in the storage room. Already processed fibre. Re-retted two days to separate the strands that had re-bonded with age and damp. Hackled once. The fibre is dry and brittle in places but the sound lengths are usable. A windfall."
+  }
+]

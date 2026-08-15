@@ -1,0 +1,82 @@
+[
+  {
+    "id": "slow_sand_biofilm_schmutzdecke_maturation",
+    "filter_basin_id": "PRIMARY_SLOW_SAND_BASIN_01",
+    "filtration_rate_meters_per_hour": 0.18,
+    "influent_turbidity_ntu": 14.5,
+    "effluent_turbidity_ntu": 0.25,
+    "timestamp_relative": "YEAR_02_WATER_LOG_01",
+    "tags": ["water_treatment", "slow_sand", "schmutzdecke", "biofilm", "turbidity"],
+    "prose": "After twenty-one days of continuous gravity flow, a gelatinous biological skin (schmutzdecke) matured across the quartz sand bed. Protozoa and sessile bacteria in the zoogleal biofilm digested suspended organic matter, dropping turbidity from 14.5 NTU to 0.25 NTU."
+  },
+  {
+    "id": "slow_sand_scraping_skin_head_loss_recovery",
+    "filter_basin_id": "SECONDARY_SLOW_SAND_BASIN_02",
+    "filtration_rate_meters_per_hour": 0.05,
+    "influent_turbidity_ntu": 18.0,
+    "effluent_turbidity_ntu": 0.3,
+    "timestamp_relative": "YEAR_04_WATER_LOG_03",
+    "tags": ["water_treatment", "slow_sand", "head_loss", "scraping", "flow_recovery"],
+    "prose": "Accumulated silt and diatom carcasses increased hydraulic head loss to 1.8 meters, choking filtration to 0.05 m/hr. Workers drained the bed and scraped off the top 15mm of clogged sand; upon re-submersion, flow restored to design capacity within six hours."
+  },
+  {
+    "id": "slow_sand_effective_size_uniformity_coefficient",
+    "filter_basin_id": "RESERVE_POTABLE_SAND_CELL_03",
+    "filtration_rate_meters_per_hour": 0.2,
+    "influent_turbidity_ntu": 8.0,
+    "effluent_turbidity_ntu": 0.15,
+    "timestamp_relative": "YEAR_07_WATER_LOG_02",
+    "tags": ["water_treatment", "sand_grading", "effective_size", "uniformity_coefficient", "quartz_media"],
+    "prose": "Sieve gradation of the river quartz sand confirmed an effective size (d10) of 0.28mm and a uniformity coefficient (Cu) of 1.95. The narrow grain size distribution prevented fine sand migration while sustaining laminar interstitial percolation."
+  },
+  {
+    "id": "slow_sand_cryptosporidium_oocyst_entrapment",
+    "filter_basin_id": "COMMISSARY_WATER_INTAKE_FILTER",
+    "filtration_rate_meters_per_hour": 0.15,
+    "influent_turbidity_ntu": 22.0,
+    "effluent_turbidity_ntu": 0.1,
+    "timestamp_relative": "YEAR_09_WATER_LOG_04",
+    "tags": ["water_treatment", "cryptosporidium", "oocyst", "pathogen_removal", "bio_barrier"],
+    "prose": "Fluorescence microscopy confirmed 99.98% physical entrapment of 4-micron *Cryptosporidium* oocysts within the top 30mm of the biological sand matrix. The sticky extracellular polysaccharides produced by the bacterial flora prevented parasite breakthrough."
+  },
+  {
+    "id": "slow_sand_underdrain_perforated_vitrified_tile",
+    "filter_basin_id": "DEEP_AQUIFER_SAND_FILTER_04",
+    "filtration_rate_meters_per_hour": 0.22,
+    "influent_turbidity_ntu": 6.5,
+    "effluent_turbidity_ntu": 0.08,
+    "timestamp_relative": "YEAR_12_WATER_LOG_01",
+    "tags": ["water_treatment", "underdrain", "vitrified_tile", "gravel_pack", "piping_prevention"],
+    "prose": "Filtered water collected through slotted vitrified clay tiles beneath a four-layer graded gravel support bed. The uniform drainage grid maintained balanced drawdown across 200 square meters of bed area without localized funneling or sand piping."
+  },
+  {
+    "id": "slow_sand_temperature_drop_metabolic_slowdown",
+    "filter_basin_id": "OUTPOST_DELTA_UNHEATED_FILTER",
+    "filtration_rate_meters_per_hour": 0.08,
+    "influent_turbidity_ntu": 12.0,
+    "effluent_turbidity_ntu": 1.4,
+    "timestamp_relative": "YEAR_15_WATER_LOG_03",
+    "tags": ["water_treatment", "temperature_drop", "biological_slowdown", "effluent_quality", "metabolism"],
+    "prose": "Subterranean intake water chilled to 2.5°C during the winter cold snap, depressing bacterial metabolic rates by 60%. Pathogen digestion efficiency collapsed, requiring operators to throttle flow to 0.08 m/hr and supplement with auxiliary UV disinfection."
+  },
+  {
+    "id": "slow_sand_air_binding_dissolved_oxygen_effervescence",
+    "filter_basin_id": "GEOTHERMAL_WARMED_SAND_BASIN",
+    "filtration_rate_meters_per_hour": 0.03,
+    "influent_turbidity_ntu": 10.0,
+    "effluent_turbidity_ntu": 0.4,
+    "timestamp_relative": "YEAR_17_WATER_LOG_02",
+    "tags": ["water_treatment", "air_binding", "degassing", "interstitial_pore", "head_loss"],
+    "prose": "Pumping cold, oxygen-saturated well water into a warmer sand basin released dissolved gas bubbles inside the sand pores. This 'air binding' phenomenon choked interstitial pathways, causing a false head loss surge and stopping water flow completely."
+  },
+  {
+    "id": "slow_sand_resanding_wet_trench_burial",
+    "filter_basin_id": "REJUVENATION_TRENCHING_CELL_01",
+    "filtration_rate_meters_per_hour": 0.16,
+    "influent_turbidity_ntu": 9.0,
+    "effluent_turbidity_ntu": 0.12,
+    "timestamp_relative": "YEAR_20_WATER_LOG_01",
+    "tags": ["water_treatment", "resanding", "trenching", "biofilm_preservation", "sand_bed"],
+    "prose": "After years of scrapings reduced bed depth to 50cm, operators used the wet-trenching technique to add 40cm of fresh sand underneath the existing biological layer. Burying the active biofilm on top of new sand preserved the living culture with zero ripening lag."
+  }
+]

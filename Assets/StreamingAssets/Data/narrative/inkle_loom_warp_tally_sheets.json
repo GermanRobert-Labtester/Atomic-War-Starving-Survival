@@ -1,0 +1,58 @@
+[
+  {
+    "id": "inkle_loom_001",
+    "loom_frame_id": "il_peg_frame_01",
+    "warp_fibre_type": "nettle_two_ply",
+    "weft_thread_count": 18,
+    "log_text": "Inkle loom pegged to the bunk post. Warped with nettle two-ply in alternating sheds. Twenty-two centimetres wide, pattern plain. First band off the loom — rough at the selvedge but the body is even. Will do for belt strapping."
+  },
+  {
+    "id": "inkle_loom_002",
+    "loom_frame_id": "il_peg_frame_01",
+    "warp_fibre_type": "hemp_line_singles",
+    "weft_thread_count": 24,
+    "log_text": "Hemp singles warp — narrower sett this time. Picked a two-over-two float in the heddle shed. It shows as a faint ridge. Durable enough for shoulder-strap load if doubled back on itself at the buckle."
+  },
+  {
+    "id": "inkle_loom_003",
+    "loom_frame_id": "il_wall_mount_02",
+    "warp_fibre_type": "linen_two_ply",
+    "weft_thread_count": 30,
+    "log_text": "Wall-mounted frame allows a longer warp. Linen two-ply at thirty ends per centimetre is the finest we have managed. Selvedge nearly straight for the last metre. Cut into two strips — one for Lara's boot facing, one stored flat."
+  },
+  {
+    "id": "inkle_loom_004",
+    "loom_frame_id": "il_wall_mount_02",
+    "warp_fibre_type": "mixed_nettle_hemp",
+    "weft_thread_count": 20,
+    "log_text": "Mixed warp — nettle in the raised shed, hemp in the lowered. The two-colour stripe is unintentional but makes the bands easier to identify when sorting supplies. Will repeat."
+  },
+  {
+    "id": "backstrap_loom_001",
+    "loom_frame_id": "bl_cord_frame_01",
+    "warp_fibre_type": "hemp_two_ply",
+    "weft_thread_count": 16,
+    "log_text": "Backstrap loom uses the shelter wall as the fixed warp post. Body tension controls the shed. Forty centimetres wide — wider than the inkle and harder to beat evenly. Hemp two-ply holds tension well. Weft passes are uneven at the edges but consistent in the centre."
+  },
+  {
+    "id": "backstrap_loom_002",
+    "loom_frame_id": "bl_cord_frame_01",
+    "warp_fibre_type": "nettle_singles",
+    "weft_thread_count": 14,
+    "log_text": "Singles warp on the backstrap — risky, but the warp threads survived. Nettle singles break at sharp bends; kept the shed stick narrow and the angle shallow. Cloth came off loose. Will soak-shrink before cutting."
+  },
+  {
+    "id": "backstrap_loom_003",
+    "loom_frame_id": "bl_rigid_heddle_02",
+    "warp_fibre_type": "linen_two_ply",
+    "weft_thread_count": 22,
+    "log_text": "Rigid heddle cut from salvage comb teeth. Slots rough but functional. Linen two-ply warp beats down cleanly at twenty-two picks per centimetre. Cloth is dense enough for a water-bag lining if waxed afterwards."
+  },
+  {
+    "id": "backstrap_loom_004",
+    "loom_frame_id": "bl_rigid_heddle_02",
+    "warp_fibre_type": "dog_fur_two_ply",
+    "weft_thread_count": 12,
+    "log_text": "Dog fur two-ply warp — softer hand than any plant fibre we have. Sheds cleanly. Weft is hemp singles beaten very open. The resulting fabric is a loose scrim, lightweight and warm. First true insulating cloth we have made."
+  }
+]

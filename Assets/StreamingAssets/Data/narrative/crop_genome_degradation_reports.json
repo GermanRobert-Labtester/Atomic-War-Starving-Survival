@@ -1,0 +1,72 @@
+[
+  {
+    "id": "crop_genome_spontaneous_point_mutation_load",
+    "cultivar_id": "HEIRLOOM_BARLEY_GOLDEN_PROMISE",
+    "generation_cycle": 12,
+    "mutation_rate_per_megabase": 4.8,
+    "phenotypic_defect": "RACHIS_BRITTLENESS_SHATTERING",
+    "timestamp_relative": "YEAR_04_GENOME_LOG_01",
+    "tags": ["cryo", "genetics", "crop_genome", "mutation_load", "barley"],
+    "prose": "Chronic background gamma radiation (120 uR/hr) inside the unshielded seed store accelerated spontaneous point mutations. By Generation 12, the barley developed brittle rachis mutations, causing seed heads to shatter on the stalk before combine harvest, losing 60% of grain."
+  },
+  {
+    "id": "crop_genome_inbreeding_depression_flint_corn",
+    "cultivar_id": "CHEROKEE_WHITE_FLINT_MAIZE",
+    "generation_cycle": 8,
+    "mutation_rate_per_megabase": 1.2,
+    "phenotypic_defect": "TASSEL_BARRENNESS_AND_DWARFISM",
+    "timestamp_relative": "YEAR_07_GENOME_LOG_03",
+    "tags": ["cryo", "genetics", "inbreeding_depression", "corn", "maize"],
+    "prose": "Restricted greenhouse growing space forced breeders to propagate maize populations from fewer than thirty parent ears. Fixation of deleterious recessive alleles caused severe inbreeding depression: plant height decreased by 50% and 40% of ears produced zero grain."
+  },
+  {
+    "id": "crop_genome_epigenetic_hypermethylation_silencing",
+    "cultivar_id": "SOYBEAN_HERITAGE_BLACK_JET",
+    "generation_cycle": 10,
+    "mutation_rate_per_megabase": 0.8,
+    "phenotypic_defect": "NODULATION_PROMOTER_HYPERMETHYLATION",
+    "timestamp_relative": "YEAR_10_GENOME_LOG_02",
+    "tags": ["cryo", "genetics", "epigenetics", "methylation", "soybean"],
+    "prose": "Repeated sub-zero cold-shock events triggered genome-wide cytosine DNA hypermethylation. Key promoter regions for symbiotic nodulation factor receptors were permanently silenced, preventing roots from forming nitrogen-fixing nodules even when inoculated with live bacteria."
+  },
+  {
+    "id": "crop_genome_chloroplast_dna_photo_oxidation",
+    "cultivar_id": "HEIRLOOM_TOMATO_BRANDYWINE",
+    "generation_cycle": 14,
+    "mutation_rate_per_megabase": 6.5,
+    "phenotypic_defect": "CHLOROPLAST_RUBISCO_DEFICIENCY",
+    "timestamp_relative": "YEAR_13_GENOME_LOG_04",
+    "tags": ["cryo", "genetics", "chloroplast_dna", "rubisco", "uv_damage"],
+    "prose": "Solar UV-B radiation penetrating damaged greenhouse glazing induced thymine dimers across the circular chloroplast genome. Rubisco large subunit enzyme production plummeted by 70%, leaving leaves pale yellow and reducing photosynthetic sugar output to near zero."
+  },
+  {
+    "id": "crop_genome_retrotransposon_burst_activation",
+    "cultivar_id": "HERITAGE_RYE_MAMMOTH_WINTER",
+    "generation_cycle": 16,
+    "mutation_rate_per_megabase": 8.2,
+    "phenotypic_defect": "RETROTRANSPOSON_MOSAIC_INSERTION",
+    "timestamp_relative": "YEAR_16_GENOME_LOG_01",
+    "tags": ["cryo", "genetics", "retrotransposon", "rye", "insertional_mutagenesis"],
+    "prose": "Double-strand DNA breaks from chronic fallout radon decay activated dormant Ty1-copia retrotransposons. Thousands of mobile genetic elements hopped across the rye genome, inserting into starch synthesis genes and turning grain heads into sterile fibrous sponges."
+  },
+  {
+    "id": "crop_genome_telomere_shortening_micropropagation",
+    "cultivar_id": "RUSSIAN_BANANA_FINGERLING_POTATO",
+    "generation_cycle": 22,
+    "mutation_rate_per_megabase": 2.1,
+    "phenotypic_defect": "MERISTEM_SENESCENCE_TELOMERE_CRISIS",
+    "timestamp_relative": "YEAR_18_GENOME_LOG_02",
+    "tags": ["cryo", "genetics", "telomeres", "tissue_culture", "potato_senescence"],
+    "prose": "Twenty-two consecutive cycles of vegetative micropropagation without sexual rejuvenation caused critical telomere loss at chromosome ends. Regenerating plantlets suffered sudden root meristem senescence, rotting in agar tubes after reaching three inches in height."
+  },
+  {
+    "id": "crop_genome_outcrossing_feral_weed_contamination",
+    "cultivar_id": "SUGAR_BEET_HIGH_BRIX_SELECT",
+    "generation_cycle": 20,
+    "mutation_rate_per_megabase": 3.4,
+    "phenotypic_defect": "FERAL_OUTBREEDING_WOODY_ROOT_REVERSION",
+    "timestamp_relative": "YEAR_20_GENOME_LOG_01",
+    "tags": ["cryo", "genetics", "outcrossing", "feral_hybrid", "sugar_beet"],
+    "prose": "Windblown pollen from radio-mutated feral wild beets (*Beta vulgaris maritima*) infiltrated the greenhouse intake louvers. F1 hybrids reverted completely to hard, woody, un-cookable roots with sugar content dropping from 18% to barely 2%."
+  }
+]

@@ -1,0 +1,51 @@
+[
+  {
+    "id": "candle_dip_001",
+    "candle_method": "dipping",
+    "wax_blend_type": "tallow_pure",
+    "burn_duration_hours": 2.5,
+    "log_text": "First dipped candles. Tallow in the tin pot, wick looped over a stick. Dipped and lifted, counted to thirty, dipped again. Twenty-two passes to reach finger thickness. Two and a half hours burn time per candle. Enough for an evening of close work."
+  },
+  {
+    "id": "candle_dip_002",
+    "candle_method": "dipping",
+    "wax_blend_type": "beeswax_tallow_blend",
+    "burn_duration_hours": 3.8,
+    "log_text": "Beeswax-tallow blend at thirty percent wax. Harder surface than pure tallow, takes more dips to build the same diameter. Three point eight hours burn time. Slower to make but each candle lasts nearly twice as long. The extra dip time is worth it."
+  },
+  {
+    "id": "candle_dip_003",
+    "candle_method": "mould_pour",
+    "wax_blend_type": "tallow_pure",
+    "burn_duration_hours": 3.0,
+    "log_text": "Poured tallow into clay cylinder moulds with wicks suspended from sticks laid across the top. Six moulds, six candles, one pour session. Three hours burn time — slightly more than dipped, likely because the moulded body is denser. The surface is rougher but it does not matter in the dark."
+  },
+  {
+    "id": "candle_dip_004",
+    "candle_method": "mould_pour",
+    "wax_blend_type": "beeswax_pure",
+    "burn_duration_hours": 5.5,
+    "log_text": "Pure beeswax candles poured into tin moulds. Five and a half hours. The longest burning candles we have made. We do not have the wax to make many of these. Reserved for the watch shifts and for medical work where sustained light matters."
+  },
+  {
+    "id": "candle_dip_005",
+    "candle_method": "dipping",
+    "wax_blend_type": "tallow_pure",
+    "burn_duration_hours": 1.8,
+    "log_text": "Thinner candles — twelve dips only. One point eight hours. Made these specifically for the rationed hours when we are allowing only one candle per sleeping area. The thinness means the light is weaker too. But it is light. That is what it is."
+  },
+  {
+    "id": "candle_dip_006",
+    "candle_method": "mould_pour",
+    "wax_blend_type": "beeswax_tallow_blend",
+    "burn_duration_hours": 4.2,
+    "log_text": "Standard production candles — beeswax-tallow blend in clay moulds. Four point two hours. Made in batches of eight. The moulds have been used fourteen times now; the clay is starting to crack at the base of two of them. Need to make replacement moulds before those fail."
+  },
+  {
+    "id": "candle_dip_007",
+    "candle_method": "dipping",
+    "wax_blend_type": "beeswax_pure",
+    "burn_duration_hours": 4.8,
+    "log_text": "Dipped pure beeswax candles — small diameter, long taper. Four point eight hours. The dipping method with pure wax is slow — the wax sets fast and the layers are thin. Thirty-eight dips to reach working thickness. Time-consuming but the result burns cleanly and holds its shape in the cold."
+  }
+]

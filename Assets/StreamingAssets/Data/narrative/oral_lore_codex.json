@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "collection_id": "oral_lore_codex",
+  "songs": [
+    {
+      "lore_id": "song_01_blower_crank_cadence",
+      "title": "The Blower's Turn (Sixteen to the Minute)",
+      "genre": "Work Shanty / Pumping Cadence",
+      "tempo_bpm": 60,
+      "meter": "4/4 Rhythmic Chanted Verse",
+      "performance_context": "Sung by pairs of dwellers turning the hand-crank ventilation fan during surface storm alerts",
+      "lyrics": "Left hand pull and right hand push / The snow is heavy on the bush / The black cloud sits upon the hill / The wheel must turn or blood will chill.\n\nOne for the coal that's in the fire / Two for the watchman on the wire / Three for the baby in the wool / Four for the belly nearly full.\n\nTurn the iron, oil the sleeve / In the ash we learn to breathe.",
+      "tags": ["work_shanty", "ventilation", "bunker", "rhythm"]
+    },
+    {
+      "lore_id": "song_02_hazard_rhyme_colors",
+      "title": "The Four Colors of the Sky",
+      "genre": "Starvation Nursery Rhyme",
+      "tempo_bpm": 80,
+      "meter": "Trochaic Nursery Rhyme",
+      "performance_context": "Recited by children in the Picket Schoolroom to memorize radiation and chemical hazard indicators",
+      "lyrics": "White sky, snow is clean / Yellow sky, boil the green / Violet sky, run below / Black sky, let nobody go.\n\nIf the rain tastes like tin / Bolt the iron door within / If the pond is shining blue / Turn your boots and run on through.",
+      "tags": ["nursery_rhyme", "education", "hazard", "survival"]
+    },
+    {
+      "lore_id": "song_03_canal_rowers_ballad",
+      "title": "The Drowned Locks of Tessarat",
+      "genre": "Canal Ballad",
+      "tempo_bpm": 52,
+      "meter": "3/4 Mournful Wounded Ballad",
+      "performance_context": "Sung by the Ash-Sea skiff rowers while towing timber barges across the flooded lowlands",
+      "lyrics": "The water rose above the sills / Before the bells had done their toll / The sapper dropped the lock-gate pins / And saved the winter wheat in whole.\n\nOh Morozov, the water's deep / Where forty cottages did stand / But in the cold forty below / We hold your shovel in our hand.\n\nRow the ash and pull the sweep / The drowned church is fast asleep.",
+      "tags": ["canal_ballad", "morozov", "drowned_locks", "rowers"]
+    },
+    {
+      "lore_id": "song_04_hearth_lullaby_coal",
+      "title": "Lullaby for a Cold Bunk",
+      "genre": "Hearth Lullaby",
+      "tempo_bpm": 48,
+      "meter": "6/8 Soft Whispered Cradle Song",
+      "performance_context": "Sung by mothers in bunk room 4 when the turbine shuts down for nocturnal battery conservation",
+      "lyrics": "Close your eyes, the light is dim / Fyodor stoked the boiler rim / Warm your feet against the brick / Listen to the geophone click.\n\nFather's on the surface mast / Counting till the storm is past / When the winter winds are done / We will see the yellow sun.\n\nSleep my quiet, sleep my lamb / Safe behind the granite dam.",
+      "tags": ["lullaby", "children", "bunk", "comfort", "motherhood"]
+    },
+    {
+      "lore_id": "song_05_smiths_striking_chant",
+      "title": "The Anvil's Answer",
+      "genre": "Forge Striking Cadence",
+      "tempo_bpm": 68,
+      "meter": "2/4 Hammer-on-Anvil Metronomic Beat",
+      "performance_context": "Chanted by Master Oleg and his striker while drawing out hot alloy plowshares",
+      "lyrics": "Strike the red! / Save the bread! / Strike the white! / Warm the night!\n\nCut the leaf spring from the lorry / We've no time to weep or worry / Hammer cold and hammer hot / Iron forgives what men cannot.\n\nOne strike true! / Two strikes through! / Bring the tongs and plunge it blue!",
+      "tags": ["forge", "blacksmith", "oleg", "anvil", "labor"]
+    },
+    {
+      "lore_id": "song_06_bakers_sawdust_tune",
+      "title": "The Baker's Third",
+      "genre": "Humorous Campfire Jingle",
+      "tempo_bpm": 92,
+      "meter": "4/4 Lively Ragtime Rhythm",
+      "performance_context": "Sung in the mess hall while waiting for the evening hard-tack biscuit distribution",
+      "lyrics": "A third of rye, a third of peat / A third of alder from the street / Sift it fine through copper wire / Bake it hard upon the fire!\n\nIt breaks the tooth, it fills the gut / It keeps the hungry mouth right shut / If you drop it on your toe / You will limp for weeks in snow!",
+      "tags": ["baker", "sawdust", "humor", "hunger", "rations"]
+    },
+    {
+      "lore_id": "song_07_vels_keys_hymn",
+      "title": "The Song of the Brass Ring",
+      "genre": "Commemorative Folk Hymn",
+      "tempo_bpm": 56,
+      "meter": "4/4 Solemn Choral Verse",
+      "performance_context": "Sung on the anniversary of Dr. Vel's vigil during the lighting of the clinic tallow candles",
+      "lyrics": "She carried thirty-one upon her tongue / And spoke them quiet while the lantern hung / She did not reach for water or for bread / But held the brass ring till her fingers bled.\n\nOh Sonya, keep the little key / And let the sick dweller go free / The medicine chest is open wide / With thirty-one names carved inside.",
+      "tags": ["vel", "keys", "hymn", "vigil", "memory"]
+    },
+    {
+      "lore_id": "song_08_ice_road_courier_cadence",
+      "title": "Eleven Kilometers on the Wire",
+      "genre": "Marching Cadence",
+      "tempo_bpm": 72,
+      "meter": "2/4 Snowshoe March",
+      "performance_context": "Muttered by couriers while pacing between surface marker posts in blinding whiteouts",
+      "lyrics": "Glove on the cable, boot in the drift / Ten more minutes to finish the shift / Post forty-two, post forty-three / Nothing to hear and nothing to see.\n\nKeep the oilcloth dry and tight / Kerosene lantern burning bright / If you drop the wire, boy / The snow will have another toy.",
+      "tags": ["courier", "ice_road", "blizzard", "marching"]
+    },
+    {
+      "lore_id": "song_09_syndicate_scales_shanty",
+      "title": "The Weight of the Salt",
+      "genre": "Barter Hall Shanty",
+      "tempo_bpm": 64,
+      "meter": "4/4 Counting Song",
+      "performance_context": "Sung by market porters while carrying salt sacks to Harlan's counting table",
+      "lyrics": "A gram of salt for an inch of thread / A liter of brine for a loaf of bread / If you want the boots from the dead man's feet / Bring twenty nails from the furnace street.\n\nHarlan sits with his balance true / He doesn't love me and he don't love you / But he keeps his thumbs right off the brass / And lets the winter barter pass.",
+      "tags": ["harlan", "syndicate", "barter", "scales"]
+    },
+    {
+      "lore_id": "song_10_crypt_chiseler_dirge",
+      "title": "The Chisel's Bite",
+      "genre": "Funerary Dirge",
+      "tempo_bpm": 40,
+      "meter": "Free Meter Chant with Stone Mallet Strikes",
+      "performance_context": "Sung softly by Sister Mara in the granite crypt while carving dweller epitaphs",
+      "lyrics": "Name by name / Cut the stone / In the dark / Flesh and bone.\n\nNot a hero, not a king / Just the hand that turned the ring / Eight hundred names along the wall / The cold rock remembers all.\n\nRest your head, your watch is done / Beneath the stone we wait the sun.",
+      "tags": ["crypt", "mara", "dirge", "granite", "memorial"]
+    },
+    {
+      "lore_id": "song_11_greenhouse_sprout_carol",
+      "title": "The Green Needle",
+      "genre": "Spring Planting Carol",
+      "tempo_bpm": 76,
+      "meter": "3/4 Joyous Lilting Carol",
+      "performance_context": "Sung when the first winter rye shoots poke through the bone-ash peat beds in the sub-level greenhouse",
+      "lyrics": "A little green needle in black dirt born / Under the yellow wire light this morn / Drink from the pipe where the charcoal sits / Rise from the gravel in tiny bits.\n\nGrow for the flour, grow for the pot / Better than all of the goods we bought / A green blade growing in forty below / Tells the dead earth it is time to grow.",
+      "tags": ["greenhouse", "agriculture", "hope", "botany", "spring"]
+    },
+    {
+      "lore_id": "song_12_sovereign_wreck_shanty",
+      "title": "Five Fathoms Down",
+      "genre": "Diver's Work Shanty",
+      "tempo_bpm": 50,
+      "meter": "4/4 Heavy Resonant Cadence",
+      "performance_context": "Chanted by the hand-pump crew aboard the salvage barge while feeding air hoses down to the divers",
+      "lyrics": "Crank the pump and watch the gauge / We're cutting through the iron cage / Five fathoms down in the acid foam / The Sovereign sits in her drowned home.\n\nBring up the crates of potassium foil / Bring up the drums of machine-head oil / We'll take what the lords of the war laid deep / And give it to children before they sleep.",
+      "tags": ["sovereign", "dive", "salvage", "shanty", "air_pump"]
+    },
+    {
+      "lore_id": "song_13_childrens_skipping_rhyme",
+      "title": "Ten Little Dwellers",
+      "genre": "Counting-Out Skipping Rhyme",
+      "tempo_bpm": 100,
+      "meter": "Trochaic Jump-Rope Rhyme",
+      "performance_context": "Chanted by children jumping over a frayed telegraph cable in the main corridor",
+      "lyrics": "Ten little dwellers sitting in a line / One ate the red snow, then there were nine.\nNine little dwellers working at the gate / One dropped his breather, then there were eight.\nEight little dwellers under boiler seven / One turned the valve wrong, now he's in heaven.\nSeven little dwellers baking sawdust sticks / One burnt the oven, then there were six.\nSix little dwellers learning how to dive / One tore his rubber suit, then there were five.\nFive little dwellers tapping on the floor / Turn around, jump around, lock the heavy door!",
+      "tags": ["children", "skipping_rhyme", "dark_humor", "counting"]
+    },
+    {
+      "lore_id": "song_14_keepers_sky_chant",
+      "title": "The Falling Stars of Station Zero",
+      "genre": "Late-Night Telemetry Ballad",
+      "tempo_bpm": 54,
+      "meter": "4/4 Atmospheric Solo Song",
+      "performance_context": "Broadcast over 88.4 MHz Pirate Free-Net during the Harrow-4 orbital decay pass",
+      "lyrics": "The stars are falling from the shelf / The satellite is by itself / It traveled forty thousand miles / To land upon our slag-heap piles.\n\nDon't fear the fire in the night / It has no fuse, it has no spite / Just heavy iron coming home / Through eight miles of the burning dome.",
+      "tags": ["orbital", "keeper", "harrow", "sky", "ballad"]
+    },
+    {
+      "lore_id": "song_15_strike_anthem_iron",
+      "title": "The Slate on the Track",
+      "genre": "Labor Anthem",
+      "tempo_bpm": 84,
+      "meter": "4/4 Defiant Marching Song",
+      "performance_context": "Sung by the Picket School students and foundry workers during the Article 4 rail strike",
+      "lyrics": "Lay the shovels down, boys, lay the shovels down / No child shall feed the blast furnace in this town / We'll take the frost upon our face, we'll take the biting cold / But we will not buy our winter heat with children twelve years old.\n\nInscribe the slate! / Open the gate! / The law is carved, the people wait!",
+      "tags": ["strike", "foundry", "labor", "constitution", "defiance"]
+    },
+    {
+      "lore_id": "song_16_century_opening_anthem",
+      "title": "The Anthem of the Open Lock",
+      "genre": "Triumphant Valley Hymn",
+      "tempo_bpm": 96,
+      "meter": "4/4 Glorious Grand Chorus",
+      "performance_context": "Sung by the combined assembly of Tessarat during the ten-year canal reopening ceremony",
+      "lyrics": "The lock is clear! The water flows! / The river runs where no one goes! / Ten years of night, ten years of ash / Dissolve beneath the water's splash!\n\nTo all who starved, to all who wept / To all the quiet vows we kept: / The grass is green on Morozov's hill / The Valley lives and labor will!\n\nRing the iron bell! Let the whistles blow! / Out of the shadow, into the glow!",
+      "tags": ["anthem", "finale", "century_seed", "victory", "reconciliation"]
+    }
+  ]
+}

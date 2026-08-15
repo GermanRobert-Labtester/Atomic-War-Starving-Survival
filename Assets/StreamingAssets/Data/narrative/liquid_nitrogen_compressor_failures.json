@@ -1,0 +1,82 @@
+[
+  {
+    "id": "compressor_fail_stirling_displacer_piston_blowby",
+    "cryocooler_unit_id": "STIRLING_COLD_HEAD_ALPHA_01",
+    "working_fluid": "HELIUM_GAS_PURITY_9999",
+    "operating_pressure_bar": 28.0,
+    "failure_mode": "DISPLACER_PTFE_SEAL_RING_BLOWBY",
+    "timestamp_relative": "YEAR_03_COMPRESSOR_LOG_01",
+    "tags": ["cryo", "compressor", "stirling", "helium_leak", "cold_head"],
+    "prose": "Wear on the filled-PTFE seal ring of the Stirling displacer piston allowed high-pressure helium blowby across the regenerator. Refrigeration power at 77K dropped from 150 watts to 40 watts, causing Dewar temperatures to rise."
+  },
+  {
+    "id": "compressor_fail_joule_thomson_expansion_orifice_ice",
+    "cryocooler_unit_id": "JT_LIQUEFACTION_SKID_02",
+    "working_fluid": "NITROGEN_GAS_STREAM",
+    "operating_pressure_bar": 200.0,
+    "failure_mode": "EXPANSION_NOZZLE_ICE_PLUG",
+    "timestamp_relative": "YEAR_05_COMPRESSOR_LOG_04",
+    "tags": ["cryo", "compressor", "joule_thomson", "ice_plug", "nozzle"],
+    "prose": "Trace water vapor (8 ppm) passing through an exhausted silica gel drier froze upon entering the 0.3mm Joule-Thomson expansion orifice. The nozzle choked with a solid ice plug, causing supply pressure to spike to 240 bar and tripping the high-pressure burst disk."
+  },
+  {
+    "id": "compressor_fail_vacuum_dewar_jacket_pinch_weld_loss",
+    "cryocooler_unit_id": "BULK_LN2_STORAGE_TANK_01",
+    "working_fluid": "LIQUID_NITROGEN_BULK",
+    "operating_pressure_bar": 3.5,
+    "failure_mode": "VACUUM_INSULATION_JACKET_LEAK",
+    "timestamp_relative": "YEAR_08_COMPRESSOR_LOG_02",
+    "tags": ["cryo", "dewar", "vacuum_loss", "boiloff", "insulation"],
+    "prose": "Corrosion along the vacuum pump-out pinch weld caused loss of the 10⁻⁵ torr vacuum inside the annular insulation jacket. Heat leak increased forty-fold; the outer stainless shell frosted over with solid ice and vented eight thousand liters of liquid nitrogen in thirty hours."
+  },
+  {
+    "id": "compressor_fail_screw_compressor_lube_oil_migration",
+    "cryocooler_unit_id": "ROTARY_SCREW_BOOSTER_UNIT_B",
+    "working_fluid": "SYNTHETIC_POLYOL_ESTER_OIL",
+    "operating_pressure_bar": 18.0,
+    "failure_mode": "AEROSOL_LUBE_OIL_MIGRATION",
+    "timestamp_relative": "YEAR_11_COMPRESSOR_LOG_03",
+    "tags": ["cryo", "compressor", "lube_oil", "coalescer", "adsorber"],
+    "prose": "A ruptured micro-fiber coalescing filter allowed synthetic lubricant aerosol to enter the cold box. At -150°C, the oil solidified into a waxy grease that completely coated the brazed aluminum fin heat exchangers, choking off gas flow."
+  },
+  {
+    "id": "compressor_fail_crosshead_bearing_knocking_wear",
+    "cryocooler_unit_id": "FOUR_STAGE_RECIPROCATING_N2_04",
+    "working_fluid": "NITROGEN_COMPRESSED_GAS",
+    "operating_pressure_bar": 250.0,
+    "failure_mode": "CROSSHEAD_WRIST_PIN_SPALLING",
+    "timestamp_relative": "YEAR_14_COMPRESSOR_LOG_01",
+    "tags": ["cryo", "compressor", "reciprocating", "bearing_wear", "mechanics"],
+    "prose": "Continuous unlubricated operation under emergency power caused severe galling on the fourth-stage piston crosshead pin. The machine produced a deafening metallic knock at 450 RPM before the connecting rod bent and punched through the cast-iron crankcase."
+  },
+  {
+    "id": "compressor_fail_cryogenic_relief_valve_frost_lock",
+    "cryocooler_unit_id": "LIQUID_LINE_SAFETY_MANIFOLD",
+    "working_fluid": "CRYOGENIC_NITROGEN_LIQUID",
+    "operating_pressure_bar": 22.0,
+    "failure_mode": "RELIEF_VALVE_ICE_CAP_LOCKOUT",
+    "timestamp_relative": "YEAR_16_COMPRESSOR_LOG_02",
+    "tags": ["cryo", "safety_valve", "frost_lock", "overpressure", "ice"],
+    "prose": "Condensing atmospheric humidity formed a two-inch collar of solid rime ice around the open discharge snout of the cryogenic safety relief valve. When line pressure rose to 25 bar, the frozen spring mechanism failed to lift, bulging the insulated transfer line."
+  },
+  {
+    "id": "compressor_fail_aluminum_plate_fin_thermal_fatigue",
+    "cryocooler_unit_id": "MAIN_CRYOGENIC_HEAT_EXCHANGER",
+    "working_fluid": "MULTI_STREAM_NITROGEN_HELIUM",
+    "operating_pressure_bar": 65.0,
+    "failure_mode": "PLATE_FIN_BRAZE_THERMAL_FATIGUE",
+    "timestamp_relative": "YEAR_18_COMPRESSOR_LOG_04",
+    "tags": ["cryo", "heat_exchanger", "thermal_fatigue", "braze_failure", "leaks"],
+    "prose": "Over six hundred emergency startup and shutdown thermal cycles between 300K and 80K induced severe thermal stress across the vacuum-brazed aluminum plate-fin core. Micro-cracks along the parting sheets allowed cross-leakage between pure nitrogen and waste purge gas."
+  },
+  {
+    "id": "compressor_fail_molecular_sieve_co2_breakthrough",
+    "cryocooler_unit_id": "FEED_AIR_PURIFICATION_BED_01",
+    "working_fluid": "COMPRESSED_ATMOSPHERIC_AIR",
+    "operating_pressure_bar": 6.0,
+    "failure_mode": "ZEOLITE_13X_CO2_BREAKTHROUGH",
+    "timestamp_relative": "YEAR_20_COMPRESSOR_LOG_01",
+    "tags": ["cryo", "molecular_sieve", "zeolite", "dry_ice", "adsorption"],
+    "prose": "Saturation of the 13X synthetic zeolite desiccant bed allowed 400 ppm carbon dioxide to break through into the sub-cooling loop. The CO2 desublimated into snow-like solid dry ice flakes that plugged the liquid nitrogen sub-cooler return screen."
+  }
+]

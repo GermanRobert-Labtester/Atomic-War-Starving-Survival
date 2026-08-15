@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "collection_id": "relic_provenance_master_dossiers",
+  "relics": [
+    {
+      "relic_id": "relic_01_reverse_pocketwatch",
+      "name": "The Sapper's Backward Watch",
+      "tone": "Mysterious",
+      "material": "Gold-plated brass with cracked mineral glass crystal",
+      "discovery_location": "Buried Sapper Command Post (-12m)",
+      "curator_note": "A Swiss pocket watch whose spring-loaded escapement ticks backwards at precisely 60 seconds per minute. The second hand runs counter-clockwise. Found in the vest pocket of a skeleton seated at a telegraph desk. When wound, anyone holding it feels a mild sensation of vertigo.",
+      "gameplay_effect": "Equip to Watch Commander: +15% foresight on structural cave-in events, -5 morale during night shifts.",
+      "tags": ["mysterious", "watch", "time", "sapper", "vertigo"]
+    },
+    {
+      "relic_id": "relic_02_indestructible_processed_cheese",
+      "name": "Can of 1979 Processed 'Siberian Sun' Cheese Spread",
+      "tone": "Hilarious",
+      "material": "Heavy galvanized tin with intact yellow lithograph label",
+      "discovery_location": "Demolished Department Store Basement",
+      "curator_note": "A tin of processed cheese spread manufactured thirty years before the war. Survived an atmospheric nuclear detonation, forty years of acid rain, and a direct sledgehammer strike by Master Smith Oleg. The tin remains completely unpunctured. Oleg claims the cheese inside could be used as high-temperature turbine sealant.",
+      "gameplay_effect": "Can be consumed (+800 calories, -10 morale due to neon orange glow) or used as +20 Armor plating for stovepipes.",
+      "tags": ["hilarious", "food", "indestructible", "cheese", "stoker"]
+    },
+    {
+      "relic_id": "relic_03_hydraulic_exo_gauntlet",
+      "name": "Pneumatic Riveting Exo-Gauntlet",
+      "tone": "Exciting",
+      "material": "Drop-forged manganese steel with braided copper hydraulic lines",
+      "discovery_location": "Sub-Level 3 Rail Yard Repair Pit",
+      "curator_note": "A heavy mechanical forearm sleeve fitted with pneumatic pistons and a hand-crank pressure reservoir. Originally used to drive one-inch boiler rivets with one blow. When charged to ten atmospheres, the wearer can punch through a reinforced brick wall or lift a derailed ore cart single-handed.",
+      "gameplay_effect": "Equip to Worker: +400% excavation speed through shale rock, consumes 1 unit of machine lubricant per shift.",
+      "tags": ["exciting", "tool", "exo_gauntlet", "hydraulic", "strength"]
+    },
+    {
+      "relic_id": "relic_04_lead_lined_music_box",
+      "name": "The Lullaby Box of Sector 4",
+      "tone": "Serious",
+      "material": "Cast lead box lined with purple velvet, brass cylinder inside",
+      "discovery_location": "Bunk Room 4 Collapse Zone",
+      "curator_note": "A heavy lead-shielded music box built by a father to protect a delicate chime cylinder from gamma radiation. When the crank is turned, it plays a simple twelve-note lullaby tuned to 432 Hz. Found clutched in a wool blanket beneath the collapsed ceiling slab. When played in the infirmary, dweller heart rates decrease by 15 bpm.",
+      "gameplay_effect": "+20 Shelter Morale when played during night rest; reduces nightmare events in sick list by 50%.",
+      "tags": ["serious", "music_box", "lead", "grief", "comfort"]
+    },
+    {
+      "relic_id": "relic_05_frozen_moth_cylinder",
+      "name": "The Amber-Glass Moth Cylinder",
+      "tone": "Mysterious",
+      "material": "Sealed borosilicate glass vial with brass threaded endcaps",
+      "discovery_location": "Botanical Institute Vault -20m",
+      "curator_note": "A heavy glass cylinder containing a pristine, unfaded Luna Moth preserved in clear mineral fluid. When exposed to low ambient temperatures (-20°C), the moth's wings faintly phosphoresce in pale emerald green, casting shadow patterns that resemble circuit schematics on the wall.",
+      "gameplay_effect": "+10 Greenhouse Research; dwellers working near it report vivid dreams of pre-war summer forests.",
+      "tags": ["mysterious", "moth", "botany", "phosphorescence", "amber"]
+    },
+    {
+      "relic_id": "relic_06_inflatable_rubber_flamingo",
+      "name": "The Pre-War Pool Flamingo 'Captain Pink'",
+      "tone": "Hilarious",
+      "material": "Bright fluorescent pink vulcanized PVC with patched puncture plug",
+      "discovery_location": "Drowned Luxury Hotel Penthouse",
+      "curator_note": "A garish, full-sized inflatable pink flamingo found floating serenely in the flooded ballroom of the Grand Metropole Hotel. The salvage divers brought it back tied to their timber raft as a mascot. It is now mounted above the main bunker shower stall. Boris the Baker claims Captain Pink watches over the flour rations.",
+      "gameplay_effect": "+5 Bunker Humor rating; children use it as a flotation raft during flooded sump pump emergencies.",
+      "tags": ["hilarious", "flamingo", "mascot", "bunker", "humor"]
+    },
+    {
+      "relic_id": "relic_07_tungsten_harpoon_point",
+      "name": "Deorbited Kinetic Penetrator Dart",
+      "tone": "Exciting",
+      "material": "Solid tungsten-carbide alloy with ablative ceramic nose cone",
+      "discovery_location": "Impact Crater North Meadow (Mile 7)",
+      "curator_note": "A sixty-kilogram solid tungsten dart dropped from orbit during the Harrow-4 constellation decay. Survived supersonic atmospheric entry without a scratch. Master Oleg spent three days trying to dent it with an anvil hammer and broke two carbide chisels. It has been mounted on a heavy timber sled as an impenetrable anti-breach ram.",
+      "gameplay_effect": "+50 Outer Airlock Armor rating; unlocks advanced armor crafting recipes at the Silent Foundry.",
+      "tags": ["exciting", "tungsten", "kinetic", "orbital", "armor"]
+    },
+    {
+      "relic_id": "relic_08_vel_stained_scalpel",
+      "name": "Dr. Vel's First Suture Kit",
+      "tone": "Serious",
+      "material": "Nickel-plated surgical steel in worn kangaroo leather roll",
+      "discovery_location": "Upper Meadow Clinic Dispensary Drawer",
+      "curator_note": "The original three scalpels, curved needle, and bone rasp used by Dr. Irina Vel during the first forty-five days following impact. The blades have been resharpened so many times on oilstone that the metal is paper-thin. Sonya refuses to let anyone touch them except to disinfect them in boiling saline.",
+      "gameplay_effect": "+25% Surgery Success Rate in Clinic; unlocks the 'Compassionate Triage' medical policy.",
+      "tags": ["serious", "vel", "medical", "scalpel", "legacy"]
+    },
+    {
+      "relic_id": "relic_09_the_singing_vacuum_tube",
+      "name": "Telefunken Resonant Triode #909",
+      "tone": "Mysterious",
+      "material": "Hand-blown glass vacuum tube with platinum filament grid",
+      "discovery_location": "Destroyed High-Frequency Summit Mast",
+      "curator_note": "A pre-war radio amplifier tube that glows with an internal blue filament when energized. Even when disconnected from all power sources and sitting on a wooden table, the tube emits a faint, crystalline 432 Hz ringing tone that modulates whenever a person walks past it.",
+      "gameplay_effect": "Increases radio reception range by 200 km; picks up hidden ghost frequency signals.",
+      "tags": ["mysterious", "vacuum_tube", "resonance", "radio", "acoustic"]
+    },
+    {
+      "relic_id": "relic_10_the_disco_cassette",
+      "name": "Cassette Tape: 'Euro-Beat Explosion 1984'",
+      "tone": "Hilarious",
+      "material": "Magenta polycarbonate magnetic audio cassette with handwritten label",
+      "discovery_location": "Garrison Staff Car Glove Compartment",
+      "curator_note": "A cassette containing high-energy 130 BPM synthesizer dance tracks. Survived EMP radiation intact. When played over the bunker tannoy system during the 06:00 shift change, coal shoveling productivity increased by 40%, although Colonel Voss complained bitterly that it undermined military dignity.",
+      "gameplay_effect": "+15% Labor speed in Boiler Room and Forge; -10% Voss patience.",
+      "tags": ["hilarious", "music", "disco", "cassette", "productivity"]
+    },
+    {
+      "relic_id": "relic_11_armored_snow_sled",
+      "name": "The Sapper's Rocket-Assisted Snow Sled",
+      "tone": "Exciting",
+      "material": "Welded aircraft duralumin frame with twin solid-fuel booster mounts",
+      "discovery_location": "Sapper Hangar Sector 9",
+      "curator_note": "A high-speed reconnaissance sled built on ski runners salvaged from a crashed glider. Fitted with two emergency solid-fuel aircraft starter rockets. Anton the Courier used it once to cross forty kilometers of blizzard in eleven minutes, describing the experience as 'like being kicked by a burning horse.'",
+      "gameplay_effect": "Enables instant 1-turn emergency courier deliveries across the world map; 5% explosion risk.",
+      "tags": ["exciting", "sled", "rocket", "speed", "courier"]
+    },
+    {
+      "relic_id": "relic_12_the_black_parchment_contract",
+      "name": "The Dam Demolition Warrant",
+      "tone": "Serious",
+      "material": "Water-damaged legal vellum with scorched edges and wax seal",
+      "discovery_location": "Provincial Governor's Emergency Safe",
+      "curator_note": "The original signed civil defense warrant authorizing the demolition of Lock 4 and the intentional flooding of the lower township. Countersigned in purple ink by Grigory Morozov four minutes before the blast charges fired. Contains the handwritten note: 'We will be judged by the harvest, not the graveyard.'",
+      "gameplay_effect": "Unlocks the 'Historical Reckoning' tribunal questline in exp_08; eliminates guilt penalties for sapper characters.",
+      "tags": ["serious", "morozov", "contract", "dam", "legal"]
+    },
+    {
+      "relic_id": "relic_13_the_mercury_barometer_flask",
+      "name": "Torricelli's Mercury Predictor",
+      "tone": "Mysterious",
+      "material": "Hand-blown glass U-tube mounted on walnut plaque with brass vernier",
+      "discovery_location": "Weather Observatory Cellar",
+      "curator_note": "An antique mercury column barometer whose liquid level drops forty-eight hours before acidic fallout squalls arrive, even when sealed inside an airtight underground pressure chamber where barometric pressure is constant. The mercury appears to react to high-altitude atmospheric ionization.",
+      "gameplay_effect": "Provides 2 days early warning for all Acid Squall and Radon Mist weather events.",
+      "tags": ["mysterious", "barometer", "mercury", "weather", "prediction"]
+    },
+    {
+      "relic_id": "relic_14_the_taxidermy_badger",
+      "name": "'General Borzoi' the Mounted Badger",
+      "tone": "Hilarious",
+      "material": "Stuffed European badger with glass marble eyes wearing a mini officer's cap",
+      "discovery_location": "Town Hall Trophy Cabinet",
+      "curator_note": "A slightly mangy taxidermy badger found in the ruins of the mayor's office. The sentries dressed him in a lieutenant's field cap and stationed him at the airlock checkpoint. Every dweller leaving the bunker must solemnly salute General Borzoi or face a shift demerit. Morale is surprisingly high.",
+      "gameplay_effect": "+10 Sentry Discipline; dwellers passing the checkpoint have a 25% chance to gain +1 Hope.",
+      "tags": ["hilarious", "badger", "taxidermy", "mascot", "sentry"]
+    },
+    {
+      "relic_id": "relic_15_portable_gamma_spectrometer",
+      "name": "The Sodium Iodide Scintillator Wand",
+      "tone": "Exciting",
+      "material": "Polished aluminum wand connected to a Nixie-tube digital counter box",
+      "discovery_location": "Nuclear Research Sub-Station 8",
+      "curator_note": "A laboratory-grade handheld gamma spectrometer that can identify exact radioactive isotopes (Cesium-137, Strontium-90, Cobalt-60) from five meters away. Allows scouts to pinpoint contaminated food crates and find buried lead-shielded caches through concrete slabs.",
+      "gameplay_effect": "+50% Scavenging loot yield on expedition nodes; eliminates radiation food poisoning risks.",
+      "tags": ["exciting", "spectrometer", "science", "scavenge", "radiation"]
+    },
+    {
+      "relic_id": "relic_16_the_charred_accordion",
+      "name": "The Deserter's Button Accordion",
+      "tone": "Serious",
+      "material": "Birch plywood casing with calfskin bellows and mother-of-pearl buttons",
+      "discovery_location": "Abandoned Outpost 12 Snowdrift",
+      "curator_note": "A 24-button diatonic accordion dropped by a fleeing young conscript during the Day 45 blizzard. One corner of the bellows is scorched by fire, but the reeds still play true in A-minor. Sister Mara refused to carve the boy's name in stone, but the accordion is played every Saturday night in the canteen.",
+      "gameplay_effect": "+15 Bunker Social Bond rate; unlocks unique oral lore shanties during leisure shifts.",
+      "tags": ["serious", "accordion", "music", "deserter", "bellows"]
+    },
+    {
+      "relic_id": "relic_17_the_phantom_compass",
+      "name": "The Gyroscopic Mariner's Compass",
+      "tone": "Mysterious",
+      "material": "Gimballed brass binnacle with oil-damped magnetic compass card",
+      "discovery_location": "Drowned Wheelhouse of S.S. Sovereign",
+      "curator_note": "A heavy maritime compass salvaged from four fathoms of black water. Regardless of magnetic field variations or geomagnetic storms, the compass needle points steadfastly toward a coordinates point fifty kilometers north-northwest in the uncharted mountains, where no settlement is recorded.",
+      "gameplay_effect": "Unlocks the secret expedition route to 'The Unmapped Crater' on the world map.",
+      "tags": ["mysterious", "compass", "sovereign", "navigation", "secret_route"]
+    },
+    {
+      "relic_id": "relic_18_the_novelty_alarm_clock",
+      "name": "The Roaring Rooster Alarm Clock",
+      "tone": "Hilarious",
+      "material": "Stamped sheet tin painted like a cartoon rooster with mechanical bell chime",
+      "discovery_location": "Department Store Toy Aisle",
+      "curator_note": "A mechanical wind-up alarm clock that emits an ear-splitting brass crowing sound at 05:00 sharp. Installed in the dweller bunk hall to ensure nobody oversleeps the boiler shift. Stoker Fyodor tried to drown it in a bucket of used engine oil; it crowed louder.",
+      "gameplay_effect": "Eliminates dweller shift tardiness demerits across the entire bunker; -2 rest quality.",
+      "tags": ["hilarious", "clock", "rooster", "bunk", "shift"]
+    },
+    {
+      "relic_id": "relic_19_heavy_salvage_plasma_torch",
+      "name": "The Vortex High-Amp Plasma Torch",
+      "tone": "Exciting",
+      "material": "Insulated bakelite grip with water-cooled copper cutting nozzle",
+      "discovery_location": "Submarine Dry Dock Facility",
+      "curator_note": "An industrial plasma arc cutting torch capable of slicing through four-inch armored steel hull plating in seconds. Requires eighty amps of current and compressed argon gas. Used by Sonya to torch open the Sovereign's lower cargo hold during the winter dive.",
+      "gameplay_effect": "Unlocks underwater hull breach mechanics; cuts locked steel vault doors in 1 turn.",
+      "tags": ["exciting", "plasma", "torch", "salvage", "underwater"]
+    },
+    {
+      "relic_id": "relic_20_the_first_harvest_ear_of_rye",
+      "name": "The Preserved First Ear of Rye",
+      "tone": "Serious",
+      "material": "Single ear of golden rye pressed between two sheets of optical glass",
+      "discovery_location": "Upper Greenhouse Bed 1 (Harvest Day 360)",
+      "curator_note": "The very first mature grain stalk grown in the bunker's subterranean peat beds under artificial wire light. Harvested on Day 360 by Botanist Elena. Sealed between glass and mounted in the assembly hall as proof that living things can still grow from ash and bone dust.",
+      "gameplay_effect": "+30 Base Shelter Hope; prevents collective despair collapses during food shortages.",
+      "tags": ["serious", "rye", "agriculture", "hope", "harvest"]
+    },
+    {
+      "relic_id": "relic_21_the_lead_encased_lens",
+      "name": "The Radiation-Browning Camera Lens",
+      "tone": "Mysterious",
+      "material": "Heavy brass telephoto barrel with dense thorium glass optical elements",
+      "discovery_location": "Air Force Aerial Reconnaissance Cache",
+      "curator_note": "A heavy aerial reconnaissance lens whose optical elements have turned tea-brown from absorbing gamma radiation. When looked through, distant surface objects appear surrounded by shimmering violet halos indicating localized ionization corridors invisible to the naked eye.",
+      "gameplay_effect": "+25% Optical periscope detection range; highlights safe low-rad paths on surface maps.",
+      "tags": ["mysterious", "optics", "lens", "thorium", "periscope"]
+    },
+    {
+      "relic_id": "relic_22_the_rubber_chicken_decoy",
+      "name": "The Acoustic Sentry Decoy 'Cluck-9'",
+      "tone": "Hilarious",
+      "material": "Molded yellow rubber chicken wired to a 12V automotive flasher relay",
+      "discovery_location": "Joke Shop Basement Ruin",
+      "curator_note": "A yellow rubber chicken modified by Sapper Stepan with a solenoid plunger that squeezes its neck every fifteen seconds. Placed three hundred meters out in the snow to test whether wasteland scavengers or phantom patrols react to unexpected poultry noises. It confused a pack of wild dogs for four hours.",
+      "gameplay_effect": "Can be deployed on surface perimeter to distract nighttime intruders for 1 full shift.",
+      "tags": ["hilarious", "decoy", "rubber_chicken", "sentry", "trap"]
+    },
+    {
+      "relic_id": "relic_23_solid_fuel_cutting_lance",
+      "name": "The Thermite Thermal Lance",
+      "tone": "Exciting",
+      "material": "Three-meter steel pipe packed with magnesium and iron oxide rods",
+      "discovery_location": "Railway Maintenance Tunnel",
+      "curator_note": "A heavy pyrotechnic cutting lance that burns at 4,000°C when fed with high-pressure oxygen. Capable of melting through reinforced concrete bunkers, granite boulders, and train wheels like butter. Used during the tunnel clearance operation to rescue trapped miners in Sector 7.",
+      "gameplay_effect": "Clears blocked excavation cave-ins instantly; creates high thermal signature on radar.",
+      "tags": ["exciting", "thermal_lance", "thermite", "excavation", "fire"]
+    },
+    {
+      "relic_id": "relic_24_the_unspoken_triage_list",
+      "name": "Dr. Vel's Refused Glass Notebook",
+      "tone": "Serious",
+      "material": "Leatherette notebook with bloodstained oilcloth cover",
+      "discovery_location": "Dr. Vel's Deathbed Stand",
+      "curator_note": "The small notebook containing the eleven names that Dr. Vel did not finish speaking during her final vigil before reaching for the glass of water. Kept by Sonya in her breast pocket. A testament to human frailty, the limits of endurance, and the burden of unpayable debts.",
+      "gameplay_effect": "Unlocks the 'Unfinished Vigil' emotional resolution questline in exp_12.",
+      "tags": ["serious", "vel", "vigil", "notebook", "grief"]
+    },
+    {
+      "relic_id": "relic_25_the_telegraph_key_in_amber",
+      "name": "The Resin-Cast Morse Key",
+      "tone": "Mysterious",
+      "material": "Brass telegraph key completely encased in a block of solidified Baltic amber",
+      "discovery_location": "Coastal Station 3 Archive",
+      "curator_note": "A brass telegraph key cast into a solid four-kilogram block of yellow amber. Found on the operator desk of a coastal station. Although completely sealed and insulated, micro-sparking can be seen inside the amber when the 99.0 MHz Tempest census broadcast goes live on Tuesday mornings.",
+      "gameplay_effect": "+15 Telegraph decoding speed; grants immunity to line voltage EMP surges.",
+      "tags": ["mysterious", "amber", "telegraph", "morse", "sparks"]
+    },
+    {
+      "relic_id": "relic_26_the_indestructible_bowler_hat",
+      "name": "The Kevlar-Reinforced Bowler Hat",
+      "tone": "Hilarious",
+      "material": "Black felt layered with ballistic aramid fiber and a silk lining",
+      "discovery_location": "Diplomatic Courier Luggage Trunk",
+      "curator_note": "A distinguished black Victorian bowler hat reinforced with pre-war bulletproof Kevlar. Harlan the Weigher wears it during all high-stakes barter negotiations. It has deflected a thrown brass scale weight, a falling icicle, and a ricochet from a sentry rifle without losing its stylish brim curve.",
+      "gameplay_effect": "Equip to Merchant: +20 Barter intimidation; grants +10 Head Armor rating.",
+      "tags": ["hilarious", "hat", "kevlar", "harlan", "style"]
+    },
+    {
+      "relic_id": "relic_27_pneumatic_rail_spear",
+      "name": "The Sapper's Anchor Harpoon",
+      "tone": "Exciting",
+      "material": "High-tensile forged steel harpoon with barbed titanium flukes and 100m wire cable",
+      "discovery_location": "Canal Lock 4 Heavy Crane Rig",
+      "curator_note": "A pneumatic harpoon launcher designed to fire barbed steel anchors into solid stone walls or ship hulls to winch heavy salvage barges against rapid canal currents. Capable of embedding three inches into reinforced concrete from eighty meters away.",
+      "gameplay_effect": "Enables rapid canal mooring in high-current weather; usable as defense weapon against heavy vehicles.",
+      "tags": ["exciting", "harpoon", "pneumatic", "cable", "salvage"]
+    },
+    {
+      "relic_id": "relic_28_the_lead_coffin_nameplate",
+      "name": "The Unengraved Granite Plaque",
+      "tone": "Serious",
+      "material": "Polished grey granite slab with beveled edges, blank surface",
+      "discovery_location": "Sister Mara's Chisel Workshop",
+      "curator_note": "A pristine slab of granite kept on the lowest shelf of the crypt workshop. Sister Mara reserved it for the final dweller who will one day close the outer airlock door forever when the bunker is abandoned or the valley is restored. No name has been cut into it yet.",
+      "gameplay_effect": "+10 Shelter Resolve; displayed in Assembly Hall as a reminder of the generational horizon.",
+      "tags": ["serious", "granite", "mara", "crypt", "destiny"]
+    },
+    {
+      "relic_id": "relic_29_the_glow_in_the_dark_dice",
+      "name": "Radium-Luminescent Bone Dice",
+      "tone": "Mysterious",
+      "material": "Carved sheep bone inlaid with green radium phosphor pips",
+      "discovery_location": "Underground Gambling Den Ruin",
+      "curator_note": "A pair of hand-carved bone dice whose pips glow with intense green radium light in total darkness. When rolled, the dice have a statistically impossible 38% bias toward rolling double sixes, regardless of how they are thrown or who rolls them.",
+      "gameplay_effect": "+10% Critical success chance on expedition skill checks; minor radiation exposure risk if held in pocket.",
+      "tags": ["mysterious", "dice", "radium", "luck", "gambling"]
+    },
+    {
+      "relic_id": "relic_30_the_battery_powered_bubble_gun",
+      "name": "The Plastic Bubble Machine 'Bubbly-Boy'",
+      "tone": "Hilarious",
+      "material": "Bright blue and yellow injection-molded polystyrene with tiny electric blower",
+      "discovery_location": "Flooded Kindergarten Toy Box",
+      "curator_note": "A battery-powered bubble blower found in an airtight plastic toy bin. Filled with soapy water, it produces hundreds of iridescent bubbles. The children in Bunk 4 use it to test air currents in the ventilation ducts to see if the intake filters are clogged with ash.",
+      "gameplay_effect": "+10 Ventilation Diagnostic speed; +15 Shelter Happiness during child play shifts.",
+      "tags": ["hilarious", "bubble_gun", "toy", "ventilation", "happiness"]
+    },
+    {
+      "relic_id": "relic_31_hydraulic_mine_jack",
+      "name": "The Fifty-Ton Strata Hydraulic Jack",
+      "tone": "Exciting",
+      "material": "High-pressure chrome-moly steel cylinder with twin-lever hand pump",
+      "discovery_location": "Abandoned Iron Mine Shaft -50m",
+      "curator_note": "A massive heavy-duty hydraulic jack capable of lifting fifty tons of collapsed bedrock. Sapper Stepan used it to shore up the primary fault line after the Day 210 earthquake, preventing the entire clinic ceiling from crushing the beds.",
+      "gameplay_effect": "Prevents catastrophic bunker room collapse during high-magnitude seismic events.",
+      "tags": ["exciting", "hydraulic_jack", "mining", "structural", "lifesaver"]
+    },
+    {
+      "relic_id": "relic_32_the_valley_constitution_chisel",
+      "name": "Sonya's Slate Scriber",
+      "tone": "Serious",
+      "material": "Solid tungsten-carbide scriber point mounted in a polished oak handle",
+      "discovery_location": "Tessarat Assembly Hall Podium",
+      "curator_note": "The hand tool used by Sonya on Day 3650 to carve the Valley Constitution into three slabs of slate from the lower crypt. The oak handle is darkened by ten years of oil, coal dust, and sweat. It represents the transition from brutal survival to lawful human society.",
+      "gameplay_effect": "Permanently seals the 'Century Seed' victory condition; generates +50 Hope across all 12 districts.",
+      "tags": ["serious", "constitution", "sonya", "chisel", "victory", "century_seed"]
+    }
+  ]
+}

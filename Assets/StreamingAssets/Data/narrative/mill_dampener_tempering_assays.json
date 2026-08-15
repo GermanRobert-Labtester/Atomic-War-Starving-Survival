@@ -1,0 +1,72 @@
+[
+  {
+    "id": "mill_tempering_hard_wheat_bran_toughening",
+    "conditioning_bin_id": "PRIMARY_TEMPERING_SILO_01",
+    "tempering_water_addition_pct": 3.5,
+    "target_milling_moisture_pct": 15.5,
+    "conditioning_dwell_hours": 24.0,
+    "timestamp_relative": "YEAR_02_TEMPER_LOG_01",
+    "tags": ["grain_milling", "tempering", "bran_toughening", "flour_extraction", "conditioning"],
+    "prose": "Injecting 3.5% potable water into dry 12.0% hard winter wheat hydrated the fibrous pericarp and aleurone layers. The toughened bran resisted shattering during break passes, peeling away in broad flakes that kept the flour snow-white."
+  },
+  {
+    "id": "mill_tempering_conditioning_rest_bin_dwell_time",
+    "conditioning_bin_id": "SECONDARY_REST_BIN_BAY_02",
+    "tempering_water_addition_pct": 2.8,
+    "target_milling_moisture_pct": 14.8,
+    "conditioning_dwell_hours": 18.0,
+    "timestamp_relative": "YEAR_05_TEMPER_LOG_03",
+    "tags": ["grain_milling", "tempering", "dwell_time", "moisture_equilibration", "endosperm"],
+    "prose": "Holding damp wheat in timber rest bins for eighteen hours allowed moisture to diffuse evenly from the outer husk into the starchy endosperm. Cross-sectional kernel cuts confirmed uniform translucency with zero dry white cores."
+  },
+  {
+    "id": "mill_tempering_hydrothermal_hot_water_scour",
+    "conditioning_bin_id": "HYDROTHERMAL_SCOURER_SKID",
+    "tempering_water_addition_pct": 4.0,
+    "target_milling_moisture_pct": 16.0,
+    "conditioning_dwell_hours": 8.0,
+    "timestamp_relative": "YEAR_08_TEMPER_LOG_02",
+    "tags": ["grain_milling", "hydrothermal", "hot_water", "spore_removal", "sanitization"],
+    "prose": "Washing grain with 52°C water inside a high-speed whizzer scourer stripped surface soil and fungal spores while accelerating water absorption. The rapid hydrothermal conditioning cut required bin dwell time from 24 hours down to eight hours."
+  },
+  {
+    "id": "mill_tempering_endosperm_mellowing_starch_damage",
+    "conditioning_bin_id": "PRECISION_MILLING_BIN_03",
+    "tempering_water_addition_pct": 3.0,
+    "target_milling_moisture_pct": 15.2,
+    "conditioning_dwell_hours": 20.0,
+    "timestamp_relative": "YEAR_11_TEMPER_LOG_04",
+    "tags": ["grain_milling", "tempering", "endosperm_mellowing", "starch_damage", "milling_energy"],
+    "prose": "Tempering hard vitreous durum wheat to 15.2% moisture mellowed the gluten-starch protein matrix. Roller mill grinding power consumption dropped by 18%, and mechanical starch granule damage remained within optimal baking limits (6.5%)."
+  },
+  {
+    "id": "mill_tempering_over_wetting_paste_choke_fluting",
+    "conditioning_bin_id": "EXPERIMENTAL_WET_MILL_CELL",
+    "tempering_water_addition_pct": 6.5,
+    "target_milling_moisture_pct": 18.5,
+    "conditioning_dwell_hours": 12.0,
+    "timestamp_relative": "YEAR_14_TEMPER_LOG_01",
+    "tags": ["grain_milling", "over_wetting", "fluting_choke", "paste_formation", "roller_mill"],
+    "prose": "A malfunctioning flowmeter overdosed water to 6.5%, driving wheat moisture to 18.5%. The soggy grain transformed into sticky dough paste between the first break rolls, packing solid into the spiral fluting and choking the millstand."
+  },
+  {
+    "id": "mill_tempering_pin_mill_entoleter_insect_egg_shatter",
+    "conditioning_bin_id": "ENTOLETER_IMPACT_STATION",
+    "tempering_water_addition_pct": 0.0,
+    "target_milling_moisture_pct": 14.5,
+    "conditioning_dwell_hours": 0.0,
+    "timestamp_relative": "YEAR_17_TEMPER_LOG_03",
+    "tags": ["grain_milling", "entoleter", "impact_destroyer", "egg_shatter", "pest_control"],
+    "prose": "Hurling tempered grain at 90 m/s against hardened steel impact pins inside the entoleter shattered microscopic insect eggs and larvae inside hidden kernel crevices. Sound wheat berries rebounded undamaged, ensuring insect-free storage."
+  },
+  {
+    "id": "mill_tempering_automatic_rotor_dampener_spray_jet",
+    "conditioning_bin_id": "CONTINUOUS_INTENSIVE_DAMPENER",
+    "tempering_water_addition_pct": 3.2,
+    "target_milling_moisture_pct": 15.0,
+    "conditioning_dwell_hours": 16.0,
+    "timestamp_relative": "YEAR_20_TEMPER_LOG_01",
+    "tags": ["grain_milling", "dampener", "spray_nozzle", "moisture_distribution", "paddle_mixer"],
+    "prose": "An intensive rotor dampener with angled mixing paddles whipped wheat kernels through a 4-bar atomized water spray. High-velocity berry-to-berry friction forced water into the kernel creases, achieving uniform moisture uptake across eight tons per hour."
+  }
+]

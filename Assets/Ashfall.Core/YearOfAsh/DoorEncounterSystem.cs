@@ -67,6 +67,8 @@ namespace Ashfall.Core.YearOfAsh
         public int minDay = 180;
         public int maxDay = 360;
         public int threatLevel = 1;
+        /// <summary>Maximum times this encounter may fire per 60-day season. 0 = unlimited.</summary>
+        public int seasonCap = 0;
         public List<EncounterChoice> choices = new List<EncounterChoice>();
     }
 
@@ -77,6 +79,10 @@ namespace Ashfall.Core.YearOfAsh
         public List<string> resolvedEncounterIds = new List<string>();
         public int cumulativeMoraleDelta = 0;
         public int cumulativeGuiltDelta = 0;
+        /// <summary>"encounterId:seasonIndex" for each season-capped firing (for seasonCap enforcement).</summary>
+        public List<string> seasonCapFirings = new List<string>();
+        /// <summary>Scratch context for the last eligibility query (day). Not persisted.</summary>
+        public int dayContext;
     }
 
     /// <summary>
@@ -149,7 +155,45 @@ namespace Ashfall.Core.YearOfAsh
             _state.cumulativeMoraleDelta += netMorale;
             _state.cumulativeGuiltDelta += netGuilt;
 
+            // seasonCap: record the season index of this firing so hosts can gate repeats.
+            if (encounter.seasonCap > 0)
+            {
+                int season = _state.dayContext > 0 ? _state.dayContext / 60 : 0;
+                _state.seasonCapFirings.Add(encounter.encounterId + ":" + season);
+            }
+
             OnEncounterResolved?.Invoke(result);
+            return result;
+        }
+
+        /// <summary>
+        /// Encounters that may still fire on <paramref name="day"/>, given one-shot
+        /// (resolvedEncounterIds) and seasonCap history. Used by hosts when rolling
+        /// the hatch; keeps verdict one-shots from repeating across a season.
+        /// </summary>
+        public List<DoorEncounterEntry> GetEligibleEncounters(int day)
+        {
+            _state.dayContext = day;
+            var result = new List<DoorEncounterEntry>();
+            int season = day / 60;
+            foreach (var entry in _catalog)
+            {
+                if (day < entry.minDay || day > entry.maxDay) continue;
+                if (entry.seasonCap == 0 && _state.resolvedEncounterIds.Contains(entry.encounterId)) continue; // one-shot
+
+                if (entry.seasonCap > 0)
+                {
+                    // Count how many times this encounter fired this season.
+                    string prefix = entry.encounterId + ":";
+                    int firedThisSeason = 0;
+                    foreach (var record in _state.seasonCapFirings)
+                        if (record.StartsWith(prefix) && record.EndsWith(":" + season))
+                            firedThisSeason++;
+                    if (firedThisSeason >= entry.seasonCap) continue; // cap reached
+                }
+
+                result.Add(entry);
+            }
             return result;
         }
 
@@ -325,7 +369,9 @@ namespace Ashfall.Core.YearOfAsh
                 totalEncountersResolved = _state.totalEncountersResolved,
                 resolvedEncounterIds = new List<string>(_state.resolvedEncounterIds),
                 cumulativeMoraleDelta = _state.cumulativeMoraleDelta,
-                cumulativeGuiltDelta = _state.cumulativeGuiltDelta
+                cumulativeGuiltDelta = _state.cumulativeGuiltDelta,
+                seasonCapFirings = new List<string>(_state.seasonCapFirings),
+                dayContext = _state.dayContext
             };
         }
 
@@ -343,6 +389,10 @@ namespace Ashfall.Core.YearOfAsh
                 : new List<string>();
             _state.cumulativeMoraleDelta = state.cumulativeMoraleDelta;
             _state.cumulativeGuiltDelta = state.cumulativeGuiltDelta;
+            _state.seasonCapFirings = state.seasonCapFirings != null
+                ? new List<string>(state.seasonCapFirings)
+                : new List<string>();
+            _state.dayContext = state.dayContext;
         }
     }
 }

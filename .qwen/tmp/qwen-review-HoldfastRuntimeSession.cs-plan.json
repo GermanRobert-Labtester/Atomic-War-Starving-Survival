@@ -1,0 +1,54 @@
+{
+  "diffPath": ".qwen/tmp/qwen-review-HoldfastRuntimeSession.cs-diff.txt",
+  "diffPathAbsolute": "/home/robertsrff/Music/Atomic_War_Straving_Survival/Atomic War/.qwen/tmp/qwen-review-HoldfastRuntimeSession.cs-diff.txt",
+  "diffLines": 260,
+  "diffChars": 10620,
+  "srcDiffLines": 260,
+  "testDiffLines": 0,
+  "docsDiffLines": 0,
+  "generatedDiffLines": 0,
+  "chunks": [
+    {
+      "id": 1,
+      "startLine": 1,
+      "endLine": 260,
+      "lines": 260,
+      "chars": 10620,
+      "maxLineChars": 117,
+      "oversized": false,
+      "files": [
+        { "path": "src/Host/HoldfastRuntimeSession.cs", "newStart": 11, "newEnd": 337 }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "path": "src/Host/HoldfastRuntimeSession.cs",
+      "kind": "source",
+      "hunks": [
+        { "newStart": 11, "newEnd": 22 },
+        { "newStart": 24, "newEnd": 45 },
+        { "newStart": 119, "newEnd": 337 }
+      ],
+      "addedLines": 234,
+      "removedLines": 0,
+      "changedLines": 234,
+      "preLines": 0,
+      "fileLines": 0,
+      "rewriteRatio": 0,
+      "heavy": false,
+      "binary": false
+    }
+  ],
+  "budget": {
+    "inlineAngles": 6,
+    "sweep": true,
+    "specialistCap": 2,
+    "verifyShard": 8,
+    "agentToolBudget": 43,
+    "reverseAuditRounds": 5
+  },
+  "untrackedFiles": [],
+  "skippedFiles": [],
+  "effort": "medium"
+}

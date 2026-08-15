@@ -227,5 +227,29 @@ namespace Ashfall.Core.Tests
             Assert.Same(food, catalog.Get("canned_food"));
             Assert.Null(catalog.Get("unknown_id"));
         }
+
+        [Fact]
+        public void Clear_EmptiesSlotsAndEquipped_ThenReusable()
+        {
+            var inv = new InventoryContainer { Capacity = 10, MaxWeight = 50f };
+            var food = Def("canned_food", stackMax: 6, weight: 0.5f);
+            var mask = Def("gas_mask", equipable: true, slot: EquipSlot.Face, radProt: 0.35f);
+            Assert.True(inv.Add(food, 3));
+            Assert.True(inv.Add(mask, 1));
+            Assert.True(inv.Equip(mask));
+            Assert.Equal(1, inv.Slots.Count);
+            Assert.Single(inv.Equipped);
+
+            inv.Clear();
+
+            Assert.Empty(inv.Slots);
+            Assert.Empty(inv.Equipped);
+            Assert.Equal(0, inv.GetCurrentWeight());
+
+            // Reuse after clear.
+            Assert.True(inv.Add(food, 2));
+            Assert.Equal(1, inv.Slots.Count);
+            Assert.Equal(2, inv.CountById("canned_food"));
+        }
     }
 }

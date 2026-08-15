@@ -284,5 +284,26 @@
     "signature_quote": "We didn't poison the water. We just decided who drinks it first.",
     "access_rule": "Three desalination plants and one aqueduct manifold, inherited intact from a pre-Exchange utility contractor and never nationalised. They do not sell water. They sell a place in the queue.",
     "badge_asset_id": "faction_badge_hydro_barons"
+  },
+  {
+    "id": "faction_the_tempest",
+    "display_name": "The Tempest",
+    "alignment": "conditional",
+    "home_region": "the_spine",
+    "is_active": false,
+    "trust": 0,
+    "wants": [
+      "maintenance_time",
+      "readings",
+      "a_presented_count"
+    ],
+    "offers": [
+      "machine_log_access",
+      "scheduled_q",
+      "archive_proof"
+    ],
+    "signature_quote": "Service shall be metered, and the meter shall be read.",
+    "access_rule": "The Tempest is not alive and has no preferences. It serves, it meters, and it waits for a human to read the meter. Access is granted by maintenance, withdrawn by nobody — it simply keeps serving, and the meter keeps reading. The census is open, and the count has not been presented.",
+    "badge_asset_id": "faction_badge_tempest"
   }
 ]

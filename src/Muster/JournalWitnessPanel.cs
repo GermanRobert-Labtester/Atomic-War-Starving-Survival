@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core.Journal;
 using Ashfall.Core.Muster;
 
@@ -30,7 +32,7 @@ namespace AtomicWar.GodotApp.Muster
                 Text = "THE UNSIGNED ORDER — THREE ACCOUNTS",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            title.AddThemeFontSizeOverride("font_size", 13);
+            title.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             rootVbox.AddChild(title);
 
             var scroll = new ScrollContainer
@@ -71,8 +73,8 @@ namespace AtomicWar.GodotApp.Muster
                 card.AddThemeConstantOverride("separation", 2);
 
                 var header = new Label { Text = $"{w.witnessName} — {w.locationId}" };
-                header.AddThemeFontSizeOverride("font_size", 12);
-                header.AddThemeColorOverride("font_color", new Color(0.8f, 0.8f, 0.6f));
+                header.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+                header.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
                 card.AddChild(header);
 
                 var body = new Label
@@ -80,7 +82,7 @@ namespace AtomicWar.GodotApp.Muster
                     Text = w.body + "\n" + framing,
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                body.AddThemeFontSizeOverride("font_size", 11);
+                body.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
                 card.AddChild(body);
 
                 _witnessList.AddChild(card);

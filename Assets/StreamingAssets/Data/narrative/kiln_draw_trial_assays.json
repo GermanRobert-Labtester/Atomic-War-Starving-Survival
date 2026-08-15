@@ -1,0 +1,51 @@
+[
+  {
+    "id": "kiln_draw_001",
+    "kiln_chamber_id": "kc_updraft_01",
+    "draw_trial_piece_type": "test_tile",
+    "surface_result": "semi_matte_melted",
+    "log_text": "Pulled the test tile at hour five with the wire hook through the spy hole. The glaze had melted — surface shiny at the edges, matte in the thicker middle. Not fully developed. Pushed another thirty minutes. Second pull was right. Left the load another hour at peak."
+  },
+  {
+    "id": "kiln_draw_002",
+    "kiln_chamber_id": "kc_updraft_01",
+    "draw_trial_piece_type": "test_tile",
+    "surface_result": "underfired_powdery",
+    "log_text": "Pull at hour four showed a powdery, unmelted glaze surface. The slip had hardened but not fused. Stoking was uneven — the right side of the chamber runs cooler. Stoked the right channel heavily for forty minutes and pulled again. Second tile showed full melt. The load was uneven."
+  },
+  {
+    "id": "kiln_draw_003",
+    "kiln_chamber_id": "kc_updraft_01",
+    "draw_trial_piece_type": "small_bowl",
+    "surface_result": "crawled_and_beaded",
+    "log_text": "Draw bowl showed the glaze crawling — pulling back from the clay surface in beads. Too thick an application. The underlying bisque is exposed in patches. Pulled the whole load immediately. Most pieces are salvageable as unglazed storage. The crawled surface is not watertight."
+  },
+  {
+    "id": "kiln_draw_004",
+    "kiln_chamber_id": "kc_updraft_01",
+    "draw_trial_piece_type": "test_tile",
+    "surface_result": "full_melt_glossy",
+    "log_text": "Best draw result so far. Tile pulled at hour six showed full melt: glossy, continuous surface, no crawling or pinholing. Glaze ran slightly at the foot — a thin bead at the base. The whole load came out at this level. Twelve well-glazed vessels. A good firing."
+  },
+  {
+    "id": "kiln_draw_005",
+    "kiln_chamber_id": "kc_pit_02",
+    "draw_trial_piece_type": "oil_lamp_blank",
+    "surface_result": "underfired_chalky",
+    "log_text": "Pit kiln cannot reach the temperature needed to melt the ash-flux glaze. The draw lamp showed a chalky, dry surface — sintered but not fused. Decision made to abandon glazing pit-kiln pieces. Fire them unglazed and use tallow-sealing for the oil lamps instead."
+  },
+  {
+    "id": "kiln_draw_006",
+    "kiln_chamber_id": "kc_updraft_01",
+    "draw_trial_piece_type": "test_tile",
+    "surface_result": "pinholed_surface",
+    "log_text": "Pinhole defects across the draw tile — small craters in the glaze surface where gas burned off too fast. Fired the last twenty centimetres of the climb too quickly. Slowed the stoking and held at medium heat for another hour. Second draw tile showed fewer pinholes. Third draw was clean."
+  },
+  {
+    "id": "kiln_draw_007",
+    "kiln_chamber_id": "kc_updraft_01",
+    "draw_trial_piece_type": "small_jar",
+    "surface_result": "ash_blush_partial_melt",
+    "log_text": "The copper-glaze jar produced a draw result unlike the test tiles — a green ash blush across the shoulder where kiln gases touched the surface directly. The interior glaze is full melt. The exterior blush is beautiful in a way that feels incidental. It was not planned. It is ours anyway."
+  }
+]

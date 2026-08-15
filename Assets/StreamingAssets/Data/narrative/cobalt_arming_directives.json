@@ -1,0 +1,107 @@
+[
+  {
+    "id": "directive_cobalt_dual_key_authorization",
+    "directive_code": "EO-99-Z-COBALT-RELEASE",
+    "classification": "TOP_SECRET_ORCHID_EYES_ONLY",
+    "issuing_authority": "NATIONAL_COMMAND_AUTHORITY_BUNKER_OMEGA",
+    "authorized_salvo_size": 24,
+    "effective_day_range": "IMMEDIATE_UPON_CONFIRMED_FIRST_STRIKE",
+    "mechanics": {
+      "co_60_curie_yield_peta_becquerel": 450000,
+      "half_life_years": 5.27,
+      "surface_sterilization_radius_km": 350
+    },
+    "tags": ["cobalt", "arming_directive", "salted_bomb", "doomsday", "dead_hand"],
+    "prose": "Authorization requires simultaneous rotation of the red Bakelite two-man keys within 800 milliseconds, followed by the insertion of the gold-foil cryptographic matrix from Safe 3. The document notes in bureaucratic coldness: 'No civilian survival contingency is attached to this salvo plan. Soil contamination is intentional and permanent.'"
+  },
+  {
+    "id": "directive_cobalt_salted_casing_inspection",
+    "directive_code": "TECH-ORD-441-METALLURGY",
+    "classification": "SECRET_RESTRICTED_ORDNANCE",
+    "issuing_authority": "DIRECTORATE_OF_SPECIAL_MUNITIONS",
+    "authorized_salvo_size": 12,
+    "effective_day_range": "PRE_WAR_MAINTENANCE_LOG",
+    "mechanics": {
+      "cobalt_59_jacket_thickness_mm": 48,
+      "neutron_capture_efficiency_percent": 96.4,
+      "decay_gamma_energy_mev": 1.33
+    },
+    "tags": ["cobalt", "metallurgy", "salted_casing", "physics", "radiation"],
+    "prose": "Ultrasonic inspection of the 48mm natural Cobalt-59 tamper jackets surrounding the secondary thermonuclear stages in Silo Bay 4. Any micro-cracking in the nickel-plating will cause premature neutron flux leakage during the fission-fusion trigger. The inspectors signed off using red wax seals without wearing protective lead aprons."
+  },
+  {
+    "id": "directive_cobalt_dead_hand_perimetr_link",
+    "directive_code": "DIRECTIVE-88-AUTOMATIC-TRIGGER",
+    "classification": "TOP_SECRET_AUTOMATED_WARFARE",
+    "issuing_authority": "AUTONOMIC_RETALIATION_SYSTEM_PERIMETER",
+    "authorized_salvo_size": 48,
+    "effective_day_range": "COMMENCING_UPON_COMMAND_SEVERANCE",
+    "mechanics": {
+      "seismic_trigger_threshold_richter": 5.5,
+      "barometric_overpressure_trigger_psi": 12,
+      "human_veto_window_seconds": 180
+    },
+    "tags": ["cobalt", "dead_hand", "automated_launch", "perimetr", "doomsday"],
+    "prose": "If high-frequency seismic sensors detect three overpressure waves exceeding 12 PSI at bunker perimeter, and the hardwired landline to the Ministry of Defense remains broken for 180 seconds, the silo guidance computers bypass the launch crew completely, venting hydraulic fluid and popping silo doors automatically."
+  },
+  {
+    "id": "directive_cobalt_atmospheric_saturation_quota",
+    "directive_code": "PLAN-AERO-201-SATURATION",
+    "classification": "TOP_SECRET_STRATEGIC_STUDY",
+    "issuing_authority": "STRATEGIC_TARGETING_BUREAU",
+    "authorized_salvo_size": 60,
+    "effective_day_range": "STRATEGIC_WAR_PLAN_SIOP",
+    "mechanics": {
+      "stratospheric_soot_injection_megatons": 150,
+      "agricultural_collapse_duration_years": 100,
+      "biosphere_survival_index": 0.04
+    },
+    "tags": ["cobalt", "nuclear_winter", "saturation", "extinction", "fallout"],
+    "prose": "Mathematical tables calculating the minimum number of high-altitude cobalt detonations required to render the northern temperate hemisphere uncultivable for a full century. The study concludes that 48 salted airbursts along the jet stream will achieve 99.6% livestock and grain mortality by Month 14."
+  },
+  {
+    "id": "directive_cobalt_abort_window_revocation",
+    "directive_code": "ORD-REVOKE-ABORT-00",
+    "classification": "SECRET_COMBAT_IMMEDIATE",
+    "issuing_authority": "MISSILE_WING_COMMANDER",
+    "authorized_salvo_size": 18,
+    "effective_day_range": "FLIGHT_PHASE_T_PLUS_180",
+    "mechanics": {
+      "radio_destruct_receiver_disabled": true,
+      "ballistic_lockout_irreversible": true,
+      "trajectory_override_prevented": true
+    },
+    "tags": ["cobalt", "abort_code", "irreversible", "missile_launch"],
+    "prose": "At T+180 seconds into boost phase, the onboard radio self-destruct receiver is permanently disconnected via pyrotechnic squibs to prevent enemy radio jamming from disabling the warheads. Once separated, nothing on Earth can stop the missiles from completing their ballistic arc."
+  },
+  {
+    "id": "directive_cobalt_sub_surface_silo_flood",
+    "directive_code": "BURIAL-PROTOCOL-VOID-7",
+    "classification": "SECRET_FACILITY_DENIAL",
+    "issuing_authority": "FACILITY_ENGINEER_CORPS",
+    "authorized_salvo_size": 0,
+    "effective_day_range": "STANDBY_IN_EVENT_OF_SURRENDER",
+    "mechanics": {
+      "silo_flood_volume_cubic_meters": 12000,
+      "concrete_slurry_plug_thickness_meters": 18,
+      "salvage_prevention_guarantee_years": 500
+    },
+    "tags": ["cobalt", "silo_burial", "self_destruction", "denial"],
+    "prose": "If a silo is overrun by hostiles or stranded without launch clearance, the station commander is ordered to open the underground river sluice gates and dump quick-drying slag-cement slurry into the missile tube, entombing the cobalt cores in eighteen meters of solid stone forever."
+  },
+  {
+    "id": "directive_cobalt_crematory_silence_pact",
+    "directive_code": "FINAL-ORDER-SILENCE-300",
+    "classification": "EYES_ONLY_LAST_OFFICER",
+    "issuing_authority": "SUPREME_DEFENSE_COUNCIL",
+    "authorized_salvo_size": 0,
+    "effective_day_range": "AFTER_SALVO_EXECUTION",
+    "mechanics": {
+      "air_scrubber_shutdown_delay_hours": 72,
+      "internal_seal_weld_completed": true,
+      "memorial_inscription_required": false
+    },
+    "tags": ["cobalt", "final_order", "suicide_pact", "silo_lockdown", "tragedy"],
+    "prose": "Following confirmation that all missiles have cleared the tubes, the blast doors shall be welded shut from the inside. Crew members are allocated three days of emergency rations and four morphine ampoules each. The order concludes: 'You have done your duty to the state. Sleep well in the bedrock.'"
+  }
+]

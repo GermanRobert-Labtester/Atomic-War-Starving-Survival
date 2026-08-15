@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using static AtomicWar.GodotApp.UI.AshfallUiHelpers;
 using Ashfall.Core;
 using Ashfall.Core.Economy;
 using Ashfall.Core.Radio;
@@ -526,7 +527,7 @@ namespace AtomicWar.GodotApp.Economy
 
             // 1. Update Header Fields
             _lblFactionName.Text = $"FACTION: {_activeFactionId.ToUpper().Replace('_', ' ')}";
-            _textureFactionEmblem.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{_activeFactionId}.png");
+            _textureFactionEmblem.Texture = AtomicWar.GodotApp.FactionIconLoader.LoadFor(_activeFactionId);
 
             float trust = _stanceProvider?.GetEffectiveTrust(_activeFactionId) ?? 0f;
             var stance = _stanceProvider?.GetStance(_activeFactionId) ?? TradeStance.Trade;
@@ -587,7 +588,7 @@ namespace AtomicWar.GodotApp.Economy
             _lblFactionName.Text = vm.FactionName.Length > 0
                 ? $"FACTION: {vm.FactionName.ToUpperInvariant()}"
                 : "FACTION: —";
-            _textureFactionEmblem.Texture = LoadTexture($"res://Assets/UI/Icons/faction_icon_{vm.FactionId}.png");
+            _textureFactionEmblem.Texture = AtomicWar.GodotApp.FactionIconLoader.LoadFor(vm.FactionId);
             _lblLeader.Text = $"Leader: {vm.LeaderName} (gen {vm.SuccessionGeneration})";
             _badgeStance.Text = vm.StanceBadgeText;
             _badgeStance.AddThemeColorOverride("font_color", GetStanceColor(vm.Stance));
@@ -642,8 +643,8 @@ namespace AtomicWar.GodotApp.Economy
 
             int bioCount = 0;
             foreach (var pair in vm.BiologicalOffers) bioCount += pair.Value;
-            _lblPlayerWorth.Text = $"Offer Worth: {global::Ashfall.Core.Economy.TradeWorthLabels.Format(vm.PlayerOfferValue)} ({vm.PlayerOffers.Count} items, {bioCount} bio)";
-            _lblFactionAskWorth.Text = $"Demand Worth: {global::Ashfall.Core.Economy.TradeWorthLabels.Format(vm.FactionAskValue)} ({vm.FactionDemands.Count} items)";
+            _lblPlayerWorth.Text = $"Offer Worth: {Ashfall.Core.Economy.TradeWorthLabels.Format(vm.PlayerOfferValue)} ({vm.PlayerOffers.Count} items, {bioCount} bio)";
+            _lblFactionAskWorth.Text = $"Demand Worth: {Ashfall.Core.Economy.TradeWorthLabels.Format(vm.FactionAskValue)} ({vm.FactionDemands.Count} items)";
 
             // 6. Grim drawer — counts shown, steppers are session-mode controls
             foreach (var pair in _bioCountLabels)
@@ -891,7 +892,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private static Color ToGodotColor((float r, float g, float b, float a) token)
         {
-            return new Color(token.r, token.g, token.b, token.a);
+            return ToColor(token);
         }
 
         private static Color GetStanceColor(TradeStance stance)
@@ -931,22 +932,7 @@ namespace AtomicWar.GodotApp.Economy
 
         private static Texture2D LoadTexture(string path)
         {
-            if (ResourceLoader.Exists(path))
-            {
-                var tex = ResourceLoader.Load<Texture2D>(path);
-                if (tex != null) return tex;
-            }
-
-            string osPath = ProjectSettings.GlobalizePath(path);
-            if (System.IO.File.Exists(osPath))
-            {
-                var img = Godot.Image.LoadFromFile(osPath);
-                if (img != null)
-                {
-                    return ImageTexture.CreateFromImage(img);
-                }
-            }
-            return null;
+            return TryLoadTexture(path);
         }
     }
 }

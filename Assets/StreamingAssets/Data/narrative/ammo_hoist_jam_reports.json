@@ -1,0 +1,82 @@
+[
+  {
+    "id": "hoist_jam_pneumatic_rammer_misfeed",
+    "turret_emplacement_id": "TURRET_NORTH_OUTPOST_01",
+    "caliber_designation": "76MM_RAPID_FIRE_NAVAL",
+    "hoist_mechanism_type": "PNEUMATIC_TELESCOPIC_RAMMER",
+    "jam_classification": "CARTRIDGE_CASE_BUCKLE_MISFEED",
+    "timestamp_relative": "YEAR_02_ARMORY_LOG_01",
+    "tags": ["military", "turret", "ammo_hoist", "rammer", "artillery"],
+    "prose": "Pneumatic rammer piston pressure dropped from 150 to 80 PSI during sustained barrage. A 76mm brass casing hung up on the breech guide lip; the advancing rammer crushed the case into an accordion fold, spilling five pounds of cordite granules into the lower turret ring."
+  },
+  {
+    "id": "hoist_jam_corroded_roller_chain_fracture",
+    "turret_emplacement_id": "EAST_GATE_AUTOMATED_BATTERY_03",
+    "caliber_designation": "40MM_BOFORS_TWIN_MOUNT",
+    "hoist_mechanism_type": "CONTINUOUS_LINK_ROLLER_HOIST",
+    "jam_classification": "ROLLER_CHAIN_TENSILE_FRACTURE",
+    "timestamp_relative": "YEAR_04_ARMORY_LOG_03",
+    "tags": ["military", "turret", "roller_chain", "ammo_hoist", "failure"],
+    "prose": "Acidic groundwater dripping through the cupola roof corroded the high-tensile link pins of the vertical ammunition elevator. Under a four-round burst load, link number 42 sheared in tension, dropping twenty live 40mm clips down thirty feet of sheet-metal chute."
+  },
+  {
+    "id": "hoist_jam_melted_hydraulic_servo_valve",
+    "turret_emplacement_id": "WEST_RIDGE_RADAR_DEFENSE_TURRET",
+    "caliber_designation": "105MM_HOWITZER_CASEMATE",
+    "hoist_mechanism_type": "ELECTRO_HYDRAULIC_SWING_ARM",
+    "jam_classification": "SERVO_VALVE_THERMAL_SEIZURE",
+    "timestamp_relative": "YEAR_07_ARMORY_LOG_02",
+    "tags": ["military", "turret", "hydraulics", "servo_valve", "jam"],
+    "prose": "An oil fire in the booster pump skid heated the Moog hydraulic servo valve to 280°C. The spool valve seized in the full-flow port position, driving the ammunition loading tray into the armored ceiling at maximum pressure and bending the steel lifting yoke."
+  },
+  {
+    "id": "hoist_jam_frozen_recoil_recuperator_cylinder",
+    "turret_emplacement_id": "PERIMETER_CUPOLA_DELTA_05",
+    "caliber_designation": "57MM_AUTOMATIC_BARRAGE_CANNON",
+    "hoist_mechanism_type": "HYDRO_PNEUMATIC_RECUPERATOR",
+    "jam_classification": "OUT_OF_BATTERY_LOCKOUT",
+    "timestamp_relative": "YEAR_09_ARMORY_LOG_04",
+    "tags": ["military", "turret", "recuperator", "cold_weather", "winter"],
+    "prose": "Sub-zero blizzard temperatures (-34°C) caused hydraulic fluid viscosity inside the hydropneumatic recuperator cylinder to increase tenfold. The gun barrel failed to return to battery after firing, locking the electric breech interlock and halting all ammo feeding."
+  },
+  {
+    "id": "hoist_jam_belt_delinking_cam_wear",
+    "turret_emplacement_id": "CIWS_ROOF_SENTRY_BRAVO",
+    "caliber_designation": "20MM_ROTARY_CANNON",
+    "hoist_mechanism_type": "ROTARY_DRUM_LINKLESS_FEED",
+    "jam_classification": "SPROCKET_CAM_TOOTH_CHIP",
+    "timestamp_relative": "YEAR_12_ARMORY_LOG_01",
+    "tags": ["military", "turret", "rotary_cannon", "delinker", "ciws"],
+    "prose": "A chipped carbide tooth on the high-speed ammunition stripper wheel misaligned the steel belt feed chute. At 3,000 rounds per minute, eight consecutive 20mm high-explosive incendiary rounds jammed into the flexible guide tube, shearing the drive flex-shaft."
+  },
+  {
+    "id": "hoist_jam_optical_proximity_interlock_soot",
+    "turret_emplacement_id": "SOUTH_PILLBOX_REMOTE_MOUNT",
+    "caliber_designation": "30MM_DUAL_AUTOCANNON",
+    "hoist_mechanism_type": "OPTICAL_SAFETY_INTERLOCK_HOIST",
+    "jam_classification": "PHOTOELECTRIC_SOOT_BLINDNESS",
+    "timestamp_relative": "YEAR_15_ARMORY_LOG_03",
+    "tags": ["military", "turret", "optical_sensor", "soot", "interlock"],
+    "prose": "Propellant smoke and graphite lubricant dust coated the lenses of the infrared cartridge detection sensors in the magazine well. The automated firing computer falsely registered an empty ready-box, cutting power to the feed elevator during an active raider assault."
+  },
+  {
+    "id": "hoist_jam_counterweight_cable_derailment",
+    "turret_emplacement_id": "HEAVY_MORTAR_PIT_SECTOR_6",
+    "caliber_designation": "120MM_AUTOMATED_MORTAR",
+    "hoist_mechanism_type": "GRAVITY_COUNTERWEIGHT_LIFT",
+    "jam_classification": "SHEAVE_CABLE_DERAILMENT",
+    "timestamp_relative": "YEAR_18_ARMORY_LOG_02",
+    "tags": ["military", "turret", "counterweight", "cable_jam", "mortar"],
+    "prose": "Seismic ground shock from a nearby blast caused the 850kg lead counterweight cable to jump the brass sheave groove. The steel wire rope wedged between the pulley and bracket, freezing the mortar shell elevator at half-height."
+  },
+  {
+    "id": "hoist_jam_primer_discharge_in_feed_tray",
+    "turret_emplacement_id": "MAIN_GATE_TWIN_TURRET_01",
+    "caliber_designation": "30MM_ARMOR_PIERCING_AUTOCANNON",
+    "hoist_mechanism_type": "ROTARY_STARWHEEL_FEED",
+    "jam_classification": "PREMATURE_PRIMER_DETONATION",
+    "timestamp_relative": "YEAR_20_ARMORY_LOG_01",
+    "tags": ["military", "turret", "primer_discharge", "ammunition", "explosion"],
+    "prose": "A burr on the steel feed starwheel struck the percussion primer of an armor-piercing round inside the transfer tray. The shell detonated in the loading chute, blowing the inspection hatch off its hinges and shredding the electrical wiring loom to the elevation servos."
+  }
+]

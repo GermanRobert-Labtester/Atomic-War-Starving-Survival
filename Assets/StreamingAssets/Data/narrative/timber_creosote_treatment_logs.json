@@ -1,0 +1,82 @@
+[
+  {
+    "id": "timber_creosote_full_cell_bethell_process",
+    "treatment_retort_id": "AUTOCLAVE_PRESSURE_CYLINDER_01",
+    "wood_species_treated": "SCOTS_PINE_MINE_PROPS",
+    "retention_kg_m3": 180.0,
+    "penetration_depth_mm": 28.0,
+    "timestamp_relative": "YEAR_02_TIMBER_LOG_01",
+    "tags": ["carpentry", "timber", "creosote", "bethell_process", "autoclave"],
+    "prose": "Pulling an initial 22-inch vacuum followed by 12 bar pressure injection of 90°C coal-tar creosote drove 180 kg/m³ of preservative into the Scots pine timbers. Complete sapwood penetration was achieved, ensuring a fifty-year lifespan in damp drainage adits."
+  },
+  {
+    "id": "timber_creosote_empty_cell_rueping_recovery",
+    "treatment_retort_id": "RUEPING_VACUUM_CYLINDER_02",
+    "wood_species_treated": "WHITE_OAK_TIE_TIMBERS",
+    "retention_kg_m3": 95.0,
+    "penetration_depth_mm": 18.0,
+    "timestamp_relative": "YEAR_04_TIMBER_LOG_03",
+    "tags": ["carpentry", "timber", "rueping_process", "empty_cell", "creosote_economy"],
+    "prose": "Applying 4 bar initial air pressure prior to creosote flooding allowed compressed air inside wood lumens to expand during final vacuum. The Rueping recovery cycle expelled 40% of the gross oil, leaving cell walls thoroughly coated with zero surface weeping."
+  },
+  {
+    "id": "timber_creosote_copper_naphthenate_dip_green",
+    "treatment_retort_id": "OPEN_DIP_TANK_STATION_B",
+    "wood_species_treated": "HEWN_CHESTNUT_HEADER_BEAMS",
+    "retention_kg_m3": 45.0,
+    "penetration_depth_mm": 8.0,
+    "timestamp_relative": "YEAR_07_TIMBER_LOG_02",
+    "tags": ["carpentry", "timber", "copper_naphthenate", "dip_tank", "green_preservative"],
+    "prose": "Soaking rough-hewn chestnut beams in a 2% copper naphthenate diesel solution imparted a characteristic emerald green hue. The non-corrosive copper naphthenate formed an impenetrable barrier against soft rot fungi without attacking steel fastening spikes."
+  },
+  {
+    "id": "timber_creosote_fire_retardant_borate_diffusion",
+    "treatment_retort_id": "HOT_BORATE_SOAK_VAT_01",
+    "wood_species_treated": "SPRUCE_HABITATION_JOISTS",
+    "retention_kg_m3": 25.0,
+    "penetration_depth_mm": 35.0,
+    "timestamp_relative": "YEAR_09_TIMBER_LOG_04",
+    "tags": ["carpentry", "timber", "borate_diffusion", "fire_retardant", "insecticide"],
+    "prose": "Submerging unseasoned green spruce joists in a heated 20% disodium octaborate tetrahydrate (DOT) bath allowed deep ionic diffusion throughout the wet heartwood. The borate salts rendered the lumber completely immune to both wood-boring larvae and open flame ignition."
+  },
+  {
+    "id": "timber_creosote_incising_roller_penetration_knife",
+    "treatment_retort_id": "MECHANICAL_INCISING_BED",
+    "wood_species_treated": "COASTAL_DOUGLAS_FIR_STRUTS",
+    "retention_kg_m3": 140.0,
+    "penetration_depth_mm": 20.0,
+    "timestamp_relative": "YEAR_12_TIMBER_LOG_01",
+    "tags": ["carpentry", "timber", "incising", "douglas_fir", "refractory_wood"],
+    "prose": "Passing dense, refractory Douglas fir timber under knife-roller incising drums cut staggered 19mm slits along the grain. The incisions permitted radial preservative flow, doubling creosote absorption depth across stubborn heartwood faces."
+  },
+  {
+    "id": "timber_creosote_boulton_boiling_under_vacuum",
+    "treatment_retort_id": "BOULTON_SEASONING_RETORT",
+    "wood_species_treated": "GREEN_LARCH_PIT_PROPS",
+    "retention_kg_m3": 160.0,
+    "penetration_depth_mm": 24.0,
+    "timestamp_relative": "YEAR_15_TIMBER_LOG_03",
+    "tags": ["carpentry", "timber", "boulton_process", "vacuum_boiling", "green_lumber"],
+    "prose": "Boiling green, sap-filled European larch logs in 100°C creosote under a 26-inch vacuum evaporated 220 liters of water per cubic meter of timber. Seasoning and preservative impregnation were completed in a single 16-hour continuous cycle."
+  },
+  {
+    "id": "timber_creosote_zinc_chloride_burnettizing_leach",
+    "treatment_retort_id": "BURNETTIZING_PRESSURE_TANK",
+    "wood_species_treated": "HEMLOCK_DRAINAGE_TROUGH_PLANKS",
+    "retention_kg_m3": 12.0,
+    "penetration_depth_mm": 15.0,
+    "timestamp_relative": "YEAR_17_TIMBER_LOG_02",
+    "tags": ["carpentry", "timber", "burnettizing", "zinc_chloride", "water_leach"],
+    "prose": "Planks pressure-treated with zinc chloride (Burnett process) performed well in dry shafts, but continuous exposure to acidic tunnel seepage leached the water-soluble zinc salts out within nine months, leaving the hemlock vulnerable to wet rot."
+  },
+  {
+    "id": "timber_creosote_charred_surface_scorching_method",
+    "treatment_retort_id": "YAKISUGI_TORCHING_STATION",
+    "wood_species_treated": "CEDAR_PERIMETER_PALISADE_POSTS",
+    "retention_kg_m3": 0.0,
+    "penetration_depth_mm": 4.0,
+    "timestamp_relative": "YEAR_20_TIMBER_LOG_01",
+    "tags": ["carpentry", "timber", "yakisugi", "charring", "surface_pyrolysis"],
+    "prose": "Torching cedar posts to produce a 4mm outer crust of glassy amorphous carbon neutralized all surface cellulose and hemicellulose. The pyrolyzed layer acted as a natural repellent against termites and subterranean fungus without requiring scarce chemicals."
+  }
+]

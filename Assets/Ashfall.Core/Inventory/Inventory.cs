@@ -337,6 +337,13 @@ namespace Ashfall.Core.Inventory
             return true;
         }
 
+        public void Clear()
+        {
+            _slots.Clear();
+            _equipped.Clear();
+            OnInventoryChanged?.Invoke();
+        }
+
         public bool Transfer(ItemDefinition item, int amount, Inventory destination)
         {
             if (item == null || amount <= 0 || destination == null || destination == this) return false;

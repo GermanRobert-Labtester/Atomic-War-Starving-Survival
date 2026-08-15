@@ -1,0 +1,198 @@
+[
+  {
+    "id": "paper_scrap",
+    "displayName": "Paper Scrap",
+    "type": "Material",
+    "stackMax": 100,
+    "weight": 0.01,
+    "tradeValue": 0.1
+  },
+  {
+    "id": "item_suitcase_locked",
+    "displayName": "Locked Suitcase",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 4.0,
+    "tradeValue": 5
+  },
+  {
+    "id": "industrial_bleach",
+    "displayName": "Industrial Bleach (5L)",
+    "type": "Material",
+    "stackMax": 2,
+    "weight": 5.5,
+    "tradeValue": 18
+  },
+  {
+    "id": "ammonia_tank",
+    "displayName": "Pressurized Ammonia Tank",
+    "type": "Material",
+    "stackMax": 1,
+    "weight": 12.0,
+    "tradeValue": 25
+  },
+  {
+    "id": "item_anchor_notes",
+    "displayName": "The Anchor's Final Script",
+    "type": "Quest",
+    "stackMax": 1,
+    "weight": 0.1,
+    "tradeValue": 0
+  },
+  {
+    "id": "halon_tank",
+    "displayName": "Halon Fire Suppressant",
+    "type": "Material",
+    "stackMax": 1,
+    "weight": 15.0,
+    "tradeValue": 40
+  },
+  {
+    "id": "pipe_wrench",
+    "displayName": "Heavy Pipe Wrench",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 3.5,
+    "tradeValue": 14
+  },
+  {
+    "id": "crayon",
+    "displayName": "Crayon",
+    "type": "Comfort",
+    "stackMax": 30,
+    "weight": 0.02,
+    "tradeValue": 0.5
+  },
+  {
+    "id": "sawdust_block",
+    "displayName": "Compressed Sawdust Block",
+    "type": "Fuel",
+    "stackMax": 50,
+    "weight": 1.0,
+    "tradeValue": 2
+  },
+  {
+    "id": "item_ash_ghillie",
+    "displayName": "Ash Ghillie Suit",
+    "type": "Protective",
+    "stackMax": 1,
+    "weight": 3.0,
+    "tradeValue": 20
+  },
+  {
+    "id": "item_teddy_bear",
+    "displayName": "Teddy Bear",
+    "type": "Comfort",
+    "stackMax": 4,
+    "weight": 0.3,
+    "tradeValue": 2,
+    "moraleEffect": 1
+  },
+  {
+    "id": "item_car_keys",
+    "displayName": "Car Keys",
+    "type": "Material",
+    "stackMax": 5,
+    "weight": 0.05,
+    "tradeValue": 1
+  },
+  {
+    "id": "item_ice_pick",
+    "displayName": "Ice Pick",
+    "type": "Tool",
+    "stackMax": 2,
+    "weight": 0.8,
+    "tradeValue": 10
+  },
+  {
+    "id": "brass_fittings",
+    "displayName": "Brass Fittings",
+    "type": "Material",
+    "stackMax": 30,
+    "weight": 0.3,
+    "tradeValue": 8
+  },
+  {
+    "id": "acoustic_foam_panel",
+    "displayName": "Acoustic Foam Panel",
+    "type": "Material",
+    "stackMax": 10,
+    "weight": 0.5,
+    "tradeValue": 3
+  },
+  {
+    "id": "ammo_9x19",
+    "displayName": "9x19mm Ammunition",
+    "type": "Material",
+    "stackMax": 20,
+    "weight": 0.01,
+    "tradeValue": 2
+  },
+  {
+    "id": "blood_bag",
+    "displayName": "Blood Bag (Compatible)",
+    "type": "Medical",
+    "stackMax": 1,
+    "weight": 0.6,
+    "tradeValue": 30,
+    "healthEffect": 15
+  },
+  {
+    "id": "bone_saw",
+    "displayName": "Bone Saw",
+    "type": "Tool",
+    "stackMax": 1,
+    "weight": 2.5,
+    "tradeValue": 12
+  },
+  {
+    "id": "cardboard_box",
+    "displayName": "Cardboard Box",
+    "type": "Material",
+    "stackMax": 20,
+    "weight": 0.3,
+    "tradeValue": 1
+  },
+  {
+    "id": "cigarette_pack_sealed",
+    "displayName": "Sealed Cigarette Pack",
+    "type": "Comfort",
+    "stackMax": 5,
+    "weight": 0.05,
+    "tradeValue": 8,
+    "moraleEffect": 1
+  },
+  {
+    "id": "fat_rendered",
+    "displayName": "Rendered Fat",
+    "type": "Food",
+    "stackMax": 10,
+    "weight": 0.5,
+    "tradeValue": 3,
+    "hungerRestore": 8
+  },
+  {
+    "id": "spoiled_blood_bag",
+    "displayName": "Spoiled Blood Bag",
+    "type": "ContaminatedFood",
+    "stackMax": 1,
+    "weight": 0.6,
+    "tradeValue": 0
+  },
+  {
+    "id": "spoiled_canned_food",
+    "displayName": "Spoiled Canned Food",
+    "type": "ContaminatedFood",
+    "stackMax": 1,
+    "weight": 0.4,
+    "tradeValue": 0
+  },
+  {
+    "id": "spoiled_meat",
+    "displayName": "Spoiled Meat",
+    "type": "ContaminatedFood",
+    "stackMax": 20,
+    "weight": 0.3,
+    "tradeValue": 0
+  }
+]

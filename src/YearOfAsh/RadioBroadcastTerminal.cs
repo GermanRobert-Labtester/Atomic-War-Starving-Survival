@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Godot;
+using AtomicWar.GodotApp.UI;
+using Ashfall.Core.UI;
 using Ashfall.Core;
 using Ashfall.Core.YearOfAsh;
 
@@ -31,7 +33,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 Text = "SECTOR 4 EMERGENCY RADIO RECEIVER [142.850 MHz]",
                 HorizontalAlignment = HorizontalAlignment.Center
             };
-            _lblHeader.AddThemeFontSizeOverride("font_size", 13);
+            _lblHeader.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             rootVbox.AddChild(_lblHeader);
 
             var scroll = new ScrollContainer
@@ -81,7 +83,7 @@ namespace AtomicWar.GodotApp.YearOfAsh
                 {
                     Text = $"[{b.frequency}] {b.source} {(b.isEmergency ? "● EMERGENCY" : "○ CIVIL")}"
                 };
-                header.AddThemeFontSizeOverride("font_size", 11);
+                header.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
                 vbox.AddChild(header);
 
                 var body = new Label
