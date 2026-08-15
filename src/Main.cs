@@ -926,9 +926,45 @@ namespace AtomicWar.GodotApp
             SetupDutyRoster();
             _simDay++;
             _dutyRoster.Clock.AdvanceDays(1);
-            TickVerdict(_simDay, LivingDwellerCountEstimate());
+            TickSimDay(_simDay);
             _statusLabel.Text = _dutyRoster.StartEncounter(ShelterEncounterSystem.KindNightSlate);
             RefreshRosterStatus();
+        }
+
+        /// <summary>
+        /// Advance every daily-bound subsystem for a new sim day. Thin host
+        /// orchestration: each session owns its own rules. Weather, caravans,
+        /// medical drift, crafting progress, expedition ticks, and the Verdict
+        /// reckoning all move forward together so the day is consistent.
+        /// </summary>
+        private void TickSimDay(int day)
+        {
+            SetupWorld();
+            _world.TickDemo(24f);
+
+            SetupCaravans();
+            _caravans.TickDemo();
+
+            SetupMedical();
+            _medical.TickDemo(24f);
+
+            SetupExpeditions();
+            _expeditions.TickDemoHours(24f);
+
+            SetupCrafting();
+            _crafting.CompleteAll(24f);
+
+            SetupMaritime();
+            if (_maritime.Dive.IsActive)
+                _maritime.TickDiveDemo(60f);
+
+            TickVerdict(day, LivingDwellerCountEstimate());
+
+            SetupExpansions();
+            if (_expansions.Greenhouse.PlotCount > 0)
+                _expansions.TickGreenhouse(day);
+
+            SaveAll();
         }
 
         private void OnRosterVisitorClicked()
@@ -2127,7 +2163,7 @@ namespace AtomicWar.GodotApp
         {
             SetupVerdict();
             _simDay++;
-            TickVerdict(_simDay, LivingDwellerCountEstimate());
+            TickSimDay(_simDay);
             _statusLabel.Text = _verdict.StatusLine();
         }
 
