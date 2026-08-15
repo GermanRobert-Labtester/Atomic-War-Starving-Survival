@@ -200,7 +200,7 @@ namespace Ashfall.Core.Tests
         public void SaveLoad_RoundTrips()
         {
             var sys = CreateSystem();
-            sys.RegisterWish("custom_arch", FinalWishSystem.WishSeeTheSky);
+            sys.RegisterWish("custom_arch", FinalWishSystem.WishBuildMemorial);
             sys.DeclareTerminalPrognosis("sv_1", "custom_arch", isAlive: true);
             sys.AdvanceWishStep("sv_1", "step_1");
             sys.DeclareTerminalPrognosis("sv_2", "unknown_archetype", isAlive: true);
@@ -212,7 +212,7 @@ namespace Ashfall.Core.Tests
 
             Assert.True(sys2.HasActiveWish("sv_1"));
             Assert.Equal(1, sys2.GetStepsCompleted("sv_1"));
-            Assert.Equal(FinalWishSystem.WishSeeTheSky, sys2.GetWishType("sv_1"));
+            Assert.Equal(FinalWishSystem.WishBuildMemorial, sys2.GetWishType("sv_1"));
             Assert.True(sys2.HasActiveWish("sv_2"));
             Assert.Equal(FinalWishSystem.WishDeliverLetter, sys2.GetWishType("sv_2"));
         }

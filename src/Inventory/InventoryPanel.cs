@@ -1,6 +1,9 @@
 using Godot;
 using Ashfall.Core.Inventory;
+using Ashfall.Core.UI;
+using AtomicWar.GodotApp.UI;
 using InventoryContainer = Ashfall.Core.Inventory.Inventory;
+using CoreTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.Inventory
 {
@@ -20,24 +23,37 @@ namespace AtomicWar.GodotApp.Inventory
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
-            CustomMinimumSize = new Vector2(420, 320);
+            CustomMinimumSize = new Vector2(CoreTheme.PanelMaxWidth, 320);
 
-            var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            // Apply standard panel 9-slice
+            var tex = AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                var sb = new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+                AddThemeStyleboxOverride("panel", sb);
+            }
+
+            var rootVbox = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingSm);
             AddChild(rootVbox);
 
-            var title = new Label
-            {
-                Text = "INVENTORY — STORAGE & GEAR",
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-            title.AddThemeFontSizeOverride("font_size", 13);
-            rootVbox.AddChild(title);
+            // ── Title ──
+            rootVbox.AddChild(AshfallUiHelpers.MakeTitle("INVENTORY", CoreTheme.FontSizeH3));
+            rootVbox.AddChild(AshfallUiHelpers.MakeLabel("STORAGE & GEAR"));
 
-            _lblSummary = new Label { Text = "Empty." };
-            _lblSummary.AddThemeFontSizeOverride("font_size", 12);
+            // ── Summary ──
+            _lblSummary = AshfallUiHelpers.MakeSmall("Empty.");
             rootVbox.AddChild(_lblSummary);
 
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Items scroll ──
             var scroll = new ScrollContainer
             {
                 HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
@@ -45,20 +61,29 @@ namespace AtomicWar.GodotApp.Inventory
             };
             rootVbox.AddChild(scroll);
 
-            var list = new VBoxContainer();
-            list.AddThemeConstantOverride("separation", 2);
+            var list = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingXs);
             scroll.AddChild(list);
 
             _lblItems = new Label { Text = string.Empty, AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _lblItems.AddThemeFontSizeOverride("font_size", 11);
+            _lblItems.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+            _lblItems.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
             list.AddChild(_lblItems);
 
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Equipment ──
             _lblEquip = new Label { Text = string.Empty, AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _lblEquip.AddThemeFontSizeOverride("font_size", 11);
+            _lblEquip.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+            _lblEquip.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
             rootVbox.AddChild(_lblEquip);
 
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Item check ──
+            rootVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("ITEM CHECK"));
             _lblCheck = new Label { Text = string.Empty, AutowrapMode = TextServer.AutowrapMode.WordSmart };
-            _lblCheck.AddThemeFontSizeOverride("font_size", 11);
+            _lblCheck.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+            _lblCheck.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
             rootVbox.AddChild(_lblCheck);
         }
 
@@ -73,58 +98,19 @@ namespace AtomicWar.GodotApp.Inventory
             var inv = _session.Inventory;
 
             _lblSummary.Text =
-                $"Items held: {inv.Slots.Count} stacks · weight {inv.GetCurrentWeight():F1}/{inv.MaxWeight:F0} kg · " +
-                $"food fill {inv.FoodFillRatio() * 100f:F0}% · water fill {inv.WaterFillRatio() * 100f:F0}%";
+                $"Items held: {inv.Slots.Count} stacks · weight {inv.GetCurrentWeight():F1}/{inv.MaxWeight:F0} kg";
 
-            var sb = new System.Text.StringBuilder();
-            for (int i = 0; i < inv.Slots.Count; i++)
-            {
-                var s = inv.Slots[i];
-                if (s == null || s.Item == null) continue;
-                sb.Append(s.Item.displayName).Append(" ×").Append(s.Amount);
-                if (s.Item.type == ItemType.Device && s.Device != null)
-                    sb.Append(" [bat ").Append((s.Device.Battery * 100f).ToString("F0"))
-                      .Append("% cal ").Append((s.Device.Calibration * 100f).ToString("F0"))
-                      .Append("%").Append(s.Device.Broken ? " BROKEN" : "").Append("]");
-                sb.Append('\n');
-            }
-            _lblItems.Text = sb.Length == 0 ? "Nothing stored. The shelves are bare." : sb.ToString().TrimEnd();
-
+            _lblItems.Text = _session.InventoryLine();
             _lblEquip.Text = _session.EquipLine();
 
-            RunItemCheck();
-        }
-
-        /// <summary>
-        /// The item-check: verifies critical consumables and gear are present,
-        /// exactly as a player would glance at the crate before a trip.
-        /// </summary>
-        private void RunItemCheck()
-        {
-            var inv = _session.Inventory;
-            var sb = new System.Text.StringBuilder();
-            sb.Append("ITEM CHECK\n");
-
-            sb.Append(CheckItem(inv, "canned_food", 3, "food for the trip"));
-            sb.Append(CheckItem(inv, "clean_water", 2, "potable water"));
-            sb.Append(CheckItem(inv, "iodine_pills", 1, "thyroid protection"));
-            sb.Append(CheckItem(inv, "gas_mask", 1, "respiratory protection"));
-            sb.Append(CheckItem(inv, "battery", 2, "power for instruments"));
-
-            sb.Append(inv.HasWorkingGeiger()
-                ? "  [OK] a working geiger counter is on hand\n"
-                : "  [!!] NO WORKING GEIGER — entering fallout blind\n");
-            sb.Append($"  [{(inv.GetEquippedProtection() >= 0.3f ? "OK" : "!!")}] equipped rad protection {inv.GetEquippedProtection():F2}");
-
-            _lblCheck.Text = sb.ToString().TrimEnd();
-        }
-
-        private static string CheckItem(InventoryContainer inv, string itemId, int need, string label)
-        {
-            int held = inv.CountById(itemId);
-            return held >= need
-                ? $"  [OK] {label}: {held} on hand (need {need})\n"
-                : $"  [!!] {label}: only {held} (need {need})\n";
+            var checkSb = new System.Text.StringBuilder();
+            checkSb.Append($"Has dosimeter: {inv.FindBestWorkingDevice("dosimeter") != null}\n");
+            checkSb.Append($"Has geiger: {inv.HasWorkingGeiger()}\n");
+            checkSb.Append($"Clean water: {inv.CountById("clean_water")} units\n");
+            checkSb.Append($"Rations: {inv.CountById("canned_food")} units\n");
+            checkSb.Append($"Meds: {inv.CountByType(ItemType.Medical)} units\n");
+            checkSb.Append($"Equipped protection: {inv.GetEquippedProtection():P0}");
+            _lblCheck.Text = checkSb.ToString();
         }
     }
 }

@@ -363,7 +363,7 @@ namespace AtomicWar.GodotApp
 
             var bg = new ColorRect
             {
-                Color = new Color(0.06f, 0.07f, 0.08f, 1.0f)
+                Color = AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Ink)
             };
             bg.SetAnchorsPreset(LayoutPreset.FullRect);
             AddChild(bg);
@@ -381,7 +381,7 @@ namespace AtomicWar.GodotApp
             // render on top of the whole UI instead of docking at the bottom. Root the
             // content in a VBox and let that own the split + the diagnostics strip.
             var rootColumn = new VBoxContainer();
-            rootColumn.AddThemeConstantOverride("separation", 8);
+            rootColumn.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             margin.AddChild(rootColumn);
 
             var hSplit = new HSplitContainer
@@ -395,7 +395,7 @@ namespace AtomicWar.GodotApp
             {
                 CustomMinimumSize = new Vector2(480, 0)
             };
-            leftBox.AddThemeConstantOverride("separation", 18);
+            leftBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingLg);
             hSplit.AddChild(leftBox);
 
             _titleLabel = new Label
@@ -403,8 +403,8 @@ namespace AtomicWar.GodotApp
                 Text = "ASHFALL\nATOMIC WAR: STARVING SURVIVAL",
                 HorizontalAlignment = HorizontalAlignment.Left
             };
-            _titleLabel.AddThemeFontSizeOverride("font_size", 32);
-            _titleLabel.AddThemeColorOverride("font_color", new Color(0.95f, 0.65f, 0.25f));
+            _titleLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH1);
+            _titleLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             leftBox.AddChild(_titleLabel);
 
             var subtitle = new Label
@@ -412,14 +412,14 @@ namespace AtomicWar.GodotApp
                 Text = "Post-Nuclear Survival Strategy & Narrative RPG\nPowered by Godot Engine (.NET Edition)",
                 HorizontalAlignment = HorizontalAlignment.Left
             };
-            subtitle.AddThemeFontSizeOverride("font_size", 14);
-            subtitle.AddThemeColorOverride("font_color", new Color(0.65f, 0.75f, 0.7f));
+            subtitle.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            subtitle.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
             leftBox.AddChild(subtitle);
 
             leftBox.AddChild(new HSeparator());
 
             _menuContainer = new VBoxContainer();
-            _menuContainer.AddThemeConstantOverride("separation", 12);
+            _menuContainer.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             leftBox.AddChild(_menuContainer);
 
             AddMenuButton("Start Survival Simulation", OnStartGameClicked);
@@ -516,8 +516,8 @@ namespace AtomicWar.GodotApp
                 Text = "System Status: Initializing game state...",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            _statusLabel.AddThemeFontSizeOverride("font_size", 13);
-            _statusLabel.AddThemeColorOverride("font_color", new Color(0.5f, 0.85f, 0.5f));
+            _statusLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _statusLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Hot));
             leftBox.AddChild(_statusLabel);
 
             _iceRoadLabel = new Label
@@ -525,8 +525,8 @@ namespace AtomicWar.GodotApp
                 Text = "Ice road: not wired",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            _iceRoadLabel.AddThemeFontSizeOverride("font_size", 13);
-            _iceRoadLabel.AddThemeColorOverride("font_color", new Color(0.75f, 0.85f, 0.95f));
+            _iceRoadLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _iceRoadLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             leftBox.AddChild(_iceRoadLabel);
 
             _catalogLabel = new Label
@@ -534,8 +534,8 @@ namespace AtomicWar.GodotApp
                 Text = "Holdfast catalog: —",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            _catalogLabel.AddThemeFontSizeOverride("font_size", 13);
-            _catalogLabel.AddThemeColorOverride("font_color", new Color(0.85f, 0.78f, 0.55f));
+            _catalogLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
+            _catalogLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             leftBox.AddChild(_catalogLabel);
 
             _briefingPreviewLabel = new Label
@@ -543,13 +543,13 @@ namespace AtomicWar.GodotApp
                 Text = "Quest briefing: —",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            _briefingPreviewLabel.AddThemeFontSizeOverride("font_size", 12);
-            _briefingPreviewLabel.AddThemeColorOverride("font_color", new Color(0.7f, 0.72f, 0.68f));
+            _briefingPreviewLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            _briefingPreviewLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Muted));
             leftBox.AddChild(_briefingPreviewLabel);
 
             // Right Column: Terminal / Codex Viewer
             var rightBox = new VBoxContainer();
-            rightBox.AddThemeConstantOverride("separation", 10);
+            rightBox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             hSplit.AddChild(rightBox);
             _rightColumn = rightBox;
 
@@ -557,8 +557,8 @@ namespace AtomicWar.GodotApp
             {
                 Text = "DATA TERMINAL & SURVIVAL LOGS"
             };
-            codexHeader.AddThemeFontSizeOverride("font_size", 16);
-            codexHeader.AddThemeColorOverride("font_color", new Color(0.4f, 0.8f, 0.9f));
+            codexHeader.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH3);
+            codexHeader.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             rightBox.AddChild(codexHeader);
 
             _codexViewer = new TextEdit
@@ -568,8 +568,8 @@ namespace AtomicWar.GodotApp
                 SizeFlagsVertical = SizeFlags.ExpandFill,
                 SizeFlagsHorizontal = SizeFlags.ExpandFill
             };
-            _codexViewer.AddThemeColorOverride("background_color", new Color(0.03f, 0.04f, 0.05f, 0.9f));
-            _codexViewer.AddThemeColorOverride("font_color", new Color(0.85f, 0.9f, 0.85f));
+            _codexViewer.AddThemeColorOverride("background_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.InkPanel));
+            _codexViewer.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Pale));
             rightBox.AddChild(_codexViewer);
 
             // Bottom Diagnostics bar
@@ -577,8 +577,8 @@ namespace AtomicWar.GodotApp
             {
                 Text = "FPS: 60 | Static Mem: 0 MB"
             };
-            _diagnosticsLabel.AddThemeFontSizeOverride("font_size", 12);
-            _diagnosticsLabel.AddThemeColorOverride("font_color", new Color(0.45f, 0.55f, 0.5f));
+            _diagnosticsLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeSmall);
+            _diagnosticsLabel.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Dim));
             rootColumn.AddChild(_diagnosticsLabel);
 
             // Year of Ash Door Encounter Modal
@@ -597,9 +597,9 @@ namespace AtomicWar.GodotApp
             var btn = new Button
             {
                 Text = text,
-                CustomMinimumSize = new Vector2(0, 42)
+                CustomMinimumSize = new Vector2(0, Ashfall.Core.UI.Theme.FontSizeBody + Ashfall.Core.UI.Theme.SpacingLg)
             };
-            btn.AddThemeFontSizeOverride("font_size", 15);
+            btn.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             btn.Pressed += callback;
             _menuContainer.AddChild(btn);
         }
@@ -2838,8 +2838,8 @@ namespace AtomicWar.GodotApp
             {
                 Text = "YEAR OF ASH — SYSTEMS (DAYS 180–360)"
             };
-            header.AddThemeFontSizeOverride("font_size", 15);
-            header.AddThemeColorOverride("font_color", new Color(0.4f, 0.8f, 0.9f));
+            header.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH3);
+            header.AddThemeColorOverride("font_color", AtomicWar.GodotApp.UI.AshfallUiHelpers.ToColor(Ashfall.Core.UI.Theme.Warm));
             _yearOfAshPanel.AddChild(header);
 
             _factionWarMap = new FactionWarMapWidget();

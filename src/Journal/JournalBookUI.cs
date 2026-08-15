@@ -56,13 +56,13 @@ namespace AtomicWar.Journal
         private RichTextLabel _content = null!;
         private Label _footerLabel = null!;
 
-        // Palette (diegetic terminal; restrained)
-        private static readonly Color ColAmber = new Color(0.95f, 0.65f, 0.25f);
-        private static readonly Color ColTeal = new Color(0.45f, 0.7f, 0.65f);
-        private static readonly Color ColBody = new Color(0.85f, 0.9f, 0.85f);
-        private static readonly Color ColMeta = new Color(0.55f, 0.6f, 0.55f);
-        private static readonly Color ColLocked = new Color(0.45f, 0.5f, 0.47f);
-        private static readonly Color ColRust = new Color(0.9f, 0.5f, 0.35f);
+        // Palette — uses Theme.cs tokens for consistency.
+        private static readonly Color ColAmber = new Color(Ashfall.Core.UI.Theme.Hot.r, Ashfall.Core.UI.Theme.Hot.g, Ashfall.Core.UI.Theme.Hot.b, Ashfall.Core.UI.Theme.Hot.a);
+        private static readonly Color ColTeal = new Color(Ashfall.Core.UI.Theme.Lethe.r, Ashfall.Core.UI.Theme.Lethe.g, Ashfall.Core.UI.Theme.Lethe.b, Ashfall.Core.UI.Theme.Lethe.a);
+        private static readonly Color ColBody = new Color(Ashfall.Core.UI.Theme.Pale.r, Ashfall.Core.UI.Theme.Pale.g, Ashfall.Core.UI.Theme.Pale.b, Ashfall.Core.UI.Theme.Pale.a);
+        private static readonly Color ColMeta = new Color(Ashfall.Core.UI.Theme.Muted.r, Ashfall.Core.UI.Theme.Muted.g, Ashfall.Core.UI.Theme.Muted.b, Ashfall.Core.UI.Theme.Muted.a);
+        private static readonly Color ColLocked = new Color(Ashfall.Core.UI.Theme.Dim.r, Ashfall.Core.UI.Theme.Dim.g, Ashfall.Core.UI.Theme.Dim.b, Ashfall.Core.UI.Theme.Dim.a);
+        private static readonly Color ColRust = new Color(Ashfall.Core.UI.Theme.Entropy.r, Ashfall.Core.UI.Theme.Entropy.g, Ashfall.Core.UI.Theme.Entropy.b, Ashfall.Core.UI.Theme.Entropy.a);
 
         /// <summary>Bind the journal + codex row builder (called once during HUD wiring).</summary>
         public void Bind(
@@ -125,8 +125,8 @@ namespace AtomicWar.Journal
             _panel.SetAnchorsPreset(LayoutPreset.FullRect);
             var bg = new StyleBoxFlat
             {
-                BgColor = new Color(0.05f, 0.06f, 0.07f, 0.97f),
-                BorderColor = new Color(0.35f, 0.3f, 0.2f, 0.85f)
+                BgColor = new Color(Ashfall.Core.UI.Theme.Ink.r, Ashfall.Core.UI.Theme.Ink.g, Ashfall.Core.UI.Theme.Ink.b, 0.97f),
+                BorderColor = new Color(Ashfall.Core.UI.Theme.Line.r, Ashfall.Core.UI.Theme.Line.g, Ashfall.Core.UI.Theme.Line.b, 0.85f)
             };
             bg.SetBorderWidthAll(2);
             bg.SetCornerRadiusAll(3);
@@ -138,16 +138,16 @@ namespace AtomicWar.Journal
             AddChild(_panel);
 
             var vbox = new VBoxContainer();
-            vbox.AddThemeConstantOverride("separation", 12);
+            vbox.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingMd);
             _panel.AddChild(vbox);
 
             _headerLabel = new Label { Text = "BUNKER LEDGER" };
-            _headerLabel.AddThemeFontSizeOverride("font_size", 20);
+            _headerLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeH2);
             _headerLabel.AddThemeColorOverride("font_color", ColAmber);
             vbox.AddChild(_headerLabel);
 
             var tabRow = new HBoxContainer();
-            tabRow.AddThemeConstantOverride("separation", 8);
+            tabRow.AddThemeConstantOverride("separation", Ashfall.Core.UI.Theme.SpacingSm);
             vbox.AddChild(tabRow);
 
             var group = new ButtonGroup();
@@ -162,7 +162,7 @@ namespace AtomicWar.Journal
                     ButtonGroup = group,
                     CustomMinimumSize = new Vector2(96, 34)
                 };
-                btn.AddThemeFontSizeOverride("font_size", 14);
+                btn.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
                 btn.Toggled += (bool on) => { if (on && _journal != null) _journal.SwitchTab(tab); };
                 tabRow.AddChild(btn);
                 _tabButtons.Add(btn);
@@ -183,7 +183,7 @@ namespace AtomicWar.Journal
             _scroll.AddChild(_content);
 
             _footerLabel = new Label { Text = string.Empty };
-            _footerLabel.AddThemeFontSizeOverride("font_size", 13);
+            _footerLabel.AddThemeFontSizeOverride("font_size", Ashfall.Core.UI.Theme.FontSizeBody);
             _footerLabel.AddThemeColorOverride("font_color", ColMeta);
             vbox.AddChild(_footerLabel);
         }

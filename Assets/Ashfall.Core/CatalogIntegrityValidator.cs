@@ -102,7 +102,8 @@ namespace Ashfall.Core
             "hemp_fiber_", "wire_rope_", "manila_hawser_", "rope_transmission_",
             "timber_creosote_", "square_set_", "dry_rot_", "mortise_tenon_",
             "crucible_slag_", "cupola_melting_", "pattern_maker_", "green_sand_",
-            "slow_sand_", "ozone_", "chlorine_titration_", "carbon_adsorption_"
+            "slow_sand_", "ozone_", "chlorine_titration_", "carbon_adsorption_",
+            "pneumatic_carrier_", "pneumatic_diverter_", "rootes_blower_", "pneumatic_cylinder_"
         };
 
         /// <summary>
@@ -237,7 +238,9 @@ namespace Ashfall.Core
             "pattern_shop_job_id", "timber_pattern_material", "shrinkage_allowance_fraction",
             "sand_muller_batch_id", "clay_binder_type",
             "filter_basin_id", "ozonator_unit_id", "dosing_station_id", "hypochlorite_reagent_grade",
-            "carbon_filter_vessel_id", "carbon_base_feedstock"
+            "carbon_filter_vessel_id", "carbon_base_feedstock",
+            "capsule_serial_number", "diverter_junction_id", "diverter_mechanism_type",
+            "blower_station_id", "rotor_lobe_configuration", "actuator_cylinder_id", "packing_leather_type"
         };
 
         /// <summary>

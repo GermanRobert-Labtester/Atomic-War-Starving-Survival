@@ -2,6 +2,9 @@ using System;
 using System.Text;
 using Godot;
 using Ashfall.Core;
+using Ashfall.Core.UI;
+using AtomicWar.GodotApp.UI;
+using CoreTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp.Dose
 {
@@ -25,24 +28,37 @@ namespace AtomicWar.GodotApp.Dose
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
-            CustomMinimumSize = new Vector2(420, 320);
+            CustomMinimumSize = new Vector2(CoreTheme.PanelMaxWidth, 360);
 
-            var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            // Apply standard panel 9-slice
+            var tex = AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                var sb = new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+                AddThemeStyleboxOverride("panel", sb);
+            }
+
+            var rootVbox = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingSm);
             AddChild(rootVbox);
 
-            var title = new Label
-            {
-                Text = "THE DOSE REGISTER — ONE FOLDER OF PAPERWORK",
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-            title.AddThemeFontSizeOverride("font_size", 13);
-            rootVbox.AddChild(title);
+            // ── Title ──
+            rootVbox.AddChild(AshfallUiHelpers.MakeTitle("THE DOSE REGISTER", CoreTheme.FontSizeH3));
+            rootVbox.AddChild(AshfallUiHelpers.MakeLabel("ONE FOLDER OF PAPERWORK"));
 
-            _lblNpcs = new Label { Text = "The four who keep the books: ..." };
-            _lblNpcs.AddThemeFontSizeOverride("font_size", 11);
+            // ── NPC rows ──
+            _lblNpcs = AshfallUiHelpers.MakeSmall("The four who keep the books: ...", true);
             rootVbox.AddChild(_lblNpcs);
 
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Tab container ──
             var tabs = new TabContainer();
             tabs.CustomMinimumSize = new Vector2(0, 240);
             rootVbox.AddChild(tabs);
@@ -56,8 +72,11 @@ namespace AtomicWar.GodotApp.Dose
             _lblVoluntary = new Label();
             tabs.AddChild(MakeTab("Voluntary", _lblVoluntary));
 
-            var actionRow = new HBoxContainer();
-            actionRow.AddThemeConstantOverride("separation", 6);
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Action buttons ──
+            var actionRow = AshfallUiHelpers.MakeHBox(CoreTheme.SpacingSm);
+            actionRow.Alignment = BoxContainer.AlignmentMode.Center;
             rootVbox.AddChild(actionRow);
 
             AddAction(actionRow, "Book a reading", OnBookReading);
@@ -72,19 +91,18 @@ namespace AtomicWar.GodotApp.Dose
 
         private static Control MakeTab(string name, Label label)
         {
-            var box = new VBoxContainer();
-            box.AddThemeConstantOverride("separation", 4);
+            var box = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingXs);
             box.Name = name;
             label.AutowrapMode = TextServer.AutowrapMode.WordSmart;
-            label.AddThemeFontSizeOverride("font_size", 11);
+            label.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+            label.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
             box.AddChild(label);
             return box;
         }
 
         private static Button AddAction(Container row, string text, Action handler)
         {
-            var button = new Button { Text = text };
-            button.Pressed += handler;
+            var button = AshfallUiHelpers.MakeButton(text, handler);
             row.AddChild(button);
             return button;
         }
@@ -128,6 +146,12 @@ namespace AtomicWar.GodotApp.Dose
             _lblCohort.Text = RenderCohort();
             _lblVoluntary.Text = RenderVoluntary();
             _btnCalibrate.Text = _session.Ledger.State.calibrationOverdue ? "Calibrate (Piet) — OVERDUE" : "Calibrate (Piet)";
+
+            // Calibration button turns critical when overdue
+            if (_session.Ledger.State.calibrationOverdue)
+                _btnCalibrate.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Critical));
+            else
+                _btnCalibrate.RemoveThemeColorOverride("font_color");
         }
 
         private string RenderLedger()

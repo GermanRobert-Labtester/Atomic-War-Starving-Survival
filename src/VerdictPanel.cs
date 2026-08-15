@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Godot;
 using Ashfall.Core.Verdict;
+using Ashfall.Core.UI;
+using AtomicWar.GodotApp.UI;
+using CoreTheme = Ashfall.Core.UI.Theme;
 
 namespace AtomicWar.GodotApp
 {
@@ -22,32 +25,48 @@ namespace AtomicWar.GodotApp
         public override void _Ready()
         {
             SetAnchorsPreset(LayoutPreset.TopRight);
-            CustomMinimumSize = new Vector2(420, 400);
+            CustomMinimumSize = new Vector2(CoreTheme.PanelMaxWidth, 400);
 
-            var rootVbox = new VBoxContainer();
-            rootVbox.AddThemeConstantOverride("separation", 6);
+            // Apply standard panel 9-slice
+            var tex = AshfallUiHelpers.TryLoadTexture("res://Assets/UI/Textures/panel_bg_9slice.png");
+            if (tex != null)
+            {
+                var sb = new StyleBoxTexture
+                {
+                    Texture = tex,
+                    TextureMarginLeft = 16,
+                    TextureMarginTop = 16,
+                    TextureMarginRight = 16,
+                    TextureMarginBottom = 16
+                };
+                AddThemeStyleboxOverride("panel", sb);
+            }
+
+            var rootVbox = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingSm);
             AddChild(rootVbox);
 
-            var title = new Label
-            {
-                Text = "THE MACHINE'S REGISTER",
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-            title.AddThemeFontSizeOverride("font_size", 14);
-            rootVbox.AddChild(title);
+            // ── Title ──
+            rootVbox.AddChild(AshfallUiHelpers.MakeTitle("THE MACHINE'S REGISTER", CoreTheme.FontSizeH3));
 
+            // ── Phase strip ──
             _lblPhase = new Label { Text = "phase: dormant" };
-            _lblPhase.AddThemeFontSizeOverride("font_size", 13);
+            _lblPhase.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeBody);
+            _lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Muted));
             rootVbox.AddChild(_lblPhase);
 
+            // ── Readout ──
             _lblReadout = new Label
             {
                 Text = "[shelter instruments] — standby cycle.",
                 AutowrapMode = TextServer.AutowrapMode.WordSmart
             };
-            _lblReadout.AddThemeFontSizeOverride("font_size", 11);
+            _lblReadout.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+            _lblReadout.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
             rootVbox.AddChild(_lblReadout);
 
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
+
+            // ── Log scroll ──
             var scroll = new ScrollContainer
             {
                 HorizontalScrollMode = ScrollContainer.ScrollMode.Disabled,
@@ -55,19 +74,15 @@ namespace AtomicWar.GodotApp
             };
             rootVbox.AddChild(scroll);
 
-            _logList = new VBoxContainer();
+            _logList = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingXs);
             scroll.AddChild(_logList);
 
-            // Figures of the machine's human record.
-            var npcTitle = new Label
-            {
-                Text = "FIGURES OF THE RECORD",
-                HorizontalAlignment = HorizontalAlignment.Center
-            };
-            npcTitle.AddThemeFontSizeOverride("font_size", 12);
-            rootVbox.AddChild(npcTitle);
+            rootVbox.AddChild(AshfallUiHelpers.MakeSeparator());
 
-            _npcList = new VBoxContainer();
+            // ── Figures ──
+            rootVbox.AddChild(AshfallUiHelpers.MakeSectionHeader("FIGURES OF THE RECORD"));
+
+            _npcList = AshfallUiHelpers.MakeVBox(CoreTheme.SpacingSm);
             rootVbox.AddChild(_npcList);
         }
 
@@ -94,20 +109,20 @@ namespace AtomicWar.GodotApp
             _lblPhase.Text = $"phase: {phaseName} · evidence {_verdict.Evidence.Count} · " +
                              $"logs read {_verdict.MachineLog.ReadCount()}/{_verdict.MachineLog.Entries.Count}{callState}";
 
-            // Phase-colored strip (procedural, restrained hues).
+            // Phase-colored strip — uses Theme tokens for each phase.
             switch (_verdict.Reckoning.Phase)
             {
                 case ReckoningPhase.Dormant:
-                    _lblPhase.AddThemeColorOverride("font_color", new Color(0.45f, 0.47f, 0.5f));
+                    _lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Muted));
                     break;
                 case ReckoningPhase.Knowing:
-                    _lblPhase.AddThemeColorOverride("font_color", new Color(0.53f, 0.56f, 0.42f));
+                    _lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Dim));
                     break;
                 case ReckoningPhase.Culpable:
-                    _lblPhase.AddThemeColorOverride("font_color", new Color(0.62f, 0.5f, 0.26f));
+                    _lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Warm));
                     break;
                 case ReckoningPhase.Counted:
-                    _lblPhase.AddThemeColorOverride("font_color", new Color(0.68f, 0.36f, 0.3f));
+                    _lblPhase.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Critical));
                     break;
             }
 
@@ -138,9 +153,11 @@ namespace AtomicWar.GodotApp
                     Text = $"{icon} [D{e.day}] {e.facilityId} · {e.kind} · {flag}\n   {e.bodyShort}",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                row.AddThemeFontSizeOverride("font_size", 10);
+                row.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
                 if (!e.read)
-                    row.AddThemeColorOverride("font_color", new Color(0.8f, 0.78f, 0.7f));
+                    row.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Pale));
+                else
+                    row.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Muted));
                 _logList.AddChild(row);
             }
 
@@ -151,7 +168,8 @@ namespace AtomicWar.GodotApp
                     Text = "The log is quiet. The meter reads its own current.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                empty.AddThemeFontSizeOverride("font_size", 10);
+                empty.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
+                empty.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Dim));
                 _logList.AddChild(empty);
             }
         }
@@ -169,7 +187,8 @@ namespace AtomicWar.GodotApp
                     Text = "No figures have stepped forward yet. The record waits.",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                none.AddThemeFontSizeOverride("font_size", 10);
+                none.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeLabel);
+                none.AddThemeColorOverride("font_color", AshfallUiHelpers.ToColor(CoreTheme.Dim));
                 _npcList.AddChild(none);
                 return;
             }
@@ -191,25 +210,23 @@ namespace AtomicWar.GodotApp
                     Text = $"{kindIcon} {npc.name} — {npc.role} {shown}",
                     AutowrapMode = TextServer.AutowrapMode.WordSmart
                 };
-                row.AddThemeFontSizeOverride("font_size", 10);
+                row.AddThemeFontSizeOverride("font_size", CoreTheme.FontSizeSmall);
+                row.AddThemeColorOverride("font_color",
+                    _verdict.Npcs.State.spokenNpcIds.Contains(npc.id)
+                        ? AshfallUiHelpers.ToColor(CoreTheme.Muted)
+                        : AshfallUiHelpers.ToColor(CoreTheme.Pale));
 
                 if (!_verdict.Npcs.State.spokenNpcIds.Contains(npc.id))
                 {
-                    var btn = new Button
+                    var btn = AshfallUiHelpers.MakeButton("hear", () =>
                     {
-                        Text = "hear",
-                        CustomMinimumSize = new Vector2(0, 22)
-                    };
-                    string captured = npc.id;
-                    btn.Pressed += () =>
-                    {
-                        if (_verdict.Npcs.Speak(captured))
+                        if (_verdict.Npcs.Speak(npc.id))
                         {
                             RefreshView();
-                            EmitSignal("NpcSpoken", captured);
+                            EmitSignal("NpcSpoken", npc.id);
                         }
-                    };
-                    var h = new HBoxContainer();
+                    });
+                    var h = AshfallUiHelpers.MakeHBox(CoreTheme.SpacingSm);
                     h.AddChild(row);
                     h.AddChild(btn);
                     _npcList.AddChild(h);
