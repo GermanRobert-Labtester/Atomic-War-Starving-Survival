@@ -252,6 +252,9 @@ namespace AtomicWar.GodotApp
                 case HostCliAction.AssetRegistrySelfTest:
                     GetTree().Quit(HostCli.RunAssetRegistrySelfTest(_dataDir));
                     return;
+                case HostCliAction.StandaloneSystemsSelfTest:
+                    GetTree().Quit(HostCli.RunStandaloneSystemsSelfTest());
+                    return;
             }
 
             BuildUserInterface();
