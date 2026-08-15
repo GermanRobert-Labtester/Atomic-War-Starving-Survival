@@ -2993,6 +2993,11 @@ namespace AtomicWar.GodotApp
             _gameOver.Visible = false;
             _gameUiContainer.Visible = true;
 
+            // A new game must not inherit the previous run's in-memory sessions or
+            // on-disk saves. Null every session so the next SetupXxx re-creates clean,
+            // and delete the store files so Continue stays disabled for a fresh run.
+            ResetAllSessions();
+
             // Initialize Holdfast
             SetupHoldfastRuntime();
             _holdfastTerminal.PressNewLedger();
@@ -3003,6 +3008,63 @@ namespace AtomicWar.GodotApp
 
             _statusLabel.Text = "New game started. Day 1. The ash is settling.";
         }
+
+        /// <summary>
+        /// Drop every session reference and clear the on-disk saves so a new game
+        /// starts from a clean slate. The Godot user:// store is the only place the
+        /// run history lives; deleting it is what makes Continue unavailable.
+        /// </summary>
+        private void ResetAllSessions()
+        {
+            _core = null!;
+            _holdfastRuntime = null!;
+            _dutyRoster = null!;
+            _expansions = null!;
+            _phantomMemory = null!;
+            _doseLedger = null!;
+            _inventory = null!;
+            _survivors = null!;
+            _economy = null!;
+            _utilityAi = null!;
+            _journal = null!;
+            _muster = null!;
+            _verdict = null!;
+            _maritime = null!;
+            _expeditions = null!;
+            _narrative = null!;
+            _medical = null!;
+            _world = null!;
+            _crafting = null!;
+            _caravans = null!;
+            _yearOfAsh = null!;
+
+            _verdictDirty = false;
+            _maritimeDirty = false;
+            _expeditionDirty = false;
+            _narrativeDirty = false;
+            _medicalDirty = false;
+            _worldDirty = false;
+            _craftingDirty = false;
+            _caravansDirty = false;
+
+            foreach (var file in new[]
+            {
+                "holdfast_s1_save.json", "holdfast_trade_save.json", "holdfast_trade_save.json.bak",
+                "duty_roster_save.json", "expansion_hub_save.json", "phantom_memory_save.json",
+                "dose_ledger_save.json", "inventory_save.json", "survivors_save.json",
+                "economy_save.json", "muster_save.json", "verdict_save.json",
+                "maritime_save.json", "expedition_save.json", "narrative_save.json",
+                "medical_save.json", "world_save.json", "crafting_save.json",
+                "caravan_save.json", "journal_save.json", "year_of_ash_save.json"
+            })
+            {
+                string p = System.IO.Path.Combine(ProjectSettings.GlobalizePath("user://"), file);
+                if (System.IO.File.Exists(p))
+                    System.IO.File.Delete(p);
+            }
+            GD.Print("[Ashfall Godot] New game: all sessions reset, saves cleared.");
+        }
+
 
         private void ContinueGame()
         {
