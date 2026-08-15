@@ -1431,7 +1431,7 @@ namespace AtomicWar.GodotApp
                 dive.CommitChoice(SovereignChoice.flood_the_market);
                 Check(dive.Choice == SovereignChoice.flood_the_market,
                     "dive choice committed");
-                Check(flags.HasFlag("dive_choice_flood_the_market"),
+                Check(flags.IsSet("flag_exp09_iodine_released"),
                     "dive choice set flag");
             }
             catch (Exception e)
