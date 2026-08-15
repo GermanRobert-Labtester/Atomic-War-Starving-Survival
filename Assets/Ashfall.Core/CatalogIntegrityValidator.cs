@@ -101,7 +101,8 @@ namespace Ashfall.Core
             "escapement_wear_", "pendulum_thermal_", "mainspring_fatigue_", "clepsydra_silt_",
             "hemp_fiber_", "wire_rope_", "manila_hawser_", "rope_transmission_",
             "timber_creosote_", "square_set_", "dry_rot_", "mortise_tenon_",
-            "crucible_slag_", "cupola_melting_", "pattern_maker_", "green_sand_"
+            "crucible_slag_", "cupola_melting_", "pattern_maker_", "green_sand_",
+            "slow_sand_", "ozone_", "chlorine_titration_", "carbon_adsorption_"
         };
 
         /// <summary>
@@ -234,7 +235,9 @@ namespace Ashfall.Core
             "peg_material_species",
             "crucible_pot_id", "crucible_lining_formula", "cupola_furnace_id", "coke_to_iron_charge_ratio",
             "pattern_shop_job_id", "timber_pattern_material", "shrinkage_allowance_fraction",
-            "sand_muller_batch_id", "clay_binder_type"
+            "sand_muller_batch_id", "clay_binder_type",
+            "filter_basin_id", "ozonator_unit_id", "dosing_station_id", "hypochlorite_reagent_grade",
+            "carbon_filter_vessel_id", "carbon_base_feedstock"
         };
 
         /// <summary>
