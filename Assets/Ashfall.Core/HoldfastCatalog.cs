@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Ashfall.Core.Inventory;
 
 namespace Ashfall.Core
 {
@@ -50,6 +51,11 @@ namespace Ashfall.Core
     {
         public List<HoldfastLocationEntry> Locations { get; } = new List<HoldfastLocationEntry>();
         public List<HoldfastQuestEntry> Quests { get; } = new List<HoldfastQuestEntry>();
+        public HoldfastItemsCatalog Items { get; set; } = HoldfastItemsCatalog.Empty();
+        public HoldfastFactionsCatalog Factions { get; set; } = HoldfastFactionsCatalog.Empty();
+
+        public HoldfastItemDefinition GetItem(string id) => Items != null ? Items.GetById(id) : null;
+        public HoldfastFactionEntry GetFaction(string id) => Factions != null ? Factions.GetById(id) : null;
 
         public HoldfastLocationEntry GetLocation(string id)
         {
