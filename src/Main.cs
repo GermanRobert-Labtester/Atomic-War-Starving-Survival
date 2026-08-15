@@ -61,6 +61,14 @@ namespace AtomicWar.GodotApp
         private VerdictPanel _verdictPanel = null!;
         private bool _verdictDirty;
 
+        // ASHFALL: THE BLACK FLOTILLA (Expansion 09 — maritime salvage & stealth dive)
+        private MaritimeHostSession _maritime = null!;
+        private bool _maritimeDirty;
+
+        // ASHFALL: traveling caravans (Expansion V spec §3.3 — wandering merchants)
+        private TravelingCaravanHostSession _caravans = null!;
+        private bool _caravansDirty;
+
         // Inventory (ported from Unity _Game/Inventory)
         private InventoryHostSession _inventory = null!;
         private AtomicWar.GodotApp.Inventory.InventoryPanel _inventoryPanel = null!;
@@ -507,6 +515,15 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Verdict: open the machine readout", OnVerdictOpenClicked);
             AddMenuButton("Verdict: advance reckoning a day", OnVerdictTickClicked);
             AddMenuButton("Verdict: census window now", OnVerdictCensusClicked);
+            // ── THE BLACK FLOTILLA (Exp 09 — maritime salvage) ──────────
+            AddMenuButton("Maritime: start stealth dive", OnMaritimeStartDiveClicked);
+            AddMenuButton("Maritime: tick dive 10s", OnMaritimeTickDiveClicked);
+            AddMenuButton("Maritime: scavenge stadium", OnMaritimeScavengeClicked);
+            AddMenuButton("Maritime: contaminate Mikhail", OnMaritimeContaminateClicked);
+            // ── TRAVELING CARAVANS (Exp V §3.3) ─────────────────────────
+            AddMenuButton("Caravan: spawn Menders' cart", OnCaravanSpawnClicked);
+            AddMenuButton("Caravan: tick a day", OnCaravanTickClicked);
+            AddMenuButton("Caravan: buy water ×2", OnCaravanBuyClicked);
             // ── INVENTORY (ported from Unity _Game/Inventory) ───────────
             AddMenuButton("Inventory: open the panel", OnInventoryOpenClicked);
             AddMenuButton("Inventory: add canned food ×6", () => OnInventoryAddClicked("canned_food", 6));
@@ -530,7 +547,7 @@ namespace AtomicWar.GodotApp
             AddMenuButton("Utility AI: evaluate demo survivor", OnUtilityAiEvaluateClicked);
             AddMenuButton("Open Bunker Ledger  [J]", OnViewCodexClicked);
             AddMenuButton("Inspect System Diagnostics", OnDiagnosticsClicked);
-            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); GetTree().Quit(); });
+            AddMenuButton("Exit Game", () => { SaveJournal(); SaveHoldfast(); SaveHoldfastRuntime(); SaveDutyRoster(); SaveExpansionHub(); SavePhantomMemory(); SaveDoseLedger(); SaveMuster(); SaveInventory(); SaveSurvivors(); SaveEconomy(); SaveVerdict(); SaveMaritime(); SaveCaravans(); GetTree().Quit(); });
 
             _statusLabel = new Label
             {
@@ -1814,6 +1831,90 @@ namespace AtomicWar.GodotApp
             }
         }
 
+        // ── ASHFALL: THE BLACK FLOTILLA (Expansion 09 — maritime salvage) ──────
+
+        private void SetupMaritime()
+        {
+            if (_maritime != null) return;
+            _maritime = MaritimeHostSession.Create(_dataDir);
+            _maritime.StateChanged += () => _maritimeDirty = true;
+            GD.Print("[Ashfall Godot] Maritime host ready: stealth dive · scavenge · contamination.");
+        }
+
+        private void SaveMaritime()
+        {
+            if (_maritime == null) return;
+            if (MaritimeSaveStore.TrySave(_maritime.CaptureSave()))
+            {
+                _maritimeDirty = false;
+                GD.Print("[Ashfall Godot] Maritime save written.");
+            }
+        }
+
+        private void OnMaritimeStartDiveClicked()
+        {
+            SetupMaritime();
+            _statusLabel.Text = _maritime.StartDiveDemo("diver_cole", "operator_ren");
+        }
+
+        private void OnMaritimeTickDiveClicked()
+        {
+            SetupMaritime();
+            _statusLabel.Text = _maritime.TickDiveDemo(10f);
+        }
+
+        private void OnMaritimeScavengeClicked()
+        {
+            SetupMaritime();
+            _statusLabel.Text = _maritime.ScavengeDemo("location_stadium_evacuation_center");
+        }
+
+        private void OnMaritimeContaminateClicked()
+        {
+            SetupMaritime();
+            _statusLabel.Text = _maritime.ContaminateDemo("survivor_gunner_mikhail", "location_automated_abattoir");
+        }
+
+        // ── TRAVELING CARAVANS (Exp V spec §3.3) ─────────────────────────────
+
+        private void SetupCaravans()
+        {
+            if (_caravans != null) return;
+            _caravans = TravelingCaravanHostSession.Create(_dataDir);
+            _caravans.StateChanged += () => _caravansDirty = true;
+            GD.Print("[Ashfall Godot] Caravan host ready.");
+        }
+
+        private void SaveCaravans()
+        {
+            if (_caravans == null) return;
+            if (CaravanSaveStore.TrySave(_caravans.CaptureSave()))
+            {
+                _caravansDirty = false;
+                GD.Print("[Ashfall Godot] Caravan save written.");
+            }
+        }
+
+        private void OnCaravanSpawnClicked()
+        {
+            SetupCaravans();
+            _statusLabel.Text = _caravans.SpawnDemoCaravan("loc_the_allotments");
+        }
+
+        private void OnCaravanTickClicked()
+        {
+            SetupCaravans();
+            _statusLabel.Text = _caravans.TickDemo() + "\n" + _caravans.StatusLine();
+        }
+
+        private void OnCaravanBuyClicked()
+        {
+            SetupCaravans();
+            int rations = 20;
+            _statusLabel.Text = _caravans.BuyDemo("caravan_menders", "item_clean_water", 2, ref rations)
+                + $" Rations left: {rations}.";
+        }
+
         private void OnVerdictOpenClicked()
         {
             SetupVerdict();
@@ -2700,6 +2801,8 @@ namespace AtomicWar.GodotApp
             SaveSurvivors();
             SaveEconomy();
             SaveVerdict();
+            SaveMaritime();
+            SaveCaravans();
         }
 
         public override void _UnhandledInput(InputEvent @event)
