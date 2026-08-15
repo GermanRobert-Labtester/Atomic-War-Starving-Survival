@@ -1,5 +1,6 @@
 using System;
 using Ashfall.Core;
+using Ashfall.Core.Shelter;
 using Ashfall.Core.World;
 
 namespace AtomicWar.GodotApp
@@ -14,15 +15,17 @@ namespace AtomicWar.GodotApp
         public const int DemoSeed = 1234;
 
         public WeatherSystem Weather { get; }
+        public SkyLayerArmorSystem SkyArmor { get; }
         public SeasonProfileDef Profile { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
 
         public event Action StateChanged;
 
-        public WorldHostSession(WeatherSystem weather = null)
+        public WorldHostSession(WeatherSystem weather = null, SkyLayerArmorSystem skyArmor = null)
         {
             Weather = weather ?? new WeatherSystem();
+            SkyArmor = skyArmor ?? new SkyLayerArmorSystem();
             Weather.OnWeatherChanged += kind =>
             {
                 LastEvent = $"Weather: {kind}";
@@ -76,5 +79,47 @@ namespace AtomicWar.GodotApp
 
         public WorldWeatherState CaptureSave() => Weather.CaptureState();
         public void RestoreSave(WorldWeatherState state) => Weather.RestoreState(state);
+
+        // ── Sky Layer Armor (Exp 11) ────────────────────────────────
+
+        public string SetSkyArmorDemo(int gridX, string material, float thickness)
+        {
+            var tier = material switch
+            {
+                "dirt" => CeilingMaterialTier.Dirt,
+                "wood" => CeilingMaterialTier.Wood,
+                "concrete" => CeilingMaterialTier.ReinforcedConcrete,
+                "lead" => CeilingMaterialTier.LeadSheeting,
+                "tungsten" => CeilingMaterialTier.TungstenComposite,
+                _ => CeilingMaterialTier.Dirt
+            };
+            SkyArmor.SetCellArmor(gridX, tier, thickness);
+            return $"Sky armor set at grid {gridX}: {tier} ({thickness}m). Attenuation: {SkyArmor.GetAttenuationFactor(gridX):F3}.";
+        }
+
+        public string ImpactDemo(int gridX, float energyMJ)
+        {
+            bool breached = SkyArmor.EvaluateKineticImpact(gridX, energyMJ, out float damage);
+            return breached ? $"BREACH at grid {gridX}! {damage:F1} MJ through." : $"Impact absorbed at grid {gridX}.";
+        }
+
+        public string SkyArmorStatusLine()
+        {
+            var save = SkyArmor.CaptureState();
+            if (save.cells.Count == 0) return "Sky armor: no cells plated";
+            return $"Sky armor: {save.cells.Count} cells · avg attenuation {AvgAttenuation():F3}";
+        }
+
+        private float AvgAttenuation()
+        {
+            var save = SkyArmor.CaptureState();
+            if (save.cells.Count == 0) return 1f;
+            float sum = 0f;
+            foreach (var c in save.cells) sum += SkyArmor.GetAttenuationFactor(c.gridX);
+            return sum / save.cells.Count;
+        }
+
+        public SkyArmorSaveState CaptureSkyArmorSave() => SkyArmor.CaptureState();
+        public void RestoreSkyArmorSave(SkyArmorSaveState state) => SkyArmor.RestoreState(state);
     }
 }

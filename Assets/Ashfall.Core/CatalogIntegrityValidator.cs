@@ -75,7 +75,23 @@ namespace Ashfall.Core
             "radio_", "broadcast_", "crisis_", "zone_", "step_", "fragment_",
             "trust_", "phase_", "milestone_", "wave_", "scenario_", "toll_",
             "trade_", "wish_", "confession_", "guilt_", "current_", "echo_",
-            "cassette_", "carving_", "template_", "zone", "part_", "code_"
+            "cassette_", "carving_", "template_", "zone", "part_", "code_",
+            "contraband_", "glitch_", "telemetry_", "blackbox_", "directive_", "audit_",
+            "hydrophone_", "borehole_", "cryopod_", "salt_mine_",
+            "liturgy_", "canon_", "hymnal_", "epitaph_",
+            "journal_psych_", "botany_", "folklore_children_", "fraud_ration_",
+            "cipher_station_", "alarm_seismic_", "emp_sniffer_", "wiretap_",
+            "pathology_autopsy_", "pharma_", "surgery_log_", "sensory_loss_",
+            "audit_gate_", "silt_report_", "lead_wall_", "filter_clog_",
+            "well_contam_", "biota_cave_", "steam_vent_", "stalactite_assay_",
+            "roach_hive_", "molerat_study_", "vulture_sighting_", "mosquito_vector_",
+            "dragline_ruin_", "substation_fire_", "locomotive_armored_", "pipeline_sabotage_",
+            "hoist_jam_", "munitions_leaching_", "sonar_fault_", "vault_breach_",
+            "germplasm_audit_", "compressor_fail_", "methane_eruption_", "crop_genome_",
+            "topo_sheet_", "scav_route_", "mudflow_report_", "crater_lake_",
+            "slag_leach_", "carbide_tool_", "gear_quench_", "bullet_alloy_",
+            "gasket_degrade_", "aramid_rot_", "tire_retread_", "celluloid_decay_",
+            "prism_delam_", "sight_glass_", "rad_brown_", "scint_crystal_"
         };
 
         /// <summary>
@@ -94,7 +110,8 @@ namespace Ashfall.Core
             "phantom_background_id", "knowledge_key", "complete_mutation",
             "fail_mutation", "world_flag", "traits", "baseTraits",
             "manifesto_law_code", "zone_id", "encounterId", "set_flag",
-            "setWorldFlag", "trait_granted", "latentExpertTrait", "inspectKey"
+            "setWorldFlag", "trait_granted", "latentExpertTrait", "inspectKey",
+            "questlineId", "stageId", "firstStageId"
         };
 
         /// <summary>
@@ -114,7 +131,8 @@ namespace Ashfall.Core
             "traitId", "branchId", "scheduleEventId", "dialogue_event_id",
             "requiredFlag", "requiredFlagId", "RequiredFlagId", "RequiredEventFlags",
             "ambushFlag", "cleanWaterRewardFlag", "trait_granted",
-            "latentExpertTrait", "requiredTrait", "roomId", "itemId"
+            "latentExpertTrait", "requiredTrait", "roomId", "itemId",
+            "downstream_quest_trigger", "gating_flag", "nextStageId"
         };
 
         /// <summary>Keys that must be ordered min <= max when both are present.</summary>
@@ -130,7 +148,56 @@ namespace Ashfall.Core
         {
             "tags", "category", "type", "phase", "discovery_trigger", "badge_asset_id",
             "hazardType", "will_not", "lootCategories", "tech_offerings",
-            "outcome_type"
+            "outcome_type", "specialEvents", "hidden_stash_location", "risk_profile",
+            "callsign", "entry_type", "record_type", "directive_code", "classification",
+            "issuing_authority", "vault_id", "audit_type", "sub_level", "auditor_designation",
+            "compliance_status", "carrier_id", "timestamp_relative", "telemetry_channel",
+            "payload_status", "effective_day_range", "buoy_callsign", "signal_classification",
+            "borehole_id", "geological_formation", "pod_id", "subject_designation",
+            "system_alert", "mine_gallery", "rock_medium", "inscription_tool", "recorder_identity",
+            "cult_faction", "liturgy_type", "ritual_sacrament", "synod_chapter", "canon_number",
+            "metallurgical_rule", "monastery_circle", "hymn_number", "liturgical_acoustic_mode",
+            "grave_site", "marker_material", "deceased_identity", "cause_of_death",
+            "author_designation", "quiet_hour_time", "psychological_marker", "botanical_name",
+            "cultivation_tray", "edibility_status", "tradition_type", "origin_sector",
+            "folk_theme", "case_id", "infraction_type", "accused_culprit", "verdict_penalty",
+            "station_nickname", "modulation_mode", "station_id", "alert_tier", "detector_id",
+            "pulse_classification", "intercept_channel", "target_faction", "speaker_identities",
+            "case_number", "anatomical_region", "compound_name", "active_agent", "preparation_method",
+            "efficacy_rating", "operation_code", "lead_surgeon", "anesthetic_used", "survival_outcome",
+            "case_file", "sensory_modality", "pathological_cause",
+            "gate_designation", "mechanical_subsystem", "failure_mode", "structural_severity",
+            "sump_basin_id", "pump_model", "operational_status", "wall_sector_id",
+            "structural_degradation_mode", "filter_bank_id", "filter_stage",
+            "well_identifier", "aquifer_stratum", "contaminant_agent", "species_designation",
+            "cavern_location", "bioluminescence_type", "ecological_niche", "vent_manifold_id",
+            "failure_diagnostic", "sample_specimen_id", "mineral_species",
+            "nest_location", "specimen_morph", "threat_rating", "colony_id", "caste_classification",
+            "observation_post", "avian_morphology", "radiation_tracking_behavior", "silo_location_id",
+            "vector_species", "pathogen_transmitted",
+            "machine_designation", "structural_condition", "substation_id", "contaminant_combustion_byproduct",
+            "locomotive_id", "locomotive_type", "current_operational_status", "pipeline_sector",
+            "sabotage_method", "environmental_hazard_severity",
+            "turret_emplacement_id", "caliber_designation", "hoist_mechanism_type", "jam_classification",
+            "magazine_vault_id", "chemical_agent", "hazard_tier", "hydrophone_station_id",
+            "transducer_element_type", "failure_classification", "vault_sector_id",
+            "barrier_material", "breach_technique",
+            "accession_number", "crop_species", "cryocooler_unit_id", "working_fluid",
+            "vault_geological_sector", "eruption_trigger", "cultivar_id", "phenotypic_defect",
+            "quadrangle_name", "grid_scale_ratio", "dominant_terrain_feature", "route_identifier",
+            "lead_scout_name", "canyon_location_id", "structural_impact_severity", "crater_lake_name",
+            "stratification_type",
+            "furnace_unit_id", "metallurgical_defect", "tool_identifier", "carbide_grade",
+            "wear_mechanism", "gear_component_id", "steel_alloy_grade", "quenching_medium",
+            "alloy_batch_code",
+            "mask_model_designation", "elastomer_polymer_type", "degradation_severity",
+            "armor_item_id", "aramid_yarn_type", "failure_phenomenon",
+            "tire_casing_id", "rubber_compound_formula", "road_wear_rating",
+            "film_archive_reel_id", "polymer_base_chemistry", "decomposition_stage",
+            "periscope_assembly_id", "optical_glass_type", "optical_cement_type",
+            "boiler_system_id", "glass_composition", "optic_system_id",
+            "substrate_material", "solarization_spectral_band", "detector_unit_id",
+            "crystal_composition", "degradation_mode"
         };
 
         /// <summary>
@@ -152,7 +219,15 @@ namespace Ashfall.Core
             "infected_refugee", "garrison_deserter", "dying_trader", "bounty_target",
                                      // survivors created by events' add_survivor effects
             "stores",               // internal bunker room (set_quarantine effect)
-            "trade_goods"           // trade-category label used in wants/offers
+            "trade_goods",          // trade-category label used in wants/offers
+            "flag_verdict_eden_log_recovered", "flag_verdict_fuse_world_read",
+            "flag_verdict_shift_charter_restored", "flag_verdict_clerk_met",
+            "flag_verdict_call_resolved", "flag_verdict_relay_read",
+            "flag_verdict_fuse_advanced", "flag_verdict_wing_slept",
+            "paper_scrap", "item_teddy_bear", "crayon", "ammo_9x19", "blood_bag",
+            "item_suitcase_locked", "fat_rendered", "industrial_bleach", "bone_saw",
+            "ammonia_tank", "cardboard_box", "cigarette_pack_sealed",
+            "acoustic_foam_panel", "item_anchor_notes"
         };
 
         private sealed class Ctx

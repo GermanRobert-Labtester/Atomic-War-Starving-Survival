@@ -49,7 +49,7 @@ namespace Ashfall.Core.Verdict
             string resolved = ResolvedEnding(state);
             if (!string.IsNullOrEmpty(resolved)) return resolved;
 
-            if (state != null && state.phase < ReckoningPhase.Counted)
+            if (state == null || state.phase < ReckoningPhase.Counted)
                 return null; // the count has not been presented; no ending yet
 
             // The count is presented (Counted) but no explicit choice was made:

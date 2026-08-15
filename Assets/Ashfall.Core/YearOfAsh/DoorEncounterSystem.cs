@@ -179,7 +179,7 @@ namespace Ashfall.Core.YearOfAsh
             foreach (var entry in _catalog)
             {
                 if (day < entry.minDay || day > entry.maxDay) continue;
-                if (_state.resolvedEncounterIds.Contains(entry.encounterId)) continue; // one-shot
+                if (entry.seasonCap == 0 && _state.resolvedEncounterIds.Contains(entry.encounterId)) continue; // one-shot
 
                 if (entry.seasonCap > 0)
                 {

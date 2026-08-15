@@ -17,6 +17,7 @@ namespace AtomicWar.GodotApp
 
         public ExpeditionSystem Engine { get; }
         public List<ExpeditionDefinition> DemoDefinitions { get; }
+        public DiveInstanceRunner DiveRunner { get; private set; }
 
         public string LastEvent { get; private set; } = string.Empty;
 
@@ -121,5 +122,45 @@ namespace AtomicWar.GodotApp
 
         public List<ExpeditionState> CaptureSave() => Engine.CaptureState();
         public void RestoreSave(List<ExpeditionState> state) => Engine.RestoreState(state);
+
+        // ── Dive Instance (Exp 09) ──────────────────────────────────
+
+        public string StartDiveDemo(string siteId = "site_exp09_ss_sovereign")
+        {
+            var site = new DiveSiteDefinition(siteId, 120, 0.5, "q_keeper_of_logs");
+            DiveRunner = new DiveInstanceRunner(new Ashfall.Core.Events.SimpleEventBus(),
+                new Ashfall.Core.Flags.InMemoryFlagLedger(), new SeededRng(DemoSeed), site);
+            return $"Dive started at {siteId}. Oxygen: {DiveRunner.OxygenRemaining} ticks.";
+        }
+
+        public string AdvanceDiveDemo()
+        {
+            if (DiveRunner == null) return "No active dive.";
+            bool ok = DiveRunner.Advance();
+            return ok ? $"Advanced to {DiveRunner.CurrentRoom}. O2: {DiveRunner.OxygenRemaining}." : "Cannot advance (at end or no oxygen).";
+        }
+
+        public string TickDiveOxygenDemo()
+        {
+            if (DiveRunner == null) return "No active dive.";
+            DiveRunner.TickOxygen();
+            return $"O2: {DiveRunner.OxygenRemaining}. Room: {DiveRunner.CurrentRoom}.";
+        }
+
+        public string CommitDiveChoiceDemo(string choice)
+        {
+            if (DiveRunner == null) return "No active dive.";
+            if (choice == "flood") DiveRunner.CommitChoice(SovereignChoice.flood_the_market);
+            else if (choice == "burn") DiveRunner.CommitChoice(SovereignChoice.burn_the_hold);
+            else return $"Unknown choice: {choice}";
+            return $"Choice committed: {DiveRunner.Choice}.";
+        }
+
+        public string DiveStatusLine()
+        {
+            if (DiveRunner == null) return "Dive: idle";
+            return $"Dive: {DiveRunner.CurrentRoom} · O2 {DiveRunner.OxygenRemaining} · " +
+                   $"choice {DiveRunner.Choice} · risk {DiveRunner.DetectionRisk(0.5, false):F2}";
+        }
     }
 }

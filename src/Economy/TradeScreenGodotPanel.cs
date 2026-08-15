@@ -642,8 +642,8 @@ namespace AtomicWar.GodotApp.Economy
 
             int bioCount = 0;
             foreach (var pair in vm.BiologicalOffers) bioCount += pair.Value;
-            _lblPlayerWorth.Text = $"Offer Worth: {global::Ashfall.Core.Economy.TradeWorthLabels.Format(vm.PlayerOfferValue)} ({vm.PlayerOffers.Count} items, {bioCount} bio)";
-            _lblFactionAskWorth.Text = $"Demand Worth: {global::Ashfall.Core.Economy.TradeWorthLabels.Format(vm.FactionAskValue)} ({vm.FactionDemands.Count} items)";
+            _lblPlayerWorth.Text = $"Offer Worth: {Ashfall.Core.Economy.TradeWorthLabels.Format(vm.PlayerOfferValue)} ({vm.PlayerOffers.Count} items, {bioCount} bio)";
+            _lblFactionAskWorth.Text = $"Demand Worth: {Ashfall.Core.Economy.TradeWorthLabels.Format(vm.FactionAskValue)} ({vm.FactionDemands.Count} items)";
 
             // 6. Grim drawer — counts shown, steppers are session-mode controls
             foreach (var pair in _bioCountLabels)
